@@ -1,0 +1,173 @@
+
+html, body
+{
+	width:1400px;
+	margin-left:auto;
+	margin-right:auto;
+}
+
+.green-button
+{
+	margin-left:auto;
+	margin-right:auto;
+	display:block;
+	font-size:48px;
+
+	-moz-border-radius:75px;
+	-webkit-border-radius:75px;
+	-o-border-radius:75px;
+	-ms-border-radius:75px;
+	border-radius:75px;
+
+	background-image: -webkit-gradient(linear, 0% 0%, 0% 80%, from(rgba(180, 255, 180, 1)), to(rgba(120, 180, 120, 1)));
+	background-image: -webkit-linear-gradient(rgba(180, 255, 180, 1) 0%, rgba(120, 180, 120, 1) 80%);
+	background-image: -moz-linear-gradient(rgba(180, 255, 180, 1) 0%, rgba(120, 180, 120, 1) 80%);
+	background-image: -o-linear-gradient(rgba(180, 255, 180, 1) 0%, rgba(120, 180, 120, 1) 80%);
+	background-image: -ms-linear-gradient(rgba(180, 255, 180, 1) 0%, rgba(120, 180, 120, 1) 80%);
+	background-image: linear-gradient(rgba(180, 255, 180, 1) 0%, rgba(120, 180, 120, 1) 80%);
+}
+
+.but-clicked
+{
+	margin-left:auto;
+	margin-right:auto;
+	display:block;
+
+	-moz-border-radius:75px;
+	-webkit-border-radius:75px;
+	-o-border-radius:75px;
+	-ms-border-radius:75px;
+	border-radius:75px;
+
+	background-image: -webkit-gradient(linear, 0% 0%, 0% 80%, from(rgba(255, 180, 180, 1)), to(rgba(120, 180, 120, 1)));
+	background-image: -webkit-linear-gradient(rgba(255, 180, 180, 1) 0%, rgba(180, 120, 120, 1) 80%);
+	background-image: -moz-linear-gradient(rgba(255, 180, 180, 1) 0%, rgba(180, 120, 120, 1) 80%);
+	background-image: -o-linear-gradient(rgba(255, 180, 180, 1) 0%, rgba(180, 120, 120, 1) 80%);
+	background-image: -ms-linear-gradient(rgba(255, 180, 180, 1) 0%, rgba(180, 120, 120, 1) 80%);
+	background-image: linear-gradient(rgba(255, 180, 180, 1) 0%, rgba(180, 120, 120, 1) 80%);
+}
+
+.message-wrapper
+{
+	position:absolute;
+	top:0px;
+	margin-left:auto;
+	margin-right:auto;
+	width:300px;
+	border:solid 1px Black;
+	background-color:Yellow;
+	padding:25px;
+	z-index:10000;
+}
+
+.description
+{
+}
+
+.rabbit
+{
+	display:block;
+	width:1400px;
+	height:200px;
+	font-size:20px;
+	margin-left:auto;
+	margin-right:auto;
+	margin-top:30px;
+
+	-moz-border-radius:75px;
+	-webkit-border-radius:75px;
+	-o-border-radius:75px;
+	-ms-border-radius:75px;
+	border-radius:75px;
+
+	background-image: -webkit-gradient(linear, 0% 0%, 0% 80%, from(rgba(255, 180, 180, 1)), to(rgba(120, 180, 120, 1)));
+	background-image: -webkit-linear-gradient(rgba(255, 180, 180, 1) 0%, rgba(180, 120, 120, 1) 80%);
+	background-image: -moz-linear-gradient(rgba(255, 180, 180, 1) 0%, rgba(180, 120, 120, 1) 80%);
+	background-image: -o-linear-gradient(rgba(255, 180, 180, 1) 0%, rgba(180, 120, 120, 1) 80%);
+	background-image: -ms-linear-gradient(rgba(255, 180, 180, 1) 0%, rgba(180, 120, 120, 1) 80%);
+	background-image: linear-gradient(rgba(255, 180, 180, 1) 0%, rgba(180, 120, 120, 1) 80%);
+}
+
+.active-event-label
+{
+	width:500px;
+	margin-left:25px;
+	display:block;
+	font-weight:bold;
+}
+
+.active-event-name
+{
+	width:500px;
+	height:100px;
+	margin-left:25px;
+	display:block;
+}
+
+.nodes-wrapper
+{
+	margin-left:auto;
+	margin-right:auto;
+	width:auto;
+	float:left;
+}
+
+.nodes
+{
+	width:500px;
+	height:200px;
+	display:block;
+	float:left;
+	margin-top:25px;
+	margin-bottom:25px;
+	margin-left:25px;
+	margin-right:25px;
+}
+
+.run-button
+{
+	display:block;
+	float:left;
+	margin-top:95px;
+	margin-left:25px;
+	margin-right:25px;
+	font-size:48px;
+}
+
+.paste-button
+{
+	display:block;
+	float:left;
+	margin-top:95px;
+	margin-left:25px;
+	margin-right:25px;
+	font-size:48px;
+}
+
+.repeater-wrapper
+{
+	clear:both;
+}
+
+.active-event
+{
+	margin:15px;
+	padding:15px;
+	display:block;
+	float:left;
+	border:dashed 1px #999;
+	text-decoration:none;
+}
+
+.active-event:hover
+{
+	margin:15px;
+	padding:15px;
+	display:block;
+	float:left;
+	color:#005;
+	border:dashed 1px #333;
+	text-decoration:none;
+}
+
+

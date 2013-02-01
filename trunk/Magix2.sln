@@ -1,0 +1,56 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Magix.UX", "Magix.UX\Magix.UX.csproj", "{FDD15C94-7DC2-4D19-9AF4-0E9FD8CCC443}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Magix.Core", "Magix.Core\Magix.Core.csproj", "{11376D5F-13BD-4529-BA92-DDE415B96220}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Magix.ApplicationPool", "Magix.ApplicationPool\Magix.ApplicationPool.csproj", "{1048405F-2036-4A8B-BC8B-EE2315B9E9F1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Magix.Core.Viewports", "Magix.Core.Viewports\Magix.Core.Viewports.csproj", "{47AFBBBE-CDF6-4B3A-8BD8-478406735C99}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Magix.SampleController", "Magix.SampleController\Magix.SampleController.csproj", "{B9D247FE-C4EA-49B2-83E9-0ED75D844B72}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Magix.SampleModules", "Magix.SampleModules\Magix.SampleModules.csproj", "{27F2733A-8DDC-49F6-BA47-F27A40043682}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Magix.execute", "Magix.execute\Magix.execute.csproj", "{7BBD5BD2-E3FE-42C2-94F8-878F4156A03E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1048405F-2036-4A8B-BC8B-EE2315B9E9F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1048405F-2036-4A8B-BC8B-EE2315B9E9F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1048405F-2036-4A8B-BC8B-EE2315B9E9F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1048405F-2036-4A8B-BC8B-EE2315B9E9F1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{11376D5F-13BD-4529-BA92-DDE415B96220}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{11376D5F-13BD-4529-BA92-DDE415B96220}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{11376D5F-13BD-4529-BA92-DDE415B96220}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{11376D5F-13BD-4529-BA92-DDE415B96220}.Release|Any CPU.Build.0 = Release|Any CPU
+		{27F2733A-8DDC-49F6-BA47-F27A40043682}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{27F2733A-8DDC-49F6-BA47-F27A40043682}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{27F2733A-8DDC-49F6-BA47-F27A40043682}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{27F2733A-8DDC-49F6-BA47-F27A40043682}.Release|Any CPU.Build.0 = Release|Any CPU
+		{47AFBBBE-CDF6-4B3A-8BD8-478406735C99}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{47AFBBBE-CDF6-4B3A-8BD8-478406735C99}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{47AFBBBE-CDF6-4B3A-8BD8-478406735C99}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{47AFBBBE-CDF6-4B3A-8BD8-478406735C99}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7BBD5BD2-E3FE-42C2-94F8-878F4156A03E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7BBD5BD2-E3FE-42C2-94F8-878F4156A03E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7BBD5BD2-E3FE-42C2-94F8-878F4156A03E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7BBD5BD2-E3FE-42C2-94F8-878F4156A03E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B9D247FE-C4EA-49B2-83E9-0ED75D844B72}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B9D247FE-C4EA-49B2-83E9-0ED75D844B72}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B9D247FE-C4EA-49B2-83E9-0ED75D844B72}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B9D247FE-C4EA-49B2-83E9-0ED75D844B72}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FDD15C94-7DC2-4D19-9AF4-0E9FD8CCC443}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FDD15C94-7DC2-4D19-9AF4-0E9FD8CCC443}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FDD15C94-7DC2-4D19-9AF4-0E9FD8CCC443}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FDD15C94-7DC2-4D19-9AF4-0E9FD8CCC443}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = Magix.ApplicationPool\Magix.ApplicationPool.csproj
+	EndGlobalSection
+EndGlobal
