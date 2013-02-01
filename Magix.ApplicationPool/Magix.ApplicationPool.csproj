@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>10.0.0</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{1048405F-2036-4A8B-BC8B-EE2315B9E9F1}</ProjectGuid>
+    <ProjectTypeGuids>{349C5851-65DF-11DA-9384-00065B846F21};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Magix.ApplicationPool</RootNamespace>
+    <AssemblyName>Magix.ApplicationPool</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Configuration" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Global.asax" />
+    <Content Include="Default.aspx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
+  <ProjectExtensions>
+    <MonoDevelop>
+      <Properties VerifyCodeBehindFields="true" VerifyCodeBehindEvents="true">
+        <XspParameters Port="8080" Address="127.0.0.1" SslMode="None" SslProtocol="Default" KeyType="None" CertFile="" KeyFile="" PasswordOptions="None" Password="" Verbose="true" />
+      </Properties>
+    </MonoDevelop>
+  </ProjectExtensions>
+  <ItemGroup>
+    <ProjectReference Include="..\Magix.Core\Magix.Core.csproj">
+      <Project>{11376D5F-13BD-4529-BA92-DDE415B96220}</Project>
+      <Name>Magix.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Magix.UX\Magix.UX.csproj">
+      <Project>{FDD15C94-7DC2-4D19-9AF4-0E9FD8CCC443}</Project>
+      <Name>Magix.UX</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Magix.Core.Viewports\Magix.Core.Viewports.csproj">
+      <Project>{47AFBBBE-CDF6-4B3A-8BD8-478406735C99}</Project>
+      <Name>Magix.Core.Viewports</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Magix.SampleController\Magix.SampleController.csproj">
+      <Project>{B9D247FE-C4EA-49B2-83E9-0ED75D844B72}</Project>
+      <Name>Magix.SampleController</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Magix.SampleModules\Magix.SampleModules.csproj">
+      <Project>{27F2733A-8DDC-49F6-BA47-F27A40043682}</Project>
+      <Name>Magix.SampleModules</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Magix.execute\Magix.execute.csproj">
+      <Project>{7BBD5BD2-E3FE-42C2-94F8-878F4156A03E}</Project>
+      <Name>Magix.execute</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="media\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="media\main.css" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,51 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Magix.SampleModules/EventViewer.ascx.cs">
+    <Files>
+      <File FileName="Magix.SampleController/ControllerSample.cs" Line="40" Column="1" />
+      <File FileName="Magix.Core/Events/ActiveEvents.cs" Line="44" Column="42" />
+      <File FileName="Magix.SampleModules/EventViewer.ascx.cs" Line="36" Column="34" />
+      <File FileName="Magix.SampleModules/EventViewer.ascx" Line="18" Column="18" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State expanded="True">
+          <Node name="Magix.ApplicationPool" expanded="True">
+            <Node name="media" expanded="True" />
+          </Node>
+          <Node name="Magix.Core" expanded="True">
+            <Node name="Common" expanded="True" />
+            <Node name="Events" expanded="True" />
+            <Node name="Modules" expanded="True" />
+          </Node>
+          <Node name="Magix.Core.Viewports" expanded="True" />
+          <Node name="Magix.SampleController" expanded="True" />
+          <Node name="Magix.SampleModules" expanded="True">
+            <Node name="EventViewer.ascx.cs" selected="True" />
+          </Node>
+          <Node name="Magix.UX" expanded="True">
+            <Node name="Controls" expanded="True" />
+          </Node>
+        </State>
+      </Pad>
+      <Pad Id="ClassPad">
+        <State expanded="True" selected="True" />
+      </Pad>
+      <Pad Id="MonoDevelop.Debugger.WatchPad">
+        <State>
+          <Value>name</Value>
+          <Value>tmp</Value>
+          <Value>context</Value>
+          <Value>moduleName</Value>
+          <Value>dyn</Value>
+          <Value>dynamic</Value>
+          <Value>pluginType</Value>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>10.0.0</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{FDD15C94-7DC2-4D19-9AF4-0E9FD8CCC443}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Magix.UX</RootNamespace>
+    <AssemblyName>Magix.UX</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Drawing" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="Controls\Basic\Button.cs" />
+    <Compile Include="Controls\Basic\CheckBox.cs" />
+    <Compile Include="Controls\Basic\HiddenField.cs" />
+    <Compile Include="Controls\Basic\HyperLink.cs" />
+    <Compile Include="Controls\Basic\Image.cs" />
+    <Compile Include="Controls\Basic\Label.cs" />
+    <Compile Include="Controls\Basic\LinkButton.cs" />
+    <Compile Include="Controls\Basic\Panel.cs" />
+    <Compile Include="Controls\Basic\RadioButton.cs" />
+    <Compile Include="Controls\Basic\SelectList.cs" />
+    <Compile Include="Controls\Basic\TextArea.cs" />
+    <Compile Include="Controls\Basic\TextBox.cs" />
+    <Compile Include="Controls\Core\BaseControl.cs" />
+    <Compile Include="Controls\Core\BaseWebControl.cs" />
+    <Compile Include="Controls\Core\BaseWebControlFormElement.cs" />
+    <Compile Include="Controls\Core\BaseWebControlFormElementInputText.cs" />
+    <Compile Include="Controls\Core\BaseWebControlFormElementText.cs" />
+    <Compile Include="Controls\Core\BaseWebControlListFormElement.cs" />
+    <Compile Include="Core\Builder\DeterministicExecutor.cs" />
+    <Compile Include="Core\Builder\Element.cs" />
+    <Compile Include="Core\Builder\HtmlBuilder.cs" />
+    <Compile Include="Core\Selector\Selector.cs" />
+    <Compile Include="Core\CallbackFilter.cs" />
+    <Compile Include="Core\ListItem.cs" />
+    <Compile Include="Core\ListItemCollection.cs" />
+    <Compile Include="Core\PostbackFilter.cs" />
+    <Compile Include="Core\StyleCollection.cs" />
+    <Compile Include="Core\StyleCollectionStyles.cs" />
+    <Compile Include="Core\WebMethod.cs" />
+    <Compile Include="Effects\Effect.cs" />
+    <Compile Include="Effects\EffectFadeIn.cs" />
+    <Compile Include="Effects\EffectFadeOut.cs" />
+    <Compile Include="Effects\EffectFocusAndSelect.cs" />
+    <Compile Include="Effects\EffectHighlight.cs" />
+    <Compile Include="Effects\EffectMove.cs" />
+    <Compile Include="Effects\EffectRollDown.cs" />
+    <Compile Include="Effects\EffectRollUp.cs" />
+    <Compile Include="Effects\EffectSize.cs" />
+    <Compile Include="Effects\EffectSlide.cs" />
+    <Compile Include="Effects\EffectTimeout.cs" />
+    <Compile Include="Helpers\StringHelper.cs" />
+    <Compile Include="Core\AjaxManager.cs" />
+    <Compile Include="Controls\Timer.cs" />
+    <Compile Include="Controls\DynamicPanel.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <EmbeddedResource Include="Js\Control.js" />
+    <EmbeddedResource Include="Js\Effects.js" />
+    <EmbeddedResource Include="Js\Magix.js" />
+    <EmbeddedResource Include="Js\Timer.js" />
+  </ItemGroup>
+</Project>
