@@ -53,6 +53,19 @@ namespace Magix.SampleModules
 			}
 		}
 
+		[ActiveEvent(Name = "Magix.Samples.UpdateJSONEditor")]
+		public void Magix_Samples_UpdateJSONEditor (object sender, ActiveEventArgs e)
+		{
+			if (e.Params.Count == 0)
+			{
+				e.Params["JSON"].Value = "JSON to stuff into TextArea ...";
+			}
+			else
+			{
+				txtIn.Text = e.Params["JSON"].Get<Node>().ToJSONString ();
+			}
+		}
+
 		protected void run_Click (object sender, EventArgs e)
 		{
 			if (txtIn.Text != "")
@@ -84,6 +97,14 @@ namespace Magix.SampleModules
 			activeEvent.Select ();
 			activeEvent.Focus ();
 			txtIn.Text = "";
+		}
+
+		protected void design_Click(object sender, EventArgs e)
+		{
+			Node tmp = new Node();
+			if(!string.IsNullOrEmpty (txtIn.Text))
+				tmp["JSON"].Value = Node.FromJSONString (txtIn.Text);
+			RaiseEvent ("Magix.Samples.LaunchJSONEditor", ref tmp);
 		}
 	}
 }

@@ -142,7 +142,7 @@ namespace Magix.Core
 				if (parameters.Length != 0)
 				{
 					// Traversing tree according to Expression
-					object expressionValue = Expressions.GetExpressionValue(parameters, pars);
+					object expressionValue = Expressions.GetExpressionValue(parameters, pars, pars);
 					if (name == null)
 						return expressionValue as Node;
 					pars = RaiseEventImplementation(sender, name, (Node)expressionValue);
@@ -321,7 +321,7 @@ namespace Magix.Core
 					index += 1;
 				}
 
-				object exprValue = Expressions.GetExpressionValue(tokens[0], pars);
+				object exprValue = Expressions.GetExpressionValue(tokens[0], pars, pars);
 
 				tokens.RemoveAt (0);
 

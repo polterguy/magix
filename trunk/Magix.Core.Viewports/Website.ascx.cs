@@ -24,6 +24,7 @@ namespace Magix.Core.Viewports
     {
         protected DynamicPanel content1;
         protected DynamicPanel content2;
+        protected DynamicPanel content3;
 		protected Panel messageWrapper;
 		protected Label messageLabel;
 
@@ -66,18 +67,13 @@ namespace Magix.Core.Viewports
         [ActiveEvent(Name = "Magix.Core.ClearControls")]
 		protected void Magix_Core_ClearControls (object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Count == 0)
+			if (!e.Params.Contains ("Container") || 
+			    string.IsNullOrEmpty (e.Params ["Container"].Get<string> ()))
 			{
 				e.Params["Container"].Value = "content1|content2";
 			}
 			else
 			{
-				// Since this is our default container, 
-				// we accept "null" and string.Empty values here ...!
-				if (string.IsNullOrEmpty (e.Params ["Container"].Get<string> ())) {
-					e.Params ["Container"].Value = "content1";
-				}
-
 				DynamicPanel dyn = Selector.FindControl<DynamicPanel> (
 	                this, 
 	                e.Params ["Container"].Get<string> ());
@@ -91,20 +87,15 @@ namespace Magix.Core.Viewports
         [ActiveEvent(Name = "Magix.Core.LoadModule")]
 		protected void Magix_Core_LoadModule (object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Count == 0)
+			if (!e.Params.Contains ("Container") || 
+			    string.IsNullOrEmpty (e.Params ["Container"].Get<string> ()))
 			{
 				e.Params["Name"].Value = "Name of Class that Implements Module";
-				e.Params["Container"].Value = "content1|content2";
+				e.Params["Container"].Value = "content1|content2|content3";
 			}
 			else
 			{
 				string moduleName = e.Params ["Name"].Get<string> ();
-
-				// Since this is our default container, 
-				// we accept "null" and string.Empty values here ...!
-				if (string.IsNullOrEmpty (e.Params ["Container"].Get<string> ())) {
-					e.Params ["Container"].Value = "content1";
-				}
 
 				DynamicPanel dyn = Selector.FindControl<DynamicPanel> (
                 this, 
