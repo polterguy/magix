@@ -29,4 +29,8 @@
         runat="server" 
         OnReload="dynamic_LoadControls"
         id="content2" />
+    <mux:DynamicPanel 
+        runat="server" 
+        OnReload="dynamic_LoadControls"
+        id="content3" />
 </mux:Panel>

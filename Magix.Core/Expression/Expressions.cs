@@ -12,18 +12,13 @@ namespace Magix.Core
      */
 	public class Expressions
 	{
-        public static object GetExpressionValue(string expression, Node source)
-        {
-            if (expression == null)
-                return source;
-
-			string expr = expression;
-
-            Node x = source;
+		private static Node GetNode (string expr, Node source, Node ip, ref string lastEntity)
+		{
+			Node x = source;
 
             bool isInside = false;
             string bufferNodeName = null;
-            string lastEntity = null;
+            lastEntity = null;
 
             for (int idx = 0; idx < expr.Length; idx++)
             {
@@ -33,7 +28,7 @@ namespace Magix.Core
                     if (tmp == ']')
                     {
                         if (string.IsNullOrEmpty(bufferNodeName))
-                            throw new ArgumentException("Opps, empty node name/index ...");
+							throw new ArgumentException("Opps, empty node name/index ...");
 
                         lastEntity = "";
 
@@ -55,6 +50,19 @@ namespace Magix.Core
                             isInside = false;
                             continue;
                         }
+                        else if (bufferNodeName == ".ip")
+                        {
+                            x = ip;
+                            bufferNodeName = "";
+                            isInside = false;
+                            continue;
+                        }
+                        else if (bufferNodeName == ".")
+                        {
+                            bufferNodeName = "";
+                            isInside = false;
+                            continue;
+                        }
                         else
                         {
                             foreach (char idxC in bufferNodeName)
@@ -70,12 +78,11 @@ namespace Magix.Core
                                 int intIdx = int.Parse(bufferNodeName);
                                 if (x.Count >= intIdx)
                                     x = x[intIdx];
-                                return null;
+								else
+									throw new ArgumentException("Out of range in accessing node");
                             }
                             else
                             {
-                                if (!x.Contains(bufferNodeName))
-                                    return null;
                                 x = x[bufferNodeName];
                             }
                             bufferNodeName = "";
@@ -96,6 +103,94 @@ namespace Magix.Core
                     lastEntity += tmp;
                 }
             }
+			return x;
+		}
+
+		public static void Empty (string expression, Node source, Node ip)
+		{
+			string lastEntity = "";
+			Node x = GetNode (expression, source, ip, ref lastEntity);
+
+            if (lastEntity == ".Value")
+				x.Value = null;
+            else if (lastEntity == ".Name")
+				x.Name = "";
+            else if (lastEntity == "")
+				x.Clear ();
+            else
+                throw new ArgumentException("Couldn't understand the last parts of your expression '" + lastEntity + "'");
+		}
+
+		public static void AddInteger (string expression, Node source, Node ip, int addition)
+		{
+			string lastEntity = "";
+			Node x = GetNode (expression, source, ip, ref lastEntity);
+
+            if (lastEntity == ".Value")
+                x.Value = Convert.ToInt32 (x.Value.ToString ()) + addition;
+            else if (lastEntity == ".Name")
+				throw new ArgumentException("Cannot increment Name");
+            else if (lastEntity == "")
+                throw new ArgumentException("Cannot increment Node Set");
+            else
+                throw new ArgumentException("Couldn't understand the last parts of your expression '" + lastEntity + "'");
+		}
+
+		public static void Remove (string expression, Node source, Node ip)
+		{
+			string lastEntity = "";
+			Node x = GetNode (expression, source, ip, ref lastEntity);
+
+            if (lastEntity == ".Value")
+                x.Value = null;
+            else if (lastEntity == ".Name")
+                x.Name = "";
+            else if (lastEntity == "")
+                x.Parent.Remove (x);
+            else
+                throw new ArgumentException("Couldn't understand the last parts of your expression '" + lastEntity + "'");
+		}
+
+		public static bool ExpressionExist (string expression, Node source, Node ip)
+		{
+			string lastEntity = "";
+			Node x = GetNode (expression, source, ip, ref lastEntity);
+
+            if (lastEntity == ".Value")
+                return x.Value != null;
+            else if (lastEntity == ".Name")
+                return x.Name != null;
+            else if (lastEntity == "")
+                return x != null;
+            else
+                throw new ArgumentException("Couldn't understand the last parts of your expression '" + lastEntity + "'");
+		}
+
+		public static void SetNodeValue (string exprDestination, string exprSource, Node source, Node ip)
+		{
+			object valueToSet = exprSource;
+
+			if (exprSource.IndexOf ("[") == 0)
+				valueToSet = Expressions.GetExpressionValue (exprSource, source, ip);
+
+			string lastEntity = "";
+			Node x = GetNode (exprDestination, source, ip, ref lastEntity);
+
+            if (lastEntity == ".Value")
+               x.Value = valueToSet;
+            else if (lastEntity == ".Name")
+                x.Name = valueToSet.ToString ();
+            else if (lastEntity == "")
+				x.ReplaceChildren(valueToSet as Node);
+            else
+                throw new ArgumentException("Couldn't understand the last parts of your expression '" + lastEntity + "'");
+		}
+
+        public static object GetExpressionValue(string expression, Node source, Node ip)
+        {
+			string lastEntity = "";
+			Node x = GetNode (expression, source, ip, ref lastEntity);
+
             if (lastEntity == ".Value")
                 return x.Value;
             else if (lastEntity == ".Name")

@@ -170,4 +170,69 @@ html, body
 	text-decoration:none;
 }
 
+.obscurer
+{
+	position:fixed;
+	top:0;
+	left:0;
+	width:100%;
+	height:100%;
+	opacity:0.3;
+	background-color:Black;
+	z-index:1000;
+}
+
+.node-wrapper
+{
+	border:solid 1px Black;
+	background-color:White;
+	width:1024px;
+	height:500px;
+	overflow:auto;
+	margin-left:auto;
+	margin-right:auto;
+	position:fixed;
+	top:50px;
+	z-index:1001;
+	padding:50px;
+
+	-moz-border-radius:25px 25px 25px 25px;
+	-webkit-border-radius:25px 25px 25px 25px;
+	-o-border-radius:25px 25px 25px 25px;
+	-ms-border-radius:25px 25px 25px 25px;
+	border-radius:25px 25px 25px 25px;
+}
+
+.node-wrapper textarea
+{
+	width:800px;
+	height:450px;
+	margin-left:auto;
+	margin-right:auto;
+	display:block;
+}
+
+.button-close
+{
+	position:fixed;
+	z-index:1002;
+	top:25px;
+	right:25px;
+	font-size:18px;
+	width:100px;
+	height:100px;
+}
+
+.button-close-save
+{
+	position:fixed;
+	z-index:1002;
+	top:145px;
+	right:25px;
+	font-size:18px;
+	width:100px;
+	height:100px;
+}
+
+
 

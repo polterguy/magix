@@ -41,6 +41,11 @@
 		id="txtOut"
 		PlaceHolder="Output Nodes ..."
 		CssClass="nodes" />
+	<mux:Button
+		runat="server"
+		id="design"
+		Text="Designer"
+		OnClick="design_Click" />
 </div>
 
 <mux:Panel

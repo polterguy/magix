@@ -30,6 +30,17 @@ namespace Magix.Core
     [Serializable]
     public class Node : IList<Node>
     {
+		public void ReplaceChildren (Node node)
+		{
+			Clear ();
+			foreach (Node idx in node._children)
+			{
+				idx._parent = this;
+				this._children.Add (idx);
+			}
+			node._children.Clear ();
+		}
+
         // Implementation of list
         private readonly List<Node> _children = new List<Node>();
 

@@ -66,6 +66,46 @@ namespace Magix.SampleController
 				}
 			}
 		}
+
+		[ActiveEvent(Name = "Magix.Samples.LaunchJSONEditor")]
+		public void Magix_Samples_LaunchJSONEditor (object sender, ActiveEventArgs e)
+		{
+			LoadModule ("Magix.SampleModules.NodeEditor", "content3");
+
+			Node tmp = new Node ();
+			if (e.Params.Contains ("JSON"))
+			{
+				tmp ["JSON"].Value = e.Params ["JSON"].Value;
+
+				RaiseEvent (
+				"Magix.Samples.PopulateNodeEditor",
+				tmp);
+			}
+		}
+
+		[ActiveEvent(Name = "Magix.Samples.CloseNodeEditor")]
+		public void Magix_Samples_CloseNodeEditor (object sender, ActiveEventArgs e)
+		{
+			Node node = new Node();
+			node["Container"].Value = "content3";
+			RaiseEvent (
+				"Magix.Core.ClearControls",
+				node);
+		}
+
+		[ActiveEvent(Name = "Magix.Samples.CloseNodeEditorAndSave")]
+		public void Magix_Samples_CloseNodeEditorAndSave (object sender, ActiveEventArgs e)
+		{
+			Node node = new Node();
+			node["Container"].Value = "content3";
+			RaiseEvent (
+				"Magix.Core.ClearControls",
+				node);
+
+			Node node2 = new Node();
+			node2["JSON"].Value = e.Params["JSON"].Value;
+			RaiseEvent ("Magix.Samples.UpdateJSONEditor", node2);
+		}
 	}
 }
 
