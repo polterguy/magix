@@ -4,14 +4,10 @@
 <%@ Control 
     Language="C#" 
     AutoEventWireup="true" 
-    Inherits="Magix.SampleModules.ButtonSample" %>
+    Inherits="Magix.SampleModules.DynamicForm" %>
 
 <link href="media/main.css" rel="stylesheet" type="text/css" />
 
-<mux:Button 
+<mux:Panel
 	runat="server"
-	Text="Click me ..."
-	OnClick="but_Click"
-    style="width:500px;height:500px;"
-    CssClass="green-button"
-    id="but" />
+	id="pnl" />
