@@ -39,6 +39,46 @@
   <ItemGroup>
     <Content Include="Global.asax" />
     <Content Include="Default.aspx" />
+    <Content Include="media\blueprint-css-master\blueprint\ie.css" />
+    <Content Include="media\blueprint-css-master\blueprint\print.css" />
+    <Content Include="media\blueprint-css-master\blueprint\screen.css" />
+    <Content Include="media\blueprint-css-master\blueprint\plugins\buttons\screen.css" />
+    <Content Include="media\blueprint-css-master\blueprint\plugins\fancy-type\screen.css" />
+    <Content Include="media\blueprint-css-master\blueprint\plugins\link-icons\screen.css" />
+    <Content Include="media\blueprint-css-master\blueprint\plugins\buttons\icons\cross.png" />
+    <Content Include="media\blueprint-css-master\blueprint\plugins\buttons\icons\key.png" />
+    <Content Include="media\blueprint-css-master\blueprint\plugins\buttons\icons\tick.png" />
+    <Content Include="media\blueprint-css-master\blueprint\plugins\link-icons\icons\doc.png" />
+    <Content Include="media\blueprint-css-master\blueprint\plugins\link-icons\icons\email.png" />
+    <Content Include="media\blueprint-css-master\blueprint\plugins\link-icons\icons\external.png" />
+    <Content Include="media\blueprint-css-master\blueprint\plugins\link-icons\icons\feed.png" />
+    <Content Include="media\blueprint-css-master\blueprint\plugins\link-icons\icons\im.png" />
+    <Content Include="media\blueprint-css-master\blueprint\plugins\link-icons\icons\lock.png" />
+    <Content Include="media\blueprint-css-master\blueprint\plugins\link-icons\icons\pdf.png" />
+    <Content Include="media\blueprint-css-master\blueprint\plugins\link-icons\icons\visited.png" />
+    <Content Include="media\blueprint-css-master\blueprint\plugins\link-icons\icons\xls.png" />
+    <Content Include="media\blueprint-css-master\blueprint\plugins\rtl\screen.css" />
+    <Content Include="media\blueprint-css-master\blueprint\src\forms.css" />
+    <Content Include="media\blueprint-css-master\blueprint\src\grid.css" />
+    <Content Include="media\blueprint-css-master\blueprint\src\grid.png" />
+    <Content Include="media\blueprint-css-master\blueprint\src\ie.css" />
+    <Content Include="media\blueprint-css-master\blueprint\src\print.css" />
+    <Content Include="media\blueprint-css-master\blueprint\src\reset.css" />
+    <Content Include="media\blueprint-css-master\blueprint\src\typography.css" />
+    <Content Include="media\blueprint-css-master\debug\debug.css" />
+    <Content Include="media\blueprint-css-master\debug\debug.html" />
+    <Content Include="media\blueprint-css-master\features\support\jquery.js" />
+    <Content Include="media\blueprint-css-master\lib\blueprint\validate\COPYRIGHT.html" />
+    <Content Include="media\blueprint-css-master\lib\blueprint\validate\README.html" />
+    <Content Include="media\blueprint-css-master\tests\index.html" />
+    <Content Include="media\blueprint-css-master\tests\parts\elements.html" />
+    <Content Include="media\blueprint-css-master\tests\parts\forms.html" />
+    <Content Include="media\blueprint-css-master\tests\parts\grid.html" />
+    <Content Include="media\blueprint-css-master\tests\parts\sample.html" />
+    <Content Include="media\blueprint-css-master\tests\parts\test.jpg" />
+    <Content Include="media\blueprint-css-master\tests\parts\test-small.jpg" />
+    <Content Include="media\blueprint-css-master\tests\parts\valid.png" />
+    <Content Include="media\blueprint-css-master\tests\parts\plugins\link-icons.html" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Global.asax.cs">
@@ -94,5 +134,44 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="media\main.css" />
+    <None Include="media\blueprint-css-master\AUTHORS.textile" />
+    <None Include="media\blueprint-css-master\CHANGELOG" />
+    <None Include="media\blueprint-css-master\Gemfile" />
+    <None Include="media\blueprint-css-master\Gemfile.lock" />
+    <None Include="media\blueprint-css-master\LICENSE" />
+    <None Include="media\blueprint-css-master\Rakefile" />
+    <None Include="media\blueprint-css-master\README.textile" />
+    <None Include="media\blueprint-css-master\TUTORIAL.textile" />
+    <None Include="media\blueprint-css-master\blueprint\plugins\buttons\readme.txt" />
+    <None Include="media\blueprint-css-master\blueprint\plugins\fancy-type\readme.txt" />
+    <None Include="media\blueprint-css-master\blueprint\plugins\link-icons\readme.txt" />
+    <None Include="media\blueprint-css-master\blueprint\plugins\rtl\readme.txt" />
+    <None Include="media\blueprint-css-master\features\generate_stylesheets.feature" />
+    <None Include="media\blueprint-css-master\features\step_definitions\blueprint_steps.rb" />
+    <None Include="media\blueprint-css-master\features\support\blueprint_app.rb" />
+    <None Include="media\blueprint-css-master\features\support\blueprint_helpers.rb" />
+    <None Include="media\blueprint-css-master\features\support\document_element.rb" />
+    <None Include="media\blueprint-css-master\features\support\element_helpers.rb" />
+    <None Include="media\blueprint-css-master\features\support\env.rb" />
+    <None Include="media\blueprint-css-master\lib\compress.rb" />
+    <None Include="media\blueprint-css-master\lib\settings.example.yml" />
+    <None Include="media\blueprint-css-master\lib\validate.rb" />
+    <None Include="media\blueprint-css-master\lib\blueprint\blueprint.rb" />
+    <None Include="media\blueprint-css-master\lib\blueprint\compressor.rb" />
+    <None Include="media\blueprint-css-master\lib\blueprint\core_ext.rb" />
+    <None Include="media\blueprint-css-master\lib\blueprint\css_parser.rb" />
+    <None Include="media\blueprint-css-master\lib\blueprint\custom_layout.rb" />
+    <None Include="media\blueprint-css-master\lib\blueprint\grid.css.erb" />
+    <None Include="media\blueprint-css-master\lib\blueprint\grid_builder.rb" />
+    <None Include="media\blueprint-css-master\lib\blueprint\namespace.rb" />
+    <None Include="media\blueprint-css-master\lib\blueprint\semantic_class_names.rb" />
+    <None Include="media\blueprint-css-master\lib\blueprint\validator.rb" />
+    <None Include="media\blueprint-css-master\lib\blueprint\validate\css-validator.jar" />
+    <None Include="media\blueprint-css-master\lib\blueprint\validate\css-validator-javadoc.jar" />
+    <None Include="media\blueprint-css-master\lib\blueprint\validate\jigsaw.jar" />
+    <None Include="media\blueprint-css-master\lib\blueprint\validate\JIGSAW_COPYRIGHT" />
+    <None Include="media\blueprint-css-master\lib\blueprint\validate\xerces.jar" />
+    <None Include="media\blueprint-css-master\lib\blueprint\validate\XERCES_COPYING.txt" />
+    <None Include="media\blueprint-css-master\templates\psd\fixed-width.psd" />
   </ItemGroup>
 </Project>

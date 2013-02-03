@@ -34,8 +34,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />
-    <Compile Include="ButtonSample.ascx.cs" />
-    <Compile Include="ComplexSample.ascx.cs" />
     <Compile Include="EventViewer.ascx.cs" />
     <Compile Include="NodeEditor.ascx.cs" />
     <Compile Include="DynamicForm.ascx.cs" />
@@ -52,8 +50,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="ButtonSample.ascx" />
-    <EmbeddedResource Include="ComplexSample.ascx" />
     <EmbeddedResource Include="EventViewer.ascx" />
     <EmbeddedResource Include="NodeEditor.ascx" />
     <EmbeddedResource Include="DynamicForm.ascx" />

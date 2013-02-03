@@ -43,7 +43,7 @@ namespace Magix.ApplicationPool
                 ActiveEvents.Instance.RaiseActiveEvent(
                     this,
                     "Magix.Core.PageLoad",
-					ref node);
+					node);
 			}
 		}
     }

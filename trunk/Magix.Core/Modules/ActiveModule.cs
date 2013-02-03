@@ -46,19 +46,19 @@ namespace Magix.Core
             ActiveEvents.Instance.RaiseActiveEvent(
                 this,
                 eventName,
-                ref node);
+                node);
             return node;
         }
 
         /**
          * Level3: Shorthand for raising events
          */
-        protected void RaiseEvent(string eventName, ref Node node)
+        protected void RaiseEvent(string eventName, Node node)
         {
             ActiveEvents.Instance.RaiseActiveEvent(
                 this,
                 eventName,
-                ref node);
+                node);
         }
 
         /**

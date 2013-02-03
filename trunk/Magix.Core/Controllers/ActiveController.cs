@@ -67,7 +67,7 @@ namespace Magix.Core
             ActiveEvents.Instance.RaiseActiveEvent(
                 this,
                 eventName,
-                ref node);
+                node);
             return node;
         }
 
@@ -80,7 +80,7 @@ namespace Magix.Core
             ActiveEvents.Instance.RaiseActiveEvent(
                 this,
                 eventName,
-                ref node);
+                node);
         }
 
         /**

@@ -15,29 +15,19 @@ namespace Magix.SampleController
 		[ActiveEvent(Name = "Magix.Core.PageLoad")]
 		public void Magix_Core_PageLoad (object sender, ActiveEventArgs e)
 		{
+			// This is just a dummy PageLoad Event Handler. 
+			// Replace with your OWN logic and Controller
 			if (e.Params.Count == 0)
 			{
 				e.Params["IsPostBack"].Value = false;
 			}
 			else if(!e.Params["IsPostBack"].Get<bool>())
 			{
-				LoadModule ("Magix.SampleModules.ButtonSample", "content1");
-			}
-		}
-
-		[ActiveEvent(Name = "Magix.Samples.FirstEvent")]
-		public void Magix_Samples_FirstEvent (object sender, ActiveEventArgs e)
-		{
-			if (e.Params.Count == 0)
-			{
-				e.Params["Message"].Value = "Message from caller...";
-			}
-			else
-			{
-				Node node = new Node();
-				node["Message"].Value = e.Params["Message"].Get<string>("No Message ... :(");
-				node["MessageFromController"].Value = "Controller says 'Hi' Too :)";
-				LoadModule ("Magix.SampleModules.ComplexSample", "content2", node);
+				Node tmp = new Node();
+				tmp["Container"].Value = "content1";
+				RaiseEvent(
+					"Magix.Samples.OpenEventViewer", 
+					tmp);
 			}
 		}
 
