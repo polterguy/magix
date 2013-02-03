@@ -78,7 +78,7 @@ namespace Magix.Core
         public void RaiseActiveEvent(object sender, string name)
         {
 			Node node = new Node();
-            RaiseActiveEvent(sender, name, ref node);
+            RaiseActiveEvent(sender, name, node);
         }
 
         private List<Tuple<MethodInfo, object>> SlurpAllEventHandlers(string eventName)
@@ -121,7 +121,7 @@ namespace Magix.Core
         public void RaiseActiveEvent(
             object sender, 
             string name, 
-            ref Node pars)
+            Node pars)
         {
             pars = RaiseEventImplementation(sender, name, pars);
         }

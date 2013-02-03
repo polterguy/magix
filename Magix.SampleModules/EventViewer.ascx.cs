@@ -71,7 +71,7 @@ namespace Magix.SampleModules
 			if (txtIn.Text != "")
 			{
 				Node node = Node.FromJSONString (txtIn.Text);
-				RaiseEvent (activeEvent.Text, ref node);
+				RaiseEvent (activeEvent.Text, node);
 				txtOut.Text = node.ToJSONString ();
 			}
 			else
@@ -104,7 +104,7 @@ namespace Magix.SampleModules
 			Node tmp = new Node();
 			if(!string.IsNullOrEmpty (txtIn.Text))
 				tmp["JSON"].Value = Node.FromJSONString (txtIn.Text);
-			RaiseEvent ("Magix.Samples.LaunchJSONEditor", ref tmp);
+			RaiseEvent ("Magix.Samples.LaunchJSONEditor", tmp);
 		}
 	}
 }

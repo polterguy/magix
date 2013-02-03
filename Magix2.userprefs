@@ -1,58 +1,12 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Magix.SampleModules/DynamicForm.ascx.cs">
-    <Files>
-      <File FileName="Magix.execute/ExecuteCore.cs" Line="73" Column="1" />
-      <File FileName="Magix.Core/Expression/Expressions.cs" Line="196" Column="44" />
-      <File FileName="Magix.Core/Events/ActiveEvents.cs" Line="324" Column="76" />
-      <File FileName="Magix.Core.Viewports/Website.ascx.cs" Line="67" Column="54" />
-      <File FileName="Magix.Core.Viewports/Website.ascx" Line="35" Column="21" />
-      <File FileName="Magix.SampleModules/NodeEditor.ascx" Line="21" Column="15" />
-      <File FileName="Magix.SampleModules/NodeEditor.ascx.cs" Line="67" Column="35" />
-      <File FileName="Magix.ApplicationPool/media/main.css" Line="230" Column="8" />
-      <File FileName="Magix.SampleModules/EventViewer.ascx" Line="48" Column="12" />
-      <File FileName="Magix.SampleModules/EventViewer.ascx.cs" Line="107" Column="47" />
-      <File FileName="Magix.SampleController/ControllerSample.cs" Line="112" Column="1" />
-      <File FileName="../Magix/Magix-Brix/Magix.Brix.ApplicationPool/media/modules/Calendar.css" Line="350" Column="6" />
-      <File FileName="Magix.Core/Common/Node.cs" Line="41" Column="28" />
-      <File FileName="Magix.execute/FormsCore.cs" Line="29" Column="5" />
-      <File FileName="Magix.SampleModules/DynamicForm.ascx" Line="13" Column="13" />
-      <File FileName="Magix.SampleModules/DynamicForm.ascx.cs" Line="126" Column="34" />
-      <File FileName="Magix.Core/Modules/ActiveModule.cs" Line="26" Column="9" />
-      <File FileName="Magix.UX/Controls/Basic/Button.cs" Line="26" Column="43" />
-      <File FileName="Magix.UX/Controls/Basic/Label.cs" Line="46" Column="10" />
-      <File FileName="Magix.UX/Controls/Core/BaseWebControlFormElementText.cs" Line="19" Column="64" />
-      <File FileName="Magix.UX/Controls/Core/BaseWebControlFormElement.cs" Line="81" Column="9" />
-      <File FileName="Magix.UX/Controls/Basic/CheckBox.cs" Line="105" Column="1" />
-      <File FileName="Magix.UX/Controls/Basic/TextArea.cs" Line="1" Column="1" />
-      <File FileName="Magix.UX/Controls/Basic/TextBox.cs" Line="29" Column="62" />
-      <File FileName="Magix.UX/Controls/Core/BaseWebControlFormElementInputText.cs" Line="20" Column="5" />
-      <File FileName="Magix.UX/Controls/Basic/HyperLink.cs" Line="96" Column="1" />
-      <File FileName="Magix.UX/Controls/Basic/Image.cs" Line="89" Column="1" />
-      <File FileName="Magix.UX/Controls/Core/BaseWebControl.cs" Line="96" Column="1" />
-    </Files>
+  <MonoDevelop.Ide.Workbench>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
           <Node name="Magix.ApplicationPool" expanded="True">
-            <Node name="media" expanded="True" />
-          </Node>
-          <Node name="Magix.Core" expanded="True">
-            <Node name="Common" expanded="True" />
-            <Node name="Events" expanded="True" />
-            <Node name="Expression" expanded="True" />
-            <Node name="Modules" expanded="True" />
-          </Node>
-          <Node name="Magix.Core.Viewports" expanded="True" />
-          <Node name="Magix.execute" expanded="True" />
-          <Node name="Magix.SampleController" expanded="True" />
-          <Node name="Magix.SampleModules" expanded="True">
-            <Node name="DynamicForm.ascx.cs" selected="True" />
-          </Node>
-          <Node name="Magix.UX" expanded="True">
-            <Node name="Controls" expanded="True">
-              <Node name="Basic" expanded="True" />
-              <Node name="Core" expanded="True" />
+            <Node name="media" expanded="True">
+              <Node name="blueprint-css-master" selected="True" />
             </Node>
           </Node>
         </State>
@@ -62,7 +16,8 @@
       </Pad>
       <Pad Id="MonoDevelop.Debugger.WatchPad">
         <State>
-          <Value>tmpClick</Value>
+          <Value>ip["context"].Value</Value>
+          <Value>dp</Value>
         </State>
       </Pad>
     </Pads>
