@@ -60,18 +60,15 @@ namespace Magix.UX.Widgets
             set
             {
                 string toSetValue = value;
-                if (!toSetValue.Contains("_"))
-                {
-                    // Assuming 'ID' and not 'ClientID' ...
-                    PreRender +=
-                        delegate
-                        {
-                            // Cheating a little bit ... ;)
-                            Control ctrl = Selector.FindControl<Control>(Page, toSetValue);
-                            if (ctrl != null)
-                                For = ctrl.ClientID;
-                        };
-                }
+                // Assuming 'ID' and not 'ClientID' ...
+                PreRender +=
+                    delegate
+                    {
+                        // Cheating a little bit ... ;)
+                        Control ctrl = Selector.FindControl<Control>(Page, toSetValue);
+                        if (ctrl != null)
+                            For = ctrl.ClientID;
+                    };
                 if (value != toSetValue)
                     SetJsonGeneric("for", toSetValue.ToString());
                 ViewState["For"] = toSetValue;
