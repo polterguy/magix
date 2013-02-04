@@ -35,7 +35,6 @@
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="EventViewer.ascx.cs" />
-    <Compile Include="NodeEditor.ascx.cs" />
     <Compile Include="DynamicForm.ascx.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
@@ -51,7 +50,6 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="EventViewer.ascx" />
-    <EmbeddedResource Include="NodeEditor.ascx" />
     <EmbeddedResource Include="DynamicForm.ascx" />
   </ItemGroup>
 </Project>

@@ -31,6 +31,15 @@ namespace Magix.Core.Viewports
 		public void Page_Load (object sender, EventArgs e)
 		{
 			messageLabel.Text = "";
+			if (!IsPostBack)
+			{
+				Node node = new Node();
+				node["IsPostBack"].Value = false;
+                ActiveEvents.Instance.RaiseActiveEvent(
+                    this,
+                    "Magix.Core.PageLoad",
+					node);
+			}
 		}
 
         /**

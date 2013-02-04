@@ -5,6 +5,7 @@
  */
 
 using System;
+using System.IO;
 using Magix.Core;
 
 namespace Magix.execute
@@ -371,6 +372,140 @@ namespace Magix.execute
 			string path = ip.Get<string>();
 
 			Expressions.AddInteger (path, dp, ip, -1);
+		}
+
+		[ActiveEvent(Name = "Magix.Core.TransformNodeToCode")]
+		public void Magix_Samples_TransformNodeToCode (object sender, ActiveEventArgs e)
+		{
+			if (!e.Params.Contains ("JSON"))
+			{
+				e.Params["JSON"].Value = "JSON Node passes by reference of value here ...";
+				return;
+			}
+			string txt = "";
+			Node node = e.Params["JSON"].Value as Node;
+			int startIdx = 0;
+			if (!string.IsNullOrEmpty (node.Name))
+			{
+				txt += node.Name;
+				if (node.Value != null)
+					txt += "=>" + node.Value.ToString ();
+				startIdx += 1;
+				txt += "\r\n";
+			}
+			txt += ParseNodes(startIdx, node).TrimEnd ();
+			e.Params["Code"].Value = txt;
+		}
+
+		private string ParseNodes (int indent, Node node)
+		{
+			string retVal = "";
+			foreach (Node idx in node)
+			{
+				for (int idxNo = 0; idxNo < indent * 2; idxNo ++)
+				{
+					retVal += " ";
+				}
+				string value = "";
+				if (idx.Get<string>("") != "")
+					value += "=>" + idx.Get<string>("").Replace ("\r\n", "\\r\\n").Replace ("\n", "\\n");
+				retVal += idx.Name + value;
+				retVal += "\r\n";
+				if (idx.Count > 0)
+				{
+					retVal += ParseNodes (indent + 1, idx);
+				}
+			}
+			return retVal;
+		}
+
+		[ActiveEvent(Name = "Magix.Core.TransformCodeToNode")]
+		public void Magix_Samples_TransformCodeToNode (object sender, ActiveEventArgs e)
+		{
+			if (!e.Params.Contains ("Code"))
+			{
+				e.Params["Code"].Value = @"if=>[Data].Value = ""thomas""
+  call=>Magix.Core.ShowMessage
+    params
+      Message=>Howdy dudes!!";
+				return;
+			}
+			string txt = e.Params["Code"].Get<string>();
+			Node ret = new Node();
+			using (TextReader reader = new StringReader(txt))
+			{
+				int indents = 0;
+				Node idxNode = ret;
+				while (true)
+				{
+					string line = reader.ReadLine ();
+					if (line == null)
+						break;
+
+					// Skipping "white lines"
+					if (line.Trim ().Length == 0)
+						continue;
+
+					// Skipping "commenting lines"
+					if (line.Trim ().IndexOf ("//") == 0)
+						continue;
+
+					// Counting indents
+					int currentIndents = 0;
+					foreach (char idx in line)
+					{
+						if (idx != ' ')
+							break;
+						currentIndents += 1;
+					}
+					if (currentIndents % 2 != 0)
+						throw new ArgumentException("Only even number of indents allowed in JSON code syntax");
+					currentIndents = currentIndents / 2; // Number of nodes inwards/outwards
+
+					string name = "";
+					string value = null;
+
+					string tmp = line.TrimStart ();
+					if (!tmp.Contains ("=>"))
+					{
+						name = tmp;
+					}
+					else
+					{
+						name = tmp.Split (new string[]{"=>"}, StringSplitOptions.RemoveEmptyEntries)[0];
+						value = tmp.Substring (name.Length + 2);
+					}
+
+					if (currentIndents == indents)
+					{
+						Node xNode = new Node(name, value);
+						idxNode.Add (xNode);
+					}
+
+					// Decreasing, upwards in hierarchy...
+					if (currentIndents < indents)
+					{
+						while (currentIndents < indents)
+						{
+							idxNode = idxNode.Parent;
+							indents -= 1;
+						}
+						idxNode.Add (new Node(name, value));
+					}
+
+					if (currentIndents != indents && currentIndents > indents && currentIndents - indents > 1)
+						throw new ArgumentException("Multiple indentations, without specifying child node name");
+
+					// Increasing, downwards in hierarchy...
+					if (currentIndents > indents)
+					{
+						idxNode = idxNode[idxNode.Count - 1];
+						idxNode.Add (new Node(name, value));
+						indents += 1;
+					}
+				}
+			}
+			e.Params["JSON"].Value = ret;
 		}
 	}
 }

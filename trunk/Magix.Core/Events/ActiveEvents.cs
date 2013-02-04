@@ -190,11 +190,16 @@ namespace Magix.Core
             return tokens;
         }
 
-		private void RaiseEventDoneParsing (object sender, string name, List<string> tokens, Node pars)
+		private void RaiseEventDoneParsing (
+			object sender, 
+			string name, 
+			List<string> tokens, 
+			Node pars)
 		{
 			// Calling single Active Event with no more tokens
+			string originalName = name;
             name = GetEventMappingValue(name);
-			ActiveEventArgs e = new ActiveEventArgs(name, pars);
+			ActiveEventArgs e = new ActiveEventArgs(originalName, pars);
             if (_staticEvents.ContainsKey(name) || InstanceMethod.ContainsKey(name))
             {
                 // We must run this in two operations since events clear controls out

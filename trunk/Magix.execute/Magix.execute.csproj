@@ -36,6 +36,7 @@
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="ExecuteCore.cs" />
     <Compile Include="FormsCore.cs" />
+    <Compile Include="Utilities.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

@@ -45,6 +45,7 @@ namespace Magix.Core
         private readonly List<Node> _children = new List<Node>();
 
         // Parent node
+		[NonSerialized]
         private Node _parent;
 
         private string _name;
@@ -377,6 +378,19 @@ namespace Magix.Core
             return this;
         }
 
+		/**
+		 * Level3: Useful for normalizing list after deserialization since _parent is
+		 * not serialized
+		 */
+		public void CleanUp ()
+		{
+			foreach (Node idx in _children)
+			{
+				idx._parent = this;
+				idx.CleanUp ();
+			}
+		}
+
         /**
          * Level3: Returns the node with the given Name. If that node doesn't exist
          * a new node will be created with the given name and appended into the
@@ -418,6 +432,8 @@ namespace Magix.Core
         [DebuggerStepThrough]
         public void Insert(int index, Node item)
         {
+			if (item == null)
+				return;
             _children.Insert(index, item);
             item._parent = this;
         }
@@ -445,8 +461,10 @@ namespace Magix.Core
             [DebuggerStepThrough]
             set
             {
-                _children[index] = value;
-                value._parent = this;
+				if (value == null)
+					return;
+	            _children[index] = value;
+	            value._parent = this;
             }
         }
 
@@ -456,6 +474,8 @@ namespace Magix.Core
         [DebuggerStepThrough]
         public void Add(Node item)
         {
+			if (item == null)
+				return;
             _children.Add(item);
             item._parent = this;
         }
@@ -468,8 +488,11 @@ namespace Magix.Core
         {
             foreach (Node idx in items)
             {
-                Add(idx);
-				idx._parent = this;
+				if (idx != null)
+				{
+                	Add(idx);
+					idx._parent = this;
+				}
             }
         }
 
