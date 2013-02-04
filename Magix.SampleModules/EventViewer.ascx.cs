@@ -53,41 +53,32 @@ namespace Magix.SampleModules
 			}
 		}
 
-		[ActiveEvent(Name = "Magix.Samples.UpdateJSONEditor")]
-		public void Magix_Samples_UpdateJSONEditor (object sender, ActiveEventArgs e)
-		{
-			if (e.Params.Count == 0)
-			{
-				e.Params["JSON"].Value = "JSON to stuff into TextArea ...";
-			}
-			else
-			{
-				txtIn.Text = e.Params["JSON"].Get<Node>().ToJSONString ();
-			}
-		}
-
 		protected void run_Click (object sender, EventArgs e)
 		{
 			if (txtIn.Text != "")
 			{
-				Node node = Node.FromJSONString (txtIn.Text);
-				RaiseEvent (activeEvent.Text, node);
-				txtOut.Text = node.ToJSONString ();
+				Node tmp = new Node();
+				tmp["Code"].Value = txtIn.Text;
+				RaiseEvent (
+					"Magix.Core.TransformCodeToNode",
+					tmp);
+				RaiseEvent (activeEvent.Text, tmp["JSON"].Get<Node>());
+				RaiseEvent (
+					"Magix.Core.TransformNodeToCode", tmp);
+				txtOut.Text = tmp["Code"].Get<string>();
 			}
 			else
 			{
 				Node node = RaiseEvent (activeEvent.Text);
-				txtOut.Text = node.ToJSONString ();
+				Node tmp = new Node();
+				tmp["JSON"].Value = node;
+				RaiseEvent (
+					"Magix.Core.TransformNodeToCode", 
+					tmp);
+				txtOut.Text = tmp["Code"].Get<string>();
 				txtOut.Select ();
 				txtOut.Focus ();
 			}
-		}
-
-		protected void paste_Click (object sender, EventArgs e)
-		{
-			txtIn.Text = txtOut.Text;
-			txtIn.Select ();
-			txtIn.Focus ();
 		}
 
 		protected void EventClicked(object sender, EventArgs e)
@@ -96,15 +87,6 @@ namespace Magix.SampleModules
 			activeEvent.Text = btn.Text;
 			activeEvent.Select ();
 			activeEvent.Focus ();
-			txtIn.Text = "";
-		}
-
-		protected void design_Click(object sender, EventArgs e)
-		{
-			Node tmp = new Node();
-			if(!string.IsNullOrEmpty (txtIn.Text))
-				tmp["JSON"].Value = Node.FromJSONString (txtIn.Text);
-			RaiseEvent ("Magix.Samples.LaunchJSONEditor", tmp);
 		}
 	}
 }

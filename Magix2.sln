@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Magix.SampleModules", "Magi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Magix.execute", "Magix.execute\Magix.execute.csproj", "{7BBD5BD2-E3FE-42C2-94F8-878F4156A03E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Magix.Data", "Magix.Data\Magix.Data.csproj", "{4FC8426A-ED89-4100-887E-C571E3DC9C8C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,6 +39,10 @@ Global
 		{47AFBBBE-CDF6-4B3A-8BD8-478406735C99}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{47AFBBBE-CDF6-4B3A-8BD8-478406735C99}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{47AFBBBE-CDF6-4B3A-8BD8-478406735C99}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4FC8426A-ED89-4100-887E-C571E3DC9C8C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4FC8426A-ED89-4100-887E-C571E3DC9C8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4FC8426A-ED89-4100-887E-C571E3DC9C8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4FC8426A-ED89-4100-887E-C571E3DC9C8C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7BBD5BD2-E3FE-42C2-94F8-878F4156A03E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7BBD5BD2-E3FE-42C2-94F8-878F4156A03E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7BBD5BD2-E3FE-42C2-94F8-878F4156A03E}.Release|Any CPU.ActiveCfg = Release|Any CPU

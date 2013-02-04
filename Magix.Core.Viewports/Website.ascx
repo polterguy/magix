@@ -8,7 +8,6 @@
 
 <mux:Panel
 	runat="server"
-	CssClass="message-wrapper"
 	style="opacity:0;"
 	id="messageWrapper">
 	<mux:Label
@@ -20,17 +19,20 @@
 <mux:Panel
     runat="server"
     id="wrp"
-    CssClass="main">
+    CssClass="container">
     <mux:DynamicPanel 
         runat="server" 
         OnReload="dynamic_LoadControls"
+        CssClass="span-24 last"
         id="content1" />
     <mux:DynamicPanel 
         runat="server" 
         OnReload="dynamic_LoadControls"
+        CssClass="span-24 last"
         id="content2" />
     <mux:DynamicPanel 
         runat="server" 
         OnReload="dynamic_LoadControls"
+        CssClass="span-24 last"
         id="content3" />
 </mux:Panel>

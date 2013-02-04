@@ -33,18 +33,5 @@ namespace Magix.ApplicationPool
             Control ctrl = ModuleControllerLoader.Instance.LoadActiveModule(defaultControl);
             Form.Controls.Add(ctrl);
         }
-
-		protected void Page_Load (object sender, EventArgs e)
-		{
-			if (!IsPostBack)
-			{
-				Node node = new Node();
-				node["IsPostBack"].Value = false;
-                ActiveEvents.Instance.RaiseActiveEvent(
-                    this,
-                    "Magix.Core.PageLoad",
-					node);
-			}
-		}
     }
 }

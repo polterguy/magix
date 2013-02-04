@@ -6,51 +6,41 @@
     AutoEventWireup="true" 
     Inherits="Magix.SampleModules.EventViewer" %>
 
-<link href="media/main.css" rel="stylesheet" type="text/css" />
-
-<div class="nodes-wrapper">
-	<p class="active-event-label">
-		Active Event Name
-	</p>
-	<mux:TextArea
-		runat="server"
-		PlaceHolder="Active Event Name ..."
-		CssClass="active-event-name"
-		id="activeEvent" />
-	<mux:TextArea
-		runat="server"
-		id="txtIn"
-		PlaceHolder="Input Nodes ..."
-		CssClass="nodes" />
-	<mux:Button
-		runat="server"
-		id="run"
-		Text="&gt;&gt;"
-		CssClass="run-button"
-		Tooltip="Runs the Active Event with the JSON Serialized content from Left Text Area"
-		OnClick="run_Click" />
-	<mux:Button
-		runat="server"
-		id="paste"
-		Text="&lt;&lt;"
-		CssClass="paste-button"
-		Tooltip="Paste the content from the Output Text Area into the Input Text Area"
-		OnClick="paste_Click" />
-	<mux:TextArea
-		runat="server"
-		id="txtOut"
-		PlaceHolder="Output Nodes ..."
-		CssClass="nodes" />
-	<mux:Button
-		runat="server"
-		id="design"
-		Text="Designer"
-		OnClick="design_Click" />
+<div class="span-24 last prepend-top">
+	<h1 class="span-10 prepend-7">Active Event Executor</h1>
+	<div class="span-24 prepend-2">
+		<mux:TextArea
+			runat="server"
+			id="txtIn"
+			PlaceHolder="Input Nodes ..."
+			CssClass="span-20 height-12" />
+	</div>
+	<div class="span-24 prepend-7 prepend-top">
+		<mux:TextArea
+			runat="server"
+			PlaceHolder="Active Event Code ..."
+			CssClass="span-10 height-5"
+			id="activeEvent" />
+		<mux:Button
+			runat="server"
+			id="run"
+			Text="Run"
+			CssClass="span-4"
+			Tooltip="Runs the Active Event with the JSON Serialized content from Left Text Area"
+			OnClick="run_Click" />
+	</div>
+	<div class="span-24 prepend-2 prepend-top">
+		<mux:TextArea
+			runat="server"
+			id="txtOut"
+			PlaceHolder="Output Nodes ..."
+			CssClass="span-20 height-12" />
+	</div>
 </div>
 
 <mux:Panel
     runat="server"
-    CssClass="repeater-wrapper"
+    CssClass="span-24 last prepend-top"
     id="wrp">
     <asp:Repeater
     	runat="server"
@@ -58,10 +48,9 @@
     	<ItemTemplate>
     		<mux:LinkButton
     			runat="server"
-    			CssClass="active-event"
+    			CssClass="span-7"
     			OnClick="EventClicked"
     			Text='<%# Eval("Value") %>' />
     	</ItemTemplate>
    	</asp:Repeater>
 </mux:Panel>
-<br style="clear:both;" />
