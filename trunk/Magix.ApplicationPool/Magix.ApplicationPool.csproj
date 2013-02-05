@@ -113,10 +113,6 @@
       <Project>{B9D247FE-C4EA-49B2-83E9-0ED75D844B72}</Project>
       <Name>Magix.SampleController</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Magix.SampleModules\Magix.SampleModules.csproj">
-      <Project>{27F2733A-8DDC-49F6-BA47-F27A40043682}</Project>
-      <Name>Magix.SampleModules</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Magix.execute\Magix.execute.csproj">
       <Project>{7BBD5BD2-E3FE-42C2-94F8-878F4156A03E}</Project>
       <Name>Magix.execute</Name>
