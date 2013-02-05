@@ -166,7 +166,7 @@ namespace Magix.Core
                             // every time the page reloads...
                             ActiveEvents.Instance.RaiseActiveEvent(
                                 null, 
-                                "Magix.Core.ApplicationStartup");
+                                "Magix.Core._ApplicationStartup");
                         }
                     }
                 }

@@ -34,18 +34,48 @@ namespace Magix.Core
         private ActiveEvents()
         { }
 
-		public IEnumerable<string> ActiveEventHandlers {
+		public IEnumerable<string> ActiveEventHandlers
+		{
 			get
 			{
 				foreach (string idx in _staticEvents.Keys)
 				{
-					yield return idx;
+					if (!_eventMappers.ContainsKey (idx))
+						yield return idx;
 				}
 				foreach (string idx in InstanceMethod.Keys)
+				{
+					if (!_eventMappers.ContainsKey (idx))
+						yield return idx;
+				}
+				foreach (string idx in _eventMappers.Keys)
 				{
 					yield return idx;
 				}
 			}
+		}
+
+		/**
+		 * Level3: Returns true if Active Event is an override
+		 */
+		public bool IsOverride (string key)
+		{
+			return _eventMappers.ContainsKey (key);
+		}
+
+		/**
+		 * Level3: Returns true if Active Event is an override
+		 */
+		public bool IsOverrideSystem (string key)
+		{
+			bool retVal = _eventMappers.ContainsKey (key);
+			if (retVal)
+			{
+				retVal = InstanceMethod.ContainsKey (key);
+				if (!retVal)
+					retVal = _staticEvents.ContainsKey (key);
+			}
+			return retVal;
 		}
 
         /**

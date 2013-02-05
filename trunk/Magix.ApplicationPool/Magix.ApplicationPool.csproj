@@ -141,7 +141,6 @@
     <Folder Include="media\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="media\main.css" />
     <None Include="media\blueprint-css-master\AUTHORS.textile" />
     <None Include="media\blueprint-css-master\CHANGELOG" />
     <None Include="media\blueprint-css-master\Gemfile" />

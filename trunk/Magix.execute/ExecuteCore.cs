@@ -334,48 +334,8 @@ namespace Magix.execute
 			}
 		}
 
-		/**
-		 */
-		[ActiveEvent(Name = "Magix.execute.increment")]
-		public void Magix_execute_increment (object sender, ActiveEventArgs e)
-		{
-			if (!e.Params.Contains ("_ip"))
-			{
-				e.Params.Name = "increment";
-				e.Params.Value = "[Data].Value";
-				return;
-			}
-
-			Node ip = e.Params["_ip"].Value as Node;
-			Node dp = e.Params["_dp"].Value as Node;
-
-			string path = ip.Get<string>();
-
-			Expressions.AddInteger (path, dp, ip, 1);
-		}
-
-		/**
-		 */
-		[ActiveEvent(Name = "Magix.execute.decrement")]
-		public void Magix_execute_decrement (object sender, ActiveEventArgs e)
-		{
-			if (!e.Params.Contains ("_ip"))
-			{
-				e.Params.Name = "decrement";
-				e.Params.Value = "[Data].Value";
-				return;
-			}
-
-			Node ip = e.Params["_ip"].Value as Node;
-			Node dp = e.Params["_dp"].Value as Node;
-
-			string path = ip.Get<string>();
-
-			Expressions.AddInteger (path, dp, ip, -1);
-		}
-
-		[ActiveEvent(Name = "Magix.Core.TransformNodeToCode")]
-		public void Magix_Samples_TransformNodeToCode (object sender, ActiveEventArgs e)
+		[ActiveEvent(Name = "Magix.Core._TransformNodeToCode")]
+		public void Magix_Samples__TransformNodeToCode (object sender, ActiveEventArgs e)
 		{
 			if (!e.Params.Contains ("JSON"))
 			{
@@ -419,8 +379,8 @@ namespace Magix.execute
 			return retVal;
 		}
 
-		[ActiveEvent(Name = "Magix.Core.TransformCodeToNode")]
-		public void Magix_Samples_TransformCodeToNode (object sender, ActiveEventArgs e)
+		[ActiveEvent(Name = "Magix.Core._TransformCodeToNode")]
+		public void Magix_Samples__TransformCodeToNode (object sender, ActiveEventArgs e)
 		{
 			if (!e.Params.Contains ("Code"))
 			{
