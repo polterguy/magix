@@ -183,7 +183,7 @@ namespace Magix.SampleModules
 								{
 									string codePath = ViewState[((Control)sender).ClientID + "_Click"] as string;
 									Node codeNode = GetNode (codePath);
-									RaiseEvent ("Magix.execute", codeNode);
+									RaiseEvent ("magix.execute", codeNode);
 								};
 						};
 				} break;
@@ -199,7 +199,7 @@ namespace Magix.SampleModules
 								{
 									string codePath = ViewState[((Control)sender).ClientID + "_DblClick"] as string;
 									Node codeNode = GetNode (codePath);
-									RaiseEvent ("Magix.execute", codeNode);
+									RaiseEvent ("magix.execute", codeNode);
 								};
 						};
 				} break;
@@ -215,7 +215,7 @@ namespace Magix.SampleModules
 								{
 									string codePath = ViewState[((Control)sender).ClientID + "_MouseOver"] as string;
 									Node codeNode = GetNode (codePath);
-									RaiseEvent ("Magix.execute", codeNode);
+									RaiseEvent ("magix.execute", codeNode);
 								};
 						};
 				} break;
@@ -231,7 +231,7 @@ namespace Magix.SampleModules
 								{
 									string codePath = ViewState[((Control)sender).ClientID + "_MouseOut"] as string;
 									Node codeNode = GetNode (codePath);
-									RaiseEvent ("Magix.execute", codeNode);
+									RaiseEvent ("magix.execute", codeNode);
 								};
 						};
 				} break;
@@ -247,7 +247,7 @@ namespace Magix.SampleModules
 								{
 									string codePath = ViewState[((Control)sender).ClientID + "_MouseDown"] as string;
 									Node codeNode = GetNode (codePath);
-									RaiseEvent ("Magix.execute", codeNode);
+									RaiseEvent ("magix.execute", codeNode);
 								};
 						};
 				} break;
@@ -263,7 +263,7 @@ namespace Magix.SampleModules
 								{
 									string codePath = ViewState[((Control)sender).ClientID + "_MouseUp"] as string;
 									Node codeNode = GetNode (codePath);
-									RaiseEvent ("Magix.execute", codeNode);
+									RaiseEvent ("magix.execute", codeNode);
 								};
 						};
 				} break;
@@ -279,7 +279,7 @@ namespace Magix.SampleModules
 								{
 									string codePath = ViewState[((Control)sender).ClientID + "_KeyPress"] as string;
 									Node codeNode = GetNode (codePath);
-									RaiseEvent ("Magix.execute", codeNode);
+									RaiseEvent ("magix.execute", codeNode);
 								};
 						};
 				} break;
@@ -295,7 +295,7 @@ namespace Magix.SampleModules
 								{
 									string codePath = ViewState[((Control)sender).ClientID + "_EscKey"] as string;
 									Node codeNode = GetNode (codePath);
-									RaiseEvent ("Magix.execute", codeNode);
+									RaiseEvent ("magix.execute", codeNode);
 								};
 						};
 				} break;

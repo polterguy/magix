@@ -18,18 +18,13 @@ namespace Magix.execute
 	{
 		/**
 		 */
-		[ActiveEvent(Name = "Magix.execute")]
-		public void Magix_execute (object sender, ActiveEventArgs e)
+		[ActiveEvent(Name = "magix.execute")]
+		public void magix_execute (object sender, ActiveEventArgs e)
 		{
 			if (e.Params.Count == 0)
 			{
-				e.Params["Data"].Value = "thomas";
-				e.Params["if"].Value = "[Data].Value == \"thomas\"";
-				e.Params["if"]["call"].Value = "Magix.Core.ShowMessage";
-				e.Params["if"]["call"]["params"]["Message"].Value = "Hi Thomas!";
-				e.Params["else"].Value = null;
-				e.Params["else"]["call"].Value = "Magix.Core.ShowMessage";
-				e.Params["else"]["call"]["params"]["Message"].Value = "Hi Stranger!";
+				e.Params["raise"].Value = "magix.core.show-message";
+				e.Params["raise"]["params"]["Message"].Value = "Hi Thomas!";
 			}
 			else
 			{
@@ -51,7 +46,7 @@ namespace Magix.execute
 					if ("abcdefghijklmnopqrstuvwxyz".IndexOf (nodeName[0]) != -1)
 					{
 						// This is a keyword
-						string eventName = "Magix.execute." + nodeName;
+						string eventName = "magix.execute." + nodeName;
 
 						Node tmp = new Node();
 
@@ -70,14 +65,14 @@ namespace Magix.execute
 
 		/**
 		 */
-		[ActiveEvent(Name = "Magix.execute.if")]
-		public void Magix_execute_if (object sender, ActiveEventArgs e)
+		[ActiveEvent(Name = "magix.execute.if")]
+		public void magix_execute_if (object sender, ActiveEventArgs e)
 		{
 			if (!e.Params.Contains ("_ip")) {
 				e.Params.Name = "if";
 				e.Params.Value = "[Data][Item1].Value=\"thomas\"";
-				e.Params ["call"].Value = "Magix.Core.ShowMessage";
-				e.Params ["call"] ["params"] ["Message"].Value = "Message...";
+				e.Params ["raise"].Value = "magix.core.show-message";
+				e.Params ["raise"] ["params"] ["Message"].Value = "Message...";
 				return;
 			}
 			Node dp = e.Params ["_dp"].Value as Node;
@@ -139,20 +134,20 @@ namespace Magix.execute
 				ip.Parent[ip.Parent.Count - 1].Value = isTrue;
 			if (isTrue)
 			{
-				RaiseEvent ("Magix.execute", parms);
+				RaiseEvent ("magix.execute", parms);
 			}
 		}
 
 		/**
 		 */
-		[ActiveEvent(Name = "Magix.execute.else-if")]
-		public void Magix_execute_else_if (object sender, ActiveEventArgs e)
+		[ActiveEvent(Name = "magix.execute.else-if")]
+		public void magix_execute_else_if (object sender, ActiveEventArgs e)
 		{
 			if (!e.Params.Contains ("_ip"))
 			{
 				e.Params.Name = "else-if";
-				e.Params["call"].Value = "Magix.Core.ShowMessage";
-				e.Params["call"]["params"]["Message"].Value = "Message...";
+				e.Params["raise"].Value = "magix.core.show-message";
+				e.Params["raise"]["params"]["Message"].Value = "Message...";
 				return;
 			}
 			Node ip = e.Params["_ip"].Value as Node;
@@ -169,14 +164,14 @@ namespace Magix.execute
 
 		/**
 		 */
-		[ActiveEvent(Name = "Magix.execute.else")]
-		public void Magix_execute_else (object sender, ActiveEventArgs e)
+		[ActiveEvent(Name = "magix.execute.else")]
+		public void magix_execute_else (object sender, ActiveEventArgs e)
 		{
 			if (!e.Params.Contains ("_ip"))
 			{
 				e.Params.Name = "else";
-				e.Params["call"].Value = "Magix.Core.ShowMessage";
-				e.Params["call"]["params"]["Message"].Value = "Message...";
+				e.Params["raise"].Value = "magix.core.show-message";
+				e.Params["raise"]["params"]["Message"].Value = "Message...";
 				return;
 			}
 			Node ip = e.Params["_ip"].Value as Node;
@@ -189,18 +184,18 @@ namespace Magix.execute
 			if (ip.Parent != null)
 				ip.Parent[ip.Parent.Count - 1].Value = null;
 
-			RaiseEvent ("Magix.execute", e.Params);
+			RaiseEvent ("magix.execute", e.Params);
 		}
 
 		/**
 		 */
-		[ActiveEvent(Name = "Magix.execute.call")]
-		public void Magix_execute_call (object sender, ActiveEventArgs e)
+		[ActiveEvent(Name = "magix.execute.raise")]
+		public void magix_execute_call (object sender, ActiveEventArgs e)
 		{
 			if (!e.Params.Contains ("_ip"))
 			{
-				e.Params.Name = "call";
-				e.Params.Value = "Magix.Core.ShowMessage";
+				e.Params.Name = "raise";
+				e.Params.Value = "magix.core.show-message";
 				e.Params["params"]["Message"].Value = "Either directly embedded 'params'...";
 				e.Params["context"].Value = "[./][OrSomeDataContainingArgs]";
 				return;
@@ -211,17 +206,21 @@ namespace Magix.execute
 			{
 				dp = Expressions.GetExpressionValue (ip["context"].Get<string>(), dp, ip) as Node;
 			}
-			else
+			else if (ip.Contains ("params"))
 			{
 				dp = ip["params"];
+			}
+			else
+			{
+				dp = ip;
 			}
 			RaiseEvent (ip.Get<string>(), dp);
 		}
 
 		/**
 		 */
-		[ActiveEvent(Name = "Magix.execute.for-each")]
-		public void Magix_execute_for_each (object sender, ActiveEventArgs e)
+		[ActiveEvent(Name = "magix.execute.for-each")]
+		public void magix_execute_for_each (object sender, ActiveEventArgs e)
 		{
 			if (!e.Params.Contains ("_ip"))
 			{
@@ -240,15 +239,15 @@ namespace Magix.execute
 					Node tmp2 = new Node();
 					tmp2["_ip"].Value = ip;
 					tmp2["_dp"].Value = idx;
-					RaiseEvent ("Magix.execute", tmp2);
+					RaiseEvent ("magix.execute", tmp2);
 				}
 			}
 		}
 
 		/**
 		 */
-		[ActiveEvent(Name = "Magix.execute.set")]
-		public void Magix_execute_set (object sender, ActiveEventArgs e)
+		[ActiveEvent(Name = "magix.execute.set")]
+		public void magix_execute_set (object sender, ActiveEventArgs e)
 		{
 			if (!e.Params.Contains ("_ip"))
 			{
@@ -272,8 +271,8 @@ namespace Magix.execute
 
 		/**
 		 */
-		[ActiveEvent(Name = "Magix.execute.remove")]
-		public void Magix_execute_remove (object sender, ActiveEventArgs e)
+		[ActiveEvent(Name = "magix.execute.remove")]
+		public void magix_execute_remove (object sender, ActiveEventArgs e)
 		{
 			if (!e.Params.Contains ("_ip"))
 			{
@@ -291,8 +290,8 @@ namespace Magix.execute
 
 		/**
 		 */
-		[ActiveEvent(Name = "Magix.execute.empty")]
-		public void Magix_execute_empty (object sender, ActiveEventArgs e)
+		[ActiveEvent(Name = "magix.execute.empty")]
+		public void magix_execute_empty (object sender, ActiveEventArgs e)
 		{
 			if (!e.Params.Contains ("_ip"))
 			{
@@ -310,8 +309,8 @@ namespace Magix.execute
 
 		/**
 		 */
-		[ActiveEvent(Name = "Magix.execute.if-exist")]
-		public void Magix_execute_if_exist (object sender, ActiveEventArgs e)
+		[ActiveEvent(Name = "magix.execute.if-exist")]
+		public void magix_execute_if_exist (object sender, ActiveEventArgs e)
 		{
 			if (!e.Params.Contains ("_ip"))
 			{
@@ -329,12 +328,12 @@ namespace Magix.execute
 					Node tmp2 = new Node();
 					tmp2["_ip"].Value = ip;
 					tmp2["_dp"].Value = dp;
-					RaiseEvent ("Magix.execute", tmp2);
+					RaiseEvent ("magix.execute", tmp2);
 				}
 			}
 		}
 
-		[ActiveEvent(Name = "Magix.Core._TransformNodeToCode")]
+		[ActiveEvent(Name = "magix.core._transform-node-2-code")]
 		public void Magix_Samples__TransformNodeToCode (object sender, ActiveEventArgs e)
 		{
 			if (!e.Params.Contains ("JSON"))
@@ -379,8 +378,8 @@ namespace Magix.execute
 			return retVal;
 		}
 
-		[ActiveEvent(Name = "Magix.Core._TransformCodeToNode")]
-		public void Magix_Samples__TransformCodeToNode (object sender, ActiveEventArgs e)
+		[ActiveEvent(Name = "magix.core._transform-code-2-node")]
+		public void magix_samples__transform_code_2_node (object sender, ActiveEventArgs e)
 		{
 			if (!e.Params.Contains ("Code"))
 			{

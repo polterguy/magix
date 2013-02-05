@@ -9,30 +9,27 @@ using Magix.Core;
 
 namespace Magix.SampleController
 {
+	/**
+	 * Level2: Default Controller in Magix, loads up Event Viewer such
+	 * that you can start developing immediately. Remove this Controller
+	 * for your own projects, and override page-load yourself.
+	 */
 	[ActiveController]
 	public class ControllerSample : ActiveController
 	{
-		[ActiveEvent(Name = "Magix.Core.PageLoad")]
-		public void Magix_Core_PageLoad (object sender, ActiveEventArgs e)
+		[ActiveEvent(Name = "magix.core.page-load")]
+		public void magix_core_page_load (object sender, ActiveEventArgs e)
 		{
-			// This is just a dummy PageLoad Event Handler. 
-			// Replace with your OWN logic and Controller
-			if (e.Params.Count == 0)
-			{
-				e.Params["IsPostBack"].Value = false;
-			}
-			else if(!e.Params["IsPostBack"].Get<bool>())
-			{
-				Node tmp = new Node();
-				tmp["Container"].Value = "content1";
-				RaiseEvent(
-					"Magix.Samples.OpenEventViewer", 
-					tmp);
-			}
+			// Loads up Event Viewer, or IDE
+			Node tmp = new Node();
+			tmp["Container"].Value = "content1";
+			RaiseEvent(
+				"magix.samples.open-event-viewer", 
+				tmp);
 		}
 
-		[ActiveEvent(Name = "Magix.Samples._GetActiveEvents")]
-		public void Magix_Samples__GetActiveEvents (object sender, ActiveEventArgs e)
+		[ActiveEvent(Name = "magix.samples._get-active-events")]
+		public void magix_samples__get_active_events (object sender, ActiveEventArgs e)
 		{
 			Node node = e.Params;
 			int idxNo = 0;
@@ -63,10 +60,15 @@ namespace Magix.SampleController
 				}
 				idxNo += 1;
 			}
+			node["ActiveEvents"].Sort (
+				delegate(Node left, Node right)
+				{
+					return ((string)left.Value).CompareTo (right.Value as String);
+				});
 		}
 
-		[ActiveEvent(Name = "Magix.Samples.OpenEventViewer")]
-		public void Magix_Samples_OpenEventViewer (object sender, ActiveEventArgs e)
+		[ActiveEvent(Name = "magix.samples.open-event-viewer")]
+		public void magix_samples_open_event_viewer (object sender, ActiveEventArgs e)
 		{
 			if (!e.Params.Contains ("Container"))
 			{
@@ -74,10 +76,18 @@ namespace Magix.SampleController
 			}
 			else
 			{
-				LoadModule ("Magix.SampleModules.EventViewer", e.Params["Container"].Get<string>());
+				LoadModule (
+					"Magix.SampleModules.EventViewer", 
+					e.Params["Container"].Get<string>());
+
 				Node node = new Node();
-				RaiseEvent ("Magix.Samples._GetActiveEvents", node);
-				RaiseEvent ("Magix.Samples._PopulateEventViewer", node);
+				RaiseEvent (
+					"magix.samples._get-active-events", 
+					node);
+
+				RaiseEvent (
+					"magix.samples._populate-event-viewer", 
+					node);
 			}
 		}
 	}

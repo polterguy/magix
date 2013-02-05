@@ -39,13 +39,13 @@
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <ProjectReference Include="..\Magix.Core\Magix.Core.csproj">
-      <Project>{11376D5F-13BD-4529-BA92-DDE415B96220}</Project>
-      <Name>Magix.Core</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Magix.UX\Magix.UX.csproj">
       <Project>{FDD15C94-7DC2-4D19-9AF4-0E9FD8CCC443}</Project>
       <Name>Magix.UX</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Magix.core\Magix.Core.csproj">
+      <Project>{11376D5F-13BD-4529-BA92-DDE415B96220}</Project>
+      <Name>Magix.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

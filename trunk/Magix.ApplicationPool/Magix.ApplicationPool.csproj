@@ -105,17 +105,9 @@
     </MonoDevelop>
   </ProjectExtensions>
   <ItemGroup>
-    <ProjectReference Include="..\Magix.Core\Magix.Core.csproj">
-      <Project>{11376D5F-13BD-4529-BA92-DDE415B96220}</Project>
-      <Name>Magix.Core</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Magix.UX\Magix.UX.csproj">
       <Project>{FDD15C94-7DC2-4D19-9AF4-0E9FD8CCC443}</Project>
       <Name>Magix.UX</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Magix.Core.Viewports\Magix.Core.Viewports.csproj">
-      <Project>{47AFBBBE-CDF6-4B3A-8BD8-478406735C99}</Project>
-      <Name>Magix.Core.Viewports</Name>
     </ProjectReference>
     <ProjectReference Include="..\Magix.SampleController\Magix.SampleController.csproj">
       <Project>{B9D247FE-C4EA-49B2-83E9-0ED75D844B72}</Project>
@@ -129,9 +121,21 @@
       <Project>{7BBD5BD2-E3FE-42C2-94F8-878F4156A03E}</Project>
       <Name>Magix.execute</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Magix.Data\Magix.Data.csproj">
+    <ProjectReference Include="..\Magix.forms\Magix.forms.csproj">
+      <Project>{71FE057E-9D78-423F-8664-2FAE2D0D56A1}</Project>
+      <Name>Magix.forms</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Magix.data\Magix.data.csproj">
       <Project>{4FC8426A-ED89-4100-887E-C571E3DC9C8C}</Project>
-      <Name>Magix.Data</Name>
+      <Name>Magix.data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Magix.core\Magix.Core.csproj">
+      <Project>{11376D5F-13BD-4529-BA92-DDE415B96220}</Project>
+      <Name>Magix.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Magix.viewports\Magix.viewports.csproj">
+      <Project>{47AFBBBE-CDF6-4B3A-8BD8-478406735C99}</Project>
+      <Name>Magix.viewports</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

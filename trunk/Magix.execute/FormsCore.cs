@@ -17,8 +17,8 @@ namespace Magix.execute
 	{
 		/**
 		 */
-		[ActiveEvent(Name = "Magix.Forms.LoadForm")]
-		public void Magix_Forms_LoadForm (object sender, ActiveEventArgs e)
+		[ActiveEvent(Name = "magix.forms.load-form")]
+		public void magix_forms_load_form (object sender, ActiveEventArgs e)
 		{
 			if (!e.Params.Contains ("Container"))
 			{
