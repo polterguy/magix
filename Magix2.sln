@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Magix.UX", "Magix.UX\Magix.UX.csproj", "{FDD15C94-7DC2-4D19-9AF4-0E9FD8CCC443}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Magix.ApplicationPool", "Magix.ApplicationPool\Magix.ApplicationPool.csproj", "{1048405F-2036-4A8B-BC8B-EE2315B9E9F1}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Magix.SampleController", "Magix.SampleController\Magix.SampleController.csproj", "{B9D247FE-C4EA-49B2-83E9-0ED75D844B72}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Magix.execute", "Magix.execute\Magix.execute.csproj", "{7BBD5BD2-E3FE-42C2-94F8-878F4156A03E}"
@@ -18,6 +16,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Magix.viewports", "Magix.viewports\Magix.viewports.csproj", "{47AFBBBE-CDF6-4B3A-8BD8-478406735C99}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Magix.admin", "Magix.admin\Magix.admin.csproj", "{381E2551-3305-4757-B652-AFC9ADCB9D3E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Magix.app", "Magix.app\Magix.app.csproj", "{1048405F-2036-4A8B-BC8B-EE2315B9E9F1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,6 +63,6 @@ Global
 		{FDD15C94-7DC2-4D19-9AF4-0E9FD8CCC443}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
-		StartupItem = Magix.ApplicationPool\Magix.ApplicationPool.csproj
+		StartupItem = Magix.app\Magix.app.csproj
 	EndGlobalSection
 EndGlobal
