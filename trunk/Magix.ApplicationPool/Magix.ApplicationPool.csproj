@@ -137,6 +137,10 @@
       <Project>{47AFBBBE-CDF6-4B3A-8BD8-478406735C99}</Project>
       <Name>Magix.viewports</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Magix.admin\Magix.admin.csproj">
+      <Project>{381E2551-3305-4757-B652-AFC9ADCB9D3E}</Project>
+      <Name>Magix.admin</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="web.config" />
