@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>10.0.0</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{1048405F-2036-4A8B-BC8B-EE2315B9E9F1}</ProjectGuid>
+    <ProjectTypeGuids>{349C5851-65DF-11DA-9384-00065B846F21};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Magix.app</RootNamespace>
+    <AssemblyName>Magix.app</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="Db4objects.Db4o, Version=8.0.184.15484, Culture=neutral, PublicKeyToken=6199cd4f203aa8eb">
+      <Private>False</Private>
+      <Package>db4o</Package>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Global.asax" />
+    <Content Include="Default.aspx" />
+    <Content Include="media\blueprint-css-master\blueprint\ie.css" />
+    <Content Include="media\blueprint-css-master\blueprint\print.css" />
+    <Content Include="media\blueprint-css-master\blueprint\screen.css" />
+    <Content Include="media\blueprint-css-master\blueprint\plugins\buttons\screen.css" />
+    <Content Include="media\blueprint-css-master\blueprint\plugins\fancy-type\screen.css" />
+    <Content Include="media\blueprint-css-master\blueprint\plugins\link-icons\screen.css" />
+    <Content Include="media\blueprint-css-master\blueprint\plugins\buttons\icons\cross.png" />
+    <Content Include="media\blueprint-css-master\blueprint\plugins\buttons\icons\key.png" />
+    <Content Include="media\blueprint-css-master\blueprint\plugins\buttons\icons\tick.png" />
+    <Content Include="media\blueprint-css-master\blueprint\plugins\link-icons\icons\doc.png" />
+    <Content Include="media\blueprint-css-master\blueprint\plugins\link-icons\icons\email.png" />
+    <Content Include="media\blueprint-css-master\blueprint\plugins\link-icons\icons\external.png" />
+    <Content Include="media\blueprint-css-master\blueprint\plugins\link-icons\icons\feed.png" />
+    <Content Include="media\blueprint-css-master\blueprint\plugins\link-icons\icons\im.png" />
+    <Content Include="media\blueprint-css-master\blueprint\plugins\link-icons\icons\lock.png" />
+    <Content Include="media\blueprint-css-master\blueprint\plugins\link-icons\icons\pdf.png" />
+    <Content Include="media\blueprint-css-master\blueprint\plugins\link-icons\icons\visited.png" />
+    <Content Include="media\blueprint-css-master\blueprint\plugins\link-icons\icons\xls.png" />
+    <Content Include="media\blueprint-css-master\blueprint\plugins\rtl\screen.css" />
+    <Content Include="media\blueprint-css-master\blueprint\src\forms.css" />
+    <Content Include="media\blueprint-css-master\blueprint\src\grid.css" />
+    <Content Include="media\blueprint-css-master\blueprint\src\grid.png" />
+    <Content Include="media\blueprint-css-master\blueprint\src\ie.css" />
+    <Content Include="media\blueprint-css-master\blueprint\src\print.css" />
+    <Content Include="media\blueprint-css-master\blueprint\src\reset.css" />
+    <Content Include="media\blueprint-css-master\blueprint\src\typography.css" />
+    <Content Include="media\blueprint-css-master\debug\debug.css" />
+    <Content Include="media\blueprint-css-master\debug\debug.html" />
+    <Content Include="media\blueprint-css-master\features\support\jquery.js" />
+    <Content Include="media\blueprint-css-master\lib\blueprint\validate\COPYRIGHT.html" />
+    <Content Include="media\blueprint-css-master\lib\blueprint\validate\README.html" />
+    <Content Include="media\blueprint-css-master\tests\index.html" />
+    <Content Include="media\blueprint-css-master\tests\parts\elements.html" />
+    <Content Include="media\blueprint-css-master\tests\parts\forms.html" />
+    <Content Include="media\blueprint-css-master\tests\parts\grid.html" />
+    <Content Include="media\blueprint-css-master\tests\parts\sample.html" />
+    <Content Include="media\blueprint-css-master\tests\parts\test.jpg" />
+    <Content Include="media\blueprint-css-master\tests\parts\test-small.jpg" />
+    <Content Include="media\blueprint-css-master\tests\parts\valid.png" />
+    <Content Include="media\blueprint-css-master\tests\parts\plugins\link-icons.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
+  <ProjectExtensions>
+    <MonoDevelop>
+      <Properties VerifyCodeBehindFields="true" VerifyCodeBehindEvents="true">
+        <XspParameters Port="8080" Address="127.0.0.1" SslMode="None" SslProtocol="Default" KeyType="None" CertFile="" KeyFile="" PasswordOptions="None" Password="" Verbose="true" />
+      </Properties>
+    </MonoDevelop>
+  </ProjectExtensions>
+  <ItemGroup>
+    <ProjectReference Include="..\Magix.UX\Magix.UX.csproj">
+      <Project>{FDD15C94-7DC2-4D19-9AF4-0E9FD8CCC443}</Project>
+      <Name>Magix.UX</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Magix.SampleController\Magix.SampleController.csproj">
+      <Project>{B9D247FE-C4EA-49B2-83E9-0ED75D844B72}</Project>
+      <Name>Magix.SampleController</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Magix.execute\Magix.execute.csproj">
+      <Project>{7BBD5BD2-E3FE-42C2-94F8-878F4156A03E}</Project>
+      <Name>Magix.execute</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Magix.forms\Magix.forms.csproj">
+      <Project>{71FE057E-9D78-423F-8664-2FAE2D0D56A1}</Project>
+      <Name>Magix.forms</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Magix.data\Magix.data.csproj">
+      <Project>{4FC8426A-ED89-4100-887E-C571E3DC9C8C}</Project>
+      <Name>Magix.data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Magix.core\Magix.Core.csproj">
+      <Project>{11376D5F-13BD-4529-BA92-DDE415B96220}</Project>
+      <Name>Magix.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Magix.viewports\Magix.viewports.csproj">
+      <Project>{47AFBBBE-CDF6-4B3A-8BD8-478406735C99}</Project>
+      <Name>Magix.viewports</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Magix.admin\Magix.admin.csproj">
+      <Project>{381E2551-3305-4757-B652-AFC9ADCB9D3E}</Project>
+      <Name>Magix.admin</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="media\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="media\blueprint-css-master\AUTHORS.textile" />
+    <None Include="media\blueprint-css-master\CHANGELOG" />
+    <None Include="media\blueprint-css-master\Gemfile" />
+    <None Include="media\blueprint-css-master\Gemfile.lock" />
+    <None Include="media\blueprint-css-master\LICENSE" />
+    <None Include="media\blueprint-css-master\Rakefile" />
+    <None Include="media\blueprint-css-master\README.textile" />
+    <None Include="media\blueprint-css-master\TUTORIAL.textile" />
+    <None Include="media\blueprint-css-master\blueprint\plugins\buttons\readme.txt" />
+    <None Include="media\blueprint-css-master\blueprint\plugins\fancy-type\readme.txt" />
+    <None Include="media\blueprint-css-master\blueprint\plugins\link-icons\readme.txt" />
+    <None Include="media\blueprint-css-master\blueprint\plugins\rtl\readme.txt" />
+    <None Include="media\blueprint-css-master\features\generate_stylesheets.feature" />
+    <None Include="media\blueprint-css-master\features\step_definitions\blueprint_steps.rb" />
+    <None Include="media\blueprint-css-master\features\support\blueprint_app.rb" />
+    <None Include="media\blueprint-css-master\features\support\blueprint_helpers.rb" />
+    <None Include="media\blueprint-css-master\features\support\document_element.rb" />
+    <None Include="media\blueprint-css-master\features\support\element_helpers.rb" />
+    <None Include="media\blueprint-css-master\features\support\env.rb" />
+    <None Include="media\blueprint-css-master\lib\compress.rb" />
+    <None Include="media\blueprint-css-master\lib\settings.example.yml" />
+    <None Include="media\blueprint-css-master\lib\validate.rb" />
+    <None Include="media\blueprint-css-master\lib\blueprint\blueprint.rb" />
+    <None Include="media\blueprint-css-master\lib\blueprint\compressor.rb" />
+    <None Include="media\blueprint-css-master\lib\blueprint\core_ext.rb" />
+    <None Include="media\blueprint-css-master\lib\blueprint\css_parser.rb" />
+    <None Include="media\blueprint-css-master\lib\blueprint\custom_layout.rb" />
+    <None Include="media\blueprint-css-master\lib\blueprint\grid.css.erb" />
+    <None Include="media\blueprint-css-master\lib\blueprint\grid_builder.rb" />
+    <None Include="media\blueprint-css-master\lib\blueprint\namespace.rb" />
+    <None Include="media\blueprint-css-master\lib\blueprint\semantic_class_names.rb" />
+    <None Include="media\blueprint-css-master\lib\blueprint\validator.rb" />
+    <None Include="media\blueprint-css-master\lib\blueprint\validate\css-validator.jar" />
+    <None Include="media\blueprint-css-master\lib\blueprint\validate\css-validator-javadoc.jar" />
+    <None Include="media\blueprint-css-master\lib\blueprint\validate\jigsaw.jar" />
+    <None Include="media\blueprint-css-master\lib\blueprint\validate\JIGSAW_COPYRIGHT" />
+    <None Include="media\blueprint-css-master\lib\blueprint\validate\xerces.jar" />
+    <None Include="media\blueprint-css-master\lib\blueprint\validate\XERCES_COPYING.txt" />
+    <None Include="media\blueprint-css-master\templates\psd\fixed-width.psd" />
+  </ItemGroup>
+</Project>
