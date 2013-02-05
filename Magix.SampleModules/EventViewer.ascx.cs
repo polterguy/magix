@@ -33,15 +33,25 @@ namespace Magix.SampleModules
 		{
 			if (this.FirstLoad)
 			{
-				activeEvent.Select ();
-				activeEvent.Focus ();
+				txtIn.Select ();
+				txtIn.Focus ();
+				activeEvent.Text = "Magix.execute";
+				txtIn.Text = @"Data=>thomas
+if=>[Data].Value == ""thomas""
+  call=>Magix.Core.ShowMessage
+    params
+      Message=>Hi Thomas!
+else
+  call=>Magix.Core.ShowMessage
+    params
+      Message=>Hi Stranger!";
 			}
 		}
 
-		[ActiveEvent(Name = "Magix.Samples.PopulateEventViewer")]
-		public void Magix_Samples_PopulateEventViewer (object sender, ActiveEventArgs e)
+		[ActiveEvent(Name = "Magix.Samples._PopulateEventViewer")]
+		public void Magix_Samples__PopulateEventViewer (object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Count == 0)
+			if (!e.Params.Contains ("ActiveEvents"))
 			{
 				e.Params["ActiveEvents"]["Active_Event_No_1"].Value = "Name.Of.Active.Events";
 			}
@@ -53,6 +63,11 @@ namespace Magix.SampleModules
 			}
 		}
 
+		protected string GetCSS(object value)
+		{
+			return "span-7 " + (string)value;
+		}
+
 		protected void run_Click (object sender, EventArgs e)
 		{
 			if (txtIn.Text != "")
@@ -60,11 +75,11 @@ namespace Magix.SampleModules
 				Node tmp = new Node();
 				tmp["Code"].Value = txtIn.Text;
 				RaiseEvent (
-					"Magix.Core.TransformCodeToNode",
+					"Magix.Core._TransformCodeToNode",
 					tmp);
 				RaiseEvent (activeEvent.Text, tmp["JSON"].Get<Node>());
 				RaiseEvent (
-					"Magix.Core.TransformNodeToCode", tmp);
+					"Magix.Core._TransformNodeToCode", tmp);
 				txtOut.Text = tmp["Code"].Get<string>();
 			}
 			else
@@ -73,7 +88,7 @@ namespace Magix.SampleModules
 				Node tmp = new Node();
 				tmp["JSON"].Value = node;
 				RaiseEvent (
-					"Magix.Core.TransformNodeToCode", 
+					"Magix.Core._TransformNodeToCode", 
 					tmp);
 				txtOut.Text = tmp["Code"].Get<string>();
 				txtOut.Select ();

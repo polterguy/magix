@@ -48,7 +48,8 @@
     	<ItemTemplate>
     		<mux:LinkButton
     			runat="server"
-    			CssClass="span-7"
+    			CssClass='<%#GetCSS(Eval("[CSS].Value")) %>'
+    			ToolTip='<%# Eval("[ToolTip].Value") %>'
     			OnClick="EventClicked"
     			Text='<%# Eval("Value") %>' />
     	</ItemTemplate>

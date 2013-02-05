@@ -31,6 +31,40 @@ namespace Magix.SampleController
 			}
 		}
 
+		[ActiveEvent(Name = "Magix.Samples._GetActiveEvents")]
+		public void Magix_Samples__GetActiveEvents (object sender, ActiveEventArgs e)
+		{
+			Node node = e.Params;
+			int idxNo = 0;
+			foreach (string idx in ActiveEvents.Instance.ActiveEventHandlers)
+			{
+				if (idx.Contains ("."))
+				{
+					string[] splits = idx.Split ('.');
+					if (splits[splits.Length - 1].StartsWith ("_"))
+						continue; // "Hidden" event ...
+				}
+				node ["ActiveEvents"] ["no_" + idxNo.ToString()].Value = idx;
+				if (ActiveEvents.Instance.IsOverrideSystem (idx))
+				{
+					node["ActiveEvents"]["no_" + idxNo.ToString()]["CSS"].Value = "error";
+					node["ActiveEvents"]["no_" + idxNo.ToString()]["ToolTip"].Value = 
+						ActiveEvents.Instance.GetEventMappingValue (idx);
+				}
+				else if (ActiveEvents.Instance.IsOverride (idx))
+				{
+					node["ActiveEvents"]["no_" + idxNo.ToString()]["CSS"].Value = "notice";
+					node["ActiveEvents"]["no_" + idxNo.ToString()]["ToolTip"].Value = 
+						ActiveEvents.Instance.GetEventMappingValue (idx);
+				}
+				else
+				{
+					node["ActiveEvents"]["no_" + idxNo.ToString()]["CSS"].Value = "info";
+				}
+				idxNo += 1;
+			}
+		}
+
 		[ActiveEvent(Name = "Magix.Samples.OpenEventViewer")]
 		public void Magix_Samples_OpenEventViewer (object sender, ActiveEventArgs e)
 		{
@@ -41,19 +75,9 @@ namespace Magix.SampleController
 			else
 			{
 				LoadModule ("Magix.SampleModules.EventViewer", e.Params["Container"].Get<string>());
-				Node node = new Node ();
-				foreach (string idx in ActiveEvents.Instance.ActiveEventHandlers) {
-					node ["ActiveEvents"] [idx].Value = idx;
-				}
-				RaiseEvent ("Magix.Samples.PopulateEventViewer", node);
-
-				if (e.Params["Container"].Get<string>() == "content1")
-				{
-					// By default, we empty content2 if viewport container is content1
-					node = new Node ();
-					node ["Container"].Value = "content2";
-					RaiseEvent ("Magix.Core.ClearControls", node);
-				}
+				Node node = new Node();
+				RaiseEvent ("Magix.Samples._GetActiveEvents", node);
+				RaiseEvent ("Magix.Samples._PopulateEventViewer", node);
 			}
 		}
 	}

@@ -15,21 +15,6 @@ namespace Magix.execute
 	[ActiveController]
 	public class Utilities : ActiveController
 	{
-		/**
-		 */
-		[ActiveEvent(Name = "Magix.Core.OverrideActiveEvent")]
-		public void Magix_Core_OverrideActiveEvent (object sender, ActiveEventArgs e)
-		{
-			if (!e.Params.Contains ("From"))
-			{
-				e.Params["From"].Value = "Name of event you wish to have associated with To";
-				e.Params["To"].Value = "Which event you wish to have raised when From is raised";
-				return;
-			}
-			ActiveEvents.Instance.CreateEventMapping (
-				e.Params["From"].Get<string>(),
-				e.Params["To"].Get<string>());
-		}
 	}
 }
 
