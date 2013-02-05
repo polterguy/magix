@@ -34,8 +34,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />
-    <Compile Include="EventViewer.ascx.cs" />
-    <Compile Include="DynamicForm.ascx.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -47,9 +45,5 @@
       <Project>{11376D5F-13BD-4529-BA92-DDE415B96220}</Project>
       <Name>Magix.Core</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="EventViewer.ascx" />
-    <EmbeddedResource Include="DynamicForm.ascx" />
   </ItemGroup>
 </Project>

@@ -11,7 +11,6 @@ using Magix.Core;
 namespace Magix.execute
 {
 	/**
-	 * Level3: Controller that encapsulates execution engine
 	 */
 	[ActiveController]
 	public class ExecuteCore : ActiveController
@@ -23,8 +22,8 @@ namespace Magix.execute
 		{
 			if (e.Params.Count == 0)
 			{
-				e.Params["raise"].Value = "magix.core.show-message";
-				e.Params["raise"]["params"]["Message"].Value = "Hi Thomas!";
+				e.Params["raise"].Value = "magix.viewport.show-message";
+				e.Params["raise"]["params"]["message"].Value = "Hi Thomas!";
 			}
 			else
 			{
@@ -71,8 +70,8 @@ namespace Magix.execute
 			if (!e.Params.Contains ("_ip")) {
 				e.Params.Name = "if";
 				e.Params.Value = "[Data][Item1].Value=\"thomas\"";
-				e.Params ["raise"].Value = "magix.core.show-message";
-				e.Params ["raise"] ["params"] ["Message"].Value = "Message...";
+				e.Params ["raise"].Value = "magix.viewport.show-message";
+				e.Params ["raise"] ["params"] ["message"].Value = "Message...";
 				return;
 			}
 			Node dp = e.Params ["_dp"].Value as Node;
@@ -85,7 +84,29 @@ namespace Magix.execute
 			if (string.IsNullOrEmpty (expr))
 				throw new ArgumentException ("You cannot have an empty if statement");
 
-			ExecuteIf (expr, ip, dp, e.Params);
+			// Checking to see if single statement, meaning "exists"
+			if (expr.IndexOfAny (new char[]{'=','>','<'}) != -1)
+			{
+				ExecuteIf (expr, ip, dp, e.Params);
+			}
+			else if (expr.IndexOf ("!") == 0)
+			{
+				if (!Expressions.ExpressionExist (expr, ip, dp))
+				{
+					if (ip.Parent != null)
+						ip.Parent[ip.Parent.Count - 1].Value = true;
+					RaiseEvent ("magix.execute", e.Params);
+				}
+			}
+			else
+			{
+				if (Expressions.ExpressionExist (expr, ip, dp))
+				{
+					if (ip.Parent != null)
+						ip.Parent[ip.Parent.Count - 1].Value = true;
+					RaiseEvent ("magix.execute", e.Params);
+				}
+			}
 		}
 
 		private void ExecuteIf(string expr, Node ip, Node dp, Node parms)
@@ -146,8 +167,8 @@ namespace Magix.execute
 			if (!e.Params.Contains ("_ip"))
 			{
 				e.Params.Name = "else-if";
-				e.Params["raise"].Value = "magix.core.show-message";
-				e.Params["raise"]["params"]["Message"].Value = "Message...";
+				e.Params["raise"].Value = "magix.viewport.show-message";
+				e.Params["raise"]["params"]["message"].Value = "Message...";
 				return;
 			}
 			Node ip = e.Params["_ip"].Value as Node;
@@ -170,8 +191,8 @@ namespace Magix.execute
 			if (!e.Params.Contains ("_ip"))
 			{
 				e.Params.Name = "else";
-				e.Params["raise"].Value = "magix.core.show-message";
-				e.Params["raise"]["params"]["Message"].Value = "Message...";
+				e.Params["raise"].Value = "magix.viewport.show-message";
+				e.Params["raise"]["params"]["message"].Value = "Message...";
 				return;
 			}
 			Node ip = e.Params["_ip"].Value as Node;
@@ -190,13 +211,13 @@ namespace Magix.execute
 		/**
 		 */
 		[ActiveEvent(Name = "magix.execute.raise")]
-		public void magix_execute_call (object sender, ActiveEventArgs e)
+		public void magix_execute_raise (object sender, ActiveEventArgs e)
 		{
 			if (!e.Params.Contains ("_ip"))
 			{
 				e.Params.Name = "raise";
-				e.Params.Value = "magix.core.show-message";
-				e.Params["params"]["Message"].Value = "Either directly embedded 'params'...";
+				e.Params.Value = "magix.viewport.show-message";
+				e.Params["params"]["message"].Value = "Either directly embedded 'params'...";
 				e.Params["context"].Value = "[./][OrSomeDataContainingArgs]";
 				return;
 			}
@@ -264,11 +285,20 @@ namespace Magix.execute
 			if (right.IndexOf ("\"") == 0)
 			{
 				right = right.Substring (1, right.Length - 2);
-				right = right.Replace ("\\\"", "\"").Replace ("\\n", "\r\n");
+				right = right.Replace ("\\\"", "\"").Replace ("\\n", "\r\n").Replace ("\\\"", "\"");
+				Expressions.SetNodeValue (left, right, dp, ip);
 			}
-			Expressions.SetNodeValue (left, right, dp, ip);
+			else if (right == "null")
+			{
+				Expressions.Empty (left, dp, ip);
+			}
+			else
+			{
+				Expressions.SetNodeValue (left, right, dp, ip);
+			}
 		}
 
+		// TODO: Is this not necessary, does set do the same ...?
 		/**
 		 */
 		[ActiveEvent(Name = "magix.execute.remove")]
@@ -286,51 +316,6 @@ namespace Magix.execute
 			string path = ip.Get<string>();
 
 			Expressions.Remove (path, dp, ip);
-		}
-
-		/**
-		 */
-		[ActiveEvent(Name = "magix.execute.empty")]
-		public void magix_execute_empty (object sender, ActiveEventArgs e)
-		{
-			if (!e.Params.Contains ("_ip"))
-			{
-				e.Params.Name = "empty";
-				e.Params.Value = "[Data]";
-				return;
-			}
-			Node ip = e.Params["_ip"].Value as Node;
-			Node dp = e.Params["_dp"].Value as Node;
-
-			string path = ip.Get<string>();
-
-			Expressions.Empty (path, dp, ip);
-		}
-
-		/**
-		 */
-		[ActiveEvent(Name = "magix.execute.if-exist")]
-		public void magix_execute_if_exist (object sender, ActiveEventArgs e)
-		{
-			if (!e.Params.Contains ("_ip"))
-			{
-				e.Params.Name = "if-exist";
-				e.Params.Value = "[Data]";
-				return;
-			}
-			Node ip = e.Params["_ip"].Value as Node;
-			Node dp = e.Params["_dp"].Value as Node;
-
-			if (Expressions.ExpressionExist (ip.Get<string>(), dp, ip))
-			{
-				foreach (Node idx in dp)
-				{
-					Node tmp2 = new Node();
-					tmp2["_ip"].Value = ip;
-					tmp2["_dp"].Value = dp;
-					RaiseEvent ("magix.execute", tmp2);
-				}
-			}
 		}
 
 		[ActiveEvent(Name = "magix.core._transform-node-2-code")]
@@ -386,7 +371,7 @@ namespace Magix.execute
 				e.Params["Code"].Value = @"if=>[Data].Value = ""thomas""
   call=>Magix.Core.ShowMessage
     params
-      Message=>Howdy dudes!!";
+      message=>Howdy dudes!!";
 				return;
 			}
 			string txt = e.Params["Code"].Get<string>();
