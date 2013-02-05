@@ -37,7 +37,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <ProjectReference Include="..\Magix.Core\Magix.Core.csproj">
+    <ProjectReference Include="..\Magix.core\Magix.Core.csproj">
       <Project>{11376D5F-13BD-4529-BA92-DDE415B96220}</Project>
       <Name>Magix.Core</Name>
     </ProjectReference>
