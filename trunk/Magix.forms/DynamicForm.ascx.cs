@@ -447,6 +447,15 @@ namespace Magix.forms
         [ActiveEvent(Name = "magix.forms.get-value")]
 		protected void magix_forms_get_value (object sender, ActiveEventArgs e)
 		{
+			if (e.Params.Contains ("describe"))
+			{
+				e.Params["describe"].Value = @"Expects a ""form-id"" and an ""id""
+node, which if the ""form-id"" node matches the form id of this form, used
+for looking up the Value of the given web control with the given ""id"".
+The value of the web control will be returned in the ""value"" node, and might
+not necessarily be a string, but can also be of other types.";
+				return;
+			}
 			if (!e.Params.Contains ("id") || !e.Params.Contains ("form-id"))
 			{
 				e.Params["id"].Value = "idOfControlInForm";

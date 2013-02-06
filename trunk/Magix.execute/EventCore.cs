@@ -48,9 +48,19 @@ namespace Magix.execute
 		[ActiveEvent(Name = "magix.core.application-startup")]
 		public static void magix_core_application_startup (object sender, ActiveEventArgs e)
 		{
+			if (e.Params.Contains ("describe"))
+			{
+				e.Params["describe"].Value = @"Called during startup
+of application to make sure our Active Events, 
+which are dynamically tied towards serialized 
+magix.execute blocks of code are being correctly 
+re-mapped.";
+				return;
+			}
 			if (!e.Params.Contains ("initial-startup-of-process"))
 			{
 				e.Params["initial-startup-of-process"].Value = null;
+				return;
 			}
 			using (IObjectContainer db = Db4oFactory.OpenFile(_dbFile))
 			{
@@ -69,6 +79,14 @@ namespace Magix.execute
 		[ActiveEvent(Name = "magix.execute.override-event")]
 		public void magix_execute_override_event (object sender, ActiveEventArgs e)
 		{
+			if (e.Params.Contains ("describe"))
+			{
+				e.Params["describe"].Value = @"Overrides the active event in ""event""
+with either the code in ""code"" or the code pointed
+to from the ""context"" Value's expression. Is callable directly
+as a 'magix.execute' keyword.";
+				return;
+			}
 			Node ip = e.Params;
 			if (e.Params.Contains ("_ip"))
 				ip = e.Params["_ip"].Value as Node;
@@ -146,6 +164,12 @@ namespace Magix.execute
 		[ActiveEvent(Name = "magix.execute.remove-override")]
 		public void magix_execute_remove_override (object sender, ActiveEventArgs e)
 		{
+			if (e.Params.Contains ("describe"))
+			{
+				e.Params["describe"].Value = @"Removes and deletes the active event
+found in the ""event"" child node.";
+				return;
+			}
 			if (!e.Params.Contains ("event"))
 			{
 				e.Params["event"].Value = "Name of active event to remove";

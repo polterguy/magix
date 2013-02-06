@@ -48,13 +48,27 @@ namespace Magix.execute
 		[ActiveEvent(Name = "magix.data.save")]
 		public void magix_data_save (object sender, ActiveEventArgs e)
 		{
+			if (e.Params.Contains ("describe"))
+			{
+				e.Params["describe"].Value = @"Will save the given given ""object"" node,
+OR the given ""context"" node's Value, which should be an expression, pointing to
+a node, which will become saved in its entirety.";
+				return;
+			}
 			if (!e.Params.Contains ("key"))
 			{
 				e.Params["key"].Value = "unique-key-of-object-to-save";
 				e.Params["object"].Value = "nodes from here and down will be saved";
+				e.Params["context"].Value = "[Or][Some][Node][Somewhere]";
 				return;
 			}
-			Node value = e.Params["object"];
+			Node value = null;
+			if (!e.Params.Contains ("object") && e.Params.Contains ("context"))
+				value = Expressions.GetExpressionValue(e.Params["context"].Get<string>(), e.Params, e.Params) as Node;
+			else if (e.Params.Contains ("object"))
+				value = e.Params["object"];
+			else
+				throw new ArgumentException("Either context or object must be defined before calling magix.data.save");
 			Node parent = value.Parent;
 			value.Parent = null;
 			new DeterministicExecutor(
@@ -93,10 +107,30 @@ namespace Magix.execute
 		[ActiveEvent(Name = "magix.data.load")]
 		public void magix_data_load (object sender, ActiveEventArgs e)
 		{
+			if (e.Params.Contains ("describe"))
+			{
+				e.Params["describe"].Value = @"Will load the object from the data storage
+with the given ""key"" node into the ""object"" child return node, 
+or the given ""context"" pointer to a node, which will be 
+transformed into the returned object from the data storage.";
+				return;
+			}
 			if (!e.Params.Contains ("key"))
 			{
 				e.Params["key"].Value = "unique-key-of-object-to-load";
 				return;
+			}
+			Node context = null;
+			if (e.Params.Contains ("context"))
+			{
+				context = Expressions.GetExpressionValue (
+					e.Params["context"].Get<string>(), 
+					e.Params, 
+					e.Params) as Node;
+			}
+			else
+			{
+				context = e.Params["object"];
 			}
 			using (IObjectContainer db = Db4oFactory.OpenFile(_dbFile))
 			{
@@ -106,12 +140,11 @@ namespace Magix.execute
 
 				foreach (Storage idx in db.QueryByExample (new Storage(null, key)))
 				{
-					e.Params["object"].ReplaceChildren (idx.Node);
-					e.Params["object"].Value = idx.Node.Value;
-					db.Commit ();
+					context.ReplaceChildren (idx.Node);
+					context.Value = idx.Node.Value;
+					context.Name = idx.Node.Name;
 					return;
 				}
-				db.Commit ();
 			}
 		}
 
@@ -120,12 +153,17 @@ namespace Magix.execute
 		[ActiveEvent(Name = "magix.data.count")]
 		public void magix_data_count (object sender, ActiveEventArgs e)
 		{
+			if (e.Params.Contains ("describe"))
+			{
+				e.Params["describe"].Value = @"Will return the number of objects
+that exists in the data storage.";
+				return;
+			}
 			using (IObjectContainer db = Db4oFactory.OpenFile(_dbFile))
 			{
 				db.Ext ().Configure ().UpdateDepth (1000);
 				db.Ext ().Configure ().ActivationDepth (1000);
 				e.Params["count"].Value = db.QueryByExample (new Storage(null, null)).Count;
-				db.Commit ();
 			}
 		}
 	}

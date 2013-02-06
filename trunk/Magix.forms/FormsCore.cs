@@ -20,6 +20,17 @@ namespace Magix.execute
 		[ActiveEvent(Name = "magix.forms.create-form")]
 		public void magix_forms_create_form (object sender, ActiveEventArgs e)
 		{
+			if (e.Params.Contains ("describe"))
+			{
+				e.Params["describe"].Value = @"Creates a dynamic form
+and loading it into the ""container"" viewport container. ""form-id""
+must be a uniquely identifiable id for later use. Either ""controls""
+contains the controls themselves, wuch as ""Button"" nodes, etc, 
+or the ""context"" path contains a Value expression that points to 
+a place in the data hierarchy where the code for the form is.
+Functions as a ""magix.executor"" keyword.";
+				return;
+			}
 			if (!e.Params.Contains ("container") || !e.Params.Contains ("form-id"))
 			{
 				e.Params["container"].Value = "content2";

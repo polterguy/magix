@@ -47,6 +47,12 @@ namespace Magix.viewports
         [ActiveEvent(Name = "magix.viewport.show-message")]
 		protected void magix_viewport_show_message (object sender, ActiveEventArgs e)
 		{
+			if (e.Params.Contains ("describe"))
+			{
+				e.Params["describe"].Value = @"Shows a message box to the 
+end user for some seconds.";
+				return;
+			}
 			if (e.Params.Count == 0 || !e.Params.Contains ("message"))
 			{
 				e.Params["message"].Value = "Message to show to End User";
@@ -76,6 +82,12 @@ namespace Magix.viewports
         [ActiveEvent(Name = "magix.viewport.clear-controls")]
 		protected void magix_viewport_clear_controls (object sender, ActiveEventArgs e)
 		{
+			if (e.Params.Contains ("describe"))
+			{
+				e.Params["describe"].Value = @"Will empty the given ""container""
+viewport container for all of its controls. Unloads a container for controls.";
+				return;
+			}
 			if (!e.Params.Contains ("container") || 
 			    string.IsNullOrEmpty (e.Params ["container"].Get<string> ()))
 			{
@@ -98,6 +110,15 @@ namespace Magix.viewports
         [ActiveEvent(Name = "magix.viewport.load-module")]
 		protected void magix_viewport_load_module (object sender, ActiveEventArgs e)
 		{
+			if (e.Params.Contains ("describe"))
+			{
+				e.Params["describe"].Value = @"Loads an active module into the 
+given ""container"" viewport container. The module name must be defined in 
+the ""name"" node. If ""context"" is given, this will be passed into
+the loading of the module, and used for initialization of the module.
+Else the incoming parameters will be used.";
+				return;
+			}
 			if (!e.Params.Contains ("container") || 
 			    string.IsNullOrEmpty (e.Params ["container"].Get<string> ()))
 			{
