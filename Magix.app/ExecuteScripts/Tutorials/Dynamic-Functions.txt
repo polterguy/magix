@@ -1,0 +1,27 @@
+Method: magix.execute
+
+inspect=>@"Demonstrates how to create two
+new dynamic function called ""foo"" and ""bar"".
+One of them have the code embedded inline as 
+""params"" to the invocation, the other uses
+the ""context"" override, to point to a code
+hierarchy elsewhere in the node tree."
+
+Data
+  Code1
+    Value1=>thomas
+    if=>[Value1].Value==thomas
+      raise=>magix.viewport.show-message
+        params
+          message=>Hi Thomas!!
+override-event
+  event=>foo
+  context=>[Data][Code1]
+override-event
+  event=>bar
+  code
+    Value1=>thomas
+    if=>[Value1].Value==thomas
+      raise=>magix.viewport.show-message
+        params
+          message=>Still there Thomas?

@@ -117,12 +117,12 @@ as a ""magix.execute"" keyword.";
 			}
 			else if (ip.Contains ("context"))
 			{
-				Node tmp = Expressions.GetExpressionValue (ip.Get<string>(), dp, ip) as Node;
+				Node tmp = Expressions.GetExpressionValue (ip["context"].Get<string>(), dp, ip) as Node;
 				dp = tmp;
 			}
 
 			Node parent = dp.Parent;
-
+			dp.Parent = null;
 			new DeterministicExecutor(
 			delegate
 				{

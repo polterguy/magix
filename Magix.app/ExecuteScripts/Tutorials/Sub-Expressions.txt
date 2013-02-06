@@ -10,6 +10,7 @@ element."
 Data
   Name=>DataNode
   DataNode=>42
+  OutputNodeName=>Output
 Buffer
-set=>[Buffer][Output].Value
+set=>[Buffer][[Data][OutputNodeName].Value].Value
   value=>[Data][[Data][[Data][Name].Name].Value].Value
