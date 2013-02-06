@@ -1,0 +1,26 @@
+Method: magix.execute
+
+inspect=>@"Demonstrates how the [.] and [.ip]
+pointers works in regards to ""for-each"" statements."
+
+Data
+  List
+    Item1=>Hi there Thomas Hansen
+    Item2=>Howdy John Doe!
+    Item3=>Mohammed Ali I presume ...?
+    Item4=>21st Century Schizoid Man!!!
+Buffer
+for-each=>[Data][List]
+  set=>[WasHere].Value
+    value=>True
+  set=>[/][Buffer][tmpValue].Value
+    value=>[.].Name
+  set=>[/][Buffer][tmpValue].Value
+    value=>[.].Value
+  set=>[/][Buffer][tmpValue].Name
+    value=>[.].Name
+  set=>[/][Buffer][tmpValue].Value
+    value=>null
+  set=>[/][Buffer].Value
+    value=>[.ip][value].Value
+remove=>[Buffer][tmpValue]

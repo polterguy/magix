@@ -1,0 +1,18 @@
+Method: magix.execute
+
+inspect=>@"Demonstrates how to remove a specific Node
+from the node hierarchy."
+
+Data
+  List
+    Item1
+      Description=>Hi there Thomas Hansen
+    Item2
+      Description=>Howdy John Doe!
+    Item3
+      Description=>Mohammed Ali I presume ...?
+    Item4
+      Description=>21st Century Schizoid Man!!!
+remove=>[Data][List][Item1]
+remove=>[Data][List][Item4]
+remove=>[Data][List][0]

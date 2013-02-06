@@ -1,0 +1,32 @@
+Method: magix.execute
+
+inspect=>@"Executes 5 different ""set"" operations
+with different types of syntax. Named nodes, index
+of nodes, setting Value, Name and node set of children.
+Also demonstrates the [.ip] and [/] retrievers, and
+the creation of child nodes through copying."
+
+Data
+  List
+    Item1
+      Description=>Hi there Thomas Hansen
+    Item2
+      Description=>Howdy John Doe!
+    Item3
+      Description=>Mohammed Ali I presume ...?
+    Item4
+      Description=>21st Century Schizoid Man!!!
+      SomethingElse
+        AndYetAgainNewNodesHere=>Howdy .....
+      SomethingDifferent=>Howdy there ...
+Buffer
+set=>[/][Buffer][first-set].Value
+  value=>[/][Data][List][Item1][Description].Value
+set=>[/][Buffer][second-set].Value
+  value=>[/][Data][List][2][Description].Value
+set=>[/][Buffer][third-set].Value
+  value=>[.ip].Value
+set=>[/][Buffer][fourth-set][TagName].Value
+  value=>[/][Data][List][2].Name
+set=>[/][Buffer][fifth-set]
+  value=>[/][Data][List][Item4]
