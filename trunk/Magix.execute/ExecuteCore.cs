@@ -22,8 +22,10 @@ namespace Magix.execute
 		{
 			if (e.Params.Contains ("inspect"))
 			{
-				e.Params["raise"].Value = "magix.viewport.show-message";
-				e.Params["raise"]["params"]["message"].Value = "Hi Thomas!";
+				e.Params["Data"]["Value"].Value = "thomas";
+				e.Params["if"].Value = "[Data][Value].Value==thomas";
+				e.Params["if"]["raise"].Value = "magix.viewport.show-message";
+				e.Params["if"]["raise"]["params"]["message"].Value = "Hi Thomas!";
 				e.Params["inspect"].Value = @"Executes all the children nodes
 expecting them to be callable keywords, directly embedded into
 the ""magix.execute"" namespace, such that they become extensions

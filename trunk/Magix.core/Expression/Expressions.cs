@@ -223,8 +223,6 @@ namespace Magix.Core
             else if (lastEntity == "")
 			{
 				x.ReplaceChildren((valueToSet as Node).Clone ());
-				x.Name = (valueToSet as Node).Name;
-				x.Value = (valueToSet as Node).Value;
 			}
             else
                 throw new ArgumentException("Couldn't understand the last parts of your expression '" + lastEntity + "'");
@@ -246,8 +244,6 @@ namespace Magix.Core
             else if (lastEntity == "")
 			{
 				x.ReplaceChildren(source.Clone ());
-				x.Name = source.Name;
-				x.Value = source.Value;
 			}
             else
                 throw new ArgumentException("Couldn't understand the last parts of your expression '" + lastEntity + "'");
