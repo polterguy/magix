@@ -27,6 +27,16 @@ namespace Magix.execute
 			}
 			else
 			{
+				if (e.Params.Contains ("describe"))
+				{
+					e.Params["describe"].Value = @"Executes all the children nodes
+expecting them to be callable keywords, directly embedded into
+the ""magix.execute"" namespace, such that they become extensions
+of the execution engine itself. Will internally keep a list
+pointer to where the code/instruction-pointer is, and where the
+data-pointer is, which is relevant for most other execution statements.";
+					return;
+				}
 				Node ip = e.Params;
 				if (e.Params.Contains ("_ip"))
 					ip = e.Params["_ip"].Value as Node;
@@ -67,6 +77,20 @@ namespace Magix.execute
 		[ActiveEvent(Name = "magix.execute.if")]
 		public void magix_execute_if (object sender, ActiveEventArgs e)
 		{
+			if (e.Params.Contains ("describe"))
+			{
+				e.Params["describe"].Value = @"Checks to see if the current 
+statement is returning true, and if so, executes the underlaying nodes
+as code through ""magix.execute"", expecting them to be keywords to
+the execution engine. You can either compare a node expression
+with another node expression, a node expression with a
+constant value or a single node expression for existence of 
+Node itself, Value or Name. Operators you can use are '!=', '==', '>=',
+'<=', '>' and '<' when comparing two nodes or one node and 
+a constant, and '!' in front of operator if only one 
+expression is given to check for existence to negate the value.";
+				return;
+			}
 			if (!e.Params.Contains ("_ip")) {
 				e.Params.Name = "if";
 				e.Params.Value = "[Data][Item1].Value=\"thomas\"";
@@ -164,6 +188,21 @@ namespace Magix.execute
 		[ActiveEvent(Name = "magix.execute.else-if")]
 		public void magix_execute_else_if (object sender, ActiveEventArgs e)
 		{
+			if (e.Params.Contains ("describe"))
+			{
+				e.Params["describe"].Value = @"If no previous ""if"" statement,
+or ""else-if"" statement has returned true, will check to see if the current 
+statement is returning true, and if so, executes the underlaying nodes
+as code through ""magix.execute"", expecting them to be keywords to
+the execution engine. You can either compare a node expression
+with another node expression, a node expression with a
+constant value or a single node expression for existence of 
+Node itself, Value or Name. Operators you can use are '!=', '==', '>=',
+'<=', '>' and '<' when comparing two nodes or one node and 
+a constant, and '!' in front of operator if only one 
+expression is given to check for existence to negate the value.";
+				return;
+			}
 			if (!e.Params.Contains ("_ip"))
 			{
 				e.Params.Name = "else-if";
@@ -188,6 +227,14 @@ namespace Magix.execute
 		[ActiveEvent(Name = "magix.execute.else")]
 		public void magix_execute_else (object sender, ActiveEventArgs e)
 		{
+			if (e.Params.Contains ("describe"))
+			{
+				e.Params["describe"].Value = @"If no previous ""if"" statement,
+or ""else-if"" statement has returned true, execute the underlaying nodes
+as code through ""magix.execute"", expecting them to be keywords to
+the execution engine.";
+				return;
+			}
 			if (!e.Params.Contains ("_ip"))
 			{
 				e.Params.Name = "else";
@@ -213,6 +260,15 @@ namespace Magix.execute
 		[ActiveEvent(Name = "magix.execute.raise")]
 		public void magix_execute_raise (object sender, ActiveEventArgs e)
 		{
+			if (e.Params.Contains ("describe"))
+			{
+				e.Params["describe"].Value = @"Will raise the current node's Value
+as an active event, passing in either the ""context"" Node 
+Expression as the parameters to the active event, or the 
+""params"" child collection. Functions as a ""magix.execute""
+keyword.";
+				return;
+			}
 			if (!e.Params.Contains ("_ip"))
 			{
 				e.Params.Name = "raise";
@@ -243,6 +299,15 @@ namespace Magix.execute
 		[ActiveEvent(Name = "magix.execute.for-each")]
 		public void magix_execute_for_each (object sender, ActiveEventArgs e)
 		{
+			if (e.Params.Contains ("describe"))
+			{
+				e.Params["describe"].Value = @"Will loop through all the given 
+node's Value Expression, and execute the underlaying code, once for 
+all nodes in the returned expression, with the Data-Pointer pointing
+to the index node currently being looped through. Is a ""magix.execute""
+keyword.";
+				return;
+			}
 			if (!e.Params.Contains ("_ip"))
 			{
 				e.Params.Name = "for-each";
@@ -270,40 +335,67 @@ namespace Magix.execute
 		[ActiveEvent(Name = "magix.execute.set")]
 		public void magix_execute_set (object sender, ActiveEventArgs e)
 		{
+			if (e.Params.Contains ("describe"))
+			{
+				e.Params["describe"].Value = @"Sets given node in the Data-Pointer
+found from the Value as a node expression to either the constant value
+of the child node called ""value"", a node expression found in ""value""
+child node, or the children nodes of the ""value"" child. Functions as 
+a ""magix.execute"" keyword.";
+				return;
+			}
 			if (!e.Params.Contains ("_ip"))
 			{
 				e.Params.Name = "set";
-				e.Params.Value = "[Data][Children]=[DataBackup][Children]";
+				e.Params.Value = "[Data][Children]";
+				e.Params["value"].Value = @"@""Here you can type in either
+a static value, either as a string, null, or anything else, or you
+can have a node expression, in which case whatever the node 
+expression returns, will be cloned and copied into the 
+node expression of the Value in the Instruction-Pointer"". Or
+if the ""value"" node's Value is empty, the child nodes
+to copy into the destination will be expected to be found 
+underneath the ""value"" node as children, at which point
+obviously the Value expression must point to a node set.";
 				return;
 			}
 			Node ip = e.Params["_ip"].Value as Node;
 			Node dp = e.Params["_dp"].Value as Node;
 
-			string left = ip.Get<string>().Split ('=')[0].TrimEnd ();
-			string right = ip.Get<string>().Substring (ip.Get<string>().IndexOf ("=") + 1).TrimStart ();
+			string left = ip.Get<string>();
 
-			if (right.IndexOf ("\"") == 0)
+			if (ip.Contains ("value"))
 			{
-				right = right.Substring (1, right.Length - 2);
-				right = right.Replace ("\\\"", "\"").Replace ("\\n", "\r\n").Replace ("\\\"", "\"");
-				Expressions.SetNodeValue (left, right, dp, ip);
-			}
-			else if (right == "null")
-			{
-				Expressions.Empty (left, dp, ip);
+				string right = ip["value"].Get<string>();
+				if (right == "null")
+				{
+					Expressions.Empty (left, dp, ip);
+				}
+				else if (!string.IsNullOrEmpty (right))
+				{
+					Expressions.SetNodeValue (left, right, dp, ip);
+				}
+				else
+				{
+					Expressions.SetNodeValue(left, ip["value"]);
+				}
 			}
 			else
-			{
-				Expressions.SetNodeValue (left, right, dp, ip);
-			}
+				throw new ArgumentException("No value passed into magix.execute.set");
 		}
 
-		// TODO: Is this not necessary, does set do the same ...?
 		/**
 		 */
 		[ActiveEvent(Name = "magix.execute.remove")]
 		public void magix_execute_remove (object sender, ActiveEventArgs e)
 		{
+			if (e.Params.Contains ("describe"))
+			{
+				e.Params["describe"].Value = @"Removes the node pointed to
+in the Value of the remove node, which is expected to be a Node Expression,
+returning a node list. Functions as a ""margix.executor"" keyword.";
+				return;
+			}
 			if (!e.Params.Contains ("_ip"))
 			{
 				e.Params.Name = "remove";

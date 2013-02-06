@@ -69,6 +69,13 @@ event, where the ""ToolTip"" will contain the original event name.";
 		[ActiveEvent(Name = "magix.admin.open-event-viewer")]
 		public void magix_admin_open_event_viewer (object sender, ActiveEventArgs e)
 		{
+			if (e.Params.Contains ("describe"))
+			{
+				e.Params["describe"].Value = @"Will open the Active Event Executor, from which
+you can run Active Events and inspect them and do other Meta/Admin Operations. Also
+serves like a development environment from which you can start at.";
+				return;
+			}
 			if (!e.Params.Contains ("container"))
 			{
 				e.Params["container"].Value = "content1";

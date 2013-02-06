@@ -20,6 +20,15 @@ namespace Magix.SampleController
 		[ActiveEvent(Name = "magix.viewport.page-load")]
 		public void magix_viewport_page_load (object sender, ActiveEventArgs e)
 		{
+			if (e.Params.Contains ("describe"))
+			{
+				e.Params["describe"].Value = @"This active event is being 
+raised upon initial loading of a page, and is kind of the doorway event
+from which everything else occurs as a consequence of. This is where you
+lload up your default forms and such. Remove this controller, and replace 
+with your own page-load handling logic to create your own applications.";
+				return;
+			}
 			if (!e.Params.Contains ("initial-load"))
 			{
 				e.Params["initial-load"].Value = null;
