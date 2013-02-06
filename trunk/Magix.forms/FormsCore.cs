@@ -20,24 +20,21 @@ namespace Magix.execute
 		[ActiveEvent(Name = "magix.forms.create-form")]
 		public void magix_forms_create_form (object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains ("describe"))
+			if (e.Params.Contains ("inspect"))
 			{
-				e.Params["describe"].Value = @"Creates a dynamic form
-and loading it into the ""container"" viewport container. ""form-id""
-must be a uniquely identifiable id for later use. Either ""controls""
-contains the controls themselves, wuch as ""Button"" nodes, etc, 
-or the ""context"" path contains a Value expression that points to 
-a place in the data hierarchy where the code for the form is.
-Functions as a ""magix.executor"" keyword.";
-				return;
-			}
-			if (!e.Params.Contains ("container") || !e.Params.Contains ("form-id"))
-			{
+				e.Params["Forms"]["Form1"]["controls"]["Button"].Value = "btn";
+				e.Params["Forms"]["Form1"]["controls"]["Button"]["Text"].Value = "Hello World2!!";
 				e.Params["container"].Value = "content2";
 				e.Params["form-id"].Value = "unique-identification-of-your-form";
 				e.Params["controls"]["Button"].Value = "btn";
 				e.Params["controls"]["Button"]["Text"].Value = "Hello World!";
-				e.Params["context"].Value = "[OR][Path][To][Form]";
+				e.Params["context"].Value = "[Forms][Form1]";
+				e.Params["inspect"].Value = @"Creates a dynamic form
+and loading it into the ""container"" viewport container. ""form-id""
+must be a uniquely identifiable id for later use. Either ""controls""
+contains the controls themselves, such as ""Button"" nodes, etc, 
+or the ""context"" path contains a Value expression that points to 
+a place in the data hierarchy where the code for the form is.";
 				return;
 			}
 			Node formContent = e.Params;

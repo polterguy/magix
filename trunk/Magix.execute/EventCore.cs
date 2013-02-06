@@ -48,18 +48,14 @@ namespace Magix.execute
 		[ActiveEvent(Name = "magix.core.application-startup")]
 		public static void magix_core_application_startup (object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains ("describe"))
+			if (e.Params.Contains ("inspect"))
 			{
-				e.Params["describe"].Value = @"Called during startup
+				e.Params["initial-startup-of-process"].Value = null;
+				e.Params["inspect"].Value = @"Called during startup
 of application to make sure our Active Events, 
 which are dynamically tied towards serialized 
 magix.execute blocks of code are being correctly 
-re-mapped.";
-				return;
-			}
-			if (!e.Params.Contains ("initial-startup-of-process"))
-			{
-				e.Params["initial-startup-of-process"].Value = null;
+re-mapped. ""initial-startup-of-process"" must exists to run event.";
 				return;
 			}
 			using (IObjectContainer db = Db4oFactory.OpenFile(_dbFile))
@@ -79,9 +75,19 @@ re-mapped.";
 		[ActiveEvent(Name = "magix.execute.override-event")]
 		public void magix_execute_override_event (object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains ("describe"))
+			if (e.Params.Contains ("inspect"))
 			{
-				e.Params["describe"].Value = @"Overrides the active event in ""event""
+				e.Params["Data"].Value = "thomas";
+				e.Params["Backup"].Value = "thomas";
+				e.Params["OR"]["Path2Code"]["if"].Value = "[Data].Value==[Backup].Value";
+				e.Params["OR"]["Path2Code"]["if"]["raise"].Value = "magix.viewport.show-message";
+				e.Params["OR"]["Path2Code"]["if"]["raise"]["params"]["message"].Value = "Howdy lady!!!";
+				e.Params["event"].Value = "foo-bar";
+				e.Params["code"]["if"].Value = "[Data].Value==[Backup].Value";
+				e.Params["code"]["if"]["raise"].Value = "magix.viewport.show-message";
+				e.Params["code"]["if"]["raise"]["params"]["message"].Value = "Howdy boy!!";
+				e.Params["context"].Value = "[OR][Path2Code]";
+				e.Params["inspect"].Value = @"Overrides the active event in ""event""
 with either the code in ""code"" or the code pointed
 to from the ""context"" Value's expression. Is callable directly
 as a 'magix.execute' keyword.";
@@ -94,14 +100,6 @@ as a 'magix.execute' keyword.";
 			Node dp = e.Params;
 			if (e.Params.Contains ("_dp"))
 				dp = e.Params["_dp"].Value as Node;
-
-			if (!ip.Contains ("event"))
-			{
-				ip["event"].Value = "Name of active event";
-				ip["code"].Value = "nodes from here and down will be saved as code and executed upon raising of event";
-				ip["context"].Value = "[OR][Here][Being][Some][Path]";
-				return;
-			}
 
 			string key = ip["event"].Get<string>();
 
@@ -164,15 +162,11 @@ as a 'magix.execute' keyword.";
 		[ActiveEvent(Name = "magix.execute.remove-override")]
 		public void magix_execute_remove_override (object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains ("describe"))
+			if (e.Params.Contains ("inspect"))
 			{
-				e.Params["describe"].Value = @"Removes and deletes the active event
+				e.Params["event"].Value = "foo-bar";
+				e.Params["inspect"].Value = @"Removes and deletes the active event
 found in the ""event"" child node.";
-				return;
-			}
-			if (!e.Params.Contains ("event"))
-			{
-				e.Params["event"].Value = "Name of active event to remove";
 				return;
 			}
 			using (IObjectContainer db = Db4oFactory.OpenFile(_dbFile))
@@ -214,8 +208,10 @@ found in the ""event"" child node.";
 						e.Params["event"].Value = e.Name;
 						e.Params["code"].Clear ();
 						e.Params["code"].AddRange (idx.Node);
-						e.Params["inspect"].UnTie ();
 						e.Params.Value = idx.Node.Value;
+						e.Params["inspect"].Value = @"This is a dynamically created
+active event, containing ""magix.executor"" code, meaning keywords from the executor.
+such that this serialized code will be called upon the raising of this event.";
 					}
 					else
 					{
