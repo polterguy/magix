@@ -48,18 +48,16 @@ namespace Magix.execute
 		[ActiveEvent(Name = "magix.data.save")]
 		public void magix_data_save (object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains ("describe"))
+			if (e.Params.Contains ("inspect"))
 			{
-				e.Params["describe"].Value = @"Will save the given given ""object"" node,
+				e.Params["Data"]["Content"].Value = "Or 'context' node!!!";
+				e.Params["key"].Value = "unique-key-id666";
+				e.Params["object"].Value = "nodes from here and down will be saved";
+				e.Params["object"]["message"].Value = "Use either 'object' node!!";
+				e.Params["context"].Value = "[Data]";
+				e.Params["inspect"].Value = @"Will save the given given ""object"" node,
 OR the given ""context"" node's Value, which should be an expression, pointing to
 a node, which will become saved in its entirety.";
-				return;
-			}
-			if (!e.Params.Contains ("key"))
-			{
-				e.Params["key"].Value = "unique-key-of-object-to-save";
-				e.Params["object"].Value = "nodes from here and down will be saved";
-				e.Params["context"].Value = "[Or][Some][Node][Somewhere]";
 				return;
 			}
 			Node value = null;
@@ -107,17 +105,14 @@ a node, which will become saved in its entirety.";
 		[ActiveEvent(Name = "magix.data.load")]
 		public void magix_data_load (object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains ("describe"))
+			if (e.Params.Contains ("inspect"))
 			{
-				e.Params["describe"].Value = @"Will load the object from the data storage
+				e.Params["key"].Value = "unique-key-of-object-to-load";
+				e.Params["context"].Value = "[OR][Expression][Pointing][ToNode][ResultSet]";
+				e.Params["inspect"].Value = @"Will load the object from the data storage
 with the given ""key"" node into the ""object"" child return node, 
 or the given ""context"" pointer to a node, which will be 
 transformed into the returned object from the data storage.";
-				return;
-			}
-			if (!e.Params.Contains ("key"))
-			{
-				e.Params["key"].Value = "unique-key-of-object-to-load";
 				return;
 			}
 			Node context = null;
@@ -153,10 +148,10 @@ transformed into the returned object from the data storage.";
 		[ActiveEvent(Name = "magix.data.count")]
 		public void magix_data_count (object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains ("describe"))
+			if (e.Params.Contains ("inspect"))
 			{
-				e.Params["describe"].Value = @"Will return the number of objects
-that exists in the data storage.";
+				e.Params["inspect"].Value = @"Will return the number of objects
+that exists in the data storage in the ""count"" child node. Takes no parameters.";
 				return;
 			}
 			using (IObjectContainer db = Db4oFactory.OpenFile(_dbFile))

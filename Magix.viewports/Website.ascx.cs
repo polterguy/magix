@@ -47,25 +47,19 @@ namespace Magix.viewports
         [ActiveEvent(Name = "magix.viewport.show-message")]
 		protected void magix_viewport_show_message (object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains ("describe"))
+			if (e.Params.Contains ("inspect"))
 			{
-				e.Params["describe"].Value = @"Shows a message box to the 
+				e.Params["message"].Value = "Message to show to End User";
+				e.Params["inspect"].Value = @"Shows a message box to the 
 end user for some seconds.";
 				return;
 			}
-			if (e.Params.Count == 0 || !e.Params.Contains ("message"))
-			{
-				e.Params["message"].Value = "Message to show to End User";
-			}
-			else
-			{
-				messageLabel.Text += "<p>" + e.Params["message"].Get<string>() + "</p>";
-				new EffectFadeIn(messageWrapper, 500)
-					.ChainThese (
-						new EffectTimeout(3000),
-						new EffectFadeOut(messageWrapper, 500))
-					.Render ();
-			}
+			messageLabel.Text += "<p>" + e.Params["message"].Get<string>() + "</p>";
+			new EffectFadeIn(messageWrapper, 500)
+				.ChainThese (
+					new EffectTimeout(3000),
+					new EffectFadeOut(messageWrapper, 500))
+				.Render ();
         }
 
         private void ClearControls(DynamicPanel dynamic)
@@ -82,25 +76,18 @@ end user for some seconds.";
         [ActiveEvent(Name = "magix.viewport.clear-controls")]
 		protected void magix_viewport_clear_controls (object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains ("describe"))
+			if (e.Params.Contains ("inspect"))
 			{
-				e.Params["describe"].Value = @"Will empty the given ""container""
+				e.Params["container"].Value = "content2";
+				e.Params["inspect"].Value = @"Will empty the given ""container""
 viewport container for all of its controls. Unloads a container for controls.";
 				return;
 			}
-			if (!e.Params.Contains ("container") || 
-			    string.IsNullOrEmpty (e.Params ["container"].Get<string> ()))
-			{
-				e.Params["container"].Value = "content1|content2";
-			}
-			else
-			{
-				DynamicPanel dyn = Selector.FindControl<DynamicPanel> (
-	                this, 
-	                e.Params ["container"].Get<string> ());
+			DynamicPanel dyn = Selector.FindControl<DynamicPanel> (
+                this, 
+                e.Params ["container"].Get<string> ());
 
-				ClearControls (dyn);
-			}
+			ClearControls (dyn);
 			Node node = new Node();
 			RaiseEvent ("magix.execute._event-override-removed", node);
 		}
@@ -110,38 +97,33 @@ viewport container for all of its controls. Unloads a container for controls.";
         [ActiveEvent(Name = "magix.viewport.load-module")]
 		protected void magix_viewport_load_module (object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains ("describe"))
+			if (e.Params.Contains ("inspect"))
 			{
-				e.Params["describe"].Value = @"Loads an active module into the 
+				e.Params["Data"]["Database"].Value = "localhost";
+				e.Params["name"].Value = "FullNameSpace.AndAlso.FullName_OfClassThatImplementsModule";
+				e.Params["container"].Value = "content2";
+				e.Params["context"].Value = "[Data]";
+				e.Params["inspect"].Value = @"Loads an active module into the 
 given ""container"" viewport container. The module name must be defined in 
 the ""name"" node. If ""context"" is given, this will be passed into
 the loading of the module, and used for initialization of the module.
 Else the incoming parameters will be used.";
 				return;
 			}
-			if (!e.Params.Contains ("container") || 
-			    string.IsNullOrEmpty (e.Params ["container"].Get<string> ()))
-			{
-				e.Params["name"].Value = "FullNameSpace.AndAlso.FullName_OfClassThatImplementsModule";
-				e.Params["container"].Value = "content1|content2";
-			}
-			else
-			{
-				string moduleName = e.Params ["name"].Get<string> ();
+			string moduleName = e.Params ["name"].Get<string> ();
 
-				DynamicPanel dyn = Selector.FindControl<DynamicPanel> (
-                	this, 
-                	e.Params ["container"].Get<string> ());
+			DynamicPanel dyn = Selector.FindControl<DynamicPanel> (
+            	this, 
+            	e.Params ["container"].Get<string> ());
 
-				Node context = e.Params;
+			Node context = e.Params;
 
-				if (e.Params.Contains ("context"))
-					context = Expressions.GetExpressionValue (
-						e.Params["context"].Get<string>(), e.Params, e.Params) as Node;
+			if (e.Params.Contains ("context"))
+				context = Expressions.GetExpressionValue (
+					e.Params["context"].Get<string>(), e.Params, e.Params) as Node;
 
-				ClearControls (dyn);
-				dyn.LoadControl (moduleName, context);
-			}
+			ClearControls (dyn);
+			dyn.LoadControl (moduleName, context);
 			Node node = new Node();
 			RaiseEvent ("magix.execute._event-overridden", node);
         }

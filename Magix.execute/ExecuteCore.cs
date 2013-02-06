@@ -20,56 +20,50 @@ namespace Magix.execute
 		[ActiveEvent(Name = "magix.execute")]
 		public void magix_execute (object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Count == 0)
+			if (e.Params.Contains ("inspect"))
 			{
 				e.Params["raise"].Value = "magix.viewport.show-message";
 				e.Params["raise"]["params"]["message"].Value = "Hi Thomas!";
-			}
-			else
-			{
-				if (e.Params.Contains ("describe"))
-				{
-					e.Params["describe"].Value = @"Executes all the children nodes
+				e.Params["inspect"].Value = @"Executes all the children nodes
 expecting them to be callable keywords, directly embedded into
 the ""magix.execute"" namespace, such that they become extensions
 of the execution engine itself. Will internally keep a list
 pointer to where the code/instruction-pointer is, and where the
 data-pointer is, which is relevant for most other execution statements.";
-					return;
-				}
-				Node ip = e.Params;
-				if (e.Params.Contains ("_ip"))
-					ip = e.Params["_ip"].Value as Node;
-
-				Node dp = e.Params;
-				if (e.Params.Contains ("_dp"))
-					dp = e.Params["_dp"].Value as Node;
-
-				ip["_state"].Value = null;
-
-				foreach (Node idx in ip)
-				{
-					string nodeName = idx.Name;
-
-					// Checking to see if it starts with a small letter
-					if ("abcdefghijklmnopqrstuvwxyz".IndexOf (nodeName[0]) != -1)
-					{
-						// This is a keyword
-						string eventName = "magix.execute." + nodeName;
-
-						Node tmp = new Node();
-
-						// "Instruction" pointer, code Node
-						tmp["_ip"].Value = idx;
-
-						// Data Pointer, pointer to data
-						tmp["_dp"].Value = dp;
-
-						RaiseEvent (eventName, tmp);
-					}
-				}
-				ip.Remove (ip["_state"]);
+				return;
 			}
+			Node ip = e.Params;
+			if (e.Params.Contains ("_ip"))
+				ip = e.Params["_ip"].Value as Node;
+
+			Node dp = e.Params;
+			if (e.Params.Contains ("_dp"))
+				dp = e.Params["_dp"].Value as Node;
+
+			ip["_state"].Value = null;
+
+			foreach (Node idx in ip)
+			{
+				string nodeName = idx.Name;
+
+				// Checking to see if it starts with a small letter
+				if ("abcdefghijklmnopqrstuvwxyz".IndexOf (nodeName[0]) != -1)
+				{
+					// This is a keyword
+					string eventName = "magix.execute." + nodeName;
+
+					Node tmp = new Node();
+
+					// "Instruction" pointer, code Node
+					tmp["_ip"].Value = idx;
+
+					// Data Pointer, pointer to data
+					tmp["_dp"].Value = dp;
+
+					RaiseEvent (eventName, tmp);
+				}
+			}
+			ip.Remove (ip["_state"]);
 		}
 
 		/**
@@ -77,9 +71,14 @@ data-pointer is, which is relevant for most other execution statements.";
 		[ActiveEvent(Name = "magix.execute.if")]
 		public void magix_execute_if (object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains ("describe"))
+			if (e.Params.Contains ("inspect"))
 			{
-				e.Params["describe"].Value = @"Checks to see if the current 
+				e.Params["Data"]["Item1"].Value = "Cache1";
+				e.Params["Data"]["Cache"].Value = null;
+				e.Params["if"].Value = "[Data][Item1].Value!=[Data][1].Name";
+				e.Params["if"]["raise"].Value = "magix.viewport.show-message";
+				e.Params["if"]["raise"] ["params"] ["message"].Value = "Message...";
+				e.Params["inspect"].Value = @"Checks to see if the current 
 statement is returning true, and if so, executes the underlaying nodes
 as code through ""magix.execute"", expecting them to be keywords to
 the execution engine. You can either compare a node expression
@@ -89,13 +88,6 @@ Node itself, Value or Name. Operators you can use are '!=', '==', '>=',
 '<=', '>' and '<' when comparing two nodes or one node and 
 a constant, and '!' in front of operator if only one 
 expression is given to check for existence to negate the value.";
-				return;
-			}
-			if (!e.Params.Contains ("_ip")) {
-				e.Params.Name = "if";
-				e.Params.Value = "[Data][Item1].Value=\"thomas\"";
-				e.Params ["raise"].Value = "magix.viewport.show-message";
-				e.Params ["raise"] ["params"] ["message"].Value = "Message...";
 				return;
 			}
 			Node dp = e.Params ["_dp"].Value as Node;
@@ -135,10 +127,11 @@ expression is given to check for existence to negate the value.";
 
 		private void ExecuteIf(string expr, Node ip, Node dp, Node parms)
 		{
-			string[] sections = expr.Split (' ');
-			string left = sections[0];
-			string comparison = sections[1];
-			string right = expr.Substring (left.Length + 2 + comparison.Length);
+			string left = expr.Substring (0, expr.IndexOfAny (new char[]{'=','>','<'}));;
+			string comparison = expr.Substring (left.Length, 2);
+			if (comparison[comparison.Length - 1] != '=')
+				comparison = comparison.Substring (0, 1);
+			string right = expr.Substring (expr.IndexOf (comparison) + comparison.Length);
 			if (right.IndexOf ("\"") == 0)
 			{
 				right = right.Substring (1);
@@ -188,9 +181,13 @@ expression is given to check for existence to negate the value.";
 		[ActiveEvent(Name = "magix.execute.else-if")]
 		public void magix_execute_else_if (object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains ("describe"))
+			if (e.Params.Contains ("inspect"))
 			{
-				e.Params["describe"].Value = @"If no previous ""if"" statement,
+				e.Params["Data"]["Node"].Value = null;
+				e.Params["else-if"].Value = "[Data][Node]";
+				e.Params["else-if"]["raise"].Value = "magix.viewport.show-message";
+				e.Params["else-if"]["raise"]["params"]["message"].Value = "Message...";
+				e.Params["inspect"].Value = @"If no previous ""if"" statement,
 or ""else-if"" statement has returned true, will check to see if the current 
 statement is returning true, and if so, executes the underlaying nodes
 as code through ""magix.execute"", expecting them to be keywords to
@@ -201,13 +198,6 @@ Node itself, Value or Name. Operators you can use are '!=', '==', '>=',
 '<=', '>' and '<' when comparing two nodes or one node and 
 a constant, and '!' in front of operator if only one 
 expression is given to check for existence to negate the value.";
-				return;
-			}
-			if (!e.Params.Contains ("_ip"))
-			{
-				e.Params.Name = "else-if";
-				e.Params["raise"].Value = "magix.viewport.show-message";
-				e.Params["raise"]["params"]["message"].Value = "Message...";
 				return;
 			}
 			Node ip = e.Params["_ip"].Value as Node;
@@ -227,19 +217,14 @@ expression is given to check for existence to negate the value.";
 		[ActiveEvent(Name = "magix.execute.else")]
 		public void magix_execute_else (object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains ("describe"))
+			if (e.Params.Contains ("inspect"))
 			{
-				e.Params["describe"].Value = @"If no previous ""if"" statement,
+				e.Params["else"]["raise"].Value = "magix.viewport.show-message";
+				e.Params["else"]["raise"]["params"]["message"].Value = "Message...";
+				e.Params["inspect"].Value = @"If no previous ""if"" statement,
 or ""else-if"" statement has returned true, execute the underlaying nodes
 as code through ""magix.execute"", expecting them to be keywords to
 the execution engine.";
-				return;
-			}
-			if (!e.Params.Contains ("_ip"))
-			{
-				e.Params.Name = "else";
-				e.Params["raise"].Value = "magix.viewport.show-message";
-				e.Params["raise"]["params"]["message"].Value = "Message...";
 				return;
 			}
 			Node ip = e.Params["_ip"].Value as Node;
@@ -260,21 +245,17 @@ the execution engine.";
 		[ActiveEvent(Name = "magix.execute.raise")]
 		public void magix_execute_raise (object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains ("describe"))
+			if (e.Params.Contains ("inspect"))
 			{
-				e.Params["describe"].Value = @"Will raise the current node's Value
+				e.Params["OR"]["Data"]["message"].Value = "Message from context";
+				e.Params["raise"].Value = "magix.viewport.show-message";
+				e.Params["raise"]["params"]["message"].Value = "Either directly embedded 'params'...";
+				e.Params["raise"]["context"].Value = "[OR][Data]";
+				e.Params["inspect"].Value = @"Will raise the current node's Value
 as an active event, passing in either the ""context"" Node 
 Expression as the parameters to the active event, or the 
 ""params"" child collection. Functions as a ""magix.execute""
 keyword.";
-				return;
-			}
-			if (!e.Params.Contains ("_ip"))
-			{
-				e.Params.Name = "raise";
-				e.Params.Value = "magix.viewport.show-message";
-				e.Params["params"]["message"].Value = "Either directly embedded 'params'...";
-				e.Params["context"].Value = "[./][OrSomeDataContainingArgs]";
 				return;
 			}
 			Node ip = e.Params["_ip"].Value as Node;
@@ -299,19 +280,18 @@ keyword.";
 		[ActiveEvent(Name = "magix.execute.for-each")]
 		public void magix_execute_for_each (object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains ("describe"))
+			if (e.Params.Contains ("inspect"))
 			{
-				e.Params["describe"].Value = @"Will loop through all the given 
+				e.Params["Data"]["Items"]["Item1"]["message"].Value = "Howdy World!";
+				e.Params["Data"]["Items"]["Item2"]["message"].Value = "Howdy World!";
+				e.Params["for-each"].Value = "[Data][Items]";
+				e.Params["for-each"]["raise"].Value = "magix.viewport.show-message";
+				e.Params["for-each"]["raise"]["context"].Value = "[.]";
+				e.Params["inspect"].Value = @"Will loop through all the given 
 node's Value Expression, and execute the underlaying code, once for 
 all nodes in the returned expression, with the Data-Pointer pointing
 to the index node currently being looped through. Is a ""magix.execute""
 keyword.";
-				return;
-			}
-			if (!e.Params.Contains ("_ip"))
-			{
-				e.Params.Name = "for-each";
-				e.Params.Value = "[Data][Items]";
 				return;
 			}
 			Node ip = e.Params["_ip"].Value as Node;
@@ -335,28 +315,15 @@ keyword.";
 		[ActiveEvent(Name = "magix.execute.set")]
 		public void magix_execute_set (object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains ("describe"))
+			if (e.Params.Contains ("inspect"))
 			{
-				e.Params["describe"].Value = @"Sets given node in the Data-Pointer
-found from the Value as a node expression to either the constant value
-of the child node called ""value"", a node expression found in ""value""
-child node, or the children nodes of the ""value"" child. Functions as 
-a ""magix.execute"" keyword.";
-				return;
-			}
-			if (!e.Params.Contains ("_ip"))
-			{
-				e.Params.Name = "set";
-				e.Params.Value = "[Data][Children]";
-				e.Params["value"].Value = @"@""Here you can type in either
-a static value, either as a string, null, or anything else, or you
-can have a node expression, in which case whatever the node 
-expression returns, will be cloned and copied into the 
-node expression of the Value in the Instruction-Pointer"". Or
-if the ""value"" node's Value is empty, the child nodes
-to copy into the destination will be expected to be found 
-underneath the ""value"" node as children, at which point
-obviously the Value expression must point to a node set.";
+				e.Params["Data"]["Children"].Value = "old value";
+				e.Params["set"].Value = "[Data][Children].Value";
+				e.Params["set"]["value"].Value = "new value";
+				e.Params["inspect"].Value = @"Sets given node to either the constant value
+of the Value of the child node called ""value"", a node expression found 
+in Value ""value"", or the children nodes of the ""value"" child, if the 
+left hand parts returns a node. Functions as a ""magix.execute"" keyword.";
 				return;
 			}
 			Node ip = e.Params["_ip"].Value as Node;
@@ -389,17 +356,13 @@ obviously the Value expression must point to a node set.";
 		[ActiveEvent(Name = "magix.execute.remove")]
 		public void magix_execute_remove (object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains ("describe"))
+			if (e.Params.Contains ("inspect"))
 			{
-				e.Params["describe"].Value = @"Removes the node pointed to
-in the Value of the remove node, which is expected to be a Node Expression,
+				e.Params["Data"]["NodeToRemove"].Value = "Will be removed ...";
+				e.Params["remove"].Value = "[Data][NodeToRemove]";
+				e.Params["inspect"].Value = @"Removes the node pointed to
+in the Value of the ""remove"" node, which is expected to be a Node Expression,
 returning a node list. Functions as a ""margix.executor"" keyword.";
-				return;
-			}
-			if (!e.Params.Contains ("_ip"))
-			{
-				e.Params.Name = "remove";
-				e.Params.Value = "[Data][NodeToRemove]";
 				return;
 			}
 			Node ip = e.Params["_ip"].Value as Node;
@@ -415,8 +378,7 @@ returning a node list. Functions as a ""margix.executor"" keyword.";
 		{
 			if (!e.Params.Contains ("JSON"))
 			{
-				e.Params["JSON"].Value = "JSON Node passes by reference of value here ...";
-				return;
+				throw new ArgumentException("No node JSON passed into transform-node-2-code");
 			}
 			string txt = "";
 			Node node = e.Params["JSON"].Value as Node;
@@ -484,12 +446,7 @@ returning a node list. Functions as a ""margix.executor"" keyword.";
 		{
 			if (!e.Params.Contains ("code"))
 			{
-				e.Params["code"].Value = @"if=>[Data].Value = thomas
-  call=>Magix.Core.ShowMessage
-    params
-      message=>@""Howdy dudes!!
-this is """"Reggie Boy"""" Talking!!""";
-				return;
+				throw new ArgumentException("No code node passed into _transform-code-2-node");
 			}
 			string txt = e.Params["code"].Get<string>();
 			Node ret = new Node();

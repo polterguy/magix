@@ -17,9 +17,9 @@ namespace Magix.admin
 		[ActiveEvent(Name = "magix.admin.get-active-events")]
 		public void magix_admin__get_active_events (object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains ("describe"))
+			if (e.Params.Contains ("inspect"))
 			{
-				e.Params["describe"].Value = @"Will return all the Active Events currently registered
+				e.Params["inspect"].Value = @"Will return all the Active Events currently registered
 within the system. Notice that this can CHANGE as the system runs, due to Event Overriding.
 Will return a list of events within the ""ActiveEvents"" node where the Value is the name
 of the Active Event you can raise. Underneath each event, it will contain a ""CSS"" node
@@ -27,7 +27,7 @@ which can have the value of ""error"", ""info"" and ""notice"". Error means it's
 System event, at which case you should be on the look-out, and alert. notice means it's an
 overridden and dynamically created event and info means it's a System event, an event in 
 Code that is. In addition it will also have a ""Tooltip"" node, in case it's an overridden 
-event, where the ""ToolTip"" will contain the original event name.";
+event, where the ""ToolTip"" will contain the original event name. Takes no parameters";
 				return;
 			}
 			Node node = e.Params;
@@ -69,26 +69,21 @@ event, where the ""ToolTip"" will contain the original event name.";
 		[ActiveEvent(Name = "magix.admin.open-event-viewer")]
 		public void magix_admin_open_event_viewer (object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains ("describe"))
-			{
-				e.Params["describe"].Value = @"Will open the Active Event Executor, from which
-you can run Active Events and inspect them and do other Meta/Admin Operations. Also
-serves like a development environment from which you can start at.";
-				return;
-			}
-			if (!e.Params.Contains ("container"))
+			if (e.Params.Contains ("inspect"))
 			{
 				e.Params["container"].Value = "content1";
+				e.Params["inspect"].Value = @"Will open the Active Event Executor, from which
+you can run Active Events and inspect them and do other Meta/Admin Operations. Also
+serves like a development environment from which you can start at. It will load
+the module into the ""container"" viewport container.";
+				return;
 			}
-			else
-			{
-				LoadModule (
-					"Magix.admin.ExecutorForm", 
-					e.Params["container"].Get<string>());
+			LoadModule (
+				"Magix.admin.ExecutorForm", 
+				e.Params["container"].Get<string>());
 
-				Node node = new Node();
-				RaiseEvent ("magix.execute._event-overridden", node);
-			}
+			Node node = new Node();
+			RaiseEvent ("magix.execute._event-overridden", node);
 		}
 	}
 }
