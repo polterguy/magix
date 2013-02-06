@@ -1,5 +1,5 @@
 ﻿<%@ Assembly 
-    Name="Magix.SampleModules" %>
+    Name="Magix.forms" %>
 
 <%@ Control 
     Language="C#" 

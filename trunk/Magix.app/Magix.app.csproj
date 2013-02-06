@@ -193,5 +193,6 @@
     <None Include="ExecuteScripts\Tutorials\For-Each.txt" />
     <None Include="ExecuteScripts\Tutorials\Sub-Expressions.txt" />
     <None Include="ExecuteScripts\Tutorials\Dynamic-Functions.txt" />
+    <None Include="ExecuteScripts\Tutorials\Dynamic-Forms.txt" />
   </ItemGroup>
 </Project>
