@@ -17,6 +17,19 @@ namespace Magix.admin
 		[ActiveEvent(Name = "magix.admin.get-active-events")]
 		public void magix_admin__get_active_events (object sender, ActiveEventArgs e)
 		{
+			if (e.Params.Contains ("describe"))
+			{
+				e.Params["describe"].Value = @"Will return all the Active Events currently registered
+within the system. Notice that this can CHANGE as the system runs, due to Event Overriding.
+Will return a list of events within the ""ActiveEvents"" node where the Value is the name
+of the Active Event you can raise. Underneath each event, it will contain a ""CSS"" node
+which can have the value of ""error"", ""info"" and ""notice"". Error means it's an overridden
+System event, at which case you should be on the look-out, and alert. notice means it's an
+overridden and dynamically created event and info means it's a System event, an event in 
+Code that is. In addition it will also have a ""Tooltip"" node, in case it's an overridden 
+event, where the ""ToolTip"" will contain the original event name.";
+				return;
+			}
 			Node node = e.Params;
 			int idxNo = 0;
 			foreach (string idx in ActiveEvents.Instance.ActiveEventHandlers)

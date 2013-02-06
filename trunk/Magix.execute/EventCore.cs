@@ -87,7 +87,7 @@ namespace Magix.execute
 
 			string key = ip["event"].Get<string>();
 
-			// If override-event contains a child node with "Code" name it
+			// If override-event contains a child node with "code" name it
 			// will use the ip pointer as the place to extract the code.
 			// Otherwise it will use the dp pointer, Data Pointer, e.g.
 			// the [.] expression from a for-each, etc as the place

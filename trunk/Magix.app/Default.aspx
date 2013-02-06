@@ -13,7 +13,7 @@
 	  <link rel="stylesheet" href="css/blueprint/ie.css" type="text/css" media="screen, projection">
 	<![endif]-->
     <head id="Head1" runat="server">
-        <title>Magix - Crescent Moon!</title>
+        <title>Magix Illuminate - Crescent Moon! - The Tree is in the Seed!!</title>
     </head>
     <body>
         <form 

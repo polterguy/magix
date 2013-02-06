@@ -72,14 +72,14 @@ namespace Magix.admin
 			if (txtIn.Text != "")
 			{
 				Node tmp = new Node();
-				tmp["Code"].Value = txtIn.Text;
+				tmp["code"].Value = txtIn.Text;
 				RaiseEvent (
 					"magix.core._transform-code-2-node",
 					tmp);
 				RaiseEvent (activeEvent.Text, tmp["JSON"].Get<Node>());
 				RaiseEvent (
 					"magix.core._transform-node-2-code", tmp);
-				txtOut.Text = tmp["Code"].Get<string>();
+				txtOut.Text = tmp["code"].Get<string>();
 			}
 			else
 			{
@@ -89,7 +89,7 @@ namespace Magix.admin
 				RaiseEvent (
 					"magix.core._transform-node-2-code", 
 					tmp);
-				txtOut.Text = tmp["Code"].Get<string>();
+				txtOut.Text = tmp["code"].Get<string>();
 				txtOut.Select ();
 				txtOut.Focus ();
 			}
