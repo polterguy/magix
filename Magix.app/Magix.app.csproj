@@ -143,6 +143,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="media\" />
+    <Folder Include="ExecuteScripts\" />
+    <Folder Include="ExecuteScripts\Tutorials\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="media\blueprint-css-master\AUTHORS.textile" />
@@ -184,5 +186,11 @@
     <None Include="media\blueprint-css-master\lib\blueprint\validate\xerces.jar" />
     <None Include="media\blueprint-css-master\lib\blueprint\validate\XERCES_COPYING.txt" />
     <None Include="media\blueprint-css-master\templates\psd\fixed-width.psd" />
+    <None Include="ExecuteScripts\Tutorials\Hello-World.txt" />
+    <None Include="ExecuteScripts\Tutorials\Updating-Nodes.txt" />
+    <None Include="ExecuteScripts\Tutorials\Expressions.txt" />
+    <None Include="ExecuteScripts\Tutorials\Remove-Node.txt" />
+    <None Include="ExecuteScripts\Tutorials\For-Each.txt" />
+    <None Include="ExecuteScripts\Tutorials\Sub-Expressions.txt" />
   </ItemGroup>
 </Project>

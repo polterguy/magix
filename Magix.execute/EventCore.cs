@@ -89,8 +89,8 @@ re-mapped. ""initial-startup-of-process"" must exists to run event.";
 				e.Params["context"].Value = "[OR][Path2Code]";
 				e.Params["inspect"].Value = @"Overrides the active event in ""event""
 with either the code in ""code"" or the code pointed
-to from the ""context"" Value's expression. Is callable directly
-as a 'magix.execute' keyword.";
+to from the ""context"" Value's expression.  Functions 
+as a ""magix.execute"" keyword.";
 				return;
 			}
 			Node ip = e.Params;
@@ -166,7 +166,7 @@ as a 'magix.execute' keyword.";
 			{
 				e.Params["event"].Value = "foo-bar";
 				e.Params["inspect"].Value = @"Removes and deletes the active event
-found in the ""event"" child node.";
+found in the ""event"" child node. Functions as a ""magix.execute"" keyword.";
 				return;
 			}
 			using (IObjectContainer db = Db4oFactory.OpenFile(_dbFile))
@@ -210,7 +210,7 @@ found in the ""event"" child node.";
 						e.Params["code"].AddRange (idx.Node);
 						e.Params.Value = idx.Node.Value;
 						e.Params["inspect"].Value = @"This is a dynamically created
-active event, containing ""magix.executor"" code, meaning keywords from the executor.
+active event, containing ""magix.executor"" code, meaning keywords from the executor,
 such that this serialized code will be called upon the raising of this event.";
 					}
 					else

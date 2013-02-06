@@ -1,0 +1,32 @@
+Method: magix.execute
+
+inspect=>@"Loops through a list of items with different Descriptions,
+copies the ""Description"" node's Value property
+into another node's value, which will be created the 
+first iteration, called ""message"". Then as it loops
+through the items in the Data node, raises
+the show message active event for the current item
+found through the context, pointing the context for the
+show message event to the [Buffer] node, which now
+should contain the copied value from the description,
+from the index node, we're currently looping through.
+Demonstrates how to loop through lists of nodes, embed
+data nodes directly into code, setting Value of nodes and
+raise active events through using a ""context""."
+
+Data
+  List
+    Item1
+      Description=>Hi there Thomas Hansen
+    Item2
+      Description=>Howdy John Doe!
+    Item3
+      Description=>Mohammed Ali I presume ...?
+    Item4
+      Description=>21st Century Schizoid Man!!!
+Buffer
+for-each=>[Data][List]
+  set=>[/][Buffer][message].Value
+    value=>[.][Description].Value
+  raise=>magix.viewport.show-message
+    context=>[/][Buffer]

@@ -30,6 +30,72 @@ namespace Magix.Core
                 char tmp = expr[idx];
                 if (isInside)
                 {
+					if (tmp == '[')
+					{
+						// Nested statement
+						if (!string.IsNullOrEmpty (bufferNodeName))
+							throw new ArgumentException("Don't understand: " + bufferNodeName);
+
+						// Spooling forward to end of nested statement
+						string entireSubStatement = "";
+						int braceIndex = 0;
+						for (; idx < expr.Length; idx++)
+						{
+							if (expr[idx] == '[')
+								braceIndex += 1;
+							else if (expr[idx] == ']')
+								braceIndex -= 1;
+							if (braceIndex == -1)
+								break;
+							entireSubStatement += expr[idx];
+						}
+
+						string subValue = null;
+						string lastSubEntity = "";
+						Node subNode = GetNode (entireSubStatement, source, ip, ref lastSubEntity, forcePath);
+						if (lastSubEntity == ".Value")
+							subValue = subNode.Value.ToString ();
+						else if (lastSubEntity == ".Name")
+							subValue = subNode.Name;
+						else if (lastSubEntity == "")
+							throw new ArgumentException("Sub expressions cannot return node lists, but only Value and Name");
+						else
+							throw new ArgumentException("Don't know how to parse: " + lastSubEntity);
+						bufferNodeName = subValue;
+						bool allNumber = true;
+                        foreach (char idxC in bufferNodeName)
+                        {
+                            if (("0123456789").IndexOf(idxC) == -1)
+                            {
+                                allNumber = false;
+                                break;
+                            }
+                        }
+                        if (allNumber)
+                        {
+                            int intIdx = int.Parse(bufferNodeName);
+                            if (x.Count >= intIdx)
+                                x = x[intIdx];
+							else
+								return null;
+                        }
+                        else
+                        {
+							if (x.Contains (bufferNodeName))
+								x = x[bufferNodeName];
+							else if (forcePath)
+							{
+								x = x[bufferNodeName];
+							}
+							else
+							{
+								return null;
+							}
+                        }
+                        bufferNodeName = "";
+                        isInside = false;
+						continue;
+					}
                     if (tmp == ']')
                     {
                         if (string.IsNullOrEmpty(bufferNodeName))
@@ -132,7 +198,7 @@ namespace Magix.Core
 				x.Value = null;
             else if (lastEntity == "")
 				x.Clear ();
-            else if (lastEntity == "Name")
+            else if (lastEntity == ".Name")
                 throw new ArgumentException("Cannot empty Name parts");
             else
                 throw new ArgumentException("Couldn't understand the last parts of your expression '" + lastEntity + "'");

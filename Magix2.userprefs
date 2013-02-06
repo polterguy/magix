@@ -4,11 +4,18 @@
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
-          <Node name="Magix.admin" expanded="True">
-            <Node name="EventExecutor.cs" selected="True" />
+          <Node name="Magix.admin" expanded="True" />
+          <Node name="Magix.Core" expanded="True">
+            <Node name="Controllers" expanded="True" />
+            <Node name="Expression" expanded="True" />
           </Node>
-          <Node name="Magix.execute" expanded="True" />
+          <Node name="Magix.data" expanded="True" />
+          <Node name="Magix.execute" expanded="True">
+            <Node name="ExecuteCore.cs" selected="True" />
+          </Node>
           <Node name="Magix.forms" expanded="True" />
+          <Node name="Magix.SampleController" expanded="True" />
+          <Node name="Magix.viewports" expanded="True" />
         </State>
       </Pad>
       <Pad Id="ClassPad">
@@ -16,7 +23,11 @@
       </Pad>
       <Pad Id="MonoDevelop.Debugger.WatchPad">
         <State>
-          <Value>value</Value>
+          <Value>expr</Value>
+          <Value>left</Value>
+          <Value>comparison</Value>
+          <Value>right</Value>
+          <Value>isTrue</Value>
         </State>
       </Pad>
     </Pads>

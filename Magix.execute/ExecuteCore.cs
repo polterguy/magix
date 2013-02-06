@@ -26,12 +26,23 @@ namespace Magix.execute
 				e.Params["if"].Value = "[Data][Value].Value==thomas";
 				e.Params["if"]["raise"].Value = "magix.viewport.show-message";
 				e.Params["if"]["raise"]["params"]["message"].Value = "Hi Thomas!";
-				e.Params["inspect"].Value = @"Executes all the children nodes
+				e.Params["inspect"].Value = @"Executes all the children nodes starting with
+a lower case alpha character,
 expecting them to be callable keywords, directly embedded into
 the ""magix.execute"" namespace, such that they become extensions
 of the execution engine itself. Will internally keep a list
 pointer to where the code/instruction-pointer is, and where the
-data-pointer is, which is relevant for most other execution statements.";
+data-pointer is, which is relevant for most other execution statements.
+Will ignore all node with Name not starting with a lower case alpha character.
+All child nodes with a name starting with a lower case letter,
+will be raise as ""magix.execute"" keywords, meaning e.g. ""if""
+will become the active event ""magix.executor.if"", meaning you
+can extend the programming language in Magix itself by adding up 
+new keywords. All active events in the ""magix.execute""
+namespace, can be called directly as keywords in magix.execute.
+And in fact, most active events in the magix.execute namespace, 
+such as ""if"", cannot be called directly, but must be called
+from within a ""magix.execute"" event code block.";
 				return;
 			}
 			Node ip = e.Params;
@@ -89,7 +100,8 @@ constant value or a single node expression for existence of
 Node itself, Value or Name. Operators you can use are '!=', '==', '>=',
 '<=', '>' and '<' when comparing two nodes or one node and 
 a constant, and '!' in front of operator if only one 
-expression is given to check for existence to negate the value.";
+expression is given to check for existence to negate the value.
+Functions as a ""magix.execute"" keyword.";
 				return;
 			}
 			Node dp = e.Params ["_dp"].Value as Node;
@@ -199,7 +211,8 @@ constant value or a single node expression for existence of
 Node itself, Value or Name. Operators you can use are '!=', '==', '>=',
 '<=', '>' and '<' when comparing two nodes or one node and 
 a constant, and '!' in front of operator if only one 
-expression is given to check for existence to negate the value.";
+expression is given to check for existence to negate the value.
+Functions as a ""magix.execute"" keyword.";
 				return;
 			}
 			Node ip = e.Params["_ip"].Value as Node;
@@ -226,7 +239,7 @@ expression is given to check for existence to negate the value.";
 				e.Params["inspect"].Value = @"If no previous ""if"" statement,
 or ""else-if"" statement has returned true, execute the underlaying nodes
 as code through ""magix.execute"", expecting them to be keywords to
-the execution engine.";
+the execution engine. Functions as a ""magix.execute"" keyword.";
 				return;
 			}
 			Node ip = e.Params["_ip"].Value as Node;
@@ -293,7 +306,7 @@ keyword.";
 node's Value Expression, and execute the underlaying code, once for 
 all nodes in the returned expression, with the Data-Pointer pointing
 to the index node currently being looped through. Is a ""magix.execute""
-keyword.";
+keyword. Functions as a ""magix.execute"" keyword.";
 				return;
 			}
 			Node ip = e.Params["_ip"].Value as Node;

@@ -1,0 +1,15 @@
+Method: magix.execute
+
+inspect=>@"Demonstrates how sub-expressions
+works. You can nest as many sub-expressions as you wish,
+as long as they only return Name or Value, and you're
+certain about that they won't return empty values,
+since then that'll make the outer path look for an empty
+element."
+
+Data
+  Name=>DataNode
+  DataNode=>42
+Buffer
+set=>[Buffer][Output].Value
+  value=>[Data][[Data][[Data][Name].Name].Value].Value
