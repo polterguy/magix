@@ -333,12 +333,25 @@ namespace Magix.execute
 			{
 				txt += node.Name;
 				if (node.Value != null)
-					txt += "=>" + node.Value.ToString ();
+				{
+					if (node.Get<string>("") != "")
+					{
+						if (node.Get<string>().Contains ("\n") || 
+						    node.Get<string>().StartsWith ("\"") ||
+						    node.Get<string>().StartsWith (" "))
+						{
+							string nValue = node.Get<string>();
+							txt += "=>" + "@\"" + nValue + "\"";
+						}
+						else
+							txt += "=>" + node.Get<string>("");
+					}
+				}
 				startIdx += 1;
 				txt += "\r\n";
 			}
 			txt += ParseNodes(startIdx, node).TrimEnd ();
-			e.Params["Code"].Value = txt;
+			e.Params["code"].Value = txt;
 		}
 
 		private string ParseNodes (int indent, Node node)
@@ -352,9 +365,20 @@ namespace Magix.execute
 				}
 				string value = "";
 				if (idx.Get<string>("") != "")
-					value += "=>" + idx.Get<string>("").Replace ("\r\n", "\\r\\n").Replace ("\n", "\\n");
+				{
+					if (idx.Get<string>().Contains ("\n") || 
+					    idx.Get<string>().StartsWith ("\"") ||
+					    idx.Get<string>().StartsWith (" "))
+					{
+						string nValue = idx.Get<string>();
+						nValue = nValue.Replace ("\"", "\"\"");
+						value += "=>" + "@\"" + nValue + "\"";
+					}
+					else
+						value += "=>" + idx.Get<string>("").Replace ("\r\n", "\\n").Replace ("\n", "\\n");
+				}
 				retVal += idx.Name + value;
-				retVal += "\r\n";
+				retVal += "\n";
 				if (idx.Count > 0)
 				{
 					retVal += ParseNodes (indent + 1, idx);
@@ -366,15 +390,16 @@ namespace Magix.execute
 		[ActiveEvent(Name = "magix.core._transform-code-2-node")]
 		public void magix_samples__transform_code_2_node (object sender, ActiveEventArgs e)
 		{
-			if (!e.Params.Contains ("Code"))
+			if (!e.Params.Contains ("code"))
 			{
-				e.Params["Code"].Value = @"if=>[Data].Value = ""thomas""
+				e.Params["code"].Value = @"if=>[Data].Value = thomas
   call=>Magix.Core.ShowMessage
     params
-      message=>Howdy dudes!!";
+      message=>@""Howdy dudes!!
+this is """"Reggie Boy"""" Talking!!""";
 				return;
 			}
-			string txt = e.Params["Code"].Get<string>();
+			string txt = e.Params["code"].Get<string>();
 			Node ret = new Node();
 			using (TextReader reader = new StringReader(txt))
 			{
@@ -417,7 +442,29 @@ namespace Magix.execute
 					else
 					{
 						name = tmp.Split (new string[]{"=>"}, StringSplitOptions.RemoveEmptyEntries)[0];
-						value = tmp.Substring (name.Length + 2);
+						value = tmp.Substring (name.Length + 2).TrimStart ();
+						if (value.StartsWith ("@"))
+						{
+							value += "\r\n";
+							while (true)
+							{
+								int noFnut = 0;
+								for (int idxNo = value.Length - 3; idxNo >=0; idxNo-- )
+								{
+									if (value[idxNo] == '"')
+										noFnut += 1;
+									else
+										break;
+								}
+								if (noFnut % 2 != 0)
+									break;
+								string tmpLine = reader.ReadLine ();
+								if (tmpLine == null)
+									throw new ArgumentException("Unfinished string literal: " + value);
+								value += tmpLine.Replace ("\"\"", "\"") + "\r\n";
+							}
+							value = value.Substring (2, value.Length - 5);
+						}
 					}
 
 					if (currentIndents == indents)
