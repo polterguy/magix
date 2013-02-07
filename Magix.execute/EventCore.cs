@@ -72,8 +72,8 @@ re-mapped. ""initial-startup-of-process"" must exists to run event.";
 
 		/**
 		 */
-		[ActiveEvent(Name = "magix.execute.override-event")]
-		public void magix_execute_override_event (object sender, ActiveEventArgs e)
+		[ActiveEvent(Name = "magix.execute.function")]
+		public void magix_execute_function (object sender, ActiveEventArgs e)
 		{
 			if (e.Params.Contains ("inspect"))
 			{
@@ -103,7 +103,7 @@ as a ""magix.execute"" keyword.";
 
 			string key = ip["event"].Get<string>();
 
-			// If override-event contains a child node with "code" name it
+			// If function contains a child node with "code" name it
 			// will use the ip pointer as the place to extract the code.
 			// Otherwise it will use the dp pointer, Data Pointer, e.g.
 			// the [.] expression from a for-each, etc as the place
@@ -120,6 +120,7 @@ as a ""magix.execute"" keyword.";
 				Node tmp = Expressions.GetExpressionValue (ip["context"].Get<string>(), dp, ip) as Node;
 				dp = tmp;
 			}
+			dp = dp.Clone ();
 
 			Node parent = dp.Parent;
 			dp.Parent = null;
@@ -159,8 +160,8 @@ as a ""magix.execute"" keyword.";
 
 		/**
 		 */
-		[ActiveEvent(Name = "magix.execute.remove-override")]
-		public void magix_execute_remove_override (object sender, ActiveEventArgs e)
+		[ActiveEvent(Name = "magix.execute.remove-function")]
+		public void magix_execute_remove_function (object sender, ActiveEventArgs e)
 		{
 			if (e.Params.Contains ("inspect"))
 			{
@@ -194,6 +195,7 @@ found in the ""event"" child node. Functions as a ""magix.execute"" keyword.";
 		[ActiveEvent(Name = "magix.execute._active-event-2-code-callback")]
 		public void magix_data__active_event_2_code_callback (object sender, ActiveEventArgs e)
 		{
+			Node caller = null;
 			using (IObjectContainer db = Db4oFactory.OpenFile(_dbFile))
 			{
 				db.Ext ().Configure ().UpdateDepth (1000);
@@ -215,11 +217,13 @@ such that this serialized code will be called upon the raising of this event.";
 					}
 					else
 					{
-						RaiseEvent ("magix.execute", idx.Node);
+						caller = idx.Node;
 					}
-					return;
+					break;
 				}
 			}
+			if (caller != null)
+				RaiseEvent ("magix.execute", caller);
 		}
 	}
 }

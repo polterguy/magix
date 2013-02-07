@@ -45,6 +45,7 @@ namespace Magix.admin
 		[ActiveEvent(Name = "magix.execute._event-overridden")]
 		public void magix_execute__event_overridden (object sender, ActiveEventArgs e)
 		{
+			noIdx = 0;
 			Node node = new Node();
 			RaiseEvent ("magix.admin.get-active-events", node);
 			rep.DataSource = node ["ActiveEvents"];
@@ -55,6 +56,7 @@ namespace Magix.admin
 		[ActiveEvent(Name = "magix.execute._event-override-removed")]
 		public void magix_execute__event_override_removed (object sender, ActiveEventArgs e)
 		{
+			noIdx = 0;
 			Node node = new Node();
 			RaiseEvent ("magix.admin.get-active-events", node);
 			rep.DataSource = node ["ActiveEvents"];
@@ -62,17 +64,29 @@ namespace Magix.admin
 			wrp.ReRender ();
 		}
 
+		int noIdx = 0;
 		protected string GetCSS(object value)
 		{
-			return "span-7 " + (string)value;
+			if ((++noIdx) % 3 == 0)
+				return "span-7 top-1 prepend-1 last " + (string)value;
+			else
+				return "span-7 top-1 prepend-1 " + (string)value;
 		}
 
 		protected void run_Click (object sender, EventArgs e)
 		{
 			if (txtIn.Text != "")
 			{
+				string wholeTxt = txtIn.Text;
+				if (wholeTxt.StartsWith ("Method:"))
+				{
+					string method = wholeTxt.Split (':')[1];
+					method = method.Substring (0, method.IndexOf ("\n"));
+					activeEvent.Text = method;
+					wholeTxt = wholeTxt.Substring (wholeTxt.IndexOf ("\n")).TrimStart ();
+				}
 				Node tmp = new Node();
-				tmp["code"].Value = txtIn.Text;
+				tmp["code"].Value = wholeTxt;
 				RaiseEvent (
 					"magix.core._transform-code-2-node",
 					tmp);

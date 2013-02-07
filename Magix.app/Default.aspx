@@ -12,6 +12,7 @@
 	<!--[if lt IE 8]>
 	  <link rel="stylesheet" href="css/blueprint/ie.css" type="text/css" media="screen, projection">
 	<![endif]-->
+	<link rel="stylesheet" href="media/main.css" type="text/css" media="screen, projection" />
     <head id="Head1" runat="server">
         <title>Magix Illuminate - Crescent Moon! - The Tree is in the Seed!!</title>
     </head>
