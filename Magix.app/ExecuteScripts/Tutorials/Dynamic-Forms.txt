@@ -1,0 +1,17 @@
+Method: magix.execute
+
+inspect=>@"Demonstrates how load a new form
+dynamically created according to node structure."
+
+raise=>magix.forms.create-form
+  container=>content2
+  form-id=>myForm
+  controls
+    Button=>btn
+      Text=>Click me!
+      OnClick
+        raise=>magix.viewport.show-message
+          params
+            message=>Hello World!!
+    Label
+      Text=>Try to click the Button ...
