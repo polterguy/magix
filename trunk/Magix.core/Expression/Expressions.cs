@@ -57,6 +57,8 @@ namespace Magix.Core
 							subValue = subNode.Value.ToString ();
 						else if (lastSubEntity == ".Name")
 							subValue = subNode.Name;
+						else if (lastSubEntity == ".Count")
+							subValue = subNode.Count.ToString ();
 						else if (lastSubEntity == "")
 							throw new ArgumentException("Sub expressions cannot return node lists, but only Value and Name");
 						else
@@ -74,8 +76,16 @@ namespace Magix.Core
                         if (allNumber)
                         {
                             int intIdx = int.Parse(bufferNodeName);
-                            if (x.Count >= intIdx)
+                            if (x.Count > intIdx)
                                 x = x[intIdx];
+							else if (forcePath)
+							{
+								while (x.Count <= intIdx)
+								{
+									x.Add (new Node("item"));
+								}
+								x = x[intIdx];
+							}
 							else
 								return null;
                         }
@@ -204,24 +214,6 @@ namespace Magix.Core
                 throw new ArgumentException("Couldn't understand the last parts of your expression '" + lastEntity + "'");
 		}
 
-		public static void AddInteger (string expression, Node source, Node ip, int addition)
-		{
-			string lastEntity = "";
-			Node x = GetNode (expression, source, ip, ref lastEntity, false);
-
-			if (x == null)
-				throw new ArgumentException("Cannot add an integer to a node that doesn't exist");
-
-            if (lastEntity == ".Value")
-                x.Value = Convert.ToInt32 (x.Value.ToString ()) + addition;
-            else if (lastEntity == ".Name")
-				throw new ArgumentException("Cannot increment Name");
-            else if (lastEntity == "")
-                throw new ArgumentException("Cannot increment Node Set");
-            else
-                throw new ArgumentException("Couldn't understand the last parts of your expression '" + lastEntity + "'");
-		}
-
 		public static void Remove (string expression, Node source, Node ip)
 		{
 			string lastEntity = "";
@@ -252,6 +244,8 @@ namespace Magix.Core
                 return x.Value != null;
             else if (lastEntity == ".Name")
                 return !string.IsNullOrEmpty (x.Name);
+            else if (lastEntity == ".Count")
+				return x.Count > 0;
             else if (lastEntity == "")
                 return true;
             else
@@ -327,6 +321,8 @@ namespace Magix.Core
                 return x.Value;
             else if (lastEntity == ".Name")
                 return x.Name;
+            else if (lastEntity == ".Count")
+                return x.Count;
             else if (lastEntity == "")
                 return x;
             else

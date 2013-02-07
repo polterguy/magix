@@ -25,7 +25,7 @@
 			runat="server"
 			id="run"
 			Text="Run"
-			CssClass="span-4"
+			CssClass="span-4 height-2"
 			Tooltip="Runs the Active Event with the JSON Serialized content from Left Text Area"
 			OnClick="run_Click" />
 	</div>

@@ -83,6 +83,7 @@
     <Content Include="media\blueprint-css-master\tests\parts\test-small.jpg" />
     <Content Include="media\blueprint-css-master\tests\parts\valid.png" />
     <Content Include="media\blueprint-css-master\tests\parts\plugins\link-icons.html" />
+    <Content Include="media\main.css" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Global.asax.cs">
@@ -145,6 +146,7 @@
     <Folder Include="media\" />
     <Folder Include="ExecuteScripts\" />
     <Folder Include="ExecuteScripts\Tutorials\" />
+    <Folder Include="ExecuteScripts\Applications\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="media\blueprint-css-master\AUTHORS.textile" />
@@ -194,5 +196,6 @@
     <None Include="ExecuteScripts\Tutorials\Sub-Expressions.txt" />
     <None Include="ExecuteScripts\Tutorials\Dynamic-Functions.txt" />
     <None Include="ExecuteScripts\Tutorials\Dynamic-Forms.txt" />
+    <None Include="ExecuteScripts\Applications\Address-Book.txt" />
   </ItemGroup>
 </Project>

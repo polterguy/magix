@@ -20,7 +20,8 @@ namespace Magix.execute
 		[ActiveEvent(Name = "magix.execute")]
 		public void magix_execute (object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains ("inspect"))
+			if (e.Params.Contains ("inspect") 
+			    && e.Params["inspect"].Get<string>("") == "")
 			{
 				e.Params["Data"]["Value"].Value = "thomas";
 				e.Params["if"].Value = "[Data][Value].Value==thomas";
@@ -121,7 +122,7 @@ Functions as a ""magix.execute"" keyword.";
 			}
 			else if (expr.IndexOf ("!") == 0)
 			{
-				if (!Expressions.ExpressionExist (expr, ip, dp))
+				if (!Expressions.ExpressionExist (expr.TrimStart ('!'), ip, dp))
 				{
 					if (ip.Parent != null)
 						ip.Parent[ip.Parent.Count - 1].Value = true;
@@ -141,7 +142,7 @@ Functions as a ""magix.execute"" keyword.";
 
 		private void ExecuteIf(string expr, Node ip, Node dp, Node parms)
 		{
-			string left = expr.Substring (0, expr.IndexOfAny (new char[]{'=','>','<'}));;
+			string left = expr.Substring (0, expr.IndexOfAny (new char[]{'!','=','>','<'}));;
 			string comparison = expr.Substring (left.Length, 2);
 			if (comparison[comparison.Length - 1] != '=')
 				comparison = comparison.Substring (0, 1);
@@ -363,7 +364,9 @@ left hand parts returns a node. Functions as a ""magix.execute"" keyword.";
 				}
 			}
 			else
-				throw new ArgumentException("No value passed into magix.execute.set");
+			{
+				Expressions.Empty (left, dp, ip);
+			}
 		}
 
 		/**
@@ -474,6 +477,11 @@ returning a node list. Functions as a ""margix.executor"" keyword.";
 					string line = reader.ReadLine ();
 					if (line == null)
 						break;
+
+					if (line.Trim () == "")
+						continue; // Skipping white lines
+					if (line.Trim ().StartsWith ("//"))
+						continue;
 
 					// Skipping "white lines"
 					if (line.Trim ().Length == 0)

@@ -14,10 +14,10 @@ Data
       raise=>magix.viewport.show-message
         params
           message=>Hi Thomas!!
-override-event
+function
   event=>foo
   context=>[Data][Code1]
-override-event
+function
   event=>bar
   code
     Value1=>thomas
