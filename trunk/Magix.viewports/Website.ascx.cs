@@ -20,27 +20,19 @@ namespace Magix.viewports
 {
     /**
      */
-    public class Website : ActiveModule
+    public class Website : Viewport
     {
         protected DynamicPanel content1;
         protected DynamicPanel content2;
         protected DynamicPanel content3;
 		protected Panel messageWrapper;
-		protected Label messageLabel;
 		protected Label msgBoxHeader;
+		protected Label messageLabel;
+		protected Image icon;
 
 		public void Page_Load (object sender, EventArgs e)
 		{
 			messageLabel.Text = "";
-			if (!IsPostBack)
-			{
-				Node node = new Node();
-				node["initial-load"].Value = null;
-                ActiveEvents.Instance.RaiseActiveEvent(
-                    this,
-                    "magix.viewport.page-load",
-					node);
-			}
 		}
 
         /**
@@ -56,6 +48,7 @@ namespace Magix.viewports
 				e.Params["color"].Value = "#eeaaaa";
 				e.Params["inspect"].Value = @"Shows a message box to the 
 end user for some seconds.";
+				e.Params["icon"].Value = "media/images/magix-logo-tiny.png";
 				return;
 			}
 			messageLabel.Text += "<p>" + e.Params["message"].Get<string>() + "</p>";
@@ -64,6 +57,13 @@ end user for some seconds.";
 			int time = 3000;
 			if (e.Params.Contains ("time"))
 				time = int.Parse (e.Params["time"].Get<string>());
+			if (e.Params.Contains ("icon"))
+			{
+				icon.ImageUrl = e.Params["icon"].Get<string>();;
+				icon.Visible = true;
+			}
+			else
+				icon.Visible = false;
 			string color = "";
 			if (e.Params.Contains ("color"))
 				color = e.Params["color"].Get<string>();
@@ -77,98 +77,6 @@ end user for some seconds.";
 						.JoinThese (
 							new EffectFadeOut()))
 				.Render ();
-        }
-
-        private void ClearControls(DynamicPanel dynamic)
-        {
-            foreach (Control idx in dynamic.Controls)
-            {
-                ActiveEvents.Instance.RemoveListener(idx);
-            }
-            dynamic.ClearControls();
-        }
-
-		/**
-         */
-        [ActiveEvent(Name = "magix.viewport.clear-controls")]
-		protected void magix_viewport_clear_controls (object sender, ActiveEventArgs e)
-		{
-			if (e.Params.Contains ("inspect"))
-			{
-				e.Params["container"].Value = "content2";
-				e.Params["inspect"].Value = @"Will empty the given ""container""
-viewport container for all of its controls. Unloads a container for controls.";
-				return;
-			}
-			DynamicPanel dyn = Selector.FindControl<DynamicPanel> (
-                this, 
-                e.Params ["container"].Get<string> ());
-
-			ClearControls (dyn);
-			Node node = new Node();
-			RaiseEvent ("magix.execute._event-override-removed", node);
-		}
-
-		/**
-         */
-        [ActiveEvent(Name = "magix.viewport.load-module")]
-		protected void magix_viewport_load_module (object sender, ActiveEventArgs e)
-		{
-			if (e.Params.Contains ("inspect"))
-			{
-				e.Params["Data"]["Database"].Value = "localhost";
-				e.Params["name"].Value = "FullNameSpace.AndAlso.FullName_OfClassThatImplementsModule";
-				e.Params["container"].Value = "content2";
-				e.Params["context"].Value = "[Data]";
-				e.Params["inspect"].Value = @"Loads an active module into the 
-given ""container"" viewport container. The module name must be defined in 
-the ""name"" node. If ""context"" is given, this will be passed into
-the loading of the module, and used for initialization of the module.
-Else the incoming parameters will be used.";
-				return;
-			}
-			string moduleName = e.Params ["name"].Get<string> ();
-
-			DynamicPanel dyn = Selector.FindControl<DynamicPanel> (
-            	this, 
-            	e.Params ["container"].Get<string> ());
-
-			Node context = e.Params;
-
-			if (e.Params.Contains ("context"))
-				context = Expressions.GetExpressionValue (
-					e.Params["context"].Get<string>(), e.Params, e.Params) as Node;
-
-			ClearControls (dyn);
-			dyn.LoadControl (moduleName, context);
-			Node node = new Node();
-			RaiseEvent ("magix.execute._event-overridden", node);
-        }
-
-		/*
-		 * Event handler for reloading controls back into Dynamic Panel
-		 */
-        protected void dynamic_LoadControls(object sender, DynamicPanel.ReloadEventArgs e)
-        {
-            DynamicPanel dynamic = sender as DynamicPanel;
-            Control ctrl = ModuleControllerLoader.Instance.LoadActiveModule(e.Key);
-            if (e.FirstReload)
-            {
-				// Since this is the Initial Loading of our module
-				// We'll need to make sure our Initial Loading procedure is being
-				// caled, if Module is of type ActiveModule
-                Node nn = e.Extra as Node;
-                ctrl.Init +=
-                    delegate
-                    {
-                        ActiveModule module = ctrl as ActiveModule;
-                        if (module != null)
-                        {
-                            module.InitialLoading(nn);
-                        }
-                    };
-            }
-            dynamic.Controls.Add(ctrl);
         }
     }
 }

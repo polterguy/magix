@@ -143,11 +143,11 @@ namespace Magix.forms
 				}
 				if (isHtml)
 				{
-					ctrl = new Panel();
-					((Panel)ctrl).Tag = idx.Name;
+					ctrl = new Label();
+					((Label)ctrl).Tag = idx.Name;
 				}
 				else
-					return;
+					throw new ArgumentException("Unknown type of tag in creating form; " + idx.Name);
 				break;
 			}
 			if (idx.Value != null)
@@ -167,6 +167,14 @@ namespace Magix.forms
 				case "Enabled":
 					if (ctrl is BaseWebControlFormElement)
 						((BaseWebControlFormElement)ctrl).Enabled = idxInner.Get<bool>();
+					else
+						throw new ArgumentException("Tried to set Enabled on a control that does not support it; " + ctrl.GetType ().Name);
+					break;
+				case "SelectedIndex":
+					if (ctrl is BaseWebControlListFormElement)
+						((BaseWebControlListFormElement)ctrl).SelectedIndex = idxInner.Get<int>();
+					else
+						throw new ArgumentException("Tried to set SelectedIndex on a control that does not support it; " + ctrl.GetType ().Name);
 					break;
 				case "CssClass":
 					((BaseWebControl)ctrl).CssClass = idxInner.Get<string>();
@@ -378,6 +386,38 @@ namespace Magix.forms
 								};
 						};
 				} break;
+				case "OnFocused":
+				{
+					string path = GetPath (idxInner);
+					((BaseWebControlFormElement)ctrl).Load +=
+						delegate(object sender, EventArgs e)
+						{
+							ViewState[ctrl.ClientID + "_OnFocused"] = path;
+							((BaseWebControlFormElement)ctrl).Focused +=
+								delegate
+								{
+									string codePath = ViewState[((Control)sender).ClientID + "_EscKey"] as string;
+									Node codeNode = GetNode (codePath);
+									RaiseEvent ("magix.execute", codeNode);
+								};
+						};
+				} break;
+				case "OnBlur":
+				{
+					string path = GetPath (idxInner);
+					((BaseWebControlFormElement)ctrl).Load +=
+						delegate(object sender, EventArgs e)
+						{
+							ViewState[ctrl.ClientID + "_OnBlur"] = path;
+							((BaseWebControlFormElement)ctrl).Blur +=
+								delegate
+								{
+									string codePath = ViewState[((Control)sender).ClientID + "_EscKey"] as string;
+									Node codeNode = GetNode (codePath);
+									RaiseEvent ("magix.execute", codeNode);
+								};
+						};
+				} break;
 				case "ID":
 					ctrl.ID = idxInner.Get<string>();
 					break;
@@ -389,6 +429,10 @@ namespace Magix.forms
 					break;
 				case "TabIndex":
 					((BaseWebControl)ctrl).TabIndex = idxInner.Get<string>();
+					break;
+				case "AccessKey":
+					if (ctrl is BaseWebControlFormElement)
+						((BaseWebControlFormElement)ctrl).AccessKey = idxInner.Get<string>();
 					break;
 				case "Checked":
 					if (ctrl is CheckBox)
@@ -431,6 +475,12 @@ namespace Magix.forms
 						((TextBox)ctrl).PlaceHolder = idxInner.Get<string>();
 					else
 						((TextArea)ctrl).PlaceHolder = idxInner.Get<string>();
+					break;
+				case "DefaultWidget":
+					if (ctrl is Panel)
+						((Panel)ctrl).DefaultWidget = idxInner.Get<string>();
+					else
+						throw new ArgumentException("Only Panels can have a Default Widget, you tried to set DefaultWidget on a " + ctrl.GetType().Name);
 					break;
 				case "controls":
 					foreach (Node idxChild in idxInner)

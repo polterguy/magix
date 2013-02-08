@@ -52,8 +52,6 @@ namespace Magix.UX.Widgets
         protected override void AddAttributes(Element el)
         {
             el.AddAttribute("href", "javascript:MUX.emptyFunction();");
-            if (!string.IsNullOrEmpty(AccessKey))
-                el.AddAttribute("accesskey", AccessKey);
             base.AddAttributes(el);
         }
 

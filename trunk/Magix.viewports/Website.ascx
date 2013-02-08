@@ -16,6 +16,11 @@
 		CssClass="message-box"
 		id="messageWrapper">
 		<br />
+		<mux:Image
+			runat="server"
+			id="icon"
+			CssClass="span-1 right"
+			Visible="false" />
 		<mux:Label
 			runat="server"
 			id="msgBoxHeader"

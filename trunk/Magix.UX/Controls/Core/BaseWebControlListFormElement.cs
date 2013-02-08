@@ -117,11 +117,6 @@ namespace Magix.UX.Widgets.Core
             }
         }
 
-        protected virtual void SetValue222222()
-        {
-            SetJsonGeneric("value", _selectedItemValue);
-        }
-
         protected override void TrackViewState()
         {
             Items.TrackViewState();
