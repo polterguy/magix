@@ -153,5 +153,6 @@
     <None Include="ExecuteScripts\Tutorials\Dynamic-Functions.txt" />
     <None Include="ExecuteScripts\Tutorials\Dynamic-Forms.txt" />
     <None Include="ExecuteScripts\Applications\Address-Book.txt" />
+    <None Include="ExecuteScripts\TODO.txt" />
   </ItemGroup>
 </Project>

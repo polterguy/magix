@@ -47,6 +47,7 @@
     <Compile Include="Helpers\AssemblyResourceVirtualFile.cs" />
     <Compile Include="Helpers\AssemblyResourceProvider.cs" />
     <Compile Include="Expression\Expressions.cs" />
+    <Compile Include="Modules\Viewport.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
@@ -63,5 +64,11 @@
     <Folder Include="Common\" />
     <Folder Include="Helpers\" />
     <Folder Include="Expression\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Magix.UX\Magix.UX.csproj">
+      <Project>{FDD15C94-7DC2-4D19-9AF4-0E9FD8CCC443}</Project>
+      <Name>Magix.UX</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>

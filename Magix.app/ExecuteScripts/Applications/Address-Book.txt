@@ -64,6 +64,7 @@ function
           controls
             Image
               ImageUrl=>media/images/magix-logo.png
+              AlternateText=>Magix Illuminate Logo
               CssClass=>span-3 logo-medium
             Label
               CssClass=>prepend-top append-bottom span-17 last
