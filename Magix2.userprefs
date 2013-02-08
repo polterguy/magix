@@ -1,20 +1,23 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench ActiveDocument="Magix.viewports/Website.ascx">
+    <Files>
+      <File FileName="Magix.viewports/Website.ascx" Line="18" Column="5" />
+      <File FileName="Magix.app/media/main.css" Line="12" Column="18" />
+      <File FileName="../Magix/Magix-Brix/Magix.Brix.ApplicationPool/media/modules/sliding-menu.css" Line="1" Column="1" />
+      <File FileName="../Magix/Magix-Brix/Magix.Brix.ApplicationPool/media/magix-ux-skins/default.css" Line="190" Column="1" />
+      <File FileName="Magix.viewports/Website.ascx.cs" Line="54" Column="52" />
+    </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
-          <Node name="Magix.admin" expanded="True" />
-          <Node name="Magix.Core" expanded="True">
-            <Node name="Controllers" expanded="True" />
-            <Node name="Expression" expanded="True" />
+          <Node name="Magix.app" expanded="True">
+            <Node name="media" expanded="True">
+              <Node name="blueprint-css-master" expanded="True">
+                <Node name="lib" selected="True" />
+              </Node>
+            </Node>
           </Node>
-          <Node name="Magix.data" expanded="True" />
-          <Node name="Magix.execute" expanded="True">
-            <Node name="ExecuteCore.cs" selected="True" />
-          </Node>
-          <Node name="Magix.forms" expanded="True" />
-          <Node name="Magix.SampleController" expanded="True" />
           <Node name="Magix.viewports" expanded="True" />
         </State>
       </Pad>
@@ -27,7 +30,7 @@
           <Value>left</Value>
           <Value>comparison</Value>
           <Value>right</Value>
-          <Value>isTrue</Value>
+          <Value>valueOfExpr</Value>
         </State>
       </Pad>
     </Pads>
