@@ -60,10 +60,13 @@ function
       form-id=>addressBook
       controls
         Panel
-          CssClass=>prepend-top span-20 prepend-2 append-2 description
+          CssClass=>prepend-top span-21 prepend-1 append-2 description
           controls
+            Image
+              ImageUrl=>media/images/magix-logo.png
+              CssClass=>span-3 logo-medium
             Label
-              CssClass=>prepend-top append-bottom span-20 last
+              CssClass=>prepend-top append-bottom span-17 last
               Text=>@"Welcome to the Magix Illuminate version of Address Book.
 Address Book is one of the main examples from Qt. The application
 basically shows how you can store, update and retreieve objects,

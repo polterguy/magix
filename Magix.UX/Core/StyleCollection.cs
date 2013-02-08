@@ -109,7 +109,7 @@ namespace Magix.UX.Widgets
         private void AddStyleToCollection(string idx, string value, bool viewStateOnly)
         {
             string styleName = idx.Trim().ToLowerInvariant();
-            string styleValue = value.Trim();
+            string styleValue = value.Trim ();
             
             if (styleName == "opacity")
             {

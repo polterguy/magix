@@ -8,18 +8,18 @@
 
 <div class="span-24 last prepend-top">
 	<h1 class="span-10 prepend-7">Active Event Executor</h1>
-	<div class="span-24 prepend-2">
+	<div class="span-22 prepend-2">
 		<mux:TextArea
 			runat="server"
 			id="txtIn"
 			PlaceHolder="Input Nodes ..."
-			CssClass="span-20 height-12" />
+			CssClass="span-20 height-12 code-window" />
 	</div>
-	<div class="span-24 prepend-7 prepend-top">
+	<div class="span-17 prepend-7 prepend-top">
 		<mux:TextArea
 			runat="server"
 			PlaceHolder="Active Event Code ..."
-			CssClass="span-10 height-5"
+			CssClass="span-10 height-5 code-window"
 			id="activeEvent" />
 		<mux:Button
 			runat="server"
@@ -29,12 +29,12 @@
 			Tooltip="Runs the Active Event with the JSON Serialized content from Left Text Area"
 			OnClick="run_Click" />
 	</div>
-	<div class="span-24 prepend-2 prepend-top">
+	<div class="span-22 prepend-2 prepend-top">
 		<mux:TextArea
 			runat="server"
 			id="txtOut"
 			PlaceHolder="Output Nodes ..."
-			CssClass="span-20 height-12" />
+			CssClass="span-20 height-12 code-window" />
 	</div>
 </div>
 
