@@ -7,19 +7,26 @@
     Inherits="Magix.viewports.Website" %>
 
 <mux:Panel
-	runat="server"
-	style="opacity:0;"
-	id="messageWrapper">
-	<mux:Label
-		Tag="div"
-		runat="server"
-		id="messageLabel" />
-</mux:Panel>
-
-<mux:Panel
     runat="server"
     id="wrp"
-    CssClass="container showgrid">
+    CssClass="container">
+	<mux:Panel
+		runat="server"
+		style="opacity:0;"
+		CssClass="message-box"
+		id="messageWrapper">
+		<br />
+		<mux:Label
+			runat="server"
+			id="msgBoxHeader"
+			Tag="label"
+			CssClass="msg-box-header"
+			Text="Message" />
+		<mux:Label
+			Tag="div"
+			runat="server"
+			id="messageLabel" />
+	</mux:Panel>
     <mux:DynamicPanel 
         runat="server" 
         OnReload="dynamic_LoadControls"

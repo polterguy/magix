@@ -27,6 +27,7 @@ namespace Magix.viewports
         protected DynamicPanel content3;
 		protected Panel messageWrapper;
 		protected Label messageLabel;
+		protected Label msgBoxHeader;
 
 		public void Page_Load (object sender, EventArgs e)
 		{
@@ -50,15 +51,26 @@ namespace Magix.viewports
 			if (e.Params.Contains ("inspect"))
 			{
 				e.Params["message"].Value = "Message to show to End User";
+				e.Params["header"].Value = "Message from system";
+				e.Params["time"].Value = "1000";
 				e.Params["inspect"].Value = @"Shows a message box to the 
 end user for some seconds.";
 				return;
 			}
 			messageLabel.Text += "<p>" + e.Params["message"].Get<string>() + "</p>";
-			new EffectFadeIn(messageWrapper, 500)
+			if (e.Params.Contains ("header"))
+				msgBoxHeader.Text = e.Params["header"].Get<string>();
+			int time = 3000;
+			if (e.Params.Contains ("time"))
+				time = int.Parse (e.Params["time"].Get<string>());
+			new EffectRollDown(messageWrapper, 500)
+				.JoinThese (
+					new EffectFadeIn())
 				.ChainThese (
-					new EffectTimeout(3000),
-					new EffectFadeOut(messageWrapper, 500))
+					new EffectTimeout(time),
+					new EffectRollUp(messageWrapper, 500)
+						.JoinThese (
+							new EffectFadeOut()))
 				.Render ();
         }
 

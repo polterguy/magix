@@ -1,5 +1,31 @@
 
 /* Formatting classes */
+
+.message-box
+{
+	position:fixed;
+	top:0;
+	left:500px;
+	width:300px;
+	background-color:#ffee55;
+	padding-left:40px;
+	padding-right:40px;
+	-webkit-border-radius:0 0 15px 15px;
+	-moz-border-radius:0 0 15px 15px;
+	-o-border-radius:0 0 15px 15px;
+	-ms-border-radius:0 0 15px 15px;
+	border-radius:0 0 15px 15px;
+	-webkit-box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
+	-moz-box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
+	-o-box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
+	-ms-box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
+	box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
+}
+
+.msg-box-header
+{
+}
+
 .description
 {
 	padding-top:8px;

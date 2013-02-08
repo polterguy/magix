@@ -1,7 +1,13 @@
 Method: magix.execute
 
-inspect=>@"A port of the famous Qt
-Address Book example."
+inspect=>@"A port of the famous Qt Address Book 
+example. Demonstrates how to dynamically create a function,
+raise events and functions, set values of nodes and create
+nodes, if branching, creating forms, partially dynamically,
+partially by iterating and modifying the original form
+node hierarchy, for-each, basic web controls, etc.
+Also clearly demonstrates self-modifying code and
+pretty advanced expressions"
 
 function
   event=>load-address
