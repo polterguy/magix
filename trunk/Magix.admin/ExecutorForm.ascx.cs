@@ -35,10 +35,8 @@ namespace Magix.admin
 			{
 				txtIn.Select ();
 				txtIn.Focus ();
-				activeEvent.Text = "magix.execute";
-				txtIn.Text = @"raise=>magix.viewport.show-message
-  params
-    message=>Hi Thomas!";
+				activeEvent.Text = "magix.viewport.show-message";
+				txtIn.Text = "message=>Hello World!";
 			}
 		}
 

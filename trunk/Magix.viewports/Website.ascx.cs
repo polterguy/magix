@@ -53,6 +53,7 @@ namespace Magix.viewports
 				e.Params["message"].Value = "Message to show to End User";
 				e.Params["header"].Value = "Message from system";
 				e.Params["time"].Value = "1000";
+				e.Params["color"].Value = "#eeaaaa";
 				e.Params["inspect"].Value = @"Shows a message box to the 
 end user for some seconds.";
 				return;
@@ -63,6 +64,10 @@ end user for some seconds.";
 			int time = 3000;
 			if (e.Params.Contains ("time"))
 				time = int.Parse (e.Params["time"].Get<string>());
+			string color = "";
+			if (e.Params.Contains ("color"))
+				color = e.Params["color"].Get<string>();
+			messageWrapper.Style[Styles.backgroundColor] = color;
 			new EffectRollDown(messageWrapper, 500)
 				.JoinThese (
 					new EffectFadeIn())
