@@ -30,17 +30,6 @@ namespace Magix.Core
     [Serializable]
     public class Node : IList<Node>
     {
-		public void ReplaceChildren (Node node)
-		{
-			Clear ();
-			foreach (Node idx in node._children)
-			{
-				idx._parent = this;
-				this._children.Add (idx);
-			}
-			node._children.Clear ();
-		}
-
         // Implementation of list
         private readonly List<Node> _children = new List<Node>();
 
@@ -82,7 +71,48 @@ namespace Magix.Core
             _parent = parent;
         }
 
-        // TODO: Refactor to allow for types to be serialized
+		/**
+		 * Level3: Compares the nodes in the "this" pointer to 
+		 * see if they contain all the nodex that exists in our "prototype"
+		 * Node. If so, it will return true, else false
+		 */
+		public bool HasNodes(Node prototype)
+		{
+			foreach (Node idx in prototype)
+			{
+				if (!Exists (
+					delegate(Node idxThis)
+					{
+						if (idx.Name != idxThis.Name)
+							return false;
+						if (idx.Value != null && idxThis.Value == null)
+							return false;
+						if (idx.Value == null && idxThis.Value != null)
+							return false;
+						if (idx.Value == null && idxThis.Value == null)
+							return idxThis.HasNodes (idx);
+						if (!idx.Value.Equals (idxThis.Value))
+							return false;
+						if (!idxThis.HasNodes (idx))
+							return false;
+						return true;
+					}))
+					return false;
+			}
+			return true;
+		}
+
+		public void ReplaceChildren (Node node)
+		{
+			Clear ();
+			foreach (Node idx in node._children)
+			{
+				idx._parent = this;
+				this._children.Add (idx);
+			}
+			node._children.Clear ();
+		}
+
         /**
          * Level3: Will de-serialize the given JSON string into a Node structure. PS!
          * Even though Nodes can be serialized to JSON, the type information is lost,
@@ -500,7 +530,7 @@ namespace Magix.Core
         /**
          * Level3: Returns true if node exists within child collection [flat]
          */
-        [DebuggerStepThrough]
+		[DebuggerStepThrough]
         public bool Contains(Node item)
         {
             return _children.Contains(item);
@@ -707,5 +737,29 @@ namespace Magix.Core
             }
             return r;
         }
+
+		private bool CompareChildren (Node rhs)
+		{
+			if (Count != rhs.Count)
+				return false;
+			for (int idx = 0; idx < Count; idx++)
+			{
+				if (!this[idx].Equals (rhs[idx]))
+					return false;
+			}
+			return true;
+		}
+
+		public override bool Equals (object obj)
+		{
+			if (obj == null || !(obj is Node))
+				return false;
+
+			Node rhs = obj as Node;
+			return Name == rhs.Name && 
+				(Value == null && rhs.Value == null || 
+				  ((Value != null && Value.Equals (rhs.Value)) && Value == rhs.Value)) && 
+				CompareChildren(rhs);
+		}
     }
 }

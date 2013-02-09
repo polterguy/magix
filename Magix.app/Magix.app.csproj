@@ -70,6 +70,7 @@
     <Content Include="media\blueprint-css-master\blueprint\src\reset.css" />
     <Content Include="media\blueprint-css-master\blueprint\src\typography.css" />
     <Content Include="media\main.css" />
+    <Content Include="media\main-debug.css" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Global.asax.cs">
