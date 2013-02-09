@@ -102,6 +102,10 @@ namespace Magix.Core
 			return true;
 		}
 
+		/**
+		 * Level3: Removes all the existing children Nodes and replaces them
+		 * with the "node" paramater Node's children
+		 */
 		public void ReplaceChildren (Node node)
 		{
 			Clear ();
