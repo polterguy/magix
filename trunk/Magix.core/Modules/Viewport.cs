@@ -1,6 +1,6 @@
 /*
  * Magix - A Web Application Framework for Humans
- * Copyright 2010 - 2012 - QueenOfSpades20122@gmail.com
+ * Copyright 2010 - 2012 - MareMara13@gmail.com
  * Magix is licensed as MITx11, see enclosed License.txt File for Details.
  */
 
@@ -28,6 +28,11 @@ namespace Magix.Core
 				delegate
 				{
 					Page_Load_Initializing();
+		            if (!AjaxManager.Instance.IsCallback && IsPostBack)
+		            {
+		                IncludeAllCssFiles();
+		                IncludeAllJsFiles();
+		            }
 				};
 			base.OnInit (e);
 		}
@@ -46,7 +51,23 @@ namespace Magix.Core
 			}
 		}
 
-        private void ClearControls(DynamicPanel dynamic)
+        private void IncludeAllCssFiles()
+        {
+            foreach (string idx in CssFiles)
+            {
+                IncludeCssFile(idx);
+            }
+        }
+
+        private void IncludeAllJsFiles()
+        {
+            foreach (string idx in JsFiles)
+            {
+                IncludeJsFile(idx);
+            }
+        }
+
+		private void ClearControls(DynamicPanel dynamic)
         {
             foreach (Control idx in dynamic.Controls)
             {
@@ -78,6 +99,93 @@ viewport container for all of its controls. Unloads a container for controls.";
 			// of Active Active Events
 			Node node = new Node();
 			RaiseEvent ("magix.execute._event-override-removed", node);
+		}
+
+        private List<string> CssFiles
+        {
+            get
+            {
+                if (ViewState["CssFiles"] == null)
+                    ViewState["CssFiles"] = new List<string>();
+                return ViewState["CssFiles"] as List<string>;
+            }
+        }
+
+        private List<string> JsFiles
+        {
+            get
+            {
+                if (ViewState["CssFiles"] == null)
+                    ViewState["CssFiles"] = new List<string>();
+                return ViewState["CssFiles"] as List<string>;
+            }
+        }
+
+        private void IncludeCssFile (string cssFile)
+		{
+			if (!string.IsNullOrEmpty (cssFile))
+			{
+				if (cssFile.Contains ("~"))
+				{
+					string appPath = HttpContext.Current.Request.Url.ToString ();
+					appPath = appPath.Substring (0, appPath.LastIndexOf ('/'));
+					cssFile = cssFile.Replace ("~", appPath);
+				}
+				if (AjaxManager.Instance.IsCallback)
+				{
+					AjaxManager.Instance.WriterAtBack.Write (
+                        @"MUX.Element.prototype.includeCSS('<link href=""{0}"" rel=""stylesheet"" type=""text/css"" />');", cssFile);
+				}
+				else
+				{
+					LiteralControl lit = new LiteralControl ();
+					lit.Text = string.Format (@"
+<link href=""{0}"" rel=""stylesheet"" type=""text/css"" />
+",
+                        cssFile);
+					Page.Header.Controls.Add (lit);
+				}
+			}
+		}
+
+        private void IncludeJsFile(string jsFile)
+        {
+            jsFile = jsFile.Replace("~/", GetApplicationBaseUrl()).ToLowerInvariant();
+            AjaxManager.Instance.IncludeScriptFromFile(jsFile);
+        }
+
+		/**
+         */
+        [ActiveEvent(Name = "magix.viewport.include-client-file")]
+		protected void magix_viewport_include_client_file (object sender, ActiveEventArgs e)
+		{
+			if (e.Params.Contains("inspect"))
+			{
+				e.Params["inspect"].Value = "Includes either a CSS file or a JavaScript file on the client side";
+				e.Params["type"].Value = "CSS";
+				e.Params["file"].Value = "media/main-debug.css";
+				return;
+			}
+			if (e.Params["type"].Get<string>() == "CSS")
+			{
+                string cssFile = e.Params["file"].Get<String>();
+                if (!CssFiles.Contains(cssFile))
+                {
+                    CssFiles.Add(cssFile);
+                    IncludeCssFile(cssFile);
+                }
+			}
+			else if (e.Params["type"].Get<string>() == "JavaScript")
+			{
+                string js = e.Params["file"].Get<String>();
+                if (!JsFiles.Contains(js))
+                {
+                    JsFiles.Add(js);
+                    IncludeJsFile(js);
+                }
+			}
+			else
+				throw new ArgumentException("Only type of JavaScript and CSS are legal inclusion files, you tried to include a file of type; " + e.Params["type"].Get<string>());
 		}
 
 		/**

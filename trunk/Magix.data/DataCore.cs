@@ -5,9 +5,12 @@
  */
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using Magix.Core;
 using Magix.UX.Builder;
 using Db4objects.Db4o;
+using Db4objects.Db4o.Ext;
 using Db4objects.Db4o.Config;
 
 namespace Magix.execute
@@ -41,6 +44,20 @@ namespace Magix.execute
 				get { return _node; }
 				set { _node = value; }
 			}
+
+			public override bool Equals (object obj)
+			{
+				if (obj == null || !(obj is Storage))
+					return false;
+
+				Storage rhs = obj as Storage;
+				return Key == rhs.Key && Node.Equals (rhs.Node);
+			}
+
+			public override int GetHashCode ()
+			{
+				return Key.GetHashCode () + Node.GetHashCode ();
+			}
 		}
 
 		/**
@@ -61,12 +78,16 @@ a node, which will become saved in its entirety.";
 				return;
 			}
 			Node value = null;
-			if (!e.Params.Contains ("object") && e.Params.Contains ("context"))
+			if (!e.Params.Contains ("object") && 
+			    e.Params.Contains ("context"))
 				value = Expressions.GetExpressionValue(e.Params["context"].Get<string>(), e.Params, e.Params) as Node;
 			else if (e.Params.Contains ("object"))
 				value = e.Params["object"];
 			else
 				throw new ArgumentException("Either context or object must be defined before calling magix.data.save");
+			if (!e.Params.Contains ("key") || 
+			    string.IsNullOrEmpty (e.Params["key"].Get<string>()))
+				throw new ArgumentException("Missing 'key' while trying to store object");
 			Node parent = value.Parent;
 			value.Parent = null;
 			new DeterministicExecutor(
@@ -77,7 +98,6 @@ a node, which will become saved in its entirety.";
 						db.Ext ().Configure ().UpdateDepth (1000);
 						db.Ext ().Configure ().ActivationDepth (1000);
 						string key = e.Params["key"].Get<string>();
-
 						bool found = false;
 						foreach (Storage idx in db.QueryByExample (new Storage(null, key)))
 						{
@@ -109,6 +129,7 @@ a node, which will become saved in its entirety.";
 			{
 				e.Params["key"].Value = "unique-key-of-object-to-load";
 				e.Params["context"].Value = "[OR][Expression][Pointing][ToNode][ResultSet]";
+				e.Params["prototype"].Value = "optional parameter, being a 'query object' which the returned object must match";
 				e.Params["inspect"].Value = @"Will load the object from the data storage
 with the given ""key"" node into the ""object"" child return node, 
 or the given ""context"" pointer to a node, which will be 
@@ -116,6 +137,7 @@ transformed into the returned object from the data storage.";
 				return;
 			}
 			Node context = null;
+			Node prototype = null;
 			if (e.Params.Contains ("context"))
 			{
 				context = Expressions.GetExpressionValue (
@@ -127,14 +149,29 @@ transformed into the returned object from the data storage.";
 			{
 				context = e.Params["object"];
 			}
+			if (e.Params.Contains ("prototype"))
+			{
+				prototype = e.Params["prototype"];
+			}
+			string key = null;
+			if (e.Params.Contains ("key"))
+				key = e.Params["key"].Get<string>();
 			using (IObjectContainer db = Db4oFactory.OpenFile(_dbFile))
 			{
 				db.Ext ().Configure ().UpdateDepth (1000);
 				db.Ext ().Configure ().ActivationDepth (1000);
-				string key = e.Params["key"].Get<string>();
 
-				foreach (Storage idx in db.QueryByExample (new Storage(null, key)))
+				IList<Storage> objects = db.Ext ().Query<Storage>(
+					delegate(Storage obj)
+					{
+						if (key != null)
+							return obj.Key == key;
+						else
+							return obj.Node.HasNodes(prototype);
+					});
+				if (objects.Count > 0)
 				{
+					Storage idx = objects[0];
 					context.ReplaceChildren (idx.Node);
 					context.Value = idx.Node.Value;
 					context.Name = idx.Node.Name;
