@@ -266,6 +266,7 @@ the execution engine. Functions as a ""magix.execute"" keyword.";
 				e.Params["OR"]["Data"]["message"].Value = "Message from context";
 				e.Params["raise"].Value = "magix.viewport.show-message";
 				e.Params["raise"]["params"]["message"].Value = "Either directly embedded 'params'...";
+				e.Params["raise"]["no-override"].Value = "False";
 				e.Params["raise"]["context"].Value = "[OR][Data]";
 				e.Params["inspect"].Value = @"Will raise the current node's Value
 as an active event, passing in either the ""context"" Node 
@@ -288,7 +289,10 @@ keyword.";
 			{
 				dp = ip;
 			}
-			RaiseEvent (ip.Get<string>(), dp);
+			bool forceNoOverride = false;
+			if (dp.Contains ("no-override") && dp["no-override"].Get<bool>())
+				forceNoOverride = true;
+			RaiseEvent (ip.Get<string>(), dp, forceNoOverride);
 		}
 
 		/**

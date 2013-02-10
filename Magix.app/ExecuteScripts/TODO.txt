@@ -1,0 +1,84 @@
+
+
+* Null Event Handlers, that catches ALL events
+
+* Calling Active Events, forcing them NOT to override, to be able to "call base" methods
+
+* Make support for assigning nodes and values into ANY parameter in ANY code by using
+  e.g. something like "message=(expr)>[.][message].Value" for instance.
+  This will eliminate the need for "context" in anything by "magix.execute" I think
+
+* Uploading of Manifest files, which changes the state of the application somehow
+
+* Serialization of DLL's and other resources back and forth to servers
+
+* Implement handling and raising of Active Events over the network
+
+* Assigning of types in code structure, e.g. MyParameter=(int)>5
+
+* Better handling of types in expressions
+
+* Tutorial mode Active Module, which helps guide the user through Magix
+
+* Variables in code, such as e.g.; var=>tmp=[Data][Path]
+
+* Queries in expression, such as e.g.; [Data][Image?[URL].Value=="google.png"]
+
+* Fix the "context" problem, e.g. "raise" and "show-message" will fissle
+  since it doesn't understand "who's context" it is ...
+
+* Add support for creating Timer in JSON
+
+* Create perfect Doxygen comments
+
+* Support for "Ping Sound" in show-message Active Event
+
+* Check up if all JavaScript DOM events are being handled
+
+* Check up if all Widget Properties are being handled [AccessKey for instance]
+
+* Support for creating effects
+
+* Refactor Event Creation in DynamicForm.ascx.cs to use a method to remove redundant code
+
+* Support for creating Dynamic Panels, Dynamically ...
+
+* Support for adding styles to Widgets
+
+* Deep comparison of Nodes, to make it possible to compare two Node expressions returning Node lists against each other
+
+* Support for SelectedItem from BaseWebControlListFormElement
+
+* Create Unit Tests
+
+* Play Sound Active Event
+
+* Indentation Module, which can indent code two spaces for simplicity
+
+* Design widget, which allows for WYSIWYG designing of create-form syntax
+
+* Math stuff in selectors, such as ".Count - 1"
+
+* "using" keyword, which changes the Data-Pointer such that relative
+  JSON paths can more easily be created
+
+* Making mostly EVERYTHING a "magix.execute" keyword ...
+  AND make sure all Events have "sane names"
+
+* Implement support for loading multiple objects in "magix.data.load"
+
+* Searching through Active Events in Executor
+
+* Setting value on Dynamically created Form Elements
+
+* Loading objects from data storage and meta traverse them
+  Create an "Object Explorer"
+
+* Simplify Selector Syntax in Adddress-Book.txt
+
+* Support code comments, and serialization of comments in JSON.
+
+* YouTube videos demonstrating Magix
+
+
+
