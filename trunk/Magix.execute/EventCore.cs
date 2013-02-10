@@ -75,6 +75,7 @@ re-mapped. ""initial-startup-of-process"" must exists to run event.";
 		[ActiveEvent(Name = "magix.execute.function")]
 		public void magix_execute_function (object sender, ActiveEventArgs e)
 		{
+			_hasNull = null;
 			if (e.Params.Contains ("inspect"))
 			{
 				e.Params["Data"].Value = "thomas";
@@ -101,7 +102,7 @@ as a ""magix.execute"" keyword.";
 			if (e.Params.Contains ("_dp"))
 				dp = e.Params["_dp"].Value as Node;
 
-			string key = ip["event"].Get<string>();
+			string key = ip["event"].Get<string>("");
 
 			// If function contains a child node with "code" name it
 			// will use the ip pointer as the place to extract the code.
@@ -163,6 +164,7 @@ as a ""magix.execute"" keyword.";
 		[ActiveEvent(Name = "magix.execute.remove-function")]
 		public void magix_execute_remove_function (object sender, ActiveEventArgs e)
 		{
+			_hasNull = null;
 			if (e.Params.Contains ("inspect"))
 			{
 				e.Params["event"].Value = "foo-bar";
@@ -174,7 +176,7 @@ found in the ""event"" child node. Functions as a ""magix.execute"" keyword.";
 			{
 				db.Ext ().Configure ().UpdateDepth (1000);
 				db.Ext ().Configure ().ActivationDepth (1000);
-				string key = e.Params["event"].Get<string>();
+				string key = e.Params["event"].Get<string>("");
 
 				foreach (Event idx in db.QueryByExample (new Event(null, key)))
 				{
@@ -188,6 +190,44 @@ found in the ""event"" child node. Functions as a ""magix.execute"" keyword.";
 			Node node = new Node();
 			node["ActiveEvent"].Value = e.Params["event"].Get<string>();
 			RaiseEvent ("magix.execute._event-override-removed", node);
+		}
+
+		private bool? _hasNull;
+		/**
+		 */
+		[ActiveEvent(Name = "")]
+		public void magix_data__active_event_2_code_callback_null_helper (object sender, ActiveEventArgs e)
+		{
+			// Small optimization, to not traverse Data storage file for EVERY SINGLE ACTIVE EVENT ...!
+			if (_hasNull.HasValue && !_hasNull.Value)
+				return;
+
+			Node caller = null;
+			_hasNull = false;
+			using (IObjectContainer db = Db4oFactory.OpenFile(_dbFile))
+			{
+				db.Ext ().Configure ().UpdateDepth (1000);
+				db.Ext ().Configure ().ActivationDepth (1000);
+
+				foreach (Event idx in db.QueryByExample (new Event(null, null)))
+				{
+					if (idx.Key == "")
+					{
+						idx.Node.Name = null;
+						caller = idx.Node;
+						_hasNull = true;
+						break;
+					}
+				}
+			}
+			if (caller != null)
+			{
+				Node tmp = new Node();
+				tmp.AddRange (caller.UnTie ());
+				tmp["_method"].Value = e.Name;
+				tmp["_method"].AddRange (e.Params.Clone ());
+				RaiseEvent ("magix.execute", tmp, true);
+			}
 		}
 
 		/**
@@ -210,7 +250,6 @@ found in the ""event"" child node. Functions as a ""magix.execute"" keyword.";
 						e.Params["event"].Value = e.Name;
 						e.Params["code"].Clear ();
 						e.Params["code"].AddRange (idx.Node);
-						e.Params.Value = idx.Node.Value;
 						e.Params["inspect"].Value = @"This is a dynamically created
 active event, containing ""magix.executor"" code, meaning keywords from the executor,
 such that this serialized code will be called upon the raising of this event.";

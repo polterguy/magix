@@ -51,6 +51,7 @@ end user for some seconds.";
 				e.Params["icon"].Value = "media/images/magix-logo-tiny.png";
 				return;
 			}
+			bool first = string.IsNullOrEmpty (messageLabel.Text);
 			messageLabel.Text += "<p>" + e.Params["message"].Get<string>() + "</p>";
 			if (e.Params.Contains ("header"))
 				msgBoxHeader.Text = e.Params["header"].Get<string>();
@@ -68,15 +69,19 @@ end user for some seconds.";
 			if (e.Params.Contains ("color"))
 				color = e.Params["color"].Get<string>();
 			messageWrapper.Style[Styles.backgroundColor] = color;
-			new EffectRollDown(messageWrapper, 500)
-				.JoinThese (
-					new EffectFadeIn())
-				.ChainThese (
-					new EffectTimeout(time),
-					new EffectRollUp(messageWrapper, 500)
-						.JoinThese (
-							new EffectFadeOut()))
-				.Render ();
+			if (first)
+			{
+				// We only render effects the FIRST time event is called ...
+				new EffectRollDown(messageWrapper, 500)
+					.JoinThese (
+						new EffectFadeIn())
+					.ChainThese (
+						new EffectTimeout(time),
+						new EffectRollUp(messageWrapper, 500)
+							.JoinThese (
+								new EffectFadeOut()))
+					.Render ();
+			}
         }
     }
 }

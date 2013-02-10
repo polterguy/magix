@@ -19,7 +19,9 @@ namespace Magix.Core
     public class ActiveEventAttribute : Attribute
     {
         /**
-         * Level3: Name of event
+         * Level3: Name of event. Notice that if this is "", your Active Event Handler
+         * will handle ALL Active Events. This is an easy way to create hooks into
+         * your code, for creating debuggers, and similar types of "meta components".
          */
         public string Name;
 

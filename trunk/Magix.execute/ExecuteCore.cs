@@ -74,7 +74,7 @@ from within a ""magix.execute"" event code block.";
 					// Data Pointer, pointer to data
 					tmp["_dp"].Value = dp;
 
-					RaiseEvent (eventName, tmp);
+					RaiseEvent (eventName, tmp, true);
 				}
 			}
 			ip.Remove (ip["_state"]);

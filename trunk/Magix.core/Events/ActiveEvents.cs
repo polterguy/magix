@@ -111,7 +111,7 @@ namespace Magix.Core
             RaiseActiveEvent(sender, name, node);
         }
 
-        private List<Tuple<MethodInfo, object>> SlurpAllEventHandlers(string eventName)
+        private List<Tuple<MethodInfo, object>> SlurpAllEventHandlers(string eventName, bool forceNoNull)
         {
             List<Tuple<MethodInfo, object>> retVal = new List<Tuple<MethodInfo, object>>();
 
@@ -132,7 +132,28 @@ namespace Magix.Core
                     retVal.Add(idx);
                 }
             }
-            return retVal;
+
+			if (forceNoNull)
+				return retVal;
+
+            // Adding NULL static methods (if any)
+            if (_staticEvents.ContainsKey(""))
+            {
+                foreach (Tuple<MethodInfo, object> idx in _staticEvents[""])
+                {
+                    retVal.Add(idx);
+                }
+            }
+
+            // Adding NULL instance methods (if any)
+            if (InstanceMethod.ContainsKey(""))
+            {
+                foreach (Tuple<MethodInfo, object> idx in InstanceMethod[""])
+                {
+                    retVal.Add(idx);
+                }
+            }
+			return retVal;
         }
 
         private void ExecuteEventMethod(
@@ -244,33 +265,34 @@ namespace Magix.Core
 			string originalName = name;
 			if (!forceNoOverride)
 				name = GetEventMappingValue(name);
+
 			ActiveEventArgs e = new ActiveEventArgs(originalName, pars);
-            if (_staticEvents.ContainsKey(name) || InstanceMethod.ContainsKey(name))
+            // We must run this in two operations since events clear controls out
+            // and hence make "dead references" to Event Handlers and such...
+            // Therefor we first iterate and find all event handlers interested in
+            // this event before we start calling them one by one. But every time in
+            // between calling the next one, we must verify that it still exists within
+            // the collection...
+            List<Tuple<MethodInfo, object>> tmp = SlurpAllEventHandlers(name, forceNoOverride);
+
+            // Looping through all methods...
+            foreach (Tuple<MethodInfo, object> idx in tmp)
             {
-                // We must run this in two operations since events clear controls out
-                // and hence make "dead references" to Event Handlers and such...
-                // Therefor we first iterate and find all event handlers interested in
-                // this event before we start calling them one by one. But every time in
-                // between calling the next one, we must verify that it still exists within
-                // the collection...
-                List<Tuple<MethodInfo, object>> tmp = SlurpAllEventHandlers(name);
+                // Since events might load and clear controls we need to check if the event 
+                // handler still exists after *every* event handler we dispatch control to...
+                List<Tuple<MethodInfo, object>> recheck = SlurpAllEventHandlers(name, forceNoOverride);
 
-                // Looping through all methods...
-                foreach (Tuple<MethodInfo, object> idx in tmp)
+				bool exists = false;
+                foreach (Tuple<MethodInfo, object> idx2 in recheck)
                 {
-                    // Since events might load and clear controls we need to check if the event 
-                    // handler still exists after *every* event handler we dispatch control to...
-                    List<Tuple<MethodInfo, object>> recheck = SlurpAllEventHandlers(name);
-
-                    foreach (Tuple<MethodInfo, object> idx2 in recheck)
+                    if (idx.Equals(idx2))
                     {
-                        if (idx.Equals(idx2))
-                        {
-                            ExecuteEventMethod(idx.Item1, idx.Item2, sender, e);
-                            break;
-                        }
+						exists = true;
+                        break;
                     }
                 }
+				if (exists)
+                	ExecuteEventMethod(idx.Item1, idx.Item2, sender, e);
             }
 		}
 
@@ -402,7 +424,8 @@ namespace Magix.Core
 		{
 			List<string> tokens = ExtractTokens(code);
 			string name = tokens.Count == 0 ? "" : tokens[0];
-			tokens.RemoveAt (0);
+			if (tokens.Count > 0)
+				tokens.RemoveAt (0);
 			return RaiseSingleEventWithTokens(sender, name, tokens, pars, forceNoOverride);
         }
 

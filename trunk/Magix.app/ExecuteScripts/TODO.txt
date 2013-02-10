@@ -2,11 +2,22 @@
 
 * Null Event Handlers, that catches ALL events
 
-* Calling Active Events, forcing them NOT to override, to be able to "call base" methods
-
 * Make support for assigning nodes and values into ANY parameter in ANY code by using
   e.g. something like "message=(expr)>[.][message].Value" for instance.
-  This will eliminate the need for "context" in anything by "magix.execute" I think
+  This will eliminate the need for "context" in anything, including "magix.execute" I think
+  PROBLEM; How to delay serialization, such that change operations in front
+  of these types of 'references' changes the content of the reference expression ...?
+  If it SHOULD do ...?
+  DONE but need support for passing in the Original Nodes somehow ... :(
+
+* There seems to be something fishy in the way events are cleared. Loading
+  a module into content2, and then clearing, doesn't "immediately" remove
+  its associated event handlers ...?
+  Test in Active Event Executor by loading dynamic form ...
+  MIGHT be fixed due to ActiveEvent.cs bug fixed ...
+
+* "fork" keyword, which spawns a new thread, with an immutable Cloned version
+  of whatever node it's reacting upon.
 
 * Uploading of Manifest files, which changes the state of the application somehow
 
