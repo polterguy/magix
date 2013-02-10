@@ -110,7 +110,7 @@ namespace Magix.admin
 		protected void EventClicked(object sender, EventArgs e)
 		{
 			LinkButton btn = sender as LinkButton;
-			activeEvent.Text = btn.Text;
+			activeEvent.Text = btn.Text == "&nbsp;" ? "" : btn.Text;
 			activeEvent.Select ();
 			activeEvent.Focus ();
 		}

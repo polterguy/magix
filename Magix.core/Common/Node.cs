@@ -408,7 +408,8 @@ namespace Magix.Core
         [DebuggerStepThrough]
         public Node UnTie()
         {
-            _parent.Remove(this);
+			if (_parent != null)
+				_parent.Remove(this);
             _parent = null;
             return this;
         }

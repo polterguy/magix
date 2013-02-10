@@ -40,21 +40,23 @@ event, where the ""ToolTip"" will contain the original event name. Takes no para
 					if (splits[splits.Length - 1].StartsWith ("_"))
 						continue; // "Hidden" event ...
 				}
-				node ["ActiveEvents"] ["no_" + idxNo.ToString()].Value = idx;
 				if (ActiveEvents.Instance.IsOverrideSystem (idx))
 				{
+					node["ActiveEvents"]["no_" + idxNo.ToString()].Value = string.IsNullOrEmpty (idx) ? "&nbsp;" : idx;
 					node["ActiveEvents"]["no_" + idxNo.ToString()]["CSS"].Value = "description-error";
 					node["ActiveEvents"]["no_" + idxNo.ToString()]["ToolTip"].Value = 
 						ActiveEvents.Instance.GetEventMappingValue (idx);
 				}
 				else if (ActiveEvents.Instance.IsOverride (idx))
 				{
+					node["ActiveEvents"]["no_" + idxNo.ToString()].Value = idx;
 					node["ActiveEvents"]["no_" + idxNo.ToString()]["CSS"].Value = "description-notice";
 					node["ActiveEvents"]["no_" + idxNo.ToString()]["ToolTip"].Value = 
 						ActiveEvents.Instance.GetEventMappingValue (idx);
 				}
-				else
+				else if (idx != "" /* Skipping System Null Overrides */)
 				{
+					node["ActiveEvents"]["no_" + idxNo.ToString()].Value = idx;
 					node["ActiveEvents"]["no_" + idxNo.ToString()]["CSS"].Value = "description";
 				}
 				idxNo += 1;
