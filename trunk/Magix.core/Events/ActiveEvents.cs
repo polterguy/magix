@@ -534,6 +534,8 @@ namespace Magix.Core
             [DebuggerStepThrough]
             get
             {
+				if (HttpContext.Current == null)
+					return new Dictionary<string, List<Tuple<MethodInfo, object>>>();// returning empty list when no page [threading ...]
                 Page page = (Page)HttpContext.Current.Handler;
                 if (!page.Items.Contains("__Magix.Brix.Loader.ActiveEvents._requestEventHandlers"))
                 {
