@@ -155,5 +155,6 @@
     <None Include="ExecuteScripts\Tutorials\Dynamic-Forms.txt" />
     <None Include="ExecuteScripts\Applications\Address-Book.txt" />
     <None Include="ExecuteScripts\TODO.txt" />
+    <None Include="ExecuteScripts\Tutorials\Null-Event-Handler.txt" />
   </ItemGroup>
 </Project>

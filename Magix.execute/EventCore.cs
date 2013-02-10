@@ -18,6 +18,7 @@ namespace Magix.execute
 	public class EventCore : ActiveController
 	{
 		private static string _dbFile = "store.db4o";
+		private static bool? _hasNull;
 
 		public class Event
 		{
@@ -43,6 +44,14 @@ namespace Magix.execute
 			}
 		}
 
+		public EventCore()
+		{
+			lock (typeof(EventCore))
+			{
+				_hasNull = new bool?();
+			}
+		}
+
 		/**
 		 */
 		[ActiveEvent(Name = "magix.core.application-startup")]
@@ -58,14 +67,17 @@ magix.execute blocks of code are being correctly
 re-mapped. ""initial-startup-of-process"" must exists to run event.";
 				return;
 			}
-			using (IObjectContainer db = Db4oFactory.OpenFile(_dbFile))
+			lock (typeof(Node))
 			{
-				db.Ext ().Configure ().UpdateDepth (1000);
-				db.Ext ().Configure ().ActivationDepth (1000);
-
-				foreach (Event idx in db.QueryByExample (new Event(null, null)))
+				using (IObjectContainer db = Db4oFactory.OpenFile(_dbFile))
 				{
-					ActiveEvents.Instance.CreateEventMapping (idx.Key, "magix.execute._active-event-2-code-callback");
+					db.Ext ().Configure ().UpdateDepth (1000);
+					db.Ext ().Configure ().ActivationDepth (1000);
+
+					foreach (Event idx in db.QueryByExample (new Event(null, null)))
+					{
+						ActiveEvents.Instance.CreateEventMapping (idx.Key, "magix.execute._active-event-2-code-callback");
+					}
 				}
 			}
 		}
@@ -73,7 +85,7 @@ re-mapped. ""initial-startup-of-process"" must exists to run event.";
 		/**
 		 */
 		[ActiveEvent(Name = "magix.execute.function")]
-		public void magix_execute_function (object sender, ActiveEventArgs e)
+		public static void magix_execute_function (object sender, ActiveEventArgs e)
 		{
 			_hasNull = null;
 			if (e.Params.Contains ("inspect"))
@@ -128,25 +140,28 @@ as a ""magix.execute"" keyword.";
 			new DeterministicExecutor(
 			delegate
 				{
-					using (IObjectContainer db = Db4oFactory.OpenFile(_dbFile))
+					lock (typeof(Node))
 					{
-						db.Ext ().Configure ().UpdateDepth (1000);
-						db.Ext ().Configure ().ActivationDepth (1000);
+						using (IObjectContainer db = Db4oFactory.OpenFile(_dbFile))
+						{
+							db.Ext ().Configure ().UpdateDepth (1000);
+							db.Ext ().Configure ().ActivationDepth (1000);
 
-						bool found = false;
-						foreach (Event idx in db.QueryByExample (new Event(null, key)))
-						{
-							idx.Node = dp;
-							db.Store (idx);
-							found = true;
-							break;
+							bool found = false;
+							foreach (Event idx in db.QueryByExample (new Event(null, key)))
+							{
+								idx.Node = dp;
+								db.Store (idx);
+								found = true;
+								break;
+							}
+							if (!found)
+							{
+								db.Store (new Event(dp, key));
+							}
+							db.Commit ();
+							ActiveEvents.Instance.CreateEventMapping (key, "magix.execute._active-event-2-code-callback");
 						}
-						if (!found)
-						{
-							db.Store (new Event(dp, key));
-						}
-						db.Commit ();
-						ActiveEvents.Instance.CreateEventMapping (key, "magix.execute._active-event-2-code-callback");
 					}
 				},
 				delegate
@@ -162,7 +177,7 @@ as a ""magix.execute"" keyword.";
 		/**
 		 */
 		[ActiveEvent(Name = "magix.execute.remove-function")]
-		public void magix_execute_remove_function (object sender, ActiveEventArgs e)
+		public static void magix_execute_remove_function (object sender, ActiveEventArgs e)
 		{
 			_hasNull = null;
 			if (e.Params.Contains ("inspect"))
@@ -172,19 +187,22 @@ as a ""magix.execute"" keyword.";
 found in the ""event"" child node. Functions as a ""magix.execute"" keyword.";
 				return;
 			}
-			using (IObjectContainer db = Db4oFactory.OpenFile(_dbFile))
+			lock (typeof(Node))
 			{
-				db.Ext ().Configure ().UpdateDepth (1000);
-				db.Ext ().Configure ().ActivationDepth (1000);
-				string key = e.Params["event"].Get<string>("");
-
-				foreach (Event idx in db.QueryByExample (new Event(null, key)))
+				using (IObjectContainer db = Db4oFactory.OpenFile(_dbFile))
 				{
-					db.Delete (idx);
-					break;
+					db.Ext ().Configure ().UpdateDepth (1000);
+					db.Ext ().Configure ().ActivationDepth (1000);
+					string key = e.Params["event"].Get<string>("");
+
+					foreach (Event idx in db.QueryByExample (new Event(null, key)))
+					{
+						db.Delete (idx);
+						break;
+					}
+					db.Commit ();
+					ActiveEvents.Instance.RemoveMapping (key);
 				}
-				db.Commit ();
-				ActiveEvents.Instance.RemoveMapping (key);
 			}
 
 			Node node = new Node();
@@ -192,11 +210,10 @@ found in the ""event"" child node. Functions as a ""magix.execute"" keyword.";
 			RaiseEvent ("magix.execute._event-override-removed", node);
 		}
 
-		private bool? _hasNull;
 		/**
 		 */
 		[ActiveEvent(Name = "")]
-		public void magix_data__active_event_2_code_callback_null_helper (object sender, ActiveEventArgs e)
+		public static void magix_data__active_event_2_code_callback_null_helper (object sender, ActiveEventArgs e)
 		{
 			// Small optimization, to not traverse Data storage file for EVERY SINGLE ACTIVE EVENT ...!
 			if (_hasNull.HasValue && !_hasNull.Value)
@@ -204,19 +221,22 @@ found in the ""event"" child node. Functions as a ""magix.execute"" keyword.";
 
 			Node caller = null;
 			_hasNull = false;
-			using (IObjectContainer db = Db4oFactory.OpenFile(_dbFile))
+			lock (typeof(Node))
 			{
-				db.Ext ().Configure ().UpdateDepth (1000);
-				db.Ext ().Configure ().ActivationDepth (1000);
-
-				foreach (Event idx in db.QueryByExample (new Event(null, null)))
+				using (IObjectContainer db = Db4oFactory.OpenFile(_dbFile))
 				{
-					if (idx.Key == "")
+					db.Ext ().Configure ().UpdateDepth (1000);
+					db.Ext ().Configure ().ActivationDepth (1000);
+
+					foreach (Event idx in db.QueryByExample (new Event(null, null)))
 					{
-						idx.Node.Name = null;
-						caller = idx.Node;
-						_hasNull = true;
-						break;
+						if (idx.Key == "")
+						{
+							idx.Node.Name = null;
+							caller = idx.Node;
+							_hasNull = true;
+							break;
+						}
 					}
 				}
 			}
@@ -233,32 +253,35 @@ found in the ""event"" child node. Functions as a ""magix.execute"" keyword.";
 		/**
 		 */
 		[ActiveEvent(Name = "magix.execute._active-event-2-code-callback")]
-		public void magix_data__active_event_2_code_callback (object sender, ActiveEventArgs e)
+		public static void magix_data__active_event_2_code_callback (object sender, ActiveEventArgs e)
 		{
 			Node caller = null;
-			using (IObjectContainer db = Db4oFactory.OpenFile(_dbFile))
+			lock (typeof(Node))
 			{
-				db.Ext ().Configure ().UpdateDepth (1000);
-				db.Ext ().Configure ().ActivationDepth (1000);
-				string key = e.Name;
-
-				foreach (Event idx in db.QueryByExample (new Event(null, key)))
+				using (IObjectContainer db = Db4oFactory.OpenFile(_dbFile))
 				{
-					idx.Node.Name = null;
-					if (e.Params.Contains ("inspect"))
+					db.Ext ().Configure ().UpdateDepth (1000);
+					db.Ext ().Configure ().ActivationDepth (1000);
+					string key = e.Name;
+
+					foreach (Event idx in db.QueryByExample (new Event(null, key)))
 					{
-						e.Params["event"].Value = e.Name;
-						e.Params["code"].Clear ();
-						e.Params["code"].AddRange (idx.Node);
-						e.Params["inspect"].Value = @"This is a dynamically created
-active event, containing ""magix.executor"" code, meaning keywords from the executor,
-such that this serialized code will be called upon the raising of this event.";
+						idx.Node.Name = null;
+						if (e.Params.Contains ("inspect"))
+						{
+							e.Params["event"].Value = e.Name;
+							e.Params["code"].Clear ();
+							e.Params["code"].AddRange (idx.Node);
+							e.Params["inspect"].Value = @"This is a dynamically created
+	active event, containing ""magix.executor"" code, meaning keywords from the executor,
+	such that this serialized code will be called upon the raising of this event.";
+						}
+						else
+						{
+							caller = idx.Node;
+						}
+						break;
 					}
-					else
-					{
-						caller = idx.Node;
-					}
-					break;
 				}
 			}
 			if (caller != null)

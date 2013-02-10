@@ -63,7 +63,7 @@ namespace Magix.execute
 		/**
 		 */
 		[ActiveEvent(Name = "magix.data.save")]
-		public void magix_data_save (object sender, ActiveEventArgs e)
+		public static void magix_data_save (object sender, ActiveEventArgs e)
 		{
 			if (e.Params.Contains ("inspect"))
 			{
@@ -93,25 +93,28 @@ a node, which will become saved in its entirety.";
 			new DeterministicExecutor(
 			delegate
 				{
-					using (IObjectContainer db = Db4oFactory.OpenFile(_dbFile))
+					lock (typeof(Node))
 					{
-						db.Ext ().Configure ().UpdateDepth (1000);
-						db.Ext ().Configure ().ActivationDepth (1000);
-						string key = e.Params["key"].Get<string>();
-						bool found = false;
-						foreach (Storage idx in db.QueryByExample (new Storage(null, key)))
+						using (IObjectContainer db = Db4oFactory.OpenFile(_dbFile))
 						{
-							idx.Node = value;
-							db.Store (idx);
-							found = true;
-							break;
-						}
-						if (!found)
-						{
-							db.Store (new Storage(value, key));
-						}
+							db.Ext ().Configure ().UpdateDepth (1000);
+							db.Ext ().Configure ().ActivationDepth (1000);
+							string key = e.Params["key"].Get<string>();
+							bool found = false;
+							foreach (Storage idx in db.QueryByExample (new Storage(null, key)))
+							{
+								idx.Node = value;
+								db.Store (idx);
+								found = true;
+								break;
+							}
+							if (!found)
+							{
+								db.Store (new Storage(value, key));
+							}
 
-						db.Commit ();
+							db.Commit ();
+						}
 					}
 				},
 				delegate
@@ -123,7 +126,7 @@ a node, which will become saved in its entirety.";
 		/**
 		 */
 		[ActiveEvent(Name = "magix.data.load")]
-		public void magix_data_load (object sender, ActiveEventArgs e)
+		public static void magix_data_load (object sender, ActiveEventArgs e)
 		{
 			if (e.Params.Contains ("inspect"))
 			{
@@ -156,26 +159,29 @@ transformed into the returned object from the data storage.";
 			string key = null;
 			if (e.Params.Contains ("key"))
 				key = e.Params["key"].Get<string>();
-			using (IObjectContainer db = Db4oFactory.OpenFile(_dbFile))
+			lock (typeof(Node))
 			{
-				db.Ext ().Configure ().UpdateDepth (1000);
-				db.Ext ().Configure ().ActivationDepth (1000);
-
-				IList<Storage> objects = db.Ext ().Query<Storage>(
-					delegate(Storage obj)
-					{
-						if (key != null)
-							return obj.Key == key;
-						else
-							return obj.Node.HasNodes(prototype);
-					});
-				if (objects.Count > 0)
+				using (IObjectContainer db = Db4oFactory.OpenFile(_dbFile))
 				{
-					Storage idx = objects[0];
-					context.ReplaceChildren (idx.Node);
-					context.Value = idx.Node.Value;
-					context.Name = idx.Node.Name;
-					return;
+					db.Ext ().Configure ().UpdateDepth (1000);
+					db.Ext ().Configure ().ActivationDepth (1000);
+
+					IList<Storage> objects = db.Ext ().Query<Storage>(
+						delegate(Storage obj)
+						{
+							if (key != null)
+								return obj.Key == key;
+							else
+								return obj.Node.HasNodes(prototype);
+						});
+					if (objects.Count > 0)
+					{
+						Storage idx = objects[0];
+						context.ReplaceChildren (idx.Node);
+						context.Value = idx.Node.Value;
+						context.Name = idx.Node.Name;
+						return;
+					}
 				}
 			}
 		}
@@ -183,7 +189,7 @@ transformed into the returned object from the data storage.";
 		/**
 		 */
 		[ActiveEvent(Name = "magix.data.count")]
-		public void magix_data_count (object sender, ActiveEventArgs e)
+		public static void magix_data_count (object sender, ActiveEventArgs e)
 		{
 			if (e.Params.Contains ("inspect"))
 			{
@@ -191,11 +197,14 @@ transformed into the returned object from the data storage.";
 that exists in the data storage in the ""count"" child node. Takes no parameters.";
 				return;
 			}
-			using (IObjectContainer db = Db4oFactory.OpenFile(_dbFile))
+			lock (typeof(Node))
 			{
-				db.Ext ().Configure ().UpdateDepth (1000);
-				db.Ext ().Configure ().ActivationDepth (1000);
-				e.Params["count"].Value = db.QueryByExample (new Storage(null, null)).Count;
+				using (IObjectContainer db = Db4oFactory.OpenFile(_dbFile))
+				{
+					db.Ext ().Configure ().UpdateDepth (1000);
+					db.Ext ().Configure ().ActivationDepth (1000);
+					e.Params["count"].Value = db.QueryByExample (new Storage(null, null)).Count;
+				}
 			}
 		}
 	}

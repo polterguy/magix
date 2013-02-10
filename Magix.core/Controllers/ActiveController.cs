@@ -61,11 +61,11 @@ namespace Magix.Core
          * but passed onto the Event Handler(s)
          */
         [DebuggerStepThrough]
-        protected Node RaiseEvent(string eventName)
+        protected static Node RaiseEvent(string eventName)
         {
             Node node = new Node();
             ActiveEvents.Instance.RaiseActiveEvent(
-                this,
+                typeof(ActiveController),
                 eventName,
                 node);
             return node;
@@ -75,7 +75,7 @@ namespace Magix.Core
          * Level3: Shorthand for raising events.
          */
         [DebuggerStepThrough]
-        protected void RaiseEvent(string eventName, Node node)
+        protected static void RaiseEvent(string eventName, Node node)
         {
 			RaiseEvent (eventName, node, false);;
         }
@@ -84,10 +84,10 @@ namespace Magix.Core
          * Level3: Shorthand for raising events.
          */
         [DebuggerStepThrough]
-        protected void RaiseEvent(string eventName, Node node, bool forceNoOverride)
+        protected static void RaiseEvent(string eventName, Node node, bool forceNoOverride)
         {
             ActiveEvents.Instance.RaiseActiveEvent(
-                this,
+                typeof(ActiveController),
                 eventName,
                 node,
 				forceNoOverride);

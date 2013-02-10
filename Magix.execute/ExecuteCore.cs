@@ -6,6 +6,7 @@
 
 using System;
 using System.IO;
+using System.Threading;
 using Magix.Core;
 
 namespace Magix.execute
@@ -18,7 +19,7 @@ namespace Magix.execute
 		/**
 		 */
 		[ActiveEvent(Name = "magix.execute")]
-		public void magix_execute (object sender, ActiveEventArgs e)
+		public static void magix_execute (object sender, ActiveEventArgs e)
 		{
 			if (e.Params.Contains ("inspect") 
 			    && e.Params["inspect"].Get<string>("") == "")
@@ -74,7 +75,7 @@ from within a ""magix.execute"" event code block.";
 					// Data Pointer, pointer to data
 					tmp["_dp"].Value = dp;
 
-					RaiseEvent (eventName, tmp, true);
+					RaiseEvent (eventName, tmp);
 				}
 			}
 			ip.Remove (ip["_state"]);
@@ -83,7 +84,7 @@ from within a ""magix.execute"" event code block.";
 		/**
 		 */
 		[ActiveEvent(Name = "magix.execute.if")]
-		public void magix_execute_if (object sender, ActiveEventArgs e)
+		public static void magix_execute_if (object sender, ActiveEventArgs e)
 		{
 			if (e.Params.Contains ("inspect"))
 			{
@@ -140,7 +141,7 @@ Functions as a ""magix.execute"" keyword.";
 			}
 		}
 
-		private void ExecuteIf(string expr, Node ip, Node dp, Node parms)
+		private static void ExecuteIf(string expr, Node ip, Node dp, Node parms)
 		{
 			string left = expr.Substring (0, expr.IndexOfAny (new char[]{'!','=','>','<'}));;
 			string comparison = expr.Substring (left.Length, 2);
@@ -194,7 +195,7 @@ Functions as a ""magix.execute"" keyword.";
 		/**
 		 */
 		[ActiveEvent(Name = "magix.execute.else-if")]
-		public void magix_execute_else_if (object sender, ActiveEventArgs e)
+		public static void magix_execute_else_if (object sender, ActiveEventArgs e)
 		{
 			if (e.Params.Contains ("inspect"))
 			{
@@ -231,7 +232,7 @@ Functions as a ""magix.execute"" keyword.";
 		/**
 		 */
 		[ActiveEvent(Name = "magix.execute.else")]
-		public void magix_execute_else (object sender, ActiveEventArgs e)
+		public static void magix_execute_else (object sender, ActiveEventArgs e)
 		{
 			if (e.Params.Contains ("inspect"))
 			{
@@ -259,7 +260,7 @@ the execution engine. Functions as a ""magix.execute"" keyword.";
 		/**
 		 */
 		[ActiveEvent(Name = "magix.execute.raise")]
-		public void magix_execute_raise (object sender, ActiveEventArgs e)
+		public static void magix_execute_raise (object sender, ActiveEventArgs e)
 		{
 			if (e.Params.Contains ("inspect"))
 			{
@@ -272,7 +273,17 @@ the execution engine. Functions as a ""magix.execute"" keyword.";
 as an active event, passing in either the ""context"" Node 
 Expression as the parameters to the active event, or the 
 ""params"" child collection. Functions as a ""magix.execute""
-keyword.";
+keyword. If ""no-override"" is true, then it won't check
+to see if the method is mapped through overriding. Which
+is useful for having 'calling base functionality', among 
+other things. For instance, if you've overridden 'foo'
+to raise 'bar', then inside of 'bar' you can raise 'foo'
+again, but this time with ""no-override"" set to False,
+which will then NOT call 'bar', which would if occurred,
+create a never ending loop. This makes it possible for
+you to have overridden active events call their overridden
+event, such that you can chain together active events, in
+a hierarchy of overridden events.";
 				return;
 			}
 			Node ip = e.Params["_ip"].Value as Node;
@@ -297,8 +308,66 @@ keyword.";
 
 		/**
 		 */
+		[ActiveEvent(Name = "magix.execute.fork")]
+		public static void magix_execute_fork (object sender, ActiveEventArgs e)
+		{
+			if (e.Params.Contains ("inspect"))
+			{
+				e.Params["Data"]["Value"].Value = "thomas";
+				e.Params["if"].Value = "[Data][Value].Value==thomas";
+				e.Params["if"]["raise"].Value = "magix.viewport.show-message";
+				e.Params["if"]["raise"]["params"]["message"].Value = "Hi Thomas!";
+				e.Params["inspect"].Value = @"Spawns a new thread which the given
+code block will be executed within. Useful for long operations, 
+where you'd like to return to caller before the operation is
+finished.";
+				return;
+			}
+			Thread thread = new Thread(ExecuteThread);
+			thread.Start (e.Params.Clone ());
+		}
+
+		private static void ExecuteThread (object pars)
+		{
+			Node par = pars as Node;
+			Node ip = par;
+			if (par.Contains ("_ip"))
+				ip = par["_ip"].Value as Node;
+
+			Node dp = par;
+			if (par.Contains ("_dp"))
+				dp = par["_dp"].Value as Node;
+
+			ip["_state"].Value = null;
+
+			foreach (Node idx in ip)
+			{
+				string nodeName = idx.Name;
+
+				// Checking to see if it starts with a small letter
+				if ("abcdefghijklmnopqrstuvwxyz".IndexOf (nodeName[0]) != -1)
+				{
+					// This is a keyword
+					string eventName = "magix.execute." + nodeName;
+
+					Node tmp = new Node();
+
+					// "Instruction" pointer, code Node
+					tmp["_ip"].Value = idx;
+
+					// Data Pointer, pointer to data
+					tmp["_dp"].Value = dp;
+
+					RaiseEvent (eventName, tmp, true);
+				}
+			}
+			ip.Remove (ip["_state"]);
+		}
+
+		/**
+		 */
 		[ActiveEvent(Name = "magix.execute.for-each")]
-		public void magix_execute_for_each (object sender, ActiveEventArgs e)
+		public static void magix_execute_for_each (object sender, ActiveEventArgs e)
 		{
 			if (e.Params.Contains ("inspect"))
 			{
@@ -333,7 +402,7 @@ keyword. Functions as a ""magix.execute"" keyword.";
 		/**
 		 */
 		[ActiveEvent(Name = "magix.execute.set")]
-		public void magix_execute_set (object sender, ActiveEventArgs e)
+		public static void magix_execute_set (object sender, ActiveEventArgs e)
 		{
 			if (e.Params.Contains ("inspect"))
 			{
@@ -376,7 +445,7 @@ left hand parts returns a node. Functions as a ""magix.execute"" keyword.";
 		/**
 		 */
 		[ActiveEvent(Name = "magix.execute.remove")]
-		public void magix_execute_remove (object sender, ActiveEventArgs e)
+		public static void magix_execute_remove (object sender, ActiveEventArgs e)
 		{
 			if (e.Params.Contains ("inspect"))
 			{
@@ -396,7 +465,7 @@ returning a node list. Functions as a ""margix.executor"" keyword.";
 		}
 
 		[ActiveEvent(Name = "magix.core._transform-node-2-code")]
-		public void Magix_Samples__TransformNodeToCode (object sender, ActiveEventArgs e)
+		public static void Magix_Samples__TransformNodeToCode (object sender, ActiveEventArgs e)
 		{
 			if (!e.Params.Contains ("JSON"))
 			{
@@ -430,7 +499,7 @@ returning a node list. Functions as a ""margix.executor"" keyword.";
 			e.Params["code"].Value = txt;
 		}
 
-		private string ParseNodes (int indent, Node node)
+		private static string ParseNodes (int indent, Node node)
 		{
 			string retVal = "";
 			foreach (Node idx in node)
@@ -464,7 +533,7 @@ returning a node list. Functions as a ""margix.executor"" keyword.";
 		}
 
 		[ActiveEvent(Name = "magix.core._transform-code-2-node")]
-		public void magix_samples__transform_code_2_node (object sender, ActiveEventArgs e)
+		public static void magix_samples__transform_code_2_node (object sender, ActiveEventArgs e)
 		{
 			if (!e.Params.Contains ("code"))
 			{

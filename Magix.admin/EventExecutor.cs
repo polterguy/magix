@@ -15,7 +15,7 @@ namespace Magix.admin
 	public class EventExecutor : ActiveController
 	{
 		[ActiveEvent(Name = "magix.admin.get-active-events")]
-		public void magix_admin__get_active_events (object sender, ActiveEventArgs e)
+		public static void magix_admin__get_active_events (object sender, ActiveEventArgs e)
 		{
 			if (e.Params.Contains ("inspect"))
 			{
