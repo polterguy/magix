@@ -77,10 +77,20 @@ namespace Magix.Core
         [DebuggerStepThrough]
         protected void RaiseEvent(string eventName, Node node)
         {
+			RaiseEvent (eventName, node, false);;
+        }
+
+        /**
+         * Level3: Shorthand for raising events.
+         */
+        [DebuggerStepThrough]
+        protected void RaiseEvent(string eventName, Node node, bool forceNoOverride)
+        {
             ActiveEvents.Instance.RaiseActiveEvent(
                 this,
                 eventName,
-                node);
+                node,
+				forceNoOverride);
         }
 
         /**

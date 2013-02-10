@@ -625,6 +625,16 @@ namespace Magix.Core
             return retVal;
         }
 
+		public override int GetHashCode ()
+		{
+			string tmp = ToString ();
+			foreach (Node idx in _children)
+			{
+				tmp += idx.ToString ();
+			}
+			return tmp.GetHashCode ();
+		}
+
         /**
          * Level3: Will translate the Node structure to a JSON string. Useful
          * for passing stuff around to other systems, and integrating with client-side

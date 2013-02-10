@@ -153,7 +153,20 @@ namespace Magix.Core
             string name, 
             Node pars)
         {
-            pars = RaiseEventImplementation(sender, name, pars);
+			RaiseActiveEvent (sender, name, pars, false);
+        }
+
+        /**
+         * Level3: Raises an event. This will dispatch control to all the ActiveEvent that are marked with
+         * the Name attribute matching the name parameter of this method call.
+         */
+        public void RaiseActiveEvent(
+            object sender, 
+            string name, 
+            Node pars,
+			bool forceNoOverride)
+        {
+            pars = RaiseEventImplementation(sender, name, pars, forceNoOverride);
         }
 
 		private Node ExtractParsAndRaise (string name, Node pars, string parameters, object sender)
@@ -164,8 +177,8 @@ namespace Magix.Core
 				// This is a Reference to another Active Event
 				// Extract Event, Recursively Invoke with any potential Parameters, 
 				// before executing outer most Active Event
-				pars = RaiseEventImplementation(sender, parameters, pars);
-				pars = RaiseEventImplementation(sender, name, pars);
+				pars = RaiseEventImplementation(sender, parameters, pars, false);
+				pars = RaiseEventImplementation(sender, name, pars, false);
 			}
 			else
 			{
@@ -175,11 +188,11 @@ namespace Magix.Core
 					object expressionValue = Expressions.GetExpressionValue(parameters, pars, pars);
 					if (name == null)
 						return expressionValue as Node;
-					pars = RaiseEventImplementation(sender, name, (Node)expressionValue);
+					pars = RaiseEventImplementation(sender, name, (Node)expressionValue, false);
 				}
 				else
 				{
-					pars = RaiseEventImplementation(sender, name, pars);
+					pars = RaiseEventImplementation(sender, name, pars, false);
 				}
 			}
 			return pars;
@@ -224,11 +237,13 @@ namespace Magix.Core
 			object sender, 
 			string name, 
 			List<string> tokens, 
-			Node pars)
+			Node pars,
+			bool forceNoOverride)
 		{
 			// Calling single Active Event with no more tokens
 			string originalName = name;
-            name = GetEventMappingValue(name);
+			if (!forceNoOverride)
+				name = GetEventMappingValue(name);
 			ActiveEventArgs e = new ActiveEventArgs(originalName, pars);
             if (_staticEvents.ContainsKey(name) || InstanceMethod.ContainsKey(name))
             {
@@ -263,7 +278,8 @@ namespace Magix.Core
 			object sender, 
 			string name, 
 			List<string> tokens, 
-			Node pars)
+			Node pars,
+			bool forceNoOverride)
 		{
 			if (tokens.Count == 0 || 
 			    (tokens.Count >= 2 && tokens[0] == "(" && tokens[1] == ")"))
@@ -274,7 +290,7 @@ namespace Magix.Core
 					tokens.RemoveAt (0);
 					tokens.RemoveAt (0);
 				}
-				RaiseEventDoneParsing(sender, name, tokens, pars);
+				RaiseEventDoneParsing(sender, name, tokens, pars, forceNoOverride);
 				if (tokens.Count > 0)
 				{
 					if(tokens[0] == "&")
@@ -282,7 +298,7 @@ namespace Magix.Core
 						tokens.RemoveAt (0);
 						string nextName = tokens[0];
 						tokens.RemoveAt (0);
-						return RaiseSingleEventWithTokens (sender, nextName, tokens, pars);
+						return RaiseSingleEventWithTokens (sender, nextName, tokens, pars, false);
 					}
 					else
 						throw new ArgumentException("Don't know how to parse parameters at end");
@@ -315,10 +331,10 @@ namespace Magix.Core
 				tokens.RemoveAt (0);
 
 				// Raising "Inner" event(s) first
-				pars = RaiseSingleEventWithTokens (sender, nameInner, tokens, pars);
+				pars = RaiseSingleEventWithTokens (sender, nameInner, tokens, pars, false);
 
 				// Then raising "this" event
-				RaiseEventDoneParsing(sender, name, tokens, pars);
+				RaiseEventDoneParsing(sender, name, tokens, pars, forceNoOverride);
 				if (tokens.Count > 0)
 				{
 					if(tokens[0] == "&")
@@ -326,7 +342,7 @@ namespace Magix.Core
 						tokens.RemoveAt (0);
 						string nextName = tokens[0];
 						tokens.RemoveAt (0);
-						return RaiseSingleEventWithTokens (sender, nextName, tokens, pars);
+						return RaiseSingleEventWithTokens (sender, nextName, tokens, pars, false);
 					}
 					else
 						throw new ArgumentException("Don't know how to parse parameters at end");
@@ -361,7 +377,7 @@ namespace Magix.Core
 				tokens.RemoveAt (0);
 
 				// Then raising "this" event
-				RaiseEventDoneParsing(sender, name, tokens, (Node)exprValue);
+				RaiseEventDoneParsing(sender, name, tokens, (Node)exprValue, forceNoOverride);
 
 				if (tokens.Count > 0)
 				{
@@ -370,7 +386,7 @@ namespace Magix.Core
 						tokens.RemoveAt (0);
 						string nextName = tokens[0];
 						tokens.RemoveAt (0);
-						return RaiseSingleEventWithTokens (sender, nextName, tokens, pars);
+						return RaiseSingleEventWithTokens (sender, nextName, tokens, pars, false);
 					}
 					else
 						throw new ArgumentException("Don't know how to parse parameters at end");
@@ -381,12 +397,13 @@ namespace Magix.Core
 
 		private Node RaiseEventImplementation (object sender, 
 			string code, 
-			Node pars)
+			Node pars,
+		    bool forceNoOverride)
 		{
 			List<string> tokens = ExtractTokens(code);
 			string name = tokens.Count == 0 ? "" : tokens[0];
 			tokens.RemoveAt (0);
-			return RaiseSingleEventWithTokens(sender, name, tokens, pars);
+			return RaiseSingleEventWithTokens(sender, name, tokens, pars, forceNoOverride);
         }
 
         /**
