@@ -17,6 +17,9 @@ namespace Magix.SampleController
 	[ActiveController]
 	public class ControllerSample : ActiveController
 	{
+		/**
+		 * Handled to make sure we load our Active Event Executor by default
+		 */
 		[ActiveEvent(Name = "magix.viewport.page-load")]
 		public void magix_viewport_page_load (object sender, ActiveEventArgs e)
 		{

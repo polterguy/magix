@@ -10,10 +10,18 @@ using Magix.Core;
 namespace Magix.admin
 {
 	/**
+	 * Controller logic for the Active Event Executor. Helps load the executor, and 
+	 * other support functions
 	 */
 	[ActiveController]
 	public class EventExecutor : ActiveController
 	{
+		/**
+		 * Returns the Active Events registered in the system. This includes
+		 * also the Active events which are temporarily loaded, due to Active
+		 * Modules and similar which are registering events. Returns
+		 * all Active Events as a list of Node in the "ActiveEvent" child node
+		 */
 		[ActiveEvent(Name = "magix.admin.get-active-events")]
 		public static void magix_admin__get_active_events (object sender, ActiveEventArgs e)
 		{
@@ -68,6 +76,11 @@ event, where the ""ToolTip"" will contain the original event name. Takes no para
 				});
 		}
 
+		/**
+		 * Loads the Active Event viewer in the given "container" Viewport Container.
+		 * The Active Event viewer allows you to see all events in the system, and also
+		 * execute arbitrary events with nodes as arguments
+		 */
 		[ActiveEvent(Name = "magix.admin.open-event-viewer")]
 		public void magix_admin_open_event_viewer (object sender, ActiveEventArgs e)
 		{

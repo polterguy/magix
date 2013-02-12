@@ -3,6 +3,7 @@
 * Make NULL Active Event Handlers handle also "magix.execute" events, somehow, maybe ...
 
 * Implement serialization of events through HTTP such that events can be remotely activated
+  Maybe through a magix.execute keyword, such as "get" or something ...?
 
 * Make support for assigning nodes and values into ANY parameter in ANY code by using
   e.g. something like "message=(expr)>[.][message].Value" for instance.
@@ -14,8 +15,6 @@
 * Uploading of Manifest files, which changes the state of the application somehow
 
 * Serialization of DLL's and other resources back and forth to servers
-
-* Implement handling and raising of Active Events over the network
 
 * Assigning of types in code structure, e.g. MyParameter=(int)>5
 
@@ -64,6 +63,8 @@
 
 * "using" keyword, which changes the Data-Pointer such that relative
   JSON paths can more easily be created
+  Implement this on "magix.execute" nodes Value from Node, which changes
+  the _dp or Data Pointer
 
 * Making mostly EVERYTHING a "magix.execute" keyword ...
   AND make sure all Events have "sane names"
@@ -76,6 +77,8 @@
 
 * Loading objects from data storage and meta traverse them
   Create an "Object Explorer"
+
+* Loading lists of objects
 
 * Simplify Selector Syntax in Adddress-Book.txt
 

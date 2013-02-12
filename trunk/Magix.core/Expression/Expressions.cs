@@ -9,6 +9,9 @@ using System;
 namespace Magix.Core
 {
     /**
+     * Level3: Implementer of Expression logic, such that nodes can be retrieved
+     * and manipulated using expressions, such as e.g. [Data][Name].Value, which will
+     * traverse the Data node's Name node, and return its Value
      */
 	public class Expressions
 	{
@@ -196,6 +199,11 @@ namespace Magix.Core
 			return x;
 		}
 
+		/**
+		 * Empties the given Value or child nodes of the given expression, e.g.
+		 * [Data] will remove all child nodes of the Data node, while
+		 * [Data].Value will set the Value of the Data node to null
+		 */
 		public static void Empty (string expression, Node source, Node ip)
 		{
 			string lastEntity = "";
@@ -214,6 +222,10 @@ namespace Magix.Core
                 throw new ArgumentException("Couldn't understand the last parts of your expression '" + lastEntity + "'");
 		}
 
+		/**
+		 * Will remove the given node, e.g. if [Data][Item1] is passed, it
+		 * will remove Data/Item1 from the Node tree
+		 */
 		public static void Remove (string expression, Node source, Node ip)
 		{
 			string lastEntity = "";
@@ -232,6 +244,9 @@ namespace Magix.Core
                 throw new ArgumentException("Couldn't understand the last parts of your expression '" + lastEntity + "'");
 		}
 
+		/**
+		 * Returns true if the given expression already exists in the node tree
+		 */
 		public static bool ExpressionExist (string expression, Node source, Node ip)
 		{
 			string lastEntity = "";
@@ -244,14 +259,17 @@ namespace Magix.Core
                 return x.Value != null;
             else if (lastEntity == ".Name")
                 return !string.IsNullOrEmpty (x.Name);
-            else if (lastEntity == ".Count")
-				return x.Count > 0;
             else if (lastEntity == "")
                 return true;
             else
                 throw new ArgumentException("Couldn't understand the last parts of your expression '" + lastEntity + "'");
 		}
 
+		/**
+		 * Level3: Sets the given exprDestination to the valuer of exprSource. If
+		 * exprSource starts with a '[', it is expected to be a reference to another
+		 * expression, else it will be assumed to be a static value
+		 */
 		public static void SetNodeValue (
 			string exprDestination, 
 			string exprSource, 
@@ -288,27 +306,10 @@ namespace Magix.Core
                 throw new ArgumentException("Couldn't understand the last parts of your expression '" + lastEntity + "'");
 		}
 
-		public static void SetNodeValue (
-			string exprDestination, 
-			Node source)
-		{
-			string lastEntity = "";
-			Node x = GetNode (exprDestination, source, source, ref lastEntity, true);
-
-            if (lastEntity == ".Value")
-				x.Value = source.Clone ();
-            else if (lastEntity == ".Name")
-			{
-				throw new ArgumentException("Cannot set the Name of a node a node set");
-			}
-            else if (lastEntity == "")
-			{
-				x.ReplaceChildren(source.Clone ());
-			}
-            else
-                throw new ArgumentException("Couldn't understand the last parts of your expression '" + lastEntity + "'");
-		}
-
+		/**
+		 * Returns the value of the given expression, which might return a string, 
+		 * list of nodes, or any other object your node tree might contain
+		 */
         public static object GetExpressionValue(string expression, Node source, Node ip)
         {
 			string lastEntity = "";

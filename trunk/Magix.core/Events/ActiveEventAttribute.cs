@@ -13,7 +13,8 @@ namespace Magix.Core
      * The Name property is the second argument to the RaiseEvent, or the "name" of the 
      * event being raised. You can mark your methods with multiple instances of this 
      * attribute to catch multiple events in the same event handler. However, as a general
-     * rule of thumb it's often better to have one method handling one event
+     * rule of thumb it's often better to have one method handling one event. Only
+     * methods inside of Controllers and Modules will be handled as active events
      */
     [AttributeUsage(AttributeTargets.Method, AllowMultiple=true, Inherited=true)]
     public class ActiveEventAttribute : Attribute

@@ -266,8 +266,6 @@ namespace Magix.Core
         {
             [DebuggerStepThrough]
             get { return _parent; }
-            [DebuggerStepThrough]
-            set { _parent = value; }
         }
 
         /**
@@ -292,7 +290,8 @@ namespace Magix.Core
         }
 
         /**
-         * Level3: Returns the value of the object
+         * Level3: Returns the value of the object. Use the Get method
+         * to retrieve typed objects
          */
         public object Value
         {
@@ -304,8 +303,8 @@ namespace Magix.Core
         }
 
         /**
-         * Level3: Returns the value of the object to type of T. Will try to cast and
-         * throw exception if unsuccessful
+         * Level3: Returns the value of the object to type of T. Will try to 
+         * convert the value, if it is another type then asked for
          */
         [DebuggerStepThrough]
         public T Get<T>()
@@ -327,6 +326,8 @@ namespace Magix.Core
                         return (T)(object)DateTime.ParseExact(GetString(_value), "yyyy.MM.dd HH:mm:ss", CultureInfo.InvariantCulture);
                     case "System.String":
                         return (T)(object)GetString(_value);
+					default:
+					throw new ArgumentException("Cannot convert node to given type; " + typeof(T).Name);
                 }
             }
 
@@ -765,6 +766,12 @@ namespace Magix.Core
 			return true;
 		}
 
+		/**
+		 * Level3: Returns true if the given object is equal of
+		 * the this object. Equality is determined to true 
+		 * if the Name, Value and all Children nodes are equal to
+		 * the this object
+		 */
 		public override bool Equals (object obj)
 		{
 			if (obj == null || !(obj is Node))

@@ -13,7 +13,8 @@ using System.Collections.Generic;
 namespace Magix.Core
 {
     /**
-     * Level3: Inherit your Active Controllers from this class
+     * Level3: Inherit your Active Controllers from this class. Contains helper
+     * methods for you, for your own controllers
      */
     [ActiveController]
 	public abstract class ActiveController
@@ -30,8 +31,8 @@ namespace Magix.Core
         }
 
         /**
-         * Level3: Loads the given module and puts it into the given container. Will return the node
-         * created and passed into creation
+         * Level3: Loads the given module and puts it into the given container. 
+         * Will return the node created and passed into creation
          */
         [DebuggerStepThrough]
         protected Node LoadModule(string name, string container)
@@ -96,7 +97,7 @@ namespace Magix.Core
         /**
          * Level3: Will return the 'base' URL of your application
          */
-        protected string GetApplicationBaseUrl()
+        protected static string GetApplicationBaseUrl()
         {
             return string.Format(
                 "{0}://{1}{2}",
@@ -110,7 +111,7 @@ namespace Magix.Core
         /**
          * Level3: Shorthand for getting access to our "Page" object.
          */
-        protected Page Page
+        protected static Page Page
         {
             get
             {
