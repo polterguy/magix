@@ -1,16 +1,18 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Magix.app/ExecuteScripts/TODO.txt">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Magix.execute/ExecuteCore.cs">
     <Files>
-      <File FileName="Magix.app/ExecuteScripts/TODO.txt" Line="3" Column="1" />
+      <File FileName="Magix.app/ExecuteScripts/TODO.txt" Line="18" Column="1" />
+      <File FileName="Magix.execute/ExecuteCore.cs" Line="324" Column="12" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
           <Node name="Magix.app" expanded="True">
-            <Node name="ExecuteScripts" expanded="True">
-              <Node name="TODO.txt" selected="True" />
-            </Node>
+            <Node name="ExecuteScripts" expanded="True" />
+          </Node>
+          <Node name="Magix.execute" expanded="True">
+            <Node name="ExecuteCore.cs" selected="True" />
           </Node>
         </State>
       </Pad>
@@ -19,8 +21,7 @@
       </Pad>
       <Pad Id="MonoDevelop.Debugger.WatchPad">
         <State>
-          <Value>idx</Value>
-          <Value>idxThis</Value>
+          <Value>name</Value>
         </State>
       </Pad>
     </Pads>
