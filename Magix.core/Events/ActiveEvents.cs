@@ -511,6 +511,7 @@ namespace Magix.Core
 		// TODO: Try to remove or make internal somehow...?
         public void RemoveListener(object context)
         {
+			List<string> toRemoKeys = new List<string>();
             // Removing all event handler with the given context (object instance)
             foreach (string idx in InstanceMethod.Keys)
             {
@@ -525,8 +526,16 @@ namespace Magix.Core
                 foreach (Tuple<MethodInfo, object> idxObj in toRemove)
                 {
                     idxCur.Remove(idxObj);
+					if (idxCur.Count == 0)
+					{
+						toRemoKeys.Add (idx);
+					}
                 }
             }
+			foreach (string idx in toRemoKeys)
+			{
+				InstanceMethod.Remove (idx);
+			}
         }
 
         private Dictionary<string, List<Tuple<MethodInfo, object>>> InstanceMethod
