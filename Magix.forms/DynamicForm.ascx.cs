@@ -19,6 +19,7 @@ using Magix.UX.Widgets.Core;
 namespace Magix.forms
 {
     /**
+     * Active module encapsulating a dynamically created form
      */
 	[ActiveModule]
     public class DynamicForm : ActiveModule
@@ -91,6 +92,7 @@ namespace Magix.forms
 			return tmp;
 		}
 
+		// TODO: Refactor!
 		void BuildControl (Node idx, BaseWebControl parent)
 		{
 			BaseControl ctrl = null;
@@ -494,6 +496,10 @@ namespace Magix.forms
 			parent.Controls.Add (ctrl);
 		}
 
+		/**
+		 * Returns the given value of the given "id" widget, within the given
+		 * "form-id" form, in the "value" node
+		 */
         [ActiveEvent(Name = "magix.forms.get-value")]
 		protected void magix_forms_get_value (object sender, ActiveEventArgs e)
 		{

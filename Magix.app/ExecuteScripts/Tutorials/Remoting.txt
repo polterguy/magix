@@ -1,0 +1,19 @@
+Method:magix.execute
+
+inspect=>@"Shows how to call, and create, a function 
+on a remote server"
+
+function
+  event=>foo2
+  remotable=>True
+  code
+    raise=>magix.admin.get-active-events
+
+remote
+  URL=>http://127.0.0.1:8080
+  event=>foo2
+
+for-each=>[remote][params][raise][ActiveEvents]
+  set=>[.ip][..][raise][params][message].Value
+    value=>[.].Value
+  raise=>magix.viewport.show-message

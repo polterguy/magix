@@ -13,6 +13,8 @@ using Db4objects.Db4o.Config;
 namespace Magix.execute
 {
 	/**
+	 * Controller logic for handling magix.execute overrides, where you've
+	 * overridden an Active Event with magix.execute code
 	 */
 	[ActiveController]
 	public class EventCore : ActiveController
@@ -24,11 +26,13 @@ namespace Magix.execute
 		{
 			private string _key;
 			private Node _node;
+			private bool _remotable;
 
-			public Event(Node node, string key)
+			public Event(Node node, string key, bool remotable)
 			{
 				_node = node;
 				_key = key;
+				_remotable = remotable;
 			}
 
 			public string Key
@@ -42,6 +46,12 @@ namespace Magix.execute
 				get { return _node; }
 				set { _node = value; }
 			}
+
+			public bool Remotable
+			{
+				get { return _remotable; }
+				set { _remotable = value; }
+			}
 		}
 
 		public EventCore()
@@ -53,6 +63,8 @@ namespace Magix.execute
 		}
 
 		/**
+		 * Handled to make sure we map our overridden magix.execute events during
+		 * app startup
 		 */
 		[ActiveEvent(Name = "magix.core.application-startup")]
 		public static void magix_core_application_startup (object sender, ActiveEventArgs e)
@@ -74,7 +86,7 @@ re-mapped. ""initial-startup-of-process"" must exists to run event.";
 					db.Ext ().Configure ().UpdateDepth (1000);
 					db.Ext ().Configure ().ActivationDepth (1000);
 
-					foreach (Event idx in db.QueryByExample (new Event(null, null)))
+					foreach (Event idx in db.QueryByExample (new Event(null, null, false)))
 					{
 						ActiveEvents.Instance.CreateEventMapping (idx.Key, "magix.execute._active-event-2-code-callback");
 					}
@@ -83,6 +95,9 @@ re-mapped. ""initial-startup-of-process"" must exists to run event.";
 		}
 
 		/**
+		 * Creates a new magix.execute function, which should contain magix.execute keywords,
+		 * which will be raised when your "event" active event is raised. Submit the code
+		 * in the "code" node
 		 */
 		[ActiveEvent(Name = "magix.execute.function")]
 		public static void magix_execute_function (object sender, ActiveEventArgs e)
@@ -96,6 +111,7 @@ re-mapped. ""initial-startup-of-process"" must exists to run event.";
 				e.Params["OR"]["Path2Code"]["if"]["raise"].Value = "magix.viewport.show-message";
 				e.Params["OR"]["Path2Code"]["if"]["raise"]["params"]["message"].Value = "Howdy lady!!!";
 				e.Params["event"].Value = "foo-bar";
+				e.Params["remotable"].Value = true;
 				e.Params["code"]["if"].Value = "[Data].Value==[Backup].Value";
 				e.Params["code"]["if"]["raise"].Value = "magix.viewport.show-message";
 				e.Params["code"]["if"]["raise"]["params"]["message"].Value = "Howdy boy!!";
@@ -135,8 +151,12 @@ as a ""magix.execute"" keyword.";
 			}
 			dp = dp.Clone ();
 
+			bool remotable = false;
+			if (ip.Contains ("remotable"))
+				remotable = ip["remotable"].Get<bool>();
+
 			Node parent = dp.Parent;
-			dp.Parent = null;
+			dp.SetParent(null);
 			new DeterministicExecutor(
 			delegate
 				{
@@ -148,16 +168,34 @@ as a ""magix.execute"" keyword.";
 							db.Ext ().Configure ().ActivationDepth (1000);
 
 							bool found = false;
-							foreach (Event idx in db.QueryByExample (new Event(null, key)))
+
+							foreach (Event idx in db.QueryByExample (new Event(null, key, false)))
 							{
 								idx.Node = dp;
+								idx.Remotable = remotable;
 								db.Store (idx);
 								found = true;
 								break;
 							}
 							if (!found)
 							{
-								db.Store (new Event(dp, key));
+								db.Store (new Event(dp, key, remotable));
+								found = true;
+							}
+							if (!found)
+							{
+								foreach (Event idx in db.QueryByExample (new Event(null, key, true)))
+								{
+									idx.Node = dp;
+									idx.Remotable = remotable;
+									db.Store (idx);
+									found = true;
+									break;
+								}
+								if (!found)
+								{
+									db.Store (new Event(dp, key, remotable));
+								}
 							}
 							db.Commit ();
 							ActiveEvents.Instance.CreateEventMapping (key, "magix.execute._active-event-2-code-callback");
@@ -166,7 +204,7 @@ as a ""magix.execute"" keyword.";
 				},
 				delegate
 				{
-					dp.Parent = parent;
+					dp.SetParent(parent);
 				});
 
 			Node node = new Node();
@@ -175,6 +213,7 @@ as a ""magix.execute"" keyword.";
 		}
 
 		/**
+		 * Remove the given "event" active event event override
 		 */
 		[ActiveEvent(Name = "magix.execute.remove-function")]
 		public static void magix_execute_remove_function (object sender, ActiveEventArgs e)
@@ -195,7 +234,7 @@ found in the ""event"" child node. Functions as a ""magix.execute"" keyword.";
 					db.Ext ().Configure ().ActivationDepth (1000);
 					string key = e.Params["event"].Get<string>("");
 
-					foreach (Event idx in db.QueryByExample (new Event(null, key)))
+					foreach (Event idx in db.QueryByExample (new Event(null, key, false)))
 					{
 						db.Delete (idx);
 						break;
@@ -211,6 +250,8 @@ found in the ""event"" child node. Functions as a ""magix.execute"" keyword.";
 		}
 
 		/**
+		 * Null event handler for handling null active event overrides for the function keyword
+		 * in magix.execute
 		 */
 		[ActiveEvent(Name = "")]
 		public static void magix_data__active_event_2_code_callback_null_helper (object sender, ActiveEventArgs e)
@@ -228,7 +269,7 @@ found in the ""event"" child node. Functions as a ""magix.execute"" keyword.";
 					db.Ext ().Configure ().UpdateDepth (1000);
 					db.Ext ().Configure ().ActivationDepth (1000);
 
-					foreach (Event idx in db.QueryByExample (new Event(null, null)))
+					foreach (Event idx in db.QueryByExample (new Event(null, null, false)))
 					{
 						if (idx.Key == "")
 						{
@@ -251,10 +292,15 @@ found in the ""event"" child node. Functions as a ""magix.execute"" keyword.";
 		}
 
 		/**
+		 * Handled to make sure we map our serialized active event overrides, the ones
+		 * overridden with the function keyword
 		 */
 		[ActiveEvent(Name = "magix.execute._active-event-2-code-callback")]
 		public static void magix_data__active_event_2_code_callback (object sender, ActiveEventArgs e)
 		{
+			bool remote = false;
+			if (e.Params.Contains ("remote"))
+				remote = e.Params["remote"].Get<bool>();
 			Node caller = null;
 			lock (typeof(Node))
 			{
@@ -264,7 +310,7 @@ found in the ""event"" child node. Functions as a ""magix.execute"" keyword.";
 					db.Ext ().Configure ().ActivationDepth (1000);
 					string key = e.Name;
 
-					foreach (Event idx in db.QueryByExample (new Event(null, key)))
+					foreach (Event idx in db.QueryByExample (new Event(null, key, remote)))
 					{
 						idx.Node.Name = null;
 						if (e.Params.Contains ("inspect"))
@@ -272,6 +318,7 @@ found in the ""event"" child node. Functions as a ""magix.execute"" keyword.";
 							e.Params["event"].Value = e.Name;
 							e.Params["code"].Clear ();
 							e.Params["code"].AddRange (idx.Node);
+							e.Params["remotable"].Value = idx.Remotable;
 							e.Params["inspect"].Value = @"This is a dynamically created
 	active event, containing ""magix.executor"" code, meaning keywords from the executor,
 	such that this serialized code will be called upon the raising of this event.";
@@ -282,10 +329,35 @@ found in the ""event"" child node. Functions as a ""magix.execute"" keyword.";
 						}
 						break;
 					}
+					if (caller == null && remote == false)
+					{
+						foreach (Event idx in db.QueryByExample (new Event(null, key, true)))
+						{
+							idx.Node.Name = null;
+							if (e.Params.Contains ("inspect"))
+							{
+								e.Params["event"].Value = e.Name;
+								e.Params["code"].Clear ();
+								e.Params["code"].AddRange (idx.Node);
+								e.Params["remotable"].Value = idx.Remotable;
+								e.Params["inspect"].Value = @"This is a dynamically created
+		active event, containing ""magix.executor"" code, meaning keywords from the executor,
+		such that this serialized code will be called upon the raising of this event.";
+							}
+							else
+							{
+								caller = idx.Node;
+							}
+							break;
+						}
+					}
 				}
 			}
 			if (caller != null)
+			{
 				RaiseEvent ("magix.execute", caller);
+				e.Params.ReplaceChildren (caller);
+			}
 		}
 	}
 }

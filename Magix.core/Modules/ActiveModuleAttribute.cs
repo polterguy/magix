@@ -11,7 +11,8 @@ namespace Magix.Core
     /**
      * Level3: Mark your Active Modules with this attribute. If you mark your Modules with this attribute
      * you can load them using the PluginLoader.LoadControl method. This is the main
-     * attribute for being able to create ActiveModules
+     * attribute for being able to create Active Modules. If you inherit your class from ActiveModule,
+     * it will automatically embed this attribute to it
      */
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = true)]
     public class ActiveModuleAttribute : Attribute

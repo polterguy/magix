@@ -10,12 +10,14 @@ using Magix.Core;
 namespace Magix.execute
 {
 	/**
-	 * Level3: Controller that encapsulates execution engine
+	 * Level3: Controller that makes it possible to create new 
+	 * dynamically created forms
 	 */
 	[ActiveController]
 	public class FormsCore : ActiveController
 	{
 		/**
+		 * Will create and instantiate a newly created dynamic form
 		 */
 		[ActiveEvent(Name = "magix.forms.create-form")]
 		public void magix_forms_create_form (object sender, ActiveEventArgs e)

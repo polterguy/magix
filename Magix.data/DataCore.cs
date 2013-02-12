@@ -16,6 +16,9 @@ using Db4objects.Db4o.Config;
 namespace Magix.execute
 {
 	/**
+	 * Controller for helping to save and load data from db4o, which is a minimalistic 
+	 * object database used in this controller to store and retrieve data from permanent
+	 * storage
 	 */
 	[ActiveController]
 	public class DataCore : ActiveController
@@ -61,6 +64,7 @@ namespace Magix.execute
 		}
 
 		/**
+		 * Will save the given "object" with the given "key"
 		 */
 		[ActiveEvent(Name = "magix.data.save")]
 		public static void magix_data_save (object sender, ActiveEventArgs e)
@@ -89,7 +93,7 @@ a node, which will become saved in its entirety.";
 			    string.IsNullOrEmpty (e.Params["key"].Get<string>()))
 				throw new ArgumentException("Missing 'key' while trying to store object");
 			Node parent = value.Parent;
-			value.Parent = null;
+			value.SetParent(null);
 			new DeterministicExecutor(
 			delegate
 				{
@@ -119,11 +123,15 @@ a node, which will become saved in its entirety.";
 				},
 				delegate
 				{
-					value.Parent = parent;
+					value.SetParent(parent);
 				});
 		}
 
 		/**
+		 * Will load the given "key" or "prototype". If you use key, this is the same
+		 * key the object was stored with. If you use "prototype", then this will 
+		 * serve as a tree which must be present in the saved object for it to return 
+		 * a match
 		 */
 		[ActiveEvent(Name = "magix.data.load")]
 		public static void magix_data_load (object sender, ActiveEventArgs e)
@@ -187,6 +195,7 @@ transformed into the returned object from the data storage.";
 		}
 
 		/**
+		 * Returns the number of objects in your data storage
 		 */
 		[ActiveEvent(Name = "magix.data.count")]
 		public static void magix_data_count (object sender, ActiveEventArgs e)

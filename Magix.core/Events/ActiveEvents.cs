@@ -45,7 +45,8 @@ namespace Magix.Core
 				}
 				foreach (string idx in InstanceMethod.Keys)
 				{
-					if (!_eventMappers.ContainsKey (idx))
+					if (!_eventMappers.ContainsKey (idx) && 
+					    !_staticEvents.ContainsKey (idx))
 						yield return idx;
 				}
 				foreach (string idx in _eventMappers.Keys)

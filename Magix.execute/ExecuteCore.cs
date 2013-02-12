@@ -12,23 +12,42 @@ using Magix.Core;
 namespace Magix.execute
 {
 	/**
+	 * Controller logic for the magix.execute programming language in magix, which
+	 * facilitates for creating logic in nodes, such that you can execute logic
+	 * based upon your nodes dynamically
 	 */
 	[ActiveController]
 	public class ExecuteCore : ActiveController
 	{
 		/**
+		 * Executes all the children nodes starting with
+		 * a lower case alpha character,
+		 * expecting them to be callable keywords, directly embedded into
+		 * the "magix.execute" namespace, such that they become extensions
+		 * of the execution engine itself. Will internally keep a list
+		 * pointer to where the code/instruction-pointer is, and where the
+		 * data-pointer is, which is relevant for most other execution statements.
+		 * Will ignore all node with Name not starting with a lower case alpha character.
+		 * All child nodes with a name starting with a lower case letter,
+		 * will be raise as "magix.execute" keywords, meaning e.g. "if"
+		 * will become the active event "magix.executor.if", meaning you
+		 * can extend the programming language in Magix itself by adding up 
+		 * new keywords. All active events in the "magix.execute"
+		 * namespace, can be called directly as keywords in magix.execute.
+		 * And in fact, most active events in the magix.execute namespace, 
+		 * such as "if", cannot be called directly, but must be called
+		 * from within a "magix.execute" event code block
 		 */
 		[ActiveEvent(Name = "magix.execute")]
 		public static void magix_execute (object sender, ActiveEventArgs e)
 		{
 			if (e.Params.Contains ("inspect") 
-			    && e.Params["inspect"].Get<string>("") == "")
-			{
-				e.Params["Data"]["Value"].Value = "thomas";
-				e.Params["if"].Value = "[Data][Value].Value==thomas";
-				e.Params["if"]["raise"].Value = "magix.viewport.show-message";
-				e.Params["if"]["raise"]["params"]["message"].Value = "Hi Thomas!";
-				e.Params["inspect"].Value = @"Executes all the children nodes starting with
+				&& e.Params ["inspect"].Get<string> ("") == "") {
+				e.Params ["Data"] ["Value"].Value = "thomas";
+				e.Params ["if"].Value = "[Data][Value].Value==thomas";
+				e.Params ["if"] ["raise"].Value = "magix.viewport.show-message";
+				e.Params ["if"] ["raise"] ["params"] ["message"].Value = "Hi Thomas!";
+				e.Params ["inspect"].Value = @"Executes all the children nodes starting with
 a lower case alpha character,
 expecting them to be callable keywords, directly embedded into
 the ""magix.execute"" namespace, such that they become extensions
@@ -47,9 +66,13 @@ such as ""if"", cannot be called directly, but must be called
 from within a ""magix.execute"" event code block.";
 				return;
 			}
+			bool hasIp = false;
 			Node ip = e.Params;
 			if (e.Params.Contains ("_ip"))
-				ip = e.Params["_ip"].Value as Node;
+			{
+				hasIp = true;
+				ip = e.Params ["_ip"].Value as Node;
+			}
 
 			Node dp = e.Params;
 			if (e.Params.Contains ("_dp"))
@@ -82,6 +105,17 @@ from within a ""magix.execute"" event code block.";
 		}
 
 		/**
+		 * Checks to see if the current 
+		 * statement is returning true, and if so, executes the underlaying nodes
+		 * as code through "magix.execute", expecting them to be keywords to
+		 * the execution engine. You can either compare a node expression
+		 * with another node expression, a node expression with a
+		 * constant value or a single node expression for existence of 
+		 * Node itself, Value or Name. Operators you can use are '!=', '==', '>=',
+		 * '<=', '>' and '<' when comparing two nodes or one node and 
+		 * a constant, and '!' in front of operator if only one 
+		 * expression is given to check for existence to negate the value.
+		 * Functions as a "magix.execute" keyword
 		 */
 		[ActiveEvent(Name = "magix.execute.if")]
 		public static void magix_execute_if (object sender, ActiveEventArgs e)
@@ -193,6 +227,18 @@ Functions as a ""magix.execute"" keyword.";
 		}
 
 		/**
+		 * If no previous "if" statement,
+		 * or "else-if" statement has returned true, will check to see if the current 
+		 * statement is returning true, and if so, executes the underlaying nodes
+		 * as code through "magix.execute", expecting them to be keywords to
+		 * the execution engine. You can either compare a node expression
+		 * with another node expression, a node expression with a
+		 * constant value or a single node expression for existence of 
+		 * Node itself, Value or Name. Operators you can use are '!=', '==', '>=',
+		 * '<=', '>' and '<' when comparing two nodes or one node and 
+		 * a constant, and '!' in front of operator if only one 
+		 * expression is given to check for existence to negate the value.
+		 * Functions as a "magix.execute" keyword
 		 */
 		[ActiveEvent(Name = "magix.execute.else-if")]
 		public static void magix_execute_else_if (object sender, ActiveEventArgs e)
@@ -230,6 +276,10 @@ Functions as a ""magix.execute"" keyword.";
 		}
 
 		/**
+		 * If no previous "if" statement,
+		 * or "else-if" statement has returned true, execute the underlaying nodes
+		 * as code through "magix.execute", expecting them to be keywords to
+		 * the execution engine. Functions as a "magix.execute" keyword
 		 */
 		[ActiveEvent(Name = "magix.execute.else")]
 		public static void magix_execute_else (object sender, ActiveEventArgs e)
@@ -258,6 +308,21 @@ the execution engine. Functions as a ""magix.execute"" keyword.";
 		}
 
 		/**
+		 * Will raise the current node's Value
+		 * as an active event, passing in either the "context" Node 
+		 * Expression as the parameters to the active event, or the 
+		 * "params" child collection. Functions as a "magix.execute"
+		 * keyword. If "no-override" is true, then it won't check
+		 * to see if the method is mapped through overriding. Which
+		 * is useful for having 'calling base functionality', among 
+		 * other things. For instance, if you've overridden 'foo'
+		 * to raise 'bar', then inside of 'bar' you can raise 'foo'
+		 * again, but this time with "no-override" set to False,
+		 * which will then NOT call 'bar', which would if occurred,
+		 * create a never ending loop. This makes it possible for
+		 * you to have overridden active events call their overridden
+		 * event, such that you can chain together active events, in
+		 * a hierarchy of overridden events
 		 */
 		[ActiveEvent(Name = "magix.execute.raise")]
 		public static void magix_execute_raise (object sender, ActiveEventArgs e)
@@ -307,6 +372,10 @@ a hierarchy of overridden events.";
 		}
 
 		/**
+		 * Spawns a new thread which the given
+		 * code block will be executed within. Useful for long operations, 
+		 * where you'd like to return to caller before the operation is
+		 * finished
 		 */
 		[ActiveEvent(Name = "magix.execute.fork")]
 		public static void magix_execute_fork (object sender, ActiveEventArgs e)
@@ -365,6 +434,11 @@ finished.";
 		}
 
 		/**
+		 * Will loop through all the given 
+		 * node's Value Expression, and execute the underlaying code, once for 
+		 * all nodes in the returned expression, with the Data-Pointer pointing
+		 * to the index node currently being looped through. Is a "magix.execute"
+		 * keyword. Functions as a "magix.execute" keyword
 		 */
 		[ActiveEvent(Name = "magix.execute.for-each")]
 		public static void magix_execute_for_each (object sender, ActiveEventArgs e)
@@ -400,6 +474,10 @@ keyword. Functions as a ""magix.execute"" keyword.";
 		}
 
 		/**
+		 * Sets given node to either the constant value
+		 * of the Value of the child node called "value", a node expression found 
+		 * in Value "value", or the children nodes of the "value" child, if the 
+		 * left hand parts returns a node. Functions as a "magix.execute" keyword
 		 */
 		[ActiveEvent(Name = "magix.execute.set")]
 		public static void magix_execute_set (object sender, ActiveEventArgs e)
@@ -423,17 +501,13 @@ left hand parts returns a node. Functions as a ""magix.execute"" keyword.";
 			if (ip.Contains ("value"))
 			{
 				string right = ip["value"].Get<string>();
-				if (right == "null")
+				if (right == "null" || string.IsNullOrEmpty (right))
 				{
 					Expressions.Empty (left, dp, ip);
 				}
-				else if (!string.IsNullOrEmpty (right))
-				{
-					Expressions.SetNodeValue (left, right, dp, ip);
-				}
 				else
 				{
-					Expressions.SetNodeValue(left, ip["value"]);
+					Expressions.SetNodeValue (left, right, dp, ip);
 				}
 			}
 			else
@@ -443,6 +517,9 @@ left hand parts returns a node. Functions as a ""magix.execute"" keyword.";
 		}
 
 		/**
+		 * Removes the node pointed to
+		 * in the Value of the "remove" node, which is expected to be a Node Expression,
+		 * returning a node list. Functions as a "magix.executor" keyword
 		 */
 		[ActiveEvent(Name = "magix.execute.remove")]
 		public static void magix_execute_remove (object sender, ActiveEventArgs e)
@@ -453,7 +530,7 @@ left hand parts returns a node. Functions as a ""magix.execute"" keyword.";
 				e.Params["remove"].Value = "[Data][NodeToRemove]";
 				e.Params["inspect"].Value = @"Removes the node pointed to
 in the Value of the ""remove"" node, which is expected to be a Node Expression,
-returning a node list. Functions as a ""margix.executor"" keyword.";
+returning a node list. Functions as a ""magix.executor"" keyword.";
 				return;
 			}
 			Node ip = e.Params["_ip"].Value as Node;
@@ -464,6 +541,9 @@ returning a node list. Functions as a ""margix.executor"" keyword.";
 			Expressions.Remove (path, dp, ip);
 		}
 
+		/**
+		 * Transforms a given "JSON" node into 'code syntax'
+		 */
 		[ActiveEvent(Name = "magix.core._transform-node-2-code")]
 		public static void Magix_Samples__TransformNodeToCode (object sender, ActiveEventArgs e)
 		{
@@ -532,6 +612,10 @@ returning a node list. Functions as a ""margix.executor"" keyword.";
 			return retVal;
 		}
 
+		/**
+		 * Transforms the given "code" node into a node structure, according to
+		 * spaces which indents the code
+		 */
 		[ActiveEvent(Name = "magix.core._transform-code-2-node")]
 		public static void magix_samples__transform_code_2_node (object sender, ActiveEventArgs e)
 		{

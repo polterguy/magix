@@ -156,5 +156,6 @@
     <None Include="ExecuteScripts\Applications\Address-Book.txt" />
     <None Include="ExecuteScripts\TODO.txt" />
     <None Include="ExecuteScripts\Tutorials\Null-Event-Handler.txt" />
+    <None Include="ExecuteScripts\Tutorials\Remoting.txt" />
   </ItemGroup>
 </Project>

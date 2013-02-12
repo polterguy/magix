@@ -19,6 +19,8 @@ using Magix.UX.Widgets.Core;
 namespace Magix.admin
 {
     /**
+     * Active Module for Active Event Executor. Allows you to execute and traverse all
+     * the Active evtns you have registered in your system
      */
 	[ActiveModule]
     public class ExecutorForm : ActiveModule
@@ -28,6 +30,7 @@ namespace Magix.admin
 		protected TextArea txtOut;
 		protected Panel wrp;
 		protected System.Web.UI.WebControls.Repeater rep;
+		private int _noActiveEventsCSSClassRendered = 0;
 
 		protected void Page_Load (object sender, EventArgs e)
 		{
@@ -40,10 +43,16 @@ namespace Magix.admin
 			}
 		}
 
+		/**
+		 * Called by Magix.Core when an event is overridden. Handled here to make
+		 * sure we re-retrieve the active events in the system, and rebinds our
+		 * list of active events
+		 */
 		[ActiveEvent(Name = "magix.execute._event-overridden")]
 		public void magix_execute__event_overridden (object sender, ActiveEventArgs e)
 		{
-			noIdx = 0;
+			_noActiveEventsCSSClassRendered = 0;
+
 			Node node = new Node();
 			RaiseEvent ("magix.admin.get-active-events", node);
 			rep.DataSource = node ["ActiveEvents"];
@@ -51,10 +60,16 @@ namespace Magix.admin
 			wrp.ReRender ();
 		}
 
+		/**
+		 * Called by Magix.Core when an event override is removed. Handled here to make
+		 * sure we re-retrieve the active events in the system, and rebinds our
+		 * list of active events
+		 */
 		[ActiveEvent(Name = "magix.execute._event-override-removed")]
 		public void magix_execute__event_override_removed (object sender, ActiveEventArgs e)
 		{
-			noIdx = 0;
+			_noActiveEventsCSSClassRendered = 0;
+
 			Node node = new Node();
 			RaiseEvent ("magix.admin.get-active-events", node);
 			rep.DataSource = node ["ActiveEvents"];
@@ -62,10 +77,9 @@ namespace Magix.admin
 			wrp.ReRender ();
 		}
 
-		int noIdx = 0;
 		protected string GetCSS(object value)
 		{
-			if ((++noIdx) % 3 == 0)
+			if ((++_noActiveEventsCSSClassRendered) % 3 == 0)
 				return "span-7 top-1 prepend-1 last " + (string)value;
 			else
 				return "span-7 top-1 prepend-1 " + (string)value;

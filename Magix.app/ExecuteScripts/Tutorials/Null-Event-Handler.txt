@@ -1,0 +1,14 @@
+Method:magix.execute.function
+
+inspect=>@"Demonstrates how to create a 'null Event Handler',
+which will handle almost every event in your system. Useful
+for debugging purposes and such"
+
+event
+code
+  set=>[.ip][..][raise][params][message].Value
+    value=>[.ip][..][_method].Value
+  raise=>magix.viewport.show-message
+    params
+      message=>Some Active Event was invoked
+      no-override=>True

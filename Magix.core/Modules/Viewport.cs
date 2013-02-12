@@ -19,6 +19,8 @@ using Magix.UX.Widgets.Core;
 namespace Magix.Core
 {
     /**
+     * Inherit your Viewports from this class to get most of the functionality 
+     * you need in your viewports for free
      */
     public class Viewport : ActiveModule
     {
@@ -41,13 +43,50 @@ namespace Magix.Core
 		{
 			if (!IsPostBack)
 			{
-				Node node = new Node();
-				node["initial-load"].Value = null;
+				// Checking to see if this is a remotely activated Active Event
+				// And if so, raising the "magix.viewport.remote-event" active event
+	            if (!AjaxManager.Instance.IsCallback && 
+	                Request.HttpMethod == "POST" &&
+	                !string.IsNullOrEmpty(Page.Request["event"]))
+	            {
+					// We only raise events which are overrides, and not
+					// if they are "system overrides" ...
+					if (ActiveEvents.Instance.IsOverride (Page.Request["event"]) &&
+					    !ActiveEvents.Instance.IsOverrideSystem (Page.Request["event"]))
+					{
+						Node node = new Node();
 
-				ActiveEvents.Instance.RaiseActiveEvent(
-                    this,
-                    "magix.viewport.page-load",
-					node);
+						if (!string.IsNullOrEmpty (Page.Request["params"]))
+							node = Node.FromJSONString (Page.Request["params"]);
+
+						node["remote"].Value = true;
+
+						RaiseEvent (
+							Page.Request["event"],
+							node);
+
+						Page.Response.Clear ();
+						Page.Response.Write ("return:" + node.ToJSONString ());
+						try
+						{
+							Page.Response.End ();
+						}
+						catch
+						{
+							; // Intentionally do nothing ...
+						}
+					}
+				}
+				else
+				{
+					Node node = new Node();
+					node["initial-load"].Value = null;
+
+					ActiveEvents.Instance.RaiseActiveEvent(
+	                    this,
+	                    "magix.viewport.page-load",
+						node);
+				}
 			}
 		}
 
@@ -77,6 +116,7 @@ namespace Magix.Core
         }
 
 		/**
+		 * Will clear the controls of the given "container" Viewport container
          */
         [ActiveEvent(Name = "magix.viewport.clear-controls")]
 		protected void magix_viewport_clear_controls (object sender, ActiveEventArgs e)
@@ -155,6 +195,8 @@ viewport container for all of its controls. Unloads a container for controls.";
         }
 
 		/**
+		 * Will include a file on the client side of the given "type", which can
+		 * be "JavaScript" or "CSS"
          */
         [ActiveEvent(Name = "magix.viewport.include-client-file")]
 		protected void magix_viewport_include_client_file (object sender, ActiveEventArgs e)
@@ -166,6 +208,8 @@ viewport container for all of its controls. Unloads a container for controls.";
 				e.Params["file"].Value = "media/main-debug.css";
 				return;
 			}
+			if (!e.Params.Contains ("type"))
+				throw new ArgumentException("You need to submit a type of file to load, legal values are 'CSS' and 'JavaScript'");
 			if (e.Params["type"].Get<string>() == "CSS")
 			{
                 string cssFile = e.Params["file"].Get<String>();
@@ -189,6 +233,7 @@ viewport container for all of its controls. Unloads a container for controls.";
 		}
 
 		/**
+		 * Will load an Active Module and put it into the "container" viewport container
          */
         [ActiveEvent(Name = "magix.viewport.load-module")]
 		protected void magix_viewport_load_module (object sender, ActiveEventArgs e)
