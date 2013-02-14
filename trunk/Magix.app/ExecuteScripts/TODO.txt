@@ -34,6 +34,12 @@
 
 * Make sure the @"" notation in serialization of Nodes, and especially "if" statements, etc is working
 
+* Support for "throw" and "catch" magix.execute keywords, to throw and catch exceptions
+
+* Add UNIT TESTS!!
+
+* Message Box is loosing text during postback due to txt.Text = ""; in Page_Load or something ...
+
 * Add support for creating Timer in JSON
 
 * Create perfect Doxygen comments
