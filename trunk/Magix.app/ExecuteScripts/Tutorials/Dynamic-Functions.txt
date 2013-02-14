@@ -1,11 +1,7 @@
 Method: magix.execute
 
 inspect=>@"Demonstrates how to create two
-new dynamic function called ""foo"" and ""bar"".
-One of them have the code embedded inline as 
-""params"" to the invocation, the other uses
-the ""context"" override, to point to a code
-hierarchy elsewhere in the node tree."
+new dynamic function called ""foo"" and ""bar""."
 
 Data
   Code1

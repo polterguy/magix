@@ -240,15 +240,11 @@ viewport container for all of its controls. Unloads a container for controls.";
 		{
 			if (e.Params.Contains ("inspect"))
 			{
-				e.Params["Data"]["Database"].Value = "localhost";
 				e.Params["name"].Value = "FullNameSpace.AndAlso.FullName_OfClassThatImplementsModule";
 				e.Params["container"].Value = "content2";
-				e.Params["context"].Value = "[Data]";
 				e.Params["inspect"].Value = @"Loads an active module into the 
 given ""container"" viewport container. The module name must be defined in 
-the ""name"" node. If ""context"" is given, this will be passed into
-the loading of the module, and used for initialization of the module.
-Else the incoming parameters will be used.";
+the ""name"" node. The incoming parameters will be used.";
 				return;
 			}
 			string moduleName = e.Params ["name"].Get<string> ();
@@ -258,10 +254,6 @@ Else the incoming parameters will be used.";
             	e.Params ["container"].Get<string> ());
 
 			Node context = e.Params;
-
-			if (e.Params.Contains ("context"))
-				context = Expressions.GetExpressionValue (
-					e.Params["context"].Get<string>(), e.Params, e.Params) as Node;
 
 			ClearControls (dyn);
 			dyn.LoadControl (moduleName, context);

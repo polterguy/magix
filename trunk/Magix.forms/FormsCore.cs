@@ -23,27 +23,17 @@ namespace Magix.execute
 		{
 			if (e.Params.Contains ("inspect"))
 			{
-				e.Params["Forms"]["Form1"]["controls"]["Button"].Value = "btn";
-				e.Params["Forms"]["Form1"]["controls"]["Button"]["Text"].Value = "Hello World2!!";
 				e.Params["container"].Value = "content2";
 				e.Params["form-id"].Value = "unique-identification-of-your-form";
 				e.Params["controls"]["Button"].Value = "btn";
 				e.Params["controls"]["Button"]["Text"].Value = "Hello World!";
-				e.Params["context"].Value = "[Forms][Form1]";
 				e.Params["inspect"].Value = @"Creates a dynamic form
 and loading it into the ""container"" viewport container. ""form-id""
-must be a uniquely identifiable id for later use. Either ""controls""
-contains the controls themselves, such as ""Button"" nodes, etc, 
-or the ""context"" path contains a Value expression that points to 
-a place in the data hierarchy where the code for the form is.";
+must be a uniquely identifiable id for later use. ""controls""
+contains the controls themselves, such as ""Button"" nodes, etc.";
 				return;
 			}
 			Node formContent = e.Params;
-			if (e.Params.Contains ("context"))
-				formContent = Expressions.GetExpressionValue (
-					e.Params["context"].Get<string>(), 
-					e.Params, 
-					e.Params) as Node;
 			LoadModule (
 				"Magix.forms.DynamicForm", 
 				e.Params["container"].Get<string>(), 

@@ -106,18 +106,13 @@ re-mapped. ""initial-startup-of-process"" must exists to run event.";
 			{
 				e.Params["Data"].Value = "thomas";
 				e.Params["Backup"].Value = "thomas";
-				e.Params["OR"]["Path2Code"]["if"].Value = "[Data].Value==[Backup].Value";
-				e.Params["OR"]["Path2Code"]["if"]["raise"].Value = "magix.viewport.show-message";
-				e.Params["OR"]["Path2Code"]["if"]["raise"]["params"]["message"].Value = "Howdy lady!!!";
 				e.Params["event"].Value = "foo-bar";
 				e.Params["remotable"].Value = true;
 				e.Params["code"]["if"].Value = "[Data].Value==[Backup].Value";
 				e.Params["code"]["if"]["raise"].Value = "magix.viewport.show-message";
 				e.Params["code"]["if"]["raise"]["params"]["message"].Value = "Howdy boy!!";
-				e.Params["context"].Value = "[OR][Path2Code]";
 				e.Params["inspect"].Value = @"Overrides the active event in ""event""
-with either the code in ""code"" or the code pointed
-to from the ""context"" Value's expression.  Functions 
+with the code in the ""code"" expression. Functions 
 as a ""magix.execute"" keyword.";
 				return;
 			}
@@ -143,10 +138,9 @@ as a ""magix.execute"" keyword.";
 			{
 				dp = ip["code"];
 			}
-			else if (ip.Contains ("context"))
+			else
 			{
-				Node tmp = Expressions.GetExpressionValue (ip["context"].Get<string>(), dp, ip) as Node;
-				dp = tmp;
+				throw new ArgumentException("function needs code to execute");
 			}
 			dp = dp.Clone ();
 

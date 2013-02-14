@@ -70,24 +70,19 @@ namespace Magix.execute
 		{
 			if (e.Params.Contains ("inspect"))
 			{
-				e.Params["Data"]["Content"].Value = "Or 'context' node!!!";
 				e.Params["key"].Value = "unique-key-id666";
 				e.Params["object"].Value = "nodes from here and down will be saved";
 				e.Params["object"]["message"].Value = "Use either 'object' node!!";
-				e.Params["context"].Value = "[Data]";
-				e.Params["inspect"].Value = @"Will save the given given ""object"" node,
-OR the given ""context"" node's Value, which should be an expression, pointing to
+				e.Params["inspect"].Value = @"Will save the given given ""object"" node, 
+which should be an expression, pointing to
 a node, which will become saved in its entirety.";
 				return;
 			}
 			Node value = null;
-			if (!e.Params.Contains ("object") && 
-			    e.Params.Contains ("context"))
-				value = Expressions.GetExpressionValue(e.Params["context"].Get<string>(), e.Params, e.Params) as Node;
-			else if (e.Params.Contains ("object"))
+			if (e.Params.Contains ("object"))
 				value = e.Params["object"];
 			else
-				throw new ArgumentException("Either context or object must be defined before calling magix.data.save");
+				throw new ArgumentException("object must be defined before calling magix.data.save");
 			if (!e.Params.Contains ("key") || 
 			    string.IsNullOrEmpty (e.Params["key"].Get<string>()))
 				throw new ArgumentException("Missing 'key' while trying to store object");
@@ -138,27 +133,14 @@ a node, which will become saved in its entirety.";
 			if (e.Params.Contains ("inspect"))
 			{
 				e.Params["key"].Value = "unique-key-of-object-to-load";
-				e.Params["context"].Value = "[OR][Expression][Pointing][ToNode][ResultSet]";
 				e.Params["prototype"].Value = "optional parameter, being a 'query object' which the returned object must match";
 				e.Params["inspect"].Value = @"Will load the object from the data storage
-with the given ""key"" node into the ""object"" child return node, 
-or the given ""context"" pointer to a node, which will be 
-transformed into the returned object from the data storage.";
+with the given ""key"" node into the ""object"" child return node.";
 				return;
 			}
 			Node context = null;
 			Node prototype = null;
-			if (e.Params.Contains ("context"))
-			{
-				context = Expressions.GetExpressionValue (
-					e.Params["context"].Get<string>(), 
-					e.Params, 
-					e.Params) as Node;
-			}
-			else
-			{
-				context = e.Params["object"];
-			}
+			context = e.Params["object"];
 			if (e.Params.Contains ("prototype"))
 			{
 				prototype = e.Params["prototype"];

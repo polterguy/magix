@@ -38,6 +38,7 @@ namespace Magix.execute
 		 * from within a "magix.execute" event code block
 		 */
 		[ActiveEvent(Name = "magix.execute")]
+		[ActiveEvent(Name = "magix.execute.execute")]
 		public static void magix_execute (object sender, ActiveEventArgs e)
 		{
 			if (e.Params.Contains ("inspect") 
@@ -62,20 +63,28 @@ new keywords. All active events in the ""magix.execute""
 namespace, can be called directly as keywords in magix.execute.
 And in fact, most active events in the magix.execute namespace, 
 such as ""if"", cannot be called directly, but must be called
-from within a ""magix.execute"" event code block.";
+from within a ""magix.execute"" event code block. If you supply
+a Value for the ""execute"" keyword, this will be expected to be 
+an Expressio, returning a Node-list, which will become the 
+Data-Pointer of your execution block.";
 				return;
 			}
-			bool hasIp = false;
 			Node ip = e.Params;
 			if (e.Params.Contains ("_ip"))
-			{
-				hasIp = true;
 				ip = e.Params ["_ip"].Value as Node;
-			}
 
 			Node dp = e.Params;
 			if (e.Params.Contains ("_dp"))
 				dp = e.Params["_dp"].Value as Node;
+
+			// Cheking to see if we've got a "context"
+			if (ip.Name == "execute" && 
+				!string.IsNullOrEmpty(ip.Get<string>()))
+			{
+				dp = Expressions.GetExpressionValue (ip.Get<string>(), dp, ip) as Node;
+				if (dp == null)
+					throw new ArgumentException("You can only supply a context pointing to an existing Node hierarchy");
+			}
 
 			ip["_state"].Value = null;
 
@@ -139,11 +148,17 @@ expression is given to check for existence to negate the value.
 Functions as a ""magix.execute"" keyword.";
 				return;
 			}
-			Node dp = e.Params ["_dp"].Value as Node;
-			Node ip = e.Params ["_ip"].Value as Node;
+			Node ip = e.Params;
+			if (e.Params.Contains ("_ip"))
+				ip = e.Params ["_ip"].Value as Node;
 
+			Node dp = e.Params;
+			if (e.Params.Contains ("_dp"))
+				dp = e.Params["_dp"].Value as Node;
+
+			/// Defaulting if statement to return "false"
 			if (ip.Parent != null)
-				ip.Parent [ip.Parent.Count - 1].Value = null;
+				ip.Parent ["_state"].Value = false;
 
 			string expr = ip.Value as string;
 			if (string.IsNullOrEmpty (expr))
@@ -152,29 +167,44 @@ Functions as a ""magix.execute"" keyword.";
 			// Checking to see if single statement, meaning "exists"
 			if (expr.IndexOfAny (new char[]{'=','>','<'}) != -1)
 			{
-				ExecuteIf (expr, ip, dp, e.Params);
+				// Comparing two nodes with each other
+				ExecuteIf (expr, ip, dp);
 			}
 			else if (expr.IndexOf ("!") == 0)
 			{
+				// Checking to see of "not exists"
 				if (!Expressions.ExpressionExist (expr.TrimStart ('!'), ip, dp))
 				{
+					// Making sure if statement returns "true"
 					if (ip.Parent != null)
-						ip.Parent[ip.Parent.Count - 1].Value = true;
-					RaiseEvent ("magix.execute", e.Params);
+						ip.Parent["_state"].Value = true;
+
+					Node tmp = new Node();
+					tmp["_ip"].Value = ip;
+					tmp["_dp"].Value = dp;
+
+					RaiseEvent ("magix.execute", tmp);
 				}
 			}
 			else
 			{
+				// Checking to see if "exists"
 				if (Expressions.ExpressionExist (expr, ip, dp))
 				{
+					// Making sure if statement returns "true"
 					if (ip.Parent != null)
-						ip.Parent[ip.Parent.Count - 1].Value = true;
-					RaiseEvent ("magix.execute", e.Params);
+						ip.Parent["_state"].Value = true;
+
+					Node tmp = new Node();
+					tmp["_ip"].Value = ip;
+					tmp["_dp"].Value = dp;
+
+					RaiseEvent ("magix.execute", tmp);
 				}
 			}
 		}
 
-		private static void ExecuteIf(string expr, Node ip, Node dp, Node parms)
+		private static void ExecuteIf(string expr, Node ip, Node dp)
 		{
 			string left = expr.Substring (0, expr.IndexOfAny (new char[]{'!','=','>','<'}));;
 			string comparison = expr.Substring (left.Length, 2);
@@ -217,11 +247,17 @@ Functions as a ""magix.execute"" keyword.";
 				isTrue = valueOfExpr.CompareTo (right) > -1;
 				break;
 			}
+
+			// Signaling to else and else-if that statement was true
 			if (ip.Parent != null)
-				ip.Parent[ip.Parent.Count - 1].Value = isTrue;
+				ip.Parent["_state"].Value = isTrue;
+
 			if (isTrue)
 			{
-				RaiseEvent ("magix.execute", parms);
+				Node node = new Node();
+				node["_ip"].Value = ip;
+				node["_dp"].Value = dp;
+				RaiseEvent ("magix.execute", node);
 			}
 		}
 
@@ -262,16 +298,21 @@ expression is given to check for existence to negate the value.
 Functions as a ""magix.execute"" keyword.";
 				return;
 			}
-			Node ip = e.Params["_ip"].Value as Node;
-			Node dp = e.Params["_dp"].Value as Node;
+			Node ip = e.Params;
+			if (e.Params.Contains ("_ip"))
+				ip = e.Params ["_ip"].Value as Node;
 
+			Node dp = e.Params;
+			if (e.Params.Contains ("_dp"))
+				dp = e.Params["_dp"].Value as Node;
+
+			// Checking to see if a previous "if" or "else-if" statement has returned true
 			if (ip.Parent != null &&
-			    ip.Parent[ip.Parent.Count - 1] != null &&
-			    ip.Parent[ip.Parent.Count - 1].Get<bool>())
+			    ip.Parent["_state"].Get<bool>())
 				return;
 
 			string expr = ip.Value as string;
-			ExecuteIf (expr, ip, dp, e.Params);
+			ExecuteIf (expr, ip, dp);
 		}
 
 		/**
@@ -293,23 +334,28 @@ as code through ""magix.execute"", expecting them to be keywords to
 the execution engine. Functions as a ""magix.execute"" keyword.";
 				return;
 			}
-			Node ip = e.Params["_ip"].Value as Node;
+			Node ip = e.Params;
+			if (e.Params.Contains ("_ip"))
+				ip = e.Params ["_ip"].Value as Node;
 
+			Node dp = e.Params;
+			if (e.Params.Contains ("_dp"))
+				dp = e.Params["_dp"].Value as Node;
+
+			// Checking to see if a previous "if" or "else-if" statement has returned true
 			if (ip.Parent != null &&
-			    ip.Parent[ip.Parent.Count - 1] != null &&
-			    ip.Parent[ip.Parent.Count - 1].Get<bool>())
+			    ip.Parent["_state"].Get<bool>())
 				return;
 
-			if (ip.Parent != null)
-				ip.Parent[ip.Parent.Count - 1].Value = null;
-
-			RaiseEvent ("magix.execute", e.Params);
+			Node node = new Node();
+			node["_ip"].Value = ip;
+			node["_dp"].Value = dp;
+			RaiseEvent ("magix.execute", node);
 		}
 
 		/**
 		 * Will raise the current node's Value
-		 * as an active event, passing in either the "context" Node 
-		 * Expression as the parameters to the active event, or the 
+		 * as an active event, passing in the 
 		 * "params" child collection. Functions as a "magix.execute"
 		 * keyword. If "no-override" is true, then it won't check
 		 * to see if the method is mapped through overriding. Which
@@ -328,14 +374,11 @@ the execution engine. Functions as a ""magix.execute"" keyword.";
 		{
 			if (e.Params.Contains ("inspect"))
 			{
-				e.Params["OR"]["Data"]["message"].Value = "Message from context";
 				e.Params["raise"].Value = "magix.viewport.show-message";
 				e.Params["raise"]["params"]["message"].Value = "Either directly embedded 'params'...";
 				e.Params["raise"]["no-override"].Value = "False";
-				e.Params["raise"]["context"].Value = "[OR][Data]";
 				e.Params["inspect"].Value = @"Will raise the current node's Value
-as an active event, passing in either the ""context"" Node 
-Expression as the parameters to the active event, or the 
+as an active event, passing in the 
 ""params"" child collection. Functions as a ""magix.execute""
 keyword. If ""no-override"" is true, then it won't check
 to see if the method is mapped through overriding. Which
@@ -350,24 +393,25 @@ event, such that you can chain together active events, in
 a hierarchy of overridden events.";
 				return;
 			}
-			Node ip = e.Params["_ip"].Value as Node;
-			Node dp = e.Params["_dp"].Value as Node;
-			if (ip.Contains ("context"))
+			Node ip = e.Params;
+			if (e.Params.Contains ("_ip"))
+				ip = e.Params ["_ip"].Value as Node;
+
+			Node dp = e.Params;
+			if (e.Params.Contains ("_dp"))
+				dp = e.Params["_dp"].Value as Node;
+
+			Node pars = new Node();
+			if (ip.Contains ("params"))
 			{
-				dp = Expressions.GetExpressionValue (ip["context"].Get<string>(), dp, ip) as Node;
+				pars = ip["params"];
 			}
-			else if (ip.Contains ("params"))
-			{
-				dp = ip["params"];
-			}
-			else
-			{
-				dp = ip;
-			}
+
 			bool forceNoOverride = false;
-			if (dp.Contains ("no-override") && dp["no-override"].Get<bool>())
+			if (ip.Contains ("no-override") && ip["no-override"].Get<bool>())
 				forceNoOverride = true;
-			RaiseEvent (ip.Get<string>(), dp, forceNoOverride);
+
+			RaiseEvent (ip.Get<string>(), pars, forceNoOverride);
 		}
 
 		/**
@@ -391,45 +435,28 @@ where you'd like to return to caller before the operation is
 finished.";
 				return;
 			}
+			Node ip = e.Params;
+			if (e.Params.Contains ("_ip"))
+				ip = e.Params ["_ip"].Value as Node;
+
+			Node dp = e.Params;
+			if (e.Params.Contains ("_dp"))
+				dp = e.Params["_dp"].Value as Node;
+
+			Node pars = new Node();
+			pars["_ip"].Value = ip.Clone ();
+			pars["_dp"].Value = dp.Clone ();
+
 			Thread thread = new Thread(ExecuteThread);
-			thread.Start (e.Params.Clone ());
+			thread.Start (pars);
 		}
 
 		private static void ExecuteThread (object pars)
 		{
 			Node par = pars as Node;
-			Node ip = par;
-			if (par.Contains ("_ip"))
-				ip = par["_ip"].Value as Node;
-
-			Node dp = par;
-			if (par.Contains ("_dp"))
-				dp = par["_dp"].Value as Node;
-
-			ip["_state"].Value = null;
-
-			foreach (Node idx in ip)
-			{
-				string nodeName = idx.Name;
-
-				// Checking to see if it starts with a small letter
-				if ("abcdefghijklmnopqrstuvwxyz".IndexOf (nodeName[0]) != -1)
-				{
-					// This is a keyword
-					string eventName = "magix.execute." + nodeName;
-
-					Node tmp = new Node();
-
-					// "Instruction" pointer, code Node
-					tmp["_ip"].Value = idx;
-
-					// Data Pointer, pointer to data
-					tmp["_dp"].Value = dp;
-
-					RaiseEvent (eventName, tmp, true);
-				}
-			}
-			ip.Remove (ip["_state"]);
+			RaiseEvent (
+				"magix.execute",
+				par);
 		}
 
 		/**
@@ -448,7 +475,6 @@ finished.";
 				e.Params["Data"]["Items"]["Item2"]["message"].Value = "Howdy World!";
 				e.Params["for-each"].Value = "[Data][Items]";
 				e.Params["for-each"]["raise"].Value = "magix.viewport.show-message";
-				e.Params["for-each"]["raise"]["context"].Value = "[.]";
 				e.Params["inspect"].Value = @"Will loop through all the given 
 node's Value Expression, and execute the underlaying code, once for 
 all nodes in the returned expression, with the Data-Pointer pointing
@@ -456,8 +482,13 @@ to the index node currently being looped through. Is a ""magix.execute""
 keyword. Functions as a ""magix.execute"" keyword.";
 				return;
 			}
-			Node ip = e.Params["_ip"].Value as Node;
-			Node dp = e.Params["_dp"].Value as Node;
+			Node ip = e.Params;
+			if (e.Params.Contains ("_ip"))
+				ip = e.Params ["_ip"].Value as Node;
+
+			Node dp = e.Params;
+			if (e.Params.Contains ("_dp"))
+				dp = e.Params["_dp"].Value as Node;
 
 			if (Expressions.ExpressionExist (ip.Get<string>(), dp, ip))
 			{
@@ -492,15 +523,20 @@ in Value ""value"", or the children nodes of the ""value"" child, if the
 left hand parts returns a node. Functions as a ""magix.execute"" keyword.";
 				return;
 			}
-			Node ip = e.Params["_ip"].Value as Node;
-			Node dp = e.Params["_dp"].Value as Node;
+			Node ip = e.Params;
+			if (e.Params.Contains ("_ip"))
+				ip = e.Params ["_ip"].Value as Node;
+
+			Node dp = e.Params;
+			if (e.Params.Contains ("_dp"))
+				dp = e.Params["_dp"].Value as Node;
 
 			string left = ip.Get<string>();
 
 			if (ip.Contains ("value"))
 			{
 				string right = ip["value"].Get<string>();
-				if (right == "null" || string.IsNullOrEmpty (right))
+				if (right == null)
 				{
 					Expressions.Empty (left, dp, ip);
 				}
@@ -532,8 +568,13 @@ in the Value of the ""remove"" node, which is expected to be a Node Expression,
 returning a node list. Functions as a ""magix.executor"" keyword.";
 				return;
 			}
-			Node ip = e.Params["_ip"].Value as Node;
-			Node dp = e.Params["_dp"].Value as Node;
+			Node ip = e.Params;
+			if (e.Params.Contains ("_ip"))
+				ip = e.Params ["_ip"].Value as Node;
+
+			Node dp = e.Params;
+			if (e.Params.Contains ("_dp"))
+				dp = e.Params["_dp"].Value as Node;
 
 			string path = ip.Get<string>();
 
