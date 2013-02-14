@@ -38,6 +38,14 @@
 
 * Add UNIT TESTS!!
 
+* Try to get rid of "magix.execute.raise", and allow for active events to be "directly embedded"
+  instead of raise=>magix.viewport.show-message, we can use just "magix.viewport.show-message", 
+  and then just add the parameters underneath ...
+
+* "magix.execute.while" keyword ...
+
+* Check to see "raise" behaves correctly with no "params" ...
+
 * Message Box is loosing text during postback due to txt.Text = ""; in Page_Load or something ...
 
 * Add support for creating Timer in JSON

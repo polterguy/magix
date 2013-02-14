@@ -291,7 +291,11 @@ namespace Magix.Core
 			Node x = GetNode (exprDestination, source, ip, ref lastEntity, true);
 
             if (lastEntity == ".Value")
+			{
+				if (valueToSet is Node)
+					throw new ArgumentException("Cannot set the Value of a node to a Node-list");
                x.Value = valueToSet;
+			}
             else if (lastEntity == ".Name")
 			{
 				if (!(valueToSet is string))
