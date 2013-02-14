@@ -16,7 +16,6 @@ namespace Magix.execute
 	 * Controller logic for handling magix.execute overrides, where you've
 	 * overridden an Active Event with magix.execute code
 	 */
-	[ActiveController]
 	public class EventCore : ActiveController
 	{
 		private static string _dbFile = "store.db4o";

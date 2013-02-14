@@ -14,7 +14,6 @@ namespace Magix.SampleController
 	 * own Application Startup logic by overriding the page-load event
 	 * to do your own custom logic
 	 */
-	[ActiveController]
 	public class ControllerSample : ActiveController
 	{
 		/**

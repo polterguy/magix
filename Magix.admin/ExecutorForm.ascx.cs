@@ -22,7 +22,6 @@ namespace Magix.admin
      * Active Module for Active Event Executor. Allows you to execute and traverse all
      * the Active evtns you have registered in your system
      */
-	[ActiveModule]
     public class ExecutorForm : ActiveModule
     {
 		protected TextArea activeEvent;

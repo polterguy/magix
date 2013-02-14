@@ -20,7 +20,6 @@ namespace Magix.execute
 	 * object database used in this controller to store and retrieve data from permanent
 	 * storage
 	 */
-	[ActiveController]
 	public class DataCore : ActiveController
 	{
 		private static string _dbFile = "store.db4o";

@@ -16,7 +16,6 @@ namespace Magix.execute
 {
 	/**
 	 */
-	[ActiveController]
 	public class RemotingCore : ActiveController
 	{
 		/**
@@ -29,8 +28,10 @@ namespace Magix.execute
 			if (e.Params.Contains ("inspect") &&
 			    e.Params["inspect"].Get<string>("") == "")
 			{
-				e.Params["URL"].Value = "http://someurl.com";
-				e.Params["event"].Value = "magix.namespace.some-event";
+				e.Params["inspect"].Value = @"Remotely invokes an active event on the given 
+""URL"". The event raised is found in ""event"".";
+				e.Params["URL"].Value = "http://127.0.0.1";
+				e.Params["event"].Value = "magix.namespace.foo";
 				return;
 			}
 			Node ip = e.Params;

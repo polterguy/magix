@@ -13,7 +13,6 @@ namespace Magix.execute
 	 * Level3: Controller that makes it possible to create new 
 	 * dynamically created forms
 	 */
-	[ActiveController]
 	public class FormsCore : ActiveController
 	{
 		/**
