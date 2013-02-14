@@ -13,7 +13,6 @@ namespace Magix.admin
 	 * Controller logic for the Active Event Executor. Helps load the executor, and 
 	 * other support functions
 	 */
-	[ActiveController]
 	public class EventExecutor : ActiveController
 	{
 		/**
@@ -97,8 +96,7 @@ the module into the ""container"" viewport container.";
 				"Magix.admin.ExecutorForm", 
 				e.Params["container"].Get<string>());
 
-			Node node = new Node();
-			RaiseEvent ("magix.execute._event-overridden", node);
+			RaiseEvent ("magix.execute._event-overridden");
 		}
 	}
 }

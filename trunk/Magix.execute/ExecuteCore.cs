@@ -16,7 +16,6 @@ namespace Magix.execute
 	 * facilitates for creating logic in nodes, such that you can execute logic
 	 * based upon your nodes dynamically
 	 */
-	[ActiveController]
 	public class ExecuteCore : ActiveController
 	{
 		/**

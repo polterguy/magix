@@ -21,7 +21,6 @@ namespace Magix.forms
     /**
      * Active module encapsulating a dynamically created form
      */
-	[ActiveModule]
     public class DynamicForm : ActiveModule
     {
         protected Panel pnl;
