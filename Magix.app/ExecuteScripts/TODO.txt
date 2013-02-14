@@ -2,6 +2,9 @@
 
 * Make NULL Active Event Handlers handle also "magix.execute" events, somehow, maybe ...
 
+* Implement support for marking specific methods as "remotable" in ActiveEvents, somehow ...
+  Maybe add boolean value in ActiveEventArgs, or something ...
+
 * Implement serialization of events through HTTP such that events can be remotely activated
   Maybe through a magix.execute keyword, such as "get" or something ...?
 
@@ -28,6 +31,8 @@
 
 * Fix the "context" problem, e.g. "raise" and "show-message" will fissle
   since it doesn't understand "who's context" it is ...
+
+* Make sure the @"" notation in serialization of Nodes, and especially "if" statements, etc is working
 
 * Add support for creating Timer in JSON
 

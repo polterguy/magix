@@ -12,7 +12,7 @@ should contain the copied value from the description,
 from the index node, we're currently looping through.
 Demonstrates how to loop through lists of nodes, embed
 data nodes directly into code, setting Value of nodes and
-raise active events through using a ""context""."
+raise active events."
 
 Data
   List
