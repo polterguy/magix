@@ -219,13 +219,24 @@ as a ""magix.execute"" keyword.";
 found in the ""event"" child node. Functions as a ""magix.execute"" keyword.";
 				return;
 			}
+
+			Node ip = e.Params;
+			if (e.Params.Contains ("_ip"))
+				ip = e.Params ["_ip"].Value as Node;
+
+			Node dp = e.Params;
+			if (e.Params.Contains ("_dp"))
+				dp = e.Params["_dp"].Value as Node;
+
+			string key = ip.Get<string>();
+			if (key == null)
+				throw new ArgumentException("Cannot remove null function");
 			lock (typeof(Node))
 			{
 				using (IObjectContainer db = Db4oFactory.OpenFile(_dbFile))
 				{
 					db.Ext ().Configure ().UpdateDepth (1000);
 					db.Ext ().Configure ().ActivationDepth (1000);
-					string key = e.Params["event"].Get<string>("");
 
 					foreach (Event idx in db.QueryByExample (new Event(null, key, false)))
 					{
