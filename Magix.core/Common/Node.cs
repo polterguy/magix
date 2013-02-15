@@ -102,6 +102,7 @@ namespace Magix.Core
 			return true;
 		}
 
+		// TODO: WTF ...?
 		/**
 		 * Level3: Removes all the existing children Nodes and replaces them
 		 * with the "node" paramater Node's children
