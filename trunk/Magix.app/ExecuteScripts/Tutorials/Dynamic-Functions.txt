@@ -8,8 +8,7 @@ Data
     Value1=>thomas
     if=>[Value1].Value==thomas
       raise=>magix.viewport.show-message
-        params
-          message=>Hi Thomas!!
+        message=>Hi Thomas!!
 function
   event=>foo
   context=>[Data][Code1]
@@ -19,5 +18,4 @@ function
     Value1=>thomas
     if=>[Value1].Value==thomas
       raise=>magix.viewport.show-message
-        params
-          message=>Still there Thomas?
+        message=>Still there Thomas?

@@ -63,6 +63,43 @@ namespace Magix.execute
 		}
 
 		/**
+		 * Will remove the given "object" with the given "key"
+		 */
+		[ActiveEvent(Name = "magix.data.remove")]
+		public static void magix_data_remove (object sender, ActiveEventArgs e)
+		{
+			if (e.Params.Contains ("inspect"))
+			{
+				e.Params["key"].Value = "unique-key-id666";
+				e.Params["inspect"].Value = @"Will remove the object
+with the given ""key"".";
+				return;
+			}
+
+			Node ip = e.Params;
+			if (e.Params.Contains ("_ip"))
+				ip = e.Params ["_ip"].Value as Node;
+
+			Node dp = e.Params;
+			if (e.Params.Contains ("_dp"))
+				dp = e.Params["_dp"].Value as Node;
+
+			if (!ip.Contains ("key") || 
+			    string.IsNullOrEmpty (ip["key"].Get<string>()))
+				throw new ArgumentException("Missing 'key' while trying to remove object");
+
+			lock (typeof(Node))
+			{
+				using (IObjectContainer db = Db4oFactory.OpenFile(_dbFile))
+				{
+					string key = ip["key"].Get<string>();
+					db.Delete (new Storage(null, key));
+					db.Commit ();
+				}
+			}
+		}
+
+		/**
 		 * Will save the given "object" with the given "key"
 		 */
 		[ActiveEvent(Name = "magix.data.save")]

@@ -6,9 +6,8 @@ for debugging purposes and such"
 
 event
 code
-  set=>[.ip][..][raise][params][message].Value
+  set=>[.ip][..][raise][message].Value
     value=>[.ip][..][_method].Value
   raise=>magix.viewport.show-message
-    params
-      message=>Some Active Event was invoked
-      no-override=>True
+    message=>Some Active Event was invoked
+    no-override=>True

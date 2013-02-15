@@ -440,6 +440,45 @@ functions as it should.";
 			xM["message"].Value = "magix.tests.else executed successfully";
 			RaiseEvent("magix.viewport.show-message", xM);
 		}
+
+		/**
+		 * Tests to see if "fork", works
+		 */
+		[ActiveEvent(Name = "magix.test.fork")]
+		public void magix_test_fork (object sender, ActiveEventArgs e)
+		{
+			Node tmp = new Node();
+
+			tmp["magix.data.remove"]["key"].Value = "fork-test-buffer-object";
+			tmp["fork"]["Buffer"].Value = null;
+			tmp["fork"]["magix.data.save"]["key"].Value = "fork-test-buffer-object";
+			tmp["fork"]["magix.data.save"]["object"]["Value"].Value = "thomas";
+			tmp["sleep"].Value = 500;
+			tmp["magix.data.load"]["key"].Value = "fork-test-buffer-object";
+
+			if (e.Params.Contains ("inspect"))
+			{
+				e.Params.Clear ();
+				e.Params["inspect"].Value = @"Checks to see if setting Node Name
+functions as it should.";
+				e.Params.AddRange (tmp);
+				return;
+			}
+
+			RaiseEvent (
+				"magix.execute",
+				tmp);
+
+			if (tmp["magix.data.load"]["object"]["Value"].Get<string>() != "thomas")
+			{
+				throw new ApplicationException(
+					"Failure of executing fork statement");
+			}
+
+			Node xM = new Node();
+			xM["message"].Value = "magix.tests.fork executed successfully";
+			RaiseEvent("magix.viewport.show-message", xM);
+		}
 	}
 }
 
