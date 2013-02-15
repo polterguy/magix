@@ -99,11 +99,11 @@ namespace Magix.admin
 				Node tmp = new Node();
 				tmp["code"].Value = wholeTxt;
 				RaiseEvent (
-					"magix.core._transform-code-2-node",
+					"magix.admin._transform-code-2-node",
 					tmp);
 				RaiseEvent (activeEvent.Text, tmp["JSON"].Get<Node>());
 				RaiseEvent (
-					"magix.core._transform-node-2-code", tmp);
+					"magix.admin._transform-node-2-code", tmp);
 				txtOut.Text = tmp["code"].Get<string>();
 			}
 			else
@@ -112,7 +112,7 @@ namespace Magix.admin
 				Node tmp = new Node();
 				tmp["JSON"].Value = node;
 				RaiseEvent (
-					"magix.core._transform-node-2-code", 
+					"magix.admin._transform-node-2-code", 
 					tmp);
 				txtOut.Text = tmp["code"].Get<string>();
 				txtOut.Select ();

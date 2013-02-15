@@ -459,7 +459,48 @@ functions as it should.";
 			if (e.Params.Contains ("inspect"))
 			{
 				e.Params.Clear ();
-				e.Params["inspect"].Value = @"Checks to see if setting Node Name
+				e.Params["inspect"].Value = @"Checks to see if creating a new thread
+functions as it should.";
+				e.Params.AddRange (tmp);
+				return;
+			}
+
+			RaiseEvent (
+				"magix.execute",
+				tmp);
+
+			if (tmp["magix.data.load"]["object"]["Value"].Get<string>() != "thomas")
+			{
+				throw new ApplicationException(
+					"Failure of executing fork statement");
+			}
+
+			Node xM = new Node();
+			xM["message"].Value = "magix.tests.fork executed successfully";
+			RaiseEvent("magix.viewport.show-message", xM);
+		}
+
+		/**
+		 * Tests to see if "magix.data.save/load", works
+		 */
+		[ActiveEvent(Name = "magix.test.data-save-load-by-key")]
+		public void magix_test_data_save_load_by_key (object sender, ActiveEventArgs e)
+		{
+			Node tmp = new Node();
+
+			tmp["magix.data.remove"]["key"].Value = "data-save-test";
+			tmp["execute"]["magix.data.load"]["key"].Value = "data-save-test";
+			tmp["execute"]["if"].Value = "[execute][magix.data.load][object]";
+			tmp["execute"]["if"]["throw"].Value = "Object didn't delete";
+			tmp["Buffer"].Value = null;
+			tmp["magix.data.save"]["key"].Value = "data-save-test";
+			tmp["magix.data.save"]["object"]["Value"].Value = "thomas";
+			tmp["magix.data.load"]["key"].Value = "data-save-test";
+
+			if (e.Params.Contains ("inspect"))
+			{
+				e.Params.Clear ();
+				e.Params["inspect"].Value = @"Checks to see if creating a new thread
 functions as it should.";
 				e.Params.AddRange (tmp);
 				return;
