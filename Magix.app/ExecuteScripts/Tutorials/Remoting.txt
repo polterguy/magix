@@ -13,7 +13,7 @@ remote
   URL=>http://127.0.0.1:8080
   event=>foo2
 
-for-each=>[remote][params][raise][ActiveEvents]
-  set=>[.ip][..][raise][params][message].Value
+for-each=>[remote][raise][ActiveEvents]
+  set=>[.ip][..][raise][message].Value
     value=>[.].Value
   raise=>magix.viewport.show-message

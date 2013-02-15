@@ -35,6 +35,21 @@ test-suite, which is to be ran, as this active event
 is raised. If it fails, it will abort all other tests,
 and show you the name of the active event handler
 that failed.";
+				foreach (string idx in ActiveEvents.Instance.ActiveEventHandlers)
+				{
+					if (idx.StartsWith ("magix.test."))
+					{
+						e.Params[idx].Value = null;
+
+						Node tmp = new Node();
+						tmp["inspect"].Value = null;
+
+						RaiseEvent (
+							idx, 
+							tmp);
+						e.Params[idx].Add (tmp["inspect"].UnTie ());
+					}
+				}
 				return;
 			}
 			string lastTest = "";

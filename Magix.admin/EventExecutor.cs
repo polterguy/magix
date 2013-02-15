@@ -41,6 +41,8 @@ event, where the ""ToolTip"" will contain the original event name. Takes no para
 			int idxNo = 0;
 			foreach (string idx in ActiveEvents.Instance.ActiveEventHandlers)
 			{
+				if (idx.StartsWith ("magix.test."))
+					continue;
 				if (idx.Contains ("."))
 				{
 					string[] splits = idx.Split ('.');

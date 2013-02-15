@@ -110,7 +110,7 @@ re-mapped. ""initial-startup-of-process"" must exists to run event.";
 				e.Params["remotable"].Value = true;
 				e.Params["code"]["if"].Value = "[Data].Value==[Backup].Value";
 				e.Params["code"]["if"]["raise"].Value = "magix.viewport.show-message";
-				e.Params["code"]["if"]["raise"]["params"]["message"].Value = "Howdy boy!!";
+				e.Params["code"]["if"]["raise"]["message"].Value = "Howdy boy!!";
 				e.Params["inspect"].Value = @"Overrides the active event in ""event""
 with the code in the ""code"" expression. Functions 
 as a ""magix.execute"" keyword.";

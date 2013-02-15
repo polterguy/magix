@@ -42,12 +42,12 @@ namespace Magix.execute
 		public static void magix_execute (object sender, ActiveEventArgs e)
 		{
 			if (e.Params.Contains ("inspect") 
-				&& e.Params ["inspect"].Get<string> ("") == "") {
-				e.Params ["Data"] ["Value"].Value = "thomas";
-				e.Params ["if"].Value = "[Data][Value].Value==thomas";
-				e.Params ["if"] ["raise"].Value = "magix.viewport.show-message";
-				e.Params ["if"] ["raise"] ["params"] ["message"].Value = "Hi Thomas!";
-				e.Params ["inspect"].Value = @"Executes all the children nodes starting with
+				&& e.Params["inspect"].Get<string> ("") == "") {
+				e.Params["Data"]["Value"].Value = "thomas";
+				e.Params["if"].Value = "[Data][Value].Value==thomas";
+				e.Params["if"]["raise"].Value = "magix.viewport.show-message";
+				e.Params["if"]["raise"]["message"].Value = "Hi Thomas!";
+				e.Params["inspect"].Value = @"Executes all the children nodes starting with
 a lower case alpha character,
 expecting them to be callable keywords, directly embedded into
 the ""magix.execute"" namespace, such that they become extensions
@@ -95,18 +95,34 @@ Data-Pointer of your execution block.";
 				// Checking to see if it starts with a small letter
 				if ("abcdefghijklmnopqrstuvwxyz".IndexOf (nodeName[0]) != -1)
 				{
-					// This is a keyword
-					string eventName = "magix.execute." + nodeName;
+					// Checking to see if it's a reference to an active event
+					if (nodeName.Contains ("."))
+					{
+						Node tmp = new Node();
 
-					Node tmp = new Node();
+						// "Instruction" pointer, code Node
+						tmp["_ip"].Value = idx;
 
-					// "Instruction" pointer, code Node
-					tmp["_ip"].Value = idx;
+						// Data Pointer, pointer to data
+						tmp["_dp"].Value = dp;
 
-					// Data Pointer, pointer to data
-					tmp["_dp"].Value = dp;
+						RaiseEvent ("magix.execute.raise", tmp);
+					}
+					else
+					{
+						// This is a keyword
+						string eventName = "magix.execute." + nodeName;
 
-					RaiseEvent (eventName, tmp);
+						Node tmp = new Node();
+
+						// "Instruction" pointer, code Node
+						tmp["_ip"].Value = idx;
+
+						// Data Pointer, pointer to data
+						tmp["_dp"].Value = dp;
+
+						RaiseEvent (eventName, tmp);
+					}
 				}
 			}
 			ip.Remove (ip["_state"]);
@@ -134,7 +150,7 @@ Data-Pointer of your execution block.";
 				e.Params["Data"]["Cache"].Value = null;
 				e.Params["if"].Value = "[Data][Item1].Value!=[Data][1].Name";
 				e.Params["if"]["raise"].Value = "magix.viewport.show-message";
-				e.Params["if"]["raise"] ["params"] ["message"].Value = "Message...";
+				e.Params["if"]["raise"]["message"].Value = "Message...";
 				e.Params["inspect"].Value = @"Checks to see if the current 
 statement is returning true, and if so, executes the underlaying nodes
 as code through ""magix.execute"", expecting them to be keywords to
@@ -283,7 +299,7 @@ Functions as a ""magix.execute"" keyword.";
 				e.Params["Data"]["Node"].Value = null;
 				e.Params["else-if"].Value = "[Data][Node]";
 				e.Params["else-if"]["raise"].Value = "magix.viewport.show-message";
-				e.Params["else-if"]["raise"]["params"]["message"].Value = "Message...";
+				e.Params["else-if"]["raise"]["message"].Value = "Message...";
 				e.Params["inspect"].Value = @"If no previous ""if"" statement,
 or ""else-if"" statement has returned true, will check to see if the current 
 statement is returning true, and if so, executes the underlaying nodes
@@ -327,7 +343,7 @@ Functions as a ""magix.execute"" keyword.";
 			if (e.Params.Contains ("inspect"))
 			{
 				e.Params["else"]["raise"].Value = "magix.viewport.show-message";
-				e.Params["else"]["raise"]["params"]["message"].Value = "Message...";
+				e.Params["else"]["raise"]["message"].Value = "Message...";
 				e.Params["inspect"].Value = @"If no previous ""if"" statement,
 or ""else-if"" statement has returned true, execute the underlaying nodes
 as code through ""magix.execute"", expecting them to be keywords to
@@ -356,7 +372,7 @@ the execution engine. Functions as a ""magix.execute"" keyword.";
 		/**
 		 * Will raise the current node's Value
 		 * as an active event, passing in the 
-		 * "params" child collection. Functions as a "magix.execute"
+		 * parameters child collection. Functions as a "magix.execute"
 		 * keyword. If "no-override" is true, then it won't check
 		 * to see if the method is mapped through overriding. Which
 		 * is useful for having 'calling base functionality', among 
@@ -375,11 +391,11 @@ the execution engine. Functions as a ""magix.execute"" keyword.";
 			if (e.Params.Contains ("inspect"))
 			{
 				e.Params["raise"].Value = "magix.viewport.show-message";
-				e.Params["raise"]["params"]["message"].Value = "Either directly embedded 'params'...";
+				e.Params["raise"]["message"].Value = "Hi there World...!!";
 				e.Params["raise"]["no-override"].Value = "False";
 				e.Params["inspect"].Value = @"Will raise the current node's Value
 as an active event, passing in the 
-""params"" child collection. Functions as a ""magix.execute""
+current Node. Functions as a ""magix.execute""
 keyword. If ""no-override"" is true, then it won't check
 to see if the method is mapped through overriding. Which
 is useful for having 'calling base functionality', among 
@@ -393,6 +409,7 @@ event, such that you can chain together active events, in
 a hierarchy of overridden events.";
 				return;
 			}
+
 			Node ip = e.Params;
 			if (e.Params.Contains ("_ip"))
 				ip = e.Params ["_ip"].Value as Node;
@@ -401,17 +418,15 @@ a hierarchy of overridden events.";
 			if (e.Params.Contains ("_dp"))
 				dp = e.Params["_dp"].Value as Node;
 
-			Node pars = new Node();
-			if (ip.Contains ("params"))
-			{
-				pars = ip["params"];
-			}
+			Node pars = ip;
 
 			bool forceNoOverride = false;
 			if (ip.Contains ("no-override") && ip["no-override"].Get<bool>())
 				forceNoOverride = true;
-
-			RaiseEvent (ip.Get<string>(), pars, forceNoOverride);
+			if (ip.Name == "raise")
+				RaiseEvent (ip.Get<string>(), pars, forceNoOverride);
+			else
+				RaiseEvent (ip.Name, pars, forceNoOverride);
 		}
 
 		/**
@@ -428,7 +443,7 @@ a hierarchy of overridden events.";
 				e.Params["Data"]["Value"].Value = "thomas";
 				e.Params["if"].Value = "[Data][Value].Value==thomas";
 				e.Params["if"]["raise"].Value = "magix.viewport.show-message";
-				e.Params["if"]["raise"]["params"]["message"].Value = "Hi Thomas!";
+				e.Params["if"]["raise"]["message"].Value = "Hi Thomas!";
 				e.Params["inspect"].Value = @"Spawns a new thread which the given
 code block will be executed within. Useful for long operations, 
 where you'd like to return to caller before the operation is
@@ -457,6 +472,29 @@ finished.";
 			RaiseEvent (
 				"magix.execute",
 				par);
+		}
+
+		/**
+		 * Spawns a new thread which the given
+		 * code block will be executed within. Useful for long operations, 
+		 * where you'd like to return to caller before the operation is
+		 * finished
+		 */
+		[ActiveEvent(Name = "magix.execute.sleep")]
+		public static void magix_execute_sleep (object sender, ActiveEventArgs e)
+		{
+			if (e.Params.Contains ("inspect"))
+			{
+				e.Params["sleep"].Value = 500;
+				e.Params["inspect"].Value = @"Sleeps the current threat
+for Value number of milliseconds.";
+				return;
+			}
+			Node ip = e.Params;
+			if (e.Params.Contains ("_ip"))
+				ip = e.Params ["_ip"].Value as Node;
+
+			Thread.Sleep (ip.Get<int>());
 		}
 
 		/**
