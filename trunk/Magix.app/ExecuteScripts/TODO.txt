@@ -40,6 +40,12 @@
 
 * "magix.execute.while" keyword ...
 
+* There's something fishy about how "remote" returns its data in "params" I think ...?
+
+* There's something "fishy" about the way "functions" returns Nodes. They return code among other things ...?
+
+* Simplify ALL syntax, function can e.g take active event name as Value and code as child nodes ...
+
 * Message Box is loosing text during postback due to txt.Text = ""; in Page_Load or something ...
 
 * Add support for creating Timer in JSON

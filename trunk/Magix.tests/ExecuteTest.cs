@@ -54,7 +54,7 @@ Node contains a copy of the original Node-set.";
 			}
 
 			Node xM = new Node();
-			xM["message"].Value = "magix.tests.set-node-list executed successfully";
+			xM["message"].Value = "magix.test.set-node-list executed successfully";
 			RaiseEvent("magix.viewport.show-message", xM);
 		}
 
@@ -94,7 +94,7 @@ Node values is functioning as it should.";
 			}
 
 			Node xM = new Node();
-			xM["message"].Value = "magix.tests.set-value executed successfully";
+			xM["message"].Value = "magix.test.set-value executed successfully";
 			RaiseEvent("magix.viewport.show-message", xM);
 		}
 
@@ -134,7 +134,7 @@ functions as it should.";
 			}
 
 			Node xM = new Node();
-			xM["message"].Value = "magix.tests.set-name executed successfully";
+			xM["message"].Value = "magix.test.set-name executed successfully";
 			RaiseEvent("magix.viewport.show-message", xM);
 		}
 
@@ -174,7 +174,7 @@ functions as it should.";
 			}
 
 			Node xM = new Node();
-			xM["message"].Value = "magix.tests.set-name executed successfully";
+			xM["message"].Value = "magix.test.set-name executed successfully";
 			RaiseEvent("magix.viewport.show-message", xM);
 		}
 
@@ -213,7 +213,7 @@ unless the ""set"" operation executed successfully.";
 					tmp["Data"].Get<string>()));
 
 			Node xM = new Node();
-			xM["message"].Value = "magix.tests.execute-1 executed successfully";
+			xM["message"].Value = "magix.test.execute-1 executed successfully";
 			RaiseEvent("magix.viewport.show-message", xM);
 		}
 
@@ -262,7 +262,7 @@ declare as success.";
 			}
 
 			Node xM = new Node();
-			xM["message"].Value = "magix.tests.assure-set-lists-dont-become-values successfully";
+			xM["message"].Value = "magix.test.assure-set-lists-dont-become-values successfully";
 			RaiseEvent("magix.viewport.show-message", xM);
 		}
 
@@ -311,7 +311,7 @@ declare as success.";
 			}
 
 			Node xM = new Node();
-			xM["message"].Value = "magix.tests.assure-set-lists-dont-become-names successfully";
+			xM["message"].Value = "magix.test.assure-set-lists-dont-become-names successfully";
 			RaiseEvent("magix.viewport.show-message", xM);
 		}
 
@@ -351,7 +351,7 @@ functions as it should.";
 			}
 
 			Node xM = new Node();
-			xM["message"].Value = "magix.tests.if executed successfully";
+			xM["message"].Value = "magix.test.if executed successfully";
 			RaiseEvent("magix.viewport.show-message", xM);
 		}
 
@@ -394,7 +394,7 @@ functions as it should.";
 			}
 
 			Node xM = new Node();
-			xM["message"].Value = "magix.tests.else-if executed successfully";
+			xM["message"].Value = "magix.test.else-if executed successfully";
 			RaiseEvent("magix.viewport.show-message", xM);
 		}
 
@@ -437,7 +437,251 @@ functions as it should.";
 			}
 
 			Node xM = new Node();
-			xM["message"].Value = "magix.tests.else executed successfully";
+			xM["message"].Value = "magix.test.else executed successfully";
+			RaiseEvent("magix.viewport.show-message", xM);
+		}
+
+		/**
+		 * Tests to see if "for-each", works
+		 */
+		[ActiveEvent(Name = "magix.test.for-each")]
+		public void magix_test_for_each (object sender, ActiveEventArgs e)
+		{
+			Node tmp = new Node();
+
+			tmp["Data"]["Item1"].Value = "thomas1";
+			tmp["Data"]["Item2"].Value = "thomas2";
+			tmp["Data"]["Item3"].Value = "thomas3";
+			tmp["Buffer"].Value = null;
+			tmp["for-each"].Value = "[Data]";
+			tmp["for-each"]["set"].Value = "[/][Buffer][[.].Name].Value";
+			tmp["for-each"]["set"]["value"].Value = "[.].Value";
+
+			if (e.Params.Contains ("inspect"))
+			{
+				e.Params.Clear ();
+				e.Params["inspect"].Value = @"Checks to see if for-each
+functions as it should.";
+				e.Params.AddRange (tmp);
+				return;
+			}
+
+			RaiseEvent (
+				"magix.execute",
+				tmp);
+
+			if (tmp["Buffer"]["Item1"].Get<string>() != "thomas1" || 
+			    tmp["Buffer"]["Item2"].Get<string>() != "thomas2" ||
+			    tmp["Buffer"]["Item3"].Get<string>() != "thomas3")
+			{
+				throw new ApplicationException(
+					"Failure of executing for-each statement");
+			}
+
+			Node xM = new Node();
+			xM["message"].Value = "magix.test.for-each executed successfully";
+			RaiseEvent("magix.viewport.show-message", xM);
+		}
+
+		/**
+		 * Tests to see if "throw", works
+		 */
+		[ActiveEvent(Name = "magix.test.throw")]
+		public void magix_test_for_throw (object sender, ActiveEventArgs e)
+		{
+			Node tmp = new Node();
+
+			tmp["throw"].Value = "This is our Message!";
+
+			if (e.Params.Contains ("inspect"))
+			{
+				e.Params.Clear ();
+				e.Params["inspect"].Value = @"Checks to see if throw
+functions as it should.";
+				e.Params.AddRange (tmp);
+				return;
+			}
+
+			try
+			{
+				RaiseEvent (
+					"magix.execute",
+					tmp);
+				throw new ApplicationException("Exception didn't occur!");
+			}
+			catch (Exception err)
+			{
+				while (err.InnerException != null)
+					err = err.InnerException;
+				if (!err.Message.Contains ("This is our Message!"))
+					throw new ApplicationException("Wrong message in Exception");
+			}
+
+			Node xM = new Node();
+			xM["message"].Value = "magix.test.throw executed successfully";
+			RaiseEvent("magix.viewport.show-message", xM);
+		}
+
+		/**
+		 * Tests to see if "remove", works
+		 */
+		[ActiveEvent(Name = "magix.test.remove")]
+		public void magix_test_remove (object sender, ActiveEventArgs e)
+		{
+			Node tmp = new Node();
+
+			tmp["Buffer"]["Data"]["Item1"].Value = "This is our Value1!";
+			tmp["Buffer"]["Data"]["Item2"].Value = "This is our Value2!";
+			tmp["Buffer"]["Data"]["Item3"].Value = "This is our Value3!";
+			tmp["Buffer"]["Data"]["Item4"].Value = "This is our Value4!";
+			tmp["Buffer"]["Data"]["Item5"].Value = "This is our Value5!";
+			tmp["remove"].Value = "[Buffer][Data]";
+
+			if (e.Params.Contains ("inspect"))
+			{
+				e.Params.Clear ();
+				e.Params["inspect"].Value = @"Checks to see if throw
+functions as it should.";
+				e.Params.AddRange (tmp);
+				return;
+			}
+
+			RaiseEvent (
+				"magix.execute",
+				tmp);
+
+			if (tmp["Buffer"].Count != 0)
+			{
+				throw new ApplicationException(
+					"Failure of executing remove statement");
+			}
+
+			Node xM = new Node();
+			xM["message"].Value = "magix.test.remove executed successfully";
+			RaiseEvent("magix.viewport.show-message", xM);
+		}
+
+		/**
+		 * Tests to see if create "function", and invoking it later, works
+		 */
+		[ActiveEvent(Name = "magix.test.function-invoke")]
+		public void magix_test_function_invoke (object sender, ActiveEventArgs e)
+		{
+			Node tmp = new Node();
+
+			tmp["function"]["event"].Value = "foo.bar";
+			tmp["function"]["code"]["Data"].Value = "howdy";
+			tmp["function"]["code"]["set"].Value = "[.ip][..][Data].Value";
+			tmp["foo.bar"].Value = null;
+
+			if (e.Params.Contains ("inspect"))
+			{
+				e.Params.Clear ();
+				e.Params["inspect"].Value = @"Checks to see if function
+functions as it should.";
+				e.Params.AddRange (tmp);
+				return;
+			}
+
+			RaiseEvent (
+				"magix.execute",
+				tmp);
+
+			if (tmp["foo.bar"].Value != null)
+			{
+				throw new ApplicationException(
+					"Failure of executing remove statement");
+			}
+
+			bool found = false;
+			foreach (string idx in ActiveEvents.Instance.ActiveEventHandlers)
+			{
+				if (idx == "foo.bar")
+					found = true;
+			}
+			if (!found)
+				throw new ApplicationException("Couldn't find foo.bar after creating it ...");
+
+			Node xM = new Node();
+			xM["message"].Value = "magix.test.function-invoke executed successfully";
+			RaiseEvent("magix.viewport.show-message", xM);
+		}
+
+		/**
+		 * Tests to see if "remove-function", works
+		 */
+		[ActiveEvent(Name = "magix.test.remove-function")]
+		public void magix_test_remove_function (object sender, ActiveEventArgs e)
+		{
+			Node tmp = new Node();
+
+			tmp["function"]["event"].Value = "foo.bar";
+			tmp["function"]["code"]["Data"].Value = "howdy";
+			tmp["function"]["code"]["set"].Value = "[.ip][..][Data].Value";
+			tmp["remove-function"].Value = "foo.bar";
+
+			if (e.Params.Contains ("inspect"))
+			{
+				e.Params.Clear ();
+				e.Params["inspect"].Value = @"Checks to see if remove-function
+functions as it should.";
+				e.Params.AddRange (tmp);
+				return;
+			}
+
+			RaiseEvent (
+				"magix.execute",
+				tmp);
+
+			foreach (string idx in ActiveEvents.Instance.ActiveEventHandlers)
+			{
+				if (idx == "foo.bar")
+				{
+					throw new ApplicationException(
+						"Failure of executing remove-function statement");
+				}
+			}
+
+			Node xM = new Node();
+			xM["message"].Value = "magix.test.remove-function executed successfully";
+			RaiseEvent("magix.viewport.show-message", xM);
+		}
+
+		/**
+		 * Tests to see if create "function", and invoking it later, works
+		 */
+		[ActiveEvent(Name = "magix.test.remote-function-invoke")]
+		public void magix_test_remote_function_invoke (object sender, ActiveEventArgs e)
+		{
+			Node tmp = new Node();
+
+			tmp["function"]["event"].Value = "foo.bar";
+			tmp["function"]["remotable"].Value = true;
+			tmp["function"]["code"]["Data"].Value = "howdy";
+			tmp["remote"]["URL"].Value = "http://127.0.0.1:8080";
+			tmp["remote"]["event"].Value = "foo.bar";
+
+			if (e.Params.Contains ("inspect"))
+			{
+				e.Params.Clear ();
+				e.Params["inspect"].Value = @"Checks to see if function
+functions as it should.";
+				e.Params.AddRange (tmp);
+				return;
+			}
+
+			RaiseEvent (
+				"magix.execute",
+				tmp);
+
+			if (tmp["remote"]["params"]["Data"].Get<string>() != "howdy")
+			{
+				throw new ApplicationException(
+					"Failure of executing remote statement");
+			}
+
+			Node xM = new Node();
+			xM["message"].Value = "magix.test.remote-function-invoke executed successfully";
 			RaiseEvent("magix.viewport.show-message", xM);
 		}
 
@@ -476,7 +720,7 @@ functions as it should.";
 			}
 
 			Node xM = new Node();
-			xM["message"].Value = "magix.tests.fork executed successfully";
+			xM["message"].Value = "magix.test.fork executed successfully";
 			RaiseEvent("magix.viewport.show-message", xM);
 		}
 
@@ -517,7 +761,7 @@ functions as it should.";
 			}
 
 			Node xM = new Node();
-			xM["message"].Value = "magix.tests.fork executed successfully";
+			xM["message"].Value = "magix.test.fork executed successfully";
 			RaiseEvent("magix.viewport.show-message", xM);
 		}
 	}
