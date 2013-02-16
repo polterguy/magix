@@ -26,6 +26,7 @@ namespace Magix.admin
 		{
 			if (e.Params.Contains ("inspect"))
 			{
+				e.Params["all"].Value = false;
 				e.Params["inspect"].Value = @"Will return all the Active Events currently registered
 within the system. Notice that this can CHANGE as the system runs, due to Event Overriding.
 Will return a list of events within the ""ActiveEvents"" node where the Value is the name
