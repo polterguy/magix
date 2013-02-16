@@ -24,9 +24,7 @@ Data
       Description=>Mohammed Ali I presume ...?
     Item4
       Description=>21st Century Schizoid Man!!!
-Buffer
 for-each=>[Data][List]
-  set=>[/][Buffer][message].Value
+  set=>[/][for-each][magix.viewport.show-message][message].Value
     value=>[.][Description].Value
-  raise=>magix.viewport.show-message
-    context=>[/][Buffer]
+  magix.viewport.show-message
