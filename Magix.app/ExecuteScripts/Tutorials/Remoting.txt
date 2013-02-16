@@ -4,16 +4,16 @@ inspect=>@"Shows how to call, and create, a function
 on a remote server"
 
 function
-  event=>foo2
+  event=>foo.bar
   remotable=>True
   code
-    raise=>magix.admin.get-active-events
+    magix.admin.get-active-events
 
 remote
   URL=>http://127.0.0.1:8080
-  event=>foo2
+  event=>foo.bar
 
-for-each=>[remote][raise][ActiveEvents]
-  set=>[.ip][..][raise][message].Value
+for-each=>[remote][params][magix.admin.get-active-events][ActiveEvents]
+  set=>[.ip][..][magix.viewport.show-message][message].Value
     value=>[.].Value
-  raise=>magix.viewport.show-message
+  magix.viewport.show-message

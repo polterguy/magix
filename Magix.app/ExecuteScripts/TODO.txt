@@ -50,6 +50,8 @@
 
 * Add support for creating Timer in JSON
 
+* NULL event handlers doesn't seem to work ...?
+
 * Create perfect Doxygen comments
 
 * Support for "Ping Sound" in show-message Active Event

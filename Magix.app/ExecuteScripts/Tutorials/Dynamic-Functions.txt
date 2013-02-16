@@ -1,21 +1,13 @@
 Method: magix.execute
 
-inspect=>@"Demonstrates how to create two
-new dynamic function called ""foo"" and ""bar""."
+inspect=>@"Demonstrates how to create one
+new dynamic function called ""foo.bar"", and invoke it."
 
-Data
-  Code1
-    Value1=>thomas
-    if=>[Value1].Value==thomas
-      raise=>magix.viewport.show-message
-        message=>Hi Thomas!!
 function
-  event=>foo
-  context=>[Data][Code1]
-function
-  event=>bar
+  event=>foo.bar
   code
     Value1=>thomas
     if=>[Value1].Value==thomas
       raise=>magix.viewport.show-message
         message=>Still there Thomas?
+foo.bar

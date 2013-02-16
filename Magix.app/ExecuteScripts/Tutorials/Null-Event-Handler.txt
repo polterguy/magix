@@ -8,6 +8,6 @@ event
 code
   set=>[.ip][..][raise][message].Value
     value=>[.ip][..][_method].Value
-  raise=>magix.viewport.show-message
+  magix.viewport.show-message
     message=>Some Active Event was invoked
     no-override=>True

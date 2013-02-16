@@ -12,9 +12,9 @@ pretty advanced expressions"
 function
   event=>load-address
   code
-    raise=>magix.data.load
+    magix.data.load
       key=>adr
-    for-each=>[/][raise][object]
+    for-each=>[/][magix.data.load][object]
       set=>[/][2][2][5][controls][[/][2][2][5][controls].Count].Value
       set=>[/][2][2][5][controls][item][CssClass].Value
         value=>span-6
@@ -55,7 +55,7 @@ function
           value=>&nbsp;
       set=>[/][2][2][5][controls][item].Name
         value=>Label
-    raise=>magix.forms.create-form
+    magix.forms.create-form
       container=>content1
       form-id=>addressBook
       controls
@@ -118,24 +118,24 @@ to contents in stored objects, and some other things."
               CssClass=>span-3 height-2 top-1 right
               Text=>Save
               OnClick
-                raise=>magix.data.load
+                magix.data.load
                   key=>adr
-                raise=>magix.forms.get-value
+                magix.forms.get-value
                   id=>first
                   form-id=>addressBook
                 set=>[.ip][..][0][object][[.ip][..][0][object].Count][first].Value
                   value=>[.ip][..][1][value].Value
-                raise=>magix.forms.get-value
+                magix.forms.get-value
                   id=>last
                   form-id=>addressBook
                 set=>[.ip][..][0][object][item][last].Value
                   value=>[.ip][..][3][value].Value
-                raise=>magix.forms.get-value
+                magix.forms.get-value
                   id=>phone
                   form-id=>addressBook
                 set=>[.ip][..][0][object][item][phone].Value
                   value=>[.ip][..][5][value].Value
-                raise=>magix.forms.get-value
+                magix.forms.get-value
                   id=>email
                   form-id=>addressBook
                 set=>[.ip][..][0][object][item][email].Value
@@ -144,7 +144,7 @@ to contents in stored objects, and some other things."
                   value=>Item
                 set=>[.ip][..][11][object]
                   value=>[.ip][..][0][object]
-                raise=>magix.data.save
+                magix.data.save
                   key=>adr
                   object
                 raise=>load-address
