@@ -803,6 +803,85 @@ functions as it should.";
 		}
 
 		/**
+		 * Tests to see if create non-remotable "function", and invoking it later remotely, throws
+		 */
+		[ActiveEvent(Name = "magix.test.non-remotely-remotely-activated-throws")]
+		public void magix_test_non_remotely_remotely_activated_throws (object sender, ActiveEventArgs e)
+		{
+			Node tmp = new Node();
+
+			tmp["function"]["event"].Value = "foo.bar";
+			tmp["function"]["remotable"].Value = false;
+			tmp["function"]["code"]["Data"].Value = "howdy";
+			tmp["remote"]["URL"].Value = "http://127.0.0.1:8080";
+			tmp["remote"]["event"].Value = "foo.bar";
+
+			if (e.Params.Contains ("inspect"))
+			{
+				e.Params.Clear ();
+				e.Params["inspect"].Value = @"Checks to see if function
+created as a non-remotable function, 
+functions as it should, and throws
+when remotely activated.";
+				e.Params.AddRange (tmp);
+				return;
+			}
+
+			try
+			{
+				RaiseEvent (
+					"magix.execute",
+					tmp);
+				throw new ApplicationException("non-remotely active event invoked remotely didn't throw an exception ...?");
+			}
+			catch
+			{
+				Node xM = new Node();
+				xM["message"].Value = "magix.test.non-remotely-remotely-activated-throws executed successfully";
+				RaiseEvent("magix.viewport.show-message", xM);
+			}
+		}
+
+		/**
+		 * Tests to see if create default "function", and invoking it later remotely, throws
+		 */
+		[ActiveEvent(Name = "magix.test.default-function-remotely-activated-throws")]
+		public void magix_test_default_function_remotely_activated_throws (object sender, ActiveEventArgs e)
+		{
+			Node tmp = new Node();
+
+			tmp["function"]["event"].Value = "foo.bar";
+			tmp["function"]["code"]["Data"].Value = "howdy";
+			tmp["remote"]["URL"].Value = "http://127.0.0.1:8080";
+			tmp["remote"]["event"].Value = "foo.bar";
+
+			if (e.Params.Contains ("inspect"))
+			{
+				e.Params.Clear ();
+				e.Params["inspect"].Value = @"Checks to see if function
+created as a default function, 
+functions as it should, and 
+throws when invoked remotely.";
+				e.Params.AddRange (tmp);
+				return;
+			}
+
+			try
+			{
+				RaiseEvent (
+					"magix.execute",
+					tmp);
+				throw new ApplicationException("default active event invoked remotely didn't throw an exception ...?");
+			}
+			catch
+			{
+				Node xM = new Node();
+				xM["message"].Value = "magix.test.default-function-remotely-activated-throws executed successfully";
+				RaiseEvent("magix.viewport.show-message", xM);
+			}
+		}
+
+		/**
 		 * Tests to see if "fork", works
 		 */
 		[ActiveEvent(Name = "magix.test.fork")]

@@ -29,6 +29,8 @@ namespace Magix.Core
 
         private static Dictionary<string, string> _eventMappers = new Dictionary<string, string>();
 
+        private static Dictionary<string, bool> _remotelyActivated = new Dictionary<string, bool>();
+
         private delegate void AsyncDelegate(object sender, ActiveEventArgs e);
 
         private ActiveEvents()
@@ -54,6 +56,30 @@ namespace Magix.Core
 					yield return idx;
 				}
 			}
+		}
+
+		/**
+		 * Level3: Returns true if the event is allowed to be remotely invoked
+		 */
+		public bool IsAllowedRemotely (string str)
+		{
+			return _remotelyActivated.ContainsKey(str);
+		}
+
+		/**
+		 * Level3: Marks an active event as a remotely activatable event
+		 */
+		public void MakeRemotable (string str)
+		{
+			_remotelyActivated[str] = true;
+		}
+
+		/**
+		 * Level3: Makes an event NOT remotable
+		 */
+		public void RemoveRemotable (string str)
+		{
+			_remotelyActivated.Remove (str);
 		}
 
 		/**
@@ -164,7 +190,7 @@ namespace Magix.Core
             ActiveEventArgs e)
         {
             method.Invoke(context, new[] { sender, e });
-        }
+		}
 
         /**
          * Level3: Raises an event. This will dispatch control to all the ActiveEvent that are marked with
