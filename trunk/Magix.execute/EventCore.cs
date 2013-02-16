@@ -228,10 +228,6 @@ found in the ""event"" child node. Functions as a ""magix.execute"" keyword.";
 			if (e.Params.Contains ("_ip"))
 				ip = e.Params ["_ip"].Value as Node;
 
-			Node dp = e.Params;
-			if (e.Params.Contains ("_dp"))
-				dp = e.Params["_dp"].Value as Node;
-
 			string key = ip.Get<string>();
 			if (key == null)
 				throw new ArgumentException("Cannot remove null function");

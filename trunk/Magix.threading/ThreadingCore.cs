@@ -27,10 +27,10 @@ namespace Magix.threading
 		{
 			if (e.Params.Contains ("inspect"))
 			{
-				e.Params["Data"]["Value"].Value = "thomas";
-				e.Params["if"].Value = "[Data][Value].Value==thomas";
-				e.Params["if"]["raise"].Value = "magix.viewport.show-message";
-				e.Params["if"]["raise"]["message"].Value = "Hi Thomas!";
+				e.Params["fork"]["Data"]["Value"].Value = "thomas";
+				e.Params["fork"]["if"].Value = "[Data][Value].Value==thomas";
+				e.Params["fork"]["if"]["raise"].Value = "magix.viewport.show-message";
+				e.Params["fork"]["if"]["raise"]["message"].Value = "Hi Thomas!";
 				e.Params["inspect"].Value = @"Spawns a new thread which the given
 code block will be executed within. Useful for long operations, 
 where you'd like to return to caller before the operation is
