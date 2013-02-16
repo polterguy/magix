@@ -679,6 +679,48 @@ functions as it should.";
 		}
 
 		/**
+		 * Tests to see if "remove", works
+		 */
+		[ActiveEvent(Name = "magix.test.throw-1")]
+		public void magix_test_throw_1 (object sender, ActiveEventArgs e)
+		{
+			Node tmp = new Node();
+
+			tmp["try"].Value = null;
+			tmp["try"]["code"]["throw"].Value = "Exception Thrown by Test";
+			tmp["try"]["catch"].Value = null;
+
+			if (e.Params.Contains ("inspect"))
+			{
+				e.Params.Clear ();
+				e.Params["inspect"].Value = @"Checks to see if try, throw and catch
+functions as it should.";
+				e.Params.AddRange (tmp);
+				return;
+			}
+
+			try
+			{
+				RaiseEvent (
+					"magix.execute",
+					tmp);
+
+				throw new ApplicationException(
+					"throw didn't throw exception ...?");
+			}
+			catch
+			{
+				if (!tmp["try"]["catch"]["exception"].Get<string>().Contains ("Exception Thrown by Test"))
+					throw new ApplicationException("Exception Message didn't show when exception was thrown");
+
+				Node xM = new Node();
+				xM["message"].Value = "magix.test.throw-1 executed successfully";
+				RaiseEvent("magix.viewport.show-message", xM);
+				return;
+			}
+		}
+
+		/**
 		 * Tests to see if create "function", and invoking it later, works
 		 */
 		[ActiveEvent(Name = "magix.test.function-invoke")]
