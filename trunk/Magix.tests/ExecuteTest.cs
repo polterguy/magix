@@ -15,6 +15,88 @@ namespace Magix.tests
 	public class ExecuteTest : ActiveController
 	{
 		/**
+		 * Tests to see if "if", "set" and "magix.execute" works
+		 */
+		[ActiveEvent(Name = "magix.test.execute-1")]
+		public void magix_test_execute_1 (object sender, ActiveEventArgs e)
+		{
+			Node tmp = new Node();
+			tmp["Data"].Value = "not-set";
+			tmp["if"].Value = "[Data].Value==not-set";
+			tmp["if"]["set"].Value = "[Data].Value";
+			tmp["if"]["set"]["value"].Value = "new-value";
+
+			if (e.Params.Contains ("inspect"))
+			{
+				e.Params["inspect"].Value = @"Tests to see if basic magix.execute
+functionality works, specifically ""set"" on a 
+Data node in the Node tree. Throws an exception 
+unless the ""set"" operation executed successfully.";
+				e.Params.Add (tmp);
+				return;
+			}
+
+			RaiseEvent (
+				"magix.execute",
+				tmp);
+
+			// Asserting new value is set ...
+			if (tmp["Data"].Get<string>() != "new-value")
+				throw new ApplicationException(
+					string.Format(
+						"Set didn't update as supposed to, expected {0}, got {1}",
+						"new-value",
+					tmp["Data"].Get<string>()));
+
+			Node xM = new Node();
+			xM["message"].Value = "magix.test.execute-1 executed successfully";
+			RaiseEvent("magix.viewport.show-message", xM);
+		}
+
+		/**
+		 * Tests to see if "magix.execute" works with slightly more complex code
+		 */
+		[ActiveEvent(Name = "magix.test.execute-complex-statement-1")]
+		public void magix_test_execute_complex_statement_1 (object sender, ActiveEventArgs e)
+		{
+			Node tmp = new Node();
+
+			tmp["Data"].Value = "not-set";
+			tmp["if"].Value = "[Data].Value==not-set";
+			tmp["if"]["function"]["event"].Value = "foo.bar";
+			tmp["if"]["function"]["code"]["Data"].Value = "not-set";
+			tmp["if"]["function"]["code"]["set"].Value = "[Data].Value";
+			tmp["if"]["function"]["code"]["set"]["value"].Value = "new-value";
+			tmp["if"]["foo.bar"].Value = null;
+
+			if (e.Params.Contains ("inspect"))
+			{
+				e.Params["inspect"].Value = @"Tests to see if basic magix.execute
+functionality works, specifically ""set"" on a 
+Data node in the Node tree. Throws an exception 
+unless the ""set"" operation executed successfully.";
+				e.Params.AddRange (tmp);
+				return;
+			}
+
+			RaiseEvent (
+				"magix.execute",
+				tmp);
+
+			// Asserting new value is set ...
+			if (tmp["if"]["foo.bar"]["Data"].Get<string>() != "new-value")
+				throw new ApplicationException(
+					string.Format(
+						"Set didn't update as supposed to, expected {0}, got {1}",
+						"new-value",
+					tmp["Data"].Get<string>()));
+
+			Node xM = new Node();
+			xM["message"].Value = "magix.test.execute-complex-statement-1 executed successfully";
+			RaiseEvent("magix.viewport.show-message", xM);
+		}
+
+		/**
 		 * Tests to see if "set", works with Node-Lists
 		 */
 		[ActiveEvent(Name = "magix.test.set-node-list")]
@@ -175,45 +257,6 @@ functions as it should.";
 
 			Node xM = new Node();
 			xM["message"].Value = "magix.test.set-name executed successfully";
-			RaiseEvent("magix.viewport.show-message", xM);
-		}
-
-		/**
-		 * Tests to see if "if", "set" and "magix.execute" works
-		 */
-		[ActiveEvent(Name = "magix.test.execute-1")]
-		public void magix_test_execute_1 (object sender, ActiveEventArgs e)
-		{
-			Node tmp = new Node("execute");
-			tmp["Data"].Value = "not-set";
-			tmp["if"].Value = "[Data].Value==not-set";
-			tmp["if"]["set"].Value = "[Data].Value";
-			tmp["if"]["set"]["value"].Value = "new-value";
-
-			if (e.Params.Contains ("inspect"))
-			{
-				e.Params["inspect"].Value = @"Tests to see if basic magix.execute
-functionality works, specifically ""set"" on a 
-Data node in the Node tree. Throws an exception 
-unless the ""set"" operation executed successfully.";
-				e.Params.Add (tmp);
-				return;
-			}
-
-			RaiseEvent (
-				"magix.execute",
-				tmp);
-
-			// Asserting new value is set ...
-			if (tmp["Data"].Get<string>() != "new-value")
-				throw new ApplicationException(
-					string.Format(
-						"Set didn't update as supposed to, expected {0}, got {1}",
-						"new-value",
-					tmp["Data"].Get<string>()));
-
-			Node xM = new Node();
-			xM["message"].Value = "magix.test.execute-1 executed successfully";
 			RaiseEvent("magix.viewport.show-message", xM);
 		}
 
