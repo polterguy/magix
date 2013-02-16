@@ -51,8 +51,7 @@ namespace Magix.Core
 	            {
 					// We only raise events which are overrides, and not
 					// if they are "system overrides" ...
-					if (ActiveEvents.Instance.IsOverride (Page.Request["event"]) &&
-					    !ActiveEvents.Instance.IsOverrideSystem (Page.Request["event"]))
+					if (ActiveEvents.Instance.IsAllowedRemotely (Page.Request["event"]))
 					{
 						Node node = new Node();
 

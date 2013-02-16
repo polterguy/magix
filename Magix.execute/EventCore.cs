@@ -88,6 +88,8 @@ re-mapped. ""initial-startup-of-process"" must exists to run event.";
 					foreach (Event idx in db.QueryByExample (new Event(null, null, false)))
 					{
 						ActiveEvents.Instance.CreateEventMapping (idx.Key, "magix.execute._active-event-2-code-callback");
+						if (idx.Remotable)
+							ActiveEvents.Instance.MakeRemotable (idx.Key);
 					}
 				}
 			}
@@ -192,6 +194,8 @@ as a ""magix.execute"" keyword.";
 							}
 							db.Commit ();
 							ActiveEvents.Instance.CreateEventMapping (key, "magix.execute._active-event-2-code-callback");
+							if (remotable)
+								ActiveEvents.Instance.MakeRemotable (key);
 						}
 					}
 				},
@@ -241,6 +245,8 @@ found in the ""event"" child node. Functions as a ""magix.execute"" keyword.";
 					foreach (Event idx in db.QueryByExample (new Event(null, key, false)))
 					{
 						db.Delete (idx);
+						if (idx.Remotable)
+							ActiveEvents.Instance.RemoveRemotable (idx.Key);
 						break;
 					}
 					db.Commit ();
