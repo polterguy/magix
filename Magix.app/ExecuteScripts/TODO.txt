@@ -2,11 +2,9 @@
 
 * Make NULL Active Event Handlers handle also "magix.execute" events, somehow, maybe ...
 
-* Implement support for marking specific methods as "remotable" in ActiveEvents, somehow ...
-  Maybe add boolean value in ActiveEventArgs, or something ...
-
-* Implement serialization of events through HTTP such that events can be remotely activated
-  Maybe through a magix.execute keyword, such as "get" or something ...?
+* Make support for overriding active events remotely, such that you
+  think you're invoking locally, but the event is "overridden" and will
+  go to another server end-point.
 
 * Make support for assigning nodes and values into ANY parameter in ANY code by using
   e.g. something like "message=(expr)>[.][message].Value" for instance.
@@ -19,8 +17,6 @@
 
 * Serialization of DLL's and other resources back and forth to servers
 
-* Assigning of types in code structure, e.g. MyParameter=(int)>5
-
 * Better handling of types in expressions
 
 * Tutorial mode Active Module, which helps guide the user through Magix
@@ -29,28 +25,21 @@
 
 * Queries in expression, such as e.g.; [Data][Image?[URL].Value=="google.png"]
 
-* Fix the "context" problem, e.g. "raise" and "show-message" will fissle
-  since it doesn't understand "who's context" it is ...
-
 * Make sure the @"" notation in serialization of Nodes, and especially "if" statements, etc is working
 
-* Support for "throw" and "catch" magix.execute keywords, to throw and catch exceptions
+* Support for getting HTTP get parameters from URL
 
-* Add UNIT TESTS!!
+* Support for storing and retrieving objects into ViewState and Session, or ...?
 
-* "magix.execute.while" keyword ...
+* Support for manipulating and retrieving cookies from disc
 
 * There's something fishy about how "remote" returns its data in "params" I think ...?
 
 * There's something "fishy" about the way "functions" returns Nodes. They return code among other things ...?
 
-* Simplify ALL syntax, function can e.g take active event name as Value and code as child nodes ...
-
-* Message Box is loosing text during postback due to txt.Text = ""; in Page_Load or something ...
+* Simplify ALL syntax, functions can e.g take active event name as Value and code as child nodes ...
 
 * Add support for creating Timer in JSON
-
-* NULL event handlers doesn't seem to work ...?
 
 * Create perfect Doxygen comments
 
@@ -62,17 +51,17 @@
 
 * Support for creating effects
 
+* More "meta-modules", such as e.g. "retrieve all events tagged with remote", etc ...
+
+* Support for marking an existing active event as "remotable"
+
 * Refactor Event Creation in DynamicForm.ascx.cs to use a method to remove redundant code
 
 * Support for creating Dynamic Panels, Dynamically ...
 
 * Support for adding styles to Widgets
 
-* Deep comparison of Nodes, to make it possible to compare two Node expressions returning Node lists against each other
-
 * Support for SelectedItem from BaseWebControlListFormElement
-
-* Create Unit Tests
 
 * Play Sound Active Event
 
@@ -81,11 +70,6 @@
 * Design widget, which allows for WYSIWYG designing of create-form syntax
 
 * Math stuff in selectors, such as ".Count - 1"
-
-* "using" keyword, which changes the Data-Pointer such that relative
-  JSON paths can more easily be created
-  Implement this on "magix.execute" nodes Value from Node, which changes
-  the _dp or Data Pointer
 
 * Making mostly EVERYTHING a "magix.execute" keyword ...
   AND make sure all Events have "sane names"

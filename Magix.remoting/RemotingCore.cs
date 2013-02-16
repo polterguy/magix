@@ -20,6 +20,70 @@ namespace Magix.execute
 	public class RemotingCore : ActiveController
 	{
 		/**
+		 * Creates a remote override for any active event in your system
+		 */
+		[ActiveEvent(Name = "magix.execute.override-remotely")]
+		public static void magix_execute_override_remotely (object sender, ActiveEventArgs e)
+		{
+			if (e.Params.Contains ("inspect") &&
+			    e.Params["inspect"].Get<string>("") == "")
+			{
+				e.Params["inspect"].Value = @"Creates an external override towards the given 
+""URL"". The event overridden is found in ""event"". If you pass
+in a null value as a URL, or no URL node, the override is removed.
+Please make sure the other side has marked the active event as
+remotable.";
+				e.Params["URL"].Value = "http://127.0.0.1:8080";
+				e.Params["event"].Value = "magix.namespace.foo";
+				return;
+			}
+			Node ip = e.Params;
+			if (e.Params.Contains ("_ip"))
+				ip = e.Params["_ip"].Value as Node;
+
+			if (!ip.Contains ("event") || ip["event"].Get<string>("") == string.Empty)
+				throw new ArgumentException("magix.execute.override-remotely needs event parameter to know which event to raise externally");
+
+			string url = ip.Contains ("URL") ? ip["URL"].Get<string>() : null;
+			string evt = ip["event"].Get<string>();
+
+			if (ip == null)
+			{
+				ActiveEvents.Instance.RemoveRemoteOverride(evt);
+			}
+			else
+			{
+				ActiveEvents.Instance.OverrideRemotely(evt, url);
+			}
+		}
+
+		/**
+		 * Allows an event to be remotly invoked within your system
+		 */
+		[ActiveEvent(Name = "magix.execute.allow-remotely")]
+		public static void magix_execute_allow_remotely (object sender, ActiveEventArgs e)
+		{
+			if (e.Params.Contains ("inspect") &&
+			    e.Params["inspect"].Get<string>("") == "")
+			{
+				e.Params["inspect"].Value = @"Allows the given ""event""
+to be remotely invoked.";
+				e.Params["event"].Value = "magix.namespace.foo";
+				return;
+			}
+			Node ip = e.Params;
+			if (e.Params.Contains ("_ip"))
+				ip = e.Params["_ip"].Value as Node;
+
+			if (!ip.Contains ("event") || ip["event"].Get<string>("") == string.Empty)
+				throw new ArgumentException("magix.execute.override-remotely needs event parameter to know which event to raise externally");
+
+			string evt = ip["event"].Get<string>();
+
+			ActiveEvents.Instance.MakeRemotable (evt);
+		}
+
+		/**
 		 * Raises a new event remotely, use "URL" and "event" to instruct which
 		 * event you wish to raise at which URL end-point. Whatever you have 
 		 * as "params" parameters, will be passed into the end-point server
@@ -52,7 +116,7 @@ namespace Magix.execute
 			string url = ip["URL"].Get<string>();
 			string evt = ip["event"].Get<string>();
 
-		
+
             HttpWebRequest req = WebRequest.Create(url) as System.Net.HttpWebRequest;
             req.Method = "POST";
             req.Referer = GetApplicationBaseUrl();
@@ -61,9 +125,7 @@ namespace Magix.execute
             using (StreamWriter writer = new StreamWriter(req.GetRequestStream()))
             {
                 writer.Write("event=" + System.Web.HttpUtility.UrlEncode(evt));
-
-				if (ip.Contains ("params") && !string.IsNullOrEmpty (ip["params"].Get<string>()))
-                    writer.Write("&params=" + System.Web.HttpUtility.UrlEncode(ip["params"].ToJSONString()));
+                writer.Write("&params=" + System.Web.HttpUtility.UrlEncode(ip.ToJSONString()));
             }
             using (HttpWebResponse resp = req.GetResponse() as HttpWebResponse)
             {
@@ -81,7 +143,9 @@ namespace Magix.execute
                         if (val.Length > 7)
 						{
 							Node tmp = Node.FromJSONString(val.Substring(7));
-                            ip["params"].ReplaceChildren (tmp);
+                            ip.ReplaceChildren (tmp);
+							ip.Name = tmp.Name;
+							ip.Value = tmp.Value;
 						}
                     }
 					else

@@ -167,5 +167,7 @@
     <None Include="ExecuteScripts\TODO.txt" />
     <None Include="ExecuteScripts\Tutorials\Null-Event-Handler.txt" />
     <None Include="ExecuteScripts\Tutorials\Remoting.txt" />
+    <None Include="ExecuteScripts\Tutorials\While.txt" />
+    <None Include="ExecuteScripts\Applications\Inspect-Events.txt" />
   </ItemGroup>
 </Project>

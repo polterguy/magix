@@ -1,0 +1,64 @@
+Method:magix.execute
+
+inspect=>@"Will show a screen of all the 
+active event in the system, and allow
+the user to inspect them bly clicking
+them."
+
+magix.admin.get-active-events
+  all=>True
+set=>[magix.admin.get-active-events].Name
+  value=>Data
+for-each=>[Data][ActiveEvents]
+  set=>[/][magix.forms.create-form][controls][Panel][controls][[/][magix.forms.create-form][controls][Panel][controls].Count].Value
+  set=>[/][magix.forms.create-form][controls][Panel][controls][item][Text].Value
+    value=>[.].Value
+  set=>[/][magix.forms.create-form][controls][Panel][controls][item][CssClass].Value
+    value=>span-7 info
+  set=>[/][magix.forms.create-form][controls][Panel][controls][item][OnClick][raise].Value
+    value=>[.].Value
+  set=>[/][magix.forms.create-form][controls][Panel][controls][item][OnClick][raise][inspect].Name
+    value=>inspect
+  expr=>[magix.viewport.show-message][message].Value
+  set=>[/][magix.forms.create-form][controls][Panel][controls][item][OnClick][set].Value
+    value=>[.ip][..][expr].Value
+  expr2=>[raise][inspect].Value
+  set=>[/][magix.forms.create-form][controls][Panel][controls][item][OnClick][set][value].Value
+    value=>[.ip][..][expr2].Value
+  exprR=>[raise][inspect]
+  set=>[/][magix.forms.create-form][controls][Panel][controls][item][OnClick][remove].Value
+    value=>[.ip][..][exprR].Value
+  expr3=>[magix.viewport.show-message][code]
+  set=>[/][magix.forms.create-form][controls][Panel][controls][item][OnClick][set1].Value
+    value=>[.ip][..][expr3].Value
+  expr4=>[raise]
+  set=>[/][magix.forms.create-form][controls][Panel][controls][item][OnClick][set1][value].Value
+    value=>[.ip][..][expr4].Value
+  set=>[/][magix.forms.create-form][controls][Panel][controls][item][OnClick][set1].Name
+    value=>set
+  expr5=>[raise][inspect].Name
+  set=>[/][magix.forms.create-form][controls][Panel][controls][item][OnClick][set1].Value
+    value=>[.ip][..][expr5].Value
+  set=>[/][magix.forms.create-form][controls][Panel][controls][item][OnClick][set1][value].Value
+    value=>inspect
+  set=>[/][magix.forms.create-form][controls][Panel][controls][item][OnClick][set1].Name
+    value=>set
+  set=>[/][magix.forms.create-form][controls][Panel][controls][item][OnClick][magix.viewport.show-message].Name
+    value=>magix.viewport.show-message
+  set=>[/][magix.forms.create-form][controls][Panel][controls][item][OnClick][magix.viewport.show-message][header].Value
+    value=>[.].Value
+  set=>[/][magix.forms.create-form][controls][Panel][controls][item][OnClick][magix.viewport.show-message][time].Value
+    value=>10000
+  set=>[/][magix.forms.create-form][controls][Panel][controls][item].Name
+    value=>LinkButton
+magix.forms.create-form
+  form-id=>av
+  container=>content1
+  controls
+    Panel=>wrp
+      CssClass=>span-24
+      controls
+        Label=>head
+          CssClass=>span-18 prepend-6 last prepend-top
+          Tag=>h1
+          Text=>Active Event Inspector

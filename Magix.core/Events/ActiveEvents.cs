@@ -5,7 +5,9 @@
  */
 
 using System;
+using System.IO;
 using System.Web;
+using System.Net;
 using System.Web.UI;
 using System.Threading;
 using System.Reflection;
@@ -28,6 +30,8 @@ namespace Magix.Core
         private static ActiveEvents _instance;
 
         private static Dictionary<string, string> _eventMappers = new Dictionary<string, string>();
+
+        private static Dictionary<string, string> _urlMappers = new Dictionary<string, string>();
 
         private static Dictionary<string, bool> _remotelyActivated = new Dictionary<string, bool>();
 
@@ -56,6 +60,33 @@ namespace Magix.Core
 					yield return idx;
 				}
 			}
+		}
+
+		/**
+		 * Level3: Makes an active event override to a remote server
+		 */
+		public void OverrideRemotely (string activeEvent, string url)
+		{
+			_urlMappers[activeEvent] = url;
+		}
+
+		/**
+		 * Level3: Removes a remotely overridden event
+		 */
+		public void RemoveRemoteOverride (string activeEvent)
+		{
+			_urlMappers.Remove (activeEvent);
+		}
+
+		/**
+		 * Level3: Returns the URL of the remote server the active event is
+		 * overridden to, or null if no remote override exists
+		 */
+		public string RemotelyOverriddenURL (string activeEvent)
+		{
+			if (_urlMappers.ContainsKey (activeEvent))
+				return _urlMappers[activeEvent];
+			return null;
 		}
 
 		/**
@@ -281,6 +312,52 @@ namespace Magix.Core
             return tokens;
         }
 
+		private void ExecuteRemotelyEvent (string evt, Node pars, string url)
+		{
+            HttpWebRequest req = WebRequest.Create(url) as System.Net.HttpWebRequest;
+            req.Method = "POST";
+            string refer = string.Format(
+                "{0}://{1}{2}",
+                HttpContext.Current.Request.Url.Scheme,
+                HttpContext.Current.Request.ServerVariables["HTTP_HOST"],
+                (HttpContext.Current.Request.ApplicationPath.Equals("/")) ? 
+                    "/" : 
+                    HttpContext.Current.Request.ApplicationPath + "/").ToLowerInvariant();
+            req.Referer = refer;
+            req.ContentType = "application/x-www-form-urlencoded";
+
+            using (StreamWriter writer = new StreamWriter(req.GetRequestStream()))
+            {
+                writer.Write("event=" + System.Web.HttpUtility.UrlEncode(evt));
+                writer.Write("&params=" + System.Web.HttpUtility.UrlEncode(pars.ToJSONString()));
+            }
+            using (HttpWebResponse resp = req.GetResponse() as HttpWebResponse)
+            {
+                using (StreamReader reader = new StreamReader(resp.GetResponseStream()))
+                {
+                    if ((int)resp.StatusCode >= 200 && (int)resp.StatusCode < 300)
+                    {
+                        string val = reader.ReadToEnd();
+                        if (!val.StartsWith("return:"))
+                            throw new Exception(
+                                "Something went wrong when connecting to '" +
+                                url +
+                                "'. Server responded with: " + val);
+
+                        if (val.Length > 7)
+						{
+							Node tmp = Node.FromJSONString(val.Substring(7));
+                            pars.ReplaceChildren (tmp);
+							pars.Name = tmp.Name;
+							pars.Value = tmp.Value;
+						}
+                    }
+					else
+						throw new ArgumentException("Couldn't find event '" + evt + "' on " + url);
+                }
+            }
+		}
+
 		private void RaiseEventDoneParsing (
 			object sender, 
 			string name, 
@@ -288,10 +365,23 @@ namespace Magix.Core
 			Node pars,
 			bool forceNoOverride)
 		{
+			if (!forceNoOverride && _urlMappers.ContainsKey(name))
+			{
+				ExecuteRemotelyEvent(name, pars, _urlMappers[name]);
+				return;
+			}
+
 			// Calling single Active Event with no more tokens
 			string originalName = name;
 			if (!forceNoOverride)
+			{
 				name = GetEventMappingValue(name);
+				if (name != originalName && _urlMappers.ContainsKey (name))
+				{
+					ExecuteRemotelyEvent(name, pars, _urlMappers[name]);
+					return;
+				}
+			}
 
 			ActiveEventArgs e = new ActiveEventArgs(originalName, pars);
             // We must run this in two operations since events clear controls out

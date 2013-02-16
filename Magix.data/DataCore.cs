@@ -80,10 +80,6 @@ with the given ""key"".";
 			if (e.Params.Contains ("_ip"))
 				ip = e.Params ["_ip"].Value as Node;
 
-			Node dp = e.Params;
-			if (e.Params.Contains ("_dp"))
-				dp = e.Params["_dp"].Value as Node;
-
 			if (!ip.Contains ("key") || 
 			    string.IsNullOrEmpty (ip["key"].Get<string>()))
 				throw new ArgumentException("Missing 'key' while trying to remove object");

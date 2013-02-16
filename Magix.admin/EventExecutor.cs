@@ -37,16 +37,19 @@ Code that is. In addition it will also have a ""Tooltip"" node, in case it's an 
 event, where the ""ToolTip"" will contain the original event name. Takes no parameters";
 				return;
 			}
+			bool takeAll = false;
+			if (e.Params.Contains ("all"))
+				takeAll = e.Params["all"].Get<bool>();
 			Node node = e.Params;
 			int idxNo = 0;
 			foreach (string idx in ActiveEvents.Instance.ActiveEventHandlers)
 			{
-				if (idx.StartsWith ("magix.test."))
+				if (!takeAll && idx.StartsWith ("magix.test."))
 					continue;
 				if (idx.Contains ("."))
 				{
 					string[] splits = idx.Split ('.');
-					if (splits[splits.Length - 1].StartsWith ("_"))
+					if (!takeAll && splits[splits.Length - 1].StartsWith ("_"))
 						continue; // "Hidden" event ...
 				}
 				if (ActiveEvents.Instance.IsOverrideSystem (idx))

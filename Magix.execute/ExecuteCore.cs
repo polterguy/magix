@@ -183,6 +183,91 @@ if an exception is thrown.";
 		/**
 		 * Checks to see if the current 
 		 * statement is returning true, and if so, executes the underlaying nodes
+		 * as code through "magix.execute", repeatedly, expecting them to be keywords to
+		 * the execution engine. You can either compare a node expression
+		 * with another node expression, a node expression with a
+		 * constant value or a single node expression for existence of 
+		 * Node itself, Value or Name. Operators you can use are '!=', '==', '>=',
+		 * '<=', '>' and '<' when comparing two nodes or one node and 
+		 * a constant, and '!' in front of operator if only one 
+		 * expression is given to check for existence to negate the value.
+		 * Functions as a "magix.execute" keyword
+		 */
+		[ActiveEvent(Name = "magix.execute.while")]
+		public static void magix_execute_while (object sender, ActiveEventArgs e)
+		{
+			if (e.Params.Contains ("inspect"))
+			{
+				e.Params["Data"]["Item1"].Value = "Cache1";
+				e.Params["while"].Value = "[Data][Item1].Value!=ole";
+				e.Params["while"]["magix.viewport.show-message"].Value = null;
+				e.Params["while"]["magix.viewport.show-message"]["message"].Value = "Message...";
+				e.Params["while"]["set"].Value = "[Data][Item1].Value";
+				e.Params["while"]["set"]["value"].Value = "ole";
+				e.Params["inspect"].Value = @"Checks to see if the current 
+statement is returning true, and if so, executes the underlaying nodes
+as code through ""magix.execute"", repeatedly, expecting them to be keywords to
+the execution engine. You can either compare a node expression
+with another node expression, a node expression with a
+constant value or a single node expression for existence of 
+Node itself, Value or Name. Operators you can use are '!=', '==', '>=',
+'<=', '>' and '<' when comparing two nodes or one node and 
+a constant, and '!' in front of operator if only one 
+expression is given to check for existence to negate the value.
+Functions as a ""magix.execute"" keyword.";
+				return;
+			}
+			Node ip = e.Params;
+			if (e.Params.Contains ("_ip"))
+				ip = e.Params ["_ip"].Value as Node;
+
+			Node dp = e.Params;
+			if (e.Params.Contains ("_dp"))
+				dp = e.Params["_dp"].Value as Node;
+
+			/// Defaulting if statement to return "false"
+			if (ip.Parent != null)
+				ip.Parent ["_state"].Value = false;
+
+			string expr = ip.Value as string;
+			if (string.IsNullOrEmpty (expr))
+				throw new ArgumentException ("You cannot have an empty if statement");
+
+			// Checking to see if single statement, meaning "exists"
+			if (expr.IndexOfAny (new char[]{'=','>','<'}) != -1)
+			{
+				// Comparing two nodes with each other
+				ExecuteWhile (expr, ip, dp);
+			}
+			else if (expr.IndexOf ("!") == 0)
+			{
+				// Checking to see of "not exists"
+				while (!Expressions.ExpressionExist (expr.TrimStart ('!'), ip, dp))
+				{
+					Node tmp = new Node();
+					tmp["_ip"].Value = ip;
+					tmp["_dp"].Value = dp;
+
+					RaiseEvent ("magix.execute", tmp);
+				}
+			}
+			else
+			{
+				// Checking to see if "exists"
+				while (Expressions.ExpressionExist (expr, ip, dp))
+				{
+					Node tmp = new Node();
+					tmp["_ip"].Value = ip;
+					tmp["_dp"].Value = dp;
+
+					RaiseEvent ("magix.execute", tmp);
+				}
+			}
+		}
+
+		/**
+		 * Checks to see if the current 
+		 * statement is returning true, and if so, executes the underlaying nodes
 		 * as code through "magix.execute", expecting them to be keywords to
 		 * the execution engine. You can either compare a node expression
 		 * with another node expression, a node expression with a
@@ -326,6 +411,68 @@ Functions as a ""magix.execute"" keyword.";
 				node["_ip"].Value = ip;
 				node["_dp"].Value = dp;
 				RaiseEvent ("magix.execute", node);
+			}
+		}
+
+		private static void ExecuteWhile(string expr, Node ip, Node dp)
+		{
+			while (true)
+			{
+				string left = expr.Substring (0, expr.IndexOfAny (new char[]{'!','=','>','<'}));;
+				string comparison = expr.Substring (left.Length, 2);
+				if (comparison[comparison.Length - 1] != '=')
+					comparison = comparison.Substring (0, 1);
+				string right = expr.Substring (expr.IndexOf (comparison) + comparison.Length);
+				if (right.IndexOf ("\"") == 0)
+				{
+					right = right.Substring (1);
+					right = right.Substring (0, right.Length - 1);
+				}
+				if (right.IndexOf("[") == 0)
+				{
+					right = Expressions.GetExpressionValue (right, dp, ip).ToString ();
+				}
+				bool isTrue = false;
+				string valueOfExpr = left;
+				if (valueOfExpr.IndexOf ("[") == 0)
+				{
+					valueOfExpr = Expressions.GetExpressionValue (valueOfExpr, dp, ip).ToString ();
+				}
+				switch (comparison)
+				{
+				case "==":
+					isTrue = valueOfExpr == right;
+					break;
+				case "!=":
+					isTrue = valueOfExpr != right;
+					break;
+				case ">":
+					isTrue = valueOfExpr.CompareTo (right) == -1;
+					break;
+				case "<":
+					isTrue = valueOfExpr.CompareTo (right) == 1;
+					break;
+				case ">=":
+					isTrue = valueOfExpr.CompareTo (right) < 1;
+					break;
+				case "<=":
+					isTrue = valueOfExpr.CompareTo (right) > -1;
+					break;
+				}
+
+				// Signaling to else and else-if that statement was true
+				if (ip.Parent != null)
+					ip.Parent["_state"].Value = isTrue;
+
+				if (isTrue)
+				{
+					Node node = new Node();
+					node["_ip"].Value = ip;
+					node["_dp"].Value = dp;
+					RaiseEvent ("magix.execute", node);
+				}
+				else
+					break;
 			}
 		}
 

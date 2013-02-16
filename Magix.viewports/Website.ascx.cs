@@ -53,10 +53,25 @@ namespace Magix.viewports
 				e.Params["inspect"].Value = @"Shows a message box to the 
 end user for some seconds.";
 				e.Params["icon"].Value = "media/images/magix-logo-tiny.png";
+				e.Params["code"].Value = "List of nodes that's to be formatted and shown in pre block";
 				return;
 			}
 
 			messageLabel.Text += "<p>" + e.Params["message"].Get<string>() + "</p>";
+
+			if (e.Params.Contains ("code"))
+			{
+				Node tmp = new Node();
+				Node code = e.Params["code"].Clone ();
+				code.Name = "";
+				tmp["JSON"].Value = code;
+				RaiseEvent (
+					"magix.admin._transform-node-2-code",
+					tmp);
+
+				messageLabel.Text += "<pre>" + tmp["code"].Get<string>() + "</pre>";
+			}
+
 			if (e.Params.Contains ("header"))
 				msgBoxHeader.Text = e.Params["header"].Get<string>();
 			if (e.Params.Contains ("time"))
