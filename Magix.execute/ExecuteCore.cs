@@ -129,6 +129,58 @@ Data-Pointer of your execution block.";
 		}
 
 		/**
+		 * Creates a try block, with an associated code block, and a catch block,
+		 * which will be invoked if an exception is thrown. The catch statement
+		 * will only be invoked if an exception is thrown
+		 */
+		[ActiveEvent(Name = "magix.execute.try")]
+		public static void magix_execute_try (object sender, ActiveEventArgs e)
+		{
+			if (e.Params.Contains ("inspect"))
+			{
+				e.Params["try"].Value = null;
+				e.Params["try"]["code"]["throw"].Value = "We threw an exception";
+				e.Params["try"]["code"]["magix.viewport.show-message"]["message"].Value = "NOT supposed to show!!";
+				e.Params["try"]["catch"]["set"].Value = "[magix.viewport.show-message][message].Value";
+				e.Params["try"]["catch"]["set"]["value"].Value = "[exception].Value";
+				e.Params["try"]["catch"]["magix.viewport.show-message"].Value = null;
+				e.Params["inspect"].Value = @"Creates a try block of
+code, which will execute the catch block,
+if an exception is thrown.";
+				return;
+			}
+			Node ip = e.Params;
+			if (e.Params.Contains ("_ip"))
+				ip = e.Params ["_ip"].Value as Node;
+
+			if (!ip.Contains ("code"))
+				throw new ApplicationException("No code block inside of try statement");
+
+			if (!ip.Contains ("catch"))
+				throw new ApplicationException("No catch block inside of try statement");
+
+			try
+			{
+				RaiseEvent (
+					"magix.execute",
+					ip["code"]);
+			}
+			catch (Exception err)
+			{
+				while (err.InnerException != null)
+					err = err.InnerException;
+
+				if (ip["code"].Contains ("_state"))
+					ip["code"]["_state"].UnTie ();
+
+				ip["catch"]["exception"].Value = err.Message;
+				RaiseEvent (
+					"magix.execute",
+					ip["catch"]);
+			}
+		}
+
+		/**
 		 * Checks to see if the current 
 		 * statement is returning true, and if so, executes the underlaying nodes
 		 * as code through "magix.execute", expecting them to be keywords to
@@ -566,7 +618,7 @@ active events.";
 			if (e.Params.Contains ("_ip"))
 				ip = e.Params ["_ip"].Value as Node;
 
-			throw new ApplicationException("Exception Thrown; " + ip.Get<string>());
+			throw new ApplicationException(ip.Get<string>());
 		}
 	}
 }
