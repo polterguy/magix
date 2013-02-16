@@ -562,6 +562,80 @@ functions as it should.";
 		}
 
 		/**
+		 * Tests to see if "remove", works
+		 */
+		[ActiveEvent(Name = "magix.test.remove-value-throws")]
+		public void magix_test_remove_value_throws (object sender, ActiveEventArgs e)
+		{
+			Node tmp = new Node();
+
+			tmp["Buffer"].Value = "This is our Value1!";
+			tmp["remove"].Value = "[Buffer].Value";
+
+			if (e.Params.Contains ("inspect"))
+			{
+				e.Params.Clear ();
+				e.Params["inspect"].Value = @"Checks to see if remove
+functions as it should.";
+				e.Params.AddRange (tmp);
+				return;
+			}
+
+			try
+			{
+				RaiseEvent (
+					"magix.execute",
+					tmp);
+				throw new ApplicationException(
+					"remove didn't throw upon removal of Value ...?");
+			}
+			catch
+			{
+				Node xM = new Node();
+				xM["message"].Value = "magix.test.remove-value-throws executed successfully";
+				RaiseEvent("magix.viewport.show-message", xM);
+				return;
+			}
+		}
+
+		/**
+		 * Tests to see if "remove", works
+		 */
+		[ActiveEvent(Name = "magix.test.remove-name-throws")]
+		public void magix_test_remove_name_throws (object sender, ActiveEventArgs e)
+		{
+			Node tmp = new Node();
+
+			tmp["Buffer"].Value = "This is our Value1!";
+			tmp["remove"].Value = "[Buffer].Name";
+
+			if (e.Params.Contains ("inspect"))
+			{
+				e.Params.Clear ();
+				e.Params["inspect"].Value = @"Checks to see if remove
+functions as it should.";
+				e.Params.AddRange (tmp);
+				return;
+			}
+
+			try
+			{
+				RaiseEvent (
+					"magix.execute",
+					tmp);
+				throw new ApplicationException(
+					"remove didn't throw upon removal of Name ...?");
+			}
+			catch
+			{
+				Node xM = new Node();
+				xM["message"].Value = "magix.test.remove-name-throws executed successfully";
+				RaiseEvent("magix.viewport.show-message", xM);
+				return;
+			}
+		}
+
+		/**
 		 * Tests to see if create "function", and invoking it later, works
 		 */
 		[ActiveEvent(Name = "magix.test.function-invoke")]
