@@ -2,7 +2,7 @@ Method:magix.execute
 
 inspect=>@"Will show a screen of all the 
 active event in the system, and allow
-the user to inspect them bly clicking
+the user to inspect them by clicking
 them."
 
 magix.admin.get-active-events

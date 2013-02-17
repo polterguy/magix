@@ -85,7 +85,7 @@ that failed.";
 
 				node["message"].Value = "SUCCESS!!<br /> " + idxNo + " tests successfully executed";
 				node["color"].Value = "LightGreen";
-				node["time"].Value = 5000;
+				node["time"].Value = 1000;
 
 				RaiseEvent (
 					"magix.viewport.show-message",
