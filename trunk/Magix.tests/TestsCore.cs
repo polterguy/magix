@@ -72,14 +72,19 @@ that failed.";
 						// Assuming this is a test ...
 						idxNo += 1;
 						lastTest = idx;
+						e.Params["tests"][idx]["success"].Value = false;
 						RaiseEvent (idx);
+						e.Params["tests"][idx]["success"].Value = true;
 					}
 				}
+				e.Params["summary"]["no-tests"].Value = idxNo;
+				e.Params["summary"]["success"].Value = true;
+
 				Node node = new Node();
 
 				node["message"].Value = "SUCCESS!!<br /> " + idxNo + " tests successfully executed";
 				node["color"].Value = "LightGreen";
-				node["time"].Value = 30000;
+				node["time"].Value = 5000;
 
 				RaiseEvent (
 					"magix.viewport.show-message",
@@ -89,6 +94,9 @@ that failed.";
 			{
 				while (err.InnerException != null)
 					err = err.InnerException;
+
+				e.Params["summary"]["success"].Value = false;
+				e.Params["summary"]["description"].Value = err.Message;
 
 				Node node = new Node();
 

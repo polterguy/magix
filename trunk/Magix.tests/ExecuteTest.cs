@@ -47,10 +47,6 @@ unless the ""set"" operation executed successfully.";
 						"Set didn't update as supposed to, expected {0}, got {1}",
 						"new-value",
 					tmp["Data"].Get<string>()));
-
-			Node xM = new Node();
-			xM["message"].Value = "magix.test.execute-1 executed successfully";
-			RaiseEvent("magix.viewport.show-message", xM);
 		}
 
 		/**
@@ -90,10 +86,6 @@ unless the ""set"" operation executed successfully.";
 						"Set didn't update as supposed to, expected {0}, got {1}",
 						"new-value",
 					tmp["Data"].Get<string>()));
-
-			Node xM = new Node();
-			xM["message"].Value = "magix.test.execute-complex-statement-1 executed successfully";
-			RaiseEvent("magix.viewport.show-message", xM);
 		}
 
 		/**
@@ -134,10 +126,6 @@ Node contains a copy of the original Node-set.";
 			{
 				throw new ApplicationException("The 'Buffer' Node didn't equal the original Node-list in the 'Data' Node as were expected");
 			}
-
-			Node xM = new Node();
-			xM["message"].Value = "magix.test.set-node-list executed successfully";
-			RaiseEvent("magix.viewport.show-message", xM);
 		}
 
 		/**
@@ -174,10 +162,6 @@ Node values is functioning as it should.";
 						"desc1",
 						tmp["Buffer"].Get<string>()));
 			}
-
-			Node xM = new Node();
-			xM["message"].Value = "magix.test.set-value executed successfully";
-			RaiseEvent("magix.viewport.show-message", xM);
 		}
 
 		/**
@@ -214,10 +198,6 @@ functions as it should.";
 						"Description123",
 						tmp["Buffer"].Get<string>()));
 			}
-
-			Node xM = new Node();
-			xM["message"].Value = "magix.test.set-name executed successfully";
-			RaiseEvent("magix.viewport.show-message", xM);
 		}
 
 		/**
@@ -254,10 +234,6 @@ functions as it should.";
 						"Description123",
 						tmp["Buffer"][0].Name));
 			}
-
-			Node xM = new Node();
-			xM["message"].Value = "magix.test.set-name executed successfully";
-			RaiseEvent("magix.viewport.show-message", xM);
 		}
 
 		/**
@@ -303,10 +279,6 @@ declare as success.";
 				throw new ApplicationException(
 					"Expected exception due to assigning a Node-list to a Value, but didn't get one ...?");
 			}
-
-			Node xM = new Node();
-			xM["message"].Value = "magix.test.assure-set-lists-dont-become-values successfully";
-			RaiseEvent("magix.viewport.show-message", xM);
 		}
 
 		/**
@@ -352,10 +324,6 @@ declare as success.";
 				throw new ApplicationException(
 					"Expected exception due to assigning a Node-list to a Name, but didn't get one ...?");
 			}
-
-			Node xM = new Node();
-			xM["message"].Value = "magix.test.assure-set-lists-dont-become-names successfully";
-			RaiseEvent("magix.viewport.show-message", xM);
 		}
 
 		/**
@@ -390,10 +358,6 @@ functions as it should.";
 				throw new ApplicationException(
 					"Failure of executing while statement");
 			}
-
-			Node xM = new Node();
-			xM["message"].Value = "magix.test.while executed successfully";
-			RaiseEvent("magix.viewport.show-message", xM);
 		}
 
 		/**
@@ -430,10 +394,6 @@ functions as it should.";
 				throw new ApplicationException(
 					"Failure of executing if statement");
 			}
-
-			Node xM = new Node();
-			xM["message"].Value = "magix.test.if executed successfully";
-			RaiseEvent("magix.viewport.show-message", xM);
 		}
 
 		/**
@@ -473,10 +433,6 @@ functions as it should.";
 				throw new ApplicationException(
 					"Failure of executing else-if statement");
 			}
-
-			Node xM = new Node();
-			xM["message"].Value = "magix.test.else-if executed successfully";
-			RaiseEvent("magix.viewport.show-message", xM);
 		}
 
 		/**
@@ -516,10 +472,6 @@ functions as it should.";
 				throw new ApplicationException(
 					"Failure of executing else statement");
 			}
-
-			Node xM = new Node();
-			xM["message"].Value = "magix.test.else executed successfully";
-			RaiseEvent("magix.viewport.show-message", xM);
 		}
 
 		/**
@@ -558,10 +510,6 @@ functions as it should.";
 				throw new ApplicationException(
 					"Failure of executing for-each statement");
 			}
-
-			Node xM = new Node();
-			xM["message"].Value = "magix.test.for-each executed successfully";
-			RaiseEvent("magix.viewport.show-message", xM);
 		}
 
 		/**
@@ -597,10 +545,6 @@ functions as it should.";
 				if (!err.Message.Contains ("This is our Message!"))
 					throw new ApplicationException("Wrong message in Exception");
 			}
-
-			Node xM = new Node();
-			xM["message"].Value = "magix.test.throw executed successfully";
-			RaiseEvent("magix.viewport.show-message", xM);
 		}
 
 		/**
@@ -636,10 +580,6 @@ functions as it should.";
 				throw new ApplicationException(
 					"Failure of executing remove statement");
 			}
-
-			Node xM = new Node();
-			xM["message"].Value = "magix.test.remove executed successfully";
-			RaiseEvent("magix.viewport.show-message", xM);
 		}
 
 		/**
@@ -672,9 +612,6 @@ functions as it should.";
 			}
 			catch
 			{
-				Node xM = new Node();
-				xM["message"].Value = "magix.test.remove-value-throws executed successfully";
-				RaiseEvent("magix.viewport.show-message", xM);
 				return;
 			}
 		}
@@ -709,9 +646,6 @@ functions as it should.";
 			}
 			catch
 			{
-				Node xM = new Node();
-				xM["message"].Value = "magix.test.remove-name-throws executed successfully";
-				RaiseEvent("magix.viewport.show-message", xM);
 				return;
 			}
 		}
@@ -751,9 +685,6 @@ functions as it should.";
 				if (!tmp["try"]["catch"]["exception"].Get<string>().Contains ("Exception Thrown by Test"))
 					throw new ApplicationException("Exception Message didn't show when exception was thrown");
 
-				Node xM = new Node();
-				xM["message"].Value = "magix.test.throw-1 executed successfully";
-				RaiseEvent("magix.viewport.show-message", xM);
 				return;
 			}
 		}
@@ -798,10 +729,6 @@ functions as it should.";
 			}
 			if (!found)
 				throw new ApplicationException("Couldn't find foo.bar after creating it ...");
-
-			Node xM = new Node();
-			xM["message"].Value = "magix.test.function-invoke executed successfully";
-			RaiseEvent("magix.viewport.show-message", xM);
 		}
 
 		/**
@@ -838,10 +765,6 @@ functions as it should.";
 						"Failure of executing remove-function statement");
 				}
 			}
-
-			Node xM = new Node();
-			xM["message"].Value = "magix.test.remove-function executed successfully";
-			RaiseEvent("magix.viewport.show-message", xM);
 		}
 
 		/**
@@ -871,15 +794,11 @@ functions as it should.";
 				"magix.execute",
 				tmp);
 
-			if (tmp["remote"]["params"]["Data"].Get<string>() != "howdy")
+			if (tmp["remote"]["Data"].Get<string>() != "howdy")
 			{
 				throw new ApplicationException(
 					"Failure of executing remote statement");
 			}
-
-			Node xM = new Node();
-			xM["message"].Value = "magix.test.remote-function-invoke executed successfully";
-			RaiseEvent("magix.viewport.show-message", xM);
 		}
 
 		/**
@@ -916,9 +835,7 @@ when remotely activated.";
 			}
 			catch
 			{
-				Node xM = new Node();
-				xM["message"].Value = "magix.test.non-remotely-remotely-activated-throws executed successfully";
-				RaiseEvent("magix.viewport.show-message", xM);
+				return;
 			}
 		}
 
@@ -955,9 +872,6 @@ throws when invoked remotely.";
 			}
 			catch
 			{
-				Node xM = new Node();
-				xM["message"].Value = "magix.test.default-function-remotely-activated-throws executed successfully";
-				RaiseEvent("magix.viewport.show-message", xM);
 			}
 		}
 
@@ -994,10 +908,6 @@ functions as it should.";
 				throw new ApplicationException(
 					"Failure of executing fork statement");
 			}
-
-			Node xM = new Node();
-			xM["message"].Value = "magix.test.fork executed successfully";
-			RaiseEvent("magix.viewport.show-message", xM);
 		}
 
 		/**
@@ -1035,10 +945,6 @@ functions as it should.";
 				throw new ApplicationException(
 					"Failure of executing fork statement");
 			}
-
-			Node xM = new Node();
-			xM["message"].Value = "magix.test.fork executed successfully";
-			RaiseEvent("magix.viewport.show-message", xM);
 		}
 	}
 }
