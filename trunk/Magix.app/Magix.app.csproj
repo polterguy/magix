@@ -169,5 +169,6 @@
     <None Include="ExecuteScripts\Tutorials\Remoting.txt" />
     <None Include="ExecuteScripts\Tutorials\While.txt" />
     <None Include="ExecuteScripts\Applications\Inspect-Events.txt" />
+    <None Include="ExecuteScripts\Applications\Inspect-Unit-Tests.txt" />
   </ItemGroup>
 </Project>
