@@ -16,6 +16,7 @@ namespace Magix.tests
 	public class TestsCore : ActiveController
 	{
 		/**
+		 * Will run all Unit Tests in the system
 		 */
 		[ActiveEvent(Name = "magix.tests.run-tests")]
 		public void magix_tests_run_tests (object sender, ActiveEventArgs e)

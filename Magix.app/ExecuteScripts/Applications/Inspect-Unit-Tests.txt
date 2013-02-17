@@ -1,0 +1,53 @@
+Method:magix.execute
+
+inspect=>@"Will show a screen of all the 
+unit tests in the system, and allow
+the user to inspect them by clicking
+them."
+
+magix.tests.run-tests
+set=>[magix.tests.run-tests].Name
+  value=>Data
+if=>[/][Data][summary][success].Value!=True
+  magix.viewport.show-message
+    color=>Red
+    message=>@"Couldn't show Unit Test form, 
+one of your tests failed. Run ""magix.tests.run-tests"" to 
+figure out which."
+    header=>Error ...
+else
+  for-each=>[Data][tests]
+    set=>[/][else][magix.forms.create-form][controls][Panel][controls][[/][else][magix.forms.create-form][controls][Panel][controls].Count].Name
+      value=>new
+    set=>[/][else][magix.forms.create-form][controls][Panel][controls][new][Text].Value
+      value=>[.].Name
+    set=>[/][else][magix.forms.create-form][controls][Panel][controls][new][CssClass].Value
+      value=>span-7 info
+    Data
+      OnClick
+        foo.method
+          inspect
+        set=>[.ip][..][magix.viewport.show-message][message].Value
+          value=>[.ip][..][0][inspect].Value
+        remove=>[.ip][..][0][inspect]
+        set=>[.ip][..][magix.viewport.show-message][code]
+          value=>[.ip][..][0]
+        magix.viewport.show-message
+          message
+          time=>5000
+    set=>[.ip][..][Data][OnClick][0].Name
+      value=>[.].Name
+    set=>[/][else][magix.forms.create-form][controls][Panel][controls][new][OnClick]
+      value=>[.ip][..][Data][OnClick]
+    set=>[/][else][magix.forms.create-form][controls][Panel][controls][new].Name
+      value=>LinkButton
+  magix.forms.create-form
+    form-id=>form1
+    container=>content1
+    controls
+      Label
+        Tag=>h1
+        CssClass=>prepend-top prepend-5 span-19 last
+        Text=>Registered Unit Tests in System
+      Panel=>wrp
+        controls
