@@ -6,6 +6,7 @@ the user to inspect them bly clicking
 them."
 
 magix.admin.get-active-events
+  all=>False
 set=>[magix.admin.get-active-events].Name
   value=>Data
 for-each=>[Data][ActiveEvents]
