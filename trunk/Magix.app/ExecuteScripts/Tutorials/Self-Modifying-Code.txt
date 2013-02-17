@@ -1,0 +1,24 @@
+Method: magix.execute
+
+inspect=>@"Demonstrates how to create code
+that creates code as it executes. Notice
+how the code changes after you've been 
+running it once."
+
+Data
+  msg1
+    magix.viewport.show-message
+      message=>Hi there Thomas!!
+  msg2
+    magix.viewport.show-message
+      message=>Hi Stranger ...
+  SomeValue=>thomas
+if=>[Data][SomeValue].Value==thomas
+  set=>[ExeBlock]
+    value=>[Data][msg1]
+else
+  set=>[ExeBlock]
+    value=>[Data][msg2]
+set=>[ExeBlock].Name
+  value=>execute
+ExeBlock

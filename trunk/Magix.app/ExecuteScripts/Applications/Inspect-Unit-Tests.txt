@@ -29,6 +29,8 @@ else
           inspect
         set=>[.ip][..][magix.viewport.show-message][message].Value
           value=>[.ip][..][0][inspect].Value
+        set=>[.ip][..][magix.viewport.show-message][header].Value
+          value=>[.ip][..][0].Name
         remove=>[.ip][..][0][inspect]
         set=>[.ip][..][magix.viewport.show-message][code]
           value=>[.ip][..][0]
