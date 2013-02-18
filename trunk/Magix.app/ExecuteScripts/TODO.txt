@@ -11,8 +11,6 @@
 
 * Uploading of Manifest files, which changes the state of the application somehow
 
-* Serialization of DLL's and other resources back and forth to servers
-
 * Better handling of types in expressions
 
 * Tutorial mode Active Module, which helps guide the user through Magix
@@ -20,7 +18,26 @@
 * Create a script that show all magix.execute keywords, such that they can
   be inspected
 
-* ZIPing files, and storing them as BASE64 Encoded values in Nodes
+* Make sure Remote Event are RE-overridden again upon application-startup, just
+  like "functions" do ... [db4o]
+
+* Binary loading and saving of files, using Base64 encoding, which allows
+  for transfering DLLs to other servers
+
+* Zipping of hierarchies of files, as "packages", which can be sent back and forth
+  Try to do this, using the "command" pattern, such that "undo" becomes possible ...?
+
+* Handling of application-startup, to check for a base "run.script.txt" file,
+  which will serve as a "manifest", being executed, potentially changing
+  the state of the server. Easy way of distributing applications...
+
+* See all overrides of active events, and also all active events which are
+  legal to invoke remotely.
+
+* Event keyword in Dynamic Forms, which can handle Active Events, and
+  treat them as "functions" with code
+
+* Turning "dynamic" code, into C# code, somehow ...
 
 * Saving objects without a key, and having a key automatically assigned
   and returned to the caller
