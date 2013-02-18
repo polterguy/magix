@@ -2,10 +2,6 @@
 
 * Make NULL Active Event Handlers handle also "magix.execute" events, somehow, maybe ...
 
-* Make support for overriding active events remotely, such that you
-  think you're invoking locally, but the event is "overridden" and will
-  go to another server end-point.
-
 * Make support for assigning nodes and values into ANY parameter in ANY code by using
   e.g. something like "message=(expr)>[.][message].Value" for instance.
   This will eliminate the need for "context" in anything, including "magix.execute" I think
@@ -23,7 +19,7 @@
 
 * Variables in code, such as e.g.; var=>tmp=[Data][Path]
 
-* Queries in expression, such as e.g.; [Data][Image?[URL].Value=="google.png"]
+* Criteria in expression, such as e.g.; [Data][Image?[URL].Value=="google.png"]
 
 * Make sure the @"" notation in serialization of Nodes, and especially "if" statements, etc is working
 

@@ -82,6 +82,26 @@ event, where the ""ToolTip"" will contain the original event name. Takes no para
 		}
 
 		/**
+		 * Opens up the Event Sniffer, which allows you to spy
+		 * on all events internally raised within the system
+		 */
+		[ActiveEvent(Name = "magix.admin.open-event-sniffer")]
+		public void magix_admin_open_event_sniffer (object sender, ActiveEventArgs e)
+		{
+			if (e.Params.Contains ("inspect"))
+			{
+				e.Params["container"].Value = "content1";
+				e.Params["inspect"].Value = @"Will open the Event Sniffer
+form, which will show all active events 
+raised in the system.";
+				return;
+			}
+			LoadModule (
+				"Magix.admin.EventSniffer", 
+				e.Params["container"].Get<string>());
+		}
+
+		/**
 		 * Loads the Active Event viewer in the given "container" Viewport Container.
 		 * The Active Event viewer allows you to see all events in the system, and also
 		 * execute arbitrary events with nodes as arguments
