@@ -17,6 +17,14 @@
 
 * Tutorial mode Active Module, which helps guide the user through Magix
 
+* Create a script that show all magix.execute keywords, such that they can
+  be inspected
+
+* ZIPing files, and storing them as BASE64 Encoded values in Nodes
+
+* Saving objects without a key, and having a key automatically assigned
+  and returned to the caller
+
 * Variables in code, such as e.g.; var=>tmp=[Data][Path]
 
 * Criteria in expression, such as e.g.; [Data][Image?[URL].Value=="google.png"]
