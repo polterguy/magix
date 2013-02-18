@@ -41,6 +41,7 @@
     <Compile Include="ExecuteCore.cs" />
     <Compile Include="EventCore.cs" />
     <Compile Include="Helper.cs" />
+    <Compile Include="FileSystem.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
