@@ -98,12 +98,12 @@ are being correctly re-mapped.
 			{
 				e.Params["event:magix.execute"].Value = null;
 				e.Params["inspect"].Value = @"Creates an external override towards the given 
-""URL"". The event overridden is found in ""event"". If you pass
+""URL"". The event overridden is found as Value. If you pass
 in a null value as a URL, or no URL node, the override is removed.
 Please make sure the other side has marked the active event as
 remotable.";
-				e.Params["override-remotely"].Value = "magix.namespace.foo";
-				e.Params["override-remotely"]["URL"].Value = "http://127.0.0.1:8080";
+				e.Params["tunnel"].Value = "magix.namespace.foo";
+				e.Params["tunnel"]["URL"].Value = "http://127.0.0.1:8080";
 				return;
 			}
 
@@ -119,7 +119,6 @@ remotable.";
 
 			if (url == null)
 			{
-				ActiveEvents.Instance.RemoveRemoteOverride(evt);
 				lock (typeof(Node))
 				{
 					using (IObjectContainer db = Db4oFactory.OpenFile(_dbFile))
@@ -127,26 +126,16 @@ remotable.";
 						db.Ext ().Configure ().UpdateDepth (1000);
 						db.Ext ().Configure ().ActivationDepth (1000);
 
-						bool found = false;
 						foreach (RemoteOverrides idx in db.QueryByExample (new RemoteOverrides()))
 						{
 							if (evt == idx.Key)
 							{
-								idx.Url = url;
-								db.Store (idx);
-								found = true;
-								break;
+								db.Delete (idx);
 							}
 						}
-						if (!found)
-						{
-							RemoteOverrides nEvt = new RemoteOverrides();
-							nEvt.Key = evt;
-							db.Store (nEvt);
-						}
 						db.Commit ();
-						ActiveEvents.Instance.OverrideRemotely(evt, url);
 					}
+					ActiveEvents.Instance.RemoveRemotable (evt);
 				}
 			}
 			else
@@ -164,6 +153,8 @@ remotable.";
 							if (evt == idx.Key)
 							{
 								found = true;
+								idx.Url = url;
+								db.Store (idx);
 								break;
 							}
 						}
@@ -171,6 +162,7 @@ remotable.";
 						{
 							RemoteOverrides nEvt = new RemoteOverrides();
 							nEvt.Key = evt;
+							nEvt.Url = url;
 							db.Store (nEvt);
 						}
 						db.Commit ();
@@ -192,7 +184,7 @@ remotable.";
 				e.Params["event:magix.execute"].Value = null;
 				e.Params["inspect"].Value = @"Allows the given Value event
 to be remotely invoked.";
-				e.Params["allow-remotely"].Value = "magix.namespace.foo";
+				e.Params["open"].Value = "magix.namespace.foo";
 				return;
 			}
 
@@ -201,7 +193,7 @@ to be remotely invoked.";
 				ip = e.Params["_ip"].Value as Node;
 
 			if (ip.Get<string>("") == string.Empty)
-				throw new ArgumentException("magix.execute.override-remotely needs event parameter to know which event to raise externally");
+				throw new ArgumentException("magix.execute.open needs event parameter to know which event to raise externally");
 
 			string evt = ip.Get<string>();
 
@@ -228,6 +220,49 @@ to be remotely invoked.";
 				db.Commit ();
 				ActiveEvents.Instance.MakeRemotable (evt);
 			}
+		}
+
+		/**
+		 * Allows an event to NOT be remotly invoked within your system
+		 */
+		[ActiveEvent(Name = "magix.execute.close")]
+		public static void magix_execute_close (object sender, ActiveEventArgs e)
+		{
+			if (e.Params.Contains ("inspect") &&
+			    e.Params["inspect"].Get<string>("") == "")
+			{
+				e.Params["event:magix.execute"].Value = null;
+				e.Params["inspect"].Value = @"Allows the given Value event
+to NOT be remotely invoked. Opposite of ""open"".";
+				e.Params["close"].Value = "magix.namespace.foo";
+				return;
+			}
+
+			Node ip = e.Params;
+			if (e.Params.Contains ("_ip"))
+				ip = e.Params["_ip"].Value as Node;
+
+			if (ip.Get<string>("") == string.Empty)
+				throw new ArgumentException("magix.execute.open needs event parameter to know which event to raise externally");
+
+			string evt = ip.Get<string>();
+
+			using (IObjectContainer db = Db4oFactory.OpenFile(_dbFile))
+			{
+				db.Ext ().Configure ().UpdateDepth (1000);
+				db.Ext ().Configure ().ActivationDepth (1000);
+
+				foreach (OpenEvents idx in db.QueryByExample (new OpenEvents()))
+				{
+					if (evt == idx.Key)
+					{
+						db.Delete (idx);
+						break;
+					}
+				}
+				db.Commit ();
+			}
+			ActiveEvents.Instance.RemoveRemotable (evt);
 		}
 
 		/**

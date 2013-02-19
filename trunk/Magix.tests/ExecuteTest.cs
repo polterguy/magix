@@ -59,10 +59,10 @@ unless the ""set"" operation executed successfully.";
 
 			tmp["Data"].Value = "not-set";
 			tmp["if"].Value = "[Data].Value==not-set";
-			tmp["if"]["function"].Value = "foo.bar";
-			tmp["if"]["function"]["code"]["Data"].Value = "not-set";
-			tmp["if"]["function"]["code"]["set"].Value = "[Data].Value";
-			tmp["if"]["function"]["code"]["set"]["value"].Value = "new-value";
+			tmp["if"]["event"].Value = "foo.bar";
+			tmp["if"]["event"]["code"]["Data"].Value = "not-set";
+			tmp["if"]["event"]["code"]["set"].Value = "[Data].Value";
+			tmp["if"]["event"]["code"]["set"]["value"].Value = "new-value";
 			tmp["if"]["foo.bar"].Value = null;
 
 			if (e.Params.Contains ("inspect"))
@@ -690,22 +690,22 @@ functions as it should.";
 		}
 
 		/**
-		 * Tests to see if create "function", and invoking it later, works
+		 * Tests to see if create "event", and invoking it later, works
 		 */
-		[ActiveEvent(Name = "magix.test.function-invoke")]
-		public void magix_test_function_invoke (object sender, ActiveEventArgs e)
+		[ActiveEvent(Name = "magix.test.event-invoke")]
+		public void magix_test_event_invoke (object sender, ActiveEventArgs e)
 		{
 			Node tmp = new Node();
 
-			tmp["function"].Value = "foo.bar";
-			tmp["function"]["code"]["Data"].Value = "howdy";
-			tmp["function"]["code"]["set"].Value = "[Data].Value";
+			tmp["event"].Value = "foo.bar";
+			tmp["event"]["code"]["Data"].Value = "howdy";
+			tmp["event"]["code"]["set"].Value = "[Data].Value";
 			tmp["foo.bar"].Value = null;
 
 			if (e.Params.Contains ("inspect"))
 			{
 				e.Params.Clear ();
-				e.Params["inspect"].Value = @"Checks to see if function
+				e.Params["inspect"].Value = @"Checks to see if ""event""
 functions as it should.";
 				e.Params.AddRange (tmp);
 				return;
@@ -732,22 +732,22 @@ functions as it should.";
 		}
 
 		/**
-		 * Tests to see if "remove-function", works
+		 * Tests to see if "remove-event", works
 		 */
-		[ActiveEvent(Name = "magix.test.remove-function")]
-		public void magix_test_remove_function (object sender, ActiveEventArgs e)
+		[ActiveEvent(Name = "magix.test.remove-event")]
+		public void magix_test_remove_event (object sender, ActiveEventArgs e)
 		{
 			Node tmp = new Node();
 
-			tmp["function"].Value = "foo.bar";
-			tmp["function"]["code"]["Data"].Value = "howdy";
-			tmp["function"]["code"]["set"].Value = "[Data].Value";
-			tmp["remove-function"].Value = "foo.bar";
+			tmp["event"].Value = "foo.bar";
+			tmp["event"]["code"]["Data"].Value = "howdy";
+			tmp["event"]["code"]["set"].Value = "[Data].Value";
+			tmp["remove-event"].Value = "foo.bar";
 
 			if (e.Params.Contains ("inspect"))
 			{
 				e.Params.Clear ();
-				e.Params["inspect"].Value = @"Checks to see if remove-function
+				e.Params["inspect"].Value = @"Checks to see if remove-event
 functions as it should.";
 				e.Params.AddRange (tmp);
 				return;
@@ -762,29 +762,29 @@ functions as it should.";
 				if (idx == "foo.bar")
 				{
 					throw new ApplicationException(
-						"Failure of executing remove-function statement");
+						"Failure of executing remove-event statement");
 				}
 			}
 		}
 
 		/**
-		 * Tests to see if create "function", and invoking it later, works
+		 * Tests to see if create "event", and invoking it later, works
 		 */
-		[ActiveEvent(Name = "magix.test.remote-function-invoke")]
-		public void magix_test_remote_function_invoke (object sender, ActiveEventArgs e)
+		[ActiveEvent(Name = "magix.test.remote-event-invoke")]
+		public void magix_test_remote_event_invoke (object sender, ActiveEventArgs e)
 		{
 			Node tmp = new Node();
 
-			tmp["function"].Value = "foo.bar";
-			tmp["function"]["remotable"].Value = true;
-			tmp["function"]["code"]["Data"].Value = "howdy";
+			tmp["event"].Value = "foo.bar";
+			tmp["event"]["remotable"].Value = true;
+			tmp["event"]["code"]["Data"].Value = "howdy";
 			tmp["remote"]["URL"].Value = "http://127.0.0.1:8080";
 			tmp["remote"].Value = "foo.bar";
 
 			if (e.Params.Contains ("inspect"))
 			{
 				e.Params.Clear ();
-				e.Params["inspect"].Value = @"Checks to see if function
+				e.Params["inspect"].Value = @"Checks to see if event
 functions as it should.";
 				e.Params.AddRange (tmp);
 				return;
@@ -802,24 +802,24 @@ functions as it should.";
 		}
 
 		/**
-		 * Tests to see if create non-remotable "function", and invoking it later remotely, throws
+		 * Tests to see if create non-remotable "event", and invoking it later remotely, throws
 		 */
 		[ActiveEvent(Name = "magix.test.non-remotely-remotely-activated-throws")]
 		public void magix_test_non_remotely_remotely_activated_throws (object sender, ActiveEventArgs e)
 		{
 			Node tmp = new Node();
 
-			tmp["function"]["event"].Value = "foo.bar";
-			tmp["function"]["remotable"].Value = false;
-			tmp["function"]["code"]["Data"].Value = "howdy";
+			tmp["event"].Value = "foo.bar";
+			tmp["event"]["remotable"].Value = false;
+			tmp["event"]["code"]["Data"].Value = "howdy";
 			tmp["remote"]["URL"].Value = "http://127.0.0.1:8080";
 			tmp["remote"]["event"].Value = "foo.bar";
 
 			if (e.Params.Contains ("inspect"))
 			{
 				e.Params.Clear ();
-				e.Params["inspect"].Value = @"Checks to see if function
-created as a non-remotable function, 
+				e.Params["inspect"].Value = @"Checks to see if event
+created as a non-remotable event, 
 functions as it should, and throws
 when remotely activated.";
 				e.Params.AddRange (tmp);
@@ -840,23 +840,23 @@ when remotely activated.";
 		}
 
 		/**
-		 * Tests to see if create default "function", and invoking it later remotely, throws
+		 * Tests to see if create default "event", and invoking it later remotely, throws
 		 */
-		[ActiveEvent(Name = "magix.test.default-function-remotely-activated-throws")]
-		public void magix_test_default_function_remotely_activated_throws (object sender, ActiveEventArgs e)
+		[ActiveEvent(Name = "magix.test.default-event-remotely-activated-throws")]
+		public void magix_test_default_event_remotely_activated_throws (object sender, ActiveEventArgs e)
 		{
 			Node tmp = new Node();
 
-			tmp["function"]["event"].Value = "foo.bar";
-			tmp["function"]["code"]["Data"].Value = "howdy";
+			tmp["event"].Value = "foo.bar";
+			tmp["event"]["code"]["Data"].Value = "howdy";
 			tmp["remote"]["URL"].Value = "http://127.0.0.1:8080";
 			tmp["remote"]["event"].Value = "foo.bar";
 
 			if (e.Params.Contains ("inspect"))
 			{
 				e.Params.Clear ();
-				e.Params["inspect"].Value = @"Checks to see if function
-created as a default function, 
+				e.Params["inspect"].Value = @"Checks to see if event
+created as a default event, 
 functions as it should, and 
 throws when invoked remotely.";
 				e.Params.AddRange (tmp);

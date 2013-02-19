@@ -1,9 +1,9 @@
 Method: magix.execute
 
 inspect=>@"Demonstrates how to create one
-new dynamic function called ""foo.bar"", and invoke it."
+new dynamic Active Event called ""foo.bar"", and invoke it."
 
-function
+event
   event=>foo.bar
   code
     Value1=>thomas

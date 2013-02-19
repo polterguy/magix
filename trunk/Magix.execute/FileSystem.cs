@@ -19,16 +19,16 @@ namespace Magix.execute
 		/**
 		 * Loads a file from disc, relatively from the root of the web application
 		 */
-		[ActiveEvent(Name = "magix.execute.load-file")]
-		public static void magix_execute_load_file (object sender, ActiveEventArgs e)
+		[ActiveEvent(Name = "magix.file.load")]
+		public static void magix_file_load (object sender, ActiveEventArgs e)
 		{
 			if (e.Params.Contains ("inspect"))
 			{
 				e.Params["event:magix.execute"].Value = null;
-				e.Params["load-file"].Value = "ExecuteScripts/TODO.txt";
+				e.Params["magix.file.load"].Value = "ExecuteScripts/TODO.txt";
 				e.Params["inspect"].Value = @"Loads a file into the 
 ""file"" node. The file to load is 
-given as Value of the load-file Node.";
+given as Value of the file Node.";
 				return;
 			}
 
@@ -38,7 +38,7 @@ given as Value of the load-file Node.";
 
 			string file = ip.Get<string>();
 			if (string.IsNullOrEmpty (file))
-				throw new ArgumentException("You need to define which file to load, as Value of the load-file Node");
+				throw new ArgumentException("You need to define which file to load, as Value of the load Node");
 
 			using (TextReader reader = File.OpenText (HttpContext.Current.Server.MapPath (file)))
 			{
@@ -49,15 +49,14 @@ given as Value of the load-file Node.";
 		/**
 		 * Saves a file to disc, relatively from the root of the web application
 		 */
-		[ActiveEvent(Name = "magix.execute.save-file")]
-		[ActiveEvent(Name = "magix.execute.delete-file")]
-		public static void magix_execute_save_file (object sender, ActiveEventArgs e)
+		[ActiveEvent(Name = "magix.file.save")]
+		public static void magix_file_save_file (object sender, ActiveEventArgs e)
 		{
 			if (e.Params.Contains ("inspect"))
 			{
 				e.Params["event:magix.execute"].Value = null;
-				e.Params["save-file"].Value = "ExecuteScripts/TODO.txt";
-				e.Params["save-file"]["file"].Value = @"Contents that will replace the contents
+				e.Params["magix.file.save"].Value = "ExecuteScripts/TODO.txt";
+				e.Params["magix.file.save"]["file"].Value = @"Contents that will replace the contents
 in the existing file, alternatively become the 
 contents of a new file.";
 				e.Params["inspect"].Value = @"Saves a file from the 
@@ -76,7 +75,7 @@ at all, any existing file will simply be deleted.";
 
 			string file = ip.Get<string>();
 			if (string.IsNullOrEmpty (file))
-				throw new ArgumentException("You need to define which file to load, as Value of the load-file Node");
+				throw new ArgumentException("You need to define which file to save, as Value of the save Node");
 
 			if (!ip.Contains ("file") || ip["file"].Get<string>("") == "")
 			{

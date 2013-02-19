@@ -1,9 +1,9 @@
 Method:magix.execute
 
-inspect=>@"Shows how to call, and create, a function 
+inspect=>@"Shows how to call, and create, an event 
 on a remote server"
 
-function
+event
   event=>foo.bar
   remotable=>True
   code
