@@ -18,8 +18,8 @@ namespace Magix.tests
 		/**
 		 * Will run all Unit Tests in the system
 		 */
-		[ActiveEvent(Name = "magix.tests.run-tests")]
-		public void magix_tests_run_tests (object sender, ActiveEventArgs e)
+		[ActiveEvent(Name = "magix.tests.run")]
+		public void magix_tests_run (object sender, ActiveEventArgs e)
 		{
 			if (e.Params.Contains ("inspect"))
 			{

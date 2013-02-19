@@ -742,7 +742,7 @@ functions as it should.";
 			tmp["event"].Value = "foo.bar";
 			tmp["event"]["code"]["Data"].Value = "howdy";
 			tmp["event"]["code"]["set"].Value = "[Data].Value";
-			tmp["remove-event"].Value = "foo.bar";
+			tmp.Add (new Node("event", "foo.bar"));
 
 			if (e.Params.Contains ("inspect"))
 			{
