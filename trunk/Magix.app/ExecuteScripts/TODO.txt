@@ -39,6 +39,10 @@
 
 * Turning "dynamic" code, into C# code, somehow ...
 
+* "wait" keyword, which waits for all threads created underneath to finish, somehow ...
+
+* "send-email" keyword
+
 * Saving objects without a key, and having a key automatically assigned
   and returned to the caller
 
