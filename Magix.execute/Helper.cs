@@ -8,8 +8,6 @@ using System;
 using System.Web;
 using Magix.Core;
 using Magix.UX.Builder;
-using Db4objects.Db4o;
-using Db4objects.Db4o.Config;
 
 namespace Magix.execute
 {
