@@ -66,16 +66,17 @@ namespace Magix.execute
 		}
 
 		/**
-		 * Will remove the given "object" with the given "key"
+		 * Will remove the given "object" with the given key found in Value
 		 */
 		[ActiveEvent(Name = "magix.data.remove")]
 		public static void magix_data_remove (object sender, ActiveEventArgs e)
 		{
 			if (e.Params.Contains ("inspect"))
 			{
-				e.Params["key"].Value = "unique-key-id666";
+				e.Params["event:magix.execute"].Value = null;
+				e.Params["remove"].Value = "unique-key-id666";
 				e.Params["inspect"].Value = @"Will remove the object
-with the given ""key"".";
+with the given Key found in Value.";
 				return;
 			}
 
@@ -83,15 +84,14 @@ with the given ""key"".";
 			if (e.Params.Contains ("_ip"))
 				ip = e.Params ["_ip"].Value as Node;
 
-			if (!ip.Contains ("key") || 
-			    string.IsNullOrEmpty (ip["key"].Get<string>()))
+			if (string.IsNullOrEmpty (ip.Get<string>()))
 				throw new ArgumentException("Missing 'key' while trying to remove object");
 
 			lock (typeof(Node))
 			{
 				using (IObjectContainer db = Db4oFactory.OpenFile(_dbFile))
 				{
-					string key = ip["key"].Get<string>();
+					string key = ip.Get<string>();
 					db.Delete (new Storage(null, key));
 					db.Commit ();
 				}
@@ -99,16 +99,16 @@ with the given ""key"".";
 		}
 
 		/**
-		 * Will save the given "object" with the given "key"
+		 * Will save the given "object" with the given key found in Value
 		 */
 		[ActiveEvent(Name = "magix.data.save")]
 		public static void magix_data_save (object sender, ActiveEventArgs e)
 		{
 			if (e.Params.Contains ("inspect"))
 			{
-				e.Params["key"].Value = "unique-key-id666";
-				e.Params["object"].Value = "nodes from here and down will be saved";
-				e.Params["object"]["message"].Value = "Use either 'object' node!!";
+				e.Params["save"].Value = "unique-key-id666";
+				e.Params["save"]["object"].Value = "nodes from here and down will be saved";
+				e.Params["save"]["object"]["message"].Value = "Use either 'object' node!!";
 				e.Params["inspect"].Value = @"Will save the given given ""object"" node, 
 which should be an expression, pointing to
 a node, which will become saved in its entirety.";
@@ -119,9 +119,8 @@ a node, which will become saved in its entirety.";
 				value = e.Params["object"];
 			else
 				throw new ArgumentException("object must be defined before calling magix.data.save");
-			if (!e.Params.Contains ("key") || 
-			    string.IsNullOrEmpty (e.Params["key"].Get<string>()))
-				throw new ArgumentException("Missing 'key' while trying to store object");
+			if (string.IsNullOrEmpty (e.Params.Get<string>()))
+				throw new ArgumentException("Missing Value while trying to store object");
 			Node parent = value.Parent;
 			value.SetParent(null);
 			new DeterministicExecutor(
@@ -133,7 +132,7 @@ a node, which will become saved in its entirety.";
 						{
 							db.Ext ().Configure ().UpdateDepth (1000);
 							db.Ext ().Configure ().ActivationDepth (1000);
-							string key = e.Params["key"].Get<string>();
+							string key = e.Params.Get<string>();
 							bool found = false;
 							foreach (Storage idx in db.QueryByExample (new Storage(null, key)))
 							{
@@ -158,7 +157,7 @@ a node, which will become saved in its entirety.";
 		}
 
 		/**
-		 * Will load the given "key" or "prototype". If you use key, this is the same
+		 * Will load the given Key found from Value, or "prototype". If you use key, this is the same
 		 * key the object was stored with. If you use "prototype", then this will 
 		 * serve as a tree which must be present in the saved object for it to return 
 		 * a match
@@ -168,22 +167,20 @@ a node, which will become saved in its entirety.";
 		{
 			if (e.Params.Contains ("inspect"))
 			{
-				e.Params["key"].Value = "unique-key-of-object-to-load";
-				e.Params["prototype"].Value = "optional parameter, being a 'query object' which the returned object must match";
+				e.Params["load"].Value = "unique-key-of-object-to-load";
+				e.Params["load"]["prototype"].Value = "optional parameter, being a 'query object' which the returned object must match";
 				e.Params["inspect"].Value = @"Will load the object from the data storage
 with the given ""key"" node into the ""object"" child return node.";
 				return;
 			}
-			Node context = null;
 			Node prototype = null;
-			context = e.Params["object"];
 			if (e.Params.Contains ("prototype"))
 			{
 				prototype = e.Params["prototype"];
 			}
 			string key = null;
-			if (e.Params.Contains ("key"))
-				key = e.Params["key"].Get<string>();
+			if (e.Params.Get<string>("") != string.Empty)
+				key = e.Params.Get<string>();
 			lock (typeof(Node))
 			{
 				using (IObjectContainer db = Db4oFactory.OpenFile(_dbFile))
@@ -202,9 +199,7 @@ with the given ""key"" node into the ""object"" child return node.";
 					if (objects.Count > 0)
 					{
 						Storage idx = objects[0];
-						context.ReplaceChildren (idx.Node);
-						context.Value = idx.Node.Value;
-						context.Name = idx.Node.Name;
+						e.Params["object"].ReplaceChildren (idx.Node);
 						return;
 					}
 				}

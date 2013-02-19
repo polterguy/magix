@@ -679,7 +679,8 @@ results might be experienced.";
 
 			// Unless we're given at least one parameter underneath our Instruction Pointer,
 			// we pass in the Data-Pointer by default to the Active Event ...
-			if (ip.Count == 0)
+			// But only if event is being "raised" and not directly referenced ...
+			if (ip.Count == 0 && ip.Name == "raise")
 				pars = dp;
 
 			bool forceNoOverride = false;

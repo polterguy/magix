@@ -19,11 +19,79 @@ namespace Magix.execute
 	 */
 	public class RemotingCore : ActiveController
 	{
+		private static string _dbFile = "store.db4o";
+
+		public class RemoteOverrides
+		{
+			private string _key;
+			private string _url;
+
+			public string Key
+			{
+				get { return _key; }
+				set { _key = value; }
+			}
+
+			public string Url
+			{
+				get { return _url; }
+				set { _url = value; }
+			}
+		}
+
+		public class OpenEvents
+		{
+			private string _key;
+
+			public string Key
+			{
+				get { return _key; }
+				set { _key = value; }
+			}
+		}
+
+		/**
+		 * Handled to make sure we map our overridden magix.execute events during
+		 * app startup
+		 */
+		[ActiveEvent(Name = "magix.core.application-startup")]
+		public static void magix_core_application_startup (object sender, ActiveEventArgs e)
+		{
+			if (e.Params.Contains ("inspect"))
+			{
+				e.Params["initial-startup-of-process"].Value = null;
+				e.Params["inspect"].Value = @"Called during startup
+of application to make sure our Active Events, 
+which are dynamically remotely overridden
+are being correctly re-mapped. 
+""initial-startup-of-process"" must exists to run event.";
+				return;
+			}
+			lock (typeof(Node))
+			{
+				using (IObjectContainer db = Db4oFactory.OpenFile(_dbFile))
+				{
+					db.Ext ().Configure ().UpdateDepth (1000);
+					db.Ext ().Configure ().ActivationDepth (1000);
+
+					foreach (RemoteOverrides idx in db.QueryByExample (new RemoteOverrides()))
+					{
+						ActiveEvents.Instance.OverrideRemotely (idx.Key, idx.Url);
+					}
+
+					foreach (OpenEvents idx in db.QueryByExample (new OpenEvents()))
+					{
+						ActiveEvents.Instance.MakeRemotable (idx.Key);
+					}
+				}
+			}
+		}
+
 		/**
 		 * Creates a remote override for any active event in your system
 		 */
-		[ActiveEvent(Name = "magix.execute.override-remotely")]
-		public static void magix_execute_override_remotely (object sender, ActiveEventArgs e)
+		[ActiveEvent(Name = "magix.execute.tunnel")]
+		public static void magix_execute_tunnel (object sender, ActiveEventArgs e)
 		{
 			if (e.Params.Contains ("inspect") &&
 			    e.Params["inspect"].Get<string>("") == "")
@@ -38,6 +106,7 @@ remotable.";
 				e.Params["override-remotely"]["URL"].Value = "http://127.0.0.1:8080";
 				return;
 			}
+
 			Node ip = e.Params;
 			if (e.Params.Contains ("_ip"))
 				ip = e.Params["_ip"].Value as Node;
@@ -46,23 +115,76 @@ remotable.";
 				throw new ArgumentException("magix.execute.override-remotely needs event parameter to know which event to raise externally");
 
 			string url = ip.Contains ("URL") ? ip["URL"].Get<string>() : null;
-			string evt = ip.Get<string>();
+			string evt = ip.Get<string>("");
 
-			if (ip == null)
+			if (url == null)
 			{
 				ActiveEvents.Instance.RemoveRemoteOverride(evt);
+				lock (typeof(Node))
+				{
+					using (IObjectContainer db = Db4oFactory.OpenFile(_dbFile))
+					{
+						db.Ext ().Configure ().UpdateDepth (1000);
+						db.Ext ().Configure ().ActivationDepth (1000);
+
+						bool found = false;
+						foreach (RemoteOverrides idx in db.QueryByExample (new RemoteOverrides()))
+						{
+							if (evt == idx.Key)
+							{
+								idx.Url = url;
+								db.Store (idx);
+								found = true;
+								break;
+							}
+						}
+						if (!found)
+						{
+							RemoteOverrides nEvt = new RemoteOverrides();
+							nEvt.Key = evt;
+							db.Store (nEvt);
+						}
+						db.Commit ();
+						ActiveEvents.Instance.OverrideRemotely(evt, url);
+					}
+				}
 			}
 			else
 			{
-				ActiveEvents.Instance.OverrideRemotely(evt, url);
+				lock (typeof(Node))
+				{
+					using (IObjectContainer db = Db4oFactory.OpenFile(_dbFile))
+					{
+						db.Ext ().Configure ().UpdateDepth (1000);
+						db.Ext ().Configure ().ActivationDepth (1000);
+
+						bool found = false;
+						foreach (RemoteOverrides idx in db.QueryByExample (new RemoteOverrides()))
+						{
+							if (evt == idx.Key)
+							{
+								found = true;
+								break;
+							}
+						}
+						if (!found)
+						{
+							RemoteOverrides nEvt = new RemoteOverrides();
+							nEvt.Key = evt;
+							db.Store (nEvt);
+						}
+						db.Commit ();
+						ActiveEvents.Instance.OverrideRemotely(evt, url);
+					}
+				}
 			}
 		}
 
 		/**
 		 * Allows an event to be remotly invoked within your system
 		 */
-		[ActiveEvent(Name = "magix.execute.allow-remotely")]
-		public static void magix_execute_allow_remotely (object sender, ActiveEventArgs e)
+		[ActiveEvent(Name = "magix.execute.open")]
+		public static void magix_execute_open (object sender, ActiveEventArgs e)
 		{
 			if (e.Params.Contains ("inspect") &&
 			    e.Params["inspect"].Get<string>("") == "")
@@ -73,6 +195,7 @@ to be remotely invoked.";
 				e.Params["allow-remotely"].Value = "magix.namespace.foo";
 				return;
 			}
+
 			Node ip = e.Params;
 			if (e.Params.Contains ("_ip"))
 				ip = e.Params["_ip"].Value as Node;
@@ -82,7 +205,29 @@ to be remotely invoked.";
 
 			string evt = ip.Get<string>();
 
-			ActiveEvents.Instance.MakeRemotable (evt);
+			using (IObjectContainer db = Db4oFactory.OpenFile(_dbFile))
+			{
+				db.Ext ().Configure ().UpdateDepth (1000);
+				db.Ext ().Configure ().ActivationDepth (1000);
+
+				bool found = false;
+				foreach (OpenEvents idx in db.QueryByExample (new OpenEvents()))
+				{
+					if (evt == idx.Key)
+					{
+						found = true;
+						break;
+					}
+				}
+				if (!found)
+				{
+					RemoteOverrides nEvt = new RemoteOverrides();
+					nEvt.Key = evt;
+					db.Store (nEvt);
+				}
+				db.Commit ();
+				ActiveEvents.Instance.MakeRemotable (evt);
+			}
 		}
 
 		/**
@@ -106,6 +251,7 @@ to be remotely invoked.";
 				e.Params["remote"]["URL"].Value = "http://127.0.0.1:8080";
 				return;
 			}
+
 			Node ip = e.Params;
 			if (e.Params.Contains ("_ip"))
 				ip = e.Params["_ip"].Value as Node;
@@ -113,7 +259,7 @@ to be remotely invoked.";
 			if (!ip.Contains ("URL") || ip["URL"].Get<string>("") == string.Empty)
 				throw new ArgumentException("magix.execute.remote needs URL parameter to know which endpoint to go towards");
 
-			if (ip["event"].Get<string>("") == string.Empty)
+			if (ip.Get<string>("") == string.Empty)
 				throw new ArgumentException("magix.execute.remote needs event parameter to know which event to raise externally");
 
 			string url = ip["URL"].Get<string>();
@@ -129,6 +275,7 @@ to be remotely invoked.";
                 writer.Write("event=" + System.Web.HttpUtility.UrlEncode(evt));
                 writer.Write("&params=" + System.Web.HttpUtility.UrlEncode(ip.ToJSONString()));
             }
+
             using (HttpWebResponse resp = req.GetResponse() as HttpWebResponse)
             {
                 using (StreamReader reader = new StreamReader(resp.GetResponseStream()))

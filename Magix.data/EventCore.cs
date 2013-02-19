@@ -106,16 +106,18 @@ re-mapped. ""initial-startup-of-process"" must exists to run event.";
 			_hasNull = null;
 			if (e.Params.Contains ("inspect"))
 			{
-				e.Params["Data"].Value = "thomas";
-				e.Params["Backup"].Value = "thomas";
-				e.Params["event"].Value = "foo-bar";
-				e.Params["remotable"].Value = true;
-				e.Params["code"]["if"].Value = "[Data].Value==[Backup].Value";
-				e.Params["code"]["if"]["raise"].Value = "magix.viewport.show-message";
-				e.Params["code"]["if"]["raise"]["message"].Value = "Howdy boy!!";
+				e.Params["event:magix.execute"].Value = null;
 				e.Params["inspect"].Value = @"Overrides the active event in ""event""
 with the code in the ""code"" expression. Functions 
 as a ""magix.execute"" keyword.";
+				e.Params["function"].Value = "foo.bar";
+				e.Params["function"]["remotable"].Value = true;
+				e.Params["function"]["code"]["Data"].Value = "thomas";
+				e.Params["function"]["code"]["Backup"].Value = "thomas";
+				e.Params["function"]["code"]["if"].Value = "[Data].Value==[Backup].Value";
+				e.Params["function"]["code"]["if"]["magix.viewport.show-message"].Value = null;
+				e.Params["function"]["code"]["if"]["magix.viewport.show-message"]["message"].Value = "Howdy World!!";
+				e.Params["foo.bar"].Value = null;
 				return;
 			}
 			Node ip = e.Params;
@@ -126,7 +128,7 @@ as a ""magix.execute"" keyword.";
 			if (e.Params.Contains ("_dp"))
 				dp = e.Params["_dp"].Value as Node;
 
-			string key = ip["event"].Get<string>("");
+			string key = ip.Get<string>("");
 
 			// If function contains a child node with "code" name it
 			// will use the ip pointer as the place to extract the code.
