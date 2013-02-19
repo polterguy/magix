@@ -41,7 +41,8 @@ namespace Magix.execute
 		[ActiveEvent(Name = "magix.execute.execute")]
 		public static void magix_execute (object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains ("inspect"))
+			if (e.Params.Contains ("inspect") &&
+			    e.Params["inspect"].Get<string>("") == "")
 			{
 				e.Params["event:magix.execute"].Value = null;
 				e.Params["inspect"].Value = @"Executes all the children nodes starting with
