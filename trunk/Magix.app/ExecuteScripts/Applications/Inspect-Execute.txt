@@ -1,0 +1,44 @@
+Method:magix.execute
+
+inspect=>@"Will show a screen of all the 
+execute keywords in the system, and allow
+the user to inspect them by clicking
+them."
+
+magix.admin.get-active-events
+  begins-with=>magix.execute.
+set=>[magix.admin.get-active-events].Name
+  value=>Data
+for-each=>[Data][ActiveEvents]
+  Tpl
+    LinkButton
+      CssClass=>span-7 info
+      Text
+      OnClick
+        void.foo
+          inspect
+        set=>[.ip][..][magix.viewport.show-message][message].Value
+          value=>[.ip][..][0][inspect].Value
+        remove=>[.ip][..][0][inspect]
+        set=>[.ip][..][magix.viewport.show-message][code]
+          value=>[.ip][..][0]
+        magix.viewport.show-message
+          message
+  set=>[.ip][..][Tpl][LinkButton][OnClick][0].Name
+    value=>[.].Value
+  set=>[.ip][..][Tpl][LinkButton][Text].Value
+    value=>[.].Value
+  add=>[/][cf][controls][Panel][controls]
+    value=>[.ip][..][Tpl][LinkButton]
+set=>[cf].Name
+  value=>magix.forms.create-form
+cf
+  form-id=>form1
+  container=>content1
+  controls
+    Label
+      Tag=>h1
+      CssClass=>prepend-top prepend-5 span-19 last
+      Text=>magix.execute keywords in the system
+    Panel=>wrp
+      controls
