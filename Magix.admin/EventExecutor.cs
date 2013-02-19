@@ -27,6 +27,7 @@ namespace Magix.admin
 			if (e.Params.Contains ("inspect"))
 			{
 				e.Params["all"].Value = false;
+				e.Params["begins-with"].Value = "magix.execute.";
 				e.Params["inspect"].Value = @"Will return all the Active Events currently registered
 within the system. Notice that this can CHANGE as the system runs, due to Event Overriding.
 Will return a list of events within the ""ActiveEvents"" node where the Value is the name
@@ -41,18 +42,28 @@ event, where the ""ToolTip"" will contain the original event name. Takes no para
 			bool takeAll = false;
 			if (e.Params.Contains ("all"))
 				takeAll = e.Params["all"].Get<bool>();
+
+			string beginsWith = null;
+			if (e.Params.Contains ("begins-with"))
+				beginsWith = e.Params["begins-with"].Get<string>();
+
 			Node node = e.Params;
 			int idxNo = 0;
 			foreach (string idx in ActiveEvents.Instance.ActiveEventHandlers)
 			{
-				if (!takeAll && idx.StartsWith ("magix.test."))
+				if (!takeAll && string.IsNullOrEmpty (beginsWith) && idx.StartsWith ("magix.test."))
 					continue;
+
 				if (idx.Contains ("."))
 				{
 					string[] splits = idx.Split ('.');
 					if (!takeAll && splits[splits.Length - 1].StartsWith ("_"))
 						continue; // "Hidden" event ...
 				}
+
+				if (!string.IsNullOrEmpty (beginsWith) && !idx.StartsWith (beginsWith))
+					continue;
+
 				if (ActiveEvents.Instance.IsOverrideSystem (idx))
 				{
 					node["ActiveEvents"]["no_" + idxNo.ToString()].Value = string.IsNullOrEmpty (idx) ? "&nbsp;" : idx;

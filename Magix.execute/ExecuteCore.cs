@@ -717,6 +717,45 @@ left hand parts returns a node. Functions as a ""magix.execute"" keyword.";
 		}
 
 		/**
+		 * Adds the given "value" Node to the Value Expression, which must be a Node list
+		 */
+		[ActiveEvent(Name = "magix.execute.add")]
+		public static void magix_execute_add (object sender, ActiveEventArgs e)
+		{
+			if (e.Params.Contains ("inspect"))
+			{
+				e.Params["Data"]["Children"].Value = "Original";
+				e.Params["Data"]["Children1"].Value = "Will be copied";
+				e.Params["add"].Value = "[Data][Children]";
+				e.Params["value"]["value"].Value = "[Data][Children1]";
+				e.Params["inspect"].Value = @"Copies the ""value"" Node and appends
+it into the Node list of the Value of the add Node.";
+				return;
+			}
+			Node ip = e.Params;
+			if (e.Params.Contains ("_ip"))
+				ip = e.Params ["_ip"].Value as Node;
+
+			Node dp = e.Params;
+			if (e.Params.Contains ("_dp"))
+				dp = e.Params["_dp"].Value as Node;
+
+			string left = ip.Get<string>();
+
+			if (!ip.Contains ("value"))
+				throw new ArgumentException("Cannot add a null node, need value Node to declare which node to add");
+
+			string right = ip["value"].Get<string>();
+			Node leftNode = Expressions.GetExpressionValue (left, dp, ip) as Node;
+			Node rightNode = Expressions.GetExpressionValue (right, dp, ip) as Node;
+
+			if (leftNode == null || rightNode == null)
+				throw new ArgumentException("Both Value and 'value' must return an existing Node-List");
+
+			leftNode.Add (rightNode.Clone ());
+		}
+
+		/**
 		 * Removes the node pointed to
 		 * in the Value of the "remove" node, which is expected to be a Node Expression,
 		 * returning a node list. Functions as a "magix.executor" keyword

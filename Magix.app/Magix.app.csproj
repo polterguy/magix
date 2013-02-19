@@ -171,5 +171,6 @@
     <None Include="ExecuteScripts\Applications\Inspect-Events.txt" />
     <None Include="ExecuteScripts\Applications\Inspect-Unit-Tests.txt" />
     <None Include="ExecuteScripts\Tutorials\Self-Modifying-Code.txt" />
+    <None Include="ExecuteScripts\Applications\Inspect-Execute.txt" />
   </ItemGroup>
 </Project>
