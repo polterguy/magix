@@ -5,14 +5,14 @@ unit tests in the system, and allow
 the user to inspect them by clicking
 them."
 
-magix.tests.run-tests
-set=>[magix.tests.run-tests].Name
+magix.tests.run
+set=>[magix.tests.run].Name
   value=>Data
 if=>[/][Data][summary][success].Value!=True
   magix.viewport.show-message
     color=>Red
     message=>@"Couldn't show Unit Test form, 
-one of your tests failed. Run ""magix.tests.run-tests"" to 
+one of your tests failed. Run ""magix.tests.run"" to 
 figure out which."
     header=>Error ...
 else

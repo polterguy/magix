@@ -1,42 +1,17 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Magix.app/ExecuteScripts/Applications/Inspect-Events.txt">
-    <Files>
-      <File FileName="Magix.app/ExecuteScripts/Applications/Inspect-Events.txt" Line="10" Column="1" />
-      <File FileName="Magix.app/ExecuteScripts/Applications/Address-Book.txt" Line="120" Column="22" />
-      <File FileName="Magix.viewports/Website.ascx.cs" Line="66" Column="20" />
-      <File FileName="Magix.admin/CodeHelper.cs" Line="23" Column="58" />
-      <File FileName="Magix.admin/EventExecutor.cs" Line="40" Column="5" />
-      <File FileName="Magix.execute/ExecuteCore.cs" Line="634" Column="41" />
-      <File FileName="Magix.execute/EventCore.cs" Line="205" Column="1" />
-      <File FileName="Magix.tests/ExecuteTest.cs" Line="975" Column="1" />
-      <File FileName="Magix.threading/ThreadingCore.cs" Line="33" Column="21" />
-    </Files>
+  <MonoDevelop.Ide.Workbench>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
-          <Node name="Magix.admin" expanded="True" />
-          <Node name="Magix.app" expanded="True">
-            <Node name="ExecuteScripts" expanded="True">
-              <Node name="Applications" expanded="True">
-                <Node name="Inspect-Events.txt" selected="True" />
-              </Node>
-              <Node name="Tutorials" expanded="True" />
-            </Node>
-          </Node>
-          <Node name="Magix.execute" expanded="True" />
-          <Node name="Magix.tests" expanded="True" />
-          <Node name="Magix.threading" expanded="True" />
-          <Node name="Magix.viewports" expanded="True" />
+          <Node name="Magix.threading" selected="True" />
         </State>
       </Pad>
       <Pad Id="ClassPad">
         <State expanded="True" selected="True" />
       </Pad>
       <Pad Id="MonoDevelop.Debugger.WatchPad">
-        <State>
-          <Value>tmp</Value>
-        </State>
+        <State />
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
