@@ -59,7 +59,7 @@ unless the ""set"" operation executed successfully.";
 
 			tmp["Data"].Value = "not-set";
 			tmp["if"].Value = "[Data].Value==not-set";
-			tmp["if"]["function"]["event"].Value = "foo.bar";
+			tmp["if"]["function"].Value = "foo.bar";
 			tmp["if"]["function"]["code"]["Data"].Value = "not-set";
 			tmp["if"]["function"]["code"]["set"].Value = "[Data].Value";
 			tmp["if"]["function"]["code"]["set"]["value"].Value = "new-value";
@@ -697,9 +697,9 @@ functions as it should.";
 		{
 			Node tmp = new Node();
 
-			tmp["function"]["event"].Value = "foo.bar";
+			tmp["function"].Value = "foo.bar";
 			tmp["function"]["code"]["Data"].Value = "howdy";
-			tmp["function"]["code"]["set"].Value = "[.ip][..][Data].Value";
+			tmp["function"]["code"]["set"].Value = "[Data].Value";
 			tmp["foo.bar"].Value = null;
 
 			if (e.Params.Contains ("inspect"))
@@ -739,9 +739,9 @@ functions as it should.";
 		{
 			Node tmp = new Node();
 
-			tmp["function"]["event"].Value = "foo.bar";
+			tmp["function"].Value = "foo.bar";
 			tmp["function"]["code"]["Data"].Value = "howdy";
-			tmp["function"]["code"]["set"].Value = "[.ip][..][Data].Value";
+			tmp["function"]["code"]["set"].Value = "[Data].Value";
 			tmp["remove-function"].Value = "foo.bar";
 
 			if (e.Params.Contains ("inspect"))
@@ -775,11 +775,11 @@ functions as it should.";
 		{
 			Node tmp = new Node();
 
-			tmp["function"]["event"].Value = "foo.bar";
+			tmp["function"].Value = "foo.bar";
 			tmp["function"]["remotable"].Value = true;
 			tmp["function"]["code"]["Data"].Value = "howdy";
 			tmp["remote"]["URL"].Value = "http://127.0.0.1:8080";
-			tmp["remote"]["event"].Value = "foo.bar";
+			tmp["remote"].Value = "foo.bar";
 
 			if (e.Params.Contains ("inspect"))
 			{
@@ -883,12 +883,12 @@ throws when invoked remotely.";
 		{
 			Node tmp = new Node();
 
-			tmp["magix.data.remove"]["key"].Value = "fork-test-buffer-object";
+			tmp["magix.data.remove"].Value = "fork-test-buffer-object";
 			tmp["fork"]["Buffer"].Value = null;
-			tmp["fork"]["magix.data.save"]["key"].Value = "fork-test-buffer-object";
+			tmp["fork"]["magix.data.save"].Value = "fork-test-buffer-object";
 			tmp["fork"]["magix.data.save"]["object"]["Value"].Value = "thomas";
 			tmp["sleep"].Value = 500;
-			tmp["magix.data.load"]["key"].Value = "fork-test-buffer-object";
+			tmp["magix.data.load"].Value = "fork-test-buffer-object";
 
 			if (e.Params.Contains ("inspect"))
 			{
@@ -918,14 +918,14 @@ functions as it should.";
 		{
 			Node tmp = new Node();
 
-			tmp["magix.data.remove"]["key"].Value = "data-save-test";
-			tmp["execute"]["magix.data.load"]["key"].Value = "data-save-test";
+			tmp["magix.data.remove"].Value = "data-save-test";
+			tmp["execute"]["magix.data.load"].Value = "data-save-test";
 			tmp["execute"]["if"].Value = "[execute][magix.data.load][object]";
 			tmp["execute"]["if"]["throw"].Value = "Object didn't delete";
 			tmp["Buffer"].Value = null;
-			tmp["magix.data.save"]["key"].Value = "data-save-test";
+			tmp["magix.data.save"].Value = "data-save-test";
 			tmp["magix.data.save"]["object"]["Value"].Value = "thomas";
-			tmp["magix.data.load"]["key"].Value = "data-save-test";
+			tmp["magix.data.load"].Value = "data-save-test";
 
 			if (e.Params.Contains ("inspect"))
 			{
