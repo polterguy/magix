@@ -89,7 +89,7 @@ namespace Magix.admin
 			if (txtIn.Text != "")
 			{
 				string wholeTxt = txtIn.Text;
-				if (wholeTxt.StartsWith ("Method:"))
+				if (wholeTxt.StartsWith ("Method:") || wholeTxt.StartsWith ("event:"))
 				{
 					string method = wholeTxt.Split (':')[1];
 					method = method.Substring (0, method.IndexOf ("\n"));

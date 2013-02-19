@@ -24,6 +24,7 @@ namespace Magix.execute
 		{
 			if (e.Params.Contains ("inspect"))
 			{
+				e.Params["event:magix.execute"].Value = null;
 				e.Params["load-file"].Value = "ExecuteScripts/TODO.txt";
 				e.Params["inspect"].Value = @"Loads a file into the 
 ""file"" node. The file to load is 
@@ -49,13 +50,16 @@ given as Value of the load-file Node.";
 		 * Saves a file to disc, relatively from the root of the web application
 		 */
 		[ActiveEvent(Name = "magix.execute.save-file")]
+		[ActiveEvent(Name = "magix.execute.delete-file")]
 		public static void magix_execute_save_file (object sender, ActiveEventArgs e)
 		{
 			if (e.Params.Contains ("inspect"))
 			{
-				e.Params["load-file"].Value = "ExecuteScripts/TODO.txt";
-				e.Params["load-file"]["file"].Value = @"Contens that will replace the contents
-in the existing file, if any exist.";
+				e.Params["event:magix.execute"].Value = null;
+				e.Params["save-file"].Value = "ExecuteScripts/TODO.txt";
+				e.Params["save-file"]["file"].Value = @"Contents that will replace the contents
+in the existing file, alternatively become the 
+contents of a new file.";
 				e.Params["inspect"].Value = @"Saves a file from the 
 ""file"" node. The file to save is 
 given as Value of the save-file Node.
