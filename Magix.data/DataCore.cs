@@ -92,8 +92,11 @@ with the given Key found in Value.";
 				using (IObjectContainer db = Db4oFactory.OpenFile(_dbFile))
 				{
 					string key = ip.Get<string>();
-					db.Delete (new Storage(null, key));
-					db.Commit ();
+					foreach (Storage idx in db.QueryByExample (new Storage(null, key)))
+					{
+						db.Delete (idx);
+						db.Commit ();
+					}
 				}
 			}
 		}
