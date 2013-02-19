@@ -38,7 +38,6 @@ namespace Magix.execute
 		 * from within a "magix.execute" event code block
 		 */
 		[ActiveEvent(Name = "magix.execute")]
-		[ActiveEvent(Name = "magix.execute.execute")]
 		public static void magix_execute (object sender, ActiveEventArgs e)
 		{
 			if (e.Params.Contains ("inspect") &&
@@ -79,7 +78,7 @@ Data-Pointer of your execution block.";
 			if (e.Params.Contains ("_dp"))
 				dp = e.Params["_dp"].Value as Node;
 
-			// Cheking to see if we've got a "context"
+			// Checking to see if we've got a "context"
 			if (ip.Name == "execute" && 
 				!string.IsNullOrEmpty(ip.Get<string>()))
 			{
@@ -114,6 +113,9 @@ Data-Pointer of your execution block.";
 					{
 						// This is a keyword
 						string eventName = "magix.execute." + nodeName;
+
+						if (nodeName == "execute")
+							eventName = "magix.execute";
 
 						Node tmp = new Node();
 
@@ -595,8 +597,8 @@ or ""else-if"" statement has returned true, executes the underlaying nodes
 as code through ""magix.execute"", expecting them to be keywords to
 the execution engine.";
 				e.Params["if"].Value = "[if].Name==x_if";
-				e.Params["if"]["magix.viewport.show-message"]["message"].Value = "Yup, I'm still sane ...";
-				e.Params["else"]["magix.viewport.show-message"]["message"].Value = "Ohh crap ...";
+				e.Params["if"]["magix.viewport.show-message"]["message"].Value = "Ohh crap ...";
+				e.Params["else"]["magix.viewport.show-message"]["message"].Value = "Yup, I'm still sane ...";
 				return;
 			}
 			Node ip = e.Params;

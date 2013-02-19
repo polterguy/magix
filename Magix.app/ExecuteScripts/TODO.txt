@@ -19,7 +19,7 @@
   be inspected
 
 * Make sure Remote Event are RE-overridden again upon application-startup, just
-  like "functions" do ... [db4o]
+  like "event" do ... [db4o]
 
 * Binary loading and saving of files, using Base64 encoding, which allows
   for transfering DLLs to other servers
@@ -35,9 +35,19 @@
   legal to invoke remotely.
 
 * Event keyword in Dynamic Forms, which can handle Active Events, and
-  treat them as "functions" with code
+  treat them as "event" with code
 
 * Turning "dynamic" code, into C# code, somehow ...
+
+* Do we really need "remove", or can "set" do the same ...?
+
+* "remove-event" and "event" can be merged, and if no code is given, event is removed ...
+
+* Support for Database Transactions ...
+
+* Should "send-email" be in the execute namespace ...
+
+* Should really "raise" send in the Data-Pointer of no parameters are given ...?
 
 * Unit Tests for every single varioation of "if", "else-if", different expressions, node lists, values, names and such ...
 

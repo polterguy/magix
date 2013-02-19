@@ -22,8 +22,8 @@ namespace Magix.execute
 		 * use the configuration found in web.config to determine which SMTP server
 		 * to use
 		 */
-		[ActiveEvent(Name = "magix.execute.send-email")]
-		public static void magix_send_email (object sender, ActiveEventArgs e)
+		[ActiveEvent(Name = "magix.email.send-email")]
+		public static void magix_email_email (object sender, ActiveEventArgs e)
 		{
 			if (e.Params.Contains ("inspect"))
 			{
@@ -31,11 +31,11 @@ namespace Magix.execute
 				e.Params["inspect"].Value = @"Will send the given email to
 the given ""to"" from ""from"". The ""subject"" will
 become subject, and ""body"" the main message.";
-				e.Params["send-email"].Value = null;
-				e.Params["send-email"]["to"].Value = "some-email-address@somewhere.com";
-				e.Params["send-email"]["from"].Value = "some-other-email-address@somewhere-else.com";
-				e.Params["send-email"]["subject"].Value = "Hi there dude!";
-				e.Params["send-email"]["body"].Value = "This is a message I wrote to you ...";
+				e.Params["magix.email.send-email"].Value = null;
+				e.Params["magix.email.send-email"]["to"].Value = "some-email-address@somewhere.com";
+				e.Params["magix.email.send-email"]["from"].Value = "some-other-email-address@somewhere-else.com";
+				e.Params["magix.email.send-email"]["subject"].Value = "Hi there dude!";
+				e.Params["magix.email.send-email"]["body"].Value = "This is a message I wrote to you ...";
 				return;
 			}
 

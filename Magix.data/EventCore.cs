@@ -96,12 +96,12 @@ re-mapped. ""initial-startup-of-process"" must exists to run event.";
 		}
 
 		/**
-		 * Creates a new magix.execute function, which should contain magix.execute keywords,
+		 * Creates a new magix.execute Activ Event, which should contain magix.execute keywords,
 		 * which will be raised when your "event" active event is raised. Submit the code
 		 * in the "code" node
 		 */
-		[ActiveEvent(Name = "magix.execute.function")]
-		public static void magix_execute_function (object sender, ActiveEventArgs e)
+		[ActiveEvent(Name = "magix.execute.event")]
+		public static void magix_execute_event (object sender, ActiveEventArgs e)
 		{
 			_hasNull = null;
 			if (e.Params.Contains ("inspect"))
@@ -110,13 +110,13 @@ re-mapped. ""initial-startup-of-process"" must exists to run event.";
 				e.Params["inspect"].Value = @"Overrides the active event in ""event""
 with the code in the ""code"" expression. Functions 
 as a ""magix.execute"" keyword.";
-				e.Params["function"].Value = "foo.bar";
-				e.Params["function"]["remotable"].Value = true;
-				e.Params["function"]["code"]["Data"].Value = "thomas";
-				e.Params["function"]["code"]["Backup"].Value = "thomas";
-				e.Params["function"]["code"]["if"].Value = "[Data].Value==[Backup].Value";
-				e.Params["function"]["code"]["if"]["magix.viewport.show-message"].Value = null;
-				e.Params["function"]["code"]["if"]["magix.viewport.show-message"]["message"].Value = "Howdy World!!";
+				e.Params["event"].Value = "foo.bar";
+				e.Params["event"]["remotable"].Value = true;
+				e.Params["event"]["code"]["Data"].Value = "thomas";
+				e.Params["event"]["code"]["Backup"].Value = "thomas";
+				e.Params["event"]["code"]["if"].Value = "[Data].Value==[Backup].Value";
+				e.Params["event"]["code"]["if"]["magix.viewport.show-message"].Value = null;
+				e.Params["event"]["code"]["if"]["magix.viewport.show-message"]["message"].Value = "Howdy World!!";
 				e.Params["foo.bar"].Value = null;
 				return;
 			}
@@ -130,58 +130,38 @@ as a ""magix.execute"" keyword.";
 
 			string key = ip.Get<string>("");
 
-			// If function contains a child node with "code" name it
-			// will use the ip pointer as the place to extract the code.
-			// Otherwise it will use the dp pointer, Data Pointer, e.g.
-			// the [.] expression from a for-each, etc as the place
-			// it will expect find 
-			// the serialized code ...
-			// UNLESS it finds a "Context" node, which case that will become the 
-			// place which it will use 
+			// If it finds "code", event will be created, otherwise deleted ...
 			if (ip.Contains ("code"))
 			{
-				dp = ip["code"];
+				dp = ip["code"].Clone ();
 			}
 			else
 			{
-				throw new ArgumentException("function needs code to execute");
+				dp = null;
 			}
-			dp = dp.Clone ();
 
 			bool remotable = false;
 			if (ip.Contains ("remotable"))
 				remotable = ip["remotable"].Get<bool>();
 
-			Node parent = dp.Parent;
-			dp.SetParent(null);
+			Node parent = dp == null ? null : dp.Parent;
+			if (dp != null)
+				dp.SetParent(null);
 			new DeterministicExecutor(
 			delegate
 				{
 					lock (typeof(Node))
 					{
-						using (IObjectContainer db = Db4oFactory.OpenFile(_dbFile))
+						if (dp != null)
 						{
-							db.Ext ().Configure ().UpdateDepth (1000);
-							db.Ext ().Configure ().ActivationDepth (1000);
+							using (IObjectContainer db = Db4oFactory.OpenFile(_dbFile))
+							{
+								db.Ext ().Configure ().UpdateDepth (1000);
+								db.Ext ().Configure ().ActivationDepth (1000);
 
-							bool found = false;
+								bool found = false;
 
-							foreach (Event idx in db.QueryByExample (new Event(null, key, false)))
-							{
-								idx.Node = dp;
-								idx.Remotable = remotable;
-								db.Store (idx);
-								found = true;
-								break;
-							}
-							if (!found)
-							{
-								db.Store (new Event(dp, key, remotable));
-								found = true;
-							}
-							if (!found)
-							{
-								foreach (Event idx in db.QueryByExample (new Event(null, key, true)))
+								foreach (Event idx in db.QueryByExample (new Event(null, key, false)))
 								{
 									idx.Node = dp;
 									idx.Remotable = remotable;
@@ -192,12 +172,41 @@ as a ""magix.execute"" keyword.";
 								if (!found)
 								{
 									db.Store (new Event(dp, key, remotable));
+									found = true;
+								}
+								db.Commit ();
+								ActiveEvents.Instance.CreateEventMapping (key, "magix.execute._active-event-2-code-callback");
+								if (remotable)
+									ActiveEvents.Instance.MakeRemotable (key);
+							}
+							Node node = new Node();
+							node["ActiveEvent"].Value = key;
+							RaiseEvent ("magix.execute._event-overridden", node);
+						}
+						else
+						{
+							// Removing existing event
+							lock (typeof(Node))
+							{
+								using (IObjectContainer db = Db4oFactory.OpenFile(_dbFile))
+								{
+									db.Ext ().Configure ().UpdateDepth (1000);
+									db.Ext ().Configure ().ActivationDepth (1000);
+
+									foreach (Event idx in db.QueryByExample (new Event(null, key, false)))
+									{
+										db.Delete (idx);
+										if (idx.Remotable)
+											ActiveEvents.Instance.RemoveRemotable (idx.Key);
+										break;
+									}
+									db.Commit ();
+									ActiveEvents.Instance.RemoveMapping (key);
 								}
 							}
-							db.Commit ();
-							ActiveEvents.Instance.CreateEventMapping (key, "magix.execute._active-event-2-code-callback");
-							if (remotable)
-								ActiveEvents.Instance.MakeRemotable (key);
+							Node node = new Node();
+							node["ActiveEvent"].Value = e.Params["event"].Get<string>();
+							RaiseEvent ("magix.execute._event-override-removed", node);
 						}
 					}
 				},
@@ -205,60 +214,10 @@ as a ""magix.execute"" keyword.";
 				{
 					dp.SetParent(parent);
 				});
-
-			Node node = new Node();
-			node["ActiveEvent"].Value = key;
-			RaiseEvent ("magix.execute._event-overridden", node);
 		}
 
 		/**
-		 * Remove the given "event" active event event override
-		 */
-		[ActiveEvent(Name = "magix.execute.remove-function")]
-		public static void magix_execute_remove_function (object sender, ActiveEventArgs e)
-		{
-			_hasNull = null;
-			if (e.Params.Contains ("inspect"))
-			{
-				e.Params["event"].Value = "foo-bar";
-				e.Params["inspect"].Value = @"Removes and deletes the active event
-found in the ""event"" child node. Functions as a ""magix.execute"" keyword.";
-				return;
-			}
-
-			Node ip = e.Params;
-			if (e.Params.Contains ("_ip"))
-				ip = e.Params ["_ip"].Value as Node;
-
-			string key = ip.Get<string>();
-			if (key == null)
-				throw new ArgumentException("Cannot remove null function");
-			lock (typeof(Node))
-			{
-				using (IObjectContainer db = Db4oFactory.OpenFile(_dbFile))
-				{
-					db.Ext ().Configure ().UpdateDepth (1000);
-					db.Ext ().Configure ().ActivationDepth (1000);
-
-					foreach (Event idx in db.QueryByExample (new Event(null, key, false)))
-					{
-						db.Delete (idx);
-						if (idx.Remotable)
-							ActiveEvents.Instance.RemoveRemotable (idx.Key);
-						break;
-					}
-					db.Commit ();
-					ActiveEvents.Instance.RemoveMapping (key);
-				}
-			}
-
-			Node node = new Node();
-			node["ActiveEvent"].Value = e.Params["event"].Get<string>();
-			RaiseEvent ("magix.execute._event-override-removed", node);
-		}
-
-		/**
-		 * Null event handler for handling null active event overrides for the function keyword
+		 * Null event handler for handling null active event overrides for the event keyword
 		 * in magix.execute
 		 */
 		[ActiveEvent(Name = "")]
@@ -301,7 +260,7 @@ found in the ""event"" child node. Functions as a ""magix.execute"" keyword.";
 
 		/**
 		 * Handled to make sure we map our serialized active event overrides, the ones
-		 * overridden with the function keyword
+		 * overridden with the event keyword
 		 */
 		[ActiveEvent(Name = "magix.execute._active-event-2-code-callback")]
 		public static void magix_data__active_event_2_code_callback (object sender, ActiveEventArgs e)

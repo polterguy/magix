@@ -18,15 +18,15 @@ namespace Magix.execute
 		/**
 		 * Returns the given Value HTTP parameter as "value"
 		 */
-		[ActiveEvent(Name = "magix.execute.get")]
-		public static void magix_execute_get (object sender, ActiveEventArgs e)
+		[ActiveEvent(Name = "magix.web.get")]
+		public static void magix_web_get (object sender, ActiveEventArgs e)
 		{
 			if (e.Params.Contains ("inspect"))
 			{
 				e.Params["event:magix.execute"].Value = null;
 				e.Params["inspect"].Value = @"Will return the given
 GET HTTP parameter as ""value"" Node.";
-				e.Params["get"].Value = "some-get-parameter";
+				e.Params["magix.web.get"].Value = "some-get-parameter";
 				return;
 			}
 			Node ip = e.Params;
@@ -42,15 +42,15 @@ GET HTTP parameter as ""value"" Node.";
 		/**
 		 * Returns the given Value HTTP cookie as "value"
 		 */
-		[ActiveEvent(Name = "magix.execute.get-cookie")]
-		public static void magix_execute_get_cookie (object sender, ActiveEventArgs e)
+		[ActiveEvent(Name = "magix.web.get-cookie")]
+		public static void magix_web_get_cookie (object sender, ActiveEventArgs e)
 		{
 			if (e.Params.Contains ("inspect"))
 			{
 				e.Params["event:magix.execute"].Value = null;
 				e.Params["inspect"].Value = @"Will return the given
 HTTP cookie parameter as ""value"" Node.";
-				e.Params["get-cookie"].Value = "some-cookie-name";
+				e.Params["magix.web.get-cookie"].Value = "some-cookie-name";
 				return;
 			}
 			Node ip = e.Params;
@@ -66,8 +66,8 @@ HTTP cookie parameter as ""value"" Node.";
 		/**
 		 * Sets the given Value HTTP cookie persistent from "value"
 		 */
-		[ActiveEvent(Name = "magix.execute.set-cookie")]
-		public static void magix_execute_set_cookie (object sender, ActiveEventArgs e)
+		[ActiveEvent(Name = "magix.web.set-cookie")]
+		public static void magix_web_set_cookie (object sender, ActiveEventArgs e)
 		{
 			if (e.Params.Contains ("inspect"))
 			{
@@ -76,9 +76,9 @@ HTTP cookie parameter as ""value"" Node.";
 and existing HTTP Cookie. If no expirationm date 
 is used, a default of three years from now will be
 the default.";
-				e.Params["set-cookie"].Value = "some-cookie-name";
-				e.Params["set-cookie"]["value"].Value = "Something to store into cookie ...";
-				e.Params["set-cookie"]["expires"].Value = DateTime.Now.AddYears (3);
+				e.Params["magix.web.set-cookie"].Value = "some-cookie-name";
+				e.Params["magix.web.set-cookie"]["value"].Value = "Something to store into cookie ...";
+				e.Params["magix.web.set-cookie"]["expires"].Value = DateTime.Now.AddYears (3);
 				return;
 			}
 			Node ip = e.Params;
