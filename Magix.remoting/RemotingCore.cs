@@ -28,24 +28,25 @@ namespace Magix.execute
 			if (e.Params.Contains ("inspect") &&
 			    e.Params["inspect"].Get<string>("") == "")
 			{
+				e.Params["event:magix.execute"].Value = null;
 				e.Params["inspect"].Value = @"Creates an external override towards the given 
 ""URL"". The event overridden is found in ""event"". If you pass
 in a null value as a URL, or no URL node, the override is removed.
 Please make sure the other side has marked the active event as
 remotable.";
-				e.Params["URL"].Value = "http://127.0.0.1:8080";
-				e.Params["event"].Value = "magix.namespace.foo";
+				e.Params["override-remotely"].Value = "magix.namespace.foo";
+				e.Params["override-remotely"]["URL"].Value = "http://127.0.0.1:8080";
 				return;
 			}
 			Node ip = e.Params;
 			if (e.Params.Contains ("_ip"))
 				ip = e.Params["_ip"].Value as Node;
 
-			if (!ip.Contains ("event") || ip["event"].Get<string>("") == string.Empty)
+			if (ip.Get<string>("") == string.Empty)
 				throw new ArgumentException("magix.execute.override-remotely needs event parameter to know which event to raise externally");
 
 			string url = ip.Contains ("URL") ? ip["URL"].Get<string>() : null;
-			string evt = ip["event"].Get<string>();
+			string evt = ip.Get<string>();
 
 			if (ip == null)
 			{
@@ -66,19 +67,20 @@ remotable.";
 			if (e.Params.Contains ("inspect") &&
 			    e.Params["inspect"].Get<string>("") == "")
 			{
-				e.Params["inspect"].Value = @"Allows the given ""event""
+				e.Params["event:magix.execute"].Value = null;
+				e.Params["inspect"].Value = @"Allows the given Value event
 to be remotely invoked.";
-				e.Params["event"].Value = "magix.namespace.foo";
+				e.Params["allow-remotely"].Value = "magix.namespace.foo";
 				return;
 			}
 			Node ip = e.Params;
 			if (e.Params.Contains ("_ip"))
 				ip = e.Params["_ip"].Value as Node;
 
-			if (!ip.Contains ("event") || ip["event"].Get<string>("") == string.Empty)
+			if (ip.Get<string>("") == string.Empty)
 				throw new ArgumentException("magix.execute.override-remotely needs event parameter to know which event to raise externally");
 
-			string evt = ip["event"].Get<string>();
+			string evt = ip.Get<string>();
 
 			ActiveEvents.Instance.MakeRemotable (evt);
 		}
@@ -97,10 +99,11 @@ to be remotely invoked.";
 			if (e.Params.Contains ("inspect") &&
 			    e.Params["inspect"].Get<string>("") == "")
 			{
+				e.Params["event:magix.execute"].Value = null;
 				e.Params["inspect"].Value = @"Remotely invokes an active event on the given 
-""URL"". The event raised is found in ""event"".";
-				e.Params["URL"].Value = "http://127.0.0.1:8080";
-				e.Params["event"].Value = "magix.namespace.foo";
+""URL"". The event raised is found in Value.";
+				e.Params["remote"].Value = "magix.namespace.foo";
+				e.Params["remote"]["URL"].Value = "http://127.0.0.1:8080";
 				return;
 			}
 			Node ip = e.Params;
@@ -110,14 +113,13 @@ to be remotely invoked.";
 			if (!ip.Contains ("URL") || ip["URL"].Get<string>("") == string.Empty)
 				throw new ArgumentException("magix.execute.remote needs URL parameter to know which endpoint to go towards");
 
-			if (!ip.Contains ("event") || ip["event"].Get<string>("") == string.Empty)
+			if (ip["event"].Get<string>("") == string.Empty)
 				throw new ArgumentException("magix.execute.remote needs event parameter to know which event to raise externally");
 
 			string url = ip["URL"].Get<string>();
-			string evt = ip["event"].Get<string>();
+			string evt = ip.Get<string>();
 
-
-            HttpWebRequest req = WebRequest.Create(url) as System.Net.HttpWebRequest;
+			HttpWebRequest req = WebRequest.Create(url) as System.Net.HttpWebRequest;
             req.Method = "POST";
             req.Referer = GetApplicationBaseUrl();
             req.ContentType = "application/x-www-form-urlencoded";
