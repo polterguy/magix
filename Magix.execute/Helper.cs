@@ -23,9 +23,10 @@ namespace Magix.execute
 		{
 			if (e.Params.Contains ("inspect"))
 			{
-				e.Params["get"].Value = "some-get-parameter";
+				e.Params["event:magix.execute"].Value = null;
 				e.Params["inspect"].Value = @"Will return the given
 GET HTTP parameter as ""value"" Node.";
+				e.Params["get"].Value = "some-get-parameter";
 				return;
 			}
 			Node ip = e.Params;
@@ -46,9 +47,10 @@ GET HTTP parameter as ""value"" Node.";
 		{
 			if (e.Params.Contains ("inspect"))
 			{
-				e.Params["get-cookie"].Value = "some-cookie-name";
+				e.Params["event:magix.execute"].Value = null;
 				e.Params["inspect"].Value = @"Will return the given
 HTTP cookie parameter as ""value"" Node.";
+				e.Params["get-cookie"].Value = "some-cookie-name";
 				return;
 			}
 			Node ip = e.Params;
@@ -69,11 +71,14 @@ HTTP cookie parameter as ""value"" Node.";
 		{
 			if (e.Params.Contains ("inspect"))
 			{
+				e.Params["event:magix.execute"].Value = null;
+				e.Params["inspect"].Value = @"Will create or overwrite
+and existing HTTP Cookie. If no expirationm date 
+is used, a default of three years from now will be
+the default.";
 				e.Params["set-cookie"].Value = "some-cookie-name";
 				e.Params["set-cookie"]["value"].Value = "Something to store into cookie ...";
 				e.Params["set-cookie"]["expires"].Value = DateTime.Now.AddYears (3);
-				e.Params["inspect"].Value = @"Will set the given cookie
-to the contents of Value";
 				return;
 			}
 			Node ip = e.Params;

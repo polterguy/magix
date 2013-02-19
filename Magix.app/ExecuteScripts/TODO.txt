@@ -39,7 +39,15 @@
 
 * Turning "dynamic" code, into C# code, somehow ...
 
+* Unit Tests for every single varioation of "if", "else-if", different expressions, node lists, values, names and such ...
+
+* Support deleting currently executing nodes
+
 * "wait" keyword, which waits for all threads created underneath to finish, somehow ...
+
+* Investigate if "set" on Node lists, really does what's intuitive ...?
+
+* Should we add an "add-child" keyword ...?
 
 * "send-email" keyword
 

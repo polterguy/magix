@@ -6,7 +6,7 @@ the user to inspect them by clicking
 them."
 
 magix.admin.get-active-events
-  begins-with=>magix.execute.
+  begins-with=>magix.execute
 set=>[magix.admin.get-active-events].Name
   value=>Data
 for-each=>[Data][ActiveEvents]
@@ -17,11 +17,15 @@ for-each=>[Data][ActiveEvents]
       OnClick
         void.foo
           inspect
-        set=>[.ip][..][magix.viewport.show-message][message].Value
-          value=>[.ip][..][0][inspect].Value
-        remove=>[.ip][..][0][inspect]
-        set=>[.ip][..][magix.viewport.show-message][code]
-          value=>[.ip][..][0]
+        set=>[magix.viewport.show-message][message].Value
+          value=>[0][inspect].Value
+        set=>[magix.viewport.show-message][header].Value
+          value=>[0].Name
+        remove=>[0][inspect]
+        set=>[magix.viewport.show-message][code]
+          value=>[0]
+        set=>[0][inspect].Name
+          value=>inspect
         magix.viewport.show-message
           message
   set=>[.ip][..][Tpl][LinkButton][OnClick][0].Name
