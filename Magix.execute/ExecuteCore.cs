@@ -780,7 +780,7 @@ returning Node-Lists.";
 				string right = ip["value"].Get<string>();
 				if (right == null)
 				{
-					Expressions.Empty (left, dp, ip);
+					Expressions.Remove (left, dp, ip);
 				}
 				else
 				{
@@ -789,7 +789,7 @@ returning Node-Lists.";
 			}
 			else
 			{
-				Expressions.Empty (left, dp, ip);
+				Expressions.Remove (left, dp, ip);
 			}
 		}
 
@@ -834,37 +834,6 @@ Expression of Value.";
 				throw new ArgumentException("Both Value and 'value' must return an existing Node-List");
 
 			leftNode.Add (rightNode.Clone ());
-		}
-
-		/**
-		 * Removes the node pointed to
-		 * in the Value of the "remove" node, which is expected to be a Node Expression,
-		 * returning a node list. Functions as a "magix.executor" keyword
-		 */
-		[ActiveEvent(Name = "magix.execute.remove")]
-		public static void magix_execute_remove (object sender, ActiveEventArgs e)
-		{
-			if (e.Params.Contains ("inspect"))
-			{
-				e.Params["event:magix.execute"].Value = null;
-				e.Params["inspect"].Value = @"Removes the node pointed to
-in the Value, which is expected to be a Node Expression,
-returning a node list.";
-				e.Params["Data"]["NodeToRemove"].Value = "Will be removed ...";
-				e.Params["remove"].Value = "[Data][NodeToRemove]";
-				return;
-			}
-			Node ip = e.Params;
-			if (e.Params.Contains ("_ip"))
-				ip = e.Params ["_ip"].Value as Node;
-
-			Node dp = e.Params;
-			if (e.Params.Contains ("_dp"))
-				dp = e.Params["_dp"].Value as Node;
-
-			string path = ip.Get<string>();
-
-			Expressions.Remove (path, dp, ip);
 		}
 
 		/**
