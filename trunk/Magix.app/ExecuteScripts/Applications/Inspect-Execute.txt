@@ -21,9 +21,11 @@ for-each=>[Data][ActiveEvents]
           value=>[0][inspect].Value
         set=>[magix.viewport.show-message][header].Value
           value=>[0].Name
-        remove=>[0][inspect]
+        set=>[0][inspect]
         set=>[magix.viewport.show-message][code]
           value=>[0]
+        set=>[magix.viewport.show-message][[0].Name].Name
+          value=>code
         set=>[0][inspect].Name
           value=>inspect
         magix.viewport.show-message
