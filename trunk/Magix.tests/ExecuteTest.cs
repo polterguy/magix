@@ -122,9 +122,44 @@ Node contains a copy of the original Node-set.";
 				"magix.execute",
 				tmp);
 
-			if (!tmp["Buffer"]["Copy"].HasNodes (original))
+			if (!tmp["Buffer"]["Data"].HasNodes (original))
 			{
 				throw new ApplicationException("The 'Buffer' Node didn't equal the original Node-list in the 'Data' Node as were expected");
+			}
+		}
+
+		/**
+		 * Tests to see if "set", works with Node-Lists
+		 */
+		[ActiveEvent(Name = "magix.test.set-node-list-null")]
+		public void magix_test_set_node_list_null (object sender, ActiveEventArgs e)
+		{
+			Node tmp = new Node();
+
+			tmp["Data"]["Items"]["Item1"]["Description"].Value = "desc1";
+			tmp["Data"]["Items"]["Item2"]["Description"].Value = "desc2";
+			tmp["Data"]["Items"]["Item3"]["Description"].Value = "desc3";
+			tmp["Data"]["Items"]["Item4"]["Description"].Value = "desc4";
+			tmp["set"].Value = "[Data][Items]";
+
+			if (e.Params.Contains ("inspect"))
+			{
+				e.Params.Clear ();
+				e.Params["inspect"].Value = @"Checks to see if copying of 
+lists of Nodes is functioning as it should, 
+by setting the Data/Items to null, which
+should remove the Data/Items node.";
+				e.Params.AddRange (tmp);
+				return;
+			}
+
+			RaiseEvent (
+				"magix.execute",
+				tmp);
+
+			if (tmp["Data"].Contains ("Items"))
+			{
+				throw new ApplicationException("The set operation didn't make the Node-list become null");
 			}
 		}
 
@@ -165,10 +200,81 @@ Node values is functioning as it should.";
 		}
 
 		/**
+		 * Tests to see if "set", works with null Values
+		 */
+		[ActiveEvent(Name = "magix.test.set-value-null")]
+		public void magix_test_set_value_null (object sender, ActiveEventArgs e)
+		{
+			Node tmp = new Node();
+
+			tmp["Data"]["Item1"]["Description"].Value = "desc1";
+			tmp["set"].Value = "[Data][Item1][Description].Value";
+
+			if (e.Params.Contains ("inspect"))
+			{
+				e.Params.Clear ();
+				e.Params["inspect"].Value = @"Checks to see if setting a Node's
+Value functions as it should with null values.";
+				e.Params.AddRange (tmp);
+				return;
+			}
+
+			RaiseEvent (
+				"magix.execute",
+				tmp);
+
+			if (tmp["Buffer"]["Item1"]["Description"].Value != null)
+			{
+				throw new ApplicationException(
+					string.Format (
+						"Expected {0}, got {1}",
+						"desc1",
+						tmp["Buffer"].Get<string>()));
+			}
+		}
+
+		/**
+		 * Tests to see if "set", works with null Values
+		 */
+		[ActiveEvent(Name = "magix.test.set-name-null-throws")]
+		public void magix_test_set_name_null_throws (object sender, ActiveEventArgs e)
+		{
+			Node tmp = new Node();
+
+			tmp["Data"]["Item1"]["Description"].Value = "desc1";
+			tmp["try"].Value = null;
+			tmp["try"]["code"]["set"].Value = "[/][Data][Item1][Description].Name";
+			tmp["try"]["catch"]["set"].Value = "[/][Data].Value";
+			tmp["try"]["catch"]["set"]["value"].Value = "success";
+
+			if (e.Params.Contains ("inspect"))
+			{
+				e.Params.Clear ();
+				e.Params["inspect"].Value = @"Checks to see if setting a Node's
+Name functions as it should with null values. Expected to throw!";
+				e.Params.AddRange (tmp);
+				return;
+			}
+
+			RaiseEvent (
+				"magix.execute",
+				tmp);
+
+			if (tmp["Data"].Get<string>() != "success")
+			{
+				throw new ApplicationException(
+					string.Format (
+						"Expected {0}, got {1}",
+						"desc1",
+						tmp["Data"].Get<string>()));
+			}
+		}
+
+		/**
 		 * Tests to see if "set", works with Name
 		 */
-		[ActiveEvent(Name = "magix.test.get-name")]
-		public void magix_test_get_name (object sender, ActiveEventArgs e)
+		[ActiveEvent(Name = "magix.test.set-get-name")]
+		public void magix_test_set_get_name (object sender, ActiveEventArgs e)
 		{
 			Node tmp = new Node();
 
@@ -338,7 +444,7 @@ declare as success.";
 			tmp["Data"]["msg2"]["message"].Value = "msg1";
 			tmp["Data"]["msg3"]["message"].Value = "msg1";
 			tmp["while"].Value = "[Data].Count!=0";
-			tmp["while"]["remove"].Value = "[Data][0]";
+			tmp["while"]["set"].Value = "[Data][0]";
 
 			if (e.Params.Contains ("inspect"))
 			{
@@ -544,109 +650,6 @@ functions as it should.";
 					err = err.InnerException;
 				if (!err.Message.Contains ("This is our Message!"))
 					throw new ApplicationException("Wrong message in Exception");
-			}
-		}
-
-		/**
-		 * Tests to see if "remove", works
-		 */
-		[ActiveEvent(Name = "magix.test.remove")]
-		public void magix_test_remove (object sender, ActiveEventArgs e)
-		{
-			Node tmp = new Node();
-
-			tmp["Buffer"]["Data"]["Item1"].Value = "This is our Value1!";
-			tmp["Buffer"]["Data"]["Item2"].Value = "This is our Value2!";
-			tmp["Buffer"]["Data"]["Item3"].Value = "This is our Value3!";
-			tmp["Buffer"]["Data"]["Item4"].Value = "This is our Value4!";
-			tmp["Buffer"]["Data"]["Item5"].Value = "This is our Value5!";
-			tmp["remove"].Value = "[Buffer][Data]";
-
-			if (e.Params.Contains ("inspect"))
-			{
-				e.Params.Clear ();
-				e.Params["inspect"].Value = @"Checks to see if throw
-functions as it should.";
-				e.Params.AddRange (tmp);
-				return;
-			}
-
-			RaiseEvent (
-				"magix.execute",
-				tmp);
-
-			if (tmp["Buffer"].Count != 0)
-			{
-				throw new ApplicationException(
-					"Failure of executing remove statement");
-			}
-		}
-
-		/**
-		 * Tests to see if "remove", works
-		 */
-		[ActiveEvent(Name = "magix.test.remove-value-throws")]
-		public void magix_test_remove_value_throws (object sender, ActiveEventArgs e)
-		{
-			Node tmp = new Node();
-
-			tmp["Buffer"].Value = "This is our Value1!";
-			tmp["remove"].Value = "[Buffer].Value";
-
-			if (e.Params.Contains ("inspect"))
-			{
-				e.Params.Clear ();
-				e.Params["inspect"].Value = @"Checks to see if remove
-functions as it should.";
-				e.Params.AddRange (tmp);
-				return;
-			}
-
-			try
-			{
-				RaiseEvent (
-					"magix.execute",
-					tmp);
-				throw new ApplicationException(
-					"remove didn't throw upon removal of Value ...?");
-			}
-			catch
-			{
-				return;
-			}
-		}
-
-		/**
-		 * Tests to see if "remove", works
-		 */
-		[ActiveEvent(Name = "magix.test.remove-name-throws")]
-		public void magix_test_remove_name_throws (object sender, ActiveEventArgs e)
-		{
-			Node tmp = new Node();
-
-			tmp["Buffer"].Value = "This is our Value1!";
-			tmp["remove"].Value = "[Buffer].Name";
-
-			if (e.Params.Contains ("inspect"))
-			{
-				e.Params.Clear ();
-				e.Params["inspect"].Value = @"Checks to see if remove
-functions as it should.";
-				e.Params.AddRange (tmp);
-				return;
-			}
-
-			try
-			{
-				RaiseEvent (
-					"magix.execute",
-					tmp);
-				throw new ApplicationException(
-					"remove didn't throw upon removal of Name ...?");
-			}
-			catch
-			{
-				return;
 			}
 		}
 

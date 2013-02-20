@@ -232,10 +232,10 @@ namespace Magix.Core
 			Node x = GetNode (expression, source, ip, ref lastEntity, false);
 
 			if (x == null)
-				return;
+				throw new ArgumentException("Cannot remove a none existing Node");
 
             if (lastEntity == ".Value")
-				throw new ArgumentException("Use set to remove a Value of a node");
+				x.Value = null;
             else if (lastEntity == ".Name")
 				throw new ArgumentException("Cannot remove a Name of a node");
             else if (lastEntity == "")
@@ -304,7 +304,10 @@ namespace Magix.Core
 			}
             else if (lastEntity == "")
 			{
-				x.ReplaceChildren((valueToSet as Node).Clone ());
+				Node clone = (valueToSet as Node).Clone ();
+				x.ReplaceChildren(clone);
+				x.Name = clone.Name;
+				x.Value = clone.Value;
 			}
             else
                 throw new ArgumentException("Couldn't understand the last parts of your expression '" + lastEntity + "'");
