@@ -160,7 +160,7 @@ namespace Magix.Core
                             if (allNumber)
                             {
                                 int intIdx = int.Parse(bufferNodeName);
-                                if (x.Count >= intIdx)
+                                if (x.Count > intIdx)
                                     x = x[intIdx];
 								else
 									return null;
