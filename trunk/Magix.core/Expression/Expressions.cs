@@ -292,8 +292,6 @@ namespace Magix.Core
 
             if (lastEntity == ".Value")
 			{
-				if (valueToSet is Node)
-					throw new ArgumentException("Cannot set the Value of a node to a Node-list");
                x.Value = valueToSet;
 			}
             else if (lastEntity == ".Name")

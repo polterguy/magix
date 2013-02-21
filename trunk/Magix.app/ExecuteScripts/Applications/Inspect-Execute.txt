@@ -17,25 +17,39 @@ for-each=>[Data][ActiveEvents]
       OnClick
         void.foo
           inspect
-        set=>[magix.viewport.show-message][message].Value
+        set=>[2][value].Value
           value=>[0][inspect].Value
-        set=>[magix.viewport.show-message][header].Value
+        magix.forms.set-value
+          form-id=>form1
+          id=>desc
+          value
+        set=>[4][value].Value
           value=>[0].Name
+        magix.forms.set-value
+          form-id=>form1
+          id=>header
+          value
         set=>[0][inspect]
-        set=>[magix.viewport.show-message][code]
+        set=>[magix.admin._transform-node-2-code][JSON].Value
           value=>[0]
-        set=>[magix.viewport.show-message][[0].Name].Name
-          value=>code
+        magix.admin._transform-node-2-code
+          JSON
+        set=>[9][value].Value
+          value=>[magix.admin._transform-node-2-code][code].Value
+        magix.forms.set-value
+          form-id=>form1
+          id=>code
+          value
         set=>[0][inspect].Name
           value=>inspect
-        magix.viewport.show-message
-          message
   set=>[.ip][..][Tpl][LinkButton][OnClick][0].Name
     value=>[.].Value
   set=>[.ip][..][Tpl][LinkButton][Text].Value
     value=>[.].Value
   add=>[/][cf][controls][Panel][controls]
     value=>[.ip][..][Tpl][LinkButton]
+set=>[cf][controls][Panel2].Name
+  value=>Panel
 set=>[cf].Name
   value=>magix.forms.create-form
 cf
@@ -44,7 +58,22 @@ cf
   controls
     Label
       Tag=>h1
-      CssClass=>prepend-top prepend-5 span-19 last
+      CssClass=>prepend-top prepend-4 span-19 last
       Text=>magix.execute keywords in the system
     Panel=>wrp
       controls
+    Panel2
+      CssClass=>span-22 info prepend-top
+      controls
+        Label=>header
+          Text=>Name of Active Event
+          Tag=>label
+        hr
+        Label=>desc
+          CssClass=>span-22 last
+          Text=>@"Description of your Active Event. 
+Click any of the Above Active Events to inspect them ..."
+        Label=>code
+          CssClass=>span-22 last prepend-top
+          Text=>Code Example ...
+          Tag=>pre
