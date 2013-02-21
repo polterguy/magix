@@ -30,28 +30,7 @@ namespace Magix.execute
 			string txt = "";
 			Node node = e.Params["JSON"].Value as Node;
 			int startIdx = 0;
-			if (!string.IsNullOrEmpty (node.Name))
-			{
-				txt += node.Name;
-				if (node.Value != null)
-				{
-					if (node.Get<string>("") != "")
-					{
-						if (node.Get<string>().Contains ("\n") || 
-						    node.Get<string>().StartsWith ("\"") ||
-						    node.Get<string>().StartsWith (" "))
-						{
-							string nValue = node.Get<string>();
-							txt += "=>" + "@\"" + nValue + "\"";
-						}
-						else
-							txt += "=>" + node.Get<string>("");
-					}
-				}
-				startIdx += 1;
-				txt += "\r\n";
-			}
-			txt += ParseNodes(startIdx, node).TrimEnd ();
+			txt += ParseNodes(0, node).TrimEnd ();
 			e.Params["code"].Value = txt;
 		}
 

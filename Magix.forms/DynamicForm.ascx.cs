@@ -533,5 +533,54 @@ not necessarily be a string, but can also be of other types.";
 						((SelectList)ctrl).SelectedItem.Value;
 			}
 		}
+
+		/**
+		 * Returns the given value of the given "id" widget, within the given
+		 * "form-id" form, in the "value" node
+		 */
+        [ActiveEvent(Name = "magix.forms.set-value")]
+		protected void magix_forms_set_value (object sender, ActiveEventArgs e)
+		{
+			if (e.Params.Contains ("inspect"))
+			{
+				e.Params["id"].Value = "idOfControlInForm";
+				e.Params["form-id"].Value = "formID";
+				e.Params["value"].Value = "New value of control";
+				e.Params["inspect"].Value = @"Expects a ""form-id"" and an ""id""
+node, which if the ""form-id"" node matches the form id of this form, used
+for looking up the Value of the given web control with the given ""id"".
+The value of the web control will be set to ""value"".";
+				return;
+			}
+			string value = e.Params["value"].Get<string>();
+			if (e.Params["form-id"].Get<string>() == FormID)
+			{
+				Control ctrl = Selector.FindControl<Control>(this, e.Params["id"].Get<string>());
+				if (ctrl is BaseWebControlFormElementText)
+					((BaseWebControlFormElementText)ctrl).Text = value;
+				if (ctrl is Label)
+					((Label)ctrl).Text = value;
+				else if (ctrl is Button)
+					((Button)ctrl).Text = value;
+				else if (ctrl is LinkButton)
+					((LinkButton)ctrl).Text = value;
+				else if (ctrl is Image)
+					((Image)ctrl).ImageUrl = value;
+				else if (ctrl is HyperLink)
+					((HyperLink)ctrl).URL = value;
+				else if (ctrl is Button)
+					((Button)ctrl).Text = value;
+				else if (ctrl is CheckBox)
+					((CheckBox)ctrl).Checked = bool.Parse (value);
+				else if (ctrl is HiddenField)
+					((HiddenField)ctrl).Value = value;
+				else if (ctrl is RadioButton)
+					((RadioButton)ctrl).Checked = bool.Parse (value);
+				else if (ctrl is SelectList)
+					((SelectList)ctrl).SetSelectedItemAccordingToValue(value);
+				else
+					throw new ArgumentException("Don't know how to set the value of that control");
+			}
+		}
     }
 }
