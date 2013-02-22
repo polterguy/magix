@@ -108,8 +108,13 @@ re-mapped. ""initial-startup-of-process"" must exists to run event.";
 			{
 				e.Params["event:magix.execute"].Value = null;
 				e.Params["inspect"].Value = @"Overrides the active event in ""event""
-with the code in the ""code"" expression. Functions 
-as a ""magix.execute"" keyword.";
+with the code in the ""code"" expression. These types
+of functions can take and return parameters, if you wish
+to pass in or retrieve parameters, then as you invoke the 
+function, just append your args underneath the function invocation,
+and they will be passed into the function, where they will
+be accessible underneath a ""P"" Node, appended as the last
+parts of your code block into your function invocation.";
 				e.Params["event"].Value = "foo.bar";
 				e.Params["event"]["remotable"].Value = true;
 				e.Params["event"]["code"]["Data"].Value = "thomas";
@@ -283,13 +288,14 @@ as a ""magix.execute"" keyword.";
 						idx.Node.Name = null;
 						if (e.Params.Contains ("inspect"))
 						{
+							e.Params["event:magix.execute"].Value = null;
 							e.Params["event"].Value = e.Name;
-							e.Params["code"].Clear ();
-							e.Params["code"].AddRange (idx.Node);
-							e.Params["remotable"].Value = idx.Remotable;
-							e.Params["inspect"].Value = @"This is a dynamically created
-	active event, containing ""magix.executor"" code, meaning keywords from the executor,
-	such that this serialized code will be called upon the raising of this event.";
+							e.Params["event"]["code"].Clear ();
+							e.Params["event"]["code"].AddRange (idx.Node);
+							e.Params["event"]["remotable"].Value = idx.Remotable;
+							e.Params["inspect"].Value = @"This is a dynamically created 
+active event, containing ""magix.executor"" code, meaning keywords from the executor, 
+such that this serialized code will be called upon the raising of this event.";
 						}
 						else
 						{
@@ -304,13 +310,14 @@ as a ""magix.execute"" keyword.";
 							idx.Node.Name = null;
 							if (e.Params.Contains ("inspect"))
 							{
+								e.Params["event:magix.execute"].Value = null;
 								e.Params["event"].Value = e.Name;
-								e.Params["code"].Clear ();
-								e.Params["code"].AddRange (idx.Node);
-								e.Params["remotable"].Value = idx.Remotable;
+								e.Params["event"]["code"].Clear ();
+								e.Params["event"]["code"].AddRange (idx.Node);
+								e.Params["event"]["remotable"].Value = idx.Remotable;
 								e.Params["inspect"].Value = @"This is a dynamically created
-		active event, containing ""magix.executor"" code, meaning keywords from the executor,
-		such that this serialized code will be called upon the raising of this event.";
+active event, containing ""magix.executor"" code, meaning keywords from the executor,
+such that this serialized code will be called upon the raising of this event.";
 							}
 							else
 							{
@@ -323,8 +330,9 @@ as a ""magix.execute"" keyword.";
 			}
 			if (caller != null)
 			{
+				caller["P"].AddRange (e.Params);
 				RaiseEvent ("magix.execute", caller);
-				e.Params.ReplaceChildren (caller);
+				e.Params.ReplaceChildren (caller["P"]);
 			}
 		}
 	}
