@@ -64,6 +64,8 @@ unless the ""set"" operation executed successfully.";
 			tmp["if"]["event"]["code"]["set"].Value = "[Data].Value";
 			tmp["if"]["event"]["code"]["set"]["value"].Value = "new-value";
 			tmp["if"]["foo.bar"].Value = null;
+			tmp.Add (new Node("event", "foo.bar"));
+
 
 			if (e.Params.Contains ("inspect"))
 			{
@@ -1280,6 +1282,7 @@ functions as it should.";
 			tmp["event"]["code"]["Data"].Value = "howdy";
 			tmp["event"]["code"]["set"].Value = "[Data].Value";
 			tmp["foo.bar"].Value = null;
+			tmp.Add (new Node("event", "foo.bar"));
 
 			if (e.Params.Contains ("inspect"))
 			{
@@ -1294,20 +1297,11 @@ functions as it should.";
 				"magix.execute",
 				tmp);
 
-			if (tmp["foo.bar"].Value != null)
+			if (!tmp["foo.bar"].Contains ("Data") || tmp["foo.bar"]["Data"].Value != null)
 			{
 				throw new ApplicationException(
-					"Failure of executing remove statement");
+					"Failure of executing event invoke statement");
 			}
-
-			bool found = false;
-			foreach (string idx in ActiveEvents.Instance.ActiveEventHandlers)
-			{
-				if (idx == "foo.bar")
-					found = true;
-			}
-			if (!found)
-				throw new ApplicationException("Couldn't find foo.bar after creating it ...");
 		}
 
 		/**
@@ -1359,6 +1353,7 @@ functions as it should.";
 			tmp["event"]["code"]["Data"].Value = "howdy";
 			tmp["remote"]["URL"].Value = "http://127.0.0.1:8080";
 			tmp["remote"].Value = "foo.bar";
+			tmp.Add (new Node("event", "foo.bar"));
 
 			if (e.Params.Contains ("inspect"))
 			{
@@ -1392,7 +1387,8 @@ functions as it should.";
 			tmp["event"]["remotable"].Value = false;
 			tmp["event"]["code"]["Data"].Value = "howdy";
 			tmp["remote"]["URL"].Value = "http://127.0.0.1:8080";
-			tmp["remote"]["event"].Value = "foo.bar";
+			tmp["remote"].Value = "foo.bar";
+			tmp.Add (new Node("event", "foo.bar"));
 
 			if (e.Params.Contains ("inspect"))
 			{
@@ -1414,6 +1410,11 @@ when remotely activated.";
 			}
 			catch
 			{
+				Node tmp2 = new Node();
+				tmp2["event"].Value = "foo.bar";
+				RaiseEvent (
+					"magix.execute",
+					tmp2);
 				return;
 			}
 		}
@@ -1430,6 +1431,7 @@ when remotely activated.";
 			tmp["event"]["code"]["Data"].Value = "howdy";
 			tmp["remote"]["URL"].Value = "http://127.0.0.1:8080";
 			tmp["remote"]["event"].Value = "foo.bar";
+			tmp.Add (new Node("event", "foo.bar"));
 
 			if (e.Params.Contains ("inspect"))
 			{
@@ -1451,6 +1453,11 @@ throws when invoked remotely.";
 			}
 			catch
 			{
+				Node tmp2 = new Node();
+				tmp2["event"].Value = "foo.bar";
+				RaiseEvent (
+					"magix.execute",
+					tmp2);
 			}
 		}
 
