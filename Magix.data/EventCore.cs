@@ -114,15 +114,21 @@ to pass in or retrieve parameters, then as you invoke the
 function, just append your args underneath the function invocation,
 and they will be passed into the function, where they will
 be accessible underneath a ""P"" Node, appended as the last
-parts of your code block into your function invocation.";
+parts of your code block into your function invocation. From
+outside of the function/event itself, you can access these 
+parameters directly underneath the active event itself.";
 				e.Params["event"].Value = "foo.bar";
-				e.Params["event"]["remotable"].Value = true;
+				e.Params["event"]["remotable"].Value = false;
 				e.Params["event"]["code"]["Data"].Value = "thomas";
 				e.Params["event"]["code"]["Backup"].Value = "thomas";
 				e.Params["event"]["code"]["if"].Value = "[Data].Value==[Backup].Value";
-				e.Params["event"]["code"]["if"]["magix.viewport.show-message"].Value = null;
-				e.Params["event"]["code"]["if"]["magix.viewport.show-message"]["message"].Value = "Howdy World!!";
+				e.Params["event"]["code"]["if"]["set"].Value = "[/][P][output].Value";
+				e.Params["event"]["code"]["if"]["set"]["value"].Value = "return-value";
+				e.Params["event"]["code"]["if"].Add (new Node("set", "[.ip][/][magix.viewport.show-message][message].Value"));
+				e.Params["event"]["code"]["if"][e.Params["event"]["code"]["if"].Count - 1]["value"].Value = "[/][P][input].Value";
+				e.Params["event"]["code"]["magix.viewport.show-message"].Value = null;
 				e.Params["foo.bar"].Value = null;
+				e.Params["foo.bar"]["input"].Value = "Hello World 2.0!!";
 				e.Params.Add (new Node("event", "foo.bar"));
 				return;
 			}
