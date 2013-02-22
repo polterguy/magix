@@ -1,40 +1,15 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Magix.tests/ExecuteTest.cs">
-    <Files>
-      <File FileName="Magix.app/ExecuteScripts/Applications/Inspect-Execute.txt" Line="41" Column="3" />
-      <File FileName="Magix.execute/ExecuteCore.cs" Line="792" Column="23" />
-      <File FileName="Magix.tests/ExecuteTest.cs" Line="767" Column="44" />
-      <File FileName="Magix.core/Expression/Expressions.cs" Line="235" Column="68" />
-      <File FileName="Magix.core/Common/Node.cs" Line="110" Column="3" />
-      <File FileName="Magix.tests/TestsCore.cs" Line="77" Column="1" />
-      <File FileName="Magix.app/ExecuteScripts/TODO.txt" Line="38" Column="1" />
-    </Files>
+  <MonoDevelop.Ide.Workbench>
     <Pads>
       <Pad Id="ProjectPad">
-        <State expanded="True">
-          <Node name="Magix.app" expanded="True">
-            <Node name="ExecuteScripts" expanded="True">
-              <Node name="Applications" expanded="True" />
-            </Node>
-          </Node>
-          <Node name="Magix.Core" expanded="True">
-            <Node name="Common" expanded="True" />
-            <Node name="Expression" expanded="True" />
-          </Node>
-          <Node name="Magix.execute" expanded="True" />
-          <Node name="Magix.tests" expanded="True">
-            <Node name="ExecuteTest.cs" selected="True" />
-          </Node>
-        </State>
+        <State expanded="True" />
       </Pad>
       <Pad Id="ClassPad">
         <State expanded="True" selected="True" />
       </Pad>
       <Pad Id="MonoDevelop.Debugger.WatchPad">
-        <State>
-          <Value>idx</Value>
-        </State>
+        <State />
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
@@ -43,5 +18,6 @@
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches>
     <Watch file="Magix.tests/ExecuteTest.cs" line="86" offsetX="650" offsetY="1185" expression="tmp" liveUpdate="False" />
+    <Watch file="Magix.tests/ExecuteTest.cs" line="819" offsetX="246" offsetY="13158" expression="tmp" liveUpdate="False" />
   </MonoDevelop.Ide.DebuggingService.PinnedWatches>
 </Properties>
