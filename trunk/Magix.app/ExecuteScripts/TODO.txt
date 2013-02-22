@@ -33,7 +33,23 @@
 
 * Turning "dynamic" code, into C# code, somehow ...
 
+* Verify the "Data-Pointer" is being moved correctly around. 
+  Should the "while" for instance move the datapointer, to inside the "while" ...?
+
+* Refactor ""if"", ""while"" and such to re-use the same extraction logic ...
+
+* Check up the way "text-literals" are created in expressions ...
+
+* Implement "variables" by using ""set""" keywrod with constant
+  expressions on the LEFT-HAND side, being the "variable name" ...?
+
+* Do we need an ""add-children"" keyword or something ...?
+  Or can we manage with ""for-each"" as substitute ...?
+
 * "remove-event" and "event" can be merged, and if no code is given, event is removed ...
+
+* Create Unit Tests with "bum parameters" for every single execute statement,
+  and check to see if sane behavior, such as exceptions, are thrown and such ...
 
 * Support for Database Transactions ...
 
