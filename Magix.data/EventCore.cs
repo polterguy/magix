@@ -118,6 +118,7 @@ as a ""magix.execute"" keyword.";
 				e.Params["event"]["code"]["if"]["magix.viewport.show-message"].Value = null;
 				e.Params["event"]["code"]["if"]["magix.viewport.show-message"]["message"].Value = "Howdy World!!";
 				e.Params["foo.bar"].Value = null;
+				e.Params.Add (new Node("event", "foo.bar"));
 				return;
 			}
 			Node ip = e.Params;
