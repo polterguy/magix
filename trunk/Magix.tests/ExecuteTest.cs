@@ -345,8 +345,8 @@ functions as it should.";
 		/**
 		 * Tests to see if ""set"" ing a Value to a Node-list throws an exception
 		 */
-		[ActiveEvent(Name = "magix.test.assure-set-lists-dont-become-values")]
-		public void magix_test_assure_set_lists_dont_become_values (object sender, ActiveEventArgs e)
+		[ActiveEvent(Name = "magix.test.assure-set-lists-become-values")]
+		public void magix_test_assure_set_lists_become_values (object sender, ActiveEventArgs e)
 		{
 			Node tmp = new Node();
 
@@ -362,28 +362,20 @@ functions as it should.";
 			{
 				e.Params.Clear ();
 				e.Params["inspect"].Value = @"Checks to see if setting Node Value
-functions as it should, by demanding an exception to
-declare as success.";
+functions as it should.";
 				e.Params.AddRange (tmp);
 				return;
 			}
+			RaiseEvent (
+				"magix.execute",
+				tmp);
 
-			bool hasException = false;
-			try
-			{
-				RaiseEvent (
-					"magix.execute",
-					tmp);
-			}
-			catch
-			{
-				hasException = true;
-			}
-
-			if (!hasException)
+			if (tmp["Buffer"].Get<Node>() == null || 
+			    tmp["Buffer"].Get<Node>()["Item4"]["Description"].Get<string>() != "desc4" ||
+			    tmp["Buffer"].Get<Node>().Count != 4)
 			{
 				throw new ApplicationException(
-					"Expected exception due to assigning a Node-list to a Value, but didn't get one ...?");
+					"Couldn't get the right Node value of of a node's Value");
 			}
 		}
 
