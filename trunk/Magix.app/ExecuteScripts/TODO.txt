@@ -29,6 +29,9 @@
 
 * Give "magix.execute" support for a "path", basically becoming "go-to" ...
 
+* Make sure the "Data-Pointer" is behaving sanely, by being where it should be, and not
+  under some "random block" according to luck ...
+
 * Zipping of hierarchies of files, as "packages", which can be sent back and forth
   Try to do this, using the "command" pattern, such that "undo" becomes possible ...?
 
