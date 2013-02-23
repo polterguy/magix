@@ -54,7 +54,11 @@ map towards the ""magix.execute.if"" active event.
 This means that you can use all ""magix.execute""
 active events as code instructions, which you can
 execute by raising this active event, by using the
-short version ""if"" instead of ""magix.execute.if"".";
+short version ""if"" instead of ""magix.execute.if"".
+If you supply a Value for your ""execute"" node, the
+event will be executed, with the code returned from
+the Node-List expression from your Value, meaning
+the Value effectively becomes a 'goto keyword'.";
 				e.Params["Data"]["Value"].Value = "thomas";
 				e.Params["if"].Value = "[Data][Value].Value==thomas";
 				e.Params["if"]["magix.viewport.show-message"].Value = null;
@@ -72,12 +76,13 @@ short version ""if"" instead of ""magix.execute.if"".";
 				dp = e.Params["_dp"].Value as Node;
 
 			// Checking to see if we've got a "context"
-			if (ip.Name == "execute" && 
+			if ((ip.Name == "execute" || ip.Name == "magix.execute") && 
 				!string.IsNullOrEmpty(ip.Get<string>()))
 			{
-				dp = Expressions.GetExpressionValue (ip.Get<string>(), dp, ip) as Node;
-				if (dp == null)
-					throw new ArgumentException("You can only supply a context pointing to an existing Node hierarchy");
+				ip = Expressions.GetExpressionValue (ip.Get<string>(), dp, ip) as Node;
+				if (ip == null)
+					throw new ArgumentException(
+						"You can only supply a context pointing to an existing Node hierarchy");
 			}
 
 			ip["_state"].Value = null;

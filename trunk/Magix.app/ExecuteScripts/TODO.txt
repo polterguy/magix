@@ -21,11 +21,8 @@
 * Binary loading and saving of files, using Base64 encoding, which allows
   for transfering DLLs to other servers
 
-* Create "return" keyword, to avoid injection of code, due to how parameters are
-  merged inside of "magix.execute._active-event-2-code-callback" to become
-  capable of passing Parameters in the first place, at ALL to "functions" ...
-
-* Make it possible to remove code as "functions" are invoked, meaning dynamic active events
+* Make it possible to change the node collection currently being traversed by
+  exchanging the foreach inside of magix.execute somehow ...
 
 * Give "magix.execute" support for a "path", basically becoming "go-to" ...
 
