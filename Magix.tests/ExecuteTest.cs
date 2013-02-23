@@ -50,6 +50,41 @@ unless the ""set"" operation executed successfully.";
 		}
 
 		/**
+		 * Tests to see if "magix.execute" works
+		 */
+		[ActiveEvent(Name = "magix.test.execute-context")]
+		public void magix_test_execute_context (object sender, ActiveEventArgs e)
+		{
+			Node tmp = new Node();
+			tmp["Data"].Value = "not-set";
+			tmp["Data"]["set"].Value = "[Data].Value";
+			tmp["Data"]["set"]["value"].Value = "new-value";
+			tmp["execute"].Value = "[Data]";
+
+			if (e.Params.Contains ("inspect"))
+			{
+				e.Params["inspect"].Value = @"Tests to see if basic magix.execute
+functionality works, specifically ""set"" on a 
+Data node in the Node tree. Throws an exception 
+unless the ""set"" operation executed successfully.";
+				e.Params.AddRange (tmp);
+				return;
+			}
+
+			RaiseEvent (
+				"magix.execute",
+				tmp);
+
+			// Asserting new value is set ...
+			if (tmp["Data"].Get<string>() != "new-value")
+				throw new ApplicationException(
+					string.Format(
+						"Set didn't update as supposed to, expected {0}, got {1}",
+						"new-value",
+					tmp["Data"].Get<string>()));
+		}
+
+		/**
 		 * Tests to see if "magix.execute" works with slightly more complex code
 		 */
 		[ActiveEvent(Name = "magix.test.execute-complex-statement-1")]
