@@ -49,23 +49,12 @@ the Value of ""set"" must be an expression.";
 				dp = e.Params["_dp"].Value as Node;
 
 			string left = ip.Get<string>();
+			string right = null;
 
 			if (ip.Contains ("value"))
-			{
-				string right = ip["value"].Get<string>();
-				if (right == null)
-				{
-					Expressions.Remove (left, dp, ip);
-				}
-				else
-				{
-					Expressions.SetNodeValue (left, right, dp, ip);
-				}
-			}
-			else
-			{
-				Expressions.Remove (left, dp, ip);
-			}
+				right = ip["value"].Get<string>();
+
+			Expressions.SetNodeValue (left, right, dp, ip);
 		}
 	}
 }

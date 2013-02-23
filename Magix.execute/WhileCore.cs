@@ -60,105 +60,17 @@ statement in the Value of while is True.";
 			if (e.Params.Contains ("_dp"))
 				dp = e.Params["_dp"].Value as Node;
 
-			/// Defaulting if statement to return "false"
-			if (ip.Parent != null)
-				ip.Parent ["_state"].Value = false;
-
 			string expr = ip.Value as string;
 			if (string.IsNullOrEmpty (expr))
-				throw new ArgumentException ("You cannot have an empty if statement");
+				throw new ArgumentException ("You cannot have an empty while statement");
 
-			// Checking to see if single statement, meaning "exists"
-			if (expr.IndexOfAny (new char[]{'=','>','<'}) != -1)
+			while (Expressions.IsTrue(expr, ip, dp))
 			{
-				// Comparing two nodes with each other
-				ExecuteWhile (expr, ip, dp);
-			}
-			else if (expr.IndexOf ("!") == 0)
-			{
-				// Checking to see of "not exists"
-				while (!Expressions.ExpressionExist (expr.TrimStart ('!'), dp, ip))
-				{
-					Node tmp = new Node();
-					tmp["_ip"].Value = ip;
-					tmp["_dp"].Value = dp;
+				Node tmp = new Node("magix.execute.while");
+				tmp["_ip"].Value = ip;
+				tmp["_dp"].Value = dp;
 
-					RaiseEvent ("magix.execute", tmp);
-				}
-			}
-			else
-			{
-				// Checking to see if "exists"
-				while (Expressions.ExpressionExist (expr, dp, ip))
-				{
-					Node tmp = new Node();
-					tmp["_ip"].Value = ip;
-					tmp["_dp"].Value = dp;
-
-					RaiseEvent ("magix.execute", tmp);
-				}
-			}
-		}
-
-		private static void ExecuteWhile(string expr, Node ip, Node dp)
-		{
-			while (true)
-			{
-				string left = expr.Substring (0, expr.IndexOfAny (new char[]{'!','=','>','<'}));;
-				string comparison = expr.Substring (left.Length, 2);
-				if (comparison[comparison.Length - 1] != '=')
-					comparison = comparison.Substring (0, 1);
-				string right = expr.Substring (expr.IndexOf (comparison) + comparison.Length);
-				if (right.IndexOf ("\"") == 0)
-				{
-					right = right.Substring (1);
-					right = right.Substring (0, right.Length - 1);
-				}
-				if (right.IndexOf("[") == 0)
-				{
-					right = Expressions.GetExpressionValue (right, dp, ip).ToString ();
-				}
-				bool isTrue = false;
-				string valueOfExpr = left;
-				if (valueOfExpr.IndexOf ("[") == 0)
-				{
-					valueOfExpr = Expressions.GetExpressionValue (valueOfExpr, dp, ip).ToString ();
-				}
-				switch (comparison)
-				{
-				case "==":
-					isTrue = valueOfExpr == right;
-					break;
-				case "!=":
-					isTrue = valueOfExpr != right;
-					break;
-				case ">":
-					isTrue = valueOfExpr.CompareTo (right) == -1;
-					break;
-				case "<":
-					isTrue = valueOfExpr.CompareTo (right) == 1;
-					break;
-				case ">=":
-					isTrue = valueOfExpr.CompareTo (right) < 1;
-					break;
-				case "<=":
-					isTrue = valueOfExpr.CompareTo (right) > -1;
-					break;
-				}
-
-				// Signaling to else and else-if that statement was true
-				if (ip.Parent != null)
-					ip.Parent["_state"].Value = isTrue;
-
-				if (isTrue)
-				{
-					Node node = new Node();
-					node["_ip"].Value = ip;
-					node["_dp"].Value = dp;
-					RaiseEvent ("magix.execute", node);
-				}
-				else
-					break;
+				RaiseEvent ("magix.execute", tmp);
 			}
 		}
 	}

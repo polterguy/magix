@@ -51,7 +51,7 @@ the current Node.";
 			if (e.Params.Contains ("_dp"))
 				dp = e.Params["_dp"].Value as Node;
 
-			if (Expressions.ExpressionExist (ip.Get<string>(), dp, ip))
+			if (Expressions.IsTrue(ip.Get<string>(), ip, dp))
 			{
 				Node tmp = Expressions.GetExpressionValue (ip.Get<string>(), dp, ip) as Node;
 				foreach (Node idx in tmp)

@@ -12,6 +12,7 @@ using Magix.Core;
 namespace Magix.execute
 {
 	/**
+	 * Controller for "magix.execute.if/else-if/else" logic
 	 */
 	public class IfElseCore : ActiveController
 	{
@@ -47,121 +48,10 @@ statements will be executed.";
 				e.Params["if"]["magix.viewport.show-message"]["message"].Value = "They are NOT the same!";
 				return;
 			}
-			Node ip = e.Params;
-			if (e.Params.Contains ("_ip"))
-				ip = e.Params ["_ip"].Value as Node;
 
-			Node dp = e.Params;
-			if (e.Params.Contains ("_dp"))
-				dp = e.Params["_dp"].Value as Node;
-
-			/// Defaulting if statement to return "false"
-			if (ip.Parent != null)
-				ip.Parent ["_state"].Value = false;
-
-			string expr = ip.Value as string;
-			if (string.IsNullOrEmpty (expr))
-				throw new ArgumentException ("You cannot have an empty if statement");
-
-			// Checking to see if single statement, meaning "exists"
-			if (expr.IndexOfAny (new char[]{'=','>','<'}) != -1)
-			{
-				// Comparing two nodes with each other
-				ExecuteIf (expr, ip, dp);
-			}
-			else if (expr.IndexOf ("!") == 0)
-			{
-				// Checking to see of "not exists"
-				if (!Expressions.ExpressionExist (expr.TrimStart ('!'), dp, ip))
-				{
-					// Making sure if statement returns "true"
-					if (ip.Parent != null)
-						ip.Parent["_state"].Value = true;
-
-					Node tmp = new Node();
-					tmp["_ip"].Value = ip;
-					tmp["_dp"].Value = dp;
-
-					RaiseEvent ("magix.execute", tmp);
-				}
-			}
-			else
-			{
-				// Checking to see if "exists"
-				if (Expressions.ExpressionExist (expr, dp, ip))
-				{
-					// Making sure if statement returns "true"
-					if (ip.Parent != null)
-						ip.Parent["_state"].Value = true;
-
-					Node tmp = new Node();
-					tmp["_ip"].Value = ip;
-					tmp["_dp"].Value = dp;
-
-					RaiseEvent ("magix.execute", tmp);
-				}
-			}
+			IfImplementation(e.Params, "magix.execute.if");
 		}
 
-		// TODO: Refactor together with ExecuteWhile
-		private static void ExecuteIf(string expr, Node ip, Node dp)
-		{
-			string left = expr.Substring (0, expr.IndexOfAny (new char[]{'!','=','>','<'}));;
-			string comparison = expr.Substring (left.Length, 2);
-			if (comparison[comparison.Length - 1] != '=')
-				comparison = comparison.Substring (0, 1);
-			string right = expr.Substring (expr.IndexOf (comparison) + comparison.Length);
-			if (right.IndexOf ("\"") == 0)
-			{
-				right = right.Substring (1);
-				right = right.Substring (0, right.Length - 1);
-			}
-			if (right.IndexOf("[") == 0)
-			{
-				right = Expressions.GetExpressionValue (right, dp, ip).ToString ();
-			}
-			bool isTrue = false;
-			string valueOfExpr = left;
-			if (valueOfExpr.IndexOf ("[") == 0)
-			{
-				valueOfExpr = Expressions.GetExpressionValue (valueOfExpr, dp, ip).ToString ();
-			}
-			switch (comparison)
-			{
-			case "==":
-				isTrue = valueOfExpr == right;
-				break;
-			case "!=":
-				isTrue = valueOfExpr != right;
-				break;
-			case ">":
-				isTrue = valueOfExpr.CompareTo (right) == -1;
-				break;
-			case "<":
-				isTrue = valueOfExpr.CompareTo (right) == 1;
-				break;
-			case ">=":
-				isTrue = valueOfExpr.CompareTo (right) < 1;
-				break;
-			case "<=":
-				isTrue = valueOfExpr.CompareTo (right) > -1;
-				break;
-			}
-
-			// Signaling to else and else-if that statement was true
-			if (ip.Parent != null)
-				ip.Parent["_state"].Value = isTrue;
-
-			if (isTrue)
-			{
-				Node node = new Node();
-				node["_ip"].Value = ip;
-				node["_dp"].Value = dp;
-				RaiseEvent ("magix.execute", node);
-			}
-		}
-
-		// TODO: Refactor together with "if" ...
 		/**
 		 * If no previous "if" statement,
 		 * or "else-if" statement has returned true, will check to see if the current 
@@ -193,59 +83,8 @@ returns True.";
 				e.Params["else-if"]["magix.viewport.show-message"]["message"].Value = "Works...";
 				return;
 			}
-			Node ip = e.Params;
-			if (e.Params.Contains ("_ip"))
-				ip = e.Params ["_ip"].Value as Node;
 
-			Node dp = e.Params;
-			if (e.Params.Contains ("_dp"))
-				dp = e.Params["_dp"].Value as Node;
-
-			// Checking to see if a previous "if" or "else-if" statement has returned true
-			if (ip.Parent != null &&
-			    ip.Parent["_state"].Get<bool>())
-				return;
-
-			string expr = ip.Value as string;
-
-			// Checking to see if single statement, meaning "exists"
-			if (expr.IndexOfAny (new char[]{'=','>','<'}) != -1)
-			{
-				// Comparing two nodes with each other
-				ExecuteIf (expr, ip, dp);
-			}
-			else if (expr.IndexOf ("!") == 0)
-			{
-				// Checking to see of "not exists"
-				if (!Expressions.ExpressionExist (expr.TrimStart ('!'), dp, ip))
-				{
-					// Making sure if statement returns "true"
-					if (ip.Parent != null)
-						ip.Parent["_state"].Value = true;
-
-					Node tmp = new Node();
-					tmp["_ip"].Value = ip;
-					tmp["_dp"].Value = dp;
-
-					RaiseEvent ("magix.execute", tmp);
-				}
-			}
-			else
-			{
-				// Checking to see if "exists"
-				if (Expressions.ExpressionExist (expr, dp, ip))
-				{
-					// Making sure if statement returns "true"
-					if (ip.Parent != null)
-						ip.Parent["_state"].Value = true;
-
-					Node tmp = new Node();
-					tmp["_ip"].Value = ip;
-					tmp["_dp"].Value = dp;
-
-					RaiseEvent ("magix.execute", tmp);
-				}
-			}
+			IfImplementation(e.Params, "magix.execute.else-if");
 		}
 
 		/**
@@ -272,19 +111,58 @@ has returned True.";
 			if (e.Params.Contains ("_ip"))
 				ip = e.Params ["_ip"].Value as Node;
 
-			Node dp = e.Params;
-			if (e.Params.Contains ("_dp"))
-				dp = e.Params["_dp"].Value as Node;
-
 			// Checking to see if a previous "if" or "else-if" statement has returned true
 			if (ip.Parent != null &&
 			    ip.Parent["_state"].Get<bool>())
 				return;
 
-			Node node = new Node();
+			Node dp = e.Params;
+			if (e.Params.Contains ("_dp"))
+				dp = e.Params["_dp"].Value as Node;
+
+			Node node = new Node("magix.execute.else");
 			node["_ip"].Value = ip;
 			node["_dp"].Value = dp;
-			RaiseEvent ("magix.execute", node);
+
+			RaiseEvent(
+				"magix.execute", 
+				node);
+		}
+
+		// Private helper, implementation for both "if" and "else-if" ...
+		private static void IfImplementation (Node pars, string evt)
+		{
+			Node ip = pars;
+			if (pars.Contains ("_ip"))
+				ip = pars["_ip"].Value as Node;
+
+			Node dp = pars;
+			if (pars.Contains ("_dp"))
+				dp = pars["_dp"].Value as Node;
+
+			if (ip.Parent == null)
+				throw new ApplicationException("Cannot have an if statement without a parent node");
+
+			// Defaulting if statement to return "false"
+			ip.Parent ["_state"].Value = false;
+
+			string expr = ip.Value as string;
+
+			if (string.IsNullOrEmpty (expr))
+				throw new ArgumentException ("You cannot have an empty if/else-if statement");
+
+			if (Expressions.IsTrue(expr, ip, dp))
+			{
+				// Making sure statement returns "true"
+				if (ip.Parent != null)
+					ip.Parent["_state"].Value = true;
+
+				Node tmp = new Node(evt);
+				tmp["_ip"].Value = ip;
+				tmp["_dp"].Value = dp;
+
+				RaiseEvent ("magix.execute", tmp);
+			}
 		}
 	}
 }

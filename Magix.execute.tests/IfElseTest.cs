@@ -233,78 +233,6 @@ functions as it should.";
 		/**
 		 * Tests to see if "if", works
 		 */
-		[ActiveEvent(Name = "magix.test.if-single-name")]
-		public void magix_test_if_single_name (object sender, ActiveEventArgs e)
-		{
-			Node tmp = new Node();
-
-			tmp["Data"]["Item1"].Value = null;
-			tmp["Buffer"].Value = null;
-			tmp["if"].Value = "[Data][Item1].Name";
-			tmp["if"]["set"].Value = "[Buffer].Value";
-			tmp["if"]["set"]["value"].Value = "success";
-			tmp["else"]["set"].Value = "[Buffer].Value";
-			tmp["else"]["set"]["value"].Value = "failure";
-
-			if (e.Params.Contains ("inspect"))
-			{
-				e.Params.Clear ();
-				e.Params["inspect"].Value = @"Checks to see if setting Node Name
-functions as it should.";
-				e.Params.AddRange (tmp);
-				return;
-			}
-
-			RaiseEvent (
-				"magix.execute",
-				tmp);
-
-			if (tmp["Buffer"].Get<string>() != "success")
-			{
-				throw new ApplicationException(
-					"Failure of executing if statement");
-			}
-		}
-
-		/**
-		 * Tests to see if "if", works
-		 */
-		[ActiveEvent(Name = "magix.test.if-single-name-not-exists")]
-		public void magix_test_if_single_name_not_exists (object sender, ActiveEventArgs e)
-		{
-			Node tmp = new Node();
-
-			tmp["Data"]["Item1"].Value = null;
-			tmp["Buffer"].Value = null;
-			tmp["if"].Value = "[Data][Item1][Item2].Name";
-			tmp["if"]["set"].Value = "[Buffer].Value";
-			tmp["if"]["set"]["value"].Value = "failure";
-			tmp["else"]["set"].Value = "[Buffer].Value";
-			tmp["else"]["set"]["value"].Value = "success";
-
-			if (e.Params.Contains ("inspect"))
-			{
-				e.Params.Clear ();
-				e.Params["inspect"].Value = @"Checks to see if setting Node Name
-functions as it should.";
-				e.Params.AddRange (tmp);
-				return;
-			}
-
-			RaiseEvent (
-				"magix.execute",
-				tmp);
-
-			if (tmp["Buffer"].Get<string>() != "success")
-			{
-				throw new ApplicationException(
-					"Failure of executing if statement");
-			}
-		}
-
-		/**
-		 * Tests to see if "if", works
-		 */
 		[ActiveEvent(Name = "magix.test.if-single-value-null")]
 		public void magix_test_if_single_value_null (object sender, ActiveEventArgs e)
 		{
@@ -387,7 +315,7 @@ functions as it should.";
 			tmp["if"].Value = "[Data]";
 			tmp["if"]["if"].Value = "[Data][Item1]";
 			tmp["if"]["if"]["if"].Value = "![Data].Value";
-			tmp["if"]["if"]["if"]["if"].Value = "[Data].Name";
+			tmp["if"]["if"]["if"]["if"].Value = "[Data].Name==Data";
 			tmp["if"]["if"]["if"]["if"]["if"].Value = "[Data][Item1].Value==thomas";
 			tmp["if"]["if"]["if"]["if"]["if"]["set"].Value = "[Buffer].Value";
 			tmp["if"]["if"]["if"]["if"]["if"]["set"]["value"].Value = "success";
@@ -427,42 +355,6 @@ functions as it should.";
 			tmp["if"]["set"]["value"].Value = "success";
 			tmp["else"]["set"].Value = "[Buffer].Value";
 			tmp["else"]["set"]["value"].Value = "failure";
-
-			if (e.Params.Contains ("inspect"))
-			{
-				e.Params.Clear ();
-				e.Params["inspect"].Value = @"Checks to see if setting Node Name
-functions as it should.";
-				e.Params.AddRange (tmp);
-				return;
-			}
-
-			RaiseEvent (
-				"magix.execute",
-				tmp);
-
-			if (tmp["Buffer"].Get<string>() != "success")
-			{
-				throw new ApplicationException(
-					"Failure of executing if statement");
-			}
-		}
-
-		/**
-		 * Tests to see if "if", works
-		 */
-		[ActiveEvent(Name = "magix.test.if-single-name-not-null")]
-		public void magix_test_if_single_name_not_null (object sender, ActiveEventArgs e)
-		{
-			Node tmp = new Node();
-
-			tmp["Data"]["Item1"].Value = null;
-			tmp["Buffer"].Value = null;
-			tmp["if"].Value = "![Data][Item1].Name";
-			tmp["if"]["set"].Value = "[Buffer].Value";
-			tmp["if"]["set"]["value"].Value = "failure";
-			tmp["else"]["set"].Value = "[Buffer].Value";
-			tmp["else"]["set"]["value"].Value = "success";
 
 			if (e.Params.Contains ("inspect"))
 			{
