@@ -31,6 +31,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Magix.file", "Magix.file\Ma
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Magix.email", "Magix.email\Magix.email.csproj", "{C84D5706-3630-4B80-B3D2-8D232EA9B095}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Magix.web", "Magix.web\Magix.web.csproj", "{AE728F8E-A41F-41FF-B5D4-013C9849D5B2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -77,6 +79,10 @@ Global
 		{AC81B6B6-15A1-40F2-98E4-5ACC23BB27C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AC81B6B6-15A1-40F2-98E4-5ACC23BB27C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AC81B6B6-15A1-40F2-98E4-5ACC23BB27C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AE728F8E-A41F-41FF-B5D4-013C9849D5B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE728F8E-A41F-41FF-B5D4-013C9849D5B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE728F8E-A41F-41FF-B5D4-013C9849D5B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE728F8E-A41F-41FF-B5D4-013C9849D5B2}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B9D247FE-C4EA-49B2-83E9-0ED75D844B72}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B9D247FE-C4EA-49B2-83E9-0ED75D844B72}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B9D247FE-C4EA-49B2-83E9-0ED75D844B72}.Release|Any CPU.ActiveCfg = Release|Any CPU
