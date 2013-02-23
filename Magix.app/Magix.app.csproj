@@ -135,6 +135,10 @@
       <Project>{AC81B6B6-15A1-40F2-98E4-5ACC23BB27C3}</Project>
       <Name>Magix.remoting</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Magix.events\Magix.events.csproj">
+      <Project>{E7421BBE-A59D-42C4-949A-A3E0661574B1}</Project>
+      <Name>Magix.events</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="web.config" />
