@@ -151,6 +151,10 @@
       <Project>{AE728F8E-A41F-41FF-B5D4-013C9849D5B2}</Project>
       <Name>Magix.web</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Magix.code\Magix.code.csproj">
+      <Project>{A6695B66-C94D-4433-9D6F-B12E6ED55E38}</Project>
+      <Name>Magix.code</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="web.config" />
