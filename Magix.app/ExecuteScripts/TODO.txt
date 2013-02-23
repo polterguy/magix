@@ -32,6 +32,9 @@
 * Make sure the "Data-Pointer" is behaving sanely, by being where it should be, and not
   under some "random block" according to luck ...
 
+* Raise "DOM-Event", such that server can "semantically" click Buttons, and manipulate
+  UI, as it sees fit, such that no other UI is needed than "human UI" ...
+
 * Zipping of hierarchies of files, as "packages", which can be sent back and forth
   Try to do this, using the "command" pattern, such that "undo" becomes possible ...?
 
