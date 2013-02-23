@@ -5,6 +5,7 @@
  */
 
 using System;
+using System.Collections.Generic;
 using Magix.Core;
 
 namespace Magix.execute
@@ -85,7 +86,12 @@ the Value effectively becomes a 'goto keyword'.";
 
 			ip["_state"].Value = null;
 
-			foreach (Node idx in ip)
+			// To allow for changing of Node Hierarchy, without halting execution because
+			// of changing collection while iterating ...
+			// Change such that it also will execute dynamically generated code, meaning
+			// ADDED nodes underneath as process is done ...
+			List<Node> tmpNodes = new List<Node>(ip.Children);
+			foreach (Node idx in tmpNodes)
 			{
 				string nodeName = idx.Name;
 

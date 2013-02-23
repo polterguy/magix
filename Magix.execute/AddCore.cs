@@ -12,6 +12,7 @@ using Magix.Core;
 namespace Magix.execute
 {
 	/**
+	 * Contains active events for handling "add" keyword
 	 */
 	public class AddCore : ActiveController
 	{

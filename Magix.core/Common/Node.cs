@@ -71,6 +71,15 @@ namespace Magix.Core
             _parent = parent;
         }
 
+		public IEnumerable<Node> Children
+		{
+			get
+			{
+				foreach (Node idx in _children)
+					yield return idx;
+			}
+		}
+
 		/**
 		 * Level3: Compares the nodes in the "this" pointer to 
 		 * see if they contain all the nodex that exists in our "prototype"
