@@ -21,38 +21,6 @@ namespace Magix.execute
 		private static string _dbFile = "store.db4o";
 		private static bool? _hasNull;
 
-		public class Event
-		{
-			private string _key;
-			private Node _node;
-			private bool _remotable;
-
-			public Event(Node node, string key, bool remotable)
-			{
-				_node = node;
-				_key = key;
-				_remotable = remotable;
-			}
-
-			public string Key
-			{
-				get { return _key; }
-				set { _key = value; }
-			}
-
-			public Node Node
-			{
-				get { return _node; }
-				set { _node = value; }
-			}
-
-			public bool Remotable
-			{
-				get { return _remotable; }
-				set { _remotable = value; }
-			}
-		}
-
 		public EventCore()
 		{
 			lock (typeof(EventCore))
