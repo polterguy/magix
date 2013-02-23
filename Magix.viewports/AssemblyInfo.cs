@@ -4,20 +4,20 @@ using System.Runtime.CompilerServices;
 // Information about this assembly is defined by the following attributes. 
 // Change them to the values specific to your project.
 
-[assembly: AssemblyTitle("Magix.Core.Viewports")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Magix.viewports")]
+[assembly: AssemblyDescription("Contains the viewport plugin for Magix")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("")]
-[assembly: AssemblyCopyright("thomas")]
-[assembly: AssemblyTrademark("")]
+[assembly: AssemblyProduct("Magix Illuminate")]
+[assembly: AssemblyCopyright("Thomas Hansen")]
+[assembly: AssemblyTrademark("Magix Illuminate")]
 [assembly: AssemblyCulture("")]
 
 // The assembly version has the format "{Major}.{Minor}.{Build}.{Revision}".
 // The form "{Major}.{Minor}.*" will automatically update the build and revision,
 // and "{Major}.{Minor}.{Build}.*" will update just the revision.
 
-[assembly: AssemblyVersion("1.0.*")]
+[assembly: AssemblyVersion("2.0.0.*")]
 
 // The following attributes are used to specify the signing key for the assembly, 
 // if desired. See the Mono documentation for more information about signing.
