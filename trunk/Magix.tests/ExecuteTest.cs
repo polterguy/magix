@@ -32,7 +32,7 @@ namespace Magix.tests
 functionality works, specifically ""set"" on a 
 Data node in the Node tree. Throws an exception 
 unless the ""set"" operation executed successfully.";
-				e.Params.Add (tmp);
+				e.Params.AddRange (tmp);
 				return;
 			}
 
