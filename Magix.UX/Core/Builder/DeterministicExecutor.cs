@@ -1,6 +1,6 @@
 ﻿/*
  * Magix - A Managed Ajax Library for ASP.NET
- * Copyright 2010 - 2012 - MareMara13@gmail.com
+ * Copyright 2010 - 2013 - MareMara13@gmail.com
  * Magix is licensed as MITx11, see enclosed License.txt File for Details.
  */
 
