@@ -49,7 +49,7 @@ were a block of execute statements, or code, within
 the ""magix.execute"" namespace. All magix active 
 events which starts with the ""magix.execute."" 
 namespace, can be embedded inside a ""magix.execute""
-scope as keywords, e.g. the ""if"" keyword, will
+scope, as keywords, e.g. the ""if"" keyword, will
 map towards the ""magix.execute.if"" active event.
 This means that you can use all ""magix.execute""
 active events as code instructions, which you can
@@ -142,10 +142,13 @@ the Value effectively becomes a 'goto keyword'.";
 			{
 				e.Params["event:magix.execute"].Value = null;
 				e.Params["inspect"].Value = @"Use the ""try"" keyword to create
-a block of code, which will enter your ""catch"" 
+a block of code, which will execute your ""catch"" 
 execution block of code, if an exception is thrown
-inside the ""code"" block, inside the ""try""
-block.";
+inside your ""code"" block. This exception handler
+will be invoked, even if an exception occurs any place
+underneath your try code block, deep within your logic. 
+Meaning, you can handle errors being raised in 
+sub-functions, or invoked active events this way.";
 				e.Params["try"].Value = null;
 				e.Params["try"]["code"]["throw"].Value = "To Throw or Not to Throw!!";
 				e.Params["try"]["code"]["magix.viewport.show-message"]["message"].Value = "NOT supposed to show!!";
@@ -289,7 +292,9 @@ statement in the Value of while is True.";
 				e.Params["inspect"].Value = @"Executes the child nodes as an execution
 block, but only if the ""if"" statement returns True.
 Pair together with ""else-if"" and ""else"" to create
-branching and control of flow of your program.";
+branching and control of flow of your program. If an ""if""
+statement returns True, then no paired ""else-if"" or ""else""
+statements will be executed.";
 				e.Params["Data"]["Item1"].Value = "Cache1";
 				e.Params["Data"]["Cache"].Value = null;
 				e.Params["if"].Value = "[Data][Item1].Value!=[Data][1].Name";
@@ -495,7 +500,7 @@ branching and control of flow of your program.";
 			{
 				e.Params["event:magix.execute"].Value = null;
 				e.Params["inspect"].Value = @"Executes the underlaying code block,
-but only if no paired ""if"" statement has returned True,
+but only if no previous ""if"" or ""else-if"" statement has returned True,
 and the statement inside the Value of the ""else-if"" 
 returns True.";
 				e.Params["Data"]["Node"].Value = null;
@@ -628,10 +633,11 @@ if your active event contains '.', then you can
 raise the active event directly, without using
 the ""raise"" keyword, by creating a node who's
 Name is the name of your active event. Add up
-""no-override"" with a Value of True to make 
-sure you go directly towards the active event 
-you're dereferencing, meaning no overrides of 
-the active events will be used.";
+""no-override"" with a Value of True if you wish
+to go directly to the active event in question,
+and not rely upon any overrides. This is useful
+for having the possibility of 'calling base
+functionality' from overridden active events.";
 				e.Params["raise"].Value = "magix.viewport.show-message";
 				e.Params["raise"]["message"].Value = "Hi there World 1.0...!!";
 				e.Params["raise"]["no-override"].Value = "False";
@@ -779,7 +785,9 @@ the Value of ""set"" must be an expression.";
 				e.Params["inspect"].Value = @"Creates a copy of the Node returned by the 
 expression in the ""value"" Node underneath 
 the ""add"" node, and appends it into the 
-Node-Expression found in Value of ""add"".";
+Node-Expression found in Value of ""add"". 
+Meaning, the entire node will be copied,
+with its children and sub-nodes.";
 				e.Params["Data"]["Children"].Value = "Original";
 				e.Params["Data"]["Children1"].Value = "Will be copied";
 				e.Params["Data"]["Children1"]["Item1"].Value = "Will be copied too";

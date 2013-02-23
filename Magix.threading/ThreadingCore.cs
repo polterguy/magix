@@ -31,10 +31,13 @@ namespace Magix.threading
 				e.Params["fork"]["if"].Value = "[Data][Value].Value==thomas";
 				e.Params["fork"]["if"]["raise"].Value = "magix.viewport.show-message";
 				e.Params["fork"]["if"]["raise"]["message"].Value = "Hi Thomas!";
-				e.Params["inspect"].Value = @"Spawns a new thread which the given
+				e.Params["inspect"].Value = @"Spawns a new thread, which the given
 code block will be executed within. Useful for long operations, 
-where you'd like to return to caller before the operation is
-finished.";
+where you'd like to return to caller, before the operation is
+finished. Notice the entire node-list underneath the ""fork""
+keyword, will be cloned, and passed into the ""fork"" active event,
+for execution on a different thread. This means the forked
+thread will not change any data on the original node-set.";
 				return;
 			}
 			Node ip = e.Params;
