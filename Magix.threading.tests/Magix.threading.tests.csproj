@@ -5,10 +5,10 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.0</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{EB41CEE7-B2A5-4A82-8AE6-1CBEABEA7438}</ProjectGuid>
+    <ProjectGuid>{E7B4FC0B-2E5D-4CC0-875D-F5A6AFAEFD5F}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>Magix.execute.tests</RootNamespace>
-    <AssemblyName>Magix.execute.tests</AssemblyName>
+    <RootNamespace>Magix.threading.tests</RootNamespace>
+    <AssemblyName>Magix.threading.tests</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -33,12 +33,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />
-    <Compile Include="ExecuteTest.cs" />
-    <Compile Include="SetTest.cs" />
-    <Compile Include="IfElseTest.cs" />
-    <Compile Include="WhileTest.cs" />
-    <Compile Include="ForEachTest.cs" />
-    <Compile Include="ExceptionTest.cs" />
+    <Compile Include="ThreadingTest.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
