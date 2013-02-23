@@ -49,8 +49,7 @@ namespace Magix.Core
 	                Request.HttpMethod == "POST" &&
 	                !string.IsNullOrEmpty(Page.Request["event"]))
 	            {
-					// We only raise events which are overrides, and not
-					// if they are "system overrides" ...
+					// We only raise events which are allowed to be remotely invoked
 					if (ActiveEvents.Instance.IsAllowedRemotely (Page.Request["event"]))
 					{
 						Node node = new Node();

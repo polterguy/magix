@@ -19,6 +19,7 @@ using Magix.UX.Widgets.Core;
 namespace Magix.viewports
 {
     /**
+     * Sample Viewport
      */
     public class Website : Viewport
     {
@@ -33,17 +34,11 @@ namespace Magix.viewports
 		private bool _notFirstMessage;
 		private int _time = 3000;
 
-		public void Page_Load (object sender, EventArgs e)
-		{
-		}
-
         /**
          */
         [ActiveEvent(Name = "magix.viewport.show-message")]
 		protected void magix_viewport_show_message (object sender, ActiveEventArgs e)
 		{
-			if (!_notFirstMessage)
-				messageLabel.Text = "";
 			if (e.Params.Contains ("inspect"))
 			{
 				e.Params["message"].Value = "Message to show to End User";
@@ -56,6 +51,8 @@ end user for some seconds.";
 				e.Params["code"].Value = "List of nodes that's to be formatted and shown in pre block";
 				return;
 			}
+			if (!_notFirstMessage)
+				messageLabel.Text = "";
 
 			messageLabel.Text += "<p>" + e.Params["message"].Get<string>() + "</p>";
 
