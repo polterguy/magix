@@ -29,7 +29,6 @@ namespace Magix.execute
 			}
 			string txt = "";
 			Node node = e.Params["JSON"].Value as Node;
-			int startIdx = 0;
 			txt += ParseNodes(0, node).TrimEnd ();
 			e.Params["code"].Value = txt;
 		}
