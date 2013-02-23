@@ -36,6 +36,12 @@
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="ExecuteCore.cs" />
     <Compile Include="ExceptionCore.cs" />
+    <Compile Include="WhileCore.cs" />
+    <Compile Include="IfElseCore.cs" />
+    <Compile Include="ForEachCore.cs" />
+    <Compile Include="RaiseCore.cs" />
+    <Compile Include="SetCore.cs" />
+    <Compile Include="AddCore.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
