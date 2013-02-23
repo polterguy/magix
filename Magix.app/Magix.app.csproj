@@ -155,6 +155,14 @@
       <Project>{A6695B66-C94D-4433-9D6F-B12E6ED55E38}</Project>
       <Name>Magix.code</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Magix.execute.tests\Magix.execute.tests.csproj">
+      <Project>{EB41CEE7-B2A5-4A82-8AE6-1CBEABEA7438}</Project>
+      <Name>Magix.execute.tests</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Magix.events.tests\Magix.events.tests.csproj">
+      <Project>{B07D7CF9-5C0C-47A1-BD42-AB346B5761F2}</Project>
+      <Name>Magix.events.tests</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="web.config" />

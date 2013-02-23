@@ -5,10 +5,10 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.0</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{40E6B621-1424-4A4C-9349-EB5C8FCD7D10}</ProjectGuid>
+    <ProjectGuid>{B07D7CF9-5C0C-47A1-BD42-AB346B5761F2}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>Magix.tests</RootNamespace>
-    <AssemblyName>Magix.tests</AssemblyName>
+    <RootNamespace>Magix.events.tests</RootNamespace>
+    <AssemblyName>Magix.events.tests</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -33,17 +33,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />
-    <Compile Include="TestsCore.cs" />
+    <Compile Include="EventsTest.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <ProjectReference Include="..\Magix.core\Magix.Core.csproj">
       <Project>{11376D5F-13BD-4529-BA92-DDE415B96220}</Project>
       <Name>Magix.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Magix.UX\Magix.UX.csproj">
-      <Project>{FDD15C94-7DC2-4D19-9AF4-0E9FD8CCC443}</Project>
-      <Name>Magix.UX</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

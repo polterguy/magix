@@ -37,6 +37,9 @@
 
 * Implement "finally"
 
+* Group Unit Tests together with their respective projects, instead of having
+  one "gigantic" Unit Test project ...
+
 * Handling of application-startup, to check for a base "run.script.txt" file,
   which will serve as a "manifest", being executed, potentially changing
   the state of the server. Easy way of distributing applications...
