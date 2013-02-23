@@ -27,6 +27,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Magix.remoting", "Magix.rem
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Magix.events", "Magix.events\Magix.events.csproj", "{E7421BBE-A59D-42C4-949A-A3E0661574B1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Magix.file", "Magix.file\Magix.file.csproj", "{F357EB84-40B4-4B9F-AFC0-DF7EEBFBAF82}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -81,6 +83,10 @@ Global
 		{E7421BBE-A59D-42C4-949A-A3E0661574B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E7421BBE-A59D-42C4-949A-A3E0661574B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E7421BBE-A59D-42C4-949A-A3E0661574B1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F357EB84-40B4-4B9F-AFC0-DF7EEBFBAF82}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F357EB84-40B4-4B9F-AFC0-DF7EEBFBAF82}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F357EB84-40B4-4B9F-AFC0-DF7EEBFBAF82}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F357EB84-40B4-4B9F-AFC0-DF7EEBFBAF82}.Release|Any CPU.Build.0 = Release|Any CPU
 		{FDD15C94-7DC2-4D19-9AF4-0E9FD8CCC443}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{FDD15C94-7DC2-4D19-9AF4-0E9FD8CCC443}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FDD15C94-7DC2-4D19-9AF4-0E9FD8CCC443}.Release|Any CPU.ActiveCfg = Release|Any CPU
