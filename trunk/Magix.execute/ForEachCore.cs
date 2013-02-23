@@ -12,6 +12,7 @@ using Magix.Core;
 namespace Magix.execute
 {
 	/**
+	 * Contains logic for "for-each" keyword
 	 */
 	public class ForEachCore : ActiveController
 	{

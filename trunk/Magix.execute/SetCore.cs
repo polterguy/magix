@@ -12,6 +12,7 @@ using Magix.Core;
 namespace Magix.execute
 {
 	/**
+	 * Contains logic for the "set" keyword
 	 */
 	public class SetCore : ActiveController
 	{
