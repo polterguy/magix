@@ -12,6 +12,7 @@ using Magix.Core;
 namespace Magix.execute
 {
 	/**
+	 * Contains active events for handling of exceptions
 	 */
 	public class ExceptionCore : ActiveController
 	{
@@ -67,6 +68,7 @@ sub-functions, or invoked active events this way.";
 					ip["code"]["_state"].UnTie ();
 
 				ip["catch"]["exception"].Value = err.Message;
+
 				RaiseEvent (
 					"magix.execute",
 					ip["catch"]);
