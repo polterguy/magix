@@ -826,7 +826,10 @@ back to the previous catch in the stack of
 active events. Message thrown becomes the 
 Value of the throw Node. Use together with
 ""try"" to handle errors.";
-				e.Params["throw"].Value = "Some Exception Error Message";
+				e.Params["try"]["code"]["throw"].Value = "Some Exception Error Message";
+				e.Params["try"]["catch"]["set"].Value = "[magix.viewport.show-message][message].Value";
+				e.Params["try"]["catch"]["set"]["value"].Value = "[exception].Value";
+				e.Params["try"]["catch"]["magix.viewport.show-message"].Value = null;
 				return;
 			}
 			Node ip = e.Params;

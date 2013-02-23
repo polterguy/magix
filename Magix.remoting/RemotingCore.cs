@@ -101,7 +101,9 @@ are being correctly re-mapped.
 ""URL"". The event overridden is found as Value. If you pass
 in a null value as a URL, or no URL node, the override is removed.
 Please make sure the other side has marked the active event as
-remotable.";
+remotable. Once a method is 'tunneled', if will no longer be
+raise locally, but every time the active event is raised, it
+will be Polymorphistically raised on your URL end-point instead.";
 				e.Params["tunnel"].Value = "magix.namespace.foo";
 				e.Params["tunnel"]["URL"].Value = "http://127.0.0.1:8080";
 				return;

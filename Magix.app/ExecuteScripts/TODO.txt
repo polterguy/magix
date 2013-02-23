@@ -35,6 +35,8 @@
 * Zipping of hierarchies of files, as "packages", which can be sent back and forth
   Try to do this, using the "command" pattern, such that "undo" becomes possible ...?
 
+* Implement "finally"
+
 * Handling of application-startup, to check for a base "run.script.txt" file,
   which will serve as a "manifest", being executed, potentially changing
   the state of the server. Easy way of distributing applications...

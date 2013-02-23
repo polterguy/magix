@@ -69,6 +69,7 @@ finished.";
 		{
 			if (e.Params.Contains ("inspect"))
 			{
+				e.Params["event:magix.execute"].Value = 500;
 				e.Params["sleep"].Value = 500;
 				e.Params["inspect"].Value = @"Sleeps the current threat
 for Value number of milliseconds.";
