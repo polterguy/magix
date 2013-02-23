@@ -163,6 +163,18 @@
       <Project>{B07D7CF9-5C0C-47A1-BD42-AB346B5761F2}</Project>
       <Name>Magix.events.tests</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Magix.remoting.tests\Magix.remoting.tests.csproj">
+      <Project>{8E639EDC-059D-4BB6-B905-E3611AAC2E24}</Project>
+      <Name>Magix.remoting.tests</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Magix.threading.tests\Magix.threading.tests.csproj">
+      <Project>{E7B4FC0B-2E5D-4CC0-875D-F5A6AFAEFD5F}</Project>
+      <Name>Magix.threading.tests</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Magix.data.tests\Magix.data.tests.csproj">
+      <Project>{A81C3236-DD06-4315-AE67-6B0EB833526F}</Project>
+      <Name>Magix.data.tests</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="web.config" />

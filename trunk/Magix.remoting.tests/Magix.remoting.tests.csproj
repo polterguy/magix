@@ -5,10 +5,10 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.0</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{EB41CEE7-B2A5-4A82-8AE6-1CBEABEA7438}</ProjectGuid>
+    <ProjectGuid>{8E639EDC-059D-4BB6-B905-E3611AAC2E24}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>Magix.execute.tests</RootNamespace>
-    <AssemblyName>Magix.execute.tests</AssemblyName>
+    <RootNamespace>Magix.remoting.tests</RootNamespace>
+    <AssemblyName>Magix.remoting.tests</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -33,12 +33,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />
-    <Compile Include="ExecuteTest.cs" />
-    <Compile Include="SetTest.cs" />
-    <Compile Include="IfElseTest.cs" />
-    <Compile Include="WhileTest.cs" />
-    <Compile Include="ForEachTest.cs" />
-    <Compile Include="ExceptionTest.cs" />
+    <Compile Include="RemotingTest.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
