@@ -143,6 +143,10 @@
       <Project>{F357EB84-40B4-4B9F-AFC0-DF7EEBFBAF82}</Project>
       <Name>Magix.file</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Magix.email\Magix.email.csproj">
+      <Project>{C84D5706-3630-4B80-B3D2-8D232EA9B095}</Project>
+      <Name>Magix.email</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="web.config" />

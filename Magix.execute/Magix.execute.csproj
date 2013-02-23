@@ -36,7 +36,6 @@
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="ExecuteCore.cs" />
     <Compile Include="Helper.cs" />
-    <Compile Include="EmailCore.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
