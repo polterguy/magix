@@ -5,6 +5,8 @@
  */
 
 using System;
+using System.Globalization;
+using System.Collections.Generic;
 
 namespace Magix.Core
 {
@@ -15,6 +17,241 @@ namespace Magix.Core
      */
 	public class Expressions
 	{
+		/**
+		 * Takes an Expression, which it compares for true or false
+		 */
+		public static bool IsTrue (string expr, Node ip, Node dp)
+		{
+			List<string> tokens = TokenizeExpression(expr);
+
+			if (tokens.Count == 1)
+			{
+				return ExpressionExist (tokens[0], dp, ip);
+			}
+			else if (tokens.Count == 2)
+			{
+				// Only ![Something] ...
+				if (tokens[0] != "!")
+					throw new ArgumentException("Didn't understand '" + expr + "'");
+				return !ExpressionExist (tokens[1], dp, ip);
+			}
+			else if (tokens.Count == 3)
+			{
+				object lhs = GetExpressionValue(tokens[0], dp, ip);
+				string comparer = tokens[1];
+				object rhs = GetExpressionValue(tokens[2], dp, ip);
+
+				if (lhs == null || rhs == null)
+					return false;
+
+				if (lhs.GetType () != rhs.GetType ())
+				{
+					switch (lhs.GetType ().FullName)
+					{
+					case "System.Int32":
+						rhs = int.Parse (rhs.ToString ());
+						break;
+					case "System.Boolean":
+						rhs = bool.Parse (rhs.ToString ());
+						break;
+					case "System.DateTime":
+						rhs = DateTime.ParseExact(rhs.ToString (), "yyyy.MM.dd HH:mm:ss", CultureInfo.InvariantCulture);
+						break;
+					case "System.Decimal":
+						rhs = decimal.Parse (rhs.ToString (), CultureInfo.InvariantCulture);
+						break;
+					default:
+						throw new ArgumentException("Don't know how to compare '" + expr + "' since the types of the expressions are incompatible");
+					}
+				}
+
+				// Actual comparison, now our types are hopefully identical, and we can perform actual comparison
+				switch (comparer)
+				{
+				case "!=":
+					return !lhs.Equals (rhs);
+				case "<=":
+					switch (lhs.GetType ().FullName)
+					{
+					case "System.Boolean":
+						return ((bool)lhs) == false;
+					case "System.DateTime":
+						return ((DateTime)lhs) <= ((DateTime)rhs);
+					case "System.Decimal":
+						return ((decimal)lhs) <= ((decimal)rhs);
+					case "System.Int32":
+						return ((int)lhs) <= ((int)rhs);
+					case "System.String":
+						return ((string)lhs).CompareTo(rhs) <= 0;
+					default:
+						throw new ArgumentException("Don't know how to compare '" + expr + "' since types don't match");
+					}
+				case ">=":
+					switch (lhs.GetType ().FullName)
+					{
+					case "System.Boolean":
+						return ((bool)lhs) == true;
+					case "System.DateTime":
+						return ((DateTime)lhs) >= ((DateTime)rhs);
+					case "System.Decimal":
+						return ((decimal)lhs) >= ((decimal)rhs);
+					case "System.Int32":
+						return ((int)lhs) >= ((int)rhs);
+					case "System.String":
+						return ((string)lhs).CompareTo(rhs) >= 0;
+					default:
+						throw new ArgumentException("Don't know how to compare '" + expr + "' since types don't match");
+					}
+				case "<":
+					switch (lhs.GetType ().FullName)
+					{
+					case "System.Boolean":
+						return ((bool)lhs) == false && ((bool)rhs) == true;
+					case "System.DateTime":
+						return ((DateTime)lhs) < ((DateTime)rhs);
+					case "System.Decimal":
+						return ((decimal)lhs) < ((decimal)rhs);
+					case "System.Int32":
+						return ((int)lhs) < ((int)rhs);
+					case "System.String":
+						return ((string)lhs).CompareTo(rhs) < 0;
+					default:
+						throw new ArgumentException("Don't know how to compare '" + expr + "' since types don't match");
+					}
+				case ">":
+					switch (lhs.GetType ().FullName)
+					{
+					case "System.Boolean":
+						return ((bool)lhs) == true && ((bool)rhs) == false;
+					case "System.DateTime":
+						return ((DateTime)lhs) > ((DateTime)rhs);
+					case "System.Decimal":
+						return ((decimal)lhs) > ((decimal)rhs);
+					case "System.Int32":
+						return ((int)lhs) > ((int)rhs);
+					case "System.String":
+						return ((string)lhs).CompareTo(rhs) > 0;
+					default:
+						throw new ArgumentException("Don't know how to compare '" + expr + "' since types don't match");
+					}
+				case "=":
+					switch (lhs.GetType ().FullName)
+					{
+					case "System.Boolean":
+						return ((bool)lhs) == ((bool)rhs);
+					case "System.DateTime":
+						return ((DateTime)lhs) == ((DateTime)rhs);
+					case "System.Decimal":
+						return ((decimal)lhs) == ((decimal)rhs);
+					case "System.Int32":
+						return ((int)lhs) == ((int)rhs);
+					case "System.String":
+						return ((string)lhs) == ((string)rhs);
+					default:
+						throw new ArgumentException("Don't know how to compare '" + expr + "' since types don't match");
+					}
+				default:
+					throw new ArgumentException("Don't understand the expression '" + expr + "'");
+				}
+			}
+			else
+				throw new ArgumentException("Didn't understand '" + expr + "'");
+		}
+
+		// Helper for above method ...
+		private static List<string> TokenizeExpression (string expr)
+		{
+			List<string> ret = new List<string>();
+
+			string buffer = "";
+			int insides = 0;
+			for (int idx = 0; idx < expr.Length; idx++)
+			{
+				if (expr[idx] == '[')
+				{
+					buffer += expr[idx];
+					insides += 1;
+				}
+				else if (expr[idx] == ']')
+				{
+					buffer += expr[idx];
+					insides -= 1;
+				}
+				else if (insides == 0 && expr[idx] == '!')
+				{
+					if (!string.IsNullOrEmpty (buffer))
+					{
+						ret.Add (buffer);
+						buffer = "";
+					}
+					if (expr[idx + 1] == '=')
+					{
+						idx += 1;
+						ret.Add ("!=");
+					}
+					else
+					{
+						ret.Add ("!");
+					}
+				}
+				else if (insides == 0 && expr[idx] == '<')
+				{
+					if (!string.IsNullOrEmpty (buffer))
+					{
+						ret.Add (buffer);
+						buffer = "";
+					}
+					if (expr[idx + 1] == '=')
+					{
+						idx += 1;
+						ret.Add ("<=");
+					}
+					else
+					{
+						ret.Add ("<");
+					}
+				}
+				else if (insides == 0 && expr[idx] == '>')
+				{
+					if (!string.IsNullOrEmpty (buffer))
+					{
+						ret.Add (buffer);
+						buffer = "";
+					}
+					if (expr[idx + 1] == '=')
+					{
+						idx += 1;
+						ret.Add (">=");
+					}
+					else
+					{
+						ret.Add (">");
+					}
+				}
+				else if (insides == 0 && expr[idx] == '=')
+				{
+					if (!string.IsNullOrEmpty (buffer))
+					{
+						ret.Add (buffer);
+						buffer = "";
+					}
+					if (expr[idx + 1] == '=')
+					{
+						idx += 1;
+					}
+					ret.Add ("=");
+				}
+				else
+				{
+					buffer += expr[idx];
+				}
+			}
+			if (!string.IsNullOrEmpty (buffer))
+				ret.Add (buffer);
+			return ret;
+		}
+
+		// Helper for finding nodes
 		private static Node GetNode (
 			string expr, 
 			Node source, 
@@ -199,34 +436,7 @@ namespace Magix.Core
 			return x;
 		}
 
-		/**
-		 * Empties the given Value or child nodes of the given expression, e.g.
-		 * [Data] will remove all child nodes of the Data node, while
-		 * [Data].Value will set the Value of the Data node to null
-		 */
-		public static void Empty (string expression, Node source, Node ip)
-		{
-			string lastEntity = "";
-			Node x = GetNode (expression, source, ip, ref lastEntity, false);
-
-			if (x == null)
-				return;
-
-            if (lastEntity == ".Value")
-				x.Value = null;
-            else if (lastEntity == "")
-				x.Clear ();
-            else if (lastEntity == ".Name")
-                throw new ArgumentException("Cannot empty Name parts");
-            else
-                throw new ArgumentException("Couldn't understand the last parts of your expression '" + lastEntity + "'");
-		}
-
-		/**
-		 * Will remove the given node, e.g. if [Data][Item1] is passed, it
-		 * will remove Data/Item1 from the Node tree
-		 */
-		public static void Remove (string expression, Node source, Node ip)
+		private static void Remove (string expression, Node source, Node ip)
 		{
 			string lastEntity = "";
 			Node x = GetNode (expression, source, ip, ref lastEntity, false);
@@ -244,10 +454,7 @@ namespace Magix.Core
                 throw new ArgumentException("Couldn't understand the last parts of your expression '" + lastEntity + "'");
 		}
 
-		/**
-		 * Returns true if the given expression already exists in the node tree
-		 */
-		public static bool ExpressionExist (string expression, Node source, Node ip)
+		private static bool ExpressionExist (string expression, Node source, Node ip)
 		{
 			string lastEntity = "";
 			Node x = GetNode (expression, source, ip, ref lastEntity, false);
@@ -257,8 +464,6 @@ namespace Magix.Core
 
             if (lastEntity == ".Value")
                 return x.Value != null;
-            else if (lastEntity == ".Name")
-                return !string.IsNullOrEmpty (x.Name);
             else if (lastEntity == "")
                 return true;
             else
@@ -276,14 +481,11 @@ namespace Magix.Core
 			Node source, 
 			Node ip)
 		{
-			object valueToSet = exprSource;
+			object valueToSet = GetExpressionValue (exprSource, source, ip);
 
-			if (exprSource.IndexOf ("[") == 0)
-				valueToSet = GetExpressionValue (exprSource, source, ip);
-
-			if (valueToSet == null || exprSource == "null")
+			if (valueToSet == null)
 			{
-				Empty (exprDestination, source, ip);
+				Remove (exprDestination, source, ip);
 				return;
 			}
 
@@ -317,8 +519,14 @@ namespace Magix.Core
 		 */
         public static object GetExpressionValue(string expression, Node source, Node ip)
         {
+			if (expression == null)
+				return null;
+
+			if (!expression.TrimStart ().StartsWith ("["))
+				return expression;
+
 			string lastEntity = "";
-			Node x = GetNode (expression, source, ip, ref lastEntity, false);
+			Node x = GetNode(expression, source, ip, ref lastEntity, false);
 
 			if (x == null)
 				return null;
