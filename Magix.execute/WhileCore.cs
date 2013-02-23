@@ -12,13 +12,10 @@ using Magix.Core;
 namespace Magix.execute
 {
 	/**
-	 * Controller logic for the magix.execute programming language in magix, which
-	 * facilitates for creating logic in nodes, such that you can execute logic
-	 * based upon your nodes dynamically
+	 * Controller logic for the "while" logic
 	 */
 	public class WhileCore : ActiveController
 	{
-		// TODO: Refactor together with "if"
 		/**
 		 * Checks to see if the current 
 		 * statement is returning true, and if so, executes the underlaying nodes

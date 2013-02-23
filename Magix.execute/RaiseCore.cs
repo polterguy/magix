@@ -12,6 +12,7 @@ using Magix.Core;
 namespace Magix.execute
 {
 	/**
+	 * Contains logic for the "raise" keyword
 	 */
 	public class RaiseCore : ActiveController
 	{
@@ -61,17 +62,7 @@ functionality' from overridden active events.";
 			if (e.Params.Contains ("_ip"))
 				ip = e.Params ["_ip"].Value as Node;
 
-			Node dp = e.Params;
-			if (e.Params.Contains ("_dp"))
-				dp = e.Params ["_dp"].Value as Node;
-
 			Node pars = ip;
-
-			// Unless we're given at least one parameter underneath our Instruction Pointer,
-			// we pass in the Data-Pointer by default to the Active Event ...
-			// But only if event is being "raised" and not directly referenced ...
-			if (ip.Count == 0 && ip.Name == "raise")
-				pars = dp;
 
 			bool forceNoOverride = false;
 			if (ip.Contains ("no-override") && ip["no-override"].Get<bool>())
