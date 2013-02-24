@@ -146,32 +146,43 @@ namespace Magix.execute
 					}
 					else
 					{
-						name = tmp.Split (new string[]{"="}, StringSplitOptions.RemoveEmptyEntries)[0];
-						switch (tmp.Substring (name.Length).Split ('>')[0] + ">")
+						name = tmp.Split(new string[]{"="}, StringSplitOptions.RemoveEmptyEntries)[0];
+						switch (tmp.Substring(name.Length).Split('>')[0] + ">")
 						{
 						case "=>":
-							value = tmp.Substring (name.Length + 2).TrimStart ();
-							if (((string)value).StartsWith ("@"))
+							if (!tmp.Substring(name.Length + 2).TrimStart().StartsWith("@"))
 							{
-								value += "\n";
+								value = tmp.Substring(name.Length + 2).TrimStart();
+							}
+							else
+							{
+								string tmpLine = tmp.Substring(name.Length + 2).TrimStart();
+								tmpLine = tmpLine.Substring(2);
 								while (true)
 								{
 									int noFnut = 0;
-									for (int idxNo = ((string)value).Length - 2; idxNo >=0; idxNo-- )
+									for (int idxNo = tmpLine.Length - 1; idxNo >= 0; idxNo--)
 									{
-										if (((string)value)[idxNo] == '"')
+										if (tmpLine[idxNo] == '"')
 											noFnut += 1;
 										else
 											break;
 									}
+
+									value += tmpLine.Replace("\"\"", "\"");
+
 									if (noFnut % 2 != 0)
+									{
+										value = ((string)value).TrimEnd().Substring(0, ((string)value).Length - 1);
 										break;
-									string tmpLine = reader.ReadLine ();
+									}
+
+									value += "\n";
+									tmpLine = reader.ReadLine();
+
 									if (tmpLine == null)
 										throw new ArgumentException("Unfinished string literal: " + value);
-									value += tmpLine.Replace ("\"\"", "\"") + "\n";
 								}
-								value = ((string)value).Substring (2, ((string)value).Length - 4);
 							} break;
 						case "=(int)>":
 							value = int.Parse (tmp.Substring (name.Length + 7).Trim());

@@ -26,9 +26,19 @@ namespace Magix.tests
 			tmp["Data"]["HELLO"]["bool"].Value = true;
 			tmp["decimal"].Value = 1.54M;
 			tmp["int"].Value = 123456;
-			tmp["string"].Value = @"asdfooh dsfoih sdfoih sdf
+			tmp["string1"].Value = @"asdfooh dsfoih sdfoih sdf
 sdafih sdfoiih sdoifh sadf"" dsfouh sdfouh sdfouuh sdf"" sadfoih
-sadfpijsdfpijsdfpoijsdafopijsdfoij!!!!!!!";
+sadfpijsdfpijsdfpoijsdafopijsdfoij!!!!!!!""";
+			tmp["string2"].Value = @"asdfooh dsfoih sdfoih sdf";
+			tmp["string3"].Value = @"asdfooh dsfoih sdfoih sdf""";
+			tmp["string4"].Value = @"asdfooh dsfoih sdfoih sdf""""""""";
+			tmp["string5"].Value = @"asdfooh dsfoih sdfoih sdf
+
+
+
+
+THOMAS""""""""";
+			tmp["expr"]["deep"]["deep1"]["deep2"].Value = @"[tjobing]";
 
 			Node input = new Node();
 			input["JSON"].Value = tmp.Clone();
