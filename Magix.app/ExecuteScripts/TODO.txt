@@ -11,10 +11,18 @@
 
 * Uploading of Manifest files, which changes the state of the application somehow
 
+* Make "magix.admin.get-active-events" also fetch only Remotable Events, or
+  remotely overridden events, etc ...
+
 * Unit tests of raising "complex active events", meaning raising code contains
   path expressions, etc ...
 
 * Better handling of types in expressions
+
+* Create "Logging" controller
+
+* Detach Magix.events and Magix.remoting from db4o, by internally using Magix.data
+  through Active Events
 
 * Tutorial mode Active Module, which helps guide the user through Magix
 

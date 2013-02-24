@@ -53,6 +53,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Magix.threading.tests", "Ma
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Magix.data.tests", "Magix.data.tests\Magix.data.tests.csproj", "{A81C3236-DD06-4315-AE67-6B0EB833526F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Magix.code.tests", "Magix.code.tests\Magix.code.tests.csproj", "{7825CF11-A8CB-4788-8A5C-C2E064F063DE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -91,6 +93,10 @@ Global
 		{71FE057E-9D78-423F-8664-2FAE2D0D56A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{71FE057E-9D78-423F-8664-2FAE2D0D56A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{71FE057E-9D78-423F-8664-2FAE2D0D56A1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7825CF11-A8CB-4788-8A5C-C2E064F063DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7825CF11-A8CB-4788-8A5C-C2E064F063DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7825CF11-A8CB-4788-8A5C-C2E064F063DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7825CF11-A8CB-4788-8A5C-C2E064F063DE}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7BBD5BD2-E3FE-42C2-94F8-878F4156A03E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7BBD5BD2-E3FE-42C2-94F8-878F4156A03E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7BBD5BD2-E3FE-42C2-94F8-878F4156A03E}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -171,6 +177,7 @@ Global
 		{8E639EDC-059D-4BB6-B905-E3611AAC2E24} = {B9E241B1-5F77-47FB-84D1-150A8B43F663}
 		{E7B4FC0B-2E5D-4CC0-875D-F5A6AFAEFD5F} = {B9E241B1-5F77-47FB-84D1-150A8B43F663}
 		{A81C3236-DD06-4315-AE67-6B0EB833526F} = {B9E241B1-5F77-47FB-84D1-150A8B43F663}
+		{7825CF11-A8CB-4788-8A5C-C2E064F063DE} = {B9E241B1-5F77-47FB-84D1-150A8B43F663}
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = Magix.app\Magix.app.csproj

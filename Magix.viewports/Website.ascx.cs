@@ -19,7 +19,7 @@ using Magix.UX.Widgets.Core;
 namespace Magix.viewports
 {
     /**
-     * Sample Viewport
+     * Sample Viewport, nothing fancy, three empty containers
      */
     public class Website : Viewport
     {
@@ -35,6 +35,7 @@ namespace Magix.viewports
 		private int _time = 3000;
 
         /**
+         * Shows a Message Box to the end user, which can be configured
          */
         [ActiveEvent(Name = "magix.viewport.show-message")]
 		protected void magix_viewport_show_message (object sender, ActiveEventArgs e)
