@@ -11,14 +11,22 @@ using System.Collections.Generic;
 namespace Magix.Core
 {
     /**
-     * Level3: Implementer of Expression logic, such that nodes can be retrieved
+     * Implementer of Expression logic, such that nodes can be retrieved
      * and manipulated using expressions, such as e.g. [Data][Name].Value, which will
      * traverse the Data node's Name node, and return its Value
      */
 	public class Expressions
 	{
 		/**
-		 * Takes an Expression, which it compares for true or false
+		 * Takes an Expression, which it compares for true or false. This expression
+		 * can take a single argument, e.g. [Data][Tmp], at which case it will check
+		 * for the existence of that Node, and return true if exists. It can prefix
+		 * a single argument with a '!', to return true if NOT exists. It can have two 
+		 * arguments, where the right-hand side might be either another Expression
+		 * path, or a constant, such as e.g. if=>[Data][Tmp].Value = thomas - or
+		 * if=>[Data][Tmp].Name != [Data].Value. Comparison operators it implements
+		 * are '=', '<', '>', '<=', '>=' and '!='. You can use either one '=' or '=='
+		 * for comparing two values
 		 */
 		public static bool IsTrue (string expr, Node ip, Node dp)
 		{
@@ -157,6 +165,81 @@ namespace Magix.Core
 			else
 				throw new ArgumentException("Didn't understand '" + expr + "'");
 		}
+
+		// TODO: Implement "strings" parsing for complex strings, such that e.g. "[Data].Value"
+		// becomes a string literal, and not an expression
+		/**
+		 * Sets the given exprDestination to the valuer of exprSource. If
+		 * exprSource starts with a '[', it is expected to be a reference to another
+		 * expression, else it will be assumed to be a static value
+		 */
+		public static void SetNodeValue (
+			string exprDestination, 
+			string exprSource, 
+			Node source, 
+			Node ip)
+		{
+			object valueToSet = GetExpressionValue (exprSource, source, ip);
+
+			if (valueToSet == null)
+			{
+				Remove (exprDestination, source, ip);
+				return;
+			}
+
+			string lastEntity = "";
+			Node x = GetNode (exprDestination, source, ip, ref lastEntity, true);
+
+            if (lastEntity == ".Value")
+			{
+               x.Value = valueToSet;
+			}
+            else if (lastEntity == ".Name")
+			{
+				if (!(valueToSet is string))
+					throw new ArgumentException("Cannot set the Name of a node to something which is not a string literal");
+                x.Name = valueToSet.ToString ();
+			}
+            else if (lastEntity == "")
+			{
+				Node clone = (valueToSet as Node).Clone ();
+				x.ReplaceChildren(clone);
+				x.Name = clone.Name;
+				x.Value = clone.Value;
+			}
+            else
+                throw new ArgumentException("Couldn't understand the last parts of your expression '" + lastEntity + "'");
+		}
+
+		/**
+		 * Returns the value of the given expression, which might return a string, 
+		 * list of nodes, or any other object your node tree might contain
+		 */
+        public static object GetExpressionValue(string expression, Node source, Node ip)
+        {
+			if (expression == null)
+				return null;
+
+			if (!expression.TrimStart ().StartsWith ("["))
+				return expression;
+
+			string lastEntity = "";
+			Node x = GetNode(expression, source, ip, ref lastEntity, false);
+
+			if (x == null)
+				return null;
+
+            if (lastEntity == ".Value")
+                return x.Value;
+            else if (lastEntity == ".Name")
+                return x.Name;
+            else if (lastEntity == ".Count")
+                return x.Count;
+            else if (lastEntity == "")
+                return x;
+            else
+                throw new ArgumentException("Couldn't understand the last parts of your expression '" + lastEntity + "'");
+        }
 
 		// Helper for above method ...
 		private static List<string> TokenizeExpression (string expr)
@@ -469,79 +552,6 @@ namespace Magix.Core
             else
                 throw new ArgumentException("Couldn't understand the last parts of your expression '" + lastEntity + "'");
 		}
-
-		/**
-		 * Level3: Sets the given exprDestination to the valuer of exprSource. If
-		 * exprSource starts with a '[', it is expected to be a reference to another
-		 * expression, else it will be assumed to be a static value
-		 */
-		public static void SetNodeValue (
-			string exprDestination, 
-			string exprSource, 
-			Node source, 
-			Node ip)
-		{
-			object valueToSet = GetExpressionValue (exprSource, source, ip);
-
-			if (valueToSet == null)
-			{
-				Remove (exprDestination, source, ip);
-				return;
-			}
-
-			string lastEntity = "";
-			Node x = GetNode (exprDestination, source, ip, ref lastEntity, true);
-
-            if (lastEntity == ".Value")
-			{
-               x.Value = valueToSet;
-			}
-            else if (lastEntity == ".Name")
-			{
-				if (!(valueToSet is string))
-					throw new ArgumentException("Cannot set the Name of a node to something which is not a string literal");
-                x.Name = valueToSet.ToString ();
-			}
-            else if (lastEntity == "")
-			{
-				Node clone = (valueToSet as Node).Clone ();
-				x.ReplaceChildren(clone);
-				x.Name = clone.Name;
-				x.Value = clone.Value;
-			}
-            else
-                throw new ArgumentException("Couldn't understand the last parts of your expression '" + lastEntity + "'");
-		}
-
-		/**
-		 * Returns the value of the given expression, which might return a string, 
-		 * list of nodes, or any other object your node tree might contain
-		 */
-        public static object GetExpressionValue(string expression, Node source, Node ip)
-        {
-			if (expression == null)
-				return null;
-
-			if (!expression.TrimStart ().StartsWith ("["))
-				return expression;
-
-			string lastEntity = "";
-			Node x = GetNode(expression, source, ip, ref lastEntity, false);
-
-			if (x == null)
-				return null;
-
-            if (lastEntity == ".Value")
-                return x.Value;
-            else if (lastEntity == ".Name")
-                return x.Name;
-            else if (lastEntity == ".Count")
-                return x.Count;
-            else if (lastEntity == "")
-                return x;
-            else
-                throw new ArgumentException("Couldn't understand the last parts of your expression '" + lastEntity + "'");
-        }
 	}
 }
 

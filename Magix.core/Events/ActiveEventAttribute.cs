@@ -9,7 +9,7 @@ using System;
 namespace Magix.Core
 {
     /**
-     * Level3: Mark your methods with this attribute to make then handle Magix.Brix Active Events. 
+     * Mark your methods with this attribute to make then handle Magix.Brix Active Events. 
      * The Name property is the second argument to the RaiseEvent, or the "name" of the 
      * event being raised. You can mark your methods with multiple instances of this 
      * attribute to catch multiple events in the same event handler. However, as a general
@@ -20,13 +20,10 @@ namespace Magix.Core
     public class ActiveEventAttribute : Attribute
     {
         /**
-         * Level3: Name of event. Notice that if this is "", your Active Event Handler
+         * Name of event. Notice that if this is "", your Active Event Handler
          * will handle ALL Active Events. This is an easy way to create hooks into
          * your code, for creating debuggers, and similar types of "meta components".
          */
         public string Name;
-
-        public ActiveEventAttribute()
-        { }
     }
 }

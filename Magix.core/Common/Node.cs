@@ -14,13 +14,13 @@ using System.Diagnostics;
 namespace Magix.Core
 {
     /**
-     * Level3: Helper class to pass around data in a "JSON kind of way" without having
+     * Helper class to pass around data in a "JSON kind of way" without having
      * to convert to JSON strings. Create a new instance, and just start appending
      * items to it like this;
      * <pre>
-     *    Node n = new Node();
-     *    n["Customer"]["Name"] = "John Doe";
-     *    n["Customer"]["Adr"] = "NY";
+     *   Node n = new Node();
+     *   n["Customer"]["Name"] = "John Doe";
+     *   n["Customer"]["Adr"] = "NY";
      * </pre>
      * This is at the core of Magix, being the 'protocol' we're using to pass
      * data around within the system. If you don't understand this class, you're
@@ -42,7 +42,6 @@ namespace Magix.Core
         /**
          * Default CTOR, creates a new node with no name and no value and no children
          */
-        [DebuggerStepThrough]
         public Node()
             : this(null)
         { }
@@ -50,7 +49,6 @@ namespace Magix.Core
         /**
          * Creates a new node with the given name
          */
-        [DebuggerStepThrough]
         public Node(string name)
             : this(name, null)
         { }
@@ -58,12 +56,10 @@ namespace Magix.Core
         /**
          * Creates a new node with the given name and the given value
          */
-        [DebuggerStepThrough]
         public Node(string name, object value)
             : this(name, value, null)
         { }
 
-        [DebuggerStepThrough]
         private Node(string name, object value, Node parent)
         {
             _name = name;
@@ -81,7 +77,7 @@ namespace Magix.Core
 		}
 
 		/**
-		 * Level3: Compares the nodes in the "this" pointer to 
+		 * Compares the nodes in the "this" pointer to 
 		 * see if they contain all the nodex that exists in our "prototype"
 		 * Node. If so, it will return true, else false
 		 */
@@ -113,7 +109,7 @@ namespace Magix.Core
 
 		// TODO: WTF ...?
 		/**
-		 * Level3: Removes all the existing children Nodes and replaces them
+		 * Removes all the existing children Nodes and replaces them
 		 * with the "node" paramater Node's children
 		 */
 		public void ReplaceChildren (Node node)
@@ -128,13 +124,12 @@ namespace Magix.Core
 		}
 
         /**
-         * Level3: Will de-serialize the given JSON string into a Node structure. PS!
+         * Will de-serialize the given JSON string into a Node structure. PS!
          * Even though Nodes can be serialized to JSON, the type information is lost,
          * meaning you can not go back again 100% correctly, since you're 'loosing
          * your types' when converting from Node to JSON. This is on our road map
          * for fixing, but currently not finished
          */
-        [DebuggerStepThrough]
         public static Node FromJSONString(string json)
         {
             List<string> tokens = ExtractTokens(json);
@@ -217,7 +212,6 @@ namespace Magix.Core
             return retVal;
         }
 
-        [DebuggerStepThrough]
         private static List<string> ExtractTokens(string json)
         {
             List<string> tokens = new List<string>();
@@ -267,19 +261,18 @@ namespace Magix.Core
         }
 
         /**
-         * Level3: Returns the Parent node of the current node in the hierarchy. Normally
+         * Returns the Parent node of the current node in the hierarchy. Normally
          * you'd never need to know the 'Parent' of a node, due to the intrinsic
          * logic of Magix, so be careful. If you're using this method, you're probably
          * doing something wrong on an architectural level. Be warned ...
          */
         public Node Parent
         {
-            [DebuggerStepThrough]
             get { return _parent; }
         }
 
         /**
-         * Level3: Assigns a Parent to the current node. Useful for 
+         * Assigns a Parent to the current node. Useful for 
          * moving nodes around
          */
         public void SetParent(Node n)
@@ -288,35 +281,28 @@ namespace Magix.Core
         }
 
         /**
-         * Level3: Returns the name of the node
+         * Returns the name of the node
          */
         public string Name
         {
-            [DebuggerStepThrough]
             get { return _name; }
-
-            [DebuggerStepThrough]
             set { _name = value; }
         }
 
         /**
-         * Level3: Returns the value of the object. Use the Get method
+         * Returns the value of the object. Use the Get method
          * to retrieve typed objects
          */
         public object Value
         {
-            [DebuggerStepThrough]
             get { return _value; }
-
-            [DebuggerStepThrough]
             set { _value = value; }
         }
 
         /**
-         * Level3: Returns the value of the object to type of T. Will try to 
+         * Returns the value of the object to type of T. Will try to 
          * convert the value, if it is another type then asked for
          */
-        [DebuggerStepThrough]
         public T Get<T>()
         {
             if (_value == null)
@@ -362,11 +348,10 @@ namespace Magix.Core
         }
 
         /**
-         * Level3: Returns the value of the object to type of T, and if
+         * Returns the value of the object to type of T, and if
          * object is null it will return 
          * the "default" value. Be careful, might throw if type is wrong
          */
-        [DebuggerStepThrough]
         public T Get<T>(T defaultValue)
         {
             if (_value == null)
@@ -376,12 +361,11 @@ namespace Magix.Core
         }
 
         /**
-         * Level3: Returns the first node that matches the given Predicate. Will
+         * Returns the first node that matches the given Predicate. Will
          * search recursively. Be careful here, if you're dereferencing nodes that
          * don't exist inside your function, you might very well never return
          * from this method ... ;)
          */
-        [DebuggerStepThrough]
         public Node FindDescendent(Predicate<Node> functor)
         {
             foreach (Node idx in _children)
@@ -397,10 +381,9 @@ namespace Magix.Core
         }
 
         /**
-         * Level3: Returns true if node exists as a direct child only, and not search
+         * Returns true if node exists as a direct child only, and not search
          * recursive
          */
-        [DebuggerStepThrough]
         public bool Exists(Predicate<Node> functor)
         {
             foreach (Node idx in this._children)
@@ -413,10 +396,9 @@ namespace Magix.Core
         }
 
         /**
-         * Level3: Will "disconnect" the node from its parent node. Useful
+         * Will "disconnect" the node from its parent node. Useful
          * for removing nodes and trees out of Node structures
          */
-        [DebuggerStepThrough]
         public Node UnTie()
         {
 			if (_parent != null)
@@ -426,14 +408,13 @@ namespace Magix.Core
         }
 
         /**
-         * Level3: Returns the node with the given Name. If that node doesn't exist
+         * Returns the node with the given Name. If that node doesn't exist
          * a new node will be created with the given name and appended into the
          * Children collection and then be returned. Please notice that this
          * method CREATES NODES during DE-REFERENCING. And it is its INTENT TOO! ;)
          */
         public Node this[string name]
         {
-            [DebuggerStepThrough]
             get
             {
                 Node retVal = _children.Find(
@@ -451,19 +432,17 @@ namespace Magix.Core
         }
 
         /**
-         * Level3: Returns the index of the given item, if it exists within the children
+         * Returns the index of the given item, if it exists within the children
          * collection. Otherwise it returns -1
          */
-        [DebuggerStepThrough]
         public int IndexOf(Node item)
         {
             return _children.IndexOf(item);
         }
 
         /**
-         * Level3: Inserts a new item into the children collection
+         * Inserts a new item into the children collection
          */
-        [DebuggerStepThrough]
         public void Insert(int index, Node item)
         {
 			if (item == null)
@@ -473,9 +452,8 @@ namespace Magix.Core
         }
 
         /**
-         * Level3: Removes node at given index
+         * Removes node at given index
          */
-        [DebuggerStepThrough]
         public void RemoveAt(int index)
         {
             _children[index]._parent = null;
@@ -483,16 +461,14 @@ namespace Magix.Core
         }
 
         /**
-         * Level3: Returns the n'th node
+         * Returns the n'th node
          */
         public Node this[int index]
         {
-            [DebuggerStepThrough]
             get
             {
                 return _children[index];
             }
-            [DebuggerStepThrough]
             set
             {
 				if (value == null)
@@ -503,9 +479,8 @@ namespace Magix.Core
         }
 
         /**
-         * Level3: Adds a new node to the collection
+         * Adds a new node to the collection
          */
-        [DebuggerStepThrough]
         public void Add(Node item)
         {
 			if (item == null)
@@ -515,9 +490,8 @@ namespace Magix.Core
         }
 
         /**
-         * Level3: Adds a range of nodes to collection
+         * Adds a range of nodes to collection
          */
-        [DebuggerStepThrough]
         public void AddRange(IEnumerable<Node> items)
         {
             foreach (Node idx in items)
@@ -531,9 +505,8 @@ namespace Magix.Core
         }
 
         /**
-         * Level3: Entirely empties the collection
+         * Entirely empties the collection
          */
-        [DebuggerStepThrough]
         public void Clear()
         {
             foreach (Node idx in _children)
@@ -544,18 +517,16 @@ namespace Magix.Core
         }
 
         /**
-         * Level3: Returns true if node exists within child collection [flat]
+         * Returns true if node exists within child collection [flat]
          */
-		[DebuggerStepThrough]
         public bool Contains(Node item)
         {
             return _children.Contains(item);
         }
 
         /**
-         * Level3: Returns true if node exists within child collection [flat]
+         * Returns true if node exists within child collection [flat]
          */
-        [DebuggerStepThrough]
         public bool Contains(string itemName)
         {
             return _children.Exists(
@@ -565,7 +536,6 @@ namespace Magix.Core
                 });
         }
 
-        [DebuggerStepThrough]
         public void CopyTo(Node[] array, int arrayIndex)
         {
             foreach (Node idx in _children)
@@ -576,24 +546,21 @@ namespace Magix.Core
         }
 
         /**
-         * Level3: Returns the number of items in the children collection
+         * Returns the number of items in the children collection
          */
         public int Count
         {
-            [DebuggerStepThrough]
             get { return _children.Count; }
         }
 
         public bool IsReadOnly
         {
-            [DebuggerStepThrough]
             get { return false; }
         }
 
         /**
-         * Level3: Removes the given node from the child collection
+         * Removes the given node from the child collection
          */
-        [DebuggerStepThrough]
         public bool Remove(Node item)
         {
             bool retVal = _children.Remove(item);
@@ -605,24 +572,21 @@ namespace Magix.Core
         }
 
         /**
-         * Level3: Supports enumerating items
+         * Supports enumerating items
          */
-        [DebuggerStepThrough]
         public IEnumerator<Node> GetEnumerator()
         {
             return _children.GetEnumerator();
         }
 
-        [DebuggerStepThrough]
         IEnumerator IEnumerable.GetEnumerator()
         {
             return _children.GetEnumerator();
         }
 
         /**
-         * Level4: Will return name/value and number of children as a string
+         * Will return name/value and number of children as a string
          */
-        [DebuggerStepThrough]
         public override string ToString()
         {
             string retVal = "";
@@ -648,13 +612,12 @@ namespace Magix.Core
 		}
 
         /**
-         * Level3: Will translate the Node structure to a JSON string. Useful
+         * Will translate the Node structure to a JSON string. Useful
          * for passing stuff around to other systems, and integrating with client-side
          * etc. Be warned! No TYPE information is being passed, so you cannot build
          * the same Node structure by reversing the method and call FromJSON after
          * creating JSON out of your node
          */
-        [DebuggerStepThrough]
         public string ToJSONString()
         {
             StringBuilder builder = new StringBuilder();
@@ -722,9 +685,8 @@ namespace Magix.Core
         }
 
         /**
-         * Level3: Will sort the nodes according to your given comparison delegate
+         * Will sort the nodes according to your given comparison delegate
          */
-        [DebuggerStepThrough]
         public void Sort(Comparison<Node> del)
         {
             _children.Sort(del);
@@ -733,7 +695,6 @@ namespace Magix.Core
         /**
          * Level3 Returns the outer most parent node, the top node of the hierarchy
          */
-        [DebuggerStepThrough]
         public Node RootNode()
         {
             Node tmp = this;
@@ -743,16 +704,14 @@ namespace Magix.Core
         }
 
         /**
-         * Level3: Clones the given node. Deep copy of all nodes
+         * Clones the given node. Deep copy of all nodes
          */
-        [DebuggerStepThrough]
         public Node Clone()
         {
             return Clone(this);
         }
 
-        [DebuggerStepThrough]
-        private Node Clone(Node node)
+        private static Node Clone(Node node)
         {
             Node r = new Node();
             r.Name = node.Name;
@@ -777,7 +736,7 @@ namespace Magix.Core
 		}
 
 		/**
-		 * Level3: Returns true if the given object is equal of
+		 * Returns true if the given object is equal of
 		 * the this object. Equality is determined to true 
 		 * if the Name, Value and all Children nodes are equal to
 		 * the this object
@@ -789,9 +748,9 @@ namespace Magix.Core
 
 			Node rhs = obj as Node;
 			return Name == rhs.Name && 
-				(Value == null && rhs.Value == null || 
-				  ((Value != null && Value.Equals (rhs.Value)) && Value == rhs.Value)) && 
-				CompareChildren(rhs);
+				 (Value == null && rhs.Value == null || 
+				   (Value != null && Value.Equals (rhs.Value))) && 
+				 CompareChildren(rhs);
 		}
     }
 }

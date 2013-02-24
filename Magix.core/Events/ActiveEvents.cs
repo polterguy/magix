@@ -9,16 +9,13 @@ using System.IO;
 using System.Web;
 using System.Net;
 using System.Web.UI;
-using System.Threading;
 using System.Reflection;
-using System.Configuration;
 using System.Collections.Generic;
-using System.Diagnostics;
 
 namespace Magix.Core
 {
     /**
-     * Level3: Class contains methods for raising events and other helpers, like for instance helpers
+     * Class contains methods for raising events and other helpers, like for instance helpers
      * to load controls and such. Though often you'll not use this directly, but rather use
      * it through helper methods on your ActiveControllers and ActiveModules
      */
@@ -40,6 +37,119 @@ namespace Magix.Core
         private ActiveEvents()
         { }
 
+        /**
+         * This is our Singleton to access our only ActiveEvents object. This is
+         * the property you'd use to gain access to the only existing ActiveEvents
+         * object in your application pool
+         */
+        public static ActiveEvents Instance
+        {
+            get
+            {
+                if (_instance == null)
+                {
+                    lock (typeof(ActiveEvents))
+                    {
+                        if (_instance == null)
+                            _instance = new ActiveEvents();
+                    }
+                }
+                return _instance;
+            }
+        }
+
+        /**
+         * Will override the given 'from' ActiveEvent name and make it so that every time
+         * anyone tries to raise the 'from' event, then the 'to' event will be raised instead.
+         * Useful for 'overriding functionality' in Magix. This can also be accomplished through
+         * doing the mapping in the system's web.config file
+         */
+        public void CreateEventMapping(string from, string to)
+        {
+            _eventMappers[from] = to;
+        }
+
+        /**
+         * Will destroy the given [key] Active Event Mapping
+         */
+        public void RemoveMapping(string key)
+        {
+            _eventMappers.Remove(key);
+        }
+
+        /**
+         * Will return the given Value for the given Key Active Event Override
+         */
+        public string GetEventMappingValue(string key)
+        {
+			if (_eventMappers.ContainsKey (key))
+				return _eventMappers[key];
+			return key;
+        }
+
+        /**
+         * Returns an Enumerable of all the Keys in the Event Mapping Collection. Basically
+         * which Active Events are overridden
+         */
+        public IEnumerable<string> EventMappingKeys
+        {
+            get
+            {
+                foreach (string idx in _eventMappers.Keys)
+                {
+                    yield return idx;
+                }
+            }
+        }
+
+        /**
+         * Returns an Enumerable of all the Values in the Event Mapping Collection. Basically
+         * where he Overridden Active Events are 'pointing'
+         */
+        public IEnumerable<string> EventMappingValues
+        {
+            get
+            {
+                foreach (string idx in _eventMappers.Values)
+                {
+                    yield return idx;
+                }
+            }
+        }
+
+		// TODO: Try to remove or make internal somehow...?
+        public void RemoveListener(object context)
+        {
+			List<string> toRemoKeys = new List<string>();
+            // Removing all event handler with the given context (object instance)
+            foreach (string idx in InstanceMethod.Keys)
+            {
+                List<Tuple<MethodInfo, object>> idxCur = InstanceMethod[idx];
+                List<Tuple<MethodInfo, object>> toRemove = 
+                    new List<Tuple<MethodInfo, object>>();
+                foreach (Tuple<MethodInfo, object> idxObj in idxCur)
+                {
+                    if (idxObj.Item2 == context)
+                        toRemove.Add(idxObj);
+                }
+                foreach (Tuple<MethodInfo, object> idxObj in toRemove)
+                {
+                    idxCur.Remove(idxObj);
+					if (idxCur.Count == 0)
+					{
+						toRemoKeys.Add (idx);
+					}
+                }
+            }
+			foreach (string idx in toRemoKeys)
+			{
+				InstanceMethod.Remove (idx);
+			}
+        }
+
+		/**
+		 * Will return all Active Events possible to raise within the system
+		 */
 		public IEnumerable<string> ActiveEventHandlers
 		{
 			get
@@ -63,7 +173,9 @@ namespace Magix.Core
 		}
 
 		/**
-		 * Level3: Makes an active event override to a remote server
+		 * Makes an active event override to a remote server, such that once
+		 * you raise it internally within your system, it will go polymorphistically
+		 * and transparently towards your URL end-point, and raise the event instead
 		 */
 		public void OverrideRemotely (string activeEvent, string url)
 		{
@@ -71,15 +183,18 @@ namespace Magix.Core
 		}
 
 		/**
-		 * Level3: Removes a remotely overridden event
+		 * Removes a remotely overridden event, meaning once raise, the event will NOT go towards
+		 * the URL end-point anymore
 		 */
 		public void RemoveRemoteOverride (string activeEvent)
 		{
+			if (!_urlMappers.ContainsKey (activeEvent))
+				return;
 			_urlMappers.Remove (activeEvent);
 		}
 
 		/**
-		 * Level3: Returns the URL of the remote server the active event is
+		 * Returns the URL of the remote server the active event is
 		 * overridden to, or null if no remote override exists
 		 */
 		public string RemotelyOverriddenURL (string activeEvent)
@@ -90,7 +205,8 @@ namespace Magix.Core
 		}
 
 		/**
-		 * Level3: Returns true if the event is allowed to be remotely invoked
+		 * Returns true if the event is allowed to be remotely invoked by another server,
+		 * using remotely activated events, to raise events on your server
 		 */
 		public bool IsAllowedRemotely (string str)
 		{
@@ -98,7 +214,9 @@ namespace Magix.Core
 		}
 
 		/**
-		 * Level3: Marks an active event as a remotely activatable event
+		 * Marks an active event become a remotely activatable event, which means
+		 * that other servers can invoke this Active Event on your server over
+		 * HTTP
 		 */
 		public void MakeRemotable (string str)
 		{
@@ -106,23 +224,28 @@ namespace Magix.Core
 		}
 
 		/**
-		 * Level3: Makes an event NOT remotable
+		 * Shuts down an existing remotely activated event, such that it can no longer
+		 * be raised by other servers
 		 */
 		public void RemoveRemotable (string str)
 		{
+			if (!_remotelyActivated.ContainsKey (str))
+				return;
 			_remotelyActivated.Remove (str);
 		}
 
 		/**
-		 * Level3: Returns true if Active Event is an override
+		 * Returns true if Active Event is an override, meaning somebody have overridden the
+		 * original active event, and are pointing you to another handler
 		 */
 		public bool IsOverride (string key)
 		{
 			return _eventMappers.ContainsKey (key);
 		}
 
+		// TODO: WTF ...?
 		/**
-		 * Level3: Returns true if Active Event is an override
+		 * Returns true if Active Event is an override of an existing active event
 		 */
 		public bool IsOverrideSystem (string key)
 		{
@@ -137,29 +260,7 @@ namespace Magix.Core
 		}
 
         /**
-         * Level3: This is our Singleton to access our only ActiveEvents object. This is
-         * the property you'd use to gain access to the only existing ActiveEvents
-         * object in your application pool
-         */
-        public static ActiveEvents Instance
-        {
-            [DebuggerStepThrough]
-            get
-            {
-                if (_instance == null)
-                {
-                    lock (typeof(ActiveEvents))
-                    {
-                        if (_instance == null)
-                            _instance = new ActiveEvents();
-                    }
-                }
-                return _instance;
-            }
-        }
-
-        /**
-         * Level3: Raises an event with null as the initialization parameter.
+         * Raises an active event with an empty node as the initialization parameter.
          * This will dispatch control to all the ActiveEvent that are marked with
          * the Name attribute matching the name parameter of this method call.
          */
@@ -224,7 +325,7 @@ namespace Magix.Core
 		}
 
         /**
-         * Level3: Raises an event. This will dispatch control to all the ActiveEvent that are marked with
+         * Raises an event. This will dispatch control to all the ActiveEvent that are marked with
          * the Name attribute matching the name parameter of this method call.
          */
         public void RaiseActiveEvent(
@@ -236,7 +337,7 @@ namespace Magix.Core
         }
 
         /**
-         * Level3: Raises an event. This will dispatch control to all the ActiveEvent that are marked with
+         * Raises an event. This will dispatch control to all the ActiveEvent that are marked with
          * the Name attribute matching the name parameter of this method call.
          */
         public void RaiseActiveEvent(
@@ -546,65 +647,6 @@ namespace Magix.Core
 			return RaiseSingleEventWithTokens(sender, name, tokens, pars, forceNoOverride);
         }
 
-        /**
-         * Level3: Will override the given 'from' ActiveEvent name and make it so that every time
-         * anyone tries to raise the 'from' event, then the 'to' event will be raised instead.
-         * Useful for 'overriding functionality' in Magix. This can also be accomplished through
-         * doing the mapping in the system's web.config file
-         */
-        public void CreateEventMapping(string from, string to)
-        {
-            _eventMappers[from] = to;
-        }
-
-        /**
-         * Level3: Will destroy the given [key] Active Event Mapping
-         */
-        public void RemoveMapping(string key)
-        {
-            _eventMappers.Remove(key);
-        }
-
-        /**
-         * Level2: Will return the given Value for the given Key Active Event Override
-         */
-        public string GetEventMappingValue(string key)
-        {
-			if (_eventMappers.ContainsKey (key))
-				return _eventMappers[key];
-			return key;
-        }
-
-        /**
-         * Level3: Returns an Enumerable of all the Keys in the Event Mapping Collection. Basically
-         * which Active Events are overridden
-         */
-        public IEnumerable<string> EventMappingKeys
-        {
-            get
-            {
-                foreach (string idx in _eventMappers.Keys)
-                {
-                    yield return idx;
-                }
-            }
-        }
-
-        /**
-         * Level3: Returns an Enumerable of all the Values in the Event Mapping Collection. Basically
-         * where he Overridden Active Events are 'pointing'
-         */
-        public IEnumerable<string> EventMappingValues
-        {
-            get
-            {
-                foreach (string idx in _eventMappers.Values)
-                {
-                    yield return idx;
-                }
-            }
-        }
-
         internal void AddListener(object context, MethodInfo method, string name)
         {
             if (context == null)
@@ -625,39 +667,8 @@ namespace Magix.Core
             }
         }
 
-		// TODO: Try to remove or make internal somehow...?
-        public void RemoveListener(object context)
-        {
-			List<string> toRemoKeys = new List<string>();
-            // Removing all event handler with the given context (object instance)
-            foreach (string idx in InstanceMethod.Keys)
-            {
-                List<Tuple<MethodInfo, object>> idxCur = InstanceMethod[idx];
-                List<Tuple<MethodInfo, object>> toRemove = 
-                    new List<Tuple<MethodInfo, object>>();
-                foreach (Tuple<MethodInfo, object> idxObj in idxCur)
-                {
-                    if (idxObj.Item2 == context)
-                        toRemove.Add(idxObj);
-                }
-                foreach (Tuple<MethodInfo, object> idxObj in toRemove)
-                {
-                    idxCur.Remove(idxObj);
-					if (idxCur.Count == 0)
-					{
-						toRemoKeys.Add (idx);
-					}
-                }
-            }
-			foreach (string idx in toRemoKeys)
-			{
-				InstanceMethod.Remove (idx);
-			}
-        }
-
         private Dictionary<string, List<Tuple<MethodInfo, object>>> InstanceMethod
         {
-            [DebuggerStepThrough]
             get
             {
 				if (HttpContext.Current == null)

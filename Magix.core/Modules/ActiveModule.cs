@@ -13,7 +13,7 @@ using System.Threading;
 namespace Magix.Core
 {
     /**
-     * Level3: Inherit your Active Modules from this class
+     * Inherit your Active Modules from this class
      */
 	[ActiveModule]
     public abstract class ActiveModule : UserControl
@@ -21,7 +21,7 @@ namespace Magix.Core
         private bool _firstLoad;
 
         /**
-         * Level3: Called internally by Viewports, if wired correctly
+         * Called internally by Viewports, if wired correctly
          */
         public virtual void InitialLoading(Node node)
         {
@@ -29,7 +29,7 @@ namespace Magix.Core
         }
 
         /**
-         * Level3: Is true if this was the request when the Module was loaded initially, somehow
+         * Is true if this was the request when the Module was loaded initially, somehow
          */
         protected bool FirstLoad
         {
@@ -37,7 +37,7 @@ namespace Magix.Core
         }
 
         /**
-         * Level3: Shorthand for raising events. Will return a node, initially created empty, 
+         * Shorthand for raising events. Will return a node, initially created empty, 
          * but passed onto the Event Handler(s)
          */
         protected Node RaiseEvent(string eventName)
@@ -51,7 +51,7 @@ namespace Magix.Core
         }
 
         /**
-         * Level3: Shorthand for raising events
+         * Shorthand for raising events
          */
         protected void RaiseEvent(string eventName, Node node)
         {
@@ -62,7 +62,7 @@ namespace Magix.Core
         }
 
         /**
-         * Level3: Will return the 'base' URL of your application. Meaning if your application
+         * Will return the 'base' URL of your application. Meaning if your application
          * is installed on x.com/f then x.com/f will always be returned from this method.
          * Useful for using as foundation for finding specific files and so on
          */

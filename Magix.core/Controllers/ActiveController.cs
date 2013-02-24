@@ -13,16 +13,15 @@ using System.Collections.Generic;
 namespace Magix.Core
 {
     /**
-     * Level3: Inherit your Active Controllers from this class. Contains helper
+     * Inherit your Active Controllers from this class. Contains helper
      * methods for you, for your own controllers
      */
     [ActiveController]
 	public abstract class ActiveController
     {
         /**
-         * Level3: Loads the given module and puts it into your default container
+         * Loads the given module and puts it into your default container
          */
-        [DebuggerStepThrough]
         protected Node LoadModule(string name)
         {
             Node node = new Node();
@@ -31,10 +30,9 @@ namespace Magix.Core
         }
 
         /**
-         * Level3: Loads the given module and puts it into the given container. 
+         * Loads the given module and puts it into the given container. 
          * Will return the node created and passed into creation
          */
-        [DebuggerStepThrough]
         protected Node LoadModule(string name, string container)
         {
             Node node = new Node();
@@ -43,10 +41,9 @@ namespace Magix.Core
         }
 
         /**
-         * Level3: Shorthand method for Loading a specific Module and putting it into
+         * Shorthand method for Loading a specific Module and putting it into
          * the given container, with the given Node structure.
          */
-        [DebuggerStepThrough]
         protected void LoadModule(string name, string container, Node node)
         {
             if (string.IsNullOrEmpty(name))
@@ -54,37 +51,42 @@ namespace Magix.Core
 
 			node["container"].Value = container;
 			node["name"].Value = name;
-			RaiseEvent ("magix.viewport.load-module", node);
+
+			RaiseEvent(
+				"magix.viewport.load-module", 
+				node);
         }
 
         /**
-         * Level3: Shorthand for raising events. Will return a node, initially created empty, 
+         * Shorthand for raising events. Will return a node, initially created empty, 
          * but passed onto the Event Handler(s)
          */
-        [DebuggerStepThrough]
         protected static Node RaiseEvent(string eventName)
         {
             Node node = new Node();
-            ActiveEvents.Instance.RaiseActiveEvent(
+
+			ActiveEvents.Instance.RaiseActiveEvent(
                 typeof(ActiveController),
                 eventName,
                 node);
-            return node;
+
+			return node;
         }
 
         /**
-         * Level3: Shorthand for raising events.
+         * Shorthand for raising events.
          */
-        [DebuggerStepThrough]
         protected static void RaiseEvent(string eventName, Node node)
         {
-			RaiseEvent (eventName, node, false);;
+			RaiseEvent(
+				eventName, 
+				node, 
+				false);;
         }
 
         /**
-         * Level3: Shorthand for raising events.
+         * Shorthand for raising events.
          */
-        [DebuggerStepThrough]
         protected static void RaiseEvent(string eventName, Node node, bool forceNoOverride)
         {
             ActiveEvents.Instance.RaiseActiveEvent(
@@ -95,7 +97,7 @@ namespace Magix.Core
         }
 
         /**
-         * Level3: Will return the 'base' URL of your application
+         * Will return the 'base' URL of your application
          */
         protected static string GetApplicationBaseUrl()
         {
@@ -109,7 +111,7 @@ namespace Magix.Core
         }
 
         /**
-         * Level3: Shorthand for getting access to our "Page" object.
+         * Shorthand for getting access to our "Page" object.
          */
         protected static Page Page
         {
