@@ -40,35 +40,40 @@ for execution on a different thread. This means the forked
 thread will not change any data on the original node-set.";
 				return;
 			}
+
 			Node ip = e.Params;
-			if (e.Params.Contains ("_ip"))
+			if (e.Params.Contains("_ip"))
 				ip = e.Params ["_ip"].Value as Node;
 
 			Node dp = e.Params;
-			if (e.Params.Contains ("_dp"))
+			if (e.Params.Contains("_dp"))
 				dp = e.Params["_dp"].Value as Node;
 
-			Node pars = new Node();
-			pars["_ip"].Value = ip.Clone ();
-			pars["_dp"].Value = dp.Clone ();
+			Node node = new Node();
+
+			// Need to CLONE parameters here, to not get race-conditions in changing them ...
+			node["_ip"].Value = ip.Clone();
+			node["_dp"].Value = dp.Clone();
 
 			Thread thread = new Thread(ExecuteThread);
-			thread.Start (pars);
+			thread.Start(node);
 		}
 
-		private static void ExecuteThread (object pars)
+		private static void ExecuteThrea(object input)
 		{
-			Node par = pars as Node;
-			RaiseEvent (
+			Node node = input as Node;
+
+			RaiseEvent(
 				"magix.execute",
-				par);
+				node);
 		}
 
+		// TODO: Do we really NEED this one, or would "wait" keyword be enough ...?
 		/**
 		 * Sleeps the current thread for "time" milliseconds
 		 */
 		[ActiveEvent(Name = "magix.execute.sleep")]
-		public static void magix_execute_sleep (object sender, ActiveEventArgs e)
+		public static void magix_execute_sleep(object sender, ActiveEventArgs e)
 		{
 			if (e.Params.Contains ("inspect"))
 			{
@@ -78,11 +83,12 @@ thread will not change any data on the original node-set.";
 for Value number of milliseconds.";
 				return;
 			}
-			Node ip = e.Params;
-			if (e.Params.Contains ("_ip"))
-				ip = e.Params ["_ip"].Value as Node;
 
-			Thread.Sleep (ip.Get<int>());
+			Node ip = e.Params;
+			if (e.Params.Contains("_ip"))
+				ip = e.Params["_ip"].Value as Node;
+
+			Thread.Sleep(ip.Get<int>());
 		}
 	}
 }

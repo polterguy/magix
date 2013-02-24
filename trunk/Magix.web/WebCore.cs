@@ -12,16 +12,18 @@ using Magix.UX.Builder;
 namespace Magix.execute
 {
 	/**
+	 * Contains helpers for 'web-stuff', such as getting GET/POST parameters, cookie handling,
+	 * etc...
 	 */
 	public class Helper : ActiveController
 	{
 		/**
-		 * Returns the given Value HTTP parameter as "value"
+		 * Returns the given Value HTTP GET or POST parameter as "value"
 		 */
 		[ActiveEvent(Name = "magix.web.get")]
 		public static void magix_web_get (object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains ("inspect"))
+			if (e.Params.Contains("inspect"))
 			{
 				e.Params["event:magix.execute"].Value = null;
 				e.Params["inspect"].Value = @"Will return the given
@@ -29,23 +31,21 @@ GET HTTP parameter as ""value"" Node.";
 				e.Params["magix.web.get"].Value = "some-get-parameter";
 				return;
 			}
-			Node ip = e.Params;
-			if (e.Params.Contains ("_ip"))
-				ip = e.Params ["_ip"].Value as Node;
 
-			string par = ip.Get<string>();
-			if (string.IsNullOrEmpty (par))
+			string par = e.Params.Get<string>();
+			if (string.IsNullOrEmpty(par))
 				throw new ArgumentException("You must tell me which GET parameter you wish to extract");
-			ip["value"].Value = HttpContext.Current.Request.Params[par];
+
+			e.Params["value"].Value = HttpContext.Current.Request.Params[par];
 		}
 
 		/**
 		 * Returns the given Value HTTP cookie as "value"
 		 */
 		[ActiveEvent(Name = "magix.web.get-cookie")]
-		public static void magix_web_get_cookie (object sender, ActiveEventArgs e)
+		public static void magix_web_get_cookie(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains ("inspect"))
+			if (e.Params.Contains("inspect"))
 			{
 				e.Params["event:magix.execute"].Value = null;
 				e.Params["inspect"].Value = @"Will return the given
@@ -53,14 +53,11 @@ HTTP cookie parameter as ""value"" Node.";
 				e.Params["magix.web.get-cookie"].Value = "some-cookie-name";
 				return;
 			}
-			Node ip = e.Params;
-			if (e.Params.Contains ("_ip"))
-				ip = e.Params ["_ip"].Value as Node;
 
-			string par = ip.Get<string>();
-			if (string.IsNullOrEmpty (par))
+			string par = e.Params.Get<string>();
+			if (string.IsNullOrEmpty(par))
 				throw new ArgumentException("You must tell me which cookie you wish to extract");
-			ip["value"].Value = HttpContext.Current.Request.Cookies[par].Value;
+			e.Params["value"].Value = HttpContext.Current.Request.Cookies[par].Value;
 		}
 
 		/**
@@ -69,7 +66,7 @@ HTTP cookie parameter as ""value"" Node.";
 		[ActiveEvent(Name = "magix.web.set-cookie")]
 		public static void magix_web_set_cookie (object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains ("inspect"))
+			if (e.Params.Contains("inspect"))
 			{
 				e.Params["event:magix.execute"].Value = null;
 				e.Params["inspect"].Value = @"Will create or overwrite
@@ -81,32 +78,29 @@ the default.";
 				e.Params["magix.web.set-cookie"]["expires"].Value = DateTime.Now.AddYears (3);
 				return;
 			}
-			Node ip = e.Params;
-			if (e.Params.Contains ("_ip"))
-				ip = e.Params ["_ip"].Value as Node;
 
-			string par = ip.Get<string>();
-			if (string.IsNullOrEmpty (par))
+			string par = e.Params.Get<string>();
+			if (string.IsNullOrEmpty(par))
 				throw new ArgumentException("You must tell me which cookie you wish to set");
 
 			string value = null;
 
-			if (ip.Contains ("value"))
-				value = ip["value"].Get<string>();
+			if (e.Params.Contains("value"))
+				value = e.Params["value"].Get<string>();
 
 			if (value == null)
 			{
-				HttpContext.Current.Response.Cookies.Remove (par);
+				HttpContext.Current.Response.Cookies.Remove(par);
 			}
 			else
 			{
 				HttpCookie cookie = new HttpCookie(par, value);
 				cookie.HttpOnly = true;
-				DateTime expires = DateTime.Now.AddYears (3);
-				if (ip.Contains ("expires"))
-					expires = ip["expires"].Get<DateTime>();
+				DateTime expires = DateTime.Now.AddYears(3);
+				if (e.Params.Contains("expires"))
+					expires = e.Params["expires"].Get<DateTime>();
 				cookie.Expires = expires;
-				HttpContext.Current.Response.SetCookie (cookie);
+				HttpContext.Current.Response.SetCookie(cookie);
 			}
 		}
 	}
