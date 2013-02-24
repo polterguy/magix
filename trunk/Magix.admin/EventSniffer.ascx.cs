@@ -19,6 +19,8 @@ using Magix.UX.Widgets.Core;
 namespace Magix.admin
 {
     /**
+     * Helps you spy on every single event in the system, to debug and run diagnostics
+     * on your server
      */
     public class EventSniffer : ActiveModule
     {
@@ -31,6 +33,9 @@ namespace Magix.admin
 		}
 
 		/**
+		 * 'null Active Event Handler', which will swallow almost every
+		 * single Active Event in the system, and show with its parameters,
+		 * in a div
 		 */
 		[ActiveEvent(Name = "")]
 		public void magix_null_event_handler (object sender, ActiveEventArgs e)

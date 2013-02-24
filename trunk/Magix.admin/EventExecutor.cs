@@ -103,8 +103,11 @@ event, where the ""ToolTip"" will contain the original event name. Takes no para
 			{
 				e.Params["container"].Value = "content1";
 				e.Params["inspect"].Value = @"Will open the Event Sniffer
-form, which will show all active events 
-raised in the system.";
+form, in ""container"" container in viewport, 
+which will show all active events raised in 
+the system, for every postback to the server,
+allowing you to facilitate for debugging of
+your server.";
 				return;
 			}
 			LoadModule (

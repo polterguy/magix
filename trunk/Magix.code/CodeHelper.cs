@@ -5,6 +5,7 @@
  */
 
 using System;
+using System.Globalization;
 using System.IO;
 using System.Threading;
 using Magix.Core;
@@ -29,7 +30,7 @@ namespace Magix.execute
 			}
 			string txt = "";
 			Node node = e.Params["JSON"].Value as Node;
-			txt += ParseNodes(0, node).TrimEnd ();
+			txt += ParseNodes(0, node);
 			e.Params["code"].Value = txt;
 		}
 
@@ -43,18 +44,39 @@ namespace Magix.execute
 					retVal += " ";
 				}
 				string value = "";
-				if (idx.Get<string>("") != "")
+				if (idx.Value != null)
 				{
-					if (idx.Get<string>().Contains ("\n") || 
-					    idx.Get<string>().StartsWith ("\"") ||
-					    idx.Get<string>().StartsWith (" "))
+					if (idx.Value.GetType () != typeof(string))
 					{
-						string nValue = idx.Get<string>();
-						nValue = nValue.Replace ("\"", "\"\"");
-						value += "=>" + "@\"" + nValue + "\"";
+						switch (idx.Value.GetType ().FullName)
+						{
+						case "System.Int32":
+							value += "=(int)>" + idx.Get<string>();
+							break;
+						case "System.Boolean":
+							value += "=(bool)>" + idx.Get<string>();
+							break;
+						case "System.Decimal":
+							value += "=(dec)>" + idx.Get<decimal>().ToString (CultureInfo.InvariantCulture);
+							break;
+						case "System.DateTime":
+							value += "=(date)>" + idx.Get<DateTime>().ToString ("yyyy.MM.dd HH:mm:ss", CultureInfo.InvariantCulture);
+							break;
+						}
 					}
 					else
-						value += "=>" + idx.Get<string>("").Replace ("\r\n", "\\n").Replace ("\n", "\\n");
+					{
+						if (idx.Get<string>().Contains ("\n") || 
+						    idx.Get<string>().StartsWith ("\"") ||
+						    idx.Get<string>().StartsWith (" "))
+						{
+							string nValue = idx.Get<string>();
+							nValue = nValue.Replace ("\"", "\"\"");
+							value += "=>" + "@\"" + nValue + "\"";
+						}
+						else
+							value += "=>" + idx.Get<string>("").Replace ("\r\n", "\\n").Replace ("\n", "\\n");
+					}
 				}
 				retVal += idx.Name + value;
 				retVal += "\n";
@@ -115,38 +137,54 @@ namespace Magix.execute
 					currentIndents = currentIndents / 2; // Number of nodes inwards/outwards
 
 					string name = "";
-					string value = null;
+					object value = null;
 
 					string tmp = line.TrimStart ();
-					if (!tmp.Contains ("=>"))
+					if (!tmp.Contains ("="))
 					{
 						name = tmp;
 					}
 					else
 					{
-						name = tmp.Split (new string[]{"=>"}, StringSplitOptions.RemoveEmptyEntries)[0];
-						value = tmp.Substring (name.Length + 2).TrimStart ();
-						if (value.StartsWith ("@"))
+						name = tmp.Split (new string[]{"="}, StringSplitOptions.RemoveEmptyEntries)[0];
+						switch (tmp.Substring (name.Length).Split ('>')[0] + ">")
 						{
-							value += "\r\n";
-							while (true)
+						case "=>":
+							value = tmp.Substring (name.Length + 2).TrimStart ();
+							if (((string)value).StartsWith ("@"))
 							{
-								int noFnut = 0;
-								for (int idxNo = value.Length - 3; idxNo >=0; idxNo-- )
+								value += "\n";
+								while (true)
 								{
-									if (value[idxNo] == '"')
-										noFnut += 1;
-									else
+									int noFnut = 0;
+									for (int idxNo = ((string)value).Length - 2; idxNo >=0; idxNo-- )
+									{
+										if (((string)value)[idxNo] == '"')
+											noFnut += 1;
+										else
+											break;
+									}
+									if (noFnut % 2 != 0)
 										break;
+									string tmpLine = reader.ReadLine ();
+									if (tmpLine == null)
+										throw new ArgumentException("Unfinished string literal: " + value);
+									value += tmpLine.Replace ("\"\"", "\"") + "\n";
 								}
-								if (noFnut % 2 != 0)
-									break;
-								string tmpLine = reader.ReadLine ();
-								if (tmpLine == null)
-									throw new ArgumentException("Unfinished string literal: " + value);
-								value += tmpLine.Replace ("\"\"", "\"") + "\r\n";
-							}
-							value = value.Substring (2, value.Length - 5);
+								value = ((string)value).Substring (2, ((string)value).Length - 4);
+							} break;
+						case "=(int)>":
+							value = int.Parse (tmp.Substring (name.Length + 7).Trim());
+							break;
+						case "=(date)>":
+							value = DateTime.ParseExact(tmp.Substring (name.Length + 8).Trim(), "yyyy.MM.dd HH:mm:ss", CultureInfo.InvariantCulture);
+							break;
+						case "=(bool)>":
+							value = bool.Parse (tmp.Substring (name.Length + 8).Trim());
+							break;
+						case "=(dec)>":
+							value = decimal.Parse(tmp.Substring (name.Length + 7).Trim(), CultureInfo.InvariantCulture);
+							break;
 						}
 					}
 

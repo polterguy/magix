@@ -20,7 +20,11 @@ namespace Magix.admin
 {
     /**
      * Active Module for Active Event Executor. Allows you to execute and traverse all
-     * the Active evtns you have registered in your system
+     * the Active Events you have registered in your system, and also contains a 'shell'
+     * for creating parameters to said Active Events, such that you can configure your
+     * system, through something almost resembling a Linux Shell. You can configure
+     * it to set the system into a specific state, by supplying an "evt" and "code"
+     * HTTP parameters
      */
     public class ExecutorForm : ActiveModule
     {
@@ -29,6 +33,7 @@ namespace Magix.admin
 		protected TextArea txtOut;
 		protected Panel wrp;
 		protected System.Web.UI.WebControls.Repeater rep;
+
 		private int _noActiveEventsCSSClassRendered = 0;
 
 		protected void Page_Load (object sender, EventArgs e)
@@ -37,8 +42,18 @@ namespace Magix.admin
 			{
 				txtIn.Select ();
 				txtIn.Focus ();
-				activeEvent.Text = "magix.viewport.show-message";
-				txtIn.Text = "message=>Hello World!";
+				string evt = Page.Request["evt"];
+				string code = Page.Request["code"];
+
+				if (string.IsNullOrEmpty(evt))
+					activeEvent.Text = "magix.viewport.show-message";
+				else
+					activeEvent.Text = evt;
+
+				if (string.IsNullOrEmpty (code))
+					txtIn.Text = "message=>Hello World!";
+				else
+					txtIn.Text = code;
 			}
 		}
 
