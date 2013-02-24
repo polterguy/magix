@@ -56,7 +56,7 @@ namespace Magix.forms
 
 		private void BuildControls()
 		{
-			if (!DataSource.Contains ("controls"))
+			if (!DataSource.Contains("controls"))
 				throw new ArgumentException("Couldn't find any 'controls' node underneath form");
 
 			foreach (Node idx in DataSource["controls"])
@@ -262,7 +262,7 @@ namespace Magix.forms
 								{
 									string codePath = ViewState[((Control)sender).ClientID + "_SelectedIndexChanged"] as string;
 									Node codeNode = GetNode (codePath);
-									RaiseEvent ("magix.execute", codeNode);
+									RaiseEvent("magix.execute", codeNode);
 								};
 						};
 				} break;
@@ -278,7 +278,7 @@ namespace Magix.forms
 								{
 									string codePath = ViewState[((Control)sender).ClientID + "_EnterPressed"] as string;
 									Node codeNode = GetNode (codePath);
-									RaiseEvent ("magix.execute", codeNode);
+									RaiseEvent("magix.execute", codeNode);
 								};
 						};
 				} break;
@@ -294,7 +294,7 @@ namespace Magix.forms
 								{
 									string codePath = ViewState[((Control)sender).ClientID + "_TextChanged"] as string;
 									Node codeNode = GetNode (codePath);
-									RaiseEvent ("magix.execute", codeNode);
+									RaiseEvent("magix.execute", codeNode);
 								};
 						};
 				} break;
@@ -312,7 +312,7 @@ namespace Magix.forms
 									{
 										string codePath = ViewState[((Control)sender).ClientID + "_CheckedChanged"] as string;
 										Node codeNode = GetNode (codePath);
-										RaiseEvent ("magix.execute", codeNode);
+										RaiseEvent("magix.execute", codeNode);
 									};
 							}
 							else if (ctrl is RadioButton)
@@ -322,7 +322,7 @@ namespace Magix.forms
 									{
 										string codePath = ViewState[((Control)sender).ClientID + "_CheckedChanged"] as string;
 										Node codeNode = GetNode (codePath);
-										RaiseEvent ("magix.execute", codeNode);
+										RaiseEvent("magix.execute", codeNode);
 									};
 							}
 						else
@@ -341,7 +341,7 @@ namespace Magix.forms
 								{
 									string codePath = ViewState[((Control)sender).ClientID + "_Click"] as string;
 									Node codeNode = GetNode (codePath);
-									RaiseEvent ("magix.execute", codeNode);
+									RaiseEvent("magix.execute", codeNode);
 								};
 						};
 				} break;
@@ -357,7 +357,7 @@ namespace Magix.forms
 								{
 									string codePath = ViewState[((Control)sender).ClientID + "_DblClick"] as string;
 									Node codeNode = GetNode (codePath);
-									RaiseEvent ("magix.execute", codeNode);
+									RaiseEvent("magix.execute", codeNode);
 								};
 						};
 				} break;
@@ -373,7 +373,7 @@ namespace Magix.forms
 								{
 									string codePath = ViewState[((Control)sender).ClientID + "_MouseOver"] as string;
 									Node codeNode = GetNode (codePath);
-									RaiseEvent ("magix.execute", codeNode);
+									RaiseEvent("magix.execute", codeNode);
 								};
 						};
 				} break;
@@ -389,7 +389,7 @@ namespace Magix.forms
 								{
 									string codePath = ViewState[((Control)sender).ClientID + "_MouseOut"] as string;
 									Node codeNode = GetNode (codePath);
-									RaiseEvent ("magix.execute", codeNode);
+									RaiseEvent("magix.execute", codeNode);
 								};
 						};
 				} break;
@@ -405,7 +405,7 @@ namespace Magix.forms
 								{
 									string codePath = ViewState[((Control)sender).ClientID + "_MouseDown"] as string;
 									Node codeNode = GetNode (codePath);
-									RaiseEvent ("magix.execute", codeNode);
+									RaiseEvent("magix.execute", codeNode);
 								};
 						};
 				} break;
@@ -421,7 +421,7 @@ namespace Magix.forms
 								{
 									string codePath = ViewState[((Control)sender).ClientID + "_MouseUp"] as string;
 									Node codeNode = GetNode (codePath);
-									RaiseEvent ("magix.execute", codeNode);
+									RaiseEvent("magix.execute", codeNode);
 								};
 						};
 				} break;
@@ -437,7 +437,7 @@ namespace Magix.forms
 								{
 									string codePath = ViewState[((Control)sender).ClientID + "_KeyPress"] as string;
 									Node codeNode = GetNode (codePath);
-									RaiseEvent ("magix.execute", codeNode);
+									RaiseEvent("magix.execute", codeNode);
 								};
 						};
 				} break;
@@ -453,7 +453,7 @@ namespace Magix.forms
 								{
 									string codePath = ViewState[((Control)sender).ClientID + "_EscKey"] as string;
 									Node codeNode = GetNode (codePath);
-									RaiseEvent ("magix.execute", codeNode);
+									RaiseEvent("magix.execute", codeNode);
 								};
 						};
 				} break;
@@ -469,7 +469,7 @@ namespace Magix.forms
 								{
 									string codePath = ViewState[((Control)sender).ClientID + "_EscKey"] as string;
 									Node codeNode = GetNode (codePath);
-									RaiseEvent ("magix.execute", codeNode);
+									RaiseEvent("magix.execute", codeNode);
 								};
 						};
 				} break;
@@ -485,7 +485,7 @@ namespace Magix.forms
 								{
 									string codePath = ViewState[((Control)sender).ClientID + "_EscKey"] as string;
 									Node codeNode = GetNode (codePath);
-									RaiseEvent ("magix.execute", codeNode);
+									RaiseEvent("magix.execute", codeNode);
 								};
 						};
 				} break;
@@ -500,9 +500,9 @@ namespace Magix.forms
 		 * "form-id" form, in the "value" node
 		 */
         [ActiveEvent(Name = "magix.forms.get-value")]
-		protected void magix_forms_get_value (object sender, ActiveEventArgs e)
+		protected void magix_forms_get_value(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains ("inspect"))
+			if (e.Params.Contains("inspect"))
 			{
 				e.Params["id"].Value = "idOfControlInForm";
 				e.Params["form-id"].Value = "formID";
@@ -539,9 +539,9 @@ not necessarily be a string, but can also be of other types.";
 		 * "form-id" form, in the "value" node
 		 */
         [ActiveEvent(Name = "magix.forms.set-value")]
-		protected void magix_forms_set_value (object sender, ActiveEventArgs e)
+		protected void magix_forms_set_value(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains ("inspect"))
+			if (e.Params.Contains("inspect"))
 			{
 				e.Params["id"].Value = "idOfControlInForm";
 				e.Params["form-id"].Value = "formID";

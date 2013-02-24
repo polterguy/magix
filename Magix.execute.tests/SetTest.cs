@@ -18,7 +18,7 @@ namespace Magix.tests
 		 * Tests to see if "set", works with Node-Lists
 		 */
 		[ActiveEvent(Name = "magix.test.set-node-list")]
-		public void magix_test_set_node_list (object sender, ActiveEventArgs e)
+		public void magix_test_set_node_list(object sender, ActiveEventArgs e)
 		{
 			Node tmp = new Node();
 
@@ -30,25 +30,25 @@ namespace Magix.tests
 			tmp["set"].Value = "[Buffer][Copy]";
 			tmp["set"]["value"].Value = "[Data]";
 
-			if (e.Params.Contains ("inspect"))
+			if (e.Params.Contains("inspect"))
 			{
-				e.Params.Clear ();
+				e.Params.Clear();
 				e.Params["inspect"].Value = @"Checks to see if copying of 
 lists of Nodes is functioning as it should, 
 by copying the contents from ""Data"" to
 ""Buffer"". Then checks to see if the ""Buffer""
 Node contains a copy of the original Node-set.";
-				e.Params.AddRange (tmp);
+				e.Params.AddRange(tmp);
 				return;
 			}
 
-			Node original = tmp["Data"].Clone ();
+			Node original = tmp["Data"].Clone();
 
-			RaiseEvent (
+			RaiseEvent(
 				"magix.execute",
 				tmp);
 
-			if (!tmp["Buffer"]["Data"].HasNodes (original))
+			if (!tmp["Buffer"]["Data"].HasNodes(original))
 			{
 				throw new ApplicationException("The 'Buffer' Node didn't equal the original Node-list in the 'Data' Node as were expected");
 			}
@@ -58,7 +58,7 @@ Node contains a copy of the original Node-set.";
 		 * Tests to see if "set", works with Node-Lists
 		 */
 		[ActiveEvent(Name = "magix.test.set-node-list-null")]
-		public void magix_test_set_node_list_null (object sender, ActiveEventArgs e)
+		public void magix_test_set_node_list_null(object sender, ActiveEventArgs e)
 		{
 			Node tmp = new Node();
 
@@ -68,22 +68,22 @@ Node contains a copy of the original Node-set.";
 			tmp["Data"]["Items"]["Item4"]["Description"].Value = "desc4";
 			tmp["set"].Value = "[Data][Items]";
 
-			if (e.Params.Contains ("inspect"))
+			if (e.Params.Contains("inspect"))
 			{
-				e.Params.Clear ();
+				e.Params.Clear();
 				e.Params["inspect"].Value = @"Checks to see if copying of 
 lists of Nodes is functioning as it should, 
 by setting the Data/Items to null, which
 should remove the Data/Items node.";
-				e.Params.AddRange (tmp);
+				e.Params.AddRange(tmp);
 				return;
 			}
 
-			RaiseEvent (
+			RaiseEvent(
 				"magix.execute",
 				tmp);
 
-			if (tmp["Data"].Contains ("Items"))
+			if (tmp["Data"].Contains("Items"))
 			{
 				throw new ApplicationException("The set operation didn't make the Node-list become null");
 			}
@@ -93,7 +93,7 @@ should remove the Data/Items node.";
 		 * Tests to see if "set", works with Values
 		 */
 		[ActiveEvent(Name = "magix.test.set-value")]
-		public void magix_test_set_value (object sender, ActiveEventArgs e)
+		public void magix_test_set_value(object sender, ActiveEventArgs e)
 		{
 			Node tmp = new Node();
 
@@ -102,16 +102,16 @@ should remove the Data/Items node.";
 			tmp["set"].Value = "[Buffer].Value";
 			tmp["set"]["value"].Value = "[Data][Item1][Description].Value";
 
-			if (e.Params.Contains ("inspect"))
+			if (e.Params.Contains("inspect"))
 			{
-				e.Params.Clear ();
+				e.Params.Clear();
 				e.Params["inspect"].Value = @"Checks to see if copying of 
 Node values is functioning as it should.";
-				e.Params.AddRange (tmp);
+				e.Params.AddRange(tmp);
 				return;
 			}
 
-			RaiseEvent (
+			RaiseEvent(
 				"magix.execute",
 				tmp);
 
@@ -129,23 +129,23 @@ Node values is functioning as it should.";
 		 * Tests to see if "set", works with null Values
 		 */
 		[ActiveEvent(Name = "magix.test.set-value-null")]
-		public void magix_test_set_value_null (object sender, ActiveEventArgs e)
+		public void magix_test_set_value_null(object sender, ActiveEventArgs e)
 		{
 			Node tmp = new Node();
 
 			tmp["Data"]["Item1"]["Description"].Value = "desc1";
 			tmp["set"].Value = "[Data][Item1][Description].Value";
 
-			if (e.Params.Contains ("inspect"))
+			if (e.Params.Contains("inspect"))
 			{
-				e.Params.Clear ();
+				e.Params.Clear();
 				e.Params["inspect"].Value = @"Checks to see if setting a Node's
 Value functions as it should with null values.";
-				e.Params.AddRange (tmp);
+				e.Params.AddRange(tmp);
 				return;
 			}
 
-			RaiseEvent (
+			RaiseEvent(
 				"magix.execute",
 				tmp);
 
@@ -163,7 +163,7 @@ Value functions as it should with null values.";
 		 * Tests to see if "set", works with null Values
 		 */
 		[ActiveEvent(Name = "magix.test.set-name-null-throws")]
-		public void magix_test_set_name_null_throws (object sender, ActiveEventArgs e)
+		public void magix_test_set_name_null_throws(object sender, ActiveEventArgs e)
 		{
 			Node tmp = new Node();
 
@@ -173,16 +173,16 @@ Value functions as it should with null values.";
 			tmp["try"]["catch"]["set"].Value = "[/][Data].Value";
 			tmp["try"]["catch"]["set"]["value"].Value = "success";
 
-			if (e.Params.Contains ("inspect"))
+			if (e.Params.Contains("inspect"))
 			{
-				e.Params.Clear ();
+				e.Params.Clear();
 				e.Params["inspect"].Value = @"Checks to see if setting a Node's
 Name functions as it should with null values. Expected to throw!";
-				e.Params.AddRange (tmp);
+				e.Params.AddRange(tmp);
 				return;
 			}
 
-			RaiseEvent (
+			RaiseEvent(
 				"magix.execute",
 				tmp);
 
@@ -200,7 +200,7 @@ Name functions as it should with null values. Expected to throw!";
 		 * Tests to see if "set", works with Name
 		 */
 		[ActiveEvent(Name = "magix.test.set-get-name")]
-		public void magix_test_set_get_name (object sender, ActiveEventArgs e)
+		public void magix_test_set_get_name(object sender, ActiveEventArgs e)
 		{
 			Node tmp = new Node();
 
@@ -209,16 +209,16 @@ Name functions as it should with null values. Expected to throw!";
 			tmp["set"].Value = "[Buffer].Value";
 			tmp["set"]["value"].Value = "[Data][Item1][0].Name";
 
-			if (e.Params.Contains ("inspect"))
+			if (e.Params.Contains("inspect"))
 			{
-				e.Params.Clear ();
+				e.Params.Clear();
 				e.Params["inspect"].Value = @"Checks to see if setting Node Name
 functions as it should.";
-				e.Params.AddRange (tmp);
+				e.Params.AddRange(tmp);
 				return;
 			}
 
-			RaiseEvent (
+			RaiseEvent(
 				"magix.execute",
 				tmp);
 
@@ -236,7 +236,7 @@ functions as it should.";
 		 * Tests to see if "set", works with Name
 		 */
 		[ActiveEvent(Name = "magix.test.set-name")]
-		public void magix_test_set_name (object sender, ActiveEventArgs e)
+		public void magix_test_set_name(object sender, ActiveEventArgs e)
 		{
 			Node tmp = new Node();
 
@@ -245,23 +245,23 @@ functions as it should.";
 			tmp["set"].Value = "[Buffer][DataTmp].Name";
 			tmp["set"]["value"].Value = "[Data][Item1][0].Name";
 
-			if (e.Params.Contains ("inspect"))
+			if (e.Params.Contains("inspect"))
 			{
-				e.Params.Clear ();
+				e.Params.Clear();
 				e.Params["inspect"].Value = @"Checks to see if setting Node Name
 functions as it should.";
-				e.Params.AddRange (tmp);
+				e.Params.AddRange(tmp);
 				return;
 			}
 
-			RaiseEvent (
+			RaiseEvent(
 				"magix.execute",
 				tmp);
 
 			if (tmp["Buffer"][0].Name != "Description123")
 			{
 				throw new ApplicationException(
-					string.Format (
+					string.Format(
 						"Expected {0}, got {1}",
 						"Description123",
 						tmp["Buffer"][0].Name));
@@ -272,7 +272,7 @@ functions as it should.";
 		 * Tests to see if ""set"" ing a Value to a Node-list throws an exception
 		 */
 		[ActiveEvent(Name = "magix.test.assure-set-lists-become-values")]
-		public void magix_test_assure_set_lists_become_values (object sender, ActiveEventArgs e)
+		public void magix_test_assure_set_lists_become_values(object sender, ActiveEventArgs e)
 		{
 			Node tmp = new Node();
 
@@ -284,15 +284,15 @@ functions as it should.";
 			tmp["set"].Value = "[Buffer].Value";
 			tmp["set"]["value"].Value = "[Data]";
 
-			if (e.Params.Contains ("inspect"))
+			if (e.Params.Contains("inspect"))
 			{
-				e.Params.Clear ();
+				e.Params.Clear();
 				e.Params["inspect"].Value = @"Checks to see if setting Node Value
 functions as it should.";
-				e.Params.AddRange (tmp);
+				e.Params.AddRange(tmp);
 				return;
 			}
-			RaiseEvent (
+			RaiseEvent(
 				"magix.execute",
 				tmp);
 
@@ -309,7 +309,7 @@ functions as it should.";
 		 * Tests to see if ""set"" ing a Name to a Node-list throws an exception
 		 */
 		[ActiveEvent(Name = "magix.test.assure-set-lists-dont-become-names")]
-		public void magix_test_assure_set_lists_dont_become_names (object sender, ActiveEventArgs e)
+		public void magix_test_assure_set_lists_dont_become_names(object sender, ActiveEventArgs e)
 		{
 			Node tmp = new Node();
 
@@ -321,20 +321,20 @@ functions as it should.";
 			tmp["set"].Value = "[Buffer][Item].Name";
 			tmp["set"]["value"].Value = "[Data][Item1]";
 
-			if (e.Params.Contains ("inspect"))
+			if (e.Params.Contains("inspect"))
 			{
-				e.Params.Clear ();
+				e.Params.Clear();
 				e.Params["inspect"].Value = @"Checks to see if setting Node Name
 functions as it should, by demanding an exception to
 declare as success.";
-				e.Params.AddRange (tmp);
+				e.Params.AddRange(tmp);
 				return;
 			}
 
 			bool hasException = false;
 			try
 			{
-				RaiseEvent (
+				RaiseEvent(
 					"magix.execute",
 					tmp);
 			}

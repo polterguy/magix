@@ -5,6 +5,7 @@
  */
 
 using System;
+using System.Collections.Generic;
 using Magix.Core;
 
 namespace Magix.execute
@@ -22,9 +23,9 @@ namespace Magix.execute
 		 * keyword. Functions as a "magix.execute" keyword
 		 */
 		[ActiveEvent(Name = "magix.execute.for-each")]
-		public static void magix_execute_for_each (object sender, ActiveEventArgs e)
+		public static void magix_execute_for_each(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains ("inspect"))
+			if (e.Params.Contains("inspect"))
 			{
 				e.Params["event:magix.execute"].Value = null;
 				e.Params["Data"]["Items"]["Item1"]["message"].Value = "Howdy World 1.0!";
@@ -42,6 +43,7 @@ expression. Use the [.] expression to de-reference
 the current Node.";
 				return;
 			}
+
 			Node ip = e.Params;
 			if (e.Params.Contains("_ip"))
 				ip = e.Params ["_ip"].Value as Node;
@@ -53,7 +55,11 @@ the current Node.";
 			if (Expressions.IsTrue(ip.Get<string>(), ip, dp))
 			{
 				Node tmp = Expressions.GetExpressionValue(ip.Get<string>(), dp, ip) as Node;
-				foreach (Node idx in tmp)
+
+				// To make sure we can CHANGE the list of nodes, as we iterate them
+				// and remove, add etc ...
+				List<Node> tmpList = new List<Node>(tmp.Children);
+				foreach (Node idx in tmpList)
 				{
 					Node tmp2 = new Node();
 					tmp2["_ip"].Value = ip;

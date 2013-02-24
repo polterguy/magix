@@ -55,9 +55,9 @@ namespace Magix.execute
 		 * app startup
 		 */
 		[ActiveEvent(Name = "magix.core.application-startup")]
-		public static void magix_core_application_startup (object sender, ActiveEventArgs e)
+		public static void magix_core_application_startup(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains ("inspect"))
+			if (e.Params.Contains("inspect"))
 			{
 				e.Params["initial-startup-of-process"].Value = null;
 				e.Params["inspect"].Value = @"Called during startup
@@ -93,7 +93,7 @@ are being correctly re-mapped.
 		[ActiveEvent(Name = "magix.execute.tunnel")]
 		public static void magix_execute_tunnel(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains ("inspect") &&
+			if (e.Params.Contains("inspect") &&
 			    e.Params["inspect"].Get<string>("") == "")
 			{
 				e.Params["event:magix.execute"].Value = null;
@@ -181,9 +181,9 @@ which event to raise externally");
 		 * Allows an event to be remotly invoked within your system
 		 */
 		[ActiveEvent(Name = "magix.execute.open")]
-		public static void magix_execute_open (object sender, ActiveEventArgs e)
+		public static void magix_execute_open(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains ("inspect") &&
+			if (e.Params.Contains("inspect") &&
 			    e.Params["inspect"].Get<string>("") == "")
 			{
 				e.Params["event:magix.execute"].Value = null;
@@ -236,9 +236,9 @@ server park, or by exposing functionality to other networks.";
 		 * Allows an event to NOT be remotly invoked within your system
 		 */
 		[ActiveEvent(Name = "magix.execute.close")]
-		public static void magix_execute_close (object sender, ActiveEventArgs e)
+		public static void magix_execute_close(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains ("inspect") &&
+			if (e.Params.Contains("inspect") &&
 			    e.Params["inspect"].Get<string>("") == "")
 			{
 				e.Params["event:magix.execute"].Value = null;
@@ -285,9 +285,9 @@ invoked from other servers.";
 		 * active event is finished executing.
 		 */
 		[ActiveEvent(Name = "magix.execute.remote")]
-		public static void magix_execute_remote (object sender, ActiveEventArgs e)
+		public static void magix_execute_remote(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains ("inspect") &&
+			if (e.Params.Contains("inspect") &&
 			    e.Params["inspect"].Get<string>("") == "")
 			{
 				e.Params["event:magix.execute"].Value = null;
@@ -305,7 +305,7 @@ transparently back to the caller.";
 			if (e.Params.Contains("_ip"))
 				ip = e.Params["_ip"].Value as Node;
 
-			if (!ip.Contains ("URL") || ip["URL"].Get<string>("") == string.Empty)
+			if (!ip.Contains("URL") || ip["URL"].Get<string>("") == string.Empty)
 				throw new ArgumentException("magix.execute.remote needs URL parameter to know which endpoint to go towards");
 
 			if (ip.Get<string>("") == string.Empty)

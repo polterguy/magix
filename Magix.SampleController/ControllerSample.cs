@@ -25,9 +25,9 @@ namespace Magix.SampleController
 		 * the page-load event, and you've got your own application
 		 */
 		[ActiveEvent(Name = "magix.viewport.page-load")]
-		public void magix_viewport_page_load (object sender, ActiveEventArgs e)
+		public void magix_viewport_page_load(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains ("inspect"))
+			if (e.Params.Contains("inspect"))
 			{
 				e.Params["initial-load"].Value = null;
 				e.Params["inspect"].Value = @"This active event is being 

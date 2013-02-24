@@ -19,6 +19,8 @@
 
 * Better handling of types in expressions
 
+* Think about handling all Unit Tests completely "managed" ...?
+
 * Implement support for "inspect" on Active Modules too
 
 * Create a custom type of exception thrown in "managed code" ...

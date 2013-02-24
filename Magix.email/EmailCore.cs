@@ -23,9 +23,9 @@ namespace Magix.execute
 		 * to use
 		 */
 		[ActiveEvent(Name = "magix.email.send-email")]
-		public static void magix_email_email (object sender, ActiveEventArgs e)
+		public static void magix_email_email(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains ("inspect"))
+			if (e.Params.Contains("inspect"))
 			{
 				e.Params["event:magix.execute"].Value = null;
 				e.Params["inspect"].Value = @"Will send the given email to
@@ -39,13 +39,13 @@ become subject, and ""body"" the main message.";
 				return;
 			}
 
-			if (!e.Params.Contains ("to"))
+			if (!e.Params.Contains("to"))
 				throw new ArgumentException("No recipient found. You need to add up 'to' child node");
-			if (!e.Params.Contains ("from"))
+			if (!e.Params.Contains("from"))
 				throw new ArgumentException("No sender found. You need to add up 'from' child node");
-			if (!e.Params.Contains ("subject"))
+			if (!e.Params.Contains("subject"))
 				throw new ArgumentException("No subject found. You need to add up 'subject' child node");
-			if (!e.Params.Contains ("body"))
+			if (!e.Params.Contains("body"))
 				throw new ArgumentException("No actual message found. You need to add up 'body' child node");
 
 			string toEmail = e.Params["to"].Get<string>();

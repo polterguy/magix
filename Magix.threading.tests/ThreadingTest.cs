@@ -18,7 +18,7 @@ namespace Magix.tests
 		 * Tests to see if "fork", works
 		 */
 		[ActiveEvent(Name = "magix.test.fork")]
-		public void magix_test_fork (object sender, ActiveEventArgs e)
+		public void magix_test_fork(object sender, ActiveEventArgs e)
 		{
 			Node tmp = new Node();
 
@@ -29,16 +29,16 @@ namespace Magix.tests
 			tmp["sleep"].Value = 500;
 			tmp["magix.data.load"].Value = "fork-test-buffer-object";
 
-			if (e.Params.Contains ("inspect"))
+			if (e.Params.Contains("inspect"))
 			{
-				e.Params.Clear ();
+				e.Params.Clear();
 				e.Params["inspect"].Value = @"Checks to see if creating a new thread
 functions as it should.";
-				e.Params.AddRange (tmp);
+				e.Params.AddRange(tmp);
 				return;
 			}
 
-			RaiseEvent (
+			RaiseEvent(
 				"magix.execute",
 				tmp);
 

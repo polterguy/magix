@@ -22,9 +22,9 @@ namespace Magix.admin
 		 * all Active Events as a list of Node in the "ActiveEvent" child node
 		 */
 		[ActiveEvent(Name = "magix.admin.get-active-events")]
-		public static void magix_admin__get_active_events (object sender, ActiveEventArgs e)
+		public static void magix_admin__get_active_events(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains ("inspect"))
+			if (e.Params.Contains("inspect"))
 			{
 				e.Params["all"].Value = false;
 				e.Params["begins-with"].Value = "magix.execute.";
@@ -40,11 +40,11 @@ event, where the ""ToolTip"" will contain the original event name. Takes no para
 				return;
 			}
 			bool takeAll = false;
-			if (e.Params.Contains ("all"))
+			if (e.Params.Contains("all"))
 				takeAll = e.Params["all"].Get<bool>();
 
 			string beginsWith = null;
-			if (e.Params.Contains ("begins-with"))
+			if (e.Params.Contains("begins-with"))
 				beginsWith = e.Params["begins-with"].Get<string>();
 
 			Node node = e.Params;
@@ -54,7 +54,7 @@ event, where the ""ToolTip"" will contain the original event name. Takes no para
 				if (!takeAll && string.IsNullOrEmpty (beginsWith) && idx.StartsWith ("magix.test."))
 					continue;
 
-				if (idx.Contains ("."))
+				if (idx.Contains("."))
 				{
 					string[] splits = idx.Split ('.');
 					if (!takeAll && splits[splits.Length - 1].StartsWith ("_"))
@@ -97,9 +97,9 @@ event, where the ""ToolTip"" will contain the original event name. Takes no para
 		 * on all events internally raised within the system
 		 */
 		[ActiveEvent(Name = "magix.admin.open-event-sniffer")]
-		public void magix_admin_open_event_sniffer (object sender, ActiveEventArgs e)
+		public void magix_admin_open_event_sniffer(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains ("inspect"))
+			if (e.Params.Contains("inspect"))
 			{
 				e.Params["container"].Value = "content1";
 				e.Params["inspect"].Value = @"Will open the Event Sniffer
@@ -121,9 +121,9 @@ your server.";
 		 * execute arbitrary events with nodes as arguments
 		 */
 		[ActiveEvent(Name = "magix.admin.open-event-viewer")]
-		public void magix_admin_open_event_viewer (object sender, ActiveEventArgs e)
+		public void magix_admin_open_event_viewer(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains ("inspect"))
+			if (e.Params.Contains("inspect"))
 			{
 				e.Params["container"].Value = "content1";
 				e.Params["inspect"].Value = @"Will open the Active Event Executor, from which
@@ -136,7 +136,7 @@ the module into the ""container"" viewport container.";
 				"Magix.admin.ExecutorForm", 
 				e.Params["container"].Get<string>());
 
-			RaiseEvent ("magix.execute._event-overridden");
+			RaiseEvent("magix.execute._event-overridden");
 		}
 	}
 }

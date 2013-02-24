@@ -18,7 +18,7 @@ namespace Magix.tests
 		 * Tests to see if "if", works
 		 */
 		[ActiveEvent(Name = "magix.test.if")]
-		public void magix_test_if (object sender, ActiveEventArgs e)
+		public void magix_test_if(object sender, ActiveEventArgs e)
 		{
 			Node tmp = new Node();
 
@@ -30,16 +30,16 @@ namespace Magix.tests
 			tmp["else"]["set"].Value = "[Buffer].Value";
 			tmp["else"]["set"]["value"].Value = "failure";
 
-			if (e.Params.Contains ("inspect"))
+			if (e.Params.Contains("inspect"))
 			{
-				e.Params.Clear ();
+				e.Params.Clear();
 				e.Params["inspect"].Value = @"Checks to see if setting Node Name
 functions as it should.";
-				e.Params.AddRange (tmp);
+				e.Params.AddRange(tmp);
 				return;
 			}
 
-			RaiseEvent (
+			RaiseEvent(
 				"magix.execute",
 				tmp);
 
@@ -54,7 +54,7 @@ functions as it should.";
 		 * Tests to see if "if", works
 		 */
 		[ActiveEvent(Name = "magix.test.if-name")]
-		public void magix_test_if_name (object sender, ActiveEventArgs e)
+		public void magix_test_if_name(object sender, ActiveEventArgs e)
 		{
 			Node tmp = new Node();
 
@@ -66,16 +66,16 @@ functions as it should.";
 			tmp["else"]["set"].Value = "[Buffer].Value";
 			tmp["else"]["set"]["value"].Value = "failure";
 
-			if (e.Params.Contains ("inspect"))
+			if (e.Params.Contains("inspect"))
 			{
-				e.Params.Clear ();
+				e.Params.Clear();
 				e.Params["inspect"].Value = @"Checks to see if setting Node Name
 functions as it should.";
-				e.Params.AddRange (tmp);
+				e.Params.AddRange(tmp);
 				return;
 			}
 
-			RaiseEvent (
+			RaiseEvent(
 				"magix.execute",
 				tmp);
 
@@ -90,7 +90,7 @@ functions as it should.";
 		 * Tests to see if "if", works
 		 */
 		[ActiveEvent(Name = "magix.test.if-not-equals")]
-		public void magix_test_if_not_equals (object sender, ActiveEventArgs e)
+		public void magix_test_if_not_equals(object sender, ActiveEventArgs e)
 		{
 			Node tmp = new Node();
 
@@ -102,16 +102,16 @@ functions as it should.";
 			tmp["else"]["set"].Value = "[Buffer].Value";
 			tmp["else"]["set"]["value"].Value = "success";
 
-			if (e.Params.Contains ("inspect"))
+			if (e.Params.Contains("inspect"))
 			{
-				e.Params.Clear ();
+				e.Params.Clear();
 				e.Params["inspect"].Value = @"Checks to see if setting Node Name
 functions as it should.";
-				e.Params.AddRange (tmp);
+				e.Params.AddRange(tmp);
 				return;
 			}
 
-			RaiseEvent (
+			RaiseEvent(
 				"magix.execute",
 				tmp);
 
@@ -126,7 +126,7 @@ functions as it should.";
 		 * Tests to see if "if", works
 		 */
 		[ActiveEvent(Name = "magix.test.if-single-value")]
-		public void magix_test_if_single_value (object sender, ActiveEventArgs e)
+		public void magix_test_if_single_value(object sender, ActiveEventArgs e)
 		{
 			Node tmp = new Node();
 
@@ -138,16 +138,16 @@ functions as it should.";
 			tmp["else"]["set"].Value = "[Buffer].Value";
 			tmp["else"]["set"]["value"].Value = "failure";
 
-			if (e.Params.Contains ("inspect"))
+			if (e.Params.Contains("inspect"))
 			{
-				e.Params.Clear ();
+				e.Params.Clear();
 				e.Params["inspect"].Value = @"Checks to see if setting Node Name
 functions as it should.";
-				e.Params.AddRange (tmp);
+				e.Params.AddRange(tmp);
 				return;
 			}
 
-			RaiseEvent (
+			RaiseEvent(
 				"magix.execute",
 				tmp);
 
@@ -162,7 +162,7 @@ functions as it should.";
 		 * Tests to see if "if", works
 		 */
 		[ActiveEvent(Name = "magix.test.if-single-node")]
-		public void magix_test_if_single_node (object sender, ActiveEventArgs e)
+		public void magix_test_if_single_node(object sender, ActiveEventArgs e)
 		{
 			Node tmp = new Node();
 
@@ -174,16 +174,16 @@ functions as it should.";
 			tmp["else"]["set"].Value = "[Buffer].Value";
 			tmp["else"]["set"]["value"].Value = "failure";
 
-			if (e.Params.Contains ("inspect"))
+			if (e.Params.Contains("inspect"))
 			{
-				e.Params.Clear ();
+				e.Params.Clear();
 				e.Params["inspect"].Value = @"Checks to see if setting Node Name
 functions as it should.";
-				e.Params.AddRange (tmp);
+				e.Params.AddRange(tmp);
 				return;
 			}
 
-			RaiseEvent (
+			RaiseEvent(
 				"magix.execute",
 				tmp);
 
@@ -198,7 +198,7 @@ functions as it should.";
 		 * Tests to see if "if", works
 		 */
 		[ActiveEvent(Name = "magix.test.if-single-node-no-exists")]
-		public void magix_test_if_single_node_not_exists (object sender, ActiveEventArgs e)
+		public void magix_test_if_single_node_not_exists(object sender, ActiveEventArgs e)
 		{
 			Node tmp = new Node();
 
@@ -210,16 +210,16 @@ functions as it should.";
 			tmp["else"]["set"].Value = "[Buffer].Value";
 			tmp["else"]["set"]["value"].Value = "success";
 
-			if (e.Params.Contains ("inspect"))
+			if (e.Params.Contains("inspect"))
 			{
-				e.Params.Clear ();
+				e.Params.Clear();
 				e.Params["inspect"].Value = @"Checks to see if setting Node Name
 functions as it should.";
-				e.Params.AddRange (tmp);
+				e.Params.AddRange(tmp);
 				return;
 			}
 
-			RaiseEvent (
+			RaiseEvent(
 				"magix.execute",
 				tmp);
 
@@ -234,7 +234,7 @@ functions as it should.";
 		 * Tests to see if "if", works
 		 */
 		[ActiveEvent(Name = "magix.test.if-single-value-null")]
-		public void magix_test_if_single_value_null (object sender, ActiveEventArgs e)
+		public void magix_test_if_single_value_null(object sender, ActiveEventArgs e)
 		{
 			Node tmp = new Node();
 
@@ -246,16 +246,16 @@ functions as it should.";
 			tmp["else"]["set"].Value = "[Buffer].Value";
 			tmp["else"]["set"]["value"].Value = "success";
 
-			if (e.Params.Contains ("inspect"))
+			if (e.Params.Contains("inspect"))
 			{
-				e.Params.Clear ();
+				e.Params.Clear();
 				e.Params["inspect"].Value = @"Checks to see if setting Node Name
 functions as it should.";
-				e.Params.AddRange (tmp);
+				e.Params.AddRange(tmp);
 				return;
 			}
 
-			RaiseEvent (
+			RaiseEvent(
 				"magix.execute",
 				tmp);
 
@@ -270,7 +270,7 @@ functions as it should.";
 		 * Tests to see if "if", works
 		 */
 		[ActiveEvent(Name = "magix.test.if-single-value-not-exists")]
-		public void magix_test_if_single_value_not_exists (object sender, ActiveEventArgs e)
+		public void magix_test_if_single_value_not_exists(object sender, ActiveEventArgs e)
 		{
 			Node tmp = new Node();
 
@@ -282,16 +282,16 @@ functions as it should.";
 			tmp["else"]["set"].Value = "[Buffer].Value";
 			tmp["else"]["set"]["value"].Value = "success";
 
-			if (e.Params.Contains ("inspect"))
+			if (e.Params.Contains("inspect"))
 			{
-				e.Params.Clear ();
+				e.Params.Clear();
 				e.Params["inspect"].Value = @"Checks to see if setting Node Name
 functions as it should.";
-				e.Params.AddRange (tmp);
+				e.Params.AddRange(tmp);
 				return;
 			}
 
-			RaiseEvent (
+			RaiseEvent(
 				"magix.execute",
 				tmp);
 
@@ -306,7 +306,7 @@ functions as it should.";
 		 * Tests to see if "if", works
 		 */
 		[ActiveEvent(Name = "magix.test.if-nested-if")]
-		public void magix_test_if_nested_if (object sender, ActiveEventArgs e)
+		public void magix_test_if_nested_if(object sender, ActiveEventArgs e)
 		{
 			Node tmp = new Node();
 
@@ -320,16 +320,16 @@ functions as it should.";
 			tmp["if"]["if"]["if"]["if"]["if"]["set"].Value = "[Buffer].Value";
 			tmp["if"]["if"]["if"]["if"]["if"]["set"]["value"].Value = "success";
 
-			if (e.Params.Contains ("inspect"))
+			if (e.Params.Contains("inspect"))
 			{
-				e.Params.Clear ();
+				e.Params.Clear();
 				e.Params["inspect"].Value = @"Checks to see if setting Node Name
 functions as it should.";
-				e.Params.AddRange (tmp);
+				e.Params.AddRange(tmp);
 				return;
 			}
 
-			RaiseEvent (
+			RaiseEvent(
 				"magix.execute",
 				tmp);
 
@@ -344,7 +344,7 @@ functions as it should.";
 		 * Tests to see if "if", works
 		 */
 		[ActiveEvent(Name = "magix.test.if-single-value-not-null")]
-		public void magix_test_if_single_value_not_null (object sender, ActiveEventArgs e)
+		public void magix_test_if_single_value_not_null(object sender, ActiveEventArgs e)
 		{
 			Node tmp = new Node();
 
@@ -356,16 +356,16 @@ functions as it should.";
 			tmp["else"]["set"].Value = "[Buffer].Value";
 			tmp["else"]["set"]["value"].Value = "failure";
 
-			if (e.Params.Contains ("inspect"))
+			if (e.Params.Contains("inspect"))
 			{
-				e.Params.Clear ();
+				e.Params.Clear();
 				e.Params["inspect"].Value = @"Checks to see if setting Node Name
 functions as it should.";
-				e.Params.AddRange (tmp);
+				e.Params.AddRange(tmp);
 				return;
 			}
 
-			RaiseEvent (
+			RaiseEvent(
 				"magix.execute",
 				tmp);
 
@@ -380,7 +380,7 @@ functions as it should.";
 		 * Tests to see if "if", works
 		 */
 		[ActiveEvent(Name = "magix.test.if-not-generating-path")]
-		public void magix_test_if_not_generating_path (object sender, ActiveEventArgs e)
+		public void magix_test_if_not_generating_path(object sender, ActiveEventArgs e)
 		{
 			Node tmp = new Node();
 
@@ -391,16 +391,16 @@ functions as it should.";
 			tmp["else"]["set"].Value = "[Data].Value";
 			tmp["else"]["set"]["value"].Value = "success";
 
-			if (e.Params.Contains ("inspect"))
+			if (e.Params.Contains("inspect"))
 			{
-				e.Params.Clear ();
+				e.Params.Clear();
 				e.Params["inspect"].Value = @"Checks to see if setting Node Name
 functions as it should.";
-				e.Params.AddRange (tmp);
+				e.Params.AddRange(tmp);
 				return;
 			}
 
-			RaiseEvent (
+			RaiseEvent(
 				"magix.execute",
 				tmp);
 
@@ -416,7 +416,7 @@ functions as it should.";
 		 * Tests to see if "if", works
 		 */
 		[ActiveEvent(Name = "magix.test.if-not-generating-path-2")]
-		public void magix_test_if_not_generating_path_2 (object sender, ActiveEventArgs e)
+		public void magix_test_if_not_generating_path_2(object sender, ActiveEventArgs e)
 		{
 			Node tmp = new Node();
 
@@ -427,16 +427,16 @@ functions as it should.";
 			tmp["else"]["set"].Value = "[Data].Value";
 			tmp["else"]["set"]["value"].Value = "success";
 
-			if (e.Params.Contains ("inspect"))
+			if (e.Params.Contains("inspect"))
 			{
-				e.Params.Clear ();
+				e.Params.Clear();
 				e.Params["inspect"].Value = @"Checks to see if setting Node Name
 functions as it should.";
-				e.Params.AddRange (tmp);
+				e.Params.AddRange(tmp);
 				return;
 			}
 
-			RaiseEvent (
+			RaiseEvent(
 				"magix.execute",
 				tmp);
 
@@ -452,7 +452,7 @@ functions as it should.";
 		 * Tests to see if "else-if", works
 		 */
 		[ActiveEvent(Name = "magix.test.else-if-single-statement")]
-		public void magix_test_else_if_single_statement (object sender, ActiveEventArgs e)
+		public void magix_test_else_if_single_statement(object sender, ActiveEventArgs e)
 		{
 			Node tmp = new Node();
 
@@ -467,16 +467,16 @@ functions as it should.";
 			tmp["else"]["set"].Value = "[Buffer].Value";
 			tmp["else"]["set"]["value"].Value = "failure";
 
-			if (e.Params.Contains ("inspect"))
+			if (e.Params.Contains("inspect"))
 			{
-				e.Params.Clear ();
+				e.Params.Clear();
 				e.Params["inspect"].Value = @"Checks to see if setting Node Name
 functions as it should.";
-				e.Params.AddRange (tmp);
+				e.Params.AddRange(tmp);
 				return;
 			}
 
-			RaiseEvent (
+			RaiseEvent(
 				"magix.execute",
 				tmp);
 
@@ -491,7 +491,7 @@ functions as it should.";
 		 * Tests to see if "else-if", works
 		 */
 		[ActiveEvent(Name = "magix.test.else-if-node-exists")]
-		public void magix_test_else_if_node_exists (object sender, ActiveEventArgs e)
+		public void magix_test_else_if_node_exists(object sender, ActiveEventArgs e)
 		{
 			Node tmp = new Node();
 
@@ -506,16 +506,16 @@ functions as it should.";
 			tmp["else"]["set"].Value = "[Buffer].Value";
 			tmp["else"]["set"]["value"].Value = "failure";
 
-			if (e.Params.Contains ("inspect"))
+			if (e.Params.Contains("inspect"))
 			{
-				e.Params.Clear ();
+				e.Params.Clear();
 				e.Params["inspect"].Value = @"Checks to see if setting Node Name
 functions as it should.";
-				e.Params.AddRange (tmp);
+				e.Params.AddRange(tmp);
 				return;
 			}
 
-			RaiseEvent (
+			RaiseEvent(
 				"magix.execute",
 				tmp);
 
@@ -530,7 +530,7 @@ functions as it should.";
 		 * Tests to see if "else-if", works
 		 */
 		[ActiveEvent(Name = "magix.test.else-if-sub-expression")]
-		public void magix_test_else_if_sub_expression (object sender, ActiveEventArgs e)
+		public void magix_test_else_if_sub_expression(object sender, ActiveEventArgs e)
 		{
 			Node tmp = new Node();
 
@@ -545,16 +545,16 @@ functions as it should.";
 			tmp["else"]["set"].Value = "[Buffer].Value";
 			tmp["else"]["set"]["value"].Value = "failure";
 
-			if (e.Params.Contains ("inspect"))
+			if (e.Params.Contains("inspect"))
 			{
-				e.Params.Clear ();
+				e.Params.Clear();
 				e.Params["inspect"].Value = @"Checks to see if setting Node Name
 functions as it should.";
-				e.Params.AddRange (tmp);
+				e.Params.AddRange(tmp);
 				return;
 			}
 
-			RaiseEvent (
+			RaiseEvent(
 				"magix.execute",
 				tmp);
 
@@ -569,7 +569,7 @@ functions as it should.";
 		 * Tests to see if "else", works
 		 */
 		[ActiveEvent(Name = "magix.test.else")]
-		public void magix_test_else (object sender, ActiveEventArgs e)
+		public void magix_test_else(object sender, ActiveEventArgs e)
 		{
 			Node tmp = new Node();
 
@@ -584,16 +584,16 @@ functions as it should.";
 			tmp["else"]["set"].Value = "[Buffer].Value";
 			tmp["else"]["set"]["value"].Value = "success";
 
-			if (e.Params.Contains ("inspect"))
+			if (e.Params.Contains("inspect"))
 			{
-				e.Params.Clear ();
+				e.Params.Clear();
 				e.Params["inspect"].Value = @"Checks to see if setting Node Name
 functions as it should.";
-				e.Params.AddRange (tmp);
+				e.Params.AddRange(tmp);
 				return;
 			}
 
-			RaiseEvent (
+			RaiseEvent(
 				"magix.execute",
 				tmp);
 

@@ -20,9 +20,9 @@ namespace Magix.execute
 		 * will only be invoked if an exception is thrown
 		 */
 		[ActiveEvent(Name = "magix.execute.try")]
-		public static void magix_execute_try (object sender, ActiveEventArgs e)
+		public static void magix_execute_try(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains ("inspect"))
+			if (e.Params.Contains("inspect"))
 			{
 				e.Params["event:magix.execute"].Value = null;
 				e.Params["inspect"].Value = @"Use the ""try"" keyword to create
@@ -42,18 +42,18 @@ sub-functions, or invoked active events this way.";
 				return;
 			}
 			Node ip = e.Params;
-			if (e.Params.Contains ("_ip"))
+			if (e.Params.Contains("_ip"))
 				ip = e.Params ["_ip"].Value as Node;
 
-			if (!ip.Contains ("code"))
+			if (!ip.Contains("code"))
 				throw new ApplicationException("No code block inside of try statement");
 
-			if (!ip.Contains ("catch"))
+			if (!ip.Contains("catch"))
 				throw new ApplicationException("No catch block inside of try statement");
 
 			try
 			{
-				RaiseEvent (
+				RaiseEvent(
 					"magix.execute",
 					ip["code"]);
 			}
@@ -62,12 +62,12 @@ sub-functions, or invoked active events this way.";
 				while (err.InnerException != null)
 					err = err.InnerException;
 
-				if (ip["code"].Contains ("_state"))
+				if (ip["code"].Contains("_state"))
 					ip["code"]["_state"].UnTie ();
 
 				ip["catch"]["exception"].Value = err.Message;
 
-				RaiseEvent (
+				RaiseEvent(
 					"magix.execute",
 					ip["catch"]);
 			}
@@ -77,9 +77,9 @@ sub-functions, or invoked active events this way.";
 		 * Throws an exception with the Value descriptive message
 		 */
 		[ActiveEvent(Name = "magix.execute.throw")]
-		public static void magix_execute_throw (object sender, ActiveEventArgs e)
+		public static void magix_execute_throw(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains ("inspect"))
+			if (e.Params.Contains("inspect"))
 			{
 				e.Params["event:magix.execute"].Value = null;
 				e.Params["inspect"].Value = @"Throws an exception, which
@@ -95,7 +95,7 @@ Value of the throw Node. Use together with
 				return;
 			}
 			Node ip = e.Params;
-			if (e.Params.Contains ("_ip"))
+			if (e.Params.Contains("_ip"))
 				ip = e.Params ["_ip"].Value as Node;
 
 			throw new ApplicationException(ip.Get<string>());

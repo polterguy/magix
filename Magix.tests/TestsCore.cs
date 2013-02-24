@@ -19,9 +19,9 @@ namespace Magix.tests
 		 * Will run all Unit Tests in the system
 		 */
 		[ActiveEvent(Name = "magix.tests.run")]
-		public void magix_tests_run (object sender, ActiveEventArgs e)
+		public void magix_tests_run(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains ("inspect"))
+			if (e.Params.Contains("inspect"))
 			{
 				e.Params["inspect"].Value = @"Will raise all active events that
 start with ""magix.test."", and treat them as Unit Tests. 
@@ -49,7 +49,7 @@ that failed.";
 						Node tmp = new Node();
 						tmp["inspect"].Value = null;
 
-						RaiseEvent (
+						RaiseEvent(
 							idx, 
 							tmp);
 						e.Params[idx].Add (tmp["inspect"].UnTie ());
@@ -74,7 +74,7 @@ that failed.";
 						idxNo += 1;
 						lastTest = idx;
 						e.Params["tests"][idx]["success"].Value = false;
-						RaiseEvent (idx);
+						RaiseEvent(idx);
 						e.Params["tests"][idx]["success"].Value = true;
 					}
 				}
@@ -87,7 +87,7 @@ that failed.";
 				node["color"].Value = "LightGreen";
 				node["time"].Value = 1000;
 
-				RaiseEvent (
+				RaiseEvent(
 					"magix.viewport.show-message",
 					node);
 			}
@@ -105,7 +105,7 @@ that failed.";
 				node["color"].Value = "Red";
 				node["time"].Value = 30000;
 
-				RaiseEvent (
+				RaiseEvent(
 					"magix.viewport.show-message",
 					node);
 			}

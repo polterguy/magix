@@ -31,9 +31,9 @@ namespace Magix.execute
 		 * a hierarchy of overridden events
 		 */
 		[ActiveEvent(Name = "magix.execute.raise")]
-		public static void magix_execute_raise (object sender, ActiveEventArgs e)
+		public static void magix_execute_raise(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains ("inspect"))
+			if (e.Params.Contains("inspect"))
 			{
 				e.Params["event:magix.execute"].Value = null;
 				e.Params["inspect"].Value = @"Will raise the active event
@@ -57,17 +57,17 @@ functionality' from overridden active events.";
 			}
 
 			Node ip = e.Params;
-			if (e.Params.Contains ("_ip"))
+			if (e.Params.Contains("_ip"))
 				ip = e.Params ["_ip"].Value as Node;
 
 			bool forceNoOverride = false;
-			if (ip.Contains ("no-override") && ip["no-override"].Get<bool>())
+			if (ip.Contains("no-override") && ip["no-override"].Get<bool>())
 				forceNoOverride = true;
 
 			if (ip.Name == "raise")
-				RaiseEvent (ip.Get<string>(), ip, forceNoOverride);
+				RaiseEvent(ip.Get<string>(), ip, forceNoOverride);
 			else
-				RaiseEvent (ip.Name, ip, forceNoOverride);
+				RaiseEvent(ip.Name, ip, forceNoOverride);
 		}
 	}
 }

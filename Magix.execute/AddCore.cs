@@ -18,9 +18,9 @@ namespace Magix.execute
 		 * Adds the given "value" Node to the Value Expression, which both must be a Node list
 		 */
 		[ActiveEvent(Name = "magix.execute.add")]
-		public static void magix_execute_add (object sender, ActiveEventArgs e)
+		public static void magix_execute_add(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains ("inspect"))
+			if (e.Params.Contains("inspect"))
 			{
 				e.Params["event:magix.execute"].Value = null;
 				e.Params["inspect"].Value = @"Creates a copy of the Node returned by the 
@@ -38,16 +38,16 @@ with its children and sub-nodes.";
 				return;
 			}
 			Node ip = e.Params;
-			if (e.Params.Contains ("_ip"))
+			if (e.Params.Contains("_ip"))
 				ip = e.Params ["_ip"].Value as Node;
 
 			Node dp = e.Params;
-			if (e.Params.Contains ("_dp"))
+			if (e.Params.Contains("_dp"))
 				dp = e.Params["_dp"].Value as Node;
 
 			string left = ip.Get<string>();
 
-			if (!ip.Contains ("value"))
+			if (!ip.Contains("value"))
 				throw new ArgumentException("Cannot add a null node, need value Node to declare which node to add");
 
 			string right = ip["value"].Get<string>();

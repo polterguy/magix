@@ -21,9 +21,9 @@ namespace Magix.execute
 		 * Loads a file from disc, relatively from the root of the web application
 		 */
 		[ActiveEvent(Name = "magix.file.load")]
-		public static void magix_file_load (object sender, ActiveEventArgs e)
+		public static void magix_file_load(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains ("inspect"))
+			if (e.Params.Contains("inspect"))
 			{
 				e.Params["event:magix.execute"].Value = null;
 				e.Params["magix.file.load"].Value = "ExecuteScripts/TODO.txt";
@@ -34,7 +34,7 @@ given as Value of the file Node.";
 			}
 
 			Node ip = e.Params;
-			if (e.Params.Contains ("_ip"))
+			if (e.Params.Contains("_ip"))
 				ip = e.Params ["_ip"].Value as Node;
 
 			string file = ip.Get<string>();
@@ -51,9 +51,9 @@ given as Value of the file Node.";
 		 * Saves a file to disc, relatively from the root of the web application
 		 */
 		[ActiveEvent(Name = "magix.file.save")]
-		public static void magix_file_save_file (object sender, ActiveEventArgs e)
+		public static void magix_file_save_file(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains ("inspect"))
+			if (e.Params.Contains("inspect"))
 			{
 				e.Params["event:magix.execute"].Value = null;
 				e.Params["magix.file.save"].Value = "ExecuteScripts/TODO.txt";

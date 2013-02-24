@@ -21,7 +21,7 @@ namespace Magix.execute
 		 * Returns the given Value HTTP GET or POST parameter as "value"
 		 */
 		[ActiveEvent(Name = "magix.web.get")]
-		public static void magix_web_get (object sender, ActiveEventArgs e)
+		public static void magix_web_get(object sender, ActiveEventArgs e)
 		{
 			if (e.Params.Contains("inspect"))
 			{
@@ -65,7 +65,7 @@ HTTP cookie parameter as ""value"" Node.";
 		 * Sets the given Value HTTP cookie persistent from "value"
 		 */
 		[ActiveEvent(Name = "magix.web.set-cookie")]
-		public static void magix_web_set_cookie (object sender, ActiveEventArgs e)
+		public static void magix_web_set_cookie(object sender, ActiveEventArgs e)
 		{
 			if (e.Params.Contains("inspect"))
 			{

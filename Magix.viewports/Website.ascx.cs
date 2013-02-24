@@ -38,9 +38,9 @@ namespace Magix.viewports
          * Shows a Message Box to the end user, which can be configured
          */
         [ActiveEvent(Name = "magix.viewport.show-message")]
-		protected void magix_viewport_show_message (object sender, ActiveEventArgs e)
+		protected void magix_viewport_show_message(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains ("inspect"))
+			if (e.Params.Contains("inspect"))
 			{
 				e.Params["message"].Value = "Message to show to End User";
 				e.Params["header"].Value = "Message from system";
@@ -57,24 +57,24 @@ end user for some seconds.";
 
 			messageLabel.Text += "<p>" + e.Params["message"].Get<string>() + "</p>";
 
-			if (e.Params.Contains ("code"))
+			if (e.Params.Contains("code"))
 			{
 				Node tmp = new Node();
-				Node code = e.Params["code"].Clone ();
+				Node code = e.Params["code"].Clone();
 				code.Name = "";
 				tmp["JSON"].Value = code;
-				RaiseEvent (
+				RaiseEvent(
 					"magix.admin._transform-node-2-code",
 					tmp);
 
 				messageLabel.Text += "<pre>" + tmp["code"].Get<string>() + "</pre>";
 			}
 
-			if (e.Params.Contains ("header"))
+			if (e.Params.Contains("header"))
 				msgBoxHeader.Text = e.Params["header"].Get<string>();
-			if (e.Params.Contains ("time"))
+			if (e.Params.Contains("time"))
 				_time = int.Parse (e.Params["time"].Get<string>());
-			if (e.Params.Contains ("icon"))
+			if (e.Params.Contains("icon"))
 			{
 				icon.ImageUrl = e.Params["icon"].Get<string>();;
 				icon.Visible = true;
@@ -82,7 +82,7 @@ end user for some seconds.";
 			else
 				icon.Visible = false;
 			string color = "";
-			if (e.Params.Contains ("color"))
+			if (e.Params.Contains("color"))
 				color = e.Params["color"].Get<string>();
 			messageWrapper.Style[Styles.backgroundColor] = color;
 			_notFirstMessage = true;
