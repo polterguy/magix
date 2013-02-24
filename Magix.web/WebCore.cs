@@ -57,6 +57,7 @@ HTTP cookie parameter as ""value"" Node.";
 			string par = e.Params.Get<string>();
 			if (string.IsNullOrEmpty(par))
 				throw new ArgumentException("You must tell me which cookie you wish to extract");
+
 			e.Params["value"].Value = HttpContext.Current.Request.Cookies[par].Value;
 		}
 
@@ -100,6 +101,7 @@ the default.";
 				if (e.Params.Contains("expires"))
 					expires = e.Params["expires"].Get<DateTime>();
 				cookie.Expires = expires;
+
 				HttpContext.Current.Response.SetCookie(cookie);
 			}
 		}

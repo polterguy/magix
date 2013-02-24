@@ -59,7 +59,7 @@ thread will not change any data on the original node-set.";
 			thread.Start(node);
 		}
 
-		private static void ExecuteThrea(object input)
+		private static void ExecuteThread(object input)
 		{
 			Node node = input as Node;
 
