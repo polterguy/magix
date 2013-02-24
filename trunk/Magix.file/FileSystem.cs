@@ -13,6 +13,7 @@ using Magix.Core;
 namespace Magix.execute
 {
 	/**
+	 * Contains logic for loading, saving and re-organizing files
 	 */
 	public class FileSystem : ActiveController
 	{
@@ -40,9 +41,9 @@ given as Value of the file Node.";
 			if (string.IsNullOrEmpty (file))
 				throw new ArgumentException("You need to define which file to load, as Value of the load Node");
 
-			using (TextReader reader = File.OpenText (HttpContext.Current.Server.MapPath (file)))
+			using (TextReader reader = File.OpenText(HttpContext.Current.Server.MapPath(file)))
 			{
-				ip["value"].Value = reader.ReadToEnd ();
+				ip["value"].Value = reader.ReadToEnd();
 			}
 		}
 
@@ -70,23 +71,24 @@ at all, any existing file will simply be deleted.";
 			}
 
 			Node ip = e.Params;
-			if (e.Params.Contains ("_ip"))
-				ip = e.Params ["_ip"].Value as Node;
+			if (e.Params.Contains("_ip"))
+				ip = e.Params["_ip"].Value as Node;
 
 			string file = ip.Get<string>();
-			if (string.IsNullOrEmpty (file))
+			if (string.IsNullOrEmpty(file))
 				throw new ArgumentException("You need to define which file to save, as Value of the save Node");
 
-			if (!ip.Contains ("file") || ip["file"].Get<string>("") == "")
+			if (!ip.Contains("file") || ip["file"].Get<string>("") == "")
 			{
 				// Deletes an existing file
-				File.Delete (HttpContext.Current.Server.MapPath (file));
+				File.Delete(HttpContext.Current.Server.MapPath(file));
 			}
 			else
 			{
 				string fileContent = ip["file"].Get<string>();
 
-				using (TextWriter writer = new StreamWriter(File.OpenWrite (HttpContext.Current.Server.MapPath (file))))
+				using (TextWriter writer = 
+				       new StreamWriter(File.OpenWrite(HttpContext.Current.Server.MapPath(file))))
 				{
 					writer.Write(fileContent);
 				}

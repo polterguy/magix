@@ -5,8 +5,6 @@
  */
 
 using System;
-using System.IO;
-using System.Threading;
 using Magix.Core;
 
 namespace Magix.execute
@@ -19,7 +17,7 @@ namespace Magix.execute
 		/**
 		 * Checks to see if the current 
 		 * statement is returning true, and if so, executes the underlaying nodes
-		 * as code through "magix.execute", expecting them to be keywords to
+		 * as code, through "magix.execute", expecting them to be keywords to
 		 * the execution engine. You can either compare a node expression
 		 * with another node expression, a node expression with a
 		 * constant value or a single node expression for existence of 
@@ -49,7 +47,9 @@ statements will be executed.";
 				return;
 			}
 
-			IfImplementation(e.Params, "magix.execute.if");
+			IfImplementation(
+				e.Params, 
+				"magix.execute.if");
 		}
 
 		/**
@@ -84,7 +84,9 @@ returns True.";
 				return;
 			}
 
-			IfImplementation(e.Params, "magix.execute.else-if");
+			IfImplementation(
+				e.Params, 
+				"magix.execute.else-if");
 		}
 
 		/**
@@ -109,7 +111,7 @@ has returned True.";
 			}
 			Node ip = e.Params;
 			if (e.Params.Contains ("_ip"))
-				ip = e.Params ["_ip"].Value as Node;
+				ip = e.Params["_ip"].Value as Node;
 
 			// Checking to see if a previous "if" or "else-if" statement has returned true
 			if (ip.Parent != null &&
@@ -117,10 +119,11 @@ has returned True.";
 				return;
 
 			Node dp = e.Params;
-			if (e.Params.Contains ("_dp"))
+			if (e.Params.Contains("_dp"))
 				dp = e.Params["_dp"].Value as Node;
 
 			Node node = new Node("magix.execute.else");
+
 			node["_ip"].Value = ip;
 			node["_dp"].Value = dp;
 
@@ -161,7 +164,9 @@ has returned True.";
 				tmp["_ip"].Value = ip;
 				tmp["_dp"].Value = dp;
 
-				RaiseEvent ("magix.execute", tmp);
+				RaiseEvent(
+					"magix.execute", 
+					tmp);
 			}
 		}
 	}

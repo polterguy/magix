@@ -5,8 +5,6 @@
  */
 
 using System;
-using System.IO;
-using System.Threading;
 using Magix.Core;
 
 namespace Magix.execute

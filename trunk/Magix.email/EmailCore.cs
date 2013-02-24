@@ -39,23 +39,19 @@ become subject, and ""body"" the main message.";
 				return;
 			}
 
-			Node ip = e.Params;
-			if (e.Params.Contains ("_ip"))
-				ip = e.Params ["_ip"].Value as Node;
-
-			if (!ip.Contains ("to"))
+			if (!e.Params.Contains ("to"))
 				throw new ArgumentException("No recipient found. You need to add up 'to' child node");
-			if (!ip.Contains ("from"))
+			if (!e.Params.Contains ("from"))
 				throw new ArgumentException("No sender found. You need to add up 'from' child node");
-			if (!ip.Contains ("subject"))
+			if (!e.Params.Contains ("subject"))
 				throw new ArgumentException("No subject found. You need to add up 'subject' child node");
-			if (!ip.Contains ("body"))
+			if (!e.Params.Contains ("body"))
 				throw new ArgumentException("No actual message found. You need to add up 'body' child node");
 
-			string toEmail = ip["to"].Get<string>();
-			string fromEmail = ip["from"].Get<string>();
-			string subject = ip["subject"].Get<string>();
-			string body = ip["body"].Get<string>();
+			string toEmail = e.Params["to"].Get<string>();
+			string fromEmail = e.Params["from"].Get<string>();
+			string subject = e.Params["subject"].Get<string>();
+			string body = e.Params["body"].Get<string>();
 
 			MailMessage msg = new MailMessage();
 			msg.From = new MailAddress(fromEmail);

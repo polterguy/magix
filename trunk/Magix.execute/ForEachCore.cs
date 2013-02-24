@@ -5,8 +5,6 @@
  */
 
 using System;
-using System.IO;
-using System.Threading;
 using Magix.Core;
 
 namespace Magix.execute
@@ -45,22 +43,25 @@ the current Node.";
 				return;
 			}
 			Node ip = e.Params;
-			if (e.Params.Contains ("_ip"))
+			if (e.Params.Contains("_ip"))
 				ip = e.Params ["_ip"].Value as Node;
 
 			Node dp = e.Params;
-			if (e.Params.Contains ("_dp"))
+			if (e.Params.Contains("_dp"))
 				dp = e.Params["_dp"].Value as Node;
 
 			if (Expressions.IsTrue(ip.Get<string>(), ip, dp))
 			{
-				Node tmp = Expressions.GetExpressionValue (ip.Get<string>(), dp, ip) as Node;
+				Node tmp = Expressions.GetExpressionValue(ip.Get<string>(), dp, ip) as Node;
 				foreach (Node idx in tmp)
 				{
 					Node tmp2 = new Node();
 					tmp2["_ip"].Value = ip;
 					tmp2["_dp"].Value = idx;
-					RaiseEvent ("magix.execute", tmp2);
+
+					RaiseEvent(
+						"magix.execute", 
+						tmp2);
 				}
 			}
 		}

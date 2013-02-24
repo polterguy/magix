@@ -6,7 +6,6 @@
 
 using System;
 using Magix.Core;
-using Magix.UX.Builder;
 using Db4objects.Db4o;
 using Db4objects.Db4o.Config;
 
@@ -82,7 +81,7 @@ to pass in or retrieve parameters, then as you invoke the
 function, just append your args underneath the function invocation,
 and they will be passed into the function, where they will
 be accessible underneath a ""P"" Node, appended as the last
-parts of your code block into your function invocation. From
+parts of your code block, into your function invocation. From
 outside of the function/event itself, you can access these 
 parameters directly underneath the active event itself.";
 				e.Params["event"].Value = "foo.bar";
@@ -104,9 +103,7 @@ parameters directly underneath the active event itself.";
 			if (e.Params.Contains ("_ip"))
 				ip = e.Params["_ip"].Value as Node;
 
-			Node dp = e.Params;
-			if (e.Params.Contains ("_dp"))
-				dp = e.Params["_dp"].Value as Node;
+			Node dp = null;
 
 			string key = ip.Get<string>("");
 
@@ -115,85 +112,74 @@ parameters directly underneath the active event itself.";
 			{
 				dp = ip["code"].Clone ();
 			}
-			else
+
+			bool remotable = ip["remotable"].Get<bool>(false);
+
+			lock (typeof(Node))
 			{
-				dp = null;
-			}
-
-			bool remotable = false;
-			if (ip.Contains ("remotable"))
-				remotable = ip["remotable"].Get<bool>();
-
-			Node parent = dp == null ? null : dp.Parent;
-			if (dp != null)
-				dp.SetParent(null);
-			new DeterministicExecutor(
-			delegate
+				if (dp != null)
 				{
+					using (IObjectContainer db = Db4oFactory.OpenFile(_dbFile))
+					{
+						db.Ext ().Configure ().UpdateDepth (1000);
+						db.Ext ().Configure ().ActivationDepth (1000);
+
+						bool found = false;
+
+						foreach (Event idx in db.QueryByExample (new Event(null, key, false)))
+						{
+							idx.Node = dp;
+							idx.Remotable = remotable;
+							db.Store (idx);
+							found = true;
+							break;
+						}
+						if (!found)
+						{
+							db.Store (new Event(dp, key, remotable));
+							found = true;
+						}
+						db.Commit();
+						ActiveEvents.Instance.CreateEventMapping(key, "magix.execute._active-event-2-code-callback");
+						if (remotable)
+							ActiveEvents.Instance.MakeRemotable(key);
+					}
+					Node node = new Node();
+					node["ActiveEvent"].Value = key;
+
+					RaiseEvent(
+						"magix.execute._event-overridden", 
+						node);
+				}
+				else
+				{
+					// Removing existing event
 					lock (typeof(Node))
 					{
-						if (dp != null)
+						using (IObjectContainer db = Db4oFactory.OpenFile(_dbFile))
 						{
-							using (IObjectContainer db = Db4oFactory.OpenFile(_dbFile))
+							db.Ext ().Configure ().UpdateDepth(1000);
+							db.Ext ().Configure ().ActivationDepth(1000);
+
+							foreach (Event idx in db.QueryByExample(new Event(null, key, false)))
 							{
-								db.Ext ().Configure ().UpdateDepth (1000);
-								db.Ext ().Configure ().ActivationDepth (1000);
-
-								bool found = false;
-
-								foreach (Event idx in db.QueryByExample (new Event(null, key, false)))
-								{
-									idx.Node = dp;
-									idx.Remotable = remotable;
-									db.Store (idx);
-									found = true;
-									break;
-								}
-								if (!found)
-								{
-									db.Store (new Event(dp, key, remotable));
-									found = true;
-								}
-								db.Commit ();
-								ActiveEvents.Instance.CreateEventMapping (key, "magix.execute._active-event-2-code-callback");
-								if (remotable)
-									ActiveEvents.Instance.MakeRemotable (key);
+								db.Delete(idx);
+								if (idx.Remotable)
+									ActiveEvents.Instance.RemoveRemotable(idx.Key);
+								break;
 							}
-							Node node = new Node();
-							node["ActiveEvent"].Value = key;
-							RaiseEvent ("magix.execute._event-overridden", node);
-						}
-						else
-						{
-							// Removing existing event
-							lock (typeof(Node))
-							{
-								using (IObjectContainer db = Db4oFactory.OpenFile(_dbFile))
-								{
-									db.Ext ().Configure ().UpdateDepth (1000);
-									db.Ext ().Configure ().ActivationDepth (1000);
-
-									foreach (Event idx in db.QueryByExample (new Event(null, key, false)))
-									{
-										db.Delete (idx);
-										if (idx.Remotable)
-											ActiveEvents.Instance.RemoveRemotable (idx.Key);
-										break;
-									}
-									db.Commit ();
-									ActiveEvents.Instance.RemoveMapping (key);
-								}
-							}
-							Node node = new Node();
-							node["ActiveEvent"].Value = e.Params["event"].Get<string>();
-							RaiseEvent ("magix.execute._event-override-removed", node);
+							db.Commit();
+							ActiveEvents.Instance.RemoveMapping(key);
 						}
 					}
-				},
-				delegate
-				{
-					dp.SetParent(parent);
-				});
+					Node node = new Node();
+					node["ActiveEvent"].Value = e.Params["event"].Get<string>();
+
+					RaiseEvent(
+						"magix.execute._event-override-removed", 
+						node);
+				}
+			}
 		}
 
 		/**
@@ -230,11 +216,15 @@ parameters directly underneath the active event itself.";
 			}
 			if (caller != null)
 			{
-				Node tmp = new Node();
-				tmp.AddRange (caller.UnTie ());
+				Node tmp = new Node(e.Name);
+				tmp.AddRange(caller.UnTie());
 				tmp["_method"].Value = e.Name;
-				tmp["_method"].AddRange (e.Params.Clone ());
-				RaiseEvent ("magix.execute", tmp, true);
+				tmp["_method"].AddRange(e.Params.Clone());
+
+				RaiseEvent(
+					"magix.execute", 
+					tmp, 
+					true);
 			}
 		}
 
@@ -246,18 +236,18 @@ parameters directly underneath the active event itself.";
 		public static void magix_data__active_event_2_code_callback (object sender, ActiveEventArgs e)
 		{
 			bool remote = false;
-			if (e.Params.Contains ("remote"))
+			if (e.Params.Contains("remote"))
 				remote = e.Params["remote"].Get<bool>();
 			Node caller = null;
 			lock (typeof(Node))
 			{
 				using (IObjectContainer db = Db4oFactory.OpenFile(_dbFile))
 				{
-					db.Ext ().Configure ().UpdateDepth (1000);
-					db.Ext ().Configure ().ActivationDepth (1000);
+					db.Ext().Configure().UpdateDepth(1000);
+					db.Ext().Configure().ActivationDepth(1000);
 					string key = e.Name;
 
-					foreach (Event idx in db.QueryByExample (new Event(null, key, remote)))
+					foreach (Event idx in db.QueryByExample(new Event(null, key, remote)))
 					{
 						idx.Node.Name = null;
 						if (e.Params.Contains ("inspect"))
@@ -268,8 +258,9 @@ parameters directly underneath the active event itself.";
 							e.Params["event"]["code"].AddRange (idx.Node);
 							e.Params["event"]["remotable"].Value = idx.Remotable;
 							e.Params["inspect"].Value = @"This is a dynamically created 
-active event, containing ""magix.executor"" code, meaning keywords from the executor, 
+active event, containing ""magix.execute"" code, meaning keywords from the executor, 
 such that this serialized code will be called upon the raising of this event.";
+							return;
 						}
 						else
 						{
@@ -279,7 +270,7 @@ such that this serialized code will be called upon the raising of this event.";
 					}
 					if (caller == null && remote == false)
 					{
-						foreach (Event idx in db.QueryByExample (new Event(null, key, true)))
+						foreach (Event idx in db.QueryByExample(new Event(null, key, true)))
 						{
 							idx.Node.Name = null;
 							if (e.Params.Contains ("inspect"))
@@ -292,6 +283,7 @@ such that this serialized code will be called upon the raising of this event.";
 								e.Params["inspect"].Value = @"This is a dynamically created
 active event, containing ""magix.executor"" code, meaning keywords from the executor,
 such that this serialized code will be called upon the raising of this event.";
+								return;
 							}
 							else
 							{
@@ -304,9 +296,13 @@ such that this serialized code will be called upon the raising of this event.";
 			}
 			if (caller != null)
 			{
-				caller["P"].AddRange (e.Params);
-				RaiseEvent ("magix.execute", caller);
-				e.Params.ReplaceChildren (caller["P"]);
+				caller["P"].AddRange(e.Params);
+
+				RaiseEvent(
+					"magix.execute", 
+					caller);
+
+				e.Params.ReplaceChildren(caller["P"]);
 			}
 		}
 	}

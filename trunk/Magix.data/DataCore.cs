@@ -28,7 +28,7 @@ namespace Magix.execute
 		private static string _dbFile = "store.db4o";
 
 		/**
-		 * Will remove the given "object" with the given key found in Value
+		 * Will remove the given "object" with the ID found in Value
 		 */
 		[ActiveEvent(Name = "magix.data.remove")]
 		public static void magix_data_remove (object sender, ActiveEventArgs e)
@@ -47,7 +47,7 @@ with the given Key found in Value.";
 				ip = e.Params ["_ip"].Value as Node;
 
 			if (string.IsNullOrEmpty (ip.Get<string>()))
-				throw new ArgumentException("Missing 'key' while trying to remove object");
+				throw new ArgumentException("Missing ID while trying to remove object");
 
 			lock (typeof(Node))
 			{
@@ -64,7 +64,7 @@ with the given Key found in Value.";
 		}
 
 		/**
-		 * Will save the given "object" with the given key found in Value
+		 * Will save the given "object" with the given ID found in Value
 		 */
 		[ActiveEvent(Name = "magix.data.save")]
 		public static void magix_data_save (object sender, ActiveEventArgs e)
@@ -122,9 +122,9 @@ a node, which will become saved in its entirety.";
 		}
 
 		/**
-		 * Will load the given Key found from Value, or "prototype". If you use key, this is the same
-		 * key the object was stored with. If you use "prototype", then this will 
-		 * serve as a tree which must be present in the saved object for it to return 
+		 * Will load the given ID found from Value, or "prototype". If you use ID, this is the same
+		 * ID as the object was stored with. If you use "prototype", then this will 
+		 * serve as a tree, which must be present in the saved object, for it to return 
 		 * a match
 		 */
 		[ActiveEvent(Name = "magix.data.load")]
@@ -144,7 +144,7 @@ with the given ""key"" node into the ""object"" child return node.";
 				prototype = e.Params["prototype"];
 			}
 			string key = null;
-			if (e.Params.Get<string>("") != string.Empty)
+			if (e.Params.Value != null)
 				key = e.Params.Get<string>();
 			lock (typeof(Node))
 			{
@@ -172,7 +172,7 @@ with the given ""key"" node into the ""object"" child return node.";
 		}
 
 		/**
-		 * Returns the number of objects in your data storage
+		 * Returns the total number of objects in your data storage
 		 */
 		[ActiveEvent(Name = "magix.data.count")]
 		public static void magix_data_count (object sender, ActiveEventArgs e)
@@ -189,6 +189,8 @@ that exists in the data storage in the ""count"" child node. Takes no parameters
 				{
 					db.Ext ().Configure ().UpdateDepth (1000);
 					db.Ext ().Configure ().ActivationDepth (1000);
+
+					// TODO: Refactor ...
 					e.Params["count"].Value = db.QueryByExample (new Storage(null, null)).Count;
 				}
 			}

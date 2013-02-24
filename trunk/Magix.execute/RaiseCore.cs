@@ -5,8 +5,6 @@
  */
 
 using System;
-using System.IO;
-using System.Threading;
 using Magix.Core;
 
 namespace Magix.execute
@@ -62,15 +60,14 @@ functionality' from overridden active events.";
 			if (e.Params.Contains ("_ip"))
 				ip = e.Params ["_ip"].Value as Node;
 
-			Node pars = ip;
-
 			bool forceNoOverride = false;
 			if (ip.Contains ("no-override") && ip["no-override"].Get<bool>())
 				forceNoOverride = true;
+
 			if (ip.Name == "raise")
-				RaiseEvent (ip.Get<string>(), pars, forceNoOverride);
+				RaiseEvent (ip.Get<string>(), ip, forceNoOverride);
 			else
-				RaiseEvent (ip.Name, pars, forceNoOverride);
+				RaiseEvent (ip.Name, ip, forceNoOverride);
 		}
 	}
 }
