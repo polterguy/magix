@@ -27,44 +27,6 @@ namespace Magix.execute
 	{
 		private static string _dbFile = "store.db4o";
 
-		public class Storage
-		{
-			private string _key;
-			private Node _node;
-
-			public Storage(Node node, string key)
-			{
-				_node = node;
-				_key = key;
-			}
-
-			public string Key
-			{
-				get { return _key; }
-				set { _key = value; }
-			}
-
-			public Node Node
-			{
-				get { return _node; }
-				set { _node = value; }
-			}
-
-			public override bool Equals (object obj)
-			{
-				if (obj == null || !(obj is Storage))
-					return false;
-
-				Storage rhs = obj as Storage;
-				return Key == rhs.Key && Node.Equals (rhs.Node);
-			}
-
-			public override int GetHashCode ()
-			{
-				return Key.GetHashCode () + Node.GetHashCode ();
-			}
-		}
-
 		/**
 		 * Will remove the given "object" with the given key found in Value
 		 */
