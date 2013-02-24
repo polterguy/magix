@@ -115,7 +115,9 @@ URL end-point instead.";
 				ip = e.Params["_ip"].Value as Node;
 
 			if (ip.Get<string>("") == string.Empty)
-				throw new ArgumentException("magix.execute.override-remotely needs event parameter to know which event to raise externally");
+				throw new ArgumentException(
+					@"magix.execute.override-remotely needs event parameter to know 
+which event to raise externally");
 
 			string url = ip.Contains("URL") ? ip["URL"].Get<string>() : null;
 			string evt = ip.Get<string>("");
