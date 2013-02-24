@@ -41,7 +41,7 @@ that failed.";
 				foreach (string idx in ActiveEvents.Instance.ActiveEventHandlers)
 				{
 					av += 1;
-					if (idx.StartsWith ("magix.test."))
+					if (idx.StartsWith("magix.test."))
 					{
 						tests += 1;
 						e.Params[idx].Value = null;
@@ -52,7 +52,7 @@ that failed.";
 						RaiseEvent(
 							idx, 
 							tmp);
-						e.Params[idx].Add (tmp["inspect"].UnTie ());
+						e.Params[idx].Add (tmp["inspect"].UnTie());
 					}
 				}
 				e.Params["tests"].Value = tests;
@@ -68,7 +68,7 @@ that failed.";
 				// all event that starts with "magix.test."
 				foreach (string idx in ActiveEvents.Instance.ActiveEventHandlers)
 				{
-					if (idx.StartsWith ("magix.test."))
+					if (idx.StartsWith("magix.test."))
 					{
 						// Assuming this is a test ...
 						idxNo += 1;

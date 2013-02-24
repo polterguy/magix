@@ -67,8 +67,8 @@ namespace Magix.execute
 					else
 					{
 						if (idx.Get<string>().Contains("\n") || 
-						    idx.Get<string>().StartsWith ("\"") ||
-						    idx.Get<string>().StartsWith (" "))
+						    idx.Get<string>().StartsWith("\"") ||
+						    idx.Get<string>().StartsWith(" "))
 						{
 							string nValue = idx.Get<string>();
 							nValue = nValue.Replace ("\"", "\"\"");
@@ -113,7 +113,7 @@ namespace Magix.execute
 
 					if (line.Trim () == "")
 						continue; // Skipping white lines
-					if (line.Trim ().StartsWith ("//"))
+					if (line.Trim ().StartsWith("//"))
 						continue;
 
 					// Skipping "white lines"

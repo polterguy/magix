@@ -63,7 +63,7 @@ sub-functions, or invoked active events this way.";
 					err = err.InnerException;
 
 				if (ip["code"].Contains("_state"))
-					ip["code"]["_state"].UnTie ();
+					ip["code"]["_state"].UnTie();
 
 				ip["catch"]["exception"].Value = err.Message;
 
