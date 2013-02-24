@@ -21,9 +21,9 @@ namespace Magix.execute
 		 * left hand parts returns a node. Functions as a "magix.execute" keyword
 		 */
 		[ActiveEvent(Name = "magix.execute.set")]
-		public static void magix_execute_set (object sender, ActiveEventArgs e)
+		public static void magix_execute_set(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains ("inspect"))
+			if (e.Params.Contains("inspect"))
 			{
 				e.Params["event:magix.execute"].Value = null;
 				e.Params["Data"]["Children"].Value = "old value";
@@ -41,17 +41,17 @@ the Value of ""set"" must be an expression.";
 			}
 
 			Node ip = e.Params;
-			if (e.Params.Contains ("_ip"))
+			if (e.Params.Contains("_ip"))
 				ip = e.Params ["_ip"].Value as Node;
 
 			Node dp = e.Params;
-			if (e.Params.Contains ("_dp"))
+			if (e.Params.Contains("_dp"))
 				dp = e.Params["_dp"].Value as Node;
 
 			string left = ip.Get<string>();
 			string right = null;
 
-			if (ip.Contains ("value"))
+			if (ip.Contains("value"))
 				right = ip["value"].Get<string>();
 
 			Expressions.SetNodeValue(left, right, dp, ip);

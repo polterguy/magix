@@ -28,9 +28,9 @@ namespace Magix.execute
 		 * Functions as a "magix.execute" keyword
 		 */
 		[ActiveEvent(Name = "magix.execute.while")]
-		public static void magix_execute_while (object sender, ActiveEventArgs e)
+		public static void magix_execute_while(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains ("inspect"))
+			if (e.Params.Contains("inspect"))
 			{
 				e.Params["event:magix.execute"].Value = null;
 				e.Params["inspect"].Value = @"Creates a loop that executes the
@@ -48,11 +48,11 @@ statement in the Value of while is True.";
 				return;
 			}
 			Node ip = e.Params;
-			if (e.Params.Contains ("_ip"))
+			if (e.Params.Contains("_ip"))
 				ip = e.Params ["_ip"].Value as Node;
 
 			Node dp = e.Params;
-			if (e.Params.Contains ("_dp"))
+			if (e.Params.Contains("_dp"))
 				dp = e.Params["_dp"].Value as Node;
 
 			string expr = ip.Value as string;
@@ -65,7 +65,7 @@ statement in the Value of while is True.";
 				tmp["_ip"].Value = ip;
 				tmp["_dp"].Value = dp;
 
-				RaiseEvent ("magix.execute", tmp);
+				RaiseEvent("magix.execute", tmp);
 			}
 		}
 	}

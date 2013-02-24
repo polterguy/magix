@@ -19,7 +19,7 @@ namespace Magix.tests
 		 * back again, can re-create the original Node-List, also with different types
 		 */
 		[ActiveEvent(Name = "magix.test.transform-node-code")]
-		public void magix_test_transform_node_code (object sender, ActiveEventArgs e)
+		public void magix_test_transform_node_code(object sender, ActiveEventArgs e)
 		{
 			Node tmp = new Node();
 			tmp["Data"]["date"].Value = DateTime.Now.Date.AddHours (1).AddMinutes (4).AddSeconds (54);

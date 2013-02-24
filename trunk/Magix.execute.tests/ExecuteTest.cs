@@ -17,8 +17,8 @@ namespace Magix.tests
 		/**
 		 * Tests to see if "if", "set" and "magix.execute" works
 		 */
-		[ActiveEvent(Name = "magix.test.execute-1")]
-		public void magix_test_execute_1 (object sender, ActiveEventArgs e)
+		[ActiveEvent(Name = "magix.test.execute")]
+		public void magix_test_execute(object sender, ActiveEventArgs e)
 		{
 			Node tmp = new Node();
 			tmp["Data"].Value = "not-set";
@@ -26,17 +26,17 @@ namespace Magix.tests
 			tmp["if"]["set"].Value = "[Data].Value";
 			tmp["if"]["set"]["value"].Value = "new-value";
 
-			if (e.Params.Contains ("inspect"))
+			if (e.Params.Contains("inspect"))
 			{
 				e.Params["inspect"].Value = @"Tests to see if basic magix.execute
 functionality works, specifically ""set"" on a 
 Data node in the Node tree. Throws an exception 
 unless the ""set"" operation executed successfully.";
-				e.Params.AddRange (tmp);
+				e.Params.AddRange(tmp);
 				return;
 			}
 
-			RaiseEvent (
+			RaiseEvent(
 				"magix.execute",
 				tmp);
 
@@ -53,7 +53,7 @@ unless the ""set"" operation executed successfully.";
 		 * Tests to see if "magix.execute" works
 		 */
 		[ActiveEvent(Name = "magix.test.execute-context")]
-		public void magix_test_execute_context (object sender, ActiveEventArgs e)
+		public void magix_test_execute_context(object sender, ActiveEventArgs e)
 		{
 			Node tmp = new Node();
 			tmp["Data"].Value = "not-set";
@@ -61,17 +61,17 @@ unless the ""set"" operation executed successfully.";
 			tmp["Data"]["set"]["value"].Value = "new-value";
 			tmp["execute"].Value = "[Data]";
 
-			if (e.Params.Contains ("inspect"))
+			if (e.Params.Contains("inspect"))
 			{
 				e.Params["inspect"].Value = @"Tests to see if basic magix.execute
 functionality works, specifically ""set"" on a 
 Data node in the Node tree. Throws an exception 
 unless the ""set"" operation executed successfully.";
-				e.Params.AddRange (tmp);
+				e.Params.AddRange(tmp);
 				return;
 			}
 
-			RaiseEvent (
+			RaiseEvent(
 				"magix.execute",
 				tmp);
 
@@ -88,7 +88,7 @@ unless the ""set"" operation executed successfully.";
 		 * Tests to see if "magix.execute" works with slightly more complex code
 		 */
 		[ActiveEvent(Name = "magix.test.execute-complex-statement-1")]
-		public void magix_test_execute_complex_statement_1 (object sender, ActiveEventArgs e)
+		public void magix_test_execute_complex_statement_1(object sender, ActiveEventArgs e)
 		{
 			Node tmp = new Node();
 
@@ -101,17 +101,17 @@ unless the ""set"" operation executed successfully.";
 			tmp.Add (new Node("event", "foo.bar"));
 
 
-			if (e.Params.Contains ("inspect"))
+			if (e.Params.Contains("inspect"))
 			{
 				e.Params["inspect"].Value = @"Tests to see if basic magix.execute
 functionality works, specifically ""set"" on a 
 Data node in the Node tree. Throws an exception 
 unless the ""set"" operation executed successfully.";
-				e.Params.AddRange (tmp);
+				e.Params.AddRange(tmp);
 				return;
 			}
 
-			RaiseEvent (
+			RaiseEvent(
 				"magix.execute",
 				tmp);
 

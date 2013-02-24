@@ -33,9 +33,9 @@ namespace Magix.execute
 		 * app startup
 		 */
 		[ActiveEvent(Name = "magix.core.application-startup")]
-		public static void magix_core_application_startup (object sender, ActiveEventArgs e)
+		public static void magix_core_application_startup(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains ("inspect"))
+			if (e.Params.Contains("inspect"))
 			{
 				e.Params["initial-startup-of-process"].Value = null;
 				e.Params["inspect"].Value = @"Called during startup
@@ -68,10 +68,10 @@ re-mapped. ""initial-startup-of-process"" must exists to run event.";
 		 * in the "code" node
 		 */
 		[ActiveEvent(Name = "magix.execute.event")]
-		public static void magix_execute_event (object sender, ActiveEventArgs e)
+		public static void magix_execute_event(object sender, ActiveEventArgs e)
 		{
 			_hasNull = null;
-			if (e.Params.Contains ("inspect"))
+			if (e.Params.Contains("inspect"))
 			{
 				e.Params["event:magix.execute"].Value = null;
 				e.Params["inspect"].Value = @"Overrides the active event in ""event""
@@ -100,7 +100,7 @@ parameters directly underneath the active event itself.";
 				return;
 			}
 			Node ip = e.Params;
-			if (e.Params.Contains ("_ip"))
+			if (e.Params.Contains("_ip"))
 				ip = e.Params["_ip"].Value as Node;
 
 			Node dp = null;
@@ -108,9 +108,9 @@ parameters directly underneath the active event itself.";
 			string key = ip.Get<string>("");
 
 			// If it finds "code", event will be created, otherwise deleted ...
-			if (ip.Contains ("code"))
+			if (ip.Contains("code"))
 			{
-				dp = ip["code"].Clone ();
+				dp = ip["code"].Clone();
 			}
 
 			bool remotable = ip["remotable"].Get<bool>(false);
@@ -187,7 +187,7 @@ parameters directly underneath the active event itself.";
 		 * in magix.execute
 		 */
 		[ActiveEvent(Name = "")]
-		public static void magix_data__active_event_2_code_callback_null_helper (object sender, ActiveEventArgs e)
+		public static void magix_data__active_event_2_code_callback_null_helper(object sender, ActiveEventArgs e)
 		{
 			// Small optimization, to not traverse Data storage file for EVERY SINGLE ACTIVE EVENT ...!
 			if (_hasNull.HasValue && !_hasNull.Value)
@@ -233,7 +233,7 @@ parameters directly underneath the active event itself.";
 		 * overridden with the event keyword
 		 */
 		[ActiveEvent(Name = "magix.execute._active-event-2-code-callback")]
-		public static void magix_data__active_event_2_code_callback (object sender, ActiveEventArgs e)
+		public static void magix_data__active_event_2_code_callback(object sender, ActiveEventArgs e)
 		{
 			bool remote = false;
 			if (e.Params.Contains("remote"))
@@ -250,7 +250,7 @@ parameters directly underneath the active event itself.";
 					foreach (Event idx in db.QueryByExample(new Event(null, key, remote)))
 					{
 						idx.Node.Name = null;
-						if (e.Params.Contains ("inspect"))
+						if (e.Params.Contains("inspect"))
 						{
 							e.Params["event:magix.execute"].Value = null;
 							e.Params["event"].Value = e.Name;
@@ -273,7 +273,7 @@ such that this serialized code will be called upon the raising of this event.";
 						foreach (Event idx in db.QueryByExample(new Event(null, key, true)))
 						{
 							idx.Node.Name = null;
-							if (e.Params.Contains ("inspect"))
+							if (e.Params.Contains("inspect"))
 							{
 								e.Params["event:magix.execute"].Value = null;
 								e.Params["event"].Value = e.Name;

@@ -38,7 +38,7 @@ namespace Magix.admin
 		 * in a div
 		 */
 		[ActiveEvent(Name = "")]
-		public void magix_null_event_handler (object sender, ActiveEventArgs e)
+		public void magix_null_event_handler(object sender, ActiveEventArgs e)
 		{
 			if (e.Name == "magix.admin._transform-node-2-code")
 				return;

@@ -59,7 +59,7 @@ namespace Magix.Core
 
 						node["remote"].Value = true;
 
-						RaiseEvent (
+						RaiseEvent(
 							Page.Request["event"],
 							node);
 
@@ -117,9 +117,9 @@ namespace Magix.Core
 		 * Will clear the controls of the given "container" Viewport container
          */
         [ActiveEvent(Name = "magix.viewport.clear-controls")]
-		protected void magix_viewport_clear_controls (object sender, ActiveEventArgs e)
+		protected void magix_viewport_clear_controls(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains ("inspect"))
+			if (e.Params.Contains("inspect"))
 			{
 				e.Params["container"].Value = "content2";
 				e.Params["inspect"].Value = @"Will empty the given ""container""
@@ -136,7 +136,7 @@ viewport container for all of its controls. Unloads a container for controls.";
 			// that Active Events MIGHT have been removed from the list
 			// of Active Active Events
 			Node node = new Node();
-			RaiseEvent ("magix.execute._event-override-removed", node);
+			RaiseEvent("magix.execute._event-override-removed", node);
 		}
 
         private List<string> CssFiles
@@ -163,7 +163,7 @@ viewport container for all of its controls. Unloads a container for controls.";
 		{
 			if (!string.IsNullOrEmpty (cssFile))
 			{
-				if (cssFile.Contains ("~"))
+				if (cssFile.Contains("~"))
 				{
 					string appPath = HttpContext.Current.Request.Url.ToString ();
 					appPath = appPath.Substring (0, appPath.LastIndexOf ('/'));
@@ -197,7 +197,7 @@ viewport container for all of its controls. Unloads a container for controls.";
 		 * be "JavaScript" or "CSS"
          */
         [ActiveEvent(Name = "magix.viewport.include-client-file")]
-		protected void magix_viewport_include_client_file (object sender, ActiveEventArgs e)
+		protected void magix_viewport_include_client_file(object sender, ActiveEventArgs e)
 		{
 			if (e.Params.Contains("inspect"))
 			{
@@ -206,7 +206,7 @@ viewport container for all of its controls. Unloads a container for controls.";
 				e.Params["file"].Value = "media/main-debug.css";
 				return;
 			}
-			if (!e.Params.Contains ("type"))
+			if (!e.Params.Contains("type"))
 				throw new ArgumentException("You need to submit a type of file to load, legal values are 'CSS' and 'JavaScript'");
 			if (e.Params["type"].Get<string>() == "CSS")
 			{
@@ -234,9 +234,9 @@ viewport container for all of its controls. Unloads a container for controls.";
 		 * Will load an Active Module and put it into the "container" viewport container
          */
         [ActiveEvent(Name = "magix.viewport.load-module")]
-		protected void magix_viewport_load_module (object sender, ActiveEventArgs e)
+		protected void magix_viewport_load_module(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains ("inspect"))
+			if (e.Params.Contains("inspect"))
 			{
 				e.Params["name"].Value = "FullNameSpace.AndAlso.FullName_OfClassThatImplementsModule";
 				e.Params["container"].Value = "content2";
@@ -256,7 +256,7 @@ the ""name"" node. The incoming parameters will be used.";
 			ClearControls (dyn);
 			dyn.LoadControl (moduleName, context);
 			Node node = new Node();
-			RaiseEvent ("magix.execute._event-overridden", node);
+			RaiseEvent("magix.execute._event-overridden", node);
         }
 
 		/*

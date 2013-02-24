@@ -63,12 +63,12 @@ namespace Magix.admin
 		 * list of active events
 		 */
 		[ActiveEvent(Name = "magix.execute._event-overridden")]
-		public void magix_execute__event_overridden (object sender, ActiveEventArgs e)
+		public void magix_execute__event_overridden(object sender, ActiveEventArgs e)
 		{
 			_noActiveEventsCSSClassRendered = 0;
 
 			Node node = new Node();
-			RaiseEvent ("magix.admin.get-active-events", node);
+			RaiseEvent("magix.admin.get-active-events", node);
 			rep.DataSource = node ["ActiveEvents"];
 			rep.DataBind ();
 			wrp.ReRender ();
@@ -80,12 +80,12 @@ namespace Magix.admin
 		 * list of active events
 		 */
 		[ActiveEvent(Name = "magix.execute._event-override-removed")]
-		public void magix_execute__event_override_removed (object sender, ActiveEventArgs e)
+		public void magix_execute__event_override_removed(object sender, ActiveEventArgs e)
 		{
 			_noActiveEventsCSSClassRendered = 0;
 
 			Node node = new Node();
-			RaiseEvent ("magix.admin.get-active-events", node);
+			RaiseEvent("magix.admin.get-active-events", node);
 			rep.DataSource = node ["ActiveEvents"];
 			rep.DataBind ();
 			wrp.ReRender ();
@@ -113,20 +113,20 @@ namespace Magix.admin
 				}
 				Node tmp = new Node();
 				tmp["code"].Value = wholeTxt;
-				RaiseEvent (
+				RaiseEvent(
 					"magix.admin._transform-code-2-node",
 					tmp);
-				RaiseEvent (activeEvent.Text, tmp["JSON"].Get<Node>());
-				RaiseEvent (
+				RaiseEvent(activeEvent.Text, tmp["JSON"].Get<Node>());
+				RaiseEvent(
 					"magix.admin._transform-node-2-code", tmp);
 				txtOut.Text = tmp["code"].Get<string>();
 			}
 			else
 			{
-				Node node = RaiseEvent (activeEvent.Text);
+				Node node = RaiseEvent(activeEvent.Text);
 				Node tmp = new Node();
 				tmp["JSON"].Value = node;
-				RaiseEvent (
+				RaiseEvent(
 					"magix.admin._transform-node-2-code", 
 					tmp);
 				txtOut.Text = tmp["code"].Get<string>();

@@ -22,9 +22,9 @@ namespace Magix.execute
 		 * Transforms a given "JSON" node into 'code syntax'
 		 */
 		[ActiveEvent(Name = "magix.admin._transform-node-2-code")]
-		public static void magix_admin__transform_node_2_code (object sender, ActiveEventArgs e)
+		public static void magix_admin__transform_node_2_code(object sender, ActiveEventArgs e)
 		{
-			if (!e.Params.Contains ("JSON"))
+			if (!e.Params.Contains("JSON"))
 			{
 				throw new ArgumentException("No node JSON passed into transform-node-2-code");
 			}
@@ -66,7 +66,7 @@ namespace Magix.execute
 					}
 					else
 					{
-						if (idx.Get<string>().Contains ("\n") || 
+						if (idx.Get<string>().Contains("\n") || 
 						    idx.Get<string>().StartsWith ("\"") ||
 						    idx.Get<string>().StartsWith (" "))
 						{
@@ -93,9 +93,9 @@ namespace Magix.execute
 		 * spaces which indents the code
 		 */
 		[ActiveEvent(Name = "magix.admin._transform-code-2-node")]
-		public static void magix_admin__transform_code_2_node (object sender, ActiveEventArgs e)
+		public static void magix_admin__transform_code_2_node(object sender, ActiveEventArgs e)
 		{
-			if (!e.Params.Contains ("code"))
+			if (!e.Params.Contains("code"))
 			{
 				throw new ArgumentException("No code node passed into _transform-code-2-node");
 			}
@@ -140,7 +140,7 @@ namespace Magix.execute
 					object value = null;
 
 					string tmp = line.TrimStart ();
-					if (!tmp.Contains ("="))
+					if (!tmp.Contains("="))
 					{
 						name = tmp;
 					}

@@ -18,7 +18,7 @@ namespace Magix.tests
 		 * Tests to see if create "event", and invoking it later, works
 		 */
 		[ActiveEvent(Name = "magix.test.remote-event-invoke-passing-data")]
-		public void magix_test_remote_event_invoke_passing_data (object sender, ActiveEventArgs e)
+		public void magix_test_remote_event_invoke_passing_data(object sender, ActiveEventArgs e)
 		{
 			Node tmp = new Node();
 
@@ -31,16 +31,16 @@ namespace Magix.tests
 			tmp["remote"]["Name"].Value = "thomas";
 			tmp.Add (new Node("event", "foo.bar"));
 
-			if (e.Params.Contains ("inspect"))
+			if (e.Params.Contains("inspect"))
 			{
-				e.Params.Clear ();
+				e.Params.Clear();
 				e.Params["inspect"].Value = @"Checks to see if event
 functions as it should.";
-				e.Params.AddRange (tmp);
+				e.Params.AddRange(tmp);
 				return;
 			}
 
-			RaiseEvent (
+			RaiseEvent(
 				"magix.execute",
 				tmp);
 
@@ -55,7 +55,7 @@ functions as it should.";
 		 * Tests to see if create non-remotable "event", and invoking it later remotely, throws
 		 */
 		[ActiveEvent(Name = "magix.test.non-remotely-remotely-activated-throws")]
-		public void magix_test_non_remotely_remotely_activated_throws (object sender, ActiveEventArgs e)
+		public void magix_test_non_remotely_remotely_activated_throws(object sender, ActiveEventArgs e)
 		{
 			Node tmp = new Node();
 
@@ -66,20 +66,20 @@ functions as it should.";
 			tmp["remote"].Value = "foo.bar";
 			tmp.Add (new Node("event", "foo.bar"));
 
-			if (e.Params.Contains ("inspect"))
+			if (e.Params.Contains("inspect"))
 			{
-				e.Params.Clear ();
+				e.Params.Clear();
 				e.Params["inspect"].Value = @"Checks to see if event
 created as a non-remotable event, 
 functions as it should, and throws
 when remotely activated.";
-				e.Params.AddRange (tmp);
+				e.Params.AddRange(tmp);
 				return;
 			}
 
 			try
 			{
-				RaiseEvent (
+				RaiseEvent(
 					"magix.execute",
 					tmp);
 				throw new ApplicationException("non-remotely active event invoked remotely didn't throw an exception ...?");
@@ -88,7 +88,7 @@ when remotely activated.";
 			{
 				Node tmp2 = new Node();
 				tmp2["event"].Value = "foo.bar";
-				RaiseEvent (
+				RaiseEvent(
 					"magix.execute",
 					tmp2);
 				return;
@@ -99,7 +99,7 @@ when remotely activated.";
 		 * Tests to see if create default "event", and invoking it later remotely, throws
 		 */
 		[ActiveEvent(Name = "magix.test.default-event-remotely-activated-throws")]
-		public void magix_test_default_event_remotely_activated_throws (object sender, ActiveEventArgs e)
+		public void magix_test_default_event_remotely_activated_throws(object sender, ActiveEventArgs e)
 		{
 			Node tmp = new Node();
 
@@ -109,20 +109,20 @@ when remotely activated.";
 			tmp["remote"]["event"].Value = "foo.bar";
 			tmp.Add (new Node("event", "foo.bar"));
 
-			if (e.Params.Contains ("inspect"))
+			if (e.Params.Contains("inspect"))
 			{
-				e.Params.Clear ();
+				e.Params.Clear();
 				e.Params["inspect"].Value = @"Checks to see if event
 created as a default event, 
 functions as it should, and 
 throws when invoked remotely.";
-				e.Params.AddRange (tmp);
+				e.Params.AddRange(tmp);
 				return;
 			}
 
 			try
 			{
-				RaiseEvent (
+				RaiseEvent(
 					"magix.execute",
 					tmp);
 				throw new ApplicationException("default active event invoked remotely didn't throw an exception ...?");
@@ -131,7 +131,7 @@ throws when invoked remotely.";
 			{
 				Node tmp2 = new Node();
 				tmp2["event"].Value = "foo.bar";
-				RaiseEvent (
+				RaiseEvent(
 					"magix.execute",
 					tmp2);
 			}

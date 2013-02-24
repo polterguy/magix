@@ -18,24 +18,24 @@ namespace Magix.tests
 		 * Tests to see if "throw", works
 		 */
 		[ActiveEvent(Name = "magix.test.throw")]
-		public void magix_test_for_throw (object sender, ActiveEventArgs e)
+		public void magix_test_for_throw(object sender, ActiveEventArgs e)
 		{
 			Node tmp = new Node();
 
 			tmp["throw"].Value = "This is our Message!";
 
-			if (e.Params.Contains ("inspect"))
+			if (e.Params.Contains("inspect"))
 			{
-				e.Params.Clear ();
+				e.Params.Clear();
 				e.Params["inspect"].Value = @"Checks to see if throw
 functions as it should.";
-				e.Params.AddRange (tmp);
+				e.Params.AddRange(tmp);
 				return;
 			}
 
 			try
 			{
-				RaiseEvent (
+				RaiseEvent(
 					"magix.execute",
 					tmp);
 				throw new ApplicationException("Exception didn't occur!");
@@ -44,7 +44,8 @@ functions as it should.";
 			{
 				while (err.InnerException != null)
 					err = err.InnerException;
-				if (!err.Message.Contains ("This is our Message!"))
+
+				if (!err.Message.Contains("This is our Message!"))
 					throw new ApplicationException("Wrong message in Exception");
 			}
 		}
@@ -53,7 +54,7 @@ functions as it should.";
 		 * Tests to see if "remove", works
 		 */
 		[ActiveEvent(Name = "magix.test.throw-1")]
-		public void magix_test_throw_1 (object sender, ActiveEventArgs e)
+		public void magix_test_throw_1(object sender, ActiveEventArgs e)
 		{
 			Node tmp = new Node();
 
@@ -61,18 +62,18 @@ functions as it should.";
 			tmp["try"]["code"]["throw"].Value = "Exception Thrown by Test";
 			tmp["try"]["catch"].Value = null;
 
-			if (e.Params.Contains ("inspect"))
+			if (e.Params.Contains("inspect"))
 			{
-				e.Params.Clear ();
+				e.Params.Clear();
 				e.Params["inspect"].Value = @"Checks to see if try, throw and catch
 functions as it should.";
-				e.Params.AddRange (tmp);
+				e.Params.AddRange(tmp);
 				return;
 			}
 
 			try
 			{
-				RaiseEvent (
+				RaiseEvent(
 					"magix.execute",
 					tmp);
 
@@ -81,7 +82,7 @@ functions as it should.";
 			}
 			catch
 			{
-				if (!tmp["try"]["catch"]["exception"].Get<string>().Contains ("Exception Thrown by Test"))
+				if (!tmp["try"]["catch"]["exception"].Get<string>().Contains("Exception Thrown by Test"))
 					throw new ApplicationException("Exception Message didn't show when exception was thrown");
 
 				return;

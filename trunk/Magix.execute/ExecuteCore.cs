@@ -37,9 +37,9 @@ namespace Magix.execute
 		 * from within a "magix.execute" event code block
 		 */
 		[ActiveEvent(Name = "magix.execute")]
-		public static void magix_execute (object sender, ActiveEventArgs e)
+		public static void magix_execute(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains ("inspect") &&
+			if (e.Params.Contains("inspect") &&
 			    e.Params["inspect"].Get<string>("") == "")
 			{
 				e.Params["event:magix.execute"].Value = null;
@@ -67,11 +67,11 @@ the Value effectively becomes a 'goto keyword'.";
 				return;
 			}
 			Node ip = e.Params;
-			if (e.Params.Contains ("_ip"))
+			if (e.Params.Contains("_ip"))
 				ip = e.Params ["_ip"].Value as Node;
 
 			Node dp = e.Params;
-			if (e.Params.Contains ("_dp"))
+			if (e.Params.Contains("_dp"))
 				dp = e.Params["_dp"].Value as Node;
 
 			// Checking to see if we've got a "context"
@@ -102,7 +102,7 @@ the Value effectively becomes a 'goto keyword'.";
 				if ("abcdefghijklmnopqrstuvwxyz".IndexOf(nodeName[0]) != -1)
 				{
 					// Checking to see if it's a reference to an active event
-					if (nodeName.Contains ("."))
+					if (nodeName.Contains("."))
 					{
 						Node tmp = new Node();
 

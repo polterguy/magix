@@ -31,9 +31,9 @@ namespace Magix.execute
 		 * Will remove the given "object" with the ID found in Value
 		 */
 		[ActiveEvent(Name = "magix.data.remove")]
-		public static void magix_data_remove (object sender, ActiveEventArgs e)
+		public static void magix_data_remove(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains ("inspect"))
+			if (e.Params.Contains("inspect"))
 			{
 				e.Params["event:magix.execute"].Value = null;
 				e.Params["remove"].Value = "unique-key-id666";
@@ -43,7 +43,7 @@ with the given Key found in Value.";
 			}
 
 			Node ip = e.Params;
-			if (e.Params.Contains ("_ip"))
+			if (e.Params.Contains("_ip"))
 				ip = e.Params ["_ip"].Value as Node;
 
 			if (string.IsNullOrEmpty (ip.Get<string>()))
@@ -67,9 +67,9 @@ with the given Key found in Value.";
 		 * Will save the given "object" with the given ID found in Value
 		 */
 		[ActiveEvent(Name = "magix.data.save")]
-		public static void magix_data_save (object sender, ActiveEventArgs e)
+		public static void magix_data_save(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains ("inspect"))
+			if (e.Params.Contains("inspect"))
 			{
 				e.Params["save"].Value = "unique-key-id666";
 				e.Params["save"]["object"].Value = "nodes from here and down will be saved";
@@ -80,7 +80,7 @@ a node, which will become saved in its entirety.";
 				return;
 			}
 			Node value = null;
-			if (e.Params.Contains ("object"))
+			if (e.Params.Contains("object"))
 				value = e.Params["object"];
 			else
 				throw new ArgumentException("object must be defined before calling magix.data.save");
@@ -128,9 +128,9 @@ a node, which will become saved in its entirety.";
 		 * a match
 		 */
 		[ActiveEvent(Name = "magix.data.load")]
-		public static void magix_data_load (object sender, ActiveEventArgs e)
+		public static void magix_data_load(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains ("inspect"))
+			if (e.Params.Contains("inspect"))
 			{
 				e.Params["load"].Value = "unique-key-of-object-to-load";
 				e.Params["load"]["prototype"].Value = "optional parameter, being a 'query object' which the returned object must match";
@@ -139,7 +139,7 @@ with the given ""key"" node into the ""object"" child return node.";
 				return;
 			}
 			Node prototype = null;
-			if (e.Params.Contains ("prototype"))
+			if (e.Params.Contains("prototype"))
 			{
 				prototype = e.Params["prototype"];
 			}
@@ -175,9 +175,9 @@ with the given ""key"" node into the ""object"" child return node.";
 		 * Returns the total number of objects in your data storage
 		 */
 		[ActiveEvent(Name = "magix.data.count")]
-		public static void magix_data_count (object sender, ActiveEventArgs e)
+		public static void magix_data_count(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains ("inspect"))
+			if (e.Params.Contains("inspect"))
 			{
 				e.Params["inspect"].Value = @"Will return the number of objects
 that exists in the data storage in the ""count"" child node. Takes no parameters.";

@@ -19,9 +19,9 @@ namespace Magix.execute
 		 * Will create, and instantiate, a newly created dynamic form
 		 */
 		[ActiveEvent(Name = "magix.forms.create-form")]
-		public void magix_forms_create_form (object sender, ActiveEventArgs e)
+		public void magix_forms_create_form(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains ("inspect"))
+			if (e.Params.Contains("inspect"))
 			{
 				e.Params["container"].Value = "content2";
 				e.Params["form-id"].Value = "unique-identification-of-your-form";

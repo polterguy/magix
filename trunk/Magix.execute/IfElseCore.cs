@@ -28,9 +28,9 @@ namespace Magix.execute
 		 * Functions as a "magix.execute" keyword
 		 */
 		[ActiveEvent(Name = "magix.execute.if")]
-		public static void magix_execute_if (object sender, ActiveEventArgs e)
+		public static void magix_execute_if(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains ("inspect"))
+			if (e.Params.Contains("inspect"))
 			{
 				e.Params["event:magix.execute"].Value = null;
 				e.Params["inspect"].Value = @"Executes the child nodes as an execution
@@ -67,9 +67,9 @@ statements will be executed.";
 		 * Functions as a "magix.execute" keyword
 		 */
 		[ActiveEvent(Name = "magix.execute.else-if")]
-		public static void magix_execute_else_if (object sender, ActiveEventArgs e)
+		public static void magix_execute_else_if(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains ("inspect"))
+			if (e.Params.Contains("inspect"))
 			{
 				e.Params["event:magix.execute"].Value = null;
 				e.Params["inspect"].Value = @"Executes the underlaying code block,
@@ -96,9 +96,9 @@ returns True.";
 		 * the execution engine. Functions as a "magix.execute" keyword
 		 */
 		[ActiveEvent(Name = "magix.execute.else")]
-		public static void magix_execute_else (object sender, ActiveEventArgs e)
+		public static void magix_execute_else(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains ("inspect"))
+			if (e.Params.Contains("inspect"))
 			{
 				e.Params["event:magix.execute"].Value = null;
 				e.Params["inspect"].Value = @"Executes the underlaying code block,
@@ -110,7 +110,7 @@ has returned True.";
 				return;
 			}
 			Node ip = e.Params;
-			if (e.Params.Contains ("_ip"))
+			if (e.Params.Contains("_ip"))
 				ip = e.Params["_ip"].Value as Node;
 
 			// Checking to see if a previous "if" or "else-if" statement has returned true
@@ -136,11 +136,11 @@ has returned True.";
 		private static void IfImplementation (Node pars, string evt)
 		{
 			Node ip = pars;
-			if (pars.Contains ("_ip"))
+			if (pars.Contains("_ip"))
 				ip = pars["_ip"].Value as Node;
 
 			Node dp = pars;
-			if (pars.Contains ("_dp"))
+			if (pars.Contains("_dp"))
 				dp = pars["_dp"].Value as Node;
 
 			if (ip.Parent == null)
