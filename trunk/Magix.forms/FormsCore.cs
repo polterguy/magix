@@ -10,7 +10,7 @@ using Magix.Core;
 namespace Magix.execute
 {
 	/**
-	 * Level3: Controller that makes it possible to create new 
+	 * Controller that makes it possible to create new 
 	 * dynamically created forms
 	 */
 	public class FormsCore : ActiveController

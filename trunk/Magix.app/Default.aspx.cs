@@ -7,18 +7,16 @@
 using System;
 using System.Configuration;
 using System.Web.UI;
-using System.Text;
-using System.IO;
 using Magix.Core;
-using Magix.UX;
 using System.Web;
-using System.Threading;
 
 namespace Magix.app
 {
     /**
-     * Level4: Your 'Application Pool', meaning the 'world' where all your 'components' lives.
-     * Nothing really to see here, this should just 'work'. But are here for reference reasons
+     * Your 'Application Pool', meaning the 'world' where all your 'components' lives.
+     * Nothing really to see here, this should just 'work'. But are here for reference reasons.
+     * If you wish to change the design on your application, then don't do this here. Rather
+     * use the Viewport for such changes. These files are intentionally intended to be 'empty'.
      */
     public partial class MainWebPage : Page
     {

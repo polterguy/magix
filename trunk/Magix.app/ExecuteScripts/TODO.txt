@@ -11,6 +11,9 @@
 
 * Uploading of Manifest files, which changes the state of the application somehow
 
+* Unit tests of raising "complex active events", meaning raising code contains
+  path expressions, etc ...
+
 * Better handling of types in expressions
 
 * Tutorial mode Active Module, which helps guide the user through Magix

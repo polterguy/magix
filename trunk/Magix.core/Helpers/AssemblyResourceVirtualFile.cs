@@ -13,7 +13,7 @@ using System.Web.Hosting;
 namespace Magix.Core
 {
     /*
-     * Level4: The internal implementation of our VirtualFile or VPP (Virtual Path Provider).
+     * The internal implementation of our VirtualFile or VPP (Virtual Path Provider).
      * Not intended for direct usage yourself, but will exist in 'the background' making
      * sure everything you do turns out right
      */
@@ -22,7 +22,7 @@ namespace Magix.Core
         readonly string _path;
 
         /*
-         * Level4: CTOR taking the path and storing to later...
+         * CTOR taking the path and storing to later...
          */
         public AssemblyResourceVirtualFile(string virtualPath)
             : base(virtualPath)
@@ -31,7 +31,7 @@ namespace Magix.Core
         }
 
         /*
-         * Level4: Expects either a relative DLL coming from the bin folder of our
+         * Expects either a relative DLL coming from the bin folder of our
          * application or a complete path pointing to a DLL another place. Will split
          * the "path" string into two different parts where the first is the assembly name
          * and the second is the fully qaulified resource identifier of the resource to load.

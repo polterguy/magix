@@ -1,15 +1,17 @@
+/*
+ * Magix-BRIX - A Web Application Framework for ASP.NET
+ * Copyright 2010 - 2013 - MareMara13@gmail.com
+ * Magix-BRIX is licensed as GPLv3.
+ */
 
 using System;
-using System.Collections;
-using System.ComponentModel;
 using System.Web;
-using System.Web.SessionState;
 
 namespace Magix.app
 {
-	public class Global : System.Web.HttpApplication
+	public class Global : HttpApplication
 	{
-		protected virtual void Application_Start (Object sender, EventArgs e)
+		protected virtual void Application_Start (object sender, EventArgs e)
 		{
 			// Registering our Resource Provider User-Control-Loader Classes
 	        Magix.Core.AssemblyResourceProvider sampleProvider = new Magix.Core.AssemblyResourceProvider();

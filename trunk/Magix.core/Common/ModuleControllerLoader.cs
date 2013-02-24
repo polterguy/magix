@@ -16,7 +16,7 @@ using System.Diagnostics;
 namespace Magix.Core
 {
     /**
-     * Level4: Helps load Active Modules embedded in resources. Relies on that Magix.Brix.Loader.AssemblyResourceProvider
+     * Helps load Active Modules embedded in resources. Relies on that Magix.Brix.Loader.AssemblyResourceProvider
      * is registered as a Virtual Path Provider in e.g. your Global.asax file. Use the Instance method
      * to access the singleton object, then use the LoadControl to load UserControls embedded as resources.
      * Kind of like the Magix' version of Page.LoadControl. Can be used directly by you, if you really
@@ -70,7 +70,7 @@ namespace Magix.Core
         }
 
         /**
-         * Level4: A list of all your ActiveControllers in the system
+         * A list of all your ActiveControllers in the system
          */
         public IEnumerable<Type> ActiveControllerTypes
         {
@@ -84,7 +84,7 @@ namespace Magix.Core
         }
 
         /**
-         * Level4: A list of all your ActiveModules with its associated containing Assembly 
+         * A list of all your ActiveModules with its associated containing Assembly 
          * File from within the system
          */
         public IEnumerable<Tuple<string, Type>> ActiveModulesTypes
@@ -99,7 +99,7 @@ namespace Magix.Core
         }
 
         /**
-         * Level4: A list of all your ActiveModules Loading Name Keys
+         * A list of all your ActiveModules Loading Name Keys
          */
         public IEnumerable<string> ActiveModulesKeys
         {
@@ -113,7 +113,7 @@ namespace Magix.Core
         }
 
 		/**
-		 * Level4: Returns the given ActiveModule Type according to key, with its associated Assembly Name
+		 * Returns the given ActiveModule Type according to key, with its associated Assembly Name
 		 */
 		public Tuple<string, Type> ActiveModuleValue(string key)
 		{
@@ -146,11 +146,10 @@ namespace Magix.Core
         }
 
         /**
-         * Level4: Singleton accessor. Allows access to the 'one and only' PluginLoader
+         * Singleton accessor. Allows access to the 'one and only' PluginLoader
          */
         public static ModuleControllerLoader Instance
         {
-            [DebuggerStepThrough]
             get
             {
                 if (_instance == null)
@@ -178,7 +177,7 @@ namespace Magix.Core
         }
 
         /**
-         * Level3: Dynamically load a Control with the given FullName (namespace + type name). This
+         * Dynamically load a Control with the given FullName (namespace + type name). This
          * is the method which is internally used in Magix-Brix to load UserControls from 
          * embedded resources and also other controls. Since ActiveEvents might be mapped and
          * overridden, you actually have no guarantee of that the event you wish to raise
