@@ -54,45 +54,46 @@ namespace Magix.forms
 			BuildControls();
 		}
 
-		void BuildControls ()
+		private void BuildControls()
 		{
 			if (!DataSource.Contains ("controls"))
 				throw new ArgumentException("Couldn't find any 'controls' node underneath form");
+
 			foreach (Node idx in DataSource["controls"])
 			{
 				BuildControl(idx, pnl);
 			}
 		}
 
-		private string GetPath (Node idxInner)
+		private string GetPath(Node idxInner)
 		{
 			Node idxNode = idxInner;
 			string retVal = "";
 			while (idxNode.Parent != null)
 			{
-				string tmp = idxNode.Parent.IndexOf (idxNode).ToString () + "|";
+				string tmp = idxNode.Parent.IndexOf(idxNode).ToString() + "|";
 				retVal = tmp + retVal;
 
 				idxNode = idxNode.Parent;
 			}
-			retVal = retVal.Trim ('|');
+			retVal = retVal.Trim('|');
 			return retVal;
 		}
 
-		private Node GetNode (string codePath)
+		private Node GetNode(string codePath)
 		{
-			string[] splits = codePath.Split ('|');
+			string[] splits = codePath.Split('|');
 			Node tmp = DataSource;
 			foreach (string idx in splits)
 			{
-				int idxNo = int.Parse (idx);
+				int idxNo = int.Parse(idx);
 				tmp = tmp[idxNo];
 			}
 			return tmp;
 		}
 
 		// TODO: Refactor!
-		void BuildControl (Node idx, BaseWebControl parent)
+		void BuildControl(Node idx, BaseWebControl parent)
 		{
 			BaseControl ctrl = null;
 			switch (idx.Name)
@@ -137,7 +138,7 @@ namespace Magix.forms
 				bool isHtml = true;
 				foreach (char idxC in idx.Name)
 				{
-					if ("abcdefghijklmnopqrstuvwxyz".IndexOf (idxC) == -1)
+					if ("abcdefghijklmnopqrstuvwxyz".IndexOf(idxC) == -1)
 					{
 						isHtml = false;
 					}
@@ -153,6 +154,7 @@ namespace Magix.forms
 			}
 			if (idx.Value != null)
 				ctrl.ID = idx.Get<string>();
+
 			foreach (Node idxInner in idx)
 			{
 				switch (idxInner.Name)
@@ -180,6 +182,74 @@ namespace Magix.forms
 				case "CssClass":
 					((BaseWebControl)ctrl).CssClass = idxInner.Get<string>();
 					break;
+				case "ID":
+					ctrl.ID = idxInner.Get<string>();
+					break;
+				case "Dir":
+					((BaseWebControl)ctrl).Dir = idxInner.Get<string>();
+					break;
+				case "ToolTip":
+					((BaseWebControl)ctrl).ToolTip = idxInner.Get<string>();
+					break;
+				case "TabIndex":
+					((BaseWebControl)ctrl).TabIndex = idxInner.Get<string>();
+					break;
+				case "AccessKey":
+					if (ctrl is BaseWebControlFormElement)
+						((BaseWebControlFormElement)ctrl).AccessKey = idxInner.Get<string>();
+					break;
+				case "Checked":
+					if (ctrl is CheckBox)
+						((CheckBox)ctrl).Checked = bool.Parse (idxInner.Get<string>());
+					else
+						((RadioButton)ctrl).Checked = bool.Parse (idxInner.Get<string>());
+					break;
+				case "Tag":
+					if (ctrl is Label)
+						((Label)ctrl).Tag = idxInner.Get<string>();
+					else
+						((Panel)ctrl).Tag = idxInner.Get<string>();
+					break;
+				case "For":
+					((Label)ctrl).For = idxInner.Get<string>();
+					break;
+				case "Value":
+					((HiddenField)ctrl).Value = idxInner.Get<string>();
+					break;
+				case "URL":
+					((HyperLink)ctrl).URL = idxInner.Get<string>();
+					break;
+				case "Target":
+					((HyperLink)ctrl).Target = idxInner.Get<string>();
+					break;
+				case "ImageUrl":
+					((Image)ctrl).ImageUrl = idxInner.Get<string>();
+					break;
+				case "AlternateText":
+					((Image)ctrl).AlternateText = idxInner.Get<string>();
+					break;
+				case "Items":
+					foreach (Node idxChild in idxInner)
+					{
+						((SelectList)ctrl).Items.Add (new ListItem(idxChild.Name, idxChild.Get<string>()));
+					} break;
+				case "PlaceHolder":
+					if (ctrl is TextBox)
+						((TextBox)ctrl).PlaceHolder = idxInner.Get<string>();
+					else
+						((TextArea)ctrl).PlaceHolder = idxInner.Get<string>();
+					break;
+				case "DefaultWidget":
+					if (ctrl is Panel)
+						((Panel)ctrl).DefaultWidget = idxInner.Get<string>();
+					else
+						throw new ArgumentException("Only Panels can have a Default Widget, you tried to set DefaultWidget on a " + ctrl.GetType().Name);
+					break;
+				case "controls":
+					foreach (Node idxChild in idxInner)
+					{
+						BuildControl (idxChild, (BaseWebControl)ctrl);
+					} break;
 				case "OnSelectedIndexChanged":
 				{
 					string path = GetPath (idxInner);
@@ -419,76 +489,6 @@ namespace Magix.forms
 								};
 						};
 				} break;
-				case "ID":
-					ctrl.ID = idxInner.Get<string>();
-					break;
-				case "Dir":
-					((BaseWebControl)ctrl).Dir = idxInner.Get<string>();
-					break;
-				case "ToolTip":
-					((BaseWebControl)ctrl).ToolTip = idxInner.Get<string>();
-					break;
-				case "TabIndex":
-					((BaseWebControl)ctrl).TabIndex = idxInner.Get<string>();
-					break;
-				case "AccessKey":
-					if (ctrl is BaseWebControlFormElement)
-						((BaseWebControlFormElement)ctrl).AccessKey = idxInner.Get<string>();
-					break;
-				case "Checked":
-					if (ctrl is CheckBox)
-						((CheckBox)ctrl).Checked = bool.Parse (idxInner.Get<string>());
-					else
-						((RadioButton)ctrl).Checked = bool.Parse (idxInner.Get<string>());
-					break;
-				case "Tag":
-					if (ctrl is Label)
-						((Label)ctrl).Tag = idxInner.Get<string>();
-					else
-						((Panel)ctrl).Tag = idxInner.Get<string>();
-					break;
-				case "For":
-					((Label)ctrl).For = idxInner.Get<string>();
-					break;
-				case "Value":
-					((HiddenField)ctrl).Value = idxInner.Get<string>();
-					break;
-				case "URL":
-					((HyperLink)ctrl).URL = idxInner.Get<string>();
-					break;
-				case "Target":
-					((HyperLink)ctrl).Target = idxInner.Get<string>();
-					break;
-				case "ImageUrl":
-					((Image)ctrl).ImageUrl = idxInner.Get<string>();
-					break;
-				case "AlternateText":
-					((Image)ctrl).AlternateText = idxInner.Get<string>();
-					break;
-				case "Items":
-					foreach (Node idxChild in idxInner)
-					{
-						((SelectList)ctrl).Items.Add (new ListItem(idxChild.Name, idxChild.Get<string>()));
-					}
-					break;
-				case "PlaceHolder":
-					if (ctrl is TextBox)
-						((TextBox)ctrl).PlaceHolder = idxInner.Get<string>();
-					else
-						((TextArea)ctrl).PlaceHolder = idxInner.Get<string>();
-					break;
-				case "DefaultWidget":
-					if (ctrl is Panel)
-						((Panel)ctrl).DefaultWidget = idxInner.Get<string>();
-					else
-						throw new ArgumentException("Only Panels can have a Default Widget, you tried to set DefaultWidget on a " + ctrl.GetType().Name);
-					break;
-				case "controls":
-					foreach (Node idxChild in idxInner)
-					{
-						BuildControl (idxChild, (BaseWebControl)ctrl);
-					}
-					break;
 				}
 			}
 

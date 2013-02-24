@@ -183,7 +183,7 @@ namespace Magix.Core
 
 			if (valueToSet == null)
 			{
-				Remove (exprDestination, source, ip);
+				Remove(exprDestination, source, ip);
 				return;
 			}
 

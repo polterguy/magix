@@ -5,8 +5,6 @@
  */
 
 using System;
-using System.IO;
-using System.Threading;
 using Magix.Core;
 
 namespace Magix.execute
@@ -41,6 +39,7 @@ null. The ""value""'s Value can be a constant,
 the Value of ""set"" must be an expression.";
 				return;
 			}
+
 			Node ip = e.Params;
 			if (e.Params.Contains ("_ip"))
 				ip = e.Params ["_ip"].Value as Node;
@@ -55,7 +54,7 @@ the Value of ""set"" must be an expression.";
 			if (ip.Contains ("value"))
 				right = ip["value"].Get<string>();
 
-			Expressions.SetNodeValue (left, right, dp, ip);
+			Expressions.SetNodeValue(left, right, dp, ip);
 		}
 	}
 }

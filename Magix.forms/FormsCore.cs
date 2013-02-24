@@ -16,7 +16,7 @@ namespace Magix.execute
 	public class FormsCore : ActiveController
 	{
 		/**
-		 * Will create and instantiate a newly created dynamic form
+		 * Will create, and instantiate, a newly created dynamic form
 		 */
 		[ActiveEvent(Name = "magix.forms.create-form")]
 		public void magix_forms_create_form (object sender, ActiveEventArgs e)
@@ -33,11 +33,11 @@ must be a uniquely identifiable id for later use. ""controls""
 contains the controls themselves, such as ""Button"" nodes, etc.";
 				return;
 			}
-			Node formContent = e.Params;
+
 			LoadModule (
 				"Magix.forms.DynamicForm", 
 				e.Params["container"].Get<string>(), 
-				formContent.Clone ());
+				e.Params.Clone());
 		}
 	}
 }

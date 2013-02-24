@@ -5,8 +5,6 @@
  */
 
 using System;
-using System.IO;
-using System.Threading;
 using Magix.Core;
 
 namespace Magix.execute
@@ -17,7 +15,7 @@ namespace Magix.execute
 	public class AddCore : ActiveController
 	{
 		/**
-		 * Adds the given "value" Node to the Value Expression, which must be a Node list
+		 * Adds the given "value" Node to the Value Expression, which both must be a Node list
 		 */
 		[ActiveEvent(Name = "magix.execute.add")]
 		public static void magix_execute_add (object sender, ActiveEventArgs e)

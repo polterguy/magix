@@ -19,6 +19,10 @@
 
 * Better handling of types in expressions
 
+* Implement support for "inspect" on Active Modules too
+
+* Create a custom type of exception thrown in "managed code" ...
+
 * Create "Logging" controller
 
 * Detach Magix.events and Magix.remoting from db4o, by internally using Magix.data

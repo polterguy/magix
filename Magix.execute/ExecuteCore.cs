@@ -84,19 +84,22 @@ the Value effectively becomes a 'goto keyword'.";
 						"You can only supply a context pointing to an existing Node hierarchy");
 			}
 
+			// Temporary variable used internally by some functions, such as "if" and "else-if"
 			ip["_state"].Value = null;
 
 			// To allow for changing of Node Hierarchy, without halting execution because
 			// of changing collection while iterating ...
-			// Change such that it also will execute dynamically generated code, meaning
+
+			// TODO: Change such that it also will execute dynamically generated code, meaning
 			// ADDED nodes underneath as process is done ...
 			List<Node> tmpNodes = new List<Node>(ip.Children);
+
 			foreach (Node idx in tmpNodes)
 			{
 				string nodeName = idx.Name;
 
 				// Checking to see if it starts with a small letter
-				if ("abcdefghijklmnopqrstuvwxyz".IndexOf (nodeName[0]) != -1)
+				if ("abcdefghijklmnopqrstuvwxyz".IndexOf(nodeName[0]) != -1)
 				{
 					// Checking to see if it's a reference to an active event
 					if (nodeName.Contains ("."))
@@ -109,10 +112,25 @@ the Value effectively becomes a 'goto keyword'.";
 						// Data Pointer, pointer to data
 						tmp["_dp"].Value = dp;
 
-						RaiseEvent ("magix.execute.raise", tmp);
+						RaiseEvent(
+							"magix.execute.raise", 
+							tmp);
 					}
 					else
 					{
+						bool isKeyword = true;
+						foreach (char idxC in nodeName)
+						{
+							if ("abcdefghijklmnopqrstuvwxyz-@£#$¤%&!?+*:.".IndexOf(idxC) == -1)
+							{
+								isKeyword = false;
+								break;
+							}
+						}
+
+						if (!isKeyword)
+							continue;
+
 						// This is a keyword
 						string eventName = "magix.execute." + nodeName;
 
@@ -127,11 +145,11 @@ the Value effectively becomes a 'goto keyword'.";
 						// Data Pointer, pointer to data
 						tmp["_dp"].Value = dp;
 
-						RaiseEvent (eventName, tmp);
+						RaiseEvent(eventName, tmp);
 					}
 				}
 			}
-			ip.Remove (ip["_state"]);
+			ip["_state"].UnTie();
 		}
 	}
 }

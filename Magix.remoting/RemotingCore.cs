@@ -71,17 +71,17 @@ are being correctly re-mapped.
 			{
 				using (IObjectContainer db = Db4oFactory.OpenFile(_dbFile))
 				{
-					db.Ext ().Configure ().UpdateDepth (1000);
-					db.Ext ().Configure ().ActivationDepth (1000);
+					db.Ext().Configure().UpdateDepth(1000);
+					db.Ext().Configure().ActivationDepth(1000);
 
-					foreach (RemoteOverrides idx in db.QueryByExample (new RemoteOverrides()))
+					foreach (RemoteOverrides idx in db.QueryByExample(new RemoteOverrides()))
 					{
-						ActiveEvents.Instance.OverrideRemotely (idx.Key, idx.Url);
+						ActiveEvents.Instance.OverrideRemotely(idx.Key, idx.Url);
 					}
 
-					foreach (OpenEvents idx in db.QueryByExample (new OpenEvents()))
+					foreach (OpenEvents idx in db.QueryByExample(new OpenEvents()))
 					{
-						ActiveEvents.Instance.MakeRemotable (idx.Key);
+						ActiveEvents.Instance.MakeRemotable(idx.Key);
 					}
 				}
 			}
@@ -91,7 +91,7 @@ are being correctly re-mapped.
 		 * Creates a remote override for any active event in your system
 		 */
 		[ActiveEvent(Name = "magix.execute.tunnel")]
-		public static void magix_execute_tunnel (object sender, ActiveEventArgs e)
+		public static void magix_execute_tunnel(object sender, ActiveEventArgs e)
 		{
 			if (e.Params.Contains ("inspect") &&
 			    e.Params["inspect"].Get<string>("") == "")
@@ -111,13 +111,13 @@ URL end-point instead.";
 			}
 
 			Node ip = e.Params;
-			if (e.Params.Contains ("_ip"))
+			if (e.Params.Contains("_ip"))
 				ip = e.Params["_ip"].Value as Node;
 
 			if (ip.Get<string>("") == string.Empty)
 				throw new ArgumentException("magix.execute.override-remotely needs event parameter to know which event to raise externally");
 
-			string url = ip.Contains ("URL") ? ip["URL"].Get<string>() : null;
+			string url = ip.Contains("URL") ? ip["URL"].Get<string>() : null;
 			string evt = ip.Get<string>("");
 
 			if (url == null)
@@ -126,19 +126,19 @@ URL end-point instead.";
 				{
 					using (IObjectContainer db = Db4oFactory.OpenFile(_dbFile))
 					{
-						db.Ext ().Configure ().UpdateDepth (1000);
-						db.Ext ().Configure ().ActivationDepth (1000);
+						db.Ext().Configure().UpdateDepth(1000);
+						db.Ext().Configure().ActivationDepth(1000);
 
-						foreach (RemoteOverrides idx in db.QueryByExample (new RemoteOverrides()))
+						foreach (RemoteOverrides idx in db.QueryByExample(new RemoteOverrides()))
 						{
 							if (evt == idx.Key)
 							{
-								db.Delete (idx);
+								db.Delete(idx);
 							}
 						}
-						db.Commit ();
+						db.Commit();
 					}
-					ActiveEvents.Instance.RemoveRemotable (evt);
+					ActiveEvents.Instance.RemoveRemotable(evt);
 				}
 			}
 			else
@@ -147,17 +147,17 @@ URL end-point instead.";
 				{
 					using (IObjectContainer db = Db4oFactory.OpenFile(_dbFile))
 					{
-						db.Ext ().Configure ().UpdateDepth (1000);
-						db.Ext ().Configure ().ActivationDepth (1000);
+						db.Ext().Configure().UpdateDepth(1000);
+						db.Ext().Configure().ActivationDepth(1000);
 
 						bool found = false;
-						foreach (RemoteOverrides idx in db.QueryByExample (new RemoteOverrides()))
+						foreach (RemoteOverrides idx in db.QueryByExample(new RemoteOverrides()))
 						{
 							if (evt == idx.Key)
 							{
 								found = true;
 								idx.Url = url;
-								db.Store (idx);
+								db.Store(idx);
 								break;
 							}
 						}
@@ -166,9 +166,9 @@ URL end-point instead.";
 							RemoteOverrides nEvt = new RemoteOverrides();
 							nEvt.Key = evt;
 							nEvt.Url = url;
-							db.Store (nEvt);
+							db.Store(nEvt);
 						}
-						db.Commit ();
+						db.Commit();
 						ActiveEvents.Instance.OverrideRemotely(evt, url);
 					}
 				}
@@ -197,7 +197,7 @@ server park, or by exposing functionality to other networks.";
 			}
 
 			Node ip = e.Params;
-			if (e.Params.Contains ("_ip"))
+			if (e.Params.Contains("_ip"))
 				ip = e.Params["_ip"].Value as Node;
 
 			if (ip.Get<string>("") == string.Empty)
@@ -207,11 +207,11 @@ server park, or by exposing functionality to other networks.";
 
 			using (IObjectContainer db = Db4oFactory.OpenFile(_dbFile))
 			{
-				db.Ext ().Configure ().UpdateDepth (1000);
-				db.Ext ().Configure ().ActivationDepth (1000);
+				db.Ext().Configure().UpdateDepth(1000);
+				db.Ext().Configure().ActivationDepth(1000);
 
 				bool found = false;
-				foreach (OpenEvents idx in db.QueryByExample (new OpenEvents()))
+				foreach (OpenEvents idx in db.QueryByExample(new OpenEvents()))
 				{
 					if (evt == idx.Key)
 					{
@@ -223,10 +223,10 @@ server park, or by exposing functionality to other networks.";
 				{
 					RemoteOverrides nEvt = new RemoteOverrides();
 					nEvt.Key = evt;
-					db.Store (nEvt);
+					db.Store(nEvt);
 				}
-				db.Commit ();
-				ActiveEvents.Instance.MakeRemotable (evt);
+				db.Commit();
+				ActiveEvents.Instance.MakeRemotable(evt);
 			}
 		}
 
@@ -248,7 +248,7 @@ invoked from other servers.";
 			}
 
 			Node ip = e.Params;
-			if (e.Params.Contains ("_ip"))
+			if (e.Params.Contains("_ip"))
 				ip = e.Params["_ip"].Value as Node;
 
 			if (ip.Get<string>("") == string.Empty)
@@ -258,20 +258,20 @@ invoked from other servers.";
 
 			using (IObjectContainer db = Db4oFactory.OpenFile(_dbFile))
 			{
-				db.Ext ().Configure ().UpdateDepth (1000);
-				db.Ext ().Configure ().ActivationDepth (1000);
+				db.Ext().Configure().UpdateDepth(1000);
+				db.Ext().Configure().ActivationDepth(1000);
 
-				foreach (OpenEvents idx in db.QueryByExample (new OpenEvents()))
+				foreach (OpenEvents idx in db.QueryByExample(new OpenEvents()))
 				{
 					if (evt == idx.Key)
 					{
-						db.Delete (idx);
+						db.Delete(idx);
 						break;
 					}
 				}
-				db.Commit ();
+				db.Commit();
 			}
-			ActiveEvents.Instance.RemoveRemotable (evt);
+			ActiveEvents.Instance.RemoveRemotable(evt);
 		}
 
 		/**
@@ -300,7 +300,7 @@ transparently back to the caller.";
 			}
 
 			Node ip = e.Params;
-			if (e.Params.Contains ("_ip"))
+			if (e.Params.Contains("_ip"))
 				ip = e.Params["_ip"].Value as Node;
 
 			if (!ip.Contains ("URL") || ip["URL"].Get<string>("") == string.Empty)
