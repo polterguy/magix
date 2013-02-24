@@ -51,17 +51,17 @@ event, where the ""ToolTip"" will contain the original event name. Takes no para
 			int idxNo = 0;
 			foreach (string idx in ActiveEvents.Instance.ActiveEventHandlers)
 			{
-				if (!takeAll && string.IsNullOrEmpty (beginsWith) && idx.StartsWith ("magix.test."))
+				if (!takeAll && string.IsNullOrEmpty (beginsWith) && idx.StartsWith("magix.test."))
 					continue;
 
 				if (idx.Contains("."))
 				{
 					string[] splits = idx.Split ('.');
-					if (!takeAll && splits[splits.Length - 1].StartsWith ("_"))
+					if (!takeAll && splits[splits.Length - 1].StartsWith("_"))
 						continue; // "Hidden" event ...
 				}
 
-				if (!string.IsNullOrEmpty (beginsWith) && !idx.StartsWith (beginsWith))
+				if (!string.IsNullOrEmpty (beginsWith) && !idx.StartsWith(beginsWith))
 					continue;
 
 				if (ActiveEvents.Instance.IsOverrideSystem (idx))

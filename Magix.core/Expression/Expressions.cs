@@ -220,7 +220,7 @@ namespace Magix.Core
 			if (expression == null)
 				return null;
 
-			if (!expression.TrimStart ().StartsWith ("["))
+			if (!expression.TrimStart ().StartsWith("["))
 				return expression;
 
 			string lastEntity = "";
