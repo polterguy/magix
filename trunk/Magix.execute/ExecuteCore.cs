@@ -66,6 +66,7 @@ the Value effectively becomes a 'goto keyword'.";
 				e.Params["else"]["magix.viewport.show-message"]["message"].Value = "Hi Stranger!";
 				return;
 			}
+
 			Node ip = e.Params;
 			if (e.Params.Contains("_ip"))
 				ip = e.Params ["_ip"].Value as Node;
