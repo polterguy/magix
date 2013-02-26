@@ -37,6 +37,20 @@ namespace Magix.UX.Widgets
             }
         }
 
+        /**
+         * Number of rows on textarea HTML element
+         */
+        public int Rows
+        {
+            get { return ViewState["Rows"] == null ? -1 : (int)ViewState["Rows"]; }
+            set
+            {
+                if (value != Rows)
+                    SetJsonGeneric("rows", value.ToString());
+                ViewState["Rows"] = value;
+            }
+        }
+
         protected override void RenderMuxControl(HtmlBuilder builder)
         {
             using (Element el = builder.CreateElement("textarea"))
@@ -55,6 +69,8 @@ namespace Magix.UX.Widgets
         {
             if (!string.IsNullOrEmpty(PlaceHolder))
                 el.AddAttribute("placeholder", PlaceHolder);
+            if (Rows != -1)
+                el.AddAttribute("rows", Rows.ToString());
             base.AddAttributes(el);
         }
     }

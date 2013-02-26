@@ -38,9 +38,20 @@ with your own page-load handling logic to create your own applications.";
 				return;
 			}
 
-			// Loads up Event Viewer, or IDE
+			LoadModule(
+				"Magix.modules.HtmlViewer",
+				"header");
+
 			Node tmp = new Node();
-			tmp["container"].Value = "content1";
+			tmp["html"].Value = "<h1>Active Event Executor</h1>";
+
+			RaiseEvent(
+				"magix.modules.set-html",
+				tmp);
+
+			// Loads up Event Viewer, or IDE
+			tmp = new Node();
+			tmp["container"].Value = "content";
 
 			RaiseEvent(
 				"magix.admin.open-event-viewer", 

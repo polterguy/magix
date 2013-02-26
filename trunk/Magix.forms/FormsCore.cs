@@ -23,7 +23,7 @@ namespace Magix.execute
 		{
 			if (e.Params.Contains("inspect"))
 			{
-				e.Params["container"].Value = "content2";
+				e.Params["container"].Value = "content";
 				e.Params["form-id"].Value = "unique-identification-of-your-form";
 				e.Params["controls"]["Button"].Value = "btn";
 				e.Params["controls"]["Button"]["Text"].Value = "Hello World!";

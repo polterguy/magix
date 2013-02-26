@@ -93,15 +93,11 @@ end user for some seconds.";
 			if (_notFirstMessage)
 			{
 				// We only render effects the FIRST time event is called ...
-				new EffectRollDown(messageWrapper, 500)
-					.JoinThese (
-						new EffectFadeIn())
-					.ChainThese (
+				new EffectFadeIn(messageWrapper, 500)
+					.ChainThese(
 						new EffectTimeout(_time),
-						new EffectRollUp(messageWrapper, 500)
-							.JoinThese (
-								new EffectFadeOut()))
-					.Render ();
+						new EffectFadeOut(messageWrapper, 500))
+					.Render();
 			}
 			base.OnPreRender (e);
 		}

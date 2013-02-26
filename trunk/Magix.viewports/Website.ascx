@@ -12,39 +12,40 @@
     CssClass="container">
 	<mux:Panel
 		runat="server"
-		style="opacity:0;"
-		CssClass="message-box"
+		style="opacity:0;position:fixed;top:0;left:0;width:100%;z-index:10000;"
+		CssClass="alert"
 		id="messageWrapper">
-		<br />
 		<mux:Image
 			runat="server"
 			id="icon"
-			CssClass="span-1 right"
 			Visible="false" />
 		<mux:Label
 			runat="server"
 			id="msgBoxHeader"
 			Tag="label"
-			CssClass="msg-box-header"
 			Text="Message" />
 		<mux:Label
 			Tag="div"
 			runat="server"
 			id="messageLabel" />
 	</mux:Panel>
-    <mux:DynamicPanel 
-        runat="server" 
-        OnReload="dynamic_LoadControls"
-        CssClass="span-24 last"
-        id="content1" />
-    <mux:DynamicPanel 
-        runat="server" 
-        OnReload="dynamic_LoadControls"
-        CssClass="span-24 last"
-        id="content2" />
-    <mux:DynamicPanel 
-        runat="server" 
-        OnReload="dynamic_LoadControls"
-        CssClass="span-24 last"
-        id="content3" />
+	<div class="row">
+	    <mux:DynamicPanel 
+	        runat="server" 
+	        OnReload="dynamic_LoadControls"
+	        CssClass="span7 offset5"
+	        id="header" />
+    </div>
+	<div class="row">
+	    <mux:DynamicPanel 
+	        runat="server" 
+	        OnReload="dynamic_LoadControls"
+	        CssClass="span3"
+	        id="menu" />
+	    <mux:DynamicPanel 
+	        runat="server" 
+	        OnReload="dynamic_LoadControls"
+	        CssClass="span9"
+	        id="content" />
+    </div>
 </mux:Panel>

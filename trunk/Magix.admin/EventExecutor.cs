@@ -101,7 +101,7 @@ event, where the ""ToolTip"" will contain the original event name. Takes no para
 		{
 			if (e.Params.Contains("inspect"))
 			{
-				e.Params["container"].Value = "content1";
+				e.Params["container"].Value = "content";
 				e.Params["inspect"].Value = @"Will open the Event Sniffer
 form, in ""container"" container in viewport, 
 which will show all active events raised in 
@@ -125,7 +125,7 @@ your server.";
 		{
 			if (e.Params.Contains("inspect"))
 			{
-				e.Params["container"].Value = "content1";
+				e.Params["container"].Value = "content";
 				e.Params["inspect"].Value = @"Will open the Active Event Executor, from which
 you can run Active Events and inspect them and do other Meta/Admin Operations. Also
 serves like a development environment from which you can start at. It will load

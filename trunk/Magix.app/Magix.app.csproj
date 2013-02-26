@@ -41,34 +41,17 @@
   <ItemGroup>
     <Content Include="Global.asax" />
     <Content Include="Default.aspx" />
-    <Content Include="media\blueprint-css-master\blueprint\ie.css" />
-    <Content Include="media\blueprint-css-master\blueprint\print.css" />
-    <Content Include="media\blueprint-css-master\blueprint\screen.css" />
-    <Content Include="media\blueprint-css-master\blueprint\plugins\buttons\screen.css" />
-    <Content Include="media\blueprint-css-master\blueprint\plugins\fancy-type\screen.css" />
-    <Content Include="media\blueprint-css-master\blueprint\plugins\link-icons\screen.css" />
-    <Content Include="media\blueprint-css-master\blueprint\plugins\buttons\icons\cross.png" />
-    <Content Include="media\blueprint-css-master\blueprint\plugins\buttons\icons\key.png" />
-    <Content Include="media\blueprint-css-master\blueprint\plugins\buttons\icons\tick.png" />
-    <Content Include="media\blueprint-css-master\blueprint\plugins\link-icons\icons\doc.png" />
-    <Content Include="media\blueprint-css-master\blueprint\plugins\link-icons\icons\email.png" />
-    <Content Include="media\blueprint-css-master\blueprint\plugins\link-icons\icons\external.png" />
-    <Content Include="media\blueprint-css-master\blueprint\plugins\link-icons\icons\feed.png" />
-    <Content Include="media\blueprint-css-master\blueprint\plugins\link-icons\icons\im.png" />
-    <Content Include="media\blueprint-css-master\blueprint\plugins\link-icons\icons\lock.png" />
-    <Content Include="media\blueprint-css-master\blueprint\plugins\link-icons\icons\pdf.png" />
-    <Content Include="media\blueprint-css-master\blueprint\plugins\link-icons\icons\visited.png" />
-    <Content Include="media\blueprint-css-master\blueprint\plugins\link-icons\icons\xls.png" />
-    <Content Include="media\blueprint-css-master\blueprint\plugins\rtl\screen.css" />
-    <Content Include="media\blueprint-css-master\blueprint\src\forms.css" />
-    <Content Include="media\blueprint-css-master\blueprint\src\grid.css" />
-    <Content Include="media\blueprint-css-master\blueprint\src\grid.png" />
-    <Content Include="media\blueprint-css-master\blueprint\src\ie.css" />
-    <Content Include="media\blueprint-css-master\blueprint\src\print.css" />
-    <Content Include="media\blueprint-css-master\blueprint\src\reset.css" />
-    <Content Include="media\blueprint-css-master\blueprint\src\typography.css" />
-    <Content Include="media\main.css" />
-    <Content Include="media\main-debug.css" />
+    <Content Include="media\bootstrap\css\bootstrap.css" />
+    <Content Include="media\bootstrap\css\bootstrap.min.css" />
+    <Content Include="media\bootstrap\css\bootstrap-responsive.css" />
+    <Content Include="media\bootstrap\css\bootstrap-responsive.min.css" />
+    <Content Include="media\bootstrap\img\glyphicons-halflings.png" />
+    <Content Include="media\bootstrap\img\glyphicons-halflings-white.png" />
+    <Content Include="media\images\magix-logo.png" />
+    <Content Include="media\images\magix-logo-small.png" />
+    <Content Include="media\images\magix-logo-tiny.png" />
+    <Content Include="media\bootstrap\js\bootstrap.js" />
+    <Content Include="media\bootstrap\js\bootstrap.min.js" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Global.asax.cs">
@@ -179,6 +162,10 @@
       <Project>{7825CF11-A8CB-4788-8A5C-C2E064F063DE}</Project>
       <Name>Magix.code.tests</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Magix.modules\Magix.modules.csproj">
+      <Project>{2456D279-E652-4B8D-99FF-C641912C9061}</Project>
+      <Name>Magix.modules</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="web.config" />
@@ -190,15 +177,6 @@
     <Folder Include="ExecuteScripts\Applications\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="media\blueprint-css-master\AUTHORS.textile" />
-    <None Include="media\blueprint-css-master\CHANGELOG" />
-    <None Include="media\blueprint-css-master\LICENSE" />
-    <None Include="media\blueprint-css-master\README.textile" />
-    <None Include="media\blueprint-css-master\TUTORIAL.textile" />
-    <None Include="media\blueprint-css-master\blueprint\plugins\buttons\readme.txt" />
-    <None Include="media\blueprint-css-master\blueprint\plugins\fancy-type\readme.txt" />
-    <None Include="media\blueprint-css-master\blueprint\plugins\link-icons\readme.txt" />
-    <None Include="media\blueprint-css-master\blueprint\plugins\rtl\readme.txt" />
     <None Include="ExecuteScripts\Tutorials\Hello-World.txt" />
     <None Include="ExecuteScripts\Tutorials\Updating-Nodes.txt" />
     <None Include="ExecuteScripts\Tutorials\Expressions.txt" />
