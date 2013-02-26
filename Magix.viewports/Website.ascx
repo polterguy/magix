@@ -12,8 +12,8 @@
     CssClass="container">
 	<mux:Panel
 		runat="server"
-		style="opacity:0;position:fixed;top:0;left:0;width:100%;z-index:10000;"
-		CssClass="alert"
+		style="opacity:0;position:fixed;top:0;z-index:10000;margin-right:auto;margin-right:left;"
+		CssClass="alert span12"
 		id="messageWrapper">
 		<mux:Image
 			runat="server"
@@ -23,7 +23,7 @@
 			runat="server"
 			id="msgBoxHeader"
 			Tag="label"
-			Text="Message" />
+			Text="Message from System" />
 		<mux:Label
 			Tag="div"
 			runat="server"

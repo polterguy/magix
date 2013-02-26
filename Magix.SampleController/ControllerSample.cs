@@ -38,12 +38,17 @@ with your own page-load handling logic to create your own applications.";
 				return;
 			}
 
+			Node tmp = new Node();
+			tmp["id"].Value = "header";
+
 			LoadModule(
 				"Magix.modules.HtmlViewer",
-				"header");
+				"header",
+				tmp);
 
-			Node tmp = new Node();
+			tmp = new Node();
 			tmp["html"].Value = "<h1>Active Event Executor</h1>";
+			tmp["id"].Value = "header";
 
 			RaiseEvent(
 				"magix.modules.set-html",
