@@ -28,7 +28,7 @@ namespace Magix.admin
      */
     public class ExecutorForm : ActiveModule
     {
-		protected TextArea activeEvent;
+		protected TextBox activeEvent;
 		protected TextArea txtIn;
 		protected TextArea txtOut;
 		protected Panel wrp;
@@ -85,18 +85,13 @@ namespace Magix.admin
 			_noActiveEventsCSSClassRendered = 0;
 
 			Node node = new Node();
-			RaiseEvent("magix.admin.get-active-events", node);
-			rep.DataSource = node ["ActiveEvents"];
-			rep.DataBind ();
-			wrp.ReRender ();
-		}
+			RaiseEvent(
+				"magix.admin.get-active-events", 
+				node);
 
-		protected string GetCSS(object value)
-		{
-			if ((++_noActiveEventsCSSClassRendered) % 3 == 0)
-				return "span-7 top-1 prepend-1 last " + (string)value;
-			else
-				return "span-7 top-1 prepend-1 " + (string)value;
+			rep.DataSource = node ["ActiveEvents"];
+			rep.DataBind();
+			wrp.ReRender();
 		}
 
 		protected void run_Click (object sender, EventArgs e)
@@ -111,21 +106,31 @@ namespace Magix.admin
 					activeEvent.Text = method;
 					wholeTxt = wholeTxt.Substring (wholeTxt.IndexOf ("\n")).TrimStart ();
 				}
+
 				Node tmp = new Node();
 				tmp["code"].Value = wholeTxt;
+
 				RaiseEvent(
 					"magix.admin._transform-code-2-node",
 					tmp);
-				RaiseEvent(activeEvent.Text, tmp["JSON"].Get<Node>());
+
 				RaiseEvent(
-					"magix.admin._transform-node-2-code", tmp);
+					activeEvent.Text, 
+					tmp["JSON"].Get<Node>());
+
+				RaiseEvent(
+					"magix.admin._transform-node-2-code", 
+					tmp);
+
 				txtOut.Text = tmp["code"].Get<string>();
 			}
 			else
 			{
 				Node node = RaiseEvent(activeEvent.Text);
+
 				Node tmp = new Node();
 				tmp["JSON"].Value = node;
+
 				RaiseEvent(
 					"magix.admin._transform-node-2-code", 
 					tmp);

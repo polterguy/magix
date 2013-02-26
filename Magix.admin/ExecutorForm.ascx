@@ -6,41 +6,43 @@
     AutoEventWireup="true" 
     Inherits="Magix.admin.ExecutorForm" %>
 
-<div class="span-24 last prepend-top">
-	<h1 class="span-10 prepend-7">Active Event Executor</h1>
-	<div class="span-22 prepend-2">
-		<mux:TextArea
-			runat="server"
-			id="txtIn"
-			PlaceHolder="Input Nodes ..."
-			CssClass="span-20 height-12 code-window" />
-	</div>
-	<div class="span-17 prepend-7 prepend-top">
-		<mux:TextArea
+<div class="span9">
+	<mux:TextArea
+		runat="server"
+		id="txtIn"
+		Rows="12"
+		PlaceHolder="Input Nodes ..."
+		CssClass="span9 input-block-level" />
+	<mux:Panel
+		runat="server"
+		ID="exeWrp"
+		DefaultWidget="run"
+		CssClass="input-append span9">
+		<mux:TextBox
 			runat="server"
 			PlaceHolder="Active Event Code ..."
-			CssClass="span-10 height-5 code-window"
+			CssClass="span7"
 			id="activeEvent" />
 		<mux:Button
 			runat="server"
 			id="run"
-			Text="Run"
-			CssClass="span-4 height-2"
+			Text="Execute"
+			AccessKey="X"
 			Tooltip="Runs the Active Event with the JSON Serialized content from Left Text Area"
+			CssClass="span2 btn btn-primary"
 			OnClick="run_Click" />
-	</div>
-	<div class="span-22 prepend-2 prepend-top">
-		<mux:TextArea
-			runat="server"
-			id="txtOut"
-			PlaceHolder="Output Nodes ..."
-			CssClass="span-20 height-12 code-window" />
-	</div>
+	</mux:Panel>
+	<mux:TextArea
+		runat="server"
+		id="txtOut"
+		Rows="8"
+		PlaceHolder="Output Nodes ..."
+		CssClass="span9 input-block-level" />
 </div>
 
 <mux:Panel
     runat="server"
-    CssClass="span-24 last prepend-top"
+    CssClass="span9"
     id="wrp">
     <asp:Repeater
     	runat="server"
@@ -48,7 +50,7 @@
     	<ItemTemplate>
     		<mux:LinkButton
     			runat="server"
-    			CssClass='<%#GetCSS(Eval("[CSS].Value")) %>'
+    			CssClass="span4 btn-info btn btn-mini input-block-level"
     			ToolTip='<%# Eval("[ToolTip].Value") %>'
     			OnClick="EventClicked"
     			Text='<%# Eval("Value") %>' />

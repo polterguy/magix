@@ -121,7 +121,7 @@ namespace Magix.Core
 		{
 			if (e.Params.Contains("inspect"))
 			{
-				e.Params["container"].Value = "content2";
+				e.Params["container"].Value = "content";
 				e.Params["inspect"].Value = @"Will empty the given ""container""
 viewport container for all of its controls. Unloads a container for controls.";
 				return;
@@ -239,7 +239,7 @@ viewport container for all of its controls. Unloads a container for controls.";
 			if (e.Params.Contains("inspect"))
 			{
 				e.Params["name"].Value = "FullNameSpace.AndAlso.FullName_OfClassThatImplementsModule";
-				e.Params["container"].Value = "content2";
+				e.Params["container"].Value = "content";
 				e.Params["inspect"].Value = @"Loads an active module into the 
 given ""container"" viewport container. The module name must be defined in 
 the ""name"" node. The incoming parameters will be used.";
