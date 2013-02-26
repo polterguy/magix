@@ -38,6 +38,7 @@ namespace Magix.admin
 			if (this.FirstLoad)
 			{
 				AjaxManager.Instance.WriterAtBack.Write(activeEvent.ClientID + ".focus();");
+				AjaxManager.Instance.WriterAtBack.Write(activeEvent.ClientID + ".select();");
 				string evt = Page.Request["evt"];
 				string code = Page.Request["code"];
 
@@ -47,7 +48,7 @@ namespace Magix.admin
 					activeEvent.Value = evt;
 
 				if (string.IsNullOrEmpty (code))
-					txtIn.Text = "message=>Hello World!";
+					txtIn.Text = "inspect";
 				else
 					txtIn.Text = code;
 
@@ -129,6 +130,7 @@ namespace Magix.admin
 		protected void run_Click (object sender, EventArgs e)
 		{
 			AjaxManager.Instance.WriterAtBack.Write(activeEvent.ClientID + ".focus();");
+			AjaxManager.Instance.WriterAtBack.Write(activeEvent.ClientID + ".select();");
 			if (txtIn.Text != "")
 			{
 				string wholeTxt = txtIn.Text;

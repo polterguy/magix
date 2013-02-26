@@ -25,7 +25,7 @@
 			placeholder="Active Event ..."
 			class="span7"
 			data-provide="typeahead" 
-			data-items="20" 
+			data-items="10" 
 			data-source='<%#GetDataSource()%>' />
 		<mux:Button
 			runat="server"
