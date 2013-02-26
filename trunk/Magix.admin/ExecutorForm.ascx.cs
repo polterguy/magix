@@ -37,7 +37,7 @@ namespace Magix.admin
 		{
 			if (this.FirstLoad)
 			{
-				run.Focus();
+				AjaxManager.Instance.WriterAtBack.Write(activeEvent.ClientID + ".focus();");
 				string evt = Page.Request["evt"];
 				string code = Page.Request["code"];
 
@@ -128,6 +128,7 @@ namespace Magix.admin
 
 		protected void run_Click (object sender, EventArgs e)
 		{
+			AjaxManager.Instance.WriterAtBack.Write(activeEvent.ClientID + ".focus();");
 			if (txtIn.Text != "")
 			{
 				string wholeTxt = txtIn.Text;
