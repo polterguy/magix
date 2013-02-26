@@ -53,7 +53,10 @@ end user for some seconds.";
 				return;
 			}
 			if (!_notFirstMessage)
+			{
 				messageLabel.Text = "";
+				msgBoxHeader.Text = "Message from System";
+			}
 
 			messageLabel.Text += "<p>" + e.Params["message"].Get<string>() + "</p>";
 

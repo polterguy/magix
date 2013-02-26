@@ -19,20 +19,43 @@ using Magix.UX.Widgets.Core;
 namespace Magix.modules
 {
     /**
+     * Modules to show arbitrary HTML
      */
     public class HtmlViewer : ActiveModule
     {
 		protected Label lbl;
 
+		private string WidgetID
+		{
+			get { return ViewState["WidgetID"] as string; }
+			set { ViewState["WidgetID"] = value; }
+		}
+
+		public override void InitialLoading (Node node)
+		{
+			base.InitialLoading (node);
+
+			if (!node.Contains ("id"))
+				throw new ArgumentNullException("Cannot load an HtmlViewer without assigning it an id");
+
+			WidgetID = node["id"].Get<string>();
+		}
+
 		/**
-		 * 
+		 * Changes the HTML of the module
 		 */
 		[ActiveEvent(Name = "magix.modules.set-html")]
 		public void magix_modules_set_html(object sender, ActiveEventArgs e)
 		{
-			if (!e.Params.Contains ("html"))
-				throw new ArgumentException("Need to pass in html");
-			lbl.Text = e.Params["html"].Get<string>();
+			if (!e.Params.Contains ("id"))
+				throw new ArgumentException("Missing ID in magix.modules.set-html");
+
+			if (WidgetID == e.Params["id"].Get<string>())
+			{
+				if (!e.Params.Contains ("html"))
+					throw new ArgumentException("Need to pass in html");
+				lbl.Text = e.Params["html"].Get<string>();
+			}
 		}
 	}
 }

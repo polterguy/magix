@@ -28,33 +28,68 @@ namespace Magix.admin
      */
     public class ExecutorForm : ActiveModule
     {
-		protected TextBox activeEvent;
 		protected TextArea txtIn;
 		protected TextArea txtOut;
-		protected Panel wrp;
-		protected System.Web.UI.WebControls.Repeater rep;
-
-		private int _noActiveEventsCSSClassRendered = 0;
+		protected Button run;
+		protected System.Web.UI.HtmlControls.HtmlInputText activeEvent;
 
 		protected void Page_Load (object sender, EventArgs e)
 		{
 			if (this.FirstLoad)
 			{
-				txtIn.Select ();
-				txtIn.Focus ();
+				run.Focus();
 				string evt = Page.Request["evt"];
 				string code = Page.Request["code"];
 
 				if (string.IsNullOrEmpty(evt))
-					activeEvent.Text = "magix.viewport.show-message";
+					activeEvent.Value = "magix.viewport.show-message";
 				else
-					activeEvent.Text = evt;
+					activeEvent.Value = evt;
 
 				if (string.IsNullOrEmpty (code))
 					txtIn.Text = "message=>Hello World!";
 				else
 					txtIn.Text = code;
+
+				// Including JavaScript files ...
+				Node tmp = new Node();
+				tmp["type"].Value = "JavaScript";
+				tmp["file"].Value = "http://code.jquery.com/jquery.js";
+
+				RaiseEvent(
+					"magix.viewport.include-client-file",
+					tmp);
+
+				tmp = new Node();
+				tmp["type"].Value = "JavaScript";
+				tmp["file"].Value = "media/bootstrap/js/bootstrap.min.js";
+
+				RaiseEvent(
+					"magix.viewport.include-client-file",
+					tmp);
+
+				activeEvent.DataBind();
 			}
+		}
+
+		protected string GetDataSource()
+		{
+			Node node = new Node();
+
+			RaiseEvent(
+				"magix.admin.get-active-events", 
+				node);
+
+			string data = "";
+
+			foreach (Node idx in node["ActiveEvents"])
+			{
+				data += "\"" + idx.Get<string>() + "\",";
+			}
+
+			string ret = "[" + data.TrimEnd (',') + "]";
+
+			return ret;
 		}
 
 		/**
@@ -65,13 +100,13 @@ namespace Magix.admin
 		[ActiveEvent(Name = "magix.execute._event-overridden")]
 		public void magix_execute__event_overridden(object sender, ActiveEventArgs e)
 		{
-			_noActiveEventsCSSClassRendered = 0;
-
+			// TODO: Make a Panel wrapper around input field, such that ReRender
+			// can be called, to re-databind the events ...
 			Node node = new Node();
-			RaiseEvent("magix.admin.get-active-events", node);
-			rep.DataSource = node ["ActiveEvents"];
-			rep.DataBind ();
-			wrp.ReRender ();
+
+			RaiseEvent(
+				"magix.admin.get-active-events", 
+				node);
 		}
 
 		/**
@@ -82,16 +117,13 @@ namespace Magix.admin
 		[ActiveEvent(Name = "magix.execute._event-override-removed")]
 		public void magix_execute__event_override_removed(object sender, ActiveEventArgs e)
 		{
-			_noActiveEventsCSSClassRendered = 0;
-
+			// TODO: Make a Panel wrapper around input field, such that ReRender
+			// can be called, to re-databind the events ...
 			Node node = new Node();
+
 			RaiseEvent(
 				"magix.admin.get-active-events", 
 				node);
-
-			rep.DataSource = node ["ActiveEvents"];
-			rep.DataBind();
-			wrp.ReRender();
 		}
 
 		protected void run_Click (object sender, EventArgs e)
@@ -103,7 +135,7 @@ namespace Magix.admin
 				{
 					string method = wholeTxt.Split (':')[1];
 					method = method.Substring (0, method.IndexOf ("\n"));
-					activeEvent.Text = method;
+					activeEvent.Value = method;
 					wholeTxt = wholeTxt.Substring (wholeTxt.IndexOf ("\n")).TrimStart ();
 				}
 
@@ -115,7 +147,7 @@ namespace Magix.admin
 					tmp);
 
 				RaiseEvent(
-					activeEvent.Text, 
+					activeEvent.Value, 
 					tmp["JSON"].Get<Node>());
 
 				RaiseEvent(
@@ -126,7 +158,7 @@ namespace Magix.admin
 			}
 			else
 			{
-				Node node = RaiseEvent(activeEvent.Text);
+				Node node = RaiseEvent(activeEvent.Value);
 
 				Node tmp = new Node();
 				tmp["JSON"].Value = node;
@@ -134,18 +166,9 @@ namespace Magix.admin
 				RaiseEvent(
 					"magix.admin._transform-node-2-code", 
 					tmp);
-				txtOut.Text = tmp["code"].Get<string>();
-				txtOut.Select ();
-				txtOut.Focus ();
-			}
-		}
 
-		protected void EventClicked(object sender, EventArgs e)
-		{
-			LinkButton btn = sender as LinkButton;
-			activeEvent.Text = btn.Text == "&nbsp;" ? "" : btn.Text;
-			activeEvent.Select ();
-			activeEvent.Focus ();
+				txtOut.Text = tmp["code"].Get<string>();
+			}
 		}
 	}
 }

@@ -18,11 +18,15 @@
 		ID="exeWrp"
 		DefaultWidget="run"
 		CssClass="input-append span9">
-		<mux:TextBox
+		<input
+			id="activeEvent"
 			runat="server"
-			PlaceHolder="Active Event Code ..."
-			CssClass="span7"
-			id="activeEvent" />
+			type="text"
+			placeholder="Active Event ..."
+			class="span7"
+			data-provide="typeahead" 
+			data-items="20" 
+			data-source='<%#GetDataSource()%>' />
 		<mux:Button
 			runat="server"
 			id="run"
@@ -39,21 +43,3 @@
 		PlaceHolder="Output Nodes ..."
 		CssClass="span9 input-block-level" />
 </div>
-
-<mux:Panel
-    runat="server"
-    CssClass="span9"
-    id="wrp">
-    <asp:Repeater
-    	runat="server"
-    	id="rep">
-    	<ItemTemplate>
-    		<mux:LinkButton
-    			runat="server"
-    			CssClass="span4 btn-info btn btn-mini input-block-level"
-    			ToolTip='<%# Eval("[ToolTip].Value") %>'
-    			OnClick="EventClicked"
-    			Text='<%# Eval("Value") %>' />
-    	</ItemTemplate>
-   	</asp:Repeater>
-</mux:Panel>
