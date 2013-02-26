@@ -35,10 +35,12 @@
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="HtmlViewer.ascx.cs" />
+    <Compile Include="PlainMenu.ascx.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <EmbeddedResource Include="HtmlViewer.ascx" />
+    <EmbeddedResource Include="PlainMenu.ascx" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Magix.core\Magix.Core.csproj">
