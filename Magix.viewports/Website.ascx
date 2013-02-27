@@ -66,7 +66,7 @@
 	    <mux:DynamicPanel 
 	        runat="server" 
 	        OnReload="dynamic_LoadControls"
-	        CssClass="span7 offset5"
+	        CssClass="span12 text-center"
 	        id="header" />
     </div>
 	<div class="row">
