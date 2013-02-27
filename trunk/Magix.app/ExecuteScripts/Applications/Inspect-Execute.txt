@@ -12,7 +12,7 @@ set=>[magix.admin.get-active-events].Name
 for-each=>[Data][ActiveEvents]
   Tpl
     LinkButton
-      CssClass=>span-7 info
+      CssClass=>span2 btn btn-small
       Text
       OnClick
         void.foo
@@ -56,24 +56,21 @@ cf
   form-id=>form1
   container=>content
   controls
-    Label
-      Tag=>h1
-      CssClass=>prepend-top prepend-4 span-19 last
-      Text=>magix.execute keywords in the system
-    Panel=>wrp
-      controls
     Panel2
-      CssClass=>span-22 info prepend-top
+      CssClass=>span5
       controls
         Label=>header
           Text=>Name of Active Event
-          Tag=>label
-        hr
+          CssClass=>span5
+          Tag=>strong
         Label=>desc
-          CssClass=>span-22 last
+          CssClass=>span5
           Text=>@"Description of your Active Event. 
-Click any of the Above Active Events to inspect them ..."
+Click any of the ""magix.execute"" Active Events below to inspect them ..."
         Label=>code
-          CssClass=>span-22 last prepend-top
+          CssClass=>span5
           Text=>Code Example ...
           Tag=>pre
+    Panel=>wrp
+      CssClass=>span2 offset1
+      controls
