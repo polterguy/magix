@@ -75,7 +75,7 @@ with your own page-load handling logic to create your own applications.";
 			tmp["Items"]["Item1"].Value = "Help";
 			tmp["Items"]["Item1"]["Event"].Value = "magix.help.start-help";
 			tmp["Items"]["Item2"].Value = "Some Other Item";
-			tmp["Items"]["Item2"]["Event"].Value = "magix.help.start-help";
+			tmp["Items"]["Item2"]["Event"].Value = "magix.help.start-help-asdasddsaasd";
 
 			RaiseEvent(
 				"magix.modules.set-menu-items", 

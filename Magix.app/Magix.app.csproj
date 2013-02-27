@@ -52,6 +52,7 @@
     <Content Include="media\images\magix-logo-tiny.png" />
     <Content Include="media\bootstrap\js\bootstrap.js" />
     <Content Include="media\bootstrap\js\bootstrap.min.js" />
+    <Content Include="media\bootstrap\js\jQuery.js" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Global.asax.cs">

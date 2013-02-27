@@ -16,6 +16,8 @@
 			<mux:LinkButton
 				runat="server"
 				CssClass="span3 btn btn-block"
+				OnClick="MenuItemClicked"
+				Xtra='<%#GetEvent(Eval("[Event]"))%>'
 				Text='<%#Eval("Value")%>' />
 		</ItemTemplate>
 	</asp:Repeater>

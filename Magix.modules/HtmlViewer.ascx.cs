@@ -50,10 +50,11 @@ namespace Magix.modules
 			if (!e.Params.Contains ("id"))
 				throw new ArgumentException("Missing ID in magix.modules.set-html");
 
+			if (!e.Params.Contains ("html"))
+				throw new ArgumentException("Need to pass in html");
+
 			if (WidgetID == e.Params["id"].Get<string>())
 			{
-				if (!e.Params.Contains ("html"))
-					throw new ArgumentException("Need to pass in html");
 				lbl.Text = e.Params["html"].Get<string>();
 			}
 		}

@@ -19,6 +19,11 @@
 
 * Better handling of types in expressions
 
+* Support mixing MUX WebControls and HTML in the HtmlViewer Module, can load HTML as XML,
+  and then parse and create Label controls, with Tags accordingly, and such become 
+  capable of nearly using .ascx syntax, possibly ...
+  Or maybe even by sypplying a custom "Load UserControl functionality" ...?
+
 * Think about handling all Unit Tests completely "managed" ...?
 
 * Implement support for "inspect" on Active Modules too

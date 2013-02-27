@@ -12,8 +12,8 @@
     CssClass="container">
 	<mux:Panel
 		runat="server"
-		style="opacity:0;position:fixed;top:0;z-index:10000;margin-right:auto;margin-right:left;"
-		CssClass="alert span12"
+		style="display:none;z-index:10000"
+		CssClass="modal"
 		id="messageWrapper">
 		<mux:Image
 			runat="server"
@@ -22,13 +22,46 @@
 		<mux:Label
 			runat="server"
 			id="msgBoxHeader"
-			Tag="label"
+			Tag="h3"
+			CssClass="modal-header"
 			Text="Message from System" />
 		<mux:Label
 			Tag="div"
 			runat="server"
+			CssClass="modal-body"
 			id="messageLabel" />
 	</mux:Panel>
+
+	<mux:Panel
+		runat="server"
+		id="backdrop"
+		Visible="false"
+		OnClick="CloseModal"
+        CssClass="modal-backdrop" />
+	<mux:Panel
+		runat="server"
+		id="mdlWrp"
+		Visible="false"
+        CssClass="modal">
+        <div class="modal-header">
+	        <mux:LinkButton 
+	        	runat="server"
+	        	Text="X"
+	        	OnClick="CloseModal"
+	        	CssClass="close"
+	        	id="mdlClose" />
+	        <mux:Label 
+	        	runat="server"
+	        	id="mdlHeader"
+	        	Tag="h3" />
+	    </div>
+	    <mux:DynamicPanel 
+	        runat="server" 
+	        OnReload="dynamic_LoadControls"
+	        CssClass="modal-body"
+	        id="modal" />
+    </mux:Panel>
+
 	<div class="row">
 	    <mux:DynamicPanel 
 	        runat="server" 

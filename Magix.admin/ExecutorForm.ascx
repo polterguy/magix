@@ -32,7 +32,6 @@
 			id="run"
 			Text="Execute"
 			AccessKey="X"
-			Tooltip="Runs the Active Event with the JSON Serialized content from Left Text Area"
 			CssClass="span2 btn btn-primary"
 			OnClick="run_Click" />
 	</mux:Panel>
