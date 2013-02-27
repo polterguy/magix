@@ -188,7 +188,7 @@ viewport container for all of its controls. Unloads a container for controls.";
 
         private void IncludeJsFile(string jsFile)
         {
-            jsFile = jsFile.Replace("~/", GetApplicationBaseUrl()).ToLowerInvariant();
+            jsFile = jsFile.Replace("~/", GetApplicationBaseUrl());
             AjaxManager.Instance.IncludeScriptFromFile(jsFile);
         }
 
@@ -234,7 +234,7 @@ viewport container for all of its controls. Unloads a container for controls.";
 		 * Will load an Active Module and put it into the "container" viewport container
          */
         [ActiveEvent(Name = "magix.viewport.load-module")]
-		protected void magix_viewport_load_module(object sender, ActiveEventArgs e)
+		protected virtual void magix_viewport_load_module(object sender, ActiveEventArgs e)
 		{
 			if (e.Params.Contains("inspect"))
 			{
@@ -245,18 +245,25 @@ given ""container"" viewport container. The module name must be defined in
 the ""name"" node. The incoming parameters will be used.";
 				return;
 			}
-			string moduleName = e.Params ["name"].Get<string> ();
+			string moduleName = e.Params["name"].Get<string>();
 
-			DynamicPanel dyn = Selector.FindControl<DynamicPanel> (
+			DynamicPanel dyn = Selector.FindControl<DynamicPanel>(
             	this, 
-            	e.Params ["container"].Get<string> ());
+            	e.Params["container"].Get<string>());
+
+			if (dyn == null)
+				return;
 
 			Node context = e.Params;
 
-			ClearControls (dyn);
-			dyn.LoadControl (moduleName, context);
+			ClearControls(dyn);
+			dyn.LoadControl(moduleName, context);
+
 			Node node = new Node();
-			RaiseEvent("magix.execute._event-overridden", node);
+
+			RaiseEvent(
+				"magix.execute._event-overridden", 
+				node);
         }
 
 		/*

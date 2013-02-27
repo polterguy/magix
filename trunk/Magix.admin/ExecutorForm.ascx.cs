@@ -39,6 +39,7 @@ namespace Magix.admin
 			{
 				AjaxManager.Instance.WriterAtBack.Write(activeEvent.ClientID + ".focus();");
 				AjaxManager.Instance.WriterAtBack.Write(activeEvent.ClientID + ".select();");
+
 				string evt = Page.Request["evt"];
 				string code = Page.Request["code"];
 
@@ -55,7 +56,7 @@ namespace Magix.admin
 				// Including JavaScript files ...
 				Node tmp = new Node();
 				tmp["type"].Value = "JavaScript";
-				tmp["file"].Value = "http://code.jquery.com/jquery.js";
+				tmp["file"].Value = "media/bootstrap/js/jQuery.js";
 
 				RaiseEvent(
 					"magix.viewport.include-client-file",
@@ -88,9 +89,7 @@ namespace Magix.admin
 				data += "\"" + idx.Get<string>() + "\",";
 			}
 
-			string ret = "[" + data.TrimEnd (',') + "]";
-
-			return ret;
+			return "[" + data.TrimEnd (',') + "]";
 		}
 
 		/**

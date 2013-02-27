@@ -30,6 +30,11 @@ namespace Magix.viewports
 		protected Label msgBoxHeader;
 		protected Label messageLabel;
 		protected Image icon;
+		protected DynamicPanel modal;
+		protected Panel backdrop;
+		protected Panel mdlWrp;
+		protected Label mdlHeader;
+		protected LinkButton mdlClose;
 
 		private bool _notFirstMessage;
 		private int _time = 3000;
@@ -66,6 +71,7 @@ end user for some seconds.";
 				Node code = e.Params["code"].Clone();
 				code.Name = "";
 				tmp["JSON"].Value = code;
+
 				RaiseEvent(
 					"magix.admin._transform-node-2-code",
 					tmp);
@@ -90,6 +96,42 @@ end user for some seconds.";
 			messageWrapper.Style[Styles.backgroundColor] = color;
 			_notFirstMessage = true;
         }
+
+		protected override void magix_viewport_load_module (object sender, ActiveEventArgs e)
+		{
+			if (e.Params["container"].Get<string>() == "modal")
+			{
+				backdrop.Visible = true;
+				mdlWrp.Visible = true;
+
+				if (e.Params.Contains("header"))
+					mdlHeader.Text = e.Params["header"].Get<string>();
+				else
+					mdlHeader.Text = "Info";
+
+				mdlWrp.Style[Styles.display] = "none";
+
+				new EffectFadeIn(backdrop, 250, 0M, 0.8M)
+					.Render();
+				new EffectFadeIn(mdlWrp, 250)
+					.Render();
+			}
+
+			base.magix_viewport_load_module(sender, e);
+		}
+
+		protected void CloseModal(object sender, EventArgs e)
+		{
+			backdrop.Visible = false;
+			mdlWrp.Visible = false;
+
+			Node tmp = new Node();
+			tmp["container"].Value = "modal";
+
+			RaiseEvent(
+				"magix.viewport.clear-controls",
+				tmp);
+		}
 
 		protected override void OnPreRender (EventArgs e)
 		{

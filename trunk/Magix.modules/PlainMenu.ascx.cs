@@ -51,5 +51,21 @@ namespace Magix.modules
 			rep.DataBind();
 			wrp.ReRender();
 		}
+
+		protected string GetEvent(object obj)
+		{
+			Node node = obj as Node;
+			return node.ToJSONString();
+		}
+
+		protected void MenuItemClicked(object sender, EventArgs e)
+		{
+			LinkButton btn = sender as LinkButton;
+			Node node = Node.FromJSONString(btn.Xtra);
+
+			RaiseEvent(
+				node.Get<string>(),
+				node);
+		}
 	}
 }
