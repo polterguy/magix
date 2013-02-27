@@ -96,9 +96,8 @@ namespace Magix.execute
 		public static void magix_admin__transform_code_2_node(object sender, ActiveEventArgs e)
 		{
 			if (!e.Params.Contains("code"))
-			{
 				throw new ArgumentException("No code node passed into _transform-code-2-node");
-			}
+
 			string txt = e.Params["code"].Get<string>();
 			Node ret = new Node();
 			using (TextReader reader = new StringReader(txt))
@@ -111,17 +110,17 @@ namespace Magix.execute
 					if (line == null)
 						break;
 
-					if (line.Trim () == "")
+					if (line.Trim() == "")
 						continue; // Skipping white lines
-					if (line.Trim ().StartsWith("//"))
+					if (line.Trim().StartsWith("//"))
 						continue;
 
 					// Skipping "white lines"
-					if (line.Trim ().Length == 0)
+					if (line.Trim().Length == 0)
 						continue;
 
 					// Skipping "commenting lines"
-					if (line.Trim ().IndexOf ("//") == 0)
+					if (line.Trim().IndexOf("//") == 0)
 						continue;
 
 					// Counting indents

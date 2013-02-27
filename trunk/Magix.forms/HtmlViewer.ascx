@@ -4,9 +4,8 @@
 <%@ Control 
     Language="C#" 
     AutoEventWireup="true" 
-    Inherits="Magix.modules.HtmlViewer" %>
+    Inherits="Magix.forms.HtmlViewer" %>
 
-<mux:Label
+<mux:Panel
 	runat="server"
-	id="lbl"
-	Tag="div" />
+	id="pnl" />

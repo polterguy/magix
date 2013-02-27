@@ -36,6 +36,8 @@
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="FormsCore.cs" />
     <Compile Include="DynamicForm.ascx.cs" />
+    <Compile Include="HtmlViewer.ascx.cs" />
+    <Compile Include="DynamicFormBase.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -50,5 +52,6 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="DynamicForm.ascx" />
+    <EmbeddedResource Include="HtmlViewer.ascx" />
   </ItemGroup>
 </Project>

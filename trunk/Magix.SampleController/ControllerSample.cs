@@ -39,19 +39,12 @@ with your own page-load handling logic to create your own applications.";
 			}
 
 			Node tmp = new Node();
-			tmp["id"].Value = "header";
-
-			LoadModule(
-				"Magix.modules.HtmlViewer",
-				"header",
-				tmp);
-
-			tmp = new Node();
+			tmp["form-id"].Value = "header";
 			tmp["html"].Value = "<h1>Active Event Executor</h1>";
-			tmp["id"].Value = "header";
+			tmp["container"].Value = "header";
 
 			RaiseEvent(
-				"magix.modules.set-html",
+				"magix.forms.create-web-page",
 				tmp);
 
 			// Loads up Event Viewer, or IDE
