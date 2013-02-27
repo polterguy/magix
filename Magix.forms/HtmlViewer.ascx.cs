@@ -1,0 +1,138 @@
+﻿/*
+ * Magix - A Web Application Framework for Humans
+ * Copyright 2010 - 2013 - MareMara13@gmail.com
+ * Magix is licensed as MITx11, see enclosed License.txt File for Details.
+ */
+
+using System;
+using System.Web.UI;
+using Magix.UX;
+using Magix.UX.Widgets;
+using Magix.UX.Effects;
+using Magix.Core;
+using System.Web;
+using System.Configuration;
+using System.Collections.Generic;
+using System.Diagnostics;
+using Magix.UX.Widgets.Core;
+
+namespace Magix.forms
+{
+    /**
+     * Modules to show arbitrary HTML
+     */
+    public class HtmlViewer : DynamicFormBase
+    {
+		protected Panel pnl;
+
+		private string Html
+		{
+			get { return ViewState["html"] as string; }
+			set { ViewState["html"] = value; }
+		}
+
+		private List<Node> DataSources
+		{
+			get { return ViewState["DataSources"] as List<Node>; }
+			set { ViewState["DataSources"] = value; }
+		}
+
+		public override void InitialLoading(Node node)
+		{
+			if (!node.Contains("html"))
+				throw new ArgumentException("Cannot load an HtmlViewer without 'html'");
+
+			Load +=
+				delegate
+				{
+					Html = node["html"].Get<string>();
+					DataSources = new List<Node>();
+				};
+			base.InitialLoading(node);
+		}
+
+		protected override void OnLoad(EventArgs e)
+		{
+			base.OnLoad(e);
+			BuildControls();
+		}
+
+		private void BuildControls()
+		{
+			bool dataSources = DataSources.Count != 0;
+
+			int currentDataSource = 0;
+
+			string html = Html;
+			string buffer = "";
+			int idxPre = 0;
+			bool last = false;
+
+			for (int idx = 0; idx < html.Length; idx++)
+			{
+				switch (html[idx])
+				{
+				case '{':
+					if (last || idxPre == 0)
+					{
+						idxPre += 1;
+						if (idxPre == 1)
+						{
+							// Finished with brand new HTML stuff
+							LiteralControl lit = new LiteralControl();
+							lit.Text = buffer;
+							pnl.Controls.Add(lit);
+							buffer = "";
+						}
+						last = true;
+					} break;
+				case '}':
+					if (last || idxPre == 2)
+					{
+						idxPre -= 1;
+						if (idxPre == 0)
+						{
+							// Finished with brand new Control collection
+							Node tmp = new Node();
+							tmp["code"].Value = buffer;
+
+							RaiseEvent(
+								"magix.admin._transform-code-2-node",
+								tmp);
+
+							Node codeNode = tmp["JSON"].Get<Node>();
+
+							if (!dataSources)
+								DataSources.Add(codeNode);
+
+							int cur = currentDataSource;
+							foreach (Node idxN in codeNode)
+							{
+								BuildControl(idxN, pnl, 
+									delegate(string path)
+								    {
+										return GetNode(path, DataSources[cur]);
+									});
+							}
+							buffer = "";
+							currentDataSource += 1;
+						}
+						last = true;
+					}
+					break;
+				default:
+					last = false;
+					buffer += html[idx];
+					break;
+				}
+			}
+
+			if (!string.IsNullOrEmpty (buffer))
+			{
+				LiteralControl lit = new LiteralControl();
+				lit.Text = buffer;
+				pnl.Controls.Add(lit);
+			}
+		}
+	}
+}

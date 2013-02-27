@@ -128,8 +128,8 @@ namespace Magix.admin
 
 		protected void run_Click (object sender, EventArgs e)
 		{
-			AjaxManager.Instance.WriterAtBack.Write(activeEvent.ClientID + ".focus();");
-			AjaxManager.Instance.WriterAtBack.Write(activeEvent.ClientID + ".select();");
+			//AjaxManager.Instance.WriterAtBack.Write(activeEvent.ClientID + ".focus();");
+			//AjaxManager.Instance.WriterAtBack.Write(activeEvent.ClientID + ".select();");
 			if (txtIn.Text != "")
 			{
 				string wholeTxt = txtIn.Text;

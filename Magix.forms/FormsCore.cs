@@ -37,7 +37,33 @@ contains the controls themselves, such as ""Button"" nodes, etc.";
 			LoadModule (
 				"Magix.forms.DynamicForm", 
 				e.Params["container"].Get<string>(), 
-				e.Params.Clone());
+				e.Params);
+		}
+
+		/**
+		 * Will create, and instantiate, a newly created dynamic web page
+		 */
+		[ActiveEvent(Name = "magix.forms.create-web-page")]
+		public void magix_forms_create_web_page(object sender, ActiveEventArgs e)
+		{
+			if (e.Params.Contains("inspect"))
+			{
+				e.Params["container"].Value = "content";
+				e.Params["form-id"].Value = "unique-identification-of-your-form";
+				e.Params["html"].Value = "<h1>Some HTML</h1>";
+				e.Params["inspect"].Value = @"Creates a dynamic HTML web page,
+loading it into the ""container"" viewport container. ""form-id""
+must be a uniquely identifiable id for later use. ""html""
+contains the html themselves. You can intermix controls into 
+your HTML by creatning a control collection by typing them 
+inside of {{...controls here...}}";
+				return;
+			}
+
+			LoadModule(
+				"Magix.forms.HtmlViewer", 
+				e.Params["container"].Get<string>(), 
+				e.Params);
 		}
 	}
 }

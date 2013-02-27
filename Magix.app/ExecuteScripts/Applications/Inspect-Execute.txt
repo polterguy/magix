@@ -54,7 +54,7 @@ set=>[cf].Name
   value=>magix.forms.create-form
 cf
   form-id=>form1
-  container=>content1
+  container=>content
   controls
     Label
       Tag=>h1

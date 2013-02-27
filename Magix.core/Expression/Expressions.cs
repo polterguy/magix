@@ -188,7 +188,7 @@ namespace Magix.Core
 			}
 
 			string lastEntity = "";
-			Node x = GetNode (exprDestination, source, ip, ref lastEntity, true);
+			Node x = GetNode(exprDestination, source, ip, ref lastEntity, true);
 
             if (lastEntity == ".Value")
 			{
@@ -335,7 +335,7 @@ namespace Magix.Core
 		}
 
 		// Helper for finding nodes
-		private static Node GetNode (
+		private static Node GetNode(
 			string expr, 
 			Node source, 
 			Node ip, 
@@ -375,7 +375,7 @@ namespace Magix.Core
 
 						string subValue = null;
 						string lastSubEntity = "";
-						Node subNode = GetNode (entireSubStatement, source, ip, ref lastSubEntity, forcePath);
+						Node subNode = GetNode(entireSubStatement, source, ip, ref lastSubEntity, forcePath);
 						if (lastSubEntity == ".Value")
 							subValue = subNode.Value.ToString ();
 						else if (lastSubEntity == ".Name")
@@ -522,7 +522,7 @@ namespace Magix.Core
 		private static void Remove (string expression, Node source, Node ip)
 		{
 			string lastEntity = "";
-			Node x = GetNode (expression, source, ip, ref lastEntity, false);
+			Node x = GetNode(expression, source, ip, ref lastEntity, false);
 
 			if (x == null)
 				throw new ArgumentException("Cannot remove a none existing Node");
@@ -540,7 +540,7 @@ namespace Magix.Core
 		private static bool ExpressionExist (string expression, Node source, Node ip)
 		{
 			string lastEntity = "";
-			Node x = GetNode (expression, source, ip, ref lastEntity, false);
+			Node x = GetNode(expression, source, ip, ref lastEntity, false);
 
 			if (x == null)
 				return false;
