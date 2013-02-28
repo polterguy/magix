@@ -1,8 +1,8 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Magix.viewports/Website.ascx.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Magix.SampleController/ControllerHelp.cs">
     <Files>
-      <File FileName="Magix.SampleController/ControllerHelp.cs" Line="25" Column="1" />
+      <File FileName="Magix.SampleController/ControllerHelp.cs" Line="48" Column="4" />
       <File FileName="Magix.viewports/Website.ascx.cs" Line="114" Column="4" />
       <File FileName="Magix.app/media/bootstrap/js/bootstrap.js" Line="840" Column="1" />
     </Files>
@@ -17,15 +17,15 @@
                 </Node>
               </Node>
             </Node>
-            <Node name="Magix.viewports" expanded="True">
-              <Node name="Website.ascx.cs" selected="True" />
-            </Node>
+            <Node name="Magix.viewports" expanded="True" />
           </Node>
           <Node name="Plugins" expanded="True">
             <Node name="Magix.modules" expanded="True" />
           </Node>
           <Node name="Samples" expanded="True">
-            <Node name="Magix.SampleController" expanded="True" />
+            <Node name="Magix.SampleController" expanded="True">
+              <Node name="ControllerHelp.cs" selected="True" />
+            </Node>
           </Node>
           <Node name="Tests" expanded="True" />
         </State>

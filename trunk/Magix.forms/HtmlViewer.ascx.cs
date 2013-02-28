@@ -134,5 +134,27 @@ namespace Magix.forms
 				pnl.Controls.Add(lit);
 			}
 		}
+
+		/**
+		 * Changes the HTML of the form
+		 */
+        [ActiveEvent(Name = "magix.forms.change-html")]
+		protected void magix_forms_change_html(object sender, ActiveEventArgs e)
+		{
+			if (!e.Params.Contains ("html"))
+				throw new ArgumentException("Need html parameter to change-html");
+
+			if (!e.Params.Contains("form-id"))
+				throw new ArgumentException("Need a form-id to change-html");
+
+			if (e.Params["form-id"].Get<string>() != FormID)
+				return;
+
+			DataSources.Clear();
+			Html = e.Params["html"].Get<string>();
+			pnl.Controls.Clear();
+			BuildControls();
+			pnl.ReRender();
+		}
 	}
 }

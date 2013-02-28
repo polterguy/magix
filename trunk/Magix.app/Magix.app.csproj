@@ -53,6 +53,7 @@
     <Content Include="media\bootstrap\js\bootstrap.js" />
     <Content Include="media\bootstrap\js\bootstrap.min.js" />
     <Content Include="media\bootstrap\js\jQuery.js" />
+    <Content Include="media\images\marvin-headshot.png" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Global.asax.cs">
@@ -176,6 +177,7 @@
     <Folder Include="ExecuteScripts\" />
     <Folder Include="ExecuteScripts\Tutorials\" />
     <Folder Include="ExecuteScripts\Applications\" />
+    <Folder Include="Help\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ExecuteScripts\Tutorials\Hello-World.txt" />
@@ -195,5 +197,9 @@
     <None Include="ExecuteScripts\Applications\Inspect-Unit-Tests.txt" />
     <None Include="ExecuteScripts\Tutorials\Self-Modifying-Code.txt" />
     <None Include="ExecuteScripts\Applications\Inspect-Execute.txt" />
+    <None Include="Help\index.txt" />
+    <None Include="Help\neuro-typical.txt" />
+    <None Include="Help\autistic.txt" />
+    <None Include="Help\adhd.txt" />
   </ItemGroup>
 </Project>
