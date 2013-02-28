@@ -1,0 +1,9 @@
+<p>asdffpihj adsfoih sdfoiih sdf</p>
+{{
+LinkButton=>lnk2
+  Text=>Back to Index!
+  CssClass=>btn btn-success btn btn-block
+  OnClick
+    magix.help.open-file
+      file=>Help/index.txt
+}}
