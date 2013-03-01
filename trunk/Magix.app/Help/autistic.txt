@@ -41,7 +41,7 @@ LinkButton=>lnk3
       file=>Help/web.txt
 
 LinkButton=>lnk4
-  Text=>code
+  Text=>structure
   CssClass=>btn btn-primary
   OnClick
     magix.help.open-file
@@ -52,7 +52,7 @@ LinkButton=>lnk5
   CssClass=>btn btn-primary
   OnClick
     magix.help.open-file
-      file=>Help/dynamic-features.txt
+      file=>Help/dynamic.txt
 
 LinkButton=>lnk6
   Text=>maintenance

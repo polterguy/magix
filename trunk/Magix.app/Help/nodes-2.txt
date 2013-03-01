@@ -17,7 +17,7 @@ data=>somewhere
   key=>some-key
 </pre>
 
-<p>all nodes can have three things; key, value and children.&nbsp;&nbsp;key can only be string.&nbsp;&nbsp;
+<p>all nodes can have three things; name, value and children.&nbsp;&nbsp;name can only be string.&nbsp;&nbsp;
 value can be decimal, int, datetime, bool, string or nodes.&nbsp;&nbsp;
 provider and key are children of data.&nbsp;&nbsp;data is name of data node, and somewhere is 
 value of it</p>

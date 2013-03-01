@@ -57,6 +57,7 @@
     <Content Include="media\images\help-files\active-module.png" />
     <Content Include="media\images\help-files\module-properties.png" />
     <Content Include="media\images\help-files\mux.png" />
+    <Content Include="media\images\help-files\new-project.png" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Global.asax.cs">
@@ -225,5 +226,22 @@
     <None Include="Help\mvc-10.txt" />
     <None Include="Help\mvc-11.txt" />
     <None Include="Help\ajax.txt" />
+    <None Include="Help\ajax-2.txt" />
+    <None Include="Help\ajax-3.txt" />
+    <None Include="Help\ajax-4.txt" />
+    <None Include="Help\web.txt" />
+    <None Include="Help\project-structure.txt" />
+    <None Include="Help\project-structure-2.txt" />
+    <None Include="Help\project-structure-3.txt" />
+    <None Include="Help\project-structure-4.txt" />
+    <None Include="Help\project-structure-5.txt" />
+    <None Include="Help\project-structure-6.txt" />
+    <None Include="Help\dynamic.txt" />
+    <None Include="Help\dynamic-2.txt" />
+    <None Include="Help\dynamic-3.txt" />
+    <None Include="Help\dynamic-4.txt" />
+    <None Include="Help\maintenance.txt" />
+    <None Include="Help\adhd-2.txt" />
+    <None Include="ExecuteScripts\Tutorials\Code-Scope.txt" />
   </ItemGroup>
 </Project>

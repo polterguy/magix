@@ -17,7 +17,7 @@ LinkButton=>lnk2
     magix.help.open-file
       file=>Help/adhd.txt
 LinkButton=>lnk3
-  Text=>mortals
+  Text=>admins
   CssClass=>btn btn-primary
   OnClick
     magix.help.open-file

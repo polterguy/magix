@@ -5,6 +5,7 @@
  */
 
 using System;
+using System.IO;
 using System.Web.UI;
 using Magix.UX;
 using Magix.UX.Widgets;
@@ -90,6 +91,25 @@ namespace Magix.admin
 			}
 
 			return "[" + data.TrimEnd (',') + "]";
+		}
+
+		/**
+		 * loads a file up, and executes it
+		 */
+		[ActiveEvent(Name = "magix.admin.run-file")]
+		public void magix_admin_run_file(object sender, ActiveEventArgs e)
+		{
+			if (!e.Params.Contains ("file") || e.Params["file"].Get<string>("") == "")
+				throw new ArgumentException("Need file object");
+
+			string file = e.Params["file"].Get<string>();
+
+			using (TextReader reader = File.OpenText(Server.MapPath(file)))
+			{
+				txtIn.Text = reader.ReadToEnd();
+			}
+
+			run_Click(sender, new EventArgs());
 		}
 
 		/**
