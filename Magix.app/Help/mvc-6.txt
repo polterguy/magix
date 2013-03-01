@@ -1,0 +1,19 @@
+
+
+<p>code to allow for an active event to be invoked on the local server from the outside</p>
+
+<pre>
+ActiveEvents.Instance.MakeRemotable(
+   "namespace.foo");
+</pre>
+
+<p>above code will open for namespace.foo to be invoked from outside of this server.&nbsp;&nbsp;
+it is now part of your server's public api, on the network server is connected to</p>
+
+{{LinkButton=>lnk1
+  Text=>more mvc
+  CssClass=>btn btn-primary
+  OnClick
+    magix.help.open-file
+      file=>Help/mvc-7.txt
+}}

@@ -11,6 +11,8 @@
 
 * Uploading of Manifest files, which changes the state of the application somehow
 
+* Throw exception in HtmlViewer when Control is given and no ID is given ...
+
 * Allow multiple methods to somehow "affect" the "inspect logic", such that
   for instance the "modal" viewport-container, can add up that it has an
   additional parameter, "header" that is ...

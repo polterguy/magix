@@ -30,12 +30,12 @@ for-each=>[Data][ActiveEvents]
           id=>header
           value
         set=>[0][inspect]
-        set=>[magix.admin._transform-node-2-code][JSON].Value
+        set=>[magix.code.node-2-code][JSON].Value
           value=>[0]
-        magix.admin._transform-node-2-code
+        magix.code.node-2-code
           JSON
         set=>[9][value].Value
-          value=>[magix.admin._transform-node-2-code][code].Value
+          value=>[magix.code.node-2-code][code].Value
         magix.forms.set-value
           form-id=>form1
           id=>code

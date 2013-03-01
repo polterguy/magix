@@ -117,7 +117,7 @@ namespace Magix.Core
 		 * Will clear the controls of the given "container" Viewport container
          */
         [ActiveEvent(Name = "magix.viewport.clear-controls")]
-		protected void magix_viewport_clear_controls(object sender, ActiveEventArgs e)
+		protected virtual void magix_viewport_clear_controls(object sender, ActiveEventArgs e)
 		{
 			if (e.Params.Contains("inspect"))
 			{

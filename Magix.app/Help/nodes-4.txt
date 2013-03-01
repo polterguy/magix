@@ -1,0 +1,20 @@
+
+
+<p>nodes can be cloned, transfered, transported and manipulated.&nbsp;&nbsp;
+nodes can transfer all data</p>
+
+<p>nodes serialize down to json, allowing two servers to communicate dynamically</p>
+<p><em>"machinery nirvana, is to de-attach 
+dependencies, by removing types, such that no concept, or attachment, can exist"</em></p>
+
+<p>the node grows agile, extendible, 
+scriptable, scalable and beautiful code.&nbsp;&nbsp;the node is the glue between the dynamic world, 
+and the static world</p>
+
+{{LinkButton=>lnk1
+  Text=>the point
+  CssClass=>btn btn-primary
+  OnClick
+    magix.help.open-file
+      file=>Help/the-point.txt
+}}

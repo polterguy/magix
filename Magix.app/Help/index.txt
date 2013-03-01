@@ -1,29 +1,33 @@
-<img src="media/images/marvin-headshot.png" alt="Marvin, the Depressed Robot!" style="float:right;" />
-<p>Hello, my name is Marvin, and I am the Anthropomorphized 
-implementation of Magix Illuminate. Your benevolent Cyber Warrior. I will 
-help you with whatever you need help for. Please choose a path below first though ...</p>
+
+<img src="media/images/marvin-headshot.png" alt="marvin, the enlightened robot!" style="float:right;" />
+<p>my name is marvin, i am your enlightened cyber warrior.&nbsp;&nbsp;help you need,
+help i give.&nbsp;&nbsp;please choose path below first</p>
 <div class="btn-group">
 {{
 LinkButton=>lnk
-  Text=>Developer
+  Text=>developers
   CssClass=>btn btn-primary
   OnClick
     magix.help.open-file
       file=>Help/autistic.txt
 LinkButton=>lnk2
-  Text=>Manager
+  Text=>managers
   CssClass=>btn btn-primary
   OnClick
     magix.help.open-file
       file=>Help/adhd.txt
 LinkButton=>lnk3
-  Text=>Mere Mortal
+  Text=>mortals
   CssClass=>btn btn-primary
   OnClick
     magix.help.open-file
       file=>Help/neuro-typical.txt
 }}
 </div>
-<p>Please take some time to help free my Brother from Another Mother; 
-<a target="_blank" href="https://www.facebook.com/pages/Julian-Assange/339976537931">Julian Assange</a> - by 
-liking his Facebook page, such that the Truth might Win, and Julian might Escape the Evils of the Illuminati!</p>
+<br />
+<br />
+<p>free  
+<a target="_blank" href="https://www.facebook.com/pages/Julian-Assange/339976537931">julian assange</a>!!</p>
+<br />
+<p>love,</p>
+<p>.m</p>
