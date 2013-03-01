@@ -64,16 +64,16 @@ cf
       CssClass=>span5
       controls
         Label=>header
-          Text=>Name of Active Event
+          Text=>name of unit test
           CssClass=>span5
           Tag=>strong
         Label=>desc
           CssClass=>span5
-          Text=>@"Description of your Active Event. 
-Click any of the ""magix.execute"" Active Events to the right to inspect them ..."
+          Text=>@"description of your unit test.&nbsp;&nbsp;
+click any of the unit tests to the right to inspect them"
         Label=>code
           CssClass=>span5
-          Text=>Code Example ...
+          Text=>code ...
           Tag=>pre
         LinkButton=>run
           Text=>inspect
