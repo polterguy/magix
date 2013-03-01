@@ -26,6 +26,7 @@ LinkButton=>link
   OnClick
     magix.admin.run-file
       file=>ExecuteScripts/Tutorials/Code-Scope.txt
+      run=>False
     magix.viewport.clear-controls
       container=>modal
 }}

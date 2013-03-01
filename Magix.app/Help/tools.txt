@@ -1,0 +1,22 @@
+
+<p>here are some tools for your convenience</p>
+<div class="btn-group">
+{{
+LinkButton=>keywords
+  Text=>keywords
+  CssClass=>btn btn-info
+  OnClick
+    magix.admin.run-file
+      file=>ExecuteScripts/Applications/Inspect-Execute.txt
+    magix.viewport.clear-controls
+      container=>modal
+LinkButton=>tests
+  Text=>tests
+  CssClass=>btn btn-info
+  OnClick
+    magix.admin.run-file
+      file=>ExecuteScripts/Applications/Inspect-Unit-Tests.txt
+    magix.viewport.clear-controls
+      container=>modal
+}}
+</div>

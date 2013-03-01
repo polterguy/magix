@@ -243,5 +243,6 @@
     <None Include="Help\maintenance.txt" />
     <None Include="Help\adhd-2.txt" />
     <None Include="ExecuteScripts\Tutorials\Code-Scope.txt" />
+    <None Include="Help\tools.txt" />
   </ItemGroup>
 </Project>
