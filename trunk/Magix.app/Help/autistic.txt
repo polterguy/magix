@@ -3,7 +3,7 @@
 <p>magix illuminate a web application framework for developers.&nbsp;&nbsp;
 built on top of a design pattern called; active events.&nbsp;&nbsp;this off-loads a lot
 of your burdons.&nbsp;&nbsp;your code becomes agile, and easily replaceable and extendible.&nbsp;&nbsp;
-your finsihed applications also become easily scalable, and possible to 
+your finished applications also become easily scalable, and possible to 
 partition as you see fit, through the means of divide and conquer, on your
 application server park</p>
 

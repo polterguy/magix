@@ -22,7 +22,7 @@ else
     set=>[/][else][magix.forms.create-form][controls][Panel][controls][new][Text].Value
       value=>[.].Name
     set=>[/][else][magix.forms.create-form][controls][Panel][controls][new][CssClass].Value
-      value=>span-7 info
+      value=>span4
     Data
       OnClick
         foo.method
@@ -34,6 +34,8 @@ else
         remove=>[.ip][..][0][inspect]
         set=>[.ip][..][magix.viewport.show-message][code]
           value=>[.ip][..][0]
+        set=>[.ip][..][magix.viewport.show-message][[.ip][..][0].Name].Name
+          value=>code
         magix.viewport.show-message
           message
           time=>5000
@@ -45,11 +47,8 @@ else
       value=>LinkButton
   magix.forms.create-form
     form-id=>form1
-    container=>content1
+    container=>content
     controls
-      Label
-        Tag=>h1
-        CssClass=>prepend-top prepend-5 span-19 last
-        Text=>Registered Unit Tests in System
       Panel=>wrp
+        Tag=>small
         controls

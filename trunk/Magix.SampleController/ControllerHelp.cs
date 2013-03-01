@@ -49,13 +49,27 @@ Help system.";
 				"magix.forms.create-web-page",
 				tmp);
 
-			tmp = new Node();
-			tmp["reset"].Value = true;
-			tmp["page"].Value = "Help/index.txt";
+			if (Pages.Count > 0)
+			{
+				tmp = new Node();
 
-			RaiseEvent(
-				"magix.help.add-page",
-				tmp);
+				tmp["freeze-help-stack"].Value = true;
+				tmp["file"].Value = Pages[CurrentIndex];
+
+				RaiseEvent(
+					"magix.help.open-file",
+					tmp);
+			}
+			else
+			{
+				tmp = new Node();
+				tmp["reset"].Value = true;
+				tmp["page"].Value = "Help/index.txt";
+
+				RaiseEvent(
+					"magix.help.add-page",
+					tmp);
+			}
 
 			tmp = new Node();
 
@@ -75,6 +89,12 @@ LinkButton=>index
   OnClick
     magix.help.open-file
       file=>Help/index.txt
+LinkButton=>tools
+  Text=>tools
+  CssClass=>btn btn-primary
+  OnClick
+    magix.help.open-file
+      file=>Help/tools.txt
 LinkButton=>forward
   Text=>>>
   CssClass=>btn btn-primary

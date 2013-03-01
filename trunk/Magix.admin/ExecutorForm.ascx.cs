@@ -109,7 +109,23 @@ namespace Magix.admin
 				txtIn.Text = reader.ReadToEnd();
 			}
 
-			run_Click(sender, new EventArgs());
+			if (!e.Params.Contains ("run") || e.Params["run"].Get<bool>())
+				run_Click(sender, new EventArgs());
+		}
+
+		/**
+		 * executes script
+		 */
+		[ActiveEvent(Name = "magix.admin.run-script")]
+		public void magix_admin_run_script(object sender, ActiveEventArgs e)
+		{
+			if (!e.Params.Contains ("script") || e.Params["script"].Get<string>("") == "")
+				throw new ArgumentException("Need script object");
+
+			txtIn.Text = e.Params["script"].Get<string>();
+
+			if (!e.Params.Contains ("run") || e.Params["run"].Get<bool>())
+				run_Click(sender, new EventArgs());
 		}
 
 		/**
@@ -146,7 +162,7 @@ namespace Magix.admin
 				node);
 		}
 
-		protected void run_Click (object sender, EventArgs e)
+		protected void run_Click(object sender, EventArgs e)
 		{
 			//AjaxManager.Instance.WriterAtBack.Write(activeEvent.ClientID + ".focus();");
 			//AjaxManager.Instance.WriterAtBack.Write(activeEvent.ClientID + ".select();");
@@ -156,9 +172,11 @@ namespace Magix.admin
 				if (wholeTxt.StartsWith("Method:") || wholeTxt.StartsWith("event:"))
 				{
 					string method = wholeTxt.Split (':')[1];
-					method = method.Substring (0, method.IndexOf ("\n"));
+					method = method.Substring(0, method.Contains("\n") ? method.IndexOf("\n") : method.Length);
 					activeEvent.Value = method;
-					wholeTxt = wholeTxt.Substring (wholeTxt.IndexOf ("\n")).TrimStart ();
+					wholeTxt = wholeTxt.Contains("\n") ? 
+						wholeTxt.Substring(wholeTxt.IndexOf("\n")).TrimStart() : 
+							"";
 				}
 
 				Node tmp = new Node();
