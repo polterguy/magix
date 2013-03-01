@@ -18,5 +18,13 @@ LinkButton=>tests
       file=>ExecuteScripts/Applications/Inspect-Unit-Tests.txt
     magix.viewport.clear-controls
       container=>modal
+LinkButton=>activeevents
+  Text=>active events
+  CssClass=>btn btn-info
+  OnClick
+    magix.admin.run-file
+      file=>ExecuteScripts/Applications/Inspect-Events.txt
+    magix.viewport.clear-controls
+      container=>modal
 }}
 </div>

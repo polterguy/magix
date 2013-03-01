@@ -10,55 +10,71 @@ magix.admin.get-active-events
 set=>[magix.admin.get-active-events].Name
   value=>Data
 for-each=>[Data][ActiveEvents]
-  set=>[/][magix.forms.create-form][controls][Panel][controls][[/][magix.forms.create-form][controls][Panel][controls].Count].Value
-  set=>[/][magix.forms.create-form][controls][Panel][controls][item][Text].Value
+  Tpl
+    LinkButton
+      CssClass=>span3 btn btn-small
+      Text
+      OnClick
+        void.foo
+          inspect
+        set=>[2][value].Value
+          value=>[0][inspect].Value
+        magix.forms.set-value
+          form-id=>form1
+          id=>desc
+          value
+        set=>[4][value].Value
+          value=>[0].Name
+        magix.forms.set-value
+          form-id=>form1
+          id=>header
+          value
+        set=>[0][inspect]
+        set=>[magix.code.node-2-code][JSON].Value
+          value=>[0]
+        magix.code.node-2-code
+          JSON
+        set=>[9][value].Value
+          value=>[magix.code.node-2-code][code].Value
+        magix.forms.set-value
+          form-id=>form1
+          id=>code
+          value
+        set=>[0][inspect].Name
+          value=>inspect
+  set=>[.ip][..][Tpl][LinkButton][OnClick][0].Name
     value=>[.].Value
-  set=>[/][magix.forms.create-form][controls][Panel][controls][item][CssClass].Value
-    value=>span-7 info
-  set=>[/][magix.forms.create-form][controls][Panel][controls][item][OnClick][raise].Value
+  set=>[.ip][..][Tpl][LinkButton][Text].Value
     value=>[.].Value
-  set=>[/][magix.forms.create-form][controls][Panel][controls][item][OnClick][raise][inspect].Name
-    value=>inspect
-  expr=>[magix.viewport.show-message][message].Value
-  set=>[/][magix.forms.create-form][controls][Panel][controls][item][OnClick][set].Value
-    value=>[.ip][..][expr].Value
-  expr2=>[raise][inspect].Value
-  set=>[/][magix.forms.create-form][controls][Panel][controls][item][OnClick][set][value].Value
-    value=>[.ip][..][expr2].Value
-  exprR=>[raise][inspect]
-  set=>[/][magix.forms.create-form][controls][Panel][controls][item][OnClick][remove].Value
-    value=>[.ip][..][exprR].Value
-  expr3=>[magix.viewport.show-message][code]
-  set=>[/][magix.forms.create-form][controls][Panel][controls][item][OnClick][set1].Value
-    value=>[.ip][..][expr3].Value
-  expr4=>[raise]
-  set=>[/][magix.forms.create-form][controls][Panel][controls][item][OnClick][set1][value].Value
-    value=>[.ip][..][expr4].Value
-  set=>[/][magix.forms.create-form][controls][Panel][controls][item][OnClick][set1].Name
-    value=>set
-  expr5=>[raise][inspect].Name
-  set=>[/][magix.forms.create-form][controls][Panel][controls][item][OnClick][set1].Value
-    value=>[.ip][..][expr5].Value
-  set=>[/][magix.forms.create-form][controls][Panel][controls][item][OnClick][set1][value].Value
-    value=>inspect
-  set=>[/][magix.forms.create-form][controls][Panel][controls][item][OnClick][set1].Name
-    value=>set
-  set=>[/][magix.forms.create-form][controls][Panel][controls][item][OnClick][magix.viewport.show-message].Name
-    value=>magix.viewport.show-message
-  set=>[/][magix.forms.create-form][controls][Panel][controls][item][OnClick][magix.viewport.show-message][header].Value
-    value=>[.].Value
-  set=>[/][magix.forms.create-form][controls][Panel][controls][item][OnClick][magix.viewport.show-message][time].Value
-    value=>10000
-  set=>[/][magix.forms.create-form][controls][Panel][controls][item].Name
-    value=>LinkButton
-magix.forms.create-form
-  form-id=>av
-  container=>content1
+  add=>[/][cf][controls][Panel][controls]
+    value=>[.ip][..][Tpl][LinkButton]
+set=>[cf][controls][Panel2].Name
+  value=>Panel
+set=>[cf].Name
+  value=>magix.forms.create-form
+cf
+  form-id=>form1
+  container=>content
   controls
-    Panel=>wrp
-      CssClass=>span-24
+    Panel2
+      CssClass=>span4
       controls
-        Label=>head
-          CssClass=>span-18 prepend-6 last prepend-top
-          Tag=>h1
-          Text=>Active Event Inspector
+        Label=>header
+          Text=>Name of Active Event
+          CssClass=>span4
+          Tag=>strong
+        Label=>desc
+          CssClass=>span4
+          Text=>@"Description of your Active Event. 
+Click any of the ""magix.execute"" Active Events below to inspect them ..."
+        Label=>code
+          CssClass=>span4
+          Text=>Code Example ...
+          Tag=>pre
+    Panel=>wrp
+      CssClass=>span3 offset1
+      controls
+        Label=>hdr
+          Text=>all active events, minus tests and private events
+          CssClass=>span3
+          Tag=>strong

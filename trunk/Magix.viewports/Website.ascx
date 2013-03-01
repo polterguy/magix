@@ -30,6 +30,18 @@
 			runat="server"
 			CssClass="modal-body"
 			id="messageLabel" />
+		<mux:Panel
+			runat="server"
+			id="modalFooter"
+			Visible="false"
+			CssClass="modal-footer">
+			<mux:Button
+				runat="server"
+				id="modalClose"
+				CssClass="btn btn-primary"
+				OnClick="modalClose_Click"
+				Text="close"/>
+		</mux:Panel>
 	</mux:Panel>
 
 	<mux:Panel

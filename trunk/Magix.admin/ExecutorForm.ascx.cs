@@ -97,35 +97,78 @@ namespace Magix.admin
 		 * loads a file up, and executes it
 		 */
 		[ActiveEvent(Name = "magix.admin.run-file")]
-		public void magix_admin_run_file(object sender, ActiveEventArgs e)
+		public static void magix_admin_run_file(object sender, ActiveEventArgs e)
 		{
 			if (!e.Params.Contains ("file") || e.Params["file"].Get<string>("") == "")
 				throw new ArgumentException("Need file object");
 
 			string file = e.Params["file"].Get<string>();
 
-			using (TextReader reader = File.OpenText(Server.MapPath(file)))
+			string txt = "";
+			using (TextReader reader = File.OpenText(HttpContext.Current.Server.MapPath(file)))
 			{
-				txtIn.Text = reader.ReadToEnd();
+				txt = reader.ReadToEnd();
 			}
 
-			if (!e.Params.Contains ("run") || e.Params["run"].Get<bool>())
-				run_Click(sender, new EventArgs());
+			string wholeTxt = txt;
+			string method = "";
+			if (wholeTxt.StartsWith("Method:") || wholeTxt.StartsWith("event:"))
+			{
+				method = wholeTxt.Split (':')[1];
+				method = method.Substring(0, method.Contains("\n") ? method.IndexOf("\n") : method.Length);
+				wholeTxt = wholeTxt.Contains("\n") ? 
+					wholeTxt.Substring(wholeTxt.IndexOf("\n")).TrimStart() : 
+						"";
+			}
+
+			Node tmp = new Node();
+			tmp["code"].Value = wholeTxt;
+
+			ActiveEvents.Instance.RaiseActiveEvent(
+				typeof(ExecutorForm),
+				"magix.code.code-2-node",
+				tmp);
+
+			ActiveEvents.Instance.RaiseActiveEvent(
+				typeof(ExecutorForm),
+				method, 
+				tmp["JSON"].Get<Node>());
 		}
 
 		/**
 		 * executes script
 		 */
 		[ActiveEvent(Name = "magix.admin.run-script")]
-		public void magix_admin_run_script(object sender, ActiveEventArgs e)
+		public static void magix_admin_run_script(object sender, ActiveEventArgs e)
 		{
 			if (!e.Params.Contains ("script") || e.Params["script"].Get<string>("") == "")
 				throw new ArgumentException("Need script object");
 
-			txtIn.Text = e.Params["script"].Get<string>();
+			string txt = e.Params["script"].Get<string>();
 
-			if (!e.Params.Contains ("run") || e.Params["run"].Get<bool>())
-				run_Click(sender, new EventArgs());
+			string wholeTxt = txt;
+			string method = "";
+			if (wholeTxt.StartsWith("Method:") || wholeTxt.StartsWith("event:"))
+			{
+				method = wholeTxt.Split (':')[1];
+				method = method.Substring(0, method.Contains("\n") ? method.IndexOf("\n") : method.Length);
+				wholeTxt = wholeTxt.Contains("\n") ? 
+					wholeTxt.Substring(wholeTxt.IndexOf("\n")).TrimStart() : 
+						"";
+			}
+
+			Node tmp = new Node();
+			tmp["code"].Value = wholeTxt;
+
+			ActiveEvents.Instance.RaiseActiveEvent(
+				typeof(ExecutorForm),
+				"magix.code.code-2-node",
+				tmp);
+
+			ActiveEvents.Instance.RaiseActiveEvent(
+				typeof(ExecutorForm),
+				method, 
+				tmp["JSON"].Get<Node>());
 		}
 
 		/**
