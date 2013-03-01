@@ -71,6 +71,17 @@ Click any of the ""magix.execute"" Active Events below to inspect them ..."
           CssClass=>span5
           Text=>Code Example ...
           Tag=>pre
+        LinkButton=>run
+          Text=>inspect
+          CssClass=>btn btn-info btn-block-level span1 offset4
+          OnClick
+            magix.forms.get-value
+              form-id=>form1
+              id=>code
+            set=>[.ip][..][magix.admin.load-code][code].Value
+              value=>[.ip][..][magix.forms.get-value][value].Value
+            magix.admin.load-code
+              code
     Panel=>wrp
       CssClass=>span2 offset1
       controls

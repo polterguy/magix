@@ -171,6 +171,12 @@ namespace Magix.admin
 				tmp["JSON"].Get<Node>());
 		}
 
+		[ActiveEvent(Name = "magix.admin.set-code")]
+		public void magix_admin_set_code(object sender, ActiveEventArgs e)
+		{
+			txtIn.Text = e.Params["code"].Get<string>();
+		}
+
 		/**
 		 * Called by Magix.Core when an event is overridden. Handled here to make
 		 * sure we re-retrieve the active events in the system, and rebinds our

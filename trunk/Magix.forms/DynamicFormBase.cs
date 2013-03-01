@@ -80,6 +80,9 @@ not necessarily be a string, but can also be of other types.";
 				else if (ctrl is SelectList)
 					e.Params["value"].Value = 
 						((SelectList)ctrl).SelectedItem.Value;
+				else if (ctrl is Label)
+					e.Params["value"].Value = 
+						((Label)ctrl).Text;
 			}
 		}
 
@@ -264,6 +267,9 @@ The value of the web control will be set to ""value"".";
 					break;
 				case "ToolTip":
 					((BaseWebControl)ctrl).ToolTip = idxInner.Get<string>();
+					break;
+				case "Visible":
+					((BaseWebControl)ctrl).Visible = idxInner.Get<bool>();
 					break;
 				case "TabIndex":
 					((BaseWebControl)ctrl).TabIndex = idxInner.Get<string>();
@@ -566,7 +572,7 @@ The value of the web control will be set to ""value"".";
 				}
 			}
 
-			parent.Controls.Add (ctrl);
+			parent.Controls.Add(ctrl);
 		}
 	}
 }

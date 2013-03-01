@@ -93,6 +93,36 @@ event, where the ""ToolTip"" will contain the original event name. Takes no para
 		}
 
 		/**
+		 */
+		[ActiveEvent(Name = "magix.admin.load-code")]
+		public void magix_admin_load_code(object sender, ActiveEventArgs e)
+		{
+			if (e.Params.Contains("inspect"))
+			{
+				e.Params["inspect"].Value = @"Will open active event executor
+in content with given ""code"" Value, expected to be code";
+				return;
+			}
+
+			if (!e.Params.Contains("code"))
+				throw new ArgumentException("Cannot load-code without code");
+
+			Node node = new Node();
+			node["container"].Value = "content";
+
+			RaiseEvent(
+				"magix.admin.open-event-viewer",
+				node);
+
+			node = new Node();
+			node["code"].Value = e.Params["code"].Get<string>();
+
+			RaiseEvent(
+				"magix.admin.set-code",
+				node);
+		}
+
+		/**
 		 * Opens up the Event Sniffer, which allows you to spy
 		 * on all events internally raised within the system
 		 */
