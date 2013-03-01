@@ -17,7 +17,7 @@ set=>[magix.admin.get-active-events].Name
 for-each=>[Data][ActiveEvents]
   Tpl
     LinkButton
-      CssClass=>span3 btn btn-small
+      CssClass=>span2 btn btn-small
       Text
       OnClick
         void.foo
@@ -62,24 +62,31 @@ cf
   container=>content
   controls
     Panel2
-      CssClass=>span4
+      CssClass=>span5
       controls
         Label=>header
           Text=>name of active event
-          CssClass=>span4
+          CssClass=>span5
           Tag=>strong
         Label=>desc
-          CssClass=>span4
+          CssClass=>span5
           Text=>@"description of your active event.&nbsp;&nbsp;
 click any of the active events to the right to inspect them"
         Label=>code
-          CssClass=>span4
+          CssClass=>span5
           Text=>code example ...
           Tag=>pre
+        LinkButton=>run
+          Text=>inspect
+          CssClass=>btn btn-info btn-block-level span1 offset4
+          OnClick
+            magix.forms.get-value
+              form-id=>form1
+              id=>code
+            set=>[.ip][..][magix.admin.load-code][code].Value
+              value=>[.ip][..][magix.forms.get-value][value].Value
+            magix.admin.load-code
+              code
     Panel=>wrp
-      CssClass=>span3 offset1
+      CssClass=>span2 offset1
       controls
-        Label=>hdr
-          Text=>all active events, minus tests and private events
-          CssClass=>span3
-          Tag=>strong
