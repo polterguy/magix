@@ -44,7 +44,7 @@ THOMAS""""""""";
 			input["JSON"].Value = tmp.Clone();
 
 			RaiseEvent(
-				"magix.admin._transform-node-2-code",
+				"magix.code.node-2-code",
 				input);
 
 			string code = input["code"].Get<string>();
@@ -53,7 +53,7 @@ THOMAS""""""""";
 			tmp2["code"].Value = code;
 
 			RaiseEvent(
-				"magix.admin._transform-code-2-node",
+				"magix.code.code-2-node",
 				tmp2);
 
 			if (!tmp.Equals(tmp2["JSON"].Get<Node>()))

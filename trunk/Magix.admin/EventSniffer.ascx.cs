@@ -40,7 +40,7 @@ namespace Magix.admin
 		[ActiveEvent(Name = "")]
 		public void magix_null_event_handler(object sender, ActiveEventArgs e)
 		{
-			if (e.Name == "magix.admin._transform-node-2-code")
+			if (e.Name == "magix.code.node-2-code")
 				return;
 
 			string code = "";
@@ -49,7 +49,7 @@ namespace Magix.admin
 				Node tmp = new Node();
 				tmp["JSON"].Value = e.Params;
 				RaiseEvent(
-					"magix.admin._transform-node-2-code",
+					"magix.code.node-2-code",
 					tmp);
 				code = "<pre>" + tmp["code"].Get<string>() + "</pre>";
 			}

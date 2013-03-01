@@ -60,6 +60,11 @@
 	        OnReload="dynamic_LoadControls"
 	        CssClass="modal-body"
 	        id="modal" />
+	    <mux:DynamicPanel 
+	        runat="server" 
+	        OnReload="dynamic_LoadControls"
+	        CssClass="modal-footer"
+	        id="modalFtr" />
     </mux:Panel>
 
 	<div class="row">

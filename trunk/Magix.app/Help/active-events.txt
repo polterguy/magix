@@ -1,0 +1,46 @@
+
+
+<p>active events is a new way to invoke methods.&nbsp;&nbsp;your code becomes 
+maintainable, agile, configurable, extendible and scalable when using active events.</p>
+<p>in active events, there are no objects sent around from method to method.&nbsp;&nbsp;
+this makes code become independent upon all other code</p>
+<p>no concepts, no problem</p>
+<div class="btn-group">
+{{
+
+LinkButton=>lnk1
+  Text=>handler code
+  CssClass=>btn btn-primary
+  OnClick
+    magix.help.open-file
+      file=>Help/handler-sample.txt
+
+LinkButton=>lnk2
+  Text=>raise code
+  CssClass=>btn btn-primary
+  OnClick
+    magix.help.open-file
+      file=>Help/raise.txt
+
+LinkButton=>lnk3
+  Text=>parameters
+  CssClass=>btn btn-primary
+  OnClick
+    magix.help.open-file
+      file=>Help/parameters.txt
+
+LinkButton=>lnk4
+  Text=>nodes
+  CssClass=>btn btn-primary
+  OnClick
+    magix.help.open-file
+      file=>Help/nodes.txt
+
+LinkButton=>lnk5
+  Text=>the point
+  CssClass=>btn btn-primary
+  OnClick
+    magix.help.open-file
+      file=>Help/the-point.txt
+
+}}</div>

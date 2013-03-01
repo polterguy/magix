@@ -145,7 +145,7 @@ namespace Magix.admin
 				tmp["code"].Value = wholeTxt;
 
 				RaiseEvent(
-					"magix.admin._transform-code-2-node",
+					"magix.code.code-2-node",
 					tmp);
 
 				RaiseEvent(
@@ -153,7 +153,7 @@ namespace Magix.admin
 					tmp["JSON"].Get<Node>());
 
 				RaiseEvent(
-					"magix.admin._transform-node-2-code", 
+					"magix.code.node-2-code", 
 					tmp);
 
 				txtOut.Text = tmp["code"].Get<string>();
@@ -166,7 +166,7 @@ namespace Magix.admin
 				tmp["JSON"].Value = node;
 
 				RaiseEvent(
-					"magix.admin._transform-node-2-code", 
+					"magix.code.node-2-code", 
 					tmp);
 
 				txtOut.Text = tmp["code"].Get<string>();

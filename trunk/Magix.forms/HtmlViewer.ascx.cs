@@ -73,6 +73,11 @@ namespace Magix.forms
 				switch (html[idx])
 				{
 				case '{':
+					if (!last && (idx < html.Length && html[idx + 1] != '{' ))
+					{
+						buffer += html[idx];
+						continue;
+					}
 					if (last || idxPre == 0)
 					{
 						idxPre += 1;
@@ -87,6 +92,11 @@ namespace Magix.forms
 						last = true;
 					} break;
 				case '}':
+					if (!last && (idx < html.Length && html[idx + 1] != '}' ))
+					{
+						buffer += html[idx];
+						continue;
+					}
 					if (last || idxPre == 2)
 					{
 						idxPre -= 1;
@@ -97,7 +107,7 @@ namespace Magix.forms
 							tmp["code"].Value = buffer;
 
 							RaiseEvent(
-								"magix.admin._transform-code-2-node",
+								"magix.code.code-2-node",
 								tmp);
 
 							Node codeNode = tmp["JSON"].Get<Node>();

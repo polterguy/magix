@@ -73,7 +73,7 @@ end user for some seconds.";
 				tmp["JSON"].Value = code;
 
 				RaiseEvent(
-					"magix.admin._transform-node-2-code",
+					"magix.code.node-2-code",
 					tmp);
 
 				messageLabel.Text += "<pre>" + tmp["code"].Get<string>() + "</pre>";
@@ -97,7 +97,7 @@ end user for some seconds.";
 			_notFirstMessage = true;
         }
 
-		protected override void magix_viewport_load_module (object sender, ActiveEventArgs e)
+		protected override void magix_viewport_load_module(object sender, ActiveEventArgs e)
 		{
 			if (e.Params["container"].Get<string>() == "modal")
 			{
@@ -118,6 +118,24 @@ end user for some seconds.";
 			}
 
 			base.magix_viewport_load_module(sender, e);
+		}
+
+		protected override void magix_viewport_clear_controls(object sender, ActiveEventArgs e)
+		{
+			if (e.Params.Contains("container") && 
+			    e.Params["container"].Get<string>() == "modal")
+			{
+				Node tmp = new Node();
+				tmp["container"].Value = "modalFtr";
+
+				RaiseEvent(
+					"magix.viewport.clear-controls",
+					tmp);
+
+				backdrop.Visible = false;
+				mdlWrp.Visible = false;
+			}
+			base.magix_viewport_clear_controls(sender, e);
 		}
 
 		protected void CloseModal(object sender, EventArgs e)

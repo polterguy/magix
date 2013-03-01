@@ -21,8 +21,8 @@ namespace Magix.execute
 		/**
 		 * Transforms a given "JSON" node into 'code syntax'
 		 */
-		[ActiveEvent(Name = "magix.admin._transform-node-2-code")]
-		public static void magix_admin__transform_node_2_code(object sender, ActiveEventArgs e)
+		[ActiveEvent(Name = "magix.code.node-2-code")]
+		public static void magix_code_node_2_code(object sender, ActiveEventArgs e)
 		{
 			if (!e.Params.Contains("JSON"))
 			{
@@ -92,8 +92,8 @@ namespace Magix.execute
 		 * Transforms the given "code" node into a node structure, according to
 		 * spaces which indents the code
 		 */
-		[ActiveEvent(Name = "magix.admin._transform-code-2-node")]
-		public static void magix_admin__transform_code_2_node(object sender, ActiveEventArgs e)
+		[ActiveEvent(Name = "magix.code.code-2-node")]
+		public static void magix_code_code_2_node(object sender, ActiveEventArgs e)
 		{
 			if (!e.Params.Contains("code"))
 				throw new ArgumentException("No code node passed into _transform-code-2-node");
