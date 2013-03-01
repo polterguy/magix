@@ -15,6 +15,9 @@
 
 * Throw exception in HtmlViewer when Control is given and no ID is given ...
 
+* Visible on HtmlViewer Controls doesn't seem to work ...?
+  Re-Creating controls gives 'destroys' is null, or something ...
+
 * Allow multiple methods to somehow "affect" the "inspect logic", such that
   for instance the "modal" viewport-container, can add up that it has an
   additional parameter, "header" that is ...

@@ -54,6 +54,12 @@ namespace Magix.forms
 		protected override void OnLoad(EventArgs e)
 		{
 			base.OnLoad(e);
+			EnsureChildControls();
+		}
+
+		protected override void CreateChildControls()
+		{
+			base.CreateChildControls();
 			BuildControls();
 		}
 
