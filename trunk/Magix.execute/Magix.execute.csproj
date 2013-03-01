@@ -42,6 +42,7 @@
     <Compile Include="RaiseCore.cs" />
     <Compile Include="SetCore.cs" />
     <Compile Include="AddCore.cs" />
+    <Compile Include="OverrideCore.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

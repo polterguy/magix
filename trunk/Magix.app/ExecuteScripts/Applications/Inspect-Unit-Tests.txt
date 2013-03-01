@@ -75,32 +75,40 @@ click any of the unit tests to the right to inspect them"
           CssClass=>span5
           Text=>code ...
           Tag=>pre
-        LinkButton=>run
-          Text=>inspect
-          CssClass=>btn btn-info btn-block-level span1 offset2
-          OnClick
-            magix.forms.get-value
-              form-id=>form1
-              id=>code
-            set=>[.ip][..][magix.admin.load-code][code].Value
-              value=>[.ip][..][magix.forms.get-value][value].Value
-            magix.admin.load-code
-              code
-        LinkButton=>run2
-          Text=>run
-          CssClass=>btn btn-info btn-block-level span1
-          OnClick
-            magix.forms.get-value
-              form-id=>form1
-              id=>header
-            set=>[.ip][..][evtName].Name
-              value=>[.ip][..][magix.forms.get-value][value].Value
-            evtName
-            magix.viewport.show-message
-              message=>success
-              color=>LightGreen
-              header=>finished
-              time=>500
+        Panel=>wrp
+          CssClass=>input-append span3 offset2
+          controls
+            LinkButton=>run
+              Text=>inspect
+              CssClass=>btn btn-primary
+              OnClick
+                magix.forms.get-value
+                  form-id=>form1
+                  id=>code
+                set=>[.ip][..][magix.admin.load-code][code].Value
+                  value=>[.ip][..][magix.forms.get-value][value].Value
+                magix.admin.load-code
+                  code
+            LinkButton=>run2
+              Text=>run
+              CssClass=>btn btn-primary
+              OnClick
+                magix.forms.get-value
+                  form-id=>form1
+                  id=>header
+                set=>[.ip][..][evtName].Name
+                  value=>[.ip][..][magix.forms.get-value][value].Value
+                evtName
+                magix.viewport.show-message
+                  message=>success
+                  color=>LightGreen
+                  header=>finished
+                  time=>500
+            LinkButton=>run3
+              Text=>run all
+              CssClass=>btn btn-primary
+              OnClick
+                magix.tests.run
     Panel=>wrp
       CssClass=>span2 offset1
       controls
