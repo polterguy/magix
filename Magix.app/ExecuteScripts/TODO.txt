@@ -11,6 +11,8 @@
 
 * Uploading of Manifest files, which changes the state of the application somehow
 
+* Only "event:magix.admin.get-active-events" in active event executor creates exception
+
 * Throw exception in HtmlViewer when Control is given and no ID is given ...
 
 * Allow multiple methods to somehow "affect" the "inspect logic", such that

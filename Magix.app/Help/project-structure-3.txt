@@ -1,0 +1,25 @@
+
+
+<p>one mini magix application is a little bit from me</p>
+
+<ul>
+<li>magix.app</li>
+<li>magix.core</li>
+<li>magix.ux</li>
+</ul>
+<p>plus yours</p>
+<ul>
+<li>one viewport</li>
+<li>one active module</li>
+<li>one active controller</li>
+</ul>
+
+<p>everything else is bonus.&nbsp;&nbsp;handle magix.viewport.page-load to load module</p>
+
+{{LinkButton=>lnk1
+  Text=>more code
+  CssClass=>btn btn-primary
+  OnClick
+    magix.help.open-file
+      file=>Help/project-structure-4.txt
+}}

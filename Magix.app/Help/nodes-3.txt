@@ -19,7 +19,17 @@ data=>somewhere
   key=>some-key
 </pre>
 
-<p>spaces counts in code, 2 becomes a child</p>
+<p>spaces counts in code, 2 becomes a child.&nbsp;&nbsp;
+{{
+LinkButton=>link
+  Text=>see scope
+  OnClick
+    magix.admin.run-file
+      file=>ExecuteScripts/Tutorials/Code-Scope.txt
+    magix.viewport.clear-controls
+      container=>modal
+}}
+</p>
 
 {{LinkButton=>lnk1
   Text=>more nodes

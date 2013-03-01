@@ -1,0 +1,22 @@
+
+
+<p>if you run an active event with inspect, you will become wise.&nbsp;&nbsp;try this</p>
+
+<pre>event:magix.viewport.show-message
+inspect</pre>
+
+<p>to see all active events</p>
+
+<pre>event:magix.admin.get-active-events</pre>
+
+<p>run all tests</p>
+
+<pre>event:magix.tests.run</pre>
+
+{{LinkButton=>lnk1
+  Text=>dynamic
+  CssClass=>btn btn-primary
+  OnClick
+    magix.help.open-file
+      file=>Help/dynamic.txt
+}}

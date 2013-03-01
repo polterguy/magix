@@ -1,0 +1,20 @@
+
+
+<p>with magix, maintenance is a breeze.&nbsp;&nbsp;code clean and flexible, you go thailand</p>
+
+<p>most of your job, is now product manager's headache.&nbsp;&nbsp;everything now configurable, 
+you indispensable, without needing to work, from thailand</p>
+
+<p>congratulations, now give me half salary</p>
+
+<p>thank you :)</p>
+
+{{LinkButton=>lnk1
+  Text=>manager
+  CssClass=>btn btn-primary
+  OnClick
+    magix.help.open-file
+      file=>Help/adhd.txt
+}}
+
+

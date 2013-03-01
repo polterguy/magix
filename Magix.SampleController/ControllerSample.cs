@@ -25,6 +25,7 @@ namespace Magix.SampleController
 		 * the page-load event, and you've got your own application
 		 */
 		[ActiveEvent(Name = "magix.viewport.page-load")]
+		[ActiveEvent(Name = "magix.admin.load-event-executor")]
 		public void magix_viewport_page_load(object sender, ActiveEventArgs e)
 		{
 			if (e.Params.Contains("inspect"))
@@ -65,10 +66,10 @@ with your own page-load handling logic to create your own applications.";
 
 			tmp = new Node();
 
-			tmp["Items"]["Item1"].Value = "Help";
+			tmp["Items"]["Item1"].Value = "help";
 			tmp["Items"]["Item1"]["Event"].Value = "magix.help.start-help";
-			tmp["Items"]["Item2"].Value = "Some Other Item";
-			tmp["Items"]["Item2"]["Event"].Value = "magix.help.start-help-asdasddsaasd";
+			tmp["Items"]["Item2"].Value = "executor";
+			tmp["Items"]["Item2"]["Event"].Value = "magix.admin.load-event-executor";
 
 			RaiseEvent(
 				"magix.modules.set-menu-items", 
