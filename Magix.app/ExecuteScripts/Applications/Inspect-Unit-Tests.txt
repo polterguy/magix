@@ -31,14 +31,14 @@ else
           value=>[.ip][..][0][inspect].Value
         set=>[.ip][..][magix.viewport.show-message][header].Value
           value=>[.ip][..][0].Name
-        remove=>[.ip][..][0][inspect]
+        set=>[.ip][..][0][inspect]
         set=>[.ip][..][magix.viewport.show-message][code]
           value=>[.ip][..][0]
         set=>[.ip][..][magix.viewport.show-message][[.ip][..][0].Name].Name
           value=>code
         magix.viewport.show-message
           message
-          time=>5000
+          time=>-1
     set=>[.ip][..][Data][OnClick][0].Name
       value=>[.].Name
     set=>[/][else][magix.forms.create-form][controls][Panel][controls][new][OnClick]

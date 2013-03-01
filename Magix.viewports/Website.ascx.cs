@@ -35,6 +35,8 @@ namespace Magix.viewports
 		protected Panel mdlWrp;
 		protected Label mdlHeader;
 		protected LinkButton mdlClose;
+		protected Panel modalFooter;
+		protected Button modalClose;
 
 		private bool _notFirstMessage;
 		private int _time = 3000;
@@ -81,8 +83,21 @@ end user for some seconds.";
 
 			if (e.Params.Contains("header"))
 				msgBoxHeader.Text = e.Params["header"].Get<string>();
+
 			if (e.Params.Contains("time"))
 				_time = int.Parse (e.Params["time"].Get<string>());
+
+			if (_time == -1)
+			{
+				modalFooter.Visible = true;
+				new EffectTimeout(500)
+					.ChainThese(
+						new EffectFocusAndSelect(modalClose))
+					.Render();
+			}
+			else
+				modalFooter.Visible = false;
+
 			if (e.Params.Contains("icon"))
 			{
 				icon.ImageUrl = e.Params["icon"].Get<string>();;
@@ -96,6 +111,11 @@ end user for some seconds.";
 			messageWrapper.Style[Styles.backgroundColor] = color;
 			_notFirstMessage = true;
         }
+
+		protected void modalClose_Click(object sender, EventArgs e)
+		{
+			messageWrapper.Visible = false;
+		}
 
 		protected override void magix_viewport_load_module(object sender, ActiveEventArgs e)
 		{
@@ -155,12 +175,21 @@ end user for some seconds.";
 		{
 			if (_notFirstMessage)
 			{
-				// We only render effects the FIRST time event is called ...
-				new EffectFadeIn(messageWrapper, 500)
-					.ChainThese(
-						new EffectTimeout(_time),
-						new EffectFadeOut(messageWrapper, 500))
-					.Render();
+				if (_time == -1)
+				{
+					// We only render effects the FIRST time event is called ...
+					new EffectFadeIn(messageWrapper, 500)
+						.Render();
+				}
+				else
+				{
+					// We only render effects the FIRST time event is called ...
+					new EffectFadeIn(messageWrapper, 500)
+						.ChainThese(
+							new EffectTimeout(_time),
+							new EffectFadeOut(messageWrapper, 500))
+						.Render();
+				}
 			}
 			base.OnPreRender (e);
 		}
