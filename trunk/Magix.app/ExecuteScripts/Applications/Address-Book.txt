@@ -9,117 +9,122 @@ node hierarchy, for-each, basic web controls, etc.
 Also clearly demonstrates self-modifying code and
 pretty advanced expressions"
 
-event
-  event=>load-address
+event=>load-address
   code
-    magix.data.load
-      key=>adr
+    magix.data.load=>adr
     for-each=>[/][magix.data.load][object]
       set=>[/][2][2][5][controls][[/][2][2][5][controls].Count].Value
+        value=>
       set=>[/][2][2][5][controls][item][CssClass].Value
-        value=>span-6
+        value=>span2
       set=>[/][2][2][5][controls][item][Text].Value
         value=>[.][first].Value
-      if=>[/][2][2][5][controls][item][Text].Value==
+      if=>[/][2][2][5][controls][item][Text].Value==@""
         set=>[/][2][2][5][controls][item][Text].Value
           value=>&nbsp;
       set=>[/][2][2][5][controls][item].Name
         value=>Label
       set=>[/][2][2][5][controls][[/][2][2][5][controls].Count].Value
+        value=>
       set=>[/][2][2][5][controls][item][CssClass].Value
-        value=>span-6
+        value=>span2
       set=>[/][2][2][5][controls][item][Text].Value
         value=>[.][last].Value
-      if=>[/][2][2][5][controls][item][Text].Value==
+      if=>[/][2][2][5][controls][item][Text].Value==@""
         set=>[/][2][2][5][controls][item][Text].Value
           value=>&nbsp;
       set=>[/][2][2][5][controls][item].Name
         value=>Label
       set=>[/][2][2][5][controls][[/][2][2][5][controls].Count].Value
+        value=>
       set=>[/][2][2][5][controls][item][CssClass].Value
-        value=>span-6
+        value=>span2
       set=>[/][2][2][5][controls][item][Text].Value
         value=>[.][phone].Value
-      if=>[/][2][2][5][controls][item][Text].Value==
+      if=>[/][2][2][5][controls][item][Text].Value==@""
         set=>[/][2][2][5][controls][item][Text].Value
           value=>&nbsp;
       set=>[/][2][2][5][controls][item].Name
         value=>Label
       set=>[/][2][2][5][controls][[/][2][2][5][controls].Count].Value
+        value=>
       set=>[/][2][2][5][controls][item][CssClass].Value
-        value=>span-6 last
+        value=>span2
       set=>[/][2][2][5][controls][item][Text].Value
         value=>[.][email].Value
-      if=>[/][2][2][5][controls][item][Text].Value==
+      if=>[/][2][2][5][controls][item][Text].Value==@""
         set=>[/][2][2][5][controls][item][Text].Value
           value=>&nbsp;
       set=>[/][2][2][5][controls][item].Name
         value=>Label
     magix.forms.create-form
-      container=>content1
+      container=>content
       form-id=>addressBook
       controls
         Panel
-          CssClass=>prepend-top span-21 prepend-1 append-2 description
+          CssClass=>span9
           controls
             Image
               ImageUrl=>media/images/magix-logo.png
               AlternateText=>Magix Illuminate Logo
-              CssClass=>span-3 logo-medium
+              CssClass=>span2
             Label
-              CssClass=>prepend-top append-bottom span-17 last
+              CssClass=>span6
               Text=>@"Welcome to the Magix Illuminate version of Address Book.
 Address Book is one of the main examples from Qt. The application
 basically shows how you can store, update and retreieve objects,
 some basic forms manipulation, dynamic creation of nodes according
 to contents in stored objects, and some other things."
         Label
-          CssClass=>description span-6 top-1
+          CssClass=>span2
           Text=>First Name
+          Tag=>strong
         Label
-          CssClass=>description span-6 top-1
+          CssClass=>span2
           Text=>Last name
+          Tag=>strong
         Label
-          CssClass=>description span-6 top-1
+          CssClass=>span2
           Text=>Phone no
+          Tag=>strong
         Label
-          CssClass=>description span-6 last top-1
+          CssClass=>span2
           Text=>Email
+          Tag=>strong
         Panel=>rep
-          CssClass=>description span-24 last height-10 top-1
+          CssClass=>span9
         Panel=>new
-          CssClass=>span-20 left-1 prepend-1 append-1 top-1 last
+          CssClass=>span9
           controls
             Label
               Text=>First Name
-              CssClass=>span-5
+              CssClass=>span2
             Label
               Text=>Last Name
-              CssClass=>span-5
+              CssClass=>span2
             Label
               Text=>Phone
-              CssClass=>span-5
+              CssClass=>span2
             Label
               Text=>Email
-              CssClass=>span-5 last
+              CssClass=>span2
             TextBox=>first
               PlaceHolder=>First Name ...
-              CssClass=>span-5
+              CssClass=>span2
             TextBox=>last
               PlaceHolder=>Last ...
-              CssClass=>span-5
+              CssClass=>span2
             TextBox=>phone
               PlaceHolder=>Phone ...
-              CssClass=>span-5
+              CssClass=>span2
             TextBox=>email
               PlaceHolder=>Email ...
-              CssClass=>span-5 last
+              CssClass=>span2
             Button=>save
-              CssClass=>span-3 height-2 top-1 right
+              CssClass=>span2
               Text=>Save
               OnClick
-                magix.data.load
-                  key=>adr
+                magix.data.load=>adr
                 magix.forms.get-value
                   id=>first
                   form-id=>addressBook
@@ -144,8 +149,7 @@ to contents in stored objects, and some other things."
                   value=>Item
                 set=>[.ip][..][11][object]
                   value=>[.ip][..][0][object]
-                magix.data.save
-                  key=>adr
+                magix.data.save=>adr
                   object
                 raise=>load-address
 raise=>load-address

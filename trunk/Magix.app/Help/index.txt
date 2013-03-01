@@ -26,6 +26,15 @@ LinkButton=>lnk3
 </div>
 <br />
 <br />
+<p>you want to see
+{{
+LinkButton=>tools
+  Text=>tools
+  OnClick
+    magix.help.open-file
+      file=>Help/tools.txt
+}} too
+</p>
 <p>free  
 <a target="_blank" href="https://www.facebook.com/pages/Julian-Assange/339976537931">julian assange</a>!!</p>
 <br />

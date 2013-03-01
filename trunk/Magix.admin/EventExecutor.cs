@@ -27,6 +27,7 @@ namespace Magix.admin
 			if (e.Params.Contains("inspect"))
 			{
 				e.Params["all"].Value = false;
+				e.Params["overridden"].Value = false;
 				e.Params["begins-with"].Value = "magix.execute.";
 				e.Params["inspect"].Value = @"Will return all the Active Events currently registered
 within the system. Notice that this can CHANGE as the system runs, due to Event Overriding.
@@ -43,6 +44,18 @@ event, where the ""ToolTip"" will contain the original event name. Takes no para
 			if (e.Params.Contains("all"))
 				takeAll = e.Params["all"].Get<bool>();
 
+			bool open = false;
+			if (e.Params.Contains("open"))
+				open = e.Params["open"].Get<bool>();
+
+			bool remoted = false;
+			if (e.Params.Contains("remoted"))
+				remoted = e.Params["remoted"].Get<bool>();
+
+			bool overridden = false;
+			if (e.Params.Contains("overridden"))
+				overridden = e.Params["overridden"].Get<bool>();
+
 			string beginsWith = null;
 			if (e.Params.Contains("begins-with"))
 				beginsWith = e.Params["begins-with"].Get<string>();
@@ -51,7 +64,23 @@ event, where the ""ToolTip"" will contain the original event name. Takes no para
 			int idxNo = 0;
 			foreach (string idx in ActiveEvents.Instance.ActiveEventHandlers)
 			{
-				if (!takeAll && string.IsNullOrEmpty (beginsWith) && idx.StartsWith("magix.test."))
+				if (open)
+				{
+					if (ActiveEvents.Instance.IsAllowedRemotely(idx))
+					{
+						node["ActiveEvents"]["no_" + idxNo.ToString()].Value = string.IsNullOrEmpty (idx) ? "&nbsp;" : idx;
+					}
+					continue;
+				}
+				if (remoted)
+				{
+					if (ActiveEvents.Instance.RemotelyOverriddenURL(idx) != null)
+					{
+						node["ActiveEvents"]["no_" + idxNo.ToString()].Value = string.IsNullOrEmpty (idx) ? "&nbsp;" : idx;
+					}
+					continue;
+				}
+				if (!takeAll && string.IsNullOrEmpty(beginsWith) && idx.StartsWith("magix.test."))
 					continue;
 
 				if (idx.Contains("."))
@@ -61,27 +90,19 @@ event, where the ""ToolTip"" will contain the original event name. Takes no para
 						continue; // "Hidden" event ...
 				}
 
-				if (!string.IsNullOrEmpty (beginsWith) && !idx.StartsWith(beginsWith))
+				if (!string.IsNullOrEmpty(beginsWith) && !idx.StartsWith(beginsWith))
 					continue;
 
-				if (ActiveEvents.Instance.IsOverrideSystem (idx))
+				if (overridden)
+				{
+					if (ActiveEvents.Instance.IsOverride(idx))
+					{
+						node["ActiveEvents"]["no_" + idxNo.ToString()].Value = string.IsNullOrEmpty (idx) ? "&nbsp;" : idx;
+					}
+				}
+				else
 				{
 					node["ActiveEvents"]["no_" + idxNo.ToString()].Value = string.IsNullOrEmpty (idx) ? "&nbsp;" : idx;
-					node["ActiveEvents"]["no_" + idxNo.ToString()]["CSS"].Value = "description-error";
-					node["ActiveEvents"]["no_" + idxNo.ToString()]["ToolTip"].Value = 
-						ActiveEvents.Instance.GetEventMappingValue (idx);
-				}
-				else if (ActiveEvents.Instance.IsOverride (idx))
-				{
-					node["ActiveEvents"]["no_" + idxNo.ToString()].Value = idx;
-					node["ActiveEvents"]["no_" + idxNo.ToString()]["CSS"].Value = "description-notice";
-					node["ActiveEvents"]["no_" + idxNo.ToString()]["ToolTip"].Value = 
-						ActiveEvents.Instance.GetEventMappingValue (idx);
-				}
-				else if (idx != "" /* Skipping System Null Overrides */)
-				{
-					node["ActiveEvents"]["no_" + idxNo.ToString()].Value = idx;
-					node["ActiveEvents"]["no_" + idxNo.ToString()]["CSS"].Value = "description";
 				}
 				idxNo += 1;
 			}

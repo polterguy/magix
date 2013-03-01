@@ -1,54 +1,106 @@
 Method:magix.execute
 
 inspect=>@"Will show a screen of all the 
-unit tests in the system, and allow
+execute keywords in the system, and allow
 the user to inspect them by clicking
 them."
 
-magix.tests.run
-set=>[magix.tests.run].Name
+magix.forms.create-web-page
+  container=>header
+  html=>@"<h1>unit tests</h1>"
+  form-id=>header
+magix.admin.get-active-events
+  begins-with=>magix.test.
+set=>[magix.admin.get-active-events].Name
   value=>Data
-if=>[/][Data][summary][success].Value!=True
-  magix.viewport.show-message
-    color=>Red
-    message=>@"Couldn't show Unit Test form, 
-one of your tests failed. Run ""magix.tests.run"" to 
-figure out which."
-    header=>Error ...
-else
-  for-each=>[Data][tests]
-    set=>[/][else][magix.forms.create-form][controls][Panel][controls][[/][else][magix.forms.create-form][controls][Panel][controls].Count].Name
-      value=>new
-    set=>[/][else][magix.forms.create-form][controls][Panel][controls][new][Text].Value
-      value=>[.].Name
-    set=>[/][else][magix.forms.create-form][controls][Panel][controls][new][CssClass].Value
-      value=>span4
-    Data
+for-each=>[Data][ActiveEvents]
+  Tpl
+    LinkButton
+      CssClass=>span2 btn btn-small
+      Text
       OnClick
-        foo.method
+        void.foo
           inspect
-        set=>[.ip][..][magix.viewport.show-message][message].Value
-          value=>[.ip][..][0][inspect].Value
-        set=>[.ip][..][magix.viewport.show-message][header].Value
-          value=>[.ip][..][0].Name
-        set=>[.ip][..][0][inspect]
-        set=>[.ip][..][magix.viewport.show-message][code]
-          value=>[.ip][..][0]
-        set=>[.ip][..][magix.viewport.show-message][[.ip][..][0].Name].Name
-          value=>code
-        magix.viewport.show-message
-          message
-          time=>-1
-    set=>[.ip][..][Data][OnClick][0].Name
-      value=>[.].Name
-    set=>[/][else][magix.forms.create-form][controls][Panel][controls][new][OnClick]
-      value=>[.ip][..][Data][OnClick]
-    set=>[/][else][magix.forms.create-form][controls][Panel][controls][new].Name
-      value=>LinkButton
-  magix.forms.create-form
-    form-id=>form1
-    container=>content
-    controls
-      Panel=>wrp
-        Tag=>small
-        controls
+        set=>[2][value].Value
+          value=>[0][inspect].Value
+        magix.forms.set-value
+          form-id=>form1
+          id=>desc
+          value
+        set=>[4][value].Value
+          value=>[0].Name
+        magix.forms.set-value
+          form-id=>form1
+          id=>header
+          value
+        set=>[0][inspect]
+        set=>[magix.code.node-2-code][JSON].Value
+          value=>[0]
+        magix.code.node-2-code
+          JSON
+        set=>[9][value].Value
+          value=>[magix.code.node-2-code][code].Value
+        magix.forms.set-value
+          form-id=>form1
+          id=>code
+          value
+        set=>[0][inspect].Name
+          value=>inspect
+  set=>[.ip][..][Tpl][LinkButton][OnClick][0].Name
+    value=>[.].Value
+  set=>[.ip][..][Tpl][LinkButton][Text].Value
+    value=>[.].Value
+  add=>[/][cf][controls][Panel][controls]
+    value=>[.ip][..][Tpl][LinkButton]
+set=>[cf][controls][Panel2].Name
+  value=>Panel
+set=>[cf].Name
+  value=>magix.forms.create-form
+cf
+  form-id=>form1
+  container=>content
+  controls
+    Panel2
+      CssClass=>span5
+      controls
+        Label=>header
+          Text=>Name of Active Event
+          CssClass=>span5
+          Tag=>strong
+        Label=>desc
+          CssClass=>span5
+          Text=>@"Description of your Active Event. 
+Click any of the ""magix.execute"" Active Events to the right to inspect them ..."
+        Label=>code
+          CssClass=>span5
+          Text=>Code Example ...
+          Tag=>pre
+        LinkButton=>run
+          Text=>inspect
+          CssClass=>btn btn-info btn-block-level span1 offset2
+          OnClick
+            magix.forms.get-value
+              form-id=>form1
+              id=>code
+            set=>[.ip][..][magix.admin.load-code][code].Value
+              value=>[.ip][..][magix.forms.get-value][value].Value
+            magix.admin.load-code
+              code
+        LinkButton=>run2
+          Text=>run
+          CssClass=>btn btn-info btn-block-level span1
+          OnClick
+            magix.forms.get-value
+              form-id=>form1
+              id=>header
+            set=>[.ip][..][evtName].Name
+              value=>[.ip][..][magix.forms.get-value][value].Value
+            evtName
+            magix.viewport.show-message
+              message=>success
+              color=>LightGreen
+              header=>finished
+              time=>500
+    Panel=>wrp
+      CssClass=>span2 offset1
+      controls
