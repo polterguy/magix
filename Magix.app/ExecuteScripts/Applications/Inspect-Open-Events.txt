@@ -1,23 +1,21 @@
 Method:magix.execute
 
 inspect=>@"Will show a screen of all the 
-active event in the system, and allow
-the user to inspect them by clicking
-them. Does not show private active events, 
-meaning active events starting wiith '_'."
+active events which are possible to raise
+from the outside of this server."
 
 magix.forms.create-web-page
   container=>header
-  html=>@"<h1>active events</h1>"
+  html=>@"<h1>open active events</h1>"
   form-id=>header
 magix.admin.get-active-events
-  all=>False
+  open=>True
 set=>[magix.admin.get-active-events].Name
   value=>Data
 for-each=>[Data][ActiveEvents]
   Tpl
     LinkButton
-      CssClass=>span3 btn btn-small
+      CssClass=>span2 btn btn-small
       Text
       OnClick
         void.foo
@@ -62,24 +60,31 @@ cf
   container=>content
   controls
     Panel2
-      CssClass=>span4
+      CssClass=>span5
       controls
         Label=>header
           Text=>name of active event
-          CssClass=>span4
+          CssClass=>span5
           Tag=>strong
         Label=>desc
-          CssClass=>span4
-          Text=>@"description of your active event.&nbsp;&nbsp;
+          CssClass=>span5
+          Text=>@"description of your active event. 
 click any of the active events to the right to inspect them"
         Label=>code
-          CssClass=>span4
+          CssClass=>span5
           Text=>code example ...
           Tag=>pre
+        LinkButton=>run
+          Text=>inspect
+          CssClass=>btn btn-info btn-block-level span1 offset4
+          OnClick
+            magix.forms.get-value
+              form-id=>form1
+              id=>code
+            set=>[.ip][..][magix.admin.load-code][code].Value
+              value=>[.ip][..][magix.forms.get-value][value].Value
+            magix.admin.load-code
+              code
     Panel=>wrp
-      CssClass=>span3 offset1
+      CssClass=>span2 offset1
       controls
-        Label=>hdr
-          Text=>all active events, minus tests and private events
-          CssClass=>span3
-          Tag=>strong

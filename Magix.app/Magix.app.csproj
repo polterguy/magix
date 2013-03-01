@@ -244,5 +244,8 @@
     <None Include="Help\adhd-2.txt" />
     <None Include="ExecuteScripts\Tutorials\Code-Scope.txt" />
     <None Include="Help\tools.txt" />
+    <None Include="ExecuteScripts\Applications\Inspect-Overridden-Events.txt" />
+    <None Include="ExecuteScripts\Applications\Inspect-Open-Events.txt" />
+    <None Include="ExecuteScripts\Applications\Inspect-Remoted-Events.txt" />
   </ItemGroup>
 </Project>

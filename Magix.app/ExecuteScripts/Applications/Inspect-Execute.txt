@@ -5,6 +5,10 @@ execute keywords in the system, and allow
 the user to inspect them by clicking
 them."
 
+magix.forms.create-web-page
+  container=>header
+  html=>@"<h1>magix.execute keywords</h1>"
+  form-id=>header
 magix.admin.get-active-events
   begins-with=>magix.execute
 set=>[magix.admin.get-active-events].Name
@@ -60,16 +64,16 @@ cf
       CssClass=>span5
       controls
         Label=>header
-          Text=>Name of Active Event
+          Text=>name of active event
           CssClass=>span5
           Tag=>strong
         Label=>desc
           CssClass=>span5
-          Text=>@"Description of your Active Event. 
-Click any of the ""magix.execute"" Active Events below to inspect them ..."
+          Text=>@"description of your active event.&nbsp;&nbsp;
+click any of the ""magix.execute"" active events to the right to inspect them"
         Label=>code
           CssClass=>span5
-          Text=>Code Example ...
+          Text=>code example ...
           Tag=>pre
         LinkButton=>run
           Text=>inspect

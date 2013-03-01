@@ -1,24 +1,8 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Magix.app/Help/active-events.txt">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Magix.app/Help/tools.txt">
     <Files>
-      <File FileName="Magix.SampleController/ControllerHelp.cs" Line="39" Column="38" />
-      <File FileName="Magix.viewports/Website.ascx.cs" Line="114" Column="4" />
-      <File FileName="Magix.app/media/bootstrap/js/bootstrap.js" Line="840" Column="1" />
-      <File FileName="Magix.app/Help/index.txt" Line="2" Column="3" />
-      <File FileName="Magix.forms/HtmlViewer.ascx.cs" Line="97" Column="27" />
-      <File FileName="Magix.forms/DynamicForm.ascx.cs" Line="40" Column="1" />
-      <File FileName="Magix.forms/DynamicFormBase.cs" Line="47" Column="1" />
-      <File FileName="Magix.app/Help/neuro-typical.txt" Line="9" Column="1" />
-      <File FileName="Magix.app/Help/autistic.txt" Line="64" Column="1" />
-      <File FileName="Magix.app/Help/adhd.txt" Line="1" Column="11" />
-      <File FileName="Magix.app/Help/active-events.txt" Line="37" Column="23" />
-      <File FileName="Magix.app/media/bootstrap/css/bootstrap.css" Line="2528" Column="19" />
-      <File FileName="Magix.app/Help/handler-sample.txt" Line="11" Column="1" />
-      <File FileName="Magix.forms/FormsCore.cs" Line="24" Column="1" />
-      <File FileName="Magix.app/Help/raise.txt" Line="8" Column="7" />
-      <File FileName="Magix.core/Controllers/ActiveController.cs" Line="68" Column="43" />
-      <File FileName="Magix.app/Help/parameters.txt" Line="18" Column="52" />
+      <File FileName="Magix.app/Help/tools.txt" Line="12" Column="41" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -26,7 +10,7 @@
           <Node name="Core" expanded="True">
             <Node name="Magix.app" expanded="True">
               <Node name="Help" expanded="True">
-                <Node name="active-events.txt" selected="True" />
+                <Node name="tools.txt" selected="True" />
               </Node>
               <Node name="media" expanded="True">
                 <Node name="bootstrap" expanded="True">
