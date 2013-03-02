@@ -23,9 +23,8 @@ namespace Magix.tests
 			Node tmp = new Node();
 
 			tmp["magix.data.remove"].Value = "fork-test-buffer-object";
-			tmp["fork"]["Buffer"].Value = null;
 			tmp["fork"]["magix.data.save"].Value = "fork-test-buffer-object";
-			tmp["fork"]["magix.data.save"]["object"]["Value"].Value = "thomas";
+			tmp["fork"]["magix.data.save"]["object"]["value"].Value = "thomas";
 			tmp["sleep"].Value = 500;
 			tmp["magix.data.load"].Value = "fork-test-buffer-object";
 
@@ -43,10 +42,10 @@ by using magix.data.load and save to signal between threads for success";
 				"magix.execute",
 				tmp);
 
-			if (tmp["magix.data.load"]["object"]["Value"].Get<string>() != "thomas")
+			if (tmp["magix.data.load"]["object"]["value"].Get<string>() != "thomas")
 			{
 				throw new ApplicationException(
-					"Failure of executing fork statement");
+					"failure of executing fork statement");
 			}
 		}
 	}

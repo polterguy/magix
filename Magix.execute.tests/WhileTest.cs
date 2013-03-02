@@ -22,11 +22,11 @@ namespace Magix.tests
 		{
 			Node tmp = new Node();
 
-			tmp["Data"]["msg1"]["message"].Value = "msg1";
-			tmp["Data"]["msg2"]["message"].Value = "msg1";
-			tmp["Data"]["msg3"]["message"].Value = "msg1";
-			tmp["while"].Value = "[Data].Count!=0";
-			tmp["while"]["set"].Value = "[Data][0]";
+			tmp["_data"]["msg1"]["message"].Value = "msg1";
+			tmp["_data"]["msg2"]["message"].Value = "msg1";
+			tmp["_data"]["msg3"]["message"].Value = "msg1";
+			tmp["while"].Value = "[_data].Count!=0";
+			tmp["while"]["set"].Value = "[_data][0]";
 
 			if (e.Params.Contains("inspect"))
 			{
@@ -44,7 +44,7 @@ are left in the node-list";
 				"magix.execute",
 				tmp);
 
-			if (tmp["Data"].Count != 0)
+			if (tmp["_data"].Count != 0)
 			{
 				throw new ApplicationException(
 					"Failure of executing while statement");

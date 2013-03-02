@@ -23,8 +23,8 @@ namespace Magix.tests
 			Node tmp = new Node();
 
 			tmp["event"].Value = "foo.bar";
-			tmp["event"]["code"]["Data"].Value = "howdy";
-			tmp["event"]["code"]["set"].Value = "[/][P][Data].Value";
+			tmp["event"]["code"]["_data"].Value = "howdy";
+			tmp["event"]["code"]["set"].Value = "[/][P][_data].Value";
 			tmp["event"]["code"]["set"]["value"].Value = "thomas";
 			tmp["foo.bar"].Value = null;
 			tmp.Add (new Node("event", "foo.bar"));
@@ -43,8 +43,8 @@ namespace Magix.tests
 				"magix.execute",
 				tmp);
 
-			if (!tmp["foo.bar"].Contains("Data") || 
-			    tmp["foo.bar"]["Data"].Get<string>() != "thomas")
+			if (!tmp["foo.bar"].Contains("_data") || 
+			    tmp["foo.bar"]["_data"].Get<string>() != "thomas")
 			{
 				throw new ApplicationException(
 					"Failure of executing event invoke statement");

@@ -13,7 +13,7 @@ magix.admin.get-active-events
   begins-with=>magix.test.
 set=>[magix.admin.get-active-events].Name
   value=>Data
-for-each=>[Data][ActiveEvents]
+for-each=>[Data][events]
   Tpl
     LinkButton
       CssClass=>span4 btn btn-small btn-left
@@ -34,10 +34,10 @@ for-each=>[Data][ActiveEvents]
           id=>header
           value
         set=>[0][inspect]
-        set=>[magix.code.node-2-code][JSON].Value
+        set=>[magix.code.node-2-code][json].Value
           value=>[0]
         magix.code.node-2-code
-          JSON
+          json
         set=>[9][value].Value
           value=>[magix.code.node-2-code][code].Value
         magix.forms.set-value

@@ -26,8 +26,8 @@ namespace Magix.execute
 			if (e.Params.Contains("inspect"))
 			{
 				e.Params["event:magix.execute"].Value = null;
-				e.Params["inspect"].Value = @"Will return the given
-GET HTTP parameter as ""value"" Node.";
+				e.Params["inspect"].Value = @"will return the given
+get http parameter as [value]";
 				e.Params["magix.web.get"].Value = "some-get-parameter";
 				return;
 			}
@@ -48,15 +48,15 @@ GET HTTP parameter as ""value"" Node.";
 			if (e.Params.Contains("inspect"))
 			{
 				e.Params["event:magix.execute"].Value = null;
-				e.Params["inspect"].Value = @"Will return the given
-HTTP cookie parameter as ""value"" Node.";
+				e.Params["inspect"].Value = @"returns the given
+http cookie parameter as [value] node";
 				e.Params["magix.web.get-cookie"].Value = "some-cookie-name";
 				return;
 			}
 
 			string par = e.Params.Get<string>();
 			if (string.IsNullOrEmpty(par))
-				throw new ArgumentException("You must tell me which cookie you wish to extract");
+				throw new ArgumentException("you must tell me which cookie you wish to extract");
 
 			e.Params["value"].Value = HttpContext.Current.Request.Cookies[par].Value;
 		}
@@ -70,19 +70,18 @@ HTTP cookie parameter as ""value"" Node.";
 			if (e.Params.Contains("inspect"))
 			{
 				e.Params["event:magix.execute"].Value = null;
-				e.Params["inspect"].Value = @"Will create or overwrite
-and existing HTTP Cookie. If no expirationm date 
-is used, a default of three years from now will be
-the default.";
+				e.Params["inspect"].Value = @"will create or overwrite
+and existing http cookie.&nbsp;&nbsp;if no expiration date 
+is used, a default of three years from now will be used";
 				e.Params["magix.web.set-cookie"].Value = "some-cookie-name";
-				e.Params["magix.web.set-cookie"]["value"].Value = "Something to store into cookie ...";
+				e.Params["magix.web.set-cookie"]["value"].Value = "something to store into cookie";
 				e.Params["magix.web.set-cookie"]["expires"].Value = DateTime.Now.AddYears (3);
 				return;
 			}
 
 			string par = e.Params.Get<string>();
 			if (string.IsNullOrEmpty(par))
-				throw new ArgumentException("You must tell me which cookie you wish to set");
+				throw new ArgumentException("you must tell me which cookie you wish to set");
 
 			string value = null;
 

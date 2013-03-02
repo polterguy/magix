@@ -66,6 +66,7 @@ or refreshed";
 			tmp["Items"]["Item1"]["Event"].Value = "magix.help.start-help";
 			tmp["Items"]["Item2"].Value = "executor";
 			tmp["Items"]["Item2"]["Event"].Value = "magix.admin.open-event-executor";
+			tmp["Items"]["Item2"]["Event"]["container"].Value = "content";
 
 			RaiseEvent(
 				"magix.modules.set-menu-items", 

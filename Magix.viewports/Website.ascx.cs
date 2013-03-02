@@ -49,20 +49,20 @@ namespace Magix.viewports
 		{
 			if (e.Params.Contains("inspect"))
 			{
-				e.Params["message"].Value = "Message to show to End User";
-				e.Params["header"].Value = "Message from system";
+				e.Params["message"].Value = "message to show to end user";
+				e.Params["header"].Value = "message from system";
 				e.Params["time"].Value = "1000";
 				e.Params["color"].Value = "#eeaaaa";
-				e.Params["inspect"].Value = @"Shows a message box to the 
-end user for some seconds.";
+				e.Params["inspect"].Value = @"shows a message box to the 
+end user for some seconds";
 				e.Params["icon"].Value = "media/images/magix-logo-tiny.png";
-				e.Params["code"].Value = "List of nodes that's to be formatted and shown in pre block";
+				e.Params["code"].Value = "code goes underneath here";
 				return;
 			}
 			if (!_notFirstMessage)
 			{
 				messageLabel.Text = "";
-				msgBoxHeader.Text = "Message from System";
+				msgBoxHeader.Text = "message from system";
 			}
 
 			messageLabel.Text += "<p>" + e.Params["message"].Get<string>() + "</p>";
@@ -72,7 +72,7 @@ end user for some seconds.";
 				Node tmp = new Node();
 				Node code = e.Params["code"].Clone();
 				code.Name = "";
-				tmp["JSON"].Value = code;
+				tmp["json"].Value = code;
 
 				RaiseEvent(
 					"magix.code.node-2-code",

@@ -22,12 +22,12 @@ namespace Magix.tests
 		{
 			Node tmp = new Node();
 
-			tmp["Data"]["Item1"].Value = "thomas1";
-			tmp["Data"]["Item2"].Value = "thomas2";
-			tmp["Data"]["Item3"].Value = "thomas3";
-			tmp["Buffer"].Value = null;
-			tmp["for-each"].Value = "[Data]";
-			tmp["for-each"]["set"].Value = "[/][Buffer][[.].Name].Value";
+			tmp["_data"]["item1"].Value = "thomas1";
+			tmp["_data"]["item2"].Value = "thomas2";
+			tmp["_data"]["item3"].Value = "thomas3";
+			tmp["_buffer"].Value = null;
+			tmp["for-each"].Value = "[_data]";
+			tmp["for-each"]["set"].Value = "[/][_buffer][[.].Name].Value";
 			tmp["for-each"]["set"]["value"].Value = "[.].Value";
 
 			if (e.Params.Contains("inspect"))
@@ -46,9 +46,9 @@ copied correctly afterwards";
 				"magix.execute",
 				tmp);
 
-			if (tmp["Buffer"]["Item1"].Get<string>() != "thomas1" || 
-			    tmp["Buffer"]["Item2"].Get<string>() != "thomas2" ||
-			    tmp["Buffer"]["Item3"].Get<string>() != "thomas3")
+			if (tmp["_buffer"]["item1"].Get<string>() != "thomas1" || 
+			    tmp["_buffer"]["item2"].Get<string>() != "thomas2" ||
+			    tmp["_buffer"]["item3"].Get<string>() != "thomas3")
 			{
 				throw new ApplicationException(
 					"Failure of executing for-each statement");

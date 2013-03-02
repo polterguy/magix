@@ -22,17 +22,17 @@ namespace Magix.tests
 		{
 			Node tmp = new Node();
 
-			tmp["Data"]["Item1"]["Description"].Value = "desc1";
-			tmp["Data"]["Item1"]["abc"].Value = null;
-			tmp["Data"]["Item1"]["abc"]["aaa"].Value = 5;
-			tmp["Data"]["Item1"]["abc"]["bbb"].Value = @"hello,
+			tmp["_data"]["item1"]["description"].Value = "desc1";
+			tmp["_data"]["item1"]["abc"].Value = null;
+			tmp["_data"]["item1"]["abc"]["aaa"].Value = 5;
+			tmp["_data"]["item1"]["abc"]["bbb"].Value = @"hello,
 hello ""hello"" hello ....";
-			tmp["Data"]["Item2"]["Description"].Value = "desc2";
-			tmp["Data"]["Item3"]["Description"].Value = "desc3";
-			tmp["Data"]["Item4"]["Description"].Value = "desc4";
-			tmp["Buffer"].Value = null;
-			tmp["set"].Value = "[Buffer][Copy]";
-			tmp["set"]["value"].Value = "[Data]";
+			tmp["_data"]["item2"]["description"].Value = "desc2";
+			tmp["_data"]["item3"]["description"].Value = "desc3";
+			tmp["_data"]["item4"]["description"].Value = "desc4";
+			tmp["_buffer"].Value = null;
+			tmp["set"].Value = "[_buffer][copy]";
+			tmp["set"]["value"].Value = "[_data]";
 
 			if (e.Params.Contains("inspect"))
 			{
@@ -45,18 +45,18 @@ the original correctly, and the new list is an exact replica";
 				return;
 			}
 
-			Node original = tmp["Data"].Clone();
+			Node original = tmp["_data"].Clone();
 
 			RaiseEvent(
 				"magix.execute",
 				tmp);
 
-			if (!tmp["Buffer"]["Data"].HasNodes(original))
+			if (!tmp["_buffer"]["_data"].HasNodes(original))
 			{
-				throw new ApplicationException("The 'Buffer' Node didn't equal the original Node-list in the 'Data' Node as were expected");
+				throw new ApplicationException("The '_buffer' Node didn't equal the original Node-list in the 'Data' Node as were expected");
 			}
 
-			if (!tmp["Data"].HasNodes(original))
+			if (!tmp["_data"].HasNodes(original))
 			{
 				throw new ApplicationException(
 					"The 'Data' Node didn't keep its original nodes");
@@ -71,11 +71,11 @@ the original correctly, and the new list is an exact replica";
 		{
 			Node tmp = new Node();
 
-			tmp["Data"]["Items"]["Item1"]["Description"].Value = "desc1";
-			tmp["Data"]["Items"]["Item2"]["Description"].Value = "desc2";
-			tmp["Data"]["Items"]["Item3"]["Description"].Value = "desc3";
-			tmp["Data"]["Items"]["Item4"]["Description"].Value = "desc4";
-			tmp["set"].Value = "[Data][Items]";
+			tmp["_data"]["items"]["item1"]["description"].Value = "desc1";
+			tmp["_data"]["items"]["item2"]["description"].Value = "desc2";
+			tmp["_data"]["items"]["item3"]["description"].Value = "desc3";
+			tmp["_data"]["items"]["item4"]["description"].Value = "desc4";
+			tmp["set"].Value = "[_data][items]";
 
 			if (e.Params.Contains("inspect"))
 			{
@@ -91,7 +91,7 @@ behaves correctly, and deletes the entire node, with its children";
 				"magix.execute",
 				tmp);
 
-			if (tmp["Data"].Contains("Items"))
+			if (tmp["_data"].Contains("items"))
 			{
 				throw new ApplicationException("The set operation didn't make the Node-list become null");
 			}
@@ -105,10 +105,10 @@ behaves correctly, and deletes the entire node, with its children";
 		{
 			Node tmp = new Node();
 
-			tmp["Data"]["Item1"]["Description"].Value = "desc1";
-			tmp["Buffer"].Value = null;
-			tmp["set"].Value = "[Buffer].Value";
-			tmp["set"]["value"].Value = "[Data][Item1][Description].Value";
+			tmp["_data"]["item1"]["description"].Value = "desc1";
+			tmp["_buffer"].Value = null;
+			tmp["set"].Value = "[_buffer].Value";
+			tmp["set"]["value"].Value = "[_data][item1][description].Value";
 
 			if (e.Params.Contains("inspect"))
 			{
@@ -124,13 +124,13 @@ from another node's value, behaves correctly";
 				"magix.execute",
 				tmp);
 
-			if (tmp["Buffer"].Get<string>() != "desc1")
+			if (tmp["_buffer"].Get<string>() != "desc1")
 			{
 				throw new ApplicationException(
 					string.Format (
 						"Expected {0}, got {1}",
 						"desc1",
-						tmp["Buffer"].Get<string>()));
+						tmp["_buffer"].Get<string>()));
 			}
 		}
 
@@ -142,8 +142,8 @@ from another node's value, behaves correctly";
 		{
 			Node tmp = new Node();
 
-			tmp["Data"]["Item1"]["Description"].Value = "desc1";
-			tmp["set"].Value = "[Data][Item1][Description].Value";
+			tmp["_data"]["item1"]["description"].Value = "desc1";
+			tmp["set"].Value = "[_data][item1][description].Value";
 
 			if (e.Params.Contains("inspect"))
 			{
@@ -159,13 +159,13 @@ to null, behaves correctly";
 				"magix.execute",
 				tmp);
 
-			if (tmp["Buffer"]["Item1"]["Description"].Value != null)
+			if (tmp["_buffer"]["item1"]["description"].Value != null)
 			{
 				throw new ApplicationException(
 					string.Format (
 						"Expected {0}, got {1}",
 						"desc1",
-						tmp["Buffer"].Get<string>()));
+						tmp["_buffer"].Get<string>()));
 			}
 		}
 
@@ -177,10 +177,10 @@ to null, behaves correctly";
 		{
 			Node tmp = new Node();
 
-			tmp["Data"]["Item1"]["Description"].Value = "desc1";
+			tmp["_data"]["item1"]["description"].Value = "desc1";
 			tmp["try"].Value = null;
-			tmp["try"]["code"]["set"].Value = "[/][Data][Item1][Description].Name";
-			tmp["try"]["catch"]["set"].Value = "[/][Data].Value";
+			tmp["try"]["code"]["set"].Value = "[/][_data][item1][description].Name";
+			tmp["try"]["catch"]["set"].Value = "[/][_data].Value";
 			tmp["try"]["catch"]["set"]["value"].Value = "success";
 
 			if (e.Params.Contains("inspect"))
@@ -197,13 +197,13 @@ to a null value, throws an exception, as it should";
 				"magix.execute",
 				tmp);
 
-			if (tmp["Data"].Get<string>() != "success")
+			if (tmp["_data"].Get<string>() != "success")
 			{
 				throw new ApplicationException(
 					string.Format (
 						"Expected {0}, got {1}",
 						"desc1",
-						tmp["Data"].Get<string>()));
+						tmp["_data"].Get<string>()));
 			}
 		}
 
@@ -215,10 +215,10 @@ to a null value, throws an exception, as it should";
 		{
 			Node tmp = new Node();
 
-			tmp["Data"]["Item1"]["Description123"].Value = null;
-			tmp["Buffer"].Value = null;
-			tmp["set"].Value = "[Buffer].Value";
-			tmp["set"]["value"].Value = "[Data][Item1][0].Name";
+			tmp["_data"]["item1"]["description123"].Value = null;
+			tmp["_buffer"].Value = null;
+			tmp["set"].Value = "[_buffer].Value";
+			tmp["set"]["value"].Value = "[_data][item1][0].Name";
 
 			if (e.Params.Contains("inspect"))
 			{
@@ -235,13 +235,13 @@ the name of a node";
 				"magix.execute",
 				tmp);
 
-			if (tmp["Buffer"].Get<string>() != "Description123")
+			if (tmp["_buffer"].Get<string>() != "description123")
 			{
 				throw new ApplicationException(
 					string.Format (
 						"Expected {0}, got {1}",
-						"Description123",
-						tmp["Buffer"].Get<string>()));
+						"description123",
+						tmp["_buffer"].Get<string>()));
 			}
 		}
 
@@ -253,10 +253,10 @@ the name of a node";
 		{
 			Node tmp = new Node();
 
-			tmp["Data"]["Item1"]["Description123"].Value = null;
-			tmp["Buffer"]["DataTmp"].Value = null;
-			tmp["set"].Value = "[Buffer][DataTmp].Name";
-			tmp["set"]["value"].Value = "[Data][Item1][0].Name";
+			tmp["_data"]["item1"]["description123"].Value = null;
+			tmp["_buffer"]["tmp"].Value = null;
+			tmp["set"].Value = "[_buffer][tmp].Name";
+			tmp["set"]["value"].Value = "[_data][item1][0].Name";
 
 			if (e.Params.Contains("inspect"))
 			{
@@ -272,13 +272,14 @@ behaves correctly, when set to another node's name";
 				"magix.execute",
 				tmp);
 
-			if (tmp["Buffer"][0].Name != "Description123")
+			if (tmp["_buffer"][0].Name != "description123" || 
+			    tmp["_buffer"].Count != 1)
 			{
 				throw new ApplicationException(
 					string.Format(
 						"Expected {0}, got {1}",
-						"Description123",
-						tmp["Buffer"][0].Name));
+						"description123",
+						tmp["_buffer"][0].Name));
 			}
 		}
 
@@ -290,13 +291,13 @@ behaves correctly, when set to another node's name";
 		{
 			Node tmp = new Node();
 
-			tmp["Data"]["Item1"]["Description"].Value = "desc1";
-			tmp["Data"]["Item2"]["Description"].Value = "desc2";
-			tmp["Data"]["Item3"]["Description"].Value = "desc3";
-			tmp["Data"]["Item4"]["Description"].Value = "desc4";
-			tmp["Buffer"].Value = null;
-			tmp["set"].Value = "[Buffer].Value";
-			tmp["set"]["value"].Value = "[Data]";
+			tmp["_data"]["item1"]["description"].Value = "desc1";
+			tmp["_data"]["item2"]["description"].Value = "desc2";
+			tmp["_data"]["item3"]["description"].Value = "desc3";
+			tmp["_data"]["item4"]["description"].Value = "desc4";
+			tmp["_buffer"].Value = null;
+			tmp["set"].Value = "[_buffer].Value";
+			tmp["set"]["value"].Value = "[_data]";
 
 			if (e.Params.Contains("inspect"))
 			{
@@ -312,10 +313,10 @@ behaves correctly";
 				"magix.execute",
 				tmp);
 
-			if (tmp["Buffer"].Get<Node>().Name != "Data" || 
-			    tmp["Buffer"].Get<Node>() == null || 
-			    tmp["Buffer"].Get<Node>()["Item4"]["Description"].Get<string>() != "desc4" ||
-			    tmp["Buffer"].Get<Node>().Count != 4)
+			if (tmp["_buffer"].Get<Node>().Name != "_data" || 
+			    tmp["_buffer"].Get<Node>() == null || 
+			    tmp["_buffer"].Get<Node>()["item4"]["description"].Get<string>() != "desc4" ||
+			    tmp["_buffer"].Get<Node>().Count != 4)
 			{
 				throw new ApplicationException(
 					"Couldn't get the right Node value of of a node's Value");
@@ -330,10 +331,10 @@ behaves correctly";
 		{
 			Node tmp = new Node();
 
-			tmp["Data"]["Item1"]["Description"].Value = "desc1";
-			tmp["Buffer"]["Item"].Value = null;
-			tmp["set"].Value = "[Buffer][Item].Name";
-			tmp["set"]["value"].Value = "[Data][Item1]";
+			tmp["_data"]["item1"]["description"].Value = "desc1";
+			tmp["_buffer"]["item"].Value = null;
+			tmp["set"].Value = "[_buffer][item].Name";
+			tmp["set"]["value"].Value = "[_data][item1]";
 
 			if (e.Params.Contains("inspect"))
 			{

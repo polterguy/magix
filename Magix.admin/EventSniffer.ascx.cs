@@ -47,7 +47,7 @@ namespace Magix.admin
 			if (e.Params != null)
 			{
 				Node tmp = new Node();
-				tmp["JSON"].Value = e.Params;
+				tmp["json"].Value = e.Params;
 				RaiseEvent(
 					"magix.code.node-2-code",
 					tmp);

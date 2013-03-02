@@ -24,19 +24,19 @@ namespace Magix.tests
 
 			tmp["event"].Value = "foo.bar";
 			tmp["event"]["remotable"].Value = true;
-			tmp["event"]["code"]["set"].Value = "[/][P][Data].Value";
-			tmp["event"]["code"]["set"]["value"].Value = "[/][P][Name].Value";
+			tmp["event"]["code"]["set"].Value = "[/][P][_data].Value";
+			tmp["event"]["code"]["set"]["value"].Value = "[/][P][_name].Value";
 			tmp["remote"]["url"].Value = "http://127.0.0.1:8080";
 			tmp["remote"].Value = "foo.bar";
-			tmp["remote"]["Name"].Value = "thomas";
+			tmp["remote"]["_name"].Value = "thomas";
 			tmp.Add (new Node("event", "foo.bar"));
 
 			if (e.Params.Contains("inspect"))
 			{
 				e.Params.Clear();
 				e.Params["event:magix.execute"].Value = null;
-				e.Params["inspect"].Value = @"Checks to see if event
-functions as it should.";
+				e.Params["inspect"].Value = @"verifies that the creation, execution and deletion 
+of a remotely activated active event behaves correctly";
 				e.Params.AddRange(tmp);
 				return;
 			}
@@ -45,7 +45,7 @@ functions as it should.";
 				"magix.execute",
 				tmp);
 
-			if (tmp["remote"]["Data"].Get<string>() != "thomas")
+			if (tmp["remote"]["_data"].Get<string>() != "thomas")
 			{
 				throw new ApplicationException(
 					"Failure of executing remote statement");
@@ -61,7 +61,7 @@ functions as it should.";
 			Node tmp = new Node();
 
 			tmp["event"].Value = "foo.bar";
-			tmp["event"]["code"]["Data"].Value = "howdy";
+			tmp["event"]["code"]["_data"].Value = "howdy";
 			tmp["remote"]["url"].Value = "http://127.0.0.1:8080";
 			tmp["remote"]["event"].Value = "foo.bar";
 			tmp.Add (new Node("event", "foo.bar"));
@@ -81,12 +81,22 @@ created as a default event, throws when attempted to be invoked remotely";
 				RaiseEvent(
 					"magix.execute",
 					tmp);
-				throw new ApplicationException("default active event invoked remotely didn't throw an exception ...?");
+
+				Node tmp2 = new Node();
+				tmp2["event"].Value = "foo.bar";
+
+				RaiseEvent(
+					"magix.execute",
+					tmp2);
+
+				throw new ApplicationException(
+					"default active event invoked remotely didn't throw an exception ...?");
 			}
 			catch
 			{
 				Node tmp2 = new Node();
 				tmp2["event"].Value = "foo.bar";
+
 				RaiseEvent(
 					"magix.execute",
 					tmp2);

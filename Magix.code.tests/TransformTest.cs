@@ -23,13 +23,13 @@ namespace Magix.tests
 		{
 			Node tmp = new Node();
 
-			tmp["Data"]["date"].Value = DateTime.Now.Date.AddHours (1).AddMinutes (4).AddSeconds (54);
-			tmp["Data"]["HELLO"]["bool"].Value = true;
+			tmp["_data"]["date"].Value = DateTime.Now.Date.AddHours (1).AddMinutes (4).AddSeconds (54);
+			tmp["_data"]["hello"]["bool"].Value = true;
 			tmp["decimal"].Value = 1.54M;
 			tmp["int"].Value = 123456;
 			tmp["string1"].Value = @"asdfooh dsfoih sdfoih sdf
 sdafih sdfoiih sdoifh sadf"" dsfouh sdfouh sdfouuh sdf"" sadfoih
-sadfpijsdfpijsdfpoijsdafopijsdfoij!!!!!!!""";
+sadfpijsdfpijsdfpoijsdafopijsdfoij""";
 			tmp["string2"].Value = @"asdfooh dsfoih sdfoih sdf";
 			tmp["string3"].Value = @"asdfooh dsfoih sdfoih sdf""";
 			tmp["string4"].Value = @"asdfooh dsfoih sdfoih sdf""""""""";
@@ -53,7 +53,7 @@ the before and after results";
 			}
 
 			Node input = new Node();
-			input["JSON"].Value = tmp.Clone();
+			input["json"].Value = tmp.Clone();
 
 			RaiseEvent(
 				"magix.code.node-2-code",
@@ -68,7 +68,7 @@ the before and after results";
 				"magix.code.code-2-node",
 				tmp2);
 
-			if (!tmp.Equals(tmp2["JSON"].Get<Node>()))
+			if (!tmp.Equals(tmp2["json"].Get<Node>()))
 				throw new ApplicationException("Couldn't successfully reproduce a Node through converting it to Code and back again ...");
 		}
 	}

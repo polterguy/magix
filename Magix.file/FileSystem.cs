@@ -27,9 +27,9 @@ namespace Magix.execute
 			{
 				e.Params["event:magix.execute"].Value = null;
 				e.Params["magix.file.load"].Value = "ExecuteScripts/TODO.txt";
-				e.Params["inspect"].Value = @"Loads a file into the 
-""file"" node. The file to load is 
-given as Value of the file Node.";
+				e.Params["inspect"].Value = @"loads a file into the 
+[file] node as text.&nbsp;&nbsp;the file to load is 
+given as value of the file node";
 				return;
 			}
 
@@ -57,16 +57,17 @@ given as Value of the file Node.";
 			{
 				e.Params["event:magix.execute"].Value = null;
 				e.Params["magix.file.save"].Value = "ExecuteScripts/TODO.txt";
-				e.Params["magix.file.save"]["file"].Value = @"Contents that will replace the contents
+				e.Params["magix.file.save"]["file"].Value = @"contents that will replace the contents
 in the existing file, alternatively become the 
-contents of a new file.";
-				e.Params["inspect"].Value = @"Saves a file from the 
-""file"" node. The file to save is 
-given as Value of the save-file Node.
-Will overwrite an existing file, if any,
-otherwise it'll create a new file. If you 
-pass in null as ""file"" Node, or no file Node
-at all, any existing file will simply be deleted.";
+contents of a new file";
+				e.Params["inspect"].Value = @"saves a file from the 
+[file] node.&nbsp;&nbsp;the file to save is 
+given as value of the save-file node.&nbsp;&nbsp;
+will overwrite an existing file, if any,
+otherwise it'll create a new file.&nbsp;&nbsp;if you 
+pass in null as [file] Node, or no [file] node
+at all, any existing file will be deleted, and no 
+new created";
 				return;
 			}
 
