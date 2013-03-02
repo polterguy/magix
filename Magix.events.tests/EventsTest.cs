@@ -70,7 +70,7 @@ namespace Magix.tests
 			tmp["event"]["remotable"].Value = true;
 			tmp["event"]["code"]["set"].Value = "[/][P][Data].Value";
 			tmp["event"]["code"]["set"]["value"].Value = "thomas";
-			tmp["remote"]["URL"].Value = "http://127.0.0.1:8080";
+			tmp["remote"]["url"].Value = "http://127.0.0.1:8080";
 			tmp["remote"].Value = "foo.bar";
 			tmp.Add (new Node("event", "foo.bar"));
 

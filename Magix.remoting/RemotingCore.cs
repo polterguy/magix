@@ -97,15 +97,15 @@ are being correctly re-mapped";
 			{
 				e.Params["event:magix.execute"].Value = null;
 				e.Params["inspect"].Value = @"creates an external override towards the given 
-[URL] for the event found in value.&nbsp;&nbsp;if you pass
-in a null value as a [URL], or no [URL] node, the override is removed.&nbsp;&nbsp;
+[url] for the event found in value.&nbsp;&nbsp;if you pass
+in a null value as a [url], or no [url] node, the override is removed.&nbsp;&nbsp;
 make sure the other side has marked the active event as
 remotable.&nbsp;&nbsp;once a method is 'tunneled', it will no longer be
 raised locally, but every time the active event is raised internally
 within your server, it will be polymorphistically raised, on your 
-[URL] end-point instead";
+[url] end-point instead";
 				e.Params["tunnel"].Value = "magix.namespace.foo";
-				e.Params["tunnel"]["URL"].Value = "http://127.0.0.1:8080";
+				e.Params["tunnel"]["url"].Value = "http://127.0.0.1:8080";
 				return;
 			}
 
@@ -118,7 +118,7 @@ within your server, it will be polymorphistically raised, on your
 					@"magix.execute.override-remotely needs event parameter to know 
 which event to raise externally");
 
-			string url = ip.Contains("URL") ? ip["URL"].Get<string>() : null;
+			string url = ip.Contains("url") ? ip["url"].Get<string>() : null;
 			string evt = ip.Get<string>("");
 
 			if (url == null)
@@ -276,8 +276,8 @@ invoked from other servers";
 		}
 
 		/**
-		 * Raises a new event remotely, use "URL" and "event" to instruct which
-		 * event you wish to raise at which URL end-point. Whatever you have 
+		 * Raises a new event remotely, use "url" and "event" to instruct which
+		 * event you wish to raise at which url end-point. Whatever you have 
 		 * as "params" parameters, will be passed into the end-point server
 		 * as the parameters to the active event. "params" will also
 		 * contain the return value Nodes from the server, after the 
@@ -291,12 +291,12 @@ invoked from other servers";
 			{
 				e.Params["event:magix.execute"].Value = null;
 				e.Params["inspect"].Value = @"remotely invokes the active event from
-value on the given [URL].&nbsp;&nbsp;this effectively works like the 
+value on the given [url].&nbsp;&nbsp;this effectively works like the 
 magix.execute.raise keyword, except the event will be serialized
 over http, and invoked on another server, returning
 transparently back to the caller, as if it was invoked locally";
 				e.Params["remote"].Value = "magix.namespace.foo";
-				e.Params["remote"]["URL"].Value = "http://127.0.0.1:8080";
+				e.Params["remote"]["url"].Value = "http://127.0.0.1:8080";
 				return;
 			}
 
@@ -304,13 +304,13 @@ transparently back to the caller, as if it was invoked locally";
 			if (e.Params.Contains("_ip"))
 				ip = e.Params["_ip"].Value as Node;
 
-			if (!ip.Contains("URL") || ip["URL"].Get<string>("") == string.Empty)
-				throw new ArgumentException("magix.execute.remote needs URL parameter to know which endpoint to go towards");
+			if (!ip.Contains("url") || ip["url"].Get<string>("") == string.Empty)
+				throw new ArgumentException("magix.execute.remote needs url parameter to know which endpoint to go towards");
 
 			if (ip.Get<string>("") == string.Empty)
 				throw new ArgumentException("magix.execute.remote needs event parameter to know which event to raise externally");
 
-			string url = ip["URL"].Get<string>();
+			string url = ip["url"].Get<string>();
 			string evt = ip.Get<string>();
 
 			HttpWebRequest req = WebRequest.Create(url) as System.Net.HttpWebRequest;

@@ -26,8 +26,8 @@ namespace Magix.execute
 			if (e.Params.Contains("inspect"))
 			{
 				e.Params["event:magix.execute"].Value = null;
-				e.Params["Data"]["Children"].Value = "old value";
-				e.Params["set"].Value = "[Data][Children].Value";
+				e.Params["_data"]["children"].Value = "old value";
+				e.Params["set"].Value = "[_data][children].Value";
 				e.Params["set"]["value"].Value = "new value";
 				e.Params["inspect"].Value = @"sets the given expression in the value
 of [set] to the value of expression, or constant, in [value] node.&nbsp;&nbsp;

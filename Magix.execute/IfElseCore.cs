@@ -39,11 +39,11 @@ pair together with [else-if] and [else] to create
 branching and control of flow of your program.&nbsp;&nbsp;if an if
 statement returns true, then no paired [else-if] or [else]
 statements will be executed";
-				e.Params["Data"]["Item1"].Value = "Cache1";
-				e.Params["Data"]["Cache"].Value = null;
-				e.Params["if"].Value = "[Data][Item1].Value!=[Data][1].Name";
+				e.Params["_data"]["item"].Value = "cache-object";
+				e.Params["_data"]["cache"].Value = null;
+				e.Params["if"].Value = "[_data][item].Value!=[_data][1].Name";
 				e.Params["if"]["magix.viewport.show-message"].Value = null;
-				e.Params["if"]["magix.viewport.show-message"]["message"].Value = "They are NOT the same!";
+				e.Params["if"]["magix.viewport.show-message"]["message"].Value = "they are not the same";
 				return;
 			}
 
@@ -76,11 +76,11 @@ statements will be executed";
 but only if no previous [if] or [else-if] statement has returned true,
 and the statement inside the value of the [else-if] 
 returns true";
-				e.Params["Data"]["Node"].Value = null;
-				e.Params["if"].Value = "[Data][Node].Value";
-				e.Params["if"]["magix.viewport.show-message"]["message"].Value = "Darn it...";
-				e.Params["else-if"].Value = "[Data][Node]";
-				e.Params["else-if"]["magix.viewport.show-message"]["message"].Value = "Works...";
+				e.Params["_data"]["node"].Value = null;
+				e.Params["if"].Value = "[_data][node].Value";
+				e.Params["if"]["magix.viewport.show-message"]["message"].Value = "darn it";
+				e.Params["else-if"].Value = "[_data][node]";
+				e.Params["else-if"]["magix.viewport.show-message"]["message"].Value = "puuh";
 				return;
 			}
 
@@ -105,8 +105,8 @@ returns true";
 but only if no paired [if] or [else-if] statement
 has returned true";
 				e.Params["if"].Value = "[if].Name==x_if";
-				e.Params["if"]["magix.viewport.show-message"]["message"].Value = "Ohh crap ...";
-				e.Params["else"]["magix.viewport.show-message"]["message"].Value = "Yup, I'm still sane ...";
+				e.Params["if"]["magix.viewport.show-message"]["message"].Value = "ohh crap";
+				e.Params["else"]["magix.viewport.show-message"]["message"].Value = "yup, still sane";
 				return;
 			}
 

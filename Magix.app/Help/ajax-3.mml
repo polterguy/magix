@@ -1,0 +1,22 @@
+
+
+<p>mux have effects.&nbsp;&nbsp;use like</p>
+
+<pre>
+new EffectFadeIn(ctrl, 500)
+   .ChainThese(
+      new EffectTimeout(500), 
+      new EffectFadeOut(ctrl, 500))
+   .Render();
+</pre>
+
+<p>effects can join or chain.&nbsp;&nbsp;prefer css3</p>
+
+{{LinkButton=>lnk1
+  Text=>more ajax
+  CssClass=>btn btn-primary
+  OnClick
+    magix.help.open-file
+      file=>Help/ajax-4.mml
+}}
+

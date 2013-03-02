@@ -56,13 +56,19 @@ execute by raising this active event, by using its
 short version.&nbsp;&nbsp;
 if you supply a value for your magix.execute node, the
 execution pointer becomes that of the expression of the
-value, effectively 'goto'";
-				e.Params["Data"]["Value"].Value = "thomas";
-				e.Params["if"].Value = "[Data][Value].Value==thomas";
+value, effectively 'goto'.&nbsp;&nbsp;all nodes in child
+collection of magix.execute will be treated as keywords, 
+if they only contain these characters; 
+abcdefghijklmnopqrstuvwxyz-.@£#$¤%&!?+:*.&nbsp;&nbsp;therefor, 
+a useful convention is to, either prefix your data parts 
+with an underscore, '_', or a Capital letter, or add numbers 
+to the node's name";
+				e.Params["_data"]["value"].Value = "thomas";
+				e.Params["if"].Value = "[_data][value].Value==thomas";
 				e.Params["if"]["magix.viewport.show-message"].Value = null;
-				e.Params["if"]["magix.viewport.show-message"]["message"].Value = "Hi Thomas!";
+				e.Params["if"]["magix.viewport.show-message"]["message"].Value = "hi thomas";
 				e.Params["else"]["magix.viewport.show-message"].Value = null;
-				e.Params["else"]["magix.viewport.show-message"]["message"].Value = "Hi Stranger!";
+				e.Params["else"]["magix.viewport.show-message"]["message"].Value = "hi stranger";
 				return;
 			}
 

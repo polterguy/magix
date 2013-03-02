@@ -28,11 +28,16 @@ namespace Magix.execute
 			if (e.Params.Contains("inspect"))
 			{
 				e.Params["event:magix.execute"].Value = null;
-				e.Params["Data"]["Items"]["Item1"]["message"].Value = "Howdy World 1.0!";
-				e.Params["Data"]["Items"]["Item2"]["message"].Value = "Howdy World 2.0!";
-				e.Params["for-each"].Value = "[Data][Items]";
+				e.Params["_data"]["items"]["message1"].Value = "howdy world 1.0";
+				e.Params["_data"]["items"]["message2"].Value = "howdy world 2.0";
+				e.Params["_data"]["items"]["message3"].Value = "howdy world 3.0";
+				e.Params["_data"]["items"]["message4"].Value = "howdy world 4.0";
+				e.Params["_data"]["items"]["message5"].Value = "howdy world 5.0";
+				e.Params["_data"]["items"]["message6"].Value = "howdy world 6.0";
+				e.Params["_data"]["items"]["message7"].Value = "howdy world 7.0";
+				e.Params["for-each"].Value = "[_data][items]";
 				e.Params["for-each"]["set"].Value = "[/][for-each][magix.viewport.show-message][message].Value";
-				e.Params["for-each"]["set"]["value"].Value = "[.][message].Value";
+				e.Params["for-each"]["set"]["value"].Value = "[.].Value";
 				e.Params["for-each"]["magix.viewport.show-message"].Value = null;
 				e.Params["inspect"].Value = @"loops through all the nodes
 in the given node-list expression, setting the 

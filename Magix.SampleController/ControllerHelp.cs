@@ -40,7 +40,7 @@ namespace Magix.SampleController
 			tmp["container"].Value = "modal";
 			tmp["header"].Value = "help from marvin";
 
-			using (TextReader reader = File.OpenText(Page.Server.MapPath("Help/index.txt")))
+			using (TextReader reader = File.OpenText(Page.Server.MapPath("Help/index.mml")))
 			{
 				tmp["html"].Value = reader.ReadToEnd();
 			}
@@ -64,7 +64,7 @@ namespace Magix.SampleController
 			{
 				tmp = new Node();
 				tmp["reset"].Value = true;
-				tmp["page"].Value = "Help/index.txt";
+				tmp["page"].Value = "Help/index.mml";
 
 				RaiseEvent(
 					"magix.help.add-page",
@@ -88,13 +88,13 @@ LinkButton=>index
   CssClass=>btn btn-primary
   OnClick
     magix.help.open-file
-      file=>Help/index.txt
+      file=>Help/index.mml
 LinkButton=>tools
   Text=>tools
   CssClass=>btn btn-primary
   OnClick
     magix.help.open-file
-      file=>Help/tools.txt
+      file=>Help/tools.mml
 LinkButton=>forward
   Text=>>>
   CssClass=>btn btn-primary
@@ -176,7 +176,7 @@ LinkButton=>forward
 			if (e.Params.Contains("inspect"))
 			{
 				e.Params["event:magix.help.add-page"].Value = null;
-				e.Params["page"].Value = "Help/path-to-page.txt";
+				e.Params["page"].Value = "Help/path-to-page.mml";
 				e.Params["reset"].Value = false;
 				e.Params["inspect"].Value = @"adds the given [page] to the history 
 of the help system.&nbsp;&nbsp;set [reset] to true to reset entire history stack

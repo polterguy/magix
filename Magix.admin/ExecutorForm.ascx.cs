@@ -103,7 +103,7 @@ namespace Magix.admin
 			{
 				e.Params["inspect"].Value = @"runs the [file] given";
 				e.Params["event:magix.admin.run-file"].Value = null;
-				e.Params["file"].Value = "ExecuteScripts/Applications/Address-Book.txt";
+				e.Params["file"].Value = "ExecuteScripts/Applications/address-book.hl";
 				return;
 			}
 

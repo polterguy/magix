@@ -1,0 +1,29 @@
+
+
+<p>create controller by inheriting from Magix.Core.ActiveController.&nbsp;&nbsp;
+then add active event handlers such as below</p>
+
+<pre>
+public class MyClass : ActiveController
+{
+   [ActiveEvent(Name = "namespace.foo")]
+   public void namespace_foo(object sender, ActiveEventArgs e)
+   {
+      /* ... do stuff in c# ... */
+   }
+}
+</pre>
+
+<p>all controllers will automatically be instantiated in one example, and have 
+active event handlers mapped.&nbsp;&nbsp;this maps active event invokers to 
+active event handlers, without type, hence no link.&nbsp;&nbsp;no link, no 
+dependency.&nbsp;&nbsp;no dependency, all the cookies</p>
+
+{{LinkButton=>lnk1
+  Text=>more mvc
+  CssClass=>btn btn-primary
+  OnClick
+    magix.help.open-file
+      file=>Help/mvc-3.mml
+}}
+

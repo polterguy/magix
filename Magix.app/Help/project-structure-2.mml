@@ -1,0 +1,16 @@
+
+
+<p>create a new magix plugin.&nbsp;&nbsp;magix.ux for active modules, magix.core for everything</p>
+
+<img src="media/images/help-files/new-project.png" alt="how to create new project" class="img-polaroid" />
+
+<p>eventsniffer.ascx and executorform.ascx are marked as embedded resources, since they are active 
+modules</p>
+
+{{LinkButton=>lnk1
+  Text=>more code
+  CssClass=>btn btn-primary
+  OnClick
+    magix.help.open-file
+      file=>Help/project-structure-3.mml
+}}

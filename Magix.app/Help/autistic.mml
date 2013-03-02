@@ -1,0 +1,63 @@
+
+
+<p>magix illuminate a web application framework for developers.&nbsp;&nbsp;
+built on top of a design pattern called; active events.&nbsp;&nbsp;this off-loads a lot
+of your burdons.&nbsp;&nbsp;your code becomes agile, and easily replaceable and extendible.&nbsp;&nbsp;
+your finished applications also become easily scalable, and possible to 
+partition as you see fit, through the means of divide and conquer, on your
+application server park</p>
+
+<p>magix is built in c# on mono</p>
+
+<div class="btn-group">
+{{
+
+LinkButton=>lnk
+  Text=>active events
+  CssClass=>btn btn-primary
+  OnClick
+    magix.help.open-file
+      file=>Help/active-events.mml
+
+LinkButton=>lnk1
+  Text=>mvc
+  CssClass=>btn btn-primary
+  OnClick
+    magix.help.open-file
+      file=>Help/mvc.mml
+
+LinkButton=>lnk2
+  Text=>ajax
+  CssClass=>btn btn-primary
+  OnClick
+    magix.help.open-file
+      file=>Help/ajax.mml
+
+LinkButton=>lnk3
+  Text=>web
+  CssClass=>btn btn-primary
+  OnClick
+    magix.help.open-file
+      file=>Help/web.mml
+
+LinkButton=>lnk4
+  Text=>structure
+  CssClass=>btn btn-primary
+  OnClick
+    magix.help.open-file
+      file=>Help/project-structure.mml
+
+LinkButton=>lnk5
+  Text=>dynamic
+  CssClass=>btn btn-primary
+  OnClick
+    magix.help.open-file
+      file=>Help/dynamic.mml
+
+LinkButton=>lnk6
+  Text=>maintenance
+  CssClass=>btn btn-primary
+  OnClick
+    magix.help.open-file
+      file=>Help/maintenance.mml
+}}</div>

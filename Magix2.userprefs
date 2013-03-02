@@ -1,36 +1,18 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Magix.app/Help/tools.txt">
-    <Files>
-      <File FileName="Magix.app/Help/tools.txt" Line="12" Column="41" />
-    </Files>
+  <MonoDevelop.Ide.Workbench>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
           <Node name="Core" expanded="True">
             <Node name="Magix.app" expanded="True">
-              <Node name="Help" expanded="True">
-                <Node name="tools.txt" selected="True" />
-              </Node>
-              <Node name="media" expanded="True">
-                <Node name="bootstrap" expanded="True">
-                  <Node name="css" expanded="True" />
-                  <Node name="js" expanded="True" />
-                </Node>
-                <Node name="images" expanded="True" />
+              <Node name="ExecuteScripts" expanded="True">
+                <Node name="todo.txt" selected="True" />
               </Node>
             </Node>
-            <Node name="Magix.Core" expanded="True">
-              <Node name="Controllers" expanded="True" />
-            </Node>
-            <Node name="Magix.viewports" expanded="True" />
           </Node>
-          <Node name="Plugins" expanded="True">
-            <Node name="Magix.forms" expanded="True" />
-          </Node>
-          <Node name="Samples" expanded="True">
-            <Node name="Magix.SampleController" expanded="True" />
-          </Node>
+          <Node name="Plugins" expanded="True" />
+          <Node name="Samples" expanded="True" />
           <Node name="Tests" expanded="True" />
         </State>
       </Pad>
@@ -39,7 +21,8 @@
       </Pad>
       <Pad Id="MonoDevelop.Debugger.WatchPad">
         <State>
-          <Value>Page.Request.Form["activeEvent"]</Value>
+          <Value>e.Params["JSON"]</Value>
+          <Value>ret</Value>
         </State>
       </Pad>
     </Pads>

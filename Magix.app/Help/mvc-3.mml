@@ -1,0 +1,28 @@
+
+
+<p>you can put your controllers in own projects.&nbsp;&nbsp;this makes them 
+independent upon modules.&nbsp;&nbsp;this allows for changing business logic, 
+or ui, without having to interfer with the other.&nbsp;&nbsp;this creates 
+great divide and conquer for you, you go venice-vedi-vici</p>
+
+<p>or you can put controllers in same projects as modules, and still 
+keep flexibility.&nbsp;&nbsp;override active events, and have them point to 
+new implementations.&nbsp;&nbsp;override active modules, and have them 
+point into new modules</p>
+
+<p>this way, old code calls new code.&nbsp;&nbsp;boss happy, customer happy, 
+wife happy, software happy, you go thailand, with wife</p>
+
+<p><em>"a true empty cup, is only useful, if it merely exists.&nbsp;&nbsp;to live, 
+is to stop allowing your existence, interfere with your capacity for life"</em></p>
+
+{{LinkButton=>lnk1
+  Text=>more mvc
+  CssClass=>btn btn-primary
+  OnClick
+    magix.help.open-file
+      file=>Help/mvc-4.mml
+}}
+
+
+

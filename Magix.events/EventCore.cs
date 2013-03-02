@@ -73,6 +73,7 @@ re-mapped";
 			_hasNull = null;
 			if (e.Params.Contains("inspect"))
 			{
+				e.Params.Clear();
 				e.Params["event:magix.execute"].Value = null;
 				e.Params["inspect"].Value = @"overrides the active event in [event]
 with the code in the [code] expression.&nbsp;&nbsp;these types
@@ -87,16 +88,16 @@ parameters directly underneath the active event itself.&nbsp;&nbsp;
 event will be deleted again, if you pass in no code block";
 				e.Params["event"].Value = "foo.bar";
 				e.Params["event"]["remotable"].Value = false;
-				e.Params["event"]["code"]["Data"].Value = "thomas";
-				e.Params["event"]["code"]["Backup"].Value = "thomas";
-				e.Params["event"]["code"]["if"].Value = "[Data].Value==[Backup].Value";
+				e.Params["event"]["code"]["_data"].Value = "thomas";
+				e.Params["event"]["code"]["_backup"].Value = "thomas";
+				e.Params["event"]["code"]["if"].Value = "[_data].Value==[_backup].Value";
 				e.Params["event"]["code"]["if"]["set"].Value = "[/][P][output].Value";
 				e.Params["event"]["code"]["if"]["set"]["value"].Value = "return-value";
 				e.Params["event"]["code"]["if"].Add (new Node("set", "[.ip][/][magix.viewport.show-message][message].Value"));
 				e.Params["event"]["code"]["if"][e.Params["event"]["code"]["if"].Count - 1]["value"].Value = "[/][P][input].Value";
 				e.Params["event"]["code"]["magix.viewport.show-message"].Value = null;
 				e.Params["foo.bar"].Value = null;
-				e.Params["foo.bar"]["input"].Value = "Hello World 2.0!!";
+				e.Params["foo.bar"]["input"].Value = "hello world 2.0";
 				e.Params.Add (new Node("event", "foo.bar"));
 				return;
 			}
