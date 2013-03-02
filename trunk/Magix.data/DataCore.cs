@@ -36,9 +36,9 @@ namespace Magix.execute
 			if (e.Params.Contains("inspect"))
 			{
 				e.Params["event:magix.execute"].Value = null;
-				e.Params["remove"].Value = "unique-key-id666";
-				e.Params["inspect"].Value = @"Will remove the object
-with the given Key found in Value.";
+				e.Params["remove"].Value = "object-id";
+				e.Params["inspect"].Value = @"removes the given object-id from 
+your persistent data storage";
 				return;
 			}
 
@@ -71,14 +71,14 @@ with the given Key found in Value.";
 		{
 			if (e.Params.Contains("inspect"))
 			{
-				e.Params["save"].Value = "unique-key-id666";
-				e.Params["save"]["object"].Value = "nodes from here and down will be saved";
-				e.Params["save"]["object"]["message"].Value = "Use either 'object' node!!";
-				e.Params["inspect"].Value = @"Will save the given given ""object"" node, 
-which should be an expression, pointing to
-a node, which will become saved in its entirety.";
+				e.Params["save"].Value = "object-id";
+				e.Params["save"]["object"].Value = "object to save";
+				e.Params["save"]["object"]["message"].Value = "more object";
+				e.Params["inspect"].Value = @"will serialize the given [object] with 
+the given object-id in the persistent data storage";
 				return;
 			}
+
 			Node value = null;
 			if (e.Params.Contains("object"))
 				value = e.Params["object"];
@@ -132,10 +132,11 @@ a node, which will become saved in its entirety.";
 		{
 			if (e.Params.Contains("inspect"))
 			{
-				e.Params["load"].Value = "unique-key-of-object-to-load";
-				e.Params["load"]["prototype"].Value = "optional parameter, being a 'query object' which the returned object must match";
-				e.Params["inspect"].Value = @"Will load the object from the data storage
-with the given ""key"" node into the ""object"" child return node.";
+				e.Params["event:magix.data.load"].Value = null;
+				e.Params["load"].Value = "object-id";
+				e.Params["load"]["prototype"].Value = "optional";
+				e.Params["inspect"].Value = @"loads the given object-id or 
+use prototype as filter";
 				return;
 			}
 			Node prototype = null;
@@ -179,8 +180,9 @@ with the given ""key"" node into the ""object"" child return node.";
 		{
 			if (e.Params.Contains("inspect"))
 			{
-				e.Params["inspect"].Value = @"Will return the number of objects
-that exists in the data storage in the ""count"" child node. Takes no parameters.";
+				e.Params["event:magix.data.count"].Value = null;
+				e.Params["inspect"].Value = @"returns the total number 
+of objects in data storage";
 				return;
 			}
 			lock (typeof(Node))

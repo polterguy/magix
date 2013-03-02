@@ -37,6 +37,7 @@ namespace Magix.forms
 			base.InitialLoading(node);
 		}
 
+		// TODO: Change id to Value instead of "id" node
 		/**
 		 * Returns the given value of the given "id" widget, within the given
 		 * "form-id" form, in the "value" node
@@ -46,13 +47,11 @@ namespace Magix.forms
 		{
 			if (e.Params.Contains("inspect"))
 			{
-				e.Params["id"].Value = "idOfControlInForm";
+				e.Params["event:magix.forms.get-value"].Value = null;
+				e.Params["id"].Value = "control";
 				e.Params["form-id"].Value = "formID";
-				e.Params["inspect"].Value = @"Expects a ""form-id"" and an ""id""
-node, which if the ""form-id"" node matches the form id of this form, used
-for looking up the Value of the given web control with the given ""id"".
-The value of the web control will be returned in the ""value"" node, and might
-not necessarily be a string, but can also be of other types.";
+				e.Params["inspect"].Value = @"returns the value of the given 
+[id] web control, in the [form-id] form, as [value]";
 				return;
 			}
 
@@ -95,13 +94,11 @@ not necessarily be a string, but can also be of other types.";
 		{
 			if (e.Params.Contains("inspect"))
 			{
-				e.Params["id"].Value = "idOfControlInForm";
-				e.Params["form-id"].Value = "formID";
-				e.Params["value"].Value = "New value of control";
-				e.Params["inspect"].Value = @"Expects a ""form-id"" and an ""id""
-node, which if the ""form-id"" node matches the form id of this form, used
-for looking up the Value of the given web control with the given ""id"".
-The value of the web control will be set to ""value"".";
+				e.Params["event:magix.forms.set-value"].Value = null;
+				e.Params["id"].Value = "control";
+				e.Params["form-id"].Value = "formid";
+				e.Params["inspect"].Value = @"sets the value of the given 
+[id] web control, in the [form-id] form, from [value]";
 				return;
 			}
 

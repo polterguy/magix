@@ -99,6 +99,14 @@ namespace Magix.admin
 		[ActiveEvent(Name = "magix.admin.run-file")]
 		public static void magix_admin_run_file(object sender, ActiveEventArgs e)
 		{
+			if (e.Params.Contains("inspect"))
+			{
+				e.Params["inspect"].Value = @"runs the [file] given";
+				e.Params["event:magix.admin.run-file"].Value = null;
+				e.Params["file"].Value = "ExecuteScripts/Applications/Address-Book.txt";
+				return;
+			}
+
 			if (!e.Params.Contains ("file") || e.Params["file"].Get<string>("") == "")
 				throw new ArgumentException("Need file object");
 
@@ -141,12 +149,25 @@ namespace Magix.admin
 		[ActiveEvent(Name = "magix.admin.run-script")]
 		public static void magix_admin_run_script(object sender, ActiveEventArgs e)
 		{
+			if (e.Params.Contains("inspect"))
+			{
+				e.Params["inspect"].Value = @"runs the [script] given";
+				e.Params["event:magix.admin.run-script"].Value = null;
+				e.Params["script"].Value =  @"
+event:magix.execute
+Data=>thomas
+if=>[Data].Value==thomas
+  magix.viewport.show-message
+    message=>hello world";
+				return;
+			}
+
 			if (!e.Params.Contains ("script") || e.Params["script"].Get<string>("") == "")
 				throw new ArgumentException("Need script object");
 
 			string txt = e.Params["script"].Get<string>();
 
-			string wholeTxt = txt;
+			string wholeTxt = txt.TrimStart();
 			string method = "";
 			if (wholeTxt.StartsWith("Method:") || wholeTxt.StartsWith("event:"))
 			{
@@ -174,6 +195,20 @@ namespace Magix.admin
 		[ActiveEvent(Name = "magix.admin.set-code")]
 		public void magix_admin_set_code(object sender, ActiveEventArgs e)
 		{
+			if (e.Params.Contains("inspect"))
+			{
+				e.Params["inspect"].Value = @"sets the code to what is given in [code]
+in the active event executor";
+				e.Params["event:magix.admin.set-code"].Value = null;
+				e.Params["code"].Value =  @"
+event:magix.execute
+Data=>thomas
+if=>[Data].Value==thomas
+  magix.viewport.show-message
+    message=>hello world";
+				return;
+			}
+
 			txtIn.Text = e.Params["code"].Get<string>();
 		}
 

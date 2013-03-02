@@ -25,21 +25,17 @@ namespace Magix.SampleController
 		 * the page-load event, and you've got your own application
 		 */
 		[ActiveEvent(Name = "magix.viewport.page-load")]
-		[ActiveEvent(Name = "magix.admin.load-event-executor")]
 		public void magix_viewport_page_load(object sender, ActiveEventArgs e)
 		{
 			if (e.Params.Contains("inspect"))
 			{
-				e.Params["initial-load"].Value = null;
-				e.Params["inspect"].Value = @"This active event is being 
-raised upon initial loading of a page, and is kind of the doorway event,
-from which everything else occurs as a consequence of. This is where you
-load up your default forms and such. Remove this controller, and replace 
-with your own page-load handling logic to create your own applications.";
+				e.Params["inspect"].Value = @"raised when page is initially loaded, 
+or refreshed";
 				return;
 			}
 
 			Node tmp = new Node();
+
 			tmp["form-id"].Value = "header";
 			tmp["html"].Value = "<h1>Active Event Executor</h1>";
 			tmp["container"].Value = "header";
@@ -53,7 +49,7 @@ with your own page-load handling logic to create your own applications.";
 			tmp["container"].Value = "content";
 
 			RaiseEvent(
-				"magix.admin.open-event-viewer", 
+				"magix.admin.open-event-executor", 
 				tmp);
 
 			tmp = new Node();
@@ -69,7 +65,7 @@ with your own page-load handling logic to create your own applications.";
 			tmp["Items"]["Item1"].Value = "help";
 			tmp["Items"]["Item1"]["Event"].Value = "magix.help.start-help";
 			tmp["Items"]["Item2"].Value = "executor";
-			tmp["Items"]["Item2"]["Event"].Value = "magix.admin.load-event-executor";
+			tmp["Items"]["Item2"]["Event"].Value = "magix.admin.open-event-executor";
 
 			RaiseEvent(
 				"magix.modules.set-menu-items", 

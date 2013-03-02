@@ -190,8 +190,9 @@ parameters directly underneath the active event itself";
 		[ActiveEvent(Name = "")]
 		public static void magix_data__active_event_2_code_callback_null_helper(object sender, ActiveEventArgs e)
 		{
-			if (e.Name == "" && e.Params.Contains("inspect"))
+			if (string.IsNullOrEmpty(e.Name) && e.Params.Contains("inspect"))
 			{
+				e.Params.Clear();
 				e.Params["inspect"].Value = @"null event handler for raising
 null active event handlers created with magix.execute.event";
 				return;

@@ -6,6 +6,8 @@ the user to inspect them by clicking
 them. Does not show private active events, 
 meaning active events starting wiith '_'."
 
+magix.viewport.clear-controls
+  container=>content
 magix.forms.create-web-page
   container=>header
   html=>@"<h1>active events</h1>"
@@ -17,10 +19,10 @@ set=>[magix.admin.get-active-events].Name
 for-each=>[Data][ActiveEvents]
   Tpl
     LinkButton
-      CssClass=>span2 btn btn-small
+      CssClass=>span4 btn btn-small btn-left
       Text
       OnClick
-        void.foo
+        raise=>
           inspect
         set=>[2][value].Value
           value=>[0][inspect].Value
@@ -29,7 +31,7 @@ for-each=>[Data][ActiveEvents]
           id=>desc
           value
         set=>[4][value].Value
-          value=>[0].Name
+          value=>[0].Value
         magix.forms.set-value
           form-id=>form1
           id=>header
@@ -47,7 +49,7 @@ for-each=>[Data][ActiveEvents]
           value
         set=>[0][inspect].Name
           value=>inspect
-  set=>[.ip][..][Tpl][LinkButton][OnClick][0].Name
+  set=>[.ip][..][Tpl][LinkButton][OnClick][0].Value
     value=>[.].Value
   set=>[.ip][..][Tpl][LinkButton][Text].Value
     value=>[.].Value
@@ -66,19 +68,19 @@ cf
       controls
         Label=>header
           Text=>name of active event
-          CssClass=>span5
+          CssClass=>span4
           Tag=>strong
         Label=>desc
-          CssClass=>span5
+          CssClass=>span4
           Text=>@"description of your active event.&nbsp;&nbsp;
 click any of the active events to the right to inspect them"
         Label=>code
-          CssClass=>span5
+          CssClass=>span4
           Text=>code example ...
           Tag=>pre
         LinkButton=>run
           Text=>inspect
-          CssClass=>btn btn-info btn-block-level span1 offset4
+          CssClass=>btn btn-info btn-block-level span1 offset3
           OnClick
             magix.forms.get-value
               form-id=>form1
@@ -88,5 +90,5 @@ click any of the active events to the right to inspect them"
             magix.admin.load-code
               code
     Panel=>wrp
-      CssClass=>span2 offset1
+      CssClass=>span3
       controls

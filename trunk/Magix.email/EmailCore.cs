@@ -28,14 +28,14 @@ namespace Magix.execute
 			if (e.Params.Contains("inspect"))
 			{
 				e.Params["event:magix.execute"].Value = null;
-				e.Params["inspect"].Value = @"Will send the given email to
-the given ""to"" from ""from"". The ""subject"" will
-become subject, and ""body"" the main message.";
+				e.Params["inspect"].Value = @"will send the given email to
+the given [to] from [from].&nbsp;&nbsp;the [subject] will
+become subject, and [body] the main message";
 				e.Params["magix.email.send-email"].Value = null;
-				e.Params["magix.email.send-email"]["to"].Value = "some-email-address@somewhere.com";
-				e.Params["magix.email.send-email"]["from"].Value = "some-other-email-address@somewhere-else.com";
-				e.Params["magix.email.send-email"]["subject"].Value = "Hi there dude!";
-				e.Params["magix.email.send-email"]["body"].Value = "This is a message I wrote to you ...";
+				e.Params["magix.email.send-email"]["to"].Value = "to@somewhere.com";
+				e.Params["magix.email.send-email"]["from"].Value = "from@somewhere-else.com";
+				e.Params["magix.email.send-email"]["subject"].Value = "hi dude";
+				e.Params["magix.email.send-email"]["body"].Value = "message i wrote, message you read";
 				return;
 			}
 

@@ -128,15 +128,18 @@ viewport container for all of its controls. Unloads a container for controls.";
 			}
 			DynamicPanel dyn = Selector.FindControl<DynamicPanel> (
                 this, 
-                e.Params ["container"].Get<string> ());
+                e.Params["container"].Get<string> ());
 
-			ClearControls (dyn);
+			ClearControls(dyn);
 
 			// We must raise this event to signal to other controls
 			// that Active Events MIGHT have been removed from the list
 			// of Active Active Events
 			Node node = new Node();
-			RaiseEvent("magix.execute._event-override-removed", node);
+
+			RaiseEvent(
+				"magix.execute._event-override-removed", 
+				node);
 		}
 
         private List<string> CssFiles
