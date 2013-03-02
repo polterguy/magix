@@ -7,7 +7,7 @@ them."
 
 magix.forms.create-web-page
   container=>header
-  html=>@"<h1>magix.execute keywords</h1>"
+  html=>@"<h1>hyper lisp keywords</h1>"
   form-id=>header
 magix.admin.get-active-events
   begins-with=>magix.execute
@@ -88,8 +88,8 @@ cf
           Text=>description
         Label=>desc
           CssClass=>span5
-          Text=>@"description of your active event.&nbsp;&nbsp;
-click any of the ""magix.execute"" active events to the right to inspect them"
+          Text=>@"description of your hyper lisp keyword.&nbsp;&nbsp;
+click any of the hyper lisp active events to the right to inspect them"
     Panel=>wrp
       CssClass=>span2 offset1
       controls

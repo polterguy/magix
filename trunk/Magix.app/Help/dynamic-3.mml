@@ -10,10 +10,10 @@ that to "magix.execute.if", which is an active event</p>
 <p>or to raise any other event within your "code", just type it in, fully qualified, and 
 add parameters underneath as children</p>
 
-<p>we have baptized this technique for "creating code" to "visual lisp".&nbsp;&nbsp;
-magix implements most of the visual lisp keywords in the magix.execute project</p>
+<p>we have baptized this technique for creating executionable code to "hyper lisp".&nbsp;&nbsp;
+magix implements most of the hyper lisp keywords in the magix.execute project</p>
 
-<p>we have ported qt address-book sample, plus many more examples of how to use visual lisp, which
+<p>we have ported qt address-book sample, plus many more examples of how to use hyper lisp, which
 can be found in executescripts folder.&nbsp;&nbsp;{{
 LinkButton=>link
   Text=>see keywords
@@ -22,7 +22,7 @@ LinkButton=>link
       file=>ExecuteScripts/Applications/inspect-execute.hl
     magix.viewport.clear-controls
       container=>modal
-}} for visual lisp</p>
+}} for hyper lisp</p>
 
 {{LinkButton=>lnk1
   Text=>more dynamic

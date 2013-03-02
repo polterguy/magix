@@ -9,7 +9,7 @@ LinkButton=>keywords2
     magix.viewport.clear-controls
       container=>modal
 }} allows you to 
-see all magix lisp keywords.&nbsp;&nbsp;
+see all hyper lisp keywords.&nbsp;&nbsp;
 {{
 LinkButton=>tests2
   Text=>tests
