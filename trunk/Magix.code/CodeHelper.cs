@@ -27,7 +27,11 @@ namespace Magix.execute
 			if (e.Params.Contains("inspect"))
 			{
 				e.Params["inspect"].Value = @"will transform the [JSON] node to 
-code syntax";
+code syntax, and return in [code].&nbsp;&nbsp;code returned will be the 
+textual representation of the original tree hierarchy, such that 
+two spaces ' ' opens up the child collection.&nbsp;&nbsp;=> separates 
+name and value of node, name first.&nbsp;&nbsp;code returned might also
+contain type information for types of int, decimal, datetime and bool";
 				e.Params["event:magix.code.node-2-code"].Value = null;
 				e.Params["JSON"]["something"].Value =  "something-else";
 				return;
@@ -107,7 +111,11 @@ code syntax";
 			if (e.Params.Contains("inspect"))
 			{
 				e.Params["inspect"].Value = @"will transform the [code] node to 
-a node tree";
+a node tree.&nbsp;&nbsp;the code will be returned in [JSON]
+as node structure, according to indentation.&nbsp;&nbsp;two spaces open up child 
+collection, => assings to value, and first parts are name of node.&nbsp;&nbsp;
+also supports =(int)>, =(datetime)>, =(decimal)> and =(bool)> to assign 
+specific type to value";
 				e.Params["event:magix.code.code-2-node"].Value = null;
 				e.Params["code"].Value =  @"
 Code

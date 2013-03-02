@@ -37,12 +37,12 @@ namespace Magix.execute
 		{
 			if (e.Params.Contains("inspect"))
 			{
-				e.Params["initial-startup-of-process"].Value = null;
+				e.Params["event:magix.core.application-startup"].Value = null;
 				e.Params["inspect"].Value = @"called during startup
 of application to make sure our active events, 
 which are dynamically tied towards serialized 
 magix.execute blocks of code, are being correctly 
-re-mapped. [initial-startup-of-process] must exists to run event.";
+re-mapped";
 				return;
 			}
 			lock (typeof(Node))
@@ -83,7 +83,8 @@ and they will be passed into the function, where they will
 be accessible underneath a [P] node, appended as the last
 parts of your code block, into your function invocation.&nbsp;&nbsp;from
 outside of the function/event itself, you can access these 
-parameters directly underneath the active event itself";
+parameters directly underneath the active event itself.&nbsp;&nbsp;
+event will be deleted again, if you pass in no code block";
 				e.Params["event"].Value = "foo.bar";
 				e.Params["event"]["remotable"].Value = false;
 				e.Params["event"]["code"]["Data"].Value = "thomas";

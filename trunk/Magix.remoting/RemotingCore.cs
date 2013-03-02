@@ -59,12 +59,11 @@ namespace Magix.execute
 		{
 			if (e.Params.Contains("inspect"))
 			{
-				e.Params["initial-startup-of-process"].Value = null;
+				e.Params["event:magix.core.application-startup"].Value = null;
 				e.Params["inspect"].Value = @"called during startup
 of application to make sure our active events, 
 which are dynamically remotely overridden
-are being correctly re-mapped.&nbsp;&nbsp;
-[initial-startup-of-process] must exists to run event";
+are being correctly re-mapped";
 				return;
 			}
 			lock (typeof(Node))

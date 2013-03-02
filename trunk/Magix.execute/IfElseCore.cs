@@ -35,7 +35,7 @@ namespace Magix.execute
 				e.Params["event:magix.execute"].Value = null;
 				e.Params["inspect"].Value = @"executes the child nodes as an execution
 block, but only if the [if] statement returns true.&nbsp;&nbsp;
-pair together with magix.execute.else-if and magix.execute.else to create
+pair together with [else-if] and [else] to create
 branching and control of flow of your program.&nbsp;&nbsp;if an if
 statement returns true, then no paired [else-if] or [else]
 statements will be executed";

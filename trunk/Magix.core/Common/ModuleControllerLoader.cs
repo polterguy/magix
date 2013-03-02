@@ -163,12 +163,9 @@ namespace Magix.Core
                             // Fire the "Application Startup" event. This one will only trigger
                             // ONCE in comparison to the "Magix.Core.InitialLoading" event which will fire
                             // every time the page reloads...
-							Node tmp = new Node();
-							tmp["initial-startup-of-process"].Value = null;
                             ActiveEvents.Instance.RaiseActiveEvent(
                                 null, 
-                                "magix.core.application-startup",
-								tmp);
+                                "magix.core.application-startup");
                         }
                     }
                 }

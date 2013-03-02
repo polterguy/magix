@@ -113,13 +113,13 @@ or [begins-with] to filter the events returned";
 
 		/**
 		 */
-		[ActiveEvent(Name = "magix.admin.load-code")]
-		public void magix_admin_load_code(object sender, ActiveEventArgs e)
+		[ActiveEvent(Name = "magix.admin.load-executor-code")]
+		public void magix_admin_load_executor_code(object sender, ActiveEventArgs e)
 		{
 			if (e.Params.Contains("inspect"))
 			{
 				e.Params.Clear();
-				e.Params["event:magix.admin.load-code"].Value = null;
+				e.Params["event:magix.admin.load-executor-code"].Value = null;
 				e.Params["inspect"].Value = @"opens active event executor
 in content with given [code] Value";
 				e.Params["code"].Value = @"
@@ -132,7 +132,7 @@ if=>[Data].Value==thomas
 			}
 
 			if (!e.Params.Contains("code"))
-				throw new ArgumentException("Cannot load-code without code");
+				throw new ArgumentException("Cannot load-executor-code without code");
 
 			Node node = new Node();
 			node["container"].Value = "content";
