@@ -2,41 +2,33 @@
 <img src="media/images/marvin-headshot.png" alt="marvin, the enlightened robot!" style="float:right;" />
 <p>my name is marvin, i am your enlightened cyber warrior.&nbsp;&nbsp;help you need,
 help i give.&nbsp;&nbsp;please choose path below first</p>
+<p>free  
+<a target="_blank" href="https://www.facebook.com/pages/Julian-Assange/339976537931">julian assange</a></p>
 <div class="btn-group">
 {{
+LinkButton=>lnk4
+  Text=>tools
+  CssClass=>btn btn-primary
+  OnClick
+    magix.help.open-file
+      file=>Help/tools.mml
 LinkButton=>lnk
-  Text=>developers
+  Text=>autistic
   CssClass=>btn btn-primary
   OnClick
     magix.help.open-file
       file=>Help/autistic.mml
 LinkButton=>lnk2
-  Text=>managers
+  Text=>adhd
   CssClass=>btn btn-primary
   OnClick
     magix.help.open-file
       file=>Help/adhd.mml
 LinkButton=>lnk3
-  Text=>admins
+  Text=>nt
   CssClass=>btn btn-primary
   OnClick
     magix.help.open-file
       file=>Help/neuro-typical.mml
 }}
 </div>
-<br />
-<br />
-<p>you want to see
-{{
-LinkButton=>tools
-  Text=>tools
-  OnClick
-    magix.help.open-file
-      file=>Help/tools.mml
-}} too
-</p>
-<p>free  
-<a target="_blank" href="https://www.facebook.com/pages/Julian-Assange/339976537931">julian assange</a>!!</p>
-<br />
-<p>love,</p>
-<p>.m</p>

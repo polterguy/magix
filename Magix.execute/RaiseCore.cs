@@ -52,7 +52,7 @@ functionality from overridden active events";
 				e.Params["raise"]["message"].Value = "hi there world";
 				e.Params["raise"]["no-override"].Value = "False";
 				e.Params["magix.viewport.show-message"].Value = null;
-				e.Params["magix.viewport.show-message"]["message"].Value = "hi there world 2.0, lisp world";
+				e.Params["magix.viewport.show-message"]["message"].Value = "hi there world 2.0, hyper lisp world";
 				return;
 			}
 

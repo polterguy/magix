@@ -9,7 +9,7 @@
 <p><strong>magix.events</strong> are serialized events, may be useful.&nbsp;&nbsp;
 relies upon magix.data</p>
 
-<p><strong>magix.execute</strong> is magix lisp</p>
+<p><strong>magix.execute</strong> is hyper lisp</p>
 
 <p><strong>magix.forms</strong> contains dynamic forms.&nbsp;&nbsp;
 relies upon magix.execute</p>

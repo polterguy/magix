@@ -37,7 +37,7 @@ or refreshed";
 			Node tmp = new Node();
 
 			tmp["form-id"].Value = "header";
-			tmp["html"].Value = "<h1>Active Event Executor</h1>";
+			tmp["html"].Value = "<h1>active event executor</h1>";
 			tmp["container"].Value = "header";
 
 			RaiseEvent(
@@ -53,11 +53,20 @@ or refreshed";
 				tmp);
 
 			tmp = new Node();
-			tmp["id"].Value = "menu";
 
-			LoadModule(
-				"Magix.modules.PlainMenu",
-				"menu",
+			tmp["form-id"].Value = "menu";
+			tmp["html"].Value = @"
+{{
+LinkButton=>help
+  Text=>help
+  CssClass=>btn btn-primary btn-large span2
+  OnClick
+    magix.help.start-help
+}}";
+			tmp["container"].Value = "menu";
+
+			RaiseEvent(
+				"magix.forms.create-web-page",
 				tmp);
 
 			tmp = new Node();
