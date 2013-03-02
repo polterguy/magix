@@ -31,6 +31,7 @@ namespace Magix.tests
 			if (e.Params.Contains("inspect"))
 			{
 				e.Params.Clear();
+				e.Params["event:magix.execute"].Value = null;
 				e.Params["inspect"].Value = @"verifies that [while] behaves correctly, 
 by removing zeroth element of node-list every iteration, until while 
 statement returns false.&nbsp;&nbsp;verifies afterwards that no items 

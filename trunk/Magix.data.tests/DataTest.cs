@@ -49,6 +49,7 @@ namespace Magix.tests
 			if (e.Params.Contains("inspect"))
 			{
 				e.Params.Clear();
+				e.Params["event:magix.execute"].Value = null;
 				e.Params["inspect"].Value = @"verifies that saving and loading
 by id, or key, behaves as it should";
 				e.Params.AddRange(tmp);

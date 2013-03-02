@@ -27,6 +27,7 @@ namespace Magix.tests
 			if (e.Params.Contains("inspect"))
 			{
 				e.Params.Clear();
+				e.Params["event:magix.execute"].Value = null;
 				e.Params["inspect"].Value = @"verifies that [throw] behaves correctly, 
 and throws";
 				e.Params.AddRange(tmp);
@@ -66,6 +67,7 @@ and throws";
 			if (e.Params.Contains("inspect"))
 			{
 				e.Params.Clear();
+				e.Params["event:magix.execute"].Value = null;
 				e.Params["inspect"].Value = @"verifies that [try], [throw] and [catch]
 behave as they should, by checking for the existence of an exception
 after throwing and catching";

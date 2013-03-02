@@ -44,8 +44,9 @@ THOMAS""""""""";
 			if (e.Params.Contains("inspect"))
 			{
 				e.Params.Clear();
-				e.Params["inspect"].Value = @"verifies that a node serializes and
-de-serializes down to a value, or string, flawlessly, by comparing 
+				e.Params["event:magix.execute"].Value = null;
+				e.Params["inspect"].Value = @"verifies that a node serialize and
+de-serialize down to a value, or string, behaves flawlessly, by comparing 
 the before and after results";
 				e.Params.AddRange(tmp);
 				return;
