@@ -25,14 +25,17 @@ namespace Magix.execute
 			if (e.Params.Contains("inspect"))
 			{
 				e.Params["event:magix.execute"].Value = null;
-				e.Params["inspect"].Value = @"use the try keyword to create
+				e.Params["inspect"].Value = @"use the [try] keyword to create
 a block of [code], which will execute your [catch] 
-execution block of code, if an exception is thrown
+execution block of code, if an exception is thrown,
 inside your [code] execution block.&nbsp;&nbsp;this exception handler
 will be invoked, even if an exception occurs any place
 underneath your try code block, deep within your logic.&nbsp;&nbsp;
-you can handle errors being raised in 
-sub-functions, or even recursively invoked active events this way";
+you can handle exceptions being raised in 
+sub-functions, or even recursively invoked active events, or natively thrown
+exceptions this way.&nbsp;&nbsp;if an exception is thrown, you can access 
+the description of the exception in the [exception] node underneath your catch 
+statement";
 				e.Params["try"].Value = null;
 				e.Params["try"]["code"]["throw"].Value = "To Throw or Not to Throw!!";
 				e.Params["try"]["code"]["magix.viewport.show-message"]["message"].Value = "NOT supposed to show!!";
@@ -87,7 +90,7 @@ will stop the entire current execution, and halt
 back to the previous catch, in the stack of 
 active events.&nbsp;&nbsp;[exception] in [catch] becomes the 
 value of the [throw] node.&nbsp;&nbsp;use together with
-magix.execute.try to handle errors";
+[try] to handle errors";
 				e.Params["try"]["code"]["throw"].Value = "Some Exception Error Message";
 				e.Params["try"]["catch"]["set"].Value = "[magix.viewport.show-message][message].Value";
 				e.Params["try"]["catch"]["set"]["value"].Value = "[exception].Value";

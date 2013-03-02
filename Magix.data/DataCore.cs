@@ -135,8 +135,8 @@ the given object-id in the persistent data storage";
 				e.Params["event:magix.data.load"].Value = null;
 				e.Params["load"].Value = "object-id";
 				e.Params["load"]["prototype"].Value = "optional";
-				e.Params["inspect"].Value = @"loads the given object-id or 
-use prototype as filter";
+				e.Params["inspect"].Value = @"loads the given object-id, or 
+use prototype as filter.&nbsp;&nbsp;returns object as [object]";
 				return;
 			}
 			Node prototype = null;
@@ -182,7 +182,7 @@ use prototype as filter";
 			{
 				e.Params["event:magix.data.count"].Value = null;
 				e.Params["inspect"].Value = @"returns the total number 
-of objects in data storage";
+of objects in data storage as [count]";
 				return;
 			}
 			lock (typeof(Node))

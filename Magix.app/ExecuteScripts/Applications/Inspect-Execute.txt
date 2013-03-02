@@ -82,9 +82,9 @@ click any of the ""magix.execute"" active events to the right to inspect them"
             magix.forms.get-value
               form-id=>form1
               id=>code
-            set=>[.ip][..][magix.admin.load-code][code].Value
+            set=>[.ip][..][magix.admin.load-executor-code][code].Value
               value=>[.ip][..][magix.forms.get-value][value].Value
-            magix.admin.load-code
+            magix.admin.load-executor-code
               code
     Panel=>wrp
       CssClass=>span2 offset1
