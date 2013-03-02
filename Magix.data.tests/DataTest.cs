@@ -17,8 +17,8 @@ namespace Magix.tests
 		/**
 		 * Tests to see if "magix.data.save/load", works
 		 */
-		[ActiveEvent(Name = "magix.test.data-save-load-by-key")]
-		public void magix_test_data_save_load_by_key(object sender, ActiveEventArgs e)
+		[ActiveEvent(Name = "magix.test.data.save-by-key")]
+		public void magix_test_data_save_by_key(object sender, ActiveEventArgs e)
 		{
 			Node tmp = new Node();
 
@@ -49,8 +49,8 @@ namespace Magix.tests
 			if (e.Params.Contains("inspect"))
 			{
 				e.Params.Clear();
-				e.Params["inspect"].Value = @"Verifies that saving and loading
-by ID functions as it should.";
+				e.Params["inspect"].Value = @"verifies that saving and loading
+by id, or key, behaves as it should";
 				e.Params.AddRange(tmp);
 				return;
 			}

@@ -17,8 +17,8 @@ namespace Magix.tests
 		/**
 		 * Tests to see if "while", works
 		 */
-		[ActiveEvent(Name = "magix.test.while")]
-		public void magix_test_while(object sender, ActiveEventArgs e)
+		[ActiveEvent(Name = "magix.test.execute.while")]
+		public void magix_test_execute_while(object sender, ActiveEventArgs e)
 		{
 			Node tmp = new Node();
 
@@ -31,8 +31,10 @@ namespace Magix.tests
 			if (e.Params.Contains("inspect"))
 			{
 				e.Params.Clear();
-				e.Params["inspect"].Value = @"Checks to see if while
-functions as it should.";
+				e.Params["inspect"].Value = @"verifies that [while] behaves correctly, 
+by removing zeroth element of node-list every iteration, until while 
+statement returns false.&nbsp;&nbsp;verifies afterwards that no items 
+are left in the node-list";
 				e.Params.AddRange(tmp);
 				return;
 			}

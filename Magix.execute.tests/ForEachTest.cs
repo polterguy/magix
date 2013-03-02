@@ -17,8 +17,8 @@ namespace Magix.tests
 		/**
 		 * Tests to see if "for-each", works
 		 */
-		[ActiveEvent(Name = "magix.test.for-each")]
-		public void magix_test_for_each(object sender, ActiveEventArgs e)
+		[ActiveEvent(Name = "magix.test.execute.for-each")]
+		public void magix_test_execute_for_each(object sender, ActiveEventArgs e)
 		{
 			Node tmp = new Node();
 
@@ -33,8 +33,10 @@ namespace Magix.tests
 			if (e.Params.Contains("inspect"))
 			{
 				e.Params.Clear();
-				e.Params["inspect"].Value = @"Checks to see if for-each
-functions as it should.";
+				e.Params["inspect"].Value = @"verifies that [for-each] iterates correctly
+over a three items long list of items, by copying them
+into another node, iteratively, and verify they were all 
+copied correctly afterwards";
 				e.Params.AddRange(tmp);
 				return;
 			}

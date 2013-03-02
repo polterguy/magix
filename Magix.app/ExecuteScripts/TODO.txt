@@ -17,6 +17,8 @@
 
 * Make Active Event Executor become a "script file" in itself
 
+* Clicking twice on an event in "View Unit Tests" tools, doubles the node code ...?
+
 * Diagnostic tool in help
 
 * all lower case letters in descriptions

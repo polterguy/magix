@@ -32,8 +32,8 @@ namespace Magix.tests
 			if (e.Params.Contains("inspect"))
 			{
 				e.Params.Clear();
-				e.Params["inspect"].Value = @"Checks to see if creating a new thread
-functions as it should.";
+				e.Params["inspect"].Value = @"verifies that [fork] behaves correctly, 
+by using magix.data.load and save to signal between threads for success";
 				e.Params.AddRange(tmp);
 				return;
 			}

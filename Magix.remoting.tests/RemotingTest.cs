@@ -52,54 +52,10 @@ functions as it should.";
 		}
 
 		/**
-		 * Tests to see if create non-remotable "event", and invoking it later remotely, throws
-		 */
-		[ActiveEvent(Name = "magix.test.non-remotely-remotely-activated-throws")]
-		public void magix_test_non_remotely_remotely_activated_throws(object sender, ActiveEventArgs e)
-		{
-			Node tmp = new Node();
-
-			tmp["event"].Value = "foo.bar";
-			tmp["event"]["remotable"].Value = false;
-			tmp["event"]["code"]["Data"].Value = "howdy";
-			tmp["remote"]["URL"].Value = "http://127.0.0.1:8080";
-			tmp["remote"].Value = "foo.bar";
-			tmp.Add (new Node("event", "foo.bar"));
-
-			if (e.Params.Contains("inspect"))
-			{
-				e.Params.Clear();
-				e.Params["inspect"].Value = @"Checks to see if event
-created as a non-remotable event, 
-functions as it should, and throws
-when remotely activated.";
-				e.Params.AddRange(tmp);
-				return;
-			}
-
-			try
-			{
-				RaiseEvent(
-					"magix.execute",
-					tmp);
-				throw new ApplicationException("non-remotely active event invoked remotely didn't throw an exception ...?");
-			}
-			catch
-			{
-				Node tmp2 = new Node();
-				tmp2["event"].Value = "foo.bar";
-				RaiseEvent(
-					"magix.execute",
-					tmp2);
-				return;
-			}
-		}
-
-		/**
 		 * Tests to see if create default "event", and invoking it later remotely, throws
 		 */
-		[ActiveEvent(Name = "magix.test.default-event-remotely-activated-throws")]
-		public void magix_test_default_event_remotely_activated_throws(object sender, ActiveEventArgs e)
+		[ActiveEvent(Name = "magix.test.remoting.default-event-remoted-throws")]
+		public void magix_test_default_event_remoted_throws(object sender, ActiveEventArgs e)
 		{
 			Node tmp = new Node();
 
@@ -112,10 +68,8 @@ when remotely activated.";
 			if (e.Params.Contains("inspect"))
 			{
 				e.Params.Clear();
-				e.Params["inspect"].Value = @"Checks to see if event
-created as a default event, 
-functions as it should, and 
-throws when invoked remotely.";
+				e.Params["inspect"].Value = @"verifies that an event
+created as a default event, throws when attempted to be invoked remotely";
 				e.Params.AddRange(tmp);
 				return;
 			}
