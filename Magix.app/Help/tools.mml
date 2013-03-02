@@ -2,7 +2,7 @@
 <p>here are some tools for your convenience.&nbsp;&nbsp;
 {{
 LinkButton=>keywords2
-  Text=>keywords
+  Text=>hyper lisp
   OnClick
     magix.admin.run-file
       file=>ExecuteScripts/Applications/inspect-execute.hl
@@ -58,7 +58,7 @@ LinkButton=>av5
 <div class="btn-group">
 {{
 LinkButton=>keywords
-  Text=>keywords
+  Text=>hyper lisp
   CssClass=>btn btn-info
   OnClick
     magix.admin.run-file
