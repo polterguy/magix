@@ -157,6 +157,17 @@ namespace Magix.forms
         [ActiveEvent(Name = "magix.forms.change-html")]
 		protected void magix_forms_change_html(object sender, ActiveEventArgs e)
 		{
+			if (e.Params.Contains("inspect"))
+			{
+				e.Params["event:magix.forms.change-html"].Value = null;
+				e.Params["inspect"].Value = @"changes the html of the 
+given [form-id] to what is in [html]";
+				e.Params["form-id"].Value = "header";
+				e.Params["html"].Value = @"
+hello world";
+				return;
+			}
+
 			if (!e.Params.Contains ("html"))
 				throw new ArgumentException("Need html parameter to change-html");
 

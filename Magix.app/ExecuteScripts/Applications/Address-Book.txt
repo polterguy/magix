@@ -9,7 +9,7 @@ node hierarchy, for-each, basic web controls, etc.
 Also clearly demonstrates self-modifying code and
 pretty advanced expressions"
 
-event=>load-address
+event=>magix.demo.load-address
   code
     magix.data.load=>adr
     for-each=>[/][magix.data.load][object]
@@ -151,5 +151,5 @@ to contents in stored objects, and some other things."
                   value=>[.ip][..][0][object]
                 magix.data.save=>adr
                   object
-                raise=>load-address
-raise=>load-address
+                raise=>magix.demo.load-address
+raise=>magix.demo.load-address

@@ -65,10 +65,10 @@ cf
       controls
         Label=>header
           Text=>name of unit test
-          CssClass=>span5
+          CssClass=>span4
           Tag=>strong
         Label=>desc
-          CssClass=>span5
+          CssClass=>span4
           Text=>@"description of your unit test.&nbsp;&nbsp;
 click any of the unit tests to the right to inspect them"
         Label=>code

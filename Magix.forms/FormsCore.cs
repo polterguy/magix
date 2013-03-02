@@ -23,6 +23,7 @@ namespace Magix.execute
 		{
 			if (e.Params.Contains("inspect"))
 			{
+				e.Params["event:magix.forms.create-form"].Value = "content";
 				e.Params["container"].Value = "content";
 				e.Params["form-id"].Value = "unique-identification-of-your-form";
 				e.Params["controls"]["Button"].Value = "btn";
@@ -48,9 +49,10 @@ contains the controls themselves, such as ""Button"" nodes, etc.";
 		{
 			if (e.Params.Contains("inspect"))
 			{
+				e.Params["event:magix.forms.create-web-page"].Value = null;
 				e.Params["container"].Value = "content";
 				e.Params["form-id"].Value = "unique-identification-of-your-form";
-				e.Params["html"].Value = "<h1>Some HTML</h1>";
+				e.Params["html"].Value = "Some HTML";
 				e.Params["inspect"].Value = @"Creates a dynamic HTML web page,
 loading it into the ""container"" viewport container. ""form-id""
 must be a uniquely identifiable id for later use. ""html""

@@ -24,6 +24,15 @@ namespace Magix.execute
 		[ActiveEvent(Name = "magix.code.node-2-code")]
 		public static void magix_code_node_2_code(object sender, ActiveEventArgs e)
 		{
+			if (e.Params.Contains("inspect"))
+			{
+				e.Params["inspect"].Value = @"will transform the [JSON] node to 
+code syntax";
+				e.Params["event:magix.code.node-2-code"].Value = null;
+				e.Params["JSON"]["something"].Value =  "something-else";
+				return;
+			}
+
 			if (!e.Params.Contains("JSON"))
 			{
 				throw new ArgumentException("No node JSON passed into transform-node-2-code");
@@ -95,6 +104,18 @@ namespace Magix.execute
 		[ActiveEvent(Name = "magix.code.code-2-node")]
 		public static void magix_code_code_2_node(object sender, ActiveEventArgs e)
 		{
+			if (e.Params.Contains("inspect"))
+			{
+				e.Params["inspect"].Value = @"will transform the [code] node to 
+a node tree";
+				e.Params["event:magix.code.code-2-node"].Value = null;
+				e.Params["code"].Value =  @"
+Code
+  Goes
+    Here";
+				return;
+			}
+
 			if (!e.Params.Contains("code"))
 				throw new ArgumentException("No code node passed into _transform-code-2-node");
 

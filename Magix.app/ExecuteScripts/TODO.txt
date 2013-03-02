@@ -19,7 +19,12 @@
 
 * Clicking twice on an event in "View Unit Tests" tools, doubles the node code ...?
 
+* Remove Magix.modules and replace menu with HtmlViewer, with menu in File on disc, or something ...
+
 * Diagnostic tool in help
+
+* magix.code.code-2-node and magix.code.node-2-code doesn't seem to 
+  function in inspect values in executor ...?
 
 * all lower case letters in descriptions
 

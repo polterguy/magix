@@ -16,7 +16,7 @@ set=>[magix.admin.get-active-events].Name
 for-each=>[Data][ActiveEvents]
   Tpl
     LinkButton
-      CssClass=>span2 btn btn-small
+      CssClass=>span2 btn btn-small btn-left
       Text
       OnClick
         void.foo

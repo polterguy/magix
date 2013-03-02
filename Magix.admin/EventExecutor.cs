@@ -26,20 +26,18 @@ namespace Magix.admin
 		{
 			if (e.Params.Contains("inspect"))
 			{
+				e.Params["event:magix.admin.get-active-events"].Value = null;
 				e.Params["all"].Value = false;
+				e.Params["open"].Value = false;
+				e.Params["remoted"].Value = false;
 				e.Params["overridden"].Value = false;
 				e.Params["begins-with"].Value = "magix.execute.";
-				e.Params["inspect"].Value = @"Will return all the Active Events currently registered
-within the system. Notice that this can CHANGE as the system runs, due to Event Overriding.
-Will return a list of events within the ""ActiveEvents"" node where the Value is the name
-of the Active Event you can raise. Underneath each event, it will contain a ""CSS"" node
-which can have the value of ""description-error"", ""description"" and ""description-important"". Error means it's an overridden
-System event, at which case you should be on the look-out, and alert. notice means it's an
-overridden and dynamically created event and description means it's a System event, an event in 
-Code that is. In addition it will also have a ""Tooltip"" node, in case it's an overridden 
-event, where the ""ToolTip"" will contain the original event name. Takes no parameters";
+				e.Params["inspect"].Value = @"returns all public active events registered 
+within the system.&nbsp;&nbsp;add [all], [open], [remoted], [overridden] 
+or [begins-with] to filter the events returned";
 				return;
 			}
+
 			bool takeAll = false;
 			if (e.Params.Contains("all"))
 				takeAll = e.Params["all"].Get<bool>();
@@ -68,7 +66,7 @@ event, where the ""ToolTip"" will contain the original event name. Takes no para
 				{
 					if (ActiveEvents.Instance.IsAllowedRemotely(idx))
 					{
-						node["ActiveEvents"]["no_" + idxNo.ToString()].Value = string.IsNullOrEmpty (idx) ? "&nbsp;" : idx;
+						node["ActiveEvents"]["no_" + idxNo.ToString()].Value = string.IsNullOrEmpty (idx) ? "" : idx;
 					}
 					continue;
 				}
@@ -76,7 +74,7 @@ event, where the ""ToolTip"" will contain the original event name. Takes no para
 				{
 					if (ActiveEvents.Instance.RemotelyOverriddenURL(idx) != null)
 					{
-						node["ActiveEvents"]["no_" + idxNo.ToString()].Value = string.IsNullOrEmpty (idx) ? "&nbsp;" : idx;
+						node["ActiveEvents"]["no_" + idxNo.ToString()].Value = string.IsNullOrEmpty (idx) ? "" : idx;
 					}
 					continue;
 				}
@@ -97,12 +95,12 @@ event, where the ""ToolTip"" will contain the original event name. Takes no para
 				{
 					if (ActiveEvents.Instance.IsOverride(idx))
 					{
-						node["ActiveEvents"]["no_" + idxNo.ToString()].Value = string.IsNullOrEmpty (idx) ? "&nbsp;" : idx;
+						node["ActiveEvents"]["no_" + idxNo.ToString()].Value = string.IsNullOrEmpty (idx) ? "" : idx;
 					}
 				}
 				else
 				{
-					node["ActiveEvents"]["no_" + idxNo.ToString()].Value = string.IsNullOrEmpty (idx) ? "&nbsp;" : idx;
+					node["ActiveEvents"]["no_" + idxNo.ToString()].Value = string.IsNullOrEmpty (idx) ? "" : idx;
 				}
 				idxNo += 1;
 			}
@@ -120,8 +118,16 @@ event, where the ""ToolTip"" will contain the original event name. Takes no para
 		{
 			if (e.Params.Contains("inspect"))
 			{
-				e.Params["inspect"].Value = @"Will open active event executor
-in content with given ""code"" Value, expected to be code";
+				e.Params.Clear();
+				e.Params["event:magix.admin.load-code"].Value = null;
+				e.Params["inspect"].Value = @"opens active event executor
+in content with given [code] Value";
+				e.Params["code"].Value = @"
+event:magix.execute
+Data=>thomas
+if=>[Data].Value==thomas
+  magix.viewport.show-message
+    message=>howdy world";
 				return;
 			}
 
@@ -132,7 +138,7 @@ in content with given ""code"" Value, expected to be code";
 			node["container"].Value = "content";
 
 			RaiseEvent(
-				"magix.admin.open-event-viewer",
+				"magix.admin.open-event-executor",
 				node);
 
 			node = new Node();
@@ -152,15 +158,13 @@ in content with given ""code"" Value, expected to be code";
 		{
 			if (e.Params.Contains("inspect"))
 			{
+				e.Params["inspect"].Value = @"will open active event sniffer, 
+allowing you to spy on all active events being raised in your system";
+				e.Params["event:magix.admin.open-event-sniffer"].Value = null;
 				e.Params["container"].Value = "content";
-				e.Params["inspect"].Value = @"Will open the Event Sniffer
-form, in ""container"" container in viewport, 
-which will show all active events raised in 
-the system, for every postback to the server,
-allowing you to facilitate for debugging of
-your server.";
 				return;
 			}
+
 			LoadModule (
 				"Magix.admin.EventSniffer", 
 				e.Params["container"].Get<string>());
@@ -171,16 +175,14 @@ your server.";
 		 * The Active Event viewer allows you to see all events in the system, and also
 		 * execute arbitrary events with nodes as arguments
 		 */
-		[ActiveEvent(Name = "magix.admin.open-event-viewer")]
-		public void magix_admin_open_event_viewer(object sender, ActiveEventArgs e)
+		[ActiveEvent(Name = "magix.admin.open-event-executor")]
+		public void magix_admin_open_event_executor(object sender, ActiveEventArgs e)
 		{
 			if (e.Params.Contains("inspect"))
 			{
+				e.Params["event:magix.admin.open-even-executor"].Value = null;
 				e.Params["container"].Value = "content";
-				e.Params["inspect"].Value = @"Will open the Active Event Executor, from which
-you can run Active Events and inspect them and do other Meta/Admin Operations. Also
-serves like a development environment from which you can start at. It will load
-the module into the ""container"" viewport container.";
+				e.Params["inspect"].Value = @"opens the active event executor in content";
 				return;
 			}
 			LoadModule (

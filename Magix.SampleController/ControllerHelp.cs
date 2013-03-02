@@ -27,10 +27,10 @@ namespace Magix.SampleController
 		[ActiveEvent(Name = "magix.help.start-help")]
 		public void magix_help_start_help(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains ("inspect"))
+			if (e.Params.Contains("inspect"))
 			{
-				e.Params["inspect"].Value = @"Starts the Magix Illuminate 
-Help system.";
+				e.Params["event:magix.help.start-help"].Value = null;
+				e.Params["inspect"].Value = @"opens the help files in modal container";
 				return;
 			}
 
@@ -114,6 +114,14 @@ LinkButton=>forward
 		[ActiveEvent(Name = "magix.help.open-file")]
 		public void magix_help_open_file(object sender, ActiveEventArgs e)
 		{
+			if (e.Params.Contains("inspect"))
+			{
+				e.Params["event:magix.help.open-file"].Value = null;
+				e.Params["file"].Value = "Help/index.html";
+				e.Params["inspect"].Value = @"opens the given [file] file as html";
+				return;
+			}
+
 			Node tmp = new Node();
 			tmp["form-id"].Value = "help";
 
@@ -165,13 +173,24 @@ LinkButton=>forward
 		[ActiveEvent(Name = "magix.help.add-page")]
 		public void magix_help_add_page(object sender, ActiveEventArgs e)
 		{
+			if (e.Params.Contains("inspect"))
+			{
+				e.Params["event:magix.help.add-page"].Value = null;
+				e.Params["page"].Value = "Help/path-to-page.txt";
+				e.Params["reset"].Value = false;
+				e.Params["inspect"].Value = @"adds the given [page] to the history 
+of the help system.&nbsp;&nbsp;set [reset] to true to reset entire history stack
+of help system";
+				return;
+			}
+
 			if (e.Params.Contains("reset") && e.Params["reset"].Get<bool>())
 			{
 				CurrentIndex = -1;
 				Pages.Clear();
 			}
 
-			if (!e.Params.Contains ("page"))
+			if (!e.Params.Contains("page"))
 				throw new ArgumentException("need to know which page to add");
 
 			while (Pages.Count - 1 > CurrentIndex)
@@ -187,6 +206,13 @@ LinkButton=>forward
 		[ActiveEvent(Name = "magix.help.move-backwards")]
 		public void magix_help_move_backwards(object sender, ActiveEventArgs e)
 		{
+			if (e.Params.Contains("inspect"))
+			{
+				e.Params["event:magix.help.move-backwards"].Value = null;
+				e.Params["inspect"].Value = @"opens the previously opened help file";
+				return;
+			}
+
 			if (CurrentIndex <= 0)
 			{
 				Node ms = new Node();
@@ -195,6 +221,7 @@ LinkButton=>forward
 				RaiseEvent(
 					"magix.viewport.show-message",
 					ms);
+
 				return;
 			}
 
@@ -208,6 +235,8 @@ LinkButton=>forward
 			RaiseEvent(
 				"magix.help.open-file",
 				tmp);
+
+			e.Params["success"].Value = true;
 		}
 
 		/**
@@ -216,6 +245,14 @@ LinkButton=>forward
 		[ActiveEvent(Name = "magix.help.move-forwards")]
 		public void magix_help_move_forwards(object sender, ActiveEventArgs e)
 		{
+			if (e.Params.Contains("inspect"))
+			{
+				e.Params["event:magix.help.move-backwards"].Value = null;
+				e.Params["inspect"].Value = @"moves forward in the history of 
+opened help pages";
+				return;
+			}
+
 			if (CurrentIndex >= Pages.Count - 1)
 			{
 				Node ms = new Node();
