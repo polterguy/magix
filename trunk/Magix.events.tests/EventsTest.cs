@@ -17,8 +17,8 @@ namespace Magix.tests
 		/**
 		 * Tests to see if create "event", and invoking it later, works
 		 */
-		[ActiveEvent(Name = "magix.test.event-invoke")]
-		public void magix_test_event_invoke(object sender, ActiveEventArgs e)
+		[ActiveEvent(Name = "magix.test.execute.invoke-event")]
+		public void magix_test_execute_invoke_event(object sender, ActiveEventArgs e)
 		{
 			Node tmp = new Node();
 
@@ -32,8 +32,8 @@ namespace Magix.tests
 			if (e.Params.Contains("inspect"))
 			{
 				e.Params.Clear();
-				e.Params["inspect"].Value = @"Checks to see if ""event""
-functions as it should.";
+				e.Params["inspect"].Value = @"verifies that creating and invoking an 
+[event] behaves correctly, and also that event is destroyed when supposed to";
 				e.Params.AddRange(tmp);
 				return;
 			}
@@ -48,49 +48,20 @@ functions as it should.";
 				throw new ApplicationException(
 					"Failure of executing event invoke statement");
 			}
-		}
 
-		/**
-		 * Tests to see if "remove-event", works
-		 */
-		[ActiveEvent(Name = "magix.test.remove-event")]
-		public void magix_test_remove_event(object sender, ActiveEventArgs e)
-		{
-			Node tmp = new Node();
-
-			tmp["event"].Value = "foo.bar";
-			tmp["event"]["code"]["Data"].Value = "howdy";
-			tmp["event"]["code"]["set"].Value = "[Data].Value";
-			tmp.Add (new Node("event", "foo.bar"));
-
-			if (e.Params.Contains("inspect"))
-			{
-				e.Params.Clear();
-				e.Params["inspect"].Value = @"Checks to see if remove-event
-functions as it should.";
-				e.Params.AddRange(tmp);
-				return;
-			}
-
-			RaiseEvent(
-				"magix.execute",
-				tmp);
-
-			foreach (string idx in ActiveEvents.Instance.ActiveEventHandlers)
+			foreach (string idx in ActiveEvents.Instance.EventMappingKeys)
 			{
 				if (idx == "foo.bar")
-				{
 					throw new ApplicationException(
-						"Failure of executing remove-event statement");
-				}
+						"Failure of executing event test, event not destroyed as supposed to");
 			}
 		}
 
 		/**
 		 * Tests to see if create "event", and invoking it later, works
 		 */
-		[ActiveEvent(Name = "magix.test.remote-event-invoke")]
-		public void magix_test_remote_event_invoke(object sender, ActiveEventArgs e)
+		[ActiveEvent(Name = "magix.test.execute.invoke-remote")]
+		public void magix_test_execute_invoke_remote(object sender, ActiveEventArgs e)
 		{
 			Node tmp = new Node();
 
@@ -105,8 +76,9 @@ functions as it should.";
 			if (e.Params.Contains("inspect"))
 			{
 				e.Params.Clear();
-				e.Params["inspect"].Value = @"Checks to see if event
-functions as it should.";
+				e.Params["inspect"].Value = @"verifies that creating an [event] which is remotable 
+behaves correctly by raising it using [remote] and verify parameters are changed 
+as supposed to";
 				e.Params.AddRange(tmp);
 				return;
 			}

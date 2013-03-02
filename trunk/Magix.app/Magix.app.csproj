@@ -58,6 +58,7 @@
     <Content Include="media\images\help-files\module-properties.png" />
     <Content Include="media\images\help-files\mux.png" />
     <Content Include="media\images\help-files\new-project.png" />
+    <Content Include="media\main.css" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Global.asax.cs">

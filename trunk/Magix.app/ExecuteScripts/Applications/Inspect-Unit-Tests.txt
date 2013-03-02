@@ -16,7 +16,7 @@ set=>[magix.admin.get-active-events].Name
 for-each=>[Data][ActiveEvents]
   Tpl
     LinkButton
-      CssClass=>span2 btn btn-small
+      CssClass=>span4 btn btn-small btn-left
       Text
       OnClick
         void.foo
@@ -72,7 +72,7 @@ cf
           Text=>@"description of your unit test.&nbsp;&nbsp;
 click any of the unit tests to the right to inspect them"
         Label=>code
-          CssClass=>span5
+          CssClass=>span4
           Text=>code ...
           Tag=>pre
         Panel=>wrp
@@ -110,5 +110,5 @@ click any of the unit tests to the right to inspect them"
               OnClick
                 magix.tests.run
     Panel=>wrp
-      CssClass=>span2 offset1
+      CssClass=>span3
       controls

@@ -18,10 +18,11 @@ namespace Magix.tests
 		 * Tests to see if a conversion of a complex Node tree, between code, and 
 		 * back again, can re-create the original Node-List, also with different types
 		 */
-		[ActiveEvent(Name = "magix.test.transform-node-code")]
-		public void magix_test_transform_node_code(object sender, ActiveEventArgs e)
+		[ActiveEvent(Name = "magix.test.code.node-2-code")]
+		public void magix_test_code_code_2_node(object sender, ActiveEventArgs e)
 		{
 			Node tmp = new Node();
+
 			tmp["Data"]["date"].Value = DateTime.Now.Date.AddHours (1).AddMinutes (4).AddSeconds (54);
 			tmp["Data"]["HELLO"]["bool"].Value = true;
 			tmp["decimal"].Value = 1.54M;
@@ -39,6 +40,16 @@ sadfpijsdfpijsdfpoijsdafopijsdfoij!!!!!!!""";
 
 THOMAS""""""""";
 			tmp["expr"]["deep"]["deep1"]["deep2"].Value = @"[tjobing]";
+
+			if (e.Params.Contains("inspect"))
+			{
+				e.Params.Clear();
+				e.Params["inspect"].Value = @"verifies that a node serializes and
+de-serializes down to a value, or string, flawlessly, by comparing 
+the before and after results";
+				e.Params.AddRange(tmp);
+				return;
+			}
 
 			Node input = new Node();
 			input["JSON"].Value = tmp.Clone();
