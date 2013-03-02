@@ -17,8 +17,8 @@ namespace Magix.tests
 		/**
 		 * Tests to see if "fork", works
 		 */
-		[ActiveEvent(Name = "magix.test.fork")]
-		public void magix_test_fork(object sender, ActiveEventArgs e)
+		[ActiveEvent(Name = "magix.test.threads.fork")]
+		public void magix_test_threads_fork(object sender, ActiveEventArgs e)
 		{
 			Node tmp = new Node();
 
@@ -32,6 +32,7 @@ namespace Magix.tests
 			if (e.Params.Contains("inspect"))
 			{
 				e.Params.Clear();
+				e.Params["event:magix.execute"].Value = null;
 				e.Params["inspect"].Value = @"verifies that [fork] behaves correctly, 
 by using magix.data.load and save to signal between threads for success";
 				e.Params.AddRange(tmp);

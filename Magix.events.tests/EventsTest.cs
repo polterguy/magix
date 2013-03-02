@@ -32,6 +32,7 @@ namespace Magix.tests
 			if (e.Params.Contains("inspect"))
 			{
 				e.Params.Clear();
+				e.Params["event:magix.execute"].Value = null;
 				e.Params["inspect"].Value = @"verifies that creating and invoking an 
 [event] behaves correctly, and also that event is destroyed when supposed to";
 				e.Params.AddRange(tmp);
@@ -76,6 +77,7 @@ namespace Magix.tests
 			if (e.Params.Contains("inspect"))
 			{
 				e.Params.Clear();
+				e.Params["event:magix.execute"].Value = null;
 				e.Params["inspect"].Value = @"verifies that creating an [event] which is remotable 
 behaves correctly by raising it using [remote] and verify parameters are changed 
 as supposed to";

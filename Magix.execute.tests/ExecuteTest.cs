@@ -29,6 +29,8 @@ namespace Magix.tests
 
 			if (e.Params.Contains("inspect"))
 			{
+				e.Params.Clear();
+				e.Params["event:magix.execute"].Value = null;
 				e.Params["inspect"].Value = @"tests to see if basic magix.execute
 functionality works, by executing a simple [if] statement, and verify
 that the result node set is manipulated as it should be";
@@ -63,6 +65,8 @@ that the result node set is manipulated as it should be";
 
 			if (e.Params.Contains("inspect"))
 			{
+				e.Params.Clear();
+				e.Params["event:magix.execute"].Value = null;
 				e.Params["inspect"].Value = @"verifies that passing in a context into 
 a magix.execute block of code correctly behaves by setting 
 a node's value to new-value within the block being executed";

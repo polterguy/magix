@@ -27,6 +27,7 @@ namespace Magix.threading
 		{
 			if (e.Params.Contains("inspect"))
 			{
+				e.Params["event:magix.execute"].Value = null;
 				e.Params["fork"]["Data"]["Value"].Value = "thomas";
 				e.Params["fork"]["if"].Value = "[Data][Value].Value==thomas";
 				e.Params["fork"]["if"]["raise"].Value = "magix.viewport.show-message";
@@ -77,7 +78,7 @@ thread will not change any data on the original node-set";
 		{
 			if (e.Params.Contains("inspect"))
 			{
-				e.Params["event:magix.execute"].Value = 500;
+				e.Params["event:magix.execute"].Value = null;
 				e.Params["sleep"].Value = 500;
 				e.Params["inspect"].Value = @"sleeps the current threat
 for value number of milliseconds.";

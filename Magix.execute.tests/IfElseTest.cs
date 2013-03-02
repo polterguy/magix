@@ -33,6 +33,7 @@ namespace Magix.tests
 			if (e.Params.Contains("inspect"))
 			{
 				e.Params.Clear();
+				e.Params["event:magix.execute"].Value = null;
 				e.Params["inspect"].Value = @"verifies that [if] correctly behaves by 
 comparing a node expression's value against a static value, 
 and from within the [if], change a value to success";
@@ -70,6 +71,7 @@ and from within the [if], change a value to success";
 			if (e.Params.Contains("inspect"))
 			{
 				e.Params.Clear();
+				e.Params["event:magix.execute"].Value = null;
 				e.Params["inspect"].Value = @"verifies that an [if] comparison which 
 compares the name of a node against a static value behaves correctly";
 				e.Params.AddRange(tmp);
@@ -106,6 +108,7 @@ compares the name of a node against a static value behaves correctly";
 			if (e.Params.Contains("inspect"))
 			{
 				e.Params.Clear();
+				e.Params["event:magix.execute"].Value = null;
 				e.Params["inspect"].Value = @"verifies that a not-equals comparison
 on [if] behaves correctly, by returning false when it is supposed to";
 				e.Params.AddRange(tmp);
@@ -142,6 +145,7 @@ on [if] behaves correctly, by returning false when it is supposed to";
 			if (e.Params.Contains("inspect"))
 			{
 				e.Params.Clear();
+				e.Params["event:magix.execute"].Value = null;
 				e.Params["inspect"].Value = @"verifies checking for the existence of
 a node's value returns true, when value is not null";
 				e.Params.AddRange(tmp);
@@ -178,6 +182,7 @@ a node's value returns true, when value is not null";
 			if (e.Params.Contains("inspect"))
 			{
 				e.Params.Clear();
+				e.Params["event:magix.execute"].Value = null;
 				e.Params["inspect"].Value = @"verifies checking for the existence 
 of a node within [if] returns true, when node exist";
 				e.Params.AddRange(tmp);
@@ -214,6 +219,7 @@ of a node within [if] returns true, when node exist";
 			if (e.Params.Contains("inspect"))
 			{
 				e.Params.Clear();
+				e.Params["event:magix.execute"].Value = null;
 				e.Params["inspect"].Value = @"verifies that a single-component [if]
 statement behaves correctly when the node it looks for
 does not exist.&nbsp;&nbsp;also verifies that the [if] 
@@ -258,6 +264,7 @@ does not generate a path, as it traverses the nodes";
 			if (e.Params.Contains("inspect"))
 			{
 				e.Params.Clear();
+				e.Params["event:magix.execute"].Value = null;
 				e.Params["inspect"].Value = @"verifies that checking for the 
 existence of a value, when it does not exist, behaves correctly
 and return false when supposed to";
@@ -297,8 +304,9 @@ and return false when supposed to";
 			if (e.Params.Contains("inspect"))
 			{
 				e.Params.Clear();
+				e.Params["event:magix.execute"].Value = null;
 				e.Params["inspect"].Value = @"verifies that nested [if] statements 
-functions as they should, by setting a node's value to success";
+behaves as they should, by setting a node's value to success";
 				e.Params.AddRange(tmp);
 				return;
 			}
@@ -333,6 +341,7 @@ functions as they should, by setting a node's value to success";
 			if (e.Params.Contains("inspect"))
 			{
 				e.Params.Clear();
+				e.Params["event:magix.execute"].Value = null;
 				e.Params["inspect"].Value = @"verifies that not'ing the returned 
 value of an [if] that checks for the existence of a value behaves correctly,
 by returning true when supposed to";
@@ -373,6 +382,7 @@ by returning true when supposed to";
 			if (e.Params.Contains("inspect"))
 			{
 				e.Params.Clear();
+				e.Params["event:magix.execute"].Value = null;
 				e.Params["inspect"].Value = @"verifies that [else-if] can positively 
 return true for the existence of a value in a single 
 component else-if expression";
@@ -413,6 +423,7 @@ component else-if expression";
 			if (e.Params.Contains("inspect"))
 			{
 				e.Params.Clear();
+				e.Params["event:magix.execute"].Value = null;
 				e.Params["inspect"].Value = @"verifies that [else-if] can positively
 check if a node exist, as a single statement else-if expression";
 				e.Params.AddRange(tmp);
@@ -452,6 +463,7 @@ check if a node exist, as a single statement else-if expression";
 			if (e.Params.Contains("inspect"))
 			{
 				e.Params.Clear();
+				e.Params["event:magix.execute"].Value = null;
 				e.Params["inspect"].Value = @"verifies that sub-expression 
 within [else-if] statements correctly behaves in a 
 comparison expression between a node-set with a 
@@ -493,6 +505,7 @@ sub-expression, and its value, and a static value";
 			if (e.Params.Contains("inspect"))
 			{
 				e.Params.Clear();
+				e.Params["event:magix.execute"].Value = null;
 				e.Params["inspect"].Value = @"verifies that [else] behaves
 as it should and kicks in if neither [if] nor [else-if] kicks in";
 				e.Params.AddRange(tmp);

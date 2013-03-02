@@ -33,6 +33,7 @@ namespace Magix.tests
 			if (e.Params.Contains("inspect"))
 			{
 				e.Params.Clear();
+				e.Params["event:magix.execute"].Value = null;
 				e.Params["inspect"].Value = @"verifies that [for-each] iterates correctly
 over a three items long list of items, by copying them
 into another node, iteratively, and verify they were all 

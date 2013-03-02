@@ -37,6 +37,7 @@ hello ""hello"" hello ....";
 			if (e.Params.Contains("inspect"))
 			{
 				e.Params.Clear();
+				e.Params["event:magix.execute"].Value = null;
 				e.Params["inspect"].Value = @"verifies that using [set] to copy 
 one node-list, and put it into another node, behaves correctly, and retain
 the original correctly, and the new list is an exact replica";
@@ -79,6 +80,7 @@ the original correctly, and the new list is an exact replica";
 			if (e.Params.Contains("inspect"))
 			{
 				e.Params.Clear();
+				e.Params["event:magix.execute"].Value = null;
 				e.Params["inspect"].Value = @"verifies that setting a node to null, 
 behaves correctly, and deletes the entire node, with its children";
 				e.Params.AddRange(tmp);
@@ -111,6 +113,7 @@ behaves correctly, and deletes the entire node, with its children";
 			if (e.Params.Contains("inspect"))
 			{
 				e.Params.Clear();
+				e.Params["event:magix.execute"].Value = null;
 				e.Params["inspect"].Value = @"verifies that setting a node's value
 from another node's value, behaves correctly";
 				e.Params.AddRange(tmp);
@@ -145,6 +148,7 @@ from another node's value, behaves correctly";
 			if (e.Params.Contains("inspect"))
 			{
 				e.Params.Clear();
+				e.Params["event:magix.execute"].Value = null;
 				e.Params["inspect"].Value = @"verifies that setting a node's value
 to null, behaves correctly";
 				e.Params.AddRange(tmp);
@@ -182,6 +186,7 @@ to null, behaves correctly";
 			if (e.Params.Contains("inspect"))
 			{
 				e.Params.Clear();
+				e.Params["event:magix.execute"].Value = null;
 				e.Params["inspect"].Value = @"verifies that attempting to set a node's name
 to a null value, throws an exception, as it should";
 				e.Params.AddRange(tmp);
@@ -218,6 +223,7 @@ to a null value, throws an exception, as it should";
 			if (e.Params.Contains("inspect"))
 			{
 				e.Params.Clear();
+				e.Params["event:magix.execute"].Value = null;
 				e.Params["inspect"].Value = @"verifies that name is extracted 
 correctly by setting another node's value to 
 the name of a node";
@@ -255,6 +261,7 @@ the name of a node";
 			if (e.Params.Contains("inspect"))
 			{
 				e.Params.Clear();
+				e.Params["event:magix.execute"].Value = null;
 				e.Params["inspect"].Value = @"verifies that setting a node's name 
 behaves correctly, when set to another node's name";
 				e.Params.AddRange(tmp);
@@ -294,6 +301,7 @@ behaves correctly, when set to another node's name";
 			if (e.Params.Contains("inspect"))
 			{
 				e.Params.Clear();
+				e.Params["event:magix.execute"].Value = null;
 				e.Params["inspect"].Value = @"verifies that setting a value to a node-list
 behaves correctly";
 				e.Params.AddRange(tmp);
@@ -330,6 +338,7 @@ behaves correctly";
 			if (e.Params.Contains("inspect"))
 			{
 				e.Params.Clear();
+				e.Params["event:magix.execute"].Value = null;
 				e.Params["inspect"].Value = @"verifies that attempting to set a node's 
 name to a node-list throws an exception";
 				e.Params.AddRange(tmp);

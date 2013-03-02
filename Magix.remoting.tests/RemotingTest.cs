@@ -17,8 +17,8 @@ namespace Magix.tests
 		/**
 		 * Tests to see if create "event", and invoking it later, works
 		 */
-		[ActiveEvent(Name = "magix.test.remote-event-invoke-passing-data")]
-		public void magix_test_remote_event_invoke_passing_data(object sender, ActiveEventArgs e)
+		[ActiveEvent(Name = "magix.test.remoting.passing-parameters")]
+		public void magix_test_remoting_passing_parameters(object sender, ActiveEventArgs e)
 		{
 			Node tmp = new Node();
 
@@ -34,6 +34,7 @@ namespace Magix.tests
 			if (e.Params.Contains("inspect"))
 			{
 				e.Params.Clear();
+				e.Params["event:magix.execute"].Value = null;
 				e.Params["inspect"].Value = @"Checks to see if event
 functions as it should.";
 				e.Params.AddRange(tmp);
@@ -54,8 +55,8 @@ functions as it should.";
 		/**
 		 * Tests to see if create default "event", and invoking it later remotely, throws
 		 */
-		[ActiveEvent(Name = "magix.test.remoting.default-event-remoted-throws")]
-		public void magix_test_default_event_remoted_throws(object sender, ActiveEventArgs e)
+		[ActiveEvent(Name = "magix.test.remoting.default-is-closed")]
+		public void magix_test_remoting_default_is_closed(object sender, ActiveEventArgs e)
 		{
 			Node tmp = new Node();
 
@@ -68,6 +69,7 @@ functions as it should.";
 			if (e.Params.Contains("inspect"))
 			{
 				e.Params.Clear();
+				e.Params["event:magix.execute"].Value = null;
 				e.Params["inspect"].Value = @"verifies that an event
 created as a default event, throws when attempted to be invoked remotely";
 				e.Params.AddRange(tmp);
