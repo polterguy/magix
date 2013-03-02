@@ -71,7 +71,7 @@ cf
 click any of the active events to the right to inspect them"
         Label=>code
           CssClass=>span5
-          Text=>code example ...
+          Text=>code example
           Tag=>pre
         LinkButton=>run
           Text=>inspect

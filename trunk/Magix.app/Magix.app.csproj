@@ -169,10 +169,6 @@
       <Project>{7825CF11-A8CB-4788-8A5C-C2E064F063DE}</Project>
       <Name>Magix.code.tests</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Magix.modules\Magix.modules.csproj">
-      <Project>{2456D279-E652-4B8D-99FF-C641912C9061}</Project>
-      <Name>Magix.modules</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="web.config" />

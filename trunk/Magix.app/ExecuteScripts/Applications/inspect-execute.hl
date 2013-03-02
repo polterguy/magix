@@ -69,7 +69,7 @@ cf
           Tag=>h4
         Label=>code
           CssClass=>span5
-          Text=>code example ...
+          Text=>code example
           Tag=>pre
         LinkButton=>run
           Text=>inspect
