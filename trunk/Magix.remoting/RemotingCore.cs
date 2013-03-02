@@ -60,11 +60,11 @@ namespace Magix.execute
 			if (e.Params.Contains("inspect"))
 			{
 				e.Params["initial-startup-of-process"].Value = null;
-				e.Params["inspect"].Value = @"Called during startup
-of application to make sure our Active Events, 
+				e.Params["inspect"].Value = @"called during startup
+of application to make sure our active events, 
 which are dynamically remotely overridden
-are being correctly re-mapped. 
-""initial-startup-of-process"" must exists to run event.";
+are being correctly re-mapped.&nbsp;&nbsp;
+[initial-startup-of-process] must exists to run event";
 				return;
 			}
 			lock (typeof(Node))
@@ -97,14 +97,14 @@ are being correctly re-mapped.
 			    e.Params["inspect"].Get<string>("") == "")
 			{
 				e.Params["event:magix.execute"].Value = null;
-				e.Params["inspect"].Value = @"Creates an external override towards the given 
-""URL"" for the event found in Value. If you pass
-in a null value as a URL, or no URL node, the override is removed.
-Please make sure the other side has marked the active event as
-remotable. Once a method is 'tunneled', it will no longer be
+				e.Params["inspect"].Value = @"creates an external override towards the given 
+[URL] for the event found in value.&nbsp;&nbsp;if you pass
+in a null value as a [URL], or no [URL] node, the override is removed.&nbsp;&nbsp;
+make sure the other side has marked the active event as
+remotable.&nbsp;&nbsp;once a method is 'tunneled', it will no longer be
 raised locally, but every time the active event is raised internally
-within your server, it will be Polymorphistically raised on your 
-URL end-point instead.";
+within your server, it will be polymorphistically raised, on your 
+[URL] end-point instead";
 				e.Params["tunnel"].Value = "magix.namespace.foo";
 				e.Params["tunnel"]["URL"].Value = "http://127.0.0.1:8080";
 				return;
@@ -187,13 +187,13 @@ which event to raise externally");
 			    e.Params["inspect"].Get<string>("") == "")
 			{
 				e.Params["event:magix.execute"].Value = null;
-				e.Params["inspect"].Value = @"Allows the given Value active event
-to be remotely invoked. This means that other servers, can
-call your active event, on your server. Meaning, you could 
-create a Server-API for WebServices, by opening 
+				e.Params["inspect"].Value = @"allows the given value active event
+to be remotely invoked.&nbsp;&nbsp;this means that other servers, can
+call your active event, on your server.&nbsp;&nbsp;you could 
+create a server-api for web-services, by opening 
 active events for being remotely invoked, and such connect
 servers together, either internally as a part of your
-server park, or by exposing functionality to other networks.";
+server park, or by exposing functionality to other networks";
 				e.Params["open"].Value = "magix.namespace.foo";
 				return;
 			}
@@ -242,9 +242,9 @@ server park, or by exposing functionality to other networks.";
 			    e.Params["inspect"].Get<string>("") == "")
 			{
 				e.Params["event:magix.execute"].Value = null;
-				e.Params["inspect"].Value = @"Closes the active event found in
-Value, such that it no longer can be remotely 
-invoked from other servers.";
+				e.Params["inspect"].Value = @"closes the active event found in
+value, such that it no longer can be remotely 
+invoked from other servers";
 				e.Params["close"].Value = "magix.namespace.foo";
 				return;
 			}
@@ -291,11 +291,11 @@ invoked from other servers.";
 			    e.Params["inspect"].Get<string>("") == "")
 			{
 				e.Params["event:magix.execute"].Value = null;
-				e.Params["inspect"].Value = @"Remotely invokes the active event from
-Value on the given ""URL"". This effectively works like the 
-""raise"" keyword, except the event will be serialized
-over HTTP, and invoked on another server, returning
-transparently back to the caller.";
+				e.Params["inspect"].Value = @"remotely invokes the active event from
+value on the given [URL].&nbsp;&nbsp;this effectively works like the 
+magix.execute.raise keyword, except the event will be serialized
+over http, and invoked on another server, returning
+transparently back to the caller, as if it was invoked locally";
 				e.Params["remote"].Value = "magix.namespace.foo";
 				e.Params["remote"]["URL"].Value = "http://127.0.0.1:8080";
 				return;

@@ -34,13 +34,13 @@ namespace Magix.execute
 				e.Params["for-each"]["set"].Value = "[/][for-each][magix.viewport.show-message][message].Value";
 				e.Params["for-each"]["set"]["value"].Value = "[.][message].Value";
 				e.Params["for-each"]["magix.viewport.show-message"].Value = null;
-				e.Params["inspect"].Value = @"Will loop through all the Nodes
-in the given Node-List expression, setting the 
-Data-Pointer to the currently processed item.
-This means that your code will execute once
-for every single Node you have in your return
-expression. Use the [.] expression to de-reference
-the current Node.";
+				e.Params["inspect"].Value = @"loops through all the nodes
+in the given node-list expression, setting the 
+data-pointer to the currently processed item.&nbsp;&nbsp;
+your code will execute once
+for every single node you have in your return
+expression.&nbsp;&nbsp;use the [.] expression to de-reference
+the current node";
 				return;
 			}
 

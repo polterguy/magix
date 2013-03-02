@@ -33,12 +33,12 @@ namespace Magix.execute
 			if (e.Params.Contains("inspect"))
 			{
 				e.Params["event:magix.execute"].Value = null;
-				e.Params["inspect"].Value = @"Executes the child nodes as an execution
-block, but only if the ""if"" statement returns True.
-Pair together with ""else-if"" and ""else"" to create
-branching and control of flow of your program. If an ""if""
-statement returns True, then no paired ""else-if"" or ""else""
-statements will be executed.";
+				e.Params["inspect"].Value = @"executes the child nodes as an execution
+block, but only if the [if] statement returns true.&nbsp;&nbsp;
+pair together with magix.execute.else-if and magix.execute.else to create
+branching and control of flow of your program.&nbsp;&nbsp;if an if
+statement returns true, then no paired [else-if] or [else]
+statements will be executed";
 				e.Params["Data"]["Item1"].Value = "Cache1";
 				e.Params["Data"]["Cache"].Value = null;
 				e.Params["if"].Value = "[Data][Item1].Value!=[Data][1].Name";
@@ -72,10 +72,10 @@ statements will be executed.";
 			if (e.Params.Contains("inspect"))
 			{
 				e.Params["event:magix.execute"].Value = null;
-				e.Params["inspect"].Value = @"Executes the underlaying code block,
-but only if no previous ""if"" or ""else-if"" statement has returned True,
-and the statement inside the Value of the ""else-if"" 
-returns True.";
+				e.Params["inspect"].Value = @"executes the underlaying code block,
+but only if no previous [if] or [else-if] statement has returned true,
+and the statement inside the value of the [else-if] 
+returns true";
 				e.Params["Data"]["Node"].Value = null;
 				e.Params["if"].Value = "[Data][Node].Value";
 				e.Params["if"]["magix.viewport.show-message"]["message"].Value = "Darn it...";
@@ -101,14 +101,15 @@ returns True.";
 			if (e.Params.Contains("inspect"))
 			{
 				e.Params["event:magix.execute"].Value = null;
-				e.Params["inspect"].Value = @"Executes the underlaying code block,
-but only if no paired ""if"" or ""else-if"" statement
-has returned True.";
+				e.Params["inspect"].Value = @"executes the underlaying code block,
+but only if no paired [if] or [else-if] statement
+has returned true";
 				e.Params["if"].Value = "[if].Name==x_if";
 				e.Params["if"]["magix.viewport.show-message"]["message"].Value = "Ohh crap ...";
 				e.Params["else"]["magix.viewport.show-message"]["message"].Value = "Yup, I'm still sane ...";
 				return;
 			}
+
 			Node ip = e.Params;
 			if (e.Params.Contains("_ip"))
 				ip = e.Params["_ip"].Value as Node;

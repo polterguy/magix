@@ -28,9 +28,9 @@ namespace Magix.execute
 				e.Params["event:magix.execute"].Value = null;
 				e.Params["override"].Value = "namespace.foo";
 				e.Params["override"]["value"].Value = "namespace.bar";
-				e.Params["inspect"].Value = @"Overrides the given Value active event 
-with the ""value"" node's Value event. If no ""value"" is given, existing 
-override is removed.";
+				e.Params["inspect"].Value = @"overrides the given value active event 
+with the [value] node's value event.&nbsp;&nbsp;if no [value] is given, existing 
+override is removed";
 				return;
 			}
 

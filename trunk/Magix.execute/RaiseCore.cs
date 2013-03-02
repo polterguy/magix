@@ -36,18 +36,18 @@ namespace Magix.execute
 			if (e.Params.Contains("inspect"))
 			{
 				e.Params["event:magix.execute"].Value = null;
-				e.Params["inspect"].Value = @"Will raise the active event
-given in the Value, with the parameters found as child 
-nodes underneath the ""raise"" keyword itself. Note, 
+				e.Params["inspect"].Value = @"will raise the active event
+given in value, with the parameters found as child 
+nodes underneath the [raise] keyword itself.&nbsp;&nbsp;note, 
 if your active event contains '.', then you can
 raise the active event directly, without using
-the ""raise"" keyword, by creating a node who's
-Name is the name of your active event. Add up
-""no-override"" with a Value of True if you wish
+the raise keyword, by creating a node who's
+name is the name of your active event.&nbsp;&nbsp;add up
+[no-override] with a value of true if you wish
 to go directly to the active event in question,
-and not rely upon any overrides. This is useful
-for having the possibility of 'calling base
-functionality' from overridden active events.";
+and not rely upon any overrides.&nbsp;&nbsp;this is useful
+for having the possibility of calling base
+functionality from overridden active events";
 				e.Params["raise"].Value = "magix.viewport.show-message";
 				e.Params["raise"]["message"].Value = "Hi there World 1.0...!!";
 				e.Params["raise"]["no-override"].Value = "False";

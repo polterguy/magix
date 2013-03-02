@@ -43,21 +43,21 @@ namespace Magix.execute
 			    e.Params["inspect"].Get<string>("") == "")
 			{
 				e.Params["event:magix.execute"].Value = null;
-				e.Params["inspect"].Value = @"Executes the children nodes as if they
+				e.Params["inspect"].Value = @"executes the children nodes as if they
 were a block of execute statements, or code, within 
-the ""magix.execute"" namespace. All magix active 
-events which starts with the ""magix.execute."" 
-namespace, can be embedded inside a ""magix.execute""
-scope, as keywords, e.g. the ""if"" keyword, will
-map towards the ""magix.execute.if"" active event.
-This means that you can use all ""magix.execute""
+the magix.execute namespace.&nbsp;&nbsp;all magix active 
+events which starts with magix.execute 
+namespace, can be embedded inside a magix.execute
+scope, as keywords, e.g. the 'if' keyword, will
+map towards the magix.execute.if active event.&nbsp;&nbsp;
+this means that you can use all magix.execute
 active events as code instructions, which you can
 execute by raising this active event, by using the
-short version ""if"" instead of ""magix.execute.if"".
-If you supply a Value for your ""execute"" node, the
+short version 'if' instead of magix.execute.if.&nbsp;&nbsp;
+if you supply a value for your magix.execute node, the
 event will be executed, with the code returned from
-the Node-List expression from your Value, meaning
-the Value effectively becomes a 'goto keyword'.";
+the node-list expression from your value, meaning
+the value effectively becomes a 'goto keyword'";
 				e.Params["Data"]["Value"].Value = "thomas";
 				e.Params["if"].Value = "[Data][Value].Value==thomas";
 				e.Params["if"]["magix.viewport.show-message"].Value = null;

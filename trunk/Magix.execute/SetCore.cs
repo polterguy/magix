@@ -29,14 +29,14 @@ namespace Magix.execute
 				e.Params["Data"]["Children"].Value = "old value";
 				e.Params["set"].Value = "[Data][Children].Value";
 				e.Params["set"]["value"].Value = "new value";
-				e.Params["inspect"].Value = @"Sets the given expression in the Value
-of ""set"" to the Value of expression, or constant, in ""value"" node 
-underneath ""set"". If you pass in no ""value"", the 
-expression in Value will be nullified. Meaning, if
-it's a Node-List it will be emptied and the Node
-removed. If it's a Value, the value will become
-null. The ""value""'s Value can be a constant,
-the Value of ""set"" must be an expression.";
+				e.Params["inspect"].Value = @"sets the given expression in the value
+of [set] to the value of expression, or constant, in [value] node.&nbsp;&nbsp;
+if you pass in no [value], the 
+expression in value will be nullified.&nbsp;&nbsp;if
+it's a node-list it will be emptied and the node
+removed.&nbsp;&nbsp;if it's a value, the value will become
+null.&nbsp;&nbsp;the [value]'s value can be a constant,
+the value of [set] must be an expression";
 				return;
 			}
 
