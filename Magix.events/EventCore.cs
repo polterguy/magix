@@ -38,11 +38,11 @@ namespace Magix.execute
 			if (e.Params.Contains("inspect"))
 			{
 				e.Params["initial-startup-of-process"].Value = null;
-				e.Params["inspect"].Value = @"Called during startup
-of application to make sure our Active Events, 
+				e.Params["inspect"].Value = @"called during startup
+of application to make sure our active events, 
 which are dynamically tied towards serialized 
-magix.execute blocks of code are being correctly 
-re-mapped. ""initial-startup-of-process"" must exists to run event.";
+magix.execute blocks of code, are being correctly 
+re-mapped. [initial-startup-of-process] must exists to run event.";
 				return;
 			}
 			lock (typeof(Node))
@@ -74,16 +74,16 @@ re-mapped. ""initial-startup-of-process"" must exists to run event.";
 			if (e.Params.Contains("inspect"))
 			{
 				e.Params["event:magix.execute"].Value = null;
-				e.Params["inspect"].Value = @"Overrides the active event in ""event""
-with the code in the ""code"" expression. These types
+				e.Params["inspect"].Value = @"overrides the active event in [event]
+with the code in the [code] expression.&nbsp;&nbsp;these types
 of functions can take and return parameters, if you wish
 to pass in or retrieve parameters, then as you invoke the 
 function, just append your args underneath the function invocation,
 and they will be passed into the function, where they will
-be accessible underneath a ""P"" Node, appended as the last
-parts of your code block, into your function invocation. From
+be accessible underneath a [P] node, appended as the last
+parts of your code block, into your function invocation.&nbsp;&nbsp;from
 outside of the function/event itself, you can access these 
-parameters directly underneath the active event itself.";
+parameters directly underneath the active event itself";
 				e.Params["event"].Value = "foo.bar";
 				e.Params["event"]["remotable"].Value = false;
 				e.Params["event"]["code"]["Data"].Value = "thomas";
@@ -99,6 +99,7 @@ parameters directly underneath the active event itself.";
 				e.Params.Add (new Node("event", "foo.bar"));
 				return;
 			}
+
 			Node ip = e.Params;
 			if (e.Params.Contains("_ip"))
 				ip = e.Params["_ip"].Value as Node;
@@ -189,6 +190,12 @@ parameters directly underneath the active event itself.";
 		[ActiveEvent(Name = "")]
 		public static void magix_data__active_event_2_code_callback_null_helper(object sender, ActiveEventArgs e)
 		{
+			if (e.Name == "" && e.Params.Contains("inspect"))
+			{
+				e.Params["inspect"].Value = @"null event handler for raising
+null active event handlers created with magix.execute.event";
+				return;
+			}
 			// Small optimization, to not traverse Data storage file for EVERY SINGLE ACTIVE EVENT ...!
 			if (_hasNull.HasValue && !_hasNull.Value)
 				return;
@@ -235,6 +242,13 @@ parameters directly underneath the active event itself.";
 		[ActiveEvent(Name = "magix.execute._active-event-2-code-callback")]
 		public static void magix_data__active_event_2_code_callback(object sender, ActiveEventArgs e)
 		{
+			if (e.Params.Contains("inspect"))
+			{
+				e.Params["inspect"].Value = @"active event handler for raising
+active event handlers created with magix.execute.event";
+				return;
+			}
+
 			bool remote = false;
 			if (e.Params.Contains("remote"))
 				remote = e.Params["remote"].Get<bool>();

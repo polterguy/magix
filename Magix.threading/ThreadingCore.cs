@@ -31,13 +31,13 @@ namespace Magix.threading
 				e.Params["fork"]["if"].Value = "[Data][Value].Value==thomas";
 				e.Params["fork"]["if"]["raise"].Value = "magix.viewport.show-message";
 				e.Params["fork"]["if"]["raise"]["message"].Value = "Hi Thomas!";
-				e.Params["inspect"].Value = @"Spawns a new thread, which the given
-code block will be executed within. Useful for long operations, 
+				e.Params["inspect"].Value = @"spawns a new thread, which the given
+code block will be executed within.&nbsp;&nbsp;useful for long operations, 
 where you'd like to return to caller, before the operation is
-finished. Notice the entire node-list underneath the ""fork""
-keyword, will be cloned, and passed into the ""fork"" active event,
-for execution on a different thread. This means the forked
-thread will not change any data on the original node-set.";
+finished.&nbsp;&nbsp;the entire node-list underneath the [fork]
+keyword, will be cloned, and passed into the magix.execute.fork active event,
+for execution on a different thread.&nbsp;&nbsp;the forked
+thread will not change any data on the original node-set";
 				return;
 			}
 
@@ -79,8 +79,8 @@ thread will not change any data on the original node-set.";
 			{
 				e.Params["event:magix.execute"].Value = 500;
 				e.Params["sleep"].Value = 500;
-				e.Params["inspect"].Value = @"Sleeps the current threat
-for Value number of milliseconds.";
+				e.Params["inspect"].Value = @"sleeps the current threat
+for value number of milliseconds.";
 				return;
 			}
 

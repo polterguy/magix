@@ -25,14 +25,14 @@ namespace Magix.execute
 			if (e.Params.Contains("inspect"))
 			{
 				e.Params["event:magix.execute"].Value = null;
-				e.Params["inspect"].Value = @"Use the ""try"" keyword to create
-a block of code, which will execute your ""catch"" 
+				e.Params["inspect"].Value = @"use the try keyword to create
+a block of [code], which will execute your [catch] 
 execution block of code, if an exception is thrown
-inside your ""code"" block. This exception handler
+inside your [code] execution block.&nbsp;&nbsp;this exception handler
 will be invoked, even if an exception occurs any place
-underneath your try code block, deep within your logic. 
-Meaning, you can handle errors being raised in 
-sub-functions, or invoked active events this way.";
+underneath your try code block, deep within your logic.&nbsp;&nbsp;
+you can handle errors being raised in 
+sub-functions, or even recursively invoked active events this way";
 				e.Params["try"].Value = null;
 				e.Params["try"]["code"]["throw"].Value = "To Throw or Not to Throw!!";
 				e.Params["try"]["code"]["magix.viewport.show-message"]["message"].Value = "NOT supposed to show!!";
@@ -82,12 +82,12 @@ sub-functions, or invoked active events this way.";
 			if (e.Params.Contains("inspect"))
 			{
 				e.Params["event:magix.execute"].Value = null;
-				e.Params["inspect"].Value = @"Throws an exception, which
+				e.Params["inspect"].Value = @"throws an exception, which
 will stop the entire current execution, and halt 
-back to the previous catch in the stack of 
-active events. Message thrown becomes the 
-Value of the throw Node. Use together with
-""try"" to handle errors.";
+back to the previous catch, in the stack of 
+active events.&nbsp;&nbsp;[exception] in [catch] becomes the 
+value of the [throw] node.&nbsp;&nbsp;use together with
+magix.execute.try to handle errors";
 				e.Params["try"]["code"]["throw"].Value = "Some Exception Error Message";
 				e.Params["try"]["catch"]["set"].Value = "[magix.viewport.show-message][message].Value";
 				e.Params["try"]["catch"]["set"]["value"].Value = "[exception].Value";

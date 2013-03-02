@@ -15,6 +15,18 @@
 
 * Throw exception in HtmlViewer when Control is given and no ID is given ...
 
+* Make Active Event Executor become a "script file" in itself
+
+* Diagnostic tool in help
+
+* all lower case letters in descriptions
+
+* Add up magix:execute on all inspect values
+
+* Make most inspect code become magix.execute
+
+* Serialize "override" into database somehow for persistance across app restarts
+
 * Visible on HtmlViewer Controls doesn't seem to work ...?
   Re-Creating controls gives 'destroys' is null, or something ...
 

@@ -33,9 +33,9 @@ namespace Magix.execute
 			if (e.Params.Contains("inspect"))
 			{
 				e.Params["event:magix.execute"].Value = null;
-				e.Params["inspect"].Value = @"Creates a loop that executes the
+				e.Params["inspect"].Value = @"creates a loop that executes the
 underlaying code block repeatedly, as long as the
-statement in the Value of while is True.";
+statement in the value of while is true";
 				e.Params["Data"]["txt1"].Value = "Hello World 1.0";
 				e.Params["Data"]["txt2"].Value = "Hello World 2.0";
 				e.Params["Data"]["txt3"].Value = "Hello World 3.0";
@@ -47,6 +47,7 @@ statement in the Value of while is True.";
 				e.Params["while"]["magix.viewport.show-message"]["message"].Value = "Message...";
 				return;
 			}
+
 			Node ip = e.Params;
 			if (e.Params.Contains("_ip"))
 				ip = e.Params ["_ip"].Value as Node;
