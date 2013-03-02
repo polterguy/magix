@@ -25,25 +25,25 @@ namespace Magix.tests
 			tmp["magix.data.remove"].Value = "data-save-test";
 			tmp["execute"]["magix.data.load"].Value = "data-save-test";
 			tmp["execute"]["if"].Value = "[execute][magix.data.load][object]";
-			tmp["execute"]["if"]["throw"].Value = "Object didn't delete";
-			tmp["Buffer"].Value = null;
+			tmp["execute"]["if"]["throw"].Value = "object didn't delete";
+			tmp["_buffer"].Value = null;
 			tmp["magix.data.save"].Value = "data-save-test";
-			tmp["magix.data.save"]["object"]["Value"].Value = "thomas";
-			tmp["magix.data.save"]["object"]["Value1"].Value = "thomas1";
-			tmp["magix.data.save"]["object"]["Value2"].Value = "thomas2";
-			tmp["magix.data.save"]["object"]["gokk"]["Value"].Value = "thomas3";
+			tmp["magix.data.save"]["object"]["value"].Value = "thomas";
+			tmp["magix.data.save"]["object"]["v_alue1"].Value = "thomas1";
+			tmp["magix.data.save"]["object"]["_value2"].Value = "thomas2";
+			tmp["magix.data.save"]["object"]["gok"]["value"].Value = "thomas3";
 			tmp["magix.data.save"]["object"]["gokk"]["Value"].Value = "thomas4";
 			tmp["magix.data.save"]["object"]["gokk"]["gokk2"]["Value"].Value = "thomas5";
 			tmp["magix.data.save"]["object"]["gokk"]["gokk2"]["Value"].Value = "thomas6";
 			tmp["magix.data.save"]["object"]["tmp"]["Value"].Value = "thomas7";
-			tmp["magix.data.save"]["object222222"]["Value"].Value = "thomas8";
+			tmp["magix.data.save"]["object222222"]["value"].Value = "thomas8";
 			tmp["magix.data.save"]["object"]["object"]["object"]["object"]["object"]["Value"].Value = "thomas9";
 			tmp["magix.data.save"]["object"]["object"]["object"]["Value"].Value = "thomas0";
 			tmp["magix.data.save"]["object"]["Value"]["Value"]["Value"]["Value"]["Value"]["Value"].Value = "thomas2";
 			tmp["magix.data.save"]["object5"]["Value"].Value = "thomas3";
 			tmp["magix.data.save"]["object4"]["Value"].Value = "thomas|";
 			tmp["magix.data.save"]["object"]["Value7"].Value = "thomash";
-			tmp["magix.data.save"]["object"]["Value3"].Value = "thomasx";
+			tmp["magix.data.save"]["object"]["Value3"].Value = "thomasx£#$¤%&/()[]}±?";
 			tmp["magix.data.load"].Value = "data-save-test";
 
 			if (e.Params.Contains("inspect"))
@@ -60,7 +60,7 @@ by id, or key, behaves as it should";
 				"magix.execute",
 				tmp);
 
-			if (!tmp["magix.data.load"]["object"].Equals (tmp["magix.data.save"]["object"]))
+			if (!tmp["magix.data.load"]["object"].Equals(tmp["magix.data.save"]["object"]))
 			{
 				throw new ApplicationException(
 					"Failure of executing data-save/load statement with big object");

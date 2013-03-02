@@ -122,8 +122,9 @@ namespace Magix.Core
 			if (e.Params.Contains("inspect"))
 			{
 				e.Params["container"].Value = "content";
-				e.Params["inspect"].Value = @"Will empty the given ""container""
-viewport container for all of its controls. Unloads a container for controls.";
+				e.Params["inspect"].Value = @"will empty the given [container]
+viewport container for all of its controls.&nbsp;&nbsp;
+unloads a container for controls";
 				return;
 			}
 			DynamicPanel dyn = Selector.FindControl<DynamicPanel> (
@@ -204,14 +205,15 @@ viewport container for all of its controls. Unloads a container for controls.";
 		{
 			if (e.Params.Contains("inspect"))
 			{
-				e.Params["inspect"].Value = "Includes either a CSS file or a JavaScript file on the client side";
-				e.Params["type"].Value = "CSS";
+				e.Params["inspect"].Value = @"includes either a css file or a 
+javascript file on the client side";
+				e.Params["type"].Value = "css";
 				e.Params["file"].Value = "media/main-debug.css";
 				return;
 			}
 			if (!e.Params.Contains("type"))
-				throw new ArgumentException("You need to submit a type of file to load, legal values are 'CSS' and 'JavaScript'");
-			if (e.Params["type"].Get<string>() == "CSS")
+				throw new ArgumentException("You need to submit a type of file to load, legal values are 'css' and 'javascript'");
+			if (e.Params["type"].Get<string>() == "css")
 			{
                 string cssFile = e.Params["file"].Get<String>();
                 if (!CssFiles.Contains(cssFile))
@@ -220,7 +222,7 @@ viewport container for all of its controls. Unloads a container for controls.";
                     IncludeCssFile(cssFile);
                 }
 			}
-			else if (e.Params["type"].Get<string>() == "JavaScript")
+			else if (e.Params["type"].Get<string>() == "javascript")
 			{
                 string js = e.Params["file"].Get<String>();
                 if (!JsFiles.Contains(js))
@@ -230,7 +232,7 @@ viewport container for all of its controls. Unloads a container for controls.";
                 }
 			}
 			else
-				throw new ArgumentException("Only type of JavaScript and CSS are legal inclusion files, you tried to include a file of type; " + e.Params["type"].Get<string>());
+				throw new ArgumentException("Only type of javascript and css are legal inclusion files, you tried to include a file of type; " + e.Params["type"].Get<string>());
 		}
 
 		/**
@@ -241,11 +243,11 @@ viewport container for all of its controls. Unloads a container for controls.";
 		{
 			if (e.Params.Contains("inspect"))
 			{
-				e.Params["name"].Value = "FullNameSpace.AndAlso.FullName_OfClassThatImplementsModule";
+				e.Params["name"].Value = "namespace.module_name";
 				e.Params["container"].Value = "content";
-				e.Params["inspect"].Value = @"Loads an active module into the 
-given ""container"" viewport container. The module name must be defined in 
-the ""name"" node. The incoming parameters will be used.";
+				e.Params["inspect"].Value = @"loads an active module into the 
+given [container] viewport container.&nbsp;&nbsp;the module name must be defined in 
+the [name] node.&nbsp;&nbsp;the incoming parameters will be used";
 				return;
 			}
 			string moduleName = e.Params["name"].Get<string>();

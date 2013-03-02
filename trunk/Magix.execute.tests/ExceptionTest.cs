@@ -22,7 +22,7 @@ namespace Magix.tests
 		{
 			Node tmp = new Node();
 
-			tmp["throw"].Value = "This is our Message!";
+			tmp["throw"].Value = "this is our message!";
 
 			if (e.Params.Contains("inspect"))
 			{
@@ -47,7 +47,7 @@ and throws";
 				while (err.InnerException != null)
 					err = err.InnerException;
 
-				if (err.Message != "This is our Message!")
+				if (err.Message != "this is our message!")
 					throw new ApplicationException("Wrong message in Exception");
 			}
 		}
@@ -61,7 +61,7 @@ and throws";
 			Node tmp = new Node();
 
 			tmp["try"].Value = null;
-			tmp["try"]["code"]["throw"].Value = "Exception Thrown by Test";
+			tmp["try"]["code"]["throw"].Value = "exception thrown by test";
 			tmp["try"]["catch"].Value = null;
 
 			if (e.Params.Contains("inspect"))
@@ -86,7 +86,7 @@ after throwing and catching";
 			}
 			catch
 			{
-				if (tmp["try"]["catch"]["exception"].Get<string>() != "Exception Thrown by Test")
+				if (tmp["try"]["catch"]["exception"].Get<string>() != "exception thrown by test")
 					throw new ApplicationException("Exception Message didn't show when exception was thrown");
 
 				return;

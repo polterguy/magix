@@ -23,19 +23,19 @@ namespace Magix.tests
 		{
 			if (e.Params.Contains("inspect"))
 			{
-				e.Params["inspect"].Value = @"Will raise all active events that
-start with ""magix.test."", and treat them as Unit Tests. 
-Which means that if some parts of the active event throws 
+				e.Params["inspect"].Value = @"will raise all active events that
+start with 'magix.test.', and treat them as unit tests.&nbsp;&nbsp;
+if some parts of the active event throws 
 an exception, then the test will be considered 'failing', and
-a red message box will show. If no test fails, the message box 
+a red message box will show.&nbsp;&nbsp;if no test fails, the message box 
 will be green, and it will show the number of tests which have 
-been running. To create a new Unit Test, create an active event 
-handler, that is within the ""magix.test"" namespace, 
+been running.&nbsp;&nbsp;to create a new unit test, create an active event 
+handler, that is within the magix.test namespace, 
 and it will automatically register as a part of the
-test-suite, which is to be ran, as this active event
-is raised. If it fails, it will abort all other tests,
+test-suite, which is to be executed, as this active event
+is raised.&nbsp;&nbsp;if it fails, it will abort all other tests,
 and show you the name of the active event handler
-that failed.";
+that failed";
 				int av = 0;
 				int tests = 0;
 				foreach (string idx in ActiveEvents.Instance.ActiveEventHandlers)

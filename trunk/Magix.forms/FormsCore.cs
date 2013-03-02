@@ -28,10 +28,10 @@ namespace Magix.execute
 				e.Params["form-id"].Value = "unique-identification-of-your-form";
 				e.Params["controls"]["Button"].Value = "btn";
 				e.Params["controls"]["Button"]["Text"].Value = "Hello World!";
-				e.Params["inspect"].Value = @"Creates a dynamic form
-and loading it into the ""container"" viewport container. ""form-id""
-must be a uniquely identifiable id for later use. ""controls""
-contains the controls themselves, such as ""Button"" nodes, etc.";
+				e.Params["inspect"].Value = @"creates a dynamic form
+and loading it into the [container] viewport container.&nbsp;&nbsp;[form-id]
+must be a uniquely identifiable id for later use.&nbsp;&nbsp;[controls]
+contains the controls themselves";
 				return;
 			}
 
@@ -51,14 +51,14 @@ contains the controls themselves, such as ""Button"" nodes, etc.";
 			{
 				e.Params["event:magix.forms.create-web-page"].Value = null;
 				e.Params["container"].Value = "content";
-				e.Params["form-id"].Value = "unique-identification-of-your-form";
-				e.Params["html"].Value = "Some HTML";
-				e.Params["inspect"].Value = @"Creates a dynamic HTML web page,
-loading it into the ""container"" viewport container. ""form-id""
-must be a uniquely identifiable id for later use. ""html""
-contains the html themselves. You can intermix controls into 
-your HTML by creatning a control collection by typing them 
-inside of {{...controls here...}}";
+				e.Params["form-id"].Value = "unique-id-of-form";
+				e.Params["html"].Value = "some html";
+				e.Params["inspect"].Value = @"creates a dynamic html web page,
+loading it into the [container] viewport container.&nbsp;&nbsp;[form-id]
+must be a uniquely identifiable id for later use.&nbsp;&nbsp;[html]
+contains the html.&nbsp;&nbsp;you can intermix controls into 
+your html by creating a control collection by typing them 
+inside of brackets such as {{...controls here...}}";
 				return;
 			}
 

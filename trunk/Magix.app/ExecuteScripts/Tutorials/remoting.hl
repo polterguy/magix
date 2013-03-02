@@ -13,7 +13,7 @@ remote
   url=>http://127.0.0.1:8080
   event=>foo.bar
 
-for-each=>[remote][params][magix.admin.get-active-events][ActiveEvents]
+for-each=>[remote][params][magix.admin.get-active-events][events]
   set=>[.ip][..][magix.viewport.show-message][message].Value
     value=>[.].Value
   magix.viewport.show-message

@@ -34,7 +34,8 @@ namespace Magix.admin
 				e.Params["begins-with"].Value = "magix.execute.";
 				e.Params["inspect"].Value = @"returns all public active events registered 
 within the system.&nbsp;&nbsp;add [all], [open], [remoted], [overridden] 
-or [begins-with] to filter the events returned";
+or [begins-with] to filter the events returned.&nbsp;&nbsp;active events 
+are returned in [events]";
 				return;
 			}
 
@@ -66,7 +67,7 @@ or [begins-with] to filter the events returned";
 				{
 					if (ActiveEvents.Instance.IsAllowedRemotely(idx))
 					{
-						node["ActiveEvents"]["no_" + idxNo.ToString()].Value = string.IsNullOrEmpty (idx) ? "" : idx;
+						node["events"]["no_" + idxNo.ToString()].Value = string.IsNullOrEmpty (idx) ? "" : idx;
 					}
 					continue;
 				}
@@ -74,7 +75,7 @@ or [begins-with] to filter the events returned";
 				{
 					if (ActiveEvents.Instance.RemotelyOverriddenURL(idx) != null)
 					{
-						node["ActiveEvents"]["no_" + idxNo.ToString()].Value = string.IsNullOrEmpty (idx) ? "" : idx;
+						node["events"]["no_" + idxNo.ToString()].Value = string.IsNullOrEmpty (idx) ? "" : idx;
 					}
 					continue;
 				}
@@ -95,23 +96,24 @@ or [begins-with] to filter the events returned";
 				{
 					if (ActiveEvents.Instance.IsOverride(idx))
 					{
-						node["ActiveEvents"]["no_" + idxNo.ToString()].Value = string.IsNullOrEmpty (idx) ? "" : idx;
+						node["events"]["no_" + idxNo.ToString()].Value = string.IsNullOrEmpty (idx) ? "" : idx;
 					}
 				}
 				else
 				{
-					node["ActiveEvents"]["no_" + idxNo.ToString()].Value = string.IsNullOrEmpty (idx) ? "" : idx;
+					node["events"]["no_" + idxNo.ToString()].Value = string.IsNullOrEmpty (idx) ? "" : idx;
 				}
 				idxNo += 1;
 			}
-			node["ActiveEvents"].Sort (
+			node["events"].Sort (
 				delegate(Node left, Node right)
 				{
-					return ((string)left.Value).CompareTo (right.Value as String);
+					return ((string)left.Value).CompareTo(right.Value as String);
 				});
 		}
 
 		/**
+		 * Loads code into active event executor, and loads executor
 		 */
 		[ActiveEvent(Name = "magix.admin.load-executor-code")]
 		public void magix_admin_load_executor_code(object sender, ActiveEventArgs e)
@@ -185,11 +187,13 @@ allowing you to spy on all active events being raised in your system";
 				e.Params["inspect"].Value = @"opens the active event executor in content";
 				return;
 			}
-			LoadModule (
+
+			LoadModule(
 				"Magix.admin.ExecutorForm", 
 				e.Params["container"].Get<string>());
 
-			RaiseEvent("magix.execute._event-overridden");
+			RaiseEvent(
+				"magix.execute._event-overridden");
 		}
 	}
 }

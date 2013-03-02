@@ -56,7 +56,7 @@ namespace Magix.admin
 
 				// Including JavaScript files ...
 				Node tmp = new Node();
-				tmp["type"].Value = "JavaScript";
+				tmp["type"].Value = "javascript";
 				tmp["file"].Value = "media/bootstrap/js/jQuery.js";
 
 				RaiseEvent(
@@ -64,7 +64,7 @@ namespace Magix.admin
 					tmp);
 
 				tmp = new Node();
-				tmp["type"].Value = "JavaScript";
+				tmp["type"].Value = "javascript";
 				tmp["file"].Value = "media/bootstrap/js/bootstrap.min.js";
 
 				RaiseEvent(
@@ -85,7 +85,7 @@ namespace Magix.admin
 
 			string data = "";
 
-			foreach (Node idx in node["ActiveEvents"])
+			foreach (Node idx in node["events"])
 			{
 				data += "\"" + idx.Get<string>() + "\",";
 			}
@@ -140,7 +140,7 @@ namespace Magix.admin
 			ActiveEvents.Instance.RaiseActiveEvent(
 				typeof(ExecutorForm),
 				method, 
-				tmp["JSON"].Get<Node>());
+				tmp["json"].Get<Node>());
 		}
 
 		/**
@@ -155,15 +155,15 @@ namespace Magix.admin
 				e.Params["event:magix.admin.run-script"].Value = null;
 				e.Params["script"].Value =  @"
 event:magix.execute
-Data=>thomas
-if=>[Data].Value==thomas
+_data=>thomas
+if=>[_data].Value==thomas
   magix.viewport.show-message
     message=>hello world";
 				return;
 			}
 
 			if (!e.Params.Contains ("script") || e.Params["script"].Get<string>("") == "")
-				throw new ArgumentException("Need script object");
+				throw new ArgumentException("need script object");
 
 			string txt = e.Params["script"].Get<string>();
 
@@ -189,7 +189,7 @@ if=>[Data].Value==thomas
 			ActiveEvents.Instance.RaiseActiveEvent(
 				typeof(ExecutorForm),
 				method, 
-				tmp["JSON"].Get<Node>());
+				tmp["json"].Get<Node>());
 		}
 
 		[ActiveEvent(Name = "magix.admin.set-code")]
@@ -272,7 +272,7 @@ if=>[Data].Value==thomas
 
 				RaiseEvent(
 					activeEvent.Value, 
-					tmp["JSON"].Get<Node>());
+					tmp["json"].Get<Node>());
 
 				RaiseEvent(
 					"magix.code.node-2-code", 
@@ -285,7 +285,7 @@ if=>[Data].Value==thomas
 				Node node = RaiseEvent(activeEvent.Value);
 
 				Node tmp = new Node();
-				tmp["JSON"].Value = node;
+				tmp["json"].Value = node;
 
 				RaiseEvent(
 					"magix.code.node-2-code", 

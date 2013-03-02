@@ -135,10 +135,10 @@ namespace Magix.Core
             List<string> tokens = ExtractTokens(json);
 
             if (tokens.Count == 0)
-                throw new ArgumentException("JSON string was empty");
+                throw new ArgumentException("json string was empty");
 
             if (tokens[0] != "{")
-                throw new ArgumentException("JSON string wasn't an object, missing opening token at character 0");
+                throw new ArgumentException("json string wasn't an object, missing opening token at character 0");
 
             int idxToken = 1;
             Node retVal = new Node();
@@ -251,7 +251,7 @@ namespace Magix.Core
                     default:
                         throw new ArgumentException(
                             string.Format(
-                                "Illegal token found in JSON string at character {0}, token was {1}, string was; \"{2}\"",
+                                "Illegal token found in json string at character {0}, token was {1}, string was; \"{2}\"",
                                 idx,
                                 json[idx],
                                 json.Substring(Math.Max(0, idx - 5))));

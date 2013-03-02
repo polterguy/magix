@@ -22,12 +22,12 @@ namespace Magix.tests
 		{
 			Node tmp = new Node();
 
-			tmp["Data"]["Item1"]["Description123"].Value = "thomas";
-			tmp["Buffer"].Value = null;
-			tmp["if"].Value = "[Data][Item1][Description123].Value==thomas";
-			tmp["if"]["set"].Value = "[Buffer].Value";
+			tmp["_data"]["item1"]["description123"].Value = "thomas";
+			tmp["_buffer"].Value = null;
+			tmp["if"].Value = "[_data][item1][description123].Value==thomas";
+			tmp["if"]["set"].Value = "[_buffer].Value";
 			tmp["if"]["set"]["value"].Value = "success";
-			tmp["else"]["set"].Value = "[Buffer].Value";
+			tmp["else"]["set"].Value = "[_buffer].Value";
 			tmp["else"]["set"]["value"].Value = "failure";
 
 			if (e.Params.Contains("inspect"))
@@ -45,7 +45,7 @@ and from within the [if], change a value to success";
 				"magix.execute",
 				tmp);
 
-			if (tmp["Buffer"].Get<string>() != "success")
+			if (tmp["_buffer"].Get<string>() != "success")
 			{
 				throw new ApplicationException(
 					"Failure of executing if statement");
@@ -60,12 +60,12 @@ and from within the [if], change a value to success";
 		{
 			Node tmp = new Node();
 
-			tmp["Data"]["Item1"]["Description123"].Value = "thomas";
-			tmp["Buffer"].Value = null;
-			tmp["if"].Value = "[Data][Item1][0].Name==Description123";
-			tmp["if"]["set"].Value = "[Buffer].Value";
+			tmp["_data"]["item1"]["description123"].Value = "thomas";
+			tmp["_buffer"].Value = null;
+			tmp["if"].Value = "[_data][item1][0].Name==description123";
+			tmp["if"]["set"].Value = "[_buffer].Value";
 			tmp["if"]["set"]["value"].Value = "success";
-			tmp["else"]["set"].Value = "[Buffer].Value";
+			tmp["else"]["set"].Value = "[_buffer].Value";
 			tmp["else"]["set"]["value"].Value = "failure";
 
 			if (e.Params.Contains("inspect"))
@@ -82,7 +82,7 @@ compares the name of a node against a static value behaves correctly";
 				"magix.execute",
 				tmp);
 
-			if (tmp["Buffer"].Get<string>() != "success")
+			if (tmp["_buffer"].Get<string>() != "success")
 			{
 				throw new ApplicationException(
 					"Failure of executing if statement");
@@ -97,12 +97,12 @@ compares the name of a node against a static value behaves correctly";
 		{
 			Node tmp = new Node();
 
-			tmp["Data"]["Item1"].Value = "thomas";
-			tmp["Buffer"].Value = null;
-			tmp["if"].Value = "[Data][Item1].Value!=thomas";
-			tmp["if"]["set"].Value = "[Buffer].Value";
+			tmp["_data"]["item1"].Value = "thomas";
+			tmp["_buffer"].Value = null;
+			tmp["if"].Value = "[_data][item1].Value!=thomas";
+			tmp["if"]["set"].Value = "[_buffer].Value";
 			tmp["if"]["set"]["value"].Value = "failure";
-			tmp["else"]["set"].Value = "[Buffer].Value";
+			tmp["else"]["set"].Value = "[_buffer].Value";
 			tmp["else"]["set"]["value"].Value = "success";
 
 			if (e.Params.Contains("inspect"))
@@ -119,7 +119,7 @@ on [if] behaves correctly, by returning false when it is supposed to";
 				"magix.execute",
 				tmp);
 
-			if (tmp["Buffer"].Get<string>() != "success")
+			if (tmp["_buffer"].Get<string>() != "success")
 			{
 				throw new ApplicationException(
 					"Failure of executing if statement");
@@ -134,12 +134,12 @@ on [if] behaves correctly, by returning false when it is supposed to";
 		{
 			Node tmp = new Node();
 
-			tmp["Data"]["Item1"].Value = "thomas";
-			tmp["Buffer"].Value = null;
-			tmp["if"].Value = "[Data][Item1].Value";
-			tmp["if"]["set"].Value = "[Buffer].Value";
+			tmp["_data"]["item1"].Value = "thomas";
+			tmp["_buffer"].Value = null;
+			tmp["if"].Value = "[_data][item1].Value";
+			tmp["if"]["set"].Value = "[_buffer].Value";
 			tmp["if"]["set"]["value"].Value = "success";
-			tmp["else"]["set"].Value = "[Buffer].Value";
+			tmp["else"]["set"].Value = "[_buffer].Value";
 			tmp["else"]["set"]["value"].Value = "failure";
 
 			if (e.Params.Contains("inspect"))
@@ -156,7 +156,7 @@ a node's value returns true, when value is not null";
 				"magix.execute",
 				tmp);
 
-			if (tmp["Buffer"].Get<string>() != "success")
+			if (tmp["_buffer"].Get<string>() != "success")
 			{
 				throw new ApplicationException(
 					"Failure of executing if statement");
@@ -171,12 +171,12 @@ a node's value returns true, when value is not null";
 		{
 			Node tmp = new Node();
 
-			tmp["Data"]["Item1"].Value = null;
-			tmp["Buffer"].Value = null;
-			tmp["if"].Value = "[Data][Item1]";
-			tmp["if"]["set"].Value = "[Buffer].Value";
+			tmp["_data"]["item1"].Value = null;
+			tmp["_buffer"].Value = null;
+			tmp["if"].Value = "[_data][item1]";
+			tmp["if"]["set"].Value = "[_buffer].Value";
 			tmp["if"]["set"]["value"].Value = "success";
-			tmp["else"]["set"].Value = "[Buffer].Value";
+			tmp["else"]["set"].Value = "[_buffer].Value";
 			tmp["else"]["set"]["value"].Value = "failure";
 
 			if (e.Params.Contains("inspect"))
@@ -193,7 +193,7 @@ of a node within [if] returns true, when node exist";
 				"magix.execute",
 				tmp);
 
-			if (tmp["Buffer"].Get<string>() != "success")
+			if (tmp["_buffer"].Get<string>() != "success")
 			{
 				throw new ApplicationException(
 					"Failure of executing if statement");
@@ -208,12 +208,12 @@ of a node within [if] returns true, when node exist";
 		{
 			Node tmp = new Node();
 
-			tmp["Data"]["Item1"].Value = null;
-			tmp["Buffer"].Value = null;
-			tmp["if"].Value = "[Data][Item1][Item2]";
-			tmp["if"]["set"].Value = "[Buffer].Value";
+			tmp["_data"]["item1"].Value = null;
+			tmp["_buffer"].Value = null;
+			tmp["if"].Value = "[_data][item1][item2]";
+			tmp["if"]["set"].Value = "[_buffer].Value";
 			tmp["if"]["set"]["value"].Value = "failure";
-			tmp["else"]["set"].Value = "[Buffer].Value";
+			tmp["else"]["set"].Value = "[_buffer].Value";
 			tmp["else"]["set"]["value"].Value = "success";
 
 			if (e.Params.Contains("inspect"))
@@ -232,7 +232,7 @@ does not generate a path, as it traverses the nodes";
 				"magix.execute",
 				tmp);
 
-			if (tmp["Buffer"].Get<string>() != "success")
+			if (tmp["_buffer"].Get<string>() != "success")
 			{
 				throw new ApplicationException(
 					"Failure of executing if statement");
@@ -253,12 +253,12 @@ does not generate a path, as it traverses the nodes";
 		{
 			Node tmp = new Node();
 
-			tmp["Data"]["Item1"].Value = null;
-			tmp["Buffer"].Value = null;
-			tmp["if"].Value = "[Data][Item1].Value";
-			tmp["if"]["set"].Value = "[Buffer].Value";
+			tmp["_data"]["item1"].Value = null;
+			tmp["_buffer"].Value = null;
+			tmp["if"].Value = "[_data][item1].Value";
+			tmp["if"]["set"].Value = "[_buffer].Value";
 			tmp["if"]["set"]["value"].Value = "failure";
-			tmp["else"]["set"].Value = "[Buffer].Value";
+			tmp["else"]["set"].Value = "[_buffer].Value";
 			tmp["else"]["set"]["value"].Value = "success";
 
 			if (e.Params.Contains("inspect"))
@@ -276,7 +276,7 @@ and return false when supposed to";
 				"magix.execute",
 				tmp);
 
-			if (tmp["Buffer"].Get<string>() != "success")
+			if (tmp["_buffer"].Get<string>() != "success")
 			{
 				throw new ApplicationException(
 					"Failure of executing if statement");
@@ -291,14 +291,14 @@ and return false when supposed to";
 		{
 			Node tmp = new Node();
 
-			tmp["Data"]["Item1"].Value = "thomas";
-			tmp["Buffer"].Value = "failure";
-			tmp["if"].Value = "[Data]";
-			tmp["if"]["if"].Value = "[Data][Item1]";
-			tmp["if"]["if"]["if"].Value = "![Data].Value";
-			tmp["if"]["if"]["if"]["if"].Value = "[Data].Name==Data";
-			tmp["if"]["if"]["if"]["if"]["if"].Value = "[Data][Item1].Value==thomas";
-			tmp["if"]["if"]["if"]["if"]["if"]["set"].Value = "[Buffer].Value";
+			tmp["_data"]["item1"].Value = "thomas";
+			tmp["_buffer"].Value = "failure";
+			tmp["if"].Value = "[_data]";
+			tmp["if"]["if"].Value = "[_data][item1]";
+			tmp["if"]["if"]["if"].Value = "![_data].Value";
+			tmp["if"]["if"]["if"]["if"].Value = "[_data].Name==_data";
+			tmp["if"]["if"]["if"]["if"]["if"].Value = "[_data][item1].Value==thomas";
+			tmp["if"]["if"]["if"]["if"]["if"]["set"].Value = "[_buffer].Value";
 			tmp["if"]["if"]["if"]["if"]["if"]["set"]["value"].Value = "success";
 
 			if (e.Params.Contains("inspect"))
@@ -315,7 +315,7 @@ behaves as they should, by setting a node's value to success";
 				"magix.execute",
 				tmp);
 
-			if (tmp["Buffer"].Get<string>() != "success")
+			if (tmp["_buffer"].Get<string>() != "success")
 			{
 				throw new ApplicationException(
 					"Failure of executing if statement");
@@ -330,12 +330,12 @@ behaves as they should, by setting a node's value to success";
 		{
 			Node tmp = new Node();
 
-			tmp["Data"]["Item1"].Value = null;
-			tmp["Buffer"].Value = null;
-			tmp["if"].Value = "![Data][Item1].Value";
-			tmp["if"]["set"].Value = "[Buffer].Value";
+			tmp["_data"]["item1"].Value = null;
+			tmp["_buffer"].Value = null;
+			tmp["if"].Value = "![_data][item1].Value";
+			tmp["if"]["set"].Value = "[_buffer].Value";
 			tmp["if"]["set"]["value"].Value = "success";
-			tmp["else"]["set"].Value = "[Buffer].Value";
+			tmp["else"]["set"].Value = "[_buffer].Value";
 			tmp["else"]["set"]["value"].Value = "failure";
 
 			if (e.Params.Contains("inspect"))
@@ -353,7 +353,7 @@ by returning true when supposed to";
 				"magix.execute",
 				tmp);
 
-			if (tmp["Buffer"].Get<string>() != "success")
+			if (tmp["_buffer"].Get<string>() != "success")
 			{
 				throw new ApplicationException(
 					"Failure of executing if statement");
@@ -368,15 +368,15 @@ by returning true when supposed to";
 		{
 			Node tmp = new Node();
 
-			tmp["Data"]["Item1"]["Description123"].Value = "thomas";
-			tmp["Buffer"].Value = null;
-			tmp["if"].Value = "[Data][Item1][Description123].Value==thomas1";
-			tmp["if"]["set"].Value = "[Buffer].Value";
+			tmp["_data"]["item1"]["description123"].Value = "thomas";
+			tmp["_buffer"].Value = null;
+			tmp["if"].Value = "[_data][item1][description123].Value==thomas1";
+			tmp["if"]["set"].Value = "[_buffer].Value";
 			tmp["if"]["set"]["value"].Value = "failure";
-			tmp["else-if"].Value = "[Data][Item1][Description123].Value";
-			tmp["else-if"]["set"].Value = "[Buffer].Value";
+			tmp["else-if"].Value = "[_data][item1][description123].Value";
+			tmp["else-if"]["set"].Value = "[_buffer].Value";
 			tmp["else-if"]["set"]["value"].Value = "success";
-			tmp["else"]["set"].Value = "[Buffer].Value";
+			tmp["else"]["set"].Value = "[_buffer].Value";
 			tmp["else"]["set"]["value"].Value = "failure";
 
 			if (e.Params.Contains("inspect"))
@@ -394,7 +394,7 @@ component else-if expression";
 				"magix.execute",
 				tmp);
 
-			if (tmp["Buffer"].Get<string>() != "success")
+			if (tmp["_buffer"].Get<string>() != "success")
 			{
 				throw new ApplicationException(
 					"Failure of executing else-if statement");
@@ -409,15 +409,15 @@ component else-if expression";
 		{
 			Node tmp = new Node();
 
-			tmp["Data"]["Item1"]["Description123"].Value = "thomas";
-			tmp["Buffer"].Value = null;
-			tmp["if"].Value = "[Data][Item1][Description123].Value==thomas1";
-			tmp["if"]["set"].Value = "[Buffer].Value";
+			tmp["_data"]["item1"]["description123"].Value = "thomas";
+			tmp["_buffer"].Value = null;
+			tmp["if"].Value = "[_data][item1][description123].Value==thomas1";
+			tmp["if"]["set"].Value = "[_buffer].Value";
 			tmp["if"]["set"]["value"].Value = "failure";
-			tmp["else-if"].Value = "[Data][Item1][Description123]";
-			tmp["else-if"]["set"].Value = "[Buffer].Value";
+			tmp["else-if"].Value = "[_data][item1][description123]";
+			tmp["else-if"]["set"].Value = "[_buffer].Value";
 			tmp["else-if"]["set"]["value"].Value = "success";
-			tmp["else"]["set"].Value = "[Buffer].Value";
+			tmp["else"]["set"].Value = "[_buffer].Value";
 			tmp["else"]["set"]["value"].Value = "failure";
 
 			if (e.Params.Contains("inspect"))
@@ -434,7 +434,7 @@ check if a node exist, as a single statement else-if expression";
 				"magix.execute",
 				tmp);
 
-			if (tmp["Buffer"].Get<string>() != "success")
+			if (tmp["_buffer"].Get<string>() != "success")
 			{
 				throw new ApplicationException(
 					"Failure of executing else-if statement");
@@ -449,15 +449,15 @@ check if a node exist, as a single statement else-if expression";
 		{
 			Node tmp = new Node();
 
-			tmp["Data"]["Item1"]["Description123"].Value = "thomas";
-			tmp["Buffer"].Value = null;
-			tmp["if"].Value = "[Data][Item1][Description123].Value==thomas1";
-			tmp["if"]["set"].Value = "[Buffer].Value";
+			tmp["_data"]["item1"]["description123"].Value = "thomas";
+			tmp["_buffer"].Value = null;
+			tmp["if"].Value = "[_data][item1][description123].Value==thomas1";
+			tmp["if"]["set"].Value = "[_buffer].Value";
 			tmp["if"]["set"]["value"].Value = "failure";
-			tmp["else-if"].Value = "[Data][Item1][[0][0][0].Name].Value==thomas";
-			tmp["else-if"]["set"].Value = "[Buffer].Value";
+			tmp["else-if"].Value = "[_data][item1][[0][0][0].Name].Value==thomas";
+			tmp["else-if"]["set"].Value = "[_buffer].Value";
 			tmp["else-if"]["set"]["value"].Value = "success";
-			tmp["else"]["set"].Value = "[Buffer].Value";
+			tmp["else"]["set"].Value = "[_buffer].Value";
 			tmp["else"]["set"]["value"].Value = "failure";
 
 			if (e.Params.Contains("inspect"))
@@ -476,7 +476,7 @@ sub-expression, and its value, and a static value";
 				"magix.execute",
 				tmp);
 
-			if (tmp["Buffer"].Get<string>() != "success")
+			if (tmp["_buffer"].Get<string>() != "success")
 			{
 				throw new ApplicationException(
 					"Failure of executing else-if statement");
@@ -491,15 +491,15 @@ sub-expression, and its value, and a static value";
 		{
 			Node tmp = new Node();
 
-			tmp["Data"]["Item1"]["Description123"].Value = "thomas";
-			tmp["Buffer"].Value = null;
-			tmp["if"].Value = "[Data][Item1][Description123].Value==thomas1";
-			tmp["if"]["set"].Value = "[Buffer].Value";
+			tmp["_data"]["item1"]["Description123"].Value = "thomas";
+			tmp["_buffer"].Value = null;
+			tmp["if"].Value = "[_data][item1][Description123].Value==thomas1";
+			tmp["if"]["set"].Value = "[_buffer].Value";
 			tmp["if"]["set"]["value"].Value = "failure";
-			tmp["else-if"].Value = "[Data][Item1][Description123].Value==thomas2";
-			tmp["else-if"]["set"].Value = "[Buffer].Value";
+			tmp["else-if"].Value = "[_data][item1][Description123].Value==thomas2";
+			tmp["else-if"]["set"].Value = "[_buffer].Value";
 			tmp["else-if"]["set"]["value"].Value = "failure";
-			tmp["else"]["set"].Value = "[Buffer].Value";
+			tmp["else"]["set"].Value = "[_buffer].Value";
 			tmp["else"]["set"]["value"].Value = "success";
 
 			if (e.Params.Contains("inspect"))
@@ -516,7 +516,7 @@ as it should and kicks in if neither [if] nor [else-if] kicks in";
 				"magix.execute",
 				tmp);
 
-			if (tmp["Buffer"].Get<string>() != "success")
+			if (tmp["_buffer"].Get<string>() != "success")
 			{
 				throw new ApplicationException(
 					"Failure of executing else statement");

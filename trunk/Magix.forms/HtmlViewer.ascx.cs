@@ -116,7 +116,7 @@ namespace Magix.forms
 								"magix.code.code-2-node",
 								tmp);
 
-							Node codeNode = tmp["JSON"].Get<Node>();
+							Node codeNode = tmp["json"].Get<Node>();
 
 							if (!dataSources)
 								DataSources.Add(codeNode);
