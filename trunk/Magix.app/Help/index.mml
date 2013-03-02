@@ -4,8 +4,23 @@
 help i give.&nbsp;&nbsp;please choose path below first</p>
 <p>free  
 <a target="_blank" href="https://www.facebook.com/pages/Julian-Assange/339976537931">julian assange</a></p>
+
+<p>if this first time, 
+{{
+LinkButton=>info2
+  Text=>info
+  OnClick
+    magix.help.open-file
+      file=>Help/info.mml
+}} useful</p>
 <div class="btn-group">
 {{
+LinkButton=>lnk5
+  Text=>info
+  CssClass=>btn btn-primary
+  OnClick
+    magix.help.open-file
+      file=>Help/info.mml
 LinkButton=>lnk4
   Text=>tools
   CssClass=>btn btn-primary
