@@ -28,13 +28,13 @@ expression in the [value] node, and appends it into the
 node-expression found in [add].&nbsp;&nbsp;
 the entire node will be copied,
 with its children and sub-nodes";
-				e.Params["Copy"].Value = null;
-				e.Params["Data"]["Children"].Value = "Original";
-				e.Params["Data"]["Children1"].Value = "Will be copied";
-				e.Params["Data"]["Children1"]["Item1"].Value = "Will be copied too";
-				e.Params["Data"]["Children1"]["Item2"].Value = "Will also be copied";
-				e.Params["add"].Value = "[Copy]";
-				e.Params["add"]["value"].Value = "[Data]";
+				e.Params["_copy"].Value = null;
+				e.Params["_data"]["children"].Value = "original";
+				e.Params["_data"]["children1"].Value = "will be copied";
+				e.Params["_data"]["children1"]["item1"].Value = "will be copied too";
+				e.Params["_data"]["children1"]["item2"].Value = "will also be copied";
+				e.Params["add"].Value = "[_copy]";
+				e.Params["add"]["value"].Value = "[_data]";
 				return;
 			}
 			Node ip = e.Params;

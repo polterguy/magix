@@ -26,7 +26,7 @@ namespace Magix.tests
 			tmp["event"]["remotable"].Value = true;
 			tmp["event"]["code"]["set"].Value = "[/][P][Data].Value";
 			tmp["event"]["code"]["set"]["value"].Value = "[/][P][Name].Value";
-			tmp["remote"]["URL"].Value = "http://127.0.0.1:8080";
+			tmp["remote"]["url"].Value = "http://127.0.0.1:8080";
 			tmp["remote"].Value = "foo.bar";
 			tmp["remote"]["Name"].Value = "thomas";
 			tmp.Add (new Node("event", "foo.bar"));
@@ -62,7 +62,7 @@ functions as it should.";
 
 			tmp["event"].Value = "foo.bar";
 			tmp["event"]["code"]["Data"].Value = "howdy";
-			tmp["remote"]["URL"].Value = "http://127.0.0.1:8080";
+			tmp["remote"]["url"].Value = "http://127.0.0.1:8080";
 			tmp["remote"]["event"].Value = "foo.bar";
 			tmp.Add (new Node("event", "foo.bar"));
 

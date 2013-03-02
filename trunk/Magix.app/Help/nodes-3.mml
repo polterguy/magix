@@ -1,0 +1,44 @@
+
+
+<p>magix.code.node-2-code transforms a node to code syntax.&nbsp;&nbsp;magix.code.code-2-node transforms 
+code to node</p>
+
+<p>nodes ...</p>
+<pre>
+Node n = new Node();
+n["data"].Value = "somewhere";
+n["data"]["provider"].Value = "somebody-else";
+n["data"]["key"].Value = "some-key";
+</pre>
+
+<p>code ...</p>
+
+<pre>
+data=>somewhere
+  provider=>somebody-else
+  key=>some-key
+</pre>
+
+<p>spaces counts in code, 2 becomes a child.&nbsp;&nbsp;
+{{
+LinkButton=>link
+  Text=>see scope
+  OnClick
+    magix.admin.run-file
+      file=>ExecuteScripts/Tutorials/code-scope.hl
+      run=>False
+    magix.viewport.clear-controls
+      container=>modal
+}}
+</p>
+
+{{LinkButton=>lnk1
+  Text=>more nodes
+  CssClass=>btn btn-primary
+  OnClick
+    magix.help.open-file
+      file=>Help/nodes-4.mml
+}}
+
+
+

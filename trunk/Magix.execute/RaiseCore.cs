@@ -49,10 +49,10 @@ and not rely upon any overrides.&nbsp;&nbsp;this is useful
 for having the possibility of calling base
 functionality from overridden active events";
 				e.Params["raise"].Value = "magix.viewport.show-message";
-				e.Params["raise"]["message"].Value = "Hi there World 1.0...!!";
+				e.Params["raise"]["message"].Value = "hi there world";
 				e.Params["raise"]["no-override"].Value = "False";
 				e.Params["magix.viewport.show-message"].Value = null;
-				e.Params["magix.viewport.show-message"]["message"].Value = "Hi there World 2.0...!!";
+				e.Params["magix.viewport.show-message"]["message"].Value = "hi there world 2.0, lisp world";
 				return;
 			}
 

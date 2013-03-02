@@ -1,0 +1,28 @@
+
+
+<p>use a node to pass in parameters and return values</p>
+<pre>
+Node node = new Node();
+node["arg1"].Value = "some value";
+node["arg2"].Value = 54;
+RaiseEvent(
+   "namespace.foo",
+   node);
+</pre>
+<p>inside active event</p>
+<pre>
+[ActiveEvent(Name = "namespace.foo")]
+public void namespace_foo(object sender, ActiveEventArgs e)
+{
+   string arg1 = e.Params["arg1"].Get&lt;string&gt;();
+   int arg2    = e.Params["arg2"].Get&lt;int&gt;();
+}
+</pre>
+{{LinkButton=>lnk1
+  Text=>nodes
+  CssClass=>btn btn-primary
+  OnClick
+    magix.help.open-file
+      file=>Help/nodes.mml
+}}
+

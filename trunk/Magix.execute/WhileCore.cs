@@ -32,19 +32,20 @@ namespace Magix.execute
 		{
 			if (e.Params.Contains("inspect"))
 			{
+				e.Params.Clear();
 				e.Params["event:magix.execute"].Value = null;
 				e.Params["inspect"].Value = @"creates a loop that executes the
 underlaying code block repeatedly, as long as the
 statement in the value of [while] is true";
-				e.Params["Data"]["txt1"].Value = "Hello World 1.0";
-				e.Params["Data"]["txt2"].Value = "Hello World 2.0";
-				e.Params["Data"]["txt3"].Value = "Hello World 3.0";
-				e.Params["while"].Value = "[Data].Count!=0";
+				e.Params["_data"]["txt1"].Value = "hello world 1.0";
+				e.Params["_data"]["txt2"].Value = "hello world 2.0";
+				e.Params["_data"]["txt3"].Value = "hello world 3.0";
+				e.Params["while"].Value = "[_data].Count!=0";
 				e.Params["while"]["set"].Value = "[while][magix.viewport.show-message][message].Value";
-				e.Params["while"]["set"]["value"].Value = "[Data][0].Value";
-				e.Params["while"].Add (new Node("set", "[Data][0]"));
+				e.Params["while"]["set"]["value"].Value = "[_data][0].Value";
+				e.Params["while"].Add (new Node("set", "[_data][0]"));
 				e.Params["while"]["magix.viewport.show-message"].Value = null;
-				e.Params["while"]["magix.viewport.show-message"]["message"].Value = "Message...";
+				e.Params["while"]["magix.viewport.show-message"]["message"].Value = "to be changed";
 				return;
 			}
 

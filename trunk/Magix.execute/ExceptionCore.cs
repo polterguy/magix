@@ -37,8 +37,8 @@ exceptions this way.&nbsp;&nbsp;if an exception is thrown, you can access
 the description of the exception in the [exception] node underneath your catch 
 statement";
 				e.Params["try"].Value = null;
-				e.Params["try"]["code"]["throw"].Value = "To Throw or Not to Throw!!";
-				e.Params["try"]["code"]["magix.viewport.show-message"]["message"].Value = "NOT supposed to show!!";
+				e.Params["try"]["code"]["throw"].Value = "to try or not to try";
+				e.Params["try"]["code"]["magix.viewport.show-message"]["message"].Value = "crap, didn't work";
 				e.Params["try"]["catch"]["set"].Value = "[magix.viewport.show-message][message].Value";
 				e.Params["try"]["catch"]["set"]["value"].Value = "[exception].Value";
 				e.Params["try"]["catch"]["magix.viewport.show-message"].Value = null;
@@ -91,7 +91,7 @@ back to the previous catch, in the stack of
 active events.&nbsp;&nbsp;[exception] in [catch] becomes the 
 value of the [throw] node.&nbsp;&nbsp;use together with
 [try] to handle errors";
-				e.Params["try"]["code"]["throw"].Value = "Some Exception Error Message";
+				e.Params["try"]["code"]["throw"].Value = "some exception error message";
 				e.Params["try"]["catch"]["set"].Value = "[magix.viewport.show-message][message].Value";
 				e.Params["try"]["catch"]["set"]["value"].Value = "[exception].Value";
 				e.Params["try"]["catch"]["magix.viewport.show-message"].Value = null;

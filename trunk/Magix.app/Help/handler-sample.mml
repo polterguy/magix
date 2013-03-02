@@ -1,0 +1,21 @@
+
+
+<pre>
+public class MyClass : ActiveController
+{
+   [ActiveEvent(Name = "namespace.foo")]
+   public void namespace_foo(object sender, ActiveEventArgs e)
+   {
+      /* ... do stuff in c# ... */
+   }
+}
+</pre>
+
+<p>above code is c#, and shows active controller, handling namespace.foo</p>
+{{LinkButton=>lnk1
+  Text=>raise code
+  CssClass=>btn btn-primary
+  OnClick
+    magix.help.open-file
+      file=>Help/raise.mml
+}}
