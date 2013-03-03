@@ -17,17 +17,11 @@ your infested code in one simple place, not linking to anything else, keeping
 the rest of your code, free from gpl, while still reaping the benefits of 
 using gpl components in your non-gpl projects</p>
 
-{{LinkButton=>lnk1
-  Text=>mvc
-  CssClass=>btn btn-primary
-  OnClick
-    magix.help.open-file
-      file=>Help/mvc.mml
-}}
-
 {{
 OnFirstLoad
   magix.help.set-next
     next=>Help/mvc.mml
+  magix.viewport.change-modal-header
+    header=>the point
 }}
 

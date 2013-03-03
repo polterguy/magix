@@ -6,19 +6,11 @@ to mark with assembly</p>
 
 <img src="media/images/help-files/active-module.png" alt="active module" class="img-polaroid" />
 
-<div>
-{{LinkButton=>lnk1
-  Text=>more mvc
-  CssClass=>btn btn-primary
-  OnClick
-    magix.help.open-file
-      file=>Help/mvc-10.mml
-}}
-</div>
-
 {{
 OnFirstLoad
   magix.help.set-next
     next=>Help/mvc-10.mml
+  magix.viewport.change-modal-header
+    header=>mvc 9
 }}
 

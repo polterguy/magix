@@ -49,6 +49,8 @@ LinkButton=>lnk5
 OnFirstLoad
   magix.help.set-next
     next=>Help/handler-sample.mml
+  magix.viewport.change-modal-header
+    header=>active events
 }}
 
 

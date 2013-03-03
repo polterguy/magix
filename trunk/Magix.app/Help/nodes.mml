@@ -15,16 +15,10 @@ if (e.Params.Contains("value"))
 <p>5 types are supported, string, bool, decimal, int and datetime.&nbsp;&nbsp;
 everything else, you can rent from string</p>
 
-{{LinkButton=>lnk1
-  Text=>more nodes
-  CssClass=>btn btn-primary
-  OnClick
-    magix.help.open-file
-      file=>Help/nodes-2.mml
-}}
-
 {{
 OnFirstLoad
   magix.help.set-next
     next=>Help/nodes-2.mml
+  magix.viewport.change-modal-header
+    header=>nodes
 }}

@@ -19,18 +19,12 @@ active event handlers mapped.&nbsp;&nbsp;this maps active event invokers to
 active event handlers, without type, hence no link.&nbsp;&nbsp;no link, no 
 dependency.&nbsp;&nbsp;no dependency, all the cookies</p>
 
-{{LinkButton=>lnk1
-  Text=>more mvc
-  CssClass=>btn btn-primary
-  OnClick
-    magix.help.open-file
-      file=>Help/mvc-3.mml
-}}
-
 {{
 OnFirstLoad
   magix.help.set-next
     next=>Help/mvc-3.mml
+  magix.viewport.change-modal-header
+    header=>mvc 2
 }}
 
 

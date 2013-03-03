@@ -18,18 +18,12 @@ through web</p>
 active event after the other.&nbsp;&nbsp;therefor we say that magix controller is solid, 
 yet changes.&nbsp;&nbsp;change without movement is the only change that exist</p>
 
-{{LinkButton=>lnk1
-  Text=>more mvc
-  CssClass=>btn btn-primary
-  OnClick
-    magix.help.open-file
-      file=>Help/mvc-8.mml
-}}
-
 {{
 OnFirstLoad
   magix.help.set-next
     next=>Help/mvc-8.mml
+  magix.viewport.change-modal-header
+    header=>mvc 7
 }}
 
 

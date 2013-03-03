@@ -22,18 +22,12 @@ public void namespace_bar(object sender, ActiveEventArgs e)
       true /* no-overrides!! */ );
 }</pre>
 
-{{LinkButton=>lnk1
-  Text=>more mvc
-  CssClass=>btn btn-primary
-  OnClick
-    magix.help.open-file
-      file=>Help/mvc-5.mml
-}}
-
 {{
 OnFirstLoad
   magix.help.set-next
     next=>Help/mvc-5.mml
+  magix.viewport.change-modal-header
+    header=>mvc 4
 }}
 
 

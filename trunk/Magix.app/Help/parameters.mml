@@ -18,16 +18,11 @@ public void namespace_foo(object sender, ActiveEventArgs e)
    int arg2    = e.Params["arg2"].Get&lt;int&gt;();
 }
 </pre>
-{{LinkButton=>lnk1
-  Text=>nodes
-  CssClass=>btn btn-primary
-  OnClick
-    magix.help.open-file
-      file=>Help/nodes.mml
-}}
 
 {{
 OnFirstLoad
   magix.help.set-next
     next=>Help/nodes.mml
+  magix.viewport.change-modal-header
+    header=>parameters
 }}

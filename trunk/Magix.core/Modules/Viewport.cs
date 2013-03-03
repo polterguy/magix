@@ -250,6 +250,7 @@ given [container] viewport container.&nbsp;&nbsp;the module name must be defined
 the [name] node.&nbsp;&nbsp;the incoming parameters will be used";
 				return;
 			}
+
 			string moduleName = e.Params["name"].Get<string>();
 
 			DynamicPanel dyn = Selector.FindControl<DynamicPanel>(
@@ -262,6 +263,10 @@ the [name] node.&nbsp;&nbsp;the incoming parameters will be used";
 			Node context = e.Params;
 
 			ClearControls(dyn);
+
+			if (e.Params.Contains("css"))
+				dyn.CssClass = e.Params["css"].Get<string>();
+
 			dyn.LoadControl(moduleName, context);
 
 			Node node = new Node();

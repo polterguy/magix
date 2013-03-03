@@ -21,6 +21,8 @@
 
 * Diagnostic tool in help
 
+* "info.hl" in help needs more links to "unit tests" etc ...
+
 * Remove the "remotable" parameter on magix.execute.event, magix.execute.open should suffice
   to create remotable functions. All magix.execute.events should be remotable, if the 
   application pool says they are, or something ...?

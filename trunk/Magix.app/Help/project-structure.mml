@@ -13,19 +13,12 @@
 which becomes your app.&nbsp;&nbsp;samples is throw away, but study to understand.&nbsp;&nbsp;
 tests are unit tests, all green, go thailand with wife</p>
 
-{{LinkButton=>lnk1
-  Text=>more code
-  CssClass=>btn btn-primary
-  OnClick
-    magix.help.open-file
-      file=>Help/project-structure-2.mml
-}}
-
-
 {{
 OnFirstLoad
   magix.help.set-next
     next=>Help/project-structure-2.mml
+  magix.viewport.change-modal-header
+    header=>project structure
 }}
 
 

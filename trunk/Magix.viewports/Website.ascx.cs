@@ -41,6 +41,22 @@ namespace Magix.viewports
 		private bool _notFirstMessage;
 		private int _time = 3000;
 
+		/**
+		 * Changes header of Modal Form
+		 */
+        [ActiveEvent(Name = "magix.viewport.change-modal-header")]
+		protected void magix_viewport_change_modal_header(object sender, ActiveEventArgs e)
+		{
+			if (e.Params.Contains("inspect"))
+			{
+				e.Params["execute:magix.viewport.change-modal-header"].Value = null;
+				e.Params["header"].Value = "new header";
+				return;
+			}
+
+			mdlHeader.Text = e.Params["header"].Get<string>();
+		}
+
         /**
          * Shows a Message Box to the end user, which can be configured
          */
