@@ -21,6 +21,8 @@
 
 * Diagnostic tool in help
 
+* storing viewstate on server
+
 * "info.hl" in help needs more links to "unit tests" etc ...
 
 * Remove the "remotable" parameter on magix.execute.event, magix.execute.open should suffice
