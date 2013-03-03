@@ -245,5 +245,6 @@
     <None Include="ExecuteScripts\Applications\inspect-unit-tests.hl" />
     <None Include="ExecuteScripts\todo.txt" />
     <None Include="Help\info.mml" />
+    <None Include="Help\info-2.mml" />
   </ItemGroup>
 </Project>
