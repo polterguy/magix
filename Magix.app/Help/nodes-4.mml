@@ -18,3 +18,10 @@ and the static world</p>
     magix.help.open-file
       file=>Help/the-point.mml
 }}
+
+{{
+OnFirstLoad
+  magix.help.set-next
+    next=>Help/the-point.mml
+}}
+

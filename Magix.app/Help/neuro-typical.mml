@@ -22,3 +22,14 @@ LinkButton=>lnk2
     magix.help.open-file
       file=>Help/index.mml
 }}
+
+
+{{
+OnFirstLoad
+  magix.help.set-next
+    next=>Help/index.mml
+  magix.viewport.show-message
+    message=>@"congratulations, you are now cured for 
+microsoft, gpl, management, autism and adhd.&nbsp;&nbsp;good luck with healthy life"
+}}
+

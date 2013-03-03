@@ -20,3 +20,11 @@ inspect</pre>
     magix.help.open-file
       file=>Help/dynamic.mml
 }}
+
+
+{{
+OnFirstLoad
+  magix.help.set-next
+    next=>Help/dynamic.mml
+}}
+

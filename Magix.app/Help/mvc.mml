@@ -26,3 +26,10 @@ minimizing influence of sick code, slowly curing by substitution</p>
     magix.help.open-file
       file=>Help/mvc-2.mml
 }}
+
+{{
+OnFirstLoad
+  magix.help.set-next
+    next=>Help/mvc-2.mml
+}}
+

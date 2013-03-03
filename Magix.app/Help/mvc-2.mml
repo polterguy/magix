@@ -27,3 +27,10 @@ dependency.&nbsp;&nbsp;no dependency, all the cookies</p>
       file=>Help/mvc-3.mml
 }}
 
+{{
+OnFirstLoad
+  magix.help.set-next
+    next=>Help/mvc-3.mml
+}}
+
+

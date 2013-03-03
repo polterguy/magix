@@ -29,3 +29,11 @@ public void namespace_bar(object sender, ActiveEventArgs e)
     magix.help.open-file
       file=>Help/mvc-5.mml
 }}
+
+{{
+OnFirstLoad
+  magix.help.set-next
+    next=>Help/mvc-5.mml
+}}
+
+

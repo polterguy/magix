@@ -20,3 +20,11 @@ else
     magix.help.open-file
       file=>Help/dynamic-3.mml
 }}
+
+
+{{
+OnFirstLoad
+  magix.help.set-next
+    next=>Help/dynamic-3.mml
+}}
+

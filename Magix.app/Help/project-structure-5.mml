@@ -30,3 +30,11 @@ relies upon magix.data</p>
 }}
 
 
+{{
+OnFirstLoad
+  magix.help.set-next
+    next=>Help/project-structure-6.mml
+}}
+
+
+

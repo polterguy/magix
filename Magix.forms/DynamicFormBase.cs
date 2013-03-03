@@ -172,6 +172,20 @@ namespace Magix.forms
 			BaseControl ctrl = null;
 			switch (idx.Name)
 			{
+			case "OnFirstLoad":
+			{
+				string path = GetPath(idx);
+				if (ViewState[ClientID + "_FirstLoad"] == null)
+				{
+					ViewState[ClientID + "_FirstLoad"] = true;
+					Node codeNode = del(path);
+					
+					RaiseEvent(
+						"magix.execute", 
+						codeNode);
+				}
+				return;
+			}
 			case "Button":
 				ctrl = new Button();
 				break;
@@ -564,6 +578,23 @@ namespace Magix.forms
 									Node codeNode = del(codePath);
 									RaiseEvent("magix.execute", codeNode);
 								};
+						};
+				} break;
+				case "OnFirstLoad":
+				{
+					string path = GetPath(idxInner);
+					((Control)ctrl).Load +=
+						delegate(object sender, EventArgs e)
+						{
+							if (ViewState[ctrl.ClientID + "_FirstLoad"] == null)
+							{
+								ViewState[ctrl.ClientID + "_FirstLoad"] = true;
+								Node codeNode = del(path);
+								
+								RaiseEvent(
+									"magix.execute", 
+									codeNode);
+							}
 						};
 				} break;
 				}

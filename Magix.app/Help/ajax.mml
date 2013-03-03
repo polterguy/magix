@@ -13,3 +13,10 @@
       file=>Help/ajax-2.mml
 }}
 </div>
+
+{{
+OnFirstLoad
+  magix.help.set-next
+    next=>Help/ajax-2.mml
+}}
+

@@ -17,3 +17,11 @@ magix.execute code is nothing but a node tree, the seeds of json</p>
       file=>Help/maintenance.mml
 }}
 
+
+{{
+OnFirstLoad
+  magix.help.set-next
+    next=>Help/maintenance.mml
+}}
+
+

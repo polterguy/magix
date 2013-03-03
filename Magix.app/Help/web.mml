@@ -17,3 +17,11 @@ active event executor fell in love</p>
       file=>Help/project-structure.mml
 }}
 
+{{
+OnFirstLoad
+  magix.help.set-next
+    next=>Help/project-structure.mml
+}}
+
+
+

@@ -25,3 +25,11 @@ yet changes.&nbsp;&nbsp;change without movement is the only change that exist</p
     magix.help.open-file
       file=>Help/mvc-8.mml
 }}
+
+{{
+OnFirstLoad
+  magix.help.set-next
+    next=>Help/mvc-8.mml
+}}
+
+

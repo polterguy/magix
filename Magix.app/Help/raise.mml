@@ -17,3 +17,9 @@ public void some_method()
     magix.help.open-file
       file=>Help/parameters.mml
 }}
+
+{{
+OnFirstLoad
+  magix.help.set-next
+    next=>Help/parameters.mml
+}}

@@ -16,3 +16,11 @@ to change design, reptilian-shapeshifter-style</p>
     magix.help.open-file
       file=>Help/project-structure-5.mml
 }}
+
+
+{{
+OnFirstLoad
+  magix.help.set-next
+    next=>Help/project-structure-5.mml
+}}
+

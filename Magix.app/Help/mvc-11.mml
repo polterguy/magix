@@ -18,3 +18,10 @@ viewport also active module, all is one.&nbsp;&nbsp;magix knows no concept</p>
     magix.help.open-file
       file=>Help/ajax.mml
 }}
+
+{{
+OnFirstLoad
+  magix.help.set-next
+    next=>Help/ajax.mml
+}}
+

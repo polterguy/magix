@@ -143,7 +143,7 @@ namespace Magix.forms
 				}
 			}
 
-			if (!string.IsNullOrEmpty (buffer))
+			if (!string.IsNullOrEmpty(buffer))
 			{
 				LiteralControl lit = new LiteralControl();
 				lit.Text = buffer;
@@ -176,6 +176,8 @@ hello world";
 
 			if (e.Params["form-id"].Get<string>() != FormID)
 				return;
+
+			ViewState[ClientID + "_FirstLoad"] = null;
 
 			DataSources.Clear();
 			Html = e.Params["html"].Get<string>();

@@ -20,3 +20,10 @@ new EffectFadeIn(ctrl, 500)
       file=>Help/ajax-4.mml
 }}
 
+{{
+OnFirstLoad
+  magix.help.set-next
+    next=>Help/ajax-4.mml
+}}
+
+

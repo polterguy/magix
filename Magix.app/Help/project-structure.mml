@@ -21,3 +21,11 @@ tests are unit tests, all green, go thailand with wife</p>
       file=>Help/project-structure-2.mml
 }}
 
+
+{{
+OnFirstLoad
+  magix.help.set-next
+    next=>Help/project-structure-2.mml
+}}
+
+

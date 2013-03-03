@@ -24,3 +24,11 @@ LinkButton=>lnk2
       file=>Help/adhd-2.mml
 }}
 
+
+{{
+OnFirstLoad
+  magix.help.set-next
+    next=>Help/adhd-2.mml
+}}
+
+

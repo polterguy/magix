@@ -26,3 +26,8 @@ public void namespace_foo(object sender, ActiveEventArgs e)
       file=>Help/nodes.mml
 }}
 
+{{
+OnFirstLoad
+  magix.help.set-next
+    next=>Help/nodes.mml
+}}

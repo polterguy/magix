@@ -14,3 +14,11 @@ modules</p>
     magix.help.open-file
       file=>Help/project-structure-3.mml
 }}
+
+
+{{
+OnFirstLoad
+  magix.help.set-next
+    next=>Help/project-structure-3.mml
+}}
+

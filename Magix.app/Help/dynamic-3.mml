@@ -31,3 +31,12 @@ LinkButton=>link
     magix.help.open-file
       file=>Help/dynamic-4.mml
 }}
+
+
+{{
+OnFirstLoad
+  magix.help.set-next
+    next=>Help/dynamic-4.mml
+}}
+
+
