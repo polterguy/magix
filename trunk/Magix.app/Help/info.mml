@@ -1,18 +1,57 @@
 
 <img src="media/images/magix-logo.png" alt="magix logo" style="float:left;margin-right:10px;" />
 <p>magix illuminate is old way to create new software.&nbsp;&nbsp;you have seen everything
-in magix before, unit tests, mvc, webcontrols, ajax and so on, but you have probably never seen 
-active events.&nbsp;&nbsp;active events is what sets magix apart.&nbsp;&nbsp;it is the 
-facilitator for the extreme amount of re-use, and flexibility magix fosters</p>
+in magix before, {{
+LinkButton=>lnkunit
+  Text=>unit tests
+  OnClick
+    magix.admin.run-file
+      file=>ExecuteScripts/Applications/inspect-unit-tests.hl
+    magix.viewport.clear-controls
+      container=>modal
+    magix.tests.run
+}}, mvc, webcontrols, ajax and so on, but you have probably never seen 
+{{
+LinkButton=>actevt
+  Text=>active events
+  OnClick
+    magix.admin.run-file
+      file=>ExecuteScripts/Applications/inspect-events.hl
+    magix.viewport.clear-controls
+      container=>modal
+}}.&nbsp;&nbsp;active events is what sets magix apart.&nbsp;&nbsp;active events is the 
+facilitator for {{
+LinkButton=>linkhyper
+  Text=>hyper lisp
+  OnClick
+    magix.admin.run-file
+      file=>ExecuteScripts/Applications/inspect-execute.hl
+    magix.viewport.clear-controls
+      container=>modal
+}}, {{
+LinkButton=>linkpoly
+  Text=>run time polymorphism
+  OnClick
+    magix.admin.run-file
+      file=>ExecuteScripts/Applications/inspect-overridden-events.hl
+    magix.viewport.clear-controls
+      container=>modal
+}}, and the extreme amount of re-use, and flexibility magix fosters</p>
 
-<p>this makes magix the <strong>definition of agile</strong></p>
+<p>active events makes magix the <strong>definition of agile</strong>.&nbsp;&nbsp;
+however, remember, you already know everything, no need for learning here</p>
 
-<p>however, remember, you already know everything</p>
+<p>magix build upon one axiom; modularity.&nbsp;&nbsp;with magix, modularity explodes, 
+and everything you do, implicitly becomes re-usable, small, flexible and maintainable</p>
+
+<p><em>"with magix, shoot foot impossible; marvin pacifist :)"</em></p>
+
+<p>marvin - the buddhist monk</p>
 
 {{
 OnFirstLoad
   magix.help.set-next
-    next=>Help/tools.mml
+    next=>Help/info-2.mml
   magix.viewport.change-modal-header
     header=>conceptual info
 }}
