@@ -36,3 +36,11 @@ woman happy, man happy, boss go thailand</p>
       file=>Help/mvc-9.mml
 }}
 
+{{
+OnFirstLoad
+  magix.help.set-next
+    next=>Help/mvc-9.mml
+}}
+
+
+

@@ -61,3 +61,10 @@ LinkButton=>lnk6
     magix.help.open-file
       file=>Help/maintenance.mml
 }}</div>
+
+{{
+OnFirstLoad
+  magix.help.set-next
+    next=>Help/active-events.mml
+}}
+

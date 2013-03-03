@@ -14,3 +14,10 @@ woman decapitating testicles.&nbsp;&nbsp;use resource id to load module</p>
       file=>Help/mvc-11.mml
 }}
 </div>
+
+{{
+OnFirstLoad
+  magix.help.set-next
+    next=>Help/mvc-11.mml
+}}
+

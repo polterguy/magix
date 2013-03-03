@@ -47,3 +47,10 @@ LinkButton=>lnk3
       file=>Help/neuro-typical.mml
 }}
 </div>
+
+{{
+OnFirstLoad
+  magix.help.set-next
+    next=>Help/info.mml
+}}
+

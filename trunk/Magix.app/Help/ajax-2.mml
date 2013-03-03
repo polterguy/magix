@@ -22,3 +22,10 @@ bzip'ed</p>
       file=>Help/ajax-3.mml
 }}
 
+{{
+OnFirstLoad
+  magix.help.set-next
+    next=>Help/ajax-3.mml
+}}
+
+

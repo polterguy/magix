@@ -23,3 +23,11 @@
     magix.help.open-file
       file=>Help/project-structure-4.mml
 }}
+
+
+{{
+OnFirstLoad
+  magix.help.set-next
+    next=>Help/project-structure-4.mml
+}}
+

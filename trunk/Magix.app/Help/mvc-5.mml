@@ -20,3 +20,12 @@ active event to scale-out, transparently to invoking code</p>
     magix.help.open-file
       file=>Help/mvc-6.mml
 }}
+
+{{
+OnFirstLoad
+  magix.help.set-next
+    next=>Help/mvc-6.mml
+}}
+
+
+

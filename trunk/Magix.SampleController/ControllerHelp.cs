@@ -95,6 +95,11 @@ LinkButton=>tools
   OnClick
     magix.help.open-file
       file=>Help/tools.mml
+LinkButton=>next
+  Text=>next
+  CssClass=>btn btn-primary
+  OnClick
+    magix.help.move-next
 LinkButton=>forward
   Text=>>>
   CssClass=>btn btn-primary
@@ -106,6 +111,45 @@ LinkButton=>forward
 			RaiseEvent(
 				"magix.forms.create-web-page",
 				tmp);
+		}
+
+		[ActiveEvent(Name = "magix.help.set-next")]
+		public void magix_help_set_next(object sender, ActiveEventArgs e)
+		{
+			if (e.Params.Contains ("inspect"))
+			{
+				e.Params["event:magix.help.set-next"].Value = null;
+				e.Params["inspect"].Value = @"set the next page for the help system";
+				e.Params["next"].Value = "Help/index.mml";
+				return;
+			}
+			if (!e.Params.Contains("next") || e.Params["next"].Get<string>("") == "")
+				throw new ArgumentException("cannot set-next without a next value");
+
+			Next = e.Params["next"].Get<string>();
+		}
+
+		[ActiveEvent(Name = "magix.help.move-next")]
+		public void magix_help_move_next(object sender, ActiveEventArgs e)
+		{
+			if (e.Params.Contains ("inspect"))
+			{
+				e.Params["event:magix.help.move-next"].Value = null;
+				e.Params["inspect"].Value = @"moves to the next page for the help system";
+				return;
+			}
+
+			if (string.IsNullOrEmpty(Next))
+				throw new ArgumentException("no next page in help system");
+
+			Node node = new Node();
+			node["file"].Value = Next;
+
+			Next = null;
+
+			RaiseEvent(
+				"magix.help.open-file",
+				node);
 		}
 
 		/**
@@ -153,6 +197,18 @@ LinkButton=>forward
 				if (Page.Session["ControllerHelper.Pages"] == null)
 					Page.Session["ControllerHelper.Pages"] = new List<string>();
 				return Page.Session["ControllerHelper.Pages"] as List<string>;
+			}
+		}
+
+		private string Next
+		{
+			get
+			{
+				return Page.Session["ControllerHelper.Next"] as string;
+			}
+			set
+			{
+				Page.Session["ControllerHelper.Next"] = value;
 			}
 		}
 

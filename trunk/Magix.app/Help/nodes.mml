@@ -22,3 +22,9 @@ everything else, you can rent from string</p>
     magix.help.open-file
       file=>Help/nodes-2.mml
 }}
+
+{{
+OnFirstLoad
+  magix.help.set-next
+    next=>Help/nodes-2.mml
+}}

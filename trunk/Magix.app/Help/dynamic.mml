@@ -22,3 +22,11 @@ magix.forms.create-form
       file=>Help/dynamic-2.mml
 }}
 
+
+{{
+OnFirstLoad
+  magix.help.set-next
+    next=>Help/dynamic-2.mml
+}}
+
+

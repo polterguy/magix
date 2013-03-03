@@ -244,5 +244,6 @@
     <None Include="ExecuteScripts\Applications\inspect-remoted-events.hl" />
     <None Include="ExecuteScripts\Applications\inspect-unit-tests.hl" />
     <None Include="ExecuteScripts\todo.txt" />
+    <None Include="Help\info.mml" />
   </ItemGroup>
 </Project>

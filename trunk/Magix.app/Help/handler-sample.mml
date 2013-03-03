@@ -19,3 +19,9 @@ public class MyClass : ActiveController
     magix.help.open-file
       file=>Help/raise.mml
 }}
+
+{{
+OnFirstLoad
+  magix.help.set-next
+    next=>Help/raise.mml
+}}

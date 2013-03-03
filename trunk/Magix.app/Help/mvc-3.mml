@@ -24,5 +24,11 @@ is to stop allowing your existence, interfere with your capacity for life"</em><
       file=>Help/mvc-4.mml
 }}
 
+{{
+OnFirstLoad
+  magix.help.set-next
+    next=>Help/mvc-4.mml
+}}
+
 
 

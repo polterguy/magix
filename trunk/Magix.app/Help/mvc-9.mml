@@ -15,3 +15,10 @@ to mark with assembly</p>
       file=>Help/mvc-10.mml
 }}
 </div>
+
+{{
+OnFirstLoad
+  magix.help.set-next
+    next=>Help/mvc-10.mml
+}}
+

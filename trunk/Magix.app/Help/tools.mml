@@ -107,3 +107,9 @@ LinkButton=>activeevents4
       container=>modal
 }}
 </div>
+{{
+OnFirstLoad
+  magix.help.set-next
+    next=>Help/autistic.mml
+}}
+

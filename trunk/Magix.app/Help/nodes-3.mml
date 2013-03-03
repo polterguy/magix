@@ -40,5 +40,10 @@ LinkButton=>link
       file=>Help/nodes-4.mml
 }}
 
+{{
+OnFirstLoad
+  magix.help.set-next
+    next=>Help/nodes-4.mml
+}}
 
 

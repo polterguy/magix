@@ -18,3 +18,11 @@ you indispensable, without needing to work, from thailand</p>
 }}
 
 
+{{
+OnFirstLoad
+  magix.help.set-next
+    next=>Help/adhd.mml
+}}
+
+
+

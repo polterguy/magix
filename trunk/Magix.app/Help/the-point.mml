@@ -24,3 +24,10 @@ using gpl components in your non-gpl projects</p>
     magix.help.open-file
       file=>Help/mvc.mml
 }}
+
+{{
+OnFirstLoad
+  magix.help.set-next
+    next=>Help/mvc.mml
+}}
+

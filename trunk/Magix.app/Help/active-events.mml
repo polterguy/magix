@@ -44,3 +44,11 @@ LinkButton=>lnk5
       file=>Help/the-point.mml
 
 }}</div>
+
+{{
+OnFirstLoad
+  magix.help.set-next
+    next=>Help/handler-sample.mml
+}}
+
+

@@ -13,3 +13,9 @@ mux very small, others not see.&nbsp;&nbsp;no concept, no body.&nbsp;&nbsp;mux g
       file=>Help/web.mml
 }}
 
+{{
+OnFirstLoad
+  magix.help.set-next
+    next=>Help/web.mml
+}}
+

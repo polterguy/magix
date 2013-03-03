@@ -17,3 +17,10 @@ it is now part of your server's public api, on the network server is connected t
     magix.help.open-file
       file=>Help/mvc-7.mml
 }}
+
+{{
+OnFirstLoad
+  magix.help.set-next
+    next=>Help/mvc-7.mml
+}}
+

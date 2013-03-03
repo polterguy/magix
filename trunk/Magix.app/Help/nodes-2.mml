@@ -28,3 +28,9 @@ value of it</p>
     magix.help.open-file
       file=>Help/nodes-3.mml
 }}
+
+{{
+OnFirstLoad
+  magix.help.set-next
+    next=>Help/nodes-3.mml
+}}
