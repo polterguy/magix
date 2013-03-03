@@ -4,13 +4,7 @@
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
-          <Node name="Core" expanded="True">
-            <Node name="Magix.app" expanded="True">
-              <Node name="ExecuteScripts" expanded="True">
-                <Node name="todo.txt" selected="True" />
-              </Node>
-            </Node>
-          </Node>
+          <Node name="Core" expanded="True" />
           <Node name="Plugins" expanded="True" />
           <Node name="Samples" expanded="True" />
           <Node name="Tests" expanded="True" />
@@ -21,8 +15,7 @@
       </Pad>
       <Pad Id="MonoDevelop.Debugger.WatchPad">
         <State>
-          <Value>e.Params["JSON"]</Value>
-          <Value>ret</Value>
+          <Value>Next</Value>
         </State>
       </Pad>
     </Pads>
