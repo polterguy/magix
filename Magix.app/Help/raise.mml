@@ -10,16 +10,11 @@ public void some_method()
 </pre>
 
 <p>above code is c#, and shows how to raise namespace.foo</p>
-{{LinkButton=>lnk1
-  Text=>parameters
-  CssClass=>btn btn-primary
-  OnClick
-    magix.help.open-file
-      file=>Help/parameters.mml
-}}
 
 {{
 OnFirstLoad
   magix.help.set-next
     next=>Help/parameters.mml
+  magix.viewport.change-modal-header
+    header=>raise
 }}

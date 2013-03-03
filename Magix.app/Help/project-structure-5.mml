@@ -21,19 +21,12 @@ relies upon magix.data</p>
 
 <p><strong>magix.web</strong> are helpers</p>
 
-{{LinkButton=>lnk1
-  Text=>more code
-  CssClass=>btn btn-primary
-  OnClick
-    magix.help.open-file
-      file=>Help/project-structure-6.mml
-}}
-
-
 {{
 OnFirstLoad
   magix.help.set-next
     next=>Help/project-structure-6.mml
+  magix.viewport.change-modal-header
+    header=>project structure 5
 }}
 
 

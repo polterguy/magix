@@ -4,18 +4,11 @@
 mux also good friend.&nbsp;&nbsp;mix mux with jquery, or other query.&nbsp;&nbsp;
 mux very small, others not see.&nbsp;&nbsp;no concept, no body.&nbsp;&nbsp;mux ghost</p>
 
-
-{{LinkButton=>lnk1
-  Text=>web
-  CssClass=>btn btn-primary
-  OnClick
-    magix.help.open-file
-      file=>Help/web.mml
-}}
-
 {{
 OnFirstLoad
   magix.help.set-next
     next=>Help/web.mml
+  magix.viewport.change-modal-header
+    header=>ajax 4
 }}
 

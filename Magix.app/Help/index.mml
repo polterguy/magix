@@ -12,7 +12,13 @@ LinkButton=>info2
   OnClick
     magix.help.open-file
       file=>Help/info.mml
-}} useful</p>
+}} useful.&nbsp;&nbsp;{{
+LinkButton=>tools2
+  Text=>tools
+  OnClick
+    magix.help.open-file
+      file=>Help/tools.mml
+}} also interesting</p>
 <div class="btn-group">
 {{
 LinkButton=>lnk5
@@ -47,10 +53,66 @@ LinkButton=>lnk3
       file=>Help/neuro-typical.mml
 }}
 </div>
+<br />
+<br />
+<p>see also 
+{{
+LinkButton=>lnkhl
+  Text=>hyper lisp keywords
+  OnClick
+    magix.admin.run-file
+      file=>ExecuteScripts/Applications/inspect-execute.hl
+    magix.viewport.clear-controls
+      container=>modal
+}}</p>
+<p>also, 
+{{
+LinkButton=>lnkunit
+  Text=>verify unit tests
+  OnClick
+    magix.admin.run-file
+      file=>ExecuteScripts/Applications/inspect-unit-tests.hl
+    magix.viewport.clear-controls
+      container=>modal
+    magix.tests.run
+}} often</p>
+<p>also, 
+{{
+LinkButton=>lnkremote
+  Text=>see remoted active events
+  OnClick
+    magix.admin.run-file
+      file=>ExecuteScripts/Applications/inspect-remoted-events.hl
+    magix.viewport.clear-controls
+      container=>modal
+}} together with 
+{{
+LinkButton=>lnkopen
+  Text=>open active events
+  OnClick
+    magix.admin.run-file
+      file=>ExecuteScripts/Applications/inspect-open-events.hl
+    magix.viewport.clear-controls
+      container=>modal
+}} to verify your system is safe.&nbsp;&nbsp;remoted events are active events which 
+are polymorphistically overridden to go to other servers.&nbsp;&nbsp;open active 
+events are events which other systems, over http, can invoke on your server.&nbsp;&nbsp;
+you can also see {{
+LinkButton=>lnkall
+  Text=>all active events
+  OnClick
+    magix.admin.run-file
+      file=>ExecuteScripts/Applications/inspect-events.hl
+    magix.viewport.clear-controls
+      container=>modal
+}}</p>
+
 
 {{
 OnFirstLoad
   magix.help.set-next
     next=>Help/info.mml
+  magix.viewport.change-modal-header
+    header=>welcome to magix
 }}
 

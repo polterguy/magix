@@ -19,17 +19,11 @@ by using active events to communicate, no link between module and controller exi
 flexibility is acquired.&nbsp;&nbsp;existing legacy model-code can be attached to controllers, 
 minimizing influence of sick code, slowly curing by substitution</p>
 
-{{LinkButton=>lnk1
-  Text=>more mvc
-  CssClass=>btn btn-primary
-  OnClick
-    magix.help.open-file
-      file=>Help/mvc-2.mml
-}}
-
 {{
 OnFirstLoad
   magix.help.set-next
     next=>Help/mvc-2.mml
+  magix.viewport.change-modal-header
+    header=>mvc
 }}
 

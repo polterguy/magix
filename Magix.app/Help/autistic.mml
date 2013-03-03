@@ -66,5 +66,7 @@ LinkButton=>lnk6
 OnFirstLoad
   magix.help.set-next
     next=>Help/active-events.mml
+  magix.viewport.change-modal-header
+    header=>autistic [developers]
 }}
 

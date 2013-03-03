@@ -14,18 +14,12 @@ namespace.&nbsp;&nbsp;use as 'mux:' in markup</p>
 hestkuk bad.&nbsp;&nbsp;mux 30kb with comments, unpacked.&nbsp;&nbsp;less than 10kb compressed and 
 bzip'ed</p>
 
-{{LinkButton=>lnk1
-  Text=>more ajax
-  CssClass=>btn btn-primary
-  OnClick
-    magix.help.open-file
-      file=>Help/ajax-3.mml
-}}
-
 {{
 OnFirstLoad
   magix.help.set-next
     next=>Help/ajax-3.mml
+  magix.viewport.change-modal-header
+    header=>ajax 2
 }}
 
 

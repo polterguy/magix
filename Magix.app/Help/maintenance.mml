@@ -9,19 +9,12 @@ you indispensable, without needing to work, from thailand</p>
 
 <p>thank you :)</p>
 
-{{LinkButton=>lnk1
-  Text=>manager
-  CssClass=>btn btn-primary
-  OnClick
-    magix.help.open-file
-      file=>Help/adhd.mml
-}}
-
-
 {{
 OnFirstLoad
   magix.help.set-next
     next=>Help/adhd.mml
+  magix.viewport.change-modal-header
+    header=>maintenance
 }}
 
 

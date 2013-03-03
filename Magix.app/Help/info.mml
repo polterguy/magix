@@ -13,5 +13,7 @@ facilitator for the extreme amount of re-use, and flexibility magix fosters</p>
 OnFirstLoad
   magix.help.set-next
     next=>Help/tools.mml
+  magix.viewport.change-modal-header
+    header=>conceptual info
 }}
 

@@ -9,19 +9,12 @@ as non-homogenously as you could possible dream of</p>
 <p>this is possible due to no concept.&nbsp;&nbsp;magix is an empty cup, everything else json.&nbsp;&nbsp;
 magix.execute code is nothing but a node tree, the seeds of json</p>
 
-{{LinkButton=>lnk1
-  Text=>maintenance
-  CssClass=>btn btn-primary
-  OnClick
-    magix.help.open-file
-      file=>Help/maintenance.mml
-}}
-
-
 {{
 OnFirstLoad
   magix.help.set-next
     next=>Help/maintenance.mml
+  magix.viewport.change-modal-header
+    header=>dynamic 4
 }}
 
 

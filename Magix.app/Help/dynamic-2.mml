@@ -10,21 +10,14 @@ if=>[Data][Value].Value==thomas
     message=>Hi Thomas!
 else
   magix.viewport.show-message
-    message=>Hi Stranger!</pre>
-
-
-{{LinkButton=>lnk1
-  Text=>more dynamic
-  CssClass=>btn btn-primary
-  OnClick
-    magix.help.open-file
-      file=>Help/dynamic-3.mml
-}}
-
+    message=>Hi Stranger!
+</pre>
 
 {{
 OnFirstLoad
   magix.help.set-next
     next=>Help/dynamic-3.mml
+  magix.viewport.change-modal-header
+    header=>dynamic 2
 }}
 

@@ -9,18 +9,12 @@ active event executor fell in love</p>
 
 <p>magix celebrate birthday of tim-berner, in thailand</p>
 
-{{LinkButton=>lnk1
-  Text=>code
-  CssClass=>btn btn-primary
-  OnClick
-    magix.help.open-file
-      file=>Help/project-structure.mml
-}}
-
 {{
 OnFirstLoad
   magix.help.set-next
     next=>Help/project-structure.mml
+  magix.viewport.change-modal-header
+    header=>web
 }}
 
 

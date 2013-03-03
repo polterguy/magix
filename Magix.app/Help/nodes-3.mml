@@ -32,18 +32,13 @@ LinkButton=>link
 }}
 </p>
 
-{{LinkButton=>lnk1
-  Text=>more nodes
-  CssClass=>btn btn-primary
-  OnClick
-    magix.help.open-file
-      file=>Help/nodes-4.mml
-}}
 
 {{
 OnFirstLoad
   magix.help.set-next
     next=>Help/nodes-4.mml
+  magix.viewport.change-modal-header
+    header=>nodes 3
 }}
 
 

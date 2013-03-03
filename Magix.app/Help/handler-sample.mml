@@ -12,16 +12,11 @@ public class MyClass : ActiveController
 </pre>
 
 <p>above code is c#, and shows active controller, handling namespace.foo</p>
-{{LinkButton=>lnk1
-  Text=>raise code
-  CssClass=>btn btn-primary
-  OnClick
-    magix.help.open-file
-      file=>Help/raise.mml
-}}
 
 {{
 OnFirstLoad
   magix.help.set-next
     next=>Help/raise.mml
+  magix.viewport.change-modal-header
+    header=>handler sample
 }}

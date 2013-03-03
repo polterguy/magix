@@ -13,18 +13,12 @@ ActiveEvents.Instance.OverrideRemotely(
 is raised on local server.&nbsp;&nbsp;polymorphistically override 
 active event to scale-out, transparently to invoking code</p>
 
-{{LinkButton=>lnk1
-  Text=>more mvc
-  CssClass=>btn btn-primary
-  OnClick
-    magix.help.open-file
-      file=>Help/mvc-6.mml
-}}
-
 {{
 OnFirstLoad
   magix.help.set-next
     next=>Help/mvc-6.mml
+  magix.viewport.change-modal-header
+    header=>mvc 5
 }}
 
 

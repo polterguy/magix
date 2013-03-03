@@ -12,18 +12,12 @@ new EffectFadeIn(ctrl, 500)
 
 <p>effects can join or chain.&nbsp;&nbsp;prefer css3</p>
 
-{{LinkButton=>lnk1
-  Text=>more ajax
-  CssClass=>btn btn-primary
-  OnClick
-    magix.help.open-file
-      file=>Help/ajax-4.mml
-}}
-
 {{
 OnFirstLoad
   magix.help.set-next
     next=>Help/ajax-4.mml
+  magix.viewport.change-modal-header
+    header=>ajax 3
 }}
 
 

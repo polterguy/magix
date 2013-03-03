@@ -38,6 +38,7 @@ namespace Magix.SampleController
 
 			tmp["form-id"].Value = "help";
 			tmp["container"].Value = "modal";
+			tmp["css"].Value = "modal-fixed-body modal-body";
 			tmp["header"].Value = "help from marvin";
 
 			using (TextReader reader = File.OpenText(Page.Server.MapPath("Help/index.mml")))
@@ -51,6 +52,7 @@ namespace Magix.SampleController
 
 			if (Pages.Count > 0)
 			{
+				// We have help history here, open last seen page instead
 				tmp = new Node();
 
 				tmp["freeze-help-stack"].Value = true;
@@ -96,15 +98,10 @@ LinkButton=>tools
     magix.help.open-file
       file=>Help/tools.mml
 LinkButton=>next
-  Text=>next
-  CssClass=>btn btn-primary
-  OnClick
-    magix.help.move-next
-LinkButton=>forward
   Text=>>>
   CssClass=>btn btn-primary
   OnClick
-    magix.help.move-forwards
+    magix.help.move-next
 }}
 </div>
 ";
@@ -139,13 +136,25 @@ LinkButton=>forward
 				return;
 			}
 
-			if (string.IsNullOrEmpty(Next))
-				throw new ArgumentException("no next page in help system");
+			// Defaulting to "next"
+			string next = Next;
 
 			Node node = new Node();
-			node["file"].Value = Next;
+
+			if (CurrentIndex < Pages.Count - 1)
+			{
+				// Mowing "forward" since we've got "forward history"
+				CurrentIndex += 1;
+				next = Pages[CurrentIndex];
+				node["freeze-help-stack"].Value = true;
+			}
+
+			if (string.IsNullOrEmpty(next))
+				throw new ArgumentException("no next page in help system");
 
 			Next = null;
+
+			node["file"].Value = next;
 
 			RaiseEvent(
 				"magix.help.open-file",

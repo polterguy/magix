@@ -16,19 +16,11 @@ with magix, you won't feel anything</p>
 <p>magix just one design pattern, active events, air - nothingness</p>
 
 {{
-LinkButton=>lnk2
-  Text=>more adhd
-  CssClass=>btn btn-primary
-  OnClick
-    magix.help.open-file
-      file=>Help/adhd-2.mml
-}}
-
-
-{{
 OnFirstLoad
   magix.help.set-next
     next=>Help/adhd-2.mml
+  magix.viewport.change-modal-header
+    header=>adhd [management]
 }}
 
 

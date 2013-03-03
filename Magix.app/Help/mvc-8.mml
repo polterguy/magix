@@ -28,18 +28,12 @@ software have two buttons, woman confused</p>
 <p>this is why there are no buttons in magix, only input fields.&nbsp;&nbsp;software happy, 
 woman happy, man happy, boss go thailand</p>
 
-{{LinkButton=>lnk1
-  Text=>more mvc
-  CssClass=>btn btn-primary
-  OnClick
-    magix.help.open-file
-      file=>Help/mvc-9.mml
-}}
-
 {{
 OnFirstLoad
   magix.help.set-next
     next=>Help/mvc-9.mml
+  magix.viewport.change-modal-header
+    header=>mvc 8
 }}
 
 

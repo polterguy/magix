@@ -4,3 +4,13 @@
 {
 	text-align:left;
 }
+
+.modal-fixed-body
+{
+	min-height:400px;
+}
+
+.monospaced
+{
+	font-family:monospace, Courier;
+}

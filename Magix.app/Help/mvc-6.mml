@@ -10,17 +10,11 @@ ActiveEvents.Instance.MakeRemotable(
 <p>above code will open for namespace.foo to be invoked from outside of this server.&nbsp;&nbsp;
 it is now part of your server's public api, on the network server is connected to</p>
 
-{{LinkButton=>lnk1
-  Text=>more mvc
-  CssClass=>btn btn-primary
-  OnClick
-    magix.help.open-file
-      file=>Help/mvc-7.mml
-}}
-
 {{
 OnFirstLoad
   magix.help.set-next
     next=>Help/mvc-7.mml
+  magix.viewport.change-modal-header
+    header=>mvc 6
 }}
 

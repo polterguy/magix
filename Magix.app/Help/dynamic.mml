@@ -14,19 +14,12 @@ magix.forms.create-form
           message=>Hello World!
 </pre>
 
-{{LinkButton=>lnk1
-  Text=>more dynamic
-  CssClass=>btn btn-primary
-  OnClick
-    magix.help.open-file
-      file=>Help/dynamic-2.mml
-}}
-
-
 {{
 OnFirstLoad
   magix.help.set-next
     next=>Help/dynamic-2.mml
+  magix.viewport.change-modal-header
+    header=>dynamic
 }}
 
 
