@@ -11,6 +11,12 @@
 
 * Uploading of Manifest files, which changes the state of the application somehow
 
+* consistently use [node] for nodes and "magix.somewhere.active-event" syntax for
+  all active events in the system
+
+* implement support for xml-2-node in generic way, such that one can download
+  rss, and have it atumatically trnsformed to nodes
+
 * Only "event:magix.admin.get-active-events" in active event executor creates exception
 
 * Throw exception in HtmlViewer when Control is given and no ID is given ...

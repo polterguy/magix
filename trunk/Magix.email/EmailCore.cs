@@ -55,12 +55,12 @@ become subject, and [body] the main message";
 
 			MailMessage msg = new MailMessage();
 			msg.From = new MailAddress(fromEmail);
-			msg.To.Add (new MailAddress(toEmail));
+			msg.To.Add(new MailAddress(toEmail));
 			msg.Subject = subject;
 			msg.Body = body;
 
 			SmtpClient client = new SmtpClient();
-			client.Send (msg);
+			client.Send(msg);
 		}
 	}
 }

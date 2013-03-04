@@ -5,6 +5,7 @@
  */
 
 using System;
+using System.IO;
 using Magix.Core;
 
 namespace Magix.execute
@@ -50,16 +51,37 @@ contains the controls themselves";
 			if (e.Params.Contains("inspect"))
 			{
 				e.Params["event:magix.forms.create-web-page"].Value = null;
-				e.Params["container"].Value = "content";
-				e.Params["form-id"].Value = "unique-id-of-form";
-				e.Params["html"].Value = "some html";
+				e.Params["container"].Value = "header";
+				e.Params["form-id"].Value = "harvester";
+				e.Params["html"].Value = "<p>some html, or file.&nbsp;&nbsp;mutually exclusive parameters</p>";
+				e.Params["file"].Value = "sample-scripts/email-harvester.mml";
 				e.Params["inspect"].Value = @"creates a dynamic html web page,
 loading it into the [container] viewport container.&nbsp;&nbsp;[form-id]
 must be a uniquely identifiable id for later use.&nbsp;&nbsp;[html]
-contains the html.&nbsp;&nbsp;you can intermix controls into 
-your html by creating a control collection by typing them 
-inside of brackets such as {{...controls here...}}";
+contains the html, alternatively you can use [file].&nbsp;&nbsp;
+you can intermix webcontrols into your html by creating a control 
+collection by typing them inside of brackets such as 
+{{...controls, using hyper lisp syntax and code in
+event handlers goes here...}}.&nbsp;&nbsp;internally it 
+calls LoadModule, hence all the parameters that goes
+into your magix.viewport.load-module active event, 
+can also be passed into this, such as [css] and 
+so on";
 				return;
+			}
+
+			if (e.Params.Contains("file"))
+			{
+				if (e.Params.Contains("html"))
+					throw new ArgumentException(
+						@"marvin confused, don't know to use [file] or [html], choose one.&nbsp;&nbsp;
+only one girl-friend at the time.&nbsp;&nbsp;[html] and [file] are two mutually exclusive 
+parameters");
+				using (TextReader reader = File.OpenText(Page.Server.MapPath(e.Params["file"].Get<string>())))
+				{
+					e.Params["html"].Value = reader.ReadToEnd();
+					e.Params["file"].UnTie(); // removing file object, to not confuse HtmlViewer ...
+				}
 			}
 
 			LoadModule(

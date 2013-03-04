@@ -1,0 +1,43 @@
+
+
+<h1 class="span9 offset1">email harvester</h1>
+
+<p class="span12 text-left">should work on ipad, iphone, droids and everything.&nbsp;&nbsp;
+you can have a web-designer put in any amounts of marketing crap here, to have it resemble 
+whatever 'story' your company is trying to sell</p>
+<p class="span12 text-left">remember the bullshit disclaimer, that legally saves your ass, against spamming laws</p>
+<p class="span12 text-left">anyone who can html, can edit this page, and make it look like you wish btw</p>
+<p class="span12 text-left">also, remember to edit the smtp settings in web.config</p>
+
+{{
+TextBox=>name
+  PlaceHolder=>name ...
+  CssClass=>span-2
+Panel=>wrp
+  CssClass=>input-append
+  DefaultWidget=>save
+  controls
+    TextBox=>email
+      PlaceHolder=>email ...
+      CssClass=>span-2
+    Button=>save
+      Text=>save
+      CssClass=>btn btn-primary
+      OnClick
+        magix.forms.get-value
+          id=>email
+          form-id=>harvester
+        set=>[/][Panel][controls][Button][OnClick][magix.email.send-email][from].Value
+          value=>[/][Panel][controls][Button][OnClick][magix.forms.get-value][value].Value
+        magix.forms.get-value
+          id=>name
+          form-id=>harvester
+        set=>[/][Panel][controls][Button][OnClick][magix.email.send-email][body].Value
+          value=>[/][Panel][controls][Button][OnClick][2][value].Value
+        magix.email.send-email
+          to=>MareMara13@gmail.com
+          from
+          subject=>harvested at magix illuminate website, please add me to mailing list
+          body=>will contain name
+}}
+

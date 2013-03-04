@@ -179,6 +179,7 @@
     <Folder Include="ExecuteScripts\Tutorials\" />
     <Folder Include="ExecuteScripts\Applications\" />
     <Folder Include="Help\" />
+    <Folder Include="sample-scripts\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Help\active-events.mml" />
@@ -246,5 +247,6 @@
     <None Include="ExecuteScripts\todo.txt" />
     <None Include="Help\info.mml" />
     <None Include="Help\info-2.mml" />
+    <None Include="sample-scripts\email-harvester.mml" />
   </ItemGroup>
 </Project>
