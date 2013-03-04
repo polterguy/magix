@@ -1,23 +1,11 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Magix.app/ExecuteScripts/Applications/inspect-execute.hl">
-    <Files>
-      <File FileName="Magix.app/Help/index.mml" Line="14" Column="26" />
-      <File FileName="Magix.app/Help/info.mml" Line="3" Column="40" />
-      <File FileName="Magix.app/ExecuteScripts/Applications/inspect-execute.hl" Line="87" Column="26" />
-    </Files>
+  <MonoDevelop.Ide.Workbench>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
           <Node name="Core" expanded="True">
-            <Node name="Magix.app" expanded="True">
-              <Node name="ExecuteScripts" expanded="True">
-                <Node name="Applications" expanded="True">
-                  <Node name="inspect-execute.hl" selected="True" />
-                </Node>
-              </Node>
-              <Node name="Help" expanded="True" />
-            </Node>
+            <Node name="Magix.app" selected="True" />
           </Node>
           <Node name="Plugins" expanded="True" />
           <Node name="Samples" expanded="True" />
