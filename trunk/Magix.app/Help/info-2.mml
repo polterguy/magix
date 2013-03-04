@@ -1,0 +1,14 @@
+
+<p>see video below to understand advantage</p>
+<div style="width:480px;margin-left:auto;margin-right:auto;">
+<iframe width="480" height="360" src="http://www.youtube.com/embed/kqTAt7WYLUE" frameborder="0" allowfullscreen></iframe>
+</div>
+
+{{
+OnFirstLoad
+  magix.help.set-next
+    next=>Help/tools.mml
+  magix.viewport.change-modal-header
+    header=>conceptual video
+}}
+
