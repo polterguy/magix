@@ -8,6 +8,13 @@ whatever 'story' your company is trying to sell</p>
 <p class="span12 text-left">remember the bullshit disclaimer, that legally saves your ass, against spamming laws</p>
 <p class="span12 text-left">anyone who can html, can edit this page, and make it look like you wish btw</p>
 <p class="span12 text-left">also, remember to edit the smtp settings in web.config</p>
+<p class="span12 text-left">this hyper lisp script, and mml page, will send you an email, with 
+sender being your new subscriber, and content of email being his name, such that 
+you can easily add them to your email news letter</p>
+<p class="span12 text-left">see ExecutionScripts/Applications/email-harvester.hl for how to 
+turn your web application into running this file during page-load, meaning this will 
+be your landing page</p>
+
 
 {{
 TextBox=>name

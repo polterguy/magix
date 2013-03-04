@@ -19,6 +19,8 @@
 
 * Only "event:magix.admin.get-active-events" in active event executor creates exception
 
+* make magix.file.open also open over http, and ftp etc ...
+
 * Throw exception in HtmlViewer when Control is given and no ID is given ...
 
 * Make Active Event Executor become a "script file" in itself

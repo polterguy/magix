@@ -248,5 +248,6 @@
     <None Include="Help\info.mml" />
     <None Include="Help\info-2.mml" />
     <None Include="sample-scripts\email-harvester.mml" />
+    <None Include="ExecuteScripts\Applications\email-harvester.hl" />
   </ItemGroup>
 </Project>
