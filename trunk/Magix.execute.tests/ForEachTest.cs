@@ -30,7 +30,7 @@ namespace Magix.tests
 			tmp["for-each"]["set"].Value = "[/][_buffer][[.].Name].Value";
 			tmp["for-each"]["set"]["value"].Value = "[.].Value";
 
-			if (e.Params.Contains("inspect"))
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
 				e.Params.Clear();
 				e.Params["event:magix.execute"].Value = null;

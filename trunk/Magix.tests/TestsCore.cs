@@ -21,7 +21,7 @@ namespace Magix.tests
 		[ActiveEvent(Name = "magix.tests.run")]
 		public void magix_tests_run(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains("inspect"))
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
 				e.Params["inspect"].Value = @"will raise all active events that
 start with 'magix.test.', and treat them as unit tests.&nbsp;&nbsp;

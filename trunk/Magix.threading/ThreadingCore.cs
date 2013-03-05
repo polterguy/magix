@@ -25,7 +25,7 @@ namespace Magix.threading
 		[ActiveEvent(Name = "magix.execute.fork")]
 		public static void magix_execute_fork(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains("inspect"))
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
 				e.Params["event:magix.execute"].Value = null;
 				e.Params["fork"]["_data"]["value"].Value = "thomas";
@@ -76,7 +76,7 @@ thread will not change any data on the original node-set";
 		[ActiveEvent(Name = "magix.execute.sleep")]
 		public static void magix_execute_sleep(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains("inspect"))
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
 				e.Params["event:magix.execute"].Value = null;
 				e.Params["sleep"].Value = 500;

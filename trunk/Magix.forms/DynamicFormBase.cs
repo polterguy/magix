@@ -45,7 +45,7 @@ namespace Magix.forms
         [ActiveEvent(Name = "magix.forms.get-value")]
 		protected void magix_forms_get_value(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains("inspect"))
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
 				e.Params["event:magix.forms.get-value"].Value = null;
 				e.Params["id"].Value = "control";
@@ -86,13 +86,72 @@ namespace Magix.forms
 		}
 
 		/**
+		 * selects all text in a mux textbox or textarea
+		 */
+        [ActiveEvent(Name = "magix.forms.select-all")]
+		protected void magix_forms_select_all(object sender, ActiveEventArgs e)
+		{
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			{
+				e.Params["event:magix.forms.select-all"].Value = null;
+				e.Params["id"].Value = "control";
+				e.Params["form-id"].Value = "formid";
+				e.Params["inspect"].Value = @"selects all text in the specific 
+[id] textbox or textarea, in the [form-id] form";
+				return;
+			}
+
+			if (!e.Params.Contains("form-id"))
+				throw new ArgumentException("Missing form-id in set-value");
+
+			if (!e.Params.Contains("id"))
+				throw new ArgumentException("Missing id in set-value");
+
+			if (e.Params["form-id"].Get<string>() == FormID)
+			{
+				BaseWebControlFormElementInputText ctrl = 
+					Selector.FindControl<BaseWebControlFormElementInputText>(this, e.Params["id"].Get<string>());
+				ctrl.Select();
+			}
+		}
+
+		/**
+		 * sets focus to a specific mux web control
+		 */
+        [ActiveEvent(Name = "magix.forms.set-focus")]
+		protected void magix_forms_set_focus(object sender, ActiveEventArgs e)
+		{
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			{
+				e.Params["event:magix.forms.set-focus"].Value = null;
+				e.Params["id"].Value = "control";
+				e.Params["form-id"].Value = "formid";
+				e.Params["inspect"].Value = @"sets focus to the specific 
+[id] web control, in the [form-id] form";
+				return;
+			}
+
+			if (!e.Params.Contains("form-id"))
+				throw new ArgumentException("Missing form-id in set-value");
+
+			if (!e.Params.Contains("id"))
+				throw new ArgumentException("Missing id in set-value");
+
+			if (e.Params["form-id"].Get<string>() == FormID)
+			{
+				BaseWebControl ctrl = Selector.FindControl<BaseWebControl>(this, e.Params["id"].Get<string>());
+				ctrl.Focus();
+			}
+		}
+
+		/**
 		 * Returns the given value of the given "id" widget, within the given
 		 * "form-id" form, in the "value" node
 		 */
         [ActiveEvent(Name = "magix.forms.set-value")]
 		protected void magix_forms_set_value(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains("inspect"))
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
 				e.Params["event:magix.forms.set-value"].Value = null;
 				e.Params["id"].Value = "control";
@@ -110,7 +169,7 @@ namespace Magix.forms
 
 			if (e.Params["form-id"].Get<string>() == FormID)
 			{
-				string value = e.Params.Contains("value") ? e.Params["value"].Get<string>() : "";
+				string value = e.Params.Contains("value") ? e.Params["value"].Get<string>("") : "";
 
 				Control ctrl = Selector.FindControl<Control>(this, e.Params["id"].Get<string>());
 				if (ctrl is BaseWebControlFormElementText)
@@ -335,6 +394,12 @@ namespace Magix.forms
 						((Panel)ctrl).DefaultWidget = idxInner.Get<string>();
 					else
 						throw new ArgumentException("Only Panels can have a Default Widget, you tried to set DefaultWidget on a " + ctrl.GetType().Name);
+					break;
+				case "Rows":
+					if (ctrl is TextArea)
+						((TextArea)ctrl).Rows = idxInner.Get<int>();
+					else
+						throw new ArgumentException("Only textarea can have Rows");
 					break;
 				case "controls":
 					foreach (Node idxChild in idxInner)

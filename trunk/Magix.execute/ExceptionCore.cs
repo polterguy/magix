@@ -22,7 +22,7 @@ namespace Magix.execute
 		[ActiveEvent(Name = "magix.execute.try")]
 		public static void magix_execute_try(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains("inspect"))
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
 				e.Params["event:magix.execute"].Value = null;
 				e.Params["inspect"].Value = @"use the [try] keyword to create
@@ -82,7 +82,7 @@ statement";
 		[ActiveEvent(Name = "magix.execute.throw")]
 		public static void magix_execute_throw(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains("inspect"))
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
 				e.Params["event:magix.execute"].Value = null;
 				e.Params["inspect"].Value = @"throws an exception, which

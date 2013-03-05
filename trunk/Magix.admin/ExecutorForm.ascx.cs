@@ -99,7 +99,7 @@ namespace Magix.admin
 		[ActiveEvent(Name = "magix.admin.run-file")]
 		public static void magix_admin_run_file(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains("inspect"))
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
 				e.Params["inspect"].Value = @"runs the [file] given";
 				e.Params["event:magix.admin.run-file"].Value = null;
@@ -118,7 +118,7 @@ namespace Magix.admin
 				txt = reader.ReadToEnd();
 			}
 
-			string wholeTxt = txt;
+			string wholeTxt = txt.TrimStart();
 			string method = "";
 			if (wholeTxt.StartsWith("Method:") || wholeTxt.StartsWith("event:"))
 			{
@@ -149,7 +149,7 @@ namespace Magix.admin
 		[ActiveEvent(Name = "magix.admin.run-script")]
 		public static void magix_admin_run_script(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains("inspect"))
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
 				e.Params["inspect"].Value = @"runs the [script] given";
 				e.Params["event:magix.admin.run-script"].Value = null;
@@ -195,7 +195,7 @@ if=>[_data].Value==thomas
 		[ActiveEvent(Name = "magix.admin.set-code")]
 		public void magix_admin_set_code(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains("inspect"))
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
 				e.Params["inspect"].Value = @"sets the code to what is given in [code]
 in the active event executor";

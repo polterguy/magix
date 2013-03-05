@@ -33,7 +33,7 @@ namespace Magix.execute
 		[ActiveEvent(Name = "magix.execute.raise")]
 		public static void magix_execute_raise(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains("inspect"))
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
 				e.Params["event:magix.execute"].Value = null;
 				e.Params["inspect"].Value = @"will raise the active event

@@ -28,7 +28,7 @@ namespace Magix.tests
 			tmp["while"].Value = "[_data].Count!=0";
 			tmp["while"]["set"].Value = "[_data][0]";
 
-			if (e.Params.Contains("inspect"))
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
 				e.Params.Clear();
 				e.Params["event:magix.execute"].Value = null;

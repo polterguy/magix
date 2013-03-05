@@ -27,7 +27,7 @@ namespace Magix.tests
 			tmp["if"]["set"].Value = "[_data].Value";
 			tmp["if"]["set"]["value"].Value = "new-value";
 
-			if (e.Params.Contains("inspect"))
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
 				e.Params.Clear();
 				e.Params["event:magix.execute"].Value = null;
@@ -63,7 +63,7 @@ that the result node set is manipulated as it should be";
 			tmp["_data"]["set"]["value"].Value = "new-value";
 			tmp["execute"].Value = "[_data]";
 
-			if (e.Params.Contains("inspect"))
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
 				e.Params.Clear();
 				e.Params["event:magix.execute"].Value = null;

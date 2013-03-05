@@ -47,7 +47,7 @@ namespace Magix.viewports
         [ActiveEvent(Name = "magix.viewport.change-modal-header")]
 		protected void magix_viewport_change_modal_header(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains("inspect"))
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
 				e.Params["execute:magix.viewport.change-modal-header"].Value = null;
 				e.Params["header"].Value = "new header";
@@ -63,7 +63,7 @@ namespace Magix.viewports
         [ActiveEvent(Name = "magix.viewport.show-message")]
 		protected void magix_viewport_show_message(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains("inspect"))
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
 				e.Params["message"].Value = "message to show to end user";
 				e.Params["header"].Value = "message from system";
@@ -75,11 +75,15 @@ end user for some seconds";
 				e.Params["code"].Value = "code goes underneath here";
 				return;
 			}
+
 			if (!_notFirstMessage)
 			{
 				messageLabel.Text = "";
 				msgBoxHeader.Text = "message from system";
 			}
+
+			if (!e.Params.Contains("message") || e.Params["message"].Get<string>("") == "")
+				throw new ArgumentException("cannot show a message box without a [message] argument");
 
 			messageLabel.Text += "<p>" + e.Params["message"].Get<string>() + "</p>";
 

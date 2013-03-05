@@ -24,7 +24,7 @@ namespace Magix.admin
 		[ActiveEvent(Name = "magix.admin.get-active-events")]
 		public static void magix_admin__get_active_events(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains("inspect"))
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
 				e.Params["event:magix.admin.get-active-events"].Value = null;
 				e.Params["all"].Value = false;
@@ -118,7 +118,7 @@ are returned in [events]";
 		[ActiveEvent(Name = "magix.admin.load-executor-code")]
 		public void magix_admin_load_executor_code(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains("inspect"))
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
 				e.Params.Clear();
 				e.Params["event:magix.admin.load-executor-code"].Value = null;
@@ -158,7 +158,7 @@ if=>[Data].Value==thomas
 		[ActiveEvent(Name = "magix.admin.open-event-sniffer")]
 		public void magix_admin_open_event_sniffer(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains("inspect"))
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
 				e.Params["inspect"].Value = @"will open active event sniffer, 
 allowing you to spy on all active events being raised in your system";
@@ -180,7 +180,7 @@ allowing you to spy on all active events being raised in your system";
 		[ActiveEvent(Name = "magix.admin.open-event-executor")]
 		public void magix_admin_open_event_executor(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains("inspect"))
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
 				e.Params["event:magix.admin.open-even-executor"].Value = null;
 				e.Params["container"].Value = "content";

@@ -24,7 +24,7 @@ namespace Magix.tests
 
 			tmp["throw"].Value = "this is our message!";
 
-			if (e.Params.Contains("inspect"))
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
 				e.Params.Clear();
 				e.Params["event:magix.execute"].Value = null;
@@ -64,7 +64,7 @@ and throws";
 			tmp["try"]["code"]["throw"].Value = "exception thrown by test";
 			tmp["try"]["catch"].Value = null;
 
-			if (e.Params.Contains("inspect"))
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
 				e.Params.Clear();
 				e.Params["event:magix.execute"].Value = null;

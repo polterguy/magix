@@ -30,7 +30,7 @@ namespace Magix.tests
 			tmp["else"]["set"].Value = "[_buffer].Value";
 			tmp["else"]["set"]["value"].Value = "failure";
 
-			if (e.Params.Contains("inspect"))
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
 				e.Params.Clear();
 				e.Params["event:magix.execute"].Value = null;
@@ -68,7 +68,7 @@ and from within the [if], change a value to success";
 			tmp["else"]["set"].Value = "[_buffer].Value";
 			tmp["else"]["set"]["value"].Value = "failure";
 
-			if (e.Params.Contains("inspect"))
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
 				e.Params.Clear();
 				e.Params["event:magix.execute"].Value = null;
@@ -105,7 +105,7 @@ compares the name of a node against a static value behaves correctly";
 			tmp["else"]["set"].Value = "[_buffer].Value";
 			tmp["else"]["set"]["value"].Value = "success";
 
-			if (e.Params.Contains("inspect"))
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
 				e.Params.Clear();
 				e.Params["event:magix.execute"].Value = null;
@@ -142,7 +142,7 @@ on [if] behaves correctly, by returning false when it is supposed to";
 			tmp["else"]["set"].Value = "[_buffer].Value";
 			tmp["else"]["set"]["value"].Value = "failure";
 
-			if (e.Params.Contains("inspect"))
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
 				e.Params.Clear();
 				e.Params["event:magix.execute"].Value = null;
@@ -179,7 +179,7 @@ a node's value returns true, when value is not null";
 			tmp["else"]["set"].Value = "[_buffer].Value";
 			tmp["else"]["set"]["value"].Value = "failure";
 
-			if (e.Params.Contains("inspect"))
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
 				e.Params.Clear();
 				e.Params["event:magix.execute"].Value = null;
@@ -216,7 +216,7 @@ of a node within [if] returns true, when node exist";
 			tmp["else"]["set"].Value = "[_buffer].Value";
 			tmp["else"]["set"]["value"].Value = "success";
 
-			if (e.Params.Contains("inspect"))
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
 				e.Params.Clear();
 				e.Params["event:magix.execute"].Value = null;
@@ -261,7 +261,7 @@ does not generate a path, as it traverses the nodes";
 			tmp["else"]["set"].Value = "[_buffer].Value";
 			tmp["else"]["set"]["value"].Value = "success";
 
-			if (e.Params.Contains("inspect"))
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
 				e.Params.Clear();
 				e.Params["event:magix.execute"].Value = null;
@@ -301,7 +301,7 @@ and return false when supposed to";
 			tmp["if"]["if"]["if"]["if"]["if"]["set"].Value = "[_buffer].Value";
 			tmp["if"]["if"]["if"]["if"]["if"]["set"]["value"].Value = "success";
 
-			if (e.Params.Contains("inspect"))
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
 				e.Params.Clear();
 				e.Params["event:magix.execute"].Value = null;
@@ -338,7 +338,7 @@ behaves as they should, by setting a node's value to success";
 			tmp["else"]["set"].Value = "[_buffer].Value";
 			tmp["else"]["set"]["value"].Value = "failure";
 
-			if (e.Params.Contains("inspect"))
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
 				e.Params.Clear();
 				e.Params["event:magix.execute"].Value = null;
@@ -379,7 +379,7 @@ by returning true when supposed to";
 			tmp["else"]["set"].Value = "[_buffer].Value";
 			tmp["else"]["set"]["value"].Value = "failure";
 
-			if (e.Params.Contains("inspect"))
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
 				e.Params.Clear();
 				e.Params["event:magix.execute"].Value = null;
@@ -420,7 +420,7 @@ component else-if expression";
 			tmp["else"]["set"].Value = "[_buffer].Value";
 			tmp["else"]["set"]["value"].Value = "failure";
 
-			if (e.Params.Contains("inspect"))
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
 				e.Params.Clear();
 				e.Params["event:magix.execute"].Value = null;
@@ -460,7 +460,7 @@ check if a node exist, as a single statement else-if expression";
 			tmp["else"]["set"].Value = "[_buffer].Value";
 			tmp["else"]["set"]["value"].Value = "failure";
 
-			if (e.Params.Contains("inspect"))
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
 				e.Params.Clear();
 				e.Params["event:magix.execute"].Value = null;
@@ -502,7 +502,7 @@ sub-expression, and its value, and a static value";
 			tmp["else"]["set"].Value = "[_buffer].Value";
 			tmp["else"]["set"]["value"].Value = "success";
 
-			if (e.Params.Contains("inspect"))
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
 				e.Params.Clear();
 				e.Params["event:magix.execute"].Value = null;

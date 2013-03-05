@@ -31,7 +31,7 @@ namespace Magix.tests
 			tmp["remote"]["_name"].Value = "thomas";
 			tmp.Add (new Node("event", "foo.bar"));
 
-			if (e.Params.Contains("inspect"))
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
 				e.Params.Clear();
 				e.Params["event:magix.execute"].Value = null;
@@ -66,7 +66,7 @@ of a remotely activated active event behaves correctly";
 			tmp["remote"]["event"].Value = "foo.bar";
 			tmp.Add (new Node("event", "foo.bar"));
 
-			if (e.Params.Contains("inspect"))
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
 				e.Params.Clear();
 				e.Params["event:magix.execute"].Value = null;

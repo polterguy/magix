@@ -21,6 +21,16 @@
 
 * make magix.file.open also open over http, and ftp etc ...
 
+* support for having "dynamic, dynamic" controls, meaning that unknown keywords, turns into
+  active events, which can either return Control Class Objects from System.Web, or something,
+  or return node trees, containing 'a control', to be further parsed, serving as nested controls, 
+  becoming effectively dynamic re-usable user controls.  this way we can 'inject' somehow,
+  controls which we can re-use ...?
+  maybe we can solve it by having a special "Composite" control, which throws a specific event,
+  looking for serialized controls, taking parameters as a part of invocation ...?
+  Though still need "custom controls", to allow for injecting completely custom controls,
+  such as domain specific controls, in c#, created by customer, not integrated into magix originally...
+
 * Throw exception in HtmlViewer when Control is given and no ID is given ...
 
 * Make Active Event Executor become a "script file" in itself

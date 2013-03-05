@@ -41,7 +41,7 @@ sadfpijsdfpijsdfpoijsdafopijsdfoij""";
 THOMAS""""""""";
 			tmp["expr"]["deep"]["deep1"]["deep2"].Value = @"[tjobing]";
 
-			if (e.Params.Contains("inspect"))
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
 				e.Params.Clear();
 				e.Params["event:magix.execute"].Value = null;

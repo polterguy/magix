@@ -83,7 +83,7 @@
 	    <mux:DynamicPanel 
 	        runat="server" 
 	        OnReload="dynamic_LoadControls"
-	        CssClass="span12 text-center"
+	        CssClass="span12"
 	        id="header" />
     </div>
 	<div class="row">
@@ -97,5 +97,12 @@
 	        OnReload="dynamic_LoadControls"
 	        CssClass="span9"
 	        id="content" />
+    </div>
+	<div class="row">
+	    <mux:DynamicPanel 
+	        runat="server" 
+	        OnReload="dynamic_LoadControls"
+	        CssClass="span12"
+	        id="footer" />
     </div>
 </mux:Panel>
