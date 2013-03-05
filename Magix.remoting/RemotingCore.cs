@@ -57,7 +57,7 @@ namespace Magix.execute
 		[ActiveEvent(Name = "magix.core.application-startup")]
 		public static void magix_core_application_startup(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains("inspect"))
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
 				e.Params["event:magix.core.application-startup"].Value = null;
 				e.Params["inspect"].Value = @"called during startup
@@ -92,8 +92,7 @@ are being correctly re-mapped";
 		[ActiveEvent(Name = "magix.execute.tunnel")]
 		public static void magix_execute_tunnel(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains("inspect") &&
-			    e.Params["inspect"].Get<string>("") == "")
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
 				e.Params["event:magix.execute"].Value = null;
 				e.Params["inspect"].Value = @"creates an external override towards the given 
@@ -182,8 +181,7 @@ which event to raise externally");
 		[ActiveEvent(Name = "magix.execute.open")]
 		public static void magix_execute_open(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains("inspect") &&
-			    e.Params["inspect"].Get<string>("") == "")
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
 				e.Params["event:magix.execute"].Value = null;
 				e.Params["inspect"].Value = @"allows the given value active event
@@ -237,8 +235,7 @@ server park, or by exposing functionality to other networks";
 		[ActiveEvent(Name = "magix.execute.close")]
 		public static void magix_execute_close(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains("inspect") &&
-			    e.Params["inspect"].Get<string>("") == "")
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
 				e.Params["event:magix.execute"].Value = null;
 				e.Params["inspect"].Value = @"closes the active event found in
@@ -286,8 +283,7 @@ invoked from other servers";
 		[ActiveEvent(Name = "magix.execute.remote")]
 		public static void magix_execute_remote(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains("inspect") &&
-			    e.Params["inspect"].Get<string>("") == "")
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
 				e.Params["event:magix.execute"].Value = null;
 				e.Params["inspect"].Value = @"remotely invokes the active event from

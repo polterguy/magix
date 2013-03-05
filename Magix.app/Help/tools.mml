@@ -107,6 +107,18 @@ LinkButton=>activeevents4
       container=>modal
 }}
 </div>
+<p style="margin-top:20px;">some more tools for your convenience</p>
+<div class="btn-group">
+{{
+LinkButton=>mmleditor
+  Text=>mml editor
+  CssClass=>btn btn-info
+  OnClick
+    magix.admin.run-file
+      file=>ExecuteScripts/Applications/magix-markup-editor.hl
+    magix.viewport.clear-controls
+      container=>modal
+}}</div>
 {{
 OnFirstLoad
   magix.help.set-next

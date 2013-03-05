@@ -34,7 +34,7 @@ hello ""hello"" hello ....";
 			tmp["set"].Value = "[_buffer][copy]";
 			tmp["set"]["value"].Value = "[_data]";
 
-			if (e.Params.Contains("inspect"))
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
 				e.Params.Clear();
 				e.Params["event:magix.execute"].Value = null;
@@ -77,7 +77,7 @@ the original correctly, and the new list is an exact replica";
 			tmp["_data"]["items"]["item4"]["description"].Value = "desc4";
 			tmp["set"].Value = "[_data][items]";
 
-			if (e.Params.Contains("inspect"))
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
 				e.Params.Clear();
 				e.Params["event:magix.execute"].Value = null;
@@ -110,7 +110,7 @@ behaves correctly, and deletes the entire node, with its children";
 			tmp["set"].Value = "[_buffer].Value";
 			tmp["set"]["value"].Value = "[_data][item1][description].Value";
 
-			if (e.Params.Contains("inspect"))
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
 				e.Params.Clear();
 				e.Params["event:magix.execute"].Value = null;
@@ -145,7 +145,7 @@ from another node's value, behaves correctly";
 			tmp["_data"]["item1"]["description"].Value = "desc1";
 			tmp["set"].Value = "[_data][item1][description].Value";
 
-			if (e.Params.Contains("inspect"))
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
 				e.Params.Clear();
 				e.Params["event:magix.execute"].Value = null;
@@ -183,7 +183,7 @@ to null, behaves correctly";
 			tmp["try"]["catch"]["set"].Value = "[/][_data].Value";
 			tmp["try"]["catch"]["set"]["value"].Value = "success";
 
-			if (e.Params.Contains("inspect"))
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
 				e.Params.Clear();
 				e.Params["event:magix.execute"].Value = null;
@@ -220,7 +220,7 @@ to a null value, throws an exception, as it should";
 			tmp["set"].Value = "[_buffer].Value";
 			tmp["set"]["value"].Value = "[_data][item1][0].Name";
 
-			if (e.Params.Contains("inspect"))
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
 				e.Params.Clear();
 				e.Params["event:magix.execute"].Value = null;
@@ -258,7 +258,7 @@ the name of a node";
 			tmp["set"].Value = "[_buffer][tmp].Name";
 			tmp["set"]["value"].Value = "[_data][item1][0].Name";
 
-			if (e.Params.Contains("inspect"))
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
 				e.Params.Clear();
 				e.Params["event:magix.execute"].Value = null;
@@ -299,7 +299,7 @@ behaves correctly, when set to another node's name";
 			tmp["set"].Value = "[_buffer].Value";
 			tmp["set"]["value"].Value = "[_data]";
 
-			if (e.Params.Contains("inspect"))
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
 				e.Params.Clear();
 				e.Params["event:magix.execute"].Value = null;
@@ -336,7 +336,7 @@ behaves correctly";
 			tmp["set"].Value = "[_buffer][item].Name";
 			tmp["set"]["value"].Value = "[_data][item1]";
 
-			if (e.Params.Contains("inspect"))
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
 				e.Params.Clear();
 				e.Params["event:magix.execute"].Value = null;

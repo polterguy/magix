@@ -1,0 +1,40 @@
+event:magix.execute
+
+inspect=>@"creates a text box, where you can type in magix
+markup language, and click preview, to have your 
+markup previewed in another container.&nbsp;&nbsp;
+uses header for editor and menu in span12 for 
+containers.&nbsp;&nbsp;clears content for simplicity"
+
+magix.viewport.clear-controls
+  container=>menu
+magix.viewport.clear-controls
+  container=>content
+magix.forms.create-web-page
+  container=>header
+  form-id=>mmleditor
+  css=>span12
+  html=>@"
+<h1>magix markup editor</h1>
+
+<p>type in magix markup language in textbox below, and click preview to see
+result below</p>
+{{
+TextArea=>markup
+  CssClass=>span12 input-block-level monospaced
+  Rows=>15
+Button=>preview
+  CssClass=>offset10 btn btn-info btn-large
+  Text=>preview
+  OnClick
+    magix.forms.get-value
+      form-id=>mmleditor
+      id=>markup
+    set=>[magix.forms.create-web-page][html].Value
+      value=>[magix.forms.get-value][value].Value
+    magix.forms.create-web-page
+      container=>menu
+      form-id=>wyc
+      css=>span12
+      html
+}}"

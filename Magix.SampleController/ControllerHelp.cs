@@ -27,7 +27,7 @@ namespace Magix.SampleController
 		[ActiveEvent(Name = "magix.help.start-help")]
 		public void magix_help_start_help(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains("inspect"))
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
 				e.Params["event:magix.help.start-help"].Value = null;
 				e.Params["inspect"].Value = @"opens the help files in modal container";
@@ -167,7 +167,7 @@ LinkButton=>next
 		[ActiveEvent(Name = "magix.help.open-file")]
 		public void magix_help_open_file(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains("inspect"))
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
 				e.Params["event:magix.help.open-file"].Value = null;
 				e.Params["file"].Value = "Help/index.html";
@@ -238,7 +238,7 @@ LinkButton=>next
 		[ActiveEvent(Name = "magix.help.add-page")]
 		public void magix_help_add_page(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains("inspect"))
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
 				e.Params["event:magix.help.add-page"].Value = null;
 				e.Params["page"].Value = "Help/path-to-page.mml";
@@ -271,7 +271,7 @@ of help system";
 		[ActiveEvent(Name = "magix.help.move-backwards")]
 		public void magix_help_move_backwards(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains("inspect"))
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
 				e.Params["event:magix.help.move-backwards"].Value = null;
 				e.Params["inspect"].Value = @"opens the previously opened help file";
@@ -310,7 +310,7 @@ of help system";
 		[ActiveEvent(Name = "magix.help.move-forwards")]
 		public void magix_help_move_forwards(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains("inspect"))
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
 				e.Params["event:magix.help.move-backwards"].Value = null;
 				e.Params["inspect"].Value = @"moves forward in the history of 

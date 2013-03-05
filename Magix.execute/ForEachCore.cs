@@ -25,7 +25,7 @@ namespace Magix.execute
 		[ActiveEvent(Name = "magix.execute.for-each")]
 		public static void magix_execute_for_each(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains("inspect"))
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
 				e.Params["event:magix.execute"].Value = null;
 				e.Params["_data"]["items"]["message1"].Value = "howdy world 1.0";

@@ -27,7 +27,7 @@ namespace Magix.SampleController
 		[ActiveEvent(Name = "magix.viewport.page-load")]
 		public void magix_viewport_page_load(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains("inspect"))
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
 				e.Params["inspect"].Value = @"raised when page is initially loaded, 
 or refreshed";

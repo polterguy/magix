@@ -33,7 +33,7 @@ namespace Magix.execute
 		[ActiveEvent(Name = "magix.data.remove")]
 		public static void magix_data_remove(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains("inspect"))
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
 				e.Params["event:magix.execute"].Value = null;
 				e.Params["remove"].Value = "object-id";
@@ -69,7 +69,7 @@ your persistent data storage";
 		[ActiveEvent(Name = "magix.data.save")]
 		public static void magix_data_save(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains("inspect"))
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
 				e.Params["save"].Value = "object-id";
 				e.Params["save"]["object"].Value = "object to save";
@@ -130,7 +130,7 @@ the given object-id in the persistent data storage";
 		[ActiveEvent(Name = "magix.data.load")]
 		public static void magix_data_load(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains("inspect"))
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
 				e.Params["event:magix.data.load"].Value = null;
 				e.Params["load"].Value = "object-id";
@@ -178,7 +178,7 @@ use prototype as filter.&nbsp;&nbsp;returns object as [object]";
 		[ActiveEvent(Name = "magix.data.count")]
 		public static void magix_data_count(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains("inspect"))
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
 				e.Params["event:magix.data.count"].Value = null;
 				e.Params["inspect"].Value = @"returns the total number 

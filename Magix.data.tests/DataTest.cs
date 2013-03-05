@@ -46,7 +46,7 @@ namespace Magix.tests
 			tmp["magix.data.save"]["object"]["Value3"].Value = "thomasx£#$¤%&/()[]}±?";
 			tmp["magix.data.load"].Value = "data-save-test";
 
-			if (e.Params.Contains("inspect"))
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
 				e.Params.Clear();
 				e.Params["event:magix.execute"].Value = null;

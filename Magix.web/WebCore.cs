@@ -23,7 +23,7 @@ namespace Magix.execute
 		[ActiveEvent(Name = "magix.web.get")]
 		public static void magix_web_get(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains("inspect"))
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
 				e.Params["event:magix.execute"].Value = null;
 				e.Params["inspect"].Value = @"will return the given
@@ -45,7 +45,7 @@ get http parameter as [value]";
 		[ActiveEvent(Name = "magix.web.get-cookie")]
 		public static void magix_web_get_cookie(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains("inspect"))
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
 				e.Params["event:magix.execute"].Value = null;
 				e.Params["inspect"].Value = @"returns the given
@@ -67,7 +67,7 @@ http cookie parameter as [value] node";
 		[ActiveEvent(Name = "magix.web.set-cookie")]
 		public static void magix_web_set_cookie(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains("inspect"))
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
 				e.Params["event:magix.execute"].Value = null;
 				e.Params["inspect"].Value = @"will create or overwrite

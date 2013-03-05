@@ -35,7 +35,7 @@ namespace Magix.execute
 		[ActiveEvent(Name = "magix.core.application-startup")]
 		public static void magix_core_application_startup(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains("inspect"))
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
 				e.Params["event:magix.core.application-startup"].Value = null;
 				e.Params["inspect"].Value = @"called during startup
@@ -71,7 +71,7 @@ re-mapped";
 		public static void magix_execute_event(object sender, ActiveEventArgs e)
 		{
 			_hasNull = null;
-			if (e.Params.Contains("inspect"))
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
 				e.Params.Clear();
 				e.Params["event:magix.execute"].Value = null;
@@ -192,7 +192,7 @@ event will be deleted again, if you pass in no code block";
 		[ActiveEvent(Name = "")]
 		public static void magix_data__active_event_2_code_callback_null_helper(object sender, ActiveEventArgs e)
 		{
-			if (string.IsNullOrEmpty(e.Name) && e.Params.Contains("inspect"))
+			if (string.IsNullOrEmpty(e.Name) && e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
 				e.Params.Clear();
 				e.Params["inspect"].Value = @"null event handler for raising
@@ -245,7 +245,7 @@ null active event handlers created with magix.execute.event";
 		[ActiveEvent(Name = "magix.execute._active-event-2-code-callback")]
 		public static void magix_data__active_event_2_code_callback(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains("inspect"))
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
 				e.Params["inspect"].Value = @"active event handler for raising
 active event handlers created with magix.execute.event";
@@ -267,7 +267,7 @@ active event handlers created with magix.execute.event";
 					foreach (Event idx in db.QueryByExample(new Event(null, key, remote)))
 					{
 						idx.Node.Name = null;
-						if (e.Params.Contains("inspect"))
+						if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 						{
 							e.Params["event:magix.execute"].Value = null;
 							e.Params["event"].Value = e.Name;
@@ -290,7 +290,7 @@ such that this serialized code will be called upon the raising of this event.";
 						foreach (Event idx in db.QueryByExample(new Event(null, key, true)))
 						{
 							idx.Node.Name = null;
-							if (e.Params.Contains("inspect"))
+							if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 							{
 								e.Params["event:magix.execute"].Value = null;
 								e.Params["event"].Value = e.Name;

@@ -29,7 +29,7 @@ namespace Magix.tests
 			tmp["foo.bar"].Value = null;
 			tmp.Add (new Node("event", "foo.bar"));
 
-			if (e.Params.Contains("inspect"))
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
 				e.Params.Clear();
 				e.Params["event:magix.execute"].Value = null;
@@ -74,7 +74,7 @@ namespace Magix.tests
 			tmp["remote"].Value = "foo.bar";
 			tmp.Add (new Node("event", "foo.bar"));
 
-			if (e.Params.Contains("inspect"))
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
 				e.Params.Clear();
 				e.Params["event:magix.execute"].Value = null;

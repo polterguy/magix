@@ -22,7 +22,7 @@ namespace Magix.execute
 		[ActiveEvent(Name = "magix.forms.create-form")]
 		public void magix_forms_create_form(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains("inspect"))
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
 				e.Params["event:magix.forms.create-form"].Value = "content";
 				e.Params["container"].Value = "content";
@@ -48,7 +48,7 @@ contains the controls themselves";
 		[ActiveEvent(Name = "magix.forms.create-web-page")]
 		public void magix_forms_create_web_page(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains("inspect"))
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
 				e.Params["event:magix.forms.create-web-page"].Value = null;
 				e.Params["container"].Value = "header";

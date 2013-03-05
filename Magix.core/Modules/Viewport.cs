@@ -119,7 +119,7 @@ namespace Magix.Core
         [ActiveEvent(Name = "magix.viewport.clear-controls")]
 		protected virtual void magix_viewport_clear_controls(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains("inspect"))
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
 				e.Params["container"].Value = "content";
 				e.Params["inspect"].Value = @"will empty the given [container]
@@ -203,7 +203,7 @@ unloads a container for controls";
         [ActiveEvent(Name = "magix.viewport.include-client-file")]
 		protected void magix_viewport_include_client_file(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains("inspect"))
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
 				e.Params["inspect"].Value = @"includes either a css file or a 
 javascript file on the client side";
@@ -241,7 +241,7 @@ javascript file on the client side";
         [ActiveEvent(Name = "magix.viewport.load-module")]
 		protected virtual void magix_viewport_load_module(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains("inspect"))
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
 				e.Params["name"].Value = "namespace.module_name";
 				e.Params["container"].Value = "content";

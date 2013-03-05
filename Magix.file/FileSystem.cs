@@ -23,7 +23,7 @@ namespace Magix.execute
 		[ActiveEvent(Name = "magix.file.load")]
 		public static void magix_file_load(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains("inspect"))
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
 				e.Params["event:magix.execute"].Value = null;
 				e.Params["magix.file.load"].Value = "ExecuteScripts/TODO.txt";
@@ -53,7 +53,7 @@ given as value of the file node";
 		[ActiveEvent(Name = "magix.file.save")]
 		public static void magix_file_save_file(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains("inspect"))
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
 				e.Params["event:magix.execute"].Value = null;
 				e.Params["magix.file.save"].Value = "ExecuteScripts/TODO.txt";

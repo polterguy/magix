@@ -28,7 +28,7 @@ namespace Magix.tests
 			tmp["sleep"].Value = 500;
 			tmp["magix.data.load"].Value = "fork-test-buffer-object";
 
-			if (e.Params.Contains("inspect"))
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
 				e.Params.Clear();
 				e.Params["event:magix.execute"].Value = null;
