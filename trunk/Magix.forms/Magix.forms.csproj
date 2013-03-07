@@ -38,6 +38,20 @@
     <Compile Include="DynamicForm.ascx.cs" />
     <Compile Include="HtmlViewer.ascx.cs" />
     <Compile Include="DynamicFormBase.cs" />
+    <Compile Include="controls\LabelCore.cs" />
+    <Compile Include="controls\BaseWebControlCore.cs" />
+    <Compile Include="controls\LinkButtonCore.cs" />
+    <Compile Include="controls\BaseControlCore.cs" />
+    <Compile Include="controls\ButtonCore.cs" />
+    <Compile Include="controls\CheckBoxCore.cs" />
+    <Compile Include="controls\HiddenField.cs" />
+    <Compile Include="controls\HyperLink.cs" />
+    <Compile Include="controls\ImageCore.cs" />
+    <Compile Include="controls\PanelCore.cs" />
+    <Compile Include="controls\RadioButtonCore.cs" />
+    <Compile Include="controls\SelectListCore.cs" />
+    <Compile Include="controls\TextAreaCore.cs" />
+    <Compile Include="controls\TextBoxCore.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -53,5 +67,8 @@
   <ItemGroup>
     <EmbeddedResource Include="DynamicForm.ascx" />
     <EmbeddedResource Include="HtmlViewer.ascx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="controls\" />
   </ItemGroup>
 </Project>

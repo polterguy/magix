@@ -8,7 +8,7 @@ using System;
 using System.IO;
 using Magix.Core;
 
-namespace Magix.execute
+namespace Magix.forms
 {
 	/**
 	 * Controller that makes it possible to create new 

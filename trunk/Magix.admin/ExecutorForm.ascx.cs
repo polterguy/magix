@@ -253,7 +253,8 @@ if=>[Data].Value==thomas
 			if (txtIn.Text != "")
 			{
 				string wholeTxt = txtIn.Text;
-				if (wholeTxt.StartsWith("Method:") || wholeTxt.StartsWith("event:"))
+				if (wholeTxt.TrimStart().StartsWith("Method:") || 
+				    wholeTxt.TrimStart().StartsWith("event:"))
 				{
 					string method = wholeTxt.Split (':')[1];
 					method = method.Substring(0, method.Contains("\n") ? method.IndexOf("\n") : method.Length);

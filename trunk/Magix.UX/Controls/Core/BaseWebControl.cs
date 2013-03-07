@@ -116,20 +116,6 @@ namespace Magix.UX.Widgets.Core
         }
 
         /**
-         * Additional information you wish to associate with your widget
-         */
-        public string Xtra
-        {
-            get { return ViewState["Xtra"] == null ? "" : (string)ViewState["Xtra"]; }
-            set
-            {
-                if (value != CssClass)
-                    SetJsonValue("Xtra", value);
-                ViewState["Xtra"] = value;
-            }
-        }
-
-        /**
          * The direction of text within your widget. Legal values are 'rtl' and 'ltr'. These
          * means 'right to left' and 'left to right' and signify the direction of your text.
          * Useful for being able to defined reading directions for non-latin based languages
