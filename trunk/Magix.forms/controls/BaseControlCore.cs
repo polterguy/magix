@@ -56,7 +56,9 @@ namespace Magix.forms
 [visible] can be true or false, [info] is any additional textually represented 
 information you like to attach with control.&nbsp;&nbsp;useful for adding in 
 id strings, and such.&nbsp;&nbsp;control_id must be a unique id within your 
-form";
+form.&nbsp;&nbsp;use [onfirstload] as the means to run initialization code
+during first initial creation in form.&nbsp;&nbsp;[onfirstload] will only 
+be raised the first time the control is created";
 			node.Value = "control_id";
 			node["visible"].Value = true;
 			node["info"].Value = "any arbitrary additional info";
