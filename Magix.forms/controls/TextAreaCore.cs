@@ -49,6 +49,32 @@ namespace Magix.forms
 			    !string.IsNullOrEmpty(node["key"].Get<string>()))
 				ret.AccessKey = node["key"].Get<string>();
 
+			if (node.Contains("ontextchanged"))
+			{
+				// TODO: is this right? do we need to clone?
+				Node codeNode = node["ontextchanged"].Clone();
+
+				ret.TextChanged += delegate(object sender2, EventArgs e2)
+				{
+					RaiseEvent(
+						"magix.execute",
+						codeNode);
+				};
+			}
+
+			if (node.Contains("onescpressed"))
+			{
+				// TODO: is this right? do we need to clone?
+				Node codeNode = node["onescpressed"].Clone();
+
+				ret.TextChanged += delegate(object sender2, EventArgs e2)
+				{
+					RaiseEvent(
+						"magix.execute",
+						codeNode);
+				};
+			}
+
 			e.Params["_ctrl"].Value = ret;
 		}
 
@@ -61,13 +87,17 @@ text, that can handle multiple lines of text.&nbsp;&nbsp;[place-holder] is shado
 only visible when input area is empty.&nbsp;&nbsp;[rows] is how many visible rows 
 of text there shall be at the same time.&nbsp;&nbsp;[text] is what text the control 
 shall have, or currently have been changed to.&nbsp;&nbsp;[key] is keyboard shortcut 
-to active, or give focus to text area";
+to active, or give focus to text area.&nbsp;&nbsp;[ontextchanged] is raised when 
+[text] is changed by user.&nbsp;&nbsp;[onescpressed] is raised when escape key
+is pressed, while control has focus";
 			node["container"].Value = "modal";
 			node["form-id"].Value = "sample-form";
 			node["controls"]["text-area"]["place-holder"].Value = "shadow text ...";
 			node["controls"]["text-area"]["rows"].Value = 5;
 			node["controls"]["text-area"]["text"].Value = "is there anybody out there?";
 			node["controls"]["text-area"]["key"].Value = "T";
+			node["controls"]["text-area"]["ontextchanged"].Value = "hyper lisp code";
+			node["controls"]["text-area"]["onescpressed"].Value = "hyper lisp code";
 			base.Inspect(node["controls"]["text-area"]);
 		}
 	}

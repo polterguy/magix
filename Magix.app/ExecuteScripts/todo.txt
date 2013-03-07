@@ -187,6 +187,9 @@
 
 * Loading lists of objects
 
+* should really [onclick] and such, in mml, web-forms, clone the node? i think they have access
+  to whole tree, which actually is kind of sexy
+
 * Simplify Selector Syntax in Adddress-Book.txt
 
 * Support code comments, and serialization of comments in JSON.

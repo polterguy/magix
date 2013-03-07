@@ -61,6 +61,19 @@ namespace Magix.forms
 				ret.SetSelectedItemAccordingToValue(node["selected"].Get<string>());
 			}
 
+			if (node.Contains("onselectedindexchanged"))
+			{
+				// TODO: is this right? do we need to clone?
+				Node codeNode = node["onselectedindexchanged"].Clone();
+
+				ret.SelectedIndexChanged += delegate(object sender2, EventArgs e2)
+				{
+					RaiseEvent(
+						"magix.execute",
+						codeNode);
+				};
+			}
+
 			e.Params["_ctrl"].Value = ret;
 		}
 
@@ -77,7 +90,7 @@ the same time.&nbsp;&nbsp;[key] is keyboard shortcut.&nbsp;&nbsp;[enabled] sets 
 control to disabled or enabled.&nbsp;&nbsp;[items] contains a collection of 
 value/text pairs, which is used as the different options to the select list.&nbsp;&nbsp;
 [selected] can be set to the value of any of its items, to set an initially selected
-choice";
+choice.&nbsp;&nbsp;[onselectedindexchangedd] is raised when selected item state of control changes";
 			node["container"].Value = "modal";
 			node["form-id"].Value = "sample-form";
 			node["controls"]["select"]["size"].Value = 5;
@@ -89,6 +102,7 @@ choice";
 			node["controls"]["select"]["items"]["item4"].Value = "Item 4";
 			node["controls"]["select"]["items"]["item5"].Value = "Item 5";
 			node["controls"]["select"]["selected"].Value = "item3";
+			node["controls"]["check"]["onselectedindexchanged"].Value = "hyper lisp code";
 			base.Inspect(node["controls"]["select"]);
 		}
 	}
