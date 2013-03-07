@@ -177,6 +177,8 @@
 
 * Math stuff in selectors, such as ".Count - 1"
 
+* regex keyword in hyper lisp, as the flaw ... ;)
+
 * Making mostly EVERYTHING a "magix.execute" keyword ...
   AND make sure all Events have "sane names"
 
