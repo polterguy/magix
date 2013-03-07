@@ -14,33 +14,31 @@ you can easily add them to your email news letter</p>
 <p class="span12 text-left">see ExecutionScripts/Applications/email-harvester.hl for how to 
 turn your web application into running this file during page-load, meaning this will 
 be your landing page</p>
-
-
 {{
-TextBox=>name
-  PlaceHolder=>name ...
-  CssClass=>span-2
-Panel=>wrp
-  CssClass=>input-append
-  DefaultWidget=>save
+text-box=>name
+  place-holder=>name ...
+  css=>span-2
+panel=>wrp
+  css=>input-append
+  default=>save
   controls
-    TextBox=>email
-      PlaceHolder=>email ...
-      CssClass=>span-2
-    Button=>save
-      Text=>save
-      CssClass=>btn btn-primary
-      OnClick
+    text-box=>email
+      place-holder=>email ...
+      css=>span-2
+    button=>save
+      text=>save
+      css=>btn btn-primary
+      onclick
         magix.forms.get-value
           id=>email
           form-id=>harvester
-        set=>[/][Panel][controls][Button][OnClick][magix.email.send-email][from].Value
-          value=>[/][Panel][controls][Button][OnClick][magix.forms.get-value][value].Value
+        set=>[/][magix.email.send-email][from].Value
+          value=>[/][magix.forms.get-value][value].Value
         magix.forms.get-value
           id=>name
           form-id=>harvester
-        set=>[/][Panel][controls][Button][OnClick][magix.email.send-email][body].Value
-          value=>[/][Panel][controls][Button][OnClick][2][value].Value
+        set=>[/][magix.email.send-email][body].Value
+          value=>[/][2][value].Value
         magix.email.send-email
           to=>MareMara13@gmail.com
           from
