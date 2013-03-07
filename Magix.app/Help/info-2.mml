@@ -5,10 +5,11 @@
 </div>
 
 {{
-OnFirstLoad
-  magix.help.set-next
-    next=>Help/tools.mml
-  magix.viewport.change-modal-header
-    header=>conceptual video
+hidden=>dummy
+  onfirstload
+    magix.help.set-next
+      next=>Help/tools.mml
+    magix.viewport.change-modal-header
+      header=>conceptual video
 }}
 

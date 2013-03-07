@@ -15,12 +15,13 @@ your network and administrate it</p>
 give to me.&nbsp;&nbsp;let me tell boss, me nice guy :)</p>
 
 {{
-OnFirstLoad
-  magix.help.set-next
-    next=>Help/index.mml
-  magix.viewport.show-message
-    time=>10000
-    message=>@"congratulations, you are now cured from 
+hidden=>dummy
+  onfirstload
+    magix.help.set-next
+      next=>Help/index.mml
+    magix.viewport.show-message
+      time=>10000
+      message=>@"congratulations, you are now cured from 
 microsoft, gpl, management, autism and adhd.&nbsp;&nbsp;
 good luck with healthy life as neuro typical"
   magix.viewport.change-modal-header

@@ -10,11 +10,12 @@ you indispensable, without needing to work, from thailand</p>
 <p>thank you :)</p>
 
 {{
-OnFirstLoad
-  magix.help.set-next
-    next=>Help/adhd.mml
-  magix.viewport.change-modal-header
-    header=>maintenance
+hidden=>dummy
+  onfirstload
+    magix.help.set-next
+      next=>Help/adhd.mml
+    magix.viewport.change-modal-header
+      header=>maintenance
 }}
 
 

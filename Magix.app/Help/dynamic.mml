@@ -7,19 +7,20 @@ magix.forms.create-form
   form-id=>my-form
   container=>modal
   controls
-    Button=>hello
-      Text=>Hello World
-      OnClick
+    button=>hello
+      text=>hello world
+      onclick
         magix.viewport.show-message
-          message=>Hello World!
+          message=>hello dynamic world
 </pre>
 
 {{
-OnFirstLoad
-  magix.help.set-next
-    next=>Help/dynamic-2.mml
-  magix.viewport.change-modal-header
-    header=>dynamic
+hidden=>dummy
+  onfirstload
+    magix.help.set-next
+      next=>Help/dynamic-2.mml
+    magix.viewport.change-modal-header
+      header=>dynamic
 }}
 
 

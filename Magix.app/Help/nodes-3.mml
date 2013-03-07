@@ -21,9 +21,14 @@ data=>somewhere
 
 <p>spaces counts in code, 2 becomes a child.&nbsp;&nbsp;
 {{
-LinkButton=>link
-  Text=>see scope
-  OnClick
+link-button=>link
+  text=>see scope
+  onfirstload
+    magix.help.set-next
+      next=>Help/nodes-4.mml
+    magix.viewport.change-modal-header
+      header=>nodes 3
+  onclick
     magix.admin.run-file
       file=>ExecuteScripts/Tutorials/code-scope.hl
       run=>False
@@ -33,12 +38,5 @@ LinkButton=>link
 </p>
 
 
-{{
-OnFirstLoad
-  magix.help.set-next
-    next=>Help/nodes-4.mml
-  magix.viewport.change-modal-header
-    header=>nodes 3
-}}
 
 

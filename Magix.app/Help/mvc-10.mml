@@ -6,10 +6,11 @@ woman decapitating testicles.&nbsp;&nbsp;use resource id to load module</p>
 <img src="media/images/help-files/module-properties.png" alt="active module properties" class="img-polaroid" />
 
 {{
-OnFirstLoad
-  magix.help.set-next
-    next=>Help/mvc-11.mml
-  magix.viewport.change-modal-header
-    header=>mvc 10
+hidden=>dummy
+  onfirstload
+    magix.help.set-next
+      next=>Help/mvc-11.mml
+    magix.viewport.change-modal-header
+      header=>mvc 10
 }}
 

@@ -18,10 +18,11 @@ the rest of your code, free from gpl, while still reaping the benefits of
 using gpl components in your non-gpl projects</p>
 
 {{
-OnFirstLoad
-  magix.help.set-next
-    next=>Help/mvc.mml
-  magix.viewport.change-modal-header
-    header=>the point
+hidden=>dummy
+  onfirstload
+    magix.help.set-next
+      next=>Help/mvc.mml
+    magix.viewport.change-modal-header
+      header=>the point
 }}
 

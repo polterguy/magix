@@ -15,21 +15,19 @@ magix implements most of the hyper lisp keywords in the magix.execute project</p
 
 <p>we have ported qt address-book sample, plus many more examples of how to use hyper lisp, which
 can be found in executescripts folder.&nbsp;&nbsp;{{
-LinkButton=>link
-  Text=>see keywords
-  OnClick
+link-button=>link
+  text=>see keywords
+  onfirstload
+    magix.help.set-next
+      next=>Help/dynamic-4.mml
+    magix.viewport.change-modal-header
+      header=>dynamic 3
+  onclick
     magix.admin.run-file
       file=>ExecuteScripts/Applications/inspect-execute.hl
     magix.viewport.clear-controls
       container=>modal
 }} for hyper lisp</p>
 
-{{
-OnFirstLoad
-  magix.help.set-next
-    next=>Help/dynamic-4.mml
-  magix.viewport.change-modal-header
-    header=>dynamic 3
-}}
 
 

@@ -16,9 +16,10 @@ if (e.Params.Contains("value"))
 everything else, you can rent from string</p>
 
 {{
-OnFirstLoad
-  magix.help.set-next
-    next=>Help/nodes-2.mml
-  magix.viewport.change-modal-header
-    header=>nodes
+hidden=>dummy
+  onfirstload
+    magix.help.set-next
+      next=>Help/nodes-2.mml
+    magix.viewport.change-modal-header
+      header=>nodes
 }}

@@ -5,10 +5,11 @@ mux also good friend.&nbsp;&nbsp;mix mux with jquery, or other query.&nbsp;&nbsp
 mux very small, others not see.&nbsp;&nbsp;no concept, no body.&nbsp;&nbsp;mux ghost</p>
 
 {{
-OnFirstLoad
-  magix.help.set-next
-    next=>Help/web.mml
-  magix.viewport.change-modal-header
-    header=>ajax 4
+hidden
+  onfirstload
+    magix.help.set-next
+      next=>Help/web.mml
+    magix.viewport.change-modal-header
+      header=>ajax 4
 }}
 

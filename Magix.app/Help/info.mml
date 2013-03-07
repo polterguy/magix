@@ -2,9 +2,9 @@
 <img src="media/images/magix-logo.png" alt="magix logo" style="float:left;margin-right:10px;" />
 <p>magix illuminate is old way to create new software.&nbsp;&nbsp;you have seen everything
 in magix before, {{
-LinkButton=>lnkunit
-  Text=>unit tests
-  OnClick
+link-button=>lnkunit
+  text=>unit tests
+  onclick
     magix.admin.run-file
       file=>ExecuteScripts/Applications/inspect-unit-tests.hl
     magix.viewport.clear-controls
@@ -12,26 +12,31 @@ LinkButton=>lnkunit
     magix.tests.run
 }}, mvc, webcontrols, ajax and so on, but you have probably never seen 
 {{
-LinkButton=>actevt
-  Text=>active events
-  OnClick
+link-button=>actevt
+  text=>active events
+  onclick
     magix.admin.run-file
       file=>ExecuteScripts/Applications/inspect-events.hl
     magix.viewport.clear-controls
       container=>modal
 }}.&nbsp;&nbsp;active events is what sets magix apart.&nbsp;&nbsp;active events is the 
 facilitator for {{
-LinkButton=>linkhyper
-  Text=>hyper lisp
-  OnClick
+link-button=>linkhyper
+  text=>hyper lisp
+  onclick
     magix.admin.run-file
       file=>ExecuteScripts/Applications/inspect-execute.hl
     magix.viewport.clear-controls
       container=>modal
 }}, {{
-LinkButton=>linkpoly
-  Text=>run time polymorphism
-  OnClick
+link-button=>linkpoly
+  text=>run time polymorphism
+  onfirstload
+    magix.help.set-next
+      next=>Help/info-2.mml
+    magix.viewport.change-modal-header
+      header=>conceptual info
+  onclick
     magix.admin.run-file
       file=>ExecuteScripts/Applications/inspect-overridden-events.hl
     magix.viewport.clear-controls
@@ -48,11 +53,4 @@ and everything you do, implicitly becomes re-usable, small, flexible and maintai
 
 <p>marvin - the buddhist monk</p>
 
-{{
-OnFirstLoad
-  magix.help.set-next
-    next=>Help/info-2.mml
-  magix.viewport.change-modal-header
-    header=>conceptual info
-}}
 

@@ -15,11 +15,12 @@ magix is lego for pyramids</p>
 and no bullet.&nbsp;&nbsp;magix empty cup, magix pacifist</p>
 
 {{
-OnFirstLoad
-  magix.help.set-next
-    next=>Help/neuro-typical.mml
-  magix.viewport.change-modal-header
-    header=>adhd 2
+hidden=>dummy
+  onfirstload
+    magix.help.set-next
+      next=>Help/neuro-typical.mml
+    magix.viewport.change-modal-header
+      header=>adhd 2
 }}
 
 

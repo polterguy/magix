@@ -22,11 +22,12 @@ relies upon magix.data</p>
 <p><strong>magix.web</strong> are helpers</p>
 
 {{
-OnFirstLoad
-  magix.help.set-next
-    next=>Help/project-structure-6.mml
-  magix.viewport.change-modal-header
-    header=>project structure 5
+hidden=>dummy
+  onfirstload
+    magix.help.set-next
+      next=>Help/project-structure-6.mml
+    magix.viewport.change-modal-header
+      header=>project structure 5
 }}
 
 

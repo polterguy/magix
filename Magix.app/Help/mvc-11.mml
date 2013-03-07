@@ -12,10 +12,11 @@ LoadModule(
 viewport also active module, all is one.&nbsp;&nbsp;magix knows no concept</p>
 
 {{
-OnFirstLoad
-  magix.help.set-next
-    next=>Help/ajax.mml
-  magix.viewport.change-modal-header
-    header=>mvc 11
+hidden=>dummy
+  onfirstload
+    magix.help.set-next
+      next=>Help/ajax.mml
+    magix.viewport.change-modal-header
+      header=>mvc 11
 }}
 
