@@ -97,6 +97,14 @@ link-button=>tools
   onclick
     magix.help.open-file
       file=>Help/tools.mml
+link-button=>executor
+  text=>executor
+  css=>btn btn-primary
+  onclick
+    magix.admin.open-event-executor
+      container=>content
+    magix.viewport.clear-controls
+      container=>modal
 link-button=>next
   text=>>>
   css=>btn btn-primary
