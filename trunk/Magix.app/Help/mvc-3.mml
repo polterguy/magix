@@ -17,11 +17,12 @@ wife happy, software happy, you go thailand, with wife</p>
 is to stop allowing your existence, interfere with your capacity for life"</em></p>
 
 {{
-OnFirstLoad
-  magix.help.set-next
-    next=>Help/mvc-4.mml
-  magix.viewport.change-modal-header
-    header=>mvc 3
+hidden=>dummy
+  onfirstload
+    magix.help.set-next
+      next=>Help/mvc-4.mml
+    magix.viewport.change-modal-header
+      header=>mvc 3
 }}
 
 

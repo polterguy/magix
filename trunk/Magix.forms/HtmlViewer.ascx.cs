@@ -124,11 +124,7 @@ namespace Magix.forms
 							int cur = currentDataSource;
 							foreach (Node idxN in codeNode)
 							{
-								BuildControl(idxN, pnl, 
-									delegate(string path)
-								    {
-										return GetNode(path, DataSources[cur]);
-									});
+								BuildControl(idxN, pnl);
 							}
 							buffer = "";
 							currentDataSource += 1;

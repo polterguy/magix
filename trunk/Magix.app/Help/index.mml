@@ -7,52 +7,52 @@ help you need, help i give</p>
 
 <p>if this first time, 
 {{
-LinkButton=>info2
-  Text=>info
-  OnClick
+link-button=>info2
+  text=>info
+  onclick
     magix.help.open-file
       file=>Help/info.mml
 }} useful.&nbsp;&nbsp;{{
-LinkButton=>tools2
-  Text=>tools
-  OnClick
+link-button=>tools2
+  text=>tools
+  onclick
     magix.help.open-file
       file=>Help/tools.mml
 }} also interesting</p>
 <div class="btn-group">
 {{
-LinkButton=>lnk5
-  Text=>info
-  CssClass=>btn btn-primary
-  ToolTip=>start here
-  OnClick
+link-button=>lnk5
+  text=>info
+  css=>btn btn-primary
+  tip=>start here
+  onclick
     magix.help.open-file
       file=>Help/info.mml
-LinkButton=>lnk4
-  Text=>tools
-  CssClass=>btn btn-primary
-  OnClick
+link-button=>lnk4
+  text=>tools
+  css=>btn btn-primary
+  onclick
     magix.help.open-file
       file=>Help/tools.mml
-LinkButton=>lnk
-  Text=>autistic
-  ToolTip=>developers
-  CssClass=>btn btn-primary
-  OnClick
+link-button=>lnk
+  text=>autistic
+  tip=>developers
+  css=>btn btn-primary
+  onclick
     magix.help.open-file
       file=>Help/autistic.mml
-LinkButton=>lnk2
-  Text=>adhd
-  ToolTip=>management
-  CssClass=>btn btn-primary
-  OnClick
+link-button=>lnk2
+  text=>adhd
+  tip=>management
+  css=>btn btn-primary
+  onclick
     magix.help.open-file
       file=>Help/adhd.mml
-LinkButton=>lnk3
-  Text=>nt
-  ToolTip=>neuro typicals, mere mortals, sys-admins, humans, journalists, gays, etc
-  CssClass=>btn btn-primary
-  OnClick
+link-button=>lnk3
+  text=>nt
+  tip=>neuro typicals, mere mortals, sys-admins, humans, journalists, gays, etc
+  css=>btn btn-primary
+  onclick
     magix.help.open-file
       file=>Help/neuro-typical.mml
 }}
@@ -61,9 +61,9 @@ LinkButton=>lnk3
 <br />
 <p>see also 
 {{
-LinkButton=>lnkhl
-  Text=>hyper lisp keywords
-  OnClick
+link-button=>lnkhl
+  text=>hyper lisp keywords
+  onclick
     magix.admin.run-file
       file=>ExecuteScripts/Applications/inspect-execute.hl
     magix.viewport.clear-controls
@@ -71,9 +71,9 @@ LinkButton=>lnkhl
 }}</p>
 <p>also, 
 {{
-LinkButton=>lnkunit
-  Text=>verify unit tests
-  OnClick
+link-button=>lnkunit
+  text=>verify unit tests
+  onclick
     magix.admin.run-file
       file=>ExecuteScripts/Applications/inspect-unit-tests.hl
     magix.viewport.clear-controls
@@ -82,18 +82,18 @@ LinkButton=>lnkunit
 }} often</p>
 <p>also, 
 {{
-LinkButton=>lnkremote
-  Text=>see remoted active events
-  OnClick
+link-button=>lnkremote
+  text=>see remoted active events
+  onclick
     magix.admin.run-file
       file=>ExecuteScripts/Applications/inspect-remoted-events.hl
     magix.viewport.clear-controls
       container=>modal
 }} together with 
 {{
-LinkButton=>lnkopen
-  Text=>open active events
-  OnClick
+link-button=>lnkopen
+  text=>open active events
+  onclick
     magix.admin.run-file
       file=>ExecuteScripts/Applications/inspect-open-events.hl
     magix.viewport.clear-controls
@@ -102,21 +102,17 @@ LinkButton=>lnkopen
 are polymorphistically overridden to go to other servers.&nbsp;&nbsp;open active 
 events are events which other systems, over http, can invoke on your server.&nbsp;&nbsp;
 you can also see {{
-LinkButton=>lnkall
-  Text=>all active events
-  OnClick
+link-button=>lnkall
+  text=>all active events
+  onfirstload
+    magix.help.set-next
+      next=>Help/info.mml
+    magix.viewport.change-modal-header
+      header=>welcome to magix
+  onclick
     magix.admin.run-file
       file=>ExecuteScripts/Applications/inspect-events.hl
     magix.viewport.clear-controls
       container=>modal
 }}</p>
-
-
-{{
-OnFirstLoad
-  magix.help.set-next
-    next=>Help/info.mml
-  magix.viewport.change-modal-header
-    header=>welcome to magix
-}}
 

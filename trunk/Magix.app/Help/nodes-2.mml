@@ -4,15 +4,15 @@
 
 <pre>
 Node n = new Node();
-n["data"].Value = "somewhere";
-n["data"]["provider"].Value = "somebody-else";
-n["data"]["key"].Value = "some-key";
+n["_data"].Value = "somewhere";
+n["_data"]["provider"].Value = "somebody-else";
+n["_data"]["key"].Value = "some-key";
 </pre>
 
 <p>this will and up looking like the code below</p>
 
 <pre>
-data=>somewhere
+_data=>somewhere
   provider=>somebody-else
   key=>some-key
 </pre>
@@ -23,9 +23,10 @@ provider and key are children of data.&nbsp;&nbsp;data is name of data node, and
 value of it</p>
 
 {{
-OnFirstLoad
-  magix.help.set-next
-    next=>Help/nodes-3.mml
-  magix.viewport.change-modal-header
-    header=>nodes 2
+hidden=>dummy
+  onfirstload
+    magix.help.set-next
+      next=>Help/nodes-3.mml
+    magix.viewport.change-modal-header
+      header=>nodes 2
 }}

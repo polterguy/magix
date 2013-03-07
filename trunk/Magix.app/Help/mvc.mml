@@ -20,10 +20,11 @@ flexibility is acquired.&nbsp;&nbsp;existing legacy model-code can be attached t
 minimizing influence of sick code, slowly curing by substitution</p>
 
 {{
-OnFirstLoad
-  magix.help.set-next
-    next=>Help/mvc-2.mml
-  magix.viewport.change-modal-header
-    header=>mvc
+hidden=>dummy
+  onfirstload
+    magix.help.set-next
+      next=>Help/mvc-2.mml
+    magix.viewport.change-modal-header
+      header=>mvc
 }}
 

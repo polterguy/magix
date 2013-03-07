@@ -1,9 +1,9 @@
 
 <p>here are some tools for your convenience.&nbsp;&nbsp;
 {{
-LinkButton=>keywords2
-  Text=>hyper lisp
-  OnClick
+link-button=>keywords2
+  text=>hyper lisp
+  onlick
     magix.admin.run-file
       file=>ExecuteScripts/Applications/inspect-execute.hl
     magix.viewport.clear-controls
@@ -11,45 +11,45 @@ LinkButton=>keywords2
 }} allows you to 
 see all hyper lisp keywords.&nbsp;&nbsp;
 {{
-LinkButton=>tests2
-  Text=>tests
-  OnClick
+link-button=>tests2
+  text=>tests
+  onclick
     magix.admin.run-file
       file=>ExecuteScripts/Applications/inspect-unit-tests.hl
     magix.viewport.clear-controls
       container=>modal
 }} opens unit tests and runs them.&nbsp;&nbsp;
 {{
-LinkButton=>av2
-  Text=>active events
-  OnClick
+link-button=>av2
+  text=>active events
+  onclick
     magix.admin.run-file
       file=>ExecuteScripts/Applications/inspect-events.hl
     magix.viewport.clear-controls
       container=>modal
 }} allows you to see all active events in system.&nbsp;&nbsp;
 {{
-LinkButton=>av3
-  Text=>overridden
-  OnClick
+link-button=>av3
+  text=>overridden
+  onclick
     magix.admin.run-file
       file=>ExecuteScripts/Applications/inspect-overridden-events.hl
     magix.viewport.clear-controls
       container=>modal
 }} allows you to see all overridden active events.&nbsp;&nbsp;
 {{
-LinkButton=>av4
-  Text=>open
-  OnClick
+link-button=>av4
+  text=>open
+  onclick
     magix.admin.run-file
       file=>ExecuteScripts/Applications/inspect-open-events.hl
     magix.viewport.clear-controls
       container=>modal
 }} allows you to see remotely exposed active events.&nbsp;&nbsp;
 {{
-LinkButton=>av5
-  Text=>remoted
-  OnClick
+link-button=>av5
+  text=>remoted
+  onclick
     magix.admin.run-file
       file=>ExecuteScripts/Applications/inspect-remoted-events.hl
     magix.viewport.clear-controls
@@ -57,50 +57,50 @@ LinkButton=>av5
 }} allows you to see active events overridden to other servers</p>
 <div class="btn-group">
 {{
-LinkButton=>keywords
-  Text=>hyper lisp
-  CssClass=>btn btn-info
-  OnClick
+link-button=>keywords
+  text=>hyper lisp
+  css=>btn btn-info
+  onclick
     magix.admin.run-file
       file=>ExecuteScripts/Applications/inspect-execute.hl
     magix.viewport.clear-controls
       container=>modal
-LinkButton=>tests
-  Text=>tests
-  CssClass=>btn btn-info
-  OnClick
+link-button=>tests
+  text=>tests
+  css=>btn btn-info
+  onclick
     magix.admin.run-file
       file=>ExecuteScripts/Applications/inspect-unit-tests.hl
     magix.viewport.clear-controls
       container=>modal
-LinkButton=>activeevents
-  Text=>active events
-  CssClass=>btn btn-info
-  OnClick
+link-button=>activeevents
+  text=>active events
+  css=>btn btn-info
+  onclick
     magix.admin.run-file
       file=>ExecuteScripts/Applications/inspect-events.hl
     magix.viewport.clear-controls
       container=>modal
-LinkButton=>activeevents2
-  Text=>overridden
-  CssClass=>btn btn-info
-  OnClick
+link-button=>activeevents2
+  text=>overridden
+  css=>btn btn-info
+  onclick
     magix.admin.run-file
       file=>ExecuteScripts/Applications/inspect-overridden-events.hl
     magix.viewport.clear-controls
       container=>modal
-LinkButton=>activeevents3
-  Text=>open
-  CssClass=>btn btn-info
-  OnClick
+link-button=>activeevents3
+  text=>open
+  css=>btn btn-info
+  onclick
     magix.admin.run-file
       file=>ExecuteScripts/Applications/inspect-open-events.hl
     magix.viewport.clear-controls
       container=>modal
-LinkButton=>activeevents4
-  Text=>remoted
-  CssClass=>btn btn-info
-  OnClick
+link-button=>activeevents4
+  text=>remoted
+  css=>btn btn-info
+  onclick
     magix.admin.run-file
       file=>ExecuteScripts/Applications/inspect-remoted-events.hl
     magix.viewport.clear-controls
@@ -110,20 +110,26 @@ LinkButton=>activeevents4
 <p style="margin-top:20px;">some more tools for your convenience</p>
 <div class="btn-group">
 {{
-LinkButton=>mmleditor
-  Text=>mml editor
-  CssClass=>btn btn-info
-  OnClick
+link-button=>mmleditor
+  text=>mml editor
+  css=>btn btn-info
+  onfirstload
+    magix.help.set-next
+      next=>Help/autistic.mml
+    magix.viewport.change-modal-header
+      header=>tools
+  onclick
     magix.admin.run-file
       file=>ExecuteScripts/Applications/magix-markup-editor.hl
     magix.viewport.clear-controls
       container=>modal
+link-button=>webcontrols
+  text=>web controls
+  css=>btn btn-info
+  onclick
+    magix.admin.run-file
+      file=>ExecuteScripts/Applications/inspect-web-controls.hl
+    magix.viewport.clear-controls
+      container=>modal
 }}</div>
-{{
-OnFirstLoad
-  magix.help.set-next
-    next=>Help/autistic.mml
-  magix.viewport.change-modal-header
-    header=>tools
-}}
 

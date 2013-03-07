@@ -10,11 +10,12 @@ as non-homogenously as you could possible dream of</p>
 magix.execute code is nothing but a node tree, the seeds of json</p>
 
 {{
-OnFirstLoad
-  magix.help.set-next
-    next=>Help/maintenance.mml
-  magix.viewport.change-modal-header
-    header=>dynamic 4
+hidden=>dummy
+  onfirstload
+    magix.help.set-next
+      next=>Help/maintenance.mml
+    magix.viewport.change-modal-header
+      header=>dynamic 4
 }}
 
 

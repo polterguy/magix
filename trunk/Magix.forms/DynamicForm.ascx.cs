@@ -55,11 +55,7 @@ namespace Magix.forms
 		{
 			foreach (Node idx in DataSource["controls"])
 			{
-				BuildControl(idx, pnl, 
-					delegate(string path)
-					{
-						return GetNode(path, DataSource);
-					});
+				BuildControl(idx, pnl);
 			}
 		}
     }

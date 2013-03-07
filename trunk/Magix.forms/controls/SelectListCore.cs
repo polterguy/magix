@@ -51,7 +51,7 @@ namespace Magix.forms
 						throw new ArgumentException("list item for select needs unique name of node to be used as value");
 					if (idxI.Value == null)
 						throw new ArgumentException("list item for select needs value of node to be used as text to show user in item");
-					ret.Items.Add(new ListItem(idxI.Name, idxI.Get<string>()));
+					ret.Items.Add(new ListItem(idxI.Get<string>(), idxI.Name));
 				}
 			}
 

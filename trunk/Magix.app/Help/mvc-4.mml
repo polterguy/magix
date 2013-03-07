@@ -23,11 +23,12 @@ public void namespace_bar(object sender, ActiveEventArgs e)
 }</pre>
 
 {{
-OnFirstLoad
-  magix.help.set-next
-    next=>Help/mvc-5.mml
-  magix.viewport.change-modal-header
-    header=>mvc 4
+hidden=>dummy
+  onfirstload
+    magix.help.set-next
+      next=>Help/mvc-5.mml
+    magix.viewport.change-modal-header
+      header=>mvc 4
 }}
 
 

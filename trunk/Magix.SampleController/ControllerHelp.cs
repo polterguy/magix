@@ -80,27 +80,27 @@ namespace Magix.SampleController
 			tmp["html"].Value = @"
 <div class=""btn-group"">
 {{
-LinkButton=>back
-  Text=><<
-  CssClass=>btn btn-primary
-  OnClick
+link-button=>back
+  text=><<
+  css=>btn btn-primary
+  onclick
     magix.help.move-backwards
-LinkButton=>index
-  Text=>index
-  CssClass=>btn btn-primary
-  OnClick
+link-button=>index
+  text=>index
+  css=>btn btn-primary
+  onclick
     magix.help.open-file
       file=>Help/index.mml
-LinkButton=>tools
-  Text=>tools
-  CssClass=>btn btn-primary
-  OnClick
+link-button=>tools
+  text=>tools
+  css=>btn btn-primary
+  onclick
     magix.help.open-file
       file=>Help/tools.mml
-LinkButton=>next
-  Text=>>>
-  CssClass=>btn btn-primary
-  OnClick
+link-button=>next
+  text=>>>
+  css=>btn btn-primary
+  onclick
     magix.help.move-next
 }}
 </div>

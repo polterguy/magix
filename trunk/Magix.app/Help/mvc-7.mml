@@ -19,11 +19,12 @@ active event after the other.&nbsp;&nbsp;therefor we say that magix controller i
 yet changes.&nbsp;&nbsp;change without movement is the only change that exist</p>
 
 {{
-OnFirstLoad
-  magix.help.set-next
-    next=>Help/mvc-8.mml
-  magix.viewport.change-modal-header
-    header=>mvc 7
+hidden=>dummy
+  onfirstload
+    magix.help.set-next
+      next=>Help/mvc-8.mml
+    magix.viewport.change-modal-header
+      header=>mvc 7
 }}
 
 

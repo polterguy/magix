@@ -14,9 +14,10 @@ public class MyClass : ActiveController
 <p>above code is c#, and shows active controller, handling namespace.foo</p>
 
 {{
-OnFirstLoad
-  magix.help.set-next
-    next=>Help/raise.mml
-  magix.viewport.change-modal-header
-    header=>handler sample
+hidden=>dummy
+  onfirstload
+    magix.help.set-next
+      next=>Help/raise.mml
+    magix.viewport.change-modal-header
+      header=>handler sample
 }}

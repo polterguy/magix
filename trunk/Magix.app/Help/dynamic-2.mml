@@ -3,21 +3,22 @@
 <p>create code</p>
 
 <pre>event:magix.execute
-Data
-  Value=>thomas
-if=>[Data][Value].Value==thomas
+_data
+  value=>thomas
+if=>[_data][value].Value==thomas
   magix.viewport.show-message
-    message=>Hi Thomas!
+    message=>hi thomas
 else
   magix.viewport.show-message
-    message=>Hi Stranger!
+    message=>hi stranger
 </pre>
 
 {{
-OnFirstLoad
-  magix.help.set-next
-    next=>Help/dynamic-3.mml
-  magix.viewport.change-modal-header
-    header=>dynamic 2
+hidden=>dummy
+  onfirstload
+    magix.help.set-next
+      next=>Help/dynamic-3.mml
+    magix.viewport.change-modal-header
+      header=>dynamic 2
 }}
 

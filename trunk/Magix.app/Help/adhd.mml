@@ -16,11 +16,12 @@ with magix, you won't feel anything</p>
 <p>magix just one design pattern, active events, air - nothingness</p>
 
 {{
-OnFirstLoad
-  magix.help.set-next
-    next=>Help/adhd-2.mml
-  magix.viewport.change-modal-header
-    header=>adhd [management]
+hidden=>dummy
+  onfirstload
+    magix.help.set-next
+      next=>Help/adhd-2.mml
+    magix.viewport.change-modal-header
+      header=>adhd [management]
 }}
 
 

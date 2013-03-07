@@ -14,11 +14,12 @@ is raised on local server.&nbsp;&nbsp;polymorphistically override
 active event to scale-out, transparently to invoking code</p>
 
 {{
-OnFirstLoad
-  magix.help.set-next
-    next=>Help/mvc-6.mml
-  magix.viewport.change-modal-header
-    header=>mvc 5
+hidden=>dummy
+  onfirstload
+    magix.help.set-next
+      next=>Help/mvc-6.mml
+    magix.viewport.change-modal-header
+      header=>mvc 5
 }}
 
 

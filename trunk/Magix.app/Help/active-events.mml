@@ -8,49 +8,47 @@ this makes code become independent upon all other code</p>
 <div class="btn-group">
 {{
 
-LinkButton=>lnk1
-  Text=>handler code
-  CssClass=>btn btn-primary
-  OnClick
+link-button=>lnk1
+  text=>handler code
+  css=>btn btn-primary
+  onclick
     magix.help.open-file
       file=>Help/handler-sample.mml
 
-LinkButton=>lnk2
-  Text=>raise code
-  CssClass=>btn btn-primary
-  OnClick
+link-button=>lnk2
+  text=>raise code
+  css=>btn btn-primary
+  onclick
     magix.help.open-file
       file=>Help/raise.mml
 
-LinkButton=>lnk3
-  Text=>parameters
-  CssClass=>btn btn-primary
-  OnClick
+link-button=>lnk3
+  text=>parameters
+  css=>btn btn-primary
+  onclick
     magix.help.open-file
       file=>Help/parameters.mml
 
-LinkButton=>lnk4
-  Text=>nodes
-  CssClass=>btn btn-primary
-  OnClick
+link-button=>lnk4
+  text=>nodes
+  css=>btn btn-primary
+  onclick
     magix.help.open-file
       file=>Help/nodes.mml
 
-LinkButton=>lnk5
-  Text=>the point
-  CssClass=>btn btn-primary
-  OnClick
+link-button=>lnk5
+  text=>the point
+  css=>btn btn-primary
+  onfirstload
+    magix.help.set-next
+      next=>Help/handler-sample.mml
+    magix.viewport.change-modal-header
+      header=>active events
+  onclick
     magix.help.open-file
       file=>Help/the-point.mml
 
 }}</div>
 
-{{
-OnFirstLoad
-  magix.help.set-next
-    next=>Help/handler-sample.mml
-  magix.viewport.change-modal-header
-    header=>active events
-}}
 
 

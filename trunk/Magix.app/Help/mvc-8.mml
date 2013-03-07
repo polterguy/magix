@@ -7,17 +7,22 @@ and type things.&nbsp;&nbsp;se below</p>
 <div class="input-prepend">
 <span class="add-on">@</span>
 {{
-TextBox=>txt
-  PlaceHolder=>textbox ...
-  CssClass=>span2
-SelectList=>lst
-  Items
-    Goat=>goat
-    Cow=>cow
-    Horse=>horse
-Button=>btn
-  Text=>Hello
-  CssClass=>btn
+text-box=>txt
+  place-bolder=>textbox ...
+  css=>span2
+  onfirstload
+    magix.help.set-next
+      next=>Help/mvc-9.mml
+    magix.viewport.change-modal-header
+      header=>mvc 8
+select=>lst
+  items
+    goat=>Goat
+    cow=>Cow
+    horse=>Horse
+button=>btn
+  text=>Hello
+  css=>btn
 }}
 </div>
 
@@ -28,13 +33,6 @@ software have two buttons, woman confused</p>
 <p>this is why there are no buttons in magix, only input fields.&nbsp;&nbsp;software happy, 
 woman happy, man happy, boss go thailand</p>
 
-{{
-OnFirstLoad
-  magix.help.set-next
-    next=>Help/mvc-9.mml
-  magix.viewport.change-modal-header
-    header=>mvc 8
-}}
 
 
 

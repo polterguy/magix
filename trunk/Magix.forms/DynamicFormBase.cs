@@ -20,6 +20,7 @@ namespace Magix.forms
 	public class DynamicFormBase : ActiveModule
 	{
 		protected delegate Node FindNode(string path);
+		protected bool isFirst;
 
 		protected string FormID
 		{
@@ -29,6 +30,7 @@ namespace Magix.forms
 
 		public override void InitialLoading(Node node)
 		{
+			isFirst = true;
 			Load +=
 				delegate
 				{
@@ -228,7 +230,7 @@ namespace Magix.forms
 			return tmp;
 		}
 
-		protected void BuildControl(Node idx, Control parent, FindNode del)
+		protected void BuildControl(Node idx, Control parent)
 		{
 			string typeName = idx.Name;
 
@@ -249,25 +251,30 @@ namespace Magix.forms
 
 			Node node = new Node();
 			node["_code"].Value = idx;
+			idx["_first"].Value = isFirst;
 
 			RaiseEvent(
 				evtName,
 				node);
 
+			idx["_first"].UnTie();
+
 			if (node.Contains("_ctrl"))
 				parent.Controls.Add(node["_ctrl"].Value as Control);
 			else
 			{
-				if (!node.Contains("_tpl"))
+				if (!node.Contains("_invisible") && !node.Contains("_tpl"))
 					throw new ArgumentException("unhandled node type in your markup, '" + typeName + "' not recognized");
 
-				// this is a 'user control', or a 'template control', and we need to
-				// individually traverse it, as if it was embedded into markup, almost
-				// like copy/paste
-				BuildControl(
-					node["_tpl"][0], 
-					parent, 
-					del);
+				if (!node["_invisible"].Get<bool>())
+				{
+					// this is a 'user control', or a 'template control', and we need to
+					// individually traverse it, as if it was embedded into markup, almost
+					// like copy/paste
+					BuildControl(
+						node["_tpl"][0], 
+						parent);
+				}
 			}
 		}
 	}

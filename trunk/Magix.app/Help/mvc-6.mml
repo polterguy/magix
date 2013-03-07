@@ -11,10 +11,11 @@ ActiveEvents.Instance.MakeRemotable(
 it is now part of your server's public api, on the network server is connected to</p>
 
 {{
-OnFirstLoad
-  magix.help.set-next
-    next=>Help/mvc-7.mml
-  magix.viewport.change-modal-header
-    header=>mvc 6
+hidden=>dummy
+  onfirstload
+    magix.help.set-next
+      next=>Help/mvc-7.mml
+    magix.viewport.change-modal-header
+      header=>mvc 6
 }}
 

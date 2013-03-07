@@ -20,9 +20,10 @@ public void namespace_foo(object sender, ActiveEventArgs e)
 </pre>
 
 {{
-OnFirstLoad
-  magix.help.set-next
-    next=>Help/nodes.mml
-  magix.viewport.change-modal-header
-    header=>parameters
+hidden=>dummy
+  onfirstload
+    magix.help.set-next
+      next=>Help/nodes.mml
+    magix.viewport.change-modal-header
+      header=>parameters
 }}

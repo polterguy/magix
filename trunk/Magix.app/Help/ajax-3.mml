@@ -13,11 +13,12 @@ new EffectFadeIn(ctrl, 500)
 <p>effects can join or chain.&nbsp;&nbsp;prefer css3</p>
 
 {{
-OnFirstLoad
-  magix.help.set-next
-    next=>Help/ajax-4.mml
-  magix.viewport.change-modal-header
-    header=>ajax 3
+hidden=>dummy
+  onfirstload
+    magix.help.set-next
+      next=>Help/ajax-4.mml
+    magix.viewport.change-modal-header
+      header=>ajax 3
 }}
 
 
