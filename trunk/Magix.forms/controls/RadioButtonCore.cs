@@ -46,6 +46,19 @@ namespace Magix.forms
 			    node["enabled"].Value != null)
 				ret.Enabled = node["enabled"].Get<bool>();
 
+			if (node.Contains("oncheckedchanged"))
+			{
+				// TODO: is this right? do we need to clone?
+				Node codeNode = node["oncheckedchanged"].Clone();
+
+				ret.CheckedChanged += delegate(object sender2, EventArgs e2)
+				{
+					RaiseEvent(
+						"magix.execute",
+						codeNode);
+				};
+			}
+
 			e.Params["_ctrl"].Value = ret;
 		}
 
@@ -60,13 +73,15 @@ same [group] value.&nbsp;&nbsp;then only one of your radio controls can be
 selected at the same time.&nbsp;&nbsp;meaning you can ask questions such as, 
 'chicken, fish or veggies?'.&nbsp;&nbsp;[groups] sets group association of control.&nbsp;&nbsp;
 [checked] sets its state to true or false.&nbsp;&nbsp;[key] changes keyboard shortcut.&nbsp;&nbsp;
-[enabled] changes the enabled state of your control to true or false";
+[enabled] changes the enabled state of your control to true or false.&nbsp;&nbsp;
+[oncheckedchanged] is raised when checked state of control changes";
 			node["container"].Value = "modal";
 			node["form-id"].Value = "sample-form";
 			node["controls"]["radio"]["group"].Value = "id_of_group";
 			node["controls"]["radio"]["checked"].Value = true;
 			node["controls"]["radio"]["key"].Value = "C";
 			node["controls"]["radio"]["enabled"].Value = true;
+			node["controls"]["radio"]["oncheckedchanged"].Value = "hyper lisp code";
 			base.Inspect(node["controls"]["radio"]);
 		}
 	}

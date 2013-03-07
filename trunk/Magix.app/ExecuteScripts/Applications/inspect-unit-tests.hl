@@ -1,24 +1,24 @@
 Method:magix.execute
 
 inspect=>@"Will show a screen of all the 
-execute keywords in the system, and allow
+unit tests in the system, and allow
 the user to inspect them by clicking
-them."
+them"
 
 magix.forms.create-web-page
   container=>header
-  html=>@"<h1>unit tests</h1>"
+  html=>@"<h1>installed unit tests</h1>"
   form-id=>header
 magix.admin.get-active-events
   begins-with=>magix.test.
 set=>[magix.admin.get-active-events].Name
   value=>Data
 for-each=>[Data][events]
-  Tpl
-    LinkButton
-      CssClass=>span4 btn btn-small btn-left
-      Text
-      OnClick
+  _tpl
+    link-button
+      css=>span2 btn btn-small btn-left
+      text
+      onclick
         void.foo
           inspect
         set=>[2][value].Value
@@ -46,42 +46,38 @@ for-each=>[Data][events]
           value
         set=>[0][inspect].Name
           value=>inspect
-  set=>[.ip][..][Tpl][LinkButton][OnClick][0].Name
+  set=>[.ip][..][_tpl][link-button][onclick][0].Name
     value=>[.].Value
-  set=>[.ip][..][Tpl][LinkButton][Text].Value
+  set=>[.ip][..][_tpl][link-button][text].Value
     value=>[.].Value
-  add=>[/][cf][controls][Panel][controls]
-    value=>[.ip][..][Tpl][LinkButton]
-set=>[cf][controls][Panel2].Name
-  value=>Panel
+  add=>[/][cf][controls][panel][controls]
+    value=>[.ip][..][_tpl][link-button]
+set=>[cf][controls][panel2].Name
+  value=>panel
 set=>[cf].Name
   value=>magix.forms.create-form
 cf
   form-id=>form1
   container=>content
   controls
-    Panel2
-      CssClass=>span5
+    panel2
+      css=>span5
       controls
-        Label=>header
-          Text=>name of unit test
-          CssClass=>span4
-          Tag=>strong
-        Label=>desc
-          CssClass=>span4
-          Text=>@"description of your unit test.&nbsp;&nbsp;
-click any of the unit tests to the right to inspect them"
-        Label=>code
-          CssClass=>span4
-          Text=>code ...
-          Tag=>pre
-        Panel=>wrp
-          CssClass=>input-append span3 offset2
+        label=>header
+          text=>name of keyword active event
+          css=>span5
+          tag=>h4
+        label=>code
+          css=>span5
+          text=>code example
+          tag=>pre
+        panel=>wrp
+          css=>input-append span3 offset2
           controls
-            LinkButton=>run
-              Text=>inspect
-              CssClass=>btn btn-primary
-              OnClick
+            link-button=>run
+              text=>inspect
+              css=>btn btn-primary
+              onclick
                 magix.forms.get-value
                   form-id=>form1
                   id=>code
@@ -89,10 +85,10 @@ click any of the unit tests to the right to inspect them"
                   value=>[.ip][..][magix.forms.get-value][value].Value
                 magix.admin.load-executor-code
                   code
-            LinkButton=>run2
-              Text=>run
-              CssClass=>btn btn-primary
-              OnClick
+            link-button=>run2
+              text=>run
+              css=>btn btn-primary
+              onclick
                 magix.forms.get-value
                   form-id=>form1
                   id=>header
@@ -104,11 +100,19 @@ click any of the unit tests to the right to inspect them"
                   color=>LightGreen
                   header=>finished
                   time=>500
-            LinkButton=>run3
-              Text=>run all
-              CssClass=>btn btn-primary
-              OnClick
+            link-button=>run3
+              text=>run all
+              css=>btn btn-primary
+              onclick
                 magix.tests.run
-    Panel=>wrp
-      CssClass=>span3
+        label=>lblDesc
+          tag=>h4
+          css=>span5
+          text=>description
+        label=>desc
+          css=>span5
+          text=>@"description of your unit test.&nbsp;&nbsp;
+click any of the unit test active events to the right to inspect them"
+    panel=>wrp
+      css=>span2 offset1
       controls

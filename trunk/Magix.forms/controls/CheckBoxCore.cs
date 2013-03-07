@@ -43,6 +43,19 @@ namespace Magix.forms
 			    node["enabled"].Value != null)
 				ret.Enabled = node["enabled"].Get<bool>();
 
+			if (node.Contains("oncheckedchanged"))
+			{
+				// TODO: is this right? do we need to clone?
+				Node codeNode = node["oncheckedchanged"].Clone();
+
+				ret.CheckedChanged += delegate(object sender2, EventArgs e2)
+				{
+					RaiseEvent(
+						"magix.execute",
+						codeNode);
+				};
+			}
+
 			e.Params["_ctrl"].Value = ret;
 		}
 
@@ -52,12 +65,14 @@ namespace Magix.forms
 			node["inspect"].Value = @"creates a checkbox input type of web control.&nbsp;&nbsp;
 useful for representing choices like yes or no.&nbsp;&nbsp;[checked] determines its 
 state, true or false.&nbsp;&nbsp;key is keyboard shortcut.&nbsp;&nbsp;[enabled] can be 
-true or false, and determines if it is possible to change its state, or not";
+true or false, and determines if it is possible to change its state, or not.&nbsp;&nbsp;
+[oncheckedchanged] is raised when checked state of control changes";
 			node["container"].Value = "modal";
 			node["form-id"].Value = "sample-form";
 			node["controls"]["check"]["checked"].Value = true;
 			node["controls"]["check"]["key"].Value = "C";
 			node["controls"]["check"]["enabled"].Value = true;
+			node["controls"]["check"]["oncheckedchanged"].Value = "hyper lisp code";
 			base.Inspect(node["controls"]["check"]);
 		}
 	}

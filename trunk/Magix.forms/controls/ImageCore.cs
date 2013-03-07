@@ -53,7 +53,7 @@ or changing the image src during execution.&nbsp;&nbsp;use [src] to set image ur
 use [alt] to set alternating text.&nbsp;&nbsp;use [key] to set keyboard shortcut";
 			node["container"].Value = "modal";
 			node["form-id"].Value = "sample-form";
-			node["controls"]["image"]["src"].Value = "media/Images/magix-logo.png";
+			node["controls"]["image"]["src"].Value = "media/images/magix-logo.png";
 			node["controls"]["image"]["alt"].Value = "alternative text";
 			node["controls"]["image"]["key"].Value = "C";
 			base.Inspect(node["controls"]["image"]);
