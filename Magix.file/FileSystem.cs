@@ -7,6 +7,7 @@
 using System;
 using System.IO;
 using System.Web;
+using System.Net;
 using System.Threading;
 using Magix.Core;
 
@@ -26,10 +27,11 @@ namespace Magix.execute
 			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
 				e.Params["event:magix.execute"].Value = null;
-				e.Params["magix.file.load"].Value = "ExecuteScripts/TODO.txt";
-				e.Params["inspect"].Value = @"loads a file into the 
-[file] node as text.&nbsp;&nbsp;the file to load is 
-given as value of the file node";
+				e.Params["magix.file.load"]["path"].Value = "ExecuteScripts/todo.txt";
+				e.Params["inspect"].Value = @"loads the [path] file into the 
+[file] node as text.&nbsp;&nbsp;[path] can be a relative path, to 
+fetch a document beneath your web application directory structure, or 
+an http or ftp path, to a document";
 				return;
 			}
 
@@ -37,13 +39,28 @@ given as value of the file node";
 			if (e.Params.Contains("_ip"))
 				ip = e.Params ["_ip"].Value as Node;
 
-			string file = ip.Get<string>();
-			if (string.IsNullOrEmpty (file))
-				throw new ArgumentException("You need to define which file to load, as Value of the load Node");
+			if (!ip.Contains("path") || ip["path"].Get<string>("") == "")
+				throw new ArgumentException("You need to define which file to load, as [path] node");
 
-			using (TextReader reader = File.OpenText(HttpContext.Current.Server.MapPath(file)))
+			string file = ip["path"].Get<string>();
+
+			if (file.StartsWith("http") || file.StartsWith("ftp"))
 			{
-				ip["value"].Value = reader.ReadToEnd();
+				WebRequest request = WebRequest.Create(file) as HttpWebRequest;
+				using (WebResponse response = request.GetResponse())
+				{
+					using (TextReader reader = new StreamReader(response.GetResponseStream()))
+					{
+						ip["file"].Value = reader.ReadToEnd();
+					}
+				}
+			}
+			else
+			{
+				using (TextReader reader = File.OpenText(HttpContext.Current.Server.MapPath(file)))
+				{
+					ip["file"].Value = reader.ReadToEnd();
+				}
 			}
 		}
 
@@ -56,7 +73,7 @@ given as value of the file node";
 			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
 				e.Params["event:magix.execute"].Value = null;
-				e.Params["magix.file.save"].Value = "ExecuteScripts/TODO.txt";
+				e.Params["magix.file.save"]["path"].Value = "ExecuteScripts/sample.txt";
 				e.Params["magix.file.save"]["file"].Value = @"contents that will replace the contents
 in the existing file, alternatively become the 
 contents of a new file";
@@ -75,9 +92,10 @@ new created";
 			if (e.Params.Contains("_ip"))
 				ip = e.Params["_ip"].Value as Node;
 
-			string file = ip.Get<string>();
-			if (string.IsNullOrEmpty(file))
-				throw new ArgumentException("You need to define which file to save, as Value of the save Node");
+			if (!ip.Contains("path") || ip["path"].Get<string>("") == "")
+				throw new ArgumentException("You need to define which file to save, as [path] node");
+
+			string file = ip["path"].Get<string>();
 
 			if (!ip.Contains("file") || ip["file"].Get<string>("") == "")
 			{

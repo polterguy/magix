@@ -14,12 +14,28 @@
 * consistently use [node] for nodes and "magix.somewhere.active-event" syntax for
   all active events in the system
 
-* implement support for xml-2-node in generic way, such that one can download
-  rss, and have it atumatically trnsformed to nodes
+* make sure ["_ip"] is only used in magix.execute keywords
 
-* Only "event:magix.admin.get-active-events" in active event executor creates exception
+* make sure all exceptions thrown, gives [correct-name] of nodes missing, etc
 
-* make magix.file.open also open over http, and ftp etc ...
+* apparently the active event executor double escapes single " inside of textual strings ...?
+
+* "magix.execute.add" should create path on [value]
+
+* should [add] take [into] and have value be where to add?
+
+* event:magix.execute and having the event active in textbox doesn't produce same result.
+  node tree traversed differently somehow
+
+* allow "magix.execute" functionality in mml, as long as result becomes controls collection,
+  by setting [/] to something in code
+
+* change the current [Label] syntax to become plugable by making everything into active events,
+  such that the control is returned, and hence sets its own properties, from a subtree,
+  raised as an event
+
+* make sure all the inspect event results values are NOT magix.execute, unless it's a keyword
+  such that samples are 'self-contained'
 
 * support for having "dynamic, dynamic" controls, meaning that unknown keywords, turns into
   active events, which can either return Control Class Objects from System.Web, or something,
@@ -35,13 +51,9 @@
 
 * Make Active Event Executor become a "script file" in itself
 
-* Clicking twice on an event in "View Unit Tests" tools, doubles the node code ...?
-
 * Diagnostic tool in help
 
 * storing viewstate on server
-
-* "info.hl" in help needs more links to "unit tests" etc ...
 
 * Remove the "remotable" parameter on magix.execute.event, magix.execute.open should suffice
   to create remotable functions. All magix.execute.events should be remotable, if the 
@@ -50,18 +62,14 @@
 * Use $ symbol to access parameters inside of magix.execute.event active events, such 
   that it becomes a shorthand for "[/][P]", basically ...
 
+* create a node-2-xml active event
+
 * exchange sleep with "magix.execute.wait", which waits for multiple threads. sleep useless ...
 
 * magix.code.code-2-node and magix.code.node-2-code doesn't seem to 
   function in inspect values in executor ...?
 
 * all lower case letters in descriptions
-
-* Add up magix:execute on all inspect values
-
-* Make most inspect code become magix.execute
-
-* Serialize "override" into database somehow for persistance across app restarts
 
 * Visible on HtmlViewer Controls doesn't seem to work ...?
   Re-Creating controls gives 'destroys' is null, or something ...
@@ -70,18 +78,8 @@
   for instance the "modal" viewport-container, can add up that it has an
   additional parameter, "header" that is ...
 
-* Make "magix.admin.get-active-events" also fetch only Remotable Events, or
-  remotely overridden events, etc ...
-
 * Unit tests of raising "complex active events", meaning raising code contains
   path expressions, etc ...
-
-* Better handling of types in expressions
-
-* Support mixing MUX WebControls and HTML in the HtmlViewer Module, can load HTML as XML,
-  and then parse and create Label controls, with Tags accordingly, and such become 
-  capable of nearly using .ascx syntax, possibly ...
-  Or maybe even by sypplying a custom "Load UserControl functionality" ...?
 
 * Think about handling all Unit Tests completely "managed" ...?
 
@@ -94,23 +92,16 @@
 * Detach Magix.events and Magix.remoting from db4o, by internally using Magix.data
   through Active Events
 
-* Tutorial mode Active Module, which helps guide the user through Magix
-
-* Support passing Parameters into Dynamically Created Functions, somehow ...
-  SECURELY! Such that you cannot pass in CODE ...!!
-
 * Binary loading and saving of files, using Base64 encoding, which allows
   for transfering DLLs to other servers
 
 * Make it possible to change the node collection currently being traversed by
   exchanging the foreach inside of magix.execute somehow ...
 
-* Give "magix.execute" support for a "path", basically becoming "go-to" ...
-
 * Make sure the "Data-Pointer" is behaving sanely, by being where it should be, and not
   under some "random block" according to luck ...
 
-* Raise "DOM-Event", such that server can "semantically" click Buttons, and manipulate
+* Raise "DOM-Event", such that other servers can "semantically" click Buttons, and manipulate
   UI, as it sees fit, such that no other UI is needed than "human UI" ...
 
 * Zipping of hierarchies of files, as "packages", which can be sent back and forth
@@ -118,15 +109,9 @@
 
 * Implement "finally"
 
-* Group Unit Tests together with their respective projects, instead of having
-  one "gigantic" Unit Test project ...
-
 * Handling of application-startup, to check for a base "run.script.txt" file,
   which will serve as a "manifest", being executed, potentially changing
   the state of the server. Easy way of distributing applications...
-
-* See all overrides of active events, and also all active events which are
-  legal to invoke remotely.
 
 * Event keyword in Dynamic Forms, which can handle Active Events, and
   treat them as "event" with code
@@ -136,28 +121,16 @@
 * Verify the "Data-Pointer" is being moved correctly around. 
   Should the "while" for instance move the datapointer, to inside the "while" ...?
 
-* Refactor ""if"", ""while"" and such to re-use the same extraction logic ...
-
 * Check up the way "text-literals" are created in expressions ...
 
-* Implement "variables" by using ""set""" keywrod with constant
+* Implement "variables" by using ""set""" keyword with constant
   expressions on the LEFT-HAND side, being the "variable name" ...?
-
-* Do we need an ""add-children"" keyword or something ...?
-  Or can we manage with ""for-each"" as substitute ...?
-
-* "remove-event" and "event" can be merged, and if no code is given, event is removed ...
-
-* Create Unit Tests with "bum parameters" for every single execute statement,
-  and check to see if sane behavior, such as exceptions, are thrown and such ...
+  Then variables can be shorthands for anything an expression can return
 
 * Support for Database Transactions ...
 
-* Should "send-email" be in the execute namespace ...
-
-* Should really "raise" send in the Data-Pointer of no parameters are given ...?
-
-* Unit Tests for every single varioation of "if", "else-if", different expressions, node lists, values, names and such ...
+* Unit Tests for every single varioation of "if", "else-if", different expressions, 
+  node lists, values, names and such.  i think this is done, but not sure
 
 * Support deleting currently executing nodes
 
@@ -165,28 +138,14 @@
 
 * Investigate if "set" on Node lists, really does what's intuitive ...?
 
-* Should we add an "add-child" keyword ...?
-
-* "send-email" keyword
-
 * Saving objects without a key, and having a key automatically assigned
   and returned to the caller
-
-* Variables in code, such as e.g.; var=>tmp=[Data][Path]
 
 * Criteria in expression, such as e.g.; [Data][Image?[URL].Value=="google.png"]
 
 * Make sure the @"" notation in serialization of Nodes, and especially "if" statements, etc is working
 
-* Support for getting HTTP get parameters from URL
-
 * Support for storing and retrieving objects into ViewState and Session, or ...?
-
-* Support for manipulating and retrieving cookies from disc
-
-* There's something fishy about how "remote" returns its data in "params" I think ...?
-
-* There's something "fishy" about the way "functions" returns Nodes. They return code among other things ...?
 
 * Simplify ALL syntax, functions can e.g take active event name as Value and code as child nodes ...
 
@@ -204,8 +163,6 @@
 
 * More "meta-modules", such as e.g. "retrieve all events tagged with remote", etc ...
 
-* Support for marking an existing active event as "remotable"
-
 * Refactor Event Creation in DynamicForm.ascx.cs to use a method to remove redundant code
 
 * Support for creating Dynamic Panels, Dynamically ...
@@ -214,11 +171,9 @@
 
 * Support for SelectedItem from BaseWebControlListFormElement
 
-* Play Sound Active Event
-
 * Indentation Module, which can indent code two spaces for simplicity
 
-* Design widget, which allows for WYSIWYG designing of create-form syntax
+* Design widget, which allows for WYSIWYG designing of create-form syntax, and mml
 
 * Math stuff in selectors, such as ".Count - 1"
 
@@ -226,10 +181,6 @@
   AND make sure all Events have "sane names"
 
 * Implement support for loading multiple objects in "magix.data.load"
-
-* Searching through Active Events in Executor
-
-* Setting value on Dynamically created Form Elements
 
 * Loading objects from data storage and meta traverse them
   Create an "Object Explorer"
@@ -242,5 +193,6 @@
 
 * YouTube videos demonstrating Magix
 
+* intelligent exceptions, with line numbers, or something
 
 

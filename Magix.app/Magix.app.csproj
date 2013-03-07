@@ -169,6 +169,10 @@
       <Project>{7825CF11-A8CB-4788-8A5C-C2E064F063DE}</Project>
       <Name>Magix.code.tests</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Magix.xml\Magix.xml.csproj">
+      <Project>{EAE2F2AE-0098-44F1-8B3D-1887266E94CF}</Project>
+      <Name>Magix.xml</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="web.config" />
@@ -250,5 +254,7 @@
     <None Include="sample-scripts\email-harvester.mml" />
     <None Include="ExecuteScripts\Applications\email-harvester.hl" />
     <None Include="ExecuteScripts\Applications\magix-markup-editor.hl" />
+    <None Include="ExecuteScripts\Applications\rss-parser.hl" />
+    <None Include="ExecuteScripts\Applications\inspect-web-controls.hl" />
   </ItemGroup>
 </Project>

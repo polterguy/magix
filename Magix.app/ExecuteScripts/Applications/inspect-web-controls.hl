@@ -1,0 +1,95 @@
+Method:magix.execute
+
+inspect=>@"Will show a screen of all the 
+web controls in the system, and allow
+the user to inspect them by clicking
+them"
+
+magix.forms.create-web-page
+  container=>header
+  html=>@"<h1>installed web controls</h1>"
+  form-id=>header
+magix.admin.get-active-events
+  begins-with=>magix.forms.controls.
+set=>[magix.admin.get-active-events].Name
+  value=>Data
+for-each=>[Data][events]
+  _tpl
+    link-button
+      css=>span2 btn btn-small btn-left
+      text
+      onclick
+        void.foo
+          inspect
+        set=>[2][value].Value
+          value=>[0][inspect].Value
+        magix.forms.set-value
+          form-id=>form1
+          id=>desc
+          value
+        set=>[4][value].Value
+          value=>[0].Name
+        magix.forms.set-value
+          form-id=>form1
+          id=>header
+          value
+        set=>[0][inspect]
+        set=>[magix.code.node-2-code][json].Value
+          value=>[0]
+        magix.code.node-2-code
+          json
+        set=>[9][value].Value
+          value=>[magix.code.node-2-code][code].Value
+        magix.forms.set-value
+          form-id=>form1
+          id=>code
+          value
+        set=>[0][inspect].Name
+          value=>inspect
+  set=>[.ip][..][_tpl][link-button][onclick][0].Name
+    value=>[.].Value
+  set=>[.ip][..][_tpl][link-button][text].Value
+    value=>[.].Value
+  add=>[/][cf][controls][panel][controls]
+    value=>[.ip][..][_tpl][link-button]
+set=>[cf][controls][panel2].Name
+  value=>panel
+set=>[cf].Name
+  value=>magix.forms.create-form
+cf
+  form-id=>form1
+  container=>content
+  controls
+    panel2
+      css=>span5
+      controls
+        label=>header
+          text=>name of keyword active event
+          css=>span5
+          tag=>h4
+        label=>code
+          css=>span5
+          text=>code example
+          tag=>pre
+        link-button=>run
+          text=>inspect
+          css=>btn btn-info btn-block-level span1 offset4
+          onclick
+            magix.forms.get-value
+              form-id=>form1
+              id=>code
+            set=>[.ip][..][magix.admin.load-executor-code][code].Value
+              value=>[.ip][..][magix.forms.get-value][value].Value
+            magix.admin.load-executor-code
+              code
+        label=>lblDesc
+          tag=>h4
+          css=>span5
+          text=>description
+        label=>desc
+          css=>span5
+          text=>@"description of your web control.&nbsp;&nbsp;
+click any of the web controls active events to the right to inspect them"
+    panel=>wrp
+      css=>span2 offset1
+      controls

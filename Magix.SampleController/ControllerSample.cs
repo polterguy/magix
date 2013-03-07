@@ -57,10 +57,10 @@ or refreshed";
 			tmp["form-id"].Value = "menu";
 			tmp["html"].Value = @"
 {{
-LinkButton=>help
-  Text=>help
-  CssClass=>btn btn-primary btn-large span2
-  OnClick
+link-button=>help
+  text=>help
+  css=>btn btn-primary btn-large span2
+  onclick
     magix.help.start-help
 }}";
 			tmp["container"].Value = "menu";
