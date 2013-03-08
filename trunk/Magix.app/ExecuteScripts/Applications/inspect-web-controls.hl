@@ -12,8 +12,8 @@ magix.forms.create-web-page
 magix.admin.get-active-events
   begins-with=>magix.forms.controls.
 set=>[magix.admin.get-active-events].Name
-  value=>Data
-for-each=>[Data][events]
+  value=>_data
+for-each=>[_data][events]
   _tpl
     link-button
       css=>span2 btn btn-small btn-left

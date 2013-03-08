@@ -179,7 +179,7 @@ namespace Magix.Core
 			Node source, 
 			Node ip)
 		{
-			object valueToSet = GetExpressionValue (exprSource, source, ip);
+			object valueToSet = GetExpressionValue(exprSource, source, ip);
 
 			if (valueToSet == null)
 			{
@@ -220,7 +220,7 @@ namespace Magix.Core
 			if (expression == null)
 				return null;
 
-			if (!expression.TrimStart ().StartsWith("["))
+			if (!expression.TrimStart().StartsWith("["))
 				return expression;
 
 			string lastEntity = "";
@@ -463,10 +463,43 @@ namespace Magix.Core
                         }
                         else if (bufferNodeName == ".")
                         {
+							x = source;
                             bufferNodeName = "";
                             isInside = false;
                             continue;
                         }
+						else if (bufferNodeName.Contains(":"))
+						{
+							int idxNo = int.Parse(bufferNodeName.Split(':')[1].TrimStart());
+							int curNo = 0;
+							int totIdx = 0;
+							bool found = false;
+							bufferNodeName = bufferNodeName.Split(':')[0].TrimEnd();
+
+							foreach (Node idxNode in x)
+							{
+								if (idxNode.Name == bufferNodeName)
+								{
+									if (curNo++ == idxNo)
+									{
+										found = true;
+										x = x[totIdx];
+										break;
+									}
+								}
+								totIdx += 1;
+							}
+							if (!found)
+							{
+								if (forcePath)
+									x.Add(new Node(bufferNodeName));
+								else
+									return null;
+							}
+							bufferNodeName = "";
+							isInside = false;
+							continue;
+						}
                         else
                         {
                             foreach (char idxC in bufferNodeName)
@@ -487,7 +520,7 @@ namespace Magix.Core
                             }
                             else
                             {
-								if (x.Contains (bufferNodeName))
+								if (x.Contains(bufferNodeName))
 									x = x[bufferNodeName];
 								else if (forcePath)
 								{

@@ -118,6 +118,14 @@ namespace Magix.admin
 				txt = reader.ReadToEnd();
 			}
 
+			Node tmp = new Node();
+			tmp["code"].Value = txt;
+
+			ActiveEvents.Instance.RaiseActiveEvent(
+				typeof(ExecutorForm),
+				"magix.admin.set-code",
+				tmp);
+
 			string wholeTxt = txt.TrimStart();
 			string method = "";
 			if (wholeTxt.StartsWith("Method:") || wholeTxt.StartsWith("event:"))
@@ -129,7 +137,7 @@ namespace Magix.admin
 						"";
 			}
 
-			Node tmp = new Node();
+			tmp = new Node();
 			tmp["code"].Value = wholeTxt;
 
 			ActiveEvents.Instance.RaiseActiveEvent(
@@ -244,6 +252,11 @@ if=>[Data].Value==thomas
 			RaiseEvent(
 				"magix.admin.get-active-events", 
 				node);
+		}
+
+		protected void move_Click(object sender, EventArgs e)
+		{
+			txtIn.Text = txtOut.Text;
 		}
 
 		protected void run_Click(object sender, EventArgs e)

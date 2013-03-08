@@ -490,6 +490,23 @@ namespace Magix.Core
         }
 
         /**
+         * Adds a new node to the collection
+         */
+        public Node Add(string name)
+        {
+			return Add(name, null);
+        }
+
+        /**
+         * Adds a new node to the collection
+         */
+        public Node Add(string name, object val)
+        {
+			Add(new Node(name, val));
+			return _children[_children.Count - 1];
+        }
+
+        /**
          * Adds a range of nodes to collection
          */
         public void AddRange(IEnumerable<Node> items)

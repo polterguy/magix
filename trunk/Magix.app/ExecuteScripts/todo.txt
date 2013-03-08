@@ -11,10 +11,18 @@
 
 * Uploading of Manifest files, which changes the state of the application somehow
 
+* verify all scripts work before last release
+
+* add support in expressions for fetching nt'h label, through [label:2]
+
 * consistently use [node] for nodes and "magix.somewhere.active-event" syntax for
   all active events in the system
 
 * make sure ["_ip"] is only used in magix.execute keywords
+
+* create back-button for loading active event executor, and menu in magix-markup-editor.hl
+
+* fix layout of icon in show-message
 
 * make sure all exceptions thrown, gives [correct-name] of nodes missing, etc
 
