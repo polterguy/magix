@@ -20,13 +20,13 @@ magix.forms.create-web-page
 <p>type in magix markup language in textbox below, and click preview to see
 result below</p>
 {{
-TextArea=>markup
-  CssClass=>span12 input-block-level monospaced
-  Rows=>15
-Button=>preview
-  CssClass=>offset10 btn btn-info btn-large
-  Text=>preview
-  OnClick
+text-area=>markup
+  css=>span12 input-block-level monospaced
+  rows=>15
+button=>preview
+  css=>offset10 btn btn-info btn-large
+  text=>preview
+  onclick
     magix.forms.get-value
       form-id=>mmleditor
       id=>markup

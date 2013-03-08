@@ -173,6 +173,10 @@
       <Project>{EAE2F2AE-0098-44F1-8B3D-1887266E94CF}</Project>
       <Name>Magix.xml</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Magix.node\Magix.node.csproj">
+      <Project>{C47C4AB9-BE13-48F0-81FB-830A83482815}</Project>
+      <Name>Magix.node</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="web.config" />
@@ -256,5 +260,7 @@
     <None Include="ExecuteScripts\Applications\magix-markup-editor.hl" />
     <None Include="ExecuteScripts\Applications\rss-parser.hl" />
     <None Include="ExecuteScripts\Applications\inspect-web-controls.hl" />
+    <None Include="Help\nodes-5.mml" />
+    <None Include="Help\nodes-6.mml" />
   </ItemGroup>
 </Project>
