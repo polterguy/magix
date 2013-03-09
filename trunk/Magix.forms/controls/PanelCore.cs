@@ -40,7 +40,6 @@ namespace Magix.forms
 
 			if (node.Contains("controls"))
 			{
-
 				foreach (Node idx in node["controls"])
 				{
 					string typeName = idx.Name;
@@ -72,21 +71,23 @@ namespace Magix.forms
 					else
 					{
 						if (!nc.Contains("_tpl"))
-							throw new ArgumentException("unhandled node type in your markup, '" + typeName + "' not recognized");
-
-						// this is a 'user control', or a 'template control', and we need to
-						// individually traverse it, as if it was embedded into markup, almost
-						// like copy/paste
-						nc = new Node();
-						nc["_code"].Value = idx;
-
-						RaiseActiveEvent(
-							"magix.forms.controls." + node["_tpl"][0].Name,
-							nc);
-						if (nc.Contains("_ctrl"))
-							ret.Controls.Add(node["_ctrl"].Value as System.Web.UI.Control);
-						else
 							throw new ArgumentException("unknown control type in your template control '" + typeName + "'");
+						else
+						{
+							// this is a 'user control', or a 'template control', and we need to
+							// individually traverse it, as if it was embedded into markup, almost
+							// like copy/paste
+							nc = new Node();
+							nc["_code"].Value = idx;
+
+							RaiseActiveEvent(
+								"magix.forms.controls." + node["_tpl"][0].Name,
+								nc);
+							if (nc.Contains("_ctrl"))
+								ret.Controls.Add(nc["_ctrl"].Value as System.Web.UI.Control);
+							else
+								throw new ArgumentException("unknown control type in your template control '" + typeName + "'");
+						}
 					}
 				}
 			}

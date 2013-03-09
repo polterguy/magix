@@ -1,8 +1,14 @@
 
-<p>see video below to understand advantage</p>
-<div style="width:480px;margin-left:auto;margin-right:auto;">
-<iframe width="480" height="360" src="http://www.youtube.com/embed/kqTAt7WYLUE" frameborder="0" allowfullscreen></iframe>
-</div>
+<p>see videos here to understand advantage</p>
+
+{{
+panel=>wrp
+  style=>margin-left:auto;margin-right:auto;width:480px;
+  controls
+    literal
+      text=>@"<iframe src=""http://www.youtube.com/embed/kqTAt7WYLUE""
+width=""480"" height=""360"" frameborder=""0"" allowfullscreen=""true""></iframe>"
+}}
 
 {{
 hidden=>dummy
