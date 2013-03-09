@@ -125,10 +125,6 @@ the given [id] in the persistent data storage";
 		}
 
 		/**
-		 * Will load the given ID found from Value, or "prototype". If you use ID, this is the same
-		 * ID as the object was stored with. If you use "prototype", then this will 
-		 * serve as a tree, which must be present in the saved object, for it to return 
-		 * a match
 		 */
 		[ActiveEvent(Name = "magix.data.load")]
 		public static void magix_data_load(object sender, ActiveEventArgs e)
@@ -139,7 +135,10 @@ the given [id] in the persistent data storage";
 				e.Params["load"]["id"].Value = "object-id";
 				e.Params["load"]["prototype"].Value = "optional";
 				e.Params["inspect"].Value = @"loads the given [id] object, or 
-use [prototype] as filter.&nbsp;&nbsp;returns object as [object]";
+use [prototype] as filter.&nbsp;&nbsp;returns objects found as [objects], with 
+child nodes of [objects] being the matching objects.&nbsp;&nbsp;
+use [start] and [end] to fetch a specific cut of objects, [start] defaults 
+to 0 and [end] defaults to 10";
 				return;
 			}
 
@@ -150,6 +149,14 @@ use [prototype] as filter.&nbsp;&nbsp;returns object as [object]";
 			string key = null;
 			if (e.Params.Contains("id") && e.Params["id"].Value != null)
 				key = e.Params["id"].Get<string>();
+
+			int start = 0;
+			if (e.Params.Contains("start") && e.Params["start"].Value != null)
+				start = e.Params["start"].Get<int>();
+
+			int end = 10;
+			if (e.Params.Contains("end") && e.Params["end"].Value != null)
+				end = e.Params["end"].Get<int>();
 
 			lock (typeof(Node))
 			{
@@ -166,11 +173,12 @@ use [prototype] as filter.&nbsp;&nbsp;returns object as [object]";
 							else
 								return obj.Node.HasNodes(prototype);
 						});
-					if (objects.Count > 0)
+					int idxNo = 0;
+					foreach (Storage idx in objects)
 					{
-						Storage idx = objects[0];
-						e.Params["object"].ReplaceChildren (idx.Node);
-						return;
+						if (idxNo >= start && idxNo < end)
+							e.Params["objects"][idx.Key].ReplaceChildren(idx.Node);
+						idxNo++;
 					}
 				}
 			}
