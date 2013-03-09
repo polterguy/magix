@@ -38,7 +38,7 @@ that the result node set is manipulated as it should be";
 				return;
 			}
 
-			RaiseEvent(
+			RaiseActiveEvent(
 				"magix.execute",
 				tmp);
 
@@ -74,7 +74,7 @@ a node's value to new-value within the block being executed";
 				return;
 			}
 
-			RaiseEvent(
+			RaiseActiveEvent(
 				"magix.execute",
 				tmp);
 

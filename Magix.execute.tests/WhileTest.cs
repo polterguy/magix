@@ -40,7 +40,7 @@ are left in the node-list";
 				return;
 			}
 
-			RaiseEvent(
+			RaiseActiveEvent(
 				"magix.execute",
 				tmp);
 

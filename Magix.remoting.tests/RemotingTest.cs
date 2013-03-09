@@ -41,7 +41,7 @@ of a remotely activated active event behaves correctly";
 				return;
 			}
 
-			RaiseEvent(
+			RaiseActiveEvent(
 				"magix.execute",
 				tmp);
 
@@ -78,14 +78,14 @@ created as a default event, throws when attempted to be invoked remotely";
 
 			try
 			{
-				RaiseEvent(
+				RaiseActiveEvent(
 					"magix.execute",
 					tmp);
 
 				Node tmp2 = new Node();
 				tmp2["event"].Value = "foo.bar";
 
-				RaiseEvent(
+				RaiseActiveEvent(
 					"magix.execute",
 					tmp2);
 
@@ -97,7 +97,7 @@ created as a default event, throws when attempted to be invoked remotely";
 				Node tmp2 = new Node();
 				tmp2["event"].Value = "foo.bar";
 
-				RaiseEvent(
+				RaiseActiveEvent(
 					"magix.execute",
 					tmp2);
 			}

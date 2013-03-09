@@ -67,8 +67,6 @@ namespace Magix.forms
 		{
 			bool dataSources = DataSources.Count != 0;
 
-			int currentDataSource = 0;
-
 			string html = Html;
 			string buffer = "";
 			int idxPre = 0;
@@ -121,13 +119,11 @@ namespace Magix.forms
 							if (!dataSources)
 								DataSources.Add(codeNode);
 
-							int cur = currentDataSource;
 							foreach (Node idxN in codeNode)
 							{
 								BuildControl(idxN, pnl);
 							}
 							buffer = "";
-							currentDataSource += 1;
 						}
 						last = true;
 					}

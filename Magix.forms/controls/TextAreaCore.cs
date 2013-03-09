@@ -56,7 +56,7 @@ namespace Magix.forms
 
 				ret.TextChanged += delegate(object sender2, EventArgs e2)
 				{
-					RaiseEvent(
+					RaiseActiveEvent(
 						"magix.execute",
 						codeNode);
 				};
@@ -69,7 +69,7 @@ namespace Magix.forms
 
 				ret.TextChanged += delegate(object sender2, EventArgs e2)
 				{
-					RaiseEvent(
+					RaiseActiveEvent(
 						"magix.execute",
 						codeNode);
 				};

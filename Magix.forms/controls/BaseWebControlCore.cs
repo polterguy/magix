@@ -45,7 +45,7 @@ namespace Magix.forms
 
 				that.Click += delegate(object sender, EventArgs e)
 				{
-					RaiseEvent(
+					RaiseActiveEvent(
 						"magix.execute",
 						codeNode);
 				};
@@ -58,7 +58,7 @@ namespace Magix.forms
 
 				that.DblClick += delegate(object sender, EventArgs e)
 				{
-					RaiseEvent(
+					RaiseActiveEvent(
 						"magix.execute",
 						codeNode);
 				};
@@ -71,7 +71,7 @@ namespace Magix.forms
 
 				that.MouseDown += delegate(object sender, EventArgs e)
 				{
-					RaiseEvent(
+					RaiseActiveEvent(
 						"magix.execute",
 						codeNode);
 				};
@@ -84,7 +84,7 @@ namespace Magix.forms
 
 				that.MouseUp += delegate(object sender, EventArgs e)
 				{
-					RaiseEvent(
+					RaiseActiveEvent(
 						"magix.execute",
 						codeNode);
 				};
@@ -97,7 +97,7 @@ namespace Magix.forms
 
 				that.MouseOver += delegate(object sender, EventArgs e)
 				{
-					RaiseEvent(
+					RaiseActiveEvent(
 						"magix.execute",
 						codeNode);
 				};
@@ -110,7 +110,7 @@ namespace Magix.forms
 
 				that.MouseOut += delegate(object sender, EventArgs e)
 				{
-					RaiseEvent(
+					RaiseActiveEvent(
 						"magix.execute",
 						codeNode);
 				};
@@ -123,7 +123,7 @@ namespace Magix.forms
 
 				that.KeyPress += delegate(object sender, EventArgs e)
 				{
-					RaiseEvent(
+					RaiseActiveEvent(
 						"magix.execute",
 						codeNode);
 				};
@@ -136,7 +136,7 @@ namespace Magix.forms
 
 				that.EscKey += delegate(object sender, EventArgs e)
 				{
-					RaiseEvent(
+					RaiseActiveEvent(
 						"magix.execute",
 						codeNode);
 				};

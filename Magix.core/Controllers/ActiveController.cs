@@ -52,7 +52,7 @@ namespace Magix.Core
 			node["container"].Value = container;
 			node["name"].Value = name;
 
-			RaiseEvent(
+			RaiseActiveEvent(
 				"magix.viewport.load-module", 
 				node);
         }
@@ -61,7 +61,7 @@ namespace Magix.Core
          * Shorthand for raising events. Will return a node, initially created empty, 
          * but passed onto the Event Handler(s)
          */
-        protected static Node RaiseEvent(string eventName)
+        protected static Node RaiseActiveEvent(string eventName)
         {
             Node node = new Node();
 
@@ -76,9 +76,9 @@ namespace Magix.Core
         /**
          * Shorthand for raising events.
          */
-        protected static void RaiseEvent(string eventName, Node node)
+        protected static void RaiseActiveEvent(string eventName, Node node)
         {
-			RaiseEvent(
+			RaiseActiveEvent(
 				eventName, 
 				node, 
 				false);;
@@ -87,7 +87,7 @@ namespace Magix.Core
         /**
          * Shorthand for raising events.
          */
-        protected static void RaiseEvent(string eventName, Node node, bool forceNoOverride)
+        protected static void RaiseActiveEvent(string eventName, Node node, bool forceNoOverride)
         {
             ActiveEvents.Instance.RaiseActiveEvent(
                 typeof(ActiveController),

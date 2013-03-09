@@ -37,6 +37,7 @@ with its children and sub-nodes";
 				e.Params["add"]["value"].Value = "[_data]";
 				return;
 			}
+
 			Node ip = e.Params;
 			if (e.Params.Contains("_ip"))
 				ip = e.Params ["_ip"].Value as Node;

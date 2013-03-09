@@ -54,7 +54,7 @@ the value of [set] must be an expression";
 			if (ip.Contains("value"))
 				right = ip["value"].Get<string>();
 
-			Expressions.SetNodeValue(left, right, dp, ip);
+			Expressions.SetNodeValue(left, right, dp, ip, ip.Contains("value"));
 		}
 	}
 }

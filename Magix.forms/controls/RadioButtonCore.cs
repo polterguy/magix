@@ -53,7 +53,7 @@ namespace Magix.forms
 
 				ret.CheckedChanged += delegate(object sender2, EventArgs e2)
 				{
-					RaiseEvent(
+					RaiseActiveEvent(
 						"magix.execute",
 						codeNode);
 				};

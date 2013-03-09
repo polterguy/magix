@@ -150,7 +150,7 @@ event will be deleted again, if you pass in no code block";
 					Node node = new Node();
 					node["ActiveEvent"].Value = key;
 
-					RaiseEvent(
+					RaiseActiveEvent(
 						"magix.execute._event-overridden", 
 						node);
 				}
@@ -178,7 +178,7 @@ event will be deleted again, if you pass in no code block";
 					Node node = new Node();
 					node["ActiveEvent"].Value = e.Params["event"].Get<string>();
 
-					RaiseEvent(
+					RaiseActiveEvent(
 						"magix.execute._event-override-removed", 
 						node);
 				}
@@ -231,7 +231,7 @@ null active event handlers created with magix.execute.event";
 				tmp["_method"].Value = e.Name;
 				tmp["_method"].AddRange(e.Params.Clone());
 
-				RaiseEvent(
+				RaiseActiveEvent(
 					"magix.execute", 
 					tmp, 
 					true);
@@ -315,7 +315,7 @@ such that this serialized code will be called upon the raising of this event.";
 			{
 				caller["P"].AddRange(e.Params);
 
-				RaiseEvent(
+				RaiseActiveEvent(
 					"magix.execute", 
 					caller);
 

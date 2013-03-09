@@ -128,7 +128,7 @@ has returned true";
 			node["_ip"].Value = ip;
 			node["_dp"].Value = dp;
 
-			RaiseEvent(
+			RaiseActiveEvent(
 				"magix.execute", 
 				node);
 		}
@@ -165,7 +165,7 @@ has returned true";
 				tmp["_ip"].Value = ip;
 				tmp["_dp"].Value = dp;
 
-				RaiseEvent(
+				RaiseActiveEvent(
 					"magix.execute", 
 					tmp);
 			}

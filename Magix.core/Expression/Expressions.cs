@@ -177,11 +177,12 @@ namespace Magix.Core
 			string exprDestination, 
 			string exprSource, 
 			Node source, 
-			Node ip)
+			Node ip,
+			bool noRemove)
 		{
 			object valueToSet = GetExpressionValue(exprSource, source, ip);
 
-			if (valueToSet == null)
+			if (valueToSet == null && !noRemove)
 			{
 				Remove(exprDestination, source, ip);
 				return;
@@ -219,6 +220,10 @@ namespace Magix.Core
         {
 			if (expression == null)
 				return null;
+
+			// Checking to see if this is an escaped expression
+			if (expression.StartsWith("\\") && expression.Length > 1 && expression[1] == '[')
+				return expression.Substring(1);
 
 			if (!expression.TrimStart().StartsWith("["))
 				return expression;
@@ -492,7 +497,13 @@ namespace Magix.Core
 							if (!found)
 							{
 								if (forcePath)
-									x.Add(new Node(bufferNodeName));
+								{
+									while (idxNo >= curNo++)
+									{
+										x.Add(new Node(bufferNodeName));
+									}
+									x = x[x.Count - 1];
+								}
 								else
 									return null;
 							}

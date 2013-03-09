@@ -39,7 +39,7 @@ namespace Magix.tests
 				return;
 			}
 
-			RaiseEvent(
+			RaiseActiveEvent(
 				"magix.execute",
 				tmp);
 
@@ -85,7 +85,7 @@ as supposed to";
 				return;
 			}
 
-			RaiseEvent(
+			RaiseActiveEvent(
 				"magix.execute",
 				tmp);
 

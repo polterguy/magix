@@ -40,7 +40,7 @@ or refreshed";
 			tmp["html"].Value = "<h1>active event executor</h1>";
 			tmp["container"].Value = "header";
 
-			RaiseEvent(
+			RaiseActiveEvent(
 				"magix.forms.create-web-page",
 				tmp);
 
@@ -48,7 +48,7 @@ or refreshed";
 			tmp = new Node();
 			tmp["container"].Value = "content";
 
-			RaiseEvent(
+			RaiseActiveEvent(
 				"magix.admin.open-event-executor", 
 				tmp);
 
@@ -65,7 +65,7 @@ link-button=>help
 }}";
 			tmp["container"].Value = "menu";
 
-			RaiseEvent(
+			RaiseActiveEvent(
 				"magix.forms.create-web-page",
 				tmp);
 
@@ -77,7 +77,7 @@ link-button=>help
 			tmp["Items"]["Item2"]["Event"].Value = "magix.admin.open-event-executor";
 			tmp["Items"]["Item2"]["Event"]["container"].Value = "content";
 
-			RaiseEvent(
+			RaiseActiveEvent(
 				"magix.modules.set-menu-items", 
 				tmp);
 		}
