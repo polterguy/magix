@@ -38,6 +38,18 @@ namespace Magix.forms
 			if (node.Contains("tip") && !string.IsNullOrEmpty(node["tip"].Get<string>()))
 				that.ToolTip = node["tip"].Get<string>();
 
+			if (node.Contains("style") && !string.IsNullOrEmpty(node["style"].Get<string>()))
+			{
+				string[] styles = 
+					node["style"].Get<string>().Split(
+						new char[] {';'}, 
+						StringSplitOptions.RemoveEmptyEntries);
+				foreach (string idxStyle in styles)
+				{
+					that.Style[idxStyle.Split(':')[0]] = idxStyle.Split(':')[1];
+				}
+			}
+
 			if (node.Contains("onclick"))
 			{
 				// TODO: is this right? do we need to clone?

@@ -36,7 +36,9 @@ expression in value will be nullified.&nbsp;&nbsp;if
 it's a node-list it will be emptied and the node
 removed.&nbsp;&nbsp;if it's a value, the value will become
 null.&nbsp;&nbsp;the [value]'s value can be a constant,
-the value of [set] must be an expression";
+the value of [set] must be an expression.&nbsp;&nbsp;
+if you try to set a node that does not exist, the node
+will be created, and added to the tree";
 				return;
 			}
 

@@ -52,6 +52,7 @@
     <Compile Include="controls\SelectListCore.cs" />
     <Compile Include="controls\TextAreaCore.cs" />
     <Compile Include="controls\TextBoxCore.cs" />
+    <Compile Include="controls\LiteralCore.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

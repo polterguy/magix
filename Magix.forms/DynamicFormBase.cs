@@ -250,6 +250,7 @@ namespace Magix.forms
 			string evtName = "magix.forms.controls." + typeName;
 
 			Node node = new Node();
+
 			node["_code"].Value = idx;
 			idx["_first"].Value = isFirst;
 
@@ -263,10 +264,9 @@ namespace Magix.forms
 				parent.Controls.Add(node["_ctrl"].Value as Control);
 			else
 			{
-				if (!node.Contains("_invisible") && !node.Contains("_tpl"))
-					throw new ArgumentException("unhandled node type in your markup, '" + typeName + "' not recognized");
-
-				if (!node["_invisible"].Get<bool>())
+				if (!node.Contains("_tpl"))
+					throw new ArgumentException("unknown control type in your template control '" + typeName + "'");
+				else
 				{
 					// this is a 'user control', or a 'template control', and we need to
 					// individually traverse it, as if it was embedded into markup, almost
