@@ -22,12 +22,12 @@ namespace Magix.tests
 		{
 			Node tmp = new Node();
 
-			tmp["magix.data.remove"].Value = "data-save-test";
-			tmp["execute"]["magix.data.load"].Value = "data-save-test";
+			tmp["magix.data.remove"]["id"].Value = "data-save-test";
+			tmp["execute"]["magix.data.load"]["id"].Value = "data-save-test";
 			tmp["execute"]["if"].Value = "[execute][magix.data.load][object]";
 			tmp["execute"]["if"]["throw"].Value = "object didn't delete";
 			tmp["_buffer"].Value = null;
-			tmp["magix.data.save"].Value = "data-save-test";
+			tmp["magix.data.save"]["id"].Value = "data-save-test";
 			tmp["magix.data.save"]["object"]["value"].Value = "thomas";
 			tmp["magix.data.save"]["object"]["v_alue1"].Value = "thomas1";
 			tmp["magix.data.save"]["object"]["_value2"].Value = "thomas2";
@@ -44,14 +44,14 @@ namespace Magix.tests
 			tmp["magix.data.save"]["object4"]["Value"].Value = "thomas|";
 			tmp["magix.data.save"]["object"]["Value7"].Value = "thomash";
 			tmp["magix.data.save"]["object"]["Value3"].Value = "thomasx£#$¤%&/()[]}±?";
-			tmp["magix.data.load"].Value = "data-save-test";
+			tmp["magix.data.load"]["id"].Value = "data-save-test";
 
 			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
 				e.Params.Clear();
 				e.Params["event:magix.execute"].Value = null;
 				e.Params["inspect"].Value = @"verifies that saving and loading
-by id, or key, behaves as it should";
+by id, behaves as it should";
 				e.Params.AddRange(tmp);
 				return;
 			}

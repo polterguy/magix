@@ -36,8 +36,8 @@ namespace Magix.execute
 			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
 				e.Params["event:magix.execute"].Value = null;
-				e.Params["remove"].Value = "object-id";
-				e.Params["inspect"].Value = @"removes the given object-id from 
+				e.Params["remove"]["id"].Value = "object-id";
+				e.Params["inspect"].Value = @"removes the given [id] object from 
 your persistent data storage";
 				return;
 			}
@@ -46,18 +46,18 @@ your persistent data storage";
 			if (e.Params.Contains("_ip"))
 				ip = e.Params ["_ip"].Value as Node;
 
-			if (string.IsNullOrEmpty (ip.Get<string>()))
-				throw new ArgumentException("Missing ID while trying to remove object");
+			if (!e.Params.Contains("id") || string.IsNullOrEmpty(e.Params["id"].Get<string>()))
+				throw new ArgumentException("missing [id] while trying to remove object");
 
 			lock (typeof(Node))
 			{
 				using (IObjectContainer db = Db4oFactory.OpenFile(_dbFile))
 				{
-					string key = ip.Get<string>();
-					foreach (Storage idx in db.QueryByExample (new Storage(null, key)))
+					string key = ip["id"].Get<string>();
+					foreach (Storage idx in db.QueryByExample(new Storage(null, key)))
 					{
-						db.Delete (idx);
-						db.Commit ();
+						db.Delete(idx);
+						db.Commit();
 					}
 				}
 			}
@@ -71,11 +71,11 @@ your persistent data storage";
 		{
 			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
-				e.Params["save"].Value = "object-id";
+				e.Params["save"]["id"].Value = "object-id";
 				e.Params["save"]["object"].Value = "object to save";
 				e.Params["save"]["object"]["message"].Value = "more object";
 				e.Params["inspect"].Value = @"will serialize the given [object] with 
-the given object-id in the persistent data storage";
+the given [id] in the persistent data storage";
 				return;
 			}
 
@@ -84,10 +84,13 @@ the given object-id in the persistent data storage";
 				value = e.Params["object"];
 			else
 				throw new ArgumentException("object must be defined before calling magix.data.save");
-			if (string.IsNullOrEmpty (e.Params.Get<string>()))
-				throw new ArgumentException("Missing Value while trying to store object");
+
+			if (!e.Params.Contains("id") || string.IsNullOrEmpty(e.Params["id"].Get<string>()))
+				throw new ArgumentException("missing [id] while trying to save object");
+
 			Node parent = value.Parent;
 			value.SetParent(null);
+
 			new DeterministicExecutor(
 			delegate
 				{
@@ -95,20 +98,20 @@ the given object-id in the persistent data storage";
 					{
 						using (IObjectContainer db = Db4oFactory.OpenFile(_dbFile))
 						{
-							db.Ext ().Configure ().UpdateDepth (1000);
-							db.Ext ().Configure ().ActivationDepth (1000);
-							string key = e.Params.Get<string>();
+							db.Ext().Configure().UpdateDepth(1000);
+							db.Ext().Configure().ActivationDepth(1000);
+							string key = e.Params["id"].Get<string>();
 							bool found = false;
-							foreach (Storage idx in db.QueryByExample (new Storage(null, key)))
+							foreach (Storage idx in db.QueryByExample(new Storage(null, key)))
 							{
 								idx.Node = value;
-								db.Store (idx);
+								db.Store(idx);
 								found = true;
 								break;
 							}
 							if (!found)
 							{
-								db.Store (new Storage(value, key));
+								db.Store(new Storage(value, key));
 							}
 
 							db.Commit ();
@@ -133,28 +136,29 @@ the given object-id in the persistent data storage";
 			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
 				e.Params["event:magix.data.load"].Value = null;
-				e.Params["load"].Value = "object-id";
+				e.Params["load"]["id"].Value = "object-id";
 				e.Params["load"]["prototype"].Value = "optional";
-				e.Params["inspect"].Value = @"loads the given object-id, or 
-use prototype as filter.&nbsp;&nbsp;returns object as [object]";
+				e.Params["inspect"].Value = @"loads the given [id] object, or 
+use [prototype] as filter.&nbsp;&nbsp;returns object as [object]";
 				return;
 			}
+
 			Node prototype = null;
 			if (e.Params.Contains("prototype"))
-			{
 				prototype = e.Params["prototype"];
-			}
+
 			string key = null;
-			if (e.Params.Value != null)
-				key = e.Params.Get<string>();
+			if (e.Params.Contains("id") && e.Params["id"].Value != null)
+				key = e.Params["id"].Get<string>();
+
 			lock (typeof(Node))
 			{
 				using (IObjectContainer db = Db4oFactory.OpenFile(_dbFile))
 				{
-					db.Ext ().Configure ().UpdateDepth (1000);
-					db.Ext ().Configure ().ActivationDepth (1000);
+					db.Ext().Configure().UpdateDepth(1000);
+					db.Ext().Configure().ActivationDepth(1000);
 
-					IList<Storage> objects = db.Ext ().Query<Storage>(
+					IList<Storage> objects = db.Ext().Query<Storage>(
 						delegate(Storage obj)
 						{
 							if (key != null)

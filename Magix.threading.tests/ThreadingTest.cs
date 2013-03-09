@@ -22,11 +22,11 @@ namespace Magix.tests
 		{
 			Node tmp = new Node();
 
-			tmp["magix.data.remove"].Value = "fork-test-buffer-object";
-			tmp["fork"]["magix.data.save"].Value = "fork-test-buffer-object";
+			tmp["magix.data.remove"]["id"].Value = "fork-test-buffer-object";
+			tmp["fork"]["magix.data.save"]["id"].Value = "fork-test-buffer-object";
 			tmp["fork"]["magix.data.save"]["object"]["value"].Value = "thomas";
 			tmp["sleep"].Value = 500;
-			tmp["magix.data.load"].Value = "fork-test-buffer-object";
+			tmp["magix.data.load"]["id"].Value = "fork-test-buffer-object";
 
 			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
