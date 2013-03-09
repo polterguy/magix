@@ -71,7 +71,7 @@ to create code in front of the instruction pointer";
 				"magix.execute",
 				n);
 
-			if (n["_data"].Get<string>() != "dbs")
+			if (n["_data"].Get<string>() != "success")
 				throw new ArgumentException("expression didn't behave as expected");
 		}
 	}
