@@ -33,7 +33,7 @@ namespace Magix.tests
 				e.Params.Clear();
 				e.Params["event:magix.execute"].Value = null;
 				e.Params["inspect"].Value = @"verifies that [fork] behaves correctly, 
-by using magix.data.load and save to signal between threads for success";
+by using magix.data.load and magix.data.save to signal between threads for success";
 				e.Params.AddRange(tmp);
 				return;
 			}
@@ -42,7 +42,7 @@ by using magix.data.load and save to signal between threads for success";
 				"magix.execute",
 				tmp);
 
-			if (tmp["magix.data.load"]["object"]["value"].Get<string>() != "thomas")
+			if (tmp["magix.data.load"]["objects"][0]["value"].Get<string>() != "thomas")
 			{
 				throw new ApplicationException(
 					"failure of executing fork statement");
