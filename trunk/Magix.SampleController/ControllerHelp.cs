@@ -46,7 +46,7 @@ namespace Magix.SampleController
 				tmp["html"].Value = reader.ReadToEnd();
 			}
 
-			RaiseEvent(
+			RaiseActiveEvent(
 				"magix.forms.create-web-page",
 				tmp);
 
@@ -58,7 +58,7 @@ namespace Magix.SampleController
 				tmp["freeze-help-stack"].Value = true;
 				tmp["file"].Value = Pages[CurrentIndex];
 
-				RaiseEvent(
+				RaiseActiveEvent(
 					"magix.help.open-file",
 					tmp);
 			}
@@ -68,7 +68,7 @@ namespace Magix.SampleController
 				tmp["reset"].Value = true;
 				tmp["page"].Value = "Help/index.mml";
 
-				RaiseEvent(
+				RaiseActiveEvent(
 					"magix.help.add-page",
 					tmp);
 			}
@@ -113,7 +113,7 @@ link-button=>next
 }}
 </div>
 ";
-			RaiseEvent(
+			RaiseActiveEvent(
 				"magix.forms.create-web-page",
 				tmp);
 		}
@@ -164,7 +164,7 @@ link-button=>next
 
 			node["file"].Value = next;
 
-			RaiseEvent(
+			RaiseActiveEvent(
 				"magix.help.open-file",
 				node);
 		}
@@ -191,7 +191,7 @@ link-button=>next
 				tmp["html"].Value = reader.ReadToEnd();
 			}
 
-			RaiseEvent(
+			RaiseActiveEvent(
 				"magix.forms.change-html",
 				tmp);
 
@@ -201,7 +201,7 @@ link-button=>next
 				tmp = new Node();
 				tmp["page"].Value = e.Params["file"].Get<string>();
 
-				RaiseEvent(
+				RaiseActiveEvent(
 					"magix.help.add-page",
 					tmp);
 			}
@@ -291,7 +291,7 @@ of help system";
 				Node ms = new Node();
 				ms["message"].Value = "No more previous screens";
 
-				RaiseEvent(
+				RaiseActiveEvent(
 					"magix.viewport.show-message",
 					ms);
 
@@ -305,7 +305,7 @@ of help system";
 			tmp["freeze-help-stack"].Value = true;
 			tmp["file"].Value = Pages[CurrentIndex];
 
-			RaiseEvent(
+			RaiseActiveEvent(
 				"magix.help.open-file",
 				tmp);
 
@@ -331,7 +331,7 @@ opened help pages";
 				Node ms = new Node();
 				ms["message"].Value = "No more forward screens";
 
-				RaiseEvent(
+				RaiseActiveEvent(
 					"magix.viewport.show-message",
 					ms);
 				return;
@@ -344,7 +344,7 @@ opened help pages";
 			tmp["freeze-help-stack"].Value = true;
 			tmp["file"].Value = Pages[CurrentIndex];
 
-			RaiseEvent(
+			RaiseActiveEvent(
 				"magix.help.open-file",
 				tmp);
 		}

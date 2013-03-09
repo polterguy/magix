@@ -63,7 +63,7 @@ namespace Magix.forms
 					Node nc = new Node();
 					nc["_code"].Value = idx;
 
-					RaiseEvent(
+					RaiseActiveEvent(
 						evtName,
 						nc);
 
@@ -80,7 +80,7 @@ namespace Magix.forms
 						nc = new Node();
 						nc["_code"].Value = idx;
 
-						RaiseEvent(
+						RaiseActiveEvent(
 							"magix.forms.controls." + node["_tpl"][0].Name,
 							nc);
 						if (nc.Contains("_ctrl"))

@@ -56,7 +56,7 @@ statement";
 
 			try
 			{
-				RaiseEvent(
+				RaiseActiveEvent(
 					"magix.execute",
 					ip["code"]);
 			}
@@ -70,7 +70,7 @@ statement";
 
 				ip["catch"]["exception"].Value = err.Message;
 
-				RaiseEvent(
+				RaiseActiveEvent(
 					"magix.execute",
 					ip["catch"]);
 			}

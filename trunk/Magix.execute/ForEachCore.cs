@@ -61,18 +61,20 @@ the currently iterated node";
 			{
 				Node tmp = Expressions.GetExpressionValue(ip.Get<string>(), dp, ip) as Node;
 
-				// To make sure we can CHANGE the list of nodes, as we iterate them
-				// and remove, add etc ...
-				List<Node> tmpList = new List<Node>(tmp.Children);
-				foreach (Node idx in tmpList)
+				for (int idxNo = 0; idxNo < tmp.Count; idxNo++)
 				{
+					Node idx = tmp[idxNo];
 					Node tmp2 = new Node();
 					tmp2["_ip"].Value = ip;
 					tmp2["_dp"].Value = idx;
 
-					RaiseEvent(
+					RaiseActiveEvent(
 						"magix.execute", 
 						tmp2);
+
+					// Checking to see if we need to halt execution
+					if (ip["_state"].Get<string>() == "stop")
+						break;
 				}
 			}
 		}

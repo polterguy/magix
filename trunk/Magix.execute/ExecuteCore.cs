@@ -83,7 +83,7 @@ to the node's name";
 			if ((ip.Name == "execute" || ip.Name == "magix.execute") && 
 				!string.IsNullOrEmpty(ip.Get<string>()))
 			{
-				ip = Expressions.GetExpressionValue (ip.Get<string>(), dp, ip) as Node;
+				ip = Expressions.GetExpressionValue(ip.Get<string>(), dp, ip) as Node;
 				if (ip == null)
 					throw new ArgumentException(
 						"You can only supply a context pointing to an existing Node hierarchy");
@@ -92,15 +92,9 @@ to the node's name";
 			// Temporary variable used internally by some functions, such as "if" and "else-if"
 			ip["_state"].Value = null;
 
-			// To allow for changing of Node Hierarchy, without halting execution because
-			// of changing collection while iterating ...
-
-			// TODO: Change such that it also will execute dynamically generated code, meaning
-			// ADDED nodes underneath as process is done ...
-			List<Node> tmpNodes = new List<Node>(ip.Children);
-
-			foreach (Node idx in tmpNodes)
+			for (int idxNo = 0; idxNo < ip.Count; idxNo++)
 			{
+				Node idx = ip[idxNo];
 				string nodeName = idx.Name;
 
 				// Checking to see if it starts with a small letter
@@ -117,7 +111,7 @@ to the node's name";
 						// Data Pointer, pointer to data
 						tmp["_dp"].Value = dp;
 
-						RaiseEvent(
+						RaiseActiveEvent(
 							"magix.execute.raise", 
 							tmp);
 					}
@@ -150,7 +144,17 @@ to the node's name";
 						// Data Pointer, pointer to data
 						tmp["_dp"].Value = dp;
 
-						RaiseEvent(eventName, tmp);
+						RaiseActiveEvent(
+							eventName, 
+							tmp);
+
+						// Checking to see if we need to halt execution
+						if (tmp["_state"].Get<string>() == "stop")
+						{
+							e.Params["_state"].Value = "stop";
+							tmp["_state"].UnTie();
+							break;
+						}
 					}
 				}
 			}

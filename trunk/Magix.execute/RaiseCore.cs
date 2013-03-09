@@ -65,9 +65,9 @@ functionality from overridden active events";
 				forceNoOverride = true;
 
 			if (ip.Name == "raise")
-				RaiseEvent(ip.Get<string>(), ip, forceNoOverride);
+				RaiseActiveEvent(ip.Get<string>(), ip, forceNoOverride);
 			else
-				RaiseEvent(ip.Name, ip, forceNoOverride);
+				RaiseActiveEvent(ip.Name, ip, forceNoOverride);
 		}
 	}
 }

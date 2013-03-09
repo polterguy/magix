@@ -13,8 +13,6 @@
 
 * verify all scripts work before last release
 
-* add support in expressions for fetching nt'h label, through [label:2]
-
 * consistently use [node] for nodes and "magix.somewhere.active-event" syntax for
   all active events in the system
 

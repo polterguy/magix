@@ -38,7 +38,7 @@ by using magix.data.load and save to signal between threads for success";
 				return;
 			}
 
-			RaiseEvent(
+			RaiseActiveEvent(
 				"magix.execute",
 				tmp);
 

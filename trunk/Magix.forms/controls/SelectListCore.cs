@@ -68,7 +68,7 @@ namespace Magix.forms
 
 				ret.SelectedIndexChanged += delegate(object sender2, EventArgs e2)
 				{
-					RaiseEvent(
+					RaiseActiveEvent(
 						"magix.execute",
 						codeNode);
 				};

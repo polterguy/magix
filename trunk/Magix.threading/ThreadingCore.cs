@@ -64,7 +64,7 @@ thread will not change any data on the original node-set";
 		{
 			Node node = input as Node;
 
-			RaiseEvent(
+			RaiseActiveEvent(
 				"magix.execute",
 				node);
 		}

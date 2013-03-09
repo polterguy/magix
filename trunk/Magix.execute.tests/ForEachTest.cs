@@ -42,7 +42,7 @@ copied correctly afterwards";
 				return;
 			}
 
-			RaiseEvent(
+			RaiseActiveEvent(
 				"magix.execute",
 				tmp);
 

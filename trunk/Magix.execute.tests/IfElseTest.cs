@@ -41,7 +41,7 @@ and from within the [if], change a value to success";
 				return;
 			}
 
-			RaiseEvent(
+			RaiseActiveEvent(
 				"magix.execute",
 				tmp);
 
@@ -78,7 +78,7 @@ compares the name of a node against a static value behaves correctly";
 				return;
 			}
 
-			RaiseEvent(
+			RaiseActiveEvent(
 				"magix.execute",
 				tmp);
 
@@ -115,7 +115,7 @@ on [if] behaves correctly, by returning false when it is supposed to";
 				return;
 			}
 
-			RaiseEvent(
+			RaiseActiveEvent(
 				"magix.execute",
 				tmp);
 
@@ -152,7 +152,7 @@ a node's value returns true, when value is not null";
 				return;
 			}
 
-			RaiseEvent(
+			RaiseActiveEvent(
 				"magix.execute",
 				tmp);
 
@@ -189,7 +189,7 @@ of a node within [if] returns true, when node exist";
 				return;
 			}
 
-			RaiseEvent(
+			RaiseActiveEvent(
 				"magix.execute",
 				tmp);
 
@@ -228,7 +228,7 @@ does not generate a path, as it traverses the nodes";
 				return;
 			}
 
-			RaiseEvent(
+			RaiseActiveEvent(
 				"magix.execute",
 				tmp);
 
@@ -272,7 +272,7 @@ and return false when supposed to";
 				return;
 			}
 
-			RaiseEvent(
+			RaiseActiveEvent(
 				"magix.execute",
 				tmp);
 
@@ -311,7 +311,7 @@ behaves as they should, by setting a node's value to success";
 				return;
 			}
 
-			RaiseEvent(
+			RaiseActiveEvent(
 				"magix.execute",
 				tmp);
 
@@ -349,7 +349,7 @@ by returning true when supposed to";
 				return;
 			}
 
-			RaiseEvent(
+			RaiseActiveEvent(
 				"magix.execute",
 				tmp);
 
@@ -390,7 +390,7 @@ component else-if expression";
 				return;
 			}
 
-			RaiseEvent(
+			RaiseActiveEvent(
 				"magix.execute",
 				tmp);
 
@@ -430,7 +430,7 @@ check if a node exist, as a single statement else-if expression";
 				return;
 			}
 
-			RaiseEvent(
+			RaiseActiveEvent(
 				"magix.execute",
 				tmp);
 
@@ -472,7 +472,7 @@ sub-expression, and its value, and a static value";
 				return;
 			}
 
-			RaiseEvent(
+			RaiseActiveEvent(
 				"magix.execute",
 				tmp);
 
@@ -512,7 +512,7 @@ as it should and kicks in if neither [if] nor [else-if] kicks in";
 				return;
 			}
 
-			RaiseEvent(
+			RaiseActiveEvent(
 				"magix.execute",
 				tmp);
 

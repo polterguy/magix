@@ -55,7 +55,7 @@ the before and after results";
 			Node input = new Node();
 			input["json"].Value = tmp.Clone();
 
-			RaiseEvent(
+			RaiseActiveEvent(
 				"magix.code.node-2-code",
 				input);
 
@@ -64,7 +64,7 @@ the before and after results";
 			Node tmp2 = new Node();
 			tmp2["code"].Value = code;
 
-			RaiseEvent(
+			RaiseActiveEvent(
 				"magix.code.code-2-node",
 				tmp2);
 

@@ -74,10 +74,6 @@ link-button=>lnkhl
 link-button=>lnkunit
   text=>verify unit tests
   onclick
-    magix.admin.run-file
-      file=>ExecuteScripts/Applications/inspect-unit-tests.hl
-    magix.viewport.clear-controls
-      container=>modal
     magix.tests.run
 }} often</p>
 <p>also, 

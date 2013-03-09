@@ -36,7 +36,7 @@ and throws";
 
 			try
 			{
-				RaiseEvent(
+				RaiseActiveEvent(
 					"magix.execute",
 					tmp);
 
@@ -77,7 +77,7 @@ after throwing and catching";
 
 			try
 			{
-				RaiseEvent(
+				RaiseActiveEvent(
 					"magix.execute",
 					tmp);
 

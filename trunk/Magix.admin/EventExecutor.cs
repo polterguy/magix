@@ -5,6 +5,8 @@
  */
 
 using System;
+using System.IO;
+using System.Web;
 using Magix.Core;
 
 namespace Magix.admin
@@ -122,8 +124,9 @@ are returned in [events]";
 			{
 				e.Params.Clear();
 				e.Params["event:magix.admin.load-executor-code"].Value = null;
-				e.Params["inspect"].Value = @"opens active event executor
-in content with given [code] Value";
+				e.Params["inspect"].Value = @"loads active event executor module
+in [container] viewport with given [code] Value.&nbsp;&nbsp;code is expected to be 
+textually based node syntax";
 				e.Params["code"].Value = @"
 event:magix.execute
 Data=>thomas
@@ -139,14 +142,14 @@ if=>[Data].Value==thomas
 			Node node = new Node();
 			node["container"].Value = "content";
 
-			RaiseEvent(
+			RaiseActiveEvent(
 				"magix.admin.open-event-executor",
 				node);
 
 			node = new Node();
 			node["code"].Value = e.Params["code"].Get<string>();
 
-			RaiseEvent(
+			RaiseActiveEvent(
 				"magix.admin.set-code",
 				node);
 		}
@@ -161,7 +164,8 @@ if=>[Data].Value==thomas
 			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
 				e.Params["inspect"].Value = @"will open active event sniffer, 
-allowing you to spy on all active events being raised in your system";
+allowing you to spy on all active events being raised in your system.&nbsp;&nbsp;
+[container] instructs magix which viewport container to load the module in";
 				e.Params["event:magix.admin.open-event-sniffer"].Value = null;
 				e.Params["container"].Value = "content";
 				return;
@@ -184,7 +188,8 @@ allowing you to spy on all active events being raised in your system";
 			{
 				e.Params["event:magix.admin.open-even-executor"].Value = null;
 				e.Params["container"].Value = "content";
-				e.Params["inspect"].Value = @"opens the active event executor in content";
+				e.Params["inspect"].Value = @"opens the active event executor module 
+in [container] viewport";
 				return;
 			}
 
@@ -192,8 +197,120 @@ allowing you to spy on all active events being raised in your system";
 				"Magix.admin.ExecutorForm", 
 				e.Params["container"].Get<string>());
 
-			RaiseEvent(
+			RaiseActiveEvent(
 				"magix.execute._event-overridden");
+		}
+
+		/**
+		 * executes the given hyper lisp file
+		 */
+		[ActiveEvent(Name = "magix.admin.run-file")]
+		public void magix_admin_run_file(object sender, ActiveEventArgs e)
+		{
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			{
+				e.Params["inspect"].Value = @"runs the hyper lisp [file] given, and 
+tries to load up the code into the active event executor";
+				e.Params["event:magix.admin.run-file"].Value = null;
+				e.Params["file"].Value = "ExecuteScripts/Applications/address-book.hl";
+				return;
+			}
+
+			if (!e.Params.Contains ("file") || e.Params["file"].Get<string>("") == "")
+				throw new ArgumentException("Need file object");
+
+			string file = e.Params["file"].Get<string>();
+
+			string txt = "";
+			using (TextReader reader = File.OpenText(HttpContext.Current.Server.MapPath(file)))
+			{
+				txt = reader.ReadToEnd();
+			}
+
+			// try to push code into active event executor, if it exists in page
+			Node tmp = new Node();
+			tmp["code"].Value = txt;
+
+			RaiseActiveEvent(
+				"magix.admin.set-code",
+				tmp);
+
+			string wholeTxt = txt.TrimStart();
+			string method = "";
+			if (wholeTxt.StartsWith("Method:") || wholeTxt.StartsWith("event:"))
+			{
+				method = wholeTxt.Split (':')[1];
+				method = method.Substring(0, method.Contains("\n") ? method.IndexOf("\n") : method.Length);
+				wholeTxt = wholeTxt.Contains("\n") ? 
+					wholeTxt.Substring(wholeTxt.IndexOf("\n")).TrimStart() : 
+						"";
+			}
+
+			tmp = new Node();
+			tmp["code"].Value = wholeTxt;
+
+			RaiseActiveEvent(
+				"magix.code.code-2-node",
+				tmp);
+
+			RaiseActiveEvent(
+				method, 
+				tmp["json"].Get<Node>());
+		}
+
+		/**
+		 * executes script
+		 */
+		[ActiveEvent(Name = "magix.admin.run-script")]
+		public void magix_admin_run_script(object sender, ActiveEventArgs e)
+		{
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			{
+				e.Params["inspect"].Value = @"runs the [script] given";
+				e.Params["event:magix.admin.run-script"].Value = null;
+				e.Params["script"].Value =  @"
+event:magix.execute
+_data=>thomas
+if=>[_data].Value==thomas
+  magix.viewport.show-message
+    message=>hello world";
+				return;
+			}
+
+			if (!e.Params.Contains ("script") || e.Params["script"].Get<string>("") == "")
+				throw new ArgumentException("need script object");
+
+			string txt = e.Params["script"].Get<string>();
+
+			string wholeTxt = txt.TrimStart();
+			string method = "";
+			if (wholeTxt.StartsWith("Method:") || wholeTxt.StartsWith("event:"))
+			{
+				method = wholeTxt.Split (':')[1];
+				method = method.Substring(0, method.Contains("\n") ? method.IndexOf("\n") : method.Length);
+				wholeTxt = wholeTxt.Contains("\n") ? 
+					wholeTxt.Substring(wholeTxt.IndexOf("\n")).TrimStart() : 
+						"";
+			}
+
+			// try to push code into active event executor, if it exists in page
+			Node tmp = new Node();
+			tmp["code"].Value = txt;
+
+			RaiseActiveEvent(
+				"magix.admin.set-code",
+				tmp);
+
+			tmp = new Node();
+			tmp["code"].Value = wholeTxt;
+
+			RaiseActiveEvent(
+				"magix.code.code-2-node",
+				tmp);
+
+			RaiseActiveEvent(
+				method, 
+				tmp["json"].Get<Node>());
 		}
 	}
 }

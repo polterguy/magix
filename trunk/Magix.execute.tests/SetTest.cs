@@ -47,7 +47,7 @@ the original correctly, and the new list is an exact replica";
 
 			Node original = tmp["_data"].Clone();
 
-			RaiseEvent(
+			RaiseActiveEvent(
 				"magix.execute",
 				tmp);
 
@@ -87,7 +87,7 @@ behaves correctly, and deletes the entire node, with its children";
 				return;
 			}
 
-			RaiseEvent(
+			RaiseActiveEvent(
 				"magix.execute",
 				tmp);
 
@@ -120,7 +120,7 @@ from another node's value, behaves correctly";
 				return;
 			}
 
-			RaiseEvent(
+			RaiseActiveEvent(
 				"magix.execute",
 				tmp);
 
@@ -155,7 +155,7 @@ to null, behaves correctly";
 				return;
 			}
 
-			RaiseEvent(
+			RaiseActiveEvent(
 				"magix.execute",
 				tmp);
 
@@ -193,7 +193,7 @@ to a null value, throws an exception, as it should";
 				return;
 			}
 
-			RaiseEvent(
+			RaiseActiveEvent(
 				"magix.execute",
 				tmp);
 
@@ -231,7 +231,7 @@ the name of a node";
 				return;
 			}
 
-			RaiseEvent(
+			RaiseActiveEvent(
 				"magix.execute",
 				tmp);
 
@@ -268,7 +268,7 @@ behaves correctly, when set to another node's name";
 				return;
 			}
 
-			RaiseEvent(
+			RaiseActiveEvent(
 				"magix.execute",
 				tmp);
 
@@ -309,7 +309,7 @@ behaves correctly";
 				return;
 			}
 
-			RaiseEvent(
+			RaiseActiveEvent(
 				"magix.execute",
 				tmp);
 
@@ -349,7 +349,7 @@ name to a node-list throws an exception";
 			bool hasException = false;
 			try
 			{
-				RaiseEvent(
+				RaiseActiveEvent(
 					"magix.execute",
 					tmp);
 			}

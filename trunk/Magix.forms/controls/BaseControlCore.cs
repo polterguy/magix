@@ -40,7 +40,7 @@ namespace Magix.forms
 
 				ctrl.Load += delegate(object sender, EventArgs e)
 				{
-					RaiseEvent(
+					RaiseActiveEvent(
 						"magix.execute",
 						codeNode);
 				};

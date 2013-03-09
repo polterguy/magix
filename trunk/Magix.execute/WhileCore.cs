@@ -67,7 +67,13 @@ statement in the value of [while] is true";
 				tmp["_ip"].Value = ip;
 				tmp["_dp"].Value = dp;
 
-				RaiseEvent("magix.execute", tmp);
+				RaiseActiveEvent(
+					"magix.execute", 
+					tmp);
+
+				// Checking to see if we need to halt execution
+				if (tmp["_state"].Get<string>() == "stop")
+					break;
 			}
 		}
 	}

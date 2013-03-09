@@ -56,7 +56,7 @@ by id, or key, behaves as it should";
 				return;
 			}
 
-			RaiseEvent(
+			RaiseActiveEvent(
 				"magix.execute",
 				tmp);
 
