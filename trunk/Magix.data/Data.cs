@@ -18,19 +18,19 @@ namespace Magix.execute
 	 */
 	public class Storage
 	{
-		private string _key;
+		private string _id;
 		private Node _node;
 
 		public Storage(Node node, string key)
 		{
 			_node = node;
-			_key = key;
+			_id = key;
 		}
 
-		public string Key
+		public string Id
 		{
-			get { return _key; }
-			set { _key = value; }
+			get { return _id; }
+			set { _id = value; }
 		}
 
 		public Node Node
@@ -39,18 +39,18 @@ namespace Magix.execute
 			set { _node = value; }
 		}
 
-		public override bool Equals (object obj)
+		public override bool Equals(object obj)
 		{
 			if (obj == null || !(obj is Storage))
 				return false;
 
 			Storage rhs = obj as Storage;
-			return Key == rhs.Key && Node.Equals (rhs.Node);
+			return Id == rhs.Id && Node.Equals(rhs.Node);
 		}
 
 		public override int GetHashCode ()
 		{
-			return Key.GetHashCode () + Node.GetHashCode ();
+			return Id.GetHashCode() + Node.GetHashCode();
 		}
 	}
 }

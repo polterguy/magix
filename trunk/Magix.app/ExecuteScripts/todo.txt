@@ -11,7 +11,13 @@
 
 * Uploading of Manifest files, which changes the state of the application somehow
 
+* checkup static versus non-static event handlers ...
+
+* support multiple event handlers of same name with magix.execute.event
+
 * verify all scripts work before last release
+
+* implement [prototype] for magix.data.count
 
 * consistently use [node] for nodes and "magix.somewhere.active-event" syntax for
   all active events in the system

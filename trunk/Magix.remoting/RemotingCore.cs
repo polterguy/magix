@@ -9,8 +9,6 @@ using System.IO;
 using System.Net;
 using Magix.Core;
 using Magix.UX.Builder;
-using Db4objects.Db4o;
-using Db4objects.Db4o.Config;
 
 namespace Magix.execute
 {
@@ -19,37 +17,6 @@ namespace Magix.execute
 	 */
 	public class RemotingCore : ActiveController
 	{
-		private static string _dbFile = "store.db4o";
-
-		public class RemoteOverrides
-		{
-			private string _key;
-			private string _url;
-
-			public string Key
-			{
-				get { return _key; }
-				set { _key = value; }
-			}
-
-			public string Url
-			{
-				get { return _url; }
-				set { _url = value; }
-			}
-		}
-
-		public class OpenEvents
-		{
-			private string _key;
-
-			public string Key
-			{
-				get { return _key; }
-				set { _key = value; }
-			}
-		}
-
 		/**
 		 * Handled to make sure we map our overridden magix.execute events during
 		 * app startup
@@ -61,27 +28,38 @@ namespace Magix.execute
 			{
 				e.Params["event:magix.core.application-startup"].Value = null;
 				e.Params["inspect"].Value = @"called during startup
-of application to make sure our active events, 
-which are dynamically remotely overridden
+of application to make sure our active events, which are dynamically remotely overridden
 are being correctly re-mapped";
 				return;
 			}
-			lock (typeof(Node))
+
+			Node tmp = new Node();
+			tmp["prototype"]["type"].Value = "magix.execute.tunneled";
+
+			RaiseActiveEvent(
+				"magix.data.load",
+				tmp);
+
+			if (tmp.Contains("objects"))
 			{
-				using (IObjectContainer db = Db4oFactory.OpenFile(_dbFile))
+				foreach (Node idx in tmp["objects"])
 				{
-					db.Ext().Configure().UpdateDepth(1000);
-					db.Ext().Configure().ActivationDepth(1000);
+					ActiveEvents.Instance.OverrideRemotely(idx.Name, idx["url"].Get<string>());
+				}
+			}
 
-					foreach (RemoteOverrides idx in db.QueryByExample(new RemoteOverrides()))
-					{
-						ActiveEvents.Instance.OverrideRemotely(idx.Key, idx.Url);
-					}
+			tmp = new Node();
+			tmp["prototype"]["type"].Value = "magix.execute.opened";
 
-					foreach (OpenEvents idx in db.QueryByExample(new OpenEvents()))
-					{
-						ActiveEvents.Instance.MakeRemotable(idx.Key);
-					}
+			RaiseActiveEvent(
+				"magix.data.load",
+				tmp);
+
+			if (tmp.Contains("objects"))
+			{
+				foreach (Node idx in tmp["objects"])
+				{
+					ActiveEvents.Instance.MakeRemotable(idx.Name);
 				}
 			}
 		}
@@ -102,7 +80,7 @@ make sure the other side has marked the active event as
 remotable.&nbsp;&nbsp;once a method is 'tunneled', it will no longer be
 raised locally, but every time the active event is raised internally
 within your server, it will be polymorphistically raised, on your 
-[url] end-point instead";
+[url] end-point server instead";
 				e.Params["tunnel"].Value = "magix.namespace.foo";
 				e.Params["tunnel"]["url"].Value = "http://127.0.0.1:8080";
 				return;
@@ -114,64 +92,38 @@ within your server, it will be polymorphistically raised, on your
 
 			if (ip.Get<string>("") == string.Empty)
 				throw new ArgumentException(
-					@"magix.execute.override-remotely needs event parameter to know 
-which event to raise externally");
+					@"magix.execute.tunnel needs value, being active event name, to know 
+which event to override to go externally.&nbsp;&nbsp;tunnel cannot override null event handler");
 
 			string url = ip.Contains("url") ? ip["url"].Get<string>() : null;
-			string evt = ip.Get<string>("");
+			string evt = ip.Get<string>();
 
 			if (url == null)
 			{
-				lock (typeof(Node))
-				{
-					using (IObjectContainer db = Db4oFactory.OpenFile(_dbFile))
-					{
-						db.Ext().Configure().UpdateDepth(1000);
-						db.Ext().Configure().ActivationDepth(1000);
+				// removing event
+				Node n = new Node();
 
-						foreach (RemoteOverrides idx in db.QueryByExample(new RemoteOverrides()))
-						{
-							if (evt == idx.Key)
-							{
-								db.Delete(idx);
-							}
-						}
-						db.Commit();
-					}
-					ActiveEvents.Instance.RemoveRemotable(evt);
-				}
+				n["prototype"]["event"].Value = evt;
+				n["prototype"]["type"].Value = "magix.execute.tunneled";
+
+				RaiseActiveEvent(
+					"magix.data.remove",
+					n);
 			}
 			else
 			{
-				lock (typeof(Node))
-				{
-					using (IObjectContainer db = Db4oFactory.OpenFile(_dbFile))
-					{
-						db.Ext().Configure().UpdateDepth(1000);
-						db.Ext().Configure().ActivationDepth(1000);
+				// adding event
+				Node n = new Node();
 
-						bool found = false;
-						foreach (RemoteOverrides idx in db.QueryByExample(new RemoteOverrides()))
-						{
-							if (evt == idx.Key)
-							{
-								found = true;
-								idx.Url = url;
-								db.Store(idx);
-								break;
-							}
-						}
-						if (!found)
-						{
-							RemoteOverrides nEvt = new RemoteOverrides();
-							nEvt.Key = evt;
-							nEvt.Url = url;
-							db.Store(nEvt);
-						}
-						db.Commit();
-						ActiveEvents.Instance.OverrideRemotely(evt, url);
-					}
-				}
+				n["id"].Value = Guid.NewGuid();
+				n["object"]["event"].Value = evt;
+				n["object"]["type"].Value = "magix.execute.tunneled";
+
+				RaiseActiveEvent(
+					"magix.data.save",
+					n);
+
+				ActiveEvents.Instance.OverrideRemotely(evt, url);
 			}
 		}
 
@@ -204,29 +156,18 @@ server park, or by exposing functionality to other networks";
 
 			string evt = ip.Get<string>();
 
-			using (IObjectContainer db = Db4oFactory.OpenFile(_dbFile))
-			{
-				db.Ext().Configure().UpdateDepth(1000);
-				db.Ext().Configure().ActivationDepth(1000);
+			// adding event
+			Node n = new Node();
 
-				bool found = false;
-				foreach (OpenEvents idx in db.QueryByExample(new OpenEvents()))
-				{
-					if (evt == idx.Key)
-					{
-						found = true;
-						break;
-					}
-				}
-				if (!found)
-				{
-					RemoteOverrides nEvt = new RemoteOverrides();
-					nEvt.Key = evt;
-					db.Store(nEvt);
-				}
-				db.Commit();
-				ActiveEvents.Instance.MakeRemotable(evt);
-			}
+			n["id"].Value = Guid.NewGuid();
+			n["object"]["event"].Value = evt;
+			n["object"]["type"].Value = "magix.execute.opened";
+
+			RaiseActiveEvent(
+				"magix.data.save",
+				n);
+
+			ActiveEvents.Instance.MakeRemotable(evt);
 		}
 
 		/**
@@ -239,8 +180,7 @@ server park, or by exposing functionality to other networks";
 			{
 				e.Params["event:magix.execute"].Value = null;
 				e.Params["inspect"].Value = @"closes the active event found in
-value, such that it no longer can be remotely 
-invoked from other servers";
+value, such that it no longer can be remotely invoked from other servers";
 				e.Params["close"].Value = "magix.namespace.foo";
 				return;
 			}
@@ -254,21 +194,16 @@ invoked from other servers";
 
 			string evt = ip.Get<string>();
 
-			using (IObjectContainer db = Db4oFactory.OpenFile(_dbFile))
-			{
-				db.Ext().Configure().UpdateDepth(1000);
-				db.Ext().Configure().ActivationDepth(1000);
+			// adding event
+			Node n = new Node();
 
-				foreach (OpenEvents idx in db.QueryByExample(new OpenEvents()))
-				{
-					if (evt == idx.Key)
-					{
-						db.Delete(idx);
-						break;
-					}
-				}
-				db.Commit();
-			}
+			n["prototype"]["event"].Value = evt;
+			n["prototype"]["type"].Value = "magix.execute.opened";
+
+			RaiseActiveEvent(
+				"magix.data.remove",
+				n);
+
 			ActiveEvents.Instance.RemoveRemotable(evt);
 		}
 

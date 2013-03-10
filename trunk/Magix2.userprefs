@@ -1,12 +1,25 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench ActiveDocument="Magix.events/EventCore.cs">
+    <Files>
+      <File FileName="Magix.events/EventCore.cs" Line="225" Column="26" />
+      <File FileName="Magix.data/DataCore.cs" Line="75" Column="1" />
+      <File FileName="Magix.core/Common/Node.cs" Line="548" Column="1" />
+    </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
-          <Node name="Core" expanded="True" />
+          <Node name="Core" expanded="True">
+            <Node name="Magix.Core" expanded="True">
+              <Node name="Common" expanded="True" />
+            </Node>
+          </Node>
           <Node name="Plugins" expanded="True">
-            <Node name="Magix.execute" selected="True" />
+            <Node name="Magix.data" expanded="True" />
+            <Node name="Magix.events" expanded="True">
+              <Node name="References" expanded="True" />
+              <Node name="EventCore.cs" selected="True" />
+            </Node>
           </Node>
           <Node name="Samples" expanded="True" />
           <Node name="Tests" expanded="True" />
@@ -17,17 +30,19 @@
       </Pad>
       <Pad Id="MonoDevelop.Debugger.WatchPad">
         <State>
-          <Value>left</Value>
-          <Value>right</Value>
+          <Value>tmp["magix.data.load"]["objects"]</Value>
         </State>
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
+    <BreakpointStore>
+      <Breakpoint file="/home/thomas/Projects/magix-illuminate-2/Magix.events/EventCore.cs" line="213" />
+    </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches>
     <Watch file="Magix.tests/ExecuteTest.cs" line="86" offsetX="650" offsetY="1185" expression="tmp" liveUpdate="False" />
     <Watch file="Magix.tests/ExecuteTest.cs" line="819" offsetX="246" offsetY="13158" expression="tmp" liveUpdate="False" />
+    <Watch file="Magix.events/EventCore.cs" line="219" offsetX="454" offsetY="3468" expression="caller" liveUpdate="False" />
   </MonoDevelop.Ide.DebuggingService.PinnedWatches>
 </Properties>
