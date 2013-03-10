@@ -8,7 +8,7 @@ them"
 
 magix.forms.create-web-page
   container=>header
-  html=>@"<h1>installed unit tests</h1>"
+  html=>@"<h1 class=""span9 offset3"">unit tests</h1>"
   form-id=>header
 magix.admin.get-active-events
   begins-with=>magix.test.
