@@ -25,19 +25,16 @@ namespace Magix.execute
 	 */
 	public class DataCore : ActiveController
 	{
-		private static string _dbFile = "store.db4o";
+		private static string _dbFile = "data-storage.db4o";
 
-		/**
-		 * Will remove the given "object" with the ID found in Value
-		 */
 		[ActiveEvent(Name = "magix.data.remove")]
 		public static void magix_data_remove(object sender, ActiveEventArgs e)
 		{
 			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
-				e.Params["event:magix.execute"].Value = null;
-				e.Params["remove"]["id"].Value = "object-id";
-				e.Params["inspect"].Value = @"removes the given [id] object from 
+				e.Params["event:magix.data.remove"].Value = null;
+				e.Params["id"].Value = "object-id";
+				e.Params["inspect"].Value = @"removes the given [id] or [prototype] object(s) from 
 your persistent data storage";
 				return;
 			}
@@ -46,117 +43,55 @@ your persistent data storage";
 			if (e.Params.Contains("_ip"))
 				ip = e.Params ["_ip"].Value as Node;
 
-			if (!e.Params.Contains("id") || string.IsNullOrEmpty(e.Params["id"].Get<string>()))
-				throw new ArgumentException("missing [id] while trying to remove object");
+
+			Node prototype = null;
+			if (ip.Contains("prototype"))
+				prototype = ip["prototype"];
+
+			if ((!e.Params.Contains("id") || string.IsNullOrEmpty(e.Params["id"].Get<string>())) && prototype == null)
+				throw new ArgumentException("missing [id] or [prototype] while trying to remove object");
 
 			lock (typeof(Node))
 			{
 				using (IObjectContainer db = Db4oFactory.OpenFile(_dbFile))
 				{
-					string key = ip["id"].Get<string>();
-					foreach (Storage idx in db.QueryByExample(new Storage(null, key)))
+					string id = ip["id"].Get<string>();
+					foreach (Storage idx in db.Ext().Query<Storage>(
+						delegate(Storage obj)
+						{
+							if (id != null)
+								return obj.Id == id;
+							else
+								return obj.Node.HasNodes(prototype);
+						}))
 					{
 						db.Delete(idx);
-						db.Commit();
 					}
+					db.Commit();
 				}
 			}
 		}
 
-		/**
-		 * Will save the given "object" with the given ID found in Value
-		 */
 		[ActiveEvent(Name = "magix.data.save")]
 		public static void magix_data_save(object sender, ActiveEventArgs e)
 		{
 			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
-				e.Params["save"]["id"].Value = "object-id";
-				e.Params["save"]["object"].Value = "object to save";
-				e.Params["save"]["object"]["message"].Value = "more object";
+				e.Params["event:magix.data.save"].Value = null;
+				e.Params["id"].Value = "object-id";
+				e.Params["object"]["value"].Value = "value of object";
 				e.Params["inspect"].Value = @"will serialize the given [object] with 
 the given [id] in the persistent data storage";
 				return;
 			}
 
-			Node value = null;
-			if (e.Params.Contains("object"))
-				value = e.Params["object"];
-			else
-				throw new ArgumentException("object must be defined before calling magix.data.save");
+			if (!e.Params.Contains("object"))
+				throw new ArgumentException("[object] must be defined for magix.data.save to actually save anything");
+
+			Node value = e.Params["object"].Clone();
 
 			if (!e.Params.Contains("id") || string.IsNullOrEmpty(e.Params["id"].Get<string>()))
 				throw new ArgumentException("missing [id] while trying to save object");
-
-			Node parent = value.Parent;
-			value.SetParent(null);
-
-			new DeterministicExecutor(
-			delegate
-				{
-					lock (typeof(Node))
-					{
-						using (IObjectContainer db = Db4oFactory.OpenFile(_dbFile))
-						{
-							db.Ext().Configure().UpdateDepth(1000);
-							db.Ext().Configure().ActivationDepth(1000);
-							string key = e.Params["id"].Get<string>();
-							bool found = false;
-							foreach (Storage idx in db.QueryByExample(new Storage(null, key)))
-							{
-								idx.Node = value;
-								db.Store(idx);
-								found = true;
-								break;
-							}
-							if (!found)
-							{
-								db.Store(new Storage(value, key));
-							}
-
-							db.Commit ();
-						}
-					}
-				},
-				delegate
-				{
-					value.SetParent(parent);
-				});
-		}
-
-		/**
-		 */
-		[ActiveEvent(Name = "magix.data.load")]
-		public static void magix_data_load(object sender, ActiveEventArgs e)
-		{
-			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
-			{
-				e.Params["event:magix.data.load"].Value = null;
-				e.Params["load"]["id"].Value = "object-id";
-				e.Params["load"]["prototype"].Value = "optional";
-				e.Params["inspect"].Value = @"loads the given [id] object, or 
-use [prototype] as filter.&nbsp;&nbsp;returns objects found as [objects], with 
-child nodes of [objects] being the matching objects.&nbsp;&nbsp;
-use [start] and [end] to fetch a specific cut of objects, [start] defaults 
-to 0 and [end] defaults to 10";
-				return;
-			}
-
-			Node prototype = null;
-			if (e.Params.Contains("prototype"))
-				prototype = e.Params["prototype"];
-
-			string key = null;
-			if (e.Params.Contains("id") && e.Params["id"].Value != null)
-				key = e.Params["id"].Get<string>();
-
-			int start = 0;
-			if (e.Params.Contains("start") && e.Params["start"].Value != null)
-				start = e.Params["start"].Get<int>();
-
-			int end = 10;
-			if (e.Params.Contains("end") && e.Params["end"].Value != null)
-				end = e.Params["end"].Get<int>();
 
 			lock (typeof(Node))
 			{
@@ -165,19 +100,81 @@ to 0 and [end] defaults to 10";
 					db.Ext().Configure().UpdateDepth(1000);
 					db.Ext().Configure().ActivationDepth(1000);
 
-					IList<Storage> objects = db.Ext().Query<Storage>(
+					string id = e.Params["id"].Get<string>();
+					bool found = false;
+
+					// checking to see if we should update existing object
+					foreach (Storage idx in db.QueryByExample(new Storage(null, id)))
+					{
+						idx.Node = value;
+						db.Store(idx);
+						found = true;
+						break;
+					}
+					if (!found)
+					{
+						db.Store(new Storage(value, id));
+					}
+					db.Commit ();
+				}
+			}
+		}
+
+		[ActiveEvent(Name = "magix.data.load")]
+		public static void magix_data_load(object sender, ActiveEventArgs e)
+		{
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			{
+				e.Params["event:magix.data.load"].Value = null;
+				e.Params["id"].Value = "object-id";
+				e.Params["inspect"].Value = @"loads the given [id] object, or 
+use [prototype] as filter.&nbsp;&nbsp;returns objects found as [objects], with 
+child nodes of [objects] being the matching objects.&nbsp;&nbsp;
+use [start] and [end] to fetch a specific slice of objects, [start] defaults 
+to 0 and [end] defaults to -1, which means all objects matching criteria.&nbsp;&nbsp;
+[start], [end] and [prototype] cannot be defined if [id] is given, since [id] is unique,
+and will make sure only one object is loaded";
+				return;
+			}
+
+			Node prototype = null;
+			if (e.Params.Contains("prototype"))
+				prototype = e.Params["prototype"];
+
+			string id = null;
+			if (e.Params.Contains("id") && e.Params["id"].Value != null)
+				id = e.Params["id"].Get<string>();
+
+			int start = 0;
+			if (e.Params.Contains("start") && e.Params["start"].Value != null)
+				start = e.Params["start"].Get<int>();
+
+			int end = -1;
+			if (e.Params.Contains("end") && e.Params["end"].Value != null)
+				end = e.Params["end"].Get<int>();
+
+			if (id != null && start != 0 && end != -1 && prototype != null)
+				throw new ArgumentException("if you supply an [id], then [start], [end] and [prototype] cannot be defined");
+
+			lock (typeof(Node))
+			{
+				using (IObjectContainer db = Db4oFactory.OpenFile(_dbFile))
+				{
+					db.Ext().Configure().UpdateDepth(1000);
+					db.Ext().Configure().ActivationDepth(1000);
+
+					int idxNo = 0;
+					foreach (Storage idx in db.Ext().Query<Storage>(
 						delegate(Storage obj)
 						{
-							if (key != null)
-								return obj.Key == key;
+							if (id != null)
+								return obj.Id == id;
 							else
 								return obj.Node.HasNodes(prototype);
-						});
-					int idxNo = 0;
-					foreach (Storage idx in objects)
+						}))
 					{
-						if (idxNo >= start && idxNo < end)
-							e.Params["objects"][idx.Key].ReplaceChildren(idx.Node);
+						if (idxNo >= start && (end == -1 || idxNo < end))
+							e.Params["objects"][idx.Id].ReplaceChildren(idx.Node);
 						idxNo++;
 					}
 				}
@@ -201,8 +198,8 @@ of objects in data storage as [count]";
 			{
 				using (IObjectContainer db = Db4oFactory.OpenFile(_dbFile))
 				{
-					db.Ext ().Configure ().UpdateDepth (1000);
-					db.Ext ().Configure ().ActivationDepth (1000);
+					db.Ext().Configure().UpdateDepth(1000);
+					db.Ext().Configure().ActivationDepth(1000);
 
 					// TODO: Refactor ...
 					e.Params["count"].Value = db.QueryByExample (new Storage(null, null)).Count;

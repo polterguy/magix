@@ -114,13 +114,13 @@ namespace Magix.Core
 		 */
 		public void ReplaceChildren (Node node)
 		{
-			Clear ();
+			Clear();
 			foreach (Node idx in node._children)
 			{
 				idx._parent = this;
-				this._children.Add (idx);
+				this._children.Add(idx);
 			}
-			node._children.Clear ();
+			node._children.Clear();
 		}
 
         /**
