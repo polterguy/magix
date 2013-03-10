@@ -1,4 +1,5 @@
-Method: magix.execute
+
+event:magix.execute
 
 inspect=>@"Demonstrates how to create code
 that creates code as it executes. Notice

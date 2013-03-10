@@ -10,4 +10,4 @@
 	runat="server"
 	id="lbl"
 	Tag="div"
-	CssClass="span-24 showgrid" />
+	CssClass="span12" />

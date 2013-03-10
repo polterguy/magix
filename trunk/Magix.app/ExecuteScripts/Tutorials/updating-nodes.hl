@@ -1,4 +1,5 @@
-Method: magix.execute
+
+event:magix.execute
 
 inspect=>@"Executes 5 different ""set"" operations
 with different types of syntax. Named nodes, index

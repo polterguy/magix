@@ -1,4 +1,5 @@
-Method: magix.execute
+
+event:magix.execute
 
 inspect=>@"A port of the famous Qt Address Book 
 example. Demonstrates how to dynamically create a event,

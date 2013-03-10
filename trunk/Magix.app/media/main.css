@@ -14,3 +14,9 @@
 {
 	font-family:monospace, Courier;
 }
+
+.code-grid
+{
+	background-image:url(images/av-background.png);
+	background-position:-9px 0px;
+}

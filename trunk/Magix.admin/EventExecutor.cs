@@ -34,10 +34,14 @@ namespace Magix.admin
 				e.Params["remoted"].Value = false;
 				e.Params["overridden"].Value = false;
 				e.Params["begins-with"].Value = "magix.execute.";
-				e.Params["inspect"].Value = @"returns all public active events registered 
+				e.Params["inspect"].Value = @"returns all active events 
 within the system.&nbsp;&nbsp;add [all], [open], [remoted], [overridden] 
 or [begins-with] to filter the events returned.&nbsp;&nbsp;active events 
-are returned in [events]";
+are returned in [events].&nbsp;&nbsp;by default, unit tests and active events starting with _
+as their name, will not be returned, unless [all] is true.&nbsp;&nbsp;
+if [all], [open], [remoted] or [overridden] is defined, it will return all events 
+fullfilling criteria, regardless of whether or not they are private events, tests or
+don't match the [begins-with] parameter";
 				return;
 			}
 
@@ -68,18 +72,19 @@ are returned in [events]";
 				if (open)
 				{
 					if (ActiveEvents.Instance.IsAllowedRemotely(idx))
-					{
 						node["events"]["no_" + idxNo.ToString()].Value = string.IsNullOrEmpty (idx) ? "" : idx;
-					}
 					continue;
 				}
 				if (remoted)
 				{
 					if (ActiveEvents.Instance.RemotelyOverriddenURL(idx) != null)
-					{
 						node["events"]["no_" + idxNo.ToString()].Value = string.IsNullOrEmpty (idx) ? "" : idx;
-					}
 					continue;
+				}
+				if (overridden)
+				{
+					if (ActiveEvents.Instance.IsOverride(idx))
+						node["events"]["no_" + idxNo.ToString()].Value = string.IsNullOrEmpty (idx) ? "" : idx;
 				}
 				if (!takeAll && string.IsNullOrEmpty(beginsWith) && idx.StartsWith("magix.test."))
 					continue;
@@ -94,24 +99,63 @@ are returned in [events]";
 				if (!string.IsNullOrEmpty(beginsWith) && !idx.StartsWith(beginsWith))
 					continue;
 
-				if (overridden)
-				{
-					if (ActiveEvents.Instance.IsOverride(idx))
-					{
-						node["events"]["no_" + idxNo.ToString()].Value = string.IsNullOrEmpty (idx) ? "" : idx;
-					}
-				}
-				else
-				{
-					node["events"]["no_" + idxNo.ToString()].Value = string.IsNullOrEmpty (idx) ? "" : idx;
-				}
+				node["events"]["no_" + idxNo.ToString()].Value = string.IsNullOrEmpty (idx) ? "" : idx;
 				idxNo += 1;
 			}
+
 			node["events"].Sort (
 				delegate(Node left, Node right)
 				{
 					return ((string)left.Value).CompareTo(right.Value as String);
 				});
+		}
+
+		/**
+		 * Loads the Active Event viewer in the given "container" Viewport Container.
+		 * The Active Event viewer allows you to see all events in the system, and also
+		 * execute arbitrary events with nodes as arguments
+		 */
+		[ActiveEvent(Name = "magix.admin.open-event-executor")]
+		public void magix_admin_open_event_executor(object sender, ActiveEventArgs e)
+		{
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			{
+				e.Params["event:magix.admin.open-even-executor"].Value = null;
+				e.Params["container"].Value = "content";
+				e.Params["inspect"].Value = @"opens the active event executor module 
+in [container] viewport container, defaulting being content";
+				return;
+			}
+
+			LoadModule(
+				"Magix.admin.ExecutorForm", 
+				e.Params["container"].Get<string>("content"));
+
+			RaiseActiveEvent(
+				"magix.execute._event-overridden");
+		}
+
+		/**
+		 * Opens up the Event Sniffer, which allows you to spy
+		 * on all events internally raised within the system
+		 */
+		[ActiveEvent(Name = "magix.admin.open-event-sniffer")]
+		public void magix_admin_open_event_sniffer(object sender, ActiveEventArgs e)
+		{
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			{
+				e.Params["inspect"].Value = @"will open active event sniffer, 
+allowing you to spy on all active events being raised in your system.&nbsp;&nbsp;
+[container] instructs magix which viewport container to load the module in.&nbsp;&nbsp;
+default container is header";
+				e.Params["event:magix.admin.open-event-sniffer"].Value = null;
+				e.Params["container"].Value = "content";
+				return;
+			}
+
+			LoadModule (
+				"Magix.admin.EventSniffer", 
+				e.Params["container"].Get<string>("header"));
 		}
 
 		/**
@@ -125,19 +169,19 @@ are returned in [events]";
 				e.Params.Clear();
 				e.Params["event:magix.admin.load-executor-code"].Value = null;
 				e.Params["inspect"].Value = @"loads active event executor module
-in [container] viewport with given [code] Value.&nbsp;&nbsp;code is expected to be 
-textually based node syntax";
+in content viewport, with given [code] Value.&nbsp;&nbsp;[code] is expected to be 
+textually based hyper lisp node syntax";
 				e.Params["code"].Value = @"
 event:magix.execute
-Data=>thomas
-if=>[Data].Value==thomas
+_data=>thomas
+if=>[_data].Value==thomas
   magix.viewport.show-message
     message=>howdy world";
 				return;
 			}
 
 			if (!e.Params.Contains("code"))
-				throw new ArgumentException("Cannot load-executor-code without code");
+				throw new ArgumentException("cannot raise load-executor-code without [code] being hyper lisp");
 
 			Node node = new Node();
 			node["container"].Value = "content";
@@ -155,53 +199,6 @@ if=>[Data].Value==thomas
 		}
 
 		/**
-		 * Opens up the Event Sniffer, which allows you to spy
-		 * on all events internally raised within the system
-		 */
-		[ActiveEvent(Name = "magix.admin.open-event-sniffer")]
-		public void magix_admin_open_event_sniffer(object sender, ActiveEventArgs e)
-		{
-			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
-			{
-				e.Params["inspect"].Value = @"will open active event sniffer, 
-allowing you to spy on all active events being raised in your system.&nbsp;&nbsp;
-[container] instructs magix which viewport container to load the module in";
-				e.Params["event:magix.admin.open-event-sniffer"].Value = null;
-				e.Params["container"].Value = "content";
-				return;
-			}
-
-			LoadModule (
-				"Magix.admin.EventSniffer", 
-				e.Params["container"].Get<string>());
-		}
-
-		/**
-		 * Loads the Active Event viewer in the given "container" Viewport Container.
-		 * The Active Event viewer allows you to see all events in the system, and also
-		 * execute arbitrary events with nodes as arguments
-		 */
-		[ActiveEvent(Name = "magix.admin.open-event-executor")]
-		public void magix_admin_open_event_executor(object sender, ActiveEventArgs e)
-		{
-			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
-			{
-				e.Params["event:magix.admin.open-even-executor"].Value = null;
-				e.Params["container"].Value = "content";
-				e.Params["inspect"].Value = @"opens the active event executor module 
-in [container] viewport";
-				return;
-			}
-
-			LoadModule(
-				"Magix.admin.ExecutorForm", 
-				e.Params["container"].Get<string>());
-
-			RaiseActiveEvent(
-				"magix.execute._event-overridden");
-		}
-
-		/**
 		 * executes the given hyper lisp file
 		 */
 		[ActiveEvent(Name = "magix.admin.run-file")]
@@ -210,7 +207,8 @@ in [container] viewport";
 			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
 				e.Params["inspect"].Value = @"runs the hyper lisp [file] given, and 
-tries to load up the code into the active event executor";
+tries to load up the code into the active event executor - if the active 
+event executor is active in any viewport containers";
 				e.Params["event:magix.admin.run-file"].Value = null;
 				e.Params["file"].Value = "ExecuteScripts/Applications/address-book.hl";
 				return;
@@ -237,7 +235,7 @@ tries to load up the code into the active event executor";
 
 			string wholeTxt = txt.TrimStart();
 			string method = "";
-			if (wholeTxt.StartsWith("Method:") || wholeTxt.StartsWith("event:"))
+			if (wholeTxt.StartsWith("event:"))
 			{
 				method = wholeTxt.Split (':')[1];
 				method = method.Substring(0, method.Contains("\n") ? method.IndexOf("\n") : method.Length);
@@ -266,7 +264,8 @@ tries to load up the code into the active event executor";
 		{
 			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
-				e.Params["inspect"].Value = @"runs the [script] given";
+				e.Params["inspect"].Value = @"runs the [script] given, and sets the 
+active event executor to the hyper lisp code given in [script]";
 				e.Params["event:magix.admin.run-script"].Value = null;
 				e.Params["script"].Value =  @"
 event:magix.execute
@@ -278,13 +277,13 @@ if=>[_data].Value==thomas
 			}
 
 			if (!e.Params.Contains ("script") || e.Params["script"].Get<string>("") == "")
-				throw new ArgumentException("need script object");
+				throw new ArgumentException("need [script] node for magix.admin.run-script");
 
 			string txt = e.Params["script"].Get<string>();
 
 			string wholeTxt = txt.TrimStart();
 			string method = "";
-			if (wholeTxt.StartsWith("Method:") || wholeTxt.StartsWith("event:"))
+			if (wholeTxt.StartsWith("event:"))
 			{
 				method = wholeTxt.Split (':')[1];
 				method = method.Substring(0, method.Contains("\n") ? method.IndexOf("\n") : method.Length);

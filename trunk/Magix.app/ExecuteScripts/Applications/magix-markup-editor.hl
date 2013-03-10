@@ -1,3 +1,4 @@
+
 event:magix.execute
 
 inspect=>@"creates a text box, where you can type in magix
