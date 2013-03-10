@@ -1,4 +1,5 @@
-Method:magix.execute
+
+event:magix.execute
 
 inspect=>@"Demonstrates how to create a 'null Event Handler',
 which will handle almost every event in your system. Useful

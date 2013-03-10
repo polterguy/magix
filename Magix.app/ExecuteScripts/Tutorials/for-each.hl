@@ -1,4 +1,5 @@
-Method: magix.execute
+
+event:magix.execute
 
 inspect=>@"Demonstrates how the [.] and [.ip]
 pointers works in regards to ""for-each"" statements."

@@ -1,4 +1,5 @@
-Method:magix.execute
+
+event:magix.execute
 
 inspect=>@"Loops through a list of
 messages to show to end user, removing

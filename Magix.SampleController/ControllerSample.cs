@@ -37,7 +37,7 @@ or refreshed";
 			Node tmp = new Node();
 
 			tmp["form-id"].Value = "header";
-			tmp["html"].Value = "<h1>active event executor</h1>";
+			tmp["html"].Value = "<h1 class=\"span9 offset3\">active event executor</h1>";
 			tmp["container"].Value = "header";
 
 			RaiseActiveEvent(

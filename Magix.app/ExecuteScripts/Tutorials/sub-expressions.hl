@@ -1,4 +1,5 @@
-Method: magix.execute
+
+event:magix.execute
 
 inspect=>@"Demonstrates how sub-expressions
 works. You can nest as many sub-expressions as you wish,

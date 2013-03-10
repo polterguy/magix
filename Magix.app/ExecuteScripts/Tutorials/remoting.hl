@@ -1,4 +1,5 @@
-Method:magix.execute
+
+event:magix.execute
 
 inspect=>@"Shows how to call, and create, an event 
 on a remote server"

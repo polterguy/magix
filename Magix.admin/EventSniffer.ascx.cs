@@ -51,9 +51,9 @@ namespace Magix.admin
 				RaiseEvent(
 					"magix.code.node-2-code",
 					tmp);
-				code = "<pre>" + tmp["code"].Get<string>() + "</pre>";
+				code = "<pre class=\"span12\">" + tmp["code"].Get<string>() + "</pre>";
 			}
-			lbl.Text += "<label>" + e.Name + "</label>" + code;
+			lbl.Text += "<h5>" + e.Name + "</h5>" + code;
 		}
 	}
 }

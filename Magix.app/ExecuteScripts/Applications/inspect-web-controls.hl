@@ -1,4 +1,5 @@
-Method:magix.execute
+
+event:magix.execute
 
 inspect=>@"Will show a screen of all the 
 web controls in the system, and allow

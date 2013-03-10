@@ -1,4 +1,5 @@
-Method: magix.execute
+
+event:magix.execute
 
 inspect=>@"Demonstrates how to create one
 new dynamic Active Event called ""foo.bar"", and invoke it."

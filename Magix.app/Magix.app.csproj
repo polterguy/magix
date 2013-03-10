@@ -59,6 +59,7 @@
     <Content Include="media\images\help-files\mux.png" />
     <Content Include="media\images\help-files\new-project.png" />
     <Content Include="media\main.css" />
+    <Content Include="media\images\av-background.png" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Global.asax.cs">

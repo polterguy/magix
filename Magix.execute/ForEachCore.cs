@@ -38,7 +38,6 @@ namespace Magix.execute
 				e.Params["for-each"].Value = "[_data][items]";
 				e.Params["for-each"]["set"].Value = "[/][for-each][magix.viewport.show-message][message].Value";
 				e.Params["for-each"]["set"]["value"].Value = "[.].Value";
-				e.Params["for-each"]["magix.viewport.show-message"].Value = null;
 				e.Params["inspect"].Value = @"loops through all the nodes
 in the given node-list expression, setting the 
 data-pointer to the currently processed item.&nbsp;&nbsp;
@@ -73,7 +72,7 @@ the currently iterated node";
 						tmp2);
 
 					// Checking to see if we need to halt execution
-					if (ip["_state"].Get<string>() == "stop")
+					if (ip.Contains("_state") && ip["_state"].Get<string>() == "stop")
 						break;
 				}
 			}

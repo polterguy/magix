@@ -1,4 +1,5 @@
-Method: magix.execute
+
+event:magix.execute
 
 inspect=>@"Demonstrates how to remove a specific Node
 from the node hierarchy."

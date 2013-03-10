@@ -11,8 +11,8 @@
 		runat="server"
 		id="txtIn"
 		Rows="12"
-		PlaceHolder="Input Nodes ..."
-		CssClass="span9 input-block-level monospaced" />
+		PlaceHolder="input nodes ..."
+		CssClass="span9 input-block-level monospaced code-grid" />
 	<mux:Panel
 		runat="server"
 		ID="exeWrp"
@@ -22,7 +22,7 @@
 			id="activeEvent"
 			runat="server"
 			type="text"
-			placeholder="Active Event ..."
+			placeholder="active event ..."
 			class="span5 monospaced"
 			data-provide="typeahead" 
 			data-items="10" 
@@ -46,6 +46,6 @@
 		runat="server"
 		id="txtOut"
 		Rows="8"
-		PlaceHolder="Output Nodes ..."
+		PlaceHolder="output nodes ..."
 		CssClass="span9 input-block-level monospaced" />
 </div>

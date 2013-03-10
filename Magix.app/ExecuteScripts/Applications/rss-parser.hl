@@ -1,3 +1,4 @@
+
 event:magix.execute
 
 inspect=>@"loads an rss file from ajaxian.com, and displays it"
