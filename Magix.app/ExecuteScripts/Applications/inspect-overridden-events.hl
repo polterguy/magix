@@ -8,7 +8,7 @@ them"
 
 magix.forms.create-web-page
   container=>header
-  html=>@"<h1>remotely overridden active events</h1>"
+  html=>@"<h1 class=""span9 offset3"">overridden active events</h1>"
   form-id=>header
 magix.admin.get-active-events
   overridden=>True

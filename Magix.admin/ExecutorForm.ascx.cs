@@ -34,6 +34,17 @@ namespace Magix.admin
 		protected Button run;
 		protected System.Web.UI.HtmlControls.HtmlInputText activeEvent;
 
+		public override void InitialLoading (Node node)
+		{
+			base.InitialLoading (node);
+
+			Load += delegate
+			{
+				if (node.Contains("grid") && node["grid"].Get<bool>())
+					txtIn.CssClass += " code-grid";
+			};
+		}
+
 		protected void Page_Load (object sender, EventArgs e)
 		{
 			if (this.FirstLoad)

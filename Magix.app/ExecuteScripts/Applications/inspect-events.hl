@@ -8,7 +8,7 @@ them"
 
 magix.forms.create-web-page
   container=>header
-  html=>@"<h1>open active events</h1>"
+  html=>@"<h1 class=""span9 offset3"">all active events</h1>"
   form-id=>header
 magix.admin.get-active-events
   all=>True

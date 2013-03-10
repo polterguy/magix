@@ -12,7 +12,7 @@
 		id="txtIn"
 		Rows="12"
 		PlaceHolder="input nodes ..."
-		CssClass="span9 input-block-level monospaced code-grid" />
+		CssClass="span9 input-block-level monospaced" />
 	<mux:Panel
 		runat="server"
 		ID="exeWrp"
