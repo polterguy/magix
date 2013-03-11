@@ -7,6 +7,7 @@
 using System;
 using System.IO;
 using System.Threading;
+using System.Collections.Generic;
 using Magix.Core;
 
 namespace Magix.threading
@@ -16,6 +17,8 @@ namespace Magix.threading
 	 */
 	public class ExecuteCore : ActiveController
 	{
+		private Stack<object> stack = new Stack<object>();
+
 		/**
 		 * Spawns a new thread which the given
 		 * code block will be executed within. Useful for long operations, 
@@ -23,7 +26,7 @@ namespace Magix.threading
 		 * finished
 		 */
 		[ActiveEvent(Name = "magix.execute.fork")]
-		public static void magix_execute_fork(object sender, ActiveEventArgs e)
+		public void magix_execute_fork(object sender, ActiveEventArgs e)
 		{
 			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
@@ -60,36 +63,73 @@ thread will not change any data on the original node-set";
 			thread.Start(node);
 		}
 
-		private static void ExecuteThread(object input)
+		private void ExecuteThread(object input)
 		{
-			Node node = input as Node;
+			lock (stack)
+				stack.Push(typeof(Thread));
 
-			RaiseActiveEvent(
-				"magix.execute",
-				node);
+			try
+			{
+				Node node = input as Node;
+
+				RaiseActiveEvent(
+					"magix.execute",
+					node);
+			}
+			finally
+			{
+				lock (stack)
+				{
+					object tmp = stack.Pop();
+
+					if (stack.Count > 0 && stack.Peek() is ManualResetEvent)
+					{
+						// signaling to release wait object
+						ManualResetEvent evt = stack.Pop() as ManualResetEvent;
+						evt.Set();
+					}
+				}
+			}
 		}
 
-		// TODO: Do we really NEED this one, or would "wait" keyword be enough ...?
 		/**
 		 * Sleeps the current thread for "time" milliseconds
 		 */
-		[ActiveEvent(Name = "magix.execute.sleep")]
-		public static void magix_execute_sleep(object sender, ActiveEventArgs e)
+		[ActiveEvent(Name = "magix.execute.wait")]
+		public void magix_execute_wait(object sender, ActiveEventArgs e)
 		{
 			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
 				e.Params["event:magix.execute"].Value = null;
-				e.Params["sleep"].Value = 500;
-				e.Params["inspect"].Value = @"sleeps the current threat
-for value number of milliseconds.";
+				e.Params["wait"].Value = null;
+				e.Params["inspect"].Value = @"will wait for multiple treads to finish.&nbsp;&nbsp;
+all [fork] blocks created underneath a [wait], will have to be finished, before the 
+execution will leave the [wait] block";
 				return;
 			}
 
+			ManualResetEvent evt = new ManualResetEvent(false);
+
+			stack.Push(evt);
+
 			Node ip = e.Params;
 			if (e.Params.Contains("_ip"))
-				ip = e.Params["_ip"].Value as Node;
+				ip = e.Params ["_ip"].Value as Node;
 
-			Thread.Sleep(ip.Get<int>());
+			Node dp = e.Params;
+			if (e.Params.Contains("_dp"))
+				dp = e.Params ["_dp"].Value as Node;
+
+			Node node = new Node();
+
+			node["_ip"].Value = ip.Clone();
+			node["_dp"].Value = dp.Clone();
+
+			RaiseActiveEvent(
+				"magix.execute",
+				node);
+
+			evt.WaitOne();
 		}
 	}
 }
