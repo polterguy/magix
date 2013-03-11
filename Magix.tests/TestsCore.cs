@@ -108,7 +108,7 @@ that failed";
 
 				Node node = new Node();
 
-				node["message"].Value = "FAILED!!! While executing '" + lastTest + "', we got; '" + err.Message + "'";
+				node["message"].Value = "failed!<br />while executing '" + lastTest + "', we got; '" + err.Message + "'";
 				node["color"].Value = "Red";
 				node["time"].Value = 30000;
 
