@@ -432,6 +432,37 @@ namespace Magix.Core
         }
 
         /**
+         * Returns the n'th node, with the given Name. If that node doesn't exist
+         * a new node will be created with the given name and appended into the
+         * Children collection and then be returned. Please notice that this
+         * method CREATES NODES during DE-REFERENCING. And it is its INTENT TOO! ;)
+         */
+        public Node this[string name, int n]
+        {
+            get
+            {
+				int idxNo = 0;
+                Node retVal = _children.Find(
+                    delegate(Node idx)
+                    {
+						if (idx.Name == name)
+						{
+							if (idxNo == n)
+								return true;
+							idxNo ++;
+						}
+						return false;
+                    });
+                if (retVal == null)
+                {
+                    retVal = new Node(name, null, this);
+                    _children.Add(retVal);
+                }
+                return retVal;
+            }
+        }
+
+        /**
          * Returns the index of the given item, if it exists within the children
          * collection. Otherwise it returns -1
          */

@@ -57,45 +57,28 @@ by using magix.data.load and magix.data.save to signal between threads for succe
 		{
 			Node tmp = new Node();
 
-			tmp["magix.data.remove1"]["id"].Value = "fork-test-buffer-object1";
-			tmp["magix.data.remove2"]["id"].Value = "fork-test-buffer-object2";
-			tmp["magix.data.remove3"]["id"].Value = "fork-test-buffer-object3";
-			tmp["magix.data.remove4"]["id"].Value = "fork-test-buffer-object4";
-			tmp["magix.data.remove5"]["id"].Value = "fork-test-buffer-object5";
-			tmp["magix.data.remove1"].Name = "magix.data.remove";
-			tmp["magix.data.remove2"].Name = "magix.data.remove";
-			tmp["magix.data.remove3"].Name = "magix.data.remove";
-			tmp["magix.data.remove4"].Name = "magix.data.remove";
-			tmp["magix.data.remove5"].Name = "magix.data.remove";
+			tmp["magix.data.remove", 0]["id"].Value = "fork-test-buffer-object1";
+			tmp["magix.data.remove", 1]["id"].Value = "fork-test-buffer-object2";
+			tmp["magix.data.remove", 2]["id"].Value = "fork-test-buffer-object3";
+			tmp["magix.data.remove", 3]["id"].Value = "fork-test-buffer-object4";
+			tmp["magix.data.remove", 4]["id"].Value = "fork-test-buffer-object5";
 
-			tmp["wait"].Value = null;
-			tmp["wait"]["fork1"]["magix.data.save"]["id"].Value = "fork-test-buffer-object1";
-			tmp["wait"]["fork1"]["magix.data.save"]["object"]["value"].Value = "thomas1";
-			tmp["wait"]["fork2"]["magix.data.save"]["id"].Value = "fork-test-buffer-object2";
-			tmp["wait"]["fork2"]["magix.data.save"]["object"]["value"].Value = "thomas2";
-			tmp["wait"]["fork3"]["magix.data.save"]["id"].Value = "fork-test-buffer-object3";
-			tmp["wait"]["fork3"]["magix.data.save"]["object"]["value"].Value = "thomas3";
-			tmp["wait"]["fork4"]["magix.data.save"]["id"].Value = "fork-test-buffer-object4";
-			tmp["wait"]["fork4"]["magix.data.save"]["object"]["value"].Value = "thomas4";
-			tmp["wait"]["fork5"]["magix.data.save"]["id"].Value = "fork-test-buffer-object5";
-			tmp["wait"]["fork5"]["magix.data.save"]["object"]["value"].Value = "thomas5";
-			tmp["wait"]["fork1"].Name = "fork";
-			tmp["wait"]["fork2"].Name = "fork";
-			tmp["wait"]["fork3"].Name = "fork";
-			tmp["wait"]["fork4"].Name = "fork";
-			tmp["wait"]["fork5"].Name = "fork";
+			tmp["wait"]["fork", 0]["magix.data.save"]["id"].Value = "fork-test-buffer-object1";
+			tmp["wait"]["fork", 0]["magix.data.save"]["object"]["value"].Value = "thomas1";
+			tmp["wait"]["fork", 1]["magix.data.save"]["id"].Value = "fork-test-buffer-object2";
+			tmp["wait"]["fork", 1]["magix.data.save"]["object"]["value"].Value = "thomas2";
+			tmp["wait"]["fork", 2]["magix.data.save"]["id"].Value = "fork-test-buffer-object3";
+			tmp["wait"]["fork", 2]["magix.data.save"]["object"]["value"].Value = "thomas3";
+			tmp["wait"]["fork", 3]["magix.data.save"]["id"].Value = "fork-test-buffer-object4";
+			tmp["wait"]["fork", 3]["magix.data.save"]["object"]["value"].Value = "thomas4";
+			tmp["wait"]["fork", 4]["magix.data.save"]["id"].Value = "fork-test-buffer-object5";
+			tmp["wait"]["fork", 4]["magix.data.save"]["object"]["value"].Value = "thomas5";
 
-			tmp["magix.data.load1"]["id"].Value = "fork-test-buffer-object1";
-			tmp["magix.data.load2"]["id"].Value = "fork-test-buffer-object2";
-			tmp["magix.data.load3"]["id"].Value = "fork-test-buffer-object3";
-			tmp["magix.data.load4"]["id"].Value = "fork-test-buffer-object4";
-			tmp["magix.data.load5"]["id"].Value = "fork-test-buffer-object5";
-
-			tmp["magix.data.load1"].Name = "magix.data.load";
-			tmp["magix.data.load2"].Name = "magix.data.load";
-			tmp["magix.data.load3"].Name = "magix.data.load";
-			tmp["magix.data.load4"].Name = "magix.data.load";
-			tmp["magix.data.load5"].Name = "magix.data.load";
+			tmp["magix.data.load", 0]["id"].Value = "fork-test-buffer-object1";
+			tmp["magix.data.load", 1]["id"].Value = "fork-test-buffer-object2";
+			tmp["magix.data.load", 2]["id"].Value = "fork-test-buffer-object3";
+			tmp["magix.data.load", 3]["id"].Value = "fork-test-buffer-object4";
+			tmp["magix.data.load", 4]["id"].Value = "fork-test-buffer-object5";
 
 			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{

@@ -29,7 +29,7 @@ namespace Magix.tests
 			tmp["remote"]["url"].Value = "http://127.0.0.1:8080";
 			tmp["remote"].Value = "foo.bar";
 			tmp["remote"]["_name"].Value = "thomas";
-			tmp.Add (new Node("event", "foo.bar"));
+			tmp.Add(new Node("event", "foo.bar"));
 
 			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{

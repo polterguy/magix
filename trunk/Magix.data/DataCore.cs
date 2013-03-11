@@ -81,7 +81,8 @@ your persistent data storage";
 				e.Params["id"].Value = "object-id";
 				e.Params["object"]["value"].Value = "value of object";
 				e.Params["inspect"].Value = @"will serialize the given [object] with 
-the given [id] in the persistent data storage";
+the given [id] in the persistent data storage.&nbsp;&nbsp;if no [id] is given, 
+a global unique identifier will be automatically assigned to the object";
 				return;
 			}
 
@@ -90,9 +91,6 @@ the given [id] in the persistent data storage";
 
 			Node value = e.Params["object"].Clone();
 
-			if (!e.Params.Contains("id") || string.IsNullOrEmpty(e.Params["id"].Get<string>()))
-				throw new ArgumentException("missing [id] while trying to save object");
-
 			lock (typeof(Node))
 			{
 				using (IObjectContainer db = Db4oFactory.OpenFile(_dbFile))
@@ -100,7 +98,9 @@ the given [id] in the persistent data storage";
 					db.Ext().Configure().UpdateDepth(1000);
 					db.Ext().Configure().ActivationDepth(1000);
 
-					string id = e.Params["id"].Get<string>();
+					string id = e.Params.Contains("id") ? 
+						e.Params["id"].Get<string>() : 
+						Guid.NewGuid().ToString();
 					bool found = false;
 
 					// checking to see if we should update existing object
