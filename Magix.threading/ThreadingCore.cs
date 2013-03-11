@@ -41,7 +41,10 @@ where you'd like to return to caller, before the operation is
 finished.&nbsp;&nbsp;the entire node-list underneath the [fork]
 keyword, will be cloned, and passed into the magix.execute.fork active event,
 for execution on a different thread.&nbsp;&nbsp;the forked
-thread will not change any data on the original node-set";
+thread will not change any data on the original node set.&nbsp;&nbsp;
+if the value of [fork] is true, the new thread will be executed 
+as a fire-and-forget thread, bypassing any [wait] statements you 
+might have";
 				return;
 			}
 
@@ -59,19 +62,26 @@ thread will not change any data on the original node-set";
 			node["_ip"].Value = ip.Clone();
 			node["_dp"].Value = dp.Clone();
 
-			Thread thread = new Thread(ExecuteThread);
-			thread.Start(node);
+			if (ip.Get<bool>(false))
+			{
+				Thread thread = new Thread(ExecuteThreadForget);
+				thread.Start(node);
+			}
+			else
+			{
+				Thread thread = new Thread(ExecuteThread);
+				thread.Start(node);
+			}
 		}
 
 		private void ExecuteThread(object input)
 		{
+			Node node = input as Node;
+
 			lock (stack)
 				stack.Push(typeof(Thread));
-
 			try
 			{
-				Node node = input as Node;
-
 				RaiseActiveEvent(
 					"magix.execute",
 					node);
@@ -92,6 +102,15 @@ thread will not change any data on the original node-set";
 			}
 		}
 
+		private void ExecuteThreadForget(object input)
+		{
+			Node node = input as Node;
+
+			RaiseActiveEvent(
+				"magix.execute",
+				node);
+		}
+
 		/**
 		 * Sleeps the current thread for "time" milliseconds
 		 */
@@ -103,8 +122,9 @@ thread will not change any data on the original node-set";
 				e.Params["event:magix.execute"].Value = null;
 				e.Params["wait"].Value = null;
 				e.Params["inspect"].Value = @"will wait for multiple treads to finish.&nbsp;&nbsp;
-all [fork] blocks created underneath a [wait], will have to be finished, before the 
-execution will leave the [wait] block";
+all [fork] blocks created underneath [wait], will have to be finished, before the 
+execution will leave the [wait] block.&nbsp;&nbsp;you can optionally set a maximum number 
+of milliseconds, before the wait is dismissed as an integer value of [set]";
 				return;
 			}
 
@@ -121,6 +141,8 @@ execution will leave the [wait] block";
 			node["_ip"].Value = ip.Clone();
 			node["_dp"].Value = dp.Clone();
 
+			int milliseconds = ip.Get<int>(-1);
+
 			ManualResetEvent evt = new ManualResetEvent(false);
 
 			lock (stack)
@@ -131,7 +153,10 @@ execution will leave the [wait] block";
 					"magix.execute",
 					node);
 
-				evt.WaitOne();
+				if (milliseconds != -1)
+					evt.WaitOne(milliseconds);
+				else
+					evt.WaitOne();
 			}
 			finally
 			{
