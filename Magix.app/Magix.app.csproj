@@ -178,6 +178,14 @@
       <Project>{C47C4AB9-BE13-48F0-81FB-830A83482815}</Project>
       <Name>Magix.node</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Magix.log\Magix.log.csproj">
+      <Project>{15893CBD-D0DD-47DF-8083-7B33E0DAAFF6}</Project>
+      <Name>Magix.log</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Magix.log.tests\Magix.log.tests.csproj">
+      <Project>{30E34A65-909F-40A6-B366-0158426A4DE2}</Project>
+      <Name>Magix.log.tests</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="web.config" />
