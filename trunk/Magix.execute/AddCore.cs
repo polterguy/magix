@@ -20,7 +20,7 @@ namespace Magix.execute
 		[ActiveEvent(Name = "magix.execute.add")]
 		public static void magix_execute_add(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			if (ShouldInspect(e.Params))
 			{
 				e.Params["event:magix.execute"].Value = null;
 				e.Params["inspect"].Value = @"creates a copy of the node returned by the 

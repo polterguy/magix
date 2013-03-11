@@ -19,6 +19,14 @@ namespace Magix.Core
     [ActiveController]
 	public abstract class ActiveController
     {
+		/**
+		 * return true if we are supposed to inspect the active event, and not execute it
+		 */
+		protected static bool ShouldInspect(Node node)
+		{
+			return node.Contains("inspect") && node["inspect"].Value == null;
+		}
+
         /**
          * Loads the given module and puts it into your default container
          */

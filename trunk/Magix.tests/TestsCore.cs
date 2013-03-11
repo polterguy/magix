@@ -19,14 +19,14 @@ namespace Magix.tests
 		 * Will run all Unit Tests in the system
 		 */
 		[ActiveEvent(Name = "magix.tests.run")]
-		public void magix_tests_run(object sender, ActiveEventArgs e)
+		public static void magix_tests_run(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			if (ShouldInspect(e.Params))
 			{
 				e.Params["inspect"].Value = @"will raise all active events that
 start with 'magix.test.', and treat them as unit tests.&nbsp;&nbsp;
 if some parts of the active event throws 
-an exception, then the test will be considered 'failing', and
+an exception, then the test will be considered failing, and
 a red message box will show.&nbsp;&nbsp;if no test fails, the message box 
 will be green, and it will show the number of tests which have 
 been running.&nbsp;&nbsp;to create a new unit test, create an active event 

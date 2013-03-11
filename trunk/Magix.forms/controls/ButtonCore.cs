@@ -21,7 +21,7 @@ namespace Magix.forms
 		[ActiveEvent(Name = "magix.forms.controls.button")]
 		public void magix_forms_controls_button(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			if (ShouldInspect(e.Params))
 			{
 				Inspect(e.Params);
 				return;

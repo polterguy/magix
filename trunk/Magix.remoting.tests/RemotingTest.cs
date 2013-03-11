@@ -18,7 +18,7 @@ namespace Magix.tests
 		 * Tests to see if create "event", and invoking it later, works
 		 */
 		[ActiveEvent(Name = "magix.test.remoting.passing-parameters")]
-		public void magix_test_remoting_passing_parameters(object sender, ActiveEventArgs e)
+		public static void magix_test_remoting_passing_parameters(object sender, ActiveEventArgs e)
 		{
 			Node tmp = new Node();
 
@@ -31,7 +31,7 @@ namespace Magix.tests
 			tmp["remote"]["_name"].Value = "thomas";
 			tmp.Add(new Node("event", "foo.bar"));
 
-			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			if (ShouldInspect(e.Params))
 			{
 				e.Params.Clear();
 				e.Params["event:magix.execute"].Value = null;
@@ -56,7 +56,7 @@ of a remotely activated active event behaves correctly";
 		 * Tests to see if create default "event", and invoking it later remotely, throws
 		 */
 		[ActiveEvent(Name = "magix.test.remoting.default-is-closed")]
-		public void magix_test_remoting_default_is_closed(object sender, ActiveEventArgs e)
+		public static void magix_test_remoting_default_is_closed(object sender, ActiveEventArgs e)
 		{
 			Node tmp = new Node();
 
@@ -66,7 +66,7 @@ of a remotely activated active event behaves correctly";
 			tmp["remote"]["event"].Value = "foo.bar";
 			tmp.Add (new Node("event", "foo.bar"));
 
-			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			if (ShouldInspect(e.Params))
 			{
 				e.Params.Clear();
 				e.Params["event:magix.execute"].Value = null;

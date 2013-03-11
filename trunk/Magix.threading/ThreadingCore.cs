@@ -15,7 +15,7 @@ namespace Magix.threading
 	/**
 	 * Contains logic for creating and manipulating new system threads, aka; Forks
 	 */
-	public class ExecuteCore : ActiveController
+	public class ThreadingCore : ActiveController
 	{
 		private Stack<object> stack = new Stack<object>();
 
@@ -28,7 +28,7 @@ namespace Magix.threading
 		[ActiveEvent(Name = "magix.execute.fork")]
 		public void magix_execute_fork(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			if (ShouldInspect(e.Params))
 			{
 				e.Params["event:magix.execute"].Value = null;
 				e.Params["fork"]["_data"]["value"].Value = "thomas";
@@ -117,7 +117,7 @@ might have";
 		[ActiveEvent(Name = "magix.execute.wait")]
 		public void magix_execute_wait(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			if (ShouldInspect(e.Params))
 			{
 				e.Params["event:magix.execute"].Value = null;
 				e.Params["wait"].Value = null;

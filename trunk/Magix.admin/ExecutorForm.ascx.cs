@@ -124,40 +124,6 @@ if=>[Data].Value==thomas
 			txtIn.Text = e.Params["code"].Get<string>();
 		}
 
-		/**
-		 * Called by Magix.Core when an event is overridden. Handled here to make
-		 * sure we re-retrieve the active events in the system, and rebinds our
-		 * list of active events
-		 */
-		[ActiveEvent(Name = "magix.execute._event-overridden")]
-		public void magix_execute__event_overridden(object sender, ActiveEventArgs e)
-		{
-			// TODO: Make a Panel wrapper around input field, such that ReRender
-			// can be called, to re-databind the events ...
-			Node node = new Node();
-
-			RaiseEvent(
-				"magix.admin.get-active-events", 
-				node);
-		}
-
-		/**
-		 * Called by Magix.Core when an event override is removed. Handled here to make
-		 * sure we re-retrieve the active events in the system, and rebinds our
-		 * list of active events
-		 */
-		[ActiveEvent(Name = "magix.execute._event-override-removed")]
-		public void magix_execute__event_override_removed(object sender, ActiveEventArgs e)
-		{
-			// TODO: Make a Panel wrapper around input field, such that ReRender
-			// can be called, to re-databind the events ...
-			Node node = new Node();
-
-			RaiseEvent(
-				"magix.admin.get-active-events", 
-				node);
-		}
-
 		protected void move_Click(object sender, EventArgs e)
 		{
 			txtIn.Text = txtOut.Text;

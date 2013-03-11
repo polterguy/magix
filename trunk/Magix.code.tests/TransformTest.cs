@@ -19,7 +19,7 @@ namespace Magix.tests
 		 * back again, can re-create the original Node-List, also with different types
 		 */
 		[ActiveEvent(Name = "magix.test.code.node-2-code")]
-		public void magix_test_code_code_2_node(object sender, ActiveEventArgs e)
+		public static void magix_test_code_code_2_node(object sender, ActiveEventArgs e)
 		{
 			Node tmp = new Node();
 
@@ -41,7 +41,7 @@ sadfpijsdfpijsdfpoijsdafopijsdfoij""";
 THOMAS""""""""";
 			tmp["expr"]["deep"]["deep1"]["deep2"].Value = @"[tjobing]";
 
-			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			if (ShouldInspect(e.Params))
 			{
 				e.Params.Clear();
 				e.Params["event:magix.execute"].Value = null;

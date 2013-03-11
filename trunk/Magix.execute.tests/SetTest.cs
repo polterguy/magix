@@ -18,7 +18,7 @@ namespace Magix.tests
 		 * Tests to see if "set", works with Node-Lists
 		 */
 		[ActiveEvent(Name = "magix.test.execute.set-node-list")]
-		public void magix_test_execute_set_node_list(object sender, ActiveEventArgs e)
+		public static void magix_test_execute_set_node_list(object sender, ActiveEventArgs e)
 		{
 			Node tmp = new Node();
 
@@ -34,7 +34,7 @@ hello ""hello"" hello ....";
 			tmp["set"].Value = "[_buffer][copy]";
 			tmp["set"]["value"].Value = "[_data]";
 
-			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			if (ShouldInspect(e.Params))
 			{
 				e.Params.Clear();
 				e.Params["event:magix.execute"].Value = null;
@@ -67,7 +67,7 @@ the original correctly, and the new list is an exact replica";
 		 * Tests to see if "set", works with Node-Lists
 		 */
 		[ActiveEvent(Name = "magix.test.execute.set-node-null")]
-		public void magix_test_execute_set_node_null(object sender, ActiveEventArgs e)
+		public static void magix_test_execute_set_node_null(object sender, ActiveEventArgs e)
 		{
 			Node tmp = new Node();
 
@@ -77,7 +77,7 @@ the original correctly, and the new list is an exact replica";
 			tmp["_data"]["items"]["item4"]["description"].Value = "desc4";
 			tmp["set"].Value = "[_data][items]";
 
-			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			if (ShouldInspect(e.Params))
 			{
 				e.Params.Clear();
 				e.Params["event:magix.execute"].Value = null;
@@ -101,7 +101,7 @@ behaves correctly, and deletes the entire node, with its children";
 		 * Tests to see if "set", works with Values
 		 */
 		[ActiveEvent(Name = "magix.test.execute.set-value")]
-		public void magix_test_execute_set_value(object sender, ActiveEventArgs e)
+		public static void magix_test_execute_set_value(object sender, ActiveEventArgs e)
 		{
 			Node tmp = new Node();
 
@@ -110,7 +110,7 @@ behaves correctly, and deletes the entire node, with its children";
 			tmp["set"].Value = "[_buffer].Value";
 			tmp["set"]["value"].Value = "[_data][item1][description].Value";
 
-			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			if (ShouldInspect(e.Params))
 			{
 				e.Params.Clear();
 				e.Params["event:magix.execute"].Value = null;
@@ -138,14 +138,14 @@ from another node's value, behaves correctly";
 		 * Tests to see if "set", works with null Values
 		 */
 		[ActiveEvent(Name = "magix.test.execute.set-value-null")]
-		public void magix_test_execute_set_value_null(object sender, ActiveEventArgs e)
+		public static void magix_test_execute_set_value_null(object sender, ActiveEventArgs e)
 		{
 			Node tmp = new Node();
 
 			tmp["_data"]["item1"]["description"].Value = "desc1";
 			tmp["set"].Value = "[_data][item1][description].Value";
 
-			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			if (ShouldInspect(e.Params))
 			{
 				e.Params.Clear();
 				e.Params["event:magix.execute"].Value = null;
@@ -173,7 +173,7 @@ to null, behaves correctly";
 		 * Tests to see if "set", works with null Values
 		 */
 		[ActiveEvent(Name = "magix.test.execute.set-name-null")]
-		public void magix_test_execute_set_name_null(object sender, ActiveEventArgs e)
+		public static void magix_test_execute_set_name_null(object sender, ActiveEventArgs e)
 		{
 			Node tmp = new Node();
 
@@ -183,7 +183,7 @@ to null, behaves correctly";
 			tmp["try"]["catch"]["set"].Value = "[/][_data].Value";
 			tmp["try"]["catch"]["set"]["value"].Value = "success";
 
-			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			if (ShouldInspect(e.Params))
 			{
 				e.Params.Clear();
 				e.Params["event:magix.execute"].Value = null;
@@ -211,7 +211,7 @@ to a null value, throws an exception, as it should";
 		 * Tests to see if "set", works with Name
 		 */
 		[ActiveEvent(Name = "magix.test.execute.get-name")]
-		public void magix_test_execute_get_name(object sender, ActiveEventArgs e)
+		public static void magix_test_execute_get_name(object sender, ActiveEventArgs e)
 		{
 			Node tmp = new Node();
 
@@ -220,7 +220,7 @@ to a null value, throws an exception, as it should";
 			tmp["set"].Value = "[_buffer].Value";
 			tmp["set"]["value"].Value = "[_data][item1][0].Name";
 
-			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			if (ShouldInspect(e.Params))
 			{
 				e.Params.Clear();
 				e.Params["event:magix.execute"].Value = null;
@@ -249,7 +249,7 @@ the name of a node";
 		 * Tests to see if "set", works with Name
 		 */
 		[ActiveEvent(Name = "magix.test.execute.set-name")]
-		public void magix_test_execute_set_name(object sender, ActiveEventArgs e)
+		public static void magix_test_execute_set_name(object sender, ActiveEventArgs e)
 		{
 			Node tmp = new Node();
 
@@ -258,7 +258,7 @@ the name of a node";
 			tmp["set"].Value = "[_buffer][tmp].Name";
 			tmp["set"]["value"].Value = "[_data][item1][0].Name";
 
-			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			if (ShouldInspect(e.Params))
 			{
 				e.Params.Clear();
 				e.Params["event:magix.execute"].Value = null;
@@ -287,7 +287,7 @@ behaves correctly, when set to another node's name";
 		 * Tests to see if ""set"" ing a Value to a Node-list throws an exception
 		 */
 		[ActiveEvent(Name = "magix.test.execute.value-2-list")]
-		public void magix_test_execute_value_2_list(object sender, ActiveEventArgs e)
+		public static void magix_test_execute_value_2_list(object sender, ActiveEventArgs e)
 		{
 			Node tmp = new Node();
 
@@ -299,7 +299,7 @@ behaves correctly, when set to another node's name";
 			tmp["set"].Value = "[_buffer].Value";
 			tmp["set"]["value"].Value = "[_data]";
 
-			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			if (ShouldInspect(e.Params))
 			{
 				e.Params.Clear();
 				e.Params["event:magix.execute"].Value = null;
@@ -327,7 +327,7 @@ behaves correctly";
 		 * Tests to see if ""set"" ing a Name to a Node-list throws an exception
 		 */
 		[ActiveEvent(Name = "magix.test.execute.name-2-list")]
-		public void magix_test_execute_name_2_list(object sender, ActiveEventArgs e)
+		public static void magix_test_execute_name_2_list(object sender, ActiveEventArgs e)
 		{
 			Node tmp = new Node();
 
@@ -336,7 +336,7 @@ behaves correctly";
 			tmp["set"].Value = "[_buffer][item].Name";
 			tmp["set"]["value"].Value = "[_data][item1]";
 
-			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			if (ShouldInspect(e.Params))
 			{
 				e.Params.Clear();
 				e.Params["event:magix.execute"].Value = null;

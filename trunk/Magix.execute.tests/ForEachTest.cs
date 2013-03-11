@@ -18,7 +18,7 @@ namespace Magix.tests
 		 * Tests to see if "for-each", works
 		 */
 		[ActiveEvent(Name = "magix.test.execute.for-each")]
-		public void magix_test_execute_for_each(object sender, ActiveEventArgs e)
+		public static void magix_test_execute_for_each(object sender, ActiveEventArgs e)
 		{
 			Node tmp = new Node();
 
@@ -30,7 +30,7 @@ namespace Magix.tests
 			tmp["for-each"]["set"].Value = "[/][_buffer][[.].Name].Value";
 			tmp["for-each"]["set"]["value"].Value = "[.].Value";
 
-			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			if (ShouldInspect(e.Params))
 			{
 				e.Params.Clear();
 				e.Params["event:magix.execute"].Value = null;

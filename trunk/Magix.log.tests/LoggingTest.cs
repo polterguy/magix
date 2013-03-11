@@ -18,14 +18,14 @@ namespace Magix.tests
 		 * tests to see if magix.log.append functions
 		 */
 		[ActiveEvent(Name = "magix.test.append-2-log")]
-		public void magix_test_append_2_log(object sender, ActiveEventArgs e)
+		public static void magix_test_append_2_log(object sender, ActiveEventArgs e)
 		{
 			Node tmp = new Node();
 
 			tmp["header"].Value = "test log item header";
 			tmp["body"].Value = "test log item body";
 
-			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			if (ShouldInspect(e.Params))
 			{
 				e.Params.Clear();
 				e.Params["event:magix.log.append"].Value = null;

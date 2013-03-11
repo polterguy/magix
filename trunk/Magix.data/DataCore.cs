@@ -30,7 +30,7 @@ namespace Magix.execute
 		[ActiveEvent(Name = "magix.data.remove")]
 		public static void magix_data_remove(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			if (ShouldInspect(e.Params))
 			{
 				e.Params["event:magix.data.remove"].Value = null;
 				e.Params["id"].Value = "object-id";
@@ -75,7 +75,7 @@ your persistent data storage";
 		[ActiveEvent(Name = "magix.data.save")]
 		public static void magix_data_save(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			if (ShouldInspect(e.Params))
 			{
 				e.Params["event:magix.data.save"].Value = null;
 				e.Params["id"].Value = "object-id";
@@ -123,7 +123,7 @@ a global unique identifier will be automatically assigned to the object";
 		[ActiveEvent(Name = "magix.data.load")]
 		public static void magix_data_load(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			if (ShouldInspect(e.Params))
 			{
 				e.Params["event:magix.data.load"].Value = null;
 				e.Params["id"].Value = "object-id";
@@ -187,7 +187,7 @@ and will make sure only one object is loaded";
 		[ActiveEvent(Name = "magix.data.count")]
 		public static void magix_data_count(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			if (ShouldInspect(e.Params))
 			{
 				e.Params["event:magix.data.count"].Value = null;
 				e.Params["inspect"].Value = @"returns the total number 

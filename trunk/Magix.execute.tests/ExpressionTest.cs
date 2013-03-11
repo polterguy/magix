@@ -17,7 +17,7 @@ namespace Magix.tests
 		 * Tests to see if expressions behave
 		 */
 		[ActiveEvent(Name = "magix.test.expressions")]
-		public void magix_test_expressions(object sender, ActiveEventArgs e)
+		public static void magix_test_expressions(object sender, ActiveEventArgs e)
 		{
 			Node n = new Node();
 
@@ -26,7 +26,7 @@ namespace Magix.tests
 			n["set"].Value = "[_data].Value";
 			n["set"]["value"].Value = "[_data][value][item:1][bike][make].Value";
 
-			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			if (ShouldInspect(e.Params))
 			{
 				e.Params.Clear();
 				e.Params["event:magix.execute"].Value = null;
@@ -48,7 +48,7 @@ trying out indexed de-referencing one node";
 		 * Tests to see if expressions behave
 		 */
 		[ActiveEvent(Name = "magix.test.expressions-create-code")]
-		public void magix_test_expressions_create_code(object sender, ActiveEventArgs e)
+		public static void magix_test_expressions_create_code(object sender, ActiveEventArgs e)
 		{
 			Node n = new Node();
 
@@ -57,7 +57,7 @@ trying out indexed de-referencing one node";
 			n.Add("set", "[set:2][value].Value");
 			n[n.Count-1]["value"].Value = "success";
 
-			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			if (ShouldInspect(e.Params))
 			{
 				e.Params.Clear();
 				e.Params["event:magix.execute"].Value = null;

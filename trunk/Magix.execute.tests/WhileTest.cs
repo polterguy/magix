@@ -18,7 +18,7 @@ namespace Magix.tests
 		 * Tests to see if "while", works
 		 */
 		[ActiveEvent(Name = "magix.test.execute.while")]
-		public void magix_test_execute_while(object sender, ActiveEventArgs e)
+		public static void magix_test_execute_while(object sender, ActiveEventArgs e)
 		{
 			Node tmp = new Node();
 
@@ -28,7 +28,7 @@ namespace Magix.tests
 			tmp["while"].Value = "[_data].Count!=0";
 			tmp["while"]["set"].Value = "[_data][0]";
 
-			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			if (ShouldInspect(e.Params))
 			{
 				e.Params.Clear();
 				e.Params["event:magix.execute"].Value = null;

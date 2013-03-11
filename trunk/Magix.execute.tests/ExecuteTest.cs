@@ -18,7 +18,7 @@ namespace Magix.tests
 		 * Tests to see if "if", "set" and "magix.execute" works
 		 */
 		[ActiveEvent(Name = "magix.test.execute")]
-		public void magix_test_execute(object sender, ActiveEventArgs e)
+		public static void magix_test_execute(object sender, ActiveEventArgs e)
 		{
 			Node tmp = new Node();
 
@@ -27,7 +27,7 @@ namespace Magix.tests
 			tmp["if"]["set"].Value = "[_data].Value";
 			tmp["if"]["set"]["value"].Value = "new-value";
 
-			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			if (ShouldInspect(e.Params))
 			{
 				e.Params.Clear();
 				e.Params["event:magix.execute"].Value = null;
@@ -55,7 +55,7 @@ that the result node set is manipulated as it should be";
 		 * Tests to see if "magix.execute" works
 		 */
 		[ActiveEvent(Name = "magix.test.execute.goto")]
-		public void magix_test_execute_goto(object sender, ActiveEventArgs e)
+		public static void magix_test_execute_goto(object sender, ActiveEventArgs e)
 		{
 			Node tmp = new Node();
 			tmp["_data"].Value = "not-set";
@@ -63,7 +63,7 @@ that the result node set is manipulated as it should be";
 			tmp["_data"]["set"]["value"].Value = "new-value";
 			tmp["execute"].Value = "[_data]";
 
-			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			if (ShouldInspect(e.Params))
 			{
 				e.Params.Clear();
 				e.Params["event:magix.execute"].Value = null;

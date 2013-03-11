@@ -21,7 +21,7 @@ namespace Magix.forms
 		[ActiveEvent(Name = "magix.forms.controls.literal")]
 		public void magix_forms_controls_panel(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			if (ShouldInspect(e.Params))
 			{
 				Inspect(e.Params);
 				return;
@@ -38,7 +38,7 @@ namespace Magix.forms
 			e.Params["_ctrl"].Value = ret;
 		}
 
-		protected void Inspect (Node node)
+		protected void Inspect(Node node)
 		{
 			node["event:magix.forms.create-form"].Value = null;
 			node["inspect"].Value = @"creates a literal type of web control.&nbsp;&nbsp;
