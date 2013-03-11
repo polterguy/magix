@@ -82,7 +82,7 @@ namespace Magix.Core
          */
         public string GetEventMappingValue(string key)
         {
-			if (_eventMappers.ContainsKey (key))
+			if (_eventMappers.ContainsKey(key))
 				return _eventMappers[key];
 			return key;
         }
@@ -240,7 +240,7 @@ namespace Magix.Core
 		 */
 		public bool IsOverride (string key)
 		{
-			return _eventMappers.ContainsKey (key);
+			return _eventMappers.ContainsKey(key) && _eventMappers[key] != key;
 		}
 
 		// TODO: WTF ...?
@@ -249,12 +249,12 @@ namespace Magix.Core
 		 */
 		public bool IsOverrideSystem (string key)
 		{
-			bool retVal = _eventMappers.ContainsKey (key);
+			bool retVal = _eventMappers.ContainsKey(key);
 			if (retVal)
 			{
-				retVal = InstanceMethod.ContainsKey (key);
+				retVal = InstanceMethod.ContainsKey(key);
 				if (!retVal)
-					retVal = _staticEvents.ContainsKey (key);
+					retVal = _staticEvents.ContainsKey(key);
 			}
 			return retVal;
 		}

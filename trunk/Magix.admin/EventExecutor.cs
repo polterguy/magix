@@ -85,6 +85,7 @@ don't match the [begins-with] parameter";
 				{
 					if (ActiveEvents.Instance.IsOverride(idx))
 						node["events"]["no_" + idxNo.ToString()].Value = string.IsNullOrEmpty (idx) ? "" : idx;
+					continue;
 				}
 				if (!takeAll && string.IsNullOrEmpty(beginsWith) && idx.StartsWith("magix.test."))
 					continue;
