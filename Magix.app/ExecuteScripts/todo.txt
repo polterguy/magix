@@ -18,7 +18,15 @@
 
 * support multiple event handlers of same name with magix.execute.event
 
+* wtf is wrong with "overridden active events" ...?
+  shows TONS of events ...
+
+* create node traversal, that retrieves value of node, but does NOT create it unless it exists
+
+* inform user, through inspect, which active events are 'thread safe' and not
+
 * "magix.execute.fork" is not static, hence can only be called in GUI thread ...
+  meaning, a forked thread cannot spawn another thread ...
 
 * remove all references to "magix.execute._event-overridden" and 
   "magix.execute._event-override-removed" - i think!
