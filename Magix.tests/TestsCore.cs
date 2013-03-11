@@ -64,6 +64,8 @@ that failed";
 			{
 				int idxNo = 0;
 
+				DateTime start = DateTime.Now;
+
 				// Loops through all active events in the system, and raises
 				// all event that starts with "magix.test."
 				foreach (string idx in ActiveEvents.Instance.ActiveEventHandlers)
@@ -78,12 +80,17 @@ that failed";
 						e.Params["tests"][idx]["success"].Value = true;
 					}
 				}
+
+				DateTime end = DateTime.Now;
+
 				e.Params["summary"]["no-tests"].Value = idxNo;
 				e.Params["summary"]["success"].Value = true;
 
 				Node node = new Node();
 
-				node["message"].Value = "SUCCESS!!<br /> " + idxNo + " tests successfully executed";
+				int time = (int)(end - start).TotalMilliseconds;
+
+				node["message"].Value = "success!<br /> " + idxNo + " tests successfully executed in " + time + " milliseconds";
 				node["color"].Value = "LightGreen";
 				node["time"].Value = 1000;
 
