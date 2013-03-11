@@ -40,6 +40,7 @@ namespace Magix.log
 
 			Node node = new Node();
 
+			node["object"]["type"].Value = "magix.log.item";
 			node["object"]["header"].Value = header;
 			node["object"]["body"].Value   = body;
 			node["object"]["date"].Value   = date;
