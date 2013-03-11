@@ -13,6 +13,9 @@
 
 * checkup static versus non-static event handlers ...
 
+* make magix.tests.run run every single unit test, even if it fails, and then show
+  which ones failed and which ones didn't
+
 * support multiple event handlers of same name with magix.execute.event
 
 * verify all scripts work before last release
