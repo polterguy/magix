@@ -80,12 +80,12 @@ thread will not change any data on the original node-set";
 			{
 				lock (stack)
 				{
-					object tmp = stack.Pop();
+					stack.Pop();
 
 					if (stack.Count > 0 && stack.Peek() is ManualResetEvent)
 					{
 						// signaling to release wait object
-						ManualResetEvent evt = stack.Pop() as ManualResetEvent;
+						ManualResetEvent evt = stack.Peek() as ManualResetEvent;
 						evt.Set();
 					}
 				}
@@ -108,10 +108,6 @@ execution will leave the [wait] block";
 				return;
 			}
 
-			ManualResetEvent evt = new ManualResetEvent(false);
-
-			stack.Push(evt);
-
 			Node ip = e.Params;
 			if (e.Params.Contains("_ip"))
 				ip = e.Params ["_ip"].Value as Node;
@@ -125,11 +121,23 @@ execution will leave the [wait] block";
 			node["_ip"].Value = ip.Clone();
 			node["_dp"].Value = dp.Clone();
 
-			RaiseActiveEvent(
-				"magix.execute",
-				node);
+			ManualResetEvent evt = new ManualResetEvent(false);
 
-			evt.WaitOne();
+			lock (stack)
+				stack.Push(evt);
+			try
+			{
+				RaiseActiveEvent(
+					"magix.execute",
+					node);
+
+				evt.WaitOne();
+			}
+			finally
+			{
+				lock (stack)
+					stack.Pop();
+			}
 		}
 	}
 }
