@@ -110,7 +110,7 @@ that failed";
 
 				node["message"].Value = "failed!<br />while executing '" + lastTest + "', we got; '" + err.Message + "'";
 				node["color"].Value = "Red";
-				node["time"].Value = 30000;
+				node["time"].Value = -1;
 
 				RaiseActiveEvent(
 					"magix.viewport.show-message",
