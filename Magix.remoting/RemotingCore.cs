@@ -70,7 +70,7 @@ are being correctly re-mapped";
 		[ActiveEvent(Name = "magix.execute.tunnel")]
 		public static void magix_execute_tunnel(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			if (ShouldInspect(e.Params))
 			{
 				e.Params["event:magix.execute"].Value = null;
 				e.Params["inspect"].Value = @"creates an external override towards the given 
@@ -133,7 +133,7 @@ which event to override to go externally.&nbsp;&nbsp;tunnel cannot override null
 		[ActiveEvent(Name = "magix.execute.open")]
 		public static void magix_execute_open(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			if (ShouldInspect(e.Params))
 			{
 				e.Params["event:magix.execute"].Value = null;
 				e.Params["inspect"].Value = @"allows the given value active event
@@ -176,7 +176,7 @@ server park, or by exposing functionality to other networks";
 		[ActiveEvent(Name = "magix.execute.close")]
 		public static void magix_execute_close(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			if (ShouldInspect(e.Params))
 			{
 				e.Params["event:magix.execute"].Value = null;
 				e.Params["inspect"].Value = @"closes the active event found in
@@ -218,7 +218,7 @@ value, such that it no longer can be remotely invoked from other servers";
 		[ActiveEvent(Name = "magix.execute.remote")]
 		public static void magix_execute_remote(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			if (ShouldInspect(e.Params))
 			{
 				e.Params["event:magix.execute"].Value = null;
 				e.Params["inspect"].Value = @"remotely invokes the active event from

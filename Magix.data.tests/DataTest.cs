@@ -18,7 +18,7 @@ namespace Magix.tests
 		 * Tests to see if "magix.data.save/load", works
 		 */
 		[ActiveEvent(Name = "magix.test.data.save-by-key")]
-		public void magix_test_data_save_by_key(object sender, ActiveEventArgs e)
+		public static void magix_test_data_save_by_key(object sender, ActiveEventArgs e)
 		{
 			Node tmp = new Node();
 
@@ -46,7 +46,7 @@ namespace Magix.tests
 			tmp["magix.data.save"]["object"]["Value3"].Value = "thomasx£#$¤%&/()[]}±?";
 			tmp["magix.data.load"]["id"].Value = "data-save-test";
 
-			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			if (ShouldInspect(e.Params))
 			{
 				e.Params.Clear();
 				e.Params["event:magix.execute"].Value = null;
@@ -71,7 +71,7 @@ by [id], behaves as it should";
 		 * Tests to see if "magix.data.save/load", works
 		 */
 		[ActiveEvent(Name = "magix.test.data.load-multiple-objects")]
-		public void magix_test_data_load_multiple_objects(object sender, ActiveEventArgs e)
+		public static void magix_test_data_load_multiple_objects(object sender, ActiveEventArgs e)
 		{
 			Node tmp = new Node();
 
@@ -107,7 +107,7 @@ by [id], behaves as it should";
 			tmp["magix.data.save2"].Name = "magix.data.save";
 			tmp["magix.data.save3"].Name = "magix.data.save";
 
-			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			if (ShouldInspect(e.Params))
 			{
 				e.Params.Clear();
 				e.Params["event:magix.execute"].Value = null;

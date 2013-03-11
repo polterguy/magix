@@ -20,9 +20,9 @@ namespace Magix.execute
 		 * returns [xml] as [dom]
 		 */
 		[ActiveEvent(Name = "magix.xml.xml-2-node")]
-		public void magix_web_get(object sender, ActiveEventArgs e)
+		public static void magix_web_get(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			if (ShouldInspect(e.Params))
 			{
 				e.Params["event:magix.xml.xml-2-node"].Value = null;
 				e.Params["inspect"].Value = @"will return 
@@ -40,7 +40,7 @@ namespace Magix.execute
 			ParseNode(doc.DocumentElement, e.Params["dom"]["_tmp"]);
 		}
 
-		private void ParseNode(XmlNode xml, Node node)
+		private static void ParseNode(XmlNode xml, Node node)
 		{
 			node.Name = xml.Name;
 

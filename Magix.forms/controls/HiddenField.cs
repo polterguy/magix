@@ -20,7 +20,7 @@ namespace Magix.forms
 		[ActiveEvent(Name = "magix.forms.controls.hidden")]
 		public void magix_forms_controls_hidden(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			if (ShouldInspect(e.Params))
 			{
 				Inspect(e.Params);
 				return;

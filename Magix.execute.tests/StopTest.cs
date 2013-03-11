@@ -18,14 +18,14 @@ namespace Magix.tests
 		 * unit test for magix.execute.stop keyword
 		 */
 		[ActiveEvent(Name = "magix.test.execute.stop")]
-		public void magix_test_execute_stop(object sender, ActiveEventArgs e)
+		public static void magix_test_execute_stop(object sender, ActiveEventArgs e)
 		{
 			Node tmp = new Node();
 
 			tmp["stop"].Value = null;
 			tmp["throw"].Value = "failure";
 
-			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			if (ShouldInspect(e.Params))
 			{
 				e.Params.Clear();
 				e.Params["event:magix.execute"].Value = null;

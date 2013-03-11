@@ -24,7 +24,7 @@ namespace Magix.execute
 		[ActiveEvent(Name = "magix.file.load")]
 		public static void magix_file_load(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			if (ShouldInspect(e.Params))
 			{
 				e.Params["event:magix.execute"].Value = null;
 				e.Params["magix.file.load"]["path"].Value = "ExecuteScripts/todo.txt";
@@ -70,7 +70,7 @@ an http or ftp path, to a document";
 		[ActiveEvent(Name = "magix.file.save")]
 		public static void magix_file_save_file(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			if (ShouldInspect(e.Params))
 			{
 				e.Params["event:magix.execute"].Value = null;
 				e.Params["magix.file.save"]["path"].Value = "ExecuteScripts/sample.txt";

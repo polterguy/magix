@@ -18,7 +18,7 @@ namespace Magix.tests
 		 * Tests to see if "fork", works
 		 */
 		[ActiveEvent(Name = "magix.test.threads.fork")]
-		public void magix_test_threads_fork(object sender, ActiveEventArgs e)
+		public static void magix_test_threads_fork(object sender, ActiveEventArgs e)
 		{
 			Node tmp = new Node();
 
@@ -28,7 +28,7 @@ namespace Magix.tests
 			tmp["wait"]["fork"]["magix.data.save"]["object"]["value"].Value = "thomas";
 			tmp["magix.data.load"]["id"].Value = "fork-test-buffer-object";
 
-			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			if (ShouldInspect(e.Params))
 			{
 				e.Params.Clear();
 				e.Params["event:magix.execute"].Value = null;
@@ -53,7 +53,7 @@ by using magix.data.load and magix.data.save to signal between threads for succe
 		 * Tests to see if "fork", works
 		 */
 		[ActiveEvent(Name = "magix.test.threads.fork-multiple-threads")]
-		public void magix_test_threads_fork_multiple_threads(object sender, ActiveEventArgs e)
+		public static void magix_test_threads_fork_multiple_threads(object sender, ActiveEventArgs e)
 		{
 			Node tmp = new Node();
 
@@ -80,7 +80,7 @@ by using magix.data.load and magix.data.save to signal between threads for succe
 			tmp["magix.data.load", 3]["id"].Value = "fork-test-buffer-object4";
 			tmp["magix.data.load", 4]["id"].Value = "fork-test-buffer-object5";
 
-			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			if (ShouldInspect(e.Params))
 			{
 				e.Params.Clear();
 				e.Params["event:magix.execute"].Value = null;

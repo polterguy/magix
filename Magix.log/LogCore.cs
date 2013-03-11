@@ -19,9 +19,9 @@ namespace Magix.log
 		 * will log the given header and body
 		 */
 		[ActiveEvent(Name = "magix.log.append")]
-		public void magix_log_append(object sender, ActiveEventArgs e)
+		public static void magix_log_append(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			if (ShouldInspect(e.Params))
 			{
 				e.Params["header"].Value = "descriptive header of log item";
 				e.Params["description"].Value = "detailed description of log item";

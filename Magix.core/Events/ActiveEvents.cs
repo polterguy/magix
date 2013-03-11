@@ -643,7 +643,7 @@ namespace Magix.Core
 			List<string> tokens = ExtractTokens(code);
 			string name = tokens.Count == 0 ? "" : tokens[0];
 			if (tokens.Count > 0)
-				tokens.RemoveAt (0);
+				tokens.RemoveAt(0);
 			return RaiseSingleEventWithTokens(sender, name, tokens, pars, forceNoOverride);
         }
 

@@ -18,7 +18,7 @@ namespace Magix.tests
 		 * Tests to see if create "event", and invoking it later, works
 		 */
 		[ActiveEvent(Name = "magix.test.execute.invoke-event")]
-		public void magix_test_execute_invoke_event(object sender, ActiveEventArgs e)
+		public static void magix_test_execute_invoke_event(object sender, ActiveEventArgs e)
 		{
 			Node tmp = new Node();
 
@@ -29,7 +29,7 @@ namespace Magix.tests
 			tmp["foo.bar"].Value = null;
 			tmp.Add (new Node("event", "foo.bar"));
 
-			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			if (ShouldInspect(e.Params))
 			{
 				e.Params.Clear();
 				e.Params["event:magix.execute"].Value = null;
@@ -62,7 +62,7 @@ namespace Magix.tests
 		 * Tests to see if create "event", and invoking it later, works
 		 */
 		[ActiveEvent(Name = "magix.test.execute.invoke-remote")]
-		public void magix_test_execute_invoke_remote(object sender, ActiveEventArgs e)
+		public static void magix_test_execute_invoke_remote(object sender, ActiveEventArgs e)
 		{
 			Node tmp = new Node();
 
@@ -74,7 +74,7 @@ namespace Magix.tests
 			tmp["remote"]["url"].Value = "http://127.0.0.1:8080";
 			tmp.Add (new Node("event", "foo.bar"));
 
-			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			if (ShouldInspect(e.Params))
 			{
 				e.Params.Clear();
 				e.Params["event:magix.execute"].Value = null;

@@ -21,9 +21,9 @@ namespace Magix.execute
 		 * Returns the given Value HTTP GET or POST parameter as "value"
 		 */
 		[ActiveEvent(Name = "magix.web.get")]
-		public static void magix_web_get(object sender, ActiveEventArgs e)
+		public void magix_web_get(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			if (ShouldInspect(e.Params))
 			{
 				e.Params["event:magix.execute"].Value = null;
 				e.Params["inspect"].Value = @"will return the given
@@ -43,9 +43,9 @@ get http parameter as [value]";
 		 * Returns the given Value HTTP cookie as "value"
 		 */
 		[ActiveEvent(Name = "magix.web.get-cookie")]
-		public static void magix_web_get_cookie(object sender, ActiveEventArgs e)
+		public void magix_web_get_cookie(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			if (ShouldInspect(e.Params))
 			{
 				e.Params["event:magix.execute"].Value = null;
 				e.Params["inspect"].Value = @"returns the given
@@ -65,9 +65,9 @@ http cookie parameter as [value] node";
 		 * Sets the given Value HTTP cookie persistent from "value"
 		 */
 		[ActiveEvent(Name = "magix.web.set-cookie")]
-		public static void magix_web_set_cookie(object sender, ActiveEventArgs e)
+		public void magix_web_set_cookie(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			if (ShouldInspect(e.Params))
 			{
 				e.Params["event:magix.execute"].Value = null;
 				e.Params["inspect"].Value = @"will create or overwrite

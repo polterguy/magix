@@ -23,7 +23,7 @@ namespace Magix.execute
 		[ActiveEvent(Name = "magix.execute.override")]
 		public static void magix_execute_set(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			if (ShouldInspect(e.Params))
 			{
 				e.Params["event:magix.execute"].Value = null;
 				e.Params["override"].Value = "namespace.foo";

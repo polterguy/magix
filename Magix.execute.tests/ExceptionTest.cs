@@ -18,13 +18,13 @@ namespace Magix.tests
 		 * Tests to see if "throw", works
 		 */
 		[ActiveEvent(Name = "magix.test.execute.throw")]
-		public void magix_test_execute_throw(object sender, ActiveEventArgs e)
+		public static void magix_test_execute_throw(object sender, ActiveEventArgs e)
 		{
 			Node tmp = new Node();
 
 			tmp["throw"].Value = "this is our message!";
 
-			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			if (ShouldInspect(e.Params))
 			{
 				e.Params.Clear();
 				e.Params["event:magix.execute"].Value = null;
@@ -56,7 +56,7 @@ and throws";
 		 * Tests to see if "remove", works
 		 */
 		[ActiveEvent(Name = "magix.test.execute.catch")]
-		public void magix_test_execute_catch(object sender, ActiveEventArgs e)
+		public static void magix_test_execute_catch(object sender, ActiveEventArgs e)
 		{
 			Node tmp = new Node();
 
@@ -64,7 +64,7 @@ and throws";
 			tmp["try"]["code"]["throw"].Value = "exception thrown by test";
 			tmp["try"]["catch"].Value = null;
 
-			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			if (ShouldInspect(e.Params))
 			{
 				e.Params.Clear();
 				e.Params["event:magix.execute"].Value = null;

@@ -21,7 +21,7 @@ namespace Magix.forms
 		[ActiveEvent(Name = "magix.forms.controls.text-box")]
 		public void magix_forms_controls_text_box(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			if (ShouldInspect(e.Params))
 			{
 				Inspect(e.Params);
 				return;

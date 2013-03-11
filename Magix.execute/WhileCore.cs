@@ -30,7 +30,7 @@ namespace Magix.execute
 		[ActiveEvent(Name = "magix.execute.while")]
 		public static void magix_execute_while(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			if (ShouldInspect(e.Params))
 			{
 				e.Params.Clear();
 				e.Params["event:magix.execute"].Value = null;

@@ -19,7 +19,7 @@ namespace Magix.node
 		[ActiveEvent(Name = "magix.execute.subtract")]
 		public void magix_execute_subtract(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			if (Inspect2(e.Params))
 			{
 				e.Params["event:magix.execute"].Value = null;
 				e.Params["inspect"].Value = @"subtracts the values from [what] node-set, 

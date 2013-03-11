@@ -24,7 +24,7 @@ namespace Magix.execute
 		[ActiveEvent(Name = "magix.code.node-2-code")]
 		public static void magix_code_node_2_code(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			if (ShouldInspect(e.Params))
 			{
 				e.Params["inspect"].Value = @"will transform the [json] node to 
 code syntax, and return in [code].&nbsp;&nbsp;code returned will be the 
@@ -108,7 +108,7 @@ contain type information for types of int, decimal, datetime and bool";
 		[ActiveEvent(Name = "magix.code.code-2-node")]
 		public static void magix_code_code_2_node(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			if (ShouldInspect(e.Params))
 			{
 				e.Params["inspect"].Value = @"will transform the [code] node to 
 a node tree.&nbsp;&nbsp;the code will be returned in [json]

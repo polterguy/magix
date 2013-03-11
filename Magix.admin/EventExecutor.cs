@@ -26,7 +26,7 @@ namespace Magix.admin
 		[ActiveEvent(Name = "magix.admin.get-active-events")]
 		public static void magix_admin__get_active_events(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			if (ShouldInspect(e.Params))
 			{
 				e.Params["event:magix.admin.get-active-events"].Value = null;
 				e.Params["all"].Value = false;
@@ -118,7 +118,7 @@ don't match the [begins-with] parameter";
 		[ActiveEvent(Name = "magix.admin.open-event-executor")]
 		public void magix_admin_open_event_executor(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			if (ShouldInspect(e.Params))
 			{
 				e.Params["event:magix.admin.open-even-executor"].Value = null;
 				e.Params["container"].Value = "content";
@@ -142,7 +142,7 @@ in [container] viewport container, defaulting being content";
 		[ActiveEvent(Name = "magix.admin.open-event-sniffer")]
 		public void magix_admin_open_event_sniffer(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			if (ShouldInspect(e.Params))
 			{
 				e.Params["inspect"].Value = @"will open active event sniffer, 
 allowing you to spy on all active events being raised in your system.&nbsp;&nbsp;
@@ -164,7 +164,7 @@ default container is header";
 		[ActiveEvent(Name = "magix.admin.load-executor-code")]
 		public void magix_admin_load_executor_code(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			if (ShouldInspect(e.Params))
 			{
 				e.Params.Clear();
 				e.Params["event:magix.admin.load-executor-code"].Value = null;
@@ -202,9 +202,9 @@ if=>[_data].Value==thomas
 		 * executes the given hyper lisp file
 		 */
 		[ActiveEvent(Name = "magix.admin.run-file")]
-		public void magix_admin_run_file(object sender, ActiveEventArgs e)
+		public static void magix_admin_run_file(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			if (ShouldInspect(e.Params))
 			{
 				e.Params["inspect"].Value = @"runs the hyper lisp [file] given, and 
 tries to load up the code into the active event executor - if the active 
@@ -262,9 +262,9 @@ event executor is active in any viewport containers";
 		[ActiveEvent(Name = "magix.admin.run-script")]
 		public void magix_admin_run_script(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			if (ShouldInspect(e.Params))
 			{
-				e.Params["inspect"].Value = @"runs the [script] given, and sets the 
+				e.Params["inspect"].Value = @"runs the [script] given, and tries to set the 
 active event executor to the hyper lisp code given in [script]";
 				e.Params["event:magix.admin.run-script"].Value = null;
 				e.Params["script"].Value =  @"

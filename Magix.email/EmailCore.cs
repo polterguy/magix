@@ -25,7 +25,7 @@ namespace Magix.execute
 		[ActiveEvent(Name = "magix.email.send-email")]
 		public static void magix_email_email(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			if (ShouldInspect(e.Params))
 			{
 				e.Params["event:magix.execute"].Value = null;
 				e.Params["inspect"].Value = @"will send the given email to

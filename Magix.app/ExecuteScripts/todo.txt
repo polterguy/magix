@@ -18,6 +18,11 @@
 
 * support multiple event handlers of same name with magix.execute.event
 
+* "magix.execute.fork" is not static, hence can only be called in GUI thread ...
+
+* remove all references to "magix.execute._event-overridden" and 
+  "magix.execute._event-override-removed" - i think!
+
 * verify all scripts work before last release
 
 * implement [prototype] for magix.data.count
