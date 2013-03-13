@@ -47,7 +47,7 @@ name is the name of your active event.&nbsp;&nbsp;add up
 to go directly to the active event in question,
 and not rely upon any overrides.&nbsp;&nbsp;this is useful
 for having the possibility of calling base
-functionality from overridden active events";
+functionality from overridden active events.&nbsp;&nbsp;thread safe";
 				e.Params["raise"].Value = "magix.viewport.show-message";
 				e.Params["raise"]["message"].Value = "hi there world";
 				e.Params["raise"]["no-override"].Value = "False";

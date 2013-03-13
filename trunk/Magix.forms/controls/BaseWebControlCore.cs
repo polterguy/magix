@@ -169,7 +169,8 @@ double clicked.&nbsp;&nbsp;[onmousedown] is raised when mouse is pressed down, o
 [onmouseup] is raised when mouse is released again, on top of control.&nbsp;&nbsp;[onmouseover] is 
 raised when mouse is hovered over control.&nbsp;&nbsp;[onmouseout] is raised when mouse is 
 moved out of control surface.&nbsp;&nbsp;[onkeypress] is raised when a key is pressed inside 
-of control.&nbsp;&nbsp;[onesc] is raised when escape key is pressed inside of control";
+of control.&nbsp;&nbsp;[onesc] is raised when escape key is pressed inside of control.
+&nbsp;&nbsp;not thread safe";
 			base.Inspect(node);
 			node["css"].Value = "css classes";
 			node["dir"].Value = "ltr";

@@ -80,7 +80,7 @@ make sure the other side has marked the active event as
 remotable.&nbsp;&nbsp;once a method is 'tunneled', it will no longer be
 raised locally, but every time the active event is raised internally
 within your server, it will be polymorphistically raised, on your 
-[url] end-point server instead";
+[url] end-point server instead.&nbsp;&nbsp;thread safe";
 				e.Params["tunnel"].Value = "magix.namespace.foo";
 				e.Params["tunnel"]["url"].Value = "http://127.0.0.1:8080";
 				return;
@@ -142,7 +142,7 @@ call your active event, on your server.&nbsp;&nbsp;you could
 create a server-api for web-services, by opening 
 active events for being remotely invoked, and such connect
 servers together, either internally as a part of your
-server park, or by exposing functionality to other networks";
+server park, or by exposing functionality to other networks.&nbsp;&nbsp;thread safe";
 				e.Params["open"].Value = "magix.namespace.foo";
 				return;
 			}
@@ -180,7 +180,7 @@ server park, or by exposing functionality to other networks";
 			{
 				e.Params["event:magix.execute"].Value = null;
 				e.Params["inspect"].Value = @"closes the active event found in
-value, such that it no longer can be remotely invoked from other servers";
+value, such that it no longer can be remotely invoked from other servers.&nbsp;&nbsp;thread safe";
 				e.Params["close"].Value = "magix.namespace.foo";
 				return;
 			}
@@ -225,7 +225,7 @@ value, such that it no longer can be remotely invoked from other servers";
 value on the given [url].&nbsp;&nbsp;this effectively works like the 
 magix.execute.raise keyword, except the event will be serialized
 over http, and invoked on another server, returning
-transparently back to the caller, as if it was invoked locally";
+transparently back to the caller, as if it was invoked locally.&nbsp;&nbsp;thread safe";
 				e.Params["remote"].Value = "magix.namespace.foo";
 				e.Params["remote"]["url"].Value = "http://127.0.0.1:8080";
 				return;

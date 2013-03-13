@@ -38,7 +38,7 @@ block, but only if the [if] statement returns true.&nbsp;&nbsp;
 pair together with [else-if] and [else] to create
 branching and control of flow of your program.&nbsp;&nbsp;if an if
 statement returns true, then no paired [else-if] or [else]
-statements will be executed";
+statements will be executed.&nbsp;&nbsp;thread safe";
 				e.Params["_data"]["item"].Value = "cache-object";
 				e.Params["_data"]["cache"].Value = null;
 				e.Params["if"].Value = "[_data][item].Value!=[_data][1].Name";
@@ -75,7 +75,7 @@ statements will be executed";
 				e.Params["inspect"].Value = @"executes the underlaying code block,
 but only if no previous [if] or [else-if] statement has returned true,
 and the statement inside the value of the [else-if] 
-returns true";
+returns true.&nbsp;&nbsp;thread safe";
 				e.Params["_data"]["node"].Value = null;
 				e.Params["if"].Value = "[_data][node].Value";
 				e.Params["if"]["magix.viewport.show-message"]["message"].Value = "darn it";
@@ -103,7 +103,7 @@ returns true";
 				e.Params["event:magix.execute"].Value = null;
 				e.Params["inspect"].Value = @"executes the underlaying code block,
 but only if no paired [if] or [else-if] statement
-has returned true";
+has returned true.&nbsp;&nbsp;thread safe";
 				e.Params["if"].Value = "[if].Name==x_if";
 				e.Params["if"]["magix.viewport.show-message"]["message"].Value = "ohh crap";
 				e.Params["else"]["magix.viewport.show-message"]["message"].Value = "yup, still sane";

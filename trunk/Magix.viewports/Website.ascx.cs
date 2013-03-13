@@ -50,6 +50,8 @@ namespace Magix.viewports
 			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
 				e.Params["execute:magix.viewport.change-modal-header"].Value = null;
+				e.Params["inspect"].Value = @"changes the header of the modal viewport container, 
+if it is visible.&nbsp;&nbsp;the header is set to [header].&nbsp;&nbsp;not thread safe";
 				e.Params["header"].Value = "new header";
 				return;
 			}
@@ -70,7 +72,7 @@ namespace Magix.viewports
 				e.Params["time"].Value = "1000";
 				e.Params["color"].Value = "#eeaaaa";
 				e.Params["inspect"].Value = @"shows a message box to the 
-end user for some seconds";
+end user for some seconds.&nbsp;&nbsp;not thread safe";
 				e.Params["icon"].Value = "media/images/magix-logo-tiny.png";
 				e.Params["code"].Value = "code goes underneath here";
 				return;

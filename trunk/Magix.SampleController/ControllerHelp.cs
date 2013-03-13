@@ -30,7 +30,8 @@ namespace Magix.SampleController
 			if (ShouldInspect(e.Params))
 			{
 				e.Params["event:magix.help.start-help"].Value = null;
-				e.Params["inspect"].Value = @"opens the help files in modal container";
+				e.Params["inspect"].Value = @"opens the help files in modal container.
+&nbsp;&nbsp;not thread safe";
 				return;
 			}
 
@@ -124,7 +125,8 @@ link-button=>next
 			if (e.Params.Contains ("inspect"))
 			{
 				e.Params["event:magix.help.set-next"].Value = null;
-				e.Params["inspect"].Value = @"set the next page for the help system";
+				e.Params["inspect"].Value = @"set the next page for the help system.
+&nbsp;&nbsp;not thread safe";
 				e.Params["next"].Value = "Help/index.mml";
 				return;
 			}
@@ -140,7 +142,8 @@ link-button=>next
 			if (e.Params.Contains ("inspect"))
 			{
 				e.Params["event:magix.help.move-next"].Value = null;
-				e.Params["inspect"].Value = @"moves to the next page for the help system";
+				e.Params["inspect"].Value = @"moves to the next page for the help system.
+&nbsp;&nbsp;not thread safe";
 				return;
 			}
 
@@ -178,8 +181,9 @@ link-button=>next
 			if (ShouldInspect(e.Params))
 			{
 				e.Params["event:magix.help.open-file"].Value = null;
+				e.Params["inspect"].Value = @"opens the given [file] file as html.
+&nbsp;&nbsp;thread safe";
 				e.Params["file"].Value = "Help/index.html";
-				e.Params["inspect"].Value = @"opens the given [file] file as html";
 				return;
 			}
 
@@ -253,7 +257,7 @@ link-button=>next
 				e.Params["reset"].Value = false;
 				e.Params["inspect"].Value = @"adds the given [page] to the history 
 of the help system.&nbsp;&nbsp;set [reset] to true to reset entire history stack
-of help system";
+of help system.&nbsp;&nbsp;not thread safe";
 				return;
 			}
 
@@ -282,7 +286,8 @@ of help system";
 			if (ShouldInspect(e.Params))
 			{
 				e.Params["event:magix.help.move-backwards"].Value = null;
-				e.Params["inspect"].Value = @"opens the previously opened help file";
+				e.Params["inspect"].Value = @"opens the previously opened help file.
+&nbsp;&nbsp;not thread safe";
 				return;
 			}
 
@@ -322,7 +327,7 @@ of help system";
 			{
 				e.Params["event:magix.help.move-backwards"].Value = null;
 				e.Params["inspect"].Value = @"moves forward in the history of 
-opened help pages";
+opened help pages.&nbsp;&nbsp;not thread safe";
 				return;
 			}
 

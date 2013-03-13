@@ -11,15 +11,10 @@
 
 * Uploading of Manifest files, which changes the state of the application somehow
 
-* checkup static versus non-static event handlers ...
-
 * make magix.tests.run run every single unit test, even if it fails, and then show
   which ones failed and which ones didn't
 
 * support multiple event handlers of same name with magix.execute.event
-
-* wtf is wrong with "overridden active events" ...?
-  shows TONS of events ...
 
 * create node traversal, that retrieves value of node, but does NOT create it unless it exists
 
@@ -34,6 +29,8 @@
 * verify all scripts work before last release
 
 * implement [prototype] for magix.data.count
+
+* for weird reasons, magix.execute.fork is actually not thread safe
 
 * consistently use [node] for nodes and "magix.somewhere.active-event" syntax for
   all active events in the system

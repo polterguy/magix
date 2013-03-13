@@ -31,7 +31,7 @@ code syntax, and return in [code].&nbsp;&nbsp;code returned will be the
 textual representation of the original tree hierarchy, such that 
 two spaces ' ' opens up the child collection.&nbsp;&nbsp;=> separates 
 name and value of node, name first.&nbsp;&nbsp;code returned might also
-contain type information for types of int, decimal, datetime and bool";
+contain type information for types of int, decimal, datetime and bool.&nbsp;&nbsp;thread safe";
 				e.Params["event:magix.code.node-2-code"].Value = null;
 				e.Params["json"]["something"].Value =  "something-else";
 				return;
@@ -115,7 +115,7 @@ a node tree.&nbsp;&nbsp;the code will be returned in [json]
 as node structure, according to indentation.&nbsp;&nbsp;two spaces open up child 
 collection, => assings to value, and first parts are name of node.&nbsp;&nbsp;
 also supports =(int)>, =(datetime)>, =(decimal)> and =(bool)> to assign 
-specific type to value";
+specific type to value.&nbsp;&nbsp;thread safe";
 				e.Params["event:magix.code.code-2-node"].Value = null;
 				e.Params["code"].Value =  @"
 code

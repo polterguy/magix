@@ -54,7 +54,7 @@ namespace Magix.forms
 				e.Params["id"].Value = "control";
 				e.Params["form-id"].Value = "formID";
 				e.Params["inspect"].Value = @"returns the value of the given 
-[id] web control, in the [form-id] form, as [value]";
+[id] web control, in the [form-id] form, as [value].&nbsp;&nbsp;not thread safe";
 				return;
 			}
 
@@ -102,7 +102,7 @@ namespace Magix.forms
 				e.Params["id"].Value = "control";
 				e.Params["form-id"].Value = "formid";
 				e.Params["inspect"].Value = @"sets the value of the given 
-[id] web control, in the [form-id] form, from [value]";
+[id] web control, in the [form-id] form, from [value].&nbsp;&nbsp;not thread safe";
 				return;
 			}
 
@@ -156,7 +156,7 @@ namespace Magix.forms
 				e.Params["id"].Value = "control";
 				e.Params["form-id"].Value = "formid";
 				e.Params["inspect"].Value = @"sets focus to the specific 
-[id] web control, in the [form-id] form";
+[id] web control, in the [form-id] form.&nbsp;&nbsp;not thread safe";
 				return;
 			}
 
@@ -185,7 +185,7 @@ namespace Magix.forms
 				e.Params["id"].Value = "control";
 				e.Params["form-id"].Value = "formid";
 				e.Params["inspect"].Value = @"selects all text in the specific 
-[id] textbox or textarea, in the [form-id] form";
+[id] textbox or textarea, in the [form-id] form.&nbsp;&nbsp;not thread safe";
 				return;
 			}
 

@@ -26,8 +26,7 @@ namespace Magix.execute
 				e.Params["inspect"].Value = @"creates a copy of the node returned by the 
 expression in the [value] node, and appends it into the 
 node-expression found in [add].&nbsp;&nbsp;
-the entire node will be copied,
-with its children and sub-nodes";
+the entire node will be copied, with its children and sub-nodes.&nbsp;&nbsp;thread safe";
 				e.Params["_copy"].Value = null;
 				e.Params["_data"]["children"].Value = "original";
 				e.Params["_data"]["children1"].Value = "will be copied";

@@ -85,7 +85,7 @@ be accessible underneath a [P] node, appended as the last
 parts of your code block, into your function invocation.&nbsp;&nbsp;from
 outside of the function/event itself, you can access these 
 parameters directly underneath the active event itself.&nbsp;&nbsp;
-event will be deleted, if you pass in no [code] block";
+event will be deleted, if you pass in no [code] block.&nbsp;&nbsp;thread safe";
 				e.Params["event"].Value = "foo.bar";
 				e.Params["event"]["remotable"].Value = false;
 				e.Params["event"]["code"]["_data"].Value = "thomas";
@@ -206,7 +206,7 @@ null active event handlers created with magix.execute.event";
 			if (ShouldInspect(e.Params))
 			{
 				e.Params["inspect"].Value = @"active event handler for raising
-active event handlers created with magix.execute.event";
+active event handlers created with magix.execute.event.&nbsp;&nbsp;thread safe";
 				return;
 			}
 

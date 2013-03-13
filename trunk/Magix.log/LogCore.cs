@@ -23,6 +23,9 @@ namespace Magix.log
 		{
 			if (ShouldInspect(e.Params))
 			{
+				e.Params["event:magix.log.append"].Value = null;
+				e.Params["inspect"].Value = @"creates a new item in your log.&nbsp;&nbsp;
+you need to submit both a [header] and a [description].&nbsp;&nbsp;thread safe";
 				e.Params["header"].Value = "descriptive header of log item";
 				e.Params["description"].Value = "detailed description of log item";
 				return;
