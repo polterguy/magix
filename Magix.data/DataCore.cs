@@ -35,7 +35,7 @@ namespace Magix.execute
 				e.Params["event:magix.data.remove"].Value = null;
 				e.Params["id"].Value = "object-id";
 				e.Params["inspect"].Value = @"removes the given [id] or [prototype] object(s) from 
-your persistent data storage";
+your persistent data storage.&nbsp;&nbsp;thread safe";
 				return;
 			}
 
@@ -82,7 +82,7 @@ your persistent data storage";
 				e.Params["object"]["value"].Value = "value of object";
 				e.Params["inspect"].Value = @"will serialize the given [object] with 
 the given [id] in the persistent data storage.&nbsp;&nbsp;if no [id] is given, 
-a global unique identifier will be automatically assigned to the object";
+a global unique identifier will be automatically assigned to the object.&nbsp;&nbsp;thread safe";
 				return;
 			}
 
@@ -133,7 +133,7 @@ child nodes of [objects] being the matching objects.&nbsp;&nbsp;
 use [start] and [end] to fetch a specific slice of objects, [start] defaults 
 to 0 and [end] defaults to -1, which means all objects matching criteria.&nbsp;&nbsp;
 [start], [end] and [prototype] cannot be defined if [id] is given, since [id] is unique,
-and will make sure only one object is loaded";
+and will make sure only one object is loaded.&nbsp;&nbsp;thread safe";
 				return;
 			}
 
@@ -191,7 +191,7 @@ and will make sure only one object is loaded";
 			{
 				e.Params["event:magix.data.count"].Value = null;
 				e.Params["inspect"].Value = @"returns the total number 
-of objects in data storage as [count]";
+of objects in data storage as [count].&nbsp;&nbsp;thread safe";
 				return;
 			}
 			lock (typeof(Node))

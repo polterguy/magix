@@ -24,7 +24,7 @@ namespace Magix.execute
 			{
 				e.Params["event:magix.execute"].Value = null;
 				e.Params["inspect"].Value = @"stops the execution of the current level
-of code nodes in the tree";
+of code nodes in the tree.&nbsp;&nbsp;thread safe";
 				e.Params["_data"].Value = 1;
 				e.Params["while"].Value = "[_data]==1";
 				e.Params["while"]["stop"].Value = null;

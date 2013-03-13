@@ -206,7 +206,7 @@ unloads a container for controls";
 			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
 				e.Params["inspect"].Value = @"includes either a css file or a 
-javascript file on the client side";
+javascript file on the client side.&nbsp;&nbsp;not thread safe";
 				e.Params["type"].Value = "css";
 				e.Params["file"].Value = "media/main-debug.css";
 				return;
@@ -247,7 +247,7 @@ javascript file on the client side";
 				e.Params["container"].Value = "content";
 				e.Params["inspect"].Value = @"loads an active module into the 
 given [container] viewport container.&nbsp;&nbsp;the module name must be defined in 
-the [name] node.&nbsp;&nbsp;the incoming parameters will be used";
+the [name] node.&nbsp;&nbsp;the incoming parameters will be used.&nbsp;&nbsp;not thread safe";
 				return;
 			}
 

@@ -30,7 +30,7 @@ namespace Magix.execute
 				e.Params["event:magix.execute"].Value = null;
 				e.Params["inspect"].Value = @"will send the given email to
 the given [to] from [from].&nbsp;&nbsp;the [subject] will
-become subject, and [body] the main message";
+become subject, and [body] the main message.&nbsp;&nbsp;thread safe";
 				e.Params["magix.email.send-email"].Value = null;
 				e.Params["magix.email.send-email"]["to"].Value = "to@somewhere.com";
 				e.Params["magix.email.send-email"]["from"].Value = "from@somewhere-else.com";

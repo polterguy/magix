@@ -153,7 +153,7 @@ namespace Magix.forms
 			{
 				e.Params["event:magix.forms.change-html"].Value = null;
 				e.Params["inspect"].Value = @"changes the html of the 
-given [form-id] to what is in [html]";
+given [form-id] to what is in [html].&nbsp;&nbsp;not thread safe";
 				e.Params["form-id"].Value = "header";
 				e.Params["html"].Value = @"
 hello world";

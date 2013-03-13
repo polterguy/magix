@@ -31,7 +31,7 @@ namespace Magix.execute
 				e.Params["inspect"].Value = @"loads the [path] file into the 
 [file] node as text.&nbsp;&nbsp;[path] can be a relative path, to 
 fetch a document beneath your web application directory structure, or 
-an http or ftp path, to a document";
+an http or ftp path, to a document.&nbsp;&nbsp;thread safe";
 				return;
 			}
 
@@ -84,7 +84,7 @@ will overwrite an existing file, if any,
 otherwise it'll create a new file.&nbsp;&nbsp;if you 
 pass in null as [file] Node, or no [file] node
 at all, any existing file will be deleted, and no 
-new created";
+new created.&nbsp;&nbsp;thread safe";
 				return;
 			}
 

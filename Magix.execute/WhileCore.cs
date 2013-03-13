@@ -36,7 +36,7 @@ namespace Magix.execute
 				e.Params["event:magix.execute"].Value = null;
 				e.Params["inspect"].Value = @"creates a loop that executes the
 underlaying code block repeatedly, as long as the
-statement in the value of [while] is true";
+statement in the value of [while] is true.&nbsp;&nbsp;thread safe";
 				e.Params["_data"]["txt1"].Value = "hello world 1.0";
 				e.Params["_data"]["txt2"].Value = "hello world 2.0";
 				e.Params["_data"]["txt3"].Value = "hello world 3.0";

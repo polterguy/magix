@@ -32,7 +32,7 @@ namespace Magix.forms
 				e.Params["inspect"].Value = @"creates a dynamic form
 and loading it into the [container] viewport container.&nbsp;&nbsp;[form-id]
 must be a uniquely identifiable id for later use.&nbsp;&nbsp;[controls]
-contains the controls themselves";
+contains the controls themselves.&nbsp;&nbsp;not thread safe";
 				return;
 			}
 
@@ -66,7 +66,7 @@ event handlers goes here...}}.&nbsp;&nbsp;internally it
 calls LoadModule, hence all the parameters that goes
 into your magix.viewport.load-module active event, 
 can also be passed into this, such as [css] and 
-so on";
+so on.&nbsp;&nbsp;not thread safe";
 				return;
 			}
 

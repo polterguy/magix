@@ -44,7 +44,7 @@ data-pointer to the currently processed item.&nbsp;&nbsp;
 your code will execute once
 for every single node you have in your return
 expression.&nbsp;&nbsp;use the [.] expression to de-reference
-the currently iterated node";
+the currently iterated node.&nbsp;&nbsp;thread safe";
 				return;
 			}
 

@@ -35,7 +35,7 @@ and it will automatically register as a part of the
 test-suite, which is to be executed, as this active event
 is raised.&nbsp;&nbsp;if it fails, it will abort all other tests,
 and show you the name of the active event handler
-that failed";
+that failed.&nbsp;&nbsp;thread safe";
 				int av = 0;
 				int tests = 0;
 				foreach (string idx in ActiveEvents.Instance.ActiveEventHandlers)

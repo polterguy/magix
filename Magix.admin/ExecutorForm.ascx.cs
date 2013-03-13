@@ -110,7 +110,7 @@ namespace Magix.admin
 			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
 				e.Params["inspect"].Value = @"sets the code to what is given in [code]
-in the active event executor";
+in the active event executor.&nbsp;&nbsp;not thread safe";
 				e.Params["event:magix.admin.set-code"].Value = null;
 				e.Params["code"].Value =  @"
 event:magix.execute

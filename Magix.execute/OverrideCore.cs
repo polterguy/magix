@@ -30,7 +30,7 @@ namespace Magix.execute
 				e.Params["override"]["value"].Value = "namespace.bar";
 				e.Params["inspect"].Value = @"overrides the given value active event 
 with the [value] node's value event.&nbsp;&nbsp;if no [value] is given, existing 
-override is removed";
+override is removed.&nbsp;&nbsp;thread safe";
 				return;
 			}
 

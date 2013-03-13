@@ -61,7 +61,7 @@ if they only contain these characters;
 abcdefghijklmnopqrstuvwxyz-.@£#$¤%&!?+:*.&nbsp;&nbsp;therefor, 
 a useful convention is to, either prefix your data parts 
 with an underscore, '_', or a Capital letter, or add numbers 
-to the node's name";
+to the node's name.&nbsp;&nbsp;thread safe";
 				e.Params["_data"]["value"].Value = "thomas";
 				e.Params["if"].Value = "[_data][value].Value==thomas";
 				e.Params["if"]["magix.viewport.show-message"].Value = null;

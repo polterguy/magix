@@ -41,7 +41,7 @@ are returned in [events].&nbsp;&nbsp;by default, unit tests and active events st
 as their name, will not be returned, unless [all] is true.&nbsp;&nbsp;
 if [all], [open], [remoted] or [overridden] is defined, it will return all events 
 fullfilling criteria, regardless of whether or not they are private events, tests or
-don't match the [begins-with] parameter";
+don't match the [begins-with] parameter.&nbsp;&nbsp;thread safe";
 				return;
 			}
 
@@ -124,7 +124,7 @@ don't match the [begins-with] parameter";
 				e.Params["event:magix.admin.open-even-executor"].Value = null;
 				e.Params["container"].Value = "content";
 				e.Params["inspect"].Value = @"opens the active event executor module 
-in [container] viewport container, defaulting being content";
+in [container] viewport container, defaulting being content.&nbsp;&nbsp;not thread safe";
 				return;
 			}
 
@@ -148,7 +148,7 @@ in [container] viewport container, defaulting being content";
 				e.Params["inspect"].Value = @"will open active event sniffer, 
 allowing you to spy on all active events being raised in your system.&nbsp;&nbsp;
 [container] instructs magix which viewport container to load the module in.&nbsp;&nbsp;
-default container is header";
+default container is header.&nbsp;&nbsp;not thread safe";
 				e.Params["event:magix.admin.open-event-sniffer"].Value = null;
 				e.Params["container"].Value = "content";
 				return;
@@ -171,7 +171,7 @@ default container is header";
 				e.Params["event:magix.admin.load-executor-code"].Value = null;
 				e.Params["inspect"].Value = @"loads active event executor module
 in content viewport, with given [code] Value.&nbsp;&nbsp;[code] is expected to be 
-textually based hyper lisp node syntax";
+textually based hyper lisp node syntax.&nbsp;&nbsp;not thread safe";
 				e.Params["code"].Value = @"
 event:magix.execute
 _data=>thomas
@@ -209,7 +209,7 @@ if=>[_data].Value==thomas
 			{
 				e.Params["inspect"].Value = @"runs the hyper lisp [file] given, and 
 tries to load up the code into the active event executor - if the active 
-event executor is active in any viewport containers";
+event executor is active in any viewport containers.&nbsp;&nbsp;thread safe";
 				e.Params["event:magix.admin.run-file"].Value = null;
 				e.Params["file"].Value = "ExecuteScripts/Applications/address-book.hl";
 				return;
@@ -261,12 +261,12 @@ event executor is active in any viewport containers";
 		 * executes script
 		 */
 		[ActiveEvent(Name = "magix.admin.run-script")]
-		public void magix_admin_run_script(object sender, ActiveEventArgs e)
+		public static void magix_admin_run_script(object sender, ActiveEventArgs e)
 		{
 			if (ShouldInspect(e.Params))
 			{
 				e.Params["inspect"].Value = @"runs the [script] given, and tries to set the 
-active event executor to the hyper lisp code given in [script]";
+active event executor to the hyper lisp code given in [script].&nbsp;&nbsp;thread safe";
 				e.Params["event:magix.admin.run-script"].Value = null;
 				e.Params["script"].Value =  @"
 event:magix.execute

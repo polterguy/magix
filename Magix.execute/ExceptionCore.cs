@@ -35,7 +35,7 @@ you can handle exceptions being raised in
 sub-functions, or even recursively invoked active events, or natively thrown
 exceptions this way.&nbsp;&nbsp;if an exception is thrown, you can access 
 the description of the exception in the [exception] node underneath your catch 
-statement";
+statement.&nbsp;&nbsp;thread safe";
 				e.Params["try"].Value = null;
 				e.Params["try"]["code"]["throw"].Value = "to try or not to try";
 				e.Params["try"]["code"]["magix.viewport.show-message"]["message"].Value = "crap, didn't work";
@@ -90,7 +90,7 @@ will stop the entire current execution, and halt
 back to the previous catch, in the stack of 
 active events.&nbsp;&nbsp;[exception] in [catch] becomes the 
 value of the [throw] node.&nbsp;&nbsp;use together with
-[try] to handle errors";
+[try] to handle errors.&nbsp;&nbsp;thread safe";
 				e.Params["try"]["code"]["throw"].Value = "some exception error message";
 				e.Params["try"]["catch"]["set"].Value = "[magix.viewport.show-message][message].Value";
 				e.Params["try"]["catch"]["set"]["value"].Value = "[exception].Value";

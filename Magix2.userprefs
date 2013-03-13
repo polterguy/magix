@@ -1,23 +1,22 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Magix.xml/XmlCore.cs">
-    <Files>
-      <File FileName="Magix.threading/ThreadingCore.cs" Line="118" Column="9" />
-      <File FileName="Magix.app/ExecuteScripts/todo.txt" Line="21" Column="81" />
-      <File FileName="Magix.xml/XmlCore.cs" Line="41" Column="4" />
-    </Files>
+  <MonoDevelop.Ide.Workbench>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
           <Node name="Core" expanded="True">
             <Node name="Magix.app" expanded="True">
-              <Node name="ExecuteScripts" expanded="True" />
+              <Node name="ExecuteScripts" expanded="True">
+                <Node name="Applications" expanded="True" />
+              </Node>
+            </Node>
+            <Node name="Magix.Core" expanded="True">
+              <Node name="Events" expanded="True" />
             </Node>
           </Node>
           <Node name="Plugins" expanded="True">
-            <Node name="Magix.threading" expanded="True" />
-            <Node name="Magix.xml" expanded="True">
-              <Node name="XmlCore.cs" selected="True" />
+            <Node name="Magix.admin" expanded="True">
+              <Node name="EventExecutor.cs" selected="True" />
             </Node>
           </Node>
           <Node name="Samples" expanded="True" />
@@ -28,9 +27,7 @@
         <State expanded="True" selected="True" />
       </Pad>
       <Pad Id="MonoDevelop.Debugger.WatchPad">
-        <State>
-          <Value>tmp["magix.data.load"]["objects"]</Value>
-        </State>
+        <State />
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>

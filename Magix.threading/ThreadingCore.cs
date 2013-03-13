@@ -19,6 +19,7 @@ namespace Magix.threading
 	{
 		private Stack<object> stack = new Stack<object>();
 
+		// TODO: Make thread safe, somehow ...
 		/**
 		 * Spawns a new thread which the given
 		 * code block will be executed within. Useful for long operations, 
@@ -44,7 +45,7 @@ for execution on a different thread.&nbsp;&nbsp;the forked
 thread will not change any data on the original node set.&nbsp;&nbsp;
 if the value of [fork] is true, the new thread will be executed 
 as a fire-and-forget thread, bypassing any [wait] statements you 
-might have";
+might have.&nbsp;&nbsp;not thread safe";
 				return;
 			}
 
@@ -124,7 +125,7 @@ might have";
 				e.Params["inspect"].Value = @"will wait for multiple treads to finish.&nbsp;&nbsp;
 all [fork] blocks created underneath [wait], will have to be finished, before the 
 execution will leave the [wait] block.&nbsp;&nbsp;you can optionally set a maximum number 
-of milliseconds, before the wait is dismissed as an integer value of [set]";
+of milliseconds, before the wait is dismissed as an integer value of [set].&nbsp;&nbsp;thread safe";
 				return;
 			}
 
