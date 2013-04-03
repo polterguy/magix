@@ -18,7 +18,7 @@
 	PlaceHolder="command ..."
 	CssClass="span12 input-block-level monospaced" />
 
-<div class="input-append span9">
+<div class="input-append offset5 span7">
 	<mux:Button
 		runat="server"
 		id="run"

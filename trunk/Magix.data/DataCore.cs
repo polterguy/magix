@@ -115,7 +115,7 @@ a global unique identifier will be automatically assigned to the object.&nbsp;&n
 					{
 						db.Store(new Storage(value, id));
 					}
-					db.Commit ();
+					db.Commit();
 				}
 			}
 		}

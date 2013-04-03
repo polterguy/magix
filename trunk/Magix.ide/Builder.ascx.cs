@@ -34,6 +34,18 @@ namespace Magix.ide
 			set { ViewState["DataSource"] = value; }
 		}
 
+		private Node ClipBoard
+		{
+			get { return ViewState["ClipBoard"] as Node; }
+			set { ViewState["ClipBoard"] = value; }
+		}
+
+		private string SelectedWidgetDna
+		{
+			get { return ViewState["SelectedWidgetDna"] as string; }
+			set { ViewState["SelectedWidgetDna"] = value; }
+		}
+
 		public override void InitialLoading(Node node)
 		{
 			base.InitialLoading(node);
@@ -96,6 +108,14 @@ namespace Magix.ide
 				throw new ArgumentException("[type] '" + type + "' does not exist");
 
 			Control ctrl = ctrlRaise["_ctrl"].Value as Control;
+
+			if (widget.Dna == SelectedWidgetDna)
+			{
+				if (ctrl is BaseWebControl)
+				{
+					(ctrl as BaseWebControl).CssClass += " selected";
+				}
+			}
 
 			if (widget.Contains("controls"))
 			{
@@ -406,31 +426,222 @@ not thread safe";
 		[ActiveEvent(Name="magix.execute.select-widget")]
 		protected void magix_execute_select_widget(object sender, ActiveEventArgs e)
 		{
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			{
+				e.Params["event:magix.execute"].Value = null;
+				e.Params["inspect"].Value = @"sets the [dna] widget as the actively selected widget.&nbsp;&nbsp;
+if no [dna] is given, no widget is set as the currently selected.&nbsp;&nbsp;not thread safe";
+				e.Params["select-widget"]["dna"].Value = "root-0-0";
+				return;
+			}
+
+			Node ip = e.Params;
+			if (e.Params.Contains("_ip"))
+				ip = e.Params["_ip"].Value as Node;
+
+			if (!ip.Contains("dna"))
+				SelectedWidgetDna = null;
+			else
+				SelectedWidgetDna = ip["dna"].Get<string>();
+
+			BuildForm();
 		}
 
 		[ActiveEvent(Name="magix.execute.copy-widget")]
 		protected void magix_execute_copy_widget(object sender, ActiveEventArgs e)
 		{
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			{
+				e.Params["event:magix.execute"].Value = null;
+				e.Params["inspect"].Value = @"copies the currently selected widget into the clipboard.&nbsp;&nbsp;
+not thread safe";
+				e.Params["copy-widget"].Value = null;
+				return;
+			}
+
+			if (SelectedWidgetDna == null)
+				throw new ArgumentException("no widget currently selected, you must select widget before you can copy it");
+
+			ClipBoard = DataSource.FindDna(SelectedWidgetDna).Clone();
 		}
 
 		[ActiveEvent(Name="magix.execute.cut-widget")]
 		protected void magix_execute_cut_widget(object sender, ActiveEventArgs e)
 		{
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			{
+				e.Params["event:magix.execute"].Value = null;
+				e.Params["inspect"].Value = @"cuts out the currently selected widget and puts it into the clipboard.&nbsp;&nbsp;
+not thread safe";
+				e.Params["cut-widget"]["dna"].Value = "root-0-0";
+				return;
+			}
+
+			if (SelectedWidgetDna == null)
+				throw new ArgumentException("no widget currently selected, you must select widget before you can cut it");
+
+			RaiseEvent(
+				"magix.execute.copy-widget",
+				e.Params);
+
+			DataSource.FindDna(SelectedWidgetDna).UnTie();
+
+			BuildForm();
 		}
 
 		[ActiveEvent(Name="magix.execute.paste-widget")]
 		protected void magix_execute_paste_widget(object sender, ActiveEventArgs e)
 		{
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			{
+				e.Params["event:magix.execute"].Value = null;
+				e.Params["inspect"].Value = @"pastes in the widget from the clipboard to the selected widget.&nbsp;&nbsp;
+use [position] to signify the relationship between the node being pasted and the position being pasted into, 
+default is after.&nbsp;&nbsp;not thread safe";
+				e.Params["paste-widget"]["to"].Value = "root-0-0";
+				return;
+			}
+
+			Node ip = e.Params;
+			if (e.Params.Contains("_ip"))
+				ip = e.Params["_ip"].Value as Node;
+
+			if (ClipBoard == null)
+				throw new ArgumentException("cannot paste a widget, since there are no widgets on the clipboard");
+
+			Node tmp = DataSource.FindDna(SelectedWidgetDna);
+
+			string position = "after";
+
+			if (ip.Contains("position"))
+				position = ip["position"].Get<string>();
+
+			switch (position)
+			{
+			case "before":
+				tmp.AddBefore(ClipBoard.Clone());
+				break;
+			case "after":
+				tmp.AddAfter(ClipBoard.Clone());
+				break;
+			case "child":
+				tmp.Add(ClipBoard.Clone());
+				break;
+			default:
+				throw new ArgumentException("sorry, don't know where " + position + " is");
+			}
+
+			BuildForm();
 		}
 
-		[ActiveEvent(Name="magix.execute.load-form")]
-		protected void magix_execute_load_form(object sender, ActiveEventArgs e)
+		[ActiveEvent(Name="magix.execute.list-forms")]
+		protected void magix_execute_list_forms(object sender, ActiveEventArgs e)
 		{
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			{
+				e.Params["event:magix.execute"].Value = null;
+				e.Params["inspect"].Value = @"lists all forms in system underneath [forms].&nbsp;&nbsp;
+not thread safe";
+				e.Params["list-forms"].Value = null;
+				return;
+			}
+
+			Node ip = e.Params;
+			if (e.Params.Contains("_ip"))
+				ip = e.Params["_ip"].Value as Node;
+
+			Node tmp = new Node();
+
+			tmp["prototype"]["type"].Value = "magix.forms.form";
+
+			RaiseEvent(
+				"magix.data.load",
+				tmp);
+
+			foreach (Node idx in tmp["objects"])
+			{
+				Node tp = new Node("form");
+				tp["name"].Value = idx["name"].Get<string>();
+				tp["object-id"].Value = idx.Name;
+				ip["forms"].Add(tp);
+			}
 		}
 
 		[ActiveEvent(Name="magix.execute.save-form")]
 		protected void magix_execute_save_form(object sender, ActiveEventArgs e)
 		{
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			{
+				e.Params["event:magix.execute"].Value = null;
+				e.Params["inspect"].Value = @"saves the currently loaded form as [name].&nbsp;&nbsp;
+not thread safe";
+				e.Params["save-form"]["name"].Value = "name-of-form";
+				return;
+			}
+
+			Node ip = e.Params;
+			if (e.Params.Contains("_ip"))
+				ip = e.Params["_ip"].Value as Node;
+
+			if (!ip.Contains("name"))
+				throw new ArgumentException("no [name] given to save form as");
+
+			Node tp = new Node();
+
+			tp["prototype"]["type"].Value = "magix.forms.form";
+			tp["prototype"]["name"].Value = ip["name"].Get<string>();
+
+			RaiseEvent(
+				"magix.data.load",
+				tp);
+
+			Node tmp = new Node();
+
+			if (tp.Contains("objects") && tp["objects"].Count > 0)
+			{
+				tmp["id"].Value = tp["objects"][0].Name;
+			}
+
+			tmp["object"]["form"].Add(DataSource.Clone());
+			tmp["object"]["type"].Value = "magix.forms.form";
+			tmp["object"]["name"].Value = ip["name"].Get<string>();
+
+			RaiseEvent(
+				"magix.data.save",
+				tmp);
+		}
+
+		[ActiveEvent(Name="magix.execute.load-form")]
+		protected void magix_execute_load_form(object sender, ActiveEventArgs e)
+		{
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			{
+				e.Params["event:magix.execute"].Value = null;
+				e.Params["inspect"].Value = @"loads the given [name] form.&nbsp;&nbsp;
+not thread safe";
+				e.Params["load-form"]["name"].Value = "name-of-form";
+				return;
+			}
+
+			Node ip = e.Params;
+			if (e.Params.Contains("_ip"))
+				ip = e.Params["_ip"].Value as Node;
+
+			if (!ip.Contains("name"))
+				throw new ArgumentException("no [name] given, don't know which form to load");
+
+			Node tmp = new Node();
+
+			tmp["prototype"]["name"].Value = ip["name"].Get<string>();
+			tmp["prototype"]["type"].Value = "magix.forms.form";
+
+			RaiseEvent(
+				"magix.data.load",
+				tmp);
+
+			DataSource = tmp["objects"][0]["form"][0].Clone();
+
+			BuildForm();
 		}
 
 		[ActiveEvent(Name="magix.execute.export-form")]
