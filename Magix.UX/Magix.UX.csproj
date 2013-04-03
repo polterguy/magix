@@ -79,6 +79,7 @@
     <Compile Include="Core\AjaxManager.cs" />
     <Compile Include="Controls\Timer.cs" />
     <Compile Include="Controls\DynamicPanel.cs" />
+    <Compile Include="Controls\Core\AttributeControl.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

@@ -186,6 +186,10 @@
       <Project>{30E34A65-909F-40A6-B366-0158426A4DE2}</Project>
       <Name>Magix.log.tests</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Magix.ide\Magix.ide.csproj">
+      <Project>{686BE5B7-2EC5-4ADF-9483-A3DD90D472F9}</Project>
+      <Name>Magix.ide</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="web.config" />
