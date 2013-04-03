@@ -26,6 +26,7 @@ namespace Magix.ide
     {
 		protected Panel wrp;
 		protected TextArea console;
+		protected TextArea output;
 
 		private Node DataSource
 		{
@@ -75,46 +76,36 @@ namespace Magix.ide
 
 			string type = widget["type"].Get<string>();
 
-			switch (type)
+			Node tmp = new Node();
+			if (widget.Contains("properties"))
 			{
-			case "html-panel":
-				break;
-			case "html-label":
-				break;
-			default:
-				Node tmp = new Node();
-				if (widget.Contains("properties"))
+				foreach (Node idx in widget["properties"])
 				{
-					foreach (Node idx in widget["properties"])
-					{
-						tmp[idx.Name].Value = idx.Value;
-					}
+					tmp[idx.Name].Value = idx.Value;
 				}
-
-				Node ctrlRaise = new Node();
-				ctrlRaise["_code"].Value = tmp;
-
-				RaiseEvent(
-					type,
-					ctrlRaise);
-
-				if (!ctrlRaise.Contains("_ctrl"))
-					throw new ArgumentException("[type] '" + type + "' does not exist");
-
-				Control ctrl = ctrlRaise["_ctrl"].Value as Control;
-
-				if (widget.Contains("controls"))
-				{
-					foreach (Node idx in widget["controls"])
-					{
-						BuildWidget(idx, ctrl);
-					}
-				}
-
-				parent.Controls.Add(ctrl);
-
-				break;
 			}
+
+			Node ctrlRaise = new Node();
+			ctrlRaise["_code"].Value = tmp;
+
+			RaiseEvent(
+				type,
+				ctrlRaise);
+
+			if (!ctrlRaise.Contains("_ctrl"))
+				throw new ArgumentException("[type] '" + type + "' does not exist");
+
+			Control ctrl = ctrlRaise["_ctrl"].Value as Control;
+
+			if (widget.Contains("controls"))
+			{
+				foreach (Node idx in widget["controls"])
+				{
+					BuildWidget(idx, ctrl);
+				}
+			}
+
+			parent.Controls.Add(ctrl);
 		}
 
 		protected void run_Click(object sender, EventArgs e)
@@ -133,6 +124,105 @@ namespace Magix.ide
 				RaiseEvent(
 					"magix.execute", 
 					tmp["json"].Get<Node>());
+
+				RaiseEvent(
+					"magix.code.node-2-code", 
+					tmp);
+
+				output.Text = tmp["code"].Get<string>();
+			}
+		}
+
+		[ActiveEvent(Name="magix.execute.list-widgets")]
+		protected void magix_execute_list_widgets(object sender, ActiveEventArgs e)
+		{
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			{
+				e.Params["event:magix.execute"].Value = null;
+				e.Params["inspect"].Value = @"lists all widgets as [widgets] in currently edited form.&nbsp;&nbsp;
+not thread safe";
+				e.Params["list-widgets"].Value = null;
+				return;
+			}
+
+			Node retVal = new Node("widgets");
+
+			if (DataSource.Contains("controls"))
+			{
+				foreach (Node idx in DataSource["controls"])
+				{
+					GetWidget(idx, retVal);
+				}
+			}
+
+			(e.Params["_ip"].Value as Node).Add(retVal);
+		}
+
+		private void GetWidget(Node widgetNode, Node output)
+		{
+			Node retVal = new Node("widget");
+
+			retVal["type"].Value = widgetNode["type"].Get<string>();
+			retVal["dna"].Value = widgetNode.Dna;
+
+			if (widgetNode.Contains("properties"))
+			{
+				foreach (Node idx in widgetNode["properties"])
+				{
+					retVal["properties"][idx.Name].Value = idx.Value;
+				}
+			}
+
+			output.Add(retVal);
+
+			if (widgetNode.Contains("controls"))
+			{
+				foreach (Node idx in widgetNode["controls"])
+				{
+					GetWidget(idx, output);
+				}
+			}
+		}
+
+		[ActiveEvent(Name="magix.execute.list-widget-types")]
+		protected void magix_execute_list_widget_types(object sender, ActiveEventArgs e)
+		{
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			{
+				e.Params["event:magix.execute"].Value = null;
+				e.Params["inspect"].Value = @"lists all widget types as [types] available in system.&nbsp;&nbsp;
+not thread safe";
+				e.Params["list-widget-types"].Value = null;
+				return;
+			}
+
+			Node tmp = new Node();
+			tmp["begins-with"].Value = "magix.forms.controls.";
+
+			RaiseEvent(
+				"magix.admin.get-active-events",
+				tmp);
+
+			Node ip = e.Params["_ip"].Get<Node>();
+
+			foreach (Node idx in tmp["events"])
+			{
+				Node tp = new Node("widget");
+				tp["type"].Value = idx.Get<string>();
+
+				Node tp2 = new Node();
+				tp2["inspect"].Value = null;
+
+				RaiseEvent(
+					idx.Get<string>(),
+					tp2);
+
+				foreach (Node idx2 in tp2["controls"][0])
+				{
+					tp["properties"][idx2.Name].Value = idx2.Value;
+				}
+
+				ip["types"].Add(tp);
 			}
 		}
 
@@ -146,7 +236,7 @@ namespace Magix.ide
 not thread safe";
 				e.Params["add-widget"]["where"]["dna"].Value = "root";
 				e.Params["add-widget"]["where"]["position"].Value = "before|after|child";
-				e.Params["add-widget"]["widget"]["type"].Value = "html-panel|html-label|magix.forms.controls.installed-widget";
+				e.Params["add-widget"]["widget"]["type"].Value = "magix.forms.controls.installed-widget";
 				e.Params["add-widget"]["widget"]["properties"]["id"].Value = "myWidget";
 				e.Params["add-widget"]["widget"]["properties"]["text"].Value = "hello world";
 				return;
@@ -189,6 +279,8 @@ not thread safe";
 			case "child":
 				whereNode["controls"].Add(widgetNode);
 				break;
+			default:
+				throw new ArgumentException("sorry, don't know where " + ip["position"].Get<string>() + " is");
 			}
 
 			BuildForm();
@@ -197,16 +289,118 @@ not thread safe";
 		[ActiveEvent(Name="magix.execute.remove-widget")]
 		protected void magix_execute_remove_widget(object sender, ActiveEventArgs e)
 		{
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			{
+				e.Params["event:magix.execute"].Value = null;
+				e.Params["inspect"].Value = @"removes the [dna] widget from the currently viewed form.&nbsp;&nbsp;
+not thread safe";
+				e.Params["remove-widget"]["dna"].Value = "root-0-0";
+				return;
+			}
+
+			Node ip = e.Params;
+			if (e.Params.Contains("_ip"))
+				ip = e.Params["_ip"].Value as Node;
+
+			if (!ip.Contains("dna"))
+				throw new ArgumentException("you need a [dna] for remove-widget");
+
+			string dna = ip["dna"].Get<string>();
+
+			Node whereNode = DataSource.FindDna(dna);
+
+			whereNode.Parent.Remove(whereNode);
+
+			BuildForm();
 		}
 
 		[ActiveEvent(Name="magix.execute.change-widget")]
 		protected void magix_execute_change_widget(object sender, ActiveEventArgs e)
 		{
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			{
+				e.Params["event:magix.execute"].Value = null;
+				e.Params["inspect"].Value = @"changes the [dna] widget, adding/changing [change] properties and 
+removing [remove] properties.&nbsp;&nbsp;not thread safe";
+				e.Params["remove-widget"]["dna"].Value = "root-0-0";
+				e.Params["remove-widget"]["change"]["id"].Value = "myId";
+				e.Params["remove-widget"]["remove"]["css"].Value = null;
+				return;
+			}
+
+			Node ip = e.Params;
+			if (e.Params.Contains("_ip"))
+				ip = e.Params["_ip"].Value as Node;
+
+			if (!ip.Contains("change") && !ip.Contains("remove"))
+				throw new ArgumentException("you need a [change] and/or a [remove] for change-widget to signalize which properties are to be updated");
+
+			Node widgetNode = DataSource.FindDna(ip["dna"].Get<string>());
+
+			if (ip.Contains("change"))
+			{
+				foreach (Node idx in ip["change"])
+				{
+					widgetNode["properties"][idx.Name].Value = idx.Value;
+				}
+			}
+
+			if (ip.Contains("remove"))
+			{
+				foreach (Node idx in ip["remove"])
+				{
+					widgetNode["properties"][idx.Name].UnTie();
+				}
+			}
+
+			BuildForm();
 		}
 
 		[ActiveEvent(Name="magix.execute.move-widget")]
 		protected void magix_execute_move_widget(object sender, ActiveEventArgs e)
 		{
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			{
+				e.Params["event:magix.execute"].Value = null;
+				e.Params["inspect"].Value = @"moves the [dna] widget to the [position] of the [to] dna.&nbsp;&nbsp;
+not thread safe";
+				e.Params["move-widget"]["dna"].Value = "root-0-0";
+				e.Params["move-widget"]["position"].Value = "before|after|child";
+				e.Params["move-widget"]["to"].Value = "root-0-0";
+				return;
+			}
+
+			Node ip = e.Params;
+			if (e.Params.Contains("_ip"))
+				ip = e.Params["_ip"].Value as Node;
+
+			if (!ip.Contains("dna"))
+				throw new ArgumentException("you need a [dna] for move-widget");
+
+			if (!ip.Contains("to"))
+				throw new ArgumentException("you need a [to] for move-widget");
+
+			if (!ip.Contains("position"))
+				throw new ArgumentException("you need a [position] for move-widget");
+
+			Node widgetNode = DataSource.FindDna(ip["dna"].Get<string>()).UnTie();
+
+			switch (ip["position"].Get<string>())
+			{
+			case "before":
+				DataSource.FindDna(ip["to"].Get<string>()).AddBefore(widgetNode);
+				break;
+			case "after":
+				DataSource.FindDna(ip["to"].Get<string>()).AddAfter(widgetNode);
+				break;
+			case "child":
+				DataSource.FindDna(ip["to"].Get<string>()).Add(widgetNode);
+				break;
+			default:
+				throw new ArgumentException("sorry, don't know where " + ip["position"].Get<string>() + " is");
+			}
+
+			BuildForm();
 		}
 
 		[ActiveEvent(Name="magix.execute.select-widget")]
@@ -226,16 +420,6 @@ not thread safe";
 
 		[ActiveEvent(Name="magix.execute.paste-widget")]
 		protected void magix_execute_paste_widget(object sender, ActiveEventArgs e)
-		{
-		}
-
-		[ActiveEvent(Name="magix.execute.list-widgets")]
-		protected void magix_execute_list_widgets(object sender, ActiveEventArgs e)
-		{
-		}
-
-		[ActiveEvent(Name="magix.execute.list-widget-types")]
-		protected void magix_execute_list_widget_types(object sender, ActiveEventArgs e)
 		{
 		}
 
