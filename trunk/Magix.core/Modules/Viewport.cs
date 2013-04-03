@@ -245,6 +245,7 @@ javascript file on the client side.&nbsp;&nbsp;not thread safe";
 			{
 				e.Params["name"].Value = "namespace.module_name";
 				e.Params["container"].Value = "content";
+				e.Params["css"].Value = "span12";
 				e.Params["inspect"].Value = @"loads an active module into the 
 given [container] viewport container.&nbsp;&nbsp;the module name must be defined in 
 the [name] node.&nbsp;&nbsp;the incoming parameters will be used.&nbsp;&nbsp;not thread safe";

@@ -77,6 +77,81 @@ namespace Magix.Core
 		}
 
 		/**
+		 * Contains a genetically unique code you might say, according to the 
+		 * node's position in the tree
+		 */
+		public string Dna
+		{
+			get
+			{
+				string dna = "";
+				if (Parent != null)
+				{
+					dna = Parent.Dna + "-";
+					int idxNo = 0;
+					foreach (Node idx in Parent.Children)
+					{
+						if (idx.Equals(this))
+						{
+							dna += idxNo;
+							break;
+						}
+						idxNo++;
+					}
+				}
+				else
+					dna = "root";
+				return dna;
+			}
+		}
+
+		/**
+		 * returns the node with the given dna
+		 */
+		public Node FindDna(string dna)
+		{
+			Node tmp = RootNode();
+			List<string> dnas = new List<string>(dna.Split('-'));
+			dnas.RemoveAt(0);
+
+			while (dnas.Count > 0)
+			{
+				int idxNo = int.Parse(dnas[0]);
+				tmp = tmp[idxNo];
+				dnas.RemoveAt(0);
+			}
+			return tmp;
+		}
+
+		/**
+		 * adds a node before the this node in its parent collection, if possible
+		 */
+		public void AddBefore(Node node)
+		{
+			if (Parent == null)
+				throw new ArgumentException("cannot add a node before the root node of a tree");
+
+			string[] dnas = Dna.Split('-');
+			int dnaNo = int.Parse(dnas[dnas.Length - 1]);
+
+			Parent.Insert(dnaNo, node);
+		}
+
+		/**
+		 * adds a node before the this node in its parent collection, if possible
+		 */
+		public void AddAfter(Node node)
+		{
+			if (Parent == null)
+				throw new ArgumentException("cannot add a node before the root node of a tree");
+
+			string[] dnas = Dna.Split('-');
+			int dnaNo = int.Parse(dnas[dnas.Length - 1]);
+
+			Parent.Insert(dnaNo + 1, node);
+		}
+
+		/**
 		 * Compares the nodes in the "this" pointer to 
 		 * see if they contain all the nodex that exists in our "prototype"
 		 * Node. If so, it will return true, else false

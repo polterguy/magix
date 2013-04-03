@@ -19,7 +19,7 @@ namespace Magix.UX.Widgets
      * If you only need to display text on your page, and you need to use WebControls for
      * this, you should use the Label control and not the Panel control.
      */
-    public class Panel : BaseWebControl, INamingContainer
+    public class Panel : AttributeControl, INamingContainer
     {
         /**
          * The HTML tag element type used to render your widget. You can set this property
