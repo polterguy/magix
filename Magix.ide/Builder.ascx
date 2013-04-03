@@ -18,10 +18,19 @@
 	PlaceHolder="command ..."
 	CssClass="span12 input-block-level monospaced" />
 
-<mux:Button
+<div class="input-append span9">
+	<mux:Button
+		runat="server"
+		id="run"
+		Text="execute"
+		AccessKey="X"
+		CssClass="span2 btn btn-primary"
+		OnClick="run_Click" />
+</div>
+
+<mux:TextArea
 	runat="server"
-	id="run"
-	Text="execute"
-	AccessKey="X"
-	CssClass="span2 btn btn-primary"
-	OnClick="run_Click" />
+	id="output"
+	Rows="12"
+	PlaceHolder="output ..."
+	CssClass="span12 input-block-level monospaced" />
