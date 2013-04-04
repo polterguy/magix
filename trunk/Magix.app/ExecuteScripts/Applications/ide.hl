@@ -54,6 +54,7 @@ magix.forms.create-form
         select=>form
           css=>span3
           onselectedindexchanged
+            select-widget
             magix.forms.get-value
               form-id=>toolbox-load-file
               id=>form
@@ -66,6 +67,33 @@ magix.forms.create-form
               value=>[/][magix.forms.get-value][value].Value
             if=>[/][if][load-form][name].Value!=_default
               load-form
+            _items
+            _buffer
+              x=>y
+            list-widgets
+            while=>[/][_items].Count>0
+              set=>[/][_items][0]
+            set=>[/][_items][_default].Value
+              value=>widgets in form ...
+            for-each=>[/][list-widgets][widgets]
+              set=>[/][_buffer][0].Name
+                value=>[.][dna].Value
+              set=>[/][_buffer][0].Value
+                value=>[.][type].Value
+              add=>[/][_items]
+                value=>[/][_buffer][0]
+            set=>[/][magix.forms.set-values][items]
+              value=>[/][_items]
+            set=>[/][magix.forms.set-values][_items].Name
+              value=>items
+            magix.forms.set-values
+              form-id=>toolbox-load-file
+              id=>widgets
+              items
+            magix.forms.set-value
+              form-id=>toolbox-load-file
+              id=>widgets
+              value=>_default
           items
             _default=>select form ...
         text-box=>name
@@ -82,8 +110,76 @@ magix.forms.create-form
             set=>[/][save-form][name].Value
               value=>[/][magix.forms.get-value][value].Value
             save-form
-        select
+            _data
+              x=>y
+            list-forms
+            for-each=>[/][list-forms][forms]
+              if=>[.][name].Value!=_default
+                set=>[/][_data][0].Name
+                  value=>[.][name].Value
+                set=>[/][_data][0].Value
+                  value=>[.][name].Value
+                add=>[/][magix.forms.set-values][items]
+                  value=>[/][_data][0]
+            magix.forms.set-values
+              form-id=>toolbox-load-file
+              id=>form
+              items
+                _default=>select form ...
+            set=>[/][magix.forms.set-value][value].Value
+              value=>[/][magix.forms.get-value][value].Value
+            magix.forms.set-value
+              form-id=>toolbox-load-file
+              id=>form
+              value
+        button=>delete
+          text=>delete
+          css=>span2 btn btn-primary
+          onclick
+            magix.forms.get-value
+              form-id=>toolbox-load-file
+              id=>name
+            set=>[/][delete-form][name].Value
+              value=>[/][magix.forms.get-value][value].Value
+            delete-form
+            _data
+              x=>y
+            list-forms
+            for-each=>[/][list-forms][forms]
+              if=>[.][name].Value!=_default
+                set=>[/][_data][0].Name
+                  value=>[.][name].Value
+                set=>[/][_data][0].Value
+                  value=>[.][name].Value
+                add=>[/][magix.forms.set-values][items]
+                  value=>[/][_data][0]
+            magix.forms.set-values
+              form-id=>toolbox-load-file
+              id=>form
+              items
+                _default=>select form ...
+            set=>[/][magix.forms.set-value][value].Value
+              value=>_default
+            magix.forms.set-value
+              form-id=>toolbox-load-file
+              id=>form
+              value
+            load-form
+              name=>_default
+            magix.forms.set-value
+              form-id=>toolbox-load-file
+              id=>name
+              value=>_default
+        select=>widgets
+          onselectedindexchanged
+            magix.forms.get-value
+              form-id=>toolbox-load-file
+              id=>widgets
+            set=>[/][select-widget][dna].Value
+              value=>[/][magix.forms.get-value][value].Value
+            select-widget
           items
+            _default=>widgets in form ...
     label=>ruler
       tag=>hr
       css=>span11

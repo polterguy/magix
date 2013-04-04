@@ -491,7 +491,29 @@ namespace Magix.Core
             // this event before we start calling them one by one. But every time in
             // between calling the next one, we must verify that it still exists within
             // the collection...
-            List<Tuple<MethodInfo, object>> tmp = SlurpAllEventHandlers(name, forceNoOverride);
+            List<Tuple<MethodInfo, object>> tmp = SlurpAllEventHandlers(":before", forceNoOverride);
+
+            // Looping through all methods...
+            foreach (Tuple<MethodInfo, object> idx in tmp)
+            {
+                // Since events might load and clear controls we need to check if the event 
+                // handler still exists after *every* event handler we dispatch control to...
+                List<Tuple<MethodInfo, object>> recheck = SlurpAllEventHandlers(":before", forceNoOverride);
+
+				bool exists = false;
+                foreach (Tuple<MethodInfo, object> idx2 in recheck)
+                {
+                    if (idx.Equals(idx2))
+                    {
+						exists = true;
+                        break;
+                    }
+                }
+				if (exists)
+                	ExecuteEventMethod(idx.Item1, idx.Item2, sender, e);
+            }
+
+            tmp = SlurpAllEventHandlers(name, forceNoOverride);
 
             // Looping through all methods...
             foreach (Tuple<MethodInfo, object> idx in tmp)
@@ -499,6 +521,28 @@ namespace Magix.Core
                 // Since events might load and clear controls we need to check if the event 
                 // handler still exists after *every* event handler we dispatch control to...
                 List<Tuple<MethodInfo, object>> recheck = SlurpAllEventHandlers(name, forceNoOverride);
+
+				bool exists = false;
+                foreach (Tuple<MethodInfo, object> idx2 in recheck)
+                {
+                    if (idx.Equals(idx2))
+                    {
+						exists = true;
+                        break;
+                    }
+                }
+				if (exists)
+                	ExecuteEventMethod(idx.Item1, idx.Item2, sender, e);
+            }
+
+            tmp = SlurpAllEventHandlers(":after", forceNoOverride);
+
+            // Looping through all methods...
+            foreach (Tuple<MethodInfo, object> idx in tmp)
+            {
+                // Since events might load and clear controls we need to check if the event 
+                // handler still exists after *every* event handler we dispatch control to...
+                List<Tuple<MethodInfo, object>> recheck = SlurpAllEventHandlers(":after", forceNoOverride);
 
 				bool exists = false;
                 foreach (Tuple<MethodInfo, object> idx2 in recheck)

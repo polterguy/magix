@@ -13,26 +13,41 @@
 
 <hr class="span11" />
 
-<mux:TextArea
+<mux:Panel
 	runat="server"
-	id="console"
-	Rows="6"
-	PlaceHolder="console ..."
-	CssClass="span12 input-block-level monospaced" />
+	CssClass="span12"
+	style="display:none;"
+	id="wrp2">
 
-<div class="input-append offset5 span7">
-	<mux:Button
+	<mux:TextArea
 		runat="server"
-		id="run"
-		Text="execute"
-		AccessKey="X"
-		CssClass="span2 btn btn-primary"
-		OnClick="run_Click" />
-</div>
+		id="console"
+		Rows="6"
+		PlaceHolder="console ..."
+		CssClass="span12 input-block-level monospaced" />
 
-<mux:TextArea
+	<div class="input-append offset5 span7">
+		<mux:Button
+			runat="server"
+			id="run"
+			Text="execute"
+			AccessKey="X"
+			CssClass="span2 btn btn-primary"
+			OnClick="run_Click" />
+	</div>
+
+	<mux:TextArea
+		runat="server"
+		id="output"
+		Rows="6"
+		PlaceHolder="output ..."
+		CssClass="span12 input-block-level monospaced" />
+
+</mux:Panel>
+
+<mux:Button
 	runat="server"
-	id="output"
-	Rows="6"
-	PlaceHolder="output ..."
-	CssClass="span12 input-block-level monospaced" />
+	id="hider"
+	CssClass="btn btn-primary span2"
+	OnClick="hider_Click"
+	Text="show" />

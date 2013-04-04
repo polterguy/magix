@@ -139,9 +139,59 @@ namespace Magix.forms
 				else if (ctrl is RadioButton)
 					((RadioButton)ctrl).Checked = bool.Parse (value);
 				else if (ctrl is SelectList)
+				{
 					((SelectList)ctrl).SetSelectedItemAccordingToValue(value);
+					((SelectList)ctrl).ReRender();
+				}
 				else
 					throw new ArgumentException("Don't know how to set the value of that control");
+			}
+		}
+
+		// TODO: create plugable event
+		/**
+		 */
+        [ActiveEvent(Name = "magix.forms.set-values")]
+		protected void magix_forms_set_values(object sender, ActiveEventArgs e)
+		{
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			{
+				e.Params["event:magix.forms.set-values"].Value = null;
+				e.Params["id"].Value = "control";
+				e.Params["form-id"].Value = "formid";
+				e.Params["values"]["item1"].Value = "new value 1";
+				e.Params["values"]["item2"].Value = "new value 2";
+				e.Params["inspect"].Value = @"sets the values of the given 
+[id] web control, in the [form-id] form, from [values] for select widgets.&nbsp;&nbsp;
+not thread safe";
+				return;
+			}
+
+			if (!e.Params.Contains ("form-id"))
+				throw new ArgumentException("Missing form-id in set-value");
+
+			if (!e.Params.Contains ("id"))
+				throw new ArgumentException("Missing id in set-value");
+
+			if (e.Params["form-id"].Get<string>() == FormID)
+			{
+				Control ctrl = Selector.FindControl<Control>(this, e.Params["id"].Get<string>());
+				if (ctrl is SelectList)
+				{
+					SelectList lst = ctrl as SelectList;
+					lst.Items.Clear();
+					if (e.Params.Contains("items"))
+					{
+						foreach (Node idx in e.Params["items"])
+						{
+							ListItem it = new ListItem(idx.Get<string>(), idx.Name);
+							lst.Items.Add(it);
+						}
+					}
+					lst.ReRender();
+				}
+				else
+					throw new ArgumentException("Don't know how to set the values of that control");
 			}
 		}
 
