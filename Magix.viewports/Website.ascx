@@ -105,4 +105,11 @@
 	        CssClass="span12"
 	        id="footer" />
     </div>
+	<div class="row">
+	    <mux:DynamicPanel 
+	        runat="server" 
+	        OnReload="dynamic_LoadControls"
+	        CssClass="span12"
+	        id="trace" />
+    </div>
 </mux:Panel>

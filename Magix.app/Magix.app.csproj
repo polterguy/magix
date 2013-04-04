@@ -275,5 +275,6 @@
     <None Include="ExecuteScripts\Applications\inspect-web-controls.hl" />
     <None Include="Help\nodes-5.mml" />
     <None Include="Help\nodes-6.mml" />
+    <None Include="ExecuteScripts\Applications\ide.hl" />
   </ItemGroup>
 </Project>

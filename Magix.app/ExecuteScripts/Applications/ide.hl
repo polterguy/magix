@@ -1,0 +1,90 @@
+
+event:magix.execute
+
+inspect=>@"loads up the toolbox for 
+the ide"
+
+_data
+  x=>y
+
+magix.viewport.load-module
+  container=>footer
+  css=>span12
+  name=>Magix.ide.Builder
+
+list-forms
+
+for-each=>[list-forms][forms]
+  set=>[/][_data][0].Name
+    value=>[.][name].Value
+  set=>[/][_data][0].Value
+    value=>[.][name].Value
+  if=>[.][name].Value!=_default
+    add=>[/][magix.forms.create-form][controls][panel][controls][select][items]
+      value=>[/][_data][0]
+
+load-form
+  name=>_default
+
+list-widgets
+
+_data2
+  x=>y
+
+for-each=>[/][list-widgets][widgets]
+  set=>[/][_data2][0].Name
+    value=>[.][dna].Value
+  set=>[/][_data2][0].Value
+    value=>[.][type].Value
+  add=>[/][magix.forms.create-form][controls][panel][controls][select:1][items]
+    value=>[/][_data2][0]
+
+magix.forms.create-form
+  form-id=>toolbox-load-file
+  container=>menu
+  css=>span12
+  controls
+    label=>header
+      tag=>h1
+      text=>ide
+      css=>span12
+    panel=>wrp
+      css=>input-append
+      controls
+        select=>form
+          css=>span3
+          onselectedindexchanged
+            magix.forms.get-value
+              form-id=>toolbox-load-file
+              id=>form
+            set=>[/][magix.forms.set-value][value].Value
+              value=>[/][magix.forms.get-value][value].Value
+            magix.forms.set-value
+              form-id=>toolbox-load-file
+              id=>name
+            set=>[/][if][load-form][name].Value
+              value=>[/][magix.forms.get-value][value].Value
+            if=>[/][if][load-form][name].Value!=_default
+              load-form
+          items
+            _default=>select form ...
+        text-box=>name
+          css=>span3
+          place-holder=>name ...
+          text=>_default
+        button=>save
+          text=>save
+          css=>span2 btn btn-primary
+          onclick
+            magix.forms.get-value
+              form-id=>toolbox-load-file
+              id=>name
+            set=>[/][save-form][name].Value
+              value=>[/][magix.forms.get-value][value].Value
+            save-form
+        select
+          items
+    label=>ruler
+      tag=>hr
+      css=>span11
+
