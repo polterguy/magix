@@ -11,11 +11,13 @@
 	CssClass="span12"
 	id="wrp" />
 
+<hr class="span11" />
+
 <mux:TextArea
 	runat="server"
 	id="console"
-	Rows="12"
-	PlaceHolder="command ..."
+	Rows="6"
+	PlaceHolder="console ..."
 	CssClass="span12 input-block-level monospaced" />
 
 <div class="input-append offset5 span7">
@@ -31,6 +33,6 @@
 <mux:TextArea
 	runat="server"
 	id="output"
-	Rows="12"
+	Rows="6"
 	PlaceHolder="output ..."
 	CssClass="span12 input-block-level monospaced" />

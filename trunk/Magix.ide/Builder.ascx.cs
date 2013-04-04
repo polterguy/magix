@@ -64,7 +64,7 @@ namespace Magix.ide
 				Load +=
 					delegate
 					{
-						DataSource = new Node();
+						DataSource = new Node("surface");
 					};
 			}
 		}
@@ -639,7 +639,10 @@ not thread safe";
 				"magix.data.load",
 				tmp);
 
-			DataSource = tmp["objects"][0]["form"][0].Clone();
+			if (tmp.Contains("objects") && tmp["objects"].Count > 0)
+			{
+				DataSource = tmp["objects"][0]["form"][0].Clone();
+			}
 
 			BuildForm();
 		}

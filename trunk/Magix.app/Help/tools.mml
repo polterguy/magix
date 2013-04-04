@@ -135,15 +135,24 @@ link-button=>ide
   text=>ide
   css=>btn btn-info
   onclick
-    magix.viewport.load-module
-      container=>header
-      css=>span12
-      name=>Magix.ide.Builder
     magix.viewport.clear-controls
       container=>modal
     magix.viewport.clear-controls
-      container=>menu
-    magix.viewport.clear-controls
       container=>content
+    magix.viewport.clear-controls
+      container=>header
+    magix.viewport.clear-controls
+      container=>menu
+    magix.admin.run-file
+      file=>ExecuteScripts/Applications/ide.hl
+link-button=>trace
+  text=>trace
+  css=>btn btn-info
+  onclick
+    magix.viewport.load-module
+      container=>trace
+      name=>Magix.admin.EventSniffer
+    magix.viewport.clear-controls
+      container=>modal
 }}</div>
 

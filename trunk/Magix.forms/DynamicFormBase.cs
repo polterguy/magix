@@ -101,6 +101,7 @@ namespace Magix.forms
 				e.Params["event:magix.forms.set-value"].Value = null;
 				e.Params["id"].Value = "control";
 				e.Params["form-id"].Value = "formid";
+				e.Params["value"].Value = "new value";
 				e.Params["inspect"].Value = @"sets the value of the given 
 [id] web control, in the [form-id] form, from [value].&nbsp;&nbsp;not thread safe";
 				return;
@@ -119,7 +120,7 @@ namespace Magix.forms
 				Control ctrl = Selector.FindControl<Control>(this, e.Params["id"].Get<string>());
 				if (ctrl is BaseWebControlFormElementText)
 					((BaseWebControlFormElementText)ctrl).Text = value;
-				if (ctrl is Label)
+				else if (ctrl is Label)
 					((Label)ctrl).Text = value;
 				else if (ctrl is Button)
 					((Button)ctrl).Text = value;
