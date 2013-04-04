@@ -27,6 +27,8 @@ namespace Magix.ide
 		protected Panel wrp;
 		protected TextArea console;
 		protected TextArea output;
+		protected Panel wrp2;
+		protected Button hider;
 
 		private Node DataSource
 		{
@@ -151,6 +153,76 @@ namespace Magix.ide
 
 				output.Text = tmp["code"].Get<string>();
 			}
+		}
+
+		protected void hider_Click(object sender, EventArgs e)
+		{
+			if (wrp2.Style[Styles.display] != "none")
+			{
+				new EffectRollUp(wrp2, 500)
+					.Render();
+				hider.Text = "show";
+			}
+			else
+			{
+				new EffectRollDown(wrp2, 500)
+					.Render();
+				hider.Text = "hide";
+			}
+		}
+
+		private bool isFirst;
+
+		[ActiveEvent(Name=":before")]
+		protected void magix_execute_before(object sender, ActiveEventArgs e)
+		{
+			if (e.Name == "magix.execute" || e.Name == "execute")
+			{
+				if (!isFirst)
+				{
+					isFirst = true;
+					console.Text = "";
+					output.Text = "";
+				}
+
+				if (wrp2.Style[Styles.display] == "none")
+					return;
+
+				Node tmp = new Node();
+				tmp["json"].Value = e.Params;
+
+				RaiseEvent(
+					"magix.code.node-2-code",
+					tmp);
+
+				console.Text += tmp["code"].Get<string>() + "\n";
+			}
+		}
+
+		[ActiveEvent(Name=":after")]
+		protected void magix_execute_after(object sender, ActiveEventArgs e)
+		{
+			if (e.Name == "magix.execute" || e.Name == "execute")
+			{
+				if (wrp2.Style[Styles.display] == "none")
+					return;
+
+				Node tmp = new Node();
+				tmp["json"].Value = e.Params;
+
+				RaiseEvent(
+					"magix.code.node-2-code",
+					tmp);
+
+				output.Text += tmp["code"].Get<string>() + "\n";
+			}
+		}
+
+		protected override void OnPreRender (EventArgs e)
+		{
+			console.Text = console.Text.Trim();
+			output.Text = output.Text.Trim();
+			base.OnPreRender (e);
 		}
 
 		[ActiveEvent(Name="magix.execute.list-widgets")]
@@ -442,9 +514,10 @@ if no [dna] is given, no widget is set as the currently selected.&nbsp;&nbsp;not
 			if (!ip.Contains("dna"))
 				SelectedWidgetDna = null;
 			else
+			{
 				SelectedWidgetDna = ip["dna"].Get<string>();
-
-			BuildForm();
+				BuildForm();
+			}
 		}
 
 		[ActiveEvent(Name="magix.execute.copy-widget")]
@@ -643,6 +716,39 @@ not thread safe";
 			{
 				DataSource = tmp["objects"][0]["form"][0].Clone();
 			}
+
+			BuildForm();
+		}
+
+		[ActiveEvent(Name="magix.execute.delete-form")]
+		protected void magix_execute_delete_form(object sender, ActiveEventArgs e)
+		{
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			{
+				e.Params["event:magix.execute"].Value = null;
+				e.Params["inspect"].Value = @"deletes the given [name] form.&nbsp;&nbsp;
+not thread safe";
+				e.Params["delete-form"]["name"].Value = "name-of-form";
+				return;
+			}
+
+			Node ip = e.Params;
+			if (e.Params.Contains("_ip"))
+				ip = e.Params["_ip"].Value as Node;
+
+			if (!ip.Contains("name"))
+				throw new ArgumentException("no [name] given, don't know which form to load");
+
+			Node tmp = new Node();
+
+			tmp["prototype"]["name"].Value = ip["name"].Get<string>();
+			tmp["prototype"]["type"].Value = "magix.forms.form";
+
+			RaiseEvent(
+				"magix.data.remove",
+				tmp);
+
+			DataSource = new Node("surface");
 
 			BuildForm();
 		}

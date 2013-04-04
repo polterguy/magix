@@ -37,7 +37,7 @@ namespace Magix.admin
 		 * single Active Event in the system, and show with its parameters,
 		 * in a div
 		 */
-		[ActiveEvent(Name = "")]
+		[ActiveEvent(Name = ":before")]
 		public void magix_null_event_handler(object sender, ActiveEventArgs e)
 		{
 			if (e.Name == "magix.code.node-2-code")
@@ -54,6 +54,30 @@ namespace Magix.admin
 				code = "<pre class=\"span12\">" + tmp["code"].Get<string>() + "</pre>";
 			}
 			lbl.Text += "<h5>" + e.Name + "</h5>" + code;
+		}
+
+		/**
+		 * 'null Active Event Handler', which will swallow almost every
+		 * single Active Event in the system, and show with its parameters,
+		 * in a div
+		 */
+		[ActiveEvent(Name = ":after")]
+		public void magix_null_event_handler_after(object sender, ActiveEventArgs e)
+		{
+			if (e.Name == "magix.code.node-2-code")
+				return;
+
+			string code = "";
+			if (e.Params != null)
+			{
+				Node tmp = new Node();
+				tmp["json"].Value = e.Params;
+				RaiseEvent(
+					"magix.code.node-2-code",
+					tmp);
+				code = "<pre class=\"span12\">" + tmp["code"].Get<string>() + "</pre>";
+			}
+			lbl.Text += code;
 		}
 	}
 }
