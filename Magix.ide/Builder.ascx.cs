@@ -58,8 +58,8 @@ namespace Magix.ide
 					delegate
 					{
 						DataSource = node["form"].Clone();
+						BuildForm();
 					};
-				BuildForm();
 			}
 			else
 			{
@@ -67,12 +67,21 @@ namespace Magix.ide
 					delegate
 					{
 						DataSource = new Node("surface");
+						BuildForm();
 					};
 			}
 		}
 
+		protected override void OnLoad (EventArgs e)
+		{
+			if (!FirstLoad)
+				BuildForm();
+			base.OnLoad(e);
+		}
+
 		private void BuildForm()
 		{
+			wrp.Controls.Clear();
 			if (DataSource.Contains("controls"))
 			{
 				foreach (Node idx in DataSource["controls"])
@@ -80,7 +89,6 @@ namespace Magix.ide
 					BuildWidget(idx, wrp);
 				}
 			}
-			wrp.ReRender();
 		}
 
 		private void BuildWidget(Node widget, Control parent)
@@ -95,9 +103,14 @@ namespace Magix.ide
 			{
 				foreach (Node idx in widget["properties"])
 				{
-					tmp[idx.Name].Value = idx.Value;
+					// we don't do event handlers here, since this is 'design view' ...
+					if (!idx.Name.StartsWith("on"))
+						tmp[idx.Name].Value = idx.Value;
 				}
 			}
+
+			// click event handler for selecting widget
+			tmp["onclick"]["select-widget"]["dna"].Value = widget.Dna;
 
 			Node ctrlRaise = new Node();
 			ctrlRaise["_code"].Value = tmp;
@@ -376,6 +389,7 @@ not thread safe";
 			}
 
 			BuildForm();
+			wrp.ReRender();
 		}
 
 		[ActiveEvent(Name="magix.execute.remove-widget")]
@@ -404,6 +418,7 @@ not thread safe";
 			whereNode.Parent.Remove(whereNode);
 
 			BuildForm();
+			wrp.ReRender();
 		}
 
 		[ActiveEvent(Name="magix.execute.change-widget")]
@@ -446,6 +461,7 @@ removing [remove] properties.&nbsp;&nbsp;not thread safe";
 			}
 
 			BuildForm();
+			wrp.ReRender();
 		}
 
 		[ActiveEvent(Name="magix.execute.move-widget")]
@@ -493,6 +509,7 @@ not thread safe";
 			}
 
 			BuildForm();
+			wrp.ReRender();
 		}
 
 		[ActiveEvent(Name="magix.execute.select-widget")]
@@ -502,7 +519,8 @@ not thread safe";
 			{
 				e.Params["event:magix.execute"].Value = null;
 				e.Params["inspect"].Value = @"sets the [dna] widget as the actively selected widget.&nbsp;&nbsp;
-if no [dna] is given, no widget is set as the currently selected.&nbsp;&nbsp;not thread safe";
+if no [dna] is given, no widget is set as the currently selected.&nbsp;&nbsp;
+raises the magix.forms.widget-selected active event when done.&nbsp;&nbsp;not thread safe";
 				e.Params["select-widget"]["dna"].Value = "root-0-0";
 				return;
 			}
@@ -516,7 +534,38 @@ if no [dna] is given, no widget is set as the currently selected.&nbsp;&nbsp;not
 			else
 			{
 				SelectedWidgetDna = ip["dna"].Get<string>();
-				BuildForm();
+			}
+
+			BuildForm();
+			wrp.ReRender();
+
+			Node tp = new Node();
+			tp["dna"].Value = SelectedWidgetDna;
+
+			RaiseEvent(
+				"magix.forms.widget-selected",
+				tp);
+		}
+
+		[ActiveEvent(Name="magix.execute.get-selected-widget")]
+		protected void magix_execute_get_selected_widget(object sender, ActiveEventArgs e)
+		{
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			{
+				e.Params["event:magix.execute"].Value = null;
+				e.Params["inspect"].Value = @"returns the currently selected widget as [value], if any.&nbsp;&nbsp;
+not thread safe";
+				e.Params["get-selected-widget"].Value = null;
+				return;
+			}
+
+			Node ip = e.Params;
+			if (e.Params.Contains("_ip"))
+				ip = e.Params["_ip"].Value as Node;
+
+			if (!string.IsNullOrEmpty(SelectedWidgetDna))
+			{
+				ip["value"]["widget"].ReplaceChildren(DataSource.FindDna(SelectedWidgetDna).Clone());
 			}
 		}
 
@@ -560,6 +609,7 @@ not thread safe";
 			DataSource.FindDna(SelectedWidgetDna).UnTie();
 
 			BuildForm();
+			wrp.ReRender();
 		}
 
 		[ActiveEvent(Name="magix.execute.paste-widget")]
@@ -605,6 +655,7 @@ default is after.&nbsp;&nbsp;not thread safe";
 			}
 
 			BuildForm();
+			wrp.ReRender();
 		}
 
 		[ActiveEvent(Name="magix.execute.list-forms")]
@@ -718,6 +769,7 @@ not thread safe";
 			}
 
 			BuildForm();
+			wrp.ReRender();
 		}
 
 		[ActiveEvent(Name="magix.execute.delete-form")]
@@ -751,6 +803,7 @@ not thread safe";
 			DataSource = new Node("surface");
 
 			BuildForm();
+			wrp.ReRender();
 		}
 
 		[ActiveEvent(Name="magix.execute.export-form")]

@@ -111,7 +111,17 @@ event will be deleted, if you pass in no [code] block.&nbsp;&nbsp;thread safe";
 
 			if (ip.Contains("code"))
 			{
+				// removing any previous siimilar events
 				Node n = new Node();
+
+				n["prototype"]["event"].Value = activeEvent;
+				n["prototype"]["type"].Value = "magix.execute.event";
+
+				RaiseActiveEvent(
+					"magix.data.remove",
+					n);
+
+				n = new Node();
 
 				n["id"].Value = Guid.NewGuid().ToString();
 				n["object"]["event"].Value = activeEvent;

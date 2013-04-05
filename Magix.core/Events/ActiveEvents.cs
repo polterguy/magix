@@ -292,6 +292,13 @@ namespace Magix.Core
                 }
             }
 
+			return retVal;
+		}
+
+		List<Tuple<MethodInfo, object>> SlurpAllNullEventHandlers(string eventName, bool forceNoNull)
+		{
+            List<Tuple<MethodInfo, object>> retVal = new List<Tuple<MethodInfo, object>>();
+
 			if (forceNoNull)
 				return retVal;
 
@@ -485,6 +492,7 @@ namespace Magix.Core
 			}
 
 			ActiveEventArgs e = new ActiveEventArgs(originalName, pars);
+
             // We must run this in two operations since events clear controls out
             // and hence make "dead references" to Event Handlers and such...
             // Therefor we first iterate and find all event handlers interested in
@@ -513,14 +521,18 @@ namespace Magix.Core
                 	ExecuteEventMethod(idx.Item1, idx.Item2, sender, e);
             }
 
-            tmp = SlurpAllEventHandlers(name, forceNoOverride);
+			tmp = SlurpAllNullEventHandlers(name, forceNoOverride);
+
+            tmp.AddRange(SlurpAllEventHandlers(name, forceNoOverride));
 
             // Looping through all methods...
             foreach (Tuple<MethodInfo, object> idx in tmp)
             {
                 // Since events might load and clear controls we need to check if the event 
                 // handler still exists after *every* event handler we dispatch control to...
-                List<Tuple<MethodInfo, object>> recheck = SlurpAllEventHandlers(name, forceNoOverride);
+                List<Tuple<MethodInfo, object>> recheck = SlurpAllNullEventHandlers(name, forceNoOverride);
+
+				recheck.AddRange(SlurpAllEventHandlers(name, forceNoOverride));
 
 				bool exists = false;
                 foreach (Tuple<MethodInfo, object> idx2 in recheck)

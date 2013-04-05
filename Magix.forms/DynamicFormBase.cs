@@ -6,6 +6,7 @@
 
 using System;
 using System.Web.UI;
+using System.Collections.Generic;
 using Magix.Core;
 using Magix.UX;
 using Magix.UX.Widgets;
@@ -26,6 +27,15 @@ namespace Magix.forms
 		{
 			get { return ViewState["FormID"] as string; }
 			set { ViewState["FormID"] = value; }
+		}
+
+		protected Dictionary<string, Node> Methods
+		{
+			get
+			{
+				if (ViewState["Methods"] == null )
+					ViewState["Methods"] = new Dictionary<string, Node>();
+				return ViewState["Methods"] as Dictionary<string, Node>; }
 		}
 
 		public override void InitialLoading(Node node)
@@ -281,6 +291,22 @@ not thread safe";
 			return tmp;
 		}
 
+		[ActiveEvent(Name = "")]
+		protected void magix_null_event_handler(object sender, ActiveEventArgs e)
+		{
+			if (Methods.ContainsKey(e.Name))
+			{
+				Node tmp = Methods[e.Name].Clone();
+
+				// cloning in the incoming parameters
+				tmp["_p"].AddRange(e.Params.Clone());
+
+				RaiseEvent(
+					"magix.execute",
+					tmp);
+			}
+		}
+
 		protected void BuildControl(Node idx, Control parent)
 		{
 			string typeName = idx.Name;
@@ -296,7 +322,11 @@ not thread safe";
 			}
 
 			if (!isControlName)
-				throw new ArgumentException("control '" + typeName + "' is not understood while trying to create web controls");
+			{
+				// assuming it's an event override method
+				Methods[typeName] = idx.Clone();
+				return;
+			}
 
 			string evtName = "magix.forms.controls." + typeName;
 

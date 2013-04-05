@@ -27,6 +27,7 @@ namespace Magix.forms
 				e.Params["event:magix.forms.create-form"].Value = "content";
 				e.Params["container"].Value = "content";
 				e.Params["form-id"].Value = "unique-identification-of-your-form";
+				e.Params["events"]["magix.forms.widget-selected"]["magix.forms.show-message"]["message"].Value = "jo, something was selected";
 				e.Params["controls"]["Button"].Value = "btn";
 				e.Params["controls"]["Button"]["Text"].Value = "Hello World!";
 				e.Params["inspect"].Value = @"creates a dynamic form
@@ -36,7 +37,7 @@ contains the controls themselves.&nbsp;&nbsp;not thread safe";
 				return;
 			}
 
-			LoadModule (
+			LoadModule(
 				"Magix.forms.DynamicForm", 
 				e.Params["container"].Get<string>(), 
 				e.Params);

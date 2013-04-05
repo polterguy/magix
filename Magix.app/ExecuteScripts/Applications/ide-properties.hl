@@ -1,0 +1,50 @@
+
+event:magix.execute
+
+inspect=>@"loads up the properties for 
+the ide"
+
+event=>magix.ide.dynamic.create-toolbox
+  code
+    _buffer
+    _data
+    get-selected-widget
+    if=>[/][get-selected-widget][value][widget]
+      list-widget-types
+      for-each=>[/][if][list-widget-types][types]
+        if=>[.][type].Value==[/][get-selected-widget][value][widget][type].Value
+          add=>[/][_data]
+            value=>[.]
+      for-each=>[/][_data][widget][properties]
+        while=>[/][_buffer].Count>0
+          set=>[/][_buffer][0]
+        set=>[/][_buffer][link-button].Value
+          value=>[.].Name
+        set=>[/][_buffer][link-button][text].Value
+          value=>[.].Name
+        set=>[/][_buffer][link-button][css].Value
+          value=>span2
+        if=>[/][get-selected-widget][value][widget][properties][[.].Name].Value
+          set=>[/][_buffer][link-button][css].Value
+            value=>span2 fat
+        add=>[/][magix.forms.create-form][controls][panel][controls]
+          value=>[/][_buffer][link-button]
+    magix.forms.create-form
+      form-id=>toolbox-properties
+      container=>menu
+      css=>span12
+      events
+        magix.forms.widget-selected
+          magix.ide.dynamic.create-toolbox
+      controls
+        label=>header
+          text=>properties
+          tag=>h4
+        panel=>wrp
+          css=>span12
+          controls
+        label=>ruler
+          css=>span12
+          tag=>hr
+
+magix.ide.dynamic.create-toolbox

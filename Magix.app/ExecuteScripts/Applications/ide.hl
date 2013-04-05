@@ -8,7 +8,7 @@ _data
   x=>y
 
 magix.viewport.load-module
-  container=>footer
+  container=>content
   css=>span12
   name=>Magix.ide.Builder
 
@@ -41,8 +41,15 @@ for-each=>[/][list-widgets][widgets]
 
 magix.forms.create-form
   form-id=>toolbox-load-file
-  container=>menu
+  container=>header
   css=>span12
+  events
+    magix.forms.widget-selected
+      set=>[/][magix.forms.set-value][value].Value
+        value=>[/][_p][dna].Value
+      magix.forms.set-value
+        form-id=>toolbox-load-file
+        id=>widgets
   controls
     label=>header
       tag=>h1
@@ -136,40 +143,53 @@ magix.forms.create-form
           text=>delete
           css=>span2 btn btn-primary
           onclick
-            magix.forms.get-value
-              form-id=>toolbox-load-file
-              id=>name
-            set=>[/][delete-form][name].Value
-              value=>[/][magix.forms.get-value][value].Value
-            delete-form
-            _data
-              x=>y
-            list-forms
-            for-each=>[/][list-forms][forms]
-              if=>[.][name].Value!=_default
-                set=>[/][_data][0].Name
-                  value=>[.][name].Value
-                set=>[/][_data][0].Value
-                  value=>[.][name].Value
-                add=>[/][magix.forms.set-values][items]
-                  value=>[/][_data][0]
-            magix.forms.set-values
-              form-id=>toolbox-load-file
-              id=>form
-              items
-                _default=>select form ...
-            set=>[/][magix.forms.set-value][value].Value
-              value=>_default
-            magix.forms.set-value
-              form-id=>toolbox-load-file
-              id=>form
-              value
-            load-form
-              name=>_default
-            magix.forms.set-value
-              form-id=>toolbox-load-file
-              id=>name
-              value=>_default
+            magix.viewport.verify
+              header=>verify deletion of form
+              button-text=>delete
+              message=>@"please verify that you wish to 
+delete the form.&nbsp;&nbsp;this action is not possible to undo"
+              code
+                magix.forms.get-value
+                  form-id=>toolbox-load-file
+                  id=>name
+                set=>[/][delete-form][name].Value
+                  value=>[/][magix.forms.get-value][value].Value
+                delete-form
+                _data
+                  x=>y
+                list-forms
+                for-each=>[/][list-forms][forms]
+                  if=>[.][name].Value!=_default
+                    set=>[/][_data][0].Name
+                      value=>[.][name].Value
+                    set=>[/][_data][0].Value
+                      value=>[.][name].Value
+                    add=>[/][magix.forms.set-values][items]
+                      value=>[/][_data][0]
+                magix.forms.set-values
+                  form-id=>toolbox-load-file
+                  id=>form
+                  items
+                    _default=>select form ...
+                set=>[/][magix.forms.set-value][value].Value
+                  value=>_default
+                magix.forms.set-value
+                  form-id=>toolbox-load-file
+                  id=>form
+                  value
+                select-widget
+                magix.forms.set-value
+                  form-id=>toolbox-load-file
+                  id=>widgets
+                  value=>_default
+                load-form
+                  name=>_default
+                magix.forms.set-value
+                  form-id=>toolbox-load-file
+                  id=>name
+                  value=>_default
+                magix.viewport.clear-controls
+                  container=>modal
         select=>widgets
           onselectedindexchanged
             magix.forms.get-value
@@ -184,3 +204,5 @@ magix.forms.create-form
       tag=>hr
       css=>span11
 
+magix.admin.run-file
+  file=>ExecuteScripts/Applications/ide-properties.hl
