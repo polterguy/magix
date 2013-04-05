@@ -276,5 +276,6 @@
     <None Include="Help\nodes-5.mml" />
     <None Include="Help\nodes-6.mml" />
     <None Include="ExecuteScripts\Applications\ide.hl" />
+    <None Include="ExecuteScripts\Applications\ide-properties.hl" />
   </ItemGroup>
 </Project>

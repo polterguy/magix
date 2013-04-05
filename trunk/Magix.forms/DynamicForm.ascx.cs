@@ -57,6 +57,10 @@ namespace Magix.forms
 			{
 				BuildControl(idx, pnl);
 			}
+			foreach (Node idx in DataSource["events"])
+			{
+				BuildControl(idx, pnl);
+			}
 		}
     }
 }

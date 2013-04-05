@@ -53,7 +53,7 @@ namespace Magix.admin
 					tmp);
 				code = "<pre class=\"span12\">" + tmp["code"].Get<string>() + "</pre>";
 			}
-			lbl.Text += "<h5>" + e.Name + "</h5>" + code;
+			lbl.Text += "<h5>" + e.Name + ":before</h5>" + code;
 		}
 
 		/**
@@ -67,7 +67,7 @@ namespace Magix.admin
 			if (e.Name == "magix.code.node-2-code")
 				return;
 
-			string code = "";
+			string code = null;
 			if (e.Params != null)
 			{
 				Node tmp = new Node();
@@ -77,7 +77,7 @@ namespace Magix.admin
 					tmp);
 				code = "<pre class=\"span12\">" + tmp["code"].Get<string>() + "</pre>";
 			}
-			lbl.Text += code;
+			lbl.Text += "<h5>" + e.Name + ":after</h5>" + code;
 		}
 	}
 }
