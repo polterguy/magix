@@ -42,7 +42,11 @@ contain type information for types of int, decimal, datetime and bool.&nbsp;&nbs
 				throw new ArgumentException("No node json passed into transform-node-2-code");
 			}
 			string txt = "";
-			Node node = e.Params["json"].Value as Node;
+			Node node = null;
+			if (e.Params["json"].Value != null)
+				node = e.Params["json"].Value as Node;
+			else
+				node = e.Params["json"].Clone();
 			txt += ParseNodes(0, node);
 			e.Params["code"].Value = txt;
 		}

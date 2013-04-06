@@ -34,14 +34,14 @@ namespace Magix.Core
 
 			if (tokens.Count == 1)
 			{
-				return ExpressionExist (tokens[0], dp, ip);
+				return ExpressionExist(tokens[0], dp, ip);
 			}
 			else if (tokens.Count == 2)
 			{
 				// Only ![Something] ...
 				if (tokens[0] != "!")
 					throw new ArgumentException("Didn't understand '" + expr + "'");
-				return !ExpressionExist (tokens[1], dp, ip);
+				return !ExpressionExist(tokens[1], dp, ip);
 			}
 			else if (tokens.Count == 3)
 			{
@@ -590,7 +590,11 @@ namespace Magix.Core
 				return false;
 
             if (lastEntity == ".Value")
+			{
+				if (x.Value != null && x.Value is string)
+					return !string.IsNullOrEmpty(x.Get<string>());
                 return x.Value != null;
+			}
             else if (lastEntity == "")
                 return true;
             else
