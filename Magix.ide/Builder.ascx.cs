@@ -429,9 +429,9 @@ not thread safe";
 				e.Params["event:magix.execute"].Value = null;
 				e.Params["inspect"].Value = @"changes the [dna] widget, adding/changing [change] properties and 
 removing [remove] properties.&nbsp;&nbsp;not thread safe";
-				e.Params["remove-widget"]["dna"].Value = "root-0-0";
-				e.Params["remove-widget"]["change"]["id"].Value = "myId";
-				e.Params["remove-widget"]["remove"]["css"].Value = null;
+				e.Params["change-widget"]["dna"].Value = "root-0-0";
+				e.Params["change-widget"]["change"]["id"].Value = "myId";
+				e.Params["change-widget"]["remove"]["css"].Value = null;
 				return;
 			}
 
@@ -448,7 +448,30 @@ removing [remove] properties.&nbsp;&nbsp;not thread safe";
 			{
 				foreach (Node idx in ip["change"])
 				{
-					widgetNode["properties"][idx.Name].Value = idx.Value;
+					// code in text format
+					if (idx.Name.StartsWith("on") && !string.IsNullOrEmpty(idx.Get<string>()))
+					{
+						Node tmp = new Node();
+
+						tmp["code"].Value = idx.Get<string>();
+
+						RaiseEvent(
+							"magix.code.code-2-node",
+							tmp);
+
+						widgetNode["properties"][idx.Name].Clear();
+						widgetNode["properties"][idx.Name].AddRange(tmp["json"].Get<Node>());
+					}
+					else if (idx.Name.StartsWith("on") && string.IsNullOrEmpty(idx.Get<string>()))
+					{
+						// code in tree format
+						widgetNode["properties"][idx.Name].AddRange(idx.Clone());
+					}
+					else
+					{
+						// anything else ...
+						widgetNode["properties"][idx.Name].Value = idx.Value;
+					}
 				}
 			}
 
@@ -566,6 +589,7 @@ not thread safe";
 			if (!string.IsNullOrEmpty(SelectedWidgetDna))
 			{
 				ip["value"]["widget"].ReplaceChildren(DataSource.FindDna(SelectedWidgetDna).Clone());
+				ip["value"]["dna"].Value = DataSource.FindDna(SelectedWidgetDna).Dna;
 			}
 		}
 

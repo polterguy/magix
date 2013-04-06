@@ -139,6 +139,10 @@ magix.forms.create-form
               form-id=>toolbox-load-file
               id=>form
               value
+            magix.viewport.show-message
+              message=>form was saved
+              header=>done
+              time=>500
         button=>delete
           text=>delete
           css=>span2 btn btn-primary
