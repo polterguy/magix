@@ -78,6 +78,7 @@ magix.forms.create-form
           css=>left right-20
         radio=>child
           group=>where
+          checked=>true
           css=>left
         label=>childLbl
           tag=>label
@@ -86,7 +87,6 @@ magix.forms.create-form
           css=>left right-20
         radio=>after
           group=>where
-          checked=>true
           css=>left
         label=>afterLbl
           tag=>label
