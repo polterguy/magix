@@ -102,8 +102,8 @@ event=>magix.ide.dynamic.create-toolbox
           value=>[/][_buffer][link-button]
     magix.forms.create-form
       form-id=>toolbox-properties
-      container=>menu
-      css=>span12
+      container=>content
+      css=>span10
       events
         magix.forms.widget-selected
           magix.ide.dynamic.create-toolbox
@@ -115,11 +115,13 @@ event=>magix.ide.dynamic.create-toolbox
           css=>span12
           controls
         label=>ruler
-          css=>span12
+          css=>span11
           tag=>hr
-    magix.forms.effect
-      id=>wrpProprties
-      type=>roll-down
-      time=>500
 
 magix.ide.dynamic.create-toolbox
+
+magix.admin.run-file
+  file=>ExecuteScripts/Applications/ide-widgets.hl
+
+
+

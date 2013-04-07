@@ -131,8 +131,8 @@ link-button=>webcontrols
       file=>ExecuteScripts/Applications/inspect-web-controls.hl
     magix.viewport.clear-controls
       container=>modal
-link-button=>ide
-  text=>ide
+link-button=>forms
+  text=>forms
   css=>btn btn-info
   onclick
     magix.viewport.clear-controls

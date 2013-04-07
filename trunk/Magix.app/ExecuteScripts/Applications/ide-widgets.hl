@@ -1,0 +1,102 @@
+
+event:magix.execute
+
+inspect=>@"loads up the widget toolbox for 
+the ide"
+
+list-widget-types
+
+_buffer
+
+_onclick
+  get-selected-widget
+  magix.forms.get-value
+    form-id=>toolbox-controls
+    id=>before
+  if=>[/][magix.forms.get-value][value].Value==True
+    set=>[/][add-widget][where][position].Value
+      value=>before
+  else
+    magix.forms.get-value
+      form-id=>toolbox-controls
+      id=>child
+    if=>[/][else][magix.forms.get-value][value].Value==True
+      set=>[/][add-widget][where][position].Value
+        value=>child
+    else
+      set=>[/][add-widget][where][position].Value
+        value=>after
+  set=>[/][add-widget][where][dna].Value
+    value=>[/][get-selected-widget][value][dna].Value
+  add-widget
+    auto-select=>True
+    where
+      dna
+      position
+    widget
+      type
+  magix.ide.update-widget-list
+
+for-each=>[/][list-widget-types][types]
+  while=>[/][_buffer].Count>0
+    set=>[/][_buffer][0]
+  set=>[/][_buffer][link-button].Value
+    value=>[.][type].Value
+  set=>[/][_buffer][link-button][text].Value
+    value=>[.][type].Value
+  set=>[/][_buffer][link-button][css].Value
+    value=>span3
+  set=>[/][_onclick][add-widget][widget][type].Value
+    value=>[.][type].Value
+  add=>[/][_buffer][link-button]
+    value=>[/][_onclick]
+  set=>[/][_buffer][link-button][_onclick].Name
+    value=>onclick
+  add=>[/][magix.forms.create-form][controls][panel:1][controls]
+    value=>[/][_buffer][0]
+
+magix.forms.create-form
+  form-id=>toolbox-controls
+  container=>menu
+  controls
+    label=>header
+      tag=>h4
+      text=>widgets
+    label=>expl
+      text=>insert ...
+      css=>span12
+    panel=>rdoWrp
+      css=>input-append span12
+      controls
+        radio=>before
+          group=>where
+          css=>left
+        label=>beforeLbl
+          tag=>label
+          for=>before
+          text=>before
+          css=>left right-20
+        radio=>child
+          group=>where
+          css=>left
+        label=>childLbl
+          tag=>label
+          for=>child
+          text=>child
+          css=>left right-20
+        radio=>after
+          group=>where
+          checked=>true
+          css=>left
+        label=>afterLbl
+          tag=>label
+          for=>after
+          text=>after
+          css=>left right-20
+    panel=>wrpTypes
+      css=>span11
+      controls
+    label=>ruler
+      tag=>hr
+      css=>span11
+
