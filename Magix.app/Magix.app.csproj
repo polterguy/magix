@@ -277,5 +277,6 @@
     <None Include="Help\nodes-6.mml" />
     <None Include="ExecuteScripts\Applications\ide.hl" />
     <None Include="ExecuteScripts\Applications\ide-properties.hl" />
+    <None Include="ExecuteScripts\Applications\ide-widgets.hl" />
   </ItemGroup>
 </Project>

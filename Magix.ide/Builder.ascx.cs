@@ -339,6 +339,7 @@ not thread safe";
 				e.Params["event:magix.execute"].Value = null;
 				e.Params["inspect"].Value = @"adds a widget to the currently viewed form.&nbsp;&nbsp;
 not thread safe";
+				e.Params["add-widget"]["auto-select"].Value = true;
 				e.Params["add-widget"]["where"]["dna"].Value = "root";
 				e.Params["add-widget"]["where"]["position"].Value = "before|after|child";
 				e.Params["add-widget"]["widget"]["type"].Value = "magix.forms.controls.installed-widget";
@@ -373,6 +374,11 @@ not thread safe";
 
 			Node widgetNode = ip["widget"].Clone();
 
+			if (!widgetNode.Contains("properties") || 
+			    !widgetNode["properties"].Contains("id") || 
+			    string.IsNullOrEmpty(widgetNode["properties"]["id"].Get<string>()))
+				widgetNode["properties"]["id"].Value = Guid.NewGuid().ToString().Replace ("-", "");
+
 			switch (position)
 			{
 			case "before":
@@ -382,10 +388,17 @@ not thread safe";
 				whereNode.AddAfter(widgetNode);
 				break;
 			case "child":
+				if (whereNode["type"].Get<string>() != "magix.forms.controls.panel")
+					throw new ArgumentException("cannot add a control as a child to anything but a panel");
 				whereNode["controls"].Add(widgetNode);
 				break;
 			default:
 				throw new ArgumentException("sorry, don't know where " + ip["position"].Get<string>() + " is");
+			}
+
+			if (ip.Contains("auto-select") && ip["auto-select"].Get<bool>())
+			{
+				SelectedWidgetDna = widgetNode.Dna;
 			}
 
 			BuildForm();

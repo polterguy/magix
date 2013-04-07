@@ -24,9 +24,20 @@
 .selected
 {
 	border:dashed Green 3px;
+	background-color:lightgreen !important;
 }
 
 .fat
 {
 	font-weight:bold;
+}
+
+.left
+{
+	float:left;
+}
+
+.right-20
+{
+	margin-right:20px;
 }
