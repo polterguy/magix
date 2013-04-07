@@ -84,7 +84,12 @@ magix.forms.create-form
     label=>header
       tag=>h1
       text=>forms
-      css=>span12
+      css=>span11
+    button=>help
+      css=>btn btn-primary span1 btn-large
+      text=>?
+      onclick
+        magix.help.start-help
     select=>form
       css=>span2
       onselectedindexchanged
@@ -131,7 +136,7 @@ magix.forms.create-form
       items
         _default=>select form ...
     panel=>wrp
-      css=>input-append
+      css=>input-append offset1
       controls
         text-box=>name
           css=>span2
@@ -139,7 +144,7 @@ magix.forms.create-form
           text=>_default
         button=>save
           text=>save
-          css=>span2 btn btn-primary
+          css=>btn btn-primary
           onclick
             magix.forms.get-value
               form-id=>toolbox-load-file
@@ -175,7 +180,7 @@ magix.forms.create-form
               time=>500
         button=>delete
           text=>delete
-          css=>span2 btn btn-primary
+          css=>btn btn-primary
           onclick
             magix.viewport.verify
               header=>verify deletion of form
@@ -225,9 +230,10 @@ delete the form.&nbsp;&nbsp;this action is not possible to undo"
                 magix.viewport.clear-controls
                   container=>modal
     panel=>wrp2
-      css=>input-append
+      css=>input-append offset1
       controls
         select=>widgetsDdl
+          css=>span2
           onselectedindexchanged
             magix.forms.get-value
               form-id=>toolbox-load-file

@@ -154,5 +154,13 @@ link-button=>trace
       name=>Magix.admin.EventSniffer
     magix.viewport.clear-controls
       container=>modal
+link-button=>traceRemove
+  text=>remove tracer
+  css=>btn btn-info
+  onclick
+    magix.viewport.clear-controls
+      container=>trace
+    magix.viewport.clear-controls
+      container=>modal
 }}</div>
 

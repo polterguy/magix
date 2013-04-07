@@ -394,8 +394,24 @@ not thread safe";
 				whereNode.AddAfter(widgetNode);
 				break;
 			case "child":
-				whereNode["controls"].Add(widgetNode);
-				break;
+			{
+				if (whereNode.Name == "surface")
+				{
+					whereNode["controls"].Add(widgetNode);
+				}
+				else
+				{
+					Node tp = new Node();
+					tp["inspect"].Value = null;
+					RaiseEvent(
+						whereNode["type"].Get<string>(),
+						tp);
+					if (tp["controls"][0].Contains("controls"))
+						whereNode["controls"].Add(widgetNode);
+					else
+						throw new ArgumentException("that control cannot have children");
+				}
+			} break;
 			default:
 				throw new ArgumentException("sorry, don't know where " + ip["position"].Get<string>() + " is");
 			}
@@ -638,6 +654,7 @@ not thread safe";
 				throw new ArgumentException("no widget currently selected, you must select widget before you can copy it");
 
 			ClipBoard = DataSource.FindDna(SelectedWidgetDna).Clone();
+			ClipBoard["properties"]["id"].Value = Guid.NewGuid().ToString().Replace("-", "");
 		}
 
 		[ActiveEvent(Name="magix.execute.cut-widget")]
@@ -659,7 +676,10 @@ not thread safe";
 				"magix.execute.copy-widget",
 				e.Params);
 
-			DataSource.FindDna(SelectedWidgetDna).UnTie();
+			ClipBoard = DataSource.FindDna(SelectedWidgetDna).UnTie();
+			ClipBoard["properties"]["id"].Value = Guid.NewGuid().ToString().Replace("-", "");
+
+			SelectedWidgetDna = null;
 
 			BuildForm();
 			wrp.ReRender();
@@ -692,23 +712,54 @@ default is after.&nbsp;&nbsp;not thread safe";
 			if (ip.Contains("position"))
 				position = ip["position"].Get<string>();
 
+			Node toAdd = ClipBoard.Clone();
+
+			toAdd["properties"]["id"].Value = Guid.NewGuid().ToString().Replace("-", "");
+
 			switch (position)
 			{
 			case "before":
-				tmp.AddBefore(ClipBoard.Clone());
+				tmp.AddBefore(toAdd);
 				break;
 			case "after":
-				tmp.AddAfter(ClipBoard.Clone());
+				tmp.AddAfter(toAdd);
 				break;
 			case "child":
-				tmp.Add(ClipBoard.Clone());
-				break;
+			{
+				Node tp = new Node();
+				tp["inspect"].Value = null;
+				RaiseEvent(
+					tmp["type"].Get<string>(),
+					tp);
+
+				if (tp["controls"][0].Contains("controls"))
+					tmp["controls"].Add(toAdd);
+				else
+					throw new ArgumentException("that control cannot have children");
+			} break;
 			default:
 				throw new ArgumentException("sorry, don't know where " + position + " is");
 			}
 
-			BuildForm();
-			wrp.ReRender();
+			if (ip.Contains("auto-select") && ip["auto-select"].Get<bool>())
+			{
+				SelectedWidgetDna = toAdd.Dna;
+
+				BuildForm();
+				wrp.ReRender();
+
+				Node tp = new Node();
+				tp["dna"].Value = SelectedWidgetDna;
+
+				RaiseEvent(
+					"magix.forms.widget-selected",
+					tp);
+			}
+			else
+			{
+				BuildForm();
+				wrp.ReRender();
+			}
 		}
 
 		[ActiveEvent(Name="magix.execute.list-forms")]
@@ -858,11 +909,6 @@ not thread safe";
 
 			BuildForm();
 			wrp.ReRender();
-		}
-
-		[ActiveEvent(Name="magix.execute.export-form")]
-		protected void magix_execute_export_form(object sender, ActiveEventArgs e)
-		{
 		}
 	}
 }

@@ -1,18 +1,21 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Magix.app/ExecuteScripts/Applications/ide.hl">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Magix.admin/EventExecutor.cs">
     <Files>
-      <File FileName="Magix.ide/Builder.ascx.cs" Line="249" Column="43" />
+      <File FileName="Magix.ide/Builder.ascx.cs" Line="249" Column="18" />
       <File FileName="Magix.app/ExecuteScripts/Applications/inspect-execute.hl" Line="15" Column="1" />
       <File FileName="Magix.app/Help/tools.mml" Line="147" Column="44" />
-      <File FileName="Magix.app/ExecuteScripts/Applications/ide.hl" Line="39" Column="24" />
-      <File FileName="Magix.ide/Builder.ascx" Line="28" Column="19" />
+      <File FileName="Magix.app/ExecuteScripts/Applications/ide.hl" Line="38" Column="27" />
+      <File FileName="Magix.ide/Builder.ascx" Line="28" Column="1" />
       <File FileName="Magix.app/ExecuteScripts/Applications/address-book.hl" Line="12" Column="1" />
       <File FileName="Magix.app/Help/dynamic.mml" Line="15" Column="1" />
       <File FileName="Magix.forms/controls/SelectListCore.cs" Line="64" Column="45" />
       <File FileName="Magix.forms/controls/TextBoxCore.cs" Line="44" Column="5" />
       <File FileName="Magix.forms/FormsCore.cs" Line="27" Column="28" />
       <File FileName="Magix.forms/DynamicFormBase.cs" Line="53" Column="1" />
+      <File FileName="Magix.SampleController/ControllerHelp.cs" Line="12" Column="8" />
+      <File FileName="Magix.SampleController/ControllerSample.cs" Line="60" Column="5" />
+      <File FileName="Magix.admin/EventExecutor.cs" Line="137" Column="50" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -20,20 +23,19 @@
           <Node name="Core" expanded="True">
             <Node name="Magix.app" expanded="True">
               <Node name="ExecuteScripts" expanded="True">
-                <Node name="Applications" expanded="True">
-                  <Node name="ide.hl" selected="True" />
-                </Node>
+                <Node name="Applications" expanded="True" />
               </Node>
               <Node name="Help" expanded="True" />
             </Node>
           </Node>
           <Node name="Plugins" expanded="True">
-            <Node name="Magix.forms" expanded="True">
-              <Node name="controls" expanded="True" />
+            <Node name="Magix.admin" expanded="True">
+              <Node name="EventExecutor.cs" selected="True" />
             </Node>
-            <Node name="Magix.ide" expanded="True" />
           </Node>
-          <Node name="Samples" expanded="True" />
+          <Node name="Samples" expanded="True">
+            <Node name="Magix.SampleController" expanded="True" />
+          </Node>
           <Node name="Tests" expanded="True" />
         </State>
       </Pad>
