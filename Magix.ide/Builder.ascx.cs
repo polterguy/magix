@@ -323,6 +323,7 @@ not thread safe";
 					idx.Get<string>(),
 					tp2);
 
+				tp["properties"]["id"].Value = "id";
 				foreach (Node idx2 in tp2["controls"][0])
 				{
 					tp["properties"][idx2.Name].Value = idx2.Value;
@@ -378,7 +379,11 @@ not thread safe";
 			if (!widgetNode.Contains("properties") || 
 			    !widgetNode["properties"].Contains("id") || 
 			    string.IsNullOrEmpty(widgetNode["properties"]["id"].Get<string>()))
-				widgetNode["properties"]["id"].Value = Guid.NewGuid().ToString().Replace ("-", "");
+				widgetNode["properties"]["id"].Value = Guid.NewGuid().ToString().Replace("-", "");
+
+			// root can only have children, no after or before widgets
+			if (dna == "root")
+				position = "child";
 
 			switch (position)
 			{

@@ -143,7 +143,7 @@ namespace Magix.Core
 		public void AddAfter(Node node)
 		{
 			if (Parent == null)
-				throw new ArgumentException("cannot add a node before the root node of a tree");
+				throw new ArgumentException("cannot add a node after the root node of a tree");
 
 			string[] dnas = Dna.Split('-');
 			int dnaNo = int.Parse(dnas[dnas.Length - 1]);
