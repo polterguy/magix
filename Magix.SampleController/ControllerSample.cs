@@ -33,12 +33,20 @@ namespace Magix.SampleController
 or refreshed";
 				return;
 			}
+			RaiseActiveEvent("magix.admin.load-start");
+		}
 
+		/**
+		 */
+		[ActiveEvent(Name = "magix.admin.load-start")]
+		public void magix_viewport_load_start(object sender, ActiveEventArgs e)
+		{
 			Node tmp = new Node();
 
 			tmp["form-id"].Value = "header";
 			tmp["html"].Value = "<h1 class=\"span9 offset3\">active event executor</h1>";
 			tmp["container"].Value = "header";
+			tmp["css"].Value = "span12";
 
 			RaiseActiveEvent(
 				"magix.forms.create-web-page",
@@ -64,22 +72,17 @@ link-button=>help
     magix.help.start-help
 }}";
 			tmp["container"].Value = "menu";
+			tmp["css"].Value = "span3";
 
 			RaiseActiveEvent(
 				"magix.forms.create-web-page",
 				tmp);
 
-			tmp = new Node();
-
-			tmp["Items"]["Item1"].Value = "help";
-			tmp["Items"]["Item1"]["Event"].Value = "magix.help.start-help";
-			tmp["Items"]["Item2"].Value = "executor";
-			tmp["Items"]["Item2"]["Event"].Value = "magix.admin.open-event-executor";
-			tmp["Items"]["Item2"]["Event"]["container"].Value = "content";
-
+			Node del = new Node();
+			del["container"].Value = "footer";
 			RaiseActiveEvent(
-				"magix.modules.set-menu-items", 
-				tmp);
+				"magix.viewport.clear-controls",
+				del);
 		}
 	}
 }

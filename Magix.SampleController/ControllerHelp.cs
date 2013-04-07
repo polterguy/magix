@@ -102,8 +102,7 @@ link-button=>executor
   text=>executor
   css=>btn btn-primary
   onclick
-    magix.admin.open-event-executor
-      container=>content
+    magix.admin.load-start
     magix.viewport.clear-controls
       container=>modal
 link-button=>next

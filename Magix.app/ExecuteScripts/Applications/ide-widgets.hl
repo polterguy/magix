@@ -14,28 +14,36 @@ _onclick
     form-id=>toolbox-controls
     id=>before
   if=>[/][magix.forms.get-value][value].Value==True
-    set=>[/][add-widget][where][position].Value
+    set=>[/][try][code][add-widget][where][position].Value
       value=>before
   else
     magix.forms.get-value
       form-id=>toolbox-controls
       id=>child
     if=>[/][else][magix.forms.get-value][value].Value==True
-      set=>[/][add-widget][where][position].Value
+      set=>[/][try][code][add-widget][where][position].Value
         value=>child
     else
-      set=>[/][add-widget][where][position].Value
+      set=>[/][try][code][add-widget][where][position].Value
         value=>after
-  set=>[/][add-widget][where][dna].Value
+  set=>[/][try][code][add-widget][where][dna].Value
     value=>[/][get-selected-widget][value][dna].Value
-  add-widget
-    auto-select=>True
-    where
-      dna
-      position
-    widget
-      type
-  magix.ide.update-widget-list
+  try
+    code
+      add-widget
+        auto-select=>True
+        where
+          dna
+          position
+        widget
+          type
+      magix.ide.update-widget-list
+    catch
+      magix.viewport.show-message
+        header=>error
+        message=>@"that widget probably don't support children.&nbsp;&nbsp;
+choose either before or after as the position of the node"
+        time=>1000
 
 for-each=>[/][list-widget-types][types]
   while=>[/][_buffer].Count>0
@@ -46,13 +54,13 @@ for-each=>[/][list-widget-types][types]
     value=>[.][type].Value
   set=>[/][_buffer][link-button][css].Value
     value=>span3
-  set=>[/][_onclick][add-widget][widget][type].Value
+  set=>[/][_onclick][try][code][add-widget][widget][type].Value
     value=>[.][type].Value
   add=>[/][_buffer][link-button]
     value=>[/][_onclick]
   set=>[/][_buffer][link-button][_onclick].Name
     value=>onclick
-  add=>[/][magix.forms.create-form][controls][panel:1][controls]
+  add=>[/][magix.forms.create-form][controls][panel:2][controls]
     value=>[/][_buffer][0]
 
 magix.forms.create-form
@@ -62,6 +70,50 @@ magix.forms.create-form
     label=>header
       tag=>h4
       text=>widgets
+    panel=>wrpCpy
+      css=>input-append input-prepend span12
+      controls
+        button=>copy
+          text=>copy
+          css=>btn btn-primary
+          onclick
+            copy-widget
+        button=>cut
+          text=>cut
+          css=>btn btn-primary
+          onclick
+            cut-widget
+        button=>paste
+          text=>paste
+          css=>btn btn-primary
+          onclick
+            magix.forms.get-value
+              form-id=>toolbox-controls
+              id=>before
+            if=>[/][magix.forms.get-value][value].Value==True
+              set=>[/][try][code][paste-widget][position].Value
+                value=>before
+            else
+              magix.forms.get-value
+                form-id=>toolbox-controls
+                id=>child
+              if=>[/][else][magix.forms.get-value][value].Value==True
+                set=>[/][try][code][paste-widget][position].Value
+                  value=>child
+              else
+                set=>[/][try][code][paste-widget][position].Value
+                  value=>after
+            try
+              code
+                paste-widget
+                  auto-select=>True
+                magix.ide.update-widget-list
+              catch
+                magix.viewport.show-message
+                  header=>error
+                  message=>@"that widget probably don't support children.&nbsp;&nbsp;
+choose either before or after as the position of the node"
+                  time=>1000
     label=>expl
       text=>insert ...
       css=>span12

@@ -128,9 +128,14 @@ in [container] viewport container, defaulting being content.&nbsp;&nbsp;not thre
 				return;
 			}
 
+			Node tmp = new Node();
+
+			tmp["css"].Value = "span9";
+
 			LoadModule(
 				"Magix.admin.ExecutorForm", 
-				e.Params["container"].Get<string>("content"));
+				e.Params["container"].Get<string>("content"),
+				tmp);
 
 			RaiseActiveEvent(
 				"magix.execute._event-overridden");
