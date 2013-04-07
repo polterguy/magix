@@ -67,6 +67,7 @@ namespace Magix.ide
 					delegate
 					{
 						DataSource = new Node("surface");
+						DataSource["controls"].Value = null;
 						BuildForm();
 					};
 			}
@@ -367,7 +368,7 @@ not thread safe";
 			if (!ip["where"].Contains("position"))
 				throw new ArgumentException("you need a [position] for [where] in add-widget");
 
-			string dna 		= ip["where"]["dna"].Get<string>();
+			string dna 		= ip["where"]["dna"].Get<string>() ?? "root";
 			string position = ip["where"]["position"].Get<string>();
 
 			Node whereNode = DataSource.FindDna(dna);
@@ -388,8 +389,6 @@ not thread safe";
 				whereNode.AddAfter(widgetNode);
 				break;
 			case "child":
-				if (whereNode["type"].Get<string>() != "magix.forms.controls.panel")
-					throw new ArgumentException("cannot add a control as a child to anything but a panel");
 				whereNode["controls"].Add(widgetNode);
 				break;
 			default:
@@ -399,10 +398,22 @@ not thread safe";
 			if (ip.Contains("auto-select") && ip["auto-select"].Get<bool>())
 			{
 				SelectedWidgetDna = widgetNode.Dna;
-			}
 
-			BuildForm();
-			wrp.ReRender();
+				BuildForm();
+				wrp.ReRender();
+
+				Node tp = new Node();
+				tp["dna"].Value = SelectedWidgetDna;
+
+				RaiseEvent(
+					"magix.forms.widget-selected",
+					tp);
+			}
+			else
+			{
+				BuildForm();
+				wrp.ReRender();
+			}
 		}
 
 		[ActiveEvent(Name="magix.execute.remove-widget")]
@@ -413,7 +424,7 @@ not thread safe";
 				e.Params["event:magix.execute"].Value = null;
 				e.Params["inspect"].Value = @"removes the [dna] widget from the currently viewed form.&nbsp;&nbsp;
 not thread safe";
-				e.Params["remove-widget"]["dna"].Value = "root-0-0";
+				e.Params["remove-widget"]["dna"].Value = "root-0";
 				return;
 			}
 
@@ -838,6 +849,7 @@ not thread safe";
 				tmp);
 
 			DataSource = new Node("surface");
+			DataSource["controls"].Value = null;
 
 			BuildForm();
 			wrp.ReRender();

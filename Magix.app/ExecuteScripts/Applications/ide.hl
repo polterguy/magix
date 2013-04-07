@@ -20,7 +20,7 @@ for-each=>[list-forms][forms]
   set=>[/][_data][0].Value
     value=>[.][name].Value
   if=>[.][name].Value!=_default
-    add=>[/][magix.forms.create-form][controls][panel][controls][select][items]
+    add=>[/][magix.forms.create-form][controls][select][items]
       value=>[/][_data][0]
 
 load-form
@@ -36,7 +36,7 @@ for-each=>[/][list-widgets][widgets]
     value=>[.][dna].Value
   set=>[/][_data2][0].Value
     value=>[.][type].Value
-  add=>[/][magix.forms.create-form][controls][panel][controls][select:1][items]
+  add=>[/][magix.forms.create-form][controls][panel:1][controls][select][items]
     value=>[/][_data2][0]
 
 magix.forms.create-form
@@ -66,69 +66,69 @@ magix.forms.create-form
         value=>items
       magix.forms.set-values
         form-id=>toolbox-load-file
-        id=>widgets
+        id=>widgetsDdl
         items
     magix.forms.widget-selected
       set=>[/][magix.forms.set-value][value].Value
         value=>[/][_p][dna].Value
       magix.forms.set-value
         form-id=>toolbox-load-file
-        id=>widgets
+        id=>widgetsDdl
   controls
     label=>header
       tag=>h1
       text=>forms
       css=>span12
+    select=>form
+      css=>span2
+      onselectedindexchanged
+        select-widget
+        magix.forms.get-value
+          form-id=>toolbox-load-file
+          id=>form
+        set=>[/][magix.forms.set-value][value].Value
+          value=>[/][magix.forms.get-value][value].Value
+        magix.forms.set-value
+          form-id=>toolbox-load-file
+          id=>name
+        set=>[/][if][load-form][name].Value
+          value=>[/][magix.forms.get-value][value].Value
+        if=>[/][if][load-form][name].Value!=_default
+          load-form
+        _items
+        _buffer
+          x=>y
+        list-widgets
+        while=>[/][_items].Count>0
+          set=>[/][_items][0]
+        set=>[/][_items][_default].Value
+          value=>widgets in form ...
+        for-each=>[/][list-widgets][widgets]
+          set=>[/][_buffer][0].Name
+            value=>[.][dna].Value
+          set=>[/][_buffer][0].Value
+            value=>[.][type].Value
+          add=>[/][_items]
+            value=>[/][_buffer][0]
+        set=>[/][magix.forms.set-values][items]
+          value=>[/][_items]
+        set=>[/][magix.forms.set-values][_items].Name
+          value=>items
+        magix.forms.set-values
+          form-id=>toolbox-load-file
+          id=>widgetsDdl
+          items
+        magix.forms.set-value
+          form-id=>toolbox-load-file
+          id=>widgetsDdl
+          value=>_default
+      items
+        _default=>select form ...
     panel=>wrp
       css=>input-append
       controls
-        select=>form
-          css=>span3
-          onselectedindexchanged
-            select-widget
-            magix.forms.get-value
-              form-id=>toolbox-load-file
-              id=>form
-            set=>[/][magix.forms.set-value][value].Value
-              value=>[/][magix.forms.get-value][value].Value
-            magix.forms.set-value
-              form-id=>toolbox-load-file
-              id=>name
-            set=>[/][if][load-form][name].Value
-              value=>[/][magix.forms.get-value][value].Value
-            if=>[/][if][load-form][name].Value!=_default
-              load-form
-            _items
-            _buffer
-              x=>y
-            list-widgets
-            while=>[/][_items].Count>0
-              set=>[/][_items][0]
-            set=>[/][_items][_default].Value
-              value=>widgets in form ...
-            for-each=>[/][list-widgets][widgets]
-              set=>[/][_buffer][0].Name
-                value=>[.][dna].Value
-              set=>[/][_buffer][0].Value
-                value=>[.][type].Value
-              add=>[/][_items]
-                value=>[/][_buffer][0]
-            set=>[/][magix.forms.set-values][items]
-              value=>[/][_items]
-            set=>[/][magix.forms.set-values][_items].Name
-              value=>items
-            magix.forms.set-values
-              form-id=>toolbox-load-file
-              id=>widgets
-              items
-            magix.forms.set-value
-              form-id=>toolbox-load-file
-              id=>widgets
-              value=>_default
-          items
-            _default=>select form ...
         text-box=>name
-          css=>span3
+          css=>span2
           place-holder=>name ...
           text=>_default
         button=>save
@@ -208,7 +208,7 @@ delete the form.&nbsp;&nbsp;this action is not possible to undo"
                 select-widget
                 magix.forms.set-value
                   form-id=>toolbox-load-file
-                  id=>widgets
+                  id=>widgetsDdl
                   value=>_default
                 load-form
                   name=>_default
@@ -218,16 +218,29 @@ delete the form.&nbsp;&nbsp;this action is not possible to undo"
                   value=>_default
                 magix.viewport.clear-controls
                   container=>modal
-        select=>widgets
+    panel=>wrp2
+      css=>input-append
+      controls
+        select=>widgetsDdl
           onselectedindexchanged
             magix.forms.get-value
               form-id=>toolbox-load-file
-              id=>widgets
+              id=>widgetsDdl
             set=>[/][select-widget][dna].Value
               value=>[/][magix.forms.get-value][value].Value
             select-widget
           items
             _default=>widgets in form ...
+        button=>deleteWidget
+          text=>delete widget
+          css=>btn btn-primary
+          onclick
+            get-selected-widget
+            set=>[/][remove-widget][dna].Value
+              value=>[/][get-selected-widget][value][dna].Value
+            remove-widget
+            magix.ide.update-widget-list
+            select-widget
     label=>ruler
       tag=>hr
       css=>span11
