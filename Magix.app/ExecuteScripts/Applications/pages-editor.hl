@@ -1,0 +1,19 @@
+
+event:magix.execute
+
+inspect=>@"loads up the pages editor for 
+the ide"
+
+magix.viewport.clear-controls
+  container=>modal
+magix.viewport.clear-controls
+  container=>content
+magix.viewport.clear-controls
+  container=>header
+magix.viewport.clear-controls
+  container=>menu
+
+magix.viewport.load-module
+  container=>content
+  name=>Magix.ide.Editor
+  css=>span12

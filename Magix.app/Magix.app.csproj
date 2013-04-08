@@ -60,6 +60,10 @@
     <Content Include="media\images\help-files\new-project.png" />
     <Content Include="media\main.css" />
     <Content Include="media\images\av-background.png" />
+    <Content Include="media\xing-wysihtml5\dist\wysihtml5-0.3.0.js" />
+    <Content Include="media\xing-wysihtml5\dist\wysihtml5-0.3.0.min.js" />
+    <Content Include="media\xing-wysihtml5\parser_rules\advanced.js" />
+    <Content Include="media\xing-wysihtml5\parser_rules\simple.js" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Global.asax.cs">
@@ -278,5 +282,7 @@
     <None Include="ExecuteScripts\Applications\ide.hl" />
     <None Include="ExecuteScripts\Applications\ide-properties.hl" />
     <None Include="ExecuteScripts\Applications\ide-widgets.hl" />
+    <None Include="ExecuteScripts\Applications\pages-editor.hl" />
+    <None Include="media\xing-wysihtml5\LICENSE" />
   </ItemGroup>
 </Project>

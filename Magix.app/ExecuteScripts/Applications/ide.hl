@@ -4,6 +4,15 @@ event:magix.execute
 inspect=>@"loads up the toolbox for 
 the ide"
 
+magix.viewport.clear-controls
+  container=>modal
+magix.viewport.clear-controls
+  container=>content
+magix.viewport.clear-controls
+  container=>header
+magix.viewport.clear-controls
+  container=>menu
+
 _data
   x=>y
 
