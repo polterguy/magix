@@ -73,7 +73,7 @@
       xhr.open('GET', url, false);
       xhr.send('');
       if (xhr.status && xhr.status >= 200 && xhr.status < 300 && xhr.responseText) {
-        eval(xhr.responseText);
+        window.eval.call(window, xhr.responseText);
         MUX._scripts[url] = true;
       } else {
         alert('Something went wrong while trying to include a JavaScript file from the server');
@@ -220,7 +220,7 @@
       while (scr) {
         sf = true;
         var TT = scr[1];
-        setTimeout(function() { eval(TT); }, 1);
+        window.eval.call(window, TT);
         scr = rx.exec(val);
       }
       if (sf) {

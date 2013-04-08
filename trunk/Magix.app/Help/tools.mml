@@ -135,16 +135,14 @@ link-button=>forms
   text=>forms
   css=>btn btn-info
   onclick
-    magix.viewport.clear-controls
-      container=>modal
-    magix.viewport.clear-controls
-      container=>content
-    magix.viewport.clear-controls
-      container=>header
-    magix.viewport.clear-controls
-      container=>menu
     magix.admin.run-file
       file=>ExecuteScripts/Applications/ide.hl
+link-button=>pages
+  text=>pages
+  css=>btn btn-info
+  onclick
+    magix.admin.run-file
+      file=>ExecuteScripts/Applications/pages-editor.hl
 link-button=>trace
   text=>trace
   css=>btn btn-info
