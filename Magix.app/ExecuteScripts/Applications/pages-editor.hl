@@ -12,8 +12,19 @@ magix.viewport.clear-controls
   container=>header
 magix.viewport.clear-controls
   container=>menu
+magix.viewport.clear-controls
+  container=>footer
 
 magix.viewport.load-module
   container=>content
   name=>Magix.ide.Editor
   css=>span12
+
+magix.forms.create-form
+  form-id=>wysiheader
+  container=>header
+  controls
+    label=>header
+      css=>span12
+      tag=>h1
+      text=>pages
