@@ -41,5 +41,105 @@ useLineBreaks: false,
 parserRules: wysihtml5ParserRules});");
 			}
 		}
+
+		[ActiveEvent(Name="magix.execute.get-page-value")]
+		protected void magix_execute_get_page_value(object sender, ActiveEventArgs e)
+		{
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			{
+				e.Params["event:magix.execute"].Value = null;
+				e.Params["inspect"].Value = @"returns mml of editor as [value].&nbsp;&nbsp;
+not thread safe";
+				e.Params["get-page-value"].Value = null;
+				return;
+			}
+
+			Node ip = e.Params;
+			if (e.Params.Contains("_ip"))
+				ip = e.Params["_ip"].Value as Node;
+
+			ip["value"].Value = surface.Text;
+		}
+
+		[ActiveEvent(Name="magix.execute.save-page")]
+		protected void magix_execute_save_page(object sender, ActiveEventArgs e)
+		{
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			{
+				e.Params["event:magix.execute"].Value = null;
+				e.Params["inspect"].Value = @"saves the content of the page from [value] as [name].&nbsp;&nbsp;
+not thread safe";
+				e.Params["save-page"]["name"].Value = "somename";
+				e.Params["save-page"]["value"].Value = "<p>some magix markup language</p>";
+				return;
+			}
+
+			Node ip = e.Params;
+			if (e.Params.Contains("_ip"))
+				ip = e.Params["_ip"].Value as Node;
+
+			if (!ip.Contains("name"))
+				throw new ArgumentException("no [name] given to save page as");
+
+			if (!ip.Contains("value"))
+				throw new ArgumentException("no [value] given to save page");
+
+			Node tp = new Node();
+
+			tp["prototype"]["type"].Value = "magix.pages.page";
+			tp["prototype"]["name"].Value = ip["name"].Get<string>();
+
+			RaiseEvent(
+				"magix.data.load",
+				tp);
+
+			Node tmp = new Node();
+
+			if (tp.Contains("objects") && tp["objects"].Count > 0)
+			{
+				tmp["id"].Value = tp["objects"][0].Name;
+			}
+
+			tmp["object"]["value"].Value = ip["value"].Get<string>();
+			tmp["object"]["type"].Value = "magix.pages.page";
+			tmp["object"]["name"].Value = ip["name"].Get<string>();
+
+			RaiseEvent(
+				"magix.data.save",
+				tmp);
+		}
+
+		[ActiveEvent(Name = "magix.execute.list-pages")]
+		protected void magix_execute_list_pages(object sender, ActiveEventArgs e)
+		{
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			{
+				e.Params["event:magix.execute"].Value = null;
+				e.Params["inspect"].Value = @"lists all pages available in system in [pages].&nbsp;&nbsp;
+not thread safe";
+				e.Params["list-pages"].Value = null;
+				return;
+			}
+
+			Node ip = e.Params;
+			if (e.Params.Contains("_ip"))
+				ip = e.Params["_ip"].Value as Node;
+
+			Node tmp = new Node();
+
+			tmp["prototype"]["type"].Value = "magix.pages.page";
+
+			RaiseEvent(
+				"magix.data.load",
+				tmp);
+
+			foreach (Node idx in tmp["objects"])
+			{
+				Node tp = new Node("page");
+				tp["name"].Value = idx["name"].Get<string>();
+				tp["object-id"].Value = idx.Name;
+				ip["pages"].Add(tp);
+			}
+		}
 	}
 }

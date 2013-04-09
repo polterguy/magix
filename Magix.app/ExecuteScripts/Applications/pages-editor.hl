@@ -20,6 +20,19 @@ magix.viewport.load-module
   name=>Magix.ide.Editor
   css=>span12
 
+_item
+  x=>y
+
+list-pages
+
+for-each=>[/][list-pages][pages]
+  set=>[/][_item][0].Name
+    value=>[.][name].Value
+  set=>[/][_item][0].Value
+    value=>[.][name].Value
+  add=>[/][magix.forms.create-form][controls][panel][controls][select][items]
+    value=>[/][_item][0]
+
 magix.forms.create-form
   form-id=>wysiheader
   container=>header
@@ -28,3 +41,59 @@ magix.forms.create-form
       css=>span12
       tag=>h1
       text=>pages
+    panel=>wrpPages
+      css=>input-append
+      controls
+        select=>page
+          items
+            _default=>select page ...
+        button=>delete
+          text=>delete
+          css=>btn btn-primary
+    panel=>wrpName
+      css=>input-append offset1
+      controls
+        text-box=>name
+          place-holder=>name of page ...
+        button=>save
+          text=>save
+          css=>btn btn-primary
+          onclick
+            magix.forms.get-value
+              form-id=>wysiheader
+              id=>name
+            if=>![/][magix.forms.get-value][value].Value
+              magix.viewport.show-message
+                message=>you need a name for your page
+                header=>error
+            else
+              get-page-value
+              set=>[/][else][save-page][name].Value
+                value=>[/][magix.forms.get-value][value].Value
+              set=>[/][else][save-page][value].Value
+                value=>[/][else][get-page-value][value].Value
+              save-page
+              magix.viewport.show-message
+                header=>page saved
+                message=>page was successfully saved
+                time=>1000
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
