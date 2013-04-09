@@ -32,7 +32,7 @@ namespace Magix.ide
 				AjaxManager.Instance.IncludeScriptFromFile("media/xing-wysihtml5/parser_rules/advanced.js");
 				AjaxManager.Instance.IncludeScriptFromFile("media/xing-wysihtml5/dist/wysihtml5-0.4.0pre.min.js");
 				AjaxManager.Instance.WriterAtBack.InnerWriter.Write(
-					"new wysihtml5.Editor('" + 
+					"window.actualEditor = new wysihtml5.Editor('" + 
 					surface.ClientID + 
 					@"', {
 toolbar:'wysihtml5-editor-toolbar',
@@ -59,6 +59,38 @@ not thread safe";
 				ip = e.Params["_ip"].Value as Node;
 
 			ip["value"].Value = surface.Text;
+		}
+
+		[ActiveEvent(Name = "magix.execute.load-page")]
+		protected void magix_execute_load_page(object sender, ActiveEventArgs e)
+		{
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			{
+				e.Params["event:magix.execute"].Value = null;
+				e.Params["inspect"].Value = @"loads the page with the given [name].&nbsp;&nbsp;
+not thread safe";
+				e.Params["load-page"]["name"].Value = "some-name-of-page";
+				return;
+			}
+
+			Node ip = e.Params;
+			if (e.Params.Contains("_ip"))
+				ip = e.Params["_ip"].Value as Node;
+
+			Node tp = new Node();
+
+			tp["prototype"]["type"].Value = "magix.pages.page";
+			tp["prototype"]["name"].Value = ip["name"].Get<string>();
+
+			RaiseEvent(
+				"magix.data.load",
+				tp);
+
+			if (tp.Contains("objects") && tp["objects"].Count > 0)
+			{
+				AjaxManager.Instance.WriterAtBack.Write("window.actualEditor.setValue('" + 
+				tp["objects"][0]["value"].Value + "');");
+			}
 		}
 
 		[ActiveEvent(Name="magix.execute.save-page")]
@@ -107,6 +139,35 @@ not thread safe";
 			RaiseEvent(
 				"magix.data.save",
 				tmp);
+		}
+
+		[ActiveEvent(Name="magix.execute.delete-page")]
+		protected void magix_execute_delete_page(object sender, ActiveEventArgs e)
+		{
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			{
+				e.Params["event:magix.execute"].Value = null;
+				e.Params["inspect"].Value = @"deletes the page with the name of [name].&nbsp;&nbsp;
+not thread safe";
+				e.Params["delete-page"]["name"].Value = "somename";
+				return;
+			}
+
+			Node ip = e.Params;
+			if (e.Params.Contains("_ip"))
+				ip = e.Params["_ip"].Value as Node;
+
+			if (!ip.Contains("name"))
+				throw new ArgumentException("no [name] given to save page as");
+
+			Node tp = new Node();
+
+			tp["prototype"]["type"].Value = "magix.pages.page";
+			tp["prototype"]["name"].Value = ip["name"].Get<string>();
+
+			RaiseEvent(
+				"magix.data.remove",
+				tp);
 		}
 
 		[ActiveEvent(Name = "magix.execute.list-pages")]
