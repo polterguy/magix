@@ -146,6 +146,7 @@ magix.forms.create-form
         _default=>select form ...
     panel=>wrp
       css=>input-append offset1
+      default=>save
       controls
         text-box=>name
           css=>span2

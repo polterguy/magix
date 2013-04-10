@@ -33,6 +33,16 @@ for-each=>[/][list-pages][pages]
   add=>[/][magix.forms.create-form][controls][panel][controls][select][items]
     value=>[/][_item][0]
 
+list-forms
+
+for-each=>[/][list-forms][forms]
+  set=>[/][_item][0].Name
+    value=>[.][name].Value
+  set=>[/][_item][0].Value
+    value=>[.][name].Value
+  add=>[/][magix.forms.create-form][controls][panel:2][controls][select][items]
+    value=>[/][_item][0]
+
 magix.forms.create-form
   form-id=>wysiheader
   container=>header
@@ -66,14 +76,20 @@ magix.forms.create-form
             magix.forms.get-value
               form-id=>wysiheader
               id=>page
-            set=>[/][magix.forms.set-value][value].Value
-              value=>[/][magix.forms.get-value][value].Value
-            set=>[/][load-page][name].Value
-              value=>[/][magix.forms.get-value][value].Value
-            magix.forms.set-value
-              form-id=>wysiheader
-              id=>name
-            load-page
+            if=>[/][magix.forms.get-value][value].Value==_default
+              magix.forms.set-value
+                form-id=>wysiheader
+                id=>name
+              clear-page
+            else
+              set=>[/][else][magix.forms.set-value][value].Value
+                value=>[/][magix.forms.get-value][value].Value
+              set=>[/][else][load-page][name].Value
+                value=>[/][magix.forms.get-value][value].Value
+              magix.forms.set-value
+                form-id=>wysiheader
+                id=>name
+              load-page
           items
             _default=>select page ...
         button=>delete
@@ -137,6 +153,13 @@ magix.forms.create-form
               magix.forms.set-value
                 form-id=>wysiheader
                 id=>page
+    panel=>wrpplugin
+      css=>input-append offset1
+      controls
+        select=>pluginform
+          css=>span2
+          items
+            _default=>insert form ...
 
 
 

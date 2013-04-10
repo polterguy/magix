@@ -1,19 +1,10 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Magix.ide/Editor.ascx">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Magix.ide/Editor.ascx.cs">
     <Files>
-      <File FileName="Magix.app/ExecuteScripts/Applications/pages-editor.hl" Line="14" Column="18" />
-      <File FileName="Magix.app/ExecuteScripts/Applications/ide.hl" Line="16" Column="1" />
-      <File FileName="Magix.app/Help/tools.mml" Line="153" Column="1" />
-      <File FileName="Magix.ide/Builder.ascx.cs" Line="25" Column="1" />
-      <File FileName="Magix.ide/Editor.ascx.cs" Line="18" Column="29" />
-      <File FileName="Magix.ide/Editor.ascx" Line="12" Column="6" />
-      <File FileName="Magix.app/media/base.js" Line="15" Column="1" />
-      <File FileName="Magix.UX/Js/Magix.js" Line="223" Column="38" />
-      <File FileName="Magix.UX/Core/PostbackFilter.cs" Line="78" Column="1" />
-      <File FileName="Magix.UX/Core/CallbackFilter.cs" Line="78" Column="1" />
-      <File FileName="Magix.UX/Core/AjaxManager.cs" Line="534" Column="33" />
-      <File FileName="Magix.UX/Js/Control.js" Line="155" Column="27" />
+      <File FileName="Magix.ide/Editor.ascx.cs" Line="39" Column="45" />
+      <File FileName="Magix.app/ExecuteScripts/Applications/pages-editor.hl" Line="73" Column="15" />
+      <File FileName="Magix.ide/Editor.ascx" Line="10" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -24,16 +15,18 @@
                 <Node name="Applications" expanded="True" />
               </Node>
               <Node name="media" expanded="True">
-                <Node name="css" selected="True" />
+                <Node name="xing-wysihtml5" expanded="True">
+                  <Node name="website" expanded="True">
+                    <Node name="css" expanded="True" />
+                  </Node>
+                </Node>
               </Node>
-            </Node>
-            <Node name="Magix.UX" expanded="True">
-              <Node name="Core" expanded="True" />
-              <Node name="Js" expanded="True" />
             </Node>
           </Node>
           <Node name="Plugins" expanded="True">
-            <Node name="Magix.ide" expanded="True" />
+            <Node name="Magix.ide" expanded="True">
+              <Node name="Editor.ascx.cs" selected="True" />
+            </Node>
           </Node>
           <Node name="Samples" expanded="True" />
           <Node name="Tests" expanded="True" />
