@@ -36,7 +36,7 @@ namespace Magix.ide
 					surface.ClientID + 
 					@"', {
 toolbar:'wysihtml5-editor-toolbar',
-stylesheets: ['css/editor.css'],
+stylesheets: ['media/xing-wysihtml5/website/css/editor.css'],
 useLineBreaks: false,
 parserRules: wysihtml5ParserRules});");
 			}
@@ -88,9 +88,25 @@ not thread safe";
 
 			if (tp.Contains("objects") && tp["objects"].Count > 0)
 			{
-				AjaxManager.Instance.WriterAtBack.Write("window.actualEditor.setValue('" + 
-				tp["objects"][0]["value"].Value + "');");
+				AjaxManager.Instance.WriterAtBack.Write(
+					"window.actualEditor.setValue('" + 
+					(tp["objects"][0]["value"].Get<string>().Replace("\n", "\\n").Replace("\r\n", "\\n")) + "');");
 			}
+		}
+
+		[ActiveEvent(Name = "magix.execute.clear-page")]
+		protected void magix_execute_clear_page(object sender, ActiveEventArgs e)
+		{
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			{
+				e.Params["event:magix.execute"].Value = null;
+				e.Params["inspect"].Value = @"clears the content of the editor.&nbsp;&nbsp;
+not thread safe";
+				e.Params["clear-page"].Value = null;
+				return;
+			}
+
+			AjaxManager.Instance.WriterAtBack.Write("window.actualEditor.setValue();");
 		}
 
 		[ActiveEvent(Name="magix.execute.save-page")]

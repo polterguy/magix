@@ -763,13 +763,13 @@ default is after.&nbsp;&nbsp;not thread safe";
 		}
 
 		[ActiveEvent(Name="magix.execute.list-forms")]
-		protected void magix_execute_list_forms(object sender, ActiveEventArgs e)
+		protected static void magix_execute_list_forms(object sender, ActiveEventArgs e)
 		{
 			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
 				e.Params["event:magix.execute"].Value = null;
 				e.Params["inspect"].Value = @"lists all forms in system underneath [forms].&nbsp;&nbsp;
-not thread safe";
+thread safe";
 				e.Params["list-forms"].Value = null;
 				return;
 			}
@@ -782,7 +782,8 @@ not thread safe";
 
 			tmp["prototype"]["type"].Value = "magix.forms.form";
 
-			RaiseEvent(
+			ActiveEvents.Instance.RaiseActiveEvent(
+				typeof(Builder),
 				"magix.data.load",
 				tmp);
 
