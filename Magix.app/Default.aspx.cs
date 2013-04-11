@@ -31,5 +31,16 @@ namespace Magix.app
             Control ctrl = ModuleControllerLoader.Instance.LoadActiveModule(defaultControl);
             Form.Controls.Add(ctrl);
         }
+
+		private PageStatePersister _pageStatePersister;
+		protected override System.Web.UI.PageStatePersister PageStatePersister
+		{
+			get
+			{
+				if (_pageStatePersister == null)
+					_pageStatePersister = new Magix_PageStatePersister(this);
+				return _pageStatePersister;
+			}
+		}
     }
 }

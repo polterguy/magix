@@ -1,0 +1,38 @@
+
+
+
+<p>an active module is a view.&nbsp;&nbsp;it contains visible things, such as click things 
+and type things.&nbsp;&nbsp;se below</p>
+
+<div class="input-prepend">
+<span class="add-on">@</span>
+{{
+text-box=>txt
+  place-bolder=>textbox ...
+  css=>span2
+  onfirstload
+    magix.help.set-next
+      next=>help-system/developers/mvc-9.mml
+    magix.viewport.change-modal-header
+      header=>mvc 8
+select=>lst
+  items
+    goat=>Goat
+    cow=>Cow
+    horse=>Horse
+button=>btn
+  text=>Hello
+  css=>btn
+}}
+</div>
+
+<p>a module can be much more complex than this, but that it not good.&nbsp;&nbsp;best programs 
+have only one button, just like woman.&nbsp;&nbsp;woman have two buttons, man confused.&nbsp;&nbsp;
+software have two buttons, woman confused</p>
+
+<p>this is why there are no buttons in magix, only input fields.&nbsp;&nbsp;software happy, 
+woman happy, man happy, boss go thailand</p>
+
+
+
+

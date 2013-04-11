@@ -1,0 +1,30 @@
+
+
+<p>magix is mvc, without model.&nbsp;&nbsp;many have legacy data, these can wrap 
+existing business code to active controllers, and become dynamic.&nbsp;&nbsp;to kill 
+disease, is to slowly cure the rest.&nbsp;&nbsp;don't kill disease, let the healthy 
+body replace the sick</p>
+
+<p>this way legacy is safe, nobody sees dirty deeds, you keep job, and 
+ceo keep face.&nbsp;&nbsp;everybody happy, you go vacation thailand</p>
+
+<ul>
+<li>no model - db4o support included</li>
+<li>controller - active controller</li>
+<li>view - active modules</li>
+</ul>
+
+<p>active events ties together modules and controllers, allowing them to communicate.&nbsp;&nbsp;
+by using active events to communicate, no link between module and controller exists, and
+flexibility is acquired.&nbsp;&nbsp;existing legacy model-code can be attached to controllers, 
+minimizing influence of sick code, slowly curing by substitution</p>
+
+{{
+hidden=>dummy
+  onfirstload
+    magix.help.set-next
+      next=>help-system/developers/mvc-2.mml
+    magix.viewport.change-modal-header
+      header=>mvc
+}}
+

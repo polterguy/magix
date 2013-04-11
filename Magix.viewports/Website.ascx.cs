@@ -42,6 +42,38 @@ namespace Magix.viewports
 		private int _time = 3000;
 
 		/**
+		 * executes the given javascript
+		 */
+        [ActiveEvent(Name = "magix.viewport.execute-javascript")]
+		protected void magix_viewport_execute_javascript(object sender, ActiveEventArgs e)
+		{
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			{
+				e.Params["execute:magix.viewport.execute-javascript"]["script"].Value = "alert('{0}');";
+				e.Params["execute:magix.viewport.execute-javascript"]["script"]["x"].Value = "thomas";
+				e.Params["inspect"].Value = @"executes the javascript given in [script] using the values
+of its children as string.format values.&nbsp;&nbsp;
+not thread safe";
+				return;
+			}
+
+			if (!e.Params.Contains("script"))
+				throw new ArgumentException("you need a [script] value to execute javascript");
+
+			string script = e.Params["script"].Get<string>();
+
+			if (e.Params["script"].Count > 0)
+			{
+				for (int idx = 0; idx < e.Params["script"].Count; idx++)
+				{
+					script = script.Replace("{" + idx + "}", e.Params["script"][idx].Get<string>());
+				}
+			}
+
+			AjaxManager.Instance.WriterAtBack.Write(script);
+		}
+
+		/**
 		 * Changes header of Modal Form
 		 */
         [ActiveEvent(Name = "magix.viewport.change-modal-header")]

@@ -1,0 +1,175 @@
+
+event:magix.execute
+
+inspect=>@"loads up the pages editor for 
+the ide"
+
+magix.viewport.clear-controls
+  container=>modal
+magix.viewport.clear-controls
+  container=>content
+magix.viewport.clear-controls
+  container=>header
+magix.viewport.clear-controls
+  container=>menu
+magix.viewport.clear-controls
+  container=>footer
+
+magix.viewport.load-module
+  container=>content
+  name=>Magix.ide.Editor
+  css=>span12
+
+_item
+  x=>y
+
+list-pages
+
+for-each=>[/][list-pages][pages]
+  set=>[/][_item][0].Name
+    value=>[.][name].Value
+  set=>[/][_item][0].Value
+    value=>[.][name].Value
+  add=>[/][magix.forms.create-form][controls][panel][controls][select][items]
+    value=>[/][_item][0]
+
+list-forms
+
+for-each=>[/][list-forms][forms]
+  set=>[/][_item][0].Name
+    value=>[.][name].Value
+  set=>[/][_item][0].Value
+    value=>[.][name].Value
+  add=>[/][magix.forms.create-form][controls][panel:2][controls][select][items]
+    value=>[/][_item][0]
+
+magix.forms.create-form
+  form-id=>wysiheader
+  container=>header
+  events
+    magix.pages.pages-changed
+      _item
+        x=>y
+      list-pages
+      for-each=>[/][list-pages][pages]
+        set=>[/][_item][0].Name
+          value=>[.][name].Value
+        set=>[/][_item][0].Value
+          value=>[.][name].Value
+        add=>[/][magix.forms.set-values][items]
+          value=>[/][_item][0]
+      magix.forms.set-values
+        form-id=>wysiheader
+        id=>page
+        items
+          _default=>select page ...
+  controls
+    label=>header
+      css=>span12
+      tag=>h1
+      text=>pages
+    panel=>wrpPages
+      css=>input-append
+      controls
+        select=>page
+          onselectedindexchanged
+            magix.forms.get-value
+              form-id=>wysiheader
+              id=>page
+            if=>[/][magix.forms.get-value][value].Value==_default
+              magix.forms.set-value
+                form-id=>wysiheader
+                id=>name
+              clear-page
+            else
+              set=>[/][else][magix.forms.set-value][value].Value
+                value=>[/][magix.forms.get-value][value].Value
+              set=>[/][else][load-page][name].Value
+                value=>[/][magix.forms.get-value][value].Value
+              magix.forms.set-value
+                form-id=>wysiheader
+                id=>name
+              load-page
+          items
+            _default=>select page ...
+        button=>delete
+          text=>delete
+          css=>btn btn-primary
+          onclick
+            magix.forms.get-value
+              form-id=>wysiheader
+              id=>page
+            if=>[/][magix.forms.get-value][value].Value==_default
+              magix.viewport.show-message
+                message=>choose page to delete first
+                header=>error
+            else
+              set=>[/][else][delete-page][name].Value
+                value=>[/][magix.forms.get-value][value].Value
+              delete-page
+              magix.viewport.show-message
+                message=>page delete successfully
+                header=>info
+                time=>500
+              magix.pages.pages-changed
+              magix.forms.set-value
+                form-id=>wysiheader
+                id=>name
+                value
+    panel=>wrpName
+      css=>input-append offset1
+      default=>save
+      controls
+        text-box=>name
+          place-holder=>name of page ...
+        button=>save
+          text=>save
+          css=>btn btn-primary
+          onclick
+            magix.forms.get-value
+              form-id=>wysiheader
+              id=>name
+            if=>![/][magix.forms.get-value][value].Value
+              magix.viewport.show-message
+                message=>you need a name for your page
+                header=>error
+            else
+              get-page-value
+              set=>[/][else][save-page][name].Value
+                value=>[/][magix.forms.get-value][value].Value
+              set=>[/][else][save-page][value].Value
+                value=>[/][else][get-page-value][value].Value
+              save-page
+              magix.viewport.show-message
+                header=>page saved
+                message=>page was successfully saved
+                time=>500
+              magix.pages.pages-changed
+              magix.forms.get-value
+                form-id=>wysiheader
+                id=>name
+              set=>[/][else][magix.forms.set-value][value].Value
+                value=>[/][else][magix.forms.get-value][value].Value
+              magix.forms.set-value
+                form-id=>wysiheader
+                id=>page
+    panel=>wrpplugin
+      css=>input-append offset1
+      controls
+        select=>pluginform
+          css=>span2
+          onselectedindexchanged
+            magix.forms.get-value
+              form-id=>wysiheader
+              id=>pluginform
+            set=>[/][magix.viewport.execute-javascript][script][form].Value
+              value=>[/][magix.forms.get-value][value].Value
+            magix.viewport.execute-javascript
+              script=>@"window.actualEditor.composer.commands.exec('insertHTML', '{{form:{0}}}');"
+                form
+            magix.forms.set-value
+              form-id=>wysiheader
+              id=>pluginform
+              value=>_default
+          items
+            _default=>insert form ...

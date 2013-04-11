@@ -1,5 +1,0 @@
-scope1=>value of scope1
-  scope2=>child node of scope1
-  scope3=>same as above
-    scope4=>child of scope 3
-  scope5=>another child of scope1

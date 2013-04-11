@@ -1,0 +1,34 @@
+
+
+<p>to override one active event with another</p>
+
+<pre>
+ActiveEvents.Instance.CreateEventMapping(
+   "namespace.foo", "namespace.bar");
+</pre>
+
+<p>the code will raise namespace.bar everytime namespace.foo is raised.&nbsp;&nbsp;
+overriding foo with bar.&nbsp;&nbsp;if you wish to invoke foo inside of bar, use 
+code below</p>
+
+<pre>
+[ActiveEvent(Name = "namespace.bar")]
+public void namespace_bar(object sender, ActiveEventArgs e)
+{
+   ActiveEvents.Instance.RaiseActiveEvent(
+      this, 
+      "namespace.foo", 
+      null, 
+      true /* no-overrides!! */ );
+}</pre>
+
+{{
+hidden=>dummy
+  onfirstload
+    magix.help.set-next
+      next=>help-system/developers/mvc-5.mml
+    magix.viewport.change-modal-header
+      header=>mvc 4
+}}
+
+

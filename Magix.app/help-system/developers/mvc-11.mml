@@ -1,0 +1,22 @@
+
+
+<p>to load active module is easy, from controller</p>
+<pre>
+LoadModule(
+   "namespace.module",
+   "content");
+</pre>
+<p>content is viewport container</p>
+
+<p>viewport can have many containers, viewport like skin, container is home for modules.&nbsp;&nbsp;
+viewport also active module, all is one.&nbsp;&nbsp;magix knows no concept</p>
+
+{{
+hidden=>dummy
+  onfirstload
+    magix.help.set-next
+      next=>help-system/developers/ajax.mml
+    magix.viewport.change-modal-header
+      header=>mvc 11
+}}
+

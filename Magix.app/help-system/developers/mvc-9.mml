@@ -1,0 +1,17 @@
+
+
+<p>create active module is easy, just embed usercontrol into project as resource.&nbsp;&nbsp;all is one, 
+also usercontrol.&nbsp;&nbsp;usercontrols very resourceful, once embedded.&nbsp;&nbsp;remember 
+to mark with assembly</p>
+
+<img src="media/images/help-files/active-module.png" alt="active module" class="img-polaroid" />
+
+{{
+hidden=>dummy
+  onfirstload
+    magix.help.set-next
+      next=>help-system/developers/mvc-10.mml
+    magix.viewport.change-modal-header
+      header=>mvc 9
+}}
+
