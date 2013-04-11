@@ -1,0 +1,21 @@
+
+
+<p>all of this can be transported over the web.&nbsp;&nbsp;meaning one server can build code, that
+another server runs, with callbacks to the first.&nbsp;&nbsp;this way you can partition your network
+as non-homogenously as you could possible dream of</p>
+
+<p>you could have one "magix.execute.if" server, and another "magix.execute.else" server</p>
+
+<p>this is possible due to no concept.&nbsp;&nbsp;magix is an empty cup, everything else json.&nbsp;&nbsp;
+magix.execute code is nothing but a node tree, the seeds of json</p>
+
+{{
+hidden=>dummy
+  onfirstload
+    magix.help.set-next
+      next=>help-system/developers/maintenance.mml
+    magix.viewport.change-modal-header
+      header=>dynamic 4
+}}
+
+

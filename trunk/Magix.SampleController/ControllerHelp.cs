@@ -42,7 +42,7 @@ namespace Magix.SampleController
 			tmp["css"].Value = "modal-fixed-body modal-body";
 			tmp["header"].Value = "help from marvin";
 
-			using (TextReader reader = File.OpenText(Page.Server.MapPath("Help/index.mml")))
+			using (TextReader reader = File.OpenText(Page.Server.MapPath("help-system/index.mml")))
 			{
 				tmp["html"].Value = reader.ReadToEnd();
 			}
@@ -67,7 +67,7 @@ namespace Magix.SampleController
 			{
 				tmp = new Node();
 				tmp["reset"].Value = true;
-				tmp["page"].Value = "Help/index.mml";
+				tmp["page"].Value = "help-system/index.mml";
 
 				RaiseActiveEvent(
 					"magix.help.add-page",
@@ -91,13 +91,13 @@ link-button=>index
   css=>btn btn-primary
   onclick
     magix.help.open-file
-      file=>Help/index.mml
+      file=>help-system/index.mml
 link-button=>tools
   text=>tools
   css=>btn btn-primary
   onclick
     magix.help.open-file
-      file=>Help/tools.mml
+      file=>help-system/tools.mml
 link-button=>executor
   text=>executor
   css=>btn btn-primary
@@ -126,7 +126,7 @@ link-button=>next
 				e.Params["event:magix.help.set-next"].Value = null;
 				e.Params["inspect"].Value = @"set the next page for the help system.
 &nbsp;&nbsp;not thread safe";
-				e.Params["next"].Value = "Help/index.mml";
+				e.Params["next"].Value = "help-system/index.mml";
 				return;
 			}
 			if (!e.Params.Contains("next") || e.Params["next"].Get<string>("") == "")
@@ -182,7 +182,7 @@ link-button=>next
 				e.Params["event:magix.help.open-file"].Value = null;
 				e.Params["inspect"].Value = @"opens the given [file] file as html.
 &nbsp;&nbsp;thread safe";
-				e.Params["file"].Value = "Help/index.html";
+				e.Params["file"].Value = "help-system/index.html";
 				return;
 			}
 
@@ -252,7 +252,7 @@ link-button=>next
 			if (ShouldInspect(e.Params))
 			{
 				e.Params["event:magix.help.add-page"].Value = null;
-				e.Params["page"].Value = "Help/path-to-page.mml";
+				e.Params["page"].Value = "help-system/path-to-page.mml";
 				e.Params["reset"].Value = false;
 				e.Params["inspect"].Value = @"adds the given [page] to the history 
 of the help system.&nbsp;&nbsp;set [reset] to true to reset entire history stack

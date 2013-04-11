@@ -1,0 +1,24 @@
+
+
+<p>create code</p>
+
+<pre>event:magix.execute
+_data
+  value=>thomas
+if=>[_data][value].Value==thomas
+  magix.viewport.show-message
+    message=>hi thomas
+else
+  magix.viewport.show-message
+    message=>hi stranger
+</pre>
+
+{{
+hidden=>dummy
+  onfirstload
+    magix.help.set-next
+      next=>help-system/developers/dynamic-3.mml
+    magix.viewport.change-modal-header
+      header=>dynamic 2
+}}
+

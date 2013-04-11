@@ -1,0 +1,15 @@
+
+
+<p>magix is ajax library, mux</p>
+
+<img src="media/images/help-files/mux.png" alt="active module properties" class="img-polaroid" />
+
+{{
+hidden=>dummy
+  onfirstload
+    magix.help.set-next
+      next=>help-system/developers/ajax-2.mml
+    magix.viewport.change-modal-header
+      header=>ajax
+}}
+

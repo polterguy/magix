@@ -21,17 +21,17 @@
 				<li data-wysihtml5-command="formatBlock" data-wysihtml5-command-value="h1" title="Insert headline 1" class="command"></li>
 				<li data-wysihtml5-command="formatBlock" data-wysihtml5-command-value="h2" title="Insert headline 2" class="command"></li>
 				<li data-wysihtml5-command-group="foreColor" class="fore-color" title="Color the selected text" class="command">
-				<ul>
-					<li data-wysihtml5-command="foreColor" data-wysihtml5-command-value="silver"></li>
-					<li data-wysihtml5-command="foreColor" data-wysihtml5-command-value="gray"></li>
-					<li data-wysihtml5-command="foreColor" data-wysihtml5-command-value="maroon"></li>
-					<li data-wysihtml5-command="foreColor" data-wysihtml5-command-value="red"></li>
-					<li data-wysihtml5-command="foreColor" data-wysihtml5-command-value="purple"></li>
-					<li data-wysihtml5-command="foreColor" data-wysihtml5-command-value="green"></li>
-					<li data-wysihtml5-command="foreColor" data-wysihtml5-command-value="olive"></li>
-					<li data-wysihtml5-command="foreColor" data-wysihtml5-command-value="navy"></li>
-					<li data-wysihtml5-command="foreColor" data-wysihtml5-command-value="blue"></li>
-				</ul>
+					<ul>
+						<li data-wysihtml5-command="foreColor" data-wysihtml5-command-value="silver"></li>
+						<li data-wysihtml5-command="foreColor" data-wysihtml5-command-value="gray"></li>
+						<li data-wysihtml5-command="foreColor" data-wysihtml5-command-value="maroon"></li>
+						<li data-wysihtml5-command="foreColor" data-wysihtml5-command-value="red"></li>
+						<li data-wysihtml5-command="foreColor" data-wysihtml5-command-value="purple"></li>
+						<li data-wysihtml5-command="foreColor" data-wysihtml5-command-value="green"></li>
+						<li data-wysihtml5-command="foreColor" data-wysihtml5-command-value="olive"></li>
+						<li data-wysihtml5-command="foreColor" data-wysihtml5-command-value="navy"></li>
+						<li data-wysihtml5-command="foreColor" data-wysihtml5-command-value="blue"></li>
+					</ul>
 				</li>
 				<li data-wysihtml5-command="insertSpeech" title="Insert speech" class="command"></li>
 				<li data-wysihtml5-action="change_view" title="Show HTML" class="action"></li>

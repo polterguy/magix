@@ -27,7 +27,7 @@ namespace Magix.execute
 			if (ShouldInspect(e.Params))
 			{
 				e.Params["event:magix.execute"].Value = null;
-				e.Params["magix.file.load"]["path"].Value = "ExecuteScripts/todo.txt";
+				e.Params["magix.file.load"]["path"].Value = "core-scripts/some-files.txt";
 				e.Params["inspect"].Value = @"loads the [path] file into the 
 [file] node as text.&nbsp;&nbsp;[path] can be a relative path, to 
 fetch a document beneath your web application directory structure, or 
@@ -73,7 +73,7 @@ an http or ftp path, to a document.&nbsp;&nbsp;thread safe";
 			if (ShouldInspect(e.Params))
 			{
 				e.Params["event:magix.execute"].Value = null;
-				e.Params["magix.file.save"]["path"].Value = "ExecuteScripts/sample.txt";
+				e.Params["magix.file.save"]["path"].Value = "core-scripts/sample.txt";
 				e.Params["magix.file.save"]["file"].Value = @"contents that will replace the contents
 in the existing file, alternatively become the 
 contents of a new file";

@@ -1,0 +1,26 @@
+
+
+<p>magix has dynamic features, you can create forms and code for execution dynamically</p>
+
+<pre>event:magix.execute
+magix.forms.create-form
+  form-id=>my-form
+  container=>modal
+  controls
+    button=>hello
+      text=>hello world
+      onclick
+        magix.viewport.show-message
+          message=>hello dynamic world
+</pre>
+
+{{
+hidden=>dummy
+  onfirstload
+    magix.help.set-next
+      next=>help-system/developers/dynamic-2.mml
+    magix.viewport.change-modal-header
+      header=>dynamic
+}}
+
+

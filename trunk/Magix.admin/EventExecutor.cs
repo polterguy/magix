@@ -216,7 +216,7 @@ if=>[_data].Value==thomas
 tries to load up the code into the active event executor - if the active 
 event executor is active in any viewport containers.&nbsp;&nbsp;thread safe";
 				e.Params["event:magix.admin.run-file"].Value = null;
-				e.Params["file"].Value = "ExecuteScripts/Applications/address-book.hl";
+				e.Params["file"].Value = "core-scripts/some-script.hl";
 				return;
 			}
 

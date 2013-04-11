@@ -1,0 +1,56 @@
+
+<img src="media/images/magix-logo.png" alt="magix logo" style="float:left;margin-right:10px;" />
+<p>magix illuminate is old way to create new software.&nbsp;&nbsp;you have seen everything
+in magix before, {{
+link-button=>lnkunit
+  text=>unit tests
+  onclick
+    magix.admin.run-file
+      file=>core-scripts/tools/inspect-unit-tests.hl
+    magix.viewport.clear-controls
+      container=>modal
+    magix.tests.run
+}}, mvc, webcontrols, ajax and so on, but you have probably never seen 
+{{
+link-button=>actevt
+  text=>active events
+  onclick
+    magix.admin.run-file
+      file=>core-scripts/tools/inspect-events.hl
+    magix.viewport.clear-controls
+      container=>modal
+}}.&nbsp;&nbsp;active events is what sets magix apart.&nbsp;&nbsp;active events is the 
+facilitator for {{
+link-button=>linkhyper
+  text=>hyper lisp
+  onclick
+    magix.admin.run-file
+      file=>core-scripts/tools/inspect-execute.hl
+    magix.viewport.clear-controls
+      container=>modal
+}}, {{
+link-button=>linkpoly
+  text=>run time polymorphism
+  onfirstload
+    magix.help.set-next
+      next=>help-system/info-2.mml
+    magix.viewport.change-modal-header
+      header=>conceptual info
+  onclick
+    magix.admin.run-file
+      file=>core-scripts/tools/inspect-overridden-events.hl
+    magix.viewport.clear-controls
+      container=>modal
+}}, and the extreme amount of re-use, and flexibility magix fosters</p>
+
+<p>active events makes magix the <strong>definition of agile</strong>.&nbsp;&nbsp;
+however, remember, you already know everything, no need for learning here</p>
+
+<p>magix build upon one axiom; modularity.&nbsp;&nbsp;with magix, modularity explodes, 
+and everything you do, implicitly becomes re-usable, small, flexible and maintainable</p>
+
+<p><em>"with magix, shoot foot impossible; marvin pacifist :)"</em></p>
+
+<p>marvin - the buddhist monk</p>
+
+

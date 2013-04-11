@@ -1,0 +1,30 @@
+
+
+<p>magix is not conventional mvc, magix is different.&nbsp;&nbsp;magix is like the tao, 
+nothing yet all.&nbsp;&nbsp;unseen, yet visible</p>
+
+<p>a controller in magix knows no concept, and hence communicates no type.&nbsp;&nbsp;
+it consumes types, eats types, as it does, dependencies vanish.&nbsp;&nbsp;out from the 
+controller, comes only nodes</p>
+
+<p>a controller in magix, can handle many things.&nbsp;&nbsp;or only half a thing.&nbsp;&nbsp;
+a controller in magix is not tied to a view, it only knows active events, and hence can control 
+millions of modules, or half a module</p>
+
+<p>a controller in magix, knows no boundaries, and hence can control objects across the world, 
+through web</p>
+
+<p>a controller in magix is timeless, because it can slowly be replaced, by overriding one 
+active event after the other.&nbsp;&nbsp;therefor we say that magix controller is solid, 
+yet changes.&nbsp;&nbsp;change without movement is the only change that exist</p>
+
+{{
+hidden=>dummy
+  onfirstload
+    magix.help.set-next
+      next=>help-system/developers/mvc-8.mml
+    magix.viewport.change-modal-header
+      header=>mvc 7
+}}
+
+

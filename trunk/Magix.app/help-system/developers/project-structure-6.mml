@@ -1,0 +1,24 @@
+
+
+<p>if you run an active event with inspect, you will become wise.&nbsp;&nbsp;try this</p>
+
+<pre>event:magix.viewport.show-message
+inspect</pre>
+
+<p>to see all active events</p>
+
+<pre>event:magix.admin.get-active-events</pre>
+
+<p>run all tests</p>
+
+<pre>event:magix.tests.run</pre>
+
+{{
+hidden=>dummy
+  onfirstload
+    magix.help.set-next
+      next=>help-system/developers/dynamic.mml
+    magix.viewport.change-modal-header
+      header=>project structure 6
+}}
+
