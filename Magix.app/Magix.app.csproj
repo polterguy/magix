@@ -215,6 +215,7 @@
     <Folder Include="help-system\management\" />
     <Folder Include="help-system\mortal\" />
     <Folder Include="core-scripts\tools\" />
+    <Folder Include="core-scripts\misc\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="media\xing-wysihtml5\LICENSE" />
@@ -278,5 +279,6 @@
     <None Include="core-scripts\tools\inspect-web-controls.hl" />
     <None Include="core-scripts\tools\magix-markup-editor.hl" />
     <None Include="core-scripts\tools\rss-parser.hl" />
+    <None Include="core-scripts\misc\main-menu.hl" />
   </ItemGroup>
 </Project>

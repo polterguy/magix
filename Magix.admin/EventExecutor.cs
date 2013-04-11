@@ -212,9 +212,8 @@ if=>[_data].Value==thomas
 		{
 			if (ShouldInspect(e.Params))
 			{
-				e.Params["inspect"].Value = @"runs the hyper lisp [file] given, and 
-tries to load up the code into the active event executor - if the active 
-event executor is active in any viewport containers.&nbsp;&nbsp;thread safe";
+				e.Params["inspect"].Value = @"runs the hyper lisp [file] given.&nbsp;&nbsp;
+thread safe";
 				e.Params["event:magix.admin.run-file"].Value = null;
 				e.Params["file"].Value = "core-scripts/some-script.hl";
 				return;
@@ -231,14 +230,6 @@ event executor is active in any viewport containers.&nbsp;&nbsp;thread safe";
 				txt = reader.ReadToEnd();
 			}
 
-			// try to push code into active event executor, if it exists in page
-			Node tmp = new Node();
-			tmp["code"].Value = txt;
-
-			RaiseActiveEvent(
-				"magix.admin.set-code",
-				tmp);
-
 			string wholeTxt = txt.TrimStart();
 			string method = "";
 			if (wholeTxt.StartsWith("event:"))
@@ -250,7 +241,7 @@ event executor is active in any viewport containers.&nbsp;&nbsp;thread safe";
 						"";
 			}
 
-			tmp = new Node();
+			Node tmp = new Node();
 			tmp["code"].Value = wholeTxt;
 
 			RaiseActiveEvent(

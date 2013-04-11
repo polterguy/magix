@@ -62,24 +62,15 @@ or refreshed";
 
 			tmp = new Node();
 
-			tmp["form-id"].Value = "menu";
-			tmp["html"].Value = @"
-{{
-link-button=>help
-  text=>help
-  css=>btn btn-primary btn-large span2
-  onclick
-    magix.help.start-help
-}}";
-			tmp["container"].Value = "menu";
-			tmp["css"].Value = "span3";
+			tmp["file"].Value = "core-scripts/misc/main-menu.hl";
 
 			RaiseActiveEvent(
-				"magix.forms.create-web-page",
+				"magix.admin.run-file",
 				tmp);
 
 			Node del = new Node();
 			del["container"].Value = "footer";
+
 			RaiseActiveEvent(
 				"magix.viewport.clear-controls",
 				del);
