@@ -9,8 +9,6 @@ magix.viewport.clear-controls
   container=>content
 magix.viewport.clear-controls
   container=>header
-magix.viewport.clear-controls
-  container=>menu
 
 magix.viewport.load-module
   container=>footer
