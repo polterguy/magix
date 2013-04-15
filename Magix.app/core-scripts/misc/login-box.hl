@@ -1,0 +1,88 @@
+
+event:magix.execute
+
+inspect=>@"loads up the login box"
+
+magix.viewport.clear-controls
+  container=>header
+magix.viewport.clear-controls
+  container=>content2
+magix.viewport.clear-controls
+  container=>footer
+magix.viewport.clear-controls
+  container=>modal
+magix.viewport.clear-controls
+  container=>trace
+
+
+
+magix.forms.create-form
+  form-id=>login-box
+  container=>content
+  css=>span12
+  controls
+    panel=>wrp
+      css=>span9 offset3 input-append
+      default=>login
+      controls
+        text-box=>name
+          place-holder=>name ...
+        text-box=>pwd
+          place-holder=>pwd ...
+        button=>login
+          css=>btn btn-primary
+          text=>login
+          onclick
+            magix.forms.get-value
+              form-id=>login-box
+              id=>name
+            magix.forms.get-value
+              form-id=>login-box
+              id=>pwd
+            set=>[/][magix.data.load][prototype][name].Value
+              value=>[/][magix.forms.get-value:0][value].Value
+            set=>[/][magix.data.load][prototype][password].Value
+              value=>[/][magix.forms.get-value:1][value].Value
+            magix.data.load
+              prototype
+                type=>magix.core.user
+                name
+                password
+            if=>[/][magix.data.load][objects][0]
+              set=>[/][if][magix.web.set-session][value].Value
+                value=>[/][magix.data.load][name].Value
+              magix.web.set-session
+                key=>magix.core.user
+                value
+              magix.admin.load-start
+            else
+              magix.viewport.show-message
+                header=>error
+                message=>wrong username or password given
+                time=>500
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

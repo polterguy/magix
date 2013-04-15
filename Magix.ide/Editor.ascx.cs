@@ -89,8 +89,8 @@ not thread safe";
 			if (tp.Contains("objects") && tp["objects"].Count > 0)
 			{
 				AjaxManager.Instance.WriterAtBack.Write(
-					"window.actualEditor.setValue('" + 
-					(tp["objects"][0]["value"].Get<string>().Replace("\n", "\\n").Replace("\r\n", "\\n")) + "');");
+					"window.actualEditor.setValue(\"" + 
+					(tp["objects"][0]["value"].Get<string>().Replace("\n", "\\n").Replace("\r\n", "\\n").Replace("\"", "\\\"")) + "\");");
 			}
 		}
 

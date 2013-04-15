@@ -51,24 +51,22 @@ your persistent data storage.&nbsp;&nbsp;thread safe";
 			if ((!e.Params.Contains("id") || string.IsNullOrEmpty(e.Params["id"].Get<string>())) && prototype == null)
 				throw new ArgumentException("missing [id] or [prototype] while trying to remove object");
 
-			lock (typeof(Node))
+			using (IObjectContainer db = Db4oFactory.OpenFile(_dbFile))
 			{
-				using (IObjectContainer db = Db4oFactory.OpenFile(_dbFile))
-				{
-					string id = ip["id"].Get<string>();
-					foreach (Storage idx in db.Ext().Query<Storage>(
-						delegate(Storage obj)
-						{
-							if (id != null)
-								return obj.Id == id;
-							else
-								return obj.Node.HasNodes(prototype);
-						}))
+				string id = ip["id"].Get<string>();
+				foreach (Storage idx in db.Ext().Query<Storage>(
+					delegate(Storage obj)
 					{
-						db.Delete(idx);
-					}
-					db.Commit();
+						if (id != null)
+							return obj.Id == id;
+						else
+							return obj.Node.HasNodes(prototype);
+					}))
+				{
+					db.Delete(idx);
 				}
+				db.Commit();
+				db.Close();
 			}
 		}
 
@@ -91,32 +89,30 @@ a global unique identifier will be automatically assigned to the object.&nbsp;&n
 
 			Node value = e.Params["object"].Clone();
 
-			lock (typeof(Node))
+			using (IObjectContainer db = Db4oFactory.OpenFile(_dbFile))
 			{
-				using (IObjectContainer db = Db4oFactory.OpenFile(_dbFile))
+				db.Ext().Configure().UpdateDepth(1000);
+				db.Ext().Configure().ActivationDepth(1000);
+
+				string id = e.Params.Contains("id") ? 
+					e.Params["id"].Get<string>() : 
+					Guid.NewGuid().ToString();
+				bool found = false;
+
+				// checking to see if we should update existing object
+				foreach (Storage idx in db.QueryByExample(new Storage(null, id)))
 				{
-					db.Ext().Configure().UpdateDepth(1000);
-					db.Ext().Configure().ActivationDepth(1000);
-
-					string id = e.Params.Contains("id") ? 
-						e.Params["id"].Get<string>() : 
-						Guid.NewGuid().ToString();
-					bool found = false;
-
-					// checking to see if we should update existing object
-					foreach (Storage idx in db.QueryByExample(new Storage(null, id)))
-					{
-						idx.Node = value;
-						db.Store(idx);
-						found = true;
-						break;
-					}
-					if (!found)
-					{
-						db.Store(new Storage(value, id));
-					}
-					db.Commit();
+					idx.Node = value;
+					db.Store(idx);
+					found = true;
+					break;
 				}
+				if (!found)
+				{
+					db.Store(new Storage(value, id));
+				}
+				db.Commit();
+				db.Close();
 			}
 		}
 
@@ -156,28 +152,27 @@ and will make sure only one object is loaded.&nbsp;&nbsp;thread safe";
 			if (id != null && start != 0 && end != -1 && prototype != null)
 				throw new ArgumentException("if you supply an [id], then [start], [end] and [prototype] cannot be defined");
 
-			lock (typeof(Node))
+			using (IObjectContainer db = Db4oFactory.OpenFile(_dbFile))
 			{
-				using (IObjectContainer db = Db4oFactory.OpenFile(_dbFile))
-				{
-					db.Ext().Configure().UpdateDepth(1000);
-					db.Ext().Configure().ActivationDepth(1000);
+				db.Ext().Configure().UpdateDepth(1000);
+				db.Ext().Configure().ActivationDepth(1000);
 
-					int idxNo = 0;
-					foreach (Storage idx in db.Ext().Query<Storage>(
-						delegate(Storage obj)
-						{
-							if (id != null)
-								return obj.Id == id;
-							else
-								return obj.Node.HasNodes(prototype);
-						}))
+				int idxNo = 0;
+				foreach (Storage idx in db.Ext().Query<Storage>(
+					delegate(Storage obj)
 					{
-						if (idxNo >= start && (end == -1 || idxNo < end))
-							e.Params["objects"][idx.Id].ReplaceChildren(idx.Node);
-						idxNo++;
-					}
+						if (id != null)
+							return obj.Id == id;
+						else
+							return obj.Node.HasNodes(prototype);
+					}))
+				{
+					if (idxNo >= start && (end == -1 || idxNo < end))
+						e.Params["objects"][idx.Id].ReplaceChildren(idx.Node.Clone());
+					idxNo++;
 				}
+				db.Commit();
+				db.Close();
 			}
 		}
 
@@ -194,16 +189,17 @@ and will make sure only one object is loaded.&nbsp;&nbsp;thread safe";
 of objects in data storage as [count].&nbsp;&nbsp;thread safe";
 				return;
 			}
-			lock (typeof(Node))
-			{
-				using (IObjectContainer db = Db4oFactory.OpenFile(_dbFile))
-				{
-					db.Ext().Configure().UpdateDepth(1000);
-					db.Ext().Configure().ActivationDepth(1000);
 
-					// TODO: Refactor ...
-					e.Params["count"].Value = db.QueryByExample (new Storage(null, null)).Count;
-				}
+			using (IObjectContainer db = Db4oFactory.OpenFile(_dbFile))
+			{
+				db.Ext().Configure().UpdateDepth(1000);
+				db.Ext().Configure().ActivationDepth(1000);
+
+				// TODO: Refactor ...
+				e.Params["count"].Value = db.QueryByExample (new Storage(null, null)).Count;
+
+				db.Commit();
+				db.Close();
 			}
 		}
 	}
