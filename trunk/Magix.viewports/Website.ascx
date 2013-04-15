@@ -97,6 +97,11 @@
 	        OnReload="dynamic_LoadControls"
 	        CssClass="span9"
 	        id="content" />
+	    <mux:DynamicPanel 
+	        runat="server" 
+	        OnReload="dynamic_LoadControls"
+	        CssClass="span9"
+	        id="content2" />
     </div>
 	<div class="row">
 	    <mux:DynamicPanel 

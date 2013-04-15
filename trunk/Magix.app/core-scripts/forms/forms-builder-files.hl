@@ -87,46 +87,56 @@ magix.forms.create-form
     select=>form
       css=>span2
       onselectedindexchanged
+        _items
+        _buffer
+          x=>y
         select-widget
         magix.forms.get-value
           form-id=>toolbox-load-file
           id=>form
-        set=>[/][magix.forms.set-value][value].Value
-          value=>[/][magix.forms.get-value][value].Value
-        magix.forms.set-value
-          form-id=>toolbox-load-file
-          id=>name
         set=>[/][if][load-form][name].Value
           value=>[/][magix.forms.get-value][value].Value
         if=>[/][if][load-form][name].Value!=_default
+          set=>[/][if][magix.forms.set-value][value].Value
+            value=>[/][magix.forms.get-value][value].Value
+          magix.forms.set-value
+            form-id=>toolbox-load-file
+            id=>name
           load-form
-        _items
-        _buffer
-          x=>y
-        list-widgets
-        while=>[/][_items].Count>0
-          set=>[/][_items][0]
-        set=>[/][_items][_default].Value
-          value=>widgets in form ...
-        for-each=>[/][list-widgets][widgets]
-          set=>[/][_buffer][0].Name
-            value=>[.][dna].Value
-          set=>[/][_buffer][0].Value
-            value=>[.][type].Value
-          add=>[/][_items]
-            value=>[/][_buffer][0]
-        set=>[/][magix.forms.set-values][items]
-          value=>[/][_items]
-        set=>[/][magix.forms.set-values][_items].Name
-          value=>items
-        magix.forms.set-values
-          form-id=>toolbox-load-file
-          id=>widgetsDdl
-          items
-        magix.forms.set-value
-          form-id=>toolbox-load-file
-          id=>widgetsDdl
-          value=>_default
+          list-widgets
+          while=>[/][_items].Count>0
+            set=>[/][_items][0]
+          set=>[/][_items][_default].Value
+            value=>widgets in form ...
+          for-each=>[/][if][list-widgets][widgets]
+            set=>[/][_buffer][0].Name
+              value=>[.][dna].Value
+            set=>[/][_buffer][0].Value
+              value=>[.][type].Value
+            add=>[/][_items]
+              value=>[/][_buffer][0]
+          set=>[/][if][magix.forms.set-values][items]
+            value=>[/][_items]
+          set=>[/][if][magix.forms.set-values][_items].Name
+            value=>items
+          magix.forms.set-values
+            form-id=>toolbox-load-file
+            id=>widgetsDdl
+            items
+          magix.forms.set-value
+            form-id=>toolbox-load-file
+            id=>widgetsDdl
+            value=>_default
+        else
+          clear-form
+          magix.forms.set-value
+            form-id=>toolbox-load-file
+            id=>name
+          magix.forms.set-values
+            form-id=>toolbox-load-file
+            id=>widgetsDdl
+            items
+              _default=>widgets in form ...
       items
         _default=>select form ...
     panel=>wrp
@@ -136,7 +146,6 @@ magix.forms.create-form
         text-box=>name
           css=>span2
           place-holder=>name ...
-          text=>_default
         button=>save
           text=>save
           css=>btn btn-primary
@@ -205,23 +214,25 @@ delete the form.&nbsp;&nbsp;this action is not possible to undo"
                   id=>form
                   items
                     _default=>select form ...
-                set=>[/][magix.forms.set-value][value].Value
-                  value=>_default
                 magix.forms.set-value
                   form-id=>toolbox-load-file
                   id=>form
-                  value
+                  value=>_default
                 select-widget
+                magix.forms.set-values
+                  form-id=>toolbox-load-file
+                  id=>widgetsDdl
+                  items
+                    _default=>widgets in form ...
                 magix.forms.set-value
                   form-id=>toolbox-load-file
                   id=>widgetsDdl
                   value=>_default
-                load-form
-                  name=>_default
+                clear-form
                 magix.forms.set-value
                   form-id=>toolbox-load-file
                   id=>name
-                  value=>_default
+                  value=>
                 magix.viewport.clear-controls
                   container=>modal
     panel=>wrp2

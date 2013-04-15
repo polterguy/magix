@@ -116,6 +116,7 @@ magix.forms.create-form
                 form-id=>wysiheader
                 id=>name
                 value
+              clear-page
     panel=>wrpName
       css=>input-append offset1
       default=>save
