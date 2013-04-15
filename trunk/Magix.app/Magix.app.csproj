@@ -37,6 +37,10 @@
       <Package>db4o</Package>
     </Reference>
     <Reference Include="System.Configuration" />
+    <Reference Include="Db4objects.Db4o.NativeQueries, Version=8.0.184.15484, Culture=neutral, PublicKeyToken=6199cd4f203aa8eb">
+      <Private>False</Private>
+      <Package>db4o</Package>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
@@ -280,5 +284,6 @@
     <None Include="core-scripts\tools\magix-markup-editor.hl" />
     <None Include="core-scripts\tools\rss-parser.hl" />
     <None Include="core-scripts\misc\main-menu.hl" />
+    <None Include="core-scripts\misc\login-box.hl" />
   </ItemGroup>
 </Project>

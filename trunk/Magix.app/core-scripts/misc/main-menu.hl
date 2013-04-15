@@ -43,6 +43,13 @@ magix.forms.create-form
               text=>active event executor
               tag=>h1
               css=>span9 offset3
-        
+    link-button=>logout
+      css=>btn btn-primary btn-large span2 air-bottom
+      text=>log out
+      onclick
+        magix.web.set-session
+          key=>magix.core.user
+        magix.web.redirect
+          url=>~
 
 

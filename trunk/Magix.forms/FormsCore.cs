@@ -67,7 +67,8 @@ event handlers goes here...}}.&nbsp;&nbsp;internally it
 calls LoadModule, hence all the parameters that goes
 into your magix.viewport.load-module active event, 
 can also be passed into this, such as [css] and 
-so on.&nbsp;&nbsp;not thread safe";
+so on.&nbsp;&nbsp;you can embed forms using this syntax
+{{form:name_of_form}}.&nbsp;&nbsp;not thread safe";
 				return;
 			}
 

@@ -29,11 +29,9 @@ namespace Magix.forms
 
 			Node node = e.Params["_code"].Value as Node;
 
-			if (!node.Contains("text"))
-				throw new ArgumentException("literal needs [text] property");
-
 			Literal ret = new Literal();
-			ret.Text = node["text"].Get<string>();
+			if (node.Contains("text"))
+				ret.Text = node["text"].Get<string>();
 
 			e.Params["_ctrl"].Value = ret;
 		}

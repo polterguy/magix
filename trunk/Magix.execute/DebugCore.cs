@@ -36,14 +36,15 @@ namespace Magix.execute
 		 * such as "if", cannot be called directly, but must be called
 		 * from within a "magix.execute" event code block
 		 */
-		[ActiveEvent(Name = "magix.execute.show-debug")]
-		public void magix_execute_show_debug(object sender, ActiveEventArgs e)
+		[ActiveEvent(Name = "magix.execute.debug")]
+		public void magix_execute_debug(object sender, ActiveEventArgs e)
 		{
 			if (ShouldInspect(e.Params))
 			{
 				e.Params["event:magix.execute"].Value = null;
 				e.Params["inspect"].Value = @"show the entire stack of tree
 in a modal message box.&nbsp;&nbsp;not thread safe";
+				e.Params["debug"].Value = null;
 				return;
 			}
 

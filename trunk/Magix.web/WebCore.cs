@@ -61,6 +61,70 @@ http cookie parameter as [value] node.&nbsp;&nbsp;not thread safe";
 			e.Params["value"].Value = HttpContext.Current.Request.Cookies[par].Value;
 		}
 
+		[ActiveEvent(Name = "magix.web.set-session")]
+		public void magix_web_set_session(object sender, ActiveEventArgs e)
+		{
+			if (ShouldInspect(e.Params))
+			{
+				e.Params["event:magix.execute"].Value = null;
+				e.Params["inspect"].Value = @"will create or overwrite
+an existing session variable named [key] with node hierarchy from [value].&nbsp;&nbsp;
+not thread safe";
+				e.Params["magix.web.set-session"]["key"].Value = "some_key";
+				e.Params["magix.web.set-session"]["value"].Value = "something to store into session";
+				return;
+			}
+
+			if (!e.Params.Contains("key"))
+				throw new ArgumentException("need [key]");
+
+			if (!e.Params.Contains("value"))
+				Page.Session.Remove(e.Params["key"].Get<string>());
+			else
+				Page.Session[e.Params["key"].Get<string>()] = e.Params["value"].Clone();
+		}
+
+		[ActiveEvent(Name = "magix.web.get-session")]
+		public void magix_web_get_session(object sender, ActiveEventArgs e)
+		{
+			if (ShouldInspect(e.Params))
+			{
+				e.Params["event:magix.execute"].Value = null;
+				e.Params["inspect"].Value = @"will return
+an existing session variable named [key] as node hierarchy into [value].&nbsp;&nbsp;
+not thread safe";
+				e.Params["magix.web.get-session"]["key"].Value = "some_key";
+				return;
+			}
+
+			if (!e.Params.Contains("key"))
+				throw new ArgumentException("need [key]");
+
+			if (Page.Session[e.Params["key"].Get<string>()] != null &&
+			    Page.Session[e.Params["key"].Get<string>()] is Node)
+				e.Params.Add(Page.Session[e.Params["key"].Get<string>()] as Node);
+		}
+
+
+		[ActiveEvent(Name = "magix.web.redirect")]
+		public void magix_web_redirect(object sender, ActiveEventArgs e)
+		{
+			if (ShouldInspect(e.Params))
+			{
+				e.Params["event:magix.execute"].Value = null;
+				e.Params["inspect"].Value = @"will redirect the browser 
+to the value of the [url].&nbsp;&nbsp;
+not thread safe";
+				e.Params["magix.web.redirect"]["url"].Value = "http://google.com";
+				return;
+			}
+
+			if (!e.Params.Contains("url"))
+				throw new ArgumentException("need [url]");
+
+			Magix.UX.AjaxManager.Instance.Redirect(e.Params["url"].Get<string>());
+		}
+
 		/**
 		 * Sets the given Value HTTP cookie persistent from "value"
 		 */
