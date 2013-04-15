@@ -22,7 +22,27 @@ magix.forms.create-form
       css=>btn btn-primary btn-large span2 air-bottom
       text=>pages
       onclick
+        magix.viewport.clear-controls
+          container=>content2
         magix.admin.run-file
           file=>core-scripts/pages/pages-editor.hl
+    link-button=>executor
+      css=>btn btn-primary btn-large span2 air-bottom
+      text=>executor
+      onclick
+        magix.admin.open-event-executor
+        magix.viewport.clear-controls
+          container=>footer
+        magix.viewport.clear-controls
+          container=>content2
+        magix.forms.create-form
+          form-id=>header
+          container=>header
+          controls
+            label=>lblHeader
+              text=>active event executor
+              tag=>h1
+              css=>span9 offset3
+        
 
 

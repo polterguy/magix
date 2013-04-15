@@ -79,11 +79,6 @@ magix.forms.create-form
       tag=>h1
       text=>forms
       css=>span11
-    button=>help
-      css=>btn btn-primary span1 btn-large
-      text=>?
-      onclick
-        magix.help.start-help
     select=>form
       css=>span2
       onselectedindexchanged

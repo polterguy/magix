@@ -11,14 +11,12 @@ magix.viewport.clear-controls
 magix.viewport.clear-controls
   container=>header
 magix.viewport.clear-controls
-  container=>menu
-magix.viewport.clear-controls
   container=>footer
 
 magix.viewport.load-module
   container=>content
   name=>Magix.ide.Editor
-  css=>span12
+  css=>span9
 
 _item
   x=>y

@@ -65,13 +65,13 @@ for-each=>[/][list-widget-types][types]
 magix.forms.create-form
   form-id=>toolbox-controls
   container=>content
-  css=>span12
+  css=>span9
   controls
     label=>header
       tag=>h4
       text=>widgets
     panel=>wrpCpy
-      css=>input-append input-prepend span12
+      css=>input-append input-prepend span9
       controls
         button=>copy
           text=>copy
@@ -116,9 +116,9 @@ choose either before or after as the position of the node"
                   time=>1000
     label=>expl
       text=>insert ...
-      css=>span12
+      css=>span9
     panel=>rdoWrp
-      css=>input-append span12
+      css=>input-append span9
       controls
         radio=>before
           group=>where
@@ -146,8 +146,5 @@ choose either before or after as the position of the node"
           text=>after
           css=>left right-20
     panel=>wrpTypes
-      css=>span11
+      css=>span8
       controls
-    label=>ruler
-      tag=>hr
-      css=>span11
