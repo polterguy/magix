@@ -59,7 +59,7 @@ event=>magix.ide.create-properties
               change-widget
               magix.viewport.clear-controls
                 container=>modal
-              magix.ide.dynamic.create-toolbox
+              magix.ide.create-properties
     get-selected-widget
     if=>[/][get-selected-widget][value][widget]
       list-widget-types
@@ -101,11 +101,11 @@ event=>magix.ide.create-properties
           value=>[/][_buffer][link-button]
     magix.forms.create-form
       form-id=>toolbox-properties
-      container=>content
+      container=>content2
       css=>span10
       events
         magix.forms.widget-selected
-          magix.ide.dynamic.create-toolbox
+          magix.ide.create-properties
       controls
         label=>header
           text=>properties
