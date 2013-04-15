@@ -1,31 +1,35 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Magix.ide/Editor.ascx.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Magix.node/NodeCore.cs">
     <Files>
-      <File FileName="Magix.ide/Editor.ascx.cs" Line="39" Column="45" />
-      <File FileName="Magix.app/ExecuteScripts/Applications/pages-editor.hl" Line="73" Column="15" />
-      <File FileName="Magix.ide/Editor.ascx" Line="10" Column="1" />
+      <File FileName="Magix.app/core-scripts/forms/forms-builder-widgets.hl" Line="58" Column="7" />
+      <File FileName="Magix.app/media/main.css" Line="49" Column="1" />
+      <File FileName="Magix.node/NodeCore.cs" Line="67" Column="1" />
+      <File FileName="Magix.execute/AddCore.cs" Line="23" Column="21" />
+      <File FileName="Magix.core/Controllers/ActiveController.cs" Line="25" Column="3" />
+      <File FileName="Magix.core/Expression/Expressions.cs" Line="238" Column="1" />
+      <File FileName="Magix.core/Common/Node.cs" Line="405" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
           <Node name="Core" expanded="True">
             <Node name="Magix.app" expanded="True">
-              <Node name="ExecuteScripts" expanded="True">
-                <Node name="Applications" expanded="True" />
+              <Node name="core-scripts" expanded="True">
+                <Node name="forms" expanded="True" />
               </Node>
-              <Node name="media" expanded="True">
-                <Node name="xing-wysihtml5" expanded="True">
-                  <Node name="website" expanded="True">
-                    <Node name="css" expanded="True" />
-                  </Node>
-                </Node>
-              </Node>
+              <Node name="media" expanded="True" />
+            </Node>
+            <Node name="Magix.Core" expanded="True">
+              <Node name="Common" expanded="True" />
+              <Node name="Controllers" expanded="True" />
+              <Node name="Expression" expanded="True" />
             </Node>
           </Node>
           <Node name="Plugins" expanded="True">
-            <Node name="Magix.ide" expanded="True">
-              <Node name="Editor.ascx.cs" selected="True" />
+            <Node name="Magix.execute" expanded="True" />
+            <Node name="Magix.node" expanded="True">
+              <Node name="NodeCore.cs" selected="True" />
             </Node>
           </Node>
           <Node name="Samples" expanded="True" />
@@ -41,7 +45,9 @@
     </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
+    <BreakpointStore>
+      <Breakpoint file="/home/thomas/Projects/magix-illuminate-2/Magix.node/NodeCore.cs" line="51" />
+    </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches>
     <Watch file="Magix.tests/ExecuteTest.cs" line="86" offsetX="650" offsetY="1185" expression="tmp" liveUpdate="False" />

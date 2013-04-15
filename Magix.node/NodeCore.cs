@@ -10,25 +10,20 @@ using Magix.Core;
 
 namespace Magix.node
 {
-	/**
-	 */
 	public class NodeCore : ActiveController
 	{
-		/**
-		 *
-		[ActiveEvent(Name = "magix.execute.subtract")]
-		public void magix_execute_subtract(object sender, ActiveEventArgs e)
+		[ActiveEvent(Name = "magix.execute.replace")]
+		public void magix_execute_replace_node_value(object sender, ActiveEventArgs e)
 		{
-			if (Inspect2(e.Params))
+			if (ShouldInspect(e.Params))
 			{
 				e.Params["event:magix.execute"].Value = null;
-				e.Params["inspect"].Value = @"subtracts the values from [what] node-set, 
-from the values of [from], being a node expression.&nbsp;&nbsp;use [?] to give wildcard 
-node name in [what]";
-				e.Params["_data"]["values"]["item1"].Value = "namespace.foo";
-				e.Params["_data"]["values"]["item2"].Value = "namespace.bar";
-				e.Params["subtract"]["what"]["values"]["?"].Value = "namespace.";
-				e.Params["subtract"]["from"].Value = "[_data]";
+				e.Params["inspect"].Value = @"replaces [replace] with [with] in 
+the [where] node expression.&nbsp;&nbsp;
+expression must end with .Value or .Name.&nbsp;&nbsp;thread safe";
+				e.Params["replace"].Value = "[expression].Value";
+				e.Params["replace"].Value = "some value to replace";
+				e.Params["with"].Value = "what to replace with";
 				return;
 			}
 
@@ -40,32 +35,32 @@ node name in [what]";
 			if (e.Params.Contains("_dp"))
 				dp = e.Params["_dp"].Value as Node;
 
-			if (!ip.Contains("from") || string.IsNullOrEmpty(ip["from"].Get<string>()))
-				throw new ArgumentException("magix.execute.subtract needs [from] parameter");
+			if (!ip.Contains("replace") || string.IsNullOrEmpty(ip["replace"].Get<string>()))
+				throw new ArgumentException("magix.nodes.replace needs [replace] parameter");
 
-			if (!ip.Contains("what") || (ip["what"].Count == 0 && ip["what"].Value == null))
-				throw new ArgumentException("magix.execute.subtract needs [what] parameter");
+			string expr = ip.Get<string>();
 
-			Node node = Expressions.GetExpressionValue(
-				ip["from"].Get<string>(), dp, ip) as Node;
+			expr = expr.Substring(0, expr.LastIndexOf("."));
 
-			if (node == null)
-				throw new ArgumentException("couldn't find the node in [from]");
+			Node exprNode = Expressions.GetExpressionValue(
+				expr, dp, ip) as Node;
 
-			Subtract(node, ip["what"]);
-		}
+			if (exprNode == null)
+				throw new ArgumentException("couldn't find the node in [replace]");
 
-		void Subtract(Node from, Node what)
-		{
-			if (!string.IsNullOrEmpty(what.Get<string>()))
-				from.Value = from.Get<string>().Replace(what.Get<string>(), "");
-
-			foreach (Node idx in from)
+			if (ip.Get<string>().EndsWith(".Value"))
 			{
-				if (what.Contains("?") || what.Contains(idx.Name))
-					Subtract(idx, what.Contains(idx.Name) ? what[idx.Name] : what["?"]);
+				exprNode.Value = exprNode.Get<string>().Replace(
+					ip["replace"].Get<string>(), 
+					(ip.Contains("with") ? ip["with"].Get<string>() : ""));
 			}
-		}*/
+			else
+			{
+				exprNode.Name = exprNode.Name.Replace(
+					ip["replace"].Get<string>(), 
+					(ip.Contains("with") ? ip["with"].Get<string>() : ""));
+			}
+		}
 	}
 }
 
