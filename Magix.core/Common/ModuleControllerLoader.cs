@@ -131,17 +131,24 @@ namespace Magix.Core
                 // expected to be .Net Framework assemblies...
                 if (assembly.GlobalAssemblyCache)
                     continue;
-                foreach (Type type in assembly.GetTypes())
-                {
-                    TAttrType[] attributes = type.GetCustomAttributes(
-                        typeof(TAttrType),
-                        true) as TAttrType[];
-                    if (attributes != null && attributes.Length > 0)
-                    {
-                        // Calling our given delegate with the type...
-                        functor(type);
-                    }
-                }
+				try
+				{
+	                foreach (Type type in assembly.GetTypes())
+	                {
+	                    TAttrType[] attributes = type.GetCustomAttributes(
+	                        typeof(TAttrType),
+	                        true) as TAttrType[];
+	                    if (attributes != null && attributes.Length > 0)
+	                    {
+	                        // Calling our given delegate with the type...
+	                        functor(type);
+	                    }
+	                }
+				}
+				catch
+				{
+					; // do nothing
+				}
             }
         }
 
