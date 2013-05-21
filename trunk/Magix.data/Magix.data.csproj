@@ -30,13 +30,11 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="Db4objects.Db4o, Version=8.0.184.15484, Culture=neutral, PublicKeyToken=6199cd4f203aa8eb">
-      <Private>False</Private>
-      <Package>db4o</Package>
+    <Reference Include="Db4objects.Db4o.NativeQueries">
+      <HintPath>..\references\Db4objects.Db4o.NativeQueries.dll</HintPath>
     </Reference>
-    <Reference Include="Db4objects.Db4o.NativeQueries, Version=8.0.184.15484, Culture=neutral, PublicKeyToken=6199cd4f203aa8eb">
-      <Private>False</Private>
-      <Package>db4o</Package>
+    <Reference Include="Db4objects.Db4o">
+      <HintPath>..\references\Db4objects.Db4o.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
