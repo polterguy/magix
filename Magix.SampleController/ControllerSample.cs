@@ -5,6 +5,7 @@
  */
 
 using System;
+using System.Configuration;
 using Magix.Core;
 
 namespace Magix.SampleController
@@ -80,12 +81,14 @@ you change this as fast as you can, since otherwise your system is not secure</p
 		 * the page-load event, and you've got your own application
 		 */
 		[ActiveEvent(Name = "magix.viewport.page-load")]
-		public void magix_viewport_page_load(object sender, ActiveEventArgs e)
+		public void magix_viewport_page_load_2(object sender, ActiveEventArgs e)
 		{
 			if (ShouldInspect(e.Params))
 			{
 				e.Params["inspect"].Value = @"raised when page is initially loaded, 
-or refreshed";
+or refreshed.&nbsp;&nbsp;will by default load a page, either the default page or the given 
+'page' http get parameter page, or if your web.config contains 'Magix.Core.PageLoad-HyperLispFile' it will
+run that hyperlisp file, and nothing else";
 				return;
 			}
 
@@ -96,34 +99,43 @@ or refreshed";
 				else
 					RaiseActiveEvent("magix.admin.load-login");
 			}
-		}
-
-		[ActiveEvent(Name = "magix.viewport.page-load")]
-		public void magix_viewport_page_load_2(object sender, ActiveEventArgs e)
-		{
-			string page = Page.Request.Params["page"] ?? "default";
-
-			if (Page.Request.Params["dashboard"] == null)
+			else
 			{
-				Node tp = new Node();
+				string defaultHyperLispFile = ConfigurationManager.AppSettings["Magix.Core.PageLoad-HyperLispFile"];
 
-				tp["prototype"]["type"].Value = "magix.pages.page";
-				tp["prototype"]["name"].Value = page;
+				if (!string.IsNullOrEmpty(defaultHyperLispFile))
+				{
+					Node node = new Node ();
+					node ["file"].Value = defaultHyperLispFile;
 
-				RaiseActiveEvent(
-					"magix.data.load",
-					tp);
+					RaiseActiveEvent(
+						"magix.admin.run-file",
+						node);
+				}
+				else
+				{
+					string page = Page.Request.Params["page"] ?? "default";
 
-				Node tmp = new Node();
+					Node tp = new Node();
 
-				tmp["html"].Value = tp["objects"][0]["value"].Value;
-				tmp["container"].Value = "content";
-				tmp["css"].Value = "span12";
-				tmp["form-id"].Value = "webpages";
+					tp["prototype"]["type"].Value = "magix.pages.page";
+					tp["prototype"]["name"].Value = page;
 
-				RaiseActiveEvent(
-					"magix.forms.create-web-page",
-					tmp);
+					RaiseActiveEvent(
+						"magix.data.load",
+						tp);
+
+					Node tmp = new Node();
+
+					tmp["html"].Value = tp["objects"][0]["value"].Value;
+					tmp["container"].Value = "content";
+					tmp["css"].Value = "span12";
+					tmp["form-id"].Value = "webpages";
+
+					RaiseActiveEvent(
+						"magix.forms.create-web-page",
+						tmp);
+				}
 			}
 		}
 

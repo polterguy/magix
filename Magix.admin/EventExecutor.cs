@@ -231,7 +231,7 @@ thread safe";
 			}
 
 			string wholeTxt = txt.TrimStart();
-			string method = "";
+			string method = "magix.execute";
 			if (wholeTxt.StartsWith("event:"))
 			{
 				method = wholeTxt.Split (':')[1];
