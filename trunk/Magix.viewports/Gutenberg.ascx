@@ -4,7 +4,7 @@
 <%@ Control 
     Language="C#" 
     AutoEventWireup="true" 
-    Inherits="Magix.viewports.Website" %>
+    Inherits="Magix.viewports.Gutenberg" %>
 
 <link href="media/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen" />
 <link href="media/main.css" rel="stylesheet" media="screen" />

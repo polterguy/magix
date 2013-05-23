@@ -7,7 +7,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{47AFBBBE-CDF6-4B3A-8BD8-478406735C99}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>Magix.Viewports</RootNamespace>
+    <RootNamespace>Magix.viewports</RootNamespace>
     <AssemblyName>Magix.viewports</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -35,11 +35,15 @@
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="Website.ascx.cs" />
+    <Compile Include="Gutenberg.ascx.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <EmbeddedResource Include="Website.ascx">
       <LogicalName>Magix.viewports.Website.ascx</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Gutenberg.ascx">
+      <LogicalName>Magix.viewports.Gutenberg.ascx</LogicalName>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

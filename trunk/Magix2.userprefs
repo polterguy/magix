@@ -1,38 +1,27 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Magix.node/NodeCore.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Magix.viewports/Gutenberg.ascx">
     <Files>
-      <File FileName="Magix.app/core-scripts/forms/forms-builder-widgets.hl" Line="58" Column="7" />
-      <File FileName="Magix.app/media/main.css" Line="49" Column="1" />
-      <File FileName="Magix.node/NodeCore.cs" Line="67" Column="1" />
-      <File FileName="Magix.execute/AddCore.cs" Line="23" Column="21" />
-      <File FileName="Magix.core/Controllers/ActiveController.cs" Line="25" Column="3" />
-      <File FileName="Magix.core/Expression/Expressions.cs" Line="238" Column="1" />
-      <File FileName="Magix.core/Common/Node.cs" Line="405" Column="1" />
+      <File FileName="Magix.viewports/Gutenberg.ascx" Line="13" Column="19" />
+      <File FileName="Magix.viewports/Gutenberg.ascx.cs" Line="24" Column="27" />
+      <File FileName="Magix.app/web.config" Line="12" Column="63" />
+      <File FileName="Magix.app/zigano/index.hl" Line="5" Column="14" />
+      <File FileName="Magix.app/zigano/index-header.mml" Line="2" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
           <Node name="Core" expanded="True">
             <Node name="Magix.app" expanded="True">
-              <Node name="core-scripts" expanded="True">
-                <Node name="forms" expanded="True" />
-              </Node>
-              <Node name="media" expanded="True" />
+              <Node name="zigano" expanded="True" />
+              <Node name="Default.aspx" expanded="True" />
             </Node>
-            <Node name="Magix.Core" expanded="True">
-              <Node name="Common" expanded="True" />
-              <Node name="Controllers" expanded="True" />
-              <Node name="Expression" expanded="True" />
-            </Node>
+            <Node name="Magix.viewports" expanded="True" selected="True" />
           </Node>
-          <Node name="Plugins" expanded="True">
-            <Node name="Magix.execute" expanded="True" />
-            <Node name="Magix.node" expanded="True">
-              <Node name="NodeCore.cs" selected="True" />
-            </Node>
+          <Node name="Plugins" expanded="True" />
+          <Node name="Samples" expanded="True">
+            <Node name="Magix.SampleController" expanded="True" />
           </Node>
-          <Node name="Samples" expanded="True" />
           <Node name="Tests" expanded="True" />
         </State>
       </Pad>
@@ -45,9 +34,7 @@
     </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore>
-      <Breakpoint file="/home/thomas/Projects/magix-illuminate-2/Magix.node/NodeCore.cs" line="51" />
-    </BreakpointStore>
+    <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches>
     <Watch file="Magix.tests/ExecuteTest.cs" line="86" offsetX="650" offsetY="1185" expression="tmp" liveUpdate="False" />
