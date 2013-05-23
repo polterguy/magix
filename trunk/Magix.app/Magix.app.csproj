@@ -212,6 +212,7 @@
     <Folder Include="help-system\mortal\" />
     <Folder Include="core-scripts\tools\" />
     <Folder Include="core-scripts\misc\" />
+    <Folder Include="ivan\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="media\xing-wysihtml5\LICENSE" />
@@ -277,5 +278,6 @@
     <None Include="core-scripts\tools\rss-parser.hl" />
     <None Include="core-scripts\misc\main-menu.hl" />
     <None Include="core-scripts\misc\login-box.hl" />
+    <None Include="ivan\index.hl" />
   </ItemGroup>
 </Project>
