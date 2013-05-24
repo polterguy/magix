@@ -1,28 +1,38 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Magix.viewports/Gutenberg.ascx">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Magix.app/zigano/index-header.mml">
     <Files>
-      <File FileName="Magix.viewports/Gutenberg.ascx" Line="13" Column="19" />
-      <File FileName="Magix.viewports/Gutenberg.ascx.cs" Line="24" Column="27" />
-      <File FileName="Magix.app/web.config" Line="12" Column="63" />
-      <File FileName="Magix.app/zigano/index.hl" Line="5" Column="14" />
-      <File FileName="Magix.app/zigano/index-header.mml" Line="2" Column="1" />
+      <File FileName="Magix.viewports/Gutenberg.ascx" Line="25" Column="40" />
+      <File FileName="Magix.viewports/Gutenberg.ascx.cs" Line="33" Column="6" />
+      <File FileName="Magix.app/web.config" Line="18" Column="81" />
+      <File FileName="Magix.app/zigano/index.hl" Line="8" Column="1" />
+      <File FileName="Magix.app/zigano/index-header.mml" Line="66" Column="28" />
+      <File FileName="Magix.app/media/grid/main.css" Line="73" Column="20" />
+      <File FileName="Magix.web/WebCore.cs" Line="67" Column="1" />
+      <File FileName="Magix.core/Modules/Viewport.cs" Line="202" Column="3" />
+      <File FileName="Magix.forms/DynamicFormBase.cs" Line="334" Column="14" />
+      <File FileName="Magix.forms/HtmlViewer.ascx.cs" Line="51" Column="18" />
+      <File FileName="Magix.forms/FormsCore.cs" Line="54" Column="60" />
+      <File FileName="Magix.forms/DynamicForm.ascx.cs" Line="1" Column="1" />
+      <File FileName="Magix.core/Events/ActiveEvents.cs" Line="331" Column="1" />
+      <File FileName="Magix.data/DataCore.cs" Line="119" Column="24" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
           <Node name="Core" expanded="True">
             <Node name="Magix.app" expanded="True">
-              <Node name="zigano" expanded="True" />
+              <Node name="help-system" expanded="True" />
+              <Node name="media" expanded="True">
+                <Node name="grid" expanded="True" />
+              </Node>
+              <Node name="zigano" expanded="True">
+                <Node name="index-header.mml" selected="True" />
+              </Node>
               <Node name="Default.aspx" expanded="True" />
             </Node>
-            <Node name="Magix.viewports" expanded="True" selected="True" />
           </Node>
-          <Node name="Plugins" expanded="True" />
-          <Node name="Samples" expanded="True">
-            <Node name="Magix.SampleController" expanded="True" />
-          </Node>
-          <Node name="Tests" expanded="True" />
+          <Node name="Samples" expanded="True" />
         </State>
       </Pad>
       <Pad Id="ClassPad">
