@@ -57,6 +57,59 @@ namespace Magix.forms
 			    !string.IsNullOrEmpty(node["text"].Get<string>()))
 				ret.Text = node["text"].Get<string>();
 
+			if (node.Contains("mode") && 
+				node["mode"].Value != null)
+			{
+				switch(node["mode"].Get<string>())
+				{
+				case "normal":
+					ret.TextMode = TextBox.TextBoxMode.Normal;
+					break;
+				case "phone":
+					ret.TextMode = TextBox.TextBoxMode.Phone;
+					break;
+				case "search":
+					ret.TextMode = TextBox.TextBoxMode.Search;
+					break;
+				case "url":
+					ret.TextMode = TextBox.TextBoxMode.Url;
+					break;
+				case "email":
+					ret.TextMode = TextBox.TextBoxMode.Email;
+					break;
+				case "datetime":
+					ret.TextMode = TextBox.TextBoxMode.DateTime;
+					break;
+				case "date":
+					ret.TextMode = TextBox.TextBoxMode.Date;
+					break;
+				case "month":
+					ret.TextMode = TextBox.TextBoxMode.Month;
+					break;
+				case "week":
+					ret.TextMode = TextBox.TextBoxMode.Week;
+					break;
+				case "time":
+					ret.TextMode = TextBox.TextBoxMode.Time;
+					break;
+				case "datetimelocal":
+					ret.TextMode = TextBox.TextBoxMode.DateTimeLocal;
+					break;
+				case "number":
+					ret.TextMode = TextBox.TextBoxMode.Number;
+					break;
+				case "range":
+					ret.TextMode = TextBox.TextBoxMode.Range;
+					break;
+				case "color":
+					ret.TextMode = TextBox.TextBoxMode.Color;
+					break;
+				case "password":
+					ret.TextMode = TextBox.TextBoxMode.Password;
+					break;
+				}
+			}
+
 			e.Params["_ctrl"].Value = ret;
 		}
 
@@ -82,6 +135,7 @@ previously typed values for you, and attempt to automatically complete the value
 			node["controls"]["text-box"]["complete"].Value = false;
 			node["controls"]["text-box"]["max"].Value = 25;
 			node["controls"]["text-box"]["text"].Value = "hello world";
+			node["controls"]["text-box"]["mode"].Value = "normal|phone|search|url|email|datetime|date|month|week|time|datetimelocal|number|range|color|password";
 			base.Inspect(node["controls"]["text-box"]);
 		}
 	}
