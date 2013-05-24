@@ -1,0 +1,291 @@
+
+/* based upon Blueprint CSS Framework 1.0 - copyright and license info - http://www.blueprintcss.org */
+
+/* reset.css */
+html {margin:0;padding:0;border:0;}
+body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, code, del, dfn, em, img, q, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, dialog, figure, footer, header, hgroup, nav, section {margin:0;padding:0;border:0;font-weight:inherit;font-style:inherit;font-size:100%;font-family:inherit;vertical-align:baseline;}
+article, aside, dialog, figure, footer, header, hgroup, nav, section {display:block;}
+body {line-height:1.5;background:white;}
+table {border-collapse:separate;border-spacing:0;}
+caption, th, td {text-align:left;font-weight:normal;float:none !important;}
+table, th, td {vertical-align:middle;}
+blockquote:before, blockquote:after, q:before, q:after {content:'';}
+blockquote, q {quotes:"" "";}
+a img {border:none;}
+:focus {outline:0;}
+
+/* typography.css */
+html {font-size:100.01%;}
+body {font-size:75%;color:#222;background:#fff;font-family:"Helvetica Neue", Arial, Helvetica, sans-serif;}
+h1, h2, h3, h4, h5, h6 {font-weight:normal;color:#111;}
+h1 {font-size:3em;line-height:1;margin-bottom:0.5em;}
+h2 {font-size:2em;margin-bottom:0.75em;}
+h3 {font-size:1.5em;line-height:1;margin-bottom:1em;}
+h4 {font-size:1.2em;line-height:1.25;margin-bottom:1.25em;}
+h5 {font-size:1em;font-weight:bold;margin-bottom:1.5em;}
+h6 {font-size:1em;font-weight:bold;}
+h1 img, h2 img, h3 img, h4 img, h5 img, h6 img {margin:0;}
+p {margin:0 0 1.5em;}
+.left {float:left !important;}
+p .left {margin:1.5em 1.5em 1.5em 0;padding:0;}
+.right {float:right !important;}
+p .right {margin:1.5em 0 1.5em 1.5em;padding:0;}
+a:focus, a:hover {color:#09f;}
+a {color:#06c;text-decoration:underline;}
+blockquote {margin:1.5em;color:#666;font-style:italic;}
+strong, dfn {font-weight:bold;}
+em, dfn {font-style:italic;}
+sup, sub {line-height:0;}
+abbr, acronym {border-bottom:1px dotted #666;}
+address {margin:0 0 1.5em;font-style:italic;}
+del {color:#666;}
+pre {margin:1.5em 0;white-space:pre;}
+pre, code, tt {font:1em 'andale mono', 'lucida console', monospace;line-height:1.5;}
+li ul, li ol {margin:0;}
+ul, ol {margin:0 1.5em 1.5em 0;padding-left:1.5em;}
+ul {list-style-type:disc;}
+ol {list-style-type:decimal;}
+dl {margin:0 0 1.5em 0;}
+dl dt {font-weight:bold;}
+dd {margin-left:1.5em;}
+table {margin-bottom:1.4em;width:100%;}
+th {font-weight:bold;}
+thead th {background:#c3d9ff;}
+th, td, caption {padding:4px 10px 4px 5px;}
+tbody tr:nth-child(even) td, tbody tr.even td {background:#e5ecf9;}
+tfoot {font-style:italic;}
+caption {background:#eee;}
+div {overflow:auto;}
+input[type=text], textarea {border-left:0px none;border-right:0px none;border-top:1px solid #bbb;border-bottom:1px solid #bbb;padding:0;}
+input[type=text] {height:16px;}
+input[type=button] {border:0 none;margin:0;}
+label {font-weight:bold;}
+.small {font-size:.8em;margin-bottom:1.875em;line-height:1.875em;}
+.large {font-size:1.2em;line-height:2.5em;margin-bottom:1.25em;}
+.hide {display:none;}
+.quiet {color:#666;}
+.loud {color:#000;}
+.highlight {background:#ff0;}
+.added {background:#060;color:#fff;}
+.removed {background:#900;color:#fff;}
+.first {margin-left:0;padding-left:0;}
+.last {margin-right:0;padding-right:0;}
+.error {color:#d33;}
+
+/* grid system */
+.container {width:950px;margin:0 auto;}
+.showgrid {background:url(grid.png);}
+.column, .span-1, .span-2, .span-3, .span-4, .span-5, .span-6, .span-7, .span-8, .span-9, .span-10, .span-11, .span-12, .span-13, .span-14, .span-15, .span-16, .span-17, .span-18, .span-19, .span-20, .span-21, .span-22, .span-23, .span-24 {float:left;margin-right:10px;}
+.last {margin-right:0;}
+.span-1 {width:30px;}
+.span-2 {width:70px;}
+.span-3 {width:110px;}
+.span-4 {width:150px;}
+.span-5 {width:190px;}
+.span-6 {width:230px;}
+.span-7 {width:270px;}
+.span-8 {width:310px;}
+.span-9 {width:350px;}
+.span-10 {width:390px;}
+.span-11 {width:430px;}
+.span-12 {width:470px;}
+.span-13 {width:510px;}
+.span-14 {width:550px;}
+.span-15 {width:590px;}
+.span-16 {width:630px;}
+.span-17 {width:670px;}
+.span-18 {width:710px;}
+.span-19 {width:750px;}
+.span-20 {width:790px;}
+.span-21 {width:830px;}
+.span-22 {width:870px;}
+.span-23 {width:910px;}
+.span-24 {width:950px;margin-right:0;}
+
+.left-1 {margin-left:40px;}
+.left-2 {margin-left:80px;}
+.left-3 {margin-left:120px;}
+.left-4 {margin-left:160px;}
+.left-5 {margin-left:200px;}
+.left-6 {margin-left:240px;}
+.left-7 {margin-left:280px;}
+.left-8 {margin-left:320px;}
+.left-9 {margin-left:360px;}
+.left-10 {margin-left:400px;}
+.left-11 {margin-left:440px;}
+.left-12 {margin-left:480px;}
+.left-13 {margin-left:520px;}
+.left-14 {margin-left:560px;}
+.left-15 {margin-left:600px;}
+.left-16 {margin-left:640px;}
+.left-17 {margin-left:680px;}
+.left-18 {margin-left:720px;}
+.left-19 {margin-left:760px;}
+.left-20 {margin-left:800px;}
+.left-21 {margin-left:840px;}
+.left-22 {margin-left:880px;}
+.left-23 {margin-left:920px;}
+
+.top-1 {margin-top:18px;}
+.top-2 {margin-top:36px;}
+.top-3 {margin-top:54px;}
+.top-4 {margin-top:72px;}
+.top-5 {margin-top:90px;}
+.top-6 {margin-top:108px;}
+.top-7 {margin-top:126px;}
+.top-8 {margin-top:144px;}
+.top-9 {margin-top:162px;}
+.top-10 {margin-top:180px;}
+.top-11 {margin-top:198px;}
+.top-12 {margin-top:216px;}
+.top-13 {margin-top:234px;}
+.top-14 {margin-top:252px;}
+.top-15 {margin-top:270px;}
+.top-16 {margin-top:288px;}
+.top-17 {margin-top:306px;}
+.top-18 {margin-top:324px;}
+.top-19 {margin-top:342px;}
+.top-20 {margin-top:360px;}
+.top-21 {margin-top:378px;}
+.top-22 {margin-top:396px;}
+.top-23 {margin-top:414px;}
+
+.right-1 {margin-right:40px;}
+.right-2 {margin-right:80px;}
+.right-3 {margin-right:120px;}
+.right-4 {margin-right:160px;}
+.right-5 {margin-right:200px;}
+.right-6 {margin-right:240px;}
+.right-7 {margin-right:280px;}
+.right-8 {margin-right:320px;}
+.right-9 {margin-right:360px;}
+.right-10 {margin-right:400px;}
+.right-11 {margin-right:440px;}
+.right-12 {margin-right:480px;}
+.right-13 {margin-right:520px;}
+.right-14 {margin-right:560px;}
+.right-15 {margin-right:600px;}
+.right-16 {margin-right:640px;}
+.right-17 {margin-right:680px;}
+.right-18 {margin-right:720px;}
+.right-19 {margin-right:760px;}
+.right-20 {margin-right:800px;}
+.right-21 {margin-right:840px;}
+.right-22 {margin-right:880px;}
+.right-23 {margin-right:920px;}
+
+.bottom-1 {margin-bottom:18px;}
+.bottom-2 {margin-bottom:36px;}
+.bottom-3 {margin-bottom:54px;}
+.bottom-4 {margin-bottom:72px;}
+.bottom-5 {margin-bottom:90px;}
+.bottom-6 {margin-bottom:108px;}
+.bottom-7 {margin-bottom:126px;}
+.bottom-8 {margin-bottom:144px;}
+.bottom-9 {margin-bottom:162px;}
+.bottom-10 {margin-bottom:180px;}
+.bottom-11 {margin-bottom:198px;}
+.bottom-12 {margin-bottom:216px;}
+.bottom-13 {margin-bottom:234px;}
+.bottom-14 {margin-bottom:252px;}
+.bottom-15 {margin-bottom:270px;}
+.bottom-16 {margin-bottom:288px;}
+.bottom-17 {margin-bottom:306px;}
+.bottom-18 {margin-bottom:324px;}
+.bottom-19 {margin-bottom:342px;}
+.bottom-20 {margin-bottom:360px;}
+.bottom-21 {margin-bottom:378px;}
+.bottom-22 {margin-bottom:396px;}
+.bottom-23 {margin-bottom:414px;}
+
+.z-1 {z-index:1;}
+.z-2 {z-index:2;}
+.z-3 {z-index:3;}
+.z-4 {z-index:4;}
+.z-5 {z-index:5;}
+.z-6 {z-index:6;}
+.z-7 {z-index:7;}
+.z-8 {z-index:8;}
+.z-9 {z-index:9;}
+.z-10 {z-index:10;}
+.z-11 {z-index:11;}
+.z-12 {z-index:12;}
+.z-13 {z-index:13;}
+
+/* some custom helpers */
+.relative {position:relative;}
+.absolute {position:absolute;}
+.top {top:0px;}
+.bottom {bottom:0px;}
+.left {left:0px;}
+.right {right:0px;}
+
+.boxed
+{
+	display:block;
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
+	-o-border-radius:5px;
+	-ms-border-radius:5px;
+	border-radius:5px;
+	-webkit-box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
+	-moz-box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
+	-o-box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
+	-ms-box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
+	box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
+	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgba(240, 240, 240, 1)), to(rgba(210, 210, 210, 1)));
+	background-image: -moz-webkit-gradient(rgba(250, 250, 250, 1) 0%, rgba(210, 210, 210, 1) 100%);
+	background-image: -moz-linear-gradient(rgba(250, 250, 250, 1) 0%, rgba(210, 210, 210, 1) 100%);
+	background-image: -o-linear-gradient(rgba(250, 250, 250, 1) 0%, rgba(210, 210, 210, 1) 100%);
+	background-image: -ms-linear-gradient(rgba(250, 250, 250, 1) 0%, rgba(210, 210, 210, 1) 100%);
+	background-image: linear-gradient(rgba(250, 250, 250, 1) 0%, rgba(210, 210, 210, 1) 100%);
+}
+
+input[type=button]
+{
+	display:block;
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
+	-o-border-radius:5px;
+	-ms-border-radius:5px;
+	border-radius:5px;
+	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgba(240, 240, 240, 1)), to(rgba(210, 210, 210, 1)));
+	background-image: -moz-webkit-gradient(rgba(250, 250, 250, 1) 0%, rgba(210, 210, 210, 1) 100%);
+	background-image: -moz-linear-gradient(rgba(250, 250, 250, 1) 0%, rgba(210, 210, 210, 1) 100%);
+	background-image: -o-linear-gradient(rgba(250, 250, 250, 1) 0%, rgba(210, 210, 210, 1) 100%);
+	background-image: -ms-linear-gradient(rgba(250, 250, 250, 1) 0%, rgba(210, 210, 210, 1) 100%);
+	background-image: linear-gradient(rgba(250, 250, 250, 1) 0%, rgba(210, 210, 210, 1) 100%);
+	-moz-transition-property:color;
+	-moz-transition-duration:.2s;
+	-webkit-transition-property:color;
+	-webkit-transition-duration:.2s;
+	-o-transition-property:color;
+	-o-transition-duration:.2s;
+	-ms-transition-property:color;
+	-ms-transition-duration:.2s;
+	transition-property:color;
+	transition-duration:.2s;
+}
+
+input[type=button]:hover
+{
+	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgba(240, 240, 240, 1)), to(rgba(180, 180, 180, 1)));
+	background-image: -moz-webkit-gradient(rgba(240, 240, 240, 1) 0%, rgba(180, 180, 180, 1) 100%);
+	background-image: -moz-linear-gradient(rgba(240, 240, 240, 1) 0%, rgba(180, 180, 180, 1) 100%);
+	background-image: -o-linear-gradient(rgba(240, 240, 240, 1) 0%, rgba(180, 180, 180, 1) 100%);
+	background-image: -ms-linear-gradient(rgba(240, 240, 240, 1) 0%, rgba(180, 180, 180, 1) 100%);
+	background-image: linear-gradient(rgba(240, 240, 240, 1) 0%, rgba(180, 180, 180, 1) 100%);
+	color:#00a;
+}
+
+input[type=button].btn-large
+{
+	height:36px;
+	font-size:16px;
+}
+
+
+
+
+
+

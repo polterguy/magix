@@ -208,7 +208,7 @@ not thread safe";
 		/**
 		 * sets focus to a specific mux web control
 		 */
-        [ActiveEvent(Name = "magix.forms.set-focus")]
+		[ActiveEvent(Name = "magix.forms.set-focus")]
 		protected void magix_forms_set_focus(object sender, ActiveEventArgs e)
 		{
 			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
@@ -231,6 +231,38 @@ not thread safe";
 			{
 				BaseWebControl ctrl = Selector.FindControl<BaseWebControl>(this, e.Params["id"].Get<string>());
 				ctrl.Focus();
+			}
+		}
+
+		/**
+		 * hides or shows a specific mux web control
+		 */
+		[ActiveEvent(Name = "magix.forms.show-control")]
+		protected void magix_forms_show_control(object sender, ActiveEventArgs e)
+		{
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			{
+				e.Params["event:magix.forms.show"].Value = null;
+				e.Params["id"].Value = "control";
+				e.Params["form-id"].Value = "formid";
+				e.Params["inspect"].Value = @"shides or show the given [id] control in given [form-id], 
+if [visible] is true, control is shown, otherwise hidden.&nbsp;&nbsp;not thread safe";
+				return;
+			}
+
+			if (!e.Params.Contains("form-id"))
+				throw new ArgumentException("Missing form-id in set-value");
+
+			if (!e.Params.Contains("id"))
+				throw new ArgumentException("Missing id in set-value");
+
+			if (e.Params["form-id"].Get<string>() == FormID)
+			{
+				BaseWebControl ctrl = Selector.FindControl<BaseWebControl>(this, e.Params["id"].Get<string>());
+				if (e.Params.Contains ("visible") && e.Params ["visible"].Get<bool> ())
+					ctrl.Visible = true;
+				else
+					ctrl.Visible = false;
 			}
 		}
 

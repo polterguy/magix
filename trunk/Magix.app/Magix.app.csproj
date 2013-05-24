@@ -65,6 +65,8 @@
     <Content Include="media\xing-wysihtml5\dist\wysihtml5-0.4.0pre.min.js" />
     <Content Include="core-scripts\web.config" />
     <Content Include="help-system\web.config" />
+    <Content Include="media\grid\main.css" />
+    <Content Include="media\grid\grid.png" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Global.asax.cs">
@@ -214,6 +216,7 @@
     <Folder Include="core-scripts\tools\" />
     <Folder Include="core-scripts\misc\" />
     <Folder Include="zigano\" />
+    <Folder Include="media\grid\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="media\xing-wysihtml5\LICENSE" />
