@@ -1,0 +1,26 @@
+
+
+{{
+button=>users
+  text=>users
+  css=>btn-large span-5
+  onclick
+    magix.forms.create-web-page
+      file=>zigano/admin/edit-users.mml
+      container=>content1
+      form-id=>admin-users
+      css=>span-19 last
+    magix.admin.run-file
+      file=>zigano/admin/users-grid.hl
+button=>roles
+  text=>roles
+  css=>btn-large span-5
+  onclick
+    magix.forms.create-web-page
+      file=>zigano/admin/edit-roles.mml
+      container=>content1
+      form-id=>admin-roles
+      css=>span-19 last
+    magix.admin.run-file
+      file=>zigano/admin/roles-grid.hl
+}}

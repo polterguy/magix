@@ -1,0 +1,17 @@
+
+magix.forms.create-web-page
+  file=>zigano/index-header.mml
+  container=>header
+  form-id=>header
+  css=>span-24
+
+magix.web.get-session
+  key=>zigano.travel.user
+if=>[magix.web.get-session][value]
+  magix.forms.create-web-page
+    file=>zigano/admin/menu.mml
+    container=>menu
+    form-id=>admin-menu
+    css=>span-5
+
+
