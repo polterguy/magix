@@ -10,7 +10,7 @@
 
 <mux:Panel
     runat="server"
-	CssClass="container showgrid"
+	CssClass="container"
     id="wrp">
     <mux:DynamicPanel 
         runat="server" 
