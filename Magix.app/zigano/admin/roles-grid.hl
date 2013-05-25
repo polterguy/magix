@@ -1,21 +1,98 @@
 
 
-magix.data.load
-  prototype
-    type=>zigano.travel.role
+event=>zigano.travel.create-roles-form
+  code
+    magix.data.load
+      prototype
+        type=>zigano.travel.role
 
-_dt
-  label
-    css=>span-19
+    _dt
+      panel
+        css=>span-19 hover-shadow relative
+        controls
+          label
+          link-button
+            css=>span-1 hover-shadow last right z-1 absolute light-red centered
+            text=>x
+            onclick
+              magix.data.remove
+                prototype
+                  type=>zigano.travel.role
+                  name=>
+              zigano.travel.create-roles-form
 
-for-each=>[magix.data.load][objects]
-  set=>[/][_dt][label][text].Value
-    value=>[.][name].Value
+    for-each=>[magix.data.load][objects]
+      set=>[/][_dt][panel][controls][link-button][onclick][magix.data.remove][prototype][name].Value
+        value=>[.][name].Value
+      set=>[/][_dt][panel][controls][label][text].Value
+        value=>[.][name].Value
+      add=>[/][magix.forms.create-form][controls][panel:1][controls]
+        value=>[/][_dt][0]
 
-magix.forms.create-form
-  form-id=>roles-grid
-  container=>content2
-  css=>span-19 last
-  controls
-    label=>dumb
-      text=>hello
+    magix.forms.create-form
+      form-id=>roles-grid
+      container=>content2
+      css=>span-19 last
+      controls
+        panel=>roleGrdHeader
+          controls
+            label=>headName
+              css=>span-18
+              text=>name
+              tag=>label
+              tip=>name of role
+            label=>headDelete
+              css=>span-1 last
+              text=>del
+              tag=>label
+              tip=>delete role
+        panel=>roleGrdWrp
+          css=>span-19 light-green
+          controls
+        panel=>newRoleWrp
+          css=>span-19 top-1
+          default=>addBtn
+          controls
+            text-box=>nName
+              css=>span-5 right-14 last
+              place-holder=>name of new role ...
+            button=>addBtn
+              css=>btn-large span-3 clear
+              text=>add
+              onclick
+                magix.forms.get-value
+                  form-id=>roles-grid
+                  id=>nName
+                set=>[magix.data.save][object][name].Value
+                  value=>[magix.forms.get-value][value].Value
+                magix.data.save
+                  object
+                    type=>zigano.travel.role
+                zigano.travel.create-roles-form
+
+zigano.travel.create-roles-form
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -284,6 +284,53 @@ input[type=button].btn-large
 	font-size:16px;
 }
 
+.hover-shadow
+{
+	background-color:transparent;
+	-moz-transition-property:background-color;
+	-moz-transition-duration:.5s;
+	-webkit-transition-property:background-color;
+	-webkit-transition-duration:.5s;
+	-o-transition-property:background-color;
+	-o-transition-duration:.5s;
+	-ms-transition-property:background-color;
+	-ms-transition-duration:.5s;
+	transition-property:background-color;
+	transition-duration:.5s;
+}
+
+.hover-shadow:hover
+{
+	background-color:rgba(220, 220, 220, 0.2);
+}
+
+.light-green
+{
+	background-color:rgba(220, 255, 220, 0.2);
+}
+
+.light-red
+{
+	background-color:rgba(255, 220, 220, 0.2);
+}
+
+.centered
+{
+	text-align:center;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
