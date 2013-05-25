@@ -29,6 +29,34 @@ namespace Magix.viewports
         protected DynamicPanel content2;
 		protected DynamicPanel footer;
 		protected DynamicPanel trace;
+		protected Label message;
 
-    }
+		/**
+         * Shows a Message Box to the end user, which can be configured
+         */
+		[ActiveEvent(Name = "magix.viewport.show-message")]
+		protected void magix_viewport_show_message(object sender, ActiveEventArgs e)
+		{
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			{
+				e.Params["message"].Value = "message to show to end user";
+				e.Params["inspect"].Value = @"shows a message box to the 
+end user for some seconds.&nbsp;&nbsp;not thread safe";
+				return;
+			}
+
+
+			if (!e.Params.Contains("message") || e.Params["message"].Get<string>("") == "")
+				throw new ArgumentException("cannot show a message box without a [message] argument");
+
+			message.Text = e.Params["message"].Get<string>();
+
+			new EffectFadeIn(message, 250)
+				.ChainThese(
+					new EffectTimeout(3000),
+					new EffectFadeOut(message,250))
+				.Render();
+		}
+	}
 }
+

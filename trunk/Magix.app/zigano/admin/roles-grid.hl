@@ -63,12 +63,21 @@ event=>zigano.travel.create-roles-form
                 magix.forms.get-value
                   form-id=>roles-grid
                   id=>nName
-                set=>[magix.data.save][object][name].Value
+                set=>[magix.data.load][prototype][name].Value
                   value=>[magix.forms.get-value][value].Value
-                magix.data.save
-                  object
+                magix.data.load
+                  prototype
                     type=>zigano.travel.role
-                zigano.travel.create-roles-form
+                if=>[magix.data.load][objects].Count>0
+                  magix.viewport.show-message
+                    message=>role exists from before
+                else
+                  set=>[else][magix.data.save][object][name].Value
+                    value=>[magix.forms.get-value][value].Value
+                  magix.data.save
+                    object
+                      type=>zigano.travel.role
+                  zigano.travel.create-roles-form
 
 zigano.travel.create-roles-form
 

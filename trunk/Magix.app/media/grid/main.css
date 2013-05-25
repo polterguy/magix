@@ -31,7 +31,7 @@ p .left {margin:1.5em 1.5em 1.5em 0;padding:0;}
 .right {float:right !important;}
 p .right {margin:1.5em 0 1.5em 1.5em;padding:0;}
 a:focus, a:hover {color:#09f;}
-a {color:#06c;text-decoration:underline;}
+a {color:#06c;text-decoration:none;}
 blockquote {margin:1.5em;color:#666;font-style:italic;}
 strong, dfn {font-weight:bold;}
 em, dfn {font-style:italic;}
@@ -73,7 +73,7 @@ label {font-weight:bold;}
 .error {color:#d33;}
 
 /* grid system */
-.container {width:950px;margin:0 auto;}
+.container {width:950px;margin:0 auto;position:relative;}
 .showgrid {background:url(grid.png);}
 .column, .span-1, .span-2, .span-3, .span-4, .span-5, .span-6, .span-7, .span-8, .span-9, .span-10, .span-11, .span-12, .span-13, .span-14, .span-15, .span-16, .span-17, .span-18, .span-19, .span-20, .span-21, .span-22, .span-23, .span-24 {float:left;margin-right:10px;}
 .last {margin-right:0;}
@@ -319,6 +319,24 @@ input[type=button].btn-large
 	text-align:center;
 }
 
+.info-message
+{
+	position:fixed;
+	top:0;
+	left:0;
+	width:100%;
+	text-align:center;
+	font-size:large;
+	padding-top:25px;
+	padding-bottom:25px;
+	background-color:rgba(255, 255, 220, 1);
+	z-index:1000;
+	-webkit-box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
+	-moz-box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
+	-o-box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
+	-ms-box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
+	box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
+}
 
 
 
