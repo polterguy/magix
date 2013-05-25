@@ -28,8 +28,8 @@ namespace Magix.forms
 				e.Params["container"].Value = "content";
 				e.Params["form-id"].Value = "unique-identification-of-your-form";
 				e.Params["events"]["magix.forms.widget-selected"]["magix.forms.show-message"]["message"].Value = "jo, something was selected";
-				e.Params["controls"]["Button"].Value = "btn";
-				e.Params["controls"]["Button"]["Text"].Value = "Hello World!";
+				e.Params["controls"]["button"].Value = "btn";
+				e.Params["controls"]["button"]["text"].Value = "Hello World!";
 				e.Params["inspect"].Value = @"creates a dynamic form
 and loading it into the [container] viewport container.&nbsp;&nbsp;[form-id]
 must be a uniquely identifiable id for later use.&nbsp;&nbsp;[controls]

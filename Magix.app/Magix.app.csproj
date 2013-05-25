@@ -217,6 +217,7 @@
     <Folder Include="core-scripts\misc\" />
     <Folder Include="zigano\" />
     <Folder Include="media\grid\" />
+    <Folder Include="zigano\admin\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="media\xing-wysihtml5\LICENSE" />
@@ -283,5 +284,12 @@
     <None Include="core-scripts\misc\main-menu.hl" />
     <None Include="core-scripts\misc\login-box.hl" />
     <None Include="zigano\index.hl" />
+    <None Include="zigano\admin\menu.mml" />
+    <None Include="zigano\admin\edit-roles.mml" />
+    <None Include="zigano\admin\edit-users.mml" />
+    <None Include="zigano\admin\roles-grid.hl">
+      <DependentUpon>users-grid.hl</DependentUpon>
+    </None>
+    <None Include="zigano\admin\users-grid.hl" />
   </ItemGroup>
 </Project>

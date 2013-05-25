@@ -1,0 +1,121 @@
+
+<div class="span-24 relative">
+	<h1 class="span-6 left-8 top-2 bottom-5">zigano.travel</h1>
+{{
+zigano.travel.change-login-box
+  magix.web.get-session
+    key=>zigano.travel.user
+  if=>![magix.web.get-session][value]
+    magix.forms.show-control
+      form-id=>header
+      id=>loginWrp
+      visible=>true
+    magix.forms.show-control
+      form-id=>header
+      id=>logoutWrp
+      visible=>false
+  else
+    magix.forms.show-control
+      form-id=>header
+      id=>loginWrp
+      visible=>false
+    magix.forms.show-control
+      form-id=>header
+      id=>logoutWrp
+      visible=>true
+
+zigano.travel.try-login
+  set=>[magix.data.load][prototype][username].Value
+    value=>[_p][username].Value
+  set=>[magix.data.load][prototype][pwd].Value
+    value=>[_p][pwd].Value
+  magix.data.load
+    prototype
+      type=>zigano.travel.user
+  if=>[magix.data.load][objects].Count>0
+    magix.web.set-session
+      key=>zigano.travel.user
+      value=>admin
+    magix.viewport.execute-javascript
+      script=>@"location.reload();"
+  else
+    magix.forms.set-value
+      form-id=>header
+      id=>error
+      value=>(*) error
+    magix.forms.set-focus
+      form-id=>header
+      id=>username
+    magix.forms.select-all
+      form-id=>header
+      id=>username
+
+panel=>loginWrp
+  onfirstload
+    zigano.travel.change-login-box
+  css=>absolute top right span-6 boxed top-1 right-1 z-1
+  controls
+    panel=>loginPnl
+      css=>span-4 left-1 top-1 bottom-1
+      default=>loginBtn
+      controls
+        label=>descr
+          tag=>label
+          text=>please login
+        text-box=>username
+          place-holder=>username ...
+          css=>span-4
+        text-box=>pwd
+          place-holder=>password ...
+          mode=>password
+          css=>span-4
+        label=>error
+          css=>error span-2
+        button=>loginBtn
+          text=>login
+          css=>right span-2 btn-large
+          onclick
+            magix.forms.get-value
+              form-id=>header
+              id=>username
+            magix.forms.get-value
+              form-id=>header
+              id=>pwd
+            set=>[zigano.travel.try-login][username].Value
+              value=>[magix.forms.get-value][value].Value
+            set=>[zigano.travel.try-login][pwd].Value
+              value=>[magix.forms.get-value:1][value].Value
+            zigano.travel.try-login
+
+
+panel=>logoutWrp
+  css=>absolute top right span-3 top-1 right-1 z-1
+  controls
+    button=>logOut
+      css=>span-3 btn-large
+      text=>logout
+      onclick
+        magix.web.set-session
+          key=>zigano.travel.user
+        magix.viewport.execute-javascript
+          script=>@"location.reload();"
+}}
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

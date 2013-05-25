@@ -1,0 +1,21 @@
+
+
+magix.data.load
+  prototype
+    type=>zigano.travel.role
+
+_dt
+  label
+    css=>span-19
+
+for-each=>[magix.data.load][objects]
+  set=>[/][_dt][label][text].Value
+    value=>[.][name].Value
+
+magix.forms.create-form
+  form-id=>roles-grid
+  container=>content2
+  css=>span-19 last
+  controls
+    label=>dumb
+      text=>hello
