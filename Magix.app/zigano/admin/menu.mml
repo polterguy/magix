@@ -1,5 +1,5 @@
 
-
+<div class="span-5 top-3">
 {{
 button=>users
   text=>users
@@ -24,3 +24,4 @@ button=>roles
     magix.admin.run-file
       file=>zigano/admin/roles-grid.hl
 }}
+</div>

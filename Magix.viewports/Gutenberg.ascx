@@ -10,8 +10,13 @@
 
 <mux:Panel
     runat="server"
-	CssClass="container"
+	CssClass="container showgrid"
     id="wrp">
+    <mux:Label
+		runat="server"
+		id="message"
+		style="display:none;"
+		CssClass="info-message" />
     <mux:DynamicPanel 
         runat="server" 
         OnReload="dynamic_LoadControls"
@@ -28,6 +33,14 @@
         runat="server" 
         OnReload="dynamic_LoadControls"
         id="content2" />
+    <mux:DynamicPanel 
+        runat="server" 
+        OnReload="dynamic_LoadControls"
+        id="content3" />
+    <mux:DynamicPanel 
+        runat="server" 
+        OnReload="dynamic_LoadControls"
+        id="content4" />
     <mux:DynamicPanel 
         runat="server" 
         OnReload="dynamic_LoadControls"
