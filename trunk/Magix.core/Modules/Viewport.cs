@@ -127,11 +127,17 @@ viewport container for all of its controls.&nbsp;&nbsp;
 unloads a container for controls";
 				return;
 			}
+
 			DynamicPanel dyn = Selector.FindControl<DynamicPanel> (
                 this, 
                 e.Params["container"].Get<string> ());
 
+			if (dyn == null)
+				return;
+
 			ClearControls(dyn);
+
+			dyn.CssClass = "";
 
 			// We must raise this event to signal to other controls
 			// that Active Events MIGHT have been removed from the list
