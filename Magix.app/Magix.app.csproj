@@ -291,5 +291,6 @@
       <DependentUpon>users-grid.hl</DependentUpon>
     </None>
     <None Include="zigano\admin\users-grid.hl" />
+    <None Include="zigano\admin\edit-single-user.hl" />
   </ItemGroup>
 </Project>

@@ -248,9 +248,18 @@ thread safe";
 				"magix.code.code-2-node",
 				tmp);
 
+			tmp = tmp["json"].Get<Node> ();
+
+			foreach (Node idx in e.Params)
+			{
+				if (idx.Name == "file")
+					continue;
+				tmp["_p"].Add(idx.Clone());
+			}
+
 			RaiseActiveEvent(
 				method, 
-				tmp["json"].Get<Node>());
+				tmp);
 		}
 
 		/**

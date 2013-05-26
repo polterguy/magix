@@ -27,6 +27,8 @@ namespace Magix.viewports
 		protected DynamicPanel menu;
         protected DynamicPanel content1;
         protected DynamicPanel content2;
+		protected DynamicPanel content3;
+		protected DynamicPanel content4;
 		protected DynamicPanel footer;
 		protected DynamicPanel trace;
 		protected Label message;
@@ -42,6 +44,7 @@ namespace Magix.viewports
 				e.Params["message"].Value = "message to show to end user";
 				e.Params["inspect"].Value = @"shows a message box to the 
 end user for some seconds.&nbsp;&nbsp;not thread safe";
+				e.Params["code"].Value = "code goes underneath here";
 				return;
 			}
 
@@ -49,7 +52,21 @@ end user for some seconds.&nbsp;&nbsp;not thread safe";
 			if (!e.Params.Contains("message") || e.Params["message"].Get<string>("") == "")
 				throw new ArgumentException("cannot show a message box without a [message] argument");
 
-			message.Text = e.Params["message"].Get<string>();
+			message.Text = "<p>" + e.Params["message"].Get<string>() + "</p>";
+
+			if (e.Params.Contains("code"))
+			{
+				Node tmp = new Node();
+				Node code = e.Params["code"].Clone();
+				code.Name = "";
+				tmp["json"].Value = code;
+
+				RaiseEvent(
+					"magix.code.node-2-code",
+					tmp);
+
+				message.Text += "<pre style='text-align:left;'>" + tmp["code"].Get<string>() + "</pre>";
+			}
 
 			new EffectFadeIn(message, 250)
 				.ChainThese(

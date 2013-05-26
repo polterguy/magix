@@ -1,5 +1,12 @@
 
 
+event=>zigano.travel.edit-user
+  code
+    set=>[magix.admin.run-file][username].Value
+      value=>[_p][username].Value
+    magix.admin.run-file
+      file=>zigano/admin/edit-single-user.hl
+
 event=>zigano.travel.create-users-form
   code
     magix.data.load
@@ -19,6 +26,8 @@ event=>zigano.travel.create-users-form
           link-button
             css=>span-3
             text=>edit
+            onclick
+              zigano.travel.edit-user
           link-button
             css=>span-1 hover-shadow last right z-1 absolute light-red centered
             text=>x
@@ -28,6 +37,8 @@ event=>zigano.travel.create-users-form
                   type=>zigano.travel.user
                   username=>
               zigano.travel.create-users-form
+              magix.viewport.clear-controls
+                container=>content3
 
     for-each=>[magix.data.load][objects]
       set=>[/][_dt][panel][controls][label:0][text].Value
@@ -36,6 +47,8 @@ event=>zigano.travel.create-users-form
         value=>[.][username].Value
       set=>[/][_dt][panel][controls][label:2][text].Value
         value=>[.][pwd].Value
+      set=>[/][_dt][panel][controls][link-button:0][onclick][zigano.travel.edit-user][username].Value
+        value=>[.][username].Value
       set=>[/][_dt][panel][controls][link-button:1][onclick][magix.data.remove][prototype][username].Value
         value=>[.][username].Value
       add=>[/][magix.forms.create-form][controls][panel:1][controls]
@@ -103,6 +116,8 @@ event=>zigano.travel.create-users-form
                   id=>nUsername
                 set=>[else][magix.data.save][object][username].Value
                   value=>[magix.forms.get-value:1][value].Value
+                set=>[else][zigano.travel.edit-user][username].Value
+                  value=>[magix.forms.get-value:1][value].Value
                 magix.forms.get-value
                   form-id=>users-grid
                   id=>nPwd
@@ -121,6 +136,7 @@ event=>zigano.travel.create-users-form
                     object
                       type=>zigano.travel.user
                   zigano.travel.create-users-form
+                  zigano.travel.edit-user
 
 zigano.travel.create-users-form
 

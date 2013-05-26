@@ -232,13 +232,13 @@ active event handlers created with magix.execute.event.&nbsp;&nbsp;thread safe";
 			if (n.Contains("objects"))
 			{
 				Node caller = n["objects"][0]["code"].Clone();
-				caller["P"].AddRange(e.Params);
+				caller["_p"].AddRange(e.Params);
 
 				RaiseActiveEvent(
 					"magix.execute", 
 					caller);
 
-				e.Params.ReplaceChildren(caller["P"]);
+				e.Params.ReplaceChildren(caller["_p"]);
 			}
 		}
 	}
