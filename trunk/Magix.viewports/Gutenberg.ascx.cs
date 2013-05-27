@@ -68,12 +68,33 @@ end user for some seconds.&nbsp;&nbsp;not thread safe";
 				message.Text += "<pre style='text-align:left;'>" + tmp["code"].Get<string>() + "</pre>";
 			}
 
-			new EffectFadeIn(message, 250)
-				.ChainThese(
-					new EffectTimeout(3000),
-					new EffectFadeOut(message,250))
-				.Render();
+			if (e.Params.Contains("time") && e.Params["time"].Get<int>() == -1)
+			{
+				new EffectFadeIn(message, 250)
+					.Render();
+			}
+			else
+			{
+				new EffectFadeIn(message, 250)
+					.ChainThese(
+						new EffectTimeout(3000),
+						new EffectFadeOut(message,250))
+						.Render();
+			}
 		}
+
+		protected override void magix_viewport_clear_controls(object sender, ActiveEventArgs e)
+		{
+			DynamicPanel dyn = Selector.FindControl<DynamicPanel> (
+				this, 
+				e.Params["container"].Get<string> ());
+
+			if (dyn == null)
+				return;
+
+			dyn.CssClass = "";
+		}
+
 	}
 }
 

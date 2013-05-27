@@ -1,7 +1,7 @@
 
 
 set=>[magix.data.load][prototype][username].Value
-  value=>[_p][username].Value
+  value=>[$][username].Value
 
 magix.data.load
   prototype

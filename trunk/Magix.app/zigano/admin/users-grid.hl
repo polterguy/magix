@@ -3,7 +3,7 @@
 event=>zigano.travel.edit-user
   code
     set=>[magix.admin.run-file][username].Value
-      value=>[_p][username].Value
+      value=>[$][username].Value
     magix.admin.run-file
       file=>zigano/admin/edit-single-user.hl
 
@@ -14,6 +14,11 @@ event=>zigano.travel.create-users-form
       end=>10
       prototype
         type=>zigano.travel.user
+    magix.data.count
+      prototype
+        type=>zigano.travel.user
+    set=>[magix.forms.create-form][controls][panel:2][controls][label][text].Value
+      value=>[magix.data.count][count].Value
 
     _dt
       panel
@@ -91,6 +96,19 @@ event=>zigano.travel.create-users-form
         panel=>userGrdWrp
           css=>span-19 light-green
           controls
+        panel=>pagerWrp
+          css=>span-19
+          controls
+            link-button=>previous
+              text=>&lt;&lt;
+              css=>span-1 left-7
+              onclick
+            label=>count
+              css=>span-1
+              text=>54
+            link-button=>next
+              text=>&gt;&gt;
+              css=>span-1
         panel=>newUserWrp
           css=>span-19 top-1
           default=>addBtn

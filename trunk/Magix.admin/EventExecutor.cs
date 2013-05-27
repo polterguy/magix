@@ -254,7 +254,7 @@ thread safe";
 			{
 				if (idx.Name == "file")
 					continue;
-				tmp["_p"].Add(idx.Clone());
+				tmp["$"].Add(idx.Clone());
 			}
 
 			RaiseActiveEvent(

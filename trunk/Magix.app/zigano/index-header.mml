@@ -26,9 +26,9 @@ zigano.travel.change-login-box
 
 zigano.travel.try-login
   set=>[magix.data.load][prototype][username].Value
-    value=>[_p][username].Value
+    value=>[$][username].Value
   set=>[magix.data.load][prototype][pwd].Value
-    value=>[_p][pwd].Value
+    value=>[$][pwd].Value
   magix.data.load
     prototype
       type=>zigano.travel.user
