@@ -10,6 +10,8 @@ event=>zigano.travel.edit-user
 event=>zigano.travel.create-users-form
   code
     magix.data.load
+      start=>0
+      end=>10
       prototype
         type=>zigano.travel.user
 
