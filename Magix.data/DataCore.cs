@@ -186,17 +186,28 @@ and will make sure only one object is loaded.&nbsp;&nbsp;thread safe";
 			{
 				e.Params["event:magix.data.count"].Value = null;
 				e.Params["inspect"].Value = @"returns the total number 
-of objects in data storage as [count].&nbsp;&nbsp;thread safe";
+of objects in data storage as [count], add [prototype] to filter results.
+&nbsp;&nbsp;thread safe";
 				return;
 			}
+
+			Node prototype = null;
+			if (e.Params.Contains("prototype"))
+				prototype = e.Params["prototype"];
 
 			using (IObjectContainer db = Db4oFactory.OpenFile(_dbFile))
 			{
 				db.Ext().Configure().UpdateDepth(1000);
 				db.Ext().Configure().ActivationDepth(1000);
 
-				// TODO: Refactor ...
-				e.Params["count"].Value = db.QueryByExample (new Storage(null, null)).Count;
+				e.Params["count"].Value = db.Ext().Query<Storage>(
+					delegate(Storage obj)
+					{
+						if (prototype != null)
+							return obj.Node.HasNodes(prototype);
+						return true;
+					}
+				).Count;
 
 				db.Commit();
 				db.Close();

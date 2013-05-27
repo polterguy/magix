@@ -4879,7 +4879,7 @@ wysihtml5.dom.parse = (function() {
      */
     if ("outerHTML" in oldNode) {
       if (!wysihtml5.browser.autoClosesUnclosedTags() &&
-          oldNode.nodeName === "_p" &&
+          oldNode.nodeName === "$" &&
           oldNode.outerHTML.slice(-4).toLowerCase() !== "</p>") {
         nodeName = "div";
       }

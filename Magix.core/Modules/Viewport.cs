@@ -137,8 +137,6 @@ unloads a container for controls";
 
 			ClearControls(dyn);
 
-			dyn.CssClass = "";
-
 			// We must raise this event to signal to other controls
 			// that Active Events MIGHT have been removed from the list
 			// of Active Active Events

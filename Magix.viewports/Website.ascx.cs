@@ -250,6 +250,17 @@ end user for some seconds.&nbsp;&nbsp;not thread safe";
 				backdrop.Visible = false;
 				mdlWrp.Visible = false;
 			}
+
+			DynamicPanel dyn = Selector.FindControl<DynamicPanel> (
+				this, 
+				e.Params["container"].Get<string> ());
+
+			if (dyn == null)
+				return;
+
+			if (dyn == content || dyn == content2 || dyn == menu || dyn == header || dyn == footer)
+				dyn.CssClass = "";
+
 			base.magix_viewport_clear_controls(sender, e);
 		}
 

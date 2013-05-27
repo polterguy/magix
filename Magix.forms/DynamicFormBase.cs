@@ -331,7 +331,7 @@ if [visible] is true, control is shown, otherwise hidden.&nbsp;&nbsp;not thread 
 				Node tmp = Methods[e.Name].Clone();
 
 				// cloning in the incoming parameters
-				tmp["_p"].AddRange(e.Params.Clone());
+				tmp["$"].AddRange(e.Params.Clone());
 
 				RaiseEvent(
 					"magix.execute",
