@@ -235,6 +235,36 @@ not thread safe";
 		}
 
 		/**
+		 * selects all text in a mux textbox or textarea
+		 */
+		[ActiveEvent(Name = "magix.forms.select-all")]
+		protected void magix_forms_select_all(object sender, ActiveEventArgs e)
+		{
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			{
+				e.Params["event:magix.forms.select-all"].Value = null;
+				e.Params["id"].Value = "control";
+				e.Params["form-id"].Value = "formid";
+				e.Params["inspect"].Value = @"selects all text in the specific 
+[id] textbox or textarea, in the [form-id] form.&nbsp;&nbsp;not thread safe";
+				return;
+			}
+
+			if (!e.Params.Contains("form-id"))
+				throw new ArgumentException("Missing form-id in set-value");
+
+			if (!e.Params.Contains("id"))
+				throw new ArgumentException("Missing id in set-value");
+
+			if (e.Params["form-id"].Get<string>() == FormID)
+			{
+				BaseWebControlFormElementInputText ctrl = 
+					Selector.FindControl<BaseWebControlFormElementInputText>(this, e.Params["id"].Get<string>());
+				ctrl.Select();
+			}
+		}
+
+		/**
 		 * hides or shows a specific mux web control
 		 */
 		[ActiveEvent(Name = "magix.forms.show-control")]
@@ -263,36 +293,6 @@ if [visible] is true, control is shown, otherwise hidden.&nbsp;&nbsp;not thread 
 					ctrl.Visible = true;
 				else
 					ctrl.Visible = false;
-			}
-		}
-
-		/**
-		 * selects all text in a mux textbox or textarea
-		 */
-        [ActiveEvent(Name = "magix.forms.select-all")]
-		protected void magix_forms_select_all(object sender, ActiveEventArgs e)
-		{
-			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
-			{
-				e.Params["event:magix.forms.select-all"].Value = null;
-				e.Params["id"].Value = "control";
-				e.Params["form-id"].Value = "formid";
-				e.Params["inspect"].Value = @"selects all text in the specific 
-[id] textbox or textarea, in the [form-id] form.&nbsp;&nbsp;not thread safe";
-				return;
-			}
-
-			if (!e.Params.Contains("form-id"))
-				throw new ArgumentException("Missing form-id in set-value");
-
-			if (!e.Params.Contains("id"))
-				throw new ArgumentException("Missing id in set-value");
-
-			if (e.Params["form-id"].Get<string>() == FormID)
-			{
-				BaseWebControlFormElementInputText ctrl = 
-					Selector.FindControl<BaseWebControlFormElementInputText>(this, e.Params["id"].Get<string>());
-				ctrl.Select();
 			}
 		}
 

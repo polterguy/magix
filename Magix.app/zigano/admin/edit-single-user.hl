@@ -8,14 +8,27 @@ magix.data.load
     type=>zigano.travel.user
 
 set=>[magix.forms.create-form][controls][label][text].Value
+  value=>[magix.data.load][objects][0][username].Value
+
+set=>[magix.forms.create-form][controls][text-box][text].Value
   value=>[magix.data.load][objects][0][name].Value
 
 magix.forms.create-form
   form-id=>edit-user
   container=>content3
-  css=>span-20 top-3 left-1 boxed air-padding bottom-2
+  css=>span-22 top-3 boxed air-padding bottom-2
   controls
-    label=>test
+    label=>username
+      css=>span-22
       tag=>h3
+    text-box=>name
+      css=>span-5
+
+magix.forms.set-focus
+  form-id=>edit-user
+  id=>name
+magix.forms.select-all
+  form-id=>edit-user
+  id=>name
 
 
