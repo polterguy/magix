@@ -52,21 +52,24 @@ namespace Magix.Core
 				if (lhs == null || rhs == null)
 					return false;
 
-				if (lhs.GetType () != rhs.GetType ())
+				if (lhs.GetType() != rhs.GetType())
 				{
-					switch (lhs.GetType ().FullName)
+					switch (lhs.GetType().FullName)
 					{
 					case "System.Int32":
-						rhs = int.Parse (rhs.ToString ());
+						rhs = int.Parse(rhs.ToString());
 						break;
 					case "System.Boolean":
-						rhs = bool.Parse (rhs.ToString ());
+						rhs = bool.Parse(rhs.ToString());
 						break;
 					case "System.DateTime":
-						rhs = DateTime.ParseExact(rhs.ToString (), "yyyy.MM.dd HH:mm:ss", CultureInfo.InvariantCulture);
+						rhs = DateTime.ParseExact(rhs.ToString(), "yyyy.MM.dd HH:mm:ss", CultureInfo.InvariantCulture);
 						break;
 					case "System.Decimal":
-						rhs = decimal.Parse (rhs.ToString (), CultureInfo.InvariantCulture);
+						rhs = decimal.Parse(rhs.ToString(), CultureInfo.InvariantCulture);
+						break;
+					case "System.String":
+						rhs = rhs.ToString();
 						break;
 					default:
 						throw new ArgumentException("Don't know how to compare '" + expr + "' since the types of the expressions are incompatible");
@@ -191,19 +194,71 @@ namespace Magix.Core
 			string lastEntity = "";
 			Node x = GetNode(exprDestination, source, ip, ref lastEntity, true);
 
-            if (lastEntity == ".Value")
+			if (lastEntity.IndexOf('+') != -1)
+			{
+				switch (valueToSet.GetType().FullName)
+				{
+					case "System.Int32":
+						valueToSet = (Convert.ToInt32(valueToSet)) + int.Parse(lastEntity.Substring(lastEntity.IndexOf('+') + 1));
+						break;
+					case "System.Decimal":
+						valueToSet = (Convert.ToDecimal(valueToSet)) + decimal.Parse(lastEntity.Substring(lastEntity.IndexOf('+') + 1), CultureInfo.InvariantCulture);
+						break;
+				}
+			}
+
+			if (lastEntity.IndexOf('-') != -1)
+			{
+				switch (valueToSet.GetType().FullName)
+				{
+					case "System.Int32":
+						valueToSet = (Convert.ToInt32(valueToSet)) - int.Parse(lastEntity.Substring(lastEntity.IndexOf('-') + 1));
+						break;
+					case "System.Decimal":
+						valueToSet = (Convert.ToDecimal(valueToSet)) - decimal.Parse(lastEntity.Substring(lastEntity.IndexOf('-') + 1), CultureInfo.InvariantCulture);
+						break;
+				}
+			}
+
+			if (lastEntity.IndexOf('*') != -1)
+			{
+				switch (valueToSet.GetType().FullName)
+				{
+					case "System.Int32":
+						valueToSet = (Convert.ToInt32(valueToSet)) * int.Parse(lastEntity.Substring(lastEntity.IndexOf('*') + 1));
+						break;
+					case "System.Decimal":
+						valueToSet = (Convert.ToDecimal(valueToSet)) * decimal.Parse(lastEntity.Substring(lastEntity.IndexOf('*') + 1), CultureInfo.InvariantCulture);
+						break;
+				}
+			}
+
+			if (lastEntity.IndexOf('/') != -1)
+			{
+				switch (valueToSet.GetType().FullName)
+				{
+					case "System.Int32":
+						valueToSet = (Convert.ToInt32(valueToSet)) / int.Parse(lastEntity.Substring(lastEntity.IndexOf('/') + 1));
+						break;
+					case "System.Decimal":
+						valueToSet = (Convert.ToDecimal(valueToSet)) / decimal.Parse(lastEntity.Substring(lastEntity.IndexOf('/') + 1), CultureInfo.InvariantCulture);
+						break;
+				}
+			}
+
+			if (lastEntity.StartsWith(".Value"))
 			{
                x.Value = valueToSet;
 			}
-            else if (lastEntity == ".Name")
+            else if (lastEntity.StartsWith(".Name"))
 			{
 				if (!(valueToSet is string))
 					throw new ArgumentException("Cannot set the Name of a node to something which is not a string literal");
-                x.Name = valueToSet.ToString ();
+                x.Name = valueToSet.ToString();
 			}
             else if (lastEntity == "")
 			{
-				Node clone = (valueToSet as Node).Clone ();
+				Node clone = (valueToSet as Node).Clone();
 				x.ReplaceChildren(clone);
 				x.Name = clone.Name;
 				x.Value = clone.Value;
@@ -234,16 +289,70 @@ namespace Magix.Core
 			if (x == null)
 				return null;
 
-            if (lastEntity == ".Value")
-                return x.Value;
-            else if (lastEntity == ".Name")
-                return x.Name;
-            else if (lastEntity == ".Count")
-                return x.Count;
+			object retVal = null;
+
+            if (lastEntity.StartsWith(".Value"))
+				retVal = x.Value;
+            else if (lastEntity.StartsWith(".Name"))
+				retVal = x.Name;
+            else if (lastEntity.StartsWith(".Count"))
+				retVal = x.Count;
             else if (lastEntity == "")
-                return x;
-            else
-                throw new ArgumentException("Couldn't understand the last parts of your expression '" + lastEntity + "'");
+				retVal = x;
+
+			if (lastEntity.IndexOf('+') != -1)
+			{
+				switch (retVal.GetType().FullName)
+				{
+				case "System.Int32":
+					retVal = (Convert.ToInt32(retVal)) + int.Parse(lastEntity.Substring(lastEntity.IndexOf('+') + 1));
+					break;
+				case "System.Decimal":
+					retVal = (Convert.ToDecimal(retVal)) + decimal.Parse(lastEntity.Substring(lastEntity.IndexOf('+') + 1), CultureInfo.InvariantCulture);
+					break;
+				}
+			}
+
+			if (lastEntity.IndexOf('-') != -1)
+			{
+				switch (retVal.GetType().FullName)
+				{
+					case "System.Int32":
+						retVal = (Convert.ToInt32(retVal)) - int.Parse(lastEntity.Substring(lastEntity.IndexOf('-') + 1));
+						break;
+					case "System.Decimal":
+						retVal = (Convert.ToDecimal(retVal)) - decimal.Parse(lastEntity.Substring(lastEntity.IndexOf('-') + 1), CultureInfo.InvariantCulture);
+						break;
+				}
+			}
+
+			if (lastEntity.IndexOf('*') != -1)
+			{
+				switch (retVal.GetType().FullName)
+				{
+					case "System.Int32":
+						retVal = (Convert.ToInt32(retVal)) * int.Parse(lastEntity.Substring(lastEntity.IndexOf('*') + 1));
+						break;
+					case "System.Decimal":
+						retVal = (Convert.ToDecimal(retVal)) * decimal.Parse(lastEntity.Substring(lastEntity.IndexOf('*') + 1), CultureInfo.InvariantCulture);
+						break;
+				}
+			}
+
+			if (lastEntity.IndexOf('/') != -1)
+			{
+				switch (retVal.GetType().FullName)
+				{
+					case "System.Int32":
+						retVal = (Convert.ToInt32(retVal)) / int.Parse(lastEntity.Substring(lastEntity.IndexOf('/') + 1));
+						break;
+					case "System.Decimal":
+						retVal = (Convert.ToDecimal(retVal)) / decimal.Parse(lastEntity.Substring(lastEntity.IndexOf('/') + 1), CultureInfo.InvariantCulture);
+						break;
+				}
+			}
+
+			return retVal;
         }
 
 		// Helper for above method ...
@@ -563,7 +672,7 @@ namespace Magix.Core
 			return x;
 		}
 
-		private static void Remove (string expression, Node source, Node ip)
+		private static void Remove(string expression, Node source, Node ip)
 		{
 			string lastEntity = "";
 			Node x = GetNode(expression, source, ip, ref lastEntity, false);

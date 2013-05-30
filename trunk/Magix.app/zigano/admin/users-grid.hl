@@ -2,6 +2,7 @@
 
 event=>zigano.travel.edit-user
   code
+    debug
     set=>[magix.admin.run-file][username].Value
       value=>[$][username].Value
     magix.admin.run-file
@@ -9,9 +10,14 @@ event=>zigano.travel.edit-user
 
 event=>zigano.travel.create-users-form
   code
+    if=>[$][start]
+      set=>[magix.data.load][start].Value
+        value=>[$][start].Value
+      set=>[magix.data.load][end].Value
+        value=>[$][end].Value
     magix.data.load
-      start=>0
-      end=>10
+      start=(int)>0
+      end=(int)>10
       prototype
         type=>zigano.travel.user
     magix.data.count
@@ -19,6 +25,22 @@ event=>zigano.travel.create-users-form
         type=>zigano.travel.user
     set=>[magix.forms.create-form][controls][panel:2][controls][label][text].Value
       value=>[magix.data.count][count].Value
+    if=>[magix.data.load][start].Value==0
+      set=>[magix.forms.create-form][controls][panel:2][controls][link-button:0][enabled].Value
+        value=>false
+    else
+      set=>[magix.forms.create-form][controls][panel:2][controls][link-button:0][onclick][zigano.travel.create-users-form][start].Value
+        value=>[magix.data.load][start].Value-10
+      set=>[magix.forms.create-form][controls][panel:2][controls][link-button:0][onclick][zigano.travel.create-users-form][end].Value
+        value=>[magix.data.load][end].Value-10
+    if=>[magix.data.load][end].Value>=[magix.data.count][count].Value
+      set=>[magix.forms.create-form][controls][panel:2][controls][link-button:1][enabled].Value
+        value=>false
+    else
+      set=>[magix.forms.create-form][controls][panel:2][controls][link-button:1][onclick][zigano.travel.create-users-form][start].Value
+        value=>[magix.data.load][start].Value+10
+      set=>[magix.forms.create-form][controls][panel:2][controls][link-button:1][onclick][zigano.travel.create-users-form][end].Value
+        value=>[magix.data.load][end].Value+10
 
     _dt
       panel
@@ -102,7 +124,6 @@ event=>zigano.travel.create-users-form
             link-button=>previous
               text=>&lt;&lt;
               css=>span-1 left-7
-              onclick
             label=>count
               css=>span-1
               text=>54
@@ -159,11 +180,6 @@ event=>zigano.travel.create-users-form
                   zigano.travel.edit-user
 
 zigano.travel.create-users-form
-
-
-
-
-
 
 
 
