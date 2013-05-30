@@ -109,6 +109,32 @@ namespace Magix.forms
 					break;
 				}
 			}
+			
+			if (node.Contains("ontextchanged"))
+			{
+				// TODO: is this right? do we need to clone?
+				Node codeNode = node["ontextchanged"].Clone();
+
+				ret.TextChanged += delegate(object sender2, EventArgs e2)
+				{
+					RaiseActiveEvent(
+						"magix.execute",
+						codeNode);
+				};
+			}
+
+			if (node.Contains("onescpressed"))
+			{
+				// TODO: is this right? do we need to clone?
+				Node codeNode = node["onescpressed"].Clone();
+
+				ret.TextChanged += delegate(object sender2, EventArgs e2)
+				{
+					RaiseActiveEvent(
+						"magix.execute",
+						codeNode);
+				};
+			}
 
 			e.Params["_ctrl"].Value = ret;
 		}

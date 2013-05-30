@@ -58,7 +58,7 @@ the currently iterated node.&nbsp;&nbsp;thread safe";
 
 			if (Expressions.IsTrue(ip.Get<string>(), ip, dp))
 			{
-				Node tmp = Expressions.GetExpressionValue(ip.Get<string>(), dp, ip) as Node;
+				Node tmp = Expressions.GetExpressionValue(ip.Get<string>(), dp, ip, false) as Node;
 
 				for (int idxNo = 0; idxNo < tmp.Count; idxNo++)
 				{
