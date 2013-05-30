@@ -83,7 +83,7 @@ to the node's name.&nbsp;&nbsp;thread safe";
 			if ((ip.Name == "execute" || ip.Name == "magix.execute") && 
 				!string.IsNullOrEmpty(ip.Get<string>()))
 			{
-				ip = Expressions.GetExpressionValue(ip.Get<string>(), dp, ip) as Node;
+				ip = Expressions.GetExpressionValue(ip.Get<string>(), dp, ip, false) as Node;
 				if (ip == null)
 					throw new ArgumentException(
 						"You can only supply a context pointing to an existing Node hierarchy");

@@ -42,8 +42,7 @@ expression must end with .Value or .Name.&nbsp;&nbsp;thread safe";
 
 			expr = expr.Substring(0, expr.LastIndexOf("."));
 
-			Node exprNode = Expressions.GetExpressionValue(
-				expr, dp, ip) as Node;
+			Node exprNode = Expressions.GetExpressionValue(expr, dp, ip, false) as Node;
 
 			if (exprNode == null)
 				throw new ArgumentException("couldn't find the node in [replace]");

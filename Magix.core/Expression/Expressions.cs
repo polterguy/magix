@@ -45,9 +45,9 @@ namespace Magix.Core
 			}
 			else if (tokens.Count == 3)
 			{
-				object lhs = GetExpressionValue(tokens[0], dp, ip);
+				object lhs = GetExpressionValue(tokens[0], dp, ip, false);
 				string comparer = tokens[1];
-				object rhs = GetExpressionValue(tokens[2], dp, ip);
+				object rhs = GetExpressionValue(tokens[2], dp, ip, false);
 
 				if (lhs == null || rhs == null)
 					return false;
@@ -176,14 +176,14 @@ namespace Magix.Core
 		 * exprSource starts with a '[', it is expected to be a reference to another
 		 * expression, else it will be assumed to be a static value
 		 */
-		public static void SetNodeValue (
+		public static void SetNodeValue(
 			string exprDestination, 
 			string exprSource, 
 			Node source, 
 			Node ip,
 			bool noRemove)
 		{
-			object valueToSet = GetExpressionValue(exprSource, source, ip);
+			object valueToSet = GetExpressionValue(exprSource, source, ip, false);
 
 			if (valueToSet == null && !noRemove)
 			{
@@ -271,7 +271,7 @@ namespace Magix.Core
 		 * Returns the value of the given expression, which might return a string, 
 		 * list of nodes, or any other object your node tree might contain
 		 */
-        public static object GetExpressionValue(string expression, Node source, Node ip)
+        public static object GetExpressionValue(string expression, Node source, Node ip, bool createPath)
         {
 			if (expression == null)
 				return null;
@@ -284,7 +284,7 @@ namespace Magix.Core
 				return expression;
 
 			string lastEntity = "";
-			Node x = GetNode(expression, source, ip, ref lastEntity, false);
+			Node x = GetNode(expression, source, ip, ref lastEntity, createPath);
 
 			if (x == null)
 				return null;

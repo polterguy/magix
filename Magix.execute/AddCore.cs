@@ -51,13 +51,13 @@ the entire node will be copied, with its children and sub-nodes.&nbsp;&nbsp;thre
 				throw new ArgumentException("Cannot add a null node, need value Node to declare which node to add");
 
 			string right = ip["value"].Get<string>();
-			Node leftNode = Expressions.GetExpressionValue (left, dp, ip) as Node;
-			Node rightNode = Expressions.GetExpressionValue (right, dp, ip) as Node;
+			Node leftNode = Expressions.GetExpressionValue(left, dp, ip, true) as Node;
+			Node rightNode = Expressions.GetExpressionValue(right, dp, ip, false) as Node;
 
 			if (leftNode == null || rightNode == null)
 				throw new ArgumentException("Both Value and 'value' must return an existing Node-List");
 
-			leftNode.Add (rightNode.Clone ());
+			leftNode.Add(rightNode.Clone());
 		}
 	}
 }

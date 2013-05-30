@@ -2,7 +2,6 @@
 
 event=>zigano.travel.edit-user
   code
-    debug
     set=>[magix.admin.run-file][username].Value
       value=>[$][username].Value
     magix.admin.run-file

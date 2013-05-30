@@ -10,8 +10,71 @@ magix.data.load
 set=>[magix.forms.create-form][controls][label][text].Value
   value=>[magix.data.load][objects][0][username].Value
 
-set=>[magix.forms.create-form][controls][text-box][text].Value
+set=>[magix.forms.create-form][controls][panel][controls][text-box:0][text].Value
   value=>[magix.data.load][objects][0][name].Value
+set=>[magix.forms.create-form][controls][panel][controls][text-box:1][text].Value
+  value=>[magix.data.load][objects][0][pwd].Value
+set=>[magix.forms.create-form][controls][panel][controls][text-box:0][ontextchanged][magix.data.load][prototype][username].Value
+  value=>[magix.data.load][objects][0][username].Value
+set=>[magix.forms.create-form][controls][panel][controls][text-box:1][ontextchanged][magix.data.load][prototype][username].Value
+  value=>[magix.data.load][objects][0][username].Value
+set=>[_dt2][panel][controls][link-button][onclick][magix.data.load][prototype][username].Value
+  value=>[magix.data.load][objects][0][username].Value
+set=>[_dt2][panel][controls][link-button][onclick][zigano.travel.edit-user][username].Value
+  value=>[magix.data.load][objects][0][username].Value
+
+magix.data.load
+  prototype
+    type=>zigano.travel.role
+
+_dt
+  value=>name
+
+for-each=>[magix.data.load:1][objects]
+  set=>[/][_dt][0].Name
+    value=>[.][name].Value
+  set=>[/][_dt][0].Value
+    value=>[.][name].Value
+  add=>[/][magix.forms.create-form][controls][panel:1][controls][select][items]
+    value=>[/][_dt][0]
+
+_dt2
+  panel
+    css=>span-5 hover-shadow
+    controls
+      label
+        css=>span-4 hover-shadow light-green
+      link-button
+        css=>span-1 hover-shadow light-red last
+        text=>x
+        onclick
+          _role=>will contain name of role
+          magix.data.load
+            prototype
+              type=>zigano.travel.user
+              username
+          set=>[magix.data.load][objects][0][roles][[_role].Value]
+          set=>[magix.data.save][id].Value
+            value=>[magix.data.load][objects][0].Name
+          set=>[magix.data.load][objects][0].Name
+            value=>object
+          add=>[magix.data.save]
+            value=>[magix.data.load][objects][object]
+          magix.data.save
+          zigano.travel.edit-user
+
+for-each=>[magix.data.load:0][objects][0][roles]
+  set=>[/][_dt2][panel][controls][label][text].Value
+    value=>[.].Name
+  set=>[/][_dt2][panel][controls][link-button][onclick][_role].Value
+    value=>[.].Name
+  add=>[/][magix.forms.create-form][controls][panel:1][controls]
+    value=>[/][_dt2][panel]
+
+set=>[/][magix.forms.create-form][controls][panel:1][controls][select][onselectedindexchanged][magix.data.load][prototype][username].Value
+  value=>[$][username].Value
+set=>[/][magix.forms.create-form][controls][panel:1][controls][select][onselectedindexchanged][zigano.travel.edit-user][username].Value
+  value=>[$][username].Value
 
 magix.forms.create-form
   form-id=>edit-user
@@ -21,8 +84,87 @@ magix.forms.create-form
     label=>username
       css=>span-22
       tag=>h3
-    text-box=>name
-      css=>span-5
+    panel=>inpWrp
+      css=>span-10
+      default=>save
+      controls
+        label
+          text=>name
+          css=>span-5
+          tag=>label
+        label
+          text=>password
+          css=>span-5 last
+          tag=>label
+        text-box=>name
+          css=>span-5 clear
+          ontextchanged
+            magix.forms.get-value
+              form-id=>edit-user
+              id=>name
+            magix.data.load
+              prototype
+                type=>zigano.travel.user
+            set=>[magix.data.load][objects][0][name].Value
+              value=>[magix.forms.get-value][value].Value
+            set=>[magix.data.save][id].Value
+              value=>[magix.data.load][objects][0].Name
+            set=>[magix.data.load][objects][0].Name
+              value=>object
+            add=>[magix.data.save]
+              value=>[magix.data.load][objects][object]
+            magix.data.save
+            zigano.travel.create-users-form
+        text-box=>pwd
+          css=>span-5 last
+          ontextchanged
+            magix.forms.get-value
+              form-id=>edit-user
+              id=>pwd
+            magix.data.load
+              prototype
+                type=>zigano.travel.user
+            set=>[magix.data.load][objects][0][pwd].Value
+              value=>[magix.forms.get-value][value].Value
+            set=>[magix.data.save][id].Value
+              value=>[magix.data.load][objects][0].Name
+            set=>[magix.data.load][objects][0].Name
+              value=>object
+            add=>[magix.data.save]
+              value=>[magix.data.load][objects][object]
+            magix.data.save
+            zigano.travel.create-users-form
+    panel=>rolesWrap
+      css=>span-5 last
+      controls
+        label
+          text=>roles
+          tag=>label
+          css=>span-5
+        select=>ddlRoles
+          css=>span-5 clear
+          onselectedindexchanged
+            magix.forms.get-value
+              form-id=>edit-user
+              id=>ddlRoles
+            magix.data.load
+              prototype=>zigano.travel.user
+            if=>[magix.data.load][objects][0][roles][[magix.forms.get-value][value].Value]
+              magix.viewport.show-message
+                message=>user belongs to role already ...
+            else
+              set=>[else][magix.data.save][id].Value
+                value=>[magix.data.load][objects][0].Name
+              set=>[magix.data.load][objects][0].Name
+                value=>object
+              add=>[else][magix.data.save]
+                value=>[magix.data.load][objects][0]
+              set=>[else][magix.data.save][object][roles][[magix.forms.get-value][value].Value].Value
+                value=>true
+              magix.data.save
+              zigano.travel.edit-user
+          items
+            _default=>add role to user ...
 
 magix.forms.set-focus
   form-id=>edit-user

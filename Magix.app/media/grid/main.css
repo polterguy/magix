@@ -58,7 +58,7 @@ caption {background:#eee;}
 div {overflow:auto;}
 input[type=text], input[type=password], textarea {border-left:0px none;border-right:0px none;border-top:1px solid #bbb;border-bottom:1px solid #bbb;padding:0;}
 input[type=text] {height:16px;}
-input[type=button] {border:0 none;margin:0;}
+input[type=button] {border:0 none;}
 label {font-weight:bold;}
 .small {font-size:.8em;margin-bottom:1.875em;line-height:1.875em;}
 .large {font-size:1.2em;line-height:2.5em;margin-bottom:1.25em;}
@@ -71,6 +71,7 @@ label {font-weight:bold;}
 .first {margin-left:0;padding-left:0;}
 .last {margin-right:0;padding-right:0;}
 .error {color:#d33;}
+.clear {clear:both;}
 
 /* grid system */
 .container {width:950px;margin:0 auto;position:relative;}

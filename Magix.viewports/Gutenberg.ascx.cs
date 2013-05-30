@@ -65,7 +65,7 @@ end user for some seconds.&nbsp;&nbsp;not thread safe";
 					"magix.code.node-2-code",
 					tmp);
 
-				message.Text += "<pre style='text-align:left;margin-left:120px;'>" + tmp["code"].Get<string>() + "</pre>";
+				message.Text += "<pre style='text-align:left;margin-left:120px;'>" + tmp["code"].Get<string>().Replace("<", "&lt;").Replace(">", "&gt;") + "</pre>";
 			}
 
 			if (e.Params.Contains("time") && e.Params["time"].Get<int>() == -1)
