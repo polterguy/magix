@@ -129,7 +129,11 @@ child nodes of [objects] being the matching objects.&nbsp;&nbsp;
 use [start] and [end] to fetch a specific slice of objects, [start] defaults 
 to 0 and [end] defaults to -1, which means all objects matching criteria.&nbsp;&nbsp;
 [start], [end] and [prototype] cannot be defined if [id] is given, since [id] is unique,
-and will make sure only one object is loaded.&nbsp;&nbsp;thread safe";
+and will make sure only one object is loaded.&nbsp;&nbsp;
+if [value] has children, these will be sequentially treated as insertion values
+for a string.format operation.&nbsp;&nbsp;if a [prototype] node is
+given, it can contain % signs which will be used as wildcards for a match 
+operation.&nbsp;&nbsp;thread safe";
 				return;
 			}
 

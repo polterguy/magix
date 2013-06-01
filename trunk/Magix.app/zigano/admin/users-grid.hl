@@ -181,7 +181,7 @@ event=>zigano.travel.create-users-form
                     object
                       type=>zigano.travel.user
                   set=>[else][magix.log.append][body][username].Value
-                    value=>[magix.forms.get-value][value].Value
+                    value=>[magix.forms.get-value:1][value].Value
                   magix.log.append
                     header=>new user created
                     body=>user {0} created

@@ -185,6 +185,18 @@ namespace Magix.Core
 		{
 			object valueToSet = GetExpressionValue(exprSource, source, ip, false);
 
+			// checking to see if this is a string.Format expression
+			if (ip.Contains("value") && ip["value"].Count > 0)
+			{
+				object[] arrs = new object[ip["value"].Count];
+				int idxNo = 0;
+				foreach (Node idx in ip["value"])
+				{
+					arrs[idxNo++] = Expressions.GetExpressionValue(idx.Get<string>(), source, ip, false);
+				}
+				valueToSet = string.Format(valueToSet.ToString(), arrs);
+			}
+
 			if (valueToSet == null && !noRemove)
 			{
 				Remove(exprDestination, source, ip);

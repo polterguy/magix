@@ -1,10 +1,24 @@
 
 
 if=>[$][start]
-  set=>[/][magix.data.load][start].Value
+  set=>[magix.data.load][start].Value
     value=>[$][start].Value
-  set=>[/][magix.data.load][end].Value
+  set=>[magix.data.load][end].Value
     value=>[$][end].Value
+
+if=>[$][filter].Value
+  set=>[magix.data.load][prototype][body].Value
+    value=>@"%{0}%"
+      pr0=>[$][filter].Value
+  set=>[magix.data.count][prototype][body].Value
+    value=>@"%{0}%"
+      pr0=>[$][filter].Value
+  set=>[magix.forms.create-form][controls][panel:1][controls][panel][controls][text-box][text].Value
+    value=>[$][filter].Value
+  set=>[magix.forms.create-form][controls][panel:1][controls][link-button:0][onclick][magix.admin.run-file][filter].Value
+    value=>[$][filter].Value
+  set=>[magix.forms.create-form][controls][panel:1][controls][link-button:1][onclick][magix.admin.run-file][filter].Value
+    value=>[$][filter].Value
 
 magix.data.load
   start=(int)>0
@@ -40,8 +54,18 @@ magix.data.count
   prototype
     type=>magix.log.item
 
-set=>[magix.forms.create-form][controls][panel:1][controls][label][text].Value
-  value=>[magix.data.count][count].Value
+if=>[magix.data.count][count].Value>[magix.data.load][end].Value
+  set=>[magix.forms.create-form][controls][panel:1][controls][label][text].Value
+    value=>@"{0}/{1} of {2}"
+      pr0=>[magix.data.load][start].Value+1
+      pr1=>[magix.data.load][end].Value
+      pr2=>[magix.data.count][count].Value
+else
+  set=>[magix.forms.create-form][controls][panel:1][controls][label][text].Value
+    value=>@"{0}/{1} of {2}"
+      pr0=>[magix.data.load][start].Value+1
+      pr1=>[magix.data.count][count].Value
+      pr2=>[magix.data.count][count].Value
 
 if=>[magix.data.load][start].Value==0
   set=>[magix.forms.create-form][controls][panel:1][controls][link-button:0][enabled].Value
@@ -82,7 +106,7 @@ magix.forms.create-form
             magix.admin.run-file
               file=>zigano/admin/server-log-grid.hl
         label=>count
-          css=>span-1
+          css=>span-2
           text=>54
         link-button=>next
           text=>&gt;&gt;
@@ -90,6 +114,23 @@ magix.forms.create-form
           onclick
             magix.admin.run-file
               file=>zigano/admin/server-log-grid.hl
+        panel
+          css=>span-2
+          default=>btnSearch
+          controls
+            text-box=>search
+              place-holder=>filter ...
+              css=>span-2
+            button=>btnSearch
+              css=>hide
+              onclick
+                magix.forms.get-value
+                  form-id=>server-log
+                  id=>search
+                set=>[magix.admin.run-file][filter].Value
+                  value=>[magix.forms.get-value][value].Value
+                magix.admin.run-file
+                  file=>zigano/admin/server-log-grid.hl
 
 
 
