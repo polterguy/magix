@@ -115,7 +115,7 @@ magix.forms.create-form
             magix.admin.run-file
               file=>zigano/admin/server-log-grid.hl
         panel
-          css=>span-2
+          css=>span-2 right
           default=>btnSearch
           controls
             text-box=>search
@@ -132,8 +132,13 @@ magix.forms.create-form
                 magix.admin.run-file
                   file=>zigano/admin/server-log-grid.hl
 
-
-
+if=>[$][filter].Value
+  magix.forms.select-all
+    form-id=>server-log
+    id=>search
+  magix.forms.set-focus
+    form-id=>server-log
+    id=>search
 
 
 
