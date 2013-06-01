@@ -52,5 +52,20 @@ button=>log
       css=>span-19 last
     magix.admin.run-file
       file=>zigano/admin/server-log-grid.hl
+button=>settings
+  text=>settings
+  css=>btn-large span-5
+  onclick
+    magix.viewport.clear-controls
+      container=>content2
+    magix.viewport.clear-controls
+      container=>content3
+    magix.viewport.clear-controls
+      container=>content4
+    magix.forms.create-web-page
+      file=>zigano/admin/admin-settings.mml
+      container=>content1
+      form-id=>admin-server-log
+      css=>span-19 last
 }}
 </div>

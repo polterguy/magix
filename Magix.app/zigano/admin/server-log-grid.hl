@@ -28,7 +28,7 @@ magix.data.load
 
 _dt
   panel
-    css=>span-17 boxed air-padding bottom-1 relative
+    css=>span-17 boxed-light-green air-padding bottom-1 relative
     controls
       label
         css=>span-13
@@ -115,7 +115,7 @@ magix.forms.create-form
             magix.admin.run-file
               file=>zigano/admin/server-log-grid.hl
         panel
-          css=>span-2 right
+          css=>span-2 right last
           default=>btnSearch
           controls
             text-box=>search

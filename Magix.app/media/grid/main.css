@@ -241,6 +241,27 @@ label {font-weight:bold;}
 	background-image: linear-gradient(rgba(250, 250, 250, 1) 0%, rgba(210, 210, 210, 1) 100%);
 }
 
+.boxed-light-green
+{
+	display:block;
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
+	-o-border-radius:5px;
+	-ms-border-radius:5px;
+	border-radius:5px;
+	-webkit-box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
+	-moz-box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
+	-o-box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
+	-ms-box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
+	box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
+	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgba(200, 240, 200, .5)), to(rgba(180, 210, 180, -5)));
+	background-image: -moz-webkit-gradient(rgba(200, 240, 200, .5) 0%, rgba(180, 210, 180, .5) 100%);
+	background-image: -moz-linear-gradient(rgba(200, 240, 200, .5) 0%, rgba(180, 210, 180, .5) 100%);
+	background-image: -o-linear-gradient(rgba(200, 240, 200, .5) 0%, rgba(180, 210, 180, .5) 100%);
+	background-image: -ms-linear-gradient(rgba(200, 240, 200, .5) 0%, rgba(180, 210, 180, .5) 100%);
+	background-image: linear-gradient(rgba(200, 240, 200, .5) 0%, rgba(180, 210, 180, .5) 100%);
+}
+
 input[type=button]
 {
 	display:block;

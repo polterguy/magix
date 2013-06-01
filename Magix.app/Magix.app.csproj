@@ -294,5 +294,6 @@
     <None Include="zigano\admin\edit-single-user.hl" />
     <None Include="zigano\admin\server-log-grid.hl" />
     <None Include="zigano\admin\server-log.mml" />
+    <None Include="zigano\admin\admin-settings.mml" />
   </ItemGroup>
 </Project>
