@@ -160,20 +160,18 @@ namespace Magix.Core
 		{
 			foreach (Node idx in prototype)
 			{
-				if (!Exists (
+				if (!Exists(
 					delegate(Node idxThis)
 					{
 						if (idx.Name != idxThis.Name)
 							return false;
 						if (idx.Value != null && idxThis.Value == null)
 							return false;
-						if (idx.Value == null && idxThis.Value != null)
+						if (idx.Value == null) // null returns true always
+							return idxThis.HasNodes(idx);
+						if (!idx.Value.Equals(idxThis.Value))
 							return false;
-						if (idx.Value == null && idxThis.Value == null)
-							return idxThis.HasNodes (idx);
-						if (!idx.Value.Equals (idxThis.Value))
-							return false;
-						if (!idxThis.HasNodes (idx))
+						if (!idxThis.HasNodes(idx))
 							return false;
 						return true;
 					}))

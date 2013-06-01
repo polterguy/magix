@@ -35,5 +35,17 @@ button=>roles
       css=>span-19 last
     magix.admin.run-file
       file=>zigano/admin/roles-grid.hl
+button=>log
+  text=>log
+  css=>btn-large span-5
+  onclick
+    magix.viewport.clear-controls
+      container=>content2
+    magix.viewport.clear-controls
+      container=>content3
+    magix.viewport.clear-controls
+      container=>content4
+    magix.viewport.show-message
+      message=>here comes server log
 }}
 </div>

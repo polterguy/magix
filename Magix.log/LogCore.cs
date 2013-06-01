@@ -25,9 +25,10 @@ namespace Magix.log
 			{
 				e.Params["event:magix.log.append"].Value = null;
 				e.Params["inspect"].Value = @"creates a new item in your log.&nbsp;&nbsp;
-you need to submit both a [header] and a [description].&nbsp;&nbsp;thread safe";
+you need to submit both a [header] and a [body].&nbsp;&nbsp;
+parameters added beneath [body] will be formatted into string.&nbsp;&nbsp;thread safe";
 				e.Params["header"].Value = "descriptive header of log item";
-				e.Params["description"].Value = "detailed description of log item";
+				e.Params["body"].Value = "detailed description of log item";
 				return;
 			}
 
@@ -40,6 +41,19 @@ you need to submit both a [header] and a [description].&nbsp;&nbsp;thread safe";
 			string header = e.Params["header"].Get<string>();
 			string body   = e.Params["body"].Get<string>();
 			DateTime date = DateTime.Now;
+
+			if (e.Params["body"].Count > 0)
+			{
+				// contains parameters
+				object[] arrs = new object[e.Params["body"].Count];
+
+				int idxNo = 0;
+				foreach (Node idx in e.Params["body"])
+				{
+					arrs[idxNo++] = idx.Value;
+				}
+				body = string.Format(body, arrs);
+			}
 
 			Node node = new Node();
 

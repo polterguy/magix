@@ -64,6 +64,9 @@ event=>zigano.travel.create-users-form
                 prototype
                   type=>zigano.travel.user
                   username=>
+              magix.log.append
+                header=>user deleted
+                body=>user {0} deleted
               zigano.travel.create-users-form
               magix.viewport.clear-controls
                 container=>content3
@@ -78,6 +81,8 @@ event=>zigano.travel.create-users-form
       set=>[/][_dt][panel][controls][link-button:0][onclick][zigano.travel.edit-user][username].Value
         value=>[.][username].Value
       set=>[/][_dt][panel][controls][link-button:1][onclick][magix.data.remove][prototype][username].Value
+        value=>[.][username].Value
+      set=>[/][_dt][panel][controls][link-button:1][onclick][magix.log.append][body][username].Value
         value=>[.][username].Value
       add=>[/][magix.forms.create-form][controls][panel:1][controls]
         value=>[/][_dt][0]
@@ -175,6 +180,11 @@ event=>zigano.travel.create-users-form
                   magix.data.save
                     object
                       type=>zigano.travel.user
+                  set=>[else][magix.log.append][body][username].Value
+                    value=>[magix.forms.get-value][value].Value
+                  magix.log.append
+                    header=>new user created
+                    body=>user {0} created
                   zigano.travel.create-users-form
                   zigano.travel.edit-user
 
