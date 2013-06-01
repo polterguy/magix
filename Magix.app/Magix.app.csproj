@@ -292,5 +292,7 @@
     </None>
     <None Include="zigano\admin\users-grid.hl" />
     <None Include="zigano\admin\edit-single-user.hl" />
+    <None Include="zigano\admin\server-log-grid.hl" />
+    <None Include="zigano\admin\server-log.mml" />
   </ItemGroup>
 </Project>
