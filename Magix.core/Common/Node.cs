@@ -169,7 +169,21 @@ namespace Magix.Core
 							return false;
 						if (idx.Value == null) // null returns true always
 							return idxThis.HasNodes(idx);
-						if (!idx.Value.Equals(idxThis.Value))
+						if (idxThis.Value == null)
+							return false;
+						if (idx.Value is string && idx.Get<string>().Contains("%"))
+						{
+							string[] parts = idx.Get<string>().Split(new char[] {'%'}, StringSplitOptions.RemoveEmptyEntries);
+							int idxNo = 0;
+							foreach (string idxQuery in parts)
+							{
+								idxNo = idxThis.Get<string>().IndexOf(idxQuery, idxNo);
+								if (idxNo == -1)
+									return false;
+								idxNo++;
+							}
+						}
+						else if (!idx.Value.Equals(idxThis.Value))
 							return false;
 						if (!idxThis.HasNodes(idx))
 							return false;

@@ -62,7 +62,6 @@ input[type=button] {border:0 none;}
 label {font-weight:bold;}
 .small {font-size:.8em;margin-bottom:1.875em;line-height:1.875em;}
 .large {font-size:1.2em;line-height:2.5em;margin-bottom:1.25em;}
-.hide {display:none;}
 .quiet {color:#666;}
 .loud {color:#000;}
 .highlight {background:#ff0;}
@@ -345,8 +344,9 @@ input[type=button].btn-large
 	padding-right:40px;
 	padding-top:18px;
 	padding-bottom:18px;
-v}
+}
 
+.hide, input[type=button].hide {display:none;}
 
 
 
