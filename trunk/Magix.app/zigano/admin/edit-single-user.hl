@@ -61,6 +61,13 @@ _dt2
           add=>[magix.data.save]
             value=>[magix.data.load][objects][object]
           magix.data.save
+          set=>[magix.log.append][body][username].Value
+            value=>[magix.data.load][prototype][username].Value
+          set=>[magix.log.append][body][role].Value
+            value=>[_role].Value
+          magix.log.append
+            header=>user removed from role
+            body=>user {0} removed from role {1}
           zigano.travel.edit-user
 
 for-each=>[magix.data.load:0][objects][0][roles]
@@ -114,6 +121,11 @@ magix.forms.create-form
             add=>[magix.data.save]
               value=>[magix.data.load][objects][object]
             magix.data.save
+            set=>[magix.log.append][body][username].Value
+              value=>[magix.data.load][prototype][username].Value
+            magix.log.append
+              header=>user changed name
+              body=>user {0} changed name
             zigano.travel.create-users-form
         text-box=>pwd
           css=>span-5 last
@@ -132,6 +144,11 @@ magix.forms.create-form
               value=>object
             add=>[magix.data.save]
               value=>[magix.data.load][objects][object]
+            set=>[magix.log.append][body][username].Value
+              value=>[magix.data.load][prototype][username].Value
+            magix.log.append
+              header=>user changed password
+              body=>user {0} changed password
             magix.data.save
             zigano.travel.create-users-form
     panel=>rolesWrap
@@ -162,6 +179,13 @@ magix.forms.create-form
               set=>[else][magix.data.save][object][roles][[magix.forms.get-value][value].Value].Value
                 value=>true
               magix.data.save
+              set=>[else][magix.log.append][body][username].Value
+                value=>[magix.data.load][prototype][username].Value
+              set=>[else][magix.log.append][body][role].Value
+                value=>[magix.forms.get-value][value].Value
+              magix.log.append
+                header=>user added to role
+                body=>user {0} added to role {1}
               zigano.travel.edit-user
           items
             _default=>add role to user ...

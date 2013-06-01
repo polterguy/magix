@@ -19,6 +19,23 @@ event=>zigano.travel.create-roles-form
                 prototype
                   type=>zigano.travel.role
                   name=>
+              set=>[magix.data.load][prototype][roles][[magix.data.remove][prototype][name].Value].Name
+                value=>[magix.data.remove][prototype][name].Value
+              magix.data.load
+                prototype
+                  type=>zigano.travel.user
+                  roles
+              for-each=>[magix.data.load][objects]
+                set=>[.][roles][[/][magix.data.remove][prototype][name].Value]
+                set=>[.ip][..][magix.data.save][object]
+                  value=>[.]
+                set=>[.ip][..][magix.data.save][1].Name
+                  value=>object
+                set=>[.ip][..][magix.data.save][object].Value
+                set=>[.ip][..][magix.data.save][id].Value
+                  value=>[.].Name
+                magix.data.save
+                  id
               zigano.travel.create-roles-form
 
     for-each=>[magix.data.load][objects]
