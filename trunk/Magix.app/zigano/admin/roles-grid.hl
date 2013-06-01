@@ -36,6 +36,11 @@ event=>zigano.travel.create-roles-form
                   value=>[.].Name
                 magix.data.save
                   id
+              set=>[magix.log.append][body][role].Value
+                value=>[magix.data.remove][prototype][name].Value
+              magix.log.append
+                header=>role deleted
+                body=>role {0} was deleted
               zigano.travel.create-roles-form
 
     for-each=>[magix.data.load][objects]
