@@ -8,7 +8,7 @@ magix.forms.create-web-page
 magix.web.get-session
   key=>zigano.travel.user
 
-if=>[magix.web.get-session][value][roles][admin].Value
+if=>[magix.web.get-session][value][roles][admin]
   magix.forms.create-web-page
     file=>zigano/admin/menu.mml
     container=>menu

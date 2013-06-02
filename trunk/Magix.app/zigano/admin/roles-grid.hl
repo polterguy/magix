@@ -85,26 +85,30 @@ event=>zigano.travel.create-roles-form
                 magix.forms.get-value
                   form-id=>roles-grid
                   id=>nName
-                set=>[magix.data.load][prototype][name].Value
-                  value=>[magix.forms.get-value][value].Value
-                magix.data.load
-                  prototype
-                    type=>zigano.travel.role
-                if=>[magix.data.load][objects].Count>0
+                if=>![magix.forms.get-value][value].Value
                   magix.viewport.show-message
-                    message=>role exists from before
+                    message=>you must give your role a name
                 else
-                  set=>[else][magix.data.save][object][name].Value
+                  set=>[@][magix.data.load][prototype][name].Value
                     value=>[magix.forms.get-value][value].Value
-                  magix.data.save
-                    object
+                  magix.data.load
+                    prototype
                       type=>zigano.travel.role
-                  set=>[else][magix.log.append][body][role].Value
-                    value=>[magix.forms.get-value][value].Value
-                  magix.log.append
-                    header=>role created
-                    body=>role {0} was created
-                  zigano.travel.create-roles-form
+                  if=>[@][magix.data.load][objects].Count>0
+                    magix.viewport.show-message
+                      message=>role exists from before
+                  else
+                    set=>[@][magix.data.save][object][name].Value
+                      value=>[magix.forms.get-value][value].Value
+                    magix.data.save
+                      object
+                        type=>zigano.travel.role
+                    set=>[@][magix.log.append][body][role].Value
+                      value=>[magix.forms.get-value][value].Value
+                    magix.log.append
+                      header=>role created
+                      body=>role {0} was created
+                    zigano.travel.create-roles-form
 
 zigano.travel.create-roles-form
 
