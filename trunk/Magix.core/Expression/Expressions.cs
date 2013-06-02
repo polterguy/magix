@@ -580,13 +580,20 @@ namespace Magix.Core
                             isInside = false;
                             continue;
                         }
-                        else if (bufferNodeName == ".ip")
-                        {
-                            x = ip;
-                            bufferNodeName = "";
-                            isInside = false;
-                            continue;
-                        }
+						else if (bufferNodeName == ".ip")
+						{
+							x = ip;
+							bufferNodeName = "";
+							isInside = false;
+							continue;
+						}
+						else if (bufferNodeName == "@")
+						{
+							x = ip.Parent;
+							bufferNodeName = "";
+							isInside = false;
+							continue;
+						}
                         else if (bufferNodeName == ".")
                         {
 							x = source;
@@ -645,8 +652,16 @@ namespace Magix.Core
                             if (allNumber)
                             {
                                 int intIdx = int.Parse(bufferNodeName);
-                                if (x.Count > intIdx)
-                                    x = x[intIdx];
+								if (x.Count > intIdx)
+									x = x[intIdx];
+								else if (forcePath)
+								{
+									while (x.Count <= intIdx)
+									{
+										x.Add(new Node("item"));
+									}
+									x = x[intIdx];
+								}
 								else
 									return null;
                             }

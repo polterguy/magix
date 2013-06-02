@@ -218,6 +218,7 @@
     <Folder Include="zigano\" />
     <Folder Include="media\grid\" />
     <Folder Include="zigano\admin\" />
+    <Folder Include="zigano\misc\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="media\xing-wysihtml5\LICENSE" />
@@ -295,5 +296,6 @@
     <None Include="zigano\admin\server-log-grid.hl" />
     <None Include="zigano\admin\server-log.mml" />
     <None Include="zigano\admin\admin-settings.mml" />
+    <None Include="zigano\misc\settings-initialize.hl" />
   </ItemGroup>
 </Project>

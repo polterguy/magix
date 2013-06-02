@@ -65,7 +65,7 @@ button=>settings
     magix.forms.create-web-page
       file=>zigano/admin/admin-settings.mml
       container=>content1
-      form-id=>admin-server-log
+      form-id=>admin-settings
       css=>span-19 last
 }}
 </div>

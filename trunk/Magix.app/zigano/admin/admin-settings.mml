@@ -1,5 +1,56 @@
 
 <h2 class="span-13 last left-6">admin settings</h2>
 
-<div class="span-17 last boxed air-padding">sdfi jsdfih sdfoih dsf</div>
+<div class="span-17 last boxed air-padding">{{
+check=>hasGrid
+  tip=>@"if checked, will show a debug-grid which helps 
+you align objects correctly according to the grid system of magix"
+  onfirstload
+    magix.data.load
+      prototype
+        type=>zigano.travel.setting
+        name=>has-grid
+    if=>[magix.data.load][objects][0][value].Value==true
+      set=>[magix.forms.set-value][value].Value
+        value=>true
+    magix.forms.set-value
+      form-id=>admin-settings
+      id=>hasGrid
+      value=>false
+  oncheckedchanged
+    magix.forms.get-value
+      form-id=>admin-settings
+      id=>hasGrid
+    magix.data.load
+      prototype
+        type=>zigano.travel.setting
+        name=>has-grid
+    set=>[magix.data.load][objects][0][value].Value
+      value=>[magix.forms.get-value][value].Value
+    if=>[magix.data.load][objects][0].Name!=item
+      set=>[magix.data.save][id].Value
+        value=>[magix.data.load][objects][0].Name
+    add=>[magix.data.save]
+      value=>[magix.data.load][objects][0]
+    set=>[magix.data.save][1].Name
+      value=>object
+    set=>[magix.data.save][object][type].Value
+      value=>zigano.travel.setting
+    set=>[magix.data.save][object][name].Value
+      value=>has-grid
+    magix.data.save
+      id
+    if=>[magix.data.save][object][value].Value==True
+      magix.viewport.show-grid
+        value=(bool)>True
+    else
+      magix.viewport.show-grid
+        value=(bool)>False
+label=>hasGridLbl
+  tip=>@"if checked, will show a debug-grid which helps 
+you align objects correctly according to the grid system of magix"
+  tag=>label
+  for=>hasGrid
+  text=>show grid
+}}</div>
 

@@ -33,7 +33,7 @@ namespace Magix.forms
 			if (node.Contains("info") && !string.IsNullOrEmpty(node["info"].Get<string>()))
 				ctrl.Info = node["info"].Get<string>();
 
-			if (node.Contains("onfirstload") && node.Contains ("_first"))
+			if (node.Contains("onfirstload") && node.Contains("_first") && node["_first"].Get<bool>())
 			{
 				// TODO: is this right? do we need to clone?
 				Node codeNode = node["onfirstload"].Clone();

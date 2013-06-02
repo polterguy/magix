@@ -81,7 +81,10 @@ not thread safe";
 			if (!e.Params.Contains("value"))
 				Page.Session.Remove(e.Params["key"].Get<string>());
 			else
-				Page.Session[e.Params["key"].Get<string>()] = e.Params["value"].Clone();
+			{
+				Node value = e.Params["value"].Clone();
+				Page.Session[e.Params["key"].Get<string>()] = value;
+			}
 		}
 
 		[ActiveEvent(Name = "magix.web.get-session")]
