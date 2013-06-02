@@ -25,7 +25,7 @@ namespace Magix.viewports
     {
 		protected DynamicPanel header;
 		protected DynamicPanel menu;
-		protected DynamicPanel content;
+		protected DynamicPanel content1;
 		protected DynamicPanel content2;
 		protected DynamicPanel footer;
 		protected DynamicPanel trace;
@@ -258,7 +258,7 @@ end user for some seconds.&nbsp;&nbsp;not thread safe";
 			if (dyn == null)
 				return;
 
-			if (dyn == content || dyn == content2 || dyn == menu || dyn == header || dyn == footer)
+			if (dyn == content1 || dyn == content2 || dyn == menu || dyn == header || dyn == footer)
 				dyn.CssClass = "";
 
 			base.magix_viewport_clear_controls(sender, e);

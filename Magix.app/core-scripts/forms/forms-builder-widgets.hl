@@ -67,7 +67,7 @@ for-each=>[/][list-widget-types][types]
 
 magix.forms.create-form
   form-id=>toolbox-controls
-  container=>content
+  container=>content1
   css=>span9
   controls
     label=>header

@@ -59,7 +59,7 @@ set=>[cf].Name
   value=>magix.forms.create-form
 cf
   form-id=>form1
-  container=>content
+  container=>content1
   controls
     panel2
       css=>span5

@@ -6,7 +6,7 @@ inspect=>@"loads up the form builder"
 magix.viewport.clear-controls
   container=>modal
 magix.viewport.clear-controls
-  container=>content
+  container=>content1
 magix.viewport.clear-controls
   container=>header
 

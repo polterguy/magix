@@ -122,9 +122,9 @@ don't match the [begins-with] parameter.&nbsp;&nbsp;thread safe";
 			if (ShouldInspect(e.Params))
 			{
 				e.Params["event:magix.admin.open-even-executor"].Value = null;
-				e.Params["container"].Value = "content";
+				e.Params["container"].Value = "content1";
 				e.Params["inspect"].Value = @"opens the active event executor module 
-in [container] viewport container, defaulting being content.&nbsp;&nbsp;not thread safe";
+in [container] viewport container, defaulting being content1.&nbsp;&nbsp;not thread safe";
 				return;
 			}
 
@@ -134,7 +134,7 @@ in [container] viewport container, defaulting being content.&nbsp;&nbsp;not thre
 
 			LoadModule(
 				"Magix.admin.ExecutorForm", 
-				e.Params["container"].Get<string>("content"),
+				e.Params["container"].Get<string>("content1"),
 				tmp);
 
 			RaiseActiveEvent(
@@ -155,7 +155,7 @@ allowing you to spy on all active events being raised in your system.&nbsp;&nbsp
 [container] instructs magix which viewport container to load the module in.&nbsp;&nbsp;
 default container is header.&nbsp;&nbsp;not thread safe";
 				e.Params["event:magix.admin.open-event-sniffer"].Value = null;
-				e.Params["container"].Value = "content";
+				e.Params["container"].Value = "content1";
 				return;
 			}
 
@@ -175,7 +175,7 @@ default container is header.&nbsp;&nbsp;not thread safe";
 				e.Params.Clear();
 				e.Params["event:magix.admin.load-executor-code"].Value = null;
 				e.Params["inspect"].Value = @"loads active event executor module
-in content viewport, with given [code] Value.&nbsp;&nbsp;[code] is expected to be 
+in content1 viewport, with given [code] Value.&nbsp;&nbsp;[code] is expected to be 
 textually based hyper lisp node syntax.&nbsp;&nbsp;not thread safe";
 				e.Params["code"].Value = @"
 event:magix.execute
@@ -190,7 +190,7 @@ if=>[_data].Value==thomas
 				throw new ArgumentException("cannot raise load-executor-code without [code] being hyper lisp");
 
 			Node node = new Node();
-			node["container"].Value = "content";
+			node["container"].Value = "content1";
 
 			RaiseActiveEvent(
 				"magix.admin.open-event-executor",

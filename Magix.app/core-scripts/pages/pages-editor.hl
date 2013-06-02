@@ -7,14 +7,14 @@ the ide"
 magix.viewport.clear-controls
   container=>modal
 magix.viewport.clear-controls
-  container=>content
+  container=>content1
 magix.viewport.clear-controls
   container=>header
 magix.viewport.clear-controls
   container=>footer
 
 magix.viewport.load-module
-  container=>content
+  container=>content1
   name=>Magix.ide.Editor
   css=>span9
 
@@ -164,7 +164,7 @@ magix.forms.create-form
             set=>[/][magix.viewport.execute-javascript][script][form].Value
               value=>[/][magix.forms.get-value][value].Value
             magix.viewport.execute-javascript
-              script=>@"window.actualEditor.composer.commands.exec('insertHTML', '{{form:{0}}}');"
+              script=>@"window.actualEditor.composer.commands.exec('insertHTML', '{{form=>{0}}}');"
                 form
             magix.forms.set-value
               form-id=>wysiheader
