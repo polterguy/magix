@@ -99,7 +99,7 @@
 	        runat="server" 
 	        OnReload="dynamic_LoadControls"
 	        CssClass="span9"
-	        id="content" />
+	        id="content1" />
 	    <mux:DynamicPanel 
 	        runat="server" 
 	        OnReload="dynamic_LoadControls"

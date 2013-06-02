@@ -18,7 +18,7 @@ magix.viewport.clear-controls
 
 magix.forms.create-form
   form-id=>login-box
-  container=>content
+  container=>content1
   css=>span12
   controls
     panel=>wrp

@@ -10,7 +10,7 @@ containers.&nbsp;&nbsp;clears content for simplicity"
 magix.viewport.clear-controls
   container=>menu
 magix.viewport.clear-controls
-  container=>content
+  container=>content1
 magix.forms.create-web-page
   container=>header
   form-id=>mmleditor

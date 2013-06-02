@@ -88,7 +88,7 @@ you change this as fast as you can, since otherwise your system is not secure</p
 				e.Params["inspect"].Value = @"raised when page is initially loaded, 
 or refreshed.&nbsp;&nbsp;will by default load a page, either the default page or the given 
 'page' http get parameter page, or if your web.config contains 'Magix.Core.PageLoad-HyperLispFile' it will
-run that hyperlisp file, and nothing else";
+run that hyperlisp file, and nothing else, unless http get parameter 'page' is given";
 				return;
 			}
 
@@ -102,8 +102,9 @@ run that hyperlisp file, and nothing else";
 			else
 			{
 				string defaultHyperLispFile = ConfigurationManager.AppSettings["Magix.Core.PageLoad-HyperLispFile"];
+				string page = Page.Request.Params["page"] ?? "default";
 
-				if (!string.IsNullOrEmpty(defaultHyperLispFile))
+				if (!string.IsNullOrEmpty(defaultHyperLispFile) && page == "default")
 				{
 					Node node = new Node ();
 					node ["file"].Value = defaultHyperLispFile;
@@ -114,8 +115,6 @@ run that hyperlisp file, and nothing else";
 				}
 				else
 				{
-					string page = Page.Request.Params["page"] ?? "default";
-
 					Node tp = new Node();
 
 					tp["prototype"]["type"].Value = "magix.pages.page";
@@ -128,7 +127,7 @@ run that hyperlisp file, and nothing else";
 					Node tmp = new Node();
 
 					tmp["html"].Value = tp["objects"][0]["value"].Value;
-					tmp["container"].Value = "content";
+					tmp["container"].Value = "content1";
 					tmp["css"].Value = "span12";
 					tmp["form-id"].Value = "webpages";
 
@@ -175,7 +174,7 @@ run that hyperlisp file, and nothing else";
 
 			// Loads up Event Viewer, or IDE
 			tmp = new Node();
-			tmp["container"].Value = "content";
+			tmp["container"].Value = "content1";
 
 			RaiseActiveEvent(
 				"magix.admin.open-event-executor", 

@@ -24,8 +24,8 @@ namespace Magix.forms
 		{
 			if (ShouldInspect(e.Params))
 			{
-				e.Params["event:magix.forms.create-form"].Value = "content";
-				e.Params["container"].Value = "content";
+				e.Params["event:magix.forms.create-form"].Value = "content1";
+				e.Params["container"].Value = "content1";
 				e.Params["form-id"].Value = "unique-identification-of-your-form";
 				e.Params["events"]["magix.forms.widget-selected"]["magix.forms.show-message"]["message"].Value = "jo, something was selected";
 				e.Params["controls"]["button"].Value = "btn";

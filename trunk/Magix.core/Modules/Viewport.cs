@@ -121,7 +121,7 @@ namespace Magix.Core
 		{
 			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
-				e.Params["container"].Value = "content";
+				e.Params["container"].Value = "content1";
 				e.Params["inspect"].Value = @"will empty the given [container]
 viewport container for all of its controls.&nbsp;&nbsp;
 unloads a container for controls";
@@ -437,7 +437,7 @@ javascript file on the client side.&nbsp;&nbsp;not thread safe";
 			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
 				e.Params["name"].Value = "namespace.module_name";
-				e.Params["container"].Value = "content";
+				e.Params["container"].Value = "content1";
 				e.Params["css"].Value = "span12";
 				e.Params["inspect"].Value = @"loads an active module into the 
 given [container] viewport container.&nbsp;&nbsp;the module name must be defined in 
