@@ -5,17 +5,19 @@ your tree, starting with any other existing node.&nbsp;&nbsp;expressions have so
 
 <ul>
 <li>[.] - access the current traversed data node</li>
+<li>[n] - access the n'th node</li>
 <li>[.ip] - access the node being currently executed in your instruction pointer</li>
+<li>[@] - access the parent node of the node being currently executed in your instruction pointer, the scope</li>
+<li>[$] - access parameters inside files, functions or events</li>
 <li>[..] - access the parent node of whatever node you are currently within</li>
 <li>[/] - access the root node of your tree</li>
 <li>[somename:n] - access the n'th node, with the name 'somename'</li>
+<li>[somename] - access the first node, with the name somename</li>
 </ul>
 
 <p>for instance [x][y][..][.][y].Name, will access the node with the name of 'y', 
 underneath 'x'.&nbsp;&nbsp;then traverse back up to 'x' because of [..].&nbsp;&nbsp;the [.] parts will
-just return 'x' again, for the [y] to return back to 'y' node, and return its name.&nbsp;&nbsp;
-that expression will always return 'y', since 'y' is the name of the last node, before the .name
-parts</p>
+just return 'x' again, for the [y] to return back to 'y' node, and return its name</p>
 
 <p>an expression can end with '.Name', '.Value', '.Count' or nothing.&nbsp;&nbsp;if you have no ending, the
 returned value will be the node itself, .Name returns the name, .Value returns the value of the node,
