@@ -89,6 +89,11 @@ namespace Magix.UX.Widgets.Core
             }
         }
 
+		protected override bool CanRaiseEvent()
+		{
+			return Enabled;
+		}
+
         /**
          * What Effect will run when user is making the widget lose focus.
          */

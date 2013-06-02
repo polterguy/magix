@@ -1,4 +1,5 @@
 
+<p>you can also add, subtract, multiply and divide node values if they're integers or decimal values by appending +, -, * or / after a node expression, such as [x].Value+5</p>
 
 <p>nodes can be cloned, transfered, transported and manipulated.&nbsp;&nbsp;
 nodes can transfer all data</p>

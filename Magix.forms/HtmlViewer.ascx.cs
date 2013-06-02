@@ -169,6 +169,8 @@ hello world";
 			if (e.Params["form-id"].Get<string>() != FormID)
 				return;
 
+			isFirst = true;
+
 			ViewState[ClientID + "_FirstLoad"] = null;
 
 			DataSources.Clear();
