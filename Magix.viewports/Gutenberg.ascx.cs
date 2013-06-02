@@ -23,6 +23,7 @@ namespace Magix.viewports
      */
     public class Gutenberg : Viewport
     {
+		protected Panel wrp;
 		protected DynamicPanel header;
 		protected DynamicPanel menu;
         protected DynamicPanel content1;
@@ -81,6 +82,37 @@ end user for some seconds.&nbsp;&nbsp;not thread safe";
 						new EffectFadeOut(message,250))
 						.Render();
 			}
+		}
+
+		/**
+		 * shows the debug grid
+		 */
+		[ActiveEvent(Name = "magix.viewport.show-grid")]
+		protected void magix_viewport_show_grid(object sender, ActiveEventArgs e)
+		{
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			{
+				e.Params["inspect"].Value = "shows or hides a debugging grid according to [value] node.&nbsp;&nbsp;not thread safe";
+				e.Params["value"].Value = true;
+				return;
+			}
+
+			Session["magix.viewport.show-grid"] = e.Params["value"].Get<bool>();
+		}
+
+		protected override void OnPreRender (EventArgs e)
+		{
+			if (Session["magix.viewport.show-grid"] != null && ((bool)Session["magix.viewport.show-grid"]) && !wrp.CssClass.Contains("showgrid"))
+			{
+				wrp.CssClass = wrp.CssClass + " showgrid";
+				wrp.CssClass = wrp.CssClass.Trim();
+			}
+			else if (wrp.CssClass.Contains("showgrid") && (Session["magix.viewport.show-grid"] == null || !((bool)Session["magix.viewport.show-grid"])))
+			{
+				wrp.CssClass = wrp.CssClass.Replace("showgrid", "").Trim();
+			}
+
+			base.OnPreRender (e);
 		}
 
 		protected override void magix_viewport_clear_controls(object sender, ActiveEventArgs e)

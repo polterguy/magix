@@ -1,0 +1,12 @@
+
+magix.data.load
+  prototype
+    type=>zigano.travel.setting
+    name=>has-grid
+
+if=>[magix.data.load][objects][0][value].Value==True
+  magix.viewport.show-grid
+    value=(bool)>True
+else
+  magix.viewport.show-grid
+    value=(bool)>False
