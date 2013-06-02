@@ -53,6 +53,7 @@
     <Compile Include="controls\TextAreaCore.cs" />
     <Compile Include="controls\TextBoxCore.cs" />
     <Compile Include="controls\LiteralCore.cs" />
+    <Compile Include="controls\FormCore.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

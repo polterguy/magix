@@ -45,25 +45,26 @@ choose either before or after as the position of the node"
         time=>1000
 
 for-each=>[/][list-widget-types][types]
-  while=>[/][_buffer].Count>0
-    set=>[/][_buffer][0]
-  set=>[/][_buffer][link-button].Value
-    value=>[.][type].Value
-  set=>[/][_buffer][link-button][text].Value
-    value=>[.][type].Value
-  replace=>[/][_buffer][link-button][text].Value
-    replace=>magix.forms.controls.
-    with=>
-  set=>[/][_buffer][link-button][css].Value
-    value=>span2 btn btn-info air-bottom
-  set=>[/][_onclick][try][code][add-widget][widget][type].Value
-    value=>[.][type].Value
-  add=>[/][_buffer][link-button]
-    value=>[/][_onclick]
-  set=>[/][_buffer][link-button][_onclick].Name
-    value=>onclick
-  add=>[/][magix.forms.create-form][controls][panel:2][controls]
-    value=>[/][_buffer][0]
+  if=>![.][_no-embed]
+    while=>[/][_buffer].Count>0
+      set=>[/][_buffer][0]
+    set=>[/][_buffer][link-button].Value
+      value=>[.][type].Value
+    set=>[/][_buffer][link-button][text].Value
+      value=>[.][type].Value
+    replace=>[/][_buffer][link-button][text].Value
+      replace=>magix.forms.controls.
+      with=>
+    set=>[/][_buffer][link-button][css].Value
+      value=>span2 btn btn-info air-bottom
+    set=>[/][_onclick][try][code][add-widget][widget][type].Value
+      value=>[.][type].Value
+    add=>[/][_buffer][link-button]
+      value=>[/][_onclick]
+    set=>[/][_buffer][link-button][_onclick].Name
+      value=>onclick
+    add=>[/][magix.forms.create-form][controls][panel:2][controls]
+      value=>[/][_buffer][0]
 
 magix.forms.create-form
   form-id=>toolbox-controls

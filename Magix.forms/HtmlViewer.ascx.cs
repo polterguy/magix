@@ -108,7 +108,7 @@ namespace Magix.forms
 						{
 							// Finished with brand new Control collection
 							Node tmp = new Node();
-							tmp["code"].Value = buffer;
+							tmp["code"].Value = buffer.Replace("&gt;", ">").Replace("&lt;", "<");
 
 							RaiseEvent(
 								"magix.code.code-2-node",

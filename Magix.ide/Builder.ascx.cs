@@ -120,28 +120,38 @@ namespace Magix.ide
 				type,
 				ctrlRaise);
 
-			if (!ctrlRaise.Contains("_ctrl"))
-				throw new ArgumentException("[type] '" + type + "' does not exist");
+			if (!ctrlRaise.Contains("_ctrl") && !ctrlRaise.Contains("_tpl"))
+				return;
 
-			Control ctrl = ctrlRaise["_ctrl"].Value as Control;
-
-			if (widget.Dna == SelectedWidgetDna)
+			if (ctrlRaise.Contains("_ctrl"))
 			{
-				if (ctrl is BaseWebControl)
+				Control ctrl = ctrlRaise["_ctrl"].Value as Control;
+
+				if (widget.Dna == SelectedWidgetDna)
 				{
-					(ctrl as BaseWebControl).CssClass += " selected";
+					if (ctrl is BaseWebControl)
+					{
+						(ctrl as BaseWebControl).CssClass += " selected";
+					}
+				}
+
+				if (widget.Contains("controls"))
+				{
+					foreach (Node idx in widget["controls"])
+					{
+						BuildWidget(idx, ctrl);
+					}
+				}
+
+				parent.Controls.Add(ctrl);
+			}
+			else
+			{
+				foreach (Node idx in ctrlRaise["_tpl"])
+				{
+					BuildWidget(idx, parent);
 				}
 			}
-
-			if (widget.Contains("controls"))
-			{
-				foreach (Node idx in widget["controls"])
-				{
-					BuildWidget(idx, ctrl);
-				}
-			}
-
-			parent.Controls.Add(ctrl);
 		}
 
 		protected void run_Click(object sender, EventArgs e)
@@ -322,6 +332,9 @@ not thread safe";
 				RaiseEvent(
 					idx.Get<string>(),
 					tp2);
+
+				if (tp2.Contains("_no-embed"))
+					tp["_no-embed"].Value = true;
 
 				tp["properties"]["id"].Value = "id";
 				foreach (Node idx2 in tp2["controls"][0])
