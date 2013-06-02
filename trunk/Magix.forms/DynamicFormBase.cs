@@ -384,9 +384,12 @@ if [visible] is true, control is shown, otherwise hidden.&nbsp;&nbsp;not thread 
 					// this is a 'user control', or a 'template control', and we need to
 					// individually traverse it, as if it was embedded into markup, almost
 					// like copy/paste
-					BuildControl(
-						node["_tpl"][0], 
-						parent);
+					foreach (Node idxInner in node["_tpl"])
+					{
+						BuildControl(
+							idxInner, 
+							parent);
+					}
 				}
 			}
 		}
