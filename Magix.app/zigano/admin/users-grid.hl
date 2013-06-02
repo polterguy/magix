@@ -154,39 +154,45 @@ event=>zigano.travel.create-users-form
                 magix.forms.get-value
                   form-id=>users-grid
                   id=>nName
-                set=>[else][magix.data.save][object][name].Value
-                  value=>[magix.forms.get-value][value].Value
-                magix.forms.get-value
-                  form-id=>users-grid
-                  id=>nUsername
-                set=>[else][magix.data.save][object][username].Value
-                  value=>[magix.forms.get-value:1][value].Value
-                set=>[else][zigano.travel.edit-user][username].Value
-                  value=>[magix.forms.get-value:1][value].Value
-                magix.forms.get-value
-                  form-id=>users-grid
-                  id=>nPwd
-                set=>[else][magix.data.save][object][pwd].Value
-                  value=>[magix.forms.get-value:2][value].Value
-                set=>[magix.data.load][prototype][username].Value
-                  value=>[magix.forms.get-value:1][value].Value
-                magix.data.load
-                  prototype
-                    type=>zigano.travel.user
-                if=>[magix.data.load][objects].Count>0
+                if=>![magix.forms.get-value][value].Value
                   magix.viewport.show-message
-                    message=>user exists from before with same username
+                    message=>you must give new user a name
                 else
-                  magix.data.save
-                    object
-                      type=>zigano.travel.user
-                  set=>[else][magix.log.append][body][username].Value
+                  set=>[@][else][magix.data.save][object][name].Value
+                    value=>[magix.forms.get-value][value].Value
+                  magix.forms.get-value
+                    form-id=>users-grid
+                    id=>nUsername
+                  set=>[@][else][magix.data.save][object][username].Value
                     value=>[magix.forms.get-value:1][value].Value
-                  magix.log.append
-                    header=>new user created
-                    body=>user {0} created
-                  zigano.travel.create-users-form
-                  zigano.travel.edit-user
+                  set=>[else][zigano.travel.edit-user][username].Value
+                    value=>[magix.forms.get-value:1][value].Value
+                  magix.forms.get-value
+                    form-id=>users-grid
+                    id=>nPwd
+                  set=>[@][else][magix.data.save][object][pwd].Value
+                    value=>[@][magix.forms.get-value:1][value].Value
+                  set=>[@][magix.data.load][prototype][username].Value
+                    value=>[@][magix.forms.get-value:0][value].Value
+                  magix.data.load
+                    prototype
+                      type=>zigano.travel.user
+                  if=>[@][magix.data.load][objects].Count>0
+                    debug
+                    stop
+                    magix.viewport.show-message
+                      message=>user exists from before with same username
+                  else
+                    magix.data.save
+                      object
+                        type=>zigano.travel.user
+                    set=>[@][magix.log.append][body][username].Value
+                      value=>[@][..][magix.forms.get-value:0][value].Value
+                    magix.log.append
+                      header=>new user created
+                      body=>user {0} created
+                    zigano.travel.create-users-form
+                    zigano.travel.edit-user
 
 zigano.travel.create-users-form
 
