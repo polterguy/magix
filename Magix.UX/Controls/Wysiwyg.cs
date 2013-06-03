@@ -51,7 +51,7 @@ namespace Magix.UX.Widgets
          */
 		public string EditorCssFile
 		{
-			get { return ViewState["EditorCssFile"] == null ? "" : (string)ViewState["EditorCssFile"]; }
+			get { return ViewState["EditorCssFile"] == null ? "media/grid/main.css" : (string)ViewState["EditorCssFile"]; }
 			set { ViewState["EditorCssFile"] = value; }
 		}
 

@@ -211,7 +211,6 @@ magix.forms.create-form
   parent-css=>span-24
   controls
     wysiwyg=>wysiwyg
-      editor-css-file=>media/grid/main.css
       css=>wysiwyg span-24
 
 

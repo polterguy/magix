@@ -67,7 +67,7 @@ namespace Magix.forms
 			node["controls"]["wysiwyg"]["has-forecolor"].Value = true;
 			node["controls"]["wysiwyg"]["has-insertspeech"].Value = true;
 			node["controls"]["wysiwyg"]["has-showhtml"].Value = true;
-			node["controls"]["wysiwyg"]["editor-css-file"].Value = "media/xing-wysihtml5/website/css/editor.css";
+			node["controls"]["wysiwyg"]["editor-css-file"].Value = "media/grid/main.css";
 			base.Inspect(node["controls"]["button"]);
 		}
 	}
