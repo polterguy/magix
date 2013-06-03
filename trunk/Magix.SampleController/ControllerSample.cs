@@ -23,6 +23,18 @@ namespace Magix.SampleController
 		[ActiveEvent(Name = "magix.core.application-startup")]
 		public static void magix_core_application_startup(object sender, ActiveEventArgs e)
 		{
+			string defaultHyperLispFile = ConfigurationManager.AppSettings["Magix.Core.AppStart-HyperLispFile"];
+
+			if (!string.IsNullOrEmpty(defaultHyperLispFile))
+			{
+				Node node = new Node ();
+				node ["file"].Value = defaultHyperLispFile;
+
+				RaiseActiveEvent(
+					"magix.admin.run-file",
+					node);
+			}
+
 			Node tp = new Node();
 
 			tp["prototype"]["type"].Value = "magix.pages.page";
