@@ -1,0 +1,9 @@
+
+<h2 class="span-13 last left-6">edit pages</h2>
+{{
+hidden=>hidden
+  onfirstload
+    magix.admin.run-file
+      file=>zigano/admin/edit-pages.hl
+}}
+
