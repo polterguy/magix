@@ -18,3 +18,6 @@ if=>[magix.web.get-session][value][roles][admin]
 magix.admin.run-file
   file=>zigano/misc/settings-initialize.hl
 
+magix.admin.run-file
+  file=>zigano/pages/run-page.hl
+

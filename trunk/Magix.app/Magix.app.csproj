@@ -219,6 +219,7 @@
     <Folder Include="media\grid\" />
     <Folder Include="zigano\admin\" />
     <Folder Include="zigano\misc\" />
+    <Folder Include="zigano\pages\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="media\xing-wysihtml5\LICENSE" />
@@ -298,5 +299,6 @@
     <None Include="zigano\admin\admin-settings.mml" />
     <None Include="zigano\misc\settings-initialize.hl" />
     <None Include="zigano\startup.hl" />
+    <None Include="zigano\pages\run-page.hl" />
   </ItemGroup>
 </Project>
