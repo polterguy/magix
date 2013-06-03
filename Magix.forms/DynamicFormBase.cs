@@ -384,12 +384,20 @@ if [visible] is true, control is shown, otherwise hidden.&nbsp;&nbsp;not thread 
 					// this is a 'user control', or a 'template control', and we need to
 					// individually traverse it, as if it was embedded into markup, almost
 					// like copy/paste
+					Panel wr = new Panel();
+					wr.ID = node["_tpl"]["id"].Get<string>("mumbo");
+					wr.CssClass = node["_tpl"]["css"].Get<string>("");
 					foreach (Node idxInner in node["_tpl"])
 					{
+						if (idxInner.Name == "id")
+							continue;
+						if (idxInner.Name == "css")
+							continue;
 						BuildControl(
 							idxInner, 
-							parent);
+							wr);
 					}
+					parent.Controls.Add(wr);
 				}
 			}
 		}
