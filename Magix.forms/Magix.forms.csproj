@@ -54,6 +54,7 @@
     <Compile Include="controls\TextBoxCore.cs" />
     <Compile Include="controls\LiteralCore.cs" />
     <Compile Include="controls\FormCore.cs" />
+    <Compile Include="controls\WysiwygCore.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

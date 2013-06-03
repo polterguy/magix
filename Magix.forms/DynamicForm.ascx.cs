@@ -40,6 +40,9 @@ namespace Magix.forms
 
 					if (!DataSource.Contains("controls"))
 						throw new ArgumentException("Couldn't find any 'controls' node underneath form");
+
+					if (DataSource.Contains("parent-css"))
+						pnl.CssClass = DataSource["parent-css"].Get<string>();
 				};
 
 			base.InitialLoading(node);

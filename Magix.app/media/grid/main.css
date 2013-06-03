@@ -55,7 +55,7 @@ th, td, caption {padding:4px 10px 4px 5px;}
 tbody tr:nth-child(even) td, tbody tr.even td {background:#e5ecf9;}
 tfoot {font-style:italic;}
 caption {background:#eee;}
-div {overflow:auto;}
+div {overflow:visible;}
 input[type=text], input[type=password], textarea {border-left:0px none;border-right:0px none;border-top:1px solid #bbb;border-bottom:1px solid #bbb;padding:0;}
 input[type=text] {height:16px;}
 input[type=button] {border:0 none;}
@@ -286,6 +286,9 @@ input[type=button]
 	-ms-transition-duration:.2s;
 	transition-property:color;
 	transition-duration:.2s;
+	margin-top:0px;
+	margin-bottom:0px;
+	height:18px;
 }
 
 input[type=button]:hover
@@ -303,6 +306,13 @@ input[type=button].btn-large
 {
 	height:36px;
 	font-size:16px;
+}
+
+select
+{
+	margin-top:0px;
+	margin-bottom:0px;
+	height:18px;
 }
 
 .hover-shadow
@@ -372,8 +382,356 @@ input[type=button].btn-large
 
 
 
+.wysiwyg-color-silver
+{
+	color:silver;
+}
+
+.wysiwyg-color-gray
+{
+	color:gray;
+}
+
+.wysiwyg-color-maroon
+{
+	color:maroon;
+}
+
+.wysiwyg-color-red
+{
+	color:red;
+}
+
+.wysiwyg-color-purple
+{
+	color:purple;
+}
+
+.wysiwyg-color-green
+{
+	color:green;
+}
+
+.wysiwyg-color-olive
+{
+	color:olive;
+}
+
+.wysiwyg-color-navy
+{
+	color:navy;
+}
+
+.wysiwyg-color-blue
+{
+	color:blue;
+}
 
 
+
+
+
+
+
+
+
+
+
+.wysiwyg {
+}
+
+.wysiwyg-editor-toolbar {
+  position: relative;
+  width:100%;
+}
+
+.wysiwyg-editor-toolbar header {
+  display: block;
+  border-radius: 4px;
+  height:36px;
+  width: 100%;
+  background: #eee;
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  background-image: linear-gradient(bottom, rgb(238,238,238) 0%, rgb(255,255,255) 100%);
+  background-image: -o-linear-gradient(bottom, rgb(238,238,238) 0%, rgb(255,255,255) 100%);
+  background-image: -moz-linear-gradient(bottom, rgb(238,238,238) 0%, rgb(255,255,255) 100%);
+  background-image: -webkit-linear-gradient(bottom, rgb(238,238,238) 0%, rgb(255,255,255) 100%);
+  background-image: -ms-linear-gradient(bottom, rgb(238,238,238) 0%, rgb(255,255,255) 100%);
+  box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.3);
+  font-size: 0;
+  text-align: center;
+}
+
+.wysiwyg-editor-toolbar .commands {
+  border-left: 1px solid #ddd;
+  display: inline-block;
+  margin:0;
+  height:36px;
+}
+
+[data-wysihtml5-command],
+[data-wysihtml5-action],
+.wysiwyg-editor-toolbar .fore-color {
+  position: relative;
+  border-right: 1px solid #ddd;
+  border-left: 1px solid #fff;
+  list-style: none;
+  display: inline-block;
+  cursor: pointer;
+  height: 36px;
+  width: 38px;
+}
+
+.wysiwyg-editor-toolbar .fore-color ul {
+  width: 100%;
+  margin:0;
+}
+
+[data-wysihtml5-command]::after,
+[data-wysihtml5-action]::after,
+.wysiwyg-editor-toolbar .fore-color::after {
+  content: "";
+  background-image: url(../xing-wysihtml5/website/img/spr_toolbar_icons_r1.png);
+  background-repeat: no-repeat;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+
+[data-wysihtml5-command]:hover,
+[data-wysihtml5-action]:hover,
+.wysiwyg-editor-toolbar .fore-color:hover {
+  background-image: linear-gradient(bottom, rgb(229,240,226) 0%, rgb(255,255,255) 100%);
+  background-image: -o-linear-gradient(bottom, rgb(229,240,226) 0%, rgb(255,255,255) 100%);
+  background-image: -moz-linear-gradient(bottom, rgb(229,240,226) 0%, rgb(255,255,255) 100%);
+  background-image: -webkit-linear-gradient(bottom, rgb(229,240,226) 0%, rgb(255,255,255) 100%);
+  background-image: -ms-linear-gradient(bottom, rgb(229,240,226) 0%, rgb(255,255,255) 100%);
+}
+
+[data-wysihtml5-command="bold"]::after {
+  background-position: 8px center;
+}
+
+[data-wysihtml5-command="italic"]::after {
+  background-position: -64px center;
+}
+
+[data-wysihtml5-command="insertUnorderedList"]::after {
+  background-position: -131px center;
+}
+
+[data-wysihtml5-command="insertOrderedList"]::after {
+  background-position: -213px center;
+}
+
+[data-wysihtml5-command="formatBlock"][data-wysihtml5-command-value="h1"]::after {
+  background-position: -361px center;
+}
+
+[data-wysihtml5-command="formatBlock"][data-wysihtml5-command-value="h2"]::after {
+  background-position: -444px center;
+}
+
+[data-wysihtml5-command="createLink"]::after {
+  background-position: -287px center;
+}
+
+[data-wysihtml5-command="insertImage"]::after {
+  background-position: -527px center;
+}
+
+.fore-color::after {
+  background-position: -757px center;
+}
+
+[data-wysihtml5-command="insertSpeech"]::after {
+  background-position: -613px center;
+}
+
+[data-wysihtml5-action="change_view"]::after {
+  background-position: -684px center;
+}
+
+.fore-color ul {
+  display: none;
+  position: absolute;
+  z-index: 2;
+  top: 36px;
+  right: -1px;
+  left: -2px;
+  border: 1px solid #ccc;
+  border-top: 0;
+  background: #fff;
+  overflow: hidden;
+}
+
+.wysiwyg-editor-toolbar .fore-color li {
+  display: block;
+  margin: 1px;
+  width: auto;
+  border: 0;
+  height: 16px;
+}
+
+.wysiwyg-editor-toolbar .fore-color ul {
+  display: none;
+}
+
+.wysiwyg-editor-toolbar .fore-color:hover ul {
+  display: block;
+}
+
+.wysiwyg-editor-toolbar .fore-color [data-wysihtml5-command-value="silver"] {
+  background: silver !important;
+}
+
+.wysiwyg-editor-toolbar .fore-color [data-wysihtml5-command-value="gray"] {
+  background: gray !important;
+}
+
+.wysiwyg-editor-toolbar .fore-color [data-wysihtml5-command-value="maroon"] {
+  background: maroon !important;
+}
+
+.wysiwyg-editor-toolbar .fore-color [data-wysihtml5-command-value="red"] {
+  background: red !important;
+}
+
+.wysiwyg-editor-toolbar .fore-color [data-wysihtml5-command-value="purple"] {
+  background: purple !important;
+}
+
+.wysiwyg-editor-toolbar .fore-color [data-wysihtml5-command-value="green"] {
+  background: green !important;
+}
+
+.wysiwyg-editor-toolbar .fore-color [data-wysihtml5-command-value="olive"] {
+  background: olive !important;
+}
+
+.wysiwyg-editor-toolbar .fore-color [data-wysihtml5-command-value="navy"] {
+  background: navy !important;
+}
+
+.wysiwyg-editor-toolbar .fore-color [data-wysihtml5-command-value="blue"] {
+  background: blue !important;
+}
+
+.wysiwyg-editor-toolbar .fore-color .wysihtml5-command-active {
+  outline: 1px solid #666;
+  outline-offset: 1px;
+}
+
+.wysiwyg-editor-toolbar .wysihtml5-commands-disabled .fore-color ul {
+  display: none;
+}
+
+.wysiwyg-editor-toolbar .wysihtml5-action-active,
+.wysiwyg-editor-toolbar .wysihtml5-command-active {
+  box-shadow: inset 0 1px 6px rgba(0, 0, 0, 0.2);
+  background: #eee !important;
+}
+
+.wysiwyg-editor-toolbar .wysihtml5-commands-disabled [data-wysihtml5-command],
+.wysiwyg-editor-toolbar .wysihtml5-commands-disabled .fore-color {
+  opacity: 0.4;
+  cursor: default;
+  background-image: none !important;
+}
+
+[data-wysihtml5-dialog] {
+  color: #333;
+  text-align: left;
+  border-radius: 4px;
+  -ms-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  padding: 5px 10px;
+  background: #FFFBE0;
+  width: 100%;
+  text-align: center;
+  top: 36px;
+}
+
+[data-wysihtml5-dialog] input {
+  color: #333;
+  border: 1px solid #ccc;
+  padding: 3px;
+  width: 300px;
+}
+
+[data-wysihtml5-dialog] input:focus {
+  outline: 0;
+  border: 1px solid #666;
+}
+
+[data-wysihtml5-dialog-action] {
+  padding: 4px;
+  color: #fff;
+  cursor: pointer;
+}
+
+[data-wysihtml5-dialog-action="save"] {
+  background: #007200;
+}
+
+[data-wysihtml5-dialog-action="cancel"] {
+  background: #999;
+}
+
+.wysiwyg-editor-toolbar section {
+  position: absolute;
+  width: 100%;
+  top: 139px;
+  bottom: 0;
+}
+
+textarea.wysiwyg {
+  font-family: "Courier New", Courier, monospace;
+  width: 100%;
+  background: transparent;
+  height: 100%;
+  border: 0;
+  resize: none;
+  white-space: pre;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  padding: 10px;
+  word-wrap: normal;
+  -ms-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  width:810px;
+}
+
+textarea.wysiwyg:focus {
+  background: rgba(255, 255, 255, 0.4);
+  outline: 0;
+}
+
+a.fork {
+  position: absolute;
+  top: 0;
+  right: 0;
+  border: 0;
+}
+
+.wysiwyg-editor-textarea {
+  width:100%;
+	min-height:288px;
+}
+
+.wysihtml5-sandbox {
+	width:100% !important;
+	min-height:288px;
+}
 
 
 

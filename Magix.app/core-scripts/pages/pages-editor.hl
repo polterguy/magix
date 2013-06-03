@@ -54,12 +54,12 @@ magix.forms.create-form
           value=>[.][name].Value
         set=>[/][_item][0].Value
           value=>[.][name].Value
-        add=>[/][magix.forms.set-values][items]
+        add=>[/][magix.forms.set-values][values]
           value=>[/][_item][0]
       magix.forms.set-values
         form-id=>wysiheader
         id=>page
-        items
+        values
           _default=>select page ...
   controls
     label=>header
