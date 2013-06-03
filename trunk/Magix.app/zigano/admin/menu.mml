@@ -59,5 +59,18 @@ button=>settings
       container=>content1
       form-id=>admin-settings
       css=>span-19 last
+button=>pages
+  text=>pages
+  css=>btn-large span-5
+  onclick
+    magix.viewport.clear-controls
+      container=>content2
+    magix.viewport.clear-controls
+      container=>content3
+    magix.forms.create-web-page
+      file=>zigano/admin/edit-pages.mml
+      container=>content1
+      form-id=>admin-settings
+      css=>span-19 last
 }}
 </div>
