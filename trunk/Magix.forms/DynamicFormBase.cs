@@ -190,9 +190,9 @@ not thread safe";
 				{
 					SelectList lst = ctrl as SelectList;
 					lst.Items.Clear();
-					if (e.Params.Contains("items"))
+					if (e.Params.Contains("values"))
 					{
-						foreach (Node idx in e.Params["items"])
+						foreach (Node idx in e.Params["values"])
 						{
 							ListItem it = new ListItem(idx.Get<string>(), idx.Name);
 							lst.Items.Add(it);

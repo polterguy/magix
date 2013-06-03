@@ -8,16 +8,16 @@ magix.forms.create-web-page
 magix.web.get-session
   key=>zigano.travel.user
 
+magix.admin.run-file
+  file=>zigano/misc/settings-initialize.hl
+
 if=>[magix.web.get-session][value][roles][admin]
   magix.forms.create-web-page
     file=>zigano/admin/menu.mml
     container=>menu
     form-id=>admin-menu
     css=>span-5
-
-magix.admin.run-file
-  file=>zigano/misc/settings-initialize.hl
-
-magix.admin.run-file
-  file=>zigano/pages/run-page.hl
+else
+  magix.admin.run-file
+    file=>zigano/pages/run-page.hl
 

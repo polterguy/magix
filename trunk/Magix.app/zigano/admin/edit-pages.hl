@@ -1,4 +1,134 @@
 
 
-magix.viewport.show-message
-  message=>halla
+magix.data.load
+  prototype
+    type=>magix.pages.page
+
+_dt
+  name=>value
+
+for-each=>[magix.data.load][objects]
+  set=>[/][_dt][0].Name
+    value=>[.].Name
+  set=>[/][_dt][0].Value
+    value=>[.][name].Value
+  add=>[/][magix.forms.create-form][controls][select][items]
+    value=>[/][_dt][0]
+
+magix.forms.create-form
+  form-id=>edit-pages
+  container=>content2
+  css=>span-19 last
+  controls
+    select=>page
+      css=>span-4
+      onselectedindexchanged
+        magix.forms.get-value
+          form-id=>edit-pages
+          id=>page
+        set=>[magix.data.load][id].Value
+          value=>[magix.forms.get-value][value].Value
+        magix.data.load
+        if=>[magix.data.load][objects].Count>0
+          set=>[magix.forms.set-value:0][value].Value
+            value=>[magix.data.load][objects][0][name].Value
+          set=>[magix.forms.set-value:1][value].Value
+            value=>[magix.data.load][objects][0][value].Value
+        magix.forms.set-value
+          form-id=>edit-pages
+          id=>name
+        magix.forms.set-value
+          form-id=>wysiwyg-editor
+          id=>wysiwyg
+      items
+        default=>choose web page ...
+    panel=>saveWrp
+      css=>span-7
+      default=>save
+      controls
+        text-box=>name
+          place-holder=>name ...
+          css=>span-4
+        button=>save
+          css=>span-3 last
+          text=>save
+          onclick
+            magix.forms.get-value
+              form-id=>edit-pages
+              id=>name
+            magix.forms.get-value
+              form-id=>wysiwyg-editor
+              id=>wysiwyg
+            magix.forms.get-value
+              form-id=>edit-pages
+              id=>page
+            if=>![magix.forms.get-value:0][value].Value
+              magix.viewport.show-message
+                message=>no name given to page
+            else
+              set=>[@][magix.data.save][object][name].Value
+                value=>[magix.forms.get-value][value].Value
+              set=>[@][magix.data.remove][prototype][name].Value
+                value=>[magix.forms.get-value][value].Value
+              set=>[@][magix.data.save][object][name].Value
+                value=>[magix.forms.get-value][value].Value
+              set=>[@][magix.data.save][object][value].Value
+                value=>[magix.forms.get-value:1][value].Value
+              magix.data.remove
+                prototype
+                  type=>magix.pages.page
+              magix.data.save
+                object
+                  type=>magix.pages.page
+              magix.viewport.show-message
+                message=>page was successfully saved
+              magix.data.load
+                prototype
+                  type=>magix.pages.page
+              _id=>
+              for-each=>[@][magix.data.load][objects]
+                if=>[.][name].Value==[/][magix.forms.get-value][value].Value
+                  set=>[@][..][..][_id].Value
+                    value=>[.].Name
+                _dt
+                  name=>value
+                set=>[@][_dt][0].Name
+                  value=>[.].Name
+                set=>[@][_dt][0].Value
+                  value=>[.][name].Value
+                add=>[@][..][_lst]
+                  value=>[@][_dt][0]
+              _lst
+                default=>choose web page ...
+              for-each=>[@][_lst]
+                add=>[@][..][magix.forms.set-values][values]
+                  value=>[.]
+              magix.forms.set-values
+                form-id=>edit-pages
+                id=>page
+              set=>[@][magix.forms.set-value][value].Value
+                value=>[@][_id].Value
+              magix.forms.set-value
+                form-id=>edit-pages
+                id=>page
+
+magix.forms.create-form
+  form-id=>wysiwyg-editor
+  container=>content3
+  css=>span-24 top-1
+  parent-css=>span-24
+  controls
+    wysiwyg=>wysiwyg
+      editor-css-file=>media/grid/main.css
+      css=>wysiwyg span-24
+
+
+
+
+
+
+
+
+
+
+

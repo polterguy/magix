@@ -117,6 +117,8 @@ end user for some seconds.&nbsp;&nbsp;not thread safe";
 
 		protected override void magix_viewport_clear_controls(object sender, ActiveEventArgs e)
 		{
+			base.magix_viewport_clear_controls(sender, e);
+
 			DynamicPanel dyn = Selector.FindControl<DynamicPanel> (
 				this, 
 				e.Params["container"].Get<string> ());

@@ -80,6 +80,7 @@
     <Compile Include="Controls\Timer.cs" />
     <Compile Include="Controls\DynamicPanel.cs" />
     <Compile Include="Controls\Core\AttributeControl.cs" />
+    <Compile Include="Controls\Wysiwyg.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
