@@ -64,9 +64,9 @@ you change this as fast as you can, since otherwise your system is not secure</p
 					tmp);
 			}
 
-			new Node();
+			tp = new Node();
 
-			tp["prototype"]["type"].Value = "magix.core.user";
+			tp["prototype"]["type"].Value = "zigano.travel.user";
 
 			RaiseActiveEvent(
 				"magix.data.load",
@@ -77,9 +77,32 @@ you change this as fast as you can, since otherwise your system is not secure</p
 				// creating default page ...
 				Node tmp = new Node();
 
-				tmp["object"]["type"].Value = "magix.core.user";
+				tmp["object"]["type"].Value = "zigano.travel.user";
+				tmp["object"]["username"].Value = "admin";
+				tmp["object"]["pwd"].Value = "admin";
+				tmp["object"]["name"].Value = "John Doe";
+				tmp["object"]["roles"]["admin"].Value = true;
+
+				RaiseActiveEvent(
+					"magix.data.save",
+					tmp);
+			}
+			
+			tp = new Node();
+
+			tp["prototype"]["type"].Value = "zigano.travel.role";
+
+			RaiseActiveEvent(
+				"magix.data.load",
+				tp);
+
+			if (!tp.Contains("objects") || tp["objects"].Count == 0)
+			{
+				// creating default page ...
+				Node tmp = new Node();
+
+				tmp["object"]["type"].Value = "zigano.travel.role";
 				tmp["object"]["name"].Value = "admin";
-				tmp["object"]["password"].Value = "admin";
 
 				RaiseActiveEvent(
 					"magix.data.save",
@@ -106,7 +129,7 @@ run that hyperlisp file, and nothing else, unless http get parameter 'page' is g
 
 			if (Page.Request.Params["dashboard"] != null)
 			{
-				if (Page.Session["magix.core.user"] != null)
+				if (Page.Session["zigano.travel.user"] != null)
 					RaiseActiveEvent("magix.admin.load-start");
 				else
 					RaiseActiveEvent("magix.admin.load-login");

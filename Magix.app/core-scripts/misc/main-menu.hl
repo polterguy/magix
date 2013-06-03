@@ -48,7 +48,7 @@ magix.forms.create-form
       text=>log out
       onclick
         magix.web.set-session
-          key=>magix.core.user
+          key=>zigano.travel.user
         magix.web.redirect
           url=>~
 

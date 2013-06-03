@@ -39,20 +39,22 @@ magix.forms.create-form
             magix.forms.get-value
               form-id=>login-box
               id=>pwd
-            set=>[/][magix.data.load][prototype][name].Value
+            set=>[/][magix.data.load][prototype][username].Value
               value=>[/][magix.forms.get-value:0][value].Value
-            set=>[/][magix.data.load][prototype][password].Value
+            set=>[/][magix.data.load][prototype][pwd].Value
               value=>[/][magix.forms.get-value:1][value].Value
             magix.data.load
               prototype
-                type=>magix.core.user
+                type=>zigano.travel.user
                 name
-                password
+                pwd
             if=>[/][magix.data.load][objects][0]
-              set=>[/][if][magix.web.set-session][value].Value
-                value=>[/][magix.data.load][name].Value
+              set=>[/][if][magix.web.set-session][value]
+                value=>[/][magix.data.load][objects][0]
+              set=>[/][if][magix.web.set-session][1].Name
+                value=>value
               magix.web.set-session
-                key=>magix.core.user
+                key=>zigano.travel.user
                 value
               magix.admin.load-start
             else
