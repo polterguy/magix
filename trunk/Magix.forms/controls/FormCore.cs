@@ -26,12 +26,16 @@ namespace Magix.forms
 				e.Params["event:magix.forms.create-form"].Value = null;
 				e.Params ["_no-embed"].Value = true;
 				e.Params["inspect"].Value = @"creates a form from the given value of the node, 
-or its [id] node's value.&nbsp;&nbsp;not thread safe";
+the [id] node's value serves as unique id if more than
+one form of the same type is injected onto the same page.&nbsp;&nbsp;
+use [css] to set css class of wrapping control, and [tag] to set html tag
+of wrapping control.&nbsp;&nbsp;not thread safe";
 				e.Params["container"].Value = "modal";
 				e.Params["form-id"].Value = "sample-form";
 				e.Params["controls"]["form"].Value = "name-of-my-form";
 				e.Params["controls"]["id"].Value = "unique-id";
 				e.Params["controls"]["css"].Value = "css-of-div-wrapper";
+				e.Params["controls"]["tag"].Value = "div";
 				return;
 			}
 
@@ -58,6 +62,8 @@ or its [id] node's value.&nbsp;&nbsp;not thread safe";
 					e.Params["_tpl"]["id"].Value = node["id"].Get<string>();
 				if (node.Contains("css") && !string.IsNullOrEmpty(node["css"].Get<string>()))
 					e.Params["_tpl"]["css"].Value = node["css"].Get<string>();
+				if (node.Contains("tag") && !string.IsNullOrEmpty(node["tag"].Get<string>()))
+					e.Params["_tpl"]["tag"].Value = node["tag"].Get<string>();
 			}
 		}
 		

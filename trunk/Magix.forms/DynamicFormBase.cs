@@ -387,11 +387,14 @@ if [visible] is true, control is shown, otherwise hidden.&nbsp;&nbsp;not thread 
 					Panel wr = new Panel();
 					wr.ID = node["_tpl"]["id"].Get<string>("mumbo");
 					wr.CssClass = node["_tpl"]["css"].Get<string>("");
+					wr.Tag = node["_tpl"]["tag"].Get<string>("div");
 					foreach (Node idxInner in node["_tpl"])
 					{
 						if (idxInner.Name == "id")
 							continue;
 						if (idxInner.Name == "css")
+							continue;
+						if (idxInner.Name == "tag")
 							continue;
 						BuildControl(
 							idxInner, 
