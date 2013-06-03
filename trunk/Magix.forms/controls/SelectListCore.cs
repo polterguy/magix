@@ -90,7 +90,7 @@ the same time.&nbsp;&nbsp;[key] is keyboard shortcut.&nbsp;&nbsp;[enabled] sets 
 control to disabled or enabled.&nbsp;&nbsp;[items] contains a collection of 
 value/text pairs, which is used as the different options to the select list.&nbsp;&nbsp;
 [selected] can be set to the value of any of its items, to set an initially selected
-choice.&nbsp;&nbsp;[onselectedindexchangedd] is raised when selected item state of control changes";
+choice.&nbsp;&nbsp;[onselectedindexchanged] is raised when selected item state of control changes";
 			node["container"].Value = "modal";
 			node["form-id"].Value = "sample-form";
 			node["controls"]["select"]["size"].Value = 5;
