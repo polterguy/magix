@@ -53,8 +53,7 @@ namespace Magix.SampleController
 <h1>welcome to magix illuminate</h1>
 <p>magix is an open source web app builder program, which means you can create your own
 applications with magix.&nbsp;&nbsp;click <a href='?dashboard='>here to start building apps</a></p>
-<p>you will be asked for your username and password, which by default is admin/admin, make sure 
-you change this as fast as you can, since otherwise your system is not secure</p>
+<p>or login at the top of this screen with username(password combination <strong>admin/admin</strong></p>
 ".Replace("\n", "").Replace("\r\n", "");
 				tmp["object"]["type"].Value = "magix.pages.page";
 				tmp["object"]["name"].Value = "default";
@@ -74,7 +73,7 @@ you change this as fast as you can, since otherwise your system is not secure</p
 
 			if (!tp.Contains("objects") || tp["objects"].Count == 0)
 			{
-				// creating default page ...
+				// creating default user ...
 				Node tmp = new Node();
 
 				tmp["object"]["type"].Value = "zigano.travel.user";
@@ -98,7 +97,7 @@ you change this as fast as you can, since otherwise your system is not secure</p
 
 			if (!tp.Contains("objects") || tp["objects"].Count == 0)
 			{
-				// creating default page ...
+				// creating default role ...
 				Node tmp = new Node();
 
 				tmp["object"]["type"].Value = "zigano.travel.role";
@@ -129,7 +128,7 @@ run that hyperlisp file, and nothing else, unless http get parameter 'page' is g
 
 			if (Page.Request.Params["dashboard"] != null)
 			{
-				if (Page.Session["zigano.travel.user"] != null)
+				if (Page.Session["zigano.travel.user"] != null && ((Node)Page.Session["zigano.travel.user"])["roles"].Contains("admin"))
 					RaiseActiveEvent("magix.admin.load-start");
 				else
 					RaiseActiveEvent("magix.admin.load-login");
