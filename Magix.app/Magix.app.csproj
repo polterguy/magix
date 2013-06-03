@@ -297,5 +297,6 @@
     <None Include="zigano\admin\server-log.mml" />
     <None Include="zigano\admin\admin-settings.mml" />
     <None Include="zigano\misc\settings-initialize.hl" />
+    <None Include="zigano\startup.hl" />
   </ItemGroup>
 </Project>
