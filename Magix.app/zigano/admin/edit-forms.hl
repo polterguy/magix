@@ -114,40 +114,49 @@ magix.forms.create-form
             add=>[@][..][..][_data]
               value=>[.]
         for-each=>[@][_data][widget][properties]
-          set=>[/][_label][text].Value
-            value=>[.].Name
-          add=>[@][..][magix.forms.create-form][controls][panel][controls]
-            value=>[/][_label]
-          if=>[.].Value==hyper lisp code
-            set=>[/][_link-button].Value
-              value=>[.].Name
-            set=>[/][_link-button][text].Value
-              value=>[.].Name
-            add=>[@][..][..][magix.forms.create-form][controls][panel][controls]
-              value=>[/][2]
-            set=>[@][..][..][magix.forms.create-form][controls][panel][controls][_label].Name
-              value=>label
-            set=>[@][..][..][magix.forms.create-form][controls][panel][controls][_link-button].Name
-              value=>link-button
+          if=>[.].Name==controls
+            magix.viewport.show-message
+              message=>implement support for controls in panels
+          else-if=>[.].Name==items
+            magix.viewport.show-message
+              message=>implement support for items in select lists
           else
-            set=>[/][_text-box].Value
+            set=>[/][_label][text].Value
               value=>[.].Name
-            set=>[/][_text-box][ontextchanged][magix.forms.get-value][id].Value
-              value=>[.].Name
-            set=>[/][_text-box][place-holder].Value
-              value=>@"{0} ..."
-                pr0=>[.].Name
             add=>[@][..][..][magix.forms.create-form][controls][panel][controls]
-              value=>[/][1]
+              value=>[/][_label]
             set=>[@][..][..][magix.forms.create-form][controls][panel][controls][_label].Name
               value=>label
-            set=>[@][..][..][magix.forms.create-form][controls][panel][controls][_text-box].Name
-              value=>text-box
+            if=>[.].Value==hyper lisp code
+              set=>[/][_link-button].Value
+                value=>[.].Name
+              set=>[/][_link-button][text].Value
+                value=>[.].Name
+              add=>[@][..][..][..][magix.forms.create-form][controls][panel][controls]
+                value=>[/][_link-button]
+              set=>[@][..][..][..][magix.forms.create-form][controls][panel][controls][_link-button].Name
+                value=>link-button
+            else
+              set=>[/][_text-box].Value
+                value=>[.].Name
+              set=>[/][_text-box][ontextchanged][magix.forms.get-value][id].Value
+                value=>[.].Name
+              set=>[/][_text-box][place-holder].Value
+                value=>[@][..][..][..][_data][0][properties][[/][_text-box].Value].Value
+              set=>[/][_text-box][text].Value
+                value=>
+              if=>[/][get-selected-widget][value][widget][properties][[/][_text-box].Value].Value
+                set=>[/][_text-box][text].Value
+                  value=>[/][get-selected-widget][value][widget][properties][[/][_text-box].Value].Value
+              add=>[@][..][..][..][magix.forms.create-form][controls][panel][controls]
+                value=>[/][_text-box]
+              set=>[@][..][..][..][magix.forms.create-form][controls][panel][controls][_text-box].Name
+                value=>text-box
         _data
         magix.forms.create-form
           form-id=>edit-properties
           container=>content4
-          css=>span-24
+          css=>span-24 bottom-5
           controls
             panel=>propWrp
               css=>span-22 boxed air-padding

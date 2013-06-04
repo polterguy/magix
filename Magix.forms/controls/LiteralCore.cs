@@ -44,7 +44,7 @@ put any html into [text] node, to render exact html as web control";
 			node["container"].Value = "modal";
 			node["form-id"].Value = "sample-form";
 			node["controls"]["literal"].Value = null;
-			node["controls"]["literal"]["text"].Value = "@\"&lt;h1&gt;hello&lt;/h1&gt;\"";
+			node["controls"]["literal"]["text"].Value = "&lt;h1&gt;hello&lt;/h1&gt;";
 		}
 	}
 }

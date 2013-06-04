@@ -83,6 +83,15 @@ returns true.&nbsp;&nbsp;thread safe";
 				e.Params["else-if"]["magix.viewport.show-message"]["message"].Value = "puuh";
 				return;
 			}
+			
+			Node ip = e.Params;
+			if (e.Params.Contains("_ip"))
+				ip = e.Params["_ip"].Value as Node;
+
+			// Checking to see if a previous "if" or "else-if" statement has returned true
+			if (ip.Parent != null &&
+			    ip.Parent["_state"].Get<bool>())
+				return;
 
 			IfImplementation(
 				e.Params, 

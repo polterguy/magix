@@ -72,8 +72,8 @@ true or false, and determines if it is possible to change its state, or not.&nbs
 			node["controls"]["check"]["checked"].Value = true;
 			node["controls"]["check"]["key"].Value = "C";
 			node["controls"]["check"]["enabled"].Value = true;
-			node["controls"]["check"]["oncheckedchanged"].Value = "hyper lisp code";
 			base.Inspect(node["controls"]["check"]);
+			node["controls"]["check"]["oncheckedchanged"].Value = "hyper lisp code";
 		}
 	}
 }
