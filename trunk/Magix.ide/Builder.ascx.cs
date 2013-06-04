@@ -340,6 +340,7 @@ not thread safe";
 				foreach (Node idx2 in tp2["controls"][0])
 				{
 					tp["properties"][idx2.Name].Value = idx2.Value;
+					tp["properties"][idx2.Name].AddRange(idx2);
 				}
 
 				ip["types"].Add(tp);

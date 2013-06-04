@@ -96,14 +96,14 @@ choice.&nbsp;&nbsp;[onselectedindexchanged] is raised when selected item state o
 			node["controls"]["select"]["size"].Value = 5;
 			node["controls"]["select"]["key"].Value = "C";
 			node["controls"]["select"]["enabled"].Value = true;
+			node["controls"]["select"]["selected"].Value = "item3";
+			// TODO: implement design support for items ...
+			base.Inspect(node["controls"]["select"]);
 			node["controls"]["select"]["items"]["item1"].Value = "Item 1";
 			node["controls"]["select"]["items"]["item2"].Value = "Item 2";
 			node["controls"]["select"]["items"]["item3"].Value = "Item 3";
 			node["controls"]["select"]["items"]["item4"].Value = "Item 4";
 			node["controls"]["select"]["items"]["item5"].Value = "Item 5";
-			node["controls"]["select"]["selected"].Value = "item3";
-			// TODO: implement design support for items ...
-			base.Inspect(node["controls"]["select"]);
 			node["controls"]["check"]["onselectedindexchanged"].Value = "hyper lisp code";
 		}
 	}
