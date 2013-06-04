@@ -109,9 +109,9 @@ control within your panel.&nbsp;&nbsp;[controls] contains a child control collec
 			node["form-id"].Value = "sample-form";
 			node["controls"]["panel"]["tag"].Value = "p|div|address|etc";
 			node["controls"]["panel"]["default"].Value = "default-button";
+			base.Inspect(node["controls"]["panel"]);
 			node["controls"]["panel"]["controls"]["button"].Value = "default-button";
 			node["controls"]["panel"]["controls"]["button"]["text"].Value = "don't work";
-			base.Inspect(node["controls"]["panel"]);
 		}
 	}
 }
