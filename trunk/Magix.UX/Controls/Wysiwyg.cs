@@ -190,12 +190,15 @@ namespace Magix.UX.Widgets
 			set { ViewState["HasChangeView"] = value; }
 		}
 
-		protected override void OnLoad(EventArgs e)
+		protected override void OnPreRender(EventArgs e)
 		{
-			base.OnLoad(e);
-
-			AjaxManager.Instance.IncludeScriptFromFile("media/xing-wysihtml5/parser_rules/advanced.js");
-			AjaxManager.Instance.IncludeScriptFromFile("media/xing-wysihtml5/dist/wysihtml5-0.4.0pre.min.js");
+			AjaxManager.Instance.IncludeScriptFromResource(
+				typeof(Wysiwyg),
+				"Magix.UX.Js.advanced.js");
+			AjaxManager.Instance.IncludeScriptFromResource(
+				typeof(Wysiwyg),
+				"Magix.UX.Js.wysihtml5-0.4.0pre.min.js");
+			base.OnPreRender(e);
 		}
 
 		protected override string GetClientSideScript ()

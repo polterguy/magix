@@ -33,9 +33,69 @@ namespace Magix.forms
 
 			FillOutParameters(node, ret);
 
-			if (node.Contains ("text") && 
-			    !string.IsNullOrEmpty (node["text"].Get<string>()))
+			if (node.Contains("text") && 
+			    !string.IsNullOrEmpty(node["text"].Get<string>()))
 				ret.Text = node["text"].Get<string>();
+
+			if (node.Contains("has-bold") && 
+			    !string.IsNullOrEmpty(node["has-bold"].Get<string>()))
+				ret.HasBold = node["has-bold"].Get<bool>();
+
+			if (node.Contains("has-italic") && 
+			    !string.IsNullOrEmpty(node["has-italic"].Get<string>()))
+				ret.HasItalic = node["has-italic"].Get<bool>();
+
+			if (node.Contains("has-unorderedlist") && 
+			    !string.IsNullOrEmpty(node["has-unorderedlist"].Get<string>()))
+				ret.HasUnorderedList = node["has-unorderedlist"].Get<bool>();
+
+			if (node.Contains("has-orderedlist") && 
+			    !string.IsNullOrEmpty(node["has-orderedlist"].Get<string>()))
+				ret.HasOrderedList = node["has-orderedlist"].Get<bool>();
+
+			if (node.Contains("has-createlink") && 
+			    !string.IsNullOrEmpty(node["has-createlink"].Get<string>()))
+				ret.HasCreateLink = node["has-createlink"].Get<bool>();
+
+			if (node.Contains("has-insertimage") && 
+			    !string.IsNullOrEmpty(node["has-insertimage"].Get<string>()))
+				ret.HasInsertImage = node["has-insertimage"].Get<bool>();
+
+			if (node.Contains("has-h1") && 
+			    !string.IsNullOrEmpty(node["has-h1"].Get<string>()))
+				ret.HasH1 = node["has-h1"].Get<bool>();
+
+			if (node.Contains("has-h2") && 
+			    !string.IsNullOrEmpty(node["has-h2"].Get<string>()))
+				ret.HasH2 = node["has-h2"].Get<bool>();
+
+			if (node.Contains("has-h3") && 
+			    !string.IsNullOrEmpty(node["has-h3"].Get<string>()))
+				ret.HasH3 = node["has-h3"].Get<bool>();
+
+			if (node.Contains("has-h4") && 
+			    !string.IsNullOrEmpty(node["has-h4"].Get<string>()))
+				ret.HasH4 = node["has-h4"].Get<bool>();
+
+			if (node.Contains("has-h5") && 
+			    !string.IsNullOrEmpty(node["has-h5"].Get<string>()))
+				ret.HasH5 = node["has-h5"].Get<bool>();
+
+			if (node.Contains("has-h6") && 
+			    !string.IsNullOrEmpty(node["has-h6"].Get<string>()))
+				ret.HasH6 = node["has-h6"].Get<bool>();
+
+			if (node.Contains("has-forecolor") && 
+			    !string.IsNullOrEmpty(node["has-forecolor"].Get<string>()))
+				ret.HasForeColor = node["has-forecolor"].Get<bool>();
+
+			if (node.Contains("has-insertspeech") && 
+			    !string.IsNullOrEmpty(node["has-insertspeech"].Get<string>()))
+				ret.HasInsertSpeech = node["has-insertspeech"].Get<bool>();
+
+			if (node.Contains("has-showhtml") && 
+			    !string.IsNullOrEmpty(node["has-showhtml"].Get<string>()))
+				ret.HasChangeView = node["has-showhtml"].Get<bool>();
 
 			if (node.Contains ("editor-css-file") && 
 			    !string.IsNullOrEmpty (node["editor-css-file"].Get<string>()))
@@ -68,7 +128,7 @@ namespace Magix.forms
 			node["controls"]["wysiwyg"]["has-insertspeech"].Value = true;
 			node["controls"]["wysiwyg"]["has-showhtml"].Value = true;
 			node["controls"]["wysiwyg"]["editor-css-file"].Value = "media/grid/main.css";
-			base.Inspect(node["controls"]["button"]);
+			base.Inspect(node["controls"]["wysiwyg"]);
 		}
 	}
 }
