@@ -57,10 +57,16 @@ namespace Magix.Core
 					switch (lhs.GetType().FullName)
 					{
 					case "System.Int32":
-						rhs = int.Parse(rhs.ToString());
+						int in32 = 0;
+						if (!int.TryParse(rhs.ToString(), out in32))
+							return false;
+						rhs = in32;
 						break;
 					case "System.Boolean":
-						rhs = bool.Parse(rhs.ToString());
+						bool inbol = false;
+						if (!bool.TryParse(rhs.ToString(), out inbol))
+							return false;
+						rhs = inbol;
 						break;
 					case "System.DateTime":
 						rhs = DateTime.ParseExact(rhs.ToString(), "yyyy.MM.dd HH:mm:ss", CultureInfo.InvariantCulture);
