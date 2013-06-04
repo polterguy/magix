@@ -1,0 +1,359 @@
+
+
+magix.data.load
+  prototype
+    type=>magix.forms.form
+
+_dt
+  name=>value
+
+for-each=>[magix.data.load][objects]
+  set=>[/][_dt][0].Name
+    value=>[.].Name
+  set=>[/][_dt][0].Value
+    value=>[.][name].Value
+  add=>[/][magix.forms.create-form][controls][select][items]
+    value=>[/][_dt][0]
+
+magix.viewport.load-module
+  container=>content3
+  css=>span-24 showgrid top-1 bottom-1 min-height-5
+  name=>Magix.ide.Surface
+
+list-widget-types
+
+_buffer
+
+_onclick
+  get-selected-widget
+  magix.forms.get-value
+    form-id=>toolbox-controls
+    id=>before
+  if=>[/][magix.forms.get-value][value].Value==True
+    set=>[/][try][code][add-widget][where][position].Value
+      value=>before
+  else
+    magix.forms.get-value
+      form-id=>toolbox-controls
+      id=>child
+    if=>[/][else][magix.forms.get-value][value].Value==True
+      set=>[/][try][code][add-widget][where][position].Value
+        value=>child
+    else
+      set=>[/][try][code][add-widget][where][position].Value
+        value=>after
+  set=>[/][try][code][add-widget][where][dna].Value
+    value=>[/][get-selected-widget][value][dna].Value
+  try
+    code
+      add-widget
+        auto-select=>True
+        where
+          dna
+          position
+        widget
+          type
+      magix.ide.update-widget-list
+    catch
+      magix.viewport.show-message
+        header=>error
+        message=>@"that widget probably don't support children.&nbsp;&nbsp;
+choose either before or after as the position of the node"
+        time=>1000
+
+for-each=>[/][list-widget-types][types]
+  if=>![.][_no-embed]
+    while=>[/][_buffer].Count>0
+      set=>[/][_buffer][0]
+    set=>[/][_buffer][button].Value
+      value=>[.][type].Value
+    set=>[/][_buffer][button][text].Value
+      value=>[.][type].Value
+    replace=>[/][_buffer][button][text].Value
+      replace=>magix.forms.controls.
+      with=>
+    set=>[/][_buffer][button][css].Value
+      value=>span-2 bottom-1
+    set=>[/][_onclick][try][code][add-widget][widget][type].Value
+      value=>[.][type].Value
+    add=>[/][_buffer][button]
+      value=>[/][_onclick]
+    set=>[/][_buffer][button][_onclick].Name
+      value=>onclick
+    add=>[/][magix.forms.create-form][controls][panel:1][controls]
+      value=>[/][_buffer][0]
+
+magix.forms.create-form
+  form-id=>edit-forms
+  container=>content2
+  css=>span-19 last
+  events
+    magix.ide.active-control-changed
+      _label
+        css=>span-3 top-1 right-text
+      _text-box
+        css=>span-4 top-1
+        ontextchanged
+          magix.forms.get-value
+            form-id=>edit-properties
+          set=>[change-widget][change][[magix.forms.get-value][id].Value].Value
+            value=>[magix.forms.get-value][value].Value
+          get-selected-widget
+          set=>[change-widget][dna].Value
+            value=>[get-selected-widget][value][dna].Value
+          change-widget
+            dna
+            change
+      _link-button
+        css=>span-4 top-1
+      get-selected-widget
+      if=>[get-selected-widget][value][widget]
+        list-widget-types
+        for-each=>[@][list-widget-types][types]
+          if=>[.][type].Value==[/][get-selected-widget][value][widget][type].Value
+            add=>[@][..][..][_data]
+              value=>[.]
+        for-each=>[@][_data][widget][properties]
+          set=>[/][_label][text].Value
+            value=>[.].Name
+          add=>[@][..][magix.forms.create-form][controls][panel][controls]
+            value=>[/][_label]
+          if=>[.].Value==hyper lisp code
+            set=>[/][_link-button].Value
+              value=>[.].Name
+            set=>[/][_link-button][text].Value
+              value=>[.].Name
+            add=>[@][..][..][magix.forms.create-form][controls][panel][controls]
+              value=>[/][2]
+            set=>[@][..][..][magix.forms.create-form][controls][panel][controls][_label].Name
+              value=>label
+            set=>[@][..][..][magix.forms.create-form][controls][panel][controls][_link-button].Name
+              value=>link-button
+          else
+            set=>[/][_text-box].Value
+              value=>[.].Name
+            set=>[/][_text-box][ontextchanged][magix.forms.get-value][id].Value
+              value=>[.].Name
+            set=>[/][_text-box][place-holder].Value
+              value=>@"{0} ..."
+                pr0=>[.].Name
+            add=>[@][..][..][magix.forms.create-form][controls][panel][controls]
+              value=>[/][1]
+            set=>[@][..][..][magix.forms.create-form][controls][panel][controls][_label].Name
+              value=>label
+            set=>[@][..][..][magix.forms.create-form][controls][panel][controls][_text-box].Name
+              value=>text-box
+        _data
+        magix.forms.create-form
+          form-id=>edit-properties
+          container=>content4
+          css=>span-24
+          controls
+            panel=>propWrp
+              css=>span-22 boxed air-padding
+              controls
+                label=>desc2
+                  css=>span-22 last
+                  text=>properties
+                  tag=>label
+      else
+        magix.viewport.clear-controls
+          container=>content4
+    magix.ide.surface-changed
+      list-widgets
+      _dt
+      for-each=>[list-widgets][widgets]
+        set=>[/][_dt][0].Name
+          value=>[.][dna].Value
+        set=>[/][_dt][0].Value
+          value=>[.][type].Value
+        add=>[/][_items]
+          value=>[@][/][_dt][0]
+      _items
+      for-each=>[_items]
+        add=>[/][magix.forms.set-values][values]
+          value=>[.]
+      magix.forms.set-values
+        form-id=>edit-forms
+        id=>widget
+        values
+          default=>select widget ...
+      magix.forms.set-value
+        form-id=>edit-forms
+        id=>widget
+        value=>default
+    magix.ide.widget-selected
+      set=>[magix.forms.set-value][value].Value
+        value=>[$][dna].Value
+      magix.forms.set-value
+        form-id=>edit-forms
+        id=>widget
+      magix.ide.active-control-changed
+      
+      
+  controls
+    select=>form
+      css=>span-4
+      onselectedindexchanged
+        magix.forms.get-value
+          form-id=>edit-forms
+          id=>form
+        set=>[magix.data.load][id].Value
+          value=>[magix.forms.get-value][value].Value
+        magix.data.load
+        set=>[load-form][name].Value
+          value=>[magix.data.load][objects][0][name].Value
+        load-form
+        set=>[magix.forms.set-value][value].Value
+          value=>[magix.data.load][objects][0][name].Value
+        magix.forms.set-value
+          form-id=>edit-forms
+          id=>name
+        magix.ide.active-control-changed
+      items
+        default=>choose web form ...
+    panel=>saveWrp
+      css=>span-15 last
+      default=>save
+      controls
+        text-box=>name
+          place-holder=>name ...
+          css=>span-4
+        button=>save
+          css=>span-3
+          text=>save
+          onclick
+            magix.forms.get-value
+              form-id=>edit-forms
+              id=>name
+            set=>[save-form][name].Value
+              value=>[magix.forms.get-value][value].Value
+            save-form
+            magix.viewport.show-message
+              message=>form saved
+            magix.data.load
+              prototype
+                type=>magix.forms.form
+            for-each=>[@][magix.data.load][objects]
+              _dt
+                name=>value
+              if=>[/][magix.forms.get-value][value].Value==[.][name].Value
+                set=>[@][..][..][_lst].Value
+                  value=>[.].Name
+              set=>[@][_dt][0].Name
+                value=>[.].Name
+              set=>[@][_dt][0].Value
+                value=>[.][name].Value
+              add=>[@][..][_lst]
+                value=>[@][_dt][0]
+            _lst
+              default=>choose web form ...
+            for-each=>[@][_lst]
+              add=>[@][..][magix.forms.set-values][values]
+                value=>[.]
+            magix.forms.set-values
+              form-id=>edit-forms
+              id=>form
+            set=>[@][magix.forms.set-value][value].Value
+              value=>[@][_lst].Value
+            magix.forms.set-value
+              form-id=>edit-forms
+              id=>form
+            set=>[@][magix.log.append][body][pr0].Value
+              value=>[/][magix.forms.get-value][value].Value
+            magix.log.append
+              header=>form saved
+              body=>@"form {0} was save"
+        button=>delete
+          css=>span-3
+          text=>delete
+          onclick
+            magix.forms.get-value
+              form-id=>edit-forms
+              id=>name
+            set=>[magix.data.load][prototype][name].Value
+              value=>[magix.forms.get-value][value].Value
+            magix.data.load
+              prototype
+                type=>magix.forms.form
+            if=>![magix.data.load][objects]
+              magix.viewport.show-message
+                message=>no such form
+            else
+              set=>[@][magix.data.remove][id].Value
+                value=>[/][magix.data.load][objects][0].Name
+              magix.data.remove
+              magix.viewport.show-message
+                message=>form deleted
+              magix.forms.set-value
+                form-id=>edit-forms
+                id=>name
+                value=>
+              load-form
+                name
+              magix.data.load
+                prototype
+                  type=>magix.forms.form
+              for-each=>[@][magix.data.load][objects]
+                _dt
+                  name=>value
+                set=>[@][_dt][0].Name
+                  value=>[.].Name
+                set=>[@][_dt][0].Value
+                  value=>[.][name].Value
+                add=>[@][..][_lst]
+                  value=>[@][_dt][0]
+              _lst
+                default=>choose web form ...
+              for-each=>[@][_lst]
+                add=>[@][..][magix.forms.set-values][values]
+                  value=>[.]
+              magix.forms.set-values
+                form-id=>edit-forms
+                id=>form
+              magix.forms.set-value
+                form-id=>edit-forms
+                id=>form
+                value=>default
+              set=>[@][magix.log.append][body][pr0].Value
+                value=>[magix.forms.get-value][value].Value
+              magix.forms.set-values
+                form-id=>edit-forms
+                id=>widget
+                values
+                  default=>select widget ...
+              magix.log.append
+                header=>form deleted
+                body=>@"form {0} was deleted"
+              magix.ide.active-control-changed
+        select=>widget
+          css=>span-5 last
+          onselectedindexchanged
+            magix.forms.get-value
+              form-id=>edit-forms
+              id=>widget
+            if=>[magix.forms.get-value][value].Value!=default
+              set=>[select-widget][dna].Value
+                value=>[magix.forms.get-value][value].Value
+            select-widget
+          items
+            default=>select widget ...
+    panel=>ctrlWrp
+      css=>span-17 last top-1 boxed air-padding
+      controls
+        label=>desc
+          text=>web controls
+          tip=>click to add up a web control to your design surface
+          tag=>label
+          css=>span-17 bottom-1 last
+
+
+
+
+
+
+
+
+
+
+

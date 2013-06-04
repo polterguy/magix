@@ -302,5 +302,7 @@
     <None Include="zigano\pages\run-page.hl" />
     <None Include="zigano\admin\edit-pages.mml" />
     <None Include="zigano\admin\edit-pages.hl" />
+    <None Include="zigano\admin\edit-forms.mml" />
+    <None Include="zigano\admin\edit-forms.hl" />
   </ItemGroup>
 </Project>
