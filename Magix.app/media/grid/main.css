@@ -584,6 +584,18 @@ select
   display: block;
 }
 
+[data-wysihtml5-command-value="silver"]::after,
+[data-wysihtml5-command-value="gray"]::after,
+[data-wysihtml5-command-value="maroon"]::after,
+[data-wysihtml5-command-value="red"]::after,
+[data-wysihtml5-command-value="purple"]::after,
+[data-wysihtml5-command-value="green"]::after,
+[data-wysihtml5-command-value="olive"]::after,
+[data-wysihtml5-command-value="navy"]::after,
+[data-wysihtml5-command-value="blue"]::after {
+	background-image:none !important;
+}
+
 .wysiwyg-editor-toolbar .fore-color [data-wysihtml5-command-value="silver"] {
   background: silver !important;
 }
