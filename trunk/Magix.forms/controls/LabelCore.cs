@@ -61,8 +61,8 @@ changing state of radio or check control";
 			node["container"].Value = "modal";
 			node["form-id"].Value = "sample-form";
 			node["controls"]["label"]["text"].Value = "hello world";
-			node["controls"]["label"]["tag"].Value = "p";
-			node["controls"]["label"]["for"].Value = null;
+			node["controls"]["label"]["tag"].Value = "p|div|span|etc";
+			node["controls"]["label"]["for"].Value = "another-control-id";
 			base.Inspect(node["controls"]["label"]);
 		}
 	}

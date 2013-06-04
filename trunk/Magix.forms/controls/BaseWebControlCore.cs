@@ -171,11 +171,11 @@ raised when mouse is hovered over control.&nbsp;&nbsp;[onmouseout] is raised whe
 moved out of control surface.&nbsp;&nbsp;[onkeypress] is raised when a key is pressed inside 
 of control.&nbsp;&nbsp;[onesc] is raised when escape key is pressed inside of control.
 &nbsp;&nbsp;not thread safe";
-			base.Inspect(node);
 			node["css"].Value = "css classes";
-			node["dir"].Value = "ltr";
+			node["dir"].Value = "ltr|rtl";
 			node["tab"].Value = 5;
 			node["tip"].Value = "informational tooltip";
+			base.Inspect(node);
 			node["onclick"].Value = "hyper lisp code";
 			node["ondblclick"].Value = "hyper lisp code";
 			node["onmousedown"].Value = "hyper lisp code";

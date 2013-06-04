@@ -59,7 +59,7 @@ keyboard shortcut";
 			node["form-id"].Value = "sample-form";
 			node["controls"]["hyperlink"]["text"].Value = "anchor text of hyperlink";
 			node["controls"]["hyperlink"]["url"].Value = "http://google.com";
-			node["controls"]["hyperlink"]["target"].Value = "_blank";
+			node["controls"]["hyperlink"]["target"].Value = "_blank|_empty|some-id|etc";
 			node["controls"]["hyperlink"]["key"].Value = "C";
 			base.Inspect(node["controls"]["hyperlink"]);
 		}

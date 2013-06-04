@@ -81,8 +81,8 @@ selected at the same time.&nbsp;&nbsp;meaning you can ask questions such as,
 			node["controls"]["radio"]["checked"].Value = true;
 			node["controls"]["radio"]["key"].Value = "C";
 			node["controls"]["radio"]["enabled"].Value = true;
-			node["controls"]["radio"]["oncheckedchanged"].Value = "hyper lisp code";
 			base.Inspect(node["controls"]["radio"]);
+			node["controls"]["radio"]["oncheckedchanged"].Value = "hyper lisp code";
 		}
 	}
 }

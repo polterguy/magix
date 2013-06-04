@@ -107,9 +107,9 @@ is entered into a [text-box], or something similar, within the scope of the [pan
 control within your panel.&nbsp;&nbsp;[controls] contains a child control collection";
 			node["container"].Value = "modal";
 			node["form-id"].Value = "sample-form";
-			node["controls"]["panel"]["tag"].Value = "p";
-			node["controls"]["panel"]["default"].Value = "run";
-			node["controls"]["panel"]["controls"]["button"].Value = "run";
+			node["controls"]["panel"]["tag"].Value = "p|div|address|etc";
+			node["controls"]["panel"]["default"].Value = "default-button";
+			node["controls"]["panel"]["controls"]["button"].Value = "default-button";
 			node["controls"]["panel"]["controls"]["button"]["text"].Value = "don't work";
 			base.Inspect(node["controls"]["panel"]);
 		}
