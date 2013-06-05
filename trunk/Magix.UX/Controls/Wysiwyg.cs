@@ -56,6 +56,15 @@ namespace Magix.UX.Widgets
 		}
 
 		/**
+         * place holder
+         */
+		public string PlaceHolder
+		{
+			get { return ViewState["PlaceHolder"] == null ? null : (string)ViewState["PlaceHolder"]; }
+			set { ViewState["PlaceHolder"] = value; }
+		}
+
+		/**
          * has bold
          */
 		public bool HasBold
@@ -484,6 +493,8 @@ parserRules: wysihtml5ParserRules});";
 					txt.AddAttribute("id", ClientID + "_text");
 					txt.AddAttribute("name", ClientID + "_text");
 					txt.AddAttribute("class", "wysiwyg-editor-textarea");
+					if (PlaceHolder != null)
+						txt.AddAttribute("placeholder", PlaceHolder);
 					txt.Write(Text);
 				}
 				RenderChildren(builder.Writer as System.Web.UI.HtmlTextWriter);

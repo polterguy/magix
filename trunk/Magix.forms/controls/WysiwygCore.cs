@@ -97,6 +97,10 @@ namespace Magix.forms
 			    !string.IsNullOrEmpty(node["has-showhtml"].Get<string>()))
 				ret.HasChangeView = node["has-showhtml"].Get<bool>();
 
+			if (node.Contains("place-holder") && 
+			    !string.IsNullOrEmpty(node["place-holder"].Get<string>()))
+				ret.PlaceHolder = node["place-holder"].Get<string>();
+
 			if (node.Contains ("editor-css-file") && 
 			    !string.IsNullOrEmpty (node["editor-css-file"].Get<string>()))
 				ret.EditorCssFile = node["editor-css-file"].Get<string>();
@@ -112,6 +116,7 @@ namespace Magix.forms
 			node["container"].Value = "modal";
 			node["form-id"].Value = "sample-form";
 			node["controls"]["wysiwyg"]["text"].Value = "hello world";
+			node["controls"]["wysiwyg"]["place-holder"].Value = "place holder ...";
 			node["controls"]["wysiwyg"]["has-bold"].Value = true;
 			node["controls"]["wysiwyg"]["has-italic"].Value = true;
 			node["controls"]["wysiwyg"]["has-unorderedlist"].Value = true;

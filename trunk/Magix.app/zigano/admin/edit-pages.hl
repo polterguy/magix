@@ -217,6 +217,7 @@ magix.forms.create-form
   controls
     wysiwyg=>wysiwyg
       css=>wysiwyg span-24
+      place-holder=>your text ...
 
 
 
