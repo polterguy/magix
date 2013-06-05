@@ -1,73 +1,30 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Magix.app/zigano/admin/users-grid.hl">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Magix.app/media/grid/main.css">
     <Files>
-      <File FileName="Magix.app/zigano/admin/roles-grid.hl" Line="88" Column="22" />
-      <File FileName="Magix.data/DataCore.cs" Line="165" Column="1" />
-      <File FileName="Magix.app/media/grid/main.css" Line="1" Column="1" />
-      <File FileName="Magix.forms/controls/LabelCore.cs" Line="1" Column="1" />
-      <File FileName="Magix.forms/controls/BaseWebControlCore.cs" Line="1" Column="1" />
-      <File FileName="Magix.viewports/Gutenberg.ascx" Line="15" Column="1" />
-      <File FileName="Magix.app/zigano/admin/users-grid.hl" Line="186" Column="1" />
-      <File FileName="Magix.app/zigano/admin/menu.mml" Line="68" Column="30" />
-      <File FileName="Magix.viewports/Gutenberg.ascx.cs" Line="101" Column="4" />
-      <File FileName="Magix.app/zigano/admin/edit-users.mml" Line="1" Column="1" />
-      <File FileName="Magix.app/zigano/admin/edit-roles.mml" Line="1" Column="1" />
-      <File FileName="Magix.app/zigano/index.hl" Line="11" Column="49" />
-      <File FileName="Magix.app/zigano/index-header.mml" Line="39" Column="19" />
-      <File FileName="Magix.events/EventCore.cs" Line="1" Column="1" />
-      <File FileName="Magix.viewports/Website.ascx.cs" Line="1" Column="1" />
-      <File FileName="Magix.app/media/xing-wysihtml5/dist/wysihtml5-0.4.0pre.js" Line="1" Column="1" />
-      <File FileName="Magix.app/zigano/admin/edit-single-user.hl" Line="34" Column="8" />
-      <File FileName="Magix.admin/EventExecutor.cs" Line="1" Column="1" />
-      <File FileName="Magix.core/Modules/Viewport.cs" Line="436" Column="4" />
-      <File FileName="Magix.app/zigano/admin/admin-settings.mml" Line="52" Column="1" />
-      <File FileName="Magix.app/help-system/index.mml" Line="103" Column="14" />
-      <File FileName="Magix.execute/SetCore.cs" Line="62" Column="1" />
-      <File FileName="Magix.core/Expression/Expressions.cs" Line="268" Column="1" />
-      <File FileName="Magix.forms/controls/BaseControlCore.cs" Line="36" Column="94" />
-      <File FileName="Magix.forms/controls/ButtonCore.cs" Line="21" Column="45" />
-      <File FileName="Magix.app/zigano/misc/settings-initialize.hl" Line="12" Column="23" />
-      <File FileName="Magix.web/WebCore.cs" Line="85" Column="9" />
-      <File FileName="Magix.core/Events/ActiveEvents.cs" Line="347" Column="8" />
+      <File FileName="Magix.app/zigano/admin/edit-forms.hl" Line="319" Column="27" />
+      <File FileName="Magix.app/media/grid/main.css" Line="769" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
           <Node name="Core" expanded="True">
             <Node name="Magix.app" expanded="True">
-              <Node name="help-system" expanded="True" />
               <Node name="media" expanded="True">
-                <Node name="grid" expanded="True" />
-                <Node name="xing-wysihtml5" expanded="True">
-                  <Node name="dist" expanded="True" />
+                <Node name="grid" expanded="True">
+                  <Node name="main.css" selected="True" />
                 </Node>
               </Node>
               <Node name="zigano" expanded="True">
-                <Node name="admin" expanded="True">
-                  <Node name="users-grid.hl" selected="True" />
-                </Node>
-                <Node name="misc" expanded="True" />
+                <Node name="admin" expanded="True" />
               </Node>
-              <Node name="Default.aspx" expanded="True" />
             </Node>
-            <Node name="Magix.Core" expanded="True">
-              <Node name="Events" expanded="True" />
-              <Node name="Expression" expanded="True" />
-              <Node name="Modules" expanded="True" />
+            <Node name="Magix.UX" expanded="True">
+              <Node name="Effects" expanded="True" />
             </Node>
             <Node name="Magix.viewports" expanded="True" />
           </Node>
-          <Node name="Plugins" expanded="True">
-            <Node name="Magix.admin" expanded="True" />
-            <Node name="Magix.data" expanded="True" />
-            <Node name="Magix.events" expanded="True" />
-            <Node name="Magix.execute" expanded="True" />
-            <Node name="Magix.forms" expanded="True">
-              <Node name="controls" expanded="True" />
-            </Node>
-            <Node name="Magix.web" expanded="True" />
-          </Node>
+          <Node name="Plugins" expanded="True" />
           <Node name="Samples" expanded="True" />
         </State>
       </Pad>
@@ -76,13 +33,16 @@
       </Pad>
       <Pad Id="MonoDevelop.Debugger.WatchPad">
         <State>
-          <Value>Session["magix.viewport.show-grid"]</Value>
+          <Value>retVal</Value>
         </State>
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
+    <BreakpointStore>
+      <Breakpoint file="/Users/finnolepetersen/Documents/magix2/Magix.ide/Builder.ascx.cs" line="637" column="1" />
+      <Breakpoint file="/Users/finnolepetersen/Documents/magix2/Magix.ide/Builder.ascx.cs" line="292" column="21" />
+    </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches>
     <Watch file="Magix.tests/ExecuteTest.cs" line="86" offsetX="650" offsetY="1185" expression="tmp" liveUpdate="False" />

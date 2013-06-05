@@ -30,6 +30,7 @@ namespace Magix.viewports
         protected DynamicPanel content2;
 		protected DynamicPanel content3;
 		protected DynamicPanel content4;
+		protected DynamicPanel content5;
 		protected DynamicPanel footer;
 		protected DynamicPanel trace;
 		protected Label message;
