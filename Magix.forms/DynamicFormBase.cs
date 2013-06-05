@@ -161,6 +161,79 @@ namespace Magix.forms
 		// TODO: create plugable event
 		/**
 		 */
+		[ActiveEvent(Name = "magix.forms.set-visible")]
+		protected void magix_forms_set_visible(object sender, ActiveEventArgs e)
+		{
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			{
+				e.Params["event:magix.forms.set-visible"].Value = null;
+				e.Params["id"].Value = "control";
+				e.Params["form-id"].Value = "formid";
+				e.Params["value"].Value = true;
+				e.Params["inspect"].Value = @"sets the visibility of the given 
+[id] web control, in the [form-id] form, from [value].&nbsp;&nbsp;not thread safe";
+				return;
+			}
+
+			if (!e.Params.Contains ("form-id"))
+				throw new ArgumentException("Missing form-id in set-value");
+
+			if (!e.Params.Contains ("id"))
+				throw new ArgumentException("Missing id in set-value");
+
+			bool visible = false;
+			if (e.Params.Contains ("value"))
+				visible = e.Params["value"].Get<bool>();
+
+			if (e.Params["form-id"].Get<string>() == FormID)
+			{
+				Control ctrl = Selector.FindControl<Control>(this, e.Params["id"].Get<string>());
+				if (ctrl is Control)
+					((Control)ctrl).Visible = visible;
+				else
+					throw new ArgumentException("Don't know how to set the value of that control");
+			}
+		}
+
+		/**
+		 */
+		[ActiveEvent(Name = "magix.forms.set-enabled")]
+		protected void magix_forms_set_enabled(object sender, ActiveEventArgs e)
+		{
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			{
+				e.Params["event:magix.forms.set-enabled"].Value = null;
+				e.Params["id"].Value = "control";
+				e.Params["form-id"].Value = "formid";
+				e.Params["value"].Value = true;
+				e.Params["inspect"].Value = @"sets the enabled property of the given 
+[id] web control, in the [form-id] form, from [value].&nbsp;&nbsp;not thread safe";
+				return;
+			}
+
+			if (!e.Params.Contains ("form-id"))
+				throw new ArgumentException("Missing form-id in set-value");
+
+			if (!e.Params.Contains ("id"))
+				throw new ArgumentException("Missing id in set-value");
+
+			bool enabled = false;
+			if (e.Params.Contains ("value"))
+				enabled = e.Params["value"].Get<bool>();
+
+			if (e.Params["form-id"].Get<string>() == FormID)
+			{
+				Control ctrl = Selector.FindControl<Control>(this, e.Params["id"].Get<string>());
+				if (ctrl is BaseWebControlFormElement)
+					((BaseWebControlFormElement)ctrl).Enabled = enabled;
+				else
+					throw new ArgumentException("Don't know how to set the value of that control");
+			}
+		}
+
+		// TODO: create plugable event
+		/**
+		 */
         [ActiveEvent(Name = "magix.forms.set-values")]
 		protected void magix_forms_set_values(object sender, ActiveEventArgs e)
 		{

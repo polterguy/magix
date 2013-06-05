@@ -91,7 +91,7 @@ namespace Magix.UX.Widgets.Core
 
 		protected override bool CanRaiseEvent()
 		{
-			return Enabled;
+			return true;
 		}
 
         /**

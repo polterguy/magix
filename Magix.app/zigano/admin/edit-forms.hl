@@ -26,22 +26,6 @@ _buffer
 
 _onclick
   get-selected-widget
-  magix.forms.get-value
-    form-id=>toolbox-controls
-    id=>before
-  if=>[/][magix.forms.get-value][value].Value==True
-    set=>[/][try][code][add-widget][where][position].Value
-      value=>before
-  else
-    magix.forms.get-value
-      form-id=>toolbox-controls
-      id=>child
-    if=>[/][else][magix.forms.get-value][value].Value==True
-      set=>[/][try][code][add-widget][where][position].Value
-        value=>child
-    else
-      set=>[/][try][code][add-widget][where][position].Value
-        value=>after
   set=>[/][try][code][add-widget][where][dna].Value
     value=>[/][get-selected-widget][value][dna].Value
   try
@@ -50,7 +34,7 @@ _onclick
         auto-select=>True
         where
           dna
-          position
+          position=>child
         widget
           type
       magix.ide.update-widget-list
@@ -167,7 +151,15 @@ magix.forms.create-form
                   css=>span-22 last
                   text=>properties
                   tag=>label
+        magix.forms.set-enabled
+          form-id=>edit-forms
+          id=>deleteWidg
+          value=(bool)>True
       else
+        magix.forms.set-enabled
+          form-id=>edit-forms
+          id=>deleteWidg
+          value=(bool)>False
         magix.viewport.clear-controls
           container=>content4
     magix.ide.surface-changed
@@ -200,11 +192,9 @@ magix.forms.create-form
         form-id=>edit-forms
         id=>widget
       magix.ide.active-control-changed
-      
-      
   controls
     select=>form
-      css=>span-4
+      css=>span-3
       onselectedindexchanged
         magix.forms.get-value
           form-id=>edit-forms
@@ -222,16 +212,16 @@ magix.forms.create-form
           id=>name
         magix.ide.active-control-changed
       items
-        default=>choose web form ...
+        default=>choose form ...
     panel=>saveWrp
-      css=>span-15 last
+      css=>span-12
       default=>save
       controls
         text-box=>name
           place-holder=>name ...
-          css=>span-4
-        button=>save
           css=>span-3
+        button=>save
+          css=>span-2
           text=>save
           onclick
             magix.forms.get-value
@@ -258,7 +248,7 @@ magix.forms.create-form
               add=>[@][..][_lst]
                 value=>[@][_dt][0]
             _lst
-              default=>choose web form ...
+              default=>choose form ...
             for-each=>[@][_lst]
               add=>[@][..][magix.forms.set-values][values]
                 value=>[.]
@@ -276,7 +266,7 @@ magix.forms.create-form
               header=>form saved
               body=>@"form {0} was save"
         button=>delete
-          css=>span-3
+          css=>span-2
           text=>delete
           onclick
             magix.forms.get-value
@@ -315,7 +305,7 @@ magix.forms.create-form
                 add=>[@][..][_lst]
                   value=>[@][_dt][0]
               _lst
-                default=>choose web form ...
+                default=>choose form ...
               for-each=>[@][_lst]
                 add=>[@][..][magix.forms.set-values][values]
                   value=>[.]
@@ -349,6 +339,22 @@ magix.forms.create-form
             select-widget
           items
             default=>select widget ...
+    button=>deleteWidg
+      css=>span-4 last
+      text=>delete widget
+      enabled=>false
+      onclick
+        magix.forms.get-value
+          form-id=>edit-forms
+          id=>widget
+        set=>[if][remove-widget][dna].Value
+          value=>[magix.forms.get-value][value].Value
+        if=>[magix.forms.get-value][value].Value!=default
+          remove-widget
+          select-widget
+        else
+          magix.viewport.show-message
+            message=>choose a widget first
     panel=>ctrlWrp
       css=>span-17 last top-1 boxed air-padding
       controls
