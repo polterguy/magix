@@ -180,12 +180,12 @@ not thread safe";
 				foreach (Node idx in DataSource["controls"])
 				{
 					Node tp = new Node("widget");
-					GetWidget(idx, tp);
 					retVal.Add(tp);
+					GetWidget(idx, tp);
 				}
 			}
 
-			(e.Params["_ip"].Value as Node).Add(retVal);
+			(e.Params["_ip"].Value as Node).Add(retVal); /*error here ... doesn't list controls of panels ...*/
 		}
 
 		private void GetWidget(Node widgetNode, Node output)
@@ -206,8 +206,8 @@ not thread safe";
 				foreach (Node idx in widgetNode["controls"])
 				{
 					Node tp = new Node("widget");
+					output.Parent.Add(tp);
 					GetWidget(idx, tp);
-					output.Add(tp);
 				}
 			}
 		}
