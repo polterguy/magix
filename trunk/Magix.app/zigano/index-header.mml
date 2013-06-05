@@ -1,6 +1,6 @@
 
 <div class="span-24 relative">
-	<h1 class="span-6 left-8 top-2 bottom-5">zigano.travel</h1>
+	<h1 class="span-8 left-6 top-2 bottom-5">magix illuminate</h1>
 {{
 zigano.travel.change-login-box
   magix.web.get-session
