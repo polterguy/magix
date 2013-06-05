@@ -528,8 +528,10 @@ removing [remove] properties.&nbsp;&nbsp;not thread safe";
 					}
 					else
 					{
-						// anything else ...
-						widgetNode["properties"][idx.Name].Value = idx.Value;
+						if (idx.Value == null || idx.Get<string>() == "")
+							widgetNode["properties"][idx.Name].UnTie();
+						else
+							widgetNode["properties"][idx.Name].Value = idx.Value;
 					}
 				}
 			}
