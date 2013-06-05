@@ -305,6 +305,10 @@ magix.forms.create-form
             magix.log.append
               header=>form saved
               body=>@"form {0} was save"
+            magix.forms.set-enabled
+              form-id=>edit-forms
+              id=>delete
+              value=>true
         button=>delete
           css=>span-2
           text=>delete
