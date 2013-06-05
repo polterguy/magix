@@ -68,6 +68,10 @@
     <mux:DynamicPanel 
         runat="server" 
         OnReload="dynamic_LoadControls"
+        id="content5" />
+    <mux:DynamicPanel 
+        runat="server" 
+        OnReload="dynamic_LoadControls"
         id="footer" />
     <mux:DynamicPanel 
         runat="server" 

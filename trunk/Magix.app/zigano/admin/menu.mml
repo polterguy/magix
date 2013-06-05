@@ -11,6 +11,8 @@ button=>users
       container=>content3
     magix.viewport.clear-controls
       container=>content4
+    magix.viewport.clear-controls
+      container=>content5
     magix.forms.create-web-page
       file=>zigano/admin/edit-users.mml
       container=>content1
@@ -28,6 +30,8 @@ button=>roles
       container=>content3
     magix.viewport.clear-controls
       container=>content4
+    magix.viewport.clear-controls
+      container=>content5
     magix.forms.create-web-page
       file=>zigano/admin/edit-roles.mml
       container=>content1
@@ -45,6 +49,8 @@ button=>log
       container=>content3
     magix.viewport.clear-controls
       container=>content4
+    magix.viewport.clear-controls
+      container=>content5
     magix.forms.create-web-page
       file=>zigano/admin/server-log.mml
       container=>content1
@@ -62,6 +68,8 @@ button=>settings
       container=>content3
     magix.viewport.clear-controls
       container=>content4
+    magix.viewport.clear-controls
+      container=>content5
     magix.forms.create-web-page
       file=>zigano/admin/admin-settings.mml
       container=>content1
@@ -77,6 +85,8 @@ button=>pages
       container=>content3
     magix.viewport.clear-controls
       container=>content4
+    magix.viewport.clear-controls
+      container=>content5
     magix.forms.create-web-page
       file=>zigano/admin/edit-pages.mml
       container=>content1
@@ -92,6 +102,8 @@ button=>forms
       container=>content3
     magix.viewport.clear-controls
       container=>content4
+    magix.viewport.clear-controls
+      container=>content5
     magix.forms.create-web-page
       file=>zigano/admin/edit-forms.mml
       container=>content1
