@@ -154,12 +154,12 @@ magix.forms.create-form
         magix.forms.set-enabled
           form-id=>edit-forms
           id=>deleteWidg
-          value=(bool)>True
+          value=>true
       else
         magix.forms.set-enabled
           form-id=>edit-forms
           id=>deleteWidg
-          value=(bool)>False
+          value=>false
         magix.viewport.clear-controls
           container=>content4
     magix.ide.surface-changed
@@ -211,6 +211,24 @@ magix.forms.create-form
           form-id=>edit-forms
           id=>name
         magix.ide.active-control-changed
+        if=>[magix.forms.get-value][value].Value!=default
+          magix.forms.set-enabled
+            form-id=>edit-forms
+            id=>save
+            value=>true
+          magix.forms.set-enabled
+            form-id=>edit-forms
+            id=>delete
+            value=>true
+        else
+          magix.forms.set-enabled
+            form-id=>edit-forms
+            id=>save
+            value=>false
+          magix.forms.set-enabled
+            form-id=>edit-forms
+            id=>delete
+            value=>false
       items
         default=>choose form ...
     panel=>saveWrp
@@ -220,6 +238,28 @@ magix.forms.create-form
         text-box=>name
           place-holder=>name ...
           css=>span-3
+          ontextchanged
+            magix.forms.get-value
+              form-id=>edit-forms
+              id=>name
+            if=>[magix.forms.get-value][value].Value
+              magix.forms.set-enabled
+                form-id=>edit-forms
+                id=>save
+                value=>true
+              magix.forms.set-enabled
+                form-id=>edit-forms
+                id=>delete
+                value=>false
+            else
+              magix.forms.set-enabled
+                form-id=>edit-forms
+                id=>save
+                value=>false
+              magix.forms.set-enabled
+                form-id=>edit-forms
+                id=>delete
+                value=>false
         button=>save
           css=>span-2
           text=>save
@@ -327,6 +367,14 @@ magix.forms.create-form
                 header=>form deleted
                 body=>@"form {0} was deleted"
               magix.ide.active-control-changed
+              magix.forms.set-enabled
+                form-id=>edit-forms
+                id=>save
+                value=>false
+              magix.forms.set-enabled
+                form-id=>edit-forms
+                id=>delete
+                value=>false
         select=>widget
           css=>span-5 last
           onselectedindexchanged
