@@ -97,6 +97,14 @@ magix.forms.create-form
         container=>content5
       get-selected-widget
       if=>[get-selected-widget][value][widget]
+        magix.forms.set-enabled
+          form-id=>edit-forms
+          id=>copy
+          value=>true
+        magix.forms.set-enabled
+          form-id=>edit-forms
+          id=>cut
+          value=>true
         list-widget-types
         for-each=>[@][list-widget-types][types]
           if=>[.][type].Value==[/][get-selected-widget][value][widget][type].Value
@@ -110,6 +118,12 @@ magix.forms.create-form
           set=>[@][..][magix.forms.create-form][controls][panel][controls][_label].Name
             value=>label
           if=>[.].Count>0
+            if=>[/][get-selected-widget][value][widget][properties][[.].Name].Count>0
+              set=>[/][_link-button][css].Value
+                value=>span-4 top-1 bold
+            else
+              set=>[/][_link-button][css].Value
+                value=>span-4 top-1
             set=>[/][_link-button].Value
               value=>[.].Name
             set=>[/][_link-button][onclick][magix.admin.run-file][property].Value
@@ -121,6 +135,12 @@ magix.forms.create-form
             set=>[@][..][..][magix.forms.create-form][controls][panel][controls][_link-button].Name
               value=>link-button
           else-if=>[.].Value==hyper lisp code
+            if=>[/][get-selected-widget][value][widget][properties][[.].Name].Count>0
+              set=>[/][_link-button][css].Value
+                value=>span-4 top-1 bold
+            else
+              set=>[/][_link-button][css].Value
+                value=>span-4 top-1
             set=>[/][_link-button].Value
               value=>[.].Name
             set=>[/][_link-button][text].Value
@@ -168,6 +188,14 @@ magix.forms.create-form
         magix.forms.set-enabled
           form-id=>edit-forms
           id=>deleteWidg
+          value=>false
+        magix.forms.set-enabled
+          form-id=>edit-forms
+          id=>copy
+          value=>false
+        magix.forms.set-enabled
+          form-id=>edit-forms
+          id=>cut
           value=>false
         magix.viewport.clear-controls
           container=>content4
@@ -223,17 +251,9 @@ magix.forms.create-form
         if=>[magix.forms.get-value][value].Value!=default
           magix.forms.set-enabled
             form-id=>edit-forms
-            id=>save
-            value=>true
-          magix.forms.set-enabled
-            form-id=>edit-forms
             id=>delete
             value=>true
         else
-          magix.forms.set-enabled
-            form-id=>edit-forms
-            id=>save
-            value=>false
           magix.forms.set-enabled
             form-id=>edit-forms
             id=>delete
@@ -254,17 +274,9 @@ magix.forms.create-form
             if=>[magix.forms.get-value][value].Value
               magix.forms.set-enabled
                 form-id=>edit-forms
-                id=>save
-                value=>true
-              magix.forms.set-enabled
-                form-id=>edit-forms
                 id=>delete
                 value=>false
             else
-              magix.forms.set-enabled
-                form-id=>edit-forms
-                id=>save
-                value=>false
               magix.forms.set-enabled
                 form-id=>edit-forms
                 id=>delete
@@ -272,7 +284,6 @@ magix.forms.create-form
         button=>save
           css=>span-2
           text=>save
-          enabled=>false
           onclick
             magix.forms.get-value
               form-id=>edit-forms
@@ -421,6 +432,19 @@ magix.forms.create-form
         else
           magix.viewport.show-message
             message=>choose a widget first
+    
+    button=>copy
+      css=>span-3 top-1
+      text=>copy
+      enabled=>false
+    button=>cut
+      css=>span-2 top-1
+      text=>cut
+      enabled=>false
+    button=>paste
+      css=>span-3 top-1
+      text=>paste
+      enabled=>false
     panel=>ctrlWrp
       css=>span-17 last top-1 boxed air-padding
       controls

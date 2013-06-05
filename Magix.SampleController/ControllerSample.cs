@@ -52,8 +52,9 @@ namespace Magix.SampleController
 				tmp["object"]["value"].Value = @"
 <h1>welcome to magix illuminate</h1>
 <p>magix is an open source web app builder program, which means you can create your own
-applications with magix.&nbsp;&nbsp;click <a href='?dashboard='>here to start building apps</a></p>
-<p>or login at the top of this screen with username(password combination <strong>admin/admin</strong></p>
+applications with magix.&nbsp;&nbsp;login at the top of this screen with username/password combination 
+<strong>admin/admin</strong></p>
+<p><strong>please change this password asap, or delete the user after creating a new admin user!!</strong></p>
 ".Replace("\n", "").Replace("\r\n", "");
 				tmp["object"]["type"].Value = "magix.pages.page";
 				tmp["object"]["name"].Value = "default";

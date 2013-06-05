@@ -17,6 +17,10 @@ if=>[get-selected-widget][value][widget][properties][[$][property].Value].Count>
 set=>[magix.forms.create-form][controls][text-area][ontextchanged][_prop].Value
   value=>[$][property].Value
 
+set=>[magix.forms.create-form][controls][label][text].Value
+  value=>@"edit property {0}"
+    pr0=>[$][property].Value
+
 magix.forms.create-form
   form-id=>edit-property
   container=>content5
@@ -36,9 +40,19 @@ magix.forms.create-form
         if=>[magix.forms.get-value][value].Value
           set=>[/][change-widget][change][[/][_prop].Value].Value
             value=>[/][magix.forms.get-value][value].Value
+          set=>[@][magix.forms.set-class][id].Value
+            value=>[/][_prop].Value
+          magix.forms.set-class
+            form-id=>edit-properties
+            value=>span-4 top-1 bold
         else
           set=>[/][change-widget][remove][[/][_prop].Value].Value
             value=>
+          set=>[@][magix.forms.set-class][id].Value
+            value=>[/][_prop].Value
+          magix.forms.set-class
+            form-id=>edit-properties
+            value=>span-4 top-1
         change-widget
           change
 

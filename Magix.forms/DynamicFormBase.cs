@@ -62,19 +62,16 @@ namespace Magix.forms
 			{
 				e.Params["event:magix.forms.get-value"].Value = null;
 				e.Params["id"].Value = "control";
-				e.Params["form-id"].Value = "formID";
+				e.Params["form-id"].Value = "webpages";
 				e.Params["inspect"].Value = @"returns the value of the given 
 [id] web control, in the [form-id] form, as [value].&nbsp;&nbsp;not thread safe";
 				return;
 			}
 
-			if (!e.Params.Contains ("form-id"))
-				throw new ArgumentException("Missing form-id in get-value");
-
 			if (!e.Params.Contains ("id"))
 				throw new ArgumentException("Missing id in get-value");
 
-			if (e.Params["form-id"].Get<string>() == FormID)
+			if (e.Params["form-id"].Get<string>("webpages") == FormID)
 			{
 				Control ctrl = Selector.FindControl<Control>(this, e.Params["id"].Get<string>());
 				if (ctrl is BaseWebControlFormElementText)
@@ -110,20 +107,17 @@ namespace Magix.forms
 			{
 				e.Params["event:magix.forms.set-value"].Value = null;
 				e.Params["id"].Value = "control";
-				e.Params["form-id"].Value = "formid";
+				e.Params["form-id"].Value = "webpages";
 				e.Params["value"].Value = "new value";
 				e.Params["inspect"].Value = @"sets the value of the given 
 [id] web control, in the [form-id] form, from [value].&nbsp;&nbsp;not thread safe";
 				return;
 			}
 
-			if (!e.Params.Contains ("form-id"))
-				throw new ArgumentException("Missing form-id in set-value");
-
 			if (!e.Params.Contains ("id"))
 				throw new ArgumentException("Missing id in set-value");
 
-			if (e.Params["form-id"].Get<string>() == FormID)
+			if (e.Params["form-id"].Get<string>("webpages") == FormID)
 			{
 				string value = e.Params.Contains("value") ? e.Params["value"].Get<string>("") : "";
 
@@ -168,15 +162,12 @@ namespace Magix.forms
 			{
 				e.Params["event:magix.forms.set-visible"].Value = null;
 				e.Params["id"].Value = "control";
-				e.Params["form-id"].Value = "formid";
+				e.Params["form-id"].Value = "webpages";
 				e.Params["value"].Value = true;
 				e.Params["inspect"].Value = @"sets the visibility of the given 
 [id] web control, in the [form-id] form, from [value].&nbsp;&nbsp;not thread safe";
 				return;
 			}
-
-			if (!e.Params.Contains ("form-id"))
-				throw new ArgumentException("Missing form-id in set-value");
 
 			if (!e.Params.Contains ("id"))
 				throw new ArgumentException("Missing id in set-value");
@@ -185,13 +176,47 @@ namespace Magix.forms
 			if (e.Params.Contains ("value"))
 				visible = e.Params["value"].Get<bool>();
 
-			if (e.Params["form-id"].Get<string>() == FormID)
+			if (e.Params["form-id"].Get<string>("webpages") == FormID)
 			{
 				Control ctrl = Selector.FindControl<Control>(this, e.Params["id"].Get<string>());
 				if (ctrl is Control)
 					((Control)ctrl).Visible = visible;
 				else
 					throw new ArgumentException("Don't know how to set the value of that control");
+			}
+		}
+
+		// TODO: create plugable event
+		/**
+		 */
+		[ActiveEvent(Name = "magix.forms.set-class")]
+		protected void magix_forms_set_class(object sender, ActiveEventArgs e)
+		{
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			{
+				e.Params["event:magix.forms.set-class"].Value = null;
+				e.Params["id"].Value = "control";
+				e.Params["form-id"].Value = "webpages";
+				e.Params["value"].Value = "some-css-class";
+				e.Params["inspect"].Value = @"sets the css class of the given 
+[id] web control, in the [form-id] form, from [value].&nbsp;&nbsp;not thread safe";
+				return;
+			}
+
+			if (!e.Params.Contains ("id"))
+				throw new ArgumentException("Missing id in set-value");
+
+			string className = "";
+			if (e.Params.Contains ("value"))
+				className = e.Params["value"].Get<string>();
+
+			if (e.Params["form-id"].Get<string>("webpages") == FormID)
+			{
+				Control ctrl = Selector.FindControl<Control>(this, e.Params["id"].Get<string>());
+				if (ctrl is BaseWebControl)
+					((BaseWebControl)ctrl).CssClass = className;
+				else
+					throw new ArgumentException("Don't know how to set the css value of that control");
 			}
 		}
 
@@ -204,15 +229,12 @@ namespace Magix.forms
 			{
 				e.Params["event:magix.forms.set-enabled"].Value = null;
 				e.Params["id"].Value = "control";
-				e.Params["form-id"].Value = "formid";
+				e.Params["form-id"].Value = "webpages";
 				e.Params["value"].Value = true;
 				e.Params["inspect"].Value = @"sets the enabled property of the given 
 [id] web control, in the [form-id] form, from [value].&nbsp;&nbsp;not thread safe";
 				return;
 			}
-
-			if (!e.Params.Contains ("form-id"))
-				throw new ArgumentException("Missing form-id in set-value");
 
 			if (!e.Params.Contains ("id"))
 				throw new ArgumentException("Missing id in set-value");
@@ -221,7 +243,7 @@ namespace Magix.forms
 			if (e.Params.Contains ("value"))
 				enabled = e.Params["value"].Get<bool>();
 
-			if (e.Params["form-id"].Get<string>() == FormID)
+			if (e.Params["form-id"].Get<string>("webpages") == FormID)
 			{
 				Control ctrl = Selector.FindControl<Control>(this, e.Params["id"].Get<string>());
 				if (ctrl is BaseWebControlFormElement)
@@ -241,7 +263,7 @@ namespace Magix.forms
 			{
 				e.Params["event:magix.forms.set-values"].Value = null;
 				e.Params["id"].Value = "control";
-				e.Params["form-id"].Value = "formid";
+				e.Params["form-id"].Value = "webpages";
 				e.Params["values"]["item1"].Value = "new value 1";
 				e.Params["values"]["item2"].Value = "new value 2";
 				e.Params["inspect"].Value = @"sets the values of the given 
@@ -250,13 +272,10 @@ not thread safe";
 				return;
 			}
 
-			if (!e.Params.Contains ("form-id"))
-				throw new ArgumentException("Missing form-id in set-value");
-
 			if (!e.Params.Contains ("id"))
 				throw new ArgumentException("Missing id in set-value");
 
-			if (e.Params["form-id"].Get<string>() == FormID)
+			if (e.Params["form-id"].Get<string>("webpages") == FormID)
 			{
 				Control ctrl = Selector.FindControl<Control>(this, e.Params["id"].Get<string>());
 				if (ctrl is SelectList)
@@ -288,19 +307,16 @@ not thread safe";
 			{
 				e.Params["event:magix.forms.set-focus"].Value = null;
 				e.Params["id"].Value = "control";
-				e.Params["form-id"].Value = "formid";
+				e.Params["form-id"].Value = "webpages";
 				e.Params["inspect"].Value = @"sets focus to the specific 
 [id] web control, in the [form-id] form.&nbsp;&nbsp;not thread safe";
 				return;
 			}
 
-			if (!e.Params.Contains("form-id"))
-				throw new ArgumentException("Missing form-id in set-value");
-
 			if (!e.Params.Contains("id"))
 				throw new ArgumentException("Missing id in set-value");
 
-			if (e.Params["form-id"].Get<string>() == FormID)
+			if (e.Params["form-id"].Get<string>("webpages") == FormID)
 			{
 				BaseWebControl ctrl = Selector.FindControl<BaseWebControl>(this, e.Params["id"].Get<string>());
 				ctrl.Focus();
@@ -317,19 +333,16 @@ not thread safe";
 			{
 				e.Params["event:magix.forms.select-all"].Value = null;
 				e.Params["id"].Value = "control";
-				e.Params["form-id"].Value = "formid";
+				e.Params["form-id"].Value = "webpages";
 				e.Params["inspect"].Value = @"selects all text in the specific 
 [id] textbox or textarea, in the [form-id] form.&nbsp;&nbsp;not thread safe";
 				return;
 			}
 
-			if (!e.Params.Contains("form-id"))
-				throw new ArgumentException("Missing form-id in set-value");
-
 			if (!e.Params.Contains("id"))
 				throw new ArgumentException("Missing id in set-value");
 
-			if (e.Params["form-id"].Get<string>() == FormID)
+			if (e.Params["form-id"].Get<string>("webpages") == FormID)
 			{
 				BaseWebControlFormElementInputText ctrl = 
 					Selector.FindControl<BaseWebControlFormElementInputText>(this, e.Params["id"].Get<string>());
@@ -347,19 +360,16 @@ not thread safe";
 			{
 				e.Params["event:magix.forms.show"].Value = null;
 				e.Params["id"].Value = "control";
-				e.Params["form-id"].Value = "formid";
+				e.Params["form-id"].Value = "webpages";
 				e.Params["inspect"].Value = @"shides or show the given [id] control in given [form-id], 
 if [visible] is true, control is shown, otherwise hidden.&nbsp;&nbsp;not thread safe";
 				return;
 			}
 
-			if (!e.Params.Contains("form-id"))
-				throw new ArgumentException("Missing form-id in set-value");
-
 			if (!e.Params.Contains("id"))
 				throw new ArgumentException("Missing id in set-value");
 
-			if (e.Params["form-id"].Get<string>() == FormID)
+			if (e.Params["form-id"].Get<string>("webpages") == FormID)
 			{
 				BaseWebControl ctrl = Selector.FindControl<BaseWebControl>(this, e.Params["id"].Get<string>());
 				if (e.Params.Contains ("visible") && e.Params ["visible"].Get<bool> ())
