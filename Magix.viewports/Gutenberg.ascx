@@ -17,6 +17,30 @@
 		id="message"
 		style="display:none;"
 		CssClass="info-message" />
+    <mux:Panel
+		runat="server"
+		id="confirmWrp"
+		style="display:none;"
+		CssClass="info-message">
+		<mux:Label
+			runat="server"
+			Tag="p"
+			id="confirmLbl" />
+		<div class="confirm-button-wrapper span-6">
+			<mux:Button
+				runat="server"
+				id="ok"
+				CssClass="info-message-ok btn-large span-3"
+				Text="OK"
+				OnClick="OKClick" />
+			<mux:Button
+				runat="server"
+				id="cancel"
+				CssClass="info-message-cancel btn-large span-3 last"
+				Text="Cancel"
+				OnClick="CancelClick" />
+		</div>
+	</mux:Panel>
     <mux:DynamicPanel 
         runat="server" 
         OnReload="dynamic_LoadControls"

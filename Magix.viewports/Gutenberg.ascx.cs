@@ -33,6 +33,9 @@ namespace Magix.viewports
 		protected DynamicPanel footer;
 		protected DynamicPanel trace;
 		protected Label message;
+		protected Panel confirmWrp;
+		protected Label confirmLbl;
+		protected Button ok;
 
 		/**
          * Shows a Message Box to the end user, which can be configured
@@ -82,6 +85,61 @@ end user for some seconds.&nbsp;&nbsp;not thread safe";
 						new EffectFadeOut(message,250))
 						.Render();
 			}
+		}
+
+		private Node ConfirmCode
+		{
+			get { return ViewState["Magix.Viewport.Gutenberg.ConfirmCode"] as Node; }
+			set { ViewState ["Magix.Viewport.Gutenberg.ConfirmCode"] = value; }
+		}
+
+		/**
+         * asks the user for confirmation of action
+         */
+		[ActiveEvent(Name = "magix.viewport.confirm")]
+		protected void magix_viewport_confirm(object sender, ActiveEventArgs e)
+		{
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			{
+				e.Params["message"].Value = "message to show to end user";
+				e.Params["inspect"].Value = @"shows a message box to the 
+end user for some seconds.&nbsp;&nbsp;not thread safe";
+				e.Params["code"].Value = "code to execute if user clicks ok goes here";
+				return;
+			}
+
+
+			if (!e.Params.Contains("message") || e.Params["message"].Get<string>("") == "")
+				throw new ArgumentException("cannot show a message box without a [message] argument");
+
+			confirmLbl.Text = e.Params["message"].Get<string>();
+
+			ConfirmCode = e.Params["code"].Clone();
+
+			confirmWrp.Visible = true;
+
+			new EffectFadeIn(confirmWrp, 250)
+				.ChainThese(
+					new EffectFocusAndSelect(ok))
+				.Render();
+		}
+
+		protected void CancelClick(object sender, EventArgs e)
+		{
+			ConfirmCode = null;
+			confirmWrp.Visible = false;
+			confirmWrp.Style["display"] = "none";
+		}
+
+		protected void OKClick(object sender, EventArgs e)
+		{
+			RaiseEvent(
+				"magix.execute",
+				ConfirmCode);
+
+			ConfirmCode = null;
+			confirmWrp.Visible = false;
+			confirmWrp.Style["display"] = "none";
 		}
 
 		/**
