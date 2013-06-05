@@ -263,6 +263,7 @@ magix.forms.create-form
         button=>save
           css=>span-2
           text=>save
+          enabled=>false
           onclick
             magix.forms.get-value
               form-id=>edit-forms
@@ -311,74 +312,78 @@ magix.forms.create-form
               value=>true
         button=>delete
           css=>span-2
+          enabled=>false
           text=>delete
           onclick
-            magix.forms.get-value
-              form-id=>edit-forms
-              id=>name
-            set=>[magix.data.load][prototype][name].Value
-              value=>[magix.forms.get-value][value].Value
-            magix.data.load
-              prototype
-                type=>magix.forms.form
-            if=>![magix.data.load][objects]
-              magix.viewport.show-message
-                message=>no such form
-            else
-              set=>[@][magix.data.remove][id].Value
-                value=>[/][magix.data.load][objects][0].Name
-              magix.data.remove
-              magix.viewport.show-message
-                message=>form deleted
-              magix.forms.set-value
-                form-id=>edit-forms
-                id=>name
-                value=>
-              load-form
-                name
-              magix.data.load
-                prototype
-                  type=>magix.forms.form
-              for-each=>[@][magix.data.load][objects]
-                _dt
-                  name=>value
-                set=>[@][_dt][0].Name
-                  value=>[.].Name
-                set=>[@][_dt][0].Value
-                  value=>[.][name].Value
-                add=>[@][..][_lst]
-                  value=>[@][_dt][0]
-              _lst
-                default=>choose form ...
-              for-each=>[@][_lst]
-                add=>[@][..][magix.forms.set-values][values]
-                  value=>[.]
-              magix.forms.set-values
-                form-id=>edit-forms
-                id=>form
-              magix.forms.set-value
-                form-id=>edit-forms
-                id=>form
-                value=>default
-              set=>[@][magix.log.append][body][pr0].Value
-                value=>[magix.forms.get-value][value].Value
-              magix.forms.set-values
-                form-id=>edit-forms
-                id=>widget
-                values
-                  default=>select widget ...
-              magix.log.append
-                header=>form deleted
-                body=>@"form {0} was deleted"
-              magix.ide.active-control-changed
-              magix.forms.set-enabled
-                form-id=>edit-forms
-                id=>save
-                value=>false
-              magix.forms.set-enabled
-                form-id=>edit-forms
-                id=>delete
-                value=>false
+            magix.viewport.confirm
+              message=>please confirm deletion of form
+              code
+                magix.forms.get-value
+                  form-id=>edit-forms
+                  id=>name
+                set=>[magix.data.load][prototype][name].Value
+                  value=>[magix.forms.get-value][value].Value
+                magix.data.load
+                  prototype
+                    type=>magix.forms.form
+                if=>![magix.data.load][objects]
+                  magix.viewport.show-message
+                    message=>no such form
+                else
+                  set=>[@][magix.data.remove][id].Value
+                    value=>[/][magix.data.load][objects][0].Name
+                  magix.data.remove
+                  magix.forms.set-value
+                    form-id=>edit-forms
+                    id=>name
+                    value=>
+                  load-form
+                    name
+                  magix.data.load
+                    prototype
+                      type=>magix.forms.form
+                  for-each=>[@][magix.data.load][objects]
+                    _dt
+                      name=>value
+                    set=>[@][_dt][0].Name
+                      value=>[.].Name
+                    set=>[@][_dt][0].Value
+                      value=>[.][name].Value
+                    add=>[@][..][_lst]
+                      value=>[@][_dt][0]
+                  _lst
+                    default=>choose form ...
+                  for-each=>[@][_lst]
+                    add=>[@][..][magix.forms.set-values][values]
+                      value=>[.]
+                  magix.forms.set-values
+                    form-id=>edit-forms
+                    id=>form
+                  magix.forms.set-value
+                    form-id=>edit-forms
+                    id=>form
+                    value=>default
+                  set=>[@][magix.log.append][body][pr0].Value
+                    value=>[magix.forms.get-value][value].Value
+                  magix.forms.set-values
+                    form-id=>edit-forms
+                    id=>widget
+                    values
+                      default=>select widget ...
+                  magix.ide.active-control-changed
+                  magix.forms.set-enabled
+                    form-id=>edit-forms
+                    id=>save
+                    value=>false
+                  magix.forms.set-enabled
+                    form-id=>edit-forms
+                    id=>delete
+                    value=>false
+                  magix.log.append
+                    header=>form deleted
+                    body=>@"form {0} was deleted"
+                  magix.viewport.show-message
+                    message=>form deleted
         select=>widget
           css=>span-5 last
           onselectedindexchanged
