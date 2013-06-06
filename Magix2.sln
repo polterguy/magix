@@ -65,6 +65,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Magix.code.tests", "Magix.c
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Magix.log.tests", "Magix.log.tests\Magix.log.tests.csproj", "{30E34A65-909F-40A6-B366-0158426A4DE2}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{73A35696-832A-4B80-9340-5D36C6F223AA}"
+	ProjectSection(SolutionItems) = preProject
+		references\Db4objects.Db4o.dll = references\Db4objects.Db4o.dll
+		references\Db4objects.Db4o.NativeQueries.dll = references\Db4objects.Db4o.NativeQueries.dll
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

@@ -1,30 +1,13 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Magix.app/media/grid/main.css">
-    <Files>
-      <File FileName="Magix.app/zigano/admin/edit-forms.hl" Line="319" Column="27" />
-      <File FileName="Magix.app/media/grid/main.css" Line="769" Column="1" />
-    </Files>
+  <MonoDevelop.Ide.Workbench>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
-          <Node name="Core" expanded="True">
-            <Node name="Magix.app" expanded="True">
-              <Node name="media" expanded="True">
-                <Node name="grid" expanded="True">
-                  <Node name="main.css" selected="True" />
-                </Node>
-              </Node>
-              <Node name="zigano" expanded="True">
-                <Node name="admin" expanded="True" />
-              </Node>
-            </Node>
-            <Node name="Magix.UX" expanded="True">
-              <Node name="Effects" expanded="True" />
-            </Node>
-            <Node name="Magix.viewports" expanded="True" />
+          <Node name="Core" expanded="True" />
+          <Node name="Plugins" expanded="True">
+            <Node name="Magix.ide" selected="True" />
           </Node>
-          <Node name="Plugins" expanded="True" />
           <Node name="Samples" expanded="True" />
         </State>
       </Pad>
@@ -33,16 +16,15 @@
       </Pad>
       <Pad Id="MonoDevelop.Debugger.WatchPad">
         <State>
-          <Value>retVal</Value>
+          <Value>widgetNode["properties"][idx.Name]</Value>
+          <Value>widgetNode</Value>
+          <Value>widgetNode</Value>
         </State>
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore>
-      <Breakpoint file="/Users/finnolepetersen/Documents/magix2/Magix.ide/Builder.ascx.cs" line="637" column="1" />
-      <Breakpoint file="/Users/finnolepetersen/Documents/magix2/Magix.ide/Builder.ascx.cs" line="292" column="21" />
-    </BreakpointStore>
+    <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches>
     <Watch file="Magix.tests/ExecuteTest.cs" line="86" offsetX="650" offsetY="1185" expression="tmp" liveUpdate="False" />

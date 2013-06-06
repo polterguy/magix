@@ -210,9 +210,9 @@ namespace Magix.UX.Widgets
 			base.OnPreRender(e);
 		}
 
-		protected override string GetClientSideScript ()
+		protected override string GetClientSideScript()
 		{
-			return
+			return base.GetClientSideScript() + 
 				"window.actualEditor = new wysihtml5.Editor('" + 
 				ClientID + "_text" + 
 				@"', {
