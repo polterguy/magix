@@ -163,7 +163,7 @@ run that hyperlisp file, and nothing else, unless http get parameter 'page' is g
 
 					tmp["html"].Value = tp["objects"][0]["value"].Value;
 					tmp["container"].Value = "content1";
-					tmp["css"].Value = "span12";
+					tmp["css"].Value = "span-24";
 					tmp["form-id"].Value = "webpages";
 
 					RaiseActiveEvent(

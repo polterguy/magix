@@ -634,8 +634,9 @@ not thread safe";
 				e.Params["event:magix.execute"].Value = null;
 				e.Params["inspect"].Value = @"pastes in the widget from the clipboard to the selected widget.&nbsp;&nbsp;
 use [position] to signify the relationship between the node being pasted and the position being pasted into, 
-default is after.&nbsp;&nbsp;not thread safe";
-				e.Params["paste-widget"]["to"].Value = "root-0-0";
+default is child, meaning if control can contain children, it will be a child, otherwise it will 
+be pasted into the control tree behind the currently selected widget.&nbsp;&nbsp;
+not thread safe";
 				return;
 			}
 
@@ -646,9 +647,12 @@ default is after.&nbsp;&nbsp;not thread safe";
 			if (ClipBoard == null)
 				throw new ArgumentException("cannot paste a widget, since there are no widgets on the clipboard");
 
-			Node tmp = DataSource.FindDna(SelectedWidgetDna);
+			Node destinationNode = DataSource["controls"];
 
-			string position = "after";
+			if (!string.IsNullOrEmpty(SelectedWidgetDna))
+				destinationNode = DataSource.FindDna(SelectedWidgetDna);
+
+			string position = "child";
 
 			if (ip.Contains("position"))
 				position = ip["position"].Get<string>();
@@ -660,23 +664,32 @@ default is after.&nbsp;&nbsp;not thread safe";
 			switch (position)
 			{
 			case "before":
-				tmp.AddBefore(toAdd);
+				destinationNode.AddBefore(toAdd);
 				break;
 			case "after":
-				tmp.AddAfter(toAdd);
+				destinationNode.AddAfter(toAdd);
 				break;
 			case "child":
 			{
-				Node tp = new Node();
-				tp["inspect"].Value = null;
-				RaiseEvent(
-					tmp["type"].Get<string>(),
-					tp);
-
-				if (tp["controls"][0].Contains("controls"))
-					tmp["controls"].Add(toAdd);
+				if (!destinationNode.Contains("type"))
+				{
+					// main surface ...
+					destinationNode.Add(toAdd);
+				}
 				else
-					tmp.AddAfter(toAdd);
+				{
+					Node tp = new Node();
+					tp["inspect"].Value = null;
+
+					RaiseEvent(
+						destinationNode["type"].Get<string>(),
+						tp);
+
+					if (tp["controls"][0].Contains("controls"))
+						destinationNode["controls"].Add(toAdd);
+					else
+						destinationNode.AddAfter(toAdd); // defaulting to add 'after'
+				}
 			} break;
 			default:
 				throw new ArgumentException("sorry, don't know where " + position + " is");

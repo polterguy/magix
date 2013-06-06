@@ -72,6 +72,7 @@ magix.forms.create-form
   container=>content2
   css=>span-19 last
   events
+
     magix.ide.active-control-changed
       _label
         css=>span-3 top-1 right-text
@@ -199,6 +200,7 @@ magix.forms.create-form
           value=>false
         magix.viewport.clear-controls
           container=>content4
+
     magix.ide.surface-changed
       list-widgets
       _dt
@@ -206,7 +208,9 @@ magix.forms.create-form
         set=>[/][_dt][0].Name
           value=>[.][dna].Value
         set=>[/][_dt][0].Value
-          value=>[.][type].Value
+          value=>@"{0}-->{1}"
+            pr0=>[.][type].Value
+            pr1=>[.][properties][id].Value
         add=>[/][_items]
           value=>[@][/][_dt][0]
       _items
@@ -229,7 +233,9 @@ magix.forms.create-form
         form-id=>edit-forms
         id=>widget
       magix.ide.active-control-changed
+
   controls
+
     select=>form
       css=>span-3
       onselectedindexchanged
@@ -260,10 +266,12 @@ magix.forms.create-form
             value=>false
       items
         default=>choose form ...
+
     panel=>saveWrp
       css=>span-12
       default=>save
       controls
+
         text-box=>name
           place-holder=>name ...
           css=>span-3
@@ -281,6 +289,7 @@ magix.forms.create-form
                 form-id=>edit-forms
                 id=>delete
                 value=>false
+
         button=>save
           css=>span-2
           text=>save
@@ -330,6 +339,7 @@ magix.forms.create-form
               form-id=>edit-forms
               id=>delete
               value=>true
+
         button=>delete
           css=>span-2
           enabled=>false
@@ -404,6 +414,7 @@ magix.forms.create-form
                     body=>@"form {0} was deleted"
                   magix.viewport.show-message
                     message=>form deleted
+
         select=>widget
           css=>span-5 last
           onselectedindexchanged
@@ -416,6 +427,7 @@ magix.forms.create-form
             select-widget
           items
             default=>select widget ...
+
     button=>deleteWidg
       css=>span-4 last
       text=>delete widget
@@ -432,22 +444,45 @@ magix.forms.create-form
         else
           magix.viewport.show-message
             message=>choose a widget first
-    
+
     button=>copy
       css=>span-3 top-1
       text=>copy
       enabled=>false
+      onclick
+        copy-widget
+        magix.forms.set-enabled
+          form-id=>edit-forms
+          id=>paste
+          value=>true
+
     button=>cut
       css=>span-2 top-1
       text=>cut
       enabled=>false
+      onclick
+        cut-widget
+        magix.forms.set-enabled
+          form-id=>edit-forms
+          id=>paste
+          value=>true
+        magix.viewport.clear-controls
+          container=>content4
+        magix.viewport.clear-controls
+          container=>content5
+
     button=>paste
       css=>span-3 top-1
       text=>paste
       enabled=>false
+      onclick
+        paste-widget
+          auto-select=>true
+
     panel=>ctrlWrp
       css=>span-17 last top-1 boxed air-padding
       controls
+
         label=>desc
           text=>web controls
           tip=>click to add up a web control to your design surface
