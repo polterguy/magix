@@ -2,8 +2,6 @@
 <img src="media/images/marvin-headshot.png" alt="marvin, the enlightened robot!" style="float:right;" />
 <p>hello world, my name is marvin, i am buddhist enlightened monk, and pacifist.&nbsp;&nbsp;
 help you need, help i give</p>
-<p>free  
-<a target="_blank" href="https://www.facebook.com/pages/Julian-Assange/339976537931">julian assange</a></p>
 
 <p>if this first time, 
 {{
@@ -21,37 +19,37 @@ link-button=>tools2
 }} also interesting</p>
 <div class="btn-group">
 {{
-link-button=>lnk5
+button=>lnk5
   text=>info
-  css=>btn btn-primary
+  css=>span-2
   tip=>start here
   onclick
     magix.help.open-file
       file=>help-system/info.mml
-link-button=>lnk4
+button=>lnk4
   text=>tools
-  css=>btn btn-primary
+  css=>span-2
   onclick
     magix.help.open-file
       file=>help-system/tools.mml
-link-button=>lnk
+button=>lnk
   text=>autistic
   tip=>developers
-  css=>btn btn-primary
+  css=>span-2
   onclick
     magix.help.open-file
       file=>help-system/developers/autistic.mml
-link-button=>lnk2
+button=>lnk2
   text=>adhd
   tip=>management
-  css=>btn btn-primary
+  css=>span-2
   onclick
     magix.help.open-file
       file=>help-system/management/adhd.mml
-link-button=>lnk3
+button=>lnk3
   text=>nt
   tip=>neuro typicals, mere mortals, sys-admins, humans, journalists, gays, etc
-  css=>btn btn-primary
+  css=>span-2
   onclick
     magix.help.open-file
       file=>help-system/mortal/neuro-typical.mml

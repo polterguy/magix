@@ -109,5 +109,18 @@ button=>forms
       container=>content1
       form-id=>admin-settings
       css=>span-19 last
+button=>help
+  text=>help
+  css=>btn-large span-5
+  onclick
+    magix.viewport.clear-controls
+      container=>content2
+    magix.viewport.clear-controls
+      container=>content3
+    magix.viewport.clear-controls
+      container=>content4
+    magix.viewport.clear-controls
+      container=>content5
+    magix.help.start-help
 }}
 </div>

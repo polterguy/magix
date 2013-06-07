@@ -801,7 +801,44 @@ a.fork {
 }
 
 
+.help-system
+{
+}
 
+.btn-group input[type=button]
+{
+	border-right:solid 1px rgba(128,128,128,.3);
+	padding-left:4px;
+	padding-right:5px;
+	margin-right:0px;
+
+	display:block;
+	float:left;
+	-moz-border-radius:0px;
+	-webkit-border-radius:0px;
+	-o-border-radius:0px;
+	-ms-border-radius:0px;
+	border-radius:0px;
+}
+
+.btn-group input[type=button]:first-child
+{
+	-moz-border-radius:15px 0px 0px 15px;
+	-webkit-border-radius:15px 0px 0px 15px;
+	-o-border-radius:15px 0px 0px 15px;
+	-ms-border-radius:15px 0px 0px 15px;
+	border-radius:15px 0px 0px 15px;
+}
+
+.btn-group input[type=button]:last-child
+{
+	-moz-border-radius:15px 0px 0px 15px;
+	-webkit-border-radius:0px 15px 15px 0px;
+	-o-border-radius:0px 15px 15px 0px;
+	-ms-border-radius:0px 15px 15px 0px;
+	border-radius:0px 15px 15px 0px;
+	border-right:none 0;
+}
 
 
 

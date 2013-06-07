@@ -37,10 +37,45 @@ namespace Magix.SampleController
 
 			Node tmp = new Node();
 
+			tmp["form-id"].Value = "help-navigation";
+			tmp["container"].Value = "content1";
+			tmp["html"].Value = @"
+<div class=""span-17 left-2 last bottom-1 top-1 btn-group"">
+{{
+button=>back
+  text=><<
+  css=>btn-large span-2
+  onclick
+    magix.help.move-backwards
+button=>index
+  text=>index
+  css=>btn-large span-2
+  onclick
+    magix.help.open-file
+      file=>help-system/index.mml
+button=>tools
+  text=>tools
+  css=>btn-large span-2
+  onclick
+    magix.help.open-file
+      file=>help-system/tools.mml
+button=>next
+  text=>>>
+  css=>btn-large span-2
+  onclick
+    magix.help.move-next
+}}
+</div>
+";
+			RaiseActiveEvent(
+				"magix.forms.create-web-page",
+				tmp);
+
+			tmp = new Node();
+
 			tmp["form-id"].Value = "help";
-			tmp["container"].Value = "modal";
-			tmp["css"].Value = "modal-fixed-body modal-body";
-			tmp["header"].Value = "help from marvin";
+			tmp["container"].Value = "content2";
+			tmp["css"].Value = "span-19 last help-system";
 
 			using (TextReader reader = File.OpenText(Page.Server.MapPath("help-system/index.mml")))
 			{
@@ -73,49 +108,6 @@ namespace Magix.SampleController
 					"magix.help.add-page",
 					tmp);
 			}
-
-			tmp = new Node();
-
-			tmp["form-id"].Value = "help-navigation";
-			tmp["container"].Value = "modalFtr";
-			tmp["html"].Value = @"
-<div class=""btn-group"">
-{{
-link-button=>back
-  text=><<
-  css=>btn btn-primary
-  onclick
-    magix.help.move-backwards
-link-button=>index
-  text=>index
-  css=>btn btn-primary
-  onclick
-    magix.help.open-file
-      file=>help-system/index.mml
-link-button=>tools
-  text=>tools
-  css=>btn btn-primary
-  onclick
-    magix.help.open-file
-      file=>help-system/tools.mml
-link-button=>executor
-  text=>executor
-  css=>btn btn-primary
-  onclick
-    magix.admin.load-start
-    magix.viewport.clear-controls
-      container=>modal
-link-button=>next
-  text=>>>
-  css=>btn btn-primary
-  onclick
-    magix.help.move-next
-}}
-</div>
-";
-			RaiseActiveEvent(
-				"magix.forms.create-web-page",
-				tmp);
 		}
 
 		[ActiveEvent(Name = "magix.help.set-next")]
