@@ -82,6 +82,19 @@ cf
               value=>[.ip][..][magix.forms.get-value][value].Value
             magix.admin.load-executor-code
               code
+        button=>run2
+          text=>run test
+          css=>span-2
+          onclick
+            magix.forms.get-value
+              form-id=>form1
+              id=>header
+            set=>[run-test].Name
+              value=>[magix.forms.get-value][value].Value
+            run-test
+            magix.viewport.show-message
+              message=>test executed successfully
+              time=>250
         button=>run3
           text=>run all
           css=>span-2

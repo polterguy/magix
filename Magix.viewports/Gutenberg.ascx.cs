@@ -82,7 +82,7 @@ end user for some seconds.&nbsp;&nbsp;not thread safe";
 			{
 				new EffectFadeIn(message, 250)
 					.ChainThese(
-						new EffectTimeout(3000),
+						new EffectTimeout(e.Params["time"].Get<int>(3000)),
 						new EffectFadeOut(message,250))
 						.Render();
 			}

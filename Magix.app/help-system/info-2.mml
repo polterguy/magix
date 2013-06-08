@@ -6,7 +6,7 @@ panel=>wrp
   style=>margin-left:auto;margin-right:auto;width:480px;
   controls
     literal
-      text=>@"<iframe src=""http://www.youtube.com/embed/kqTAt7WYLUE""
+      text=>@"<iframe src=""http://www.youtube.com/embed/Gh0ir6f6rfQ""
 width=""480"" height=""360"" frameborder=""0"" allowfullscreen=""true""></iframe>"
 }}
 
