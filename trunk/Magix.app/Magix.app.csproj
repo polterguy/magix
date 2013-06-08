@@ -211,7 +211,6 @@
     <Folder Include="help-system\developers\" />
     <Folder Include="help-system\management\" />
     <Folder Include="help-system\mortal\" />
-    <Folder Include="core-scripts\tools\" />
     <Folder Include="core-scripts\misc\" />
     <Folder Include="zigano\" />
     <Folder Include="media\grid\" />
@@ -267,15 +266,6 @@
     <None Include="help-system\developers\the-point.mml" />
     <None Include="help-system\developers\web.mml" />
     <None Include="help-system\tools.mml" />
-    <None Include="core-scripts\tools\inspect-events.hl" />
-    <None Include="core-scripts\tools\inspect-execute.hl" />
-    <None Include="core-scripts\tools\inspect-open-events.hl" />
-    <None Include="core-scripts\tools\inspect-overridden-events.hl" />
-    <None Include="core-scripts\tools\inspect-remoted-events.hl" />
-    <None Include="core-scripts\tools\inspect-unit-tests.hl" />
-    <None Include="core-scripts\tools\inspect-web-controls.hl" />
-    <None Include="core-scripts\tools\magix-markup-editor.hl" />
-    <None Include="core-scripts\tools\rss-parser.hl" />
     <None Include="core-scripts\misc\main-menu.hl" />
     <None Include="core-scripts\misc\login-box.hl" />
     <None Include="zigano\index.hl" />
@@ -298,5 +288,14 @@
     <None Include="zigano\admin\edit-forms.mml" />
     <None Include="zigano\admin\edit-forms.hl" />
     <None Include="zigano\admin\edit-property.hl" />
+    <None Include="zigano\admin\tools\inspect-events.hl" />
+    <None Include="zigano\admin\tools\inspect-execute.hl" />
+    <None Include="zigano\admin\tools\inspect-open-events.hl" />
+    <None Include="zigano\admin\tools\inspect-overridden-events.hl" />
+    <None Include="zigano\admin\tools\inspect-remoted-events.hl" />
+    <None Include="zigano\admin\tools\inspect-unit-tests.hl" />
+    <None Include="zigano\admin\tools\inspect-web-controls.hl" />
+    <None Include="zigano\admin\tools\magix-markup-editor.hl" />
+    <None Include="zigano\admin\tools\rss-parser.hl" />
   </ItemGroup>
 </Project>
