@@ -14,8 +14,6 @@ hidden=>dummy
   onfirstload
     magix.help.set-next
       next=>help-system/developers/maintenance.mml
-    magix.viewport.change-modal-header
-      header=>dynamic 4
 }}
 
 

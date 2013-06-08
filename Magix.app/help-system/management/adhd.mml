@@ -20,8 +20,6 @@ hidden=>dummy
   onfirstload
     magix.help.set-next
       next=>help-system/management/adhd-2.mml
-    magix.viewport.change-modal-header
-      header=>adhd [management]
 }}
 
 

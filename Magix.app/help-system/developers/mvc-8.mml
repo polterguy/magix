@@ -13,8 +13,6 @@ text-box=>txt
   onfirstload
     magix.help.set-next
       next=>help-system/developers/mvc-9.mml
-    magix.viewport.change-modal-header
-      header=>mvc 8
 select=>lst
   items
     goat=>Goat

@@ -19,8 +19,6 @@ hidden=>dummy
   onfirstload
     magix.help.set-next
       next=>help-system/mortal/neuro-typical.mml
-    magix.viewport.change-modal-header
-      header=>adhd 2
 }}
 
 

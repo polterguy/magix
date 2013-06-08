@@ -34,8 +34,6 @@ link-button=>linkpoly
   onfirstload
     magix.help.set-next
       next=>help-system/info-2.mml
-    magix.viewport.change-modal-header
-      header=>conceptual info
   onclick
     magix.admin.run-file
       file=>zigano/admin/tools/inspect-overridden-events.hl

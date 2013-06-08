@@ -9,7 +9,5 @@ hidden
   onfirstload
     magix.help.set-next
       next=>help-system/developers/web.mml
-    magix.viewport.change-modal-header
-      header=>ajax 4
 }}
 

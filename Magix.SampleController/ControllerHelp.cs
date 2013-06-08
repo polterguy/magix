@@ -41,7 +41,7 @@ namespace Magix.SampleController
 			tmp["container"].Value = "content1";
 			tmp["css"].Value = "span-19 last";
 			tmp["html"].Value = @"
-<div class=""span-17 left-2 last bottom-1 btn-group"">
+<div class=""span-15 left-4 last bottom-1 btn-group"">
 {{
 button=>back
   text=><<

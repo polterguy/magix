@@ -18,6 +18,4 @@ hidden=>dummy
   onfirstload
     magix.help.set-next
       next=>help-system/developers/raise.mml
-    magix.viewport.change-modal-header
-      header=>handler sample
 }}

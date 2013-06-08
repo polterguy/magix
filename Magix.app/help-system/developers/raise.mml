@@ -16,6 +16,4 @@ hidden=>dummy
   onfirstload
     magix.help.set-next
       next=>help-system/developers/parameters.mml
-    magix.viewport.change-modal-header
-      header=>raise
 }}

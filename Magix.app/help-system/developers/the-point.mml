@@ -22,7 +22,5 @@ hidden=>dummy
   onfirstload
     magix.help.set-next
       next=>help-system/developers/mvc.mml
-    magix.viewport.change-modal-header
-      header=>the point
 }}
 

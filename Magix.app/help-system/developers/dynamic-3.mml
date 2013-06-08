@@ -20,8 +20,6 @@ link-button=>link
   onfirstload
     magix.help.set-next
       next=>help-system/developers/dynamic-4.mml
-    magix.viewport.change-modal-header
-      header=>dynamic 3
   onclick
     magix.admin.run-file
       file=>zigano/admin/tools/inspect-execute.hl

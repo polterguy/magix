@@ -27,8 +27,6 @@ hidden=>dummy
   onfirstload
     magix.help.set-next
       next=>help-system/developers/mvc-5.mml
-    magix.viewport.change-modal-header
-      header=>mvc 4
 }}
 
 

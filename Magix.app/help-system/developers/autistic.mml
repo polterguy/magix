@@ -59,8 +59,6 @@ button=>lnk6
   onfirstload
     magix.help.set-next
       next=>help-system/developers/active-events.mml
-    magix.viewport.change-modal-header
-      header=>autistic [developers]
   onclick
     magix.help.open-file
       file=>help-system/developers/maintenance.mml
