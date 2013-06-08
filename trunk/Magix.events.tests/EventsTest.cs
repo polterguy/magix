@@ -24,7 +24,7 @@ namespace Magix.tests
 
 			tmp["event"].Value = "foo.bar";
 			tmp["event"]["code"]["_data"].Value = "howdy";
-			tmp["event"]["code"]["set"].Value = "[/][P][_data].Value";
+			tmp["event"]["code"]["set"].Value = "[$][_data].Value";
 			tmp["event"]["code"]["set"]["value"].Value = "thomas";
 			tmp["foo.bar"].Value = null;
 			tmp.Add (new Node("event", "foo.bar"));
@@ -68,7 +68,7 @@ namespace Magix.tests
 
 			tmp["event"].Value = "foo.bar";
 			tmp["event"]["remotable"].Value = true;
-			tmp["event"]["code"]["set"].Value = "[/][P][Data].Value";
+			tmp["event"]["code"]["set"].Value = "[$][Data].Value";
 			tmp["event"]["code"]["set"]["value"].Value = "thomas";
 			tmp["remote"].Value = "foo.bar";
 			tmp["remote"]["url"].Value = "http://127.0.0.1:8080";

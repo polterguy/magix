@@ -24,8 +24,8 @@ namespace Magix.tests
 
 			tmp["event"].Value = "foo.bar";
 			tmp["event"]["remotable"].Value = true;
-			tmp["event"]["code"]["set"].Value = "[/][P][_data].Value";
-			tmp["event"]["code"]["set"]["value"].Value = "[/][P][_name].Value";
+			tmp["event"]["code"]["set"].Value = "[$][_data].Value";
+			tmp["event"]["code"]["set"]["value"].Value = "[$][_name].Value";
 			tmp["remote"]["url"].Value = "http://127.0.0.1:8080";
 			tmp["remote"].Value = "foo.bar";
 			tmp["remote"]["_name"].Value = "thomas";
