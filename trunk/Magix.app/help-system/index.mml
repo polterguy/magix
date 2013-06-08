@@ -63,7 +63,7 @@ link-button=>lnkhl
   text=>hyper lisp keywords
   onclick
     magix.admin.run-file
-      file=>core-scripts/tools/inspect-execute.hl
+      file=>zigano/admin/tools/inspect-execute.hl
     magix.viewport.clear-controls
       container=>modal
 }}</p>
@@ -80,7 +80,7 @@ link-button=>lnkremote
   text=>see remoted active events
   onclick
     magix.admin.run-file
-      file=>core-scripts/tools/inspect-remoted-events.hl
+      file=>zigano/admin/tools/inspect-remoted-events.hl
     magix.viewport.clear-controls
       container=>modal
 }} together with 
@@ -89,7 +89,7 @@ link-button=>lnkopen
   text=>open active events
   onclick
     magix.admin.run-file
-      file=>core-scripts/tools/inspect-open-events.hl
+      file=>zigano/admin/tools/inspect-open-events.hl
     magix.viewport.clear-controls
       container=>modal
 }} to verify your system is safe.&nbsp;&nbsp;remoted events are active events which 
@@ -105,7 +105,7 @@ link-button=>lnkall
       header=>welcome to magix
   onclick
     magix.admin.run-file
-      file=>core-scripts/tools/inspect-events.hl
+      file=>zigano/admin/tools/inspect-events.hl
     magix.viewport.clear-controls
       container=>modal
 }}.&nbsp;&nbsp;<a href="https://groups.google.com/forum/?fromgroups#!forum/magix-illuminate" target="_blank">get support</a>

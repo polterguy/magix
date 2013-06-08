@@ -24,7 +24,7 @@ link-button=>link
       header=>dynamic 3
   onclick
     magix.admin.run-file
-      file=>core-scripts/tools/inspect-execute.hl
+      file=>zigano/admin/tools/inspect-execute.hl
     magix.viewport.clear-controls
       container=>modal
 }} for hyper lisp</p>
