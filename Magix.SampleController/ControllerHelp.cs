@@ -40,7 +40,7 @@ namespace Magix.SampleController
 			tmp["form-id"].Value = "help-navigation";
 			tmp["container"].Value = "content1";
 			tmp["html"].Value = @"
-<div class=""span-17 left-2 last bottom-1 top-1 btn-group"">
+<div class=""span-17 left-2 last bottom-1 btn-group"">
 {{
 button=>back
   text=><<
