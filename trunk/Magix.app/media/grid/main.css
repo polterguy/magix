@@ -72,6 +72,8 @@ label {font-weight:bold;}
 .error {color:#d33;}
 .clear {clear:both;}
 
+pre {background-color:#fafafa;padding-top:18px;padding-bottom:18px;}
+
 /* grid system */
 .container {width:950px;margin:0 auto;position:relative;}
 .showgrid {background:url(grid.png);overflow:auto;}

@@ -57,49 +57,49 @@ link-button=>av5
 }} allows you to see active events overridden to other servers</p>
 <div class="btn-group">
 {{
-link-button=>keywords
+button=>keywords
   text=>hyper lisp
-  css=>btn btn-info
+  css=>span-3
   onclick
     magix.admin.run-file
       file=>core-scripts/tools/inspect-execute.hl
     magix.viewport.clear-controls
       container=>modal
-link-button=>tests
+button=>tests
   text=>tests
-  css=>btn btn-info
+  css=>span-3
   onclick
     magix.admin.run-file
       file=>core-scripts/tools/inspect-unit-tests.hl
     magix.viewport.clear-controls
       container=>modal
-link-button=>activeevents
+button=>activeevents
   text=>active events
-  css=>btn btn-info
+  css=>span-3
   onclick
     magix.admin.run-file
       file=>core-scripts/tools/inspect-events.hl
     magix.viewport.clear-controls
       container=>modal
-link-button=>activeevents2
+button=>activeevents2
   text=>overridden
-  css=>btn btn-info
+  css=>span-3
   onclick
     magix.admin.run-file
       file=>core-scripts/tools/inspect-overridden-events.hl
     magix.viewport.clear-controls
       container=>modal
-link-button=>activeevents3
+button=>activeevents3
   text=>open
-  css=>btn btn-info
+  css=>span-3
   onclick
     magix.admin.run-file
       file=>core-scripts/tools/inspect-open-events.hl
     magix.viewport.clear-controls
       container=>modal
-link-button=>activeevents4
+button=>activeevents4
   text=>remoted
-  css=>btn btn-info
+  css=>span-3
   onclick
     magix.admin.run-file
       file=>core-scripts/tools/inspect-remoted-events.hl
@@ -107,12 +107,12 @@ link-button=>activeevents4
       container=>modal
 }}
 </div>
-<p style="margin-top:20px;">some more tools for your convenience</p>
+<p class="top-1 span-19 last">some more tools for your convenience</p>
 <div class="btn-group">
 {{
-link-button=>mmleditor
+button=>mmleditor
   text=>mml editor
-  css=>btn btn-info
+  css=>span-3
   onfirstload
     magix.help.set-next
       next=>help-system/developers/autistic.mml
@@ -123,38 +123,38 @@ link-button=>mmleditor
       file=>core-scripts/tools/magix-markup-editor.hl
     magix.viewport.clear-controls
       container=>modal
-link-button=>webcontrols
+button=>webcontrols
   text=>web controls
-  css=>btn btn-info
+  css=>span-3
   onclick
     magix.admin.run-file
       file=>core-scripts/tools/inspect-web-controls.hl
     magix.viewport.clear-controls
       container=>modal
-link-button=>forms
+button=>forms
   text=>forms
-  css=>btn btn-info
+  css=>span-3
   onclick
     magix.admin.run-file
       file=>core-scripts/forms/forms-builder.hl
-link-button=>pages
+button=>pages
   text=>pages
-  css=>btn btn-info
+  css=>span-3
   onclick
     magix.admin.run-file
       file=>core-scripts/pages/pages-editor.hl
-link-button=>trace
+button=>trace
   text=>trace
-  css=>btn btn-info
+  css=>span-3
   onclick
     magix.viewport.load-module
       container=>trace
       name=>Magix.admin.EventSniffer
     magix.viewport.clear-controls
       container=>modal
-link-button=>traceRemove
+button=>traceRemove
   text=>remove tracer
-  css=>btn btn-info
+  css=>span-3
   onclick
     magix.viewport.clear-controls
       container=>trace

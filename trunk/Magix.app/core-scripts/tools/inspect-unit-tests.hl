@@ -2,14 +2,10 @@
 event:magix.execute
 
 inspect=>@"Will show a screen of all the 
-unit tests in the system, and allow
+magix.execute active events in the system, and allow
 the user to inspect them by clicking
 them"
 
-magix.forms.create-web-page
-  container=>header
-  html=>@"<h1 class=""span9 offset3"">unit tests</h1>"
-  form-id=>header
 magix.admin.get-active-events
   begins-with=>magix.test.
 set=>[magix.admin.get-active-events].Name
@@ -17,7 +13,7 @@ set=>[magix.admin.get-active-events].Name
 for-each=>[Data][events]
   _tpl
     link-button
-      css=>span2 btn btn-small btn-left
+      css=>span-6
       text
       onclick
         void.foo
@@ -57,63 +53,48 @@ set=>[cf][controls][panel2].Name
   value=>panel
 set=>[cf].Name
   value=>magix.forms.create-form
+magix.viewport.clear-controls
+  container=>content2
 cf
   form-id=>form1
+  css=>span-19 last bottom-5
   container=>content1
   controls
     panel2
-      css=>span5
+      css=>span-13
       controls
         label=>header
-          text=>name of keyword active event
-          css=>span5
-          tag=>h4
+          text=>name of active event
+          css=>span-13
+          tag=>h3
         label=>code
-          css=>span5
+          css=>span-13
           text=>code example
           tag=>pre
-        panel=>wrp
-          css=>input-append span3 offset2
-          controls
-            link-button=>run
-              text=>inspect
-              css=>btn btn-primary
-              onclick
-                magix.forms.get-value
-                  form-id=>form1
-                  id=>code
-                set=>[.ip][..][magix.admin.load-executor-code][code].Value
-                  value=>[.ip][..][magix.forms.get-value][value].Value
-                magix.admin.load-executor-code
-                  code
-            link-button=>run2
-              text=>run
-              css=>btn btn-primary
-              onclick
-                magix.forms.get-value
-                  form-id=>form1
-                  id=>header
-                set=>[.ip][..][evtName].Name
-                  value=>[.ip][..][magix.forms.get-value][value].Value
-                evtName
-                magix.viewport.show-message
-                  message=>success
-                  color=>LightGreen
-                  header=>finished
-                  time=>500
-            link-button=>run3
-              text=>run all
-              css=>btn btn-primary
-              onclick
-                magix.tests.run
+        button=>run
+          text=>inspect
+          css=>span-2
+          onclick
+            magix.forms.get-value
+              form-id=>form1
+              id=>code
+            set=>[.ip][..][magix.admin.load-executor-code][code].Value
+              value=>[.ip][..][magix.forms.get-value][value].Value
+            magix.admin.load-executor-code
+              code
+        button=>run3
+          text=>run all
+          css=>span-2
+          onclick
+            magix.tests.run
         label=>lblDesc
-          tag=>h4
-          css=>span5
+          css=>span-13 top-2
+          tag=>label
           text=>description
         label=>desc
-          css=>span5
-          text=>@"description of your unit test.&nbsp;&nbsp;
-click any of the unit test active events to the right to inspect them"
+          css=>span-13 bottom-5
+          text=>@"description of your magix.execute keyword.&nbsp;&nbsp;
+click any of the keyword active events to the right to inspect them"
     panel=>wrp
-      css=>span2 offset1
+      css=>span-6 last
       controls
