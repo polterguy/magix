@@ -14,8 +14,6 @@ hidden=>dummy
   onfirstload
     magix.help.set-next
       next=>help-system/management/adhd.mml
-    magix.viewport.change-modal-header
-      header=>maintenance
 }}
 
 

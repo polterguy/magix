@@ -101,8 +101,6 @@ link-button=>lnkall
   onfirstload
     magix.help.set-next
       next=>help-system/info.mml
-    magix.viewport.change-modal-header
-      header=>welcome to magix
   onclick
     magix.admin.run-file
       file=>zigano/admin/tools/inspect-events.hl

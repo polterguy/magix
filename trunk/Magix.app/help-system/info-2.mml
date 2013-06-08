@@ -15,7 +15,5 @@ hidden=>dummy
   onfirstload
     magix.help.set-next
       next=>help-system/tools.mml
-    magix.viewport.change-modal-header
-      header=>conceptual video
 }}
 

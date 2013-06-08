@@ -41,8 +41,6 @@ button=>lnk5
   onfirstload
     magix.help.set-next
       next=>help-system/developers/handler-sample.mml
-    magix.viewport.change-modal-header
-      header=>active events
   onclick
     magix.help.open-file
       file=>help-system/developers/the-point.mml
