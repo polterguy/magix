@@ -8,24 +8,18 @@ uses header for editor and menu in span12 for
 containers.&nbsp;&nbsp;clears content for simplicity"
 
 magix.viewport.clear-controls
-  container=>menu
-magix.viewport.clear-controls
-  container=>content1
+  container=>content2
 magix.forms.create-web-page
-  container=>header
+  container=>content1
   form-id=>mmleditor
-  css=>span12
+  css=>span-19 last
   html=>@"
-<h1>magix markup editor</h1>
-
-<p>type in magix markup language in textbox below, and click preview to see
-result below</p>
 {{
 text-area=>markup
-  css=>span12 input-block-level monospaced
-  rows=>15
+  css=>span-19 top-3 min-height-13
+  place-holder=>type in magix markup language here ...
 button=>preview
-  css=>offset10 btn btn-info btn-large
+  css=>span-3 left-16 last
   text=>preview
   onclick
     magix.forms.get-value
@@ -34,8 +28,8 @@ button=>preview
     set=>[magix.forms.create-web-page][html].Value
       value=>[magix.forms.get-value][value].Value
     magix.forms.create-web-page
-      container=>menu
+      container=>content2
       form-id=>wyc
-      css=>span12
+      css=>span-24
       html
 }}"

@@ -2,22 +2,18 @@
 event:magix.execute
 
 inspect=>@"Will show a screen of all the 
-web controls in the system, and allow
+magix.execute active events in the system, and allow
 the user to inspect them by clicking
 them"
 
-magix.forms.create-web-page
-  container=>header
-  html=>@"<h1 class=""span9 offset3"">installed web controls</h1>"
-  form-id=>header
 magix.admin.get-active-events
   begins-with=>magix.forms.controls.
 set=>[magix.admin.get-active-events].Name
-  value=>_data
-for-each=>[_data][events]
+  value=>Data
+for-each=>[Data][events]
   _tpl
     link-button
-      css=>span2 btn btn-small btn-left
+      css=>span-6
       text
       onclick
         void.foo
@@ -57,24 +53,27 @@ set=>[cf][controls][panel2].Name
   value=>panel
 set=>[cf].Name
   value=>magix.forms.create-form
+magix.viewport.clear-controls
+  container=>content2
 cf
   form-id=>form1
+  css=>span-19 last bottom-5
   container=>content1
   controls
     panel2
-      css=>span5
+      css=>span-13
       controls
         label=>header
-          text=>name of keyword active event
-          css=>span5
-          tag=>h4
+          text=>name of active event
+          css=>span-13
+          tag=>h3
         label=>code
-          css=>span5
+          css=>span-13
           text=>code example
           tag=>pre
-        link-button=>run
+        button=>run
           text=>inspect
-          css=>btn btn-info btn-block-level span1 offset4
+          css=>span-2
           onclick
             magix.forms.get-value
               form-id=>form1
@@ -84,13 +83,13 @@ cf
             magix.admin.load-executor-code
               code
         label=>lblDesc
-          tag=>h4
-          css=>span5
+          css=>span-13 top-2
+          tag=>label
           text=>description
         label=>desc
-          css=>span5
-          text=>@"description of your web control.&nbsp;&nbsp;
-click any of the web controls active events to the right to inspect them"
+          css=>span-13 bottom-5
+          text=>@"description of your magix.execute keyword.&nbsp;&nbsp;
+click any of the keyword active events to the right to inspect them"
     panel=>wrp
-      css=>span2 offset1
+      css=>span-6 last
       controls

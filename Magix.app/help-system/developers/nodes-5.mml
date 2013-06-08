@@ -23,6 +23,9 @@ just return 'x' again, for the [y] to return back to 'y' node, and return its na
 returned value will be the node itself, .Name returns the name, .Value returns the value of the node,
 .Count the number of child nodes</p>
 
+<p>if your expression returns a number, integer or decimal, you can add, subtract, multiply and divide it using +, -, * and / operators, e.g.; 
+[my-data][some-integer].Value+10</p>
+
 {{
 hidden=>dummy
   onfirstload

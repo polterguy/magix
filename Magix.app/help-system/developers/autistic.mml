@@ -11,52 +11,51 @@ application server park</p>
 
 <div class="btn-group">
 {{
-
-link-button=>lnk
+button=>lnk
   text=>active events
-  css=>btn btn-primary
+  css=>span-3
   onclick
     magix.help.open-file
       file=>help-system/developers/active-events.mml
 
-link-button=>lnk1
+button=>lnk1
   text=>mvc
-  css=>btn btn-primary
+  css=>span-2
   onclick
     magix.help.open-file
       file=>help-system/developers/mvc.mml
 
-link-button=>lnk2
+button=>lnk2
   text=>ajax
-  css=>btn btn-primary
+  css=>span-2
   onclick
     magix.help.open-file
       file=>help-system/developers/ajax.mml
 
-link-button=>lnk3
+button=>lnk3
   text=>web
-  css=>btn btn-primary
+  css=>span-2
   onclick
     magix.help.open-file
       file=>help-system/developers/web.mml
 
-link-button=>lnk4
+button=>lnk4
   text=>structure
-  css=>btn btn-primary
+  css=>span-3
   onclick
     magix.help.open-file
       file=>help-system/developers/project-structure.mml
 
-link-button=>lnk5
+button=>lnk5
   text=>dynamic
-  css=>btn btn-primary
+  css=>span-3
   onclick
     magix.help.open-file
       file=>help-system/developers/dynamic.mml
 
-link-button=>lnk6
+button=>lnk6
   text=>maintenance
-  css=>btn btn-primary
+  css=>span-3
   onfirstload
     magix.help.set-next
       next=>help-system/developers/active-events.mml
