@@ -206,8 +206,6 @@
   <ItemGroup>
     <Folder Include="media\" />
     <Folder Include="core-scripts\" />
-    <Folder Include="core-scripts\forms\" />
-    <Folder Include="core-scripts\pages\" />
     <Folder Include="code\" />
     <Folder Include="help-system\" />
     <Folder Include="help-system\developers\" />
@@ -223,11 +221,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="media\xing-wysihtml5\LICENSE" />
-    <None Include="core-scripts\pages\pages-editor.hl" />
-    <None Include="core-scripts\forms\forms-builder.hl" />
-    <None Include="core-scripts\forms\forms-builder-files.hl" />
-    <None Include="core-scripts\forms\forms-builder-properties.hl" />
-    <None Include="core-scripts\forms\forms-builder-widgets.hl" />
     <None Include="help-system\index.mml" />
     <None Include="help-system\developers\autistic.mml" />
     <None Include="help-system\developers\active-events.mml" />

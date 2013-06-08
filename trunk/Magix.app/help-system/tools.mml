@@ -116,13 +116,9 @@ button=>mmleditor
   onfirstload
     magix.help.set-next
       next=>help-system/developers/autistic.mml
-    magix.viewport.change-modal-header
-      header=>tools
   onclick
     magix.admin.run-file
       file=>core-scripts/tools/magix-markup-editor.hl
-    magix.viewport.clear-controls
-      container=>modal
 button=>webcontrols
   text=>web controls
   css=>span-3
@@ -131,27 +127,14 @@ button=>webcontrols
       file=>core-scripts/tools/inspect-web-controls.hl
     magix.viewport.clear-controls
       container=>modal
-button=>forms
-  text=>forms
-  css=>span-3
-  onclick
-    magix.admin.run-file
-      file=>core-scripts/forms/forms-builder.hl
-button=>pages
-  text=>pages
-  css=>span-3
-  onclick
-    magix.admin.run-file
-      file=>core-scripts/pages/pages-editor.hl
 button=>trace
   text=>trace
   css=>span-3
   onclick
     magix.viewport.load-module
       container=>trace
+      css=>span-24 top-3 bottom-3
       name=>Magix.admin.EventSniffer
-    magix.viewport.clear-controls
-      container=>modal
 button=>traceRemove
   text=>remove tracer
   css=>span-3
