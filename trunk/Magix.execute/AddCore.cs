@@ -22,6 +22,7 @@ namespace Magix.execute
 		{
 			if (ShouldInspect(e.Params))
 			{
+				e.Params.Clear();
 				e.Params["event:magix.execute"].Value = null;
 				e.Params["inspect"].Value = @"creates a copy of the node returned by the 
 expression in the [value] node, and appends it into the 

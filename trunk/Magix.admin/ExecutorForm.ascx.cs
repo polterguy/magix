@@ -32,7 +32,7 @@ namespace Magix.admin
 		protected TextArea txtIn;
 		protected TextArea txtOut;
 		protected Button run;
-		protected System.Web.UI.HtmlControls.HtmlInputText activeEvent;
+		protected TextBox activeEvent;
 
 		protected void Page_Load (object sender, EventArgs e)
 		{
@@ -45,9 +45,9 @@ namespace Magix.admin
 				string code = Page.Request["code"];
 
 				if (string.IsNullOrEmpty(evt))
-					activeEvent.Value = "magix.viewport.show-message";
+					activeEvent.Text = "magix.viewport.show-message";
 				else
-					activeEvent.Value = evt;
+					activeEvent.Text = evt;
 
 				if (string.IsNullOrEmpty (code))
 					txtIn.Text = "inspect";
@@ -72,7 +72,9 @@ namespace Magix.admin
 					"magix.viewport.include-client-file",
 					tmp);
 
-				activeEvent.DataBind();
+				activeEvent.Attributes.Add(new AttributeControl.Attribute("data-provide", "typeahead"));
+				activeEvent.Attributes.Add(new AttributeControl.Attribute("data-items", "10"));
+				activeEvent.Attributes.Add(new AttributeControl.Attribute("data-source", GetDataSource()));
 			}
 		}
 
@@ -99,6 +101,7 @@ namespace Magix.admin
 		{
 			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
+				e.Params.Clear();
 				e.Params["event:magix.admin.set-code"].Value = null;
 				e.Params["inspect"].Value = @"sets the code to what is given in [code]
 in the active event executor.&nbsp;&nbsp;not thread safe";
@@ -123,26 +126,27 @@ if=>[Data].Value==thomas
 		{
 			if (txtIn.Text != "")
 			{
-				string wholeTxt = txtIn.Text;
-				if (wholeTxt.TrimStart().StartsWith("event:"))
-				{
-					string method = wholeTxt.Split (':')[1];
-					method = method.Substring(0, method.Contains("\n") ? method.IndexOf("\n") : method.Length);
-					activeEvent.Value = method;
-					wholeTxt = wholeTxt.Contains("\n") ? 
-						wholeTxt.Substring(wholeTxt.IndexOf("\n")).TrimStart() : 
-							"";
-				}
-
 				Node tmp = new Node();
-				tmp["code"].Value = wholeTxt;
+				tmp["code"].Value = txtIn.Text;
 
 				RaiseEvent(
 					"magix.code.code-2-node",
 					tmp);
 
+				foreach (Node idx in tmp["json"].Get<Node>())
+				{
+					if (idx.Name.StartsWith("event:"))
+					{
+						activeEvent.Text = idx.Name.Substring(6);
+						tmp["json"].Get<Node>().Remove(idx);
+						if (tmp["json"].Get<Node>().Contains("inspect"))
+							tmp["json"].Get<Node>().Remove(tmp["json"].Get<Node>()["inspect"]);
+						break;
+					}
+				}
+
 				RaiseEvent(
-					activeEvent.Value, 
+					activeEvent.Text, 
 					tmp["json"].Get<Node>());
 
 				RaiseEvent(
@@ -153,7 +157,7 @@ if=>[Data].Value==thomas
 			}
 			else
 			{
-				Node node = RaiseEvent(activeEvent.Value);
+				Node node = RaiseEvent(activeEvent.Text);
 
 				Node tmp = new Node();
 				tmp["json"].Value = node;

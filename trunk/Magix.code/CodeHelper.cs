@@ -26,6 +26,7 @@ namespace Magix.execute
 		{
 			if (ShouldInspect(e.Params))
 			{
+				e.Params.Clear();
 				e.Params["event:magix.code.node-2-code"].Value = null;
 				e.Params["inspect"].Value = @"will transform the [json] node to 
 code syntax, and return in [code].&nbsp;&nbsp;code returned will be the 
