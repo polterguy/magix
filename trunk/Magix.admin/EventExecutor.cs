@@ -151,11 +151,11 @@ defaulting to content1.&nbsp;&nbsp;not thread safe";
 		{
 			if (ShouldInspect(e.Params))
 			{
+				e.Params["event:magix.admin.open-event-sniffer"].Value = null;
 				e.Params["inspect"].Value = @"will open active event sniffer, 
 allowing you to spy on all active events being raised in your system.&nbsp;&nbsp;
 [container] instructs magix which viewport container to load the module in.&nbsp;&nbsp;
 default container is header.&nbsp;&nbsp;not thread safe";
-				e.Params["event:magix.admin.open-event-sniffer"].Value = null;
 				e.Params["container"].Value = "content1";
 				return;
 			}
@@ -214,9 +214,9 @@ if=>[_data].Value==thomas
 		{
 			if (ShouldInspect(e.Params))
 			{
+				e.Params["event:magix.admin.run-file"].Value = null;
 				e.Params["inspect"].Value = @"runs the hyper lisp [file] given.&nbsp;&nbsp;
 thread safe";
-				e.Params["event:magix.admin.run-file"].Value = null;
 				e.Params["file"].Value = "core-scripts/some-script.hl";
 				return;
 			}
@@ -272,9 +272,9 @@ thread safe";
 		{
 			if (ShouldInspect(e.Params))
 			{
+				e.Params["event:magix.admin.run-script"].Value = null;
 				e.Params["inspect"].Value = @"runs the [script] given, and tries to set the 
 active event executor to the hyper lisp code given in [script].&nbsp;&nbsp;thread safe";
-				e.Params["event:magix.admin.run-script"].Value = null;
 				e.Params["script"].Value =  @"
 event:magix.execute
 _data=>thomas
