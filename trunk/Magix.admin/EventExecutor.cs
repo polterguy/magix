@@ -158,14 +158,22 @@ defaulting to content1.&nbsp;&nbsp;not thread safe";
 				e.Params["inspect"].Value = @"will open active event sniffer, 
 allowing you to spy on all active events being raised in your system.&nbsp;&nbsp;
 [container] instructs magix which viewport container to load the module in.&nbsp;&nbsp;
-default container is header.&nbsp;&nbsp;not thread safe";
-				e.Params["container"].Value = "content1";
+default container is trace.&nbsp;&nbsp;
+[css] instructs magix about which css classes to load the module with, 
+default is span-24.&nbsp;&nbsp;not thread safe";
+				e.Params["container"].Value = "trace";
+				e.Params["css"].Value = "span-24";
 				return;
 			}
 
-			LoadModule (
+			Node tmp = new Node();
+
+			tmp["css"].Value = e.Params.Contains("css") ? e.Params["css"].Get<string>() : "span-24";
+
+			LoadModule(
 				"Magix.admin.EventSniffer", 
-				e.Params["container"].Get<string>("header"));
+				e.Params["container"].Get<string>("trace"),
+				tmp);
 		}
 
 		/**
