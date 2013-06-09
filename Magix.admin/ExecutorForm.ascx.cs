@@ -73,7 +73,7 @@ namespace Magix.admin
 					tmp);
 
 				activeEvent.Attributes.Add(new AttributeControl.Attribute("data-provide", "typeahead"));
-				activeEvent.Attributes.Add(new AttributeControl.Attribute("data-items", "10"));
+				activeEvent.Attributes.Add(new AttributeControl.Attribute("data-items", "42"));
 				activeEvent.Attributes.Add(new AttributeControl.Attribute("data-source", GetDataSource()));
 			}
 		}

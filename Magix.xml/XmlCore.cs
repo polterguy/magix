@@ -27,7 +27,11 @@ namespace Magix.execute
 				e.Params["event:magix.xml.xml-2-node"].Value = null;
 				e.Params["inspect"].Value = @"will return 
 [dom] node structure, parsed from xml in [xml].&nbsp;&nbsp;thread safe";
-				e.Params["xml"].Value = "some-get-parameter";
+				e.Params["xml"].Value = @"
+<xml>
+  <value1>howdy</value1>
+  <value2>hello</value2>
+</xml>";
 				return;
 			}
 
