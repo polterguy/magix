@@ -6,8 +6,6 @@ link-button=>keywords2
   onlick
     magix.admin.run-file
       file=>zigano/admin/tools/inspect-execute.hl
-    magix.viewport.clear-controls
-      container=>modal
 }} allows you to 
 see all hyper lisp keywords.&nbsp;&nbsp;
 {{
@@ -16,8 +14,6 @@ link-button=>tests2
   onclick
     magix.admin.run-file
       file=>zigano/admin/tools/inspect-unit-tests.hl
-    magix.viewport.clear-controls
-      container=>modal
 }} opens unit tests and runs them.&nbsp;&nbsp;
 {{
 link-button=>av2
@@ -25,8 +21,6 @@ link-button=>av2
   onclick
     magix.admin.run-file
       file=>zigano/admin/tools/inspect-events.hl
-    magix.viewport.clear-controls
-      container=>modal
 }} allows you to see all active events in system.&nbsp;&nbsp;
 {{
 link-button=>av3
@@ -34,8 +28,6 @@ link-button=>av3
   onclick
     magix.admin.run-file
       file=>zigano/admin/tools/inspect-overridden-events.hl
-    magix.viewport.clear-controls
-      container=>modal
 }} allows you to see all overridden active events.&nbsp;&nbsp;
 {{
 link-button=>av4
@@ -43,8 +35,6 @@ link-button=>av4
   onclick
     magix.admin.run-file
       file=>zigano/admin/tools/inspect-open-events.hl
-    magix.viewport.clear-controls
-      container=>modal
 }} allows you to see remotely exposed active events.&nbsp;&nbsp;
 {{
 link-button=>av5
@@ -52,8 +42,6 @@ link-button=>av5
   onclick
     magix.admin.run-file
       file=>zigano/admin/tools/inspect-remoted-events.hl
-    magix.viewport.clear-controls
-      container=>modal
 }} allows you to see active events overridden to other servers</p>
 <div class="btn-group">
 {{
@@ -63,48 +51,36 @@ button=>keywords
   onclick
     magix.admin.run-file
       file=>zigano/admin/tools/inspect-execute.hl
-    magix.viewport.clear-controls
-      container=>modal
 button=>tests
   text=>tests
   css=>span-3
   onclick
     magix.admin.run-file
       file=>zigano/admin/tools/inspect-unit-tests.hl
-    magix.viewport.clear-controls
-      container=>modal
 button=>activeevents
   text=>active events
   css=>span-3
   onclick
     magix.admin.run-file
       file=>zigano/admin/tools/inspect-events.hl
-    magix.viewport.clear-controls
-      container=>modal
 button=>activeevents2
   text=>overridden
   css=>span-3
   onclick
     magix.admin.run-file
       file=>zigano/admin/tools/inspect-overridden-events.hl
-    magix.viewport.clear-controls
-      container=>modal
 button=>activeevents3
   text=>open
   css=>span-3
   onclick
     magix.admin.run-file
       file=>zigano/admin/tools/inspect-open-events.hl
-    magix.viewport.clear-controls
-      container=>modal
 button=>activeevents4
   text=>remoted
   css=>span-3
   onclick
     magix.admin.run-file
       file=>zigano/admin/tools/inspect-remoted-events.hl
-    magix.viewport.clear-controls
-      container=>modal
 }}
 </div>
 <p class="top-1 span-19 last">some more tools for your convenience</p>
@@ -125,8 +101,6 @@ button=>webcontrols
   onclick
     magix.admin.run-file
       file=>zigano/admin/tools/inspect-web-controls.hl
-    magix.viewport.clear-controls
-      container=>modal
 button=>trace
   text=>trace
   css=>span-3
@@ -141,7 +115,13 @@ button=>traceRemove
   onclick
     magix.viewport.clear-controls
       container=>trace
+button=>executor
+  text=>executor
+  css=>span-3
+  onclick
+    magix.admin.open-event-executor
+      css=>span-19 last top-3
     magix.viewport.clear-controls
-      container=>modal
+      container=>content2
 }}</div>
 

@@ -71,6 +71,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		references\Db4objects.Db4o.NativeQueries.dll = references\Db4objects.Db4o.NativeQueries.dll
 	EndProjectSection
 EndProject
+Project("{9344BDBB-3E7F-41FC-A0DD-8665D75EE146}") = "Pakker", "Pakker.mdproj", "{7DFFF6C5-2436-4C35-A9AD-58743CB217FA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -129,6 +131,8 @@ Global
 		{7BBD5BD2-E3FE-42C2-94F8-878F4156A03E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7BBD5BD2-E3FE-42C2-94F8-878F4156A03E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7BBD5BD2-E3FE-42C2-94F8-878F4156A03E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7DFFF6C5-2436-4C35-A9AD-58743CB217FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7DFFF6C5-2436-4C35-A9AD-58743CB217FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8E639EDC-059D-4BB6-B905-E3611AAC2E24}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8E639EDC-059D-4BB6-B905-E3611AAC2E24}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8E639EDC-059D-4BB6-B905-E3611AAC2E24}.Release|Any CPU.ActiveCfg = Release|Any CPU

@@ -54,7 +54,6 @@
     <Content Include="media\images\help-files\module-properties.png" />
     <Content Include="media\images\help-files\mux.png" />
     <Content Include="media\images\help-files\new-project.png" />
-    <Content Include="media\main.css" />
     <Content Include="media\images\av-background.png" />
     <Content Include="media\xing-wysihtml5\parser_rules\advanced.js" />
     <Content Include="media\xing-wysihtml5\parser_rules\simple.js" />
@@ -63,7 +62,6 @@
     <Content Include="media\xing-wysihtml5\website\img\spr_toolbar_icons_r1.png" />
     <Content Include="media\xing-wysihtml5\dist\wysihtml5-0.4.0pre.js" />
     <Content Include="media\xing-wysihtml5\dist\wysihtml5-0.4.0pre.min.js" />
-    <Content Include="core-scripts\web.config" />
     <Content Include="help-system\web.config" />
     <Content Include="media\grid\main.css" />
     <Content Include="media\grid\grid.png" />
@@ -206,13 +204,11 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="media\" />
-    <Folder Include="core-scripts\" />
     <Folder Include="code\" />
     <Folder Include="help-system\" />
     <Folder Include="help-system\developers\" />
     <Folder Include="help-system\management\" />
     <Folder Include="help-system\mortal\" />
-    <Folder Include="core-scripts\misc\" />
     <Folder Include="zigano\" />
     <Folder Include="media\grid\" />
     <Folder Include="zigano\admin\" />
@@ -267,15 +263,10 @@
     <None Include="help-system\developers\the-point.mml" />
     <None Include="help-system\developers\web.mml" />
     <None Include="help-system\tools.mml" />
-    <None Include="core-scripts\misc\main-menu.hl" />
-    <None Include="core-scripts\misc\login-box.hl" />
     <None Include="zigano\index.hl" />
     <None Include="zigano\admin\menu.mml" />
     <None Include="zigano\admin\edit-roles.mml" />
     <None Include="zigano\admin\edit-users.mml" />
-    <None Include="zigano\admin\roles-grid.hl">
-      <DependentUpon>users-grid.hl</DependentUpon>
-    </None>
     <None Include="zigano\admin\users-grid.hl" />
     <None Include="zigano\admin\edit-single-user.hl" />
     <None Include="zigano\admin\server-log-grid.hl" />
@@ -298,5 +289,6 @@
     <None Include="zigano\admin\tools\inspect-web-controls.hl" />
     <None Include="zigano\admin\tools\magix-markup-editor.hl" />
     <None Include="zigano\admin\tools\rss-parser.hl" />
+    <None Include="zigano\admin\tools\roles-grid.hl" />
   </ItemGroup>
 </Project>
