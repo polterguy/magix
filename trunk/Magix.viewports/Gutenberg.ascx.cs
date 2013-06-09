@@ -50,6 +50,7 @@ namespace Magix.viewports
 				e.Params["inspect"].Value = @"shows a message box to the 
 end user for some seconds.&nbsp;&nbsp;not thread safe";
 				e.Params["code"].Value = "code goes underneath here";
+				e.Params["time"].Value = 3000;
 				return;
 			}
 
