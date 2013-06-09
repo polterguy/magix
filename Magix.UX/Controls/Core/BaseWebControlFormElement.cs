@@ -18,7 +18,7 @@ namespace Magix.UX.Widgets.Core
      * and other internals things. Inherit from this one if you intend to create an
      * Ajax Widget which wraps an HTML FORM element.
      */
-    public abstract class BaseWebControlFormElement : BaseWebControl
+    public abstract class BaseWebControlFormElement : AttributeControl
     {
         private static readonly string[] _handlerNames = new string[]
         {

@@ -18,15 +18,11 @@
 		ID="exeWrp"
 		DefaultWidget="run"
 		CssClass="btn-group span-19 last">
-		<input
+		<mux:TextBox
 			id="activeEvent"
 			runat="server"
-			type="text"
-			placeholder="active event ..."
-			class="span-13 monospaced input-large"
-			data-provide="typeahead" 
-			data-items="10" 
-			data-source='<%#GetDataSource()%>' />
+			PlaceHolder="active event ..."
+			CssClass="span-13 monospaced input-large" />
 		<mux:Button
 			runat="server"
 			id="run"

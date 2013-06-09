@@ -28,6 +28,7 @@ namespace Magix.admin
 		{
 			if (ShouldInspect(e.Params))
 			{
+				e.Params.Clear();
 				e.Params["event:magix.admin.get-active-events"].Value = null;
 				e.Params["all"].Value = false;
 				e.Params["open"].Value = false;
@@ -121,6 +122,7 @@ don't match the [begins-with] parameter.&nbsp;&nbsp;thread safe";
 		{
 			if (ShouldInspect(e.Params))
 			{
+				e.Params.Clear();
 				e.Params["event:magix.admin.open-even-executor"].Value = null;
 				e.Params["container"].Value = "content1";
 				e.Params["inspect"].Value = @"opens the active event executor module with [css], 
@@ -151,6 +153,7 @@ defaulting to content1.&nbsp;&nbsp;not thread safe";
 		{
 			if (ShouldInspect(e.Params))
 			{
+				e.Params.Clear();
 				e.Params["event:magix.admin.open-event-sniffer"].Value = null;
 				e.Params["inspect"].Value = @"will open active event sniffer, 
 allowing you to spy on all active events being raised in your system.&nbsp;&nbsp;
@@ -214,6 +217,7 @@ if=>[_data].Value==thomas
 		{
 			if (ShouldInspect(e.Params))
 			{
+				e.Params.Clear();
 				e.Params["event:magix.admin.run-file"].Value = null;
 				e.Params["inspect"].Value = @"runs the hyper lisp [file] given.&nbsp;&nbsp;
 thread safe";
@@ -272,6 +276,7 @@ thread safe";
 		{
 			if (ShouldInspect(e.Params))
 			{
+				e.Params.Clear();
 				e.Params["event:magix.admin.run-script"].Value = null;
 				e.Params["inspect"].Value = @"runs the [script] given, and tries to set the 
 active event executor to the hyper lisp code given in [script].&nbsp;&nbsp;thread safe";

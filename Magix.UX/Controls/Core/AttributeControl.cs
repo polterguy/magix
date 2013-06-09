@@ -23,8 +23,20 @@ namespace Magix.UX.Widgets.Core
 		/**
 		 * One custom attribute
 		 */
+		[Serializable]
 		public class Attribute
 		{
+			public Attribute ()
+			{
+				
+			}
+
+			public Attribute (string name, string value)
+			{
+				Name = name;
+				Value = value;
+			}
+
 			/**
 			 * Name of attribute
 			 */
@@ -48,7 +60,7 @@ namespace Magix.UX.Widgets.Core
 		/**
 		 * List of custom attributes associated with control
 		 */
-		List<Attribute> Attributes
+		public List<Attribute> Attributes
 		{
 			get
 			{
