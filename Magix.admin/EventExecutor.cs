@@ -160,9 +160,9 @@ allowing you to spy on all active events being raised in your system.&nbsp;&nbsp
 [container] instructs magix which viewport container to load the module in.&nbsp;&nbsp;
 default container is trace.&nbsp;&nbsp;
 [css] instructs magix about which css classes to load the module with, 
-default is span-24.&nbsp;&nbsp;not thread safe";
+default is span-24 top-2.&nbsp;&nbsp;not thread safe";
 				e.Params["container"].Value = "trace";
-				e.Params["css"].Value = "span-24";
+				e.Params["css"].Value = "span-24 top-2";
 				return;
 			}
 
