@@ -6,24 +6,24 @@
     AutoEventWireup="true" 
     Inherits="Magix.admin.ExecutorForm" %>
 
-<div class="span9">
+<div class="fill-width">
 	<mux:TextArea
 		runat="server"
 		id="txtIn"
-		Rows="12"
+		Rows="15"
 		PlaceHolder="input nodes ..."
-		CssClass="span9 input-block-level monospaced" />
+		CssClass="fill-width monospaced" />
 	<mux:Panel
 		runat="server"
 		ID="exeWrp"
 		DefaultWidget="run"
-		CssClass="input-append span9">
+		CssClass="btn-group span-19 last">
 		<input
 			id="activeEvent"
 			runat="server"
 			type="text"
 			placeholder="active event ..."
-			class="span5 monospaced"
+			class="span-13 monospaced input-large"
 			data-provide="typeahead" 
 			data-items="10" 
 			data-source='<%#GetDataSource()%>' />
@@ -32,20 +32,20 @@
 			id="run"
 			Text="execute"
 			AccessKey="X"
-			CssClass="span2 btn btn-primary"
+			CssClass="span-3 btn-large"
 			OnClick="run_Click" />
 		<mux:Button
 			runat="server"
 			id="move"
 			Text="move up"
 			AccessKey="U"
-			CssClass="span2 btn btn-primary"
+			CssClass="span-3 last btn-large"
 			OnClick="move_Click" />
 	</mux:Panel>
 	<mux:TextArea
 		runat="server"
 		id="txtOut"
-		Rows="8"
+		Rows="15"
 		PlaceHolder="output nodes ..."
-		CssClass="span9 input-block-level monospaced" />
+		CssClass="fill-width" />
 </div>

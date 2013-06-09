@@ -34,17 +34,6 @@ namespace Magix.admin
 		protected Button run;
 		protected System.Web.UI.HtmlControls.HtmlInputText activeEvent;
 
-		public override void InitialLoading (Node node)
-		{
-			base.InitialLoading (node);
-
-			Load += delegate
-			{
-				if (node.Contains("grid") && node["grid"].Get<bool>())
-					txtIn.CssClass += " code-grid";
-			};
-		}
-
 		protected void Page_Load (object sender, EventArgs e)
 		{
 			if (this.FirstLoad)
@@ -67,6 +56,7 @@ namespace Magix.admin
 
 				// Including JavaScript files ...
 				Node tmp = new Node();
+
 				tmp["type"].Value = "javascript";
 				tmp["file"].Value = "media/bootstrap/js/jQuery.js";
 
@@ -131,8 +121,6 @@ if=>[Data].Value==thomas
 
 		protected void run_Click(object sender, EventArgs e)
 		{
-			//AjaxManager.Instance.WriterAtBack.Write(activeEvent.ClientID + ".focus();");
-			//AjaxManager.Instance.WriterAtBack.Write(activeEvent.ClientID + ".select();");
 			if (txtIn.Text != "")
 			{
 				string wholeTxt = txtIn.Text;

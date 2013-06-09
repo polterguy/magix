@@ -123,14 +123,15 @@ don't match the [begins-with] parameter.&nbsp;&nbsp;thread safe";
 			{
 				e.Params["event:magix.admin.open-even-executor"].Value = null;
 				e.Params["container"].Value = "content1";
-				e.Params["inspect"].Value = @"opens the active event executor module 
-in [container] viewport container, defaulting being content1.&nbsp;&nbsp;not thread safe";
+				e.Params["inspect"].Value = @"opens the active event executor module with [css], 
+defaulting to span-24, in [container] viewport container, 
+defaulting to content1.&nbsp;&nbsp;not thread safe";
 				return;
 			}
 
 			Node tmp = new Node();
 
-			tmp["css"].Value = "span9";
+			tmp["css"].Value = e.Params["css"].Get<string>("span-24");
 
 			LoadModule(
 				"Magix.admin.ExecutorForm", 
@@ -175,7 +176,7 @@ default container is header.&nbsp;&nbsp;not thread safe";
 				e.Params.Clear();
 				e.Params["event:magix.admin.load-executor-code"].Value = null;
 				e.Params["inspect"].Value = @"loads active event executor module
-in content1 viewport, with given [code] Value.&nbsp;&nbsp;[code] is expected to be 
+in [container] viewpoert, defaulting to content2, with given [code] Value.&nbsp;&nbsp;[code] is expected to be 
 textually based hyper lisp node syntax.&nbsp;&nbsp;not thread safe";
 				e.Params["code"].Value = @"
 event:magix.execute
@@ -190,7 +191,8 @@ if=>[_data].Value==thomas
 				throw new ArgumentException("cannot raise load-executor-code without [code] being hyper lisp");
 
 			Node node = new Node();
-			node["container"].Value = "content1";
+
+			node["container"].Value = e.Params["container"].Get<string>("content2");
 
 			RaiseActiveEvent(
 				"magix.admin.open-event-executor",
