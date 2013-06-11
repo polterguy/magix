@@ -122,6 +122,7 @@ might have.&nbsp;&nbsp;not thread safe";
 			{
 				e.Params["event:magix.execute"].Value = null;
 				e.Params["wait"].Value = null;
+				e.Params["wait"]["fork"].Value = null;
 				e.Params["inspect"].Value = @"will wait for multiple treads to finish.&nbsp;&nbsp;
 all [fork] blocks created underneath [wait], will have to be finished, before the 
 execution will leave the [wait] block.&nbsp;&nbsp;you can optionally set a maximum number 
