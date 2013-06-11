@@ -114,7 +114,33 @@ if=>[Data].Value==thomas
 				return;
 			}
 
-			txtIn.Text = e.Params["code"].Get<string>();
+			Node tmp = new Node();
+			tmp["code"].Value = e.Params["code"].Get<string>();
+
+			RaiseEvent (
+				"magix.code.code-2-node",
+				tmp);
+
+			Node json = tmp["json"].Get<Node>();
+
+			foreach (Node idx in json)
+			{
+				if (idx.Name.StartsWith("event:"))
+				{
+					json.Remove(idx);
+					activeEvent.Text = idx.Name.Substring(6);
+					break;
+				}
+			}
+
+			tmp = new Node();
+			tmp["json"].Value = json;
+
+			RaiseEvent (
+				"magix.code.node-2-code",
+				tmp);
+
+			txtIn.Text = tmp["code"].Get<string>();
 		}
 
 		protected void move_Click(object sender, EventArgs e)
