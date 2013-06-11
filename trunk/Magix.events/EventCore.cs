@@ -81,7 +81,7 @@ of functions can take and return parameters, if you wish
 to pass in or retrieve parameters, then as you invoke the 
 function, just append your args underneath the function invocation,
 and they will be passed into the function, where they will
-be accessible underneath a [P] node, appended as the last
+be accessible underneath a [$] node, appended as the last
 parts of your code block, into your function invocation.&nbsp;&nbsp;from
 outside of the function/event itself, you can access these 
 parameters directly underneath the active event itself.&nbsp;&nbsp;
@@ -94,7 +94,7 @@ event will be deleted, if you pass in no [code] block.&nbsp;&nbsp;thread safe";
 				e.Params["event"]["code"]["if"]["set"].Value = "[/][P][output].Value";
 				e.Params["event"]["code"]["if"]["set"]["value"].Value = "return-value";
 				e.Params["event"]["code"]["if"].Add (new Node("set", "[.ip][/][magix.viewport.show-message][message].Value"));
-				e.Params["event"]["code"]["if"][e.Params["event"]["code"]["if"].Count - 1]["value"].Value = "[/][P][input].Value";
+				e.Params["event"]["code"]["if"][e.Params["event"]["code"]["if"].Count - 1]["value"].Value = "[/][$][input].Value";
 				e.Params["event"]["code"]["magix.viewport.show-message"].Value = null;
 				e.Params["foo.bar"].Value = null;
 				e.Params["foo.bar"]["input"].Value = "hello world 2.0";

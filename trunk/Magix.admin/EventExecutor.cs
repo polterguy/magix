@@ -187,8 +187,9 @@ default is span-24 top-2.&nbsp;&nbsp;not thread safe";
 				e.Params.Clear();
 				e.Params["event:magix.admin.load-executor-code"].Value = null;
 				e.Params["inspect"].Value = @"loads active event executor module
-in [container] viewpoert, defaulting to content2, with given [code] Value.&nbsp;&nbsp;[code] is expected to be 
-textually based hyper lisp node syntax.&nbsp;&nbsp;not thread safe";
+in [container] viewpoert, defaulting to content2, with given [code] value and [css] value defaulting to span-24.&nbsp;&nbsp;
+[code] is expected to be textually based hyper lisp node syntax.
+&nbsp;&nbsp;not thread safe";
 				e.Params["code"].Value = @"
 event:magix.execute
 _data=>thomas
@@ -204,6 +205,7 @@ if=>[_data].Value==thomas
 			Node node = new Node();
 
 			node["container"].Value = e.Params["container"].Get<string>("content2");
+			node["css"].Value = e.Params["css"].Get<string>("span-24");
 
 			RaiseActiveEvent(
 				"magix.admin.open-event-executor",
