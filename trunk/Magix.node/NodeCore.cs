@@ -49,7 +49,7 @@ expression must end with .Value or .Name.&nbsp;&nbsp;thread safe";
 
 			Expressions.SetNodeValue(
 				expr, 
-				exprNode.Replace(ip["replace"].Get<string>(), ip["with"].Get<string>("")), 
+				exprNode.Replace(ip["replace"].Get<string>(), ip.Contains("with") ? ip["with"].Get<string>("") : ""), 
 				dp, 
 				ip, 
 				false);
