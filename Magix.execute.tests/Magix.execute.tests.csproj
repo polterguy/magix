@@ -41,6 +41,7 @@
     <Compile Include="ExceptionTest.cs" />
     <Compile Include="ExpressionTest.cs" />
     <Compile Include="StopTest.cs" />
+    <Compile Include="ReplaceTest.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
