@@ -27,52 +27,6 @@ namespace Magix.execute
 	{
 		private static string _dbFile = "data-storage.db4o";
 
-		[ActiveEvent(Name = "magix.data.remove")]
-		public static void magix_data_remove(object sender, ActiveEventArgs e)
-		{
-			if (ShouldInspect(e.Params))
-			{
-				e.Params["event:magix.data.remove"].Value = null;
-				e.Params["id"].Value = "object-id";
-				e.Params["inspect"].Value = @"removes the given [id] or [prototype] object(s) from 
-your persistent data storage.&nbsp;&nbsp;thread safe";
-				return;
-			}
-
-			Node ip = e.Params;
-			if (e.Params.Contains("_ip"))
-				ip = e.Params ["_ip"].Value as Node;
-
-
-			Node prototype = null;
-			if (ip.Contains("prototype"))
-				prototype = ip["prototype"];
-
-			if ((!e.Params.Contains("id") || string.IsNullOrEmpty(e.Params["id"].Get<string>())) && prototype == null)
-				throw new ArgumentException("missing [id] or [prototype] while trying to remove object");
-
-			lock (typeof(DataCore))
-			{
-				using (IObjectContainer db = Db4oFactory.OpenFile(_dbFile))
-				{
-					string id = ip["id"].Get<string>();
-					foreach (Storage idx in db.Ext().Query<Storage>(
-						delegate(Storage obj)
-						{
-							if (id != null)
-								return obj.Id == id;
-							else
-								return obj.Node.HasNodes(prototype);
-						}))
-					{
-						db.Delete(idx);
-					}
-					db.Commit();
-					db.Close();
-				}
-			}
-		}
-
 		[ActiveEvent(Name = "magix.data.save")]
 		public static void magix_data_save(object sender, ActiveEventArgs e)
 		{
@@ -94,7 +48,7 @@ a global unique identifier will be automatically assigned to the object.&nbsp;&n
 
 			lock (typeof(DataCore))
 			{
-				using (IObjectContainer db = Db4oFactory.OpenFile(_dbFile))
+				using (IObjectContainer db = Db4oEmbedded.OpenFile(_dbFile))
 				{
 					db.Ext().Configure().UpdateDepth(1000);
 					db.Ext().Configure().ActivationDepth(1000);
@@ -115,6 +69,47 @@ a global unique identifier will be automatically assigned to the object.&nbsp;&n
 					if (!found)
 					{
 						db.Store(new Storage(value, id));
+					}
+					db.Commit();
+					db.Close();
+				}
+			}
+		}
+
+		[ActiveEvent(Name = "magix.data.remove")]
+		public static void magix_data_remove(object sender, ActiveEventArgs e)
+		{
+			if (ShouldInspect(e.Params))
+			{
+				e.Params["event:magix.data.remove"].Value = null;
+				e.Params["id"].Value = "object-id";
+				e.Params["inspect"].Value = @"removes the given [id] or [prototype] object(s) from 
+your persistent data storage.&nbsp;&nbsp;thread safe";
+				return;
+			}
+
+			Node prototype = null;
+			if (e.Params.Contains("prototype"))
+				prototype = e.Params["prototype"];
+
+			if ((!e.Params.Contains("id") || string.IsNullOrEmpty(e.Params["id"].Get<string>())) && prototype == null)
+				throw new ArgumentException("missing [id] or [prototype] while trying to remove object");
+
+			lock (typeof(DataCore))
+			{
+				using (IObjectContainer db = Db4oEmbedded.OpenFile(_dbFile))
+				{
+					string id = e.Params.Contains("id") ? e.Params["id"].Get<string>() : null;
+					foreach (Storage idx in db.Ext().Query<Storage>(
+						delegate(Storage obj)
+						{
+						if (id != null)
+							return obj.Id == id;
+						else
+							return obj.Node.HasNodes(prototype);
+					}))
+					{
+						db.Delete(idx);
 					}
 					db.Commit();
 					db.Close();
@@ -164,7 +159,7 @@ operation.&nbsp;&nbsp;thread safe";
 
 			lock (typeof(DataCore))
 			{
-				using (IObjectContainer db = Db4oFactory.OpenFile(_dbFile))
+				using (IObjectContainer db = Db4oEmbedded.OpenFile(_dbFile))
 				{
 					db.Ext().Configure().UpdateDepth(1000);
 					db.Ext().Configure().ActivationDepth(1000);
@@ -209,7 +204,7 @@ of objects in data storage as [count], add [prototype] to filter results.
 
 			lock (typeof(DataCore))
 			{
-				using (IObjectContainer db = Db4oFactory.OpenFile(_dbFile))
+				using (IObjectContainer db = Db4oEmbedded.OpenFile(_dbFile))
 				{
 					db.Ext().Configure().UpdateDepth(1000);
 					db.Ext().Configure().ActivationDepth(1000);
