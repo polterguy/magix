@@ -97,6 +97,15 @@ that failed.&nbsp;&nbsp;thread safe";
 				RaiseActiveEvent(
 					"magix.viewport.show-message",
 					node);
+
+				node = new Node();
+
+				node["header"].Value = "unit tests executed successfully";
+				node["body"].Value = "magix.tests.run was running successfully, " + idxNo + " tests executed successfully";
+
+				RaiseActiveEvent(
+					"magix.log.append",
+					node);
 			}
 			catch (Exception err)
 			{
@@ -114,6 +123,15 @@ that failed.&nbsp;&nbsp;thread safe";
 
 				RaiseActiveEvent(
 					"magix.viewport.show-message",
+					node);
+				
+				node = new Node();
+
+				node["header"].Value = "unit tests executed with errors";
+				node["body"].Value = "magix.tests.run did not execute successfully, message from system; " + err.Message;
+
+				RaiseActiveEvent(
+					"magix.log.append",
 					node);
 			}
 		}
