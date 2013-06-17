@@ -1,6 +1,0 @@
-
-event:magix.execute
-
-inspect=>@"loads up the properties for the forms builder"
-
-magix.ide.create-properties
