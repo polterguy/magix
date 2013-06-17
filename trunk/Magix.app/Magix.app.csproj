@@ -66,6 +66,7 @@
     <Content Include="media\grid\main.css" />
     <Content Include="media\grid\grid.png" />
     <Content Include="zigano\web.config" />
+    <Content Include="core-scripts\web.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Global.asax.cs">
@@ -290,5 +291,12 @@
     <None Include="zigano\admin\tools\magix-markup-editor.hl" />
     <None Include="zigano\admin\tools\rss-parser.hl" />
     <None Include="zigano\admin\tools\roles-grid.hl" />
+    <None Include="core-scripts\forms\forms-builder-files.hl" />
+    <None Include="core-scripts\forms\forms-builder-properties.hl" />
+    <None Include="core-scripts\forms\forms-builder-widgets.hl" />
+    <None Include="core-scripts\forms\forms-builder.hl" />
+    <None Include="core-scripts\misc\login-box.hl" />
+    <None Include="core-scripts\misc\main-menu.hl" />
+    <None Include="core-scripts\tools\sdffsdsdf.txt" />
   </ItemGroup>
 </Project>
