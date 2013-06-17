@@ -1,0 +1,112 @@
+
+
+event=>zigano.travel.create-roles-form
+  code
+    magix.data.load
+      prototype
+        type=>zigano.travel.role
+
+    _dt
+      panel
+        css=>span-19 hover-shadow relative
+        controls
+          label
+          link-button
+            css=>span-1 hover-shadow last right z-1 absolute light-red centered
+            text=>x
+            onclick
+              magix.data.remove
+                prototype
+                  type=>zigano.travel.role
+                  name=>
+              set=>[magix.data.load][prototype][roles][[magix.data.remove][prototype][name].Value].Name
+                value=>[magix.data.remove][prototype][name].Value
+              magix.data.load
+                prototype
+                  type=>zigano.travel.user
+                  roles
+              for-each=>[magix.data.load][objects]
+                set=>[.][roles][[/][magix.data.remove][prototype][name].Value]
+                set=>[.ip][..][magix.data.save][object]
+                  value=>[.]
+                set=>[.ip][..][magix.data.save][1].Name
+                  value=>object
+                set=>[.ip][..][magix.data.save][object].Value
+                set=>[.ip][..][magix.data.save][id].Value
+                  value=>[.].Name
+                magix.data.save
+                  id
+              set=>[magix.log.append][body][role].Value
+                value=>[magix.data.remove][prototype][name].Value
+              magix.log.append
+                header=>role deleted
+                body=>role {0} was deleted
+              zigano.travel.create-roles-form
+
+    for-each=>[magix.data.load][objects]
+      set=>[/][_dt][panel][controls][link-button][onclick][magix.data.remove][prototype][name].Value
+        value=>[.][name].Value
+      set=>[/][_dt][panel][controls][label][text].Value
+        value=>[.][name].Value
+      add=>[/][magix.forms.create-form][controls][panel:1][controls]
+        value=>[/][_dt][0]
+
+    magix.forms.create-form
+      form-id=>roles-grid
+      container=>content2
+      css=>span-19 last
+      controls
+        panel=>roleGrdHeader
+          controls
+            label=>headName
+              css=>span-18
+              text=>name
+              tag=>label
+              tip=>name of role
+            label=>headDelete
+              css=>span-1 last
+              text=>del
+              tag=>label
+              tip=>delete role
+        panel=>roleGrdWrp
+          css=>span-19 light-green
+          controls
+        panel=>newRoleWrp
+          css=>span-19 top-1
+          default=>addBtn
+          controls
+            text-box=>nName
+              css=>span-5 right-14 last
+              place-holder=>name of new role ...
+            button=>addBtn
+              css=>btn-large span-3 clear
+              text=>add
+              onclick
+                magix.forms.get-value
+                  form-id=>roles-grid
+                  id=>nName
+                if=>![magix.forms.get-value][value].Value
+                  magix.viewport.show-message
+                    message=>you must give your role a name
+                else
+                  set=>[@][magix.data.load][prototype][name].Value
+                    value=>[magix.forms.get-value][value].Value
+                  magix.data.load
+                    prototype
+                      type=>zigano.travel.role
+                  if=>[@][magix.data.load][objects].Count>0
+                    magix.viewport.show-message
+                      message=>role exists from before
+                  else
+                    set=>[@][magix.data.save][object][name].Value
+                      value=>[magix.forms.get-value][value].Value
+                    magix.data.save
+                      object
+                        type=>zigano.travel.role
+                    set=>[@][magix.log.append][body][role].Value
+                      value=>[magix.forms.get-value][value].Value
+                    magix.log.append
+                      header=>role created
+                      body=>role {0} was created
+                    zigano.travel.create-roles-form
+
