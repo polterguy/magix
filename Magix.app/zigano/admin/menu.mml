@@ -37,8 +37,7 @@ button=>roles
       container=>content1
       form-id=>admin-roles
       css=>span-19 last
-    magix.admin.run-file
-      file=>zigano/admin/roles-grid.hl
+    zigano.travel.create-roles-form
 button=>log
   text=>log
   css=>btn-large span-5
