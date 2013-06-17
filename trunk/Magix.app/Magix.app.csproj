@@ -215,6 +215,7 @@
     <Folder Include="zigano\misc\" />
     <Folder Include="zigano\pages\" />
     <Folder Include="zigano\startup-scripts\" />
+    <Folder Include="zigano\file-browser\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="media\xing-wysihtml5\LICENSE" />
@@ -294,5 +295,6 @@
     <None Include="zigano\startup-scripts\event-create-roles-form.hl" />
     <None Include="zigano\startup-scripts\event-create-edit-user.hl" />
     <None Include="zigano\startup-scripts\event-create-ide-properties.hl" />
+    <None Include="zigano\file-browser\file-browser.hl" />
   </ItemGroup>
 </Project>

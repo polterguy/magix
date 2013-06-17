@@ -123,5 +123,12 @@ button=>executor
       css=>span-19 last top-3
     magix.viewport.clear-controls
       container=>content2
+button=>files
+  text=>files
+  css=>span-3
+  onclick
+    magix.admin.run-file
+      file=>zigano/file-browser/file-browser.hl
+      
 }}</div>
 

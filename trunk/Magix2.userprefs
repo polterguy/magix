@@ -1,17 +1,23 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Magix.file/FileSystem.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Magix.app/zigano/startup.hl">
     <Files>
-      <File FileName="Magix.app/zigano/startup.hl" Line="1" Column="1" />
-      <File FileName="Magix.file/FileSystem.cs" Line="77" Column="61" />
+      <File FileName="Magix.file/FileSystem.cs" Line="149" Column="91" />
+      <File FileName="Magix.app/zigano/startup.hl" Line="15" Column="1" />
+      <File FileName="Magix.app/zigano/startup-scripts/event-create-roles-form.hl" Line="112" Column="1" />
+      <File FileName="Magix.app/zigano/startup-scripts/event-create-edit-user.hl" Line="209" Column="1" />
+      <File FileName="Magix.app/zigano/startup-scripts/event-create-ide-properties.hl" Line="27" Column="31" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
           <Node name="Core" expanded="True">
             <Node name="Magix.app" expanded="True">
-              <Node name="help-system" selected="True" />
-              <Node name="zigano" expanded="True" />
+              <Node name="zigano" expanded="True">
+                <Node name="startup-scripts" expanded="True">
+                  <Node name="event-create-ide-properties.hl" selected="True" />
+                </Node>
+              </Node>
             </Node>
           </Node>
           <Node name="Plugins" expanded="True">
