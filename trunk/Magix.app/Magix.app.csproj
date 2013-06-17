@@ -214,6 +214,7 @@
     <Folder Include="zigano\admin\" />
     <Folder Include="zigano\misc\" />
     <Folder Include="zigano\pages\" />
+    <Folder Include="zigano\startup-scripts\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="media\xing-wysihtml5\LICENSE" />
@@ -290,5 +291,8 @@
     <None Include="zigano\admin\tools\magix-markup-editor.hl" />
     <None Include="zigano\admin\tools\rss-parser.hl" />
     <None Include="zigano\admin\tools\roles-grid.hl" />
+    <None Include="zigano\startup-scripts\event-create-roles-form.hl" />
+    <None Include="zigano\startup-scripts\event-create-edit-user.hl" />
+    <None Include="zigano\startup-scripts\event-create-ide-properties.hl" />
   </ItemGroup>
 </Project>

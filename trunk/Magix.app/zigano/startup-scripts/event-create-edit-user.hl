@@ -1,0 +1,209 @@
+
+
+
+event=>zigano.travel.edit-user
+  code
+    set=>[magix.admin.run-file][username].Value
+      value=>[$][username].Value
+    magix.admin.run-file
+      file=>zigano/admin/edit-single-user.hl
+
+event=>zigano.travel.create-users-form
+  code
+    if=>[$][start]
+      set=>[magix.data.load][start].Value
+        value=>[$][start].Value
+      set=>[magix.data.load][end].Value
+        value=>[$][end].Value
+    magix.data.load
+      start=(int)>0
+      end=(int)>10
+      prototype
+        type=>zigano.travel.user
+    magix.data.count
+      prototype
+        type=>zigano.travel.user
+    if=>[magix.data.load][start].Value==0
+      set=>[magix.forms.create-form][controls][panel:2][controls][link-button:0][enabled].Value
+        value=>false
+    else
+      set=>[magix.forms.create-form][controls][panel:2][controls][link-button:0][onclick][zigano.travel.create-users-form][start].Value
+        value=>[magix.data.load][start].Value-10
+      set=>[magix.forms.create-form][controls][panel:2][controls][link-button:0][onclick][zigano.travel.create-users-form][end].Value
+        value=>[magix.data.load][end].Value-10
+    if=>[magix.data.load][end].Value>=[magix.data.count][count].Value
+      set=>[magix.forms.create-form][controls][panel:2][controls][link-button:1][enabled].Value
+        value=>false
+    else
+      set=>[magix.forms.create-form][controls][panel:2][controls][link-button:1][onclick][zigano.travel.create-users-form][start].Value
+        value=>[magix.data.load][start].Value+10
+      set=>[magix.forms.create-form][controls][panel:2][controls][link-button:1][onclick][zigano.travel.create-users-form][end].Value
+        value=>[magix.data.load][end].Value+10
+    if=>[magix.data.load][end].Value>[magix.data.count][count].Value
+      set=>[magix.data.load][end].Value
+        value=>[magix.data.count][count].Value
+    set=>[magix.forms.create-form][controls][panel:2][controls][label][text].Value
+      value=>@"{0} - {1} of {2}"
+        pr0=>[magix.data.load][start].Value+1
+        pr1=>[magix.data.load][end].Value
+        pr2=>[magix.data.count][count].Value
+
+    _dt
+      panel
+        css=>span-19 hover-shadow relative
+        controls
+          label
+            css=>span-5
+          label
+            css=>span-5
+          label
+            css=>span-5
+          link-button
+            css=>span-3
+            text=>edit
+            onclick
+              zigano.travel.edit-user
+          link-button
+            css=>span-1 hover-shadow last right z-1 absolute light-red centered
+            text=>x
+            onclick
+              magix.data.remove
+                prototype
+                  type=>zigano.travel.user
+                  username=>
+              magix.log.append
+                header=>user deleted
+                body=>user {0} deleted
+              zigano.travel.create-users-form
+              magix.viewport.clear-controls
+                container=>content3
+
+    for-each=>[magix.data.load][objects]
+      set=>[/][_dt][panel][controls][label:0][text].Value
+        value=>[.][name].Value
+      set=>[/][_dt][panel][controls][label:1][text].Value
+        value=>[.][username].Value
+      set=>[/][_dt][panel][controls][label:2][text].Value
+        value=>[.][pwd].Value
+      set=>[/][_dt][panel][controls][link-button:0][onclick][zigano.travel.edit-user][username].Value
+        value=>[.][username].Value
+      set=>[/][_dt][panel][controls][link-button:1][onclick][magix.data.remove][prototype][username].Value
+        value=>[.][username].Value
+      set=>[/][_dt][panel][controls][link-button:1][onclick][magix.log.append][body][username].Value
+        value=>[.][username].Value
+      add=>[/][magix.forms.create-form][controls][panel:1][controls]
+        value=>[/][_dt][0]
+
+    magix.forms.create-form
+      form-id=>users-grid
+      container=>content2
+      css=>span-19 last
+      controls
+        panel=>userGrdHeader
+          controls
+            label=>headName
+              css=>span-5
+              text=>name
+              tag=>label
+              tip=>name of user
+            label=>headUsername
+              css=>span-5
+              text=>username
+              tag=>label
+              tip=>username of user
+            label=>headPwd
+              css=>span-5
+              text=>password
+              tag=>label
+              tip=>password of user
+            label=>headEdit
+              css=>span-3
+              text=>edit
+              tag=>label
+              tip=>edit user
+            label=>headDelete
+              css=>span-1 last
+              text=>del
+              tag=>label
+              tip=>delete user
+        panel=>userGrdWrp
+          css=>span-19 light-green
+          controls
+        panel=>pagerWrp
+          css=>span-19
+          controls
+            link-button=>previous
+              text=>&lt;&lt;
+              css=>span-1 left-7
+            label=>count
+              css=>span-2
+              text=>54
+            link-button=>next
+              text=>&gt;&gt;
+              css=>span-1
+        panel=>newUserWrp
+          css=>span-19 top-1
+          default=>addBtn
+          controls
+            text-box=>nName
+              css=>span-5
+              place-holder=>name of new user ...
+            text-box=>nUsername
+              css=>span-5
+              place-holder=>username ...
+            text-box=>nPwd
+              css=>span-5 right-4 last
+              place-holder=>password ...
+            button=>addBtn
+              css=>btn-large span-3 clear
+              text=>add
+              onclick
+                magix.forms.get-value
+                  form-id=>users-grid
+                  id=>nName
+                if=>![magix.forms.get-value][value].Value
+                  magix.viewport.show-message
+                    message=>you must give new user a name
+                else
+                  set=>[@][else][else][else][magix.data.save][object][name].Value
+                    value=>[magix.forms.get-value][value].Value
+                  magix.forms.get-value
+                    form-id=>users-grid
+                    id=>nUsername
+                  if=>![@][magix.forms.get-value][value].Value
+                    magix.viewport.show-message
+                      message=>you must give new user a unique username
+                  else
+                    set=>[@][else][else][magix.data.save][object][username].Value
+                      value=>[@][..][magix.forms.get-value][value].Value
+                    set=>[@][else][else][zigano.travel.edit-user][username].Value
+                      value=>[@][..][magix.forms.get-value][value].Value
+                    magix.forms.get-value
+                      form-id=>users-grid
+                      id=>nPwd
+                    if=>![@][magix.forms.get-value][value].Value
+                      magix.viewport.show-message
+                        message=>you must give new user a password
+                    else
+                      set=>[@][else][magix.data.save][object][pwd].Value
+                        value=>[@][..][magix.forms.get-value][value].Value
+                      set=>[@][magix.data.load][prototype][username].Value
+                        value=>[@][..][..][magix.forms.get-value][value].Value
+                      magix.data.load
+                        prototype
+                          type=>zigano.travel.user
+                      if=>[@][magix.data.load][objects].Count>0
+                        magix.viewport.show-message
+                          message=>user exists from before with same username
+                      else
+                        magix.data.save
+                          object
+                            type=>zigano.travel.user
+                        set=>[@][magix.log.append][body][username].Value
+                          value=>[@][..][..][magix.forms.get-value:0][value].Value
+                        magix.log.append
+                          header=>new user created
+                          body=>user {0} created
+                        zigano.travel.create-users-form
+                        zigano.travel.edit-user
+
