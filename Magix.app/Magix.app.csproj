@@ -290,6 +290,5 @@
     <None Include="zigano\admin\tools\magix-markup-editor.hl" />
     <None Include="zigano\admin\tools\rss-parser.hl" />
     <None Include="zigano\admin\tools\roles-grid.hl" />
-    <None Include="data-storage.db4o" />
   </ItemGroup>
 </Project>
