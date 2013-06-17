@@ -65,58 +65,6 @@ an http or ftp path, to a document.&nbsp;&nbsp;thread safe";
 		}
 
 		/**
-		 */
-		[ActiveEvent(Name = "magix.file.list-files")]
-		public static void magix_file_list_files(object sender, ActiveEventArgs e)
-		{
-			if (ShouldInspect(e.Params))
-			{
-				e.Params["event:magix.execute"].Value = null;
-				e.Params["magix.file.list-files"]["directory"].Value = "zigano";
-				e.Params["inspect"].Value = @"lists the files in [files] in the given
-[directory], which must be relative to the app's main path";
-				return;
-			}
-
-			if (!e.Params.Contains("directory"))
-				throw new Exception("you need a [directory] parameter to the list-files active event");
-
-			string dir = e.Params["directory"].Get<string>().TrimStart('/');
-
-			int idxNo = 0;
-			foreach (string idxFile in Directory.GetFiles(HttpContext.Current.Server.MapPath(dir)))
-			{
-				e.Params["files"]["f_" + idxNo++].Value = idxFile.Substring(idxFile.LastIndexOf(dir));
-			}
-		}
-
-		/**
-		 */
-		[ActiveEvent(Name = "magix.file.list-directories")]
-		public static void magix_file_list_directories(object sender, ActiveEventArgs e)
-		{
-			if (ShouldInspect(e.Params))
-			{
-				e.Params["event:magix.execute"].Value = null;
-				e.Params["magix.file.list-directories"]["directory"].Value = "zigano";
-				e.Params["inspect"].Value = @"lists the directories in [directories] in the given
-[directory], which must be relative to the app's main path";
-				return;
-			}
-
-			if (!e.Params.Contains("directory"))
-				throw new Exception("you need a [directory] parameter to the list-directories active event");
-
-			string dir = e.Params["directory"].Get<string>().TrimStart('/');
-
-			int idxNo = 0;
-			foreach (string idxFile in Directory.GetDirectories(HttpContext.Current.Server.MapPath(dir)))
-			{
-				e.Params["directories"]["f_" + idxNo++].Value = idxFile.Substring(idxFile.LastIndexOf(dir));
-			}
-		}
-
-		/**
 		 * Saves a file to disc, relatively from the root of the web application
 		 */
 		[ActiveEvent(Name = "magix.file.save")]
@@ -163,6 +111,78 @@ new created.&nbsp;&nbsp;thread safe";
 				{
 					writer.Write(fileContent);
 				}
+			}
+		}
+
+		/**
+		 */
+		[ActiveEvent(Name = "magix.file.list-files")]
+		public static void magix_file_list_files(object sender, ActiveEventArgs e)
+		{
+			if (ShouldInspect(e.Params))
+			{
+				e.Params["event:magix.execute"].Value = null;
+				e.Params["magix.file.list-files"]["directory"].Value = "zigano";
+				e.Params["magix.file.list-files"]["filter"].Value = "*.hl";
+				e.Params["inspect"].Value = @"lists the files in [files] in the given
+[directory], which must be relative to the app's main path.&nbsp;&nbsp;
+use [filter] as a search pattern.&nbsp;&nbsp;thread safe";
+				return;
+			}
+
+			if (!e.Params.Contains("directory"))
+				throw new Exception("you need a [directory] parameter to the list-files active event");
+
+			string dir = e.Params["directory"].Get<string>().TrimStart('/');
+			string filter = e.Params.Contains("filter") ? e.Params["filter"].Get<string>() : null;
+
+			string[] files = null;
+
+			if (string.IsNullOrEmpty(filter))
+				files = Directory.GetFiles(HttpContext.Current.Server.MapPath(dir));
+			else
+				files = Directory.GetFiles(HttpContext.Current.Server.MapPath(dir), filter);
+
+			int idxNo = 0;
+			foreach (string idxFile in files)
+			{
+				e.Params["files"]["f_" + idxNo++].Value = idxFile.Substring(idxFile.LastIndexOf(dir));
+			}
+		}
+
+		/**
+		 */
+		[ActiveEvent(Name = "magix.file.list-directories")]
+		public static void magix_file_list_directories(object sender, ActiveEventArgs e)
+		{
+			if (ShouldInspect(e.Params))
+			{
+				e.Params["event:magix.execute"].Value = null;
+				e.Params["magix.file.list-directories"]["directory"].Value = "zigano";
+				e.Params["magix.file.list-directories"]["filter"].Value = "*s*";
+				e.Params["inspect"].Value = @"lists the directories in [directories] in the given
+[directory], which must be relative to the app's main path.&nbsp;&nbsp;
+use [filter] as a search pattern.&nbsp;&nbsp;thread safe";
+				return;
+			}
+
+			if (!e.Params.Contains("directory"))
+				throw new Exception("you need a [directory] parameter to the list-directories active event");
+
+			string dir = e.Params["directory"].Get<string>().TrimStart('/');
+			string filter = e.Params.Contains("filter") ? e.Params["filter"].Get<string>() : null;
+
+			string[] files = null;
+
+			if (string.IsNullOrEmpty(filter))
+				files = Directory.GetDirectories(HttpContext.Current.Server.MapPath(dir));
+			else
+				files = Directory.GetDirectories(HttpContext.Current.Server.MapPath(dir), filter);
+
+			int idxNo = 0;
+			foreach (string idxFile in files)
+			{
+				e.Params["directories"]["f_" + idxNo++].Value = idxFile.Substring(idxFile.LastIndexOf(dir));
 			}
 		}
 	}
