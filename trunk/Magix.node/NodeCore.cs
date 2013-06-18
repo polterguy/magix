@@ -20,11 +20,11 @@ namespace Magix.node
 				e.Params.Clear();
 				e.Params["event:magix.execute"].Value = null;
 				e.Params["_expression"].Value = "some value to be replaced";
-				e.Params["inspect"].Value = @"replaces [replace] value with [with] in 
-the [where] node expression.&nbsp;&nbsp;
+				e.Params["inspect"].Value = @"replaces [what] value/expression with [with] value/expression in 
+the value of the [replace] node's expression.&nbsp;&nbsp;
 expression must end with .Value or .Name.&nbsp;&nbsp;thread safe";
 				e.Params["replace"].Value = "[_expression].Value";
-				e.Params["replace"]["replace"].Value = "some";
+				e.Params["replace"]["what"].Value = "some";
 				e.Params["replace"]["with"].Value = "some other";
 				return;
 			}
@@ -37,21 +37,23 @@ expression must end with .Value or .Name.&nbsp;&nbsp;thread safe";
 			if (e.Params.Contains("_dp"))
 				dp = e.Params["_dp"].Value as Node;
 
-			if (!ip.Contains("replace") || string.IsNullOrEmpty(ip["replace"].Get<string>()))
-				throw new ArgumentException("magix.nodes.replace needs [replace] parameter");
+			if (!ip.Contains("what") || string.IsNullOrEmpty(ip["what"].Get<string>()))
+				throw new ArgumentException("magix.nodes.replace needs [what] parameter");
 
 			string expr = ip.Get<string>();
 
 			string exprNode = Expressions.GetExpressionValue(expr, dp, ip, false) as string;
 
-			string replNode = Expressions.GetExpressionValue(ip["replace"].Get<string>(), dp, ip, false) as string;
+			string replNode = Expressions.GetExpressionValue(ip["what"].Get<string>(), dp, ip, false) as string;
+
+			string withNode = ip.Contains("with") ? Expressions.GetExpressionValue(ip["with"].Get<string>(""), dp, ip, false) as string : "";
 
 			if (exprNode == null)
 				throw new ArgumentException("couldn't find the node in [replace]");
 
 			Expressions.SetNodeValue(
 				expr, 
-				exprNode.Replace(replNode, ip.Contains("with") ? ip["with"].Get<string>("") : ""), 
+				exprNode.Replace(replNode, withNode), 
 				dp, 
 				ip, 
 				false);

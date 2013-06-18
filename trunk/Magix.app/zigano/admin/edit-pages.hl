@@ -132,60 +132,63 @@ magix.forms.create-form
           css=>span-3 last
           text=>delete
           onclick
-            magix.forms.get-value
-              form-id=>edit-pages
-              id=>name
-            set=>[magix.data.load][prototype][name].Value
-              value=>[magix.forms.get-value][value].Value
-            magix.data.load
-              prototype
-                type=>magix.pages.page
-            if=>![magix.data.load][objects]
-              magix.viewport.show-message
-                message=>no such page
-            else
-              set=>[@][magix.data.remove][id].Value
-                value=>[/][magix.data.load][objects][0].Name
-              magix.data.remove
-              magix.viewport.show-message
-                message=>page removed
-              magix.forms.set-value
-                form-id=>wysiwyg-editor
-                id=>wysiwyg
-                value=>
-              magix.forms.set-value
-                form-id=>edit-pages
-                id=>name
-                value=>
-              magix.data.load
-                prototype
-                  type=>magix.pages.page
-              for-each=>[@][magix.data.load][objects]
-                _dt
-                  name=>value
-                set=>[@][_dt][0].Name
-                  value=>[.].Name
-                set=>[@][_dt][0].Value
-                  value=>[.][name].Value
-                add=>[@][..][_lst]
-                  value=>[@][_dt][0]
-              _lst
-                default=>choose web page ...
-              for-each=>[@][_lst]
-                add=>[@][..][magix.forms.set-values][values]
-                  value=>[.]
-              magix.forms.set-values
-                form-id=>edit-pages
-                id=>page
-              magix.forms.set-value
-                form-id=>edit-pages
-                id=>page
-                value=>default
-              set=>[@][magix.log.append][body][pr0].Value
-                value=>[magix.forms.get-value][value].Value
-              magix.log.append
-                header=>page deleted
-                body=>@"page {0} was deleted"
+            magix.viewport.confirm
+              message=>please confirm deletion of page
+              code
+                magix.forms.get-value
+                  form-id=>edit-pages
+                  id=>name
+                set=>[magix.data.load][prototype][name].Value
+                  value=>[magix.forms.get-value][value].Value
+                magix.data.load
+                  prototype
+                    type=>magix.pages.page
+                if=>![magix.data.load][objects]
+                  magix.viewport.show-message
+                    message=>no such page
+                else
+                  set=>[@][magix.data.remove][id].Value
+                    value=>[/][magix.data.load][objects][0].Name
+                  magix.data.remove
+                  magix.viewport.show-message
+                    message=>page removed
+                  magix.forms.set-value
+                    form-id=>wysiwyg-editor
+                    id=>wysiwyg
+                    value=>
+                  magix.forms.set-value
+                    form-id=>edit-pages
+                    id=>name
+                    value=>
+                  magix.data.load
+                    prototype
+                      type=>magix.pages.page
+                  for-each=>[@][magix.data.load][objects]
+                    _dt
+                      name=>value
+                    set=>[@][_dt][0].Name
+                      value=>[.].Name
+                    set=>[@][_dt][0].Value
+                      value=>[.][name].Value
+                    add=>[@][..][_lst]
+                      value=>[@][_dt][0]
+                  _lst
+                    default=>choose web page ...
+                  for-each=>[@][_lst]
+                    add=>[@][..][magix.forms.set-values][values]
+                      value=>[.]
+                  magix.forms.set-values
+                    form-id=>edit-pages
+                    id=>page
+                  magix.forms.set-value
+                    form-id=>edit-pages
+                    id=>page
+                    value=>default
+                  set=>[@][magix.log.append][body][pr0].Value
+                    value=>[magix.forms.get-value][value].Value
+                  magix.log.append
+                    header=>page deleted
+                    body=>@"page {0} was deleted"
     select=>form
       css=>span-5 last
       onselectedindexchanged

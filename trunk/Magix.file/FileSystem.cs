@@ -130,7 +130,7 @@ use [filter] as a search pattern.&nbsp;&nbsp;thread safe";
 				return;
 			}
 
-			string dir = e.Params.Contains("directory") ? e.Params["directory"].Get<string>().TrimStart('/') : "~/";
+			string dir = e.Params.Contains("directory") ? e.Params["directory"].Get<string>("").TrimStart('/') : "~/";
 			string filter = e.Params.Contains("filter") ? e.Params["filter"].Get<string>() : null;
 
 			string[] files = null;
@@ -164,7 +164,7 @@ use [filter] as a search pattern.&nbsp;&nbsp;thread safe";
 				return;
 			}
 
-			string dir = e.Params.Contains("directory") ? e.Params["directory"].Get<string>().TrimStart('/') : "~/";
+			string dir = e.Params.Contains("directory") ? e.Params["directory"].Get<string>("").TrimStart('/') : "~/";
 			string filter = e.Params.Contains("filter") ? e.Params["filter"].Get<string>() : null;
 
 			string[] files = null;

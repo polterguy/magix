@@ -1008,8 +1008,14 @@ textarea.input-large,
 }
 
 
+.file
+{
+}
 
-
+.directory
+{
+	color:#339933;
+}
 
 
 
