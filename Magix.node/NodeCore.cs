@@ -44,12 +44,14 @@ expression must end with .Value or .Name.&nbsp;&nbsp;thread safe";
 
 			string exprNode = Expressions.GetExpressionValue(expr, dp, ip, false) as string;
 
+			string replNode = Expressions.GetExpressionValue(ip["replace"].Get<string>(), dp, ip, false) as string;
+
 			if (exprNode == null)
 				throw new ArgumentException("couldn't find the node in [replace]");
 
 			Expressions.SetNodeValue(
 				expr, 
-				exprNode.Replace(ip["replace"].Get<string>(), ip.Contains("with") ? ip["with"].Get<string>("") : ""), 
+				exprNode.Replace(replNode, ip.Contains("with") ? ip["with"].Get<string>("") : ""), 
 				dp, 
 				ip, 
 				false);
