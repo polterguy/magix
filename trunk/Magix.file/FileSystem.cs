@@ -130,10 +130,7 @@ use [filter] as a search pattern.&nbsp;&nbsp;thread safe";
 				return;
 			}
 
-			if (!e.Params.Contains("directory"))
-				throw new Exception("you need a [directory] parameter to the list-files active event");
-
-			string dir = e.Params["directory"].Get<string>().TrimStart('/');
+			string dir = e.Params.Contains("directory") ? e.Params["directory"].Get<string>().TrimStart('/') : "~/";
 			string filter = e.Params.Contains("filter") ? e.Params["filter"].Get<string>() : null;
 
 			string[] files = null;
@@ -144,9 +141,10 @@ use [filter] as a search pattern.&nbsp;&nbsp;thread safe";
 				files = Directory.GetFiles(HttpContext.Current.Server.MapPath(dir), filter);
 
 			int idxNo = 0;
+			string rootDir = HttpContext.Current.Server.MapPath("~");
 			foreach (string idxFile in files)
 			{
-				e.Params["files"]["f_" + idxNo++].Value = idxFile.Substring(idxFile.LastIndexOf(dir));
+				e.Params["files"]["f_" + idxNo++].Value = idxFile.Substring(rootDir.Length);
 			}
 		}
 
@@ -166,10 +164,7 @@ use [filter] as a search pattern.&nbsp;&nbsp;thread safe";
 				return;
 			}
 
-			if (!e.Params.Contains("directory"))
-				throw new Exception("you need a [directory] parameter to the list-directories active event");
-
-			string dir = e.Params["directory"].Get<string>().TrimStart('/');
+			string dir = e.Params.Contains("directory") ? e.Params["directory"].Get<string>().TrimStart('/') : "~/";
 			string filter = e.Params.Contains("filter") ? e.Params["filter"].Get<string>() : null;
 
 			string[] files = null;
@@ -180,9 +175,10 @@ use [filter] as a search pattern.&nbsp;&nbsp;thread safe";
 				files = Directory.GetDirectories(HttpContext.Current.Server.MapPath(dir), filter);
 
 			int idxNo = 0;
+			string rootDir = HttpContext.Current.Server.MapPath("~");
 			foreach (string idxFile in files)
 			{
-				e.Params["directories"]["f_" + idxNo++].Value = idxFile.Substring(idxFile.LastIndexOf(dir));
+				e.Params["directories"]["f_" + idxNo++].Value = idxFile.Substring(rootDir.Length);
 			}
 		}
 	}

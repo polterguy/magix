@@ -1,4 +1,75 @@
 
 
-magix.viewport.show-message
-  message=>sdfih sdfoh dsf
+if=>[$][directory]
+  set=>[magix.file.list-files][directory].Value
+    value=>[$][directory].Value
+  set=>[magix.file.list-directories][directory].Value
+    value=>[$][directory].Value
+  set=>[magix.forms.create-form][controls][label][text].Value
+    value=>@"files from {0}"
+      pr0=>[$][directory].Value
+
+magix.file.list-files
+
+_link-button
+  css=>span-5 file
+  onclick
+    magix.viewport.show-message
+      message=>show file or something ...
+
+_link-buttonDir
+  css=>span-5 directory
+  onclick
+    magix.admin.run-file
+      file=>zigano/file-browser/file-browser.hl
+
+for-each=>[magix.file.list-files][files]
+  set=>[/][_link-button][text].Value
+    value=>[.].Value
+  if=>[/][$][directory]
+    set=>[@][replace][replace].Value
+      value=>@"{0}/"
+        pr0=>@"[/][$][directory].Value"
+    replace=>[/][_link-button][text].Value
+  add=>[/][magix.forms.create-form][controls]
+    value=>[/][_link-button]
+  set=>[/][magix.forms.create-form][controls][_link-button].Name
+    value=>link-button
+
+magix.file.list-directories
+
+for-each=>[magix.file.list-directories][directories]
+  set=>[/][_link-buttonDir][text].Value
+    value=>[.].Value
+  set=>[/][_link-buttonDir][onclick][magix.admin.run-file][directory].Value
+    value=>[.].Value
+  if=>[/][$][directory]
+    set=>[@][replace][replace].Value
+      value=>@"{0}/"
+        pr0=>@"[/][$][directory].Value"
+    replace=>[/][_link-buttonDir][text].Value
+  add=>[/][magix.forms.create-form][controls]
+    value=>[/][_link-buttonDir]
+  set=>[/][magix.forms.create-form][controls][_link-buttonDir].Name
+    value=>link-button
+
+
+magix.forms.create-form
+  container=>content1
+  css=>span-19 last
+  controls
+    label=>desc
+      css=>span-15 last left-4
+      tag=>h2
+      text=>files from /
+
+
+magix.viewport.clear-controls
+  container=>content2
+magix.viewport.clear-controls
+  container=>content3
+magix.viewport.clear-controls
+  container=>content4
+magix.viewport.clear-controls
+  container=>content5
+
