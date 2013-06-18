@@ -197,6 +197,10 @@
       <Project>{686BE5B7-2EC5-4ADF-9483-A3DD90D472F9}</Project>
       <Name>Magix.ide</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Magix.viewport.tests\Magix.viewport.tests.csproj">
+      <Project>{00BCDCAD-3B03-4589-9EA1-1619D1242C8B}</Project>
+      <Name>Magix.viewport.tests</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="web.config" />

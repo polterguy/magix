@@ -429,6 +429,56 @@ javascript file on the client side.&nbsp;&nbsp;not thread safe";
 		}
 
 		/**
+		 */
+		[ActiveEvent(Name = "magix.viewport.set-viewstate")]
+		protected virtual void magix_viewport_set_viewstate(object sender, ActiveEventArgs e)
+		{
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			{
+				e.Params["inspect"].Value = @"stores [value] node hierarchy into viewstate
+with [id] as key for later lookup.
+&nbsp;&nbsp;not thread safe";
+				e.Params["id"].Value = "some-id";
+				e.Params["value"]["some-node"]["hierarchy"].Value = "some node hierarchy to store into viewstate";
+				return;
+			}
+
+			if (!e.Params.Contains("id"))
+				throw new ArgumentException("missing [id] in set-viewstate");
+
+			string id = e.Params["id"].Get<string>();
+
+			if (!e.Params.Contains("value"))
+				ViewState.Remove(id);
+			else
+			{
+				Node value = e.Params["value"].Clone();
+				ViewState[id] = value;
+			}
+		}
+
+		/**
+		 */
+		[ActiveEvent(Name = "magix.viewport.get-viewstate")]
+		protected virtual void magix_viewport_get_viewstate(object sender, ActiveEventArgs e)
+		{
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			{
+				e.Params["inspect"].Value = @"retrieves [id] viewstate value, and puts
+it into [value] node.&nbsp;&nbsp;not thread safe";
+				e.Params["id"].Value = "some-id";
+				return;
+			}
+
+			if (!e.Params.Contains("id"))
+				throw new ArgumentException("missing [id] in set-viewstate");
+
+			string id = e.Params["id"].Get<string>();
+
+			e.Params.Add(ViewState[id] as Node);
+		}
+
+		/**
 		 * Will load an Active Module and put it into the "container" viewport container
          */
         [ActiveEvent(Name = "magix.viewport.load-module")]
