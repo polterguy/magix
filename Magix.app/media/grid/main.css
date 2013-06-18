@@ -1012,9 +1012,19 @@ textarea.input-large,
 {
 }
 
+.file:hover
+{
+	background-color:rgba(100, 200, 100, 0.3);
+}
+
 .directory
 {
 	color:#339933;
+}
+
+.directory:hover
+{
+	background-color:rgba(100, 200, 100, 0.3);
 }
 
 
