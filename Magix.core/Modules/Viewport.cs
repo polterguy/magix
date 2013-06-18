@@ -449,7 +449,10 @@ with [id] as key for later lookup.
 			string id = e.Params["id"].Get<string>();
 
 			if (!e.Params.Contains("value"))
-				ViewState.Remove(id);
+			{
+				if (ViewState[id] != null)
+					ViewState.Remove(id);
+			}
 			else
 			{
 				Node value = e.Params["value"].Clone();
@@ -471,11 +474,14 @@ it into [value] node.&nbsp;&nbsp;not thread safe";
 			}
 
 			if (!e.Params.Contains("id"))
-				throw new ArgumentException("missing [id] in set-viewstate");
+				throw new ArgumentException("missing [id] in get-viewstate");
 
 			string id = e.Params["id"].Get<string>();
 
-			e.Params.Add(ViewState[id] as Node);
+			if (ViewState[id] != null && ViewState[id] is Node)
+			{
+				e.Params["value"].ReplaceChildren((ViewState[id] as Node).Clone());
+			}
 		}
 
 		/**

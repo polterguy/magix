@@ -10,12 +10,10 @@ using Magix.Core;
 namespace Magix.tests
 {
 	/**
-	 * Contains Unit Tests for "magix.execute" active event
 	 */
 	public class ViewStateTest : ActiveController
 	{
 		/**
-		 * Tests to see if "fork", works
 		 */
 		[ActiveEvent(Name = "magix.test.viewstate")]
 		public static void magix_test_viewstate(object sender, ActiveEventArgs e)

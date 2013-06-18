@@ -107,6 +107,7 @@ end user for some seconds.&nbsp;&nbsp;not thread safe";
 				e.Params["inspect"].Value = @"shows a message box to the 
 end user for some seconds.&nbsp;&nbsp;not thread safe";
 				e.Params["code"].Value = "code to execute if user clicks ok goes here";
+				e.Params["closable-only"].Value = false;
 				return;
 			}
 
@@ -119,6 +120,25 @@ end user for some seconds.&nbsp;&nbsp;not thread safe";
 			ConfirmCode = e.Params["code"].Clone();
 
 			confirmWrp.Visible = true;
+
+			if (!e.Params.Contains("closable-only") || e.Params["closable-only"].Get<bool>() == false)
+			{
+				ok.Visible = true;
+			}
+			else
+			{
+				Node tmp = new Node();
+				Node code = e.Params["code"].Clone();
+				code.Name = "";
+				tmp["json"].Value = code;
+
+				RaiseEvent(
+					"magix.code.node-2-code",
+					tmp);
+
+				confirmLbl.Text += "<pre style='text-align:left;margin-left:120px;margin-right:120px;height:360px;overflow:auto;'>" + tmp["code"].Get<string>().Replace("<", "&lt;").Replace(">", "&gt;") + "</pre>";
+				ok.Visible = false;
+			}
 
 			new EffectFadeIn(confirmWrp, 250)
 				.ChainThese(

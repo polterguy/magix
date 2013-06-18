@@ -14,6 +14,15 @@ namespace Magix.execute
 	 */
 	public class StopCore : ActiveController
 	{
+		public class HyperLispStopException : Exception
+		{
+			public override string Message {
+				get {
+					return "_STOP!!";
+				}
+			}
+		}
+
 		/**
 		 * stops the execution of the current block of code
 		 */
@@ -33,7 +42,7 @@ of code nodes in the tree.&nbsp;&nbsp;thread safe";
 				return;
 			}
 
-			e.Params["_state"].Value = "stop";
+			throw new HyperLispStopException();
 		}
 	}
 }

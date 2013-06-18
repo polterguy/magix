@@ -144,16 +144,30 @@ to the node's name.&nbsp;&nbsp;thread safe";
 						// Data Pointer, pointer to data
 						tmp["_dp"].Value = dp;
 
-						RaiseActiveEvent(
-							eventName, 
-							tmp);
-
-						// Checking to see if we need to halt execution
-						if (tmp["_state"].Get<string>() == "stop")
+						try
 						{
-							e.Params["_state"].Value = "stop";
-							tmp["_state"].UnTie();
-							break;
+							RaiseActiveEvent(
+								eventName, 
+								tmp);
+						}
+						catch(Exception err)
+						{
+							ip["_state"].UnTie();
+							while (err.InnerException != null)
+								err = err.InnerException;
+							if (err.Message == "_STOP!!")
+							{
+								if (e.Params.Contains("_ip"))
+								{
+									throw err; // keep on rethrowing till we meet somewhere magix.execute was explicitly called ...
+								}
+								// outer execution
+								return;
+							}
+							else
+							{
+								throw err;
+							}
 						}
 					}
 				}

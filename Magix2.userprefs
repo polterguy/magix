@@ -6,7 +6,7 @@
       <File FileName="Magix.file/FileSystem.cs" Line="167" Column="86" />
       <File FileName="Magix.app/media/grid/main.css" Line="1025" Column="11" />
       <File FileName="Magix.core/Modules/Viewport.cs" Line="476" Column="45" />
-      <File FileName="Magix.viewport.tests/ViewStateTest.cs" Line="49" Column="2" />
+      <File FileName="Magix.viewport.tests/ViewStateTest.cs" Line="47" Column="5" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -18,14 +18,10 @@
                 <Node name="file-browser" expanded="True" />
               </Node>
             </Node>
-            <Node name="Magix.Core" expanded="True">
-              <Node name="Modules" expanded="True" />
-            </Node>
           </Node>
           <Node name="Plugins" expanded="True" />
           <Node name="Samples" expanded="True" />
           <Node name="Tests" expanded="True">
-            <Node name="Magix.threading.tests" expanded="True" />
             <Node name="Magix.viewport.tests" expanded="True" selected="True" />
           </Node>
           <Node name="Pakker" expanded="True" />
