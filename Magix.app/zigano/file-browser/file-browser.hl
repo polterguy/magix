@@ -13,8 +13,6 @@ _back
   css=>span-5 directory back-directory
   text=>..
   onclick
-    debug
-    stop
     magix.admin.run-file
       file=>zigano/file-browser/file-browser.hl
 
