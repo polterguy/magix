@@ -505,61 +505,13 @@ namespace Magix.Core
 							entireSubStatement += expr[idx];
 						}
 
-						string subValue = null;
-						string lastSubEntity = "";
-						Node subNode = GetNode(entireSubStatement, source, ip, ref lastSubEntity, forcePath);
-						if (lastSubEntity == ".Value")
-							subValue = subNode.Value.ToString ();
-						else if (lastSubEntity == ".Name")
-							subValue = subNode.Name;
-						else if (lastSubEntity == ".Count")
-							subValue = subNode.Count.ToString ();
-						else if (lastSubEntity == "")
-							throw new ArgumentException("Sub expressions cannot return node lists, but only Value and Name");
-						else
-							throw new ArgumentException("Don't know how to parse: " + lastSubEntity);
-						bufferNodeName = subValue;
-						bool allNumber = true;
-                        foreach (char idxC in bufferNodeName)
-                        {
-                            if (("0123456789").IndexOf(idxC) == -1)
-                            {
-                                allNumber = false;
-                                break;
-                            }
-                        }
-                        if (allNumber)
-                        {
-                            int intIdx = int.Parse(bufferNodeName);
-                            if (x.Count > intIdx)
-                                x = x[intIdx];
-							else if (forcePath)
-							{
-								while (x.Count <= intIdx)
-								{
-									x.Add (new Node("item"));
-								}
-								x = x[intIdx];
-							}
-							else
-								return null;
-                        }
-                        else
-                        {
-							if (x.Contains (bufferNodeName))
-								x = x[bufferNodeName];
-							else if (forcePath)
-							{
-								x = x[bufferNodeName];
-							}
-							else
-							{
-								return null;
-							}
-                        }
-                        bufferNodeName = "";
-                        isInside = false;
-						continue;
+						object innerVal = GetExpressionValue(entireSubStatement, source, ip, false);
+
+						if (innerVal == null)
+							throw new ArgumentException("subexpression failed, expression was; " + entireSubStatement);
+
+						tmp = ']'; // to sucker into ending of logic
+						bufferNodeName = innerVal.ToString();
 					}
                     if (tmp == ']')
                     {

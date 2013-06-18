@@ -55,12 +55,12 @@ in a modal message box.&nbsp;&nbsp;not thread safe";
 			Node tmp = new Node();
 
 			tmp["code"].AddRange(ip.RootNode().Clone());
+			tmp["code"]["_state"].UnTie();
 			tmp["message"].Value = "stackdump of tree from debug instruction";
-			tmp["header"].Value = "debug";
-			tmp["time"].Value = -1;
+			tmp["closable-only"].Value = true;
 
 			RaiseActiveEvent(
-				"magix.viewport.show-message",
+				"magix.viewport.confirm",
 				tmp);
 		}
 	}
