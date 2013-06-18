@@ -1,12 +1,12 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Magix.app/zigano/startup.hl">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Magix.viewport.tests/ViewStateTest.cs">
     <Files>
-      <File FileName="Magix.file/FileSystem.cs" Line="149" Column="91" />
-      <File FileName="Magix.app/zigano/startup.hl" Line="15" Column="1" />
-      <File FileName="Magix.app/zigano/startup-scripts/event-create-roles-form.hl" Line="112" Column="1" />
-      <File FileName="Magix.app/zigano/startup-scripts/event-create-edit-user.hl" Line="209" Column="1" />
-      <File FileName="Magix.app/zigano/startup-scripts/event-create-ide-properties.hl" Line="27" Column="31" />
+      <File FileName="Magix.app/zigano/file-browser/file-browser.hl" Line="16" Column="25" />
+      <File FileName="Magix.file/FileSystem.cs" Line="167" Column="86" />
+      <File FileName="Magix.app/media/grid/main.css" Line="1025" Column="11" />
+      <File FileName="Magix.core/Modules/Viewport.cs" Line="476" Column="45" />
+      <File FileName="Magix.viewport.tests/ViewStateTest.cs" Line="49" Column="2" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -14,17 +14,20 @@
           <Node name="Core" expanded="True">
             <Node name="Magix.app" expanded="True">
               <Node name="zigano" expanded="True">
-                <Node name="startup-scripts" expanded="True">
-                  <Node name="event-create-ide-properties.hl" selected="True" />
-                </Node>
+                <Node name="admin" expanded="True" />
+                <Node name="file-browser" expanded="True" />
               </Node>
             </Node>
+            <Node name="Magix.Core" expanded="True">
+              <Node name="Modules" expanded="True" />
+            </Node>
           </Node>
-          <Node name="Plugins" expanded="True">
-            <Node name="Magix.file" expanded="True" />
-          </Node>
+          <Node name="Plugins" expanded="True" />
           <Node name="Samples" expanded="True" />
-          <Node name="Tests" expanded="True" />
+          <Node name="Tests" expanded="True">
+            <Node name="Magix.threading.tests" expanded="True" />
+            <Node name="Magix.viewport.tests" expanded="True" selected="True" />
+          </Node>
           <Node name="Pakker" expanded="True" />
         </State>
       </Pad>
