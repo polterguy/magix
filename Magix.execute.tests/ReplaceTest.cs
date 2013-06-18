@@ -24,13 +24,13 @@ namespace Magix.tests
 
 			tmp["_data"].Value = "msg1-msg2";
 			tmp["replace"].Value = "[_data].Value";
-			tmp["replace"]["replace"].Value = "-msg2";
+			tmp["replace"]["what"].Value = "-msg2";
 			tmp["replace"]["with"].Value = "xxx";
 			tmp["replace", 1].Value = "[_data].Name";
-			tmp["replace", 1]["replace"].Value = "_da";
+			tmp["replace", 1]["what"].Value = "_da";
 			tmp["replace", 1]["with"].Value = "_DA";
 			tmp["replace", 2].Value = "[_DAta].Value";
-			tmp["replace", 2]["replace"].Value = "msg1";
+			tmp["replace", 2]["what"].Value = "msg1";
 
 			if (ShouldInspect(e.Params))
 			{

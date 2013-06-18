@@ -586,6 +586,12 @@ namespace Magix.Core
                             isInside = false;
                             continue;
                         }
+						else if (bufferNodeName == "$")
+						{
+							x = x.RootNode()["$"];
+							isInside = false;
+							continue;
+						}
 						else if (bufferNodeName == ".ip")
 						{
 							x = ip;

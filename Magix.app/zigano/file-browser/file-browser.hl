@@ -6,8 +6,23 @@ if=>[$][directory]
   set=>[magix.file.list-directories][directory].Value
     value=>[$][directory].Value
   set=>[magix.forms.create-form][controls][label][text].Value
-    value=>@"files from {0}"
+    value=>@"files from /{0}"
       pr0=>[$][directory].Value
+
+_back
+  css=>span-5 directory back-directory
+  text=>..
+  onclick
+    debug
+    stop
+    magix.admin.run-file
+      file=>zigano/file-browser/file-browser.hl
+
+if=>[$][directory]
+  add=>[/][magix.forms.create-form][controls]
+    value=>[/][_back]
+  set=>[/][magix.forms.create-form][controls][_back].Name
+    value=>link-button
 
 magix.file.list-files
 
@@ -26,10 +41,10 @@ _link-buttonDir
 for-each=>[magix.file.list-files][files]
   set=>[/][_link-button][text].Value
     value=>[.].Value
-  if=>[/][$][directory]
-    set=>[@][replace][replace].Value
+  if=>[$][directory]
+    set=>[@][replace][what].Value
       value=>@"{0}/"
-        pr0=>@"[/][$][directory].Value"
+        pr0=>@"[$][directory].Value"
     replace=>[/][_link-button][text].Value
   add=>[/][magix.forms.create-form][controls]
     value=>[/][_link-button]
@@ -43,16 +58,15 @@ for-each=>[magix.file.list-directories][directories]
     value=>[.].Value
   set=>[/][_link-buttonDir][onclick][magix.admin.run-file][directory].Value
     value=>[.].Value
-  if=>[/][$][directory]
-    set=>[@][replace][replace].Value
+  if=>[$][directory]
+    set=>[@][replace][what].Value
       value=>@"{0}/"
-        pr0=>@"[/][$][directory].Value"
+        pr0=>@"[$][directory].Value"
     replace=>[/][_link-buttonDir][text].Value
   add=>[/][magix.forms.create-form][controls]
     value=>[/][_link-buttonDir]
   set=>[/][magix.forms.create-form][controls][_link-buttonDir].Name
     value=>link-button
-
 
 magix.forms.create-form
   container=>content1
