@@ -55,7 +55,7 @@ hyperlinks points to other urls, either locally, or externally.&nbsp;&nbsp;
 use [text] to change readable text, [url] to set the url of the document to link to, 
 [target] to either _blank, _new, ro any id you wish to reuse.&nbsp;&nbsp;[key] is 
 keyboard shortcut";
-			node["container"].Value = "modal";
+			node["container"].Value = "content5";
 			node["form-id"].Value = "sample-form";
 			node["controls"]["hyperlink"]["text"].Value = "anchor text of hyperlink";
 			node["controls"]["hyperlink"]["url"].Value = "http://google.com";

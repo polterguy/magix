@@ -75,7 +75,7 @@ selected at the same time.&nbsp;&nbsp;meaning you can ask questions such as,
 [checked] sets its state to true or false.&nbsp;&nbsp;[key] changes keyboard shortcut.&nbsp;&nbsp;
 [enabled] changes the enabled state of your control to true or false.&nbsp;&nbsp;
 [oncheckedchanged] is raised when checked state of control changes";
-			node["container"].Value = "modal";
+			node["container"].Value = "content5";
 			node["form-id"].Value = "sample-form";
 			node["controls"]["radio"]["group"].Value = "id_of_group";
 			node["controls"]["radio"]["checked"].Value = true;

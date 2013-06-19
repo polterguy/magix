@@ -292,6 +292,7 @@ thread safe";
 in whatever editor makes sense according to its extension, or download directly in browser 
 if none.&nbsp;&nbsp;thread safe";
 				e.Params["file"].Value = "media/grid/main.css";
+				e.Params["container"].Value = "content5";
 				e.Params["new-file"].Value = false;
 				return;
 			}

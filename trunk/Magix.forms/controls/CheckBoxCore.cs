@@ -67,7 +67,7 @@ useful for representing choices like yes or no.&nbsp;&nbsp;[checked] determines 
 state, true or false.&nbsp;&nbsp;key is keyboard shortcut.&nbsp;&nbsp;[enabled] can be 
 true or false, and determines if it is possible to change its state, or not.&nbsp;&nbsp;
 [oncheckedchanged] is raised when checked state of control changes";
-			node["container"].Value = "modal";
+			node["container"].Value = "content5";
 			node["form-id"].Value = "sample-form";
 			node["controls"]["check"]["checked"].Value = true;
 			node["controls"]["check"]["key"].Value = "C";

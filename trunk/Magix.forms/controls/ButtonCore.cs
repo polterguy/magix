@@ -53,7 +53,7 @@ namespace Magix.forms
 			node["event:magix.forms.create-form"].Value = null;
 			node["inspect"].Value = @"creates a button input type of web control.&nbsp;&nbsp;
 [text] is the visible text, [key] the keyboard shortcut, [enabled] enables or disables the control";
-			node["container"].Value = "modal";
+			node["container"].Value = "content5";
 			node["form-id"].Value = "sample-form";
 			node["controls"]["button"]["text"].Value = "hello world";
 			node["controls"]["button"]["key"].Value = "C";

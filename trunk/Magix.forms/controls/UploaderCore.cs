@@ -89,7 +89,7 @@ namespace Magix.forms
 			node["event:magix.forms.create-form"].Value = null;
 			node["inspect"].Value = @"creates a uploader input type of web control.&nbsp;&nbsp;
 [onuploaded] is the event handler";
-			node["container"].Value = "modal";
+			node["container"].Value = "content5";
 			node["form-id"].Value = "sample-form";
 			node["controls"]["uploader"]["onuploaded"].Value = "hyper lisp code";
 			node["controls"]["uploader"]["folder"].Value = "zigano";

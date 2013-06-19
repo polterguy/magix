@@ -58,7 +58,7 @@ or [radio] control.&nbsp;&nbsp;use [text] to change visible text of label, [tag]
 change html tag to render control, [for] in combination with [tag] being label, to 
 point to a [radio] or [check] control, to associate clicking of the label with 
 changing state of radio or check control";
-			node["container"].Value = "modal";
+			node["container"].Value = "content5";
 			node["form-id"].Value = "sample-form";
 			node["controls"]["label"]["text"].Value = "hello world";
 			node["controls"]["label"]["tag"].Value = "p|div|span|etc";

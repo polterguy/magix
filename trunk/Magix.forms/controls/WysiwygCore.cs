@@ -113,7 +113,7 @@ namespace Magix.forms
 			node["event:magix.forms.create-form"].Value = null;
 			node["inspect"].Value = @"creates a wysiwyg input type of web control.&nbsp;&nbsp;
 [text] is the visible text.&nbsp;&nbso;not thread safe";
-			node["container"].Value = "modal";
+			node["container"].Value = "content5";
 			node["form-id"].Value = "sample-form";
 			node["controls"]["wysiwyg"]["text"].Value = "hello world";
 			node["controls"]["wysiwyg"]["place-holder"].Value = "place holder ...";

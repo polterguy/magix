@@ -90,7 +90,7 @@ shall have, or currently have been changed to.&nbsp;&nbsp;[key] is keyboard shor
 to active, or give focus to text area.&nbsp;&nbsp;[ontextchanged] is raised when 
 [text] is changed by user.&nbsp;&nbsp;[onescpressed] is raised when escape key
 is pressed, while control has focus";
-			node["container"].Value = "modal";
+			node["container"].Value = "content5";
 			node["form-id"].Value = "sample-form";
 			node["controls"]["text-area"]["place-holder"].Value = "shadow text ...";
 			node["controls"]["text-area"]["rows"].Value = 5;

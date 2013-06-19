@@ -30,7 +30,7 @@ the [id] node's value serves as unique id if more than
 one form of the same type is injected onto the same page.&nbsp;&nbsp;
 use [css] to set css class of wrapping control, and [tag] to set html tag
 of wrapping control.&nbsp;&nbsp;not thread safe";
-				e.Params["container"].Value = "modal";
+				e.Params["container"].Value = "content5";
 				e.Params["form-id"].Value = "sample-form";
 				e.Params["controls"]["form"].Value = "name-of-my-form";
 				e.Params["controls"]["id"].Value = "unique-id";

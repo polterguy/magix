@@ -43,7 +43,7 @@ namespace Magix.forms
 			node["event:magix.forms.create-form"].Value = null;
 			node["inspect"].Value = @"creates a hidden field input type of web control.&nbsp;&nbsp;
 hidden fields are invisible, but can store any data as test in their [value] node";
-			node["container"].Value = "modal";
+			node["container"].Value = "content5";
 			node["form-id"].Value = "sample-form";
 			node["controls"]["hidden"]["value"].Value = "whatever you wish to put in as value";
 			base.Inspect(node["controls"]["hidden"]);

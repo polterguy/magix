@@ -41,7 +41,7 @@ namespace Magix.forms
 			node["event:magix.forms.create-form"].Value = null;
 			node["inspect"].Value = @"creates a literal type of web control.&nbsp;&nbsp;
 put any html into [text] node, to render exact html as web control";
-			node["container"].Value = "modal";
+			node["container"].Value = "content5";
 			node["form-id"].Value = "sample-form";
 			node["controls"]["literal"].Value = null;
 			node["controls"]["literal"]["text"].Value = "&lt;h1&gt;hello&lt;/h1&gt;";
