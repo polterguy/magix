@@ -17,7 +17,9 @@ if=>[$][directory].Value
   set=>[/][magix.forms.create-form][events][magix.ide.file-saved][magix.admin.run-file][directory].Value
     value=>[$][directory].Value
   set=>[/][_btn][onclick][magix.admin.edit-file][file].Value
-    value=>[$][directory].Value
+    value=>@"{0}/{1}"
+      pr0=>[$][directory].Value
+      pr1=>empty.txt
   set=>[/][magix.forms.create-form][controls][uploader][folder].Value
     value=>[$][directory].Value
   set=>[/][magix.forms.create-form][controls][uploader][uploaded][if][magix.admin.run-file][directory].Value
@@ -104,10 +106,10 @@ _btn
   text=>new file
   onclick
     magix.admin.edit-file
-      css=>span-24 last
+      css=>span-24 last top-2
       container=>content2
       new-file=>true
-      file=>
+      file=>empty.txt
 
 add=>[magix.forms.create-form][controls]
   value=>[_btn]
