@@ -37,6 +37,7 @@ namespace Magix.viewports
 		protected Panel confirmWrp;
 		protected Label confirmLbl;
 		protected Button ok;
+		private bool _isFirst = true;
 
 		/**
          * Shows a Message Box to the end user, which can be configured
@@ -58,7 +59,14 @@ end user for some seconds.&nbsp;&nbsp;not thread safe";
 			if (!e.Params.Contains("message") || e.Params["message"].Get<string>("") == "")
 				throw new ArgumentException("cannot show a message box without a [message] argument");
 
-			message.Text = "<p>" + e.Params["message"].Get<string>() + "</p>";
+			if (_isFirst)
+			{
+				message.Text = "<p>" + e.Params["message"].Get<string>() + "</p>";
+			}
+			else
+			{
+				message.Text += "<p>" + e.Params["message"].Get<string>() + "</p>";
+			}
 
 			if (e.Params.Contains("code"))
 			{
@@ -74,18 +82,22 @@ end user for some seconds.&nbsp;&nbsp;not thread safe";
 				message.Text += "<pre style='text-align:left;margin-left:120px;'>" + tmp["code"].Get<string>().Replace("<", "&lt;").Replace(">", "&gt;") + "</pre>";
 			}
 
-			if (e.Params.Contains("time") && e.Params["time"].Get<int>() == -1)
+			if (_isFirst)
 			{
-				new EffectFadeIn(message, 250)
-					.Render();
-			}
-			else
-			{
-				new EffectFadeIn(message, 250)
-					.ChainThese(
-						new EffectTimeout(e.Params.Contains("time") ? e.Params["time"].Get<int>(3000) : 3000),
-						new EffectFadeOut(message,250))
+				_isFirst = false;
+				if (e.Params.Contains("time") && e.Params["time"].Get<int>() == -1)
+				{
+					new EffectFadeIn(message, 250)
 						.Render();
+				}
+				else
+				{
+					new EffectFadeIn(message, 250)
+						.ChainThese(
+							new EffectTimeout(e.Params.Contains("time") ? e.Params["time"].Get<int>(3000) : 3000),
+							new EffectFadeOut(message,250))
+							.Render();
+				}
 			}
 		}
 
