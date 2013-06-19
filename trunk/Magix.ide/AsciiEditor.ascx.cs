@@ -65,27 +65,16 @@ namespace Magix.ide
 		
 		protected void delete_Click(object sender, EventArgs e)
 		{
-			Node tmp = new Node();
-			tmp["path"].Value = path.Text;
+			Node c = new Node();
+			c["message"].Value = "are you sure you wish to delete the file " + path.Text + "?";
+			c["code"]["magix.file.save"]["path"].Value = path.Text;
+			c["code"]["magix.viewport.show-message"]["message"].Value = "file deleted";
+			c["code"]["magix.viewport.show-message"]["time"].Value = 500;
+			c["code"]["magix.ide.file-deleted"]["path"].Value = path.Text;
 
 			RaiseEvent(
-				"magix.file.save", // will delete file, since no file node is given ...
-				tmp);
-
-			tmp = new Node();
-			tmp["message"].Value = "file delete";
-			tmp["time"].Value = 500;
-
-			RaiseEvent(
-				"magix.viewport.show-message",
-				tmp);
-
-			tmp = new Node();
-			tmp["path"].Value = path.Text;
-
-			RaiseEvent(
-				"magix.ide.file-deleted",
-				tmp);
+				"magix.viewport.confirm",
+				c);
 		}
 	}
 }
