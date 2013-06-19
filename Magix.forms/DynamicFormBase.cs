@@ -92,6 +92,9 @@ namespace Magix.forms
 				else if (ctrl is Label)
 					e.Params["value"].Value = 
 						((Label)ctrl).Text;
+				else if (ctrl is Uploader)
+					e.Params["value"].Value = 
+						((Uploader)ctrl).GetFileName();
 			}
 		}
 
@@ -217,6 +220,35 @@ namespace Magix.forms
 					((BaseWebControl)ctrl).CssClass = className;
 				else
 					throw new ArgumentException("Don't know how to set the css value of that control");
+			}
+		}
+
+		/**
+		 */
+		[ActiveEvent(Name = "magix.forms.has-more-data")]
+		protected void magix_forms_has_more_data(object sender, ActiveEventArgs e)
+		{
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			{
+				e.Params["event:magix.forms.set-enabled"].Value = null;
+				e.Params["id"].Value = "control";
+				e.Params["form-id"].Value = "webpages";
+				e.Params["value"].Value = true;
+				e.Params["inspect"].Value = @"returns true in [value] if there is more data in the given 
+[id] web control, in the [form-id] form, from [value].&nbsp;&nbsp;not thread safe";
+				return;
+			}
+
+			if (!e.Params.Contains ("id"))
+				throw new ArgumentException("Missing id in set-value");
+
+			if (e.Params["form-id"].Get<string>("webpages") == FormID)
+			{
+				Control ctrl = Selector.FindControl<Control>(this, e.Params["id"].Get<string>());
+				if (ctrl is Uploader)
+					e.Params["value"].Value = ((Uploader)ctrl).SizeOfBatch > ((Uploader)ctrl).CurrentNo + 1;
+				else
+					throw new ArgumentException("Don't know how to see if that control has more data");
 			}
 		}
 

@@ -10,10 +10,12 @@
 	runat="server"
 	DefaultWidget="save"
 	id="wrp">
+	<label class="fill-width">file name</label>
 	<mux:TextBox
 		runat="server"
 		id="path"
 		CssClass="fill-width"/>
+	<label class="fill-width top-1">file content</label>
 	<mux:TextArea
 		runat="server"
 		CssClass="fill-width monospaced ascii-editor"

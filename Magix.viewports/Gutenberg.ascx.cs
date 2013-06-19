@@ -153,6 +153,13 @@ end user for some seconds.&nbsp;&nbsp;not thread safe";
 			confirmWrp.Style["display"] = "none";
 		}
 
+		protected void confirmWrp_Esc(object sender, EventArgs e)
+		{
+			ConfirmCode = null;
+			confirmWrp.Visible = false;
+			confirmWrp.Style["display"] = "none";
+		}
+
 		protected void OKClick(object sender, EventArgs e)
 		{
 			RaiseEvent(

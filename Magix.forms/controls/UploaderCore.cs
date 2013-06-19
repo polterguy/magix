@@ -32,6 +32,11 @@ namespace Magix.forms
 
 			FillOutParameters(node, ret);
 
+			string folder = "";
+
+			if (node.Contains("folder") && !string.IsNullOrEmpty(node["folder"].Get<string>()))
+				folder = node["folder"].Get<string>();
+
 			if (node.Contains("onuploaded"))
 			{
 				// TODO: is this right? do we need to clone?
@@ -39,9 +44,41 @@ namespace Magix.forms
 
 				ret.Uploaded += delegate(object sender2, EventArgs e2)
 				{
+					Uploader that = sender2 as Uploader;
+
+					string fileName = Page.Server.MapPath(folder.Trim('/') + "/" + that.GetFileName());
+
+					if (File.Exists(fileName))
+						File.Delete(fileName);
+
+					byte[] content = Convert.FromBase64String(that.GetFileRawBASE64());
+					using(FileStream stream = File.Create(fileName))
+					{
+						stream.Write(content, 0, content.Length);
+
+					}
+
 					RaiseActiveEvent(
 						"magix.execute",
 						codeNode);
+				};
+			}
+			else
+			{
+				ret.Uploaded += delegate(object sender2, EventArgs e2)
+				{
+					Uploader that = sender2 as Uploader;
+
+					string fileName = Page.Server.MapPath(folder.Trim('/') + "/" + that.GetFileName());
+
+					if (File.Exists(fileName))
+						File.Delete(fileName);
+
+					byte[] content = Convert.FromBase64String(that.GetFileRawBASE64());
+					using(FileStream stream = File.Create(fileName))
+					{
+						stream.Write(content, 0, content.Length);
+					}
 				};
 			}
 			e.Params["_ctrl"].Value = ret;
@@ -55,6 +92,7 @@ namespace Magix.forms
 			node["container"].Value = "modal";
 			node["form-id"].Value = "sample-form";
 			node["controls"]["uploader"]["onuploaded"].Value = "hyper lisp code";
+			node["controls"]["uploader"]["folder"].Value = "zigano";
 			base.Inspect(node["controls"]["uploader"]);
 		}
 	}

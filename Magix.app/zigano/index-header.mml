@@ -77,7 +77,7 @@ panel=>loginWrp
           css=>error span-2
         button=>loginBtn
           text=>login
-          css=>right span-2 btn-large
+          css=>right span-2 btn-large last
           onclick
             magix.forms.get-value
               form-id=>header
