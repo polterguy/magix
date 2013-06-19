@@ -70,8 +70,6 @@ namespace Magix.ide
 			Node c = new Node();
 			c["message"].Value = "are you sure you wish to delete the file " + path.Text + "?";
 			c["code"]["magix.file.save"]["path"].Value = path.Text;
-			c["code"]["magix.viewport.show-message"]["message"].Value = "file deleted";
-			c["code"]["magix.viewport.show-message"]["time"].Value = 500;
 			c["code"]["magix.ide.file-deleted"]["path"].Value = path.Text;
 
 			RaiseEvent(

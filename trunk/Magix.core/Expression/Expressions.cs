@@ -693,7 +693,10 @@ namespace Magix.Core
 			{
 				if (x.Value != null && x.Value is string)
 					return !string.IsNullOrEmpty(x.Get<string>());
-                return x.Value != null;
+				else if (x.Value != null && x.Value is bool)
+					return x.Get<bool>();
+                else
+					return x.Value != null;
 			}
             else if (lastEntity == "")
                 return true;

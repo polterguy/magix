@@ -21,6 +21,7 @@
 		runat="server"
 		id="confirmWrp"
 		style="display:none;"
+		OnEscKey="confirmWrp_Esc"
 		CssClass="info-message">
 		<mux:Label
 			runat="server"

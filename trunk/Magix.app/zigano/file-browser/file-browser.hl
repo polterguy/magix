@@ -18,6 +18,10 @@ if=>[$][directory].Value
     value=>[$][directory].Value
   set=>[/][_btn][onclick][magix.admin.edit-file][file].Value
     value=>[$][directory].Value
+  set=>[/][magix.forms.create-form][controls][uploader][folder].Value
+    value=>[$][directory].Value
+  set=>[/][magix.forms.create-form][controls][uploader][uploaded][if][magix.admin.run-file][directory].Value
+    value=>[$][directory].Value
 else
   magix.viewport.set-viewstate
     id=>stack-of-pages
@@ -130,17 +134,31 @@ magix.forms.create-form
         container=>content5
 
   container=>content1
+  form-id=>file-explorer
   css=>span-19 last
   controls
     label=>desc
       css=>span-15 last left-4
       tag=>h2
       text=>files from /
-    uploader=>dragdropfiles
+    uploader=>uploader
+      folder=>
       onuploaded
+        magix.forms.get-value
+          form-id=>file-explorer
+          id=>uploader
+        set=>[magix.viewport.show-message][message].Value
+          value=>@"file {0} successfully uploaded"
+            pr0=>[/][magix.forms.get-value][value].Value
         magix.viewport.show-message
-          message=>howdy :D
-          time=>250
+          time=>1250
+        magix.forms.has-more-data
+          form-id=>file-explorer
+          id=>uploader
+        if=>![magix.forms.has-more-data][value].Value
+          magix.admin.run-file
+            file=>zigano/file-browser/file-browser.hl
+
 
 
 
