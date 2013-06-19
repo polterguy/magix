@@ -34,6 +34,8 @@ namespace Magix.ide
 			{
 				surface.Text = node["content"].Get<string>();
 				path.Text = node["file"].Get<string>();
+				path.Select();
+				path.Focus();
 			};
 		}
 		

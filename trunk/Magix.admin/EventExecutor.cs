@@ -291,7 +291,8 @@ thread safe";
 				e.Params["inspect"].Value = @"attempts to open the given [file]
 in whatever editor makes sense according to its extension, or download directly in browser 
 if none.&nbsp;&nbsp;thread safe";
-				e.Params["file"].Value =  @"media/grid/main.css";
+				e.Params["file"].Value = "media/grid/main.css";
+				e.Params["new-file"].Value = false;
 				return;
 			}
 
@@ -300,7 +301,7 @@ if none.&nbsp;&nbsp;thread safe";
 
 			string file = e.Params["file"].Get<string>();
 
-			if (!File.Exists(Page.Server.MapPath(file)))
+			if ((!e.Params.Contains("new-file") || !e.Params["new-file"].Get<bool>()) && !File.Exists(Page.Server.MapPath(file)))
 				throw new ArgumentException("file " + file + " doesn't exist on disc");
 
 			string extension = file.Substring(file.LastIndexOf('.') + 1);
@@ -322,17 +323,7 @@ if none.&nbsp;&nbsp;thread safe";
 					"magix.viewport.execute-javascript",
 					tmp);
 			} break;
-			case "hl":
-			case "css":
-			case "mml":
-			case "html":
-			case "htm":
-			case "txt":
-			case "cs":
-			case "aspx":
-			case "config":
-			case "asax":
-			case "csproj":
+			default:
 			{
 				if (!e.Params.Contains("container"))
 					throw new ArgumentException("edit-file needs [container]");
@@ -340,10 +331,15 @@ if none.&nbsp;&nbsp;thread safe";
 				Node tmp = new Node();
 				tmp["file"].Value = file;
 
-				using (TextReader reader = File.OpenText(file))
+				if (!e.Params.Contains("new-file") || !e.Params["new-file"].Get<bool>())
 				{
-					tmp["content"].Value = reader.ReadToEnd();
+					using (TextReader reader = File.OpenText(file))
+					{
+						tmp["content"].Value = reader.ReadToEnd();
+					}
 				}
+				else
+					tmp["content"].Value = "";
 
 				if (e.Params.Contains("css"))
 					tmp["css"].Value = e.Params["css"].Value;
