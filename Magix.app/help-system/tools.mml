@@ -140,3 +140,27 @@ button=>files
       
 }}</div>
 
+<ul class="span-19 last top-2">
+	<li><strong>hyper lisp</strong> - allows you to see, study, learn, try out and inspect all hyper lisp keywords, to understand the language</li>
+	<li><strong>tests</strong> - allows you to see, study, learn, run and verify all unit tests in the system</li>
+	<li><strong>active events</strong> - allows you to see, study, learn, try out and inspect all active events in the system</li>
+	<li><strong>overridden</strong> - allows you to see which active veents are overridden within the system</li>
+	<li><strong>open</strong> - allows you to see which active events are opened, and hence invokable from the outside, which is important to understand for security reasons</li>
+	<li><strong>remoted</strong> - allows you to see which active events have been overridden to go towards remote server end-points, which is important to understand from a security perspective</li>
+	<li><strong>mml editor</strong> - allows you to play around with magix markup language, and see and test the results in a preview area</li>
+	<li><strong>web controls</strong> - allows you to see, study, learn, try out and inspect all web controls</li>
+	<li><strong>trace</strong> - turns tracing on, such that every single active event invoked will be traced, and the nodes passed into it, and out from it in a tracer container</li>
+	<li><strong>remove tracer</strong> - turns tracing off, the opposite of trace</li>
+	<li><strong>executor</strong> - the active event executor is almost like a command line shell, or linux shell if you wish, from where you can within an intellisense environment, inspect and test-run every single active events within the system</li>
+	<li><strong>files</strong> - the magix file manager from where you can browse the file system. has support for creating new files, editing existing files and uploading new files through drag and dropping to the surface area of the file explorer</li>
+</ul>
+
+
+
+
+
+
+
+
+
+

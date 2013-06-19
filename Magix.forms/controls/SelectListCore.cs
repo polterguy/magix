@@ -91,7 +91,7 @@ control to disabled or enabled.&nbsp;&nbsp;[items] contains a collection of
 value/text pairs, which is used as the different options to the select list.&nbsp;&nbsp;
 [selected] can be set to the value of any of its items, to set an initially selected
 choice.&nbsp;&nbsp;[onselectedindexchanged] is raised when selected item state of control changes";
-			node["container"].Value = "modal";
+			node["container"].Value = "content5";
 			node["form-id"].Value = "sample-form";
 			node["controls"]["select"]["size"].Value = 5;
 			node["controls"]["select"]["key"].Value = "C";

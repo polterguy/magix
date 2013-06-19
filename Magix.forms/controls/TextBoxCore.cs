@@ -153,7 +153,7 @@ correctly capitalize entities, as if you are typing a name.&nbsp;&nbsp;[correct]
 automatically suggest corrections for typos.&nbsp;&nbsp;[complete] will suggest 
 previously typed values for you, and attempt to automatically complete the value.&nbsp;&nbsp;
 [max] is maximum number of characters in text-box.&nbsp;&nbsp;";
-			node["container"].Value = "modal";
+			node["container"].Value = "content5";
 			node["form-id"].Value = "sample-form";
 			node["controls"]["text-box"]["place-holder"].Value = "shadow text ...";
 			node["controls"]["text-box"]["capitalize"].Value = false;

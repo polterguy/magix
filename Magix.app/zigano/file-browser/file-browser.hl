@@ -137,7 +137,7 @@ magix.forms.create-form
 
   container=>content1
   form-id=>file-explorer
-  css=>span-19 last
+  css=>span-19 last min-height-30
   controls
     label=>desc
       css=>span-15 last left-4

@@ -105,7 +105,7 @@ which will automatically raise [onclick] on that control if carriage return
 is entered into a [text-box], or something similar, within the scope of the [panel].&nbsp;&nbsp;
 [tag] sets html tag to render panel as.&nbsp;&nbsp;[default] sets the defaul 
 control within your panel.&nbsp;&nbsp;[controls] contains a child control collection";
-			node["container"].Value = "modal";
+			node["container"].Value = "content5";
 			node["form-id"].Value = "sample-form";
 			node["controls"]["panel"]["tag"].Value = "p|div|address|etc";
 			node["controls"]["panel"]["default"].Value = "default-button";

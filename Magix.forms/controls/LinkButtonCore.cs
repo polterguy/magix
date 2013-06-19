@@ -55,7 +55,7 @@ namespace Magix.forms
 a link button looks, and renders, like a [hyperlink], but acts like a [button].&nbsp;&nbsp;
 [text] is visible text, or anchor text.&nbsp;&nbsp;[key] is keyboard shortcut.&nbsp;&nbsp;
 [enabled] can be true or false";
-			node["container"].Value = "modal";
+			node["container"].Value = "content5";
 			node["form-id"].Value = "sample-form";
 			node["controls"]["link-button"]["text"].Value = "hello world";
 			node["controls"]["link-button"]["key"].Value = "C";
