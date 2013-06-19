@@ -309,22 +309,18 @@ if none.&nbsp;&nbsp;thread safe";
 
 			switch (extension)
 			{
-			case "png":
-			case "gif":
-			case "jpg":
-			case "jpeg":
-			case "ico":
-			case "vaw":
-			case "mp3":
-			{
-				Node tmp = new Node();
-				tmp["script"].Value = "window.open('" + file + "', '_blank').focus();";
-
-				RaiseActiveEvent(
-					"magix.viewport.execute-javascript",
-					tmp);
-			} break;
-			default:
+			case "txt":
+			case "cs":
+			case "hl":
+			case "mml":
+			case "csproj":
+			case "config":
+			case "html":
+			case "htm":
+			case "css":
+			case "aspx":
+			case "ascx":
+			case "js":
 			{
 				if (!e.Params.Contains("container"))
 					throw new ArgumentException("edit-file needs [container]");
@@ -348,6 +344,15 @@ if none.&nbsp;&nbsp;thread safe";
 				LoadModule(
 					"Magix.ide.AsciiEditor", 
 					e.Params["container"].Get<string>(), 
+					tmp);
+			} break;
+			default:
+			{
+				Node tmp = new Node();
+				tmp["script"].Value = "window.open('" + file + "', '_blank').focus();";
+
+				RaiseActiveEvent(
+					"magix.viewport.execute-javascript",
 					tmp);
 			} break;
 			}
