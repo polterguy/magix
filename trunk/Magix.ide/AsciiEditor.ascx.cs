@@ -22,6 +22,13 @@ namespace Magix.ide
     public class AsciiEditor : ActiveModule
     {
 		protected TextArea surface;
+		protected Button save;
+
+		private string Path
+		{
+			get { return ViewState["Path"] as string; }
+			set { ViewState["Path"] = value; }
+		}
 
 		public override void InitialLoading(Node node)
 		{
@@ -31,7 +38,50 @@ namespace Magix.ide
 				delegate
 			{
 				surface.Text = node["content"].Get<string>();
+				Path = node["file"].Get<string>();
 			};
+		}
+
+		protected void save_Click(object sender, EventArgs e)
+		{
+			Node tmp = new Node();
+			tmp["file"].Value = surface.Text;
+			tmp["path"].Value = Path;
+
+			RaiseEvent(
+				"magix.file.save",
+				tmp);
+
+			tmp = new Node();
+			tmp["message"].Value = "file saved";
+			tmp["time"].Value = 500;
+
+			RaiseEvent(
+				"magix.viewport.show-message",
+				tmp);
 		}
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
