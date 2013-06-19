@@ -129,6 +129,14 @@ button=>files
   onclick
     magix.admin.run-file
       file=>zigano/file-browser/file-browser.hl
+    magix.viewport.clear-controls
+      container=>content2
+    magix.viewport.clear-controls
+      container=>content3
+    magix.viewport.clear-controls
+      container=>content4
+    magix.viewport.clear-controls
+      container=>content5
       
 }}</div>
 

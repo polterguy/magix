@@ -35,14 +35,10 @@ an http or ftp path, to a document.&nbsp;&nbsp;thread safe";
 				return;
 			}
 
-			Node ip = e.Params;
-			if (e.Params.Contains("_ip"))
-				ip = e.Params ["_ip"].Value as Node;
-
-			if (!ip.Contains("path") || ip["path"].Get<string>("") == "")
+			if (!e.Params.Contains("path") || e.Params["path"].Get<string>("") == "")
 				throw new ArgumentException("You need to define which file to load, as [path] node");
 
-			string file = ip["path"].Get<string>();
+			string file = e.Params["path"].Get<string>();
 
 			if (file.StartsWith("http") || file.StartsWith("ftp"))
 			{
@@ -51,7 +47,7 @@ an http or ftp path, to a document.&nbsp;&nbsp;thread safe";
 				{
 					using (TextReader reader = new StreamReader(response.GetResponseStream()))
 					{
-						ip["file"].Value = reader.ReadToEnd();
+						e.Params["file"].Value = reader.ReadToEnd();
 					}
 				}
 			}
@@ -59,7 +55,7 @@ an http or ftp path, to a document.&nbsp;&nbsp;thread safe";
 			{
 				using (TextReader reader = File.OpenText(HttpContext.Current.Server.MapPath(file)))
 				{
-					ip["file"].Value = reader.ReadToEnd();
+					e.Params["file"].Value = reader.ReadToEnd();
 				}
 			}
 		}
@@ -88,23 +84,19 @@ new created.&nbsp;&nbsp;thread safe";
 				return;
 			}
 
-			Node ip = e.Params;
-			if (e.Params.Contains("_ip"))
-				ip = e.Params["_ip"].Value as Node;
-
-			if (!ip.Contains("path") || ip["path"].Get<string>("") == "")
+			if (!e.Params.Contains("path") || e.Params["path"].Get<string>("") == "")
 				throw new ArgumentException("You need to define which file to save, as [path] node");
 
-			string file = ip["path"].Get<string>();
+			string file = e.Params["path"].Get<string>();
 
-			if (!ip.Contains("file") || ip["file"].Get<string>() == null)
+			if (!e.Params.Contains("file") || e.Params["file"].Get<string>() == null)
 			{
 				// Deletes an existing file
 				File.Delete(HttpContext.Current.Server.MapPath(file));
 			}
 			else
 			{
-				string fileContent = ip["file"].Get<string>();
+				string fileContent = e.Params["file"].Get<string>();
 
 				using (TextWriter writer = 
 				       new StreamWriter(File.OpenWrite(HttpContext.Current.Server.MapPath(file))))

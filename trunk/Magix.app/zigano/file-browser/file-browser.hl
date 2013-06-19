@@ -12,6 +12,10 @@ if=>[$][directory].Value
     value=>[/][_back]
   set=>[/][magix.forms.create-form][controls][_back].Name
     value=>link-button
+  set=>[/][magix.forms.create-form][events][magix.ide.file-deleted][magix.admin.run-file][directory].Value
+    value=>[$][directory].Value
+  set=>[/][magix.forms.create-form][events][magix.ide.file-saved][magix.admin.run-file][directory].Value
+    value=>[$][directory].Value
 else
   magix.viewport.set-viewstate
     id=>stack-of-pages
@@ -94,6 +98,21 @@ for-each=>[magix.file.list-directories][directories]
     value=>link-button
 
 magix.forms.create-form
+  events
+    magix.ide.file-saved
+      magix.admin.run-file
+        file=>zigano/file-browser/file-browser.hl
+    magix.ide.file-deleted
+      magix.admin.run-file
+        file=>zigano/file-browser/file-browser.hl
+      magix.viewport.clear-controls
+        container=>content2
+      magix.viewport.clear-controls
+        container=>content3
+      magix.viewport.clear-controls
+        container=>content4
+      magix.viewport.clear-controls
+        container=>content5
   container=>content1
   css=>span-19 last
   controls
@@ -103,12 +122,4 @@ magix.forms.create-form
       text=>files from /
 
 
-magix.viewport.clear-controls
-  container=>content2
-magix.viewport.clear-controls
-  container=>content3
-magix.viewport.clear-controls
-  container=>content4
-magix.viewport.clear-controls
-  container=>content5
 
