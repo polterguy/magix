@@ -81,6 +81,7 @@
     <Compile Include="Controls\DynamicPanel.cs" />
     <Compile Include="Controls\Core\AttributeControl.cs" />
     <Compile Include="Controls\Wysiwyg.cs" />
+    <Compile Include="Controls\Uploader.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -90,5 +91,6 @@
     <EmbeddedResource Include="Js\Timer.js" />
     <EmbeddedResource Include="Js\wysihtml5-0.4.0pre.min.js" />
     <EmbeddedResource Include="Js\advanced.js" />
+    <EmbeddedResource Include="Js\Uploader.js" />
   </ItemGroup>
 </Project>

@@ -33,5 +33,6 @@ using System.Web.UI;
 [assembly: WebResource("Magix.UX.Js.Effects.js", "application/javascript")]
 [assembly: WebResource("Magix.UX.Js.Timer.js", "application/javascript")]
 [assembly: WebResource("Magix.UX.Js.advanced.js", "application/javascript")]
+[assembly: WebResource("Magix.UX.Js.Uploader.js", "application/javascript")]
 [assembly: WebResource("Magix.UX.Js.wysihtml5-0.4.0pre.min.js", "application/javascript")]
 
