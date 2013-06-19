@@ -1,9 +1,17 @@
 
 
-magix.viewport.show-message
-  message=>jo dude!! :)
 
 
+
+
+magix.admin.get-active-events
+  begins-with=>magix.admin.desktop-shortcuts.
+
+for-each=>[magix.admin.get-active-events][events]
+  set=>[@][_evt].Name
+    value=>[.].Value
+  _evt
+    scripts
 
 
 

@@ -303,5 +303,6 @@
     <None Include="zigano\file-browser\file-browser.hl" />
     <None Include="zigano\admin\desktop.mml" />
     <None Include="zigano\admin\show-desktop.hl" />
+    <None Include="zigano\startup-scripts\events-create-desktop-shortcuts.hl" />
   </ItemGroup>
 </Project>

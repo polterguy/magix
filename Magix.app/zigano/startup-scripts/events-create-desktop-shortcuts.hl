@@ -1,0 +1,56 @@
+
+
+
+
+event=>magix.admin.desktop-shortcuts.defaults
+  code
+    _scripts
+      _default_script1
+        event=>zigano.travel.inspect-execute
+        text=>hyper lisp reference
+        category=>learning
+        description=>@"hyper lisp reference guide,
+to help you understand the programming of magix 
+illuminate using hyper lisp"
+      _default_script2
+        event=>zigano.travel.inspect-unit-tests
+        text=>unit tests
+        category=>tools
+        description=>@"view, inspect and run unit tests
+in magix, which is an integral part of the system itself.&nbsp;&nbsp;
+magix illuminate is largely literate, according to donald knuth's
+definition"
+      _default_script3
+        event=>zigano.travel.inspect-active-events
+        text=>active-events
+        category=>tools
+        description=>@"view, inspect and run any active event 
+in magix, which is an integral part of the system itself.&nbsp;&nbsp;
+magix illuminate is largely literate, according to donald knuth's
+definition, or self-documenting with other words"
+    for-each=>[_scripts]
+      add=>[$][scripts]
+        value=>[.]
+
+
+event=>zigano.travel.inspect-execute
+  code
+    magix.admin.run-file
+      file=>zigano/admin/tools/inspect-execute.hl
+
+event=>zigano.travel.inspect-unit-tests
+  code
+    magix.admin.run-file
+      file=>zigano/admin/tools/inspect-unit-tests.hl
+
+
+
+
+
+
+
+
+
+
+
+
