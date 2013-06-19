@@ -66,6 +66,7 @@
     <Content Include="media\grid\main.css" />
     <Content Include="media\grid\grid.png" />
     <Content Include="zigano\web.config" />
+    <Content Include="media\grid\start-button.png" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Global.asax.cs">
@@ -300,5 +301,7 @@
     <None Include="zigano\startup-scripts\event-create-edit-user.hl" />
     <None Include="zigano\startup-scripts\event-create-ide-properties.hl" />
     <None Include="zigano\file-browser\file-browser.hl" />
+    <None Include="zigano\admin\desktop.mml" />
+    <None Include="zigano\admin\show-desktop.hl" />
   </ItemGroup>
 </Project>

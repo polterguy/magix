@@ -57,7 +57,7 @@ zigano.travel.try-login
 panel=>loginWrp
   onfirstload
     zigano.travel.change-login-box
-  css=>absolute top right span-6 boxed top-1 right-1 z-1
+  css=>absolute top right span-6 boxed top-1 z-1 last
   controls
     panel=>loginPnl
       css=>span-4 left-1 top-1 bottom-1
@@ -93,7 +93,7 @@ panel=>loginWrp
 
 
 panel=>logoutWrp
-  css=>absolute top right span-3 top-1 right-1 z-1
+  css=>absolute top right span-3 top-1 z-1 last
   controls
     button=>logOut
       css=>span-3 btn-large

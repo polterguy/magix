@@ -1142,7 +1142,14 @@ textarea.ascii-editor
 }
 
 
-
+.start-button
+{
+	height:72px;
+	width:72px;
+	float:right;
+	display:block;
+	background:transparent url(start-button.png) no-repeat 0 0;
+}
 
 
 

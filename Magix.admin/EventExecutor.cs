@@ -320,6 +320,7 @@ if none.&nbsp;&nbsp;thread safe";
 			case "css":
 			case "aspx":
 			case "ascx":
+			case "asax":
 			case "js":
 			{
 				if (!e.Params.Contains("container"))
