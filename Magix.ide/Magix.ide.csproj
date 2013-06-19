@@ -36,6 +36,7 @@
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="Editor.ascx.cs" />
     <Compile Include="Surface.ascx.cs" />
+    <Compile Include="AsciiEditor.ascx.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -51,5 +52,6 @@
   <ItemGroup>
     <EmbeddedResource Include="Editor.ascx" />
     <EmbeddedResource Include="Surface.ascx" />
+    <EmbeddedResource Include="AsciiEditor.ascx" />
   </ItemGroup>
 </Project>

@@ -278,6 +278,74 @@ thread safe";
 				tmp);
 		}
 
+		
+		/**
+		 */
+		[ActiveEvent(Name = "magix.admin.edit-file")]
+		public void magix_admin_edit_file(object sender, ActiveEventArgs e)
+		{
+			if (ShouldInspect(e.Params))
+			{
+				e.Params.Clear();
+				e.Params["event:magix.admin.edit-file"].Value = null;
+				e.Params["inspect"].Value = @"attempts to open the given [file]
+in whatever editor makes sense according to its extension, or download directly in browser 
+if none.&nbsp;&nbsp;thread safe";
+				e.Params["file"].Value =  @"media/grid/main.css";
+				return;
+			}
+
+			if (!e.Params.Contains("file"))
+				throw new ArgumentException("need [file] parameter");
+
+			string file = e.Params["file"].Get<string>();
+
+			if (!File.Exists(Page.Server.MapPath(file)))
+				throw new ArgumentException("file " + file + " doesn't exist on disc");
+
+			string extension = file.Substring(file.LastIndexOf('.') + 1);
+
+			switch (extension)
+			{
+			case "png":
+			case "gif":
+			case "jpg":
+			case "jpeg":
+			case "ico":
+			case "vaw":
+			case "mp3":
+			{
+				Node tmp = new Node();
+				tmp["script"].Value = "window.open('" + file + "', '_blank').focus();";
+
+				RaiseActiveEvent(
+					"magix.viewport.execute-javascript",
+					tmp);
+			} break;
+			case "hl":
+			{
+				if (!e.Params.Contains("container"))
+					throw new ArgumentException("edit-file needs [container]");
+
+				Node tmp = new Node();
+				tmp["file"].Value = file;
+
+				using (TextReader reader = File.OpenText(file))
+				{
+					tmp["content"].Value = reader.ReadToEnd();
+				}
+
+				if (e.Params.Contains("css"))
+					tmp["css"].Value = e.Params["css"].Value;
+
+				LoadModule(
+					"Magix.ide.AsciiEditor", 
+					e.Params["container"].Get<string>(), 
+					tmp);
+			} break;
+			}
+		}
+
 		/**
 		 * executes script
 		 */
