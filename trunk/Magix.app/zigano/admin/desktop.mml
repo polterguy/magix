@@ -1,0 +1,16 @@
+
+
+
+<div class="span-19 last min-height-16 top-3">
+{{
+link-button=>start
+  css=>start-button
+  text=>&nbsp;
+  onclick
+    magix.admin.run-file
+      file=>zigano/admin/show-desktop.hl
+}}
+<div>
+
+
+

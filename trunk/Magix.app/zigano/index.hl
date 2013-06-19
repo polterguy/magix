@@ -16,6 +16,11 @@ if=>[magix.web.get-session][value][roles][admin]
     container=>menu
     form-id=>admin-menu
     css=>span-5
+  magix.forms.create-web-page
+    file=>zigano/admin/desktop.mml
+    container=>content1
+    form-id=>desktop
+    css=>span-19 last
 else
   magix.admin.run-file
     file=>zigano/pages/run-page.hl
