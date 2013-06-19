@@ -136,6 +136,22 @@ magix.forms.create-form
       css=>span-15 last left-4
       tag=>h2
       text=>files from /
+    uploader=>dragdropfiles
+      onuploaded
+        magix.viewport.show-message
+          message=>howdy :D
+          time=>250
+
+
+
+
+
+
+
+
+
+
+
 
 
 

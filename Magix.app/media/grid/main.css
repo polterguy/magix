@@ -239,6 +239,8 @@ textarea.min-height-16,.min-height-16 {min-height:306px;}
 .right {right:0px;}
 .bold {font-weight:bold;}
 
+html, body {width:100%;height:100%;}
+
 .boxed
 {
 	display:block;
@@ -1033,10 +1035,97 @@ textarea.ascii-editor
 	display:block;
 }
 
+.mux-file-uploader
+{
+	position:absolute;
+	top:0;
+	left:0;
+	width:450px;
+	min-height:36px;
+	padding:36px 36px 18px 36px;
+	z-index:100000;
+	display:none;
+	color:White;
 
+	-moz-border-radius:0 0 50px 0;
+	-webkit-border-radius:0 0 50px o;
+	-o-border-radius:0 0 50px 0;
+	-ms-border-radius:0 0 50px 0;
+	border-radius:0 0 50px 0;
 
+	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgba(0, 0, 0, 1)), to(rgba(64, 64, 64, 1)));
+	background-image: -webkit-linear-gradient(rgba(0, 0, 0, 1) 0%, rgba(64, 64, 64, 1) 100%);
+	background-image: -moz-linear-gradient(rgba(0, 0, 0, 1) 0%, rgba(64, 64, 64, 1) 100%);
+	background-image: -o-linear-gradient(rgba(0, 0, 0, 1) 0%, rgba(64, 64, 64, 1) 100%);
+	background-image: -ms-linear-gradient(rgba(0, 0, 0, 1) 0%, rgba(64, 64, 64, 1) 100%);
+	background-image: linear-gradient(rgba(0, 0, 0, 1) 0%, rgba(64, 64, 64, 1) 100%);
 
+	-webkit-box-shadow: -2px 2px 3px rgba(0, 0, 0, .5);
+	-moz-box-shadow: -2px 2px 3px rgba(0, 0, 0, .5);
+	-o-box-shadow: -2px 2px 3px rgba(0, 0, 0, .5);
+	-ms-box-shadow: -2px 2px 3px rgba(0, 0, 0, .5);
+	box-shadow: -2px 2px 3px rgba(0, 0, 0, .5);
+}
 
+.mux-file-uploader ul
+{
+	margin-left:50px;
+}
+
+.mux-file-uploader p
+{
+	margin-left:50px;
+}
+
+.mux-file-uploader ul li
+{
+	list-style-type:none;
+}
+
+.mux-file-uploader img
+{
+	display:block;
+	position:fixed;
+	top:30px;
+	left:25px;
+}
+
+@-webkit-keyframes mux-uploader-processing {
+ from {
+   color: rgba(255, 0, 0, 1);
+ }
+ to {
+   color: rgba(255, 200, 0, 1);
+ }
+}
+
+@-moz-keyframes mux-uploader-processing {
+ from {
+   color: rgba(255, 0, 0, 1);
+ }
+ to {
+   color: rgba(255, 200, 0, 1);
+ }
+}
+
+.mux-file-uploader ul li.mux-uploader-processing
+{
+	-webkit-animation-name: mux-uploader-processing;
+	-webkit-animation-duration: 2s;
+	-webkit-animation-iteration-count: infinite;
+	-webkit-animation-direction: alternate;
+
+	-moz-animation-name: mux-uploader-processing;
+	-moz-animation-duration: 2s;
+	-moz-animation-iteration-count: infinite;
+	-moz-animation-direction: alternate;
+}
+
+.mux-file-uploader .mux-uploader-processing-error
+{
+	font-weight:bold;
+	color:Red;
+}
 
 
 
