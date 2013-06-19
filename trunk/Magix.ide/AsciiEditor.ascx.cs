@@ -33,7 +33,7 @@ namespace Magix.ide
 				delegate
 			{
 				surface.Text = node["content"].Get<string>();
-				path.Text = node["file"].Get<string>();
+				path.Text = node["file"].Get<string>("empty.txt");
 				path.Select();
 				path.Focus();
 			};
