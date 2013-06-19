@@ -37,8 +37,9 @@ _back
 _link-button
   css=>span-5 file
   onclick
-    magix.viewport.show-message
-      message=>show file or something ...
+    magix.admin.edit-file
+      container=>content2
+      css=>span-24 min-height-16 top-2
 
 _link-buttonDir
   css=>span-5 directory
@@ -64,6 +65,12 @@ for-each=>[magix.file.list-files][files]
       value=>@"{0}/"
         pr0=>@"[$][directory].Value"
     replace=>[/][_link-button][text].Value
+  set=>[/][_link-button][onclick][magix.admin.edit-file][file].Value
+    value=>[.].Value
+
+
+
+
   add=>[/][magix.forms.create-form][controls]
     value=>[/][_link-button]
   set=>[/][magix.forms.create-form][controls][_link-button].Name
