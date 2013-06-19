@@ -2,7 +2,6 @@
 
 
 
-
 event=>magix.ide.create-properties
   code
     _buffer
@@ -117,4 +116,5 @@ event=>magix.ide.create-properties
         label=>ruler
           css=>span11
           tag=>hr
+
 

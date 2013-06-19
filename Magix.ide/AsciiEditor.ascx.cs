@@ -23,12 +23,7 @@ namespace Magix.ide
     {
 		protected TextArea surface;
 		protected Button save;
-
-		private string Path
-		{
-			get { return ViewState["Path"] as string; }
-			set { ViewState["Path"] = value; }
-		}
+		protected TextBox path;
 
 		public override void InitialLoading(Node node)
 		{
@@ -38,15 +33,15 @@ namespace Magix.ide
 				delegate
 			{
 				surface.Text = node["content"].Get<string>();
-				Path = node["file"].Get<string>();
+				path.Text = node["file"].Get<string>();
 			};
 		}
-
+		
 		protected void save_Click(object sender, EventArgs e)
 		{
 			Node tmp = new Node();
 			tmp["file"].Value = surface.Text;
-			tmp["path"].Value = Path;
+			tmp["path"].Value = path.Text;
 
 			RaiseEvent(
 				"magix.file.save",
@@ -58,6 +53,38 @@ namespace Magix.ide
 
 			RaiseEvent(
 				"magix.viewport.show-message",
+				tmp);
+			
+			tmp = new Node();
+			tmp["path"].Value = path.Text;
+
+			RaiseEvent(
+				"magix.ide.file-saved",
+				tmp);
+		}
+		
+		protected void delete_Click(object sender, EventArgs e)
+		{
+			Node tmp = new Node();
+			tmp["path"].Value = path.Text;
+
+			RaiseEvent(
+				"magix.file.save", // will delete file, since no file node is given ...
+				tmp);
+
+			tmp = new Node();
+			tmp["message"].Value = "file delete";
+			tmp["time"].Value = 500;
+
+			RaiseEvent(
+				"magix.viewport.show-message",
+				tmp);
+
+			tmp = new Node();
+			tmp["path"].Value = path.Text;
+
+			RaiseEvent(
+				"magix.ide.file-deleted",
 				tmp);
 		}
 	}
