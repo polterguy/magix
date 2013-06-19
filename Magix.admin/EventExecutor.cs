@@ -323,6 +323,16 @@ if none.&nbsp;&nbsp;thread safe";
 					tmp);
 			} break;
 			case "hl":
+			case "css":
+			case "mml":
+			case "html":
+			case "htm":
+			case "txt":
+			case "cs":
+			case "aspx":
+			case "config":
+			case "asax":
+			case "csproj":
 			{
 				if (!e.Params.Contains("container"))
 					throw new ArgumentException("edit-file needs [container]");
