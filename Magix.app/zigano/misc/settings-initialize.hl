@@ -10,3 +10,23 @@ if=>[magix.data.load][objects][0][value].Value==True
 else
   magix.viewport.show-grid
     value=(bool)>False
+
+
+magix.data.load
+  prototype
+    type=>zigano.travel.setting
+    name=>stopped-learning
+
+if=>[magix.data.load][objects][0][value].Value==True
+  magix.web.set-session
+    key=>stopped-learning
+    value=(bool)>true
+else
+  magix.web.set-session
+    key=>stopped-learning
+    value=(bool)>false
+
+
+
+
+

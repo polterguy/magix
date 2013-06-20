@@ -1,10 +1,11 @@
 
 <div class="span-5 top-3">
 {{
-button=>users
-  text=>users
-  css=>btn-large span-5
+link-button=>desktop
+  css=>start-button
   onclick
+    magix.viewport.clear-controls
+      container=>content1
     magix.viewport.clear-controls
       container=>content2
     magix.viewport.clear-controls
@@ -13,130 +14,11 @@ button=>users
       container=>content4
     magix.viewport.clear-controls
       container=>content5
-    magix.forms.create-web-page
-      file=>zigano/admin/edit-users.mml
-      container=>content1
-      form-id=>admin-users
-      css=>span-19 last
     magix.admin.run-file
-      file=>zigano/admin/users-grid.hl
-button=>roles
-  text=>roles
-  css=>btn-large span-5
-  onclick
-    magix.viewport.clear-controls
-      container=>content2
-    magix.viewport.clear-controls
-      container=>content3
-    magix.viewport.clear-controls
-      container=>content4
-    magix.viewport.clear-controls
-      container=>content5
-    magix.forms.create-web-page
-      file=>zigano/admin/edit-roles.mml
-      container=>content1
-      form-id=>admin-roles
-      css=>span-19 last
-    zigano.travel.create-roles-form
-button=>log
-  text=>log
-  css=>btn-large span-5
-  onclick
-    magix.viewport.clear-controls
-      container=>content2
-    magix.viewport.clear-controls
-      container=>content3
-    magix.viewport.clear-controls
-      container=>content4
-    magix.viewport.clear-controls
-      container=>content5
-    magix.forms.create-web-page
-      file=>zigano/admin/server-log.mml
-      container=>content1
-      form-id=>admin-server-log
-      css=>span-19 last
-    magix.admin.run-file
-      file=>zigano/admin/server-log-grid.hl
-button=>settings
-  text=>settings
-  css=>btn-large span-5
-  onclick
-    magix.viewport.clear-controls
-      container=>content2
-    magix.viewport.clear-controls
-      container=>content3
-    magix.viewport.clear-controls
-      container=>content4
-    magix.viewport.clear-controls
-      container=>content5
-    magix.forms.create-web-page
-      file=>zigano/admin/admin-settings.mml
-      container=>content1
-      form-id=>admin-settings
-      css=>span-19 last
-button=>pages
-  text=>pages
-  css=>btn-large span-5
-  onclick
-    magix.viewport.clear-controls
-      container=>content2
-    magix.viewport.clear-controls
-      container=>content3
-    magix.viewport.clear-controls
-      container=>content4
-    magix.viewport.clear-controls
-      container=>content5
-    magix.forms.create-web-page
-      file=>zigano/admin/edit-pages.mml
-      container=>content1
-      form-id=>admin-settings
-      css=>span-19 last
-button=>forms
-  text=>forms
-  css=>btn-large span-5
-  onclick
-    magix.viewport.clear-controls
-      container=>content2
-    magix.viewport.clear-controls
-      container=>content3
-    magix.viewport.clear-controls
-      container=>content4
-    magix.viewport.clear-controls
-      container=>content5
-    magix.forms.create-web-page
-      file=>zigano/admin/edit-forms.mml
-      container=>content1
-      form-id=>admin-settings
-      css=>span-19 last
-button=>help
-  text=>help
-  css=>btn-large span-5
-  onclick
-    magix.viewport.clear-controls
-      container=>content2
-    magix.viewport.clear-controls
-      container=>content3
-    magix.viewport.clear-controls
-      container=>content4
-    magix.viewport.clear-controls
-      container=>content5
-    magix.help.start-help
-button=>desktop
-  text=>desktop
-  css=>btn-large span-5
-  onclick
-    magix.viewport.clear-controls
-      container=>content2
-    magix.viewport.clear-controls
-      container=>content3
-    magix.viewport.clear-controls
-      container=>content4
-    magix.viewport.clear-controls
-      container=>content5
-    magix.forms.create-web-page
-      file=>zigano/admin/desktop.mml
-      container=>content1
-      form-id=>desktop-admin
-      css=>span-19 last
+      file=>zigano/admin/show-desktop.hl
+    magix.viewport.show-message-if-help-mode
+      message=>@"think of this like your start menu, from here you can accomplish most tasks in magix.&nbsp;&nbsp;
+anytime you wish to access your start menu, you can click this button"
+      time=>7700
 }}
 </div>

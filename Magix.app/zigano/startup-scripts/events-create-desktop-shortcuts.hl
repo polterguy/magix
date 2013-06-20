@@ -5,6 +5,14 @@
 event=>magix.admin.desktop-shortcuts.defaults
   code
     _scripts
+      _default_script4
+        text=>overridden active events
+        category=>security
+        description=>@"view, inspect and run any overridden active event 
+in magix illuminate"
+        code
+          magix.admin.run-file
+            file=>zigano/admin/tools/inspect-overridden-events.hl
       _default_script2
         text=>unit tests
         category=>tools
@@ -25,14 +33,34 @@ definition, or self-documenting with other words"
         code
           magix.admin.run-file
             file=>zigano/admin/tools/inspect-events.hl
-      _default_script4
-        text=>overridden active events
-        category=>security
-        description=>@"view, inspect and run any overridden active event 
-in magix illuminate"
+      _default_script17
+        text=>pages
+        category=>applications
+        description=>@"edit web pages within
+your system"
+        code
+          magix.viewport.clear-controls
+            container=>content2
+          magix.viewport.clear-controls
+            container=>content3
+          magix.viewport.clear-controls
+            container=>content4
+          magix.viewport.clear-controls
+            container=>content5
+          magix.forms.create-web-page
+            file=>zigano/admin/edit-pages.mml
+            container=>content1
+            form-id=>admin-pages
+            css=>span-19 last
+      _default_script1
+        text=>hyper lisp reference
+        category=>learn
+        description=>@"hyper lisp reference guide,
+to help you understand the programming of magix 
+illuminate using hyper lisp"
         code
           magix.admin.run-file
-            file=>zigano/admin/tools/inspect-overridden-events.hl
+            file=>zigano/admin/tools/inspect-execute.hl
       _default_script5
         text=>open active events
         category=>security
@@ -44,6 +72,87 @@ evnts, to allow for invoking over http, from other remote machines"
         code
           magix.admin.run-file
             file=>zigano/admin/tools/inspect-open-events.hl
+      _default_script13
+        text=>edit users
+        category=>security
+        description=>@"view and edit all users in 
+your system"
+        code
+          magix.viewport.clear-controls
+            container=>content2
+          magix.viewport.clear-controls
+            container=>content3
+          magix.viewport.clear-controls
+            container=>content4
+          magix.viewport.clear-controls
+            container=>content5
+          magix.forms.create-web-page
+            file=>zigano/admin/edit-users.mml
+            container=>content1
+            form-id=>admin-users
+            css=>span-19 last
+          magix.admin.run-file
+            file=>zigano/admin/users-grid.hl
+      _default_script14
+        text=>edit roles
+        category=>security
+        description=>@"view and edit all the different roles in 
+your system"
+        code
+          magix.viewport.clear-controls
+            container=>content2
+          magix.viewport.clear-controls
+            container=>content3
+          magix.viewport.clear-controls
+            container=>content4
+          magix.viewport.clear-controls
+            container=>content5
+          magix.forms.create-web-page
+            file=>zigano/admin/edit-roles.mml
+            container=>content1
+            form-id=>admin-roles
+            css=>span-19 last
+          zigano.travel.create-roles-form
+      _default_script15
+        text=>server log
+        category=>security
+        description=>@"view the server log
+of your system"
+        code
+          magix.viewport.clear-controls
+            container=>content2
+          magix.viewport.clear-controls
+            container=>content3
+          magix.viewport.clear-controls
+            container=>content4
+          magix.viewport.clear-controls
+            container=>content5
+          magix.forms.create-web-page
+            file=>zigano/admin/server-log.mml
+            container=>content1
+            form-id=>admin-server-log
+            css=>span-19 last
+          magix.admin.run-file
+            file=>zigano/admin/server-log-grid.hl
+      _default_script16
+        text=>settings
+        category=>tools
+        description=>@"view and change settings of 
+your system"
+        code
+          magix.viewport.clear-controls
+            container=>content2
+          magix.viewport.clear-controls
+            container=>content3
+          magix.viewport.clear-controls
+            container=>content4
+          magix.viewport.clear-controls
+            container=>content5
+          magix.forms.create-web-page
+            file=>zigano/admin/admin-settings.mml
+            container=>content1
+            form-id=>admin-settings
+            css=>span-19 last
       _default_script6
         text=>remoted active events
         category=>security
@@ -131,24 +240,49 @@ files unto the surface of the file explorer"
             container=>content4
           magix.viewport.clear-controls
             container=>content5
-      _default_script1
-        text=>hyper lisp reference
-        category=>learning
-        description=>@"hyper lisp reference guide,
-to help you understand the programming of magix 
-illuminate using hyper lisp"
-        code
-          magix.admin.run-file
-            file=>zigano/admin/tools/inspect-execute.hl
       _default_script8
         text=>web controls
-        category=>learning
+        category=>learn
         description=>@"see, inspect and play around with 
 all the web controls which are inside of your 
 installation of magix"
         code
           magix.admin.run-file
             file=>zigano/admin/tools/inspect-web-controls.hl
+      _default_script18
+        text=>forms
+        category=>applications
+        description=>@"edit web forms within
+your system"
+        code
+          magix.viewport.clear-controls
+            container=>content2
+          magix.viewport.clear-controls
+            container=>content3
+          magix.viewport.clear-controls
+            container=>content4
+          magix.viewport.clear-controls
+            container=>content5
+          magix.forms.create-web-page
+            file=>zigano/admin/edit-forms.mml
+            container=>content1
+            form-id=>admin-settings
+            css=>span-19 last
+      _default_script19
+        text=>help
+        category=>learn
+        description=>@"get help from marvin, the bigger 
+brain within magix illuminate"
+        code
+          magix.viewport.clear-controls
+            container=>content2
+          magix.viewport.clear-controls
+            container=>content3
+          magix.viewport.clear-controls
+            container=>content4
+          magix.viewport.clear-controls
+            container=>content5
+          magix.help.start-help
     for-each=>[_scripts]
       add=>[$][scripts]
         value=>[.]
