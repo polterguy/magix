@@ -64,7 +64,7 @@ cf
       css=>span-13
       controls
         label=>header
-          text=>name of active event
+          text=>name of unit test
           css=>span-13
           tag=>h3
         label=>code
@@ -107,8 +107,9 @@ cf
           text=>description
         label=>desc
           css=>span-13 bottom-5
-          text=>@"description of your magix.execute keyword.&nbsp;&nbsp;
-click any of the keyword active events to the right to inspect them"
+          text=>@"description of your unit test.&nbsp;&nbsp;
+click unit test to the right to inspect or run individual unit
+tests, or click run all to run all unit tests in the system"
     panel=>wrp
       css=>span-6 last
       controls

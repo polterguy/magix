@@ -64,7 +64,7 @@ cf
       css=>span-13
       controls
         label=>header
-          text=>name of active event
+          text=>open active event name
           css=>span-13
           tag=>h3
         label=>code
@@ -89,8 +89,22 @@ cf
           text=>description
         label=>desc
           css=>span-13 bottom-5
-          text=>@"description of your magix.execute keyword.&nbsp;&nbsp;
-click any of the keyword active events to the right to inspect them"
+          text=>@"description of your open active event, please notice there
+is a substantial security risk for opening active events, unless you are 
+painfully aware of exactly what you do.&nbsp;&nbsp;if there are any open 
+active events in your system, please make sure they are opened such that 
+no code can be executed from sources which you do not thrust"
     panel=>wrp
       css=>span-6 last
       controls
+
+
+
+
+
+
+
+
+
+
+

@@ -74,18 +74,21 @@ don't match the [begins-with] parameter.&nbsp;&nbsp;thread safe";
 				{
 					if (ActiveEvents.Instance.IsAllowedRemotely(idx))
 						node["events"]["no_" + idxNo.ToString()].Value = string.IsNullOrEmpty (idx) ? "" : idx;
+					idxNo += 1;
 					continue;
 				}
 				if (remoted)
 				{
 					if (ActiveEvents.Instance.RemotelyOverriddenURL(idx) != null)
 						node["events"]["no_" + idxNo.ToString()].Value = string.IsNullOrEmpty (idx) ? "" : idx;
+					idxNo += 1;
 					continue;
 				}
 				if (overridden)
 				{
 					if (ActiveEvents.Instance.IsOverride(idx))
 						node["events"]["no_" + idxNo.ToString()].Value = string.IsNullOrEmpty (idx) ? "" : idx;
+					idxNo += 1;
 					continue;
 				}
 				if (!takeAll && string.IsNullOrEmpty(beginsWith) && idx.StartsWith("magix.test."))

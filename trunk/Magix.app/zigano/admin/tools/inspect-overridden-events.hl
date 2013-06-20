@@ -7,7 +7,7 @@ the user to inspect them by clicking
 them"
 
 magix.admin.get-active-events
-  overridden=>true
+  overridden=(bool)>True
 set=>[magix.admin.get-active-events].Name
   value=>Data
 for-each=>[Data][events]
@@ -64,7 +64,7 @@ cf
       css=>span-13
       controls
         label=>header
-          text=>name of active event
+          text=>overridden active event name
           css=>span-13
           tag=>h3
         label=>code
@@ -89,8 +89,13 @@ cf
           text=>description
         label=>desc
           css=>span-13 bottom-5
-          text=>@"description of your magix.execute keyword.&nbsp;&nbsp;
-click any of the keyword active events to the right to inspect them"
+          text=>@"description of your overridden active event, please
+be careful when overriding active events, since there is a security risk
+involved unless you know what you are doing.&nbsp;&nbsp;
+all dynamically created active events, through the [magix.execute.event]/[event] keyword,
+will automatically also become overrides, and end up on this list.&nbsp;&nbsp;
+so the number of active events on this list, can to some extend be used to monitor the complexity of
+your system as a total"
     panel=>wrp
       css=>span-6 last
       controls
