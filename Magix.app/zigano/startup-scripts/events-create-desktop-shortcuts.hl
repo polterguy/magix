@@ -63,6 +63,9 @@ your system"
         code
           magix.admin.run-file
             file=>zigano/admin/tools/inspect-execute.hl
+          magix.viewport.show-message-if-help-mode
+            message=>@"shows all [magix.execute] keywords
+in magix, that is all hyper lisp keywrods"
       _default_script5
         text=>open active events
         category=>security
@@ -70,9 +73,12 @@ your system"
           magix.admin.run-file
             file=>zigano/admin/tools/inspect-open-events.hl
           magix.viewport.show-message-if-help-mode
-            message=>@"hyper lisp reference guide,
-to help you understand the programming of magix 
-illuminate using hyper lisp"
+            message=>@"shows all open active events within
+the system, such that you can inspect and play around
+with them.&nbsp;&nbsp;am open active event, is
+an event which can be invoked remotely by other servers.&nbsp;&nbsp;
+make sure you understand the consequences of this, before opening events, since it implies
+security issues"
       _default_script13
         text=>edit users
         category=>security
