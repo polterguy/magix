@@ -121,5 +121,22 @@ button=>help
     magix.viewport.clear-controls
       container=>content5
     magix.help.start-help
+button=>desktop
+  text=>desktop
+  css=>btn-large span-5
+  onclick
+    magix.viewport.clear-controls
+      container=>content2
+    magix.viewport.clear-controls
+      container=>content3
+    magix.viewport.clear-controls
+      container=>content4
+    magix.viewport.clear-controls
+      container=>content5
+    magix.forms.create-web-page
+      file=>zigano/admin/desktop.mml
+      container=>content1
+      form-id=>desktop-admin
+      css=>span-19 last
 }}
 </div>
