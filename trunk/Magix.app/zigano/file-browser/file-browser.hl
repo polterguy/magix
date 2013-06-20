@@ -22,6 +22,8 @@ if=>[$][directory].Value
       pr1=>empty.txt
   set=>[/][magix.forms.create-form][controls][uploader][folder].Value
     value=>[$][directory].Value
+  set=>[/][magix.forms.create-form][controls][uploader][onuploaded][if][magix.admin.run-file][directory].Value
+    value=>[$][directory].Value
   set=>[/][magix.forms.create-form][controls][uploader][uploaded][if][magix.admin.run-file][directory].Value
     value=>[$][directory].Value
 else
