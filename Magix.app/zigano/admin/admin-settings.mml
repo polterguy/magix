@@ -5,6 +5,7 @@
 check=>hasGrid
   tip=>@"if checked, will show a debug-grid which helps 
 you align objects correctly according to the grid system of magix"
+  css=>span-1
   onfirstload
     magix.data.load
       prototype
@@ -46,11 +47,70 @@ you align objects correctly according to the grid system of magix"
     else
       magix.viewport.show-grid
         value=(bool)>False
-label=>hasGridLbl
-  tip=>@"if checked, will show a debug-grid which helps 
-you align objects correctly according to the grid system of magix"
+label=>hasGrid
+  tip=>@"if checked, will show tips around most objects 
+as you click your way around in magix"
   tag=>label
   for=>hasGrid
-  text=>show grid
+  text=>view grid
+  css=>span-3
+check=>hasTutorial
+  tip=>@"if checked, will show tips around most objects 
+as you click your way around in magix"
+  css=>left-1 span-1
+  onfirstload
+    magix.data.load
+      prototype
+        type=>zigano.travel.setting
+        name=>stopped-learning
+    if=>[magix.data.load][objects][0][value].Value==True
+      set=>[magix.forms.set-value][value].Value
+        value=>false
+    magix.forms.set-value
+      form-id=>admin-settings
+      id=>hasTutorial
+      value=>true
+  oncheckedchanged
+    magix.forms.get-value
+      form-id=>admin-settings
+      id=>hasTutorial
+    magix.data.load
+      prototype
+        type=>zigano.travel.setting
+        name=>stopped-learning
+    if=>[magix.forms.get-value][value].Value
+      set=>[/][magix.data.load][objects][0][value].Value
+        value=(bool)>False
+    else
+      set=>[/][magix.data.load][objects][0][value].Value
+        value=(bool)>True
+    if=>[magix.data.load][objects][0].Name!=item
+      set=>[/][magix.data.save][id].Value
+        value=>[/][magix.data.load][objects][0].Name
+    add=>[magix.data.save]
+      value=>[magix.data.load][objects][0]
+    set=>[magix.data.save][1].Name
+      value=>object
+    set=>[magix.data.save][object][type].Value
+      value=>zigano.travel.setting
+    set=>[magix.data.save][object][name].Value
+      value=>stopped-learning
+    magix.data.save
+      id
+    if=>[magix.data.save][object][value].Value==True
+      magix.web.set-session
+        key=>stopped-learning
+        value=>True
+    else
+      magix.web.set-session
+        key=>stopped-learning
+        value=>False
+label=>hasGTutorialLbl
+  tip=>@"iif checked, will show tips around most objects 
+as you click your way around in magix"
+  tag=>label
+  for=>hasTutorial
+  text=>tutorial mode
+  css=>span-3
 }}</div>
 
