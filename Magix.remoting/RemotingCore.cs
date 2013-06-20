@@ -109,6 +109,8 @@ which event to override to go externally.&nbsp;&nbsp;tunnel cannot override null
 				RaiseActiveEvent(
 					"magix.data.remove",
 					n);
+
+				ActiveEvents.Instance.RemoveRemoteOverride(evt);
 			}
 			else
 			{
