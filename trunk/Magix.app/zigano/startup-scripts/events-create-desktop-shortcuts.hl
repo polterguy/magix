@@ -177,6 +177,14 @@ such that they will be remotely invoked.&nbsp;&nbsp;
 understanding this feature, and its security risk, is imperative
 to be capable of making sure magix is secure, before you open 
 evnts, to allow for invoking over http, from other remote machines"
+      _default_scriptx_4
+        text=>logout
+        category=>security
+        code
+          magix.web.set-session
+            key=>zigano.travel.user
+          magix.viewport.execute-javascript
+            script=>@"location.reload();"
       _default_script7
         text=>magix markup language editor
         category=>tools
