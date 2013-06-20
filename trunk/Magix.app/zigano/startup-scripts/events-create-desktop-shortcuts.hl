@@ -244,7 +244,10 @@ if loaded.&nbsp;&nbsp; see turn on tracer"
 active event executor, which allows you to 
 execute and inspect, all active events in the system, 
 and add up node parameters, tracing the output and 
-having intellisense on active events"
+having intellisense on active events.&nbsp;&nbsp;
+think of the executor as a linux command shell, 
+from where you can execute any active events within your system,
+to change your system's state"
       _default_script11
         text=>file system
         category=>tools
