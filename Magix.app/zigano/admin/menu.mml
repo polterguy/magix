@@ -19,6 +19,5 @@ link-button=>desktop
     magix.viewport.show-message-if-help-mode
       message=>@"think of this like your start menu, from here you can accomplish most tasks in magix.&nbsp;&nbsp;
 anytime you wish to access your start menu, you can click the horus-ra button"
-      time=>7700
 }}
 </div>
