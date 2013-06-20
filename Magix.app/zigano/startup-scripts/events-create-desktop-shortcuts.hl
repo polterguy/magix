@@ -84,7 +84,7 @@ modifying it yourself"
             container=>trace
             css=>span-24 top-3 bottom-3
             name=>Magix.admin.EventSniffer
-      _default_script9
+      _default_script12
         text=>turn off tracer
         category=>tools
         description=>@"turn tracing off in 
