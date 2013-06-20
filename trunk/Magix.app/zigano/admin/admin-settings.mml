@@ -84,6 +84,9 @@ as you click your way around in magix"
     else
       set=>[/][magix.data.load][objects][0][value].Value
         value=(bool)>True
+      magix.viewport.show-message
+        message=>come back here to settings, to turn on tutorial mode again
+        time=>3000
     if=>[magix.data.load][objects][0].Name!=item
       set=>[/][magix.data.save][id].Value
         value=>[/][magix.data.load][objects][0].Name
