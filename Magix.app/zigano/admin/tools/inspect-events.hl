@@ -2,8 +2,8 @@
 event:magix.execute
 
 inspect=>@"Will show a screen of all the 
-magix.execute active events in the system, and allow
-the user to inspect them by clicking
+active events in the system, and allow 
+the user to inspect them by clicking 
 them"
 
 magix.admin.get-active-events
@@ -89,8 +89,8 @@ cf
           text=>description
         label=>desc
           css=>span-13 bottom-5
-          text=>@"description of your magix.execute keyword.&nbsp;&nbsp;
-click any of the keyword active events to the right to inspect them"
+          text=>@"description of your magix active event.&nbsp;&nbsp;
+click any of the active events to the right to inspect them"
     panel=>wrp
       css=>span-6 last
       controls

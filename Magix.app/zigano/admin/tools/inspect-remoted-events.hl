@@ -64,7 +64,7 @@ cf
       css=>span-13
       controls
         label=>header
-          text=>name of active event
+          text=>remoted active event name
           css=>span-13
           tag=>h3
         label=>code
@@ -89,8 +89,11 @@ cf
           text=>description
         label=>desc
           css=>span-13 bottom-5
-          text=>@"description of your magix.execute keyword.&nbsp;&nbsp;
-click any of the keyword active events to the right to inspect them"
+          text=>@"lists the active events within your system whiah
+are to be remotely invoked, or which are overridden to go
+to other serv end-points.&nbsp;&nbsp;please take care when
+overriding active events to go to a different server, since it
+involves a security risk"
     panel=>wrp
       css=>span-6 last
       controls

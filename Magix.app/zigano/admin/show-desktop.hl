@@ -7,11 +7,104 @@
 magix.admin.get-active-events
   begins-with=>magix.admin.desktop-shortcuts.
 
+_btn
+  css=>span-6 last desktop-widget-item
+  onclick
+
 for-each=>[magix.admin.get-active-events][events]
-  set=>[@][_evt].Name
+  set=>[/][_evts][_evt].Name
     value=>[.].Value
-  _evt
-    scripts
+
+_evts
+magix.execute=>[@][_evts]
+
+for-each=>[_evts]
+  for-each=>[.][scripts]
+    set=>[/][_categories][[.][category].Value].Value
+      value=>
+
+_categories
+
+_curCat
+
+for-each=>[_categories]
+  set=>[/][_pnl][controls][label][text].Value
+    value=>[.].Name
+  set=>[/][_pnl][controls][panel][controls]
+  set=>[/][_curCat].Value
+    value=>[.].Name
+  set=>[/][_pnl].Value
+    value=>@"{0}Wrp"
+      pr0=>[/][_curCat].Value
+  set=>[/][_pnl][controls][panel].Value
+    value=>@"{0}WrpOuter"
+      pr0=>[/][_curCat].Value
+  for-each=>[/][_evts]
+    for-each=>[.][scripts]
+      if=>[.][category].Value==[/][_curCat].Value
+        set=>[/][_btn][text].Value
+          value=>[.][text].Value
+        set=>[/][_btn].Value
+          value=>[.].Name
+        add=>[/][_btn]
+          value=>[.][code]
+        set=>[/][_btn][onclick]
+        set=>[/][_btn][code].Name
+          value=>onclick
+        add=>[/][_pnl][controls][panel][controls]
+          value=>[/][_btn]
+        set=>[/][_pnl][controls][panel][controls][_btn].Name
+          value=>link-button
+  add=>[/][magix.forms.create-form][controls]
+    value=>[/][_pnl]
+  set=>[/][magix.forms.create-form][controls][_pnl].Name
+    value=>panel
+
+_pnl
+  css=>span-6 desktop-widget bottom-3 left-1
+  controls
+    label=>header
+      css=>desktop-widget-header span-4
+      tag=>label
+    panel
+      controls
+
+magix.forms.create-form
+  form-id=>desktop-surface
+  container=>content2
+  css=>span-19 last bottom-5 desktop-surface top-3
+
+magix.forms.effect
+  form-id=>desktop-admin
+  id=>content1
+  type=>fade-out
+  time=>500
+
+magix.forms.effect
+  form-id=>desktop-surface
+  id=>content2
+  type=>fade-in
+  time=>500
+  joined
+    e0
+      type=>roll-down
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

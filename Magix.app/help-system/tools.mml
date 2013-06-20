@@ -123,6 +123,13 @@ button=>executor
       css=>span-19 last top-3
     magix.viewport.clear-controls
       container=>content2
+    magix.viewport.clear-controls
+      container=>content3
+    magix.viewport.clear-controls
+      container=>content4
+    magix.viewport.clear-controls
+      container=>content5
+      
 button=>files
   text=>files
   css=>span-3

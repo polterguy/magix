@@ -1,7 +1,7 @@
 
 
 
-<div class="span-19 last min-height-16 top-3">
+<div class="span-19 last top-3 absolute z-1">
 {{
 link-button=>startBtn
   css=>start-button
