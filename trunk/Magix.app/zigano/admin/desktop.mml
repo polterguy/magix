@@ -1,15 +1,8 @@
 
 
 
-<div class="span-19 last top-3 absolute z-1">
-{{
-link-button=>startBtn
-  css=>start-button
-  text=>&nbsp;
-  onclick
-    magix.admin.run-file
-      file=>zigano/admin/show-desktop.hl
-}}
+<div class="span-19 last top-7 absolute z-1">
+<h2>&lt;== start here</h2>
 </div>
 
 

@@ -61,7 +61,7 @@ for-each=>[_categories]
     value=>panel
 
 _pnl
-  css=>span-6 desktop-widget bottom-3 left-1
+  css=>span-6 desktop-widget bottom-1 left-1
   controls
     label=>header
       css=>desktop-widget-header span-4
