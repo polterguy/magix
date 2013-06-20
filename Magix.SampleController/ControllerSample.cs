@@ -50,7 +50,6 @@ namespace Magix.SampleController
 				Node tmp = new Node();
 
 				tmp["object"]["value"].Value = @"
-<h1>welcome to magix illuminate</h1>
 <p>magix is an open source web app builder program, which means you can create your own
 applications with magix.&nbsp;&nbsp;login at the top of this screen with username/password combination 
 <strong>admin/admin</strong></p>
