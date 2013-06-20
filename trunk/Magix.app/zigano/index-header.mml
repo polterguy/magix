@@ -1,6 +1,6 @@
 
 <div class="span-24 relative">
-	<h1 class="span-8 left-6 top-2 bottom-5">magix illuminate</h1>
+	<h1 class="span-14 top-2 bottom-3">magix illuminate - release lucifer</h1>
 {{
 zigano.travel.change-login-box
   magix.web.get-session
@@ -57,10 +57,10 @@ zigano.travel.try-login
 panel=>loginWrp
   onfirstload
     zigano.travel.change-login-box
-  css=>absolute top right span-6 boxed top-1 z-1 last
+  css=>absolute top right span-6 top-1 z-1 last
   controls
     panel=>loginPnl
-      css=>span-4 left-1 top-1 bottom-1
+      css=>span-4 left-1
       default=>loginBtn
       controls
         label=>descr

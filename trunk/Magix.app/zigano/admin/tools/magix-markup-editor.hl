@@ -16,7 +16,7 @@ magix.forms.create-web-page
   html=>@"
 {{
 text-area=>markup
-  css=>span-19 top-3 min-height-13
+  css=>span-19 min-height-13
   place-holder=>type in magix markup language here ...
 button=>preview
   css=>span-3 left-16 last

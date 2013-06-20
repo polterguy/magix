@@ -212,7 +212,7 @@ and add up node parameters, tracing the output and
 having intellisense on active events"
         code
           magix.admin.open-event-executor
-            css=>span-19 last top-3
+            css=>span-19 last
           magix.viewport.clear-controls
             container=>content2
           magix.viewport.clear-controls

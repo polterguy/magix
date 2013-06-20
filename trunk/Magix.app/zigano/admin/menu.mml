@@ -1,5 +1,5 @@
 
-<div class="span-5 top-3">
+<div class="span-5">
 {{
 link-button=>desktop
   css=>start-button
@@ -18,7 +18,7 @@ link-button=>desktop
       file=>zigano/admin/show-desktop.hl
     magix.viewport.show-message-if-help-mode
       message=>@"think of this like your start menu, from here you can accomplish most tasks in magix.&nbsp;&nbsp;
-anytime you wish to access your start menu, you can click this button"
+anytime you wish to access your start menu, you can click the horus-ra button"
       time=>7700
 }}
 </div>

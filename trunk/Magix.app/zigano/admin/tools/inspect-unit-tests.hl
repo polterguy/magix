@@ -57,7 +57,7 @@ magix.viewport.clear-controls
   container=>content2
 cf
   form-id=>form1
-  css=>span-19 last bottom-3
+  css=>span-19 last
   container=>content1
   controls
     panel2
@@ -82,7 +82,7 @@ cf
               value=>[.ip][..][magix.forms.get-value][value].Value
             magix.admin.load-executor-code
               code
-              css=>span-24 bottom-3
+              css=>span-24 bottom-3 top-1
         button=>run2
           text=>run test
           css=>span-2
@@ -106,7 +106,7 @@ cf
           tag=>label
           text=>description
         label=>desc
-          css=>span-13 bottom-5
+          css=>span-13
           text=>@"description of your unit test.&nbsp;&nbsp;
 click unit test to the right to inspect or run individual unit
 tests, or click run all to run all unit tests in the system"

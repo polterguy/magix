@@ -215,7 +215,7 @@ magix.forms.create-form
 magix.forms.create-form
   form-id=>wysiwyg-editor
   container=>content3
-  css=>span-24 top-3
+  css=>span-24
   parent-css=>span-24
   controls
     wysiwyg=>wysiwyg

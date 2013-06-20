@@ -72,7 +72,7 @@ _pnl
 magix.forms.create-form
   form-id=>desktop-surface
   container=>content2
-  css=>span-19 last bottom-5 desktop-surface top-3
+  css=>span-19 last bottom-5 desktop-surface
 
 magix.forms.effect
   form-id=>desktop-admin
