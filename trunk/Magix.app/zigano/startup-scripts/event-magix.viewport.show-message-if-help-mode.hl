@@ -14,6 +14,7 @@ event=>magix.viewport.show-message-if-help-mode
         set=>[@][..][magix.viewport.show-message][code]
           value=>[$][code]
       magix.viewport.show-message
+        time=>-1
 
 
 
