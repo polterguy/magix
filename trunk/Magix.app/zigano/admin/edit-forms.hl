@@ -225,6 +225,17 @@ magix.forms.create-form
         form-id=>edit-forms
         id=>widget
         value=>default
+      if=>[list-widgets][widgets].Count>0
+        magix.forms.set-enabled
+          form-id=>edit-forms
+          id=>preview
+          value=>true
+      else
+        magix.forms.set-enabled
+          form-id=>edit-forms
+          id=>preview
+          value=>false
+
     magix.ide.widget-selected
       set=>[magix.forms.set-value][value].Value
         value=>[$][dna].Value
@@ -477,6 +488,61 @@ magix.forms.create-form
       onclick
         paste-widget
           auto-select=>true
+
+    button=>preview
+      css=>span-3 top-1
+      text=>preview
+      enabled=>false
+      onclick
+        get-form
+        add=>[magix.forms.show-form][form]
+          value=>[get-form][form]
+        magix.forms.create-web-page
+          container=>content6
+          css=>span-24
+          form-id=>myPage
+          html=>@"
+<h2 class=""span-24 top-1"">preview of form</h2>
+<p>below is your form in executable style, meaning
+all events and everything is hooked up and ready to be tested<br/>
+{{
+check=>showgrid
+  checked=>true
+  oncheckedchanged
+    magix.forms.get-value
+      form-id=>myPage
+      id=>showgrid
+    if=>[magix.forms.get-value][value].Value
+      magix.forms.add-css
+        form-id=>preview-form
+        id=>content7
+        css=>showgrid
+    else
+      magix.forms.remove-css
+        form-id=>preview-form
+        id=>content7
+        css=>showgrid
+label=>descr
+  tag=>label
+  for=>showgrid
+  text=>show grid
+  tip=>@""hides or shows the grid system behind the preview of your form, 
+such that you can see if it is aligned according to the typography system
+in magix""
+}}&nbsp;&nbsp;{{
+link-button=>closepreview
+  text=>close preview
+  onclick
+    magix.viewport.clear-controls
+      container=>content6
+    magix.viewport.clear-controls
+      container=>content7
+}}
+</p>"
+        magix.forms.show-form
+          container=>content7
+          css=>span-24 showgrid bottom-5
+          form-id=>preview-form
 
     panel=>ctrlWrp
       css=>span-17 last top-1 boxed air-padding

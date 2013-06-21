@@ -211,6 +211,78 @@ different effects have different properties.&nbsp;&nbsp;not thread safe";
 			return tmp;
 		}
 
+		/*
+		 */
+		[ActiveEvent(Name = "magix.forms.add-css")]
+		protected void magix_forms_add_css(object sender, ActiveEventArgs e)
+		{
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			{
+				e.Params["event:magix.forms.add-css"].Value = null;
+				e.Params["id"].Value = "control";
+				e.Params["form-id"].Value = "webpages";
+				e.Params["css"].Value = "css-class-to-add";
+				e.Params["inspect"].Value = @"adds the given [css] to the css class name of the 
+[id] control.&nbsp;&nbsp;not thread safe";
+				return;
+			}
+
+			if (!e.Params.Contains ("id"))
+				throw new ArgumentException("Missing [id] in add-css");
+
+			if (!e.Params.Contains ("css"))
+				throw new ArgumentException("Missing [css] in add-css");
+
+			if (e.Params["form-id"].Get<string>("webpages") == FormID)
+			{
+				BaseWebControl ctrl = Selector.FindControl<BaseWebControl>(this.Parent/*to include viewport container*/, e.Params["id"].Get<string>());
+
+				if (ctrl != null)
+				{
+					if (ctrl.CssClass.IndexOf(e.Params["css"].Get<string>()) == -1)
+					{
+						ctrl.CssClass = ctrl.CssClass.Trim() + " " + e.Params["css"].Get<string>().Trim();
+					}
+				}
+			}
+		}
+
+		/*
+		 */
+		[ActiveEvent(Name = "magix.forms.remove-css")]
+		protected void magix_forms_remove_css(object sender, ActiveEventArgs e)
+		{
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			{
+				e.Params["event:magix.forms.remove-css"].Value = null;
+				e.Params["id"].Value = "control";
+				e.Params["form-id"].Value = "webpages";
+				e.Params["css"].Value = "css-class-to-remove";
+				e.Params["inspect"].Value = @"removes the given [css] from the css class property of the 
+[id] control.&nbsp;&nbsp;not thread safe";
+				return;
+			}
+
+			if (!e.Params.Contains ("id"))
+				throw new ArgumentException("Missing [id] in remove-css");
+
+			if (!e.Params.Contains ("css"))
+				throw new ArgumentException("Missing [css] in remove-css");
+
+			if (e.Params["form-id"].Get<string>("webpages") == FormID)
+			{
+				BaseWebControl ctrl = Selector.FindControl<BaseWebControl>(this.Parent/*to include viewport container*/, e.Params["id"].Get<string>());
+
+				if (ctrl != null)
+				{
+					if (ctrl.CssClass.IndexOf(e.Params["css"].Get<string>()) != -1)
+					{
+						ctrl.CssClass = ctrl.CssClass.Replace(e.Params["css"].Get<string>().Trim(), "").Replace("  ", " ").Trim();
+					}
+				}
+			}
+		}
+
 		// TODO: create plugable event
 		// TODO: Change id to Value instead of "id" node
 		/**
@@ -231,7 +303,7 @@ different effects have different properties.&nbsp;&nbsp;not thread safe";
 			}
 
 			if (!e.Params.Contains ("id"))
-				throw new ArgumentException("Missing id in get-value");
+				throw new ArgumentException("Missing [id] in get-value");
 
 			if (e.Params["form-id"].Get<string>("webpages") == FormID)
 			{
