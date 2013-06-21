@@ -136,6 +136,8 @@ has returned true.&nbsp;&nbsp;thread safe";
 
 			node["_ip"].Value = ip;
 			node["_dp"].Value = dp;
+			if (e.Params.Contains("_whitelist"))
+				node["_whitelist"].Value = e.Params["_whitelist"].Value;
 
 			RaiseActiveEvent(
 				"magix.execute", 
@@ -173,6 +175,8 @@ has returned true.&nbsp;&nbsp;thread safe";
 				Node tmp = new Node(evt);
 				tmp["_ip"].Value = ip;
 				tmp["_dp"].Value = dp;
+				if (pars.Contains("_whitelist"))
+					tmp["_whitelist"].Value = pars["_whitelist"].Value;
 
 				RaiseActiveEvent(
 					"magix.execute", 

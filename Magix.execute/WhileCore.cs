@@ -66,6 +66,8 @@ statement in the value of [while] is true.&nbsp;&nbsp;thread safe";
 				Node tmp = new Node("magix.execute.while");
 				tmp["_ip"].Value = ip;
 				tmp["_dp"].Value = dp;
+				if (e.Params.Contains("_whitelist"))
+					tmp["_whitelist"].Value = e.Params["_whitelist"].Value;
 
 				RaiseActiveEvent(
 					"magix.execute", 
