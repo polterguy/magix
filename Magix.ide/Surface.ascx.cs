@@ -764,6 +764,25 @@ not thread safe";
 				tmp);
 		}
 
+		[ActiveEvent(Name="magix.execute.get-form")]
+		protected void magix_execute_get_form(object sender, ActiveEventArgs e)
+		{
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			{
+				e.Params["event:magix.execute"].Value = null;
+				e.Params["inspect"].Value = @"returns the current form node 
+back to caller as [form]";
+				e.Params["get-form"].Value = null;
+				return;
+			}
+
+			Node ip = e.Params;
+			if (e.Params.Contains("_ip"))
+				ip = e.Params["_ip"].Value as Node;
+
+			ip["form"].ReplaceChildren(DataSource.Clone());
+		}
+
 		[ActiveEvent(Name="magix.execute.load-form")]
 		protected void magix_execute_load_form(object sender, ActiveEventArgs e)
 		{

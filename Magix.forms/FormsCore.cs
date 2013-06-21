@@ -26,6 +26,7 @@ namespace Magix.forms
 			{
 				e.Params["event:magix.forms.create-form"].Value = "content1";
 				e.Params["container"].Value = "content1";
+				e.Params["css"].Value = "css class(es) of your form";
 				e.Params["form-id"].Value = "unique-identification-of-your-form";
 				e.Params["events"]["magix.forms.widget-selected"]["magix.forms.show-message"]["message"].Value = "jo, something was selected";
 				e.Params["controls"]["button"].Value = "btn";
@@ -33,9 +34,16 @@ namespace Magix.forms
 				e.Params["inspect"].Value = @"creates a dynamic form
 and loading it into the [container] viewport container.&nbsp;&nbsp;[form-id]
 must be a uniquely identifiable id for later use.&nbsp;&nbsp;[controls]
-contains the controls themselves.&nbsp;&nbsp;not thread safe";
+contains the controls themselves, [css] becomes the css classes of your form
+.&nbsp;&nbsp;not thread safe";
 				return;
 			}
+
+			if (!e.Params.Contains("container"))
+				throw new ArgumentException("you need a [container] for your create-form");
+
+			if (!e.Params.Contains("form-id"))
+				throw new ArgumentException("you need a [form-id] for your create-form");
 
 			LoadModule(
 				"Magix.forms.DynamicForm", 
