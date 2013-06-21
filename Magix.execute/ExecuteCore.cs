@@ -112,8 +112,6 @@ as a security breach, and logged.&nbsp;&nbsp;thread safe";
 
 						ip["_state"].UnTie();
 
-						Node oldIp = ip;
-
 						while (ip.Parent != null)
 						{
 							ip.Parent["_state"].UnTie();
@@ -127,9 +125,9 @@ as a security breach, and logged.&nbsp;&nbsp;thread safe";
 							ip = ip.Parent;
 						}
 
-						log["code"].ReplaceChildren(ip.RootNode().Clone());
+						ip.Name += " ( ** execution engine error ** )";
 
-						log["code"]["stopped-execution"].ReplaceChildren(oldIp.Clone());
+						log["code"].ReplaceChildren(ip.RootNode().Clone());
 
 						RaiseActiveEvent(
 							"magix.log.append", 
@@ -182,8 +180,6 @@ as a security breach, and logged.&nbsp;&nbsp;thread safe";
 
 								ip["_state"].UnTie();
 
-								Node oldIp = ip;
-
 								while (ip.Parent != null)
 								{
 									ip.Parent["_state"].UnTie();
@@ -197,8 +193,9 @@ as a security breach, and logged.&nbsp;&nbsp;thread safe";
 									ip = ip.Parent;
 								}
 
+								idx.Name += " ( ** execution engine error ** )";
+
 								log["code"].ReplaceChildren(ip.RootNode().Clone());
-								log["code"]["stopped-execution"].ReplaceChildren(oldIp.Clone());
 
 								RaiseActiveEvent(
 									"magix.log.append", 
@@ -255,17 +252,15 @@ as a security breach, and logged.&nbsp;&nbsp;thread safe";
 
 								ip["_state"].UnTie();
 
-								Node oldIp = ip;
-
 								while (ip.Parent != null)
 								{
 									ip.Parent["_state"].UnTie();
 									ip = ip.Parent;
 								}
 
-								log["code"].ReplaceChildren(ip.RootNode().Clone());
+								idx.Name += " ( ** execution engine error ** )";
 
-								log["code"]["stopped-execution"].ReplaceChildren(oldIp.Clone());
+								log["code"].ReplaceChildren(ip.RootNode().Clone());
 
 								RaiseActiveEvent(
 									"magix.log.append", 
@@ -297,7 +292,7 @@ as a security breach, and logged.&nbsp;&nbsp;thread safe";
 								{
 									throw err; // keep on rethrowing till we meet somewhere magix.execute was explicitly called ...
 								}
-								// outer execution
+								// outer execution, returning as if nothing happened ...
 								return;
 							}
 							else
