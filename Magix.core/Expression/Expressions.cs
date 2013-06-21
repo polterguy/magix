@@ -669,7 +669,7 @@ namespace Magix.Core
 			Node x = GetNode(expression, source, ip, ref lastEntity, false);
 
 			if (x == null)
-				throw new ArgumentException("Cannot remove a none existing Node");
+				return;
 
             if (lastEntity == ".Value")
 				x.Value = null;
@@ -678,7 +678,7 @@ namespace Magix.Core
             else if (lastEntity == "")
                 x.UnTie ();
             else
-                throw new ArgumentException("Couldn't understand the last parts of your expression '" + lastEntity + "'");
+                throw new ArgumentException("couldn't understand the last parts of your expression '" + lastEntity + "'");
 		}
 
 		private static bool ExpressionExist (string expression, Node source, Node ip)

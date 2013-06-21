@@ -16,11 +16,6 @@ namespace Magix.execute
 	{
 		public class HyperLispStopException : Exception
 		{
-			public override string Message {
-				get {
-					return "_STOP!!";
-				}
-			}
 		}
 
 		/**

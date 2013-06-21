@@ -28,7 +28,6 @@ magix.data.load
 
 _dt
   panel
-    css=>span-17 boxed-light-green air-padding bottom-1 relative
     controls
       label
         css=>span-13
@@ -47,6 +46,23 @@ for-each=>[magix.data.load][objects]
     value=>[.][date].Value
   set=>[/][_dt][panel][controls][label:2][text].Value
     value=>[.][body].Value
+  if=>[.][error].Value==true
+    set=>[/][_dt][panel][css].Value
+      value=>span-17 boxed-light-red air-padding bottom-1 relative
+  else
+    set=>[/][_dt][panel][css].Value
+      value=>span-17 boxed-light-green air-padding bottom-1 relative
+  if=>[.][code]
+    set=>[@][magix.code.node-2-code][json]
+    while=>[.][code].Count>0
+      add=>[@][..][magix.code.node-2-code][json]
+        value=>[.][code][0]
+      set=>[.][code][0]
+    magix.code.node-2-code
+    set=>[/][_dt][panel][controls][label:2][text].Value
+      value=>@"{0} <pre>{1}</pre>"
+        pr0=>[/][_dt][panel][controls][label:2][text].Value
+        pr1=>[@][magix.code.node-2-code][code].Value
   add=>[/][magix.forms.create-form][controls][panel][controls]
     value=>[/][_dt][panel]
 

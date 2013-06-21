@@ -40,7 +40,7 @@ contain type information for types of int, decimal, datetime and bool.&nbsp;&nbs
 
 			if (!e.Params.Contains("json"))
 			{
-				throw new ArgumentException("No node json passed into transform-node-2-code");
+				throw new ArgumentException("no [json] passed into node-2-code");
 			}
 			string txt = "";
 			Node node = null;
