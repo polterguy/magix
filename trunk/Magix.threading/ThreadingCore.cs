@@ -63,6 +63,9 @@ might have.&nbsp;&nbsp;not thread safe";
 			node["_ip"].Value = ip.Clone();
 			node["_dp"].Value = dp.Clone();
 
+			if (e.Params.Contains("_whitelist"))
+				node["_whitelist"].Value = e.Params["_whitelist"].Value;
+
 			if (ip.Get<bool>(false))
 			{
 				Thread thread = new Thread(ExecuteThreadForget);
@@ -142,6 +145,9 @@ of milliseconds, before the wait is dismissed as an integer value of [set].&nbsp
 
 			node["_ip"].Value = ip.Clone();
 			node["_dp"].Value = dp.Clone();
+
+			if (e.Params.Contains("_whitelist"))
+				node["_whitelist"].Value = e.Params["_whitelist"].Value;
 
 			int milliseconds = ip.Get<int>(-1);
 

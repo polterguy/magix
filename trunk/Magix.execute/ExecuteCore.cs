@@ -79,14 +79,26 @@ to the node's name.&nbsp;&nbsp;thread safe";
 			if (e.Params.Contains("_dp"))
 				dp = e.Params["_dp"].Value as Node;
 
+			Node whiteList = null;
+			if (e.Params.Contains("_whitelist"))
+				whiteList = e.Params["_whitelist"].Value as Node;
+
 			// Checking to see if we've got a "context"
 			if ((ip.Name == "execute" || ip.Name == "magix.execute") && 
 				!string.IsNullOrEmpty(ip.Get<string>()))
 			{
+				if (ip.Contains("whitelist"))
+				{
+					if (whiteList != null)
+						throw new ArgumentOutOfRangeException("attempted to inject another whitelist of hyper lisp keywords unto an existing whitelist.&nbsp;&nbsp;security breach!!");
+
+					whiteList = ip["whitelist"].Clone();
+				}
+
 				ip = Expressions.GetExpressionValue(ip.Get<string>(), dp, ip, false) as Node;
 				if (ip == null)
 					throw new ArgumentException(
-						"You can only supply a context pointing to an existing Node hierarchy");
+						"you can only supply a context pointing to an existing node hierarchy");
 			}
 
 			// Temporary variable used internally by some functions, such as "if" and "else-if"
@@ -110,6 +122,13 @@ to the node's name.&nbsp;&nbsp;thread safe";
 
 						// Data Pointer, pointer to data
 						tmp["_dp"].Value = dp;
+
+						if (whiteList != null)
+						{
+							if (!whiteList.Contains(nodeName))
+								throw new ArgumentOutOfRangeException("attempted to use a keyword not in the whitelist of the execution context, keyword was [" + nodeName + "].  security breach!!");
+							tmp["_whitelist"].Value = whiteList;
+						}
 
 						RaiseActiveEvent(
 							"magix.execute.raise", 
@@ -144,6 +163,15 @@ to the node's name.&nbsp;&nbsp;thread safe";
 						// Data Pointer, pointer to data
 						tmp["_dp"].Value = dp;
 
+						if (whiteList != null)
+						{
+							if (!whiteList.Contains(nodeName))
+								throw new ArgumentOutOfRangeException("attempted to use a keyword not in the whitelist of the execution context, keyword was [" + nodeName + "].  security breach!!");
+							tmp["_whitelist"].Value = whiteList;
+						}
+
+
+						// to support stop keywords, and similar constructs
 						try
 						{
 							RaiseActiveEvent(

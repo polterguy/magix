@@ -67,6 +67,9 @@ the currently iterated node.&nbsp;&nbsp;thread safe";
 					tmp2["_ip"].Value = ip;
 					tmp2["_dp"].Value = idx;
 
+					if (e.Params.Contains("_whitelist"))
+						tmp2["_whitelist"].Value = e.Params["_whitelist"].Value;
+
 					RaiseActiveEvent(
 						"magix.execute", 
 						tmp2);
