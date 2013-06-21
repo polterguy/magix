@@ -24,6 +24,13 @@ namespace Magix.execute
 			{ }
 		}
 
+		private class HyperLispExecutionEngineException : Exception
+		{
+			public HyperLispExecutionEngineException(string err)
+				: base(err)
+			{ }
+		}
+
 		/**
 		 * Executes all the children nodes starting with
 		 * a lower case alpha character,
@@ -290,14 +297,45 @@ as a security breach, and logged.&nbsp;&nbsp;thread safe";
 							{
 								if (e.Params.Contains("_ip"))
 								{
-									throw err; // keep on rethrowing till we meet somewhere magix.execute was explicitly called ...
+									throw; // keep on rethrowing till we meet somewhere magix.execute was explicitly called ...
 								}
 								// outer execution, returning as if nothing happened ...
 								return;
 							}
+							else if (err is ExecuteCore.HyperLispExecutionEngineException)
+							{
+								throw;
+							}
+							else if (err is ExecuteCore.SecurityHyperLispException)
+							{
+								throw;
+							}
 							else
 							{
-								throw err;
+								idx.Name += " ( ** execution engine error ** )";
+
+								// logging security breach
+								Node log = new Node();
+
+								log["header"].Value = "execution error [magix.execute]";
+								log["body"].Value = "execution engine broke down at [" + nodeName + "], inner exception was; '" + err.Message + "'";
+								log["error"].Value = true;
+
+								ip["_state"].UnTie();
+
+								while (ip.Parent != null)
+								{
+									ip.Parent["_state"].UnTie();
+									ip = ip.Parent;
+								}
+
+								log["code"].ReplaceChildren(ip.RootNode().Clone());
+
+								RaiseActiveEvent(
+									"magix.log.append", 
+									log);
+
+								throw new ExecuteCore.HyperLispExecutionEngineException("execution engine exception, error was; '" + err.Message + "'");
 							}
 						}
 					}
