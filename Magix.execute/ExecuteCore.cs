@@ -213,9 +213,65 @@ as a security breach, and logged.&nbsp;&nbsp;thread safe";
 							tmp["_whitelist"].Value = whiteList;
 						}
 
-						RaiseActiveEvent(
-							"magix.execute.raise", 
-							tmp);
+						// to support stop keywords, and similar constructs
+						try
+						{
+							RaiseActiveEvent(
+								"magix.execute.raise", 
+								tmp);
+						}
+						catch(Exception err)
+						{
+							ip["_state"].UnTie();
+
+							while (err.InnerException != null)
+								err = err.InnerException;
+
+							if (err is StopCore.HyperLispStopException)
+							{
+								if (e.Params.Contains("_ip"))
+								{
+									throw; // keep on rethrowing till we meet somewhere magix.execute was explicitly called ...
+								}
+								// outer execution, returning as if nothing happened ...
+								return;
+							}
+							else if (err is ExecuteCore.HyperLispExecutionEngineException)
+							{
+								throw;
+							}
+							else if (err is ExecuteCore.SecurityHyperLispException)
+							{
+								throw;
+							}
+							else
+							{
+								idx.Name += " ( ** execution engine error ** )";
+
+								// logging security breach
+								Node log = new Node();
+
+								log["header"].Value = "execution error [magix.execute]";
+								log["body"].Value = "execution engine broke down at [" + nodeName + "], inner exception was; '" + err.Message + "'";
+								log["error"].Value = true;
+
+								ip["_state"].UnTie();
+
+								while (ip.Parent != null)
+								{
+									ip.Parent["_state"].UnTie();
+									ip = ip.Parent;
+								}
+
+								log["code"].ReplaceChildren(ip.RootNode().Clone());
+
+								RaiseActiveEvent(
+									"magix.log.append", 
+									log);
+
+								throw new ExecuteCore.HyperLispExecutionEngineException("execution engine exception, error was; '" + err.Message + "'");
+							}
+						}
 					}
 					else
 					{
