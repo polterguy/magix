@@ -29,6 +29,8 @@ you need to submit both a [header] and a [body].&nbsp;&nbsp;
 parameters added beneath [body] and/or [header] will be formatted into string.&nbsp;&nbsp;thread safe";
 				e.Params["header"].Value = "descriptive header of log item";
 				e.Params["body"].Value = "detailed description of log item";
+				e.Params["code"].Value = "hyper lisp code";
+				e.Params["error"].Value = false;
 				return;
 			}
 
@@ -40,6 +42,7 @@ parameters added beneath [body] and/or [header] will be formatted into string.&n
 
 			string header = e.Params["header"].Get<string>();
 			string body   = e.Params["body"].Get<string>();
+
 			DateTime date = DateTime.Now;
 
 			if (e.Params["body"].Count > 0)
@@ -74,6 +77,14 @@ parameters added beneath [body] and/or [header] will be formatted into string.&n
 			node["object"]["header"].Value = header;
 			node["object"]["body"].Value   = body;
 			node["object"]["date"].Value   = date;
+
+			if (e.Params.Contains("error"))
+				node["object"]["error"].Value = e.Params["error"].Value;
+
+			if (e.Params.Contains("code"))
+			{
+				node["object"]["code"].ReplaceChildren(e.Params["code"].Clone());
+			}
 
 			RaiseActiveEvent(
 				"magix.data.save",

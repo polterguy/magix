@@ -17,6 +17,13 @@ namespace Magix.execute
 	 */
 	public class ExecuteCore : ActiveController
 	{
+		private class SecurityHyperLispException : Exception
+		{
+			public SecurityHyperLispException(string err)
+				: base(err)
+			{ }
+		}
+
 		/**
 		 * Executes all the children nodes starting with
 		 * a lower case alpha character,
@@ -61,7 +68,12 @@ if they only contain these characters;
 abcdefghijklmnopqrstuvwxyz-.@£#$¤%&!?+:*.&nbsp;&nbsp;therefor, 
 a useful convention is to, either prefix your data parts 
 with an underscore, '_', or a Capital letter, or add numbers 
-to the node's name.&nbsp;&nbsp;thread safe";
+to the node's name.&nbsp;&nbsp;
+if you add a [whitelist] child node, together with a context value, 
+the node names underneath the 
+whitelist node, will become a list of exclusively allowed keywords and
+active events to run, and any other keywords or events, will be perceived
+as a security breach, and logged.&nbsp;&nbsp;thread safe";
 				e.Params["_data"]["value"].Value = "thomas";
 				e.Params["if"].Value = "[_data][value].Value==thomas";
 				e.Params["if"]["magix.viewport.show-message"].Value = null;
@@ -90,7 +102,41 @@ to the node's name.&nbsp;&nbsp;thread safe";
 				if (ip.Contains("whitelist"))
 				{
 					if (whiteList != null)
-						throw new ArgumentOutOfRangeException("attempted to inject another whitelist of hyper lisp keywords unto an existing whitelist.&nbsp;&nbsp;security breach!!");
+					{
+						// logging security breach
+						Node log = new Node();
+
+						log["header"].Value = "security breach in [magix.execute]";
+						log["body"].Value = "attempted to load another whitelist into the system, even though an existing exists.  security breach!!";
+						log["error"].Value = true;
+
+						ip["_state"].UnTie();
+
+						Node oldIp = ip;
+
+						while (ip.Parent != null)
+						{
+							ip.Parent["_state"].UnTie();
+							ip = ip.Parent;
+						}
+
+						ip["_state"].UnTie();
+						while (ip.Parent != null)
+						{
+							ip.Parent["_state"].UnTie();
+							ip = ip.Parent;
+						}
+
+						log["code"].ReplaceChildren(ip.RootNode().Clone());
+
+						log["code"]["stopped-execution"].ReplaceChildren(oldIp.Clone());
+
+						RaiseActiveEvent(
+							"magix.log.append", 
+							log);
+
+						throw new ExecuteCore.SecurityHyperLispException("attempted to inject another whitelist of hyper lisp keywords unto an existing whitelist.&nbsp;&nbsp;security breach!!");
+					}
 
 					whiteList = ip["whitelist"].Clone();
 				}
@@ -126,7 +172,40 @@ to the node's name.&nbsp;&nbsp;thread safe";
 						if (whiteList != null)
 						{
 							if (!whiteList.Contains(nodeName))
-								throw new ArgumentOutOfRangeException("attempted to use a keyword not in the whitelist of the execution context, keyword was [" + nodeName + "].  security breach!!");
+							{
+								// logging security breach
+								Node log = new Node();
+
+								log["header"].Value = "security breach in [magix.execute]";
+								log["body"].Value = "attempted to raise an active event not in the whitelist of the execution context, name of active event was was [" + nodeName + "].  security breach!!";
+								log["error"].Value = true;
+
+								ip["_state"].UnTie();
+
+								Node oldIp = ip;
+
+								while (ip.Parent != null)
+								{
+									ip.Parent["_state"].UnTie();
+									ip = ip.Parent;
+								}
+
+								ip["_state"].UnTie();
+								while (ip.Parent != null)
+								{
+									ip.Parent["_state"].UnTie();
+									ip = ip.Parent;
+								}
+
+								log["code"].ReplaceChildren(ip.RootNode().Clone());
+								log["code"]["stopped-execution"].ReplaceChildren(oldIp.Clone());
+
+								RaiseActiveEvent(
+									"magix.log.append", 
+									log);
+
+								throw new ExecuteCore.SecurityHyperLispException("attempted to raise an active event not in the whitelist of the execution context, name of active event was was [" + nodeName + "].  security breach!!");
+							}
 							tmp["_whitelist"].Value = whiteList;
 						}
 
@@ -166,7 +245,34 @@ to the node's name.&nbsp;&nbsp;thread safe";
 						if (whiteList != null)
 						{
 							if (!whiteList.Contains(nodeName))
-								throw new ArgumentOutOfRangeException("attempted to use a keyword not in the whitelist of the execution context, keyword was [" + nodeName + "].  security breach!!");
+							{
+								// logging security breach
+								Node log = new Node();
+
+								log["header"].Value = "security breach in [magix.execute]";
+								log["body"].Value = "attempted to use a keyword not in the whitelist of the execution context, keyword was [" + nodeName + "].  security breach!!";
+								log["error"].Value = true;
+
+								ip["_state"].UnTie();
+
+								Node oldIp = ip;
+
+								while (ip.Parent != null)
+								{
+									ip.Parent["_state"].UnTie();
+									ip = ip.Parent;
+								}
+
+								log["code"].ReplaceChildren(ip.RootNode().Clone());
+
+								log["code"]["stopped-execution"].ReplaceChildren(oldIp.Clone());
+
+								RaiseActiveEvent(
+									"magix.log.append", 
+									log);
+
+								throw new ExecuteCore.SecurityHyperLispException("attempted to use a keyword not in the whitelist of the execution context, keyword was [" + nodeName + "].  security breach!!");
+							}
 							tmp["_whitelist"].Value = whiteList;
 						}
 
@@ -181,9 +287,11 @@ to the node's name.&nbsp;&nbsp;thread safe";
 						catch(Exception err)
 						{
 							ip["_state"].UnTie();
+
 							while (err.InnerException != null)
 								err = err.InnerException;
-							if (err.Message == "_STOP!!")
+
+							if (err is StopCore.HyperLispStopException)
 							{
 								if (e.Params.Contains("_ip"))
 								{
