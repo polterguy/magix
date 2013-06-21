@@ -28,7 +28,7 @@ namespace Magix.Core
 		 * are '=', '<', '>', '<=', '>=' and '!='. You can use either one '=' or '=='
 		 * for comparing two values
 		 */
-		public static bool IsTrue (string expr, Node ip, Node dp)
+		public static bool IsTrue(string expr, Node ip, Node dp)
 		{
 			List<string> tokens = TokenizeExpression(expr);
 
@@ -681,7 +681,7 @@ namespace Magix.Core
                 throw new ArgumentException("couldn't understand the last parts of your expression '" + lastEntity + "'");
 		}
 
-		private static bool ExpressionExist (string expression, Node source, Node ip)
+		private static bool ExpressionExist(string expression, Node source, Node ip)
 		{
 			string lastEntity = "";
 			Node x = GetNode(expression, source, ip, ref lastEntity, false);
