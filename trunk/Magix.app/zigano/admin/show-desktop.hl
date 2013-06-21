@@ -16,7 +16,7 @@ for-each=>[magix.admin.get-active-events][events]
     value=>[.].Value
 
 _evts
-magix.execute=>[@][_evts]
+execute=>[_evts]
 
 for-each=>[_evts]
   for-each=>[.][scripts]

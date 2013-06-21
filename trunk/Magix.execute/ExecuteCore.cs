@@ -366,6 +366,10 @@ as a security breach, and logged.&nbsp;&nbsp;thread safe";
 							{
 								throw;
 							}
+							else if (err is ExceptionCore.ManagedHyperLispException)
+							{
+								throw;
+							}
 							else
 							{
 								idx.Name += " ( ** execution engine error ** )";

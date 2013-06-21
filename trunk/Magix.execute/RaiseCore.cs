@@ -64,10 +64,23 @@ functionality from overridden active events.&nbsp;&nbsp;thread safe";
 			if (ip.Contains("no-override") && ip["no-override"].Get<bool>())
 				forceNoOverride = true;
 
-			if (ip.Name == "raise")
-				RaiseActiveEvent(ip.Get<string>(), ip, forceNoOverride);
-			else
-				RaiseActiveEvent(ip.Name, ip, forceNoOverride);
+			Node tmpParent = ip.Parent;
+			ip.SetParent(null); // to avoid that methods have access to parent nodes it shouldn't have access to ...
+			try
+			{
+				if (ip.Name == "raise")
+				{
+					RaiseActiveEvent(ip.Get<string>(), ip, forceNoOverride);
+				}
+				else
+				{
+					RaiseActiveEvent(ip.Name, ip, forceNoOverride);
+				}
+			}
+			finally
+			{
+				ip.SetParent(tmpParent);
+			}
 		}
 	}
 }

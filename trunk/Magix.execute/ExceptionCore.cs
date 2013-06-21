@@ -14,6 +14,13 @@ namespace Magix.execute
 	 */
 	public class ExceptionCore : ActiveController
 	{
+		public class ManagedHyperLispException : Exception
+		{
+			public ManagedHyperLispException(string msg)
+				: base(msg)
+			{ }
+		}
+
 		/**
 		 * Creates a try block, with an associated code block, and a catch block,
 		 * which will be invoked if an exception is thrown. The catch statement
@@ -101,7 +108,7 @@ value of the [throw] node.&nbsp;&nbsp;use together with
 			if (e.Params.Contains("_ip"))
 				ip = e.Params ["_ip"].Value as Node;
 
-			throw new ApplicationException(ip.Get<string>());
+			throw new ExceptionCore.ManagedHyperLispException(ip.Get<string>());
 		}
 	}
 }
