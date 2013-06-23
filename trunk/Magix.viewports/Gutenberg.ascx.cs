@@ -127,7 +127,7 @@ end user for some seconds.&nbsp;&nbsp;not thread safe";
 
 
 			if (!e.Params.Contains("message") || e.Params["message"].Get<string>("") == "")
-				throw new ArgumentException("cannot show a message box without a [message] argument");
+				throw new ArgumentException("cannot show a confirm message box without a [message] argument");
 
 			confirmLbl.Text = e.Params["message"].Get<string>();
 

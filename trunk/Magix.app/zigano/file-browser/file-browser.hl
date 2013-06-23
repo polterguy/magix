@@ -27,6 +27,10 @@ if=>[$][directory].Value
     value=>[$][directory].Value
   set=>[/][_delDir][onclick][magix.viewport.confirm][code][magix.file.delete-directory][path].Value
     value=>[$][directory].Value
+  set=>[/][_ren][controls][text-box][text].Value
+    value=>[$][directory].Value
+  set=>[/][_ren][controls][text-box][ontextchanged][magix.file.move-directory][from].Value
+    value=>[$][directory].Value
   set=>[/][magix.forms.create-form][controls][uploader][folder].Value
     value=>[$][directory].Value
   set=>[/][magix.forms.create-form][controls][uploader][onuploaded][if][magix.admin.run-file][directory].Value
@@ -39,6 +43,8 @@ else
     value
       root=>
   set=>[/][_delDir][enabled].Value
+    value=>false
+  set=>[/][_ren][visible].Value
     value=>false
 
 _back
@@ -141,6 +147,28 @@ _delDir=>deldir
         magix.admin.run-file
           file=>zigano/file-browser/file-browser.hl
 
+_ren=>renWrp
+  css=>span-9 last top-1 right btn-group
+  placeholder=>name of directory ...
+  default=>saveDirName
+  controls
+    text-box=>dirName
+      css=>span-7
+      ontextchanged
+        magix.forms.get-value
+          form-id=>file-explorer
+          id=>dirName
+        set=>[magix.file.move-directory][to].Value
+          value=>[magix.forms.get-value][value].Value
+        magix.file.move-directory
+        set=>[magix.admin.run-file][directory].Value
+          value=>[magix.file.move-directory][to].Value
+        magix.admin.run-file
+          file=>zigano/file-browser/file-browser.hl
+    button=>saveDirName
+      css=>span-2 last
+      text=>save
+
 add=>[magix.forms.create-form][controls]
   value=>[_btn]
 set=>[magix.forms.create-form][controls][_btn].Name
@@ -155,6 +183,11 @@ add=>[magix.forms.create-form][controls]
   value=>[_delDir]
 set=>[magix.forms.create-form][controls][_delDir].Name
   value=>button
+
+add=>[magix.forms.create-form][controls]
+  value=>[_ren]
+set=>[magix.forms.create-form][controls][_ren].Name
+  value=>panel
 
 magix.forms.create-form
   events
