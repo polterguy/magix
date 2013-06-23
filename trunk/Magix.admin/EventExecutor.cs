@@ -293,10 +293,11 @@ thread safe";
 				e.Params["event:magix.admin.edit-file"].Value = null;
 				e.Params["inspect"].Value = @"attempts to open the given [file]
 in whatever editor makes sense according to its extension, or download directly in browser 
-if none.&nbsp;&nbsp;thread safe";
+if none.&nbsp;&nbsp;if file doesn't exist, an empty file 
+will be edited, but not created before saved.&nbsp;&nbsp;not thread safe";
 				e.Params["file"].Value = "media/grid/main.css";
+				e.Params["css"].Value = "css classes of editor";
 				e.Params["container"].Value = "content5";
-				e.Params["new-file"].Value = false;
 				return;
 			}
 
@@ -304,9 +305,6 @@ if none.&nbsp;&nbsp;thread safe";
 				throw new ArgumentException("need [file] parameter");
 
 			string file = e.Params["file"].Get<string>();
-
-			if ((!e.Params.Contains("new-file") || !e.Params["new-file"].Get<bool>()) && !File.Exists(Page.Server.MapPath(file)))
-				throw new ArgumentException("file " + file + " doesn't exist on disc");
 
 			string extension = file.Substring(file.LastIndexOf('.') + 1);
 
@@ -332,7 +330,7 @@ if none.&nbsp;&nbsp;thread safe";
 				Node tmp = new Node();
 				tmp["file"].Value = file;
 
-				if (!e.Params.Contains("new-file") || !e.Params["new-file"].Get<bool>())
+				if (File.Exists(Page.Server.MapPath(file)))
 				{
 					using (TextReader reader = File.OpenText(file))
 					{

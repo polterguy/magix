@@ -19,6 +19,14 @@ if=>[$][directory].Value
     value=>@"{0}/{1}"
       pr0=>[$][directory].Value
       pr1=>empty.txt
+  set=>[/][_newDir][onclick][magix.file.create-directory][path].Value
+    value=>@"{0}/{1}"
+      pr0=>[$][directory].Value
+      pr1=>new-directory
+  set=>[/][_newDir][onclick][magix.admin.run-file][directory].Value
+    value=>[$][directory].Value
+  set=>[/][_delDir][onclick][magix.viewport.confirm][code][magix.file.delete-directory][path].Value
+    value=>[$][directory].Value
   set=>[/][magix.forms.create-form][controls][uploader][folder].Value
     value=>[$][directory].Value
   set=>[/][magix.forms.create-form][controls][uploader][onuploaded][if][magix.admin.run-file][directory].Value
@@ -30,6 +38,8 @@ else
     id=>stack-of-pages
     value
       root=>
+  set=>[/][_delDir][enabled].Value
+    value=>false
 
 _back
   css=>span-5 directory back-directory
@@ -102,19 +112,48 @@ for-each=>[magix.file.list-directories][directories]
   set=>[/][magix.forms.create-form][controls][_link-buttonDir].Name
     value=>link-button
 
-_btn
-  css=>span-3 btn-large left-16 last top-1
+_btn=>newfile
+  css=>span-3 btn-large left-10 top-1 clear
   text=>new file
   onclick
     magix.admin.edit-file
       css=>span-24 last top-2
       container=>content2
-      new-file=>true
       file=>empty.txt
+
+_newDir=>newdir
+  css=>span-3 btn-large top-1
+  text=>new dir
+  onclick
+    magix.file.create-directory
+      path=>new-directory
+    magix.admin.run-file
+      file=>zigano/file-browser/file-browser.hl
+
+_delDir=>deldir
+  css=>span-3 btn-large last top-1
+  text=>del dir
+  onclick
+    magix.viewport.confirm
+      message=>do you really want to delete the open directory?
+      code
+        magix.file.delete-directory
+        magix.admin.run-file
+          file=>zigano/file-browser/file-browser.hl
 
 add=>[magix.forms.create-form][controls]
   value=>[_btn]
 set=>[magix.forms.create-form][controls][_btn].Name
+  value=>button
+
+add=>[magix.forms.create-form][controls]
+  value=>[_newDir]
+set=>[magix.forms.create-form][controls][_newDir].Name
+  value=>button
+
+add=>[magix.forms.create-form][controls]
+  value=>[_delDir]
+set=>[magix.forms.create-form][controls][_delDir].Name
   value=>button
 
 magix.forms.create-form

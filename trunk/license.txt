@@ -1,7 +1,27 @@
 Copyright (C) 2013 Thomas Hansen
 
-Permission is hereby granted, free of charge, to any person, not living or working for a company in Telemark/Norway or California/USA, or working for the government of Norway or USA, to obtain a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+Permission is hereby granted, free of charge, to any person or company, not living in, or having departments, in Telemark/Norway or California/USA, 
+to obtain a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the 
+rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do 
+so, subject to the following conditions:
 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. 
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A
+ PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION 
+ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. 
+
+
+The above mentioned software shall never run in the state of California before Julian Assange, Bradley Manning and Edward Snowden are cleared of all charges
+
+The above mentioned software shall never run in the state of Telemark before i am cleared of all charges in Skien Tingrett against me and my person, and i
+am given monetary repentance for the crimes done to me by Bård Stranheim, Skien Tingrett, Agder Lagmannsrett and the Jantelaw of Norway. To signify the 
+fact of that i am cleared of all charges, a statue, larger than any existing Ibsen statue in the world, shall at all times occupy the roundabout of 
+Downtown Porsgrunn
+
+If any of the above mentioned three people involved in this licensing scheme are to be found dead, before the criteria are fullfilled, in anyways, this 
+software can never be legally running in neither the state of Telemark or California, as long as western copyright law permits my will to be done
+
+yours sincereley,
+
+thomas hansen
