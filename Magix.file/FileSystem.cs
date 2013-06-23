@@ -107,6 +107,52 @@ new created.&nbsp;&nbsp;thread safe";
 		}
 
 		/**
+		 * Loads a file from disc, relatively from the root of the web application
+		 */
+		[ActiveEvent(Name = "magix.file.create-directory")]
+		public static void magix_file_create_directory(object sender, ActiveEventArgs e)
+		{
+			if (ShouldInspect(e.Params))
+			{
+				e.Params["event:magix.execute"].Value = null;
+				e.Params["magix.file.create-directory"]["path"].Value = "media/tmp";
+				e.Params["inspect"].Value = @"creates the [path] directory.
+&nbsp;&nbsp;thread safe";
+				return;
+			}
+
+			if (!e.Params.Contains("path") || e.Params["path"].Get<string>("") == "")
+				throw new ArgumentException("You need to define which directory to create, as [path] node");
+
+			string dir = e.Params["path"].Get<string>();
+
+			Directory.CreateDirectory(HttpContext.Current.Server.MapPath(dir));
+		}
+
+		/**
+		 * Loads a file from disc, relatively from the root of the web application
+		 */
+		[ActiveEvent(Name = "magix.file.delete-directory")]
+		public static void magix_file_delete_directory(object sender, ActiveEventArgs e)
+		{
+			if (ShouldInspect(e.Params))
+			{
+				e.Params["event:magix.execute"].Value = null;
+				e.Params["magix.file.delete-directory"]["path"].Value = "media/tmp";
+				e.Params["inspect"].Value = @"deletes the [path] directory from disc.
+&nbsp;&nbsp;thread safe";
+				return;
+			}
+
+			if (!e.Params.Contains("path") || e.Params["path"].Get<string>("") == "")
+				throw new ArgumentException("You need to define which directory to delete, as [path] node");
+
+			string dir = e.Params["path"].Get<string>();
+
+			Directory.Delete(HttpContext.Current.Server.MapPath(dir));
+		}
+
+		/**
 		 */
 		[ActiveEvent(Name = "magix.file.list-files")]
 		public static void magix_file_list_files(object sender, ActiveEventArgs e)
