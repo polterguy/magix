@@ -145,11 +145,39 @@ new created.&nbsp;&nbsp;thread safe";
 			}
 
 			if (!e.Params.Contains("path") || e.Params["path"].Get<string>("") == "")
-				throw new ArgumentException("You need to define which directory to delete, as [path] node");
+				throw new ArgumentException("you need to define which directory to delete, as [path] node");
 
 			string dir = e.Params["path"].Get<string>();
 
 			Directory.Delete(HttpContext.Current.Server.MapPath(dir));
+		}
+
+		/**
+		 * Loads a file from disc, relatively from the root of the web application
+		 */
+		[ActiveEvent(Name = "magix.file.move-directory")]
+		public static void magix_file_move_directory(object sender, ActiveEventArgs e)
+		{
+			if (ShouldInspect(e.Params))
+			{
+				e.Params["event:magix.execute"].Value = null;
+				e.Params["magix.file.move-directory"]["from"].Value = "media/tmp";
+				e.Params["magix.file.move-directory"]["to"].Value = "media/some-new-directory";
+				e.Params["inspect"].Value = @"moves the given [from] directory, and puts all files into [to].
+&nbsp;&nbsp;thread safe";
+				return;
+			}
+
+			if (!e.Params.Contains("from") || e.Params["from"].Get<string>("") == "")
+				throw new ArgumentException("you need to define which directory to copy, as [from] node");
+
+			if (!e.Params.Contains("to") || e.Params["to"].Get<string>("") == "")
+				throw new ArgumentException("you need to define which directory to copy to, as [to] node");
+
+			string from = e.Params["from"].Get<string>();
+			string to = e.Params["to"].Get<string>();
+
+			Directory.Move(from, to);
 		}
 
 		/**
