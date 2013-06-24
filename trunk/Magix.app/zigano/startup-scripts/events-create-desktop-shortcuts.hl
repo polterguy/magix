@@ -82,6 +82,20 @@ with them.&nbsp;&nbsp;am open active event, is
 an event which can be invoked remotely by other servers.&nbsp;&nbsp;
 make sure you understand the consequences of this, before opening events, since it implies
 security issues"
+      _default_script6
+        text=>tunneled active events
+        category=>security
+        code
+          magix.admin.run-file
+            file=>zigano/admin/tools/inspect-remoted-events.hl
+          magix.viewport.show-message-if-help-mode
+            message=>@"view, inspect and run any tunneled active event 
+in magix illuminate, meaning any active events which are overridden, 
+such that they will be remotely invoked, through e.g. using the [tunnel]
+keyword.&nbsp;&nbsp;
+understanding this feature, and its security risk, is imperative
+to be capable of making sure magix is secure, before you open up active 
+events, to allow for invoking over http, from other remote machines"
       _default_script13
         text=>edit users
         category=>security
@@ -167,19 +181,6 @@ of your system"
           magix.viewport.show-message-if-help-mode
             message=>@"view and change settings of 
 your system"
-      _default_script6
-        text=>remoted active events
-        category=>security
-        code
-          magix.admin.run-file
-            file=>zigano/admin/tools/inspect-remoted-events.hl
-          magix.viewport.show-message-if-help-mode
-            message=>@"view, inspect and run any remoted active event 
-in magix illuminate, meaning any active events which are overridden, 
-such that they will be remotely invoked.&nbsp;&nbsp;
-understanding this feature, and its security risk, is imperative
-to be capable of making sure magix is secure, before you open 
-evnts, to allow for invoking over http, from other remote machines"
       _default_scriptx_4
         text=>logout
         category=>security
