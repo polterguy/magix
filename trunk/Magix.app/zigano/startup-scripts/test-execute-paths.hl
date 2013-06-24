@@ -130,6 +130,29 @@ didn't correctly change the node hierarchy"
 
 
 
+event=>magix.test.execute-with-max-cycles-infinite-while
+  inspect=>@"checks to see if [execute] with [max-cycles] stops 
+execution when of an infinite while loop"
+  code
+    _success
+    _exe
+      _dt=>true
+      while=>[@][_dt].Value
+        set=>[_exe].Value
+          value=>true
+    try
+      code
+        execute=>[/][_exe]
+          max-cycles=>10000
+      catch
+        set=>[/][_success].Value
+          value=>true
+    if=>![_success].Value
+      throw=>magix.test.execute-with-max-cycles-infinite-while failed, exception was not thrown
+
+
+
+
 
 
 
