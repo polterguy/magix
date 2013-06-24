@@ -64,7 +64,7 @@ cf
       css=>span-13
       controls
         label=>header
-          text=>remoted active event name
+          text=>tunneled active event name
           css=>span-13
           tag=>h3
         label=>code
