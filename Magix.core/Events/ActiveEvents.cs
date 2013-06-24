@@ -295,7 +295,7 @@ namespace Magix.Core
 			return retVal;
 		}
 
-		List<Tuple<MethodInfo, object>> SlurpAllNullEventHandlers(string eventName, bool forceNoNull)
+		List<Tuple<MethodInfo, object>> SlurpAllNullEventHandlers(bool forceNoNull)
 		{
             List<Tuple<MethodInfo, object>> retVal = new List<Tuple<MethodInfo, object>>();
 
@@ -511,7 +511,7 @@ namespace Magix.Core
 				bool exists = false;
                 foreach (Tuple<MethodInfo, object> idx2 in recheck)
                 {
-                    if (idx.Equals(idx2))
+                    if (idx.Item1.Equals(idx2.Item1))
                     {
 						exists = true;
                         break;
@@ -521,53 +521,58 @@ namespace Magix.Core
                 	ExecuteEventMethod(idx.Item1, idx.Item2, sender, e);
             }
 
-			tmp = SlurpAllNullEventHandlers(name, forceNoOverride);
+			try
+			{
+				tmp = SlurpAllNullEventHandlers(forceNoOverride);
 
-            tmp.AddRange(SlurpAllEventHandlers(name, forceNoOverride));
+	            tmp.AddRange(SlurpAllEventHandlers(name, forceNoOverride));
 
-            // Looping through all methods...
-            foreach (Tuple<MethodInfo, object> idx in tmp)
-            {
-                // Since events might load and clear controls we need to check if the event 
-                // handler still exists after *every* event handler we dispatch control to...
-                List<Tuple<MethodInfo, object>> recheck = SlurpAllNullEventHandlers(name, forceNoOverride);
+	            // Looping through all methods...
+	            foreach (Tuple<MethodInfo, object> idx in tmp)
+	            {
+	                // Since events might load and clear controls we need to check if the event 
+	                // handler still exists after *every* event handler we dispatch control to...
+	                List<Tuple<MethodInfo, object>> recheck = SlurpAllNullEventHandlers(forceNoOverride);
 
-				recheck.AddRange(SlurpAllEventHandlers(name, forceNoOverride));
+					recheck.AddRange(SlurpAllEventHandlers(name, forceNoOverride));
 
-				bool exists = false;
-                foreach (Tuple<MethodInfo, object> idx2 in recheck)
-                {
-                    if (idx.Equals(idx2))
-                    {
-						exists = true;
-                        break;
-                    }
-                }
-				if (exists)
-                	ExecuteEventMethod(idx.Item1, idx.Item2, sender, e);
-            }
+					bool exists = false;
+	                foreach (Tuple<MethodInfo, object> idx2 in recheck)
+	                {
+	                    if (idx.Item1.Equals(idx2.Item1))
+	                    {
+							exists = true;
+	                        break;
+	                    }
+	                }
+					if (exists)
+	                	ExecuteEventMethod(idx.Item1, idx.Item2, sender, e);
+	            }
+			}
+			finally
+			{
+		        tmp = SlurpAllEventHandlers(":after", forceNoOverride);
 
-            tmp = SlurpAllEventHandlers(":after", forceNoOverride);
+		        // Looping through all methods...
+		        foreach (Tuple<MethodInfo, object> idx in tmp)
+		        {
+		            // Since events might load and clear controls we need to check if the event 
+		            // handler still exists after *every* event handler we dispatch control to...
+		            List<Tuple<MethodInfo, object>> recheck = SlurpAllEventHandlers(":after", forceNoOverride);
 
-            // Looping through all methods...
-            foreach (Tuple<MethodInfo, object> idx in tmp)
-            {
-                // Since events might load and clear controls we need to check if the event 
-                // handler still exists after *every* event handler we dispatch control to...
-                List<Tuple<MethodInfo, object>> recheck = SlurpAllEventHandlers(":after", forceNoOverride);
-
-				bool exists = false;
-                foreach (Tuple<MethodInfo, object> idx2 in recheck)
-                {
-                    if (idx.Equals(idx2))
-                    {
-						exists = true;
-                        break;
-                    }
-                }
-				if (exists)
-                	ExecuteEventMethod(idx.Item1, idx.Item2, sender, e);
-            }
+					bool exists = false;
+		            foreach (Tuple<MethodInfo, object> idx2 in recheck)
+		            {
+		                if (idx.Item1.Equals(idx2.Item1))
+		                {
+							exists = true;
+		                    break;
+		                }
+		            }
+					if (exists)
+		            	ExecuteEventMethod(idx.Item1, idx.Item2, sender, e);
+		        }
+			}
 		}
 
 		private Node RaiseSingleEventWithTokens (
