@@ -68,6 +68,8 @@ statement in the value of [while] is true.&nbsp;&nbsp;thread safe";
 				tmp["_dp"].Value = dp;
 				if (e.Params.Contains("_whitelist"))
 					tmp["_whitelist"].Value = e.Params["_whitelist"].Value;
+				if (e.Params.Contains("_max-cycles"))
+					tmp["_max-cycles"].Value = e.Params["_max-cycles"].Value;
 
 				RaiseActiveEvent(
 					"magix.execute", 

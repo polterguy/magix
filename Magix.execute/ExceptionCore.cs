@@ -53,7 +53,19 @@ statement.&nbsp;&nbsp;thread safe";
 			}
 			Node ip = e.Params;
 			if (e.Params.Contains("_ip"))
-				ip = e.Params ["_ip"].Value as Node;
+				ip = e.Params["_ip"].Value as Node;
+
+			Node dp = e.Params;
+			if (e.Params.Contains("_dp"))
+				dp = e.Params["_dp"].Value as Node;
+
+			Node whitelist = null;
+			if (e.Params.Contains("_whitelist"))
+				whitelist = e.Params["_whitelist"].Value as Node;
+
+			Node maxCycles = null;
+			if (e.Params.Contains("_max-cycles"))
+				whitelist = e.Params["_max-cycles"].Value as Node;
 
 			if (!ip.Contains("code"))
 				throw new ApplicationException("No code block inside of try statement");
@@ -63,9 +75,18 @@ statement.&nbsp;&nbsp;thread safe";
 
 			try
 			{
+				Node tmp = new Node();
+				tmp["_ip"].Value = ip["code"];
+				if(dp != null)
+					tmp["_dp"].Value = dp;
+				if (whitelist != null)
+					tmp["_whitelist"].Value = whitelist;
+				if (maxCycles != null)
+					tmp["_max-cycles"].Value = maxCycles;
+
 				RaiseActiveEvent(
 					"magix.execute",
-					ip["code"]);
+					tmp);
 			}
 			catch (Exception err)
 			{

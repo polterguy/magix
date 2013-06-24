@@ -1,6 +1,8 @@
 
 
 event=>zigano.travel.create-roles-form
+  inspect=>@"creates the edit roles form.&nbsp;&nbsp;
+not thread safe"
   code
     magix.data.load
       prototype

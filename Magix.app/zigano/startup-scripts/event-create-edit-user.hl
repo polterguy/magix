@@ -2,6 +2,8 @@
 
 
 event=>zigano.travel.edit-user
+  inspect=>@"edits a single user in the system.
+&nbsp;&nbsp;not thread safe"
   code
     set=>[magix.admin.run-file][username].Value
       value=>[$][username].Value
@@ -9,6 +11,8 @@ event=>zigano.travel.edit-user
       file=>zigano/admin/edit-single-user.hl
 
 event=>zigano.travel.create-users-form
+  inspect=>@"creates the edit/create user form.
+&nbsp;&nbsp;not thread safe"
   code
     if=>[$][start]
       set=>[magix.data.load][start].Value

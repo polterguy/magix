@@ -92,7 +92,7 @@ that failed.&nbsp;&nbsp;thread safe";
 
 				node["message"].Value = "success!<br /> " + idxNo + " tests successfully executed in " + time + " milliseconds";
 				node["color"].Value = "LightGreen";
-				node["time"].Value = 1000;
+				node["time"].Value = 5000;
 
 				RaiseActiveEvent(
 					"magix.viewport.show-message",

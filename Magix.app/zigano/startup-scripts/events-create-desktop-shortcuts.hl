@@ -3,6 +3,8 @@
 
 
 event=>magix.admin.desktop-shortcuts.defaults
+  inspect=@"returns all the default desktop keyboard 
+shortcuts in the system.&nbsp;&nbsp;thread safe"
   code
     _scripts
       _default_script4

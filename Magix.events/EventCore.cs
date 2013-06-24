@@ -87,6 +87,7 @@ outside of the function/event itself, you can access these
 parameters directly underneath the active event itself.&nbsp;&nbsp;
 event will be deleted, if you pass in no [code] block.&nbsp;&nbsp;thread safe";
 				e.Params["event"].Value = "foo.bar";
+				e.Params["inspect"].Value = "description of your event";
 				e.Params["event"]["remotable"].Value = false;
 				e.Params["event"]["code"]["_data"].Value = "thomas";
 				e.Params["event"]["code"]["_backup"].Value = "thomas";
@@ -128,6 +129,9 @@ event will be deleted, if you pass in no [code] block.&nbsp;&nbsp;thread safe";
 				n["object"]["type"].Value = "magix.execute.event";
 				n["object"]["remotable"].Value = remotable;
 				n["object"]["code"].ReplaceChildren(ip["code"].Clone());
+
+				if (ip.Contains("inspect"))
+					n["object"]["inspect"].Value = ip["inspect"].Value;
 
 				RaiseActiveEvent(
 					"magix.data.save",
@@ -215,8 +219,26 @@ null active event handlers created with magix.execute.event";
 		{
 			if (ShouldInspect(e.Params))
 			{
-				e.Params["inspect"].Value = @"active event handler for raising
-active event handlers created with magix.execute.event.&nbsp;&nbsp;thread safe";
+				e.Params["inspect"].Value = @"dynamically created active event, created with the [magix.execute.event] keyword.&nbsp;&nbsp;
+thread safety is dependent upon the events raised internally within event";
+
+				Node le = new Node();
+
+				le["prototype"]["type"].Value = "magix.execute.event";
+				le["prototype"]["event"].Value = e.Name;
+				
+				RaiseActiveEvent(
+					"magix.data.load",
+					le);
+
+				if (le.Contains("objects"))
+				{
+					if (le["objects"][0].Contains("code"))
+						e.Params.AddRange(le["objects"][0]["code"].Clone());
+					if (le["objects"][0].Contains("inspect"))
+						e.Params["inspect"].Value = le["objects"][0]["inspect"].Value;
+				}
+
 				return;
 			}
 

@@ -80,7 +80,13 @@ if you add a [whitelist] child node, together with a context value,
 the node names underneath the 
 whitelist node, will become a list of exclusively allowed keywords and
 active events to run, and any other keywords or events, will be perceived
-as a security breach, and logged.&nbsp;&nbsp;thread safe";
+as a security breach, and logged.&nbsp;&nbsp;
+if you have a context node, pointing to a node to be executed, 
+you can add up a [max-cycles] node, which will become the maximum number of 
+iterations the engine will allow for execution.&nbsp;&nbsp;
+this is useful to avoid never ending loops and such from code generated
+by other sources, for instance
+.&nbsp;&nbsp;thread safe";
 				e.Params["_data"]["value"].Value = "thomas";
 				e.Params["if"].Value = "[_data][value].Value==thomas";
 				e.Params["if"]["magix.viewport.show-message"].Value = null;
@@ -102,10 +108,53 @@ as a security breach, and logged.&nbsp;&nbsp;thread safe";
 			if (e.Params.Contains("_whitelist"))
 				whiteList = e.Params["_whitelist"].Value as Node;
 
+			Node cycles = null;
+			if (e.Params.Contains("_max-cycles"))
+				cycles = e.Params["_max-cycles"].Value as Node;
+
 			// Checking to see if we've got a "context"
 			if ((ip.Name == "execute" || ip.Name == "magix.execute") && 
 				!string.IsNullOrEmpty(ip.Get<string>()))
 			{
+				if (ip.Contains("max-cycles"))
+				{
+					if (cycles != null)
+					{
+						// logging security breach
+						Node log = new Node();
+
+						log["header"].Value = "security breach in [magix.execute]";
+						log["body"].Value = "attempted to set another [max-cycles] into the system, even though an existing exists.  security breach!!";
+						log["error"].Value = true;
+
+						ip["_state"].UnTie();
+
+						while (ip.Parent != null)
+						{
+							ip.Parent["_state"].UnTie();
+							ip = ip.Parent;
+						}
+
+						ip["_state"].UnTie();
+						while (ip.Parent != null)
+						{
+							ip.Parent["_state"].UnTie();
+							ip = ip.Parent;
+						}
+
+						ip.Name += " ( ** execution engine error ** )";
+
+						log["code"].ReplaceChildren(ip.RootNode().Clone());
+
+						RaiseActiveEvent(
+							"magix.log.append", 
+							log);
+
+						throw new ExecuteCore.SecurityHyperLispException("attempted to inject another whitelist of hyper lisp keywords unto an existing whitelist.&nbsp;&nbsp;security breach!!");
+					}
+
+					cycles = ip["max-cycles"].Clone();
+				}
 				if (ip.Contains("whitelist"))
 				{
 					if (whiteList != null)
@@ -163,6 +212,82 @@ as a security breach, and logged.&nbsp;&nbsp;thread safe";
 				// Checking to see if it starts with a small letter
 				if ("abcdefghijklmnopqrstuvwxyz".IndexOf(nodeName[0]) != -1)
 				{
+					if (cycles != null)
+					{
+						cycles["count"].Value = cycles["count"].Get<int>(0) + 1;
+						if (cycles["count"].Get<int>() > cycles.Get<int>())
+						{
+							// logging security breach
+							Node log = new Node();
+
+							log["header"].Value = "security breach in [magix.execute]";
+							log["body"].Value = "attempted to execute code with more iterations than allocated through [max-cycles].  security breach!!";
+							log["error"].Value = true;
+
+							ip["_state"].UnTie();
+
+							while (ip.Parent != null)
+							{
+								ip.Parent["_state"].UnTie();
+								ip = ip.Parent;
+							}
+
+							ip["_state"].UnTie();
+							while (ip.Parent != null)
+							{
+								ip.Parent["_state"].UnTie();
+								ip = ip.Parent;
+							}
+
+							idx.Name += " ( ** execution engine error ** )";
+
+							log["code"].ReplaceChildren(ip.RootNode().Clone());
+
+							RaiseActiveEvent(
+								"magix.log.append", 
+								log);
+
+							throw new ExecuteCore.SecurityHyperLispException("attempted to execute code with more iterations than allocated through [max-cycles]");
+						}
+					}
+					if (whiteList != null)
+					{
+						if (!whiteList.Contains(nodeName))
+						{
+							// logging security breach
+							Node log = new Node();
+
+							log["header"].Value = "security breach in [magix.execute]";
+							log["body"].Value = "attempted to raise an active event not in the whitelist of the execution context, name of active event was was [" + nodeName + "].  security breach!!";
+							log["error"].Value = true;
+
+							ip["_state"].UnTie();
+
+							while (ip.Parent != null)
+							{
+								ip.Parent["_state"].UnTie();
+								ip = ip.Parent;
+							}
+
+							ip["_state"].UnTie();
+							while (ip.Parent != null)
+							{
+								ip.Parent["_state"].UnTie();
+								ip = ip.Parent;
+							}
+
+							idx.Name += " ( ** execution engine error ** )";
+
+							log["code"].ReplaceChildren(ip.RootNode().Clone());
+
+							RaiseActiveEvent(
+								"magix.log.append", 
+								log);
+
+							throw new ExecuteCore.SecurityHyperLispException("attempted to raise an active event not in the whitelist of the execution context, name of active event was was [" + nodeName + "].  security breach!!");
+						}
+					}
+
 					// Checking to see if it's a reference to an active event
 					if (nodeName.Contains("."))
 					{
@@ -176,41 +301,12 @@ as a security breach, and logged.&nbsp;&nbsp;thread safe";
 
 						if (whiteList != null)
 						{
-							if (!whiteList.Contains(nodeName))
-							{
-								// logging security breach
-								Node log = new Node();
-
-								log["header"].Value = "security breach in [magix.execute]";
-								log["body"].Value = "attempted to raise an active event not in the whitelist of the execution context, name of active event was was [" + nodeName + "].  security breach!!";
-								log["error"].Value = true;
-
-								ip["_state"].UnTie();
-
-								while (ip.Parent != null)
-								{
-									ip.Parent["_state"].UnTie();
-									ip = ip.Parent;
-								}
-
-								ip["_state"].UnTie();
-								while (ip.Parent != null)
-								{
-									ip.Parent["_state"].UnTie();
-									ip = ip.Parent;
-								}
-
-								idx.Name += " ( ** execution engine error ** )";
-
-								log["code"].ReplaceChildren(ip.RootNode().Clone());
-
-								RaiseActiveEvent(
-									"magix.log.append", 
-									log);
-
-								throw new ExecuteCore.SecurityHyperLispException("attempted to raise an active event not in the whitelist of the execution context, name of active event was was [" + nodeName + "].  security breach!!");
-							}
 							tmp["_whitelist"].Value = whiteList;
+						}
+
+						if (cycles != null)
+						{
+							tmp["_max-cycles"].Value = cycles;
 						}
 
 						// to support stop keywords, and similar constructs
@@ -278,7 +374,7 @@ as a security breach, and logged.&nbsp;&nbsp;thread safe";
 						bool isKeyword = true;
 						foreach (char idxC in nodeName)
 						{
-							if ("abcdefghijklmnopqrstuvwxyz-@£#$¤%&!?+*:.".IndexOf(idxC) == -1)
+							if ("abcdefghijklmnopqrstuvwxyz-".IndexOf(idxC) == -1)
 							{
 								isKeyword = false;
 								break;
@@ -304,34 +400,11 @@ as a security breach, and logged.&nbsp;&nbsp;thread safe";
 
 						if (whiteList != null)
 						{
-							if (!whiteList.Contains(nodeName))
-							{
-								// logging security breach
-								Node log = new Node();
-
-								log["header"].Value = "security breach in [magix.execute]";
-								log["body"].Value = "attempted to use a keyword not in the whitelist of the execution context, keyword was [" + nodeName + "].  security breach!!";
-								log["error"].Value = true;
-
-								ip["_state"].UnTie();
-
-								while (ip.Parent != null)
-								{
-									ip.Parent["_state"].UnTie();
-									ip = ip.Parent;
-								}
-
-								idx.Name += " ( ** execution engine error ** )";
-
-								log["code"].ReplaceChildren(ip.RootNode().Clone());
-
-								RaiseActiveEvent(
-									"magix.log.append", 
-									log);
-
-								throw new ExecuteCore.SecurityHyperLispException("attempted to use a keyword not in the whitelist of the execution context, keyword was [" + nodeName + "].  security breach!!");
-							}
 							tmp["_whitelist"].Value = whiteList;
+						}
+						if (cycles != null)
+						{
+							tmp["_max-cycles"].Value = cycles;
 						}
 
 

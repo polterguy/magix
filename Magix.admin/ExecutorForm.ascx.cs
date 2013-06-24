@@ -96,6 +96,25 @@ namespace Magix.admin
 			return "[" + data.TrimEnd (',') + "]";
 		}
 
+		[ActiveEvent(Name = "magix.admin.set-code-event")]
+		public void magix_admin_set_code_event(object sender, ActiveEventArgs e)
+		{
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			{
+				e.Params.Clear();
+				e.Params["event:magix.admin.set-code-event"].Value = null;
+				e.Params["inspect"].Value = @"sets the active evtn to what is given in [event].
+&nbsp;&nbsp;not thread safe";
+				e.Params["event"].Value = "magix.execute";
+				return;
+			}
+
+			if (!e.Params.Contains("event"))
+				throw new ArgumentException("you must pass in an [event] to set-code-event");
+
+			activeEvent.Text = e.Params["event"].Get<string>();
+		}
+
 		[ActiveEvent(Name = "magix.admin.set-code")]
 		public void magix_admin_set_code(object sender, ActiveEventArgs e)
 		{

@@ -138,6 +138,8 @@ has returned true.&nbsp;&nbsp;thread safe";
 			node["_dp"].Value = dp;
 			if (e.Params.Contains("_whitelist"))
 				node["_whitelist"].Value = e.Params["_whitelist"].Value;
+			if (e.Params.Contains("_max-cycles"))
+				node["_max-cycles"].Value = e.Params["_max-cycles"].Value;
 
 			RaiseActiveEvent(
 				"magix.execute", 
@@ -177,6 +179,8 @@ has returned true.&nbsp;&nbsp;thread safe";
 				tmp["_dp"].Value = dp;
 				if (pars.Contains("_whitelist"))
 					tmp["_whitelist"].Value = pars["_whitelist"].Value;
+				if (pars.Contains("_max-cycles"))
+					tmp["_max-cycles"].Value = pars["_max-cycles"].Value;
 
 				RaiseActiveEvent(
 					"magix.execute", 
