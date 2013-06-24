@@ -83,7 +83,7 @@ cf
             magix.admin.load-executor-code
               event=>magix.execute
               code
-              css=>span-24 bottom-3 top-1
+              css=>span-19 last left-5 bottom-3 top-1
         label=>lblDesc
           css=>span-13 top-2
           tag=>label

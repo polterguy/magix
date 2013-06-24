@@ -13,7 +13,7 @@ set=>[magix.admin.get-active-events].Name
 for-each=>[Data][events]
   _tpl
     link-button
-      css=>span-4
+      css=>span-4 hover-shadow
       text
       onclick
         void.foo
@@ -47,6 +47,11 @@ for-each=>[Data][events]
     value=>[.].Value
   set=>[.ip][..][_tpl][link-button][text].Value
     value=>[.].Value
+  replace=>[.ip][..][_tpl][link-button][text].Value
+    what=>magix.execute.
+  replace=>[.ip][..][_tpl][link-button][text].Value
+    what=>magix.execute
+    with=>execute
   add=>[/][cf][controls][panel][controls]
     value=>[.ip][..][_tpl][link-button]
 set=>[cf][controls][panel2].Name
@@ -83,7 +88,7 @@ cf
             magix.admin.load-executor-code
               code
               event=>magix.execute
-              css=>span-24 bottom-3 top-1
+              css=>span-19 last left-5 bottom-3 top-1
         label=>lblDesc
           css=>span-15 top-2
           tag=>label

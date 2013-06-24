@@ -13,7 +13,7 @@ set=>[magix.admin.get-active-events].Name
 for-each=>[Data][events]
   _tpl
     link-button
-      css=>span-6
+      css=>span-6 hover-shadow
       text
       onclick
         void.foo
@@ -83,7 +83,7 @@ cf
             magix.admin.load-executor-code
               code
               event=>magix.execute
-              css=>span-24 bottom-3 top-1
+              css=>span-19 last left-5 bottom-3 top-1
         label=>lblDesc
           css=>span-13 top-2
           tag=>label

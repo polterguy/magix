@@ -1,9 +1,10 @@
 
 
-
+magix.viewport.show-message
+  message=>swfih sdfoih sdf
 
 event=>magix.admin.desktop-shortcuts.defaults
-  inspect=@"returns all the default desktop keyboard 
+  inspect=>@"returns all the default desktop keyboard 
 shortcuts in the system.&nbsp;&nbsp;thread safe"
   code
     _scripts
