@@ -3,6 +3,8 @@
 
 
 event=>magix.ide.create-properties
+  inspect=>@"helper event to create the edit property screen in the forms builder.
+&nbsp;&nbsp;not thread safe"
   code
     _buffer
     _data

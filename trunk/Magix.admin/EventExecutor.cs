@@ -220,6 +220,16 @@ if=>[_data].Value==thomas
 			RaiseActiveEvent(
 				"magix.admin.set-code",
 				node);
+
+			if (e.Params.Contains("event"))
+			{
+				node = new Node();
+				node["event"].Value = e.Params["event"].Value;
+
+				RaiseActiveEvent(
+					"magix.admin.set-code-event",
+					node);
+			}
 		}
 
 		/**

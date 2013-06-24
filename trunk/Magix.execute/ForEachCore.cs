@@ -69,6 +69,8 @@ the currently iterated node.&nbsp;&nbsp;thread safe";
 
 					if (e.Params.Contains("_whitelist"))
 						tmp2["_whitelist"].Value = e.Params["_whitelist"].Value;
+					if (e.Params.Contains("_max-cycles"))
+						tmp2["_max-cycles"].Value = e.Params["_max-cycles"].Value;
 
 					RaiseActiveEvent(
 						"magix.execute", 

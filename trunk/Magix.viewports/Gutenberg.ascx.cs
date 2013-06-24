@@ -54,6 +54,7 @@ namespace Magix.viewports
 end user for some seconds.&nbsp;&nbsp;not thread safe";
 				e.Params["code"].Value = "code goes underneath here";
 				e.Params["time"].Value = 3000;
+				e.Params["color"].Value = "LightGreen";
 				return;
 			}
 
@@ -69,6 +70,11 @@ end user for some seconds.&nbsp;&nbsp;not thread safe";
 			{
 				message.Text += "<p>" + e.Params["message"].Get<string>() + "</p>";
 			}
+
+			if (e.Params.Contains("color"))
+				message.Style[Styles.backgroundColor] = e.Params["color"].Get<string>();
+			else
+				message.Style[Styles.backgroundColor] = "";
 
 			if (e.Params.Contains("code"))
 			{

@@ -65,6 +65,8 @@ might have.&nbsp;&nbsp;not thread safe";
 
 			if (e.Params.Contains("_whitelist"))
 				node["_whitelist"].Value = e.Params["_whitelist"].Value;
+			if (e.Params.Contains("_max-cycles"))
+				node["_max-cycles"].Value = e.Params["_max-cycles"].Value;
 
 			if (ip.Get<bool>(false))
 			{
@@ -148,6 +150,8 @@ of milliseconds, before the wait is dismissed as an integer value of [set].&nbsp
 
 			if (e.Params.Contains("_whitelist"))
 				node["_whitelist"].Value = e.Params["_whitelist"].Value;
+			if (e.Params.Contains("_max-cycles"))
+				node["_max-cycles"].Value = e.Params["_max-cycles"].Value;
 
 			int milliseconds = ip.Get<int>(-1);
 

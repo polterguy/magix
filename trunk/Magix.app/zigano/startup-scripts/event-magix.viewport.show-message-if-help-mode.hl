@@ -1,6 +1,10 @@
 
 
 event=>magix.viewport.show-message-if-help-mode
+  inspect=>@"will show the given message box, but
+only if learning mode is on, which can be
+changed in the settings of the system.&nbsp;&nbsp;
+not thread safe"
   code
     magix.web.get-session
       key=>stopped-learning
