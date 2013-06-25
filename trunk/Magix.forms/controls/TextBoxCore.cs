@@ -49,6 +49,10 @@ namespace Magix.forms
 			    node["complete"].Value != null)
 				ret.AutoComplete = node["complete"].Get<bool>();
 
+			if (node.Contains("enabled") && 
+			    node["enabled"].Value != null)
+				ret.Enabled = node["enabled"].Get<bool>();
+
 			if (node.Contains("max") && 
 			    node["max"].Value != null)
 				ret.MaxLength = node["max"].Get<int>();
