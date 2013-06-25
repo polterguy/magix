@@ -163,6 +163,7 @@ previously typed values for you, and attempt to automatically complete the value
 			node["controls"]["text-box"]["capitalize"].Value = false;
 			node["controls"]["text-box"]["correct"].Value = true;
 			node["controls"]["text-box"]["complete"].Value = false;
+			node["controls"]["text-box"]["enabled"].Value = true;
 			node["controls"]["text-box"]["max"].Value = 25;
 			node["controls"]["text-box"]["text"].Value = "hello world";
 			node["controls"]["text-box"]["mode"].Value = "normal|phone|search|url|email|datetime|date|month|week|time|datetimelocal|number|range|color|password";
