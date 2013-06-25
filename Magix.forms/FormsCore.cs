@@ -99,6 +99,128 @@ parameters");
 				e.Params["container"].Get<string>(), 
 				e.Params);
 		}
+		
+		/**
+		 * Will create, and instantiate, a newly created dynamic web page
+		 */
+		[ActiveEvent(Name = "magix.forms.controls.lambda")]
+		public void magix_forms_controls_lambda(object sender, ActiveEventArgs e)
+		{
+			if (ShouldInspect(e.Params))
+			{
+				e.Params["event:magix.forms.create-form"].Value = null;
+				e.Params["inspect"].Value = @"creates a lambda type of web control.&nbsp;&nbsp;
+[oncreatecontrols] is the hyper lisp code executing when the 
+control is lately bound.&nbsp;&nbsp;the [oncreatecontrols] event is expected 
+to return control(s), or nothing, in the [$] return node";
+				e.Params["container"].Value = "content5";
+				e.Params["form-id"].Value = "sample-form";
+				e.Params["controls"]["lambda"]["oncreatecontrols"]["set"].Value = "[$][link-button][text].Value";
+				e.Params["controls"]["lambda"]["oncreatecontrols"]["set"]["value"].Value = "howdy world :)";
+				return;
+			}
+
+			Node code = e.Params["_code"].Value as Node;
+
+			if (!code.Contains("oncreatecontrols"))
+				return; // nothing to render unless event handler is defined ...
+
+			if (!code.Contains("id"))
+				throw new ArgumentException("a [lambda] control must have a unique [id]");
+
+			Node getC = new Node();
+			getC["id"].Value = "magix.forms.controls.lambda_" + code["id"].Get<string>();
+
+			RaiseActiveEvent(
+				"magix.viewport.get-viewstate",
+				getC);
+
+			Node exe = null;
+
+			if (getC.Contains("value"))
+			{
+				exe = new Node();
+				exe["$"].AddRange(getC["value"].Clone());
+			}
+			else
+			{
+				exe = code["oncreatecontrols"].Clone();
+				
+				RaiseActiveEvent(
+					"magix.execute",
+					exe);
+
+				Node cache = new Node();
+
+				cache["id"].Value = "magix.forms.controls.lambda_" + code["id"].Get<string>();
+				cache["value"].AddRange(exe["$"]);
+
+				RaiseActiveEvent(
+					"magix.viewport.set-viewstate",
+					cache);
+			}
+
+			if (!exe.Contains("_stop") && exe.Contains("$"))
+			{
+				foreach (Node idxCtrl in exe["$"])
+				{
+					string evtName = "magix.forms.controls." + idxCtrl.Name;
+
+					Node node = new Node();
+
+					node["_code"].Value = idxCtrl;
+					idxCtrl["_first"].Value = idxCtrl["_first"].Value;
+
+					RaiseActiveEvent(
+						evtName,
+						node);
+
+					idxCtrl["_first"].UnTie();
+
+					if (node.Contains("_ctrl"))
+					{
+						if (node["_ctrl"].Value != null)
+							e.Params["_ctrl"].Add(new Node("_x", node["_ctrl"].Value));
+						else
+						{
+							// multiple controls returned ...
+							foreach (Node idxCtrl2 in node["_ctrl"])
+							{
+								e.Params["_ctrl"].Add(new Node("_x", idxCtrl2.Value));
+							}
+						}
+					}
+
+					e.Params["_buffer"].Value = true;
+				}
+			}
+			else
+				e.Params["_ctrl"].Value = null;
+		}
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
