@@ -13,8 +13,8 @@
       </Pad>
       <Pad Id="MonoDevelop.Debugger.WatchPad">
         <State>
-          <Value>e.Params["key"].Value</Value>
-          <Value>e.Params</Value>
+          <Value>e.Name</Value>
+          <Value>SlurpAllEventHandlers(":before", false)</Value>
         </State>
       </Pad>
     </Pads>

@@ -146,7 +146,6 @@ if=>[Data].Value==thomas
 			{
 				if (idx.Name.StartsWith("event:"))
 				{
-					json.Remove(idx);
 					activeEvent.Text = idx.Name.Substring(6);
 					break;
 				}
