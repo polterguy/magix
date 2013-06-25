@@ -429,6 +429,7 @@ by other sources, for instance
 									throw; // keep on rethrowing till we meet somewhere magix.execute was explicitly called ...
 								}
 								// outer execution, returning as if nothing happened ...
+								e.Params["_stop"].Value = true;
 								return;
 							}
 							else if (err is ExecuteCore.HyperLispExecutionEngineException)

@@ -39,6 +39,7 @@ namespace Magix.viewports
 		protected Panel confirmWrp;
 		protected Label confirmLbl;
 		protected Button ok;
+		protected Button cancel;
 		private bool _isFirst = true;
 
 		/**
@@ -87,7 +88,7 @@ end user for some seconds.&nbsp;&nbsp;not thread safe";
 					"magix.code.node-2-code",
 					tmp);
 
-				message.Text += "<pre style='text-align:left;margin-left:120px;'>" + tmp["code"].Get<string>().Replace("<", "&lt;").Replace(">", "&gt;") + "</pre>";
+				message.Text += "<pre style='text-align:left;margin-left:120px;overflow:auto;max-height:300px;'>" + tmp["code"].Get<string>().Replace("<", "&lt;").Replace(">", "&gt;") + "</pre>";
 			}
 
 			if (_isFirst)
@@ -137,26 +138,35 @@ end user for some seconds.&nbsp;&nbsp;not thread safe";
 
 			confirmLbl.Text = e.Params["message"].Get<string>();
 
-			ConfirmCode = e.Params["code"].Clone();
+			if (e.Params.Contains("code"))
+				ConfirmCode = e.Params["code"].Clone();
+			else
+				ConfirmCode = null;
 
 			confirmWrp.Visible = true;
 
 			if (!e.Params.Contains("closable-only") || e.Params["closable-only"].Get<bool>() == false)
 			{
 				ok.Visible = true;
+				cancel.Text = "cancel";
 			}
 			else
 			{
+				cancel.Text = "close";
 				Node tmp = new Node();
-				Node code = e.Params["code"].Clone();
-				code.Name = "";
-				tmp["json"].Value = code;
 
-				RaiseEvent(
-					"magix.code.node-2-code",
-					tmp);
+				if (ConfirmCode != null)
+				{
+					Node code = e.Params["code"].Clone();
+					code.Name = "";
+					tmp["json"].Value = code;
 
-				confirmLbl.Text += "<pre style='text-align:left;margin-left:120px;margin-right:120px;height:360px;overflow:auto;'>" + tmp["code"].Get<string>().Replace("<", "&lt;").Replace(">", "&gt;") + "</pre>";
+					RaiseEvent(
+						"magix.code.node-2-code",
+						tmp);
+
+					confirmLbl.Text += "<pre style='text-align:left;margin-left:120px;overflow:auto;max-height:300px;'>" + tmp["code"].Get<string>().Replace("<", "&lt;").Replace(">", "&gt;") + "</pre>";
+				}
 				ok.Visible = false;
 			}
 
