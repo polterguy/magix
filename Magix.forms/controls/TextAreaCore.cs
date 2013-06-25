@@ -100,6 +100,7 @@ is pressed, while control has focus";
 			node["controls"]["text-area"]["rows"].Value = 5;
 			node["controls"]["text-area"]["text"].Value = "is there anybody out there?";
 			node["controls"]["text-area"]["key"].Value = "T";
+			node["controls"]["text-area"]["enabled"].Value = true;
 			base.Inspect(node["controls"]["text-area"]);
 			node["controls"]["text-area"]["ontextchanged"].Value = "hyper lisp code";
 			node["controls"]["text-area"]["onescpressed"].Value = "hyper lisp code";
