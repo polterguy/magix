@@ -175,6 +175,7 @@ of control.&nbsp;&nbsp;[onesc] is raised when escape key is pressed inside of co
 			node["dir"].Value = "ltr|rtl";
 			node["tab"].Value = 5;
 			node["tip"].Value = "informational tooltip";
+			node["style"].Value = "css style collection";
 			base.Inspect(node);
 			node["onclick"].Value = "hyper lisp code";
 			node["ondblclick"].Value = "hyper lisp code";

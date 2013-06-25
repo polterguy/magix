@@ -49,6 +49,10 @@ namespace Magix.forms
 			    !string.IsNullOrEmpty(node["key"].Get<string>()))
 				ret.AccessKey = node["key"].Get<string>();
 
+			if (node.Contains("enabled") && 
+			    node["enabled"].Value != null)
+				ret.Enabled = node["enabled"].Get<bool>();
+
 			if (node.Contains("ontextchanged"))
 			{
 				// TODO: is this right? do we need to clone?
