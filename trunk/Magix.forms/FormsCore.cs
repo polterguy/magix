@@ -162,6 +162,7 @@ to return control(s), or nothing, in the [$] return node";
 
 			if (!exe.Contains("_stop") && exe.Contains("$"))
 			{
+				e.Params["_ctrl"].Value = null;
 				foreach (Node idxCtrl in exe["$"])
 				{
 					string evtName = "magix.forms.controls." + idxCtrl.Name;
