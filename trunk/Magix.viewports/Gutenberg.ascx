@@ -10,7 +10,7 @@
 
 <mux:Panel
     runat="server"
-	CssClass="container"
+	CssClass="container bottom-10"
     id="wrp">
     <mux:Label
 		runat="server"
