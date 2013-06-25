@@ -13,7 +13,7 @@ set=>[magix.admin.get-active-events].Name
 for-each=>[Data][events]
   _tpl
     link-button
-      css=>span-6
+      css=>span-6 hover-shadow
       text
       onclick
         void.foo
@@ -47,6 +47,8 @@ for-each=>[Data][events]
     value=>[.].Value
   set=>[.ip][..][_tpl][link-button][text].Value
     value=>[.].Value
+  replace=>[.ip][..][_tpl][link-button][text].Value
+    what=>magix.forms.controls.
   add=>[/][cf][controls][panel][controls]
     value=>[.ip][..][_tpl][link-button]
 set=>[cf][controls][panel2].Name

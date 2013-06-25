@@ -115,32 +115,33 @@ control is lately bound.&nbsp;&nbsp;the [oncreatecontrols] event is expected
 to return control(s), or nothing, in the [$] return node";
 				e.Params["container"].Value = "content5";
 				e.Params["form-id"].Value = "sample-form";
+				e.Params["controls"]["lambda"].Value = "idOfLambda";
 				e.Params["controls"]["lambda"]["oncreatecontrols"]["set"].Value = "[$][link-button][text].Value";
 				e.Params["controls"]["lambda"]["oncreatecontrols"]["set"]["value"].Value = "howdy world :)";
 				return;
 			}
 
-			Node code = e.Params["_code"].Value as Node;
+			Node code = (e.Params["_code"].Value as Node);
 
 			if (!code.Contains("oncreatecontrols"))
 				return; // nothing to render unless event handler is defined ...
 
-			if (!code.Contains("id"))
+			string id = code.Value as string;
+
+			if (id == null && !code.Contains("id"))
 				throw new ArgumentException("a [lambda] control must have a unique [id]");
 
-			Node getC = new Node();
-			getC["id"].Value = "magix.forms.controls.lambda_" + code["id"].Get<string>();
+			if (id == null)
+				id = code["id"].Get<string>();
 
-			RaiseActiveEvent(
-				"magix.viewport.get-viewstate",
-				getC);
+			if (id == null)
+				throw new ArgumentException("a [lambda] control must have a unique [id]");
 
-			Node exe = null;
+			Node exe = new Node();
 
-			if (getC.Contains("value"))
+			if (code.Contains("_buffer"))
 			{
-				exe = new Node();
-				exe["$"].AddRange(getC["value"].Clone());
+				exe["$"].AddRange(code["_buffer"].Clone());
 			}
 			else
 			{
@@ -150,14 +151,7 @@ to return control(s), or nothing, in the [$] return node";
 					"magix.execute",
 					exe);
 
-				Node cache = new Node();
-
-				cache["id"].Value = "magix.forms.controls.lambda_" + code["id"].Get<string>();
-				cache["value"].AddRange(exe["$"]);
-
-				RaiseActiveEvent(
-					"magix.viewport.set-viewstate",
-					cache);
+				code["_buffer"].AddRange(exe["$"]); 
 			}
 
 			if (!exe.Contains("_stop") && exe.Contains("$"))

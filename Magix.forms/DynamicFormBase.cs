@@ -713,8 +713,8 @@ if [visible] is true, control is shown, otherwise hidden.&nbsp;&nbsp;not thread 
 
 			Node node = new Node();
 
-			node["_code"].Value = idx.Clone();
-			node["_code"].Get<Node>()["_first"].Value = isFirst;
+			node["_code"].Value = idx;
+			idx["_first"].Value = isFirst;
 
 			RaiseEvent(
 				evtName,
