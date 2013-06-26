@@ -1,7 +1,7 @@
 
 
 event=>magix.viewport.show-message-if-help-mode
-  inspect=>@"will show the given message box, but
+  inspect=>@"will show the given [message] box, but
 only if learning mode is on, which can be
 changed in the settings of the system.&nbsp;&nbsp;
 not thread safe"
@@ -9,14 +9,9 @@ not thread safe"
     magix.web.get-session
       key=>stopped-learning
     if=>[magix.web.get-session][value].Value==False
-      set=>[@][magix.viewport.show-message][message].Value
-        value=>[$][message].Value
-      if=>[$][time]
-        set=>[@][..][magix.viewport.show-message][time].Value
-          value=>[$][time].Value
-      if=>[$][code]
-        set=>[@][..][magix.viewport.show-message][code]
-          value=>[$][code]
+      for-each=>[$]
+        add=>[@][..][magix.viewport.show-message]
+          value=>[.]
       magix.viewport.show-message
         time=>-1
 
