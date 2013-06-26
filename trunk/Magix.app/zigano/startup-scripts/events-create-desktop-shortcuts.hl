@@ -147,11 +147,6 @@ your system"
             container=>content4
           magix.viewport.clear-controls
             container=>content5
-          magix.forms.create-web-page
-            file=>zigano/admin/server-log.mml
-            container=>content1
-            form-id=>admin-server-log
-            css=>span-19 last
           magix.admin.run-file
             file=>zigano/admin/server-log-grid.hl
           magix.viewport.show-message-if-help-mode
