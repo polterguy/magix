@@ -17,15 +17,6 @@ shortcuts in the system.&nbsp;&nbsp;thread safe"
           magix.viewport.show-message-if-help-mode
             message=>@"view, inspect and run any overridden active event 
 in magix illuminate"
-      _default_script4
-        text=>overridden active events
-        category=>security
-        code
-          magix.admin.run-file
-            file=>zigano/admin/tools/inspect-overridden-events.hl
-          magix.viewport.show-message-if-help-mode
-            message=>@"view, inspect and run any overridden active event 
-in magix illuminate"
       _default_script2
         text=>unit tests
         category=>tools

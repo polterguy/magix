@@ -217,6 +217,23 @@ end user for some seconds.&nbsp;&nbsp;not thread safe";
 			Session["magix.viewport.show-grid"] = e.Params["value"].Get<bool>();
 		}
 
+		/**
+		 */
+		[ActiveEvent(Name = "magix.viewport.has-grid")]
+		protected void magix_viewport_has_grid(object sender, ActiveEventArgs e)
+		{
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			{
+				e.Params["inspect"].Value = @"returns true if grid is visible.&nbsp;&nbsp;
+not thread safe";
+				e.Params["value"].Value = true;
+				return;
+			}
+
+			if (Session["magix.viewport.show-grid"] != null && ((bool)Session["magix.viewport.show-grid"]))
+				e.Params["value"].Value = true;
+		}
+
 		protected override void OnPreRender(EventArgs e)
 		{
 			if (Session["magix.viewport.show-grid"] != null && ((bool)Session["magix.viewport.show-grid"]) && !wrp.CssClass.Contains("showgrid"))

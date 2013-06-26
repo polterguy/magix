@@ -126,7 +126,8 @@ magix.forms.create-form
             magix.log.append
               header=>user changed name
               body=>user {0} changed name
-            zigano.travel.create-users-form
+            magix.admin.run-file
+              file=>zigano/admin/users-grid.hl
         text-box=>pwd
           css=>span-5 last
           ontextchanged
@@ -150,7 +151,8 @@ magix.forms.create-form
               header=>user changed password
               body=>user {0} changed password
             magix.data.save
-            zigano.travel.create-users-form
+            magix.admin.run-file
+              file=>zigano/admin/users-grid.hl
     panel=>rolesWrap
       css=>span-5 last
       controls

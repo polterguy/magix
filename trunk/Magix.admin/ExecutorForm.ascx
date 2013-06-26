@@ -6,7 +6,17 @@
     AutoEventWireup="true" 
     Inherits="Magix.admin.ExecutorForm" %>
 
-<div class="fill-width">
+<div class="fill-width relative">
+    <mux:LinkButton
+    	runat="server"
+    	CssClass="indent-event-executor"
+    	id="indent"
+    	OnClick="indent_Click" />
+    <mux:LinkButton
+    	runat="server"
+    	CssClass="de-indent-event-executor"
+    	id="deindent"
+    	OnClick="deindent_Click" />
 	<mux:TextArea
 		runat="server"
 		id="txtIn"
