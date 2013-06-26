@@ -16,7 +16,7 @@ for-each=>[magix.data.load][objects]
     value=>[/][_dt][0]
 
 magix.viewport.load-module
-  container=>content3
+  container=>content2
   css=>span-24 showgrid top-1 bottom-1 min-height-5
   name=>Magix.ide.Surface
 
@@ -68,7 +68,7 @@ for-each=>[/][list-widget-types][types]
 
 magix.forms.create-form
   form-id=>edit-forms
-  container=>content2
+  container=>content1
   css=>span-19 last
   events
 
@@ -170,7 +170,7 @@ magix.forms.create-form
         _data
         magix.forms.create-form
           form-id=>edit-properties
-          container=>content4
+          container=>content3
           css=>span-24 bottom-1
           controls
             panel=>propWrp
@@ -245,6 +245,11 @@ magix.forms.create-form
       magix.ide.active-control-changed
 
   controls
+  
+    label=>header
+      text=>edit forms
+      tag=>h2
+      css=>span-13 last left-6
 
     select=>form
       css=>span-3

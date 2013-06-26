@@ -26,18 +26,6 @@ in magix illuminate"
           magix.viewport.show-message-if-help-mode
             message=>@"view, inspect and run any overridden active event 
 in magix illuminate"
-      _default_scriptxxx2
-        text=>namespace overview
-        category=>tools
-        code
-          magix.admin.run-file
-            file=>zigano/admin/tools/inspect-namespace-active-events.hl
-          magix.viewport.show-message-if-help-mode
-            message=>@"view, inspect and run unit tests
-in magix, which is an integral part of the system itself.&nbsp;&nbsp;
-magix illuminate is largely literate, according to donald knuth's
-definition.&nbsp;&nbsp;here you can inspect and run individual unit tests,
-or all unit tests in the system"
       _default_script2
         text=>unit tests
         category=>tools
@@ -338,11 +326,8 @@ installation of magix"
             container=>content4
           magix.viewport.clear-controls
             container=>content5
-          magix.forms.create-web-page
-            file=>zigano/admin/edit-forms.mml
-            container=>content1
-            form-id=>admin-settings
-            css=>span-19 last
+          magix.admin.run-file
+            file=>zigano/admin/edit-forms.hl
           magix.viewport.show-message-if-help-mode
             message=>@"edit web forms within
 your system"
