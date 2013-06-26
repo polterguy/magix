@@ -17,6 +17,27 @@ shortcuts in the system.&nbsp;&nbsp;thread safe"
           magix.viewport.show-message-if-help-mode
             message=>@"view, inspect and run any overridden active event 
 in magix illuminate"
+      _default_script4
+        text=>overridden active events
+        category=>security
+        code
+          magix.admin.run-file
+            file=>zigano/admin/tools/inspect-overridden-events.hl
+          magix.viewport.show-message-if-help-mode
+            message=>@"view, inspect and run any overridden active event 
+in magix illuminate"
+      _default_scriptxxx2
+        text=>namespace overview
+        category=>tools
+        code
+          magix.admin.run-file
+            file=>zigano/admin/tools/inspect-namespace-active-events.hl
+          magix.viewport.show-message-if-help-mode
+            message=>@"view, inspect and run unit tests
+in magix, which is an integral part of the system itself.&nbsp;&nbsp;
+magix illuminate is largely literate, according to donald knuth's
+definition.&nbsp;&nbsp;here you can inspect and run individual unit tests,
+or all unit tests in the system"
       _default_script2
         text=>unit tests
         category=>tools
