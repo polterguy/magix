@@ -224,6 +224,7 @@
     <Folder Include="zigano\pages\" />
     <Folder Include="zigano\startup-scripts\" />
     <Folder Include="zigano\file-browser\" />
+    <Folder Include="zigano\admin\desktop\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="media\xing-wysihtml5\LICENSE" />
@@ -293,7 +294,6 @@
     <None Include="zigano\admin\tools\inspect-unit-tests.hl" />
     <None Include="zigano\admin\tools\inspect-web-controls.hl" />
     <None Include="zigano\admin\tools\magix-markup-editor.hl" />
-    <None Include="zigano\admin\tools\roles-grid.hl" />
     <None Include="zigano\file-browser\file-browser.hl" />
     <None Include="zigano\admin\desktop.mml" />
     <None Include="zigano\admin\show-desktop.hl" />
@@ -302,5 +302,7 @@
     <None Include="todo.txt" />
     <None Include="zigano\startup-scripts\event-magix-viewport-show-message-if-help-mode.hl" />
     <None Include="zigano\admin\roles-grid.hl" />
+    <None Include="zigano\admin\desktop\desktop.mml" />
+    <None Include="zigano\admin\desktop\show-desktop.hl" />
   </ItemGroup>
 </Project>

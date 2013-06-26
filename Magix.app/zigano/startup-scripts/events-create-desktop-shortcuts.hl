@@ -123,7 +123,7 @@ your system"
           magix.viewport.clear-controls
             container=>content5
           magix.admin.run-file
-            file=>zigano/admin/tools/roles-grid.hl
+            file=>zigano/admin/roles-grid.hl
           magix.viewport.show-message-if-help-mode
             message=>@"view and edit all the different roles in 
 your system"
