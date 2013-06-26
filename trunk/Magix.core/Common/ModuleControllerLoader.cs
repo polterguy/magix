@@ -227,7 +227,7 @@ namespace Magix.Core
             }
         }
 
-		private static void BuildCacheForStaticMethodsForType (Type pluginType)
+		private static void BuildCacheForStaticMethodsForType(Type pluginType)
 		{
 			_cacheStaticMethodsForType [pluginType] = new List<Tuple<MethodInfo, string>> ();
 			foreach (MethodInfo idx in pluginType.GetMethods (
@@ -245,7 +245,7 @@ namespace Magix.Core
 			}
 		}
 
-		private static void BuildCacheForMethodsForType (Type pluginType)
+		private static void BuildCacheForMethodsForType(Type pluginType)
 		{
 			_cacheMethodsForType [pluginType] = new List<Tuple<MethodInfo, string>> ();
 			foreach (MethodInfo idx in pluginType.GetMethods (
@@ -263,7 +263,7 @@ namespace Magix.Core
 			}
 		}
 
-        private static void InitializeEventHandlers (object objectInstance, Type pluginType)
+        private static void InitializeEventHandlers(object objectInstance, Type pluginType)
 		{
 			// If the context passed is null, then what we're trying to retrieve
 			// are the stat event handlers...

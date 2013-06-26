@@ -227,11 +227,11 @@ namespace Magix.Core
 		 * Shuts down an existing remotely activated event, such that it can no longer
 		 * be raised by other servers
 		 */
-		public void RemoveRemotable (string str)
+		public void RemoveRemotable(string str)
 		{
-			if (!_remotelyActivated.ContainsKey (str))
+			if (!_remotelyActivated.ContainsKey(str))
 				return;
-			_remotelyActivated.Remove (str);
+			_remotelyActivated.Remove(str);
 		}
 
 		/**

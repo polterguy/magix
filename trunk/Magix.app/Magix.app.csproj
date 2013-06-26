@@ -308,5 +308,6 @@
     <None Include="zigano\startup-scripts\events-create-desktop-shortcuts.hl" />
     <None Include="zigano\startup-scripts\event-magix.viewport.show-message-if-help-mode.hl" />
     <None Include="zigano\startup-scripts\test-execute-paths.hl" />
+    <None Include="todo.txt" />
   </ItemGroup>
 </Project>

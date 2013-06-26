@@ -40,7 +40,9 @@ to return control(s), or nothing, in the [$] return node";
 			Node code = (e.Params["_code"].Value as Node);
 
 			if (!code.Contains("oncreatecontrols"))
+			{
 				return; // nothing to render unless event handler is defined ...
+			}
 
 			string id = code.Value as string;
 
@@ -57,6 +59,7 @@ to return control(s), or nothing, in the [$] return node";
 
 			if (code.Contains("_buffer"))
 			{
+				exe["$"].UnTie();
 				exe["$"].AddRange(code["_buffer"].Clone());
 			}
 			else
@@ -67,6 +70,7 @@ to return control(s), or nothing, in the [$] return node";
 					"magix.execute",
 					exe);
 
+				code["_buffer"].UnTie();
 				code["_buffer"].AddRange(exe["$"]); 
 			}
 
@@ -102,7 +106,7 @@ to return control(s), or nothing, in the [$] return node";
 						}
 					}
 
-					e.Params["_buffer"].Value = true;
+					code["_buffer"].Value = true;
 				}
 			}
 			else
