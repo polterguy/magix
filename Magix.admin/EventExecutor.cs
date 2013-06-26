@@ -249,7 +249,7 @@ thread safe";
 			}
 
 			if (!e.Params.Contains ("file") || e.Params["file"].Get<string>("") == "")
-				throw new ArgumentException("Need file object");
+				throw new ArgumentException("run-file needs [file] object");
 
 			string file = e.Params["file"].Get<string>();
 
