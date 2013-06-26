@@ -65,5 +65,40 @@ namespace Magix.forms
 				BuildControl(idx, pnl);
 			}
 		}
+
+		private void CleanUpDataSource(Node node)
+		{
+			bool hasMore = true;
+			while (hasMore)
+			{
+				hasMore = false;
+				foreach (Node idx in node)
+				{
+					if (idx.Name == "_buffer")
+					{
+						idx.UnTie();
+						hasMore = true;
+						break;
+					}
+				}
+			}
+			foreach (Node idx in node)
+			{
+				CleanUpDataSource(idx);
+			}
+		}
+		
+		protected override void ReRender()
+		{
+			isFirst = true;
+
+			ViewState[ClientID + "_FirstLoad"] = null;
+
+			CleanUpDataSource(DataSource);
+
+			pnl.Controls.Clear();
+			BuildControls();
+			pnl.ReRender();
+		}
     }
 }
