@@ -12,6 +12,17 @@
 
 * something is very fishy with the admin settings form, it keeps on flashing the scheck boxes randomly off and on ...?
 
-
-
+* the execute hyperlisp keyword, should be able to take parameters into the executing code block
+  e.e.;
+_exe
+  magix.web.get-session
+    key=>stopped-learning
+  if=>[@][magix.web.get-session][value].Value==False
+    for-each=>[$]
+      add=>[@][..][magix.viewport.show-message]
+        value=>[.]
+    magix.viewport.show-message
+      time=>-1
+execute=>[_exe]
+  message=>howdy
 
