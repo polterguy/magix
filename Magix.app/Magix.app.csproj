@@ -223,7 +223,6 @@
     <Folder Include="zigano\misc\" />
     <Folder Include="zigano\pages\" />
     <Folder Include="zigano\startup-scripts\" />
-    <Folder Include="zigano\file-browser\" />
     <Folder Include="zigano\admin\desktop\" />
   </ItemGroup>
   <ItemGroup>
@@ -294,7 +293,6 @@
     <None Include="zigano\admin\tools\inspect-unit-tests.hl" />
     <None Include="zigano\admin\tools\inspect-web-controls.hl" />
     <None Include="zigano\admin\tools\magix-markup-editor.hl" />
-    <None Include="zigano\file-browser\file-browser.hl" />
     <None Include="zigano\startup-scripts\events-create-desktop-shortcuts.hl" />
     <None Include="zigano\startup-scripts\test-execute-paths.hl" />
     <None Include="todo.txt" />
