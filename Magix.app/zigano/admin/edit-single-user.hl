@@ -20,7 +20,7 @@ set=>[magix.forms.create-form][controls][panel][controls][text-box:1][ontextchan
   value=>[magix.data.load][objects][0][username].Value
 set=>[_dt2][panel][controls][link-button][onclick][magix.data.load][prototype][username].Value
   value=>[magix.data.load][objects][0][username].Value
-set=>[_dt2][panel][controls][link-button][onclick][zigano.travel.edit-user][username].Value
+set=>[_dt2][panel][controls][link-button][onclick][magix.admin.run-file][username].Value
   value=>[magix.data.load][objects][0][username].Value
 
 magix.data.load
@@ -68,7 +68,8 @@ _dt2
           magix.log.append
             header=>user removed from role
             body=>user {0} removed from role {1}
-          zigano.travel.edit-user
+          magix.admin.run-file
+            file=>zigano/admin/edit-single-user.hl
 
 for-each=>[magix.data.load:0][objects][0][roles]
   set=>[/][_dt2][panel][controls][label][text].Value
@@ -80,7 +81,7 @@ for-each=>[magix.data.load:0][objects][0][roles]
 
 set=>[/][magix.forms.create-form][controls][panel:1][controls][select][onselectedindexchanged][magix.data.load][prototype][username].Value
   value=>[$][username].Value
-set=>[/][magix.forms.create-form][controls][panel:1][controls][select][onselectedindexchanged][zigano.travel.edit-user][username].Value
+set=>[/][magix.forms.create-form][controls][panel:1][controls][select][onselectedindexchanged][else][magix.admin.run-file][username].Value
   value=>[$][username].Value
 
 magix.forms.create-form
@@ -188,7 +189,8 @@ magix.forms.create-form
               magix.log.append
                 header=>user added to role
                 body=>user {0} added to role {1}
-              zigano.travel.edit-user
+              magix.admin.run-file
+                file=>zigano/admin/edit-single-user.hl
           items
             _default=>add role to user ...
 
