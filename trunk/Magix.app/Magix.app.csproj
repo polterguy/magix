@@ -309,6 +309,5 @@
     <None Include="zigano\startup-scripts\event-magix.viewport.show-message-if-help-mode.hl" />
     <None Include="zigano\startup-scripts\test-execute-paths.hl" />
     <None Include="todo.txt" />
-    <None Include="zigano\admin\tools\inspect-namespace-active-events.hl" />
   </ItemGroup>
 </Project>

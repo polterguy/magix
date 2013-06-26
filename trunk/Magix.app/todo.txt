@@ -7,4 +7,11 @@
   while in a page, with a page get paramater, the same form will show the same messagebox upon every single ajax request.
   sever error!!
 
+* there are no way to traverse trees, hierarchically, currently in magix. this is seen if attempting to construct a tree 
+  lamba web control of e.g. namespaces in magix, represented as a tree
+
+
+
+
+
 
