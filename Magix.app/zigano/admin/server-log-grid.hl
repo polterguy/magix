@@ -109,6 +109,9 @@ magix.forms.create-form
   container=>content2
   css=>span-19 last
   controls
+    label=>header
+      css=>span-13 left-6 last
+      text=>server log
     panel=>items
       css=>span-19 last
       controls
