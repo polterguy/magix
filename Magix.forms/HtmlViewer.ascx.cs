@@ -160,24 +160,14 @@ hello world";
 				return;
 			}
 
-			if (!e.Params.Contains ("html"))
-				throw new ArgumentException("Need html parameter to change-html");
-
 			if (!e.Params.Contains("form-id"))
-				throw new ArgumentException("Need a form-id to change-html");
+				throw new ArgumentException("need a [form-id] to change-html");
 
-			if (e.Params["form-id"].Get<string>() != FormID)
-				return;
-
-			isFirst = true;
-
-			ViewState[ClientID + "_FirstLoad"] = null;
-
-			DataSources.Clear();
-			Html = e.Params["html"].Get<string>();
-			pnl.Controls.Clear();
-			BuildControls();
-			pnl.ReRender();
+			if (FormID.Get<string>() == e.Params["form-id"].Get<string>() || FormID.Contains(e.Params["form-id"].Get<string>()))
+			{
+				Html = e.Params["html"].Get<string>();
+				ReRender();
+			}
 		}
 		
 		protected override void ReRender()

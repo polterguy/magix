@@ -23,9 +23,14 @@ namespace Magix.forms
 		protected delegate Node FindNode(string path);
 		protected bool isFirst;
 
-		protected string FormID
+		protected Node FormID
 		{
-			get { return ViewState["FormID"] as string; }
+			get
+			{
+				if (ViewState["FormID"] == null)
+					ViewState["FormID"] = new Node();
+				return ViewState["FormID"] as Node;
+			}
 			set { ViewState["FormID"] = value; }
 		}
 
@@ -44,9 +49,26 @@ namespace Magix.forms
 			Load +=
 				delegate
 				{
-					FormID = node["form-id"].Get<string>();
+					FormID.Value = node["form-id"].Get<string>();
 				};
 			base.InitialLoading(node);
+		}
+
+		protected Control FindControl(Node pars)
+		{
+			if (!pars.Contains("form-id"))
+				throw new ArgumentException("need a [form-id]");
+
+			if (!pars.Contains("id"))
+				throw new ArgumentException("need an [id]");
+
+			if (FormID.Get<string>() == pars["form-id"].Get<string>() || FormID.Contains(pars["form-id"].Get<string>()))
+			{
+				//Node form = FormID[pars["form-id"].Get<string>()];
+				Control ctrl = Selector.FindControl<Control>(this.Parent, pars["id"].Get<string>());
+				return ctrl;
+			}
+			return null;
 		}
 
 		/**
@@ -71,10 +93,9 @@ different effects have different properties.&nbsp;&nbsp;not thread safe";
 				return;
 			}
 
-			if (e.Params["form-id"].Get<string>() == FormID)
+			if (FindControl(e.Params) != null)
 			{
 				Effect tmp = CreateEffect(e.Params);
-
 				tmp.Render();
 			}
 		}
@@ -211,6 +232,37 @@ different effects have different properties.&nbsp;&nbsp;not thread safe";
 			return tmp;
 		}
 
+		// TODO: create plugable event
+		/**
+		 */
+		[ActiveEvent(Name = "magix.forms.set-class")]
+		protected void magix_forms_set_class(object sender, ActiveEventArgs e)
+		{
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			{
+				e.Params["event:magix.forms.set-class"].Value = null;
+				e.Params["id"].Value = "control";
+				e.Params["form-id"].Value = "webpages";
+				e.Params["value"].Value = "some-css-class";
+				e.Params["inspect"].Value = @"sets the css class of the given 
+[id] web control, in the [form-id] form, from [value].&nbsp;&nbsp;not thread safe";
+				return;
+			}
+
+			Control ctrl = FindControl(e.Params);
+
+			if (ctrl != null)
+			{
+				string className = "";
+				if (e.Params.Contains ("value"))
+					className = e.Params["value"].Get<string>();
+				if (ctrl is BaseWebControl)
+					((BaseWebControl)ctrl).CssClass = className;
+				else
+					throw new ArgumentException("don't know how to set the css value of that control");
+			}
+		}
+
 		/*
 		 */
 		[ActiveEvent(Name = "magix.forms.add-css")]
@@ -227,23 +279,24 @@ different effects have different properties.&nbsp;&nbsp;not thread safe";
 				return;
 			}
 
-			if (!e.Params.Contains ("id"))
-				throw new ArgumentException("Missing [id] in add-css");
-
 			if (!e.Params.Contains ("css"))
 				throw new ArgumentException("Missing [css] in add-css");
 
-			if (e.Params["form-id"].Get<string>("webpages") == FormID)
-			{
-				BaseWebControl ctrl = Selector.FindControl<BaseWebControl>(this.Parent/*to include viewport container*/, e.Params["id"].Get<string>());
+			Control ctrl = FindControl(e.Params);
 
-				if (ctrl != null)
+			if (ctrl != null)
+			{
+				BaseWebControl ctrl2 = ctrl as BaseWebControl;
+
+				if (ctrl2 != null)
 				{
-					if (ctrl.CssClass.IndexOf(e.Params["css"].Get<string>()) == -1)
+					if (ctrl2.CssClass.IndexOf(e.Params["css"].Get<string>()) == -1)
 					{
-						ctrl.CssClass = ctrl.CssClass.Trim() + " " + e.Params["css"].Get<string>().Trim();
+						ctrl2.CssClass = ctrl2.CssClass.Trim() + " " + e.Params["css"].Get<string>().Trim();
 					}
 				}
+				else
+					throw new ArgumentException("you cannot invoke add-css on that control since it is not a mux webcontrol");
 			}
 		}
 
@@ -263,23 +316,24 @@ different effects have different properties.&nbsp;&nbsp;not thread safe";
 				return;
 			}
 
-			if (!e.Params.Contains ("id"))
-				throw new ArgumentException("Missing [id] in remove-css");
-
 			if (!e.Params.Contains ("css"))
 				throw new ArgumentException("Missing [css] in remove-css");
 
-			if (e.Params["form-id"].Get<string>("webpages") == FormID)
-			{
-				BaseWebControl ctrl = Selector.FindControl<BaseWebControl>(this.Parent/*to include viewport container*/, e.Params["id"].Get<string>());
+			Control ctrl = FindControl(e.Params);
 
-				if (ctrl != null)
+			if (ctrl != null)
+			{
+				BaseWebControl ctrl2 = ctrl as BaseWebControl;
+
+				if (ctrl2 != null)
 				{
-					if (ctrl.CssClass.IndexOf(e.Params["css"].Get<string>()) != -1)
+					if (ctrl2.CssClass.IndexOf(e.Params["css"].Get<string>()) != -1)
 					{
-						ctrl.CssClass = ctrl.CssClass.Replace(e.Params["css"].Get<string>().Trim(), "").Replace("  ", " ").Trim();
+						ctrl2.CssClass = ctrl2.CssClass.Replace(e.Params["css"].Get<string>().Trim(), "").Replace("  ", " ").Trim();
 					}
 				}
+				else
+					throw new ArgumentException("you cannot invoke remove-css on that control since it is not a mux webcontrol");
 			}
 		}
 
@@ -302,12 +356,11 @@ different effects have different properties.&nbsp;&nbsp;not thread safe";
 				return;
 			}
 
-			if (!e.Params.Contains ("id"))
-				throw new ArgumentException("Missing [id] in get-value");
+			Control ctrl = FindControl(e.Params);
 
-			if (e.Params["form-id"].Get<string>("webpages") == FormID)
+			if (ctrl != null)
 			{
-				Control ctrl = Selector.FindControl<Control>(this, e.Params["id"].Get<string>());
+				// TODO: rewrite, refactor into specific controllers ...
 				if (ctrl is BaseWebControlFormElementText)
 					e.Params["value"].Value = 
 						((BaseWebControlFormElementText)ctrl).Text;
@@ -351,14 +404,13 @@ different effects have different properties.&nbsp;&nbsp;not thread safe";
 				return;
 			}
 
-			if (!e.Params.Contains ("id"))
-				throw new ArgumentException("Missing id in set-value");
+			Control ctrl = FindControl(e.Params);
 
-			if (e.Params["form-id"].Get<string>("webpages") == FormID)
+			if (ctrl != null)
 			{
+				// TODO: refactor out to specific controllers ...
 				string value = e.Params.Contains("value") ? e.Params["value"].Get<string>("") : "";
 
-				Control ctrl = Selector.FindControl<Control>(this, e.Params["id"].Get<string>());
 				if (ctrl is BaseWebControlFormElementText)
 					((BaseWebControlFormElementText)ctrl).Text = value;
 				else if (ctrl is Label)
@@ -385,7 +437,7 @@ different effects have different properties.&nbsp;&nbsp;not thread safe";
 					((SelectList)ctrl).ReRender();
 				}
 				else
-					throw new ArgumentException("Don't know how to set the value of that control");
+					throw new ArgumentException("don't know how to set the value of that control");
 			}
 		}
 
@@ -406,57 +458,19 @@ different effects have different properties.&nbsp;&nbsp;not thread safe";
 				return;
 			}
 
-			if (!e.Params.Contains ("id"))
-				throw new ArgumentException("Missing id in set-value");
+			Control ctrl = FindControl(e.Params);
 
-			bool visible = false;
-			if (e.Params.Contains ("value"))
-				visible = e.Params["value"].Get<bool>();
-
-			if (e.Params["form-id"].Get<string>("webpages") == FormID)
+			if (ctrl != null)
 			{
-				Control ctrl = Selector.FindControl<Control>(this, e.Params["id"].Get<string>());
-				if (ctrl is Control)
-					((Control)ctrl).Visible = visible;
-				else
-					throw new ArgumentException("Don't know how to set the value of that control");
+				bool visible = false;
+				if (e.Params.Contains ("value"))
+					visible = e.Params["value"].Get<bool>();
+
+				ctrl.Visible = visible;
 			}
 		}
 
-		// TODO: create plugable event
-		/**
-		 */
-		[ActiveEvent(Name = "magix.forms.set-class")]
-		protected void magix_forms_set_class(object sender, ActiveEventArgs e)
-		{
-			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
-			{
-				e.Params["event:magix.forms.set-class"].Value = null;
-				e.Params["id"].Value = "control";
-				e.Params["form-id"].Value = "webpages";
-				e.Params["value"].Value = "some-css-class";
-				e.Params["inspect"].Value = @"sets the css class of the given 
-[id] web control, in the [form-id] form, from [value].&nbsp;&nbsp;not thread safe";
-				return;
-			}
-
-			if (!e.Params.Contains ("id"))
-				throw new ArgumentException("Missing id in set-value");
-
-			string className = "";
-			if (e.Params.Contains ("value"))
-				className = e.Params["value"].Get<string>();
-
-			if (e.Params["form-id"].Get<string>("webpages") == FormID)
-			{
-				Control ctrl = Selector.FindControl<Control>(this, e.Params["id"].Get<string>());
-				if (ctrl is BaseWebControl)
-					((BaseWebControl)ctrl).CssClass = className;
-				else
-					throw new ArgumentException("Don't know how to set the css value of that control");
-			}
-		}
-
+		// TODO: refactor out to specific controller
 		/**
 		 */
 		[ActiveEvent(Name = "magix.forms.has-more-data")]
@@ -473,16 +487,14 @@ different effects have different properties.&nbsp;&nbsp;not thread safe";
 				return;
 			}
 
-			if (!e.Params.Contains ("id"))
-				throw new ArgumentException("Missing id in set-value");
+			Control ctrl = FindControl(e.Params);
 
-			if (e.Params["form-id"].Get<string>("webpages") == FormID)
+			if (ctrl != null)
 			{
-				Control ctrl = Selector.FindControl<Control>(this, e.Params["id"].Get<string>());
 				if (ctrl is Uploader)
 					e.Params["value"].Value = ((Uploader)ctrl).SizeOfBatch > ((Uploader)ctrl).CurrentNo + 1;
 				else
-					throw new ArgumentException("Don't know how to see if that control has more data");
+					throw new ArgumentException("don't know how to see if that control has more data");
 			}
 		}
 
@@ -502,20 +514,18 @@ different effects have different properties.&nbsp;&nbsp;not thread safe";
 				return;
 			}
 
-			if (!e.Params.Contains ("id"))
-				throw new ArgumentException("Missing id in set-value");
+			Control ctrl = FindControl(e.Params);
 
-			bool enabled = false;
-			if (e.Params.Contains ("value"))
-				enabled = e.Params["value"].Get<bool>();
-
-			if (e.Params["form-id"].Get<string>("webpages") == FormID)
+			if (ctrl != null)
 			{
-				Control ctrl = Selector.FindControl<Control>(this, e.Params["id"].Get<string>());
+				bool enabled = false;
+				if (e.Params.Contains ("value"))
+					enabled = e.Params["value"].Get<bool>();
+
 				if (ctrl is BaseWebControlFormElement)
 					((BaseWebControlFormElement)ctrl).Enabled = enabled;
 				else
-					throw new ArgumentException("Don't know how to set the value of that control");
+					throw new ArgumentException("don't know how to set the value of that control");
 			}
 		}
 
@@ -538,12 +548,10 @@ not thread safe";
 				return;
 			}
 
-			if (!e.Params.Contains ("id"))
-				throw new ArgumentException("Missing id in set-value");
+			Control ctrl = FindControl(e.Params);
 
-			if (e.Params["form-id"].Get<string>("webpages") == FormID)
+			if (ctrl != null)
 			{
-				Control ctrl = Selector.FindControl<Control>(this, e.Params["id"].Get<string>());
 				if (ctrl is SelectList)
 				{
 					SelectList lst = ctrl as SelectList;
@@ -559,7 +567,7 @@ not thread safe";
 					lst.ReRender();
 				}
 				else
-					throw new ArgumentException("Don't know how to set the values of that control");
+					throw new ArgumentException("don't know how to set the values of that control");
 			}
 		}
 
@@ -579,13 +587,14 @@ not thread safe";
 				return;
 			}
 
-			if (!e.Params.Contains("id"))
-				throw new ArgumentException("Missing id in set-value");
+			Control ctrl = FindControl(e.Params);
 
-			if (e.Params["form-id"].Get<string>("webpages") == FormID)
+			if (ctrl != null)
 			{
-				BaseWebControl ctrl = Selector.FindControl<BaseWebControl>(this, e.Params["id"].Get<string>());
-				ctrl.Focus();
+				if (ctrl is BaseWebControl)
+					((BaseWebControl)ctrl).Focus();
+				else
+					throw new ArgumentException("con't know how to the focus to that control since it is not a mux webcontrol");
 			}
 		}
 
@@ -605,14 +614,14 @@ not thread safe";
 				return;
 			}
 
-			if (!e.Params.Contains("id"))
-				throw new ArgumentException("Missing id in set-value");
+			Control ctrl = FindControl(e.Params);
 
-			if (e.Params["form-id"].Get<string>("webpages") == FormID)
+			if (ctrl != null)
 			{
-				BaseWebControlFormElementInputText ctrl = 
-					Selector.FindControl<BaseWebControlFormElementInputText>(this, e.Params["id"].Get<string>());
-				ctrl.Select();
+				if (ctrl is BaseWebControlFormElementInputText)
+					((BaseWebControlFormElementInputText)ctrl).Select();
+				else
+					throw new ArgumentException("con't know how to select all text in that control, since it doesn't seem to be a textually based control");
 			}
 		}
 
@@ -632,13 +641,11 @@ if [visible] is true, control is shown, otherwise hidden.&nbsp;&nbsp;not thread 
 				return;
 			}
 
-			if (!e.Params.Contains("id"))
-				throw new ArgumentException("Missing id in set-value");
+			Control ctrl = FindControl(e.Params);
 
-			if (e.Params["form-id"].Get<string>("webpages") == FormID)
+			if (ctrl != null)
 			{
-				BaseWebControl ctrl = Selector.FindControl<BaseWebControl>(this, e.Params["id"].Get<string>());
-				if (e.Params.Contains ("visible") && e.Params ["visible"].Get<bool> ())
+				if (e.Params.Contains("visible") && e.Params ["visible"].Get<bool>())
 					ctrl.Visible = true;
 				else
 					ctrl.Visible = false;
@@ -743,10 +750,8 @@ if [visible] is true, control is shown, otherwise hidden.&nbsp;&nbsp;not thread 
 					// individually traverse it, as if it was embedded into markup, almost
 					// like copy/paste
 
-					// TODO: doesn't work with multiple forms per page
-
 					if (node["_tpl"].Value != null)
-						FormID = node["_tpl"].Get<string>();
+						FormID[node["_tpl"].Get<string>()].Value = null;
 
 					Panel wr = new Panel();
 					wr.ID = node["_tpl"]["id"].Get<string>("mumbo");
@@ -787,12 +792,12 @@ form with the [form-id].&nbsp;&nbsp;not thread safe";
 			}
 
 			if (!e.Params.Contains("form-id"))
-				throw new ArgumentException("Need a [form-id] to re-render");
+				throw new ArgumentException("need a [form-id] to re-render");
 
-			if (e.Params["form-id"].Get<string>() != FormID)
-				return;
-
-			ReRender();
+			if (FormID.Get<string>() == e.Params["form-id"].Get<string>() || FormID.Contains(e.Params["form-id"].Get<string>()))
+			{
+				ReRender();
+			}
 		}
 	}
 }
