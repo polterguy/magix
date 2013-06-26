@@ -742,6 +742,12 @@ if [visible] is true, control is shown, otherwise hidden.&nbsp;&nbsp;not thread 
 					// this is a 'user control', or a 'template control', and we need to
 					// individually traverse it, as if it was embedded into markup, almost
 					// like copy/paste
+
+					// TODO: doesn't work with multiple forms per page
+
+					if (node["_tpl"].Value != null)
+						FormID = node["_tpl"].Get<string>();
+
 					Panel wr = new Panel();
 					wr.ID = node["_tpl"]["id"].Get<string>("mumbo");
 					wr.CssClass = node["_tpl"]["css"].Get<string>("");

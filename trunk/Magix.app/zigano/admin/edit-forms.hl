@@ -512,6 +512,13 @@ check=>showgrid
     magix.forms.get-value
       form-id=>myPage
       id=>showgrid
+    magix.forms.get-value
+      form-id=>edit-forms
+      id=>name
+    set=>[if][magix.forms.add-css][form-id].Value
+      value=>[magix.forms.get-value:1][value].Value
+    set=>[else][magix.forms.remove-css][form-id].Value
+      value=>[magix.forms.get-value:1][value].Value
     if=>[magix.forms.get-value][value].Value
       magix.forms.add-css
         form-id=>preview-form
@@ -539,10 +546,15 @@ link-button=>closepreview
       container=>content7
 }}
 </p>"
+        magix.forms.get-value
+          id=>name
+          form-id=>edit-forms
+        set=>[@][magix.forms.show-form][form-id].Value
+          value=>[@][magix.forms.get-value][value].Value
         magix.forms.show-form
           container=>content7
           css=>span-24 showgrid bottom-5
-          form-id=>preview-form
+          form-id
 
     panel=>ctrlWrp
       css=>span-17 last top-1 boxed air-padding

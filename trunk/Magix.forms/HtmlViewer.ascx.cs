@@ -179,5 +179,35 @@ hello world";
 			BuildControls();
 			pnl.ReRender();
 		}
+		
+		/**
+		 */
+		[ActiveEvent(Name = "magix.forms.re-render")]
+		protected void magix_forms_re_render(object sender, ActiveEventArgs e)
+		{
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			{
+				e.Params["event:magix.forms.re-render"].Value = null;
+				e.Params["inspect"].Value = @"re renders the
+form with the [form-id].&nbsp;&nbsp;not thread safe";
+				e.Params["form-id"].Value = "header";
+				return;
+			}
+
+			if (!e.Params.Contains("form-id"))
+				throw new ArgumentException("Need a [form-id] to re-render");
+
+			if (e.Params["form-id"].Get<string>() != FormID)
+				return;
+
+			isFirst = true;
+
+			ViewState[ClientID + "_FirstLoad"] = null;
+
+			DataSources.Clear();
+			pnl.Controls.Clear();
+			BuildControls();
+			pnl.ReRender();
+		}
 	}
 }
