@@ -284,7 +284,6 @@
     <None Include="zigano\misc\settings-initialize.hl" />
     <None Include="zigano\startup.hl" />
     <None Include="zigano\pages\run-page.hl" />
-    <None Include="zigano\admin\edit-pages.mml" />
     <None Include="zigano\admin\edit-pages.hl" />
     <None Include="zigano\admin\edit-forms.hl" />
     <None Include="zigano\admin\edit-property.hl" />
