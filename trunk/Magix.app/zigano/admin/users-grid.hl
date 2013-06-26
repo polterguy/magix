@@ -53,7 +53,8 @@ _dt
         css=>span-3
         text=>edit
         onclick
-          zigano.travel.edit-user
+          magix.admin.run-file
+            file=>zigano/admin/edit-single-user.hl
       link-button
         css=>span-1 hover-shadow last right z-1 absolute light-red centered
         text=>x
@@ -77,7 +78,7 @@ for-each=>[magix.data.load][objects]
     value=>[.][username].Value
   set=>[/][_dt][panel][controls][label:2][text].Value
     value=>[.][pwd].Value
-  set=>[/][_dt][panel][controls][link-button:0][onclick][zigano.travel.edit-user][username].Value
+  set=>[/][_dt][panel][controls][link-button:0][onclick][magix.admin.run-file][username].Value
     value=>[.][username].Value
   set=>[/][_dt][panel][controls][link-button:1][onclick][magix.data.remove][prototype][username].Value
     value=>[.][username].Value
@@ -172,7 +173,7 @@ magix.forms.create-form
               else
                 set=>[@][else][else][magix.data.save][object][username].Value
                   value=>[@][..][magix.forms.get-value][value].Value
-                set=>[@][else][else][zigano.travel.edit-user][username].Value
+                set=>[@][else][else][magix.admin.run-file:1][username].Value
                   value=>[@][..][magix.forms.get-value][value].Value
                 magix.forms.get-value
                   form-id=>users-grid
@@ -202,7 +203,8 @@ magix.forms.create-form
                       body=>user {0} created
                     magix.admin.run-file
                       file=>zigano/admin/users-grid.hl
-                    zigano.travel.edit-user
+                    magix.admin.run-file
+                      file=>zigano/admin/edit-single-user.hl
 
 
 
