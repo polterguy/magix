@@ -295,7 +295,6 @@
     <None Include="zigano\admin\tools\magix-markup-editor.hl" />
     <None Include="zigano\admin\tools\roles-grid.hl" />
     <None Include="zigano\startup-scripts\event-create-roles-form.hl" />
-    <None Include="zigano\startup-scripts\event-create-edit-user.hl" />
     <None Include="zigano\startup-scripts\event-create-ide-properties.hl" />
     <None Include="zigano\file-browser\file-browser.hl" />
     <None Include="zigano\admin\desktop.mml" />

@@ -122,7 +122,8 @@ your system"
             container=>content4
           magix.viewport.clear-controls
             container=>content5
-          zigano.travel.create-roles-form
+          magix.admin.run-file
+            file=>zigano/admin/tools/roles-grid.hl
           magix.viewport.show-message-if-help-mode
             message=>@"view and edit all the different roles in 
 your system"
