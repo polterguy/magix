@@ -136,11 +136,6 @@ your system"
             container=>content4
           magix.viewport.clear-controls
             container=>content5
-          magix.forms.create-web-page
-            file=>zigano/admin/edit-roles.mml
-            container=>content1
-            form-id=>admin-roles
-            css=>span-19 last
           zigano.travel.create-roles-form
           magix.viewport.show-message-if-help-mode
             message=>@"view and edit all the different roles in 

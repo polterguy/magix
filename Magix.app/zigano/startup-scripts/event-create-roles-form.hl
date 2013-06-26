@@ -58,6 +58,10 @@ not thread safe"
       container=>content2
       css=>span-19 last
       controls
+        label=>header
+          css=>span-13 left-6 last
+          text=>edit roles
+          tag=>h2
         panel=>roleGrdHeader
           controls
             label=>headName
