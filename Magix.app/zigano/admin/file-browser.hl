@@ -61,7 +61,7 @@ _back
     set=>[@][magix.admin.run-file][directory].Value
       value=>[@][magix.viewport.set-viewstate][value][[@][magix.viewport.set-viewstate][value].Count-1].Value
     magix.admin.run-file
-      file=>zigano/file-browser/file-browser.hl
+      file=>zigano/admin/file-browser.hl
 
 _link-button
   css=>span-5 file
@@ -74,7 +74,7 @@ _link-buttonDir
   css=>span-5 directory
   onclick
     magix.admin.run-file
-      file=>zigano/file-browser/file-browser.hl
+      file=>zigano/admin/file-browser.hl
     magix.viewport.get-viewstate
       id=>stack-of-pages
     set=>[@][magix.viewport.get-viewstate][value][[@][magix.viewport.get-viewstate][value].Count].Value
@@ -134,7 +134,7 @@ _newDir=>newdir
     magix.file.create-directory
       path=>new-directory
     magix.admin.run-file
-      file=>zigano/file-browser/file-browser.hl
+      file=>zigano/admin/file-browser.hl
 
 _delDir=>deldir
   css=>span-3 btn-large last top-1
@@ -145,7 +145,7 @@ _delDir=>deldir
       code
         magix.file.delete-directory
         magix.admin.run-file
-          file=>zigano/file-browser/file-browser.hl
+          file=>zigano/admin/file-browser.hl
 
 _ren=>renWrp
   css=>span-9 last top-1 right btn-group
@@ -164,7 +164,7 @@ _ren=>renWrp
         set=>[magix.admin.run-file][directory].Value
           value=>[magix.file.move-directory][to].Value
         magix.admin.run-file
-          file=>zigano/file-browser/file-browser.hl
+          file=>zigano/admin/file-browser.hl
     button=>saveDirName
       css=>span-2 last
       text=>save
@@ -194,11 +194,11 @@ magix.forms.create-form
 
     magix.ide.file-saved
       magix.admin.run-file
-        file=>zigano/file-browser/file-browser.hl
+        file=>zigano/admin/file-browser.hl
 
     magix.ide.file-deleted
       magix.admin.run-file
-        file=>zigano/file-browser/file-browser.hl
+        file=>zigano/admin/file-browser.hl
       magix.viewport.clear-controls
         container=>content2
       magix.viewport.clear-controls
@@ -232,7 +232,7 @@ magix.forms.create-form
           id=>uploader
         if=>![magix.forms.has-more-data][value].Value
           magix.admin.run-file
-            file=>zigano/file-browser/file-browser.hl
+            file=>zigano/admin/file-browser.hl
 
 
 

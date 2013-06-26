@@ -302,5 +302,6 @@
     <None Include="zigano\admin\roles-grid.hl" />
     <None Include="zigano\admin\desktop\desktop.mml" />
     <None Include="zigano\admin\desktop\show-desktop.hl" />
+    <None Include="zigano\admin\file-browser.hl" />
   </ItemGroup>
 </Project>
