@@ -42,21 +42,25 @@ namespace Magix.UX.Widgets
             }
         }
 
-        protected override void OnInit(EventArgs e)
-        {
-            if (Page.IsPostBack)
-            {
-                GetValue();
-            }
-            base.OnInit(e);
-        }
+		// Overridden to make sure we extract the value form the HTTP request.
+		protected override void OnInit(EventArgs e)
+		{
+			// Please notice that this logic only kicks in if ViewState is disabled.
+			// If ViewState is turned on, then LoadViewState will take
+			// care of de-serializing the value sent from the client.
+			if (!IsViewStateEnabled && Page.IsPostBack)
+				SetValue();
+			base.OnInit(e);
+		}
 
-        private void GetValue()
-        {
-            string value = Page.Request.Params[ClientID];
-            if (value != null)
-                Value = value;
-        }
+		private void SetValue()
+		{
+			string valueOfHiddenField = Page.Request.Params[ClientID];
+			if (valueOfHiddenField != Value)
+			{
+				ViewState["Value"] = valueOfHiddenField;
+			}
+		}
 
         protected override void RenderMuxControl(HtmlBuilder builder)
         {
