@@ -277,7 +277,6 @@
     <None Include="zigano\admin\users-grid.hl" />
     <None Include="zigano\admin\edit-single-user.hl" />
     <None Include="zigano\admin\server-log-grid.hl" />
-    <None Include="zigano\admin\server-log.mml" />
     <None Include="zigano\admin\admin-settings.mml" />
     <None Include="zigano\misc\settings-initialize.hl" />
     <None Include="zigano\startup.hl" />
