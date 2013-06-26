@@ -13,8 +13,7 @@
       </Pad>
       <Pad Id="MonoDevelop.Debugger.WatchPad">
         <State>
-          <Value>e.Name</Value>
-          <Value>SlurpAllEventHandlers(":before", false)</Value>
+          <Value>node</Value>
         </State>
       </Pad>
     </Pads>
