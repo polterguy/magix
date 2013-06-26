@@ -100,9 +100,13 @@ event=>zigano.travel.create-users-form
 
     magix.forms.create-form
       form-id=>users-grid
-      container=>content2
+      container=>content1
       css=>span-19 last
       controls
+        label=>header
+          css=>span-13 last left-6
+          text=>edit users
+          tag=>h2
         panel=>userGrdHeader
           controls
             label=>headName
