@@ -61,11 +61,8 @@ definition, or self-documenting with other words"
             container=>content4
           magix.viewport.clear-controls
             container=>content5
-          magix.forms.create-web-page
-            file=>zigano/admin/edit-pages.mml
-            container=>content1
-            form-id=>admin-pages
-            css=>span-19 last
+          magix.admin.run-file
+            file=>zigano/admin/edit-pages.hl
           magix.viewport.show-message-if-help-mode
             message=>@"edit web pages within
 your system"

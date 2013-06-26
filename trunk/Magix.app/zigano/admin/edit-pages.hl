@@ -29,9 +29,13 @@ for-each=>[magix.data.load:1][objects]
 
 magix.forms.create-form
   form-id=>edit-pages
-  container=>content2
+  container=>content1
   css=>span-19 last
   controls
+    label=>header
+      tag=>h2
+      css=>span-13 last left-6
+      text=>edit pages
     select=>page
       css=>span-4
       onselectedindexchanged
@@ -214,7 +218,7 @@ magix.forms.create-form
 
 magix.forms.create-form
   form-id=>wysiwyg-editor
-  container=>content3
+  container=>content2
   css=>span-24
   parent-css=>span-24
   controls
