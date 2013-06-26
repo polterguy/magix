@@ -27,6 +27,72 @@ namespace Magix.execute
 	{
 		private static string _dbFile = "data-storage.db4o";
 
+		[ActiveEvent(Name = "magix.data.load")]
+		public static void magix_data_load(object sender, ActiveEventArgs e)
+		{
+			if (ShouldInspect(e.Params))
+			{
+				e.Params["event:magix.data.load"].Value = null;
+				e.Params["id"].Value = "object-id";
+				e.Params["inspect"].Value = @"loads the given [id] object, or 
+use [prototype] as filter.&nbsp;&nbsp;returns objects found as [objects], with 
+child nodes of [objects] being the matching objects.&nbsp;&nbsp;
+use [start] and [end] to fetch a specific slice of objects, [start] defaults 
+to 0 and [end] defaults to -1, which means all objects matching criteria.&nbsp;&nbsp;
+[start], [end] and [prototype] cannot be defined if [id] is given, since [id] is unique,
+and will make sure only one object is loaded.&nbsp;&nbsp;
+if [value] has children, these will be sequentially treated as insertion values
+for a string.format operation.&nbsp;&nbsp;if a [prototype] node is
+given, it can contain node values with % to signify wildcards for a match 
+operation.&nbsp;&nbsp;thread safe";
+				return;
+			}
+
+			Node prototype = null;
+			if (e.Params.Contains("prototype"))
+				prototype = e.Params["prototype"];
+
+			string id = null;
+			if (e.Params.Contains("id") && e.Params["id"].Value != null)
+				id = e.Params["id"].Get<string>();
+
+			int start = 0;
+			if (e.Params.Contains("start") && e.Params["start"].Value != null)
+				start = e.Params["start"].Get<int>();
+
+			int end = -1;
+			if (e.Params.Contains("end") && e.Params["end"].Value != null)
+				end = e.Params["end"].Get<int>();
+
+			if (id != null && start != 0 && end != -1 && prototype != null)
+				throw new ArgumentException("if you supply an [id], then [start], [end] and [prototype] cannot be defined");
+
+			lock (typeof(DataCore))
+			{
+				using (IObjectContainer db = Db4oEmbedded.OpenFile(_dbFile))
+				{
+					db.Ext().Configure().UpdateDepth(1000);
+					db.Ext().Configure().ActivationDepth(1000);
+
+					int idxNo = 0;
+					foreach (Storage idx in db.Ext().Query<Storage>(
+						delegate(Storage obj)
+						{
+						if (id != null)
+							return obj.Id == id;
+						else
+							return obj.Node.HasNodes(prototype);
+					}))
+					{
+						if (idxNo >= start && (end == -1 || idxNo < end))
+							e.Params["objects"][idx.Id].ReplaceChildren(idx.Node.Clone());
+						idxNo++;
+					}
+					db.Close();
+				}
+			}
+		}
+
 		[ActiveEvent(Name = "magix.data.save")]
 		public static void magix_data_save(object sender, ActiveEventArgs e)
 		{
@@ -112,72 +178,6 @@ your persistent data storage.&nbsp;&nbsp;thread safe";
 						db.Delete(idx);
 					}
 					db.Commit();
-					db.Close();
-				}
-			}
-		}
-
-		[ActiveEvent(Name = "magix.data.load")]
-		public static void magix_data_load(object sender, ActiveEventArgs e)
-		{
-			if (ShouldInspect(e.Params))
-			{
-				e.Params["event:magix.data.load"].Value = null;
-				e.Params["id"].Value = "object-id";
-				e.Params["inspect"].Value = @"loads the given [id] object, or 
-use [prototype] as filter.&nbsp;&nbsp;returns objects found as [objects], with 
-child nodes of [objects] being the matching objects.&nbsp;&nbsp;
-use [start] and [end] to fetch a specific slice of objects, [start] defaults 
-to 0 and [end] defaults to -1, which means all objects matching criteria.&nbsp;&nbsp;
-[start], [end] and [prototype] cannot be defined if [id] is given, since [id] is unique,
-and will make sure only one object is loaded.&nbsp;&nbsp;
-if [value] has children, these will be sequentially treated as insertion values
-for a string.format operation.&nbsp;&nbsp;if a [prototype] node is
-given, it can contain node values with % to signify wildcards for a match 
-operation.&nbsp;&nbsp;thread safe";
-				return;
-			}
-
-			Node prototype = null;
-			if (e.Params.Contains("prototype"))
-				prototype = e.Params["prototype"];
-
-			string id = null;
-			if (e.Params.Contains("id") && e.Params["id"].Value != null)
-				id = e.Params["id"].Get<string>();
-
-			int start = 0;
-			if (e.Params.Contains("start") && e.Params["start"].Value != null)
-				start = e.Params["start"].Get<int>();
-
-			int end = -1;
-			if (e.Params.Contains("end") && e.Params["end"].Value != null)
-				end = e.Params["end"].Get<int>();
-
-			if (id != null && start != 0 && end != -1 && prototype != null)
-				throw new ArgumentException("if you supply an [id], then [start], [end] and [prototype] cannot be defined");
-
-			lock (typeof(DataCore))
-			{
-				using (IObjectContainer db = Db4oEmbedded.OpenFile(_dbFile))
-				{
-					db.Ext().Configure().UpdateDepth(1000);
-					db.Ext().Configure().ActivationDepth(1000);
-
-					int idxNo = 0;
-					foreach (Storage idx in db.Ext().Query<Storage>(
-						delegate(Storage obj)
-						{
-							if (id != null)
-								return obj.Id == id;
-							else
-								return obj.Node.HasNodes(prototype);
-						}))
-					{
-						if (idxNo >= start && (end == -1 || idxNo < end))
-							e.Params["objects"][idx.Id].ReplaceChildren(idx.Node.Clone());
-						idxNo++;
-					}
 					db.Close();
 				}
 			}

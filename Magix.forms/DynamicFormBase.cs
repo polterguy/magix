@@ -65,6 +65,8 @@ namespace Magix.forms
 			if (FormID.Get<string>() == pars["form-id"].Get<string>() || FormID.Contains(pars["form-id"].Get<string>()))
 			{
 				//Node form = FormID[pars["form-id"].Get<string>()];
+				// TODO: if template form, then start searching from actual template form, and
+				// not from this.Parent, since that might give false positives
 				Control ctrl = Selector.FindControl<Control>(this.Parent, pars["id"].Get<string>());
 				return ctrl;
 			}

@@ -116,7 +116,7 @@ namespace Magix.ide
 				type,
 				ctrlRaise);
 
-			if (!ctrlRaise.Contains("_ctrl") && !ctrlRaise.Contains("_tpl"))
+			if ((!ctrlRaise.Contains("_ctrl") || ctrlRaise["_ctrl"].Value == null) && !ctrlRaise.Contains("_tpl"))
 				return;
 
 			if (ctrlRaise.Contains("_ctrl"))

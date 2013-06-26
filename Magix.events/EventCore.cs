@@ -15,15 +15,7 @@ namespace Magix.execute
 	 */
 	public class EventCore : ActiveController
 	{
-		private static bool? _hasNull;
-
-		public EventCore()
-		{
-			lock (typeof(EventCore))
-			{
-				_hasNull = new bool?();
-			}
-		}
+		private static Node _events = new Node();
 
 		/**
 		 * Handled to make sure we map our overridden magix.execute events during
@@ -70,7 +62,6 @@ magix.execute blocks of code, are being correctly re-mapped";
 		[ActiveEvent(Name = "magix.execute.event")]
 		public static void magix_execute_event(object sender, ActiveEventArgs e)
 		{
-			_hasNull = null;
 			if (ShouldInspect(e.Params))
 			{
 				e.Params.Clear();
@@ -158,55 +149,52 @@ event will be deleted, if you pass in no [code] block.&nbsp;&nbsp;thread safe";
 				ActiveEvents.Instance.RemoveMapping(activeEvent);
 				ActiveEvents.Instance.RemoveRemotable(activeEvent);
 			}
+
+			if (_events.Contains(activeEvent))
+			{
+				lock (typeof(EventCore))
+				{
+					if (_events.Contains(activeEvent))
+					{
+						_events[activeEvent].UnTie();
+					}
+				}
+			}
 		}
 
-		/**
-		 * Null event handler for handling null active event overrides for the event keyword
-		 * in magix.execute
-		 */
-		[ActiveEvent(Name = "")]
-		public static void magix_execute_event_null_helper(object sender, ActiveEventArgs e)
+		private static Node GetEventCode(string name)
 		{
-			if (string.IsNullOrEmpty(e.Name) && ShouldInspect(e.Params))
+			if (_events.Contains(name) && _events.Count > 0)
+				return _events[name].Clone();
+			else if (_events.Contains(name))
+				return null;
+
+			lock (typeof(EventCore))
 			{
-				e.Params.Clear();
-				e.Params["inspect"].Value = @"null event handler for raising
-null active event handlers created with magix.execute.event";
-				return;
-			}
+				if (_events.Contains(name) && _events.Count > 0)
+					return _events[name].Clone();
+				else if (_events.Contains(name))
+					return null;
+				else
+				{
+					Node n = new Node();
 
-			// Small optimization, to not traverse Data storage file for EVERY SINGLE ACTIVE EVENT ...!
-			if (_hasNull.HasValue && !_hasNull.Value)
-				return;
+					n["prototype"]["type"].Value = "magix.execute.event";
+					n["prototype"]["event"].Value = name;
 
-			Node caller = null;
-			_hasNull = false;
+					RaiseActiveEvent(
+						"magix.data.load",
+						n);
 
-			Node n = new Node();
-
-			n["prototype"]["type"].Value = "magix.execute.event";
-			n["prototype"]["event"].Value = "";
-
-			RaiseActiveEvent(
-				"magix.data.load",
-				n);
-
-			if (n.Contains("objects"))
-			{
-				caller = n["objects"][0];
-			}
-
-			if (caller != null)
-			{
-				Node tmp = new Node(e.Name);
-				tmp.AddRange(caller.UnTie());
-				tmp["_method"].Value = e.Name;
-				tmp["_method"].AddRange(e.Params.Clone());
-
-				RaiseActiveEvent(
-					"magix.execute", 
-					tmp, 
-					true);
+					if (n.Contains("objects"))
+					{
+						Node caller = n["objects"][0]["code"];
+						_events[name].AddRange(caller);
+						return _events[name].Clone();
+					}
+					_events[name].Value = null;
+					return null;
+				}
 			}
 		}
 
@@ -242,25 +230,17 @@ thread safety is dependent upon the events raised internally within event";
 				return;
 			}
 
-			Node n = new Node();
+			Node code = GetEventCode(e.Name);
 
-			n["prototype"]["type"].Value = "magix.execute.event";
-			n["prototype"]["event"].Value = e.Name;
-
-			RaiseActiveEvent(
-				"magix.data.load",
-				n);
-
-			if (n.Contains("objects"))
+			if (code != null)
 			{
-				Node caller = n["objects"][0]["code"].Clone();
-				caller["$"].AddRange(e.Params);
+				code["$"].AddRange(e.Params);
 
 				RaiseActiveEvent(
 					"magix.execute", 
-					caller);
+					code);
 
-				e.Params.ReplaceChildren(caller["$"]);
+				e.Params.ReplaceChildren(code["$"]);
 			}
 		}
 	}
