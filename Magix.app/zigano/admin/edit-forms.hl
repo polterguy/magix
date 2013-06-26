@@ -495,6 +495,9 @@ magix.forms.create-form
       enabled=>false
       onclick
         get-form
+        magix.forms.get-value
+          form-id=>edit-forms
+          id=>name
         add=>[magix.forms.show-form][form]
           value=>[get-form][form]
         magix.forms.create-web-page
