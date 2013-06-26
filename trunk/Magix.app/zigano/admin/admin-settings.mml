@@ -56,16 +56,15 @@ check=>hasTutorial
 as you click your way around in magix"
   css=>left-1 span-1
   onfirstload
-    magix.viewport.has-grid
-    if=>[magix.viewport.has-grid][value].Value
+    magix.web.get-session
+      key=>stopped-learning
+    if=>[magix.web.get-session][value].Value
       set=>[magix.forms.set-value][value].Value
-        value=>true
-    else
-      set=>[magix.forms.set-value][value].Value
-        value=>false
+        value=(bool)>False
     magix.forms.set-value
       form-id=>admin-settings
       id=>hasTutorial
+      value=(bool)>True
   oncheckedchanged
     magix.forms.get-value
       form-id=>admin-settings
@@ -99,11 +98,11 @@ as you click your way around in magix"
     if=>[magix.data.save][object][value].Value==True
       magix.web.set-session
         key=>stopped-learning
-        value=>True
+        value=(bool)>True
     else
       magix.web.set-session
         key=>stopped-learning
-        value=>False
+        value=(bool)>False
 label=>hasGTutorialLbl
   tip=>@"iif checked, will show tips around most objects 
 as you click your way around in magix"

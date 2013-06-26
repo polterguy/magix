@@ -8,7 +8,7 @@ not thread safe"
   code
     magix.web.get-session
       key=>stopped-learning
-    if=>[magix.web.get-session][value].Value==False
+    if=>![magix.web.get-session][value].Value
       for-each=>[$]
         add=>[@][..][magix.viewport.show-message]
           value=>[.]
