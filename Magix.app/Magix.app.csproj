@@ -274,7 +274,6 @@
     <None Include="help-system\tools.mml" />
     <None Include="zigano\index.hl" />
     <None Include="zigano\admin\menu.mml" />
-    <None Include="zigano\admin\edit-roles.mml" />
     <None Include="zigano\admin\edit-users.mml" />
     <None Include="zigano\admin\users-grid.hl" />
     <None Include="zigano\admin\edit-single-user.hl" />
