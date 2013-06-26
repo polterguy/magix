@@ -7,11 +7,8 @@ check=>hasGrid
 you align objects correctly according to the grid system of magix"
   css=>span-1
   onfirstload
-    magix.data.load
-      prototype
-        type=>zigano.travel.setting
-        name=>has-grid
-    if=>[magix.data.load][objects][0][value].Value==true
+    magix.viewport.has-grid
+    if=>[magix.viewport.has-grid][value].Value
       set=>[magix.forms.set-value][value].Value
         value=>true
     magix.forms.set-value
@@ -59,17 +56,16 @@ check=>hasTutorial
 as you click your way around in magix"
   css=>left-1 span-1
   onfirstload
-    magix.data.load
-      prototype
-        type=>zigano.travel.setting
-        name=>stopped-learning
-    if=>[magix.data.load][objects][0][value].Value==True
+    magix.viewport.has-grid
+    if=>[magix.viewport.has-grid][value].Value
+      set=>[magix.forms.set-value][value].Value
+        value=>true
+    else
       set=>[magix.forms.set-value][value].Value
         value=>false
     magix.forms.set-value
       form-id=>admin-settings
       id=>hasTutorial
-      value=>true
   oncheckedchanged
     magix.forms.get-value
       form-id=>admin-settings

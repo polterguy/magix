@@ -112,6 +112,7 @@ magix.forms.create-form
     label=>header
       css=>span-13 left-6 last
       text=>server log
+      tag=>h2
     panel=>items
       css=>span-19 last
       controls

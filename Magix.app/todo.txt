@@ -10,7 +10,7 @@
 * there are no way to traverse trees, hierarchically, currently in magix. this is seen if attempting to construct a tree 
   lamba web control of e.g. namespaces in magix, represented as a tree
 
-
+* something is very fishy with the admin settings form, it keeps on flashing the scheck boxes randomly off and on ...?
 
 
 

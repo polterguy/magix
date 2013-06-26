@@ -69,6 +69,7 @@
     <Content Include="media\grid\start-button.png" />
     <Content Include="media\grid\splash.png" />
     <Content Include="media\grid\RaLogo1600x1600.png" />
+    <Content Include="media\grid\arrows.png" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Global.asax.cs">
@@ -292,7 +293,6 @@
     <None Include="zigano\admin\tools\inspect-unit-tests.hl" />
     <None Include="zigano\admin\tools\inspect-web-controls.hl" />
     <None Include="zigano\admin\tools\magix-markup-editor.hl" />
-    <None Include="zigano\admin\tools\rss-parser.hl" />
     <None Include="zigano\admin\tools\roles-grid.hl" />
     <None Include="zigano\startup-scripts\event-create-roles-form.hl" />
     <None Include="zigano\startup-scripts\event-create-edit-user.hl" />

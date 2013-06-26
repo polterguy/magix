@@ -213,5 +213,66 @@ if=>[Data].Value==thomas
 				txtOut.Text = tmp["code"].Get<string>();
 			}
 		}
+		
+		protected void indent_Click(object sender, EventArgs e)
+		{
+			string transformed = "";
+			using (StringReader reader = new StringReader(txtIn.Text))
+			{
+				string line = reader.ReadLine();
+				while (line != null)
+				{
+					transformed += "  " + line + "\r\n";
+					line = reader.ReadLine();
+				}
+			}
+			txtIn.Text = transformed;
+		}
+		
+		protected void deindent_Click(object sender, EventArgs e)
+		{
+			string transformed = "";
+			using (StringReader reader = new StringReader(txtIn.Text))
+			{
+				string line = reader.ReadLine();
+				while (line != null)
+				{
+					if (line.IndexOf("  ") == 0)
+						line = line.Substring(2);
+					transformed += line + "\r\n";
+					line = reader.ReadLine();
+				}
+			}
+			txtIn.Text = transformed;
+		}
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
