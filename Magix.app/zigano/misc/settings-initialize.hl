@@ -17,14 +17,14 @@ magix.data.load
     type=>zigano.travel.setting
     name=>stopped-learning
 
-if=>[magix.data.load:1][objects][0][value].Value==True
+if=>[magix.data.load:1][objects][0][value].Value
   magix.web.set-session
     key=>stopped-learning
-    value=>True
+    value=(bool)>True
 else
   magix.web.set-session
     key=>stopped-learning
-    value=>False
+    value=>(bool)False
 
 
 
