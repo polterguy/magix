@@ -263,7 +263,7 @@ to change your system's state"
         category=>tools
         code
           magix.admin.run-file
-            file=>zigano/file-browser/file-browser.hl
+            file=>zigano/admin/file-browser.hl
           magix.viewport.clear-controls
             container=>content2
           magix.viewport.clear-controls
