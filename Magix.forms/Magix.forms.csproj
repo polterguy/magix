@@ -56,6 +56,7 @@
     <Compile Include="controls\FormCore.cs" />
     <Compile Include="controls\WysiwygCore.cs" />
     <Compile Include="controls\UploaderCore.cs" />
+    <Compile Include="controls\LambdaBaseCore.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

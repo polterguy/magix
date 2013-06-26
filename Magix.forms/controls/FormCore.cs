@@ -64,6 +64,7 @@ of wrapping control.&nbsp;&nbsp;not thread safe";
 					e.Params["_tpl"]["css"].Value = node["css"].Get<string>();
 				if (node.Contains("tag") && !string.IsNullOrEmpty(node["tag"].Get<string>()))
 					e.Params["_tpl"]["tag"].Value = node["tag"].Get<string>();
+				e.Params["_tpl"].Value = form["objects"][0]["name"].Value;
 			}
 		}
 		
