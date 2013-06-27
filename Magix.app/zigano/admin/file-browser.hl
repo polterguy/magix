@@ -44,7 +44,7 @@ else
       root=>
   set=>[/][_delDir][enabled].Value
     value=>false
-  set=>[/][_ren][enabled].Value
+  set=>[/][_ren][controls][text-box][enabled].Value
     value=>false
 
 _back
