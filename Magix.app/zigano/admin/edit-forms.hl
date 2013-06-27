@@ -94,6 +94,10 @@ magix.forms.create-form
           magix.admin.run-file
             file=>zigano/admin/edit-property.hl
       magix.viewport.clear-controls
+        container=>content3
+      magix.viewport.clear-controls
+        container=>content4
+      magix.viewport.clear-controls
         container=>content5
       get-selected-widget
       if=>[get-selected-widget][value][widget]
@@ -381,7 +385,6 @@ magix.forms.create-form
                   magix.forms.set-value
                     form-id=>edit-forms
                     id=>name
-                    value=>
                   load-form
                     name
                   magix.data.load
@@ -418,10 +421,6 @@ magix.forms.create-form
                   magix.ide.active-control-changed
                   magix.forms.set-enabled
                     form-id=>edit-forms
-                    id=>save
-                    value=>false
-                  magix.forms.set-enabled
-                    form-id=>edit-forms
                     id=>delete
                     value=>false
                   magix.log.append
@@ -429,6 +428,10 @@ magix.forms.create-form
                     body=>@"form {0} was deleted"
                   magix.viewport.show-message
                     message=>form deleted
+                  magix.viewport.clear-controls
+                    container=>content6
+                  magix.viewport.clear-controls
+                    container=>content7
 
         select=>widget
           css=>span-5 last
@@ -481,6 +484,8 @@ magix.forms.create-form
           form-id=>edit-forms
           id=>paste
           value=>true
+        magix.viewport.clear-controls
+          container=>content3
         magix.viewport.clear-controls
           container=>content4
         magix.viewport.clear-controls
@@ -548,8 +553,6 @@ in magix""
 link-button=>closepreview
   text=>close preview
   onclick
-    magix.viewport.clear-controls
-      container=>content6
     magix.viewport.clear-controls
       container=>content7
 }}
