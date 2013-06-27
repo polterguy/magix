@@ -380,8 +380,8 @@ will be edited, but not created before saved.&nbsp;&nbsp;not thread safe";
 			{
 				e.Params.Clear();
 				e.Params["event:magix.admin.run-script"].Value = null;
-				e.Params["inspect"].Value = @"runs the [script] given, and tries to set the 
-active event executor to the hyper lisp code given in [script].&nbsp;&nbsp;thread safe";
+				e.Params["inspect"].Value = @"runs the [script] given.
+&nbsp;&nbsp;thread safe";
 				e.Params["script"].Value =  @"
 event:magix.execute
 _data=>thomas
@@ -407,15 +407,7 @@ if=>[_data].Value==thomas
 						"";
 			}
 
-			// try to push code into active event executor, if it exists in page
 			Node tmp = new Node();
-			tmp["code"].Value = txt;
-
-			RaiseActiveEvent(
-				"magix.admin.set-code",
-				tmp);
-
-			tmp = new Node();
 			tmp["code"].Value = wholeTxt;
 
 			RaiseActiveEvent(
