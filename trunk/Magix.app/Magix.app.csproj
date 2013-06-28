@@ -70,6 +70,7 @@
     <Content Include="media\grid\splash.png" />
     <Content Include="media\grid\RaLogo1600x1600.png" />
     <Content Include="media\grid\arrows.png" />
+    <Content Include="system42\web.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Global.asax.cs">
@@ -209,6 +210,7 @@
   <ItemGroup>
     <EmbeddedResource Include="web.config" />
     <EmbeddedResource Include="zigano\public\index-header.mml" />
+    <EmbeddedResource Include="system42\public\index-header.mml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="media\" />
@@ -227,6 +229,16 @@
     <Folder Include="zigano\admin\users\" />
     <Folder Include="zigano\admin\forms\" />
     <Folder Include="zigano\public\" />
+    <Folder Include="system42\" />
+    <Folder Include="system42\admin\" />
+    <Folder Include="system42\misc\" />
+    <Folder Include="system42\pages\" />
+    <Folder Include="system42\public\" />
+    <Folder Include="system42\startup-scripts\" />
+    <Folder Include="system42\admin\desktop\" />
+    <Folder Include="system42\admin\forms\" />
+    <Folder Include="system42\admin\tools\" />
+    <Folder Include="system42\admin\users\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="media\xing-wysihtml5\LICENSE" />
@@ -305,5 +317,33 @@
     <None Include="zigano\admin\forms\edit-property.hl" />
     <None Include="zigano\admin\desktop\menu.mml" />
     <None Include="zigano\startup-scripts\event-server-discovery.hl" />
+    <None Include="system42\index.hl" />
+    <None Include="system42\startup.hl" />
+    <None Include="system42\startup-scripts\event-magix-viewport-show-message-if-help-mode.hl" />
+    <None Include="system42\startup-scripts\events-create-desktop-shortcuts.hl" />
+    <None Include="system42\startup-scripts\event-server-discovery.hl" />
+    <None Include="system42\startup-scripts\test-execute-paths.hl" />
+    <None Include="system42\pages\run-page.hl" />
+    <None Include="system42\misc\settings-initialize.hl" />
+    <None Include="system42\admin\admin-settings.mml" />
+    <None Include="system42\admin\edit-pages.hl" />
+    <None Include="system42\admin\file-browser.hl" />
+    <None Include="system42\admin\roles-grid.hl" />
+    <None Include="system42\admin\server-log-grid.hl" />
+    <None Include="system42\admin\users\edit-single-user.hl" />
+    <None Include="system42\admin\users\users-grid.hl" />
+    <None Include="system42\admin\tools\inspect-events.hl" />
+    <None Include="system42\admin\tools\inspect-execute.hl" />
+    <None Include="system42\admin\tools\inspect-open-events.hl" />
+    <None Include="system42\admin\tools\inspect-overridden-events.hl" />
+    <None Include="system42\admin\tools\inspect-remoted-events.hl" />
+    <None Include="system42\admin\tools\inspect-unit-tests.hl" />
+    <None Include="system42\admin\tools\inspect-web-controls.hl" />
+    <None Include="system42\admin\tools\magix-markup-editor.hl" />
+    <None Include="system42\admin\forms\edit-forms.hl" />
+    <None Include="system42\admin\forms\edit-property.hl" />
+    <None Include="system42\admin\desktop\desktop.mml" />
+    <None Include="system42\admin\desktop\menu.mml" />
+    <None Include="system42\admin\desktop\show-desktop.hl" />
   </ItemGroup>
 </Project>

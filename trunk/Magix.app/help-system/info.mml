@@ -5,7 +5,7 @@ link-button=>lnkunit
   text=>unit tests
   onclick
     magix.admin.run-file
-      file=>zigano/admin/tools/inspect-unit-tests.hl
+      file=>system42/admin/tools/inspect-unit-tests.hl
     magix.viewport.clear-controls
       container=>modal
     magix.tests.run
@@ -15,7 +15,7 @@ link-button=>actevt
   text=>active events
   onclick
     magix.admin.run-file
-      file=>zigano/admin/tools/inspect-events.hl
+      file=>system42/admin/tools/inspect-events.hl
     magix.viewport.clear-controls
       container=>modal
 }}.  active events is what sets magix apart.  active events is the 
@@ -24,7 +24,7 @@ link-button=>linkhyper
   text=>hyper lisp
   onclick
     magix.admin.run-file
-      file=>zigano/admin/tools/inspect-execute.hl
+      file=>system42/admin/tools/inspect-execute.hl
     magix.viewport.clear-controls
       container=>modal
 }}, {{
@@ -35,7 +35,7 @@ link-button=>linkpoly
       next=>help-system/info-2.mml
   onclick
     magix.admin.run-file
-      file=>zigano/admin/tools/inspect-overridden-events.hl
+      file=>system42/admin/tools/inspect-overridden-events.hl
     magix.viewport.clear-controls
       container=>modal
 }}, and the extreme amount of re-use, and flexibility magix fosters</p>

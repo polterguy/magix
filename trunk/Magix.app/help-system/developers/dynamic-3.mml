@@ -22,7 +22,7 @@ link-button=>link
       next=>help-system/developers/dynamic-4.mml
   onclick
     magix.admin.run-file
-      file=>zigano/admin/tools/inspect-execute.hl
+      file=>system42/admin/tools/inspect-execute.hl
     magix.viewport.clear-controls
       container=>modal
 }} for hyper lisp</p>

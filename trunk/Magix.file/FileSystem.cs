@@ -188,7 +188,7 @@ new created.&nbsp;&nbsp;thread safe";
 			if (ShouldInspect(e.Params))
 			{
 				e.Params["event:magix.execute"].Value = null;
-				e.Params["magix.file.list-files"]["directory"].Value = "zigano";
+				e.Params["magix.file.list-files"]["directory"].Value = "system42";
 				e.Params["magix.file.list-files"]["filter"].Value = "*.hl";
 				e.Params["inspect"].Value = @"lists the files in [files] in the given
 [directory], which must be relative to the app's main path.&nbsp;&nbsp;
@@ -222,7 +222,7 @@ use [filter] as a search pattern.&nbsp;&nbsp;thread safe";
 			if (ShouldInspect(e.Params))
 			{
 				e.Params["event:magix.execute"].Value = null;
-				e.Params["magix.file.list-directories"]["directory"].Value = "zigano";
+				e.Params["magix.file.list-directories"]["directory"].Value = "system42";
 				e.Params["magix.file.list-directories"]["filter"].Value = "*s*";
 				e.Params["inspect"].Value = @"lists the directories in [directories] in the given
 [directory], which must be relative to the app's main path.&nbsp;&nbsp;

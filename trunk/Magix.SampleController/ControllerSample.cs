@@ -65,7 +65,7 @@ applications with magix.&nbsp;&nbsp;login at the top of this screen with usernam
 
 			tp = new Node();
 
-			tp["prototype"]["type"].Value = "zigano.travel.user";
+			tp["prototype"]["type"].Value = "system42.travel.user";
 
 			RaiseActiveEvent(
 				"magix.data.load",
@@ -76,7 +76,7 @@ applications with magix.&nbsp;&nbsp;login at the top of this screen with usernam
 				// creating default user ...
 				Node tmp = new Node();
 
-				tmp["object"]["type"].Value = "zigano.travel.user";
+				tmp["object"]["type"].Value = "system42.travel.user";
 				tmp["object"]["username"].Value = "admin";
 				tmp["object"]["pwd"].Value = "admin";
 				tmp["object"]["name"].Value = "John Doe";
@@ -89,7 +89,7 @@ applications with magix.&nbsp;&nbsp;login at the top of this screen with usernam
 			
 			tp = new Node();
 
-			tp["prototype"]["type"].Value = "zigano.travel.role";
+			tp["prototype"]["type"].Value = "system42.travel.role";
 
 			RaiseActiveEvent(
 				"magix.data.load",
@@ -100,7 +100,7 @@ applications with magix.&nbsp;&nbsp;login at the top of this screen with usernam
 				// creating default role ...
 				Node tmp = new Node();
 
-				tmp["object"]["type"].Value = "zigano.travel.role";
+				tmp["object"]["type"].Value = "system42.travel.role";
 				tmp["object"]["name"].Value = "admin";
 
 				RaiseActiveEvent(
@@ -128,7 +128,7 @@ run that hyperlisp file, and nothing else, unless http get parameter 'page' is g
 
 			if (Page.Request.Params["dashboard"] != null)
 			{
-				if (Page.Session["zigano.travel.user"] != null && ((Node)Page.Session["zigano.travel.user"])["roles"].Contains("admin"))
+				if (Page.Session["system42.travel.user"] != null && ((Node)Page.Session["system42.travel.user"])["roles"].Contains("admin"))
 					RaiseActiveEvent("magix.admin.load-start");
 				else
 					RaiseActiveEvent("magix.admin.load-login");
