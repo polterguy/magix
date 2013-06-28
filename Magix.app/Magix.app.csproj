@@ -304,5 +304,6 @@
     <None Include="zigano\admin\forms\edit-forms.hl" />
     <None Include="zigano\admin\forms\edit-property.hl" />
     <None Include="zigano\admin\desktop\menu.mml" />
+    <None Include="zigano\startup-scripts\event-server-discovery.hl" />
   </ItemGroup>
 </Project>
