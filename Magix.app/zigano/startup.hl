@@ -11,7 +11,6 @@ int this event, since it is the equivalent of the starting of application
 pool process"
 
 
-
 magix.file.list-files
   directory=>zigano/startup-scripts
   filter=>*.hl

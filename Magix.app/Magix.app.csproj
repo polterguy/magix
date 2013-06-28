@@ -208,7 +208,6 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="web.config" />
-    <EmbeddedResource Include="zigano\index-header.mml" />
     <EmbeddedResource Include="zigano\public\index-header.mml" />
   </ItemGroup>
   <ItemGroup>

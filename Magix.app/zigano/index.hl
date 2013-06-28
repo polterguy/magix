@@ -1,5 +1,15 @@
+
+
+inspect=>@"file run upon every initial page load request, 
+such as refreshing, or first load from user/machine, etc.&nbsp;&nbsp;
+will create the common header, with the login box and logout logic.&nbsp;&nbsp;
+then depending upon if it is a user logged in, belinging to 
+an admin role, the desktop will be loaded, or the if the user is 
+not an admin, then the run-page.hl script will be executed"
+
+
 magix.forms.create-web-page
-  file=>zigano/index-header.mml
+  file=>zigano/public/index-header.mml
   container=>header
   form-id=>header
   css=>span-24
