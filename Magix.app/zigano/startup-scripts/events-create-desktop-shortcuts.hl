@@ -106,7 +106,7 @@ events, to allow for invoking over http, from other remote machines"
           magix.viewport.clear-controls
             container=>content5
           magix.admin.run-file
-            file=>zigano/admin/users-grid.hl
+            file=>zigano/admin/users/users-grid.hl
           magix.viewport.show-message-if-help-mode
             message=>@"view and edit all users in 
 your system"

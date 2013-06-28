@@ -67,7 +67,7 @@ _dt
             header=>user deleted
             body=>user {0} deleted
           magix.admin.run-file
-            file=>zigano/admin/users-grid.hl
+            file=>zigano/admin/users/users-grid.hl
           magix.viewport.clear-controls
             container=>content3
 
@@ -202,7 +202,7 @@ magix.forms.create-form
                       header=>new user created
                       body=>user {0} created
                     magix.admin.run-file
-                      file=>zigano/admin/users-grid.hl
+                      file=>zigano/admin/users/users-grid.hl
                     magix.admin.run-file
                       file=>zigano/admin/users/edit-single-user.hl
 

@@ -225,6 +225,7 @@
     <Folder Include="zigano\startup-scripts\" />
     <Folder Include="zigano\admin\desktop\" />
     <Folder Include="zigano\admin\users\" />
+    <Folder Include="zigano\admin\forms\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="media\xing-wysihtml5\LICENSE" />
@@ -276,8 +277,6 @@
     <None Include="help-system\tools.mml" />
     <None Include="zigano\index.hl" />
     <None Include="zigano\admin\menu.mml" />
-    <None Include="zigano\admin\users-grid.hl" />
-    <None Include="zigano\admin\edit-single-user.hl" />
     <None Include="zigano\admin\server-log-grid.hl" />
     <None Include="zigano\admin\admin-settings.mml" />
     <None Include="zigano\misc\settings-initialize.hl" />
@@ -304,5 +303,7 @@
     <None Include="zigano\admin\file-browser.hl" />
     <None Include="zigano\admin\users\users-grid.hl" />
     <None Include="zigano\admin\users\edit-single-user.hl" />
+    <None Include="zigano\admin\forms\edit-forms.hl" />
+    <None Include="zigano\admin\forms\edit-property.hl" />
   </ItemGroup>
 </Project>
