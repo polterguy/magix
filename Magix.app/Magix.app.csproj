@@ -209,6 +209,7 @@
   <ItemGroup>
     <EmbeddedResource Include="web.config" />
     <EmbeddedResource Include="zigano\index-header.mml" />
+    <EmbeddedResource Include="zigano\public\index-header.mml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="media\" />
@@ -226,6 +227,7 @@
     <Folder Include="zigano\admin\desktop\" />
     <Folder Include="zigano\admin\users\" />
     <Folder Include="zigano\admin\forms\" />
+    <Folder Include="zigano\public\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="media\xing-wysihtml5\LICENSE" />
@@ -276,7 +278,6 @@
     <None Include="help-system\developers\web.mml" />
     <None Include="help-system\tools.mml" />
     <None Include="zigano\index.hl" />
-    <None Include="zigano\admin\menu.mml" />
     <None Include="zigano\admin\server-log-grid.hl" />
     <None Include="zigano\admin\admin-settings.mml" />
     <None Include="zigano\misc\settings-initialize.hl" />
