@@ -92,7 +92,7 @@ magix.forms.create-form
         css=>span-4 top-1
         onclick
           magix.admin.run-file
-            file=>zigano/admin/edit-property.hl
+            file=>zigano/admin/forms/edit-property.hl
       magix.viewport.clear-controls
         container=>content3
       magix.viewport.clear-controls

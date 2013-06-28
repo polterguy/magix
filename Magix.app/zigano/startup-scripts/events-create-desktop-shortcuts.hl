@@ -301,7 +301,7 @@ installation of magix"
           magix.viewport.clear-controls
             container=>content5
           magix.admin.run-file
-            file=>zigano/admin/edit-forms.hl
+            file=>zigano/admin/forms/edit-forms.hl
           magix.viewport.show-message-if-help-mode
             message=>@"edit web forms within
 your system"

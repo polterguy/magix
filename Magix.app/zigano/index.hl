@@ -12,7 +12,7 @@ magix.admin.run-file
 
 if=>[magix.web.get-session][value][roles][admin]
   magix.forms.create-web-page
-    file=>zigano/admin/menu.mml
+    file=>zigano/admin/desktop/menu.mml
     container=>menu
     form-id=>admin-menu
     css=>span-5

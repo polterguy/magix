@@ -283,8 +283,6 @@
     <None Include="zigano\startup.hl" />
     <None Include="zigano\pages\run-page.hl" />
     <None Include="zigano\admin\edit-pages.hl" />
-    <None Include="zigano\admin\edit-forms.hl" />
-    <None Include="zigano\admin\edit-property.hl" />
     <None Include="zigano\admin\tools\inspect-events.hl" />
     <None Include="zigano\admin\tools\inspect-execute.hl" />
     <None Include="zigano\admin\tools\inspect-open-events.hl" />
@@ -305,5 +303,6 @@
     <None Include="zigano\admin\users\edit-single-user.hl" />
     <None Include="zigano\admin\forms\edit-forms.hl" />
     <None Include="zigano\admin\forms\edit-property.hl" />
+    <None Include="zigano\admin\desktop\menu.mml" />
   </ItemGroup>
 </Project>
