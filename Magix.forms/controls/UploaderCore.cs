@@ -91,7 +91,7 @@ namespace Magix.forms
 [onuploaded] is the event handler";
 			node["container"].Value = "content5";
 			node["form-id"].Value = "sample-form";
-			node["controls"]["uploader"]["folder"].Value = "zigano";
+			node["controls"]["uploader"]["folder"].Value = "system42";
 			base.Inspect(node["controls"]["uploader"]);
 			node["controls"]["uploader"]["onuploaded"].Value = "hyper lisp code";
 		}

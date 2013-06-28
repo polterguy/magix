@@ -1,0 +1,97 @@
+
+event:magix.execute
+
+inspect=>@"Will show a screen of all the 
+active events in the system, and allow 
+the user to inspect them by clicking 
+them"
+
+magix.admin.get-active-events
+  all=>true
+set=>[magix.admin.get-active-events].Name
+  value=>Data
+for-each=>[Data][events]
+  _tpl
+    link-button
+      css=>span-6
+      text
+      onclick
+        void.foo
+          inspect
+        set=>[2][value].Value
+          value=>[0][inspect].Value
+        magix.forms.set-value
+          form-id=>form1
+          id=>desc
+          value
+        set=>[4][value].Value
+          value=>[0].Name
+        magix.forms.set-value
+          form-id=>form1
+          id=>header
+          value
+        set=>[0][inspect]
+        set=>[magix.code.node-2-code][json].Value
+          value=>[0]
+        magix.code.node-2-code
+          json
+        set=>[9][value].Value
+          value=>[magix.code.node-2-code][code].Value
+        magix.forms.set-value
+          form-id=>form1
+          id=>code
+          value
+        set=>[0][inspect].Name
+          value=>inspect
+  set=>[.ip][..][_tpl][link-button][onclick][0].Name
+    value=>[.].Value
+  set=>[.ip][..][_tpl][link-button][text].Value
+    value=>[.].Value
+  add=>[/][cf][controls][panel][controls]
+    value=>[.ip][..][_tpl][link-button]
+set=>[cf][controls][panel2].Name
+  value=>panel
+set=>[cf].Name
+  value=>magix.forms.create-form
+magix.viewport.clear-controls
+  container=>content2
+cf
+  form-id=>form1
+  css=>span-19 last
+  container=>content1
+  controls
+    panel2
+      css=>span-13
+      controls
+        label=>header
+          text=>name of active event
+          css=>span-13
+          tag=>h3
+        label=>code
+          css=>span-13
+          text=>code example
+          tag=>pre
+        button=>run
+          text=>inspect
+          css=>span-2
+          onclick
+            magix.forms.get-value
+              form-id=>form1
+              id=>code
+            set=>[.ip][..][magix.admin.load-executor-code][code].Value
+              value=>[.ip][..][magix.forms.get-value][value].Value
+            magix.admin.load-executor-code
+              event=>magix.execute
+              code
+              css=>span-19 last left-5 bottom-3 top-1
+        label=>lblDesc
+          css=>span-13 top-2
+          tag=>label
+          text=>description
+        label=>desc
+          css=>span-13 bottom-5
+          text=>@"description of your magix active event.&nbsp;&nbsp;
+click any of the active events to the right to inspect them"
+    panel=>wrp
+      css=>span-6 last
+      controls
