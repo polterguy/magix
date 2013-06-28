@@ -69,7 +69,7 @@ _dt2
             header=>user removed from role
             body=>user {0} removed from role {1}
           magix.admin.run-file
-            file=>zigano/admin/edit-single-user.hl
+            file=>zigano/admin/users/edit-single-user.hl
 
 for-each=>[magix.data.load:0][objects][0][roles]
   set=>[/][_dt2][panel][controls][label][text].Value
@@ -190,13 +190,14 @@ magix.forms.create-form
                 header=>user added to role
                 body=>user {0} added to role {1}
               magix.admin.run-file
-                file=>zigano/admin/edit-single-user.hl
+                file=>zigano/admin/users/edit-single-user.hl
           items
             _default=>add role to user ...
 
 magix.forms.set-focus
   form-id=>edit-user
   id=>name
+
 magix.forms.select-all
   form-id=>edit-user
   id=>name
