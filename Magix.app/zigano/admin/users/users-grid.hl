@@ -54,7 +54,7 @@ _dt
         text=>edit
         onclick
           magix.admin.run-file
-            file=>zigano/admin/edit-single-user.hl
+            file=>zigano/admin/users/edit-single-user.hl
       link-button
         css=>span-1 hover-shadow last right z-1 absolute light-red centered
         text=>x
@@ -204,7 +204,7 @@ magix.forms.create-form
                     magix.admin.run-file
                       file=>zigano/admin/users-grid.hl
                     magix.admin.run-file
-                      file=>zigano/admin/edit-single-user.hl
+                      file=>zigano/admin/users/edit-single-user.hl
 
 
 

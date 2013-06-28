@@ -93,6 +93,54 @@ operation.&nbsp;&nbsp;thread safe";
 			}
 		}
 
+		// TODO: make smarter
+		[ActiveEvent(Name = "magix.data.load-distinct")]
+		public static void magix_data_load_distinct(object sender, ActiveEventArgs e)
+		{
+			if (ShouldInspect(e.Params))
+			{
+				e.Params["event:magix.data.load-distinct"].Value = null;
+				e.Params["prototype"]["type"].Value = null;
+				e.Params["inspect"].Value = @"loads the distinct different values 
+of the given prototype, which can contain only one node, signifying which 
+node to load the different distinct values of.
+&nbsp;&nbsp;thread safe";
+				return;
+			}
+
+			if (!e.Params.Contains("prototype"))
+				throw new ArgumentException("need [prototype] and exactly one node path underneath");
+
+			Node prototype = e.Params["prototype"];
+
+			lock (typeof(DataCore))
+			{
+				using (IObjectContainer db = Db4oEmbedded.OpenFile(_dbFile))
+				{
+					db.Ext().Configure().UpdateDepth(1000);
+					db.Ext().Configure().ActivationDepth(1000);
+
+					Dictionary<string, bool> dict = new Dictionary<string, bool>();
+
+					int idxNo = 0;
+					foreach (Storage idx in db.Ext().Query<Storage>(
+						delegate(Storage obj)
+						{
+							return obj.Node.HasNodes(prototype);
+						}))
+					{
+						dict[prototype[0].Name] = true;
+						//e.Params["objects"][idx.Id].ReplaceChildren(idx.Node.Clone());
+					}
+					db.Close();
+					foreach (string idx in dict.Keys)
+					{
+						e.Params["objects"][idx].Value = null;
+					}
+				}
+			}
+		}
+
 		[ActiveEvent(Name = "magix.data.save")]
 		public static void magix_data_save(object sender, ActiveEventArgs e)
 		{
