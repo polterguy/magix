@@ -128,7 +128,7 @@ magix.forms.create-form
               header=>user changed name
               body=>user {0} changed name
             magix.admin.run-file
-              file=>zigano/admin/users-grid.hl
+              file=>zigano/admin/users/users-grid.hl
         text-box=>pwd
           css=>span-5 last
           ontextchanged
@@ -153,7 +153,7 @@ magix.forms.create-form
               body=>user {0} changed password
             magix.data.save
             magix.admin.run-file
-              file=>zigano/admin/users-grid.hl
+              file=>zigano/admin/users/users-grid.hl
     panel=>rolesWrap
       css=>span-5 last
       controls
