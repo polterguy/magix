@@ -65,7 +65,6 @@
     <Content Include="help-system\web.config" />
     <Content Include="media\grid\main.css" />
     <Content Include="media\grid\grid.png" />
-    <Content Include="zigano\web.config" />
     <Content Include="media\grid\start-button.png" />
     <Content Include="media\grid\splash.png" />
     <Content Include="media\grid\RaLogo1600x1600.png" />
@@ -209,7 +208,6 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="web.config" />
-    <EmbeddedResource Include="zigano\public\index-header.mml" />
     <EmbeddedResource Include="system42\public\index-header.mml" />
   </ItemGroup>
   <ItemGroup>
@@ -219,16 +217,7 @@
     <Folder Include="help-system\developers\" />
     <Folder Include="help-system\management\" />
     <Folder Include="help-system\mortal\" />
-    <Folder Include="zigano\" />
     <Folder Include="media\grid\" />
-    <Folder Include="zigano\admin\" />
-    <Folder Include="zigano\misc\" />
-    <Folder Include="zigano\pages\" />
-    <Folder Include="zigano\startup-scripts\" />
-    <Folder Include="zigano\admin\desktop\" />
-    <Folder Include="zigano\admin\users\" />
-    <Folder Include="zigano\admin\forms\" />
-    <Folder Include="zigano\public\" />
     <Folder Include="system42\" />
     <Folder Include="system42\admin\" />
     <Folder Include="system42\misc\" />
@@ -288,35 +277,7 @@
     <None Include="help-system\developers\the-point.mml" />
     <None Include="help-system\developers\web.mml" />
     <None Include="help-system\tools.mml" />
-    <None Include="zigano\index.hl" />
-    <None Include="zigano\admin\server-log-grid.hl" />
-    <None Include="zigano\admin\admin-settings.mml" />
-    <None Include="zigano\misc\settings-initialize.hl" />
-    <None Include="zigano\startup.hl" />
-    <None Include="zigano\pages\run-page.hl" />
-    <None Include="zigano\admin\edit-pages.hl" />
-    <None Include="zigano\admin\tools\inspect-events.hl" />
-    <None Include="zigano\admin\tools\inspect-execute.hl" />
-    <None Include="zigano\admin\tools\inspect-open-events.hl" />
-    <None Include="zigano\admin\tools\inspect-overridden-events.hl" />
-    <None Include="zigano\admin\tools\inspect-remoted-events.hl" />
-    <None Include="zigano\admin\tools\inspect-unit-tests.hl" />
-    <None Include="zigano\admin\tools\inspect-web-controls.hl" />
-    <None Include="zigano\admin\tools\magix-markup-editor.hl" />
-    <None Include="zigano\startup-scripts\events-create-desktop-shortcuts.hl" />
-    <None Include="zigano\startup-scripts\test-execute-paths.hl" />
     <None Include="todo.txt" />
-    <None Include="zigano\startup-scripts\event-magix-viewport-show-message-if-help-mode.hl" />
-    <None Include="zigano\admin\roles-grid.hl" />
-    <None Include="zigano\admin\desktop\desktop.mml" />
-    <None Include="zigano\admin\desktop\show-desktop.hl" />
-    <None Include="zigano\admin\file-browser.hl" />
-    <None Include="zigano\admin\users\users-grid.hl" />
-    <None Include="zigano\admin\users\edit-single-user.hl" />
-    <None Include="zigano\admin\forms\edit-forms.hl" />
-    <None Include="zigano\admin\forms\edit-property.hl" />
-    <None Include="zigano\admin\desktop\menu.mml" />
-    <None Include="zigano\startup-scripts\event-server-discovery.hl" />
     <None Include="system42\index.hl" />
     <None Include="system42\startup.hl" />
     <None Include="system42\startup-scripts\event-magix-viewport-show-message-if-help-mode.hl" />
