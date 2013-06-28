@@ -1,10 +1,17 @@
 
 
+inspect=>@"will create the [magix.viewport.show-message-if-help-mode] active event, 
+which will show a message box, but only if in tutorial mode, otherwise
+it will show nothing"
+
+
 event=>magix.viewport.show-message-if-help-mode
-  inspect=>@"will show the given [message] box, but
+
+  inspect=>@"will show the given [magix.viewport.show-message] box, but
 only if learning mode is on, which can be
 changed in the settings of the system.&nbsp;&nbsp;
 not thread safe"
+
   code
     magix.web.get-session
       key=>stopped-learning
@@ -14,8 +21,4 @@ not thread safe"
           value=>[.]
       magix.viewport.show-message
         time=>-1
-
-
-
-
 

@@ -1,5 +1,12 @@
 
 
+inspect=>@"creates a couple of execute-with-path unit tests, with
+hyper lisp statements.&nbsp;&nbsp;partially to serve as 
+hyper lisp unit tests, partially because they're needed as unit tests, and also because
+they serve as great examples for yourself, in your own code.&nbsp;&nbsp;
+if you wish to create your own unit tests, make sure they're in the 
+magix.test. namespace"
+
 
 event=>magix.test.execute-path-1
   inspect=>@"checks to see if [execute] with path behaves correctly"
@@ -47,8 +54,6 @@ event=>magix.test.execute-path-with-external-exception-handler
 wrong text of exception"
 
 
-
-
 event=>magix.test.execute-with-whitelist-1
   inspect=>@"checks to see if [execute] with [whitelist] behaves correctly"
   code
@@ -57,7 +62,6 @@ event=>magix.test.execute-with-whitelist-1
     execute=>[_exe]
       whitelist
         if
-
 
 
 event=>magix.test.execute-with-empty-whitelist
@@ -76,10 +80,6 @@ event=>magix.test.execute-with-empty-whitelist
 empty whitelist allowed for executing [if]"
 
 
-
-
-
-
 event=>magix.test.execute-with-max-cycles-allowed
   inspect=>@"checks to see if [execute] with [max-cycles] allows when supposed to"
   code
@@ -94,8 +94,6 @@ event=>magix.test.execute-with-max-cycles-allowed
     execute=>[_exe]
       max-cycles=>4
     _out
-
-
 
 
 event=>magix.test.execute-with-max-cycles-exceeded
@@ -126,10 +124,6 @@ didn't correctly change the node hierarchy"
     _out
 
 
-
-
-
-
 event=>magix.test.execute-with-max-cycles-infinite-while
   inspect=>@"checks to see if [execute] with [max-cycles] stops 
 execution when of an infinite while loop"
@@ -149,12 +143,5 @@ execution when of an infinite while loop"
           value=>true
     if=>![_success].Value
       throw=>magix.test.execute-with-max-cycles-infinite-while failed, exception was not thrown
-
-
-
-
-
-
-
 
 
