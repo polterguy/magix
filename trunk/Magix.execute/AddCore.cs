@@ -10,12 +10,12 @@ using Magix.Core;
 namespace Magix.execute
 {
 	/**
-	 * Contains active events for handling "add" keyword
+	 * hyper lisp add logic
 	 */
 	public class AddCore : ActiveController
 	{
-		/**
-		 * Adds the given "value" Node to the Value Expression, which both must be a Node list
+		/*
+		 * add hyper lisp keyword
 		 */
 		[ActiveEvent(Name = "magix.execute.add")]
 		public static void magix_execute_add(object sender, ActiveEventArgs e)
@@ -38,25 +38,30 @@ the entire node will be copied, with its children and sub-nodes.&nbsp;&nbsp;thre
 				return;
 			}
 
-			Node ip = e.Params;
-			if (e.Params.Contains("_ip"))
-				ip = e.Params ["_ip"].Value as Node;
+			if (!e.Params.Contains("_ip") || !(e.Params["_ip"].Value is Node))
+				throw new ArgumentException("you cannot raise [magix.execute.add] directly, except for inspect purposes");
 
-			Node dp = e.Params;
+			Node ip = e.Params ["_ip"].Value as Node;
+
+			Node dp = ip;
 			if (e.Params.Contains("_dp"))
 				dp = e.Params["_dp"].Value as Node;
 
-			string left = ip.Get<string>();
-
 			if (!ip.Contains("value"))
-				throw new ArgumentException("Cannot add a null node, need value Node to declare which node to add");
+				throw new ArgumentException("cannot add a null node, need value node to declare which node to add");
 
 			string right = ip["value"].Get<string>();
+
+			string left = ip.Get<string>();
+
 			Node leftNode = Expressions.GetExpressionValue(left, dp, ip, true) as Node;
 			Node rightNode = Expressions.GetExpressionValue(right, dp, ip, false) as Node;
 
-			if (leftNode == null || rightNode == null)
-				throw new ArgumentException("Both Value and 'value' must return an existing Node-List");
+			if (leftNode == null)
+				throw new ArgumentException("both [add] and [value] must return an existing node-list, [add] value returned null, expression was; " + left);
+
+			if (rightNode == null)
+				throw new ArgumentException("both [add] and [value] must return an existing node-list, [value] node returned null, expression was; " + right);
 
 			leftNode.Add(rightNode.Clone());
 		}

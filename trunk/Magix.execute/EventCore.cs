@@ -9,17 +9,15 @@ using Magix.Core;
 
 namespace Magix.execute
 {
-	/**
-	 * Controller logic for handling magix.execute overrides, where you've
-	 * overridden an Active Event with magix.execute code
+	/*
+	 * hyper lisp event support
 	 */
 	public class EventCore : ActiveController
 	{
 		private static Node _events = new Node();
 
-		/**
-		 * Handled to make sure we map our overridden magix.execute events during
-		 * app startup
+		/*
+		 * creates the associations between existing events in the database, and active event references
 		 */
 		[ActiveEvent(Name = "magix.core.application-startup")]
 		public static void magix_core_application_startup(object sender, ActiveEventArgs e)
@@ -50,14 +48,14 @@ magix.execute blocks of code, are being correctly re-mapped";
 
 					if (idx.Contains("remotable") && idx["remotable"].Get<bool>())
 						ActiveEvents.Instance.MakeRemotable(idx["event"].Get<string>());
+
+					_events[idx["event"].Get<string>()].AddRange(idx["code"].Clone());
 				}
 			}
 		}
 
-		/**
-		 * Creates a new magix.execute Activ Event, which should contain magix.execute keywords,
-		 * which will be raised when your "event" active event is raised. Submit the code
-		 * in the "code" node
+		/*
+		 * event hyper lisp keyword
 		 */
 		[ActiveEvent(Name = "magix.execute.event")]
 		public static void magix_execute_event(object sender, ActiveEventArgs e)
@@ -94,11 +92,16 @@ event will be deleted, if you pass in no [code] block.&nbsp;&nbsp;thread safe";
 				return;
 			}
 
-			Node ip = e.Params;
-			if (e.Params.Contains("_ip"))
-				ip = e.Params["_ip"].Value as Node;
+			if (!e.Params.Contains("_ip") || !(e.Params["_ip"].Value is Node))
+				throw new ArgumentException("you cannot raise [magix.execute.add] directly, except for inspect purposes");
 
-			string activeEvent = ip.Get<string>("");
+			Node ip = e.Params ["_ip"].Value as Node;
+
+			string activeEvent = ip.Get<string>();
+
+			if (string.IsNullOrEmpty(activeEvent))
+				throw new ArgumentException("you cannot create an event without a name in the value of the [event] keyword");
+
 			bool remotable = ip.Contains("remotable") && ip["remotable"].Get<bool>();
 
 			if (ip.Contains("code"))
@@ -134,6 +137,11 @@ event will be deleted, if you pass in no [code] block.&nbsp;&nbsp;thread safe";
 
 				if (remotable)
 					ActiveEvents.Instance.MakeRemotable(activeEvent);
+				else
+					ActiveEvents.Instance.RemoveRemotable(activeEvent);
+
+				_events[activeEvent].Clear();
+				_events[activeEvent].AddRange(ip["code"].Clone());
 			}
 			else
 			{
@@ -148,17 +156,8 @@ event will be deleted, if you pass in no [code] block.&nbsp;&nbsp;thread safe";
 
 				ActiveEvents.Instance.RemoveMapping(activeEvent);
 				ActiveEvents.Instance.RemoveRemotable(activeEvent);
-			}
 
-			if (_events.Contains(activeEvent))
-			{
-				lock (typeof(EventCore))
-				{
-					if (_events.Contains(activeEvent))
-					{
-						_events[activeEvent].UnTie();
-					}
-				}
+				_events[activeEvent].UnTie();
 			}
 		}
 
@@ -199,8 +198,7 @@ event will be deleted, if you pass in no [code] block.&nbsp;&nbsp;thread safe";
 		}
 
 		/**
-		 * Handled to make sure we map our serialized active event overrides, the ones
-		 * overridden with the event keyword
+		 * entry point for hyper lisp created active event overrides
 		 */
 		[ActiveEvent(Name = "magix.execute._active-event-2-code-callback")]
 		public static void magix_data__active_event_2_code_callback(object sender, ActiveEventArgs e)

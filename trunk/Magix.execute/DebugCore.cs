@@ -10,31 +10,13 @@ using Magix.Core;
 
 namespace Magix.execute
 {
-	/**
-	 * Controller logic for the magix.execute programming language in magix, which
-	 * facilitates for creating logic in nodes, such that you can execute logic
-	 * based upon your nodes dynamically
+	/*
+	 * debug logic
 	 */
 	public class DebugCore : ActiveController
 	{
 		/**
-		 * Executes all the children nodes starting with
-		 * a lower case alpha character,
-		 * expecting them to be callable keywords, directly embedded into
-		 * the "magix.execute" namespace, such that they become extensions
-		 * of the execution engine itself. Will internally keep a list
-		 * pointer to where the code/instruction-pointer is, and where the
-		 * data-pointer is, which is relevant for most other execution statements.
-		 * Will ignore all node with Name not starting with a lower case alpha character.
-		 * All child nodes with a name starting with a lower case letter,
-		 * will be raise as "magix.execute" keywords, meaning e.g. "if"
-		 * will become the active event "magix.executor.if", meaning you
-		 * can extend the programming language in Magix itself by adding up 
-		 * new keywords. All active events in the "magix.execute"
-		 * namespace, can be called directly as keywords in magix.execute.
-		 * And in fact, most active events in the magix.execute namespace, 
-		 * such as "if", cannot be called directly, but must be called
-		 * from within a "magix.execute" event code block
+		 * debug hyper lisp keyword
 		 */
 		[ActiveEvent(Name = "magix.execute.debug")]
 		public void magix_execute_debug(object sender, ActiveEventArgs e)
@@ -42,15 +24,16 @@ namespace Magix.execute
 			if (ShouldInspect(e.Params))
 			{
 				e.Params["event:magix.execute"].Value = null;
-				e.Params["inspect"].Value = @"show the entire stack of tree
+				e.Params["inspect"].Value = @"show the entire stack of hyper lisp tree 
 in a modal message box.&nbsp;&nbsp;not thread safe";
 				e.Params["debug"].Value = null;
 				return;
 			}
 
-			Node ip = e.Params;
-			if (e.Params.Contains("_ip"))
-				ip = e.Params ["_ip"].Value as Node;
+			if (!e.Params.Contains("_ip") || !(e.Params["_ip"].Value is Node))
+				throw new ArgumentException("you cannot raise [magix.execute.add] directly, except for inspect purposes");
+
+			Node ip = e.Params ["_ip"].Value as Node;
 
 			Node tmp = new Node();
 

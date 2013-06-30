@@ -45,7 +45,7 @@ _onclick
 choose either before or after as the position of the node"
         time=>1000
 
-for-each=>[/][list-widget-types][types]
+for-each=>[list-widget-types][types]
   if=>![.][_no-embed]
     while=>[/][_buffer].Count>0
       set=>[/][_buffer][0]
@@ -553,6 +553,8 @@ in magix""
 link-button=>closepreview
   text=>close preview
   onclick
+    magix.viewport.clear-controls
+      container=>content6
     magix.viewport.clear-controls
       container=>content7
 }}

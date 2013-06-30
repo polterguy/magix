@@ -39,12 +39,12 @@
     <Compile Include="WhileCore.cs" />
     <Compile Include="IfElseCore.cs" />
     <Compile Include="ForEachCore.cs" />
-    <Compile Include="RaiseCore.cs" />
     <Compile Include="SetCore.cs" />
     <Compile Include="AddCore.cs" />
     <Compile Include="OverrideCore.cs" />
     <Compile Include="StopCore.cs" />
     <Compile Include="DebugCore.cs" />
+    <Compile Include="EventCore.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
