@@ -12,14 +12,13 @@ using Magix.UX.Builder;
 
 namespace Magix.execute
 {
-	/**
-	 * Contains the logic for invoking remote events
+	/*
+	 * remoting hyper lisp support
 	 */
 	public class RemotingCore : ActiveController
 	{
-		/**
-		 * Handled to make sure we map our overridden magix.execute events during
-		 * app startup
+		/*
+		 * remoted hyper lisp support
 		 */
 		[ActiveEvent(Name = "magix.core.application-startup")]
 		public static void magix_core_application_startup(object sender, ActiveEventArgs e)
@@ -64,8 +63,8 @@ are being correctly re-mapped";
 			}
 		}
 
-		/**
-		 * Creates a remote override for any active event in your system
+		/*
+		 * tunnel hyper lisp keyword
 		 */
 		[ActiveEvent(Name = "magix.execute.tunnel")]
 		public static void magix_execute_tunnel(object sender, ActiveEventArgs e)
@@ -86,11 +85,12 @@ within your server, it will be polymorphistically raised, on your
 				return;
 			}
 
-			Node ip = e.Params;
-			if (e.Params.Contains("_ip"))
-				ip = e.Params["_ip"].Value as Node;
+			if (!e.Params.Contains("_ip") || !(e.Params["_ip"].Value is Node))
+				throw new ArgumentException("you cannot raise [magix.execute.tunnel] directly, except for inspect purposes");
 
-			if (ip.Get<string>("") == string.Empty)
+			Node ip = e.Params["_ip"].Value as Node;
+
+			if (string.IsNullOrEmpty(ip.Get<string>()))
 				throw new ArgumentException(
 					@"magix.execute.tunnel needs value, being active event name, to know 
 which event to override to go externally.&nbsp;&nbsp;tunnel cannot override null event handler");
@@ -98,7 +98,7 @@ which event to override to go externally.&nbsp;&nbsp;tunnel cannot override null
 			string url = ip.Contains("url") ? ip["url"].Get<string>() : null;
 			string evt = ip.Get<string>();
 
-			if (url == null)
+			if (string.IsNullOrEmpty(url))
 			{
 				// removing event
 				Node n = new Node();
@@ -129,8 +129,8 @@ which event to override to go externally.&nbsp;&nbsp;tunnel cannot override null
 			}
 		}
 
-		/**
-		 * Allows an event to be remotly invoked within your system
+		/*
+		 * open hyper lisp keyword
 		 */
 		[ActiveEvent(Name = "magix.execute.open")]
 		public static void magix_execute_open(object sender, ActiveEventArgs e)
@@ -149,11 +149,12 @@ server park, or by exposing functionality to other networks.&nbsp;&nbsp;thread s
 				return;
 			}
 
-			Node ip = e.Params;
-			if (e.Params.Contains("_ip"))
-				ip = e.Params["_ip"].Value as Node;
+			if (!e.Params.Contains("_ip") || !(e.Params["_ip"].Value is Node))
+				throw new ArgumentException("you cannot raise [magix.execute.tunnel] directly, except for inspect purposes");
 
-			if (ip.Get<string>("") == string.Empty)
+			Node ip = e.Params["_ip"].Value as Node;
+
+			if (string.IsNullOrEmpty(ip.Get<string>()))
 				throw new ArgumentException("magix.execute.open needs event parameter to know which event to raise externally");
 
 			string evt = ip.Get<string>();
@@ -172,8 +173,8 @@ server park, or by exposing functionality to other networks.&nbsp;&nbsp;thread s
 			ActiveEvents.Instance.MakeRemotable(evt);
 		}
 
-		/**
-		 * Allows an event to NOT be remotly invoked within your system
+		/*
+		 * close hyper lisp support
 		 */
 		[ActiveEvent(Name = "magix.execute.close")]
 		public static void magix_execute_close(object sender, ActiveEventArgs e)
@@ -187,11 +188,12 @@ value, such that it no longer can be remotely invoked from other servers.&nbsp;&
 				return;
 			}
 
-			Node ip = e.Params;
-			if (e.Params.Contains("_ip"))
-				ip = e.Params["_ip"].Value as Node;
+			if (!e.Params.Contains("_ip") || !(e.Params["_ip"].Value is Node))
+				throw new ArgumentException("you cannot raise [magix.execute.tunnel] directly, except for inspect purposes");
 
-			if (ip.Get<string>("") == string.Empty)
+			Node ip = e.Params["_ip"].Value as Node;
+
+			if (string.IsNullOrEmpty(ip.Get<string>()))
 				throw new ArgumentException("magix.execute.open needs event parameter to know which event to raise externally");
 
 			string evt = ip.Get<string>();
@@ -233,14 +235,15 @@ transparently back to the caller, as if it was invoked locally.&nbsp;&nbsp;threa
 				return;
 			}
 
-			Node ip = e.Params;
-			if (e.Params.Contains("_ip"))
-				ip = e.Params["_ip"].Value as Node;
+			if (!e.Params.Contains("_ip") || !(e.Params["_ip"].Value is Node))
+				throw new ArgumentException("you cannot raise [magix.execute.tunnel] directly, except for inspect purposes");
 
-			if (!ip.Contains("url") || ip["url"].Get<string>("") == string.Empty)
+			Node ip = e.Params["_ip"].Value as Node;
+
+			if (!ip.Contains("url") || string.IsNullOrEmpty(ip["url"].Get<string>()))
 				throw new ArgumentException("magix.execute.remote needs url parameter to know which endpoint to go towards");
 
-			if (ip.Get<string>("") == string.Empty)
+			if (string.IsNullOrEmpty(ip.Get<string>()))
 				throw new ArgumentException("magix.execute.remote needs event parameter to know which event to raise externally");
 
 			string url = ip["url"].Get<string>();

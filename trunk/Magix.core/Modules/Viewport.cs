@@ -363,12 +363,6 @@ the [name] node.&nbsp;&nbsp;the incoming parameters will be used.&nbsp;&nbsp;not
 				dyn.CssClass = e.Params["css"].Get<string>();
 
 			dyn.LoadControl(moduleName, context);
-
-			Node node = new Node();
-
-			RaiseEvent(
-				"magix.execute._event-overridden", 
-				node);
         }
 
 		/*

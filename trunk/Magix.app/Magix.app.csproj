@@ -306,5 +306,6 @@
     <None Include="system42\startup-scripts\test-files.hl" />
     <None Include="system42\admin\test-files\test-input-pars.hl" />
     <None Include="system42\startup-scripts\test-events.hl" />
+    <None Include="system42\startup-scripts\magix-admin.hl" />
   </ItemGroup>
 </Project>

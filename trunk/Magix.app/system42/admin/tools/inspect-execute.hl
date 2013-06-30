@@ -7,7 +7,7 @@ the user to inspect them by clicking
 them"
 
 magix.admin.get-active-events
-  begins-with=>magix.execute
+  begins-with=>magix.execute.
 set=>[magix.admin.get-active-events].Name
   value=>Data
 for-each=>[Data][events]
