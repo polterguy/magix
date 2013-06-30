@@ -67,4 +67,19 @@ event=>magix.test.execute.path-with-parameters
       message=>howdy world
     if=>[execute][value].Value!=5
       throw=>value not returned from execute path
+    if=>[execute][message].Value!=howdy world
+      throw=>value not returned input nodes from execute path
 
+event=>magix.test.execute.with-without-period
+  inspect=>@"verifies that [execute] versus [magix.execute] 
+correctly chops up node tree"
+  code
+    _dt=>test
+    _exe1
+      if=>[/][_dt].Value!=test
+        throw=>_exe1 failed
+    _exe2
+      if=>[/][_dt].Value==test
+        throw=>_exe2 failed
+    execute=>[_exe1]
+    magix.execute=>[_exe2]
