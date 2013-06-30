@@ -289,6 +289,12 @@ thread safe";
 			RaiseActiveEvent(
 				method, 
 				tmp);
+
+			if (tmp.Contains("$"))
+			{
+				e.Params["$"].UnTie();
+				e.Params.Add(tmp["$"]);
+			}
 		}
 
 		

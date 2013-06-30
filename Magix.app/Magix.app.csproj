@@ -224,6 +224,7 @@
     <Folder Include="system42\admin\forms\" />
     <Folder Include="system42\admin\tools\" />
     <Folder Include="system42\admin\users\" />
+    <Folder Include="system42\admin\test-files\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="media\xing-wysihtml5\LICENSE" />
@@ -302,5 +303,7 @@
     <None Include="system42\admin\desktop\desktop.mml" />
     <None Include="system42\admin\desktop\menu.mml" />
     <None Include="system42\admin\desktop\show-desktop.hl" />
+    <None Include="system42\startup-scripts\test-files.hl" />
+    <None Include="system42\admin\test-files\test-input-pars.hl" />
   </ItemGroup>
 </Project>
