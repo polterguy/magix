@@ -1,15 +1,19 @@
 
 
 inspect=>@"creates unit tests for testing execution 
-of files"
+of inline script"
 
-event=>magix.test.run-file-with-parameters
-  inspect=>@"verifies that running a file 
+event=>magix.test.run-script-with-parameters
+  inspect=>@"verifies that running a script 
 with parameters, both input and output, is behaving
 correctly"
   code
-    magix.admin.run-file
-      file=>system42/admin/test-files/test-input-pars.hl
+    magix.admin.run-script
+      script=>@"
+if=>[$][mumbo].Value!=howdy
+  throw=>input parameter not accessible in file
+set=>[$][jumbo].Value
+  value=>5"
       mumbo=>howdy
     if=>[magix.admin.run-file][mumbo].Value!=howdy
       throw=>input value not returned

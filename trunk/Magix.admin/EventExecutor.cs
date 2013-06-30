@@ -134,22 +134,17 @@ thread safe";
 
 			string file = e.Params["file"].Get<string>();
 
-			string txt = "";
-			using (TextReader reader = File.OpenText(HttpContext.Current.Server.MapPath(file)))
-			{
-				txt = reader.ReadToEnd();
-			}
+			Node fn = new Node();
+
+			fn["path"].Value = file;
+
+			RaiseActiveEvent(
+				"magix.file.load",
+				fn);
+
+			string txt = fn["file"].Get<string>();
 
 			string wholeTxt = txt.TrimStart();
-			string method = "magix.execute";
-			if (wholeTxt.StartsWith("event:"))
-			{
-				method = wholeTxt.Split (':')[1];
-				method = method.Substring(0, method.Contains("\n") ? method.IndexOf("\n") : method.Length);
-				wholeTxt = wholeTxt.Contains("\n") ? 
-					wholeTxt.Substring(wholeTxt.IndexOf("\n")).TrimStart() : 
-						"";
-			}
 
 			Node tmp = new Node();
 			tmp["code"].Value = wholeTxt;
@@ -168,7 +163,7 @@ thread safe";
 			}
 
 			RaiseActiveEvent(
-				method, 
+				"magix.execute", 
 				tmp);
 
 			if (tmp.Contains("$"))
@@ -177,87 +172,7 @@ thread safe";
 				e.Params.Add(tmp["$"]);
 			}
 		}
-
 		
-		/*
-		 * edit ascii files
-		 */
-		[ActiveEvent(Name = "magix.admin.edit-file")]
-		public void magix_admin_edit_file(object sender, ActiveEventArgs e)
-		{
-			if (ShouldInspect(e.Params))
-			{
-				e.Params.Clear();
-				e.Params["event:magix.admin.edit-file"].Value = null;
-				e.Params["inspect"].Value = @"attempts to open the given [file]
-in whatever editor makes sense according to its extension, or download directly in browser 
-if none.&nbsp;&nbsp;if file doesn't exist, an empty file 
-will be edited, but not created before saved.&nbsp;&nbsp;not thread safe";
-				e.Params["file"].Value = "media/grid/main.css";
-				e.Params["css"].Value = "css classes of editor";
-				e.Params["container"].Value = "content5";
-				return;
-			}
-
-			if (!e.Params.Contains("file"))
-				throw new ArgumentException("need [file] parameter");
-
-			string file = e.Params["file"].Get<string>();
-
-			string extension = file.Substring(file.LastIndexOf('.') + 1);
-
-			switch (extension)
-			{
-			case "txt":
-			case "cs":
-			case "hl":
-			case "mml":
-			case "csproj":
-			case "config":
-			case "html":
-			case "htm":
-			case "css":
-			case "aspx":
-			case "ascx":
-			case "asax":
-			case "js":
-			{
-				if (!e.Params.Contains("container"))
-					throw new ArgumentException("edit-file needs [container]");
-
-				Node tmp = new Node();
-				tmp["file"].Value = file;
-
-				if (File.Exists(Page.Server.MapPath(file)))
-				{
-					using (TextReader reader = File.OpenText(file))
-					{
-						tmp["content"].Value = reader.ReadToEnd();
-					}
-				}
-				else
-					tmp["content"].Value = "";
-
-				if (e.Params.Contains("css"))
-					tmp["css"].Value = e.Params["css"].Value;
-
-				LoadModule(
-					"Magix.ide.AsciiEditor", 
-					e.Params["container"].Get<string>(), 
-					tmp);
-			} break;
-			default:
-			{
-				Node tmp = new Node();
-				tmp["script"].Value = "window.open('" + file + "', '_blank').focus();";
-
-				RaiseActiveEvent(
-					"magix.viewport.execute-javascript",
-					tmp);
-			} break;
-			}
-		}
-
 		/*
 		 * executes script
 		 */
@@ -285,15 +200,6 @@ if=>[_data].Value==thomas
 			string txt = e.Params["script"].Get<string>();
 
 			string wholeTxt = txt.TrimStart();
-			string method = "";
-			if (wholeTxt.StartsWith("event:"))
-			{
-				method = wholeTxt.Split (':')[1];
-				method = method.Substring(0, method.Contains("\n") ? method.IndexOf("\n") : method.Length);
-				wholeTxt = wholeTxt.Contains("\n") ? 
-					wholeTxt.Substring(wholeTxt.IndexOf("\n")).TrimStart() : 
-						"";
-			}
 
 			Node tmp = new Node();
 			tmp["code"].Value = wholeTxt;
@@ -302,9 +208,22 @@ if=>[_data].Value==thomas
 				"magix.code.code-2-node",
 				tmp);
 
+			foreach (Node idx in e.Params)
+			{
+				if (idx.Name == "file")
+					continue;
+				tmp["$"].Add(idx.Clone());
+			}
+
 			RaiseActiveEvent(
-				method, 
+				"magix.execute", 
 				tmp["json"].Get<Node>());
+
+			if (tmp.Contains("$"))
+			{
+				e.Params["$"].UnTie();
+				e.Params.Add(tmp["$"]);
+			}
 		}
 	}
 }
