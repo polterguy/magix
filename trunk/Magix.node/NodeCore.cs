@@ -8,7 +8,7 @@ using System;
 using System.IO;
 using Magix.Core;
 
-namespace Magix.node
+namespace Magix.execute
 {
 	public class NodeCore : ActiveController
 	{

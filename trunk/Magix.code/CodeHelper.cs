@@ -10,7 +10,7 @@ using System.IO;
 using System.Threading;
 using Magix.Core;
 
-namespace Magix.execute
+namespace Magix.code
 {
 	/**
 	 * Helps you to transform Nodes back and forth between code syntax, which

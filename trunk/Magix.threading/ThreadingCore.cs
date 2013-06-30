@@ -10,7 +10,7 @@ using System.Threading;
 using System.Collections.Generic;
 using Magix.Core;
 
-namespace Magix.threading
+namespace Magix.execute
 {
 	/**
 	 * Contains logic for creating and manipulating new system threads, aka; Forks
