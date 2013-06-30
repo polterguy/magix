@@ -79,7 +79,35 @@ correctly chops up node tree"
       if=>[/][_dt].Value!=test
         throw=>_exe1 failed
     _exe2
-      if=>[/][_dt].Value==test
+      _dt=>not-root
+      if=>[/][_dt].Value!=not-root
         throw=>_exe2 failed
     execute=>[_exe1]
     magix.execute=>[_exe2]
+
+event=>magix.test.execute.with-without-period-2
+  inspect=>@"verifies that [execute] versus [magix.execute] 
+correctly chops up node tree"
+  code
+    _exe1
+      _dt=>5
+      execute
+        set=>[@][..][_dt].Value
+          value=>6
+      if=>[_dt].Value!=6
+        throw=>set inside of execute didn't work
+    execute=>[_exe1]
+    _exe2
+      _dt=>5
+      execute
+        set=>[@][..][_dt].Value
+          value=>6
+      if=>[_dt].Value!=6
+        throw=>set inside of execute didn't work
+    magix.execute=>[_exe2]
+    if=>[_exe1][_dt].Value!=6
+      throw=>node not correctly changed by [execute]
+    if=>[_exe2][_dt].Value!=5
+      throw=>node not correctly changed by [execute]
+    
+
