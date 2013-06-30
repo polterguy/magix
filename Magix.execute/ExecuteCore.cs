@@ -69,10 +69,23 @@ thread safe";
 		{
 			if (ShouldInspect(e.Params))
 			{
-				e.Params["inspect"].Value = @"internally used by keywords developers,
-see for instance how magix.execute.if is implemented in c# to understand 
-this active event";
-				e.Params["no-sample-code"].Value = null;
+				e.Params["event:magix.execute"].Value = null;
+				e.Params["inspect"].Value = @"executes the incoming parameters 
+as hyper lisp, meaning it will raise everything containing a '.', 
+while everything not starting with a '_' will be assumed to be a hyper lisp 
+keyword, and appended behind 'magix.execute.', before that string is raised as an active event.&nbsp;&nbsp;
+a hyper lisp keyword will have access to the entire data tree, while a normal active 
+event will get a deep copy of the tree underneath its own node.&nbsp;&nbsp;
+if the [magix.execute]/[execute]/root-node has a value, it will be expected to 
+be an expression referencing another node, which will be executed instead of the 
+incoming parameter nodes.&nbsp;&nbsp;
+thread safe";
+				e.Params["_data"]["value"].Value = "thomas";
+				e.Params["if"].Value = "[_data][value].Value==thomas";
+				e.Params["if"]["magix.viewport.show-message"].Value = null;
+				e.Params["if"]["magix.viewport.show-message"]["message"].Value = "hi thomas";
+				e.Params["else"]["magix.viewport.show-message"].Value = null;
+				e.Params["else"]["magix.viewport.show-message"]["message"].Value = "hi stranger";
 				return;
 			}
 

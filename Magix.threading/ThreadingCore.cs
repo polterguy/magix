@@ -119,7 +119,7 @@ might have.&nbsp;&nbsp;not thread safe";
 				e.Params["inspect"].Value = @"will wait for multiple treads to finish.&nbsp;&nbsp;
 all [fork] blocks created underneath [wait], will have to be finished, before the 
 execution will leave the [wait] block.&nbsp;&nbsp;you can optionally set a maximum number 
-of milliseconds, before the wait is dismissed as an integer value of [set].&nbsp;&nbsp;thread safe";
+of milliseconds, before the wait is dismissed as an integer value of [wait].&nbsp;&nbsp;thread safe";
 				return;
 			}
 

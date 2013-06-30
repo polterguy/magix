@@ -41,7 +41,7 @@ the entire node will be copied, with its children and sub-nodes.&nbsp;&nbsp;thre
 			if (!e.Params.Contains("_ip") || !(e.Params["_ip"].Value is Node))
 				throw new ArgumentException("you cannot raise [magix.execute.add] directly, except for inspect purposes");
 
-			Node ip = e.Params ["_ip"].Value as Node;
+			Node ip = e.Params["_ip"].Value as Node;
 
 			Node dp = ip;
 			if (e.Params.Contains("_dp"))
