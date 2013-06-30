@@ -129,10 +129,6 @@
       <Project>{40E6B621-1424-4A4C-9349-EB5C8FCD7D10}</Project>
       <Name>Magix.tests</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Magix.remoting\Magix.remoting.csproj">
-      <Project>{AC81B6B6-15A1-40F2-98E4-5ACC23BB27C3}</Project>
-      <Name>Magix.remoting</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Magix.file\Magix.file.csproj">
       <Project>{F357EB84-40B4-4B9F-AFC0-DF7EEBFBAF82}</Project>
       <Name>Magix.file</Name>
