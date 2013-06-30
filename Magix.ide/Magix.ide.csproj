@@ -36,6 +36,7 @@
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="Surface.ascx.cs" />
     <Compile Include="AsciiEditor.ascx.cs" />
+    <Compile Include="IdeCore.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
