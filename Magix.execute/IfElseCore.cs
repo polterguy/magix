@@ -9,23 +9,13 @@ using Magix.Core;
 
 namespace Magix.execute
 {
-	/**
-	 * Controller for "magix.execute.if/else-if/else" logic
+	/*
+	 * if/else-if/else hyper lisp active events
 	 */
 	public class IfElseCore : ActiveController
 	{
-		/**
-		 * Checks to see if the current 
-		 * statement is returning true, and if so, executes the underlaying nodes
-		 * as code, through "magix.execute", expecting them to be keywords to
-		 * the execution engine. You can either compare a node expression
-		 * with another node expression, a node expression with a
-		 * constant value or a single node expression for existence of 
-		 * Node itself, Value or Name. Operators you can use are '!=', '==', '>=',
-		 * '<=', '>' and '<' when comparing two nodes or one node and 
-		 * a constant, and '!' in front of operator if only one 
-		 * expression is given to check for existence to negate the value.
-		 * Functions as a "magix.execute" keyword
+		/*
+		 * if implementation
 		 */
 		[ActiveEvent(Name = "magix.execute.if")]
 		public static void magix_execute_if(object sender, ActiveEventArgs e)
@@ -52,19 +42,8 @@ statements will be executed.&nbsp;&nbsp;thread safe";
 				"magix.execute.if");
 		}
 
-		/**
-		 * If no previous "if" statement,
-		 * or "else-if" statement has returned true, will check to see if the current 
-		 * statement is returning true, and if so, executes the underlaying nodes
-		 * as code through "magix.execute", expecting them to be keywords to
-		 * the execution engine. You can either compare a node expression
-		 * with another node expression, a node expression with a
-		 * constant value or a single node expression for existence of 
-		 * Node itself, Value or Name. Operators you can use are '!=', '==', '>=',
-		 * '<=', '>' and '<' when comparing two nodes or one node and 
-		 * a constant, and '!' in front of operator if only one 
-		 * expression is given to check for existence to negate the value.
-		 * Functions as a "magix.execute" keyword
+		/*
+		 * else-if implementation
 		 */
 		[ActiveEvent(Name = "magix.execute.else-if")]
 		public static void magix_execute_else_if(object sender, ActiveEventArgs e)
@@ -84,25 +63,53 @@ returns true.&nbsp;&nbsp;thread safe";
 				return;
 			}
 			
-			Node ip = e.Params;
-			if (e.Params.Contains("_ip"))
-				ip = e.Params["_ip"].Value as Node;
+			if (!e.Params.Contains("_ip") || !(e.Params["_ip"].Value is Node))
+				throw new ArgumentException("you cannot raise [magix.execute.else-if] directly, except for inspect purposes");
+
+			Node ip = e.Params["_ip"].Value as Node;
 
 			// Checking to see if a previous "if" or "else-if" statement has returned true
-			if (ip.Parent != null &&
-			    ip.Parent["_state"].Get<bool>())
+			if (ip.Parent.Contains("_state_if") &&
+			    ip.Parent["_state_if"].Get<bool>())
 				return;
 
 			IfImplementation(
 				e.Params, 
 				"magix.execute.else-if");
 		}
+		
+		// Private helper, implementation for both "if" and "else-if" ...
+		private static void IfImplementation (Node pars, string evt)
+		{
+			if (!pars.Contains("_ip") || !(pars["_ip"].Value is Node))
+				throw new ArgumentException("you cannot raise [" + evt + "] directly, except for inspect purposes");
 
-		/**
-		 * If no previous "if" statement,
-		 * or "else-if" statement has returned true, execute the underlaying nodes
-		 * as code through "magix.execute", expecting them to be keywords to
-		 * the execution engine. Functions as a "magix.execute" keyword
+			Node ip = pars["_ip"].Value as Node;
+
+			Node dp = ip;
+			if (pars.Contains("_dp"))
+				dp = pars["_dp"].Value as Node;
+
+			string expr = ip.Value as string;
+
+			if (string.IsNullOrEmpty(expr))
+				throw new ArgumentException("You cannot have an empty [" + evt + "] statement");
+
+			if (Expressions.IsTrue(expr, ip, dp))
+			{
+				// Making sure statement returns "true"
+				ip.Parent["_state_if"].Value = true;
+
+				RaiseActiveEvent(
+					"magix._execute", 
+					pars);
+			}
+			else
+				ip.Parent["_state_if"].UnTie();
+		}
+
+		/*
+		 * else implementation
 		 */
 		[ActiveEvent(Name = "magix.execute.else")]
 		public static void magix_execute_else(object sender, ActiveEventArgs e)
@@ -119,73 +126,20 @@ has returned true.&nbsp;&nbsp;thread safe";
 				return;
 			}
 
-			Node ip = e.Params;
-			if (e.Params.Contains("_ip"))
-				ip = e.Params["_ip"].Value as Node;
+			if (!e.Params.Contains("_ip") || !(e.Params["_ip"].Value is Node))
+				throw new ArgumentException("you cannot raise [magix.execute.else-if] directly, except for inspect purposes");
+
+			Node ip = e.Params["_ip"].Value as Node;
 
 			// Checking to see if a previous "if" or "else-if" statement has returned true
-			if (ip.Parent != null &&
-			    ip.Parent["_state"].Get<bool>())
+			if (ip.Parent.Contains("_state_if") &&
+			    ip.Parent["_state_if"].Get<bool>())
 				return;
 
-			Node dp = e.Params;
-			if (e.Params.Contains("_dp"))
-				dp = e.Params["_dp"].Value as Node;
-
-			Node node = new Node("magix.execute.else");
-
-			node["_ip"].Value = ip;
-			node["_dp"].Value = dp;
-			if (e.Params.Contains("_whitelist"))
-				node["_whitelist"].Value = e.Params["_whitelist"].Value;
-			if (e.Params.Contains("_max-cycles"))
-				node["_max-cycles"].Value = e.Params["_max-cycles"].Value;
 
 			RaiseActiveEvent(
-				"magix.execute", 
-				node);
-		}
-
-		// Private helper, implementation for both "if" and "else-if" ...
-		private static void IfImplementation (Node pars, string evt)
-		{
-			Node ip = pars;
-			if (pars.Contains("_ip"))
-				ip = pars["_ip"].Value as Node;
-
-			Node dp = pars;
-			if (pars.Contains("_dp"))
-				dp = pars["_dp"].Value as Node;
-
-			if (ip.Parent == null)
-				throw new ApplicationException("Cannot have an if statement without a parent node");
-
-			// Defaulting if statement to return "false"
-			ip.Parent ["_state"].Value = false;
-
-			string expr = ip.Value as string;
-
-			if (string.IsNullOrEmpty (expr))
-				throw new ArgumentException ("You cannot have an empty if/else-if statement");
-
-			if (Expressions.IsTrue(expr, ip, dp))
-			{
-				// Making sure statement returns "true"
-				if (ip.Parent != null)
-					ip.Parent["_state"].Value = true;
-
-				Node tmp = new Node(evt);
-				tmp["_ip"].Value = ip;
-				tmp["_dp"].Value = dp;
-				if (pars.Contains("_whitelist"))
-					tmp["_whitelist"].Value = pars["_whitelist"].Value;
-				if (pars.Contains("_max-cycles"))
-					tmp["_max-cycles"].Value = pars["_max-cycles"].Value;
-
-				RaiseActiveEvent(
-					"magix.execute", 
-					tmp);
-			}
+				"magix._execute", 
+				e.Params);
 		}
 	}
 }

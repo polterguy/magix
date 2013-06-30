@@ -9,26 +9,13 @@ using Magix.Core;
 
 namespace Magix.execute
 {
-	/**
-	 * Contains logic for the "raise" keyword
+	/*
+	 * raise hyper lisp keyword
 	 */
 	public class RaiseCore : ActiveController
 	{
-		/**
-		 * Will raise the current node's Value
-		 * as an active event, passing in the 
-		 * parameters child collection. Functions as a "magix.execute"
-		 * keyword. If "no-override" is true, then it won't check
-		 * to see if the method is mapped through overriding. Which
-		 * is useful for having 'calling base functionality', among 
-		 * other things. For instance, if you've overridden 'foo'
-		 * to raise 'bar', then inside of 'bar' you can raise 'foo'
-		 * again, but this time with "no-override" set to False,
-		 * which will then NOT call 'bar', which would if occurred,
-		 * create a never ending loop. This makes it possible for
-		 * you to have overridden active events call their overridden
-		 * event, such that you can chain together active events, in
-		 * a hierarchy of overridden events
+		/*
+		 * raise hyper lisp keyword
 		 */
 		[ActiveEvent(Name = "magix.execute.raise")]
 		public static void magix_execute_raise(object sender, ActiveEventArgs e)

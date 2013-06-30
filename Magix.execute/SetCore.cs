@@ -9,16 +9,13 @@ using Magix.Core;
 
 namespace Magix.execute
 {
-	/**
-	 * Contains logic for the "set" keyword
+	/*
+	 * hyper lisp set keyword
 	 */
 	public class SetCore : ActiveController
 	{
-		/**
-		 * Sets given node to either the constant value
-		 * of the Value of the child node called "value", a node expression found 
-		 * in Value "value", or the children nodes of the "value" child, if the 
-		 * left hand parts returns a node. Functions as a "magix.execute" keyword
+		/*
+		 * hyepr lisp set keyword
 		 */
 		[ActiveEvent(Name = "magix.execute.set")]
 		public static void magix_execute_set(object sender, ActiveEventArgs e)
@@ -45,11 +42,12 @@ to multiply, divide, add and subtract the [value] expression.
 				return;
 			}
 
-			Node ip = e.Params;
-			if (e.Params.Contains("_ip"))
-				ip = e.Params ["_ip"].Value as Node;
+			if (!e.Params.Contains("_ip") || !(e.Params["_ip"].Value is Node))
+				throw new ArgumentException("you cannot raise [magix.execute.set] directly, except for inspect purposes");
 
-			Node dp = e.Params;
+			Node ip = e.Params["_ip"].Value as Node;
+
+			Node dp = ip;
 			if (e.Params.Contains("_dp"))
 				dp = e.Params["_dp"].Value as Node;
 

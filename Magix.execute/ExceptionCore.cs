@@ -9,8 +9,8 @@ using Magix.Core;
 
 namespace Magix.execute
 {
-	/**
-	 * Contains active events for handling of exceptions
+	/*
+	 * exception hyper lisp logic
 	 */
 	public class ExceptionCore : ActiveController
 	{
@@ -21,10 +21,8 @@ namespace Magix.execute
 			{ }
 		}
 
-		/**
-		 * Creates a try block, with an associated code block, and a catch block,
-		 * which will be invoked if an exception is thrown. The catch statement
-		 * will only be invoked if an exception is thrown
+		/*
+		 * creates a try block
 		 */
 		[ActiveEvent(Name = "magix.execute.try")]
 		public static void magix_execute_try(object sender, ActiveEventArgs e)
@@ -51,61 +49,49 @@ statement.&nbsp;&nbsp;thread safe";
 				e.Params["try"]["catch"]["magix.viewport.show-message"].Value = null;
 				return;
 			}
-			Node ip = e.Params;
-			if (e.Params.Contains("_ip"))
-				ip = e.Params["_ip"].Value as Node;
 
-			Node dp = e.Params;
-			if (e.Params.Contains("_dp"))
-				dp = e.Params["_dp"].Value as Node;
+			if (!e.Params.Contains("_ip") || !(e.Params["_ip"].Value is Node))
+				throw new ArgumentException("you cannot raise [magix.execute.try] directly, except for inspect purposes");
 
-			Node whitelist = null;
-			if (e.Params.Contains("_whitelist"))
-				whitelist = e.Params["_whitelist"].Value as Node;
-
-			Node maxCycles = null;
-			if (e.Params.Contains("_max-cycles"))
-				whitelist = e.Params["_max-cycles"].Value as Node;
+			Node ip = e.Params["_ip"].Value as Node;
 
 			if (!ip.Contains("code"))
-				throw new ApplicationException("No code block inside of try statement");
+				throw new ApplicationException("you need a [code] block inside your [try] statement, which is supposed to contain the tried code");
 
 			if (!ip.Contains("catch"))
-				throw new ApplicationException("No catch block inside of try statement");
+				throw new ApplicationException("you need a [catch] block inside your [try] statement");
+
+			object oldIp = e.Params["_ip"].Value;
+
+			e.Params["_ip"].Value = ip["code"];
 
 			try
 			{
-				Node tmp = new Node();
-				tmp["_ip"].Value = ip["code"];
-				if(dp != null)
-					tmp["_dp"].Value = dp;
-				if (whitelist != null)
-					tmp["_whitelist"].Value = whitelist;
-				if (maxCycles != null)
-					tmp["_max-cycles"].Value = maxCycles;
-
 				RaiseActiveEvent(
-					"magix.execute",
-					tmp);
+					"magix._execute",
+					e.Params);
 			}
 			catch (Exception err)
 			{
 				while (err.InnerException != null)
 					err = err.InnerException;
 
-				if (ip["code"].Contains("_state"))
-					ip["code"]["_state"].UnTie();
-
 				ip["catch"]["exception"].Value = err.Message;
+				e.Params["_ip"].Value = ip["catch"];
 
 				RaiseActiveEvent(
-					"magix.execute",
-					ip["catch"]);
+					"magix._execute",
+					e.Params);
+			}
+			finally
+			{
+				if (oldIp != null)
+					e.Params["_ip"].Value = oldIp;
 			}
 		}
 
-		/**
-		 * Throws an exception with the Value descriptive message
+		/*
+		 * throw support
 		 */
 		[ActiveEvent(Name = "magix.execute.throw")]
 		public static void magix_execute_throw(object sender, ActiveEventArgs e)
@@ -125,9 +111,11 @@ value of the [throw] node.&nbsp;&nbsp;use together with
 				e.Params["try"]["catch"]["magix.viewport.show-message"].Value = null;
 				return;
 			}
-			Node ip = e.Params;
-			if (e.Params.Contains("_ip"))
-				ip = e.Params ["_ip"].Value as Node;
+
+			if (!e.Params.Contains("_ip") || !(e.Params["_ip"].Value is Node))
+				throw new ArgumentException("you cannot raise [magix.execute.throw] directly, except for inspect purposes");
+
+			Node ip = e.Params["_ip"].Value as Node;
 
 			throw new ExceptionCore.ManagedHyperLispException(ip.Get<string>());
 		}

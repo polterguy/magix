@@ -25,3 +25,12 @@ _exe
       time=>-1
 execute=>[_exe]
   message=>howdy
+
+* get rid of ControllerSample, or leave it as an empty project template
+
+* implement confirm on delete user and role
+
+* figure out of magix.execute.override is necessary, since there is magix.execute.event ...?
+
+
+

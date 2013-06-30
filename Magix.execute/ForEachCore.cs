@@ -10,17 +10,13 @@ using Magix.Core;
 
 namespace Magix.execute
 {
-	/**
-	 * Contains logic for "for-each" keyword
+	/*
+	 * for-each hyper lisp keyword
 	 */
 	public class ForEachCore : ActiveController
 	{
-		/**
-		 * Will loop through all the given 
-		 * node's Value Expression, and execute the underlaying code, once for 
-		 * all nodes in the returned expression, with the Data-Pointer pointing
-		 * to the index node currently being looped through. Is a "magix.execute"
-		 * keyword. Functions as a "magix.execute" keyword
+		/*
+		 * for-each hyper lisp keyword
 		 */
 		[ActiveEvent(Name = "magix.execute.for-each")]
 		public static void magix_execute_for_each(object sender, ActiveEventArgs e)
@@ -48,37 +44,37 @@ the currently iterated node.&nbsp;&nbsp;thread safe";
 				return;
 			}
 
-			Node ip = e.Params;
-			if (e.Params.Contains("_ip"))
-				ip = e.Params ["_ip"].Value as Node;
+			if (!e.Params.Contains("_ip") || !(e.Params["_ip"].Value is Node))
+				throw new ArgumentException("you cannot raise [magix.execute.for-each] directly, except for inspect purposes");
 
-			Node dp = e.Params;
+			Node ip = e.Params["_ip"].Value as Node;
+
+			Node dp = ip;
 			if (e.Params.Contains("_dp"))
 				dp = e.Params["_dp"].Value as Node;
 
-			if (Expressions.IsTrue(ip.Get<string>(), ip, dp))
+			Node tmp = Expressions.GetExpressionValue(ip.Get<string>(), dp, ip, false) as Node;
+
+
+			if (tmp != null)
 			{
-				Node tmp = Expressions.GetExpressionValue(ip.Get<string>(), dp, ip, false) as Node;
+				object oldDp = e.Params.Contains("_dp") ? e.Params["_dp"].Value : null;
 
-				for (int idxNo = 0; idxNo < tmp.Count; idxNo++)
+				try
 				{
-					Node idx = tmp[idxNo];
-					Node tmp2 = new Node();
-					tmp2["_ip"].Value = ip;
-					tmp2["_dp"].Value = idx;
+					for (int idxNo = 0; idxNo < tmp.Count; idxNo++)
+					{
+						e.Params["_dp"].Value = tmp[idxNo];
 
-					if (e.Params.Contains("_whitelist"))
-						tmp2["_whitelist"].Value = e.Params["_whitelist"].Value;
-					if (e.Params.Contains("_max-cycles"))
-						tmp2["_max-cycles"].Value = e.Params["_max-cycles"].Value;
-
-					RaiseActiveEvent(
-						"magix.execute", 
-						tmp2);
-
-					// Checking to see if we need to halt execution
-					if (ip.Contains("_state") && ip["_state"].Get<string>() == "stop")
-						break;
+						RaiseActiveEvent(
+							"magix._execute", 
+							e.Params);
+					}
+				}
+				finally
+				{
+					if (oldDp != null)
+						e.Params["_dp"].Value = oldDp;
 				}
 			}
 		}

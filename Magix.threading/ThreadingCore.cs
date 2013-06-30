@@ -49,26 +49,14 @@ might have.&nbsp;&nbsp;not thread safe";
 				return;
 			}
 
-			Node ip = e.Params;
-			if (e.Params.Contains("_ip"))
-				ip = e.Params ["_ip"].Value as Node;
+			if (!e.Params.Contains("_ip") || !(e.Params["_ip"].Value is Node))
+				throw new ArgumentException("you cannot raise [magix.execute.set] directly, except for inspect purposes");
 
-			Node dp = e.Params;
-			if (e.Params.Contains("_dp"))
-				dp = e.Params["_dp"].Value as Node;
+			Node ip = e.Params["_ip"].Value as Node;
 
-			Node node = new Node();
+			Node node = ip.Clone();
 
-			// Need to CLONE parameters here, to not get race-conditions in changing them ...
-			node["_ip"].Value = ip.Clone();
-			node["_dp"].Value = dp.Clone();
-
-			if (e.Params.Contains("_whitelist"))
-				node["_whitelist"].Value = e.Params["_whitelist"].Value;
-			if (e.Params.Contains("_max-cycles"))
-				node["_max-cycles"].Value = e.Params["_max-cycles"].Value;
-
-			if (ip.Get<bool>(false))
+			if (node.Get<bool>(false))
 			{
 				Thread thread = new Thread(ExecuteThreadForget);
 				thread.Start(node);
@@ -135,23 +123,10 @@ of milliseconds, before the wait is dismissed as an integer value of [set].&nbsp
 				return;
 			}
 
-			Node ip = e.Params;
-			if (e.Params.Contains("_ip"))
-				ip = e.Params ["_ip"].Value as Node;
+			if (!e.Params.Contains("_ip") || !(e.Params["_ip"].Value is Node))
+				throw new ArgumentException("you cannot raise [magix.execute.set] directly, except for inspect purposes");
 
-			Node dp = e.Params;
-			if (e.Params.Contains("_dp"))
-				dp = e.Params ["_dp"].Value as Node;
-
-			Node node = new Node();
-
-			node["_ip"].Value = ip.Clone();
-			node["_dp"].Value = dp.Clone();
-
-			if (e.Params.Contains("_whitelist"))
-				node["_whitelist"].Value = e.Params["_whitelist"].Value;
-			if (e.Params.Contains("_max-cycles"))
-				node["_max-cycles"].Value = e.Params["_max-cycles"].Value;
+			Node ip = e.Params["_ip"].Value as Node;
 
 			int milliseconds = ip.Get<int>(-1);
 
@@ -162,8 +137,8 @@ of milliseconds, before the wait is dismissed as an integer value of [set].&nbsp
 			try
 			{
 				RaiseActiveEvent(
-					"magix.execute",
-					node);
+					"magix._execute",
+					e.Params);
 
 				if (milliseconds != -1)
 					evt.WaitOne(milliseconds);

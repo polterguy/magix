@@ -49,35 +49,24 @@ statement in the value of [while] is true.&nbsp;&nbsp;thread safe";
 				return;
 			}
 
-			Node ip = e.Params;
-			if (e.Params.Contains("_ip"))
-				ip = e.Params ["_ip"].Value as Node;
+			if (!e.Params.Contains("_ip") || !(e.Params["_ip"].Value is Node))
+				throw new ArgumentException("you cannot raise [magix.execute.set] directly, except for inspect purposes");
 
-			Node dp = e.Params;
+			Node ip = e.Params["_ip"].Value as Node;
+
+			Node dp = ip;
 			if (e.Params.Contains("_dp"))
 				dp = e.Params["_dp"].Value as Node;
 
 			string expr = ip.Value as string;
-			if (string.IsNullOrEmpty (expr))
-				throw new ArgumentException ("You cannot have an empty while statement");
+			if (string.IsNullOrEmpty(expr))
+				throw new ArgumentException ("you cannot have an empty while statement");
 
 			while (Expressions.IsTrue(expr, ip, dp))
 			{
-				Node tmp = new Node("magix.execute.while");
-				tmp["_ip"].Value = ip;
-				tmp["_dp"].Value = dp;
-				if (e.Params.Contains("_whitelist"))
-					tmp["_whitelist"].Value = e.Params["_whitelist"].Value;
-				if (e.Params.Contains("_max-cycles"))
-					tmp["_max-cycles"].Value = e.Params["_max-cycles"].Value;
-
 				RaiseActiveEvent(
-					"magix.execute", 
-					tmp);
-
-				// Checking to see if we need to halt execution
-				if (tmp["_state"].Get<string>() == "stop")
-					break;
+					"magix._execute", 
+					e.Params);
 			}
 		}
 	}
