@@ -242,7 +242,9 @@ if=>[_data].Value==thomas
 			{
 				e.Params.Clear();
 				e.Params["event:magix.admin.run-file"].Value = null;
-				e.Params["inspect"].Value = @"runs the hyper lisp [file] given.&nbsp;&nbsp;
+				e.Params["inspect"].Value = @"runs the hyper lisp [file] given, putting all
+other child nodes into the [$] collection, accessible from inside the file, 
+which again is able to return nodes through the [$] node.&nbsp;&nbsp;
 thread safe";
 				e.Params["file"].Value = "core-scripts/some-script.hl";
 				return;
