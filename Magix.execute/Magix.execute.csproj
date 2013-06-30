@@ -45,6 +45,7 @@
     <Compile Include="StopCore.cs" />
     <Compile Include="DebugCore.cs" />
     <Compile Include="EventCore.cs" />
+    <Compile Include="ThreadingCore.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
