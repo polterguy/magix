@@ -37,8 +37,7 @@ _dt
           magix.log.append
             header=>role deleted
             body=>role {0} was deleted
-          magix.admin.run-file
-            file=>system42/admin/roles-grid.hl
+          execute-file=>system42/admin/roles-grid.hl
 
 for-each=>[magix.data.load][objects]
   set=>[/][_dt][panel][controls][link-button][onclick][magix.data.remove][prototype][name].Value
@@ -109,6 +108,5 @@ magix.forms.create-form
                 magix.log.append
                   header=>role created
                   body=>role {0} was created
-                magix.admin.run-file
-                  file=>system42/admin/roles-grid.hl
+                execute-file=>system42/admin/roles-grid.hl
 

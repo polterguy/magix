@@ -4,44 +4,38 @@
 link-button=>keywords2
   text=>hyper lisp
   onlick
-    magix.admin.run-file
-      file=>system42/admin/tools/inspect-execute.hl
+    execute-file=>system42/admin/tools/inspect-execute.hl
 }} allows you to 
 see all hyper lisp keywords.&nbsp;&nbsp;
 {{
 link-button=>tests2
   text=>tests
   onclick
-    magix.admin.run-file
-      file=>system42/admin/tools/inspect-unit-tests.hl
+    execute-file=>system42/admin/tools/inspect-unit-tests.hl
 }} opens unit tests and runs them.&nbsp;&nbsp;
 {{
 link-button=>av2
   text=>active events
   onclick
-    magix.admin.run-file
-      file=>system42/admin/tools/inspect-events.hl
+    execute-file=>system42/admin/tools/inspect-events.hl
 }} allows you to see all active events in system.&nbsp;&nbsp;
 {{
 link-button=>av3
   text=>overridden
   onclick
-    magix.admin.run-file
-      file=>system42/admin/tools/inspect-overridden-events.hl
+    execute-file=>system42/admin/tools/inspect-overridden-events.hl
 }} allows you to see all overridden active events.&nbsp;&nbsp;
 {{
 link-button=>av4
   text=>open
   onclick
-    magix.admin.run-file
-      file=>system42/admin/tools/inspect-open-events.hl
+    execute-file=>system42/admin/tools/inspect-open-events.hl
 }} allows you to see remotely exposed active events.&nbsp;&nbsp;
 {{
 link-button=>av5
   text=>remoted
   onclick
-    magix.admin.run-file
-      file=>system42/admin/tools/inspect-remoted-events.hl
+    execute-file=>system42/admin/tools/inspect-remoted-events.hl
 }} allows you to see active events overridden to other servers</p>
 <div class="btn-group">
 {{
@@ -49,38 +43,32 @@ button=>keywords
   text=>hyper lisp
   css=>span-3
   onclick
-    magix.admin.run-file
-      file=>system42/admin/tools/inspect-execute.hl
+    execute-file=>system42/admin/tools/inspect-execute.hl
 button=>tests
   text=>tests
   css=>span-3
   onclick
-    magix.admin.run-file
-      file=>system42/admin/tools/inspect-unit-tests.hl
+    execute-file=>system42/admin/tools/inspect-unit-tests.hl
 button=>activeevents
   text=>active events
   css=>span-3
   onclick
-    magix.admin.run-file
-      file=>system42/admin/tools/inspect-events.hl
+    execute-file=>system42/admin/tools/inspect-events.hl
 button=>activeevents2
   text=>overridden
   css=>span-3
   onclick
-    magix.admin.run-file
-      file=>system42/admin/tools/inspect-overridden-events.hl
+    execute-file=>system42/admin/tools/inspect-overridden-events.hl
 button=>activeevents3
   text=>open
   css=>span-3
   onclick
-    magix.admin.run-file
-      file=>system42/admin/tools/inspect-open-events.hl
+    execute-file=>system42/admin/tools/inspect-open-events.hl
 button=>activeevents4
   text=>remoted
   css=>span-3
   onclick
-    magix.admin.run-file
-      file=>system42/admin/tools/inspect-remoted-events.hl
+    execute-file=>system42/admin/tools/inspect-remoted-events.hl
 }}
 </div>
 <p class="top-1 span-19 last">some more tools for your convenience</p>
@@ -93,14 +81,12 @@ button=>mmleditor
     magix.help.set-next
       next=>help-system/developers/autistic.mml
   onclick
-    magix.admin.run-file
-      file=>system42/admin/tools/magix-markup-editor.hl
+    execute-file=>system42/admin/tools/magix-markup-editor.hl
 button=>webcontrols
   text=>web controls
   css=>span-3
   onclick
-    magix.admin.run-file
-      file=>system42/admin/tools/inspect-web-controls.hl
+    execute-file=>system42/admin/tools/inspect-web-controls.hl
 button=>trace
   text=>trace
   css=>span-3
@@ -134,8 +120,7 @@ button=>files
   text=>files
   css=>span-3
   onclick
-    magix.admin.run-file
-      file=>system42/admin/file-browser.hl
+    execute-file=>system42/admin/file-browser.hl
     magix.viewport.clear-controls
       container=>content2
     magix.viewport.clear-controls

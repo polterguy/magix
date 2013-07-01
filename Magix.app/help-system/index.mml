@@ -62,8 +62,7 @@ button=>lnk3
 link-button=>lnkhl
   text=>hyper lisp keywords
   onclick
-    magix.admin.run-file
-      file=>system42/admin/tools/inspect-execute.hl
+    execute-file=>system42/admin/tools/inspect-execute.hl
     magix.viewport.clear-controls
       container=>modal
 }}</p>
@@ -79,8 +78,7 @@ link-button=>lnkunit
 link-button=>lnkremote
   text=>see remoted active events
   onclick
-    magix.admin.run-file
-      file=>system42/admin/tools/inspect-remoted-events.hl
+    execute-file=>system42/admin/tools/inspect-remoted-events.hl
     magix.viewport.clear-controls
       container=>modal
 }} together with 
@@ -88,8 +86,7 @@ link-button=>lnkremote
 link-button=>lnkopen
   text=>open active events
   onclick
-    magix.admin.run-file
-      file=>system42/admin/tools/inspect-open-events.hl
+    execute-file=>system42/admin/tools/inspect-open-events.hl
     magix.viewport.clear-controls
       container=>modal
 }} to verify your system is safe.&nbsp;&nbsp;remoted events are active events which 
@@ -102,8 +99,7 @@ link-button=>lnkall
     magix.help.set-next
       next=>help-system/info.mml
   onclick
-    magix.admin.run-file
-      file=>system42/admin/tools/inspect-events.hl
+    execute-file=>system42/admin/tools/inspect-events.hl
     magix.viewport.clear-controls
       container=>modal
 }}.&nbsp;&nbsp;<a href="https://groups.google.com/forum/?fromgroups#!forum/magix-illuminate" target="_blank">get support</a>

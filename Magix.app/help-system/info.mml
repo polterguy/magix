@@ -4,8 +4,7 @@ in magix before, {{
 link-button=>lnkunit
   text=>unit tests
   onclick
-    magix.admin.run-file
-      file=>system42/admin/tools/inspect-unit-tests.hl
+    execute-file=>system42/admin/tools/inspect-unit-tests.hl
     magix.viewport.clear-controls
       container=>modal
     magix.tests.run
@@ -14,8 +13,7 @@ link-button=>lnkunit
 link-button=>actevt
   text=>active events
   onclick
-    magix.admin.run-file
-      file=>system42/admin/tools/inspect-events.hl
+    execute-file=>system42/admin/tools/inspect-events.hl
     magix.viewport.clear-controls
       container=>modal
 }}.  active events is what sets magix apart.  active events is the 
@@ -23,8 +21,7 @@ facilitator for {{
 link-button=>linkhyper
   text=>hyper lisp
   onclick
-    magix.admin.run-file
-      file=>system42/admin/tools/inspect-execute.hl
+    execute-file=>system42/admin/tools/inspect-execute.hl
     magix.viewport.clear-controls
       container=>modal
 }}, {{
@@ -34,8 +31,7 @@ link-button=>linkpoly
     magix.help.set-next
       next=>help-system/info-2.mml
   onclick
-    magix.admin.run-file
-      file=>system42/admin/tools/inspect-overridden-events.hl
+    execute-file=>system42/admin/tools/inspect-overridden-events.hl
     magix.viewport.clear-controls
       container=>modal
 }}, and the extreme amount of re-use, and flexibility magix fosters</p>

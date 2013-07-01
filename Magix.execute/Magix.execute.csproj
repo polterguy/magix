@@ -47,6 +47,7 @@
     <Compile Include="EventCore.cs" />
     <Compile Include="ThreadingCore.cs" />
     <Compile Include="RemotingCore.cs" />
+    <Compile Include="ScriptCore.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

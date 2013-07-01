@@ -3,15 +3,14 @@
 inspect=>@"creates unit tests for testing execution 
 of files"
 
-event=>magix.test.run-file-with-parameters
+event=>magix.test.execute-file-with-parameters
   inspect=>@"verifies that running a file 
 with parameters, both input and output, is behaving
 correctly"
   code
-    magix.admin.run-file
-      file=>system42/admin/test-files/test-input-pars.hl
+    execute-file=>system42/admin/test-files/test-input-pars.hl
       mumbo=>howdy
-    if=>[magix.admin.run-file][mumbo].Value!=howdy
+    if=>[execute-file][mumbo].Value!=howdy
       throw=>input value not returned
-    if=>[magix.admin.run-file][jumbo].Value!=5
+    if=>[execute-file][jumbo].Value!=5
       throw=>output value not returned currectly

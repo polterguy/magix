@@ -18,8 +18,7 @@ shortcuts in the system.&nbsp;&nbsp;thread safe"
         text=>overridden active events
         category=>security
         code
-          magix.admin.run-file
-            file=>system42/admin/tools/inspect-overridden-events.hl
+          execute-file=>system42/admin/tools/inspect-overridden-events.hl
           magix.viewport.show-message-if-help-mode
             message=>@"view, inspect and run any overridden active event 
 in magix illuminate"
@@ -27,8 +26,7 @@ in magix illuminate"
         text=>unit tests
         category=>tools
         code
-          magix.admin.run-file
-            file=>system42/admin/tools/inspect-unit-tests.hl
+          execute-file=>system42/admin/tools/inspect-unit-tests.hl
           magix.viewport.show-message-if-help-mode
             message=>@"view, inspect and run unit tests
 in magix, which is an integral part of the system itself.&nbsp;&nbsp;
@@ -39,8 +37,7 @@ or all unit tests in the system"
         text=>active events
         category=>tools
         code
-          magix.admin.run-file
-            file=>system42/admin/tools/inspect-events.hl
+          execute-file=>system42/admin/tools/inspect-events.hl
           magix.viewport.show-message-if-help-mode
             message=>@"view, inspect and run any active event 
 in magix, which is an integral part of the system itself.&nbsp;&nbsp;
@@ -58,8 +55,7 @@ definition, or self-documenting with other words"
             container=>content4
           magix.viewport.clear-controls
             container=>content5
-          magix.admin.run-file
-            file=>system42/admin/edit-pages.hl
+          execute-file=>system42/admin/edit-pages.hl
           magix.viewport.show-message-if-help-mode
             message=>@"edit web pages within
 your system"
@@ -67,8 +63,7 @@ your system"
         text=>hyper lisp reference
         category=>learn
         code
-          magix.admin.run-file
-            file=>system42/admin/tools/inspect-execute.hl
+          execute-file=>system42/admin/tools/inspect-execute.hl
           magix.viewport.show-message-if-help-mode
             message=>@"shows all [magix.execute] keywords
 in magix, that is all hyper lisp keywrods"
@@ -76,8 +71,7 @@ in magix, that is all hyper lisp keywrods"
         text=>open active events
         category=>security
         code
-          magix.admin.run-file
-            file=>system42/admin/tools/inspect-open-events.hl
+          execute-file=>system42/admin/tools/inspect-open-events.hl
           magix.viewport.show-message-if-help-mode
             message=>@"shows all open active events within
 the system, such that you can inspect and play around
@@ -89,8 +83,7 @@ security issues"
         text=>tunneled active events
         category=>security
         code
-          magix.admin.run-file
-            file=>system42/admin/tools/inspect-remoted-events.hl
+          execute-file=>system42/admin/tools/inspect-remoted-events.hl
           magix.viewport.show-message-if-help-mode
             message=>@"view, inspect and run any tunneled active event 
 in magix illuminate, meaning any active events which are overridden, 
@@ -111,8 +104,7 @@ events, to allow for invoking over http, from other remote machines"
             container=>content4
           magix.viewport.clear-controls
             container=>content5
-          magix.admin.run-file
-            file=>system42/admin/users/users-grid.hl
+          execute-file=>system42/admin/users/users-grid.hl
           magix.viewport.show-message-if-help-mode
             message=>@"view and edit all users in 
 your system"
@@ -128,8 +120,7 @@ your system"
             container=>content4
           magix.viewport.clear-controls
             container=>content5
-          magix.admin.run-file
-            file=>system42/admin/roles-grid.hl
+          execute-file=>system42/admin/roles-grid.hl
           magix.viewport.show-message-if-help-mode
             message=>@"view and edit all the different roles in 
 your system"
@@ -145,8 +136,7 @@ your system"
             container=>content4
           magix.viewport.clear-controls
             container=>content5
-          magix.admin.run-file
-            file=>system42/admin/server-log-grid.hl
+          execute-file=>system42/admin/server-log-grid.hl
           magix.viewport.show-message-if-help-mode
             message=>@"view the server log
 of your system"
@@ -182,8 +172,7 @@ your system"
         text=>magix markup language editor
         category=>tools
         code
-          magix.admin.run-file
-            file=>system42/admin/tools/magix-markup-editor.hl
+          execute-file=>system42/admin/tools/magix-markup-editor.hl
           magix.viewport.show-message-if-help-mode
             message=>@"magix illuminate contains a markup
 language, which is a superset of html, where you can 
@@ -268,8 +257,7 @@ to change your system's state"
         text=>file system
         category=>tools
         code
-          magix.admin.run-file
-            file=>system42/admin/file-browser.hl
+          execute-file=>system42/admin/file-browser.hl
           magix.viewport.clear-controls
             container=>content2
           magix.viewport.clear-controls
@@ -288,8 +276,7 @@ files unto the surface of the file explorer"
         text=>web controls
         category=>learn
         code
-          magix.admin.run-file
-            file=>system42/admin/tools/inspect-web-controls.hl
+          execute-file=>system42/admin/tools/inspect-web-controls.hl
           magix.viewport.show-message-if-help-mode
             message=>@"see, inspect and play around with 
 all the web controls which are inside of your 
@@ -306,7 +293,7 @@ installation of magix"
             container=>content4
           magix.viewport.clear-controls
             container=>content5
-          magix.admin.run-file
+          execute-file
             file=>system42/admin/forms/edit-forms.hl
           magix.viewport.show-message-if-help-mode
             message=>@"edit web forms within

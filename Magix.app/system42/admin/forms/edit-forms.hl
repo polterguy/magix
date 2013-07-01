@@ -91,8 +91,7 @@ magix.forms.create-form
       _link-button
         css=>span-4 top-1
         onclick
-          magix.admin.run-file
-            file=>system42/admin/forms/edit-property.hl
+          execute-file=>system42/admin/forms/edit-property.hl
       magix.viewport.clear-controls
         container=>content3
       magix.viewport.clear-controls
@@ -130,7 +129,7 @@ magix.forms.create-form
                 value=>span-4 top-1
             set=>[/][_link-button].Value
               value=>[.].Name
-            set=>[/][_link-button][onclick][magix.admin.run-file][property].Value
+            set=>[/][_link-button][onclick][execute-file][property].Value
               value=>[.].Name
             set=>[/][_link-button][text].Value
               value=>[.].Name
@@ -149,7 +148,7 @@ magix.forms.create-form
               value=>[.].Name
             set=>[/][_link-button][text].Value
               value=>[.].Name
-            set=>[/][_link-button][onclick][magix.admin.run-file][property].Value
+            set=>[/][_link-button][onclick][execute-file][property].Value
               value=>[.].Name
             add=>[@][..][..][magix.forms.create-form][controls][panel][controls]
               value=>[/][_link-button]
