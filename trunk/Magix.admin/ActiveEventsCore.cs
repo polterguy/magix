@@ -14,7 +14,7 @@ namespace Magix.admin
 	/*
 	 * admin controller
 	 */
-	public class EventExecutor : ActiveController
+	public class ActiveEventsCore : ActiveController
 	{
 		/*
 		 * get active events active event
