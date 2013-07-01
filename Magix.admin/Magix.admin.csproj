@@ -39,6 +39,7 @@
     <Compile Include="EventSniffer.ascx.cs" />
     <Compile Include="EventProfiler.ascx.cs" />
     <Compile Include="ThreadingCore.cs" />
+    <Compile Include="ActiveEventsCore.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
