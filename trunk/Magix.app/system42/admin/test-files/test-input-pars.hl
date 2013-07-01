@@ -1,7 +1,7 @@
 
 inspect=>@"test file for verifying parameters are passed correctly
 into and out from hyper lisp files.&nbsp;&nbsp;
-used in combination with [magix.test.run-file-with-parameters]"
+used in combination with [magix.test.execute-file-with-parameters]"
 
 if=>[$][mumbo].Value!=howdy
   throw=>input parameter not accessible in file

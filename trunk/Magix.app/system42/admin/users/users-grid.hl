@@ -18,17 +18,17 @@ if=>[magix.data.load][start].Value==0
   set=>[magix.forms.create-form][controls][panel:2][controls][link-button:0][enabled].Value
     value=>false
 else
-  set=>[magix.forms.create-form][controls][panel:2][controls][link-button:0][onclick][magix.admin.run-file][start].Value
+  set=>[magix.forms.create-form][controls][panel:2][controls][link-button:0][onclick][execute-file][start].Value
     value=>[magix.data.load][start].Value-10
-  set=>[magix.forms.create-form][controls][panel:2][controls][link-button:0][onclick][magix.admin.run-file][end].Value
+  set=>[magix.forms.create-form][controls][panel:2][controls][link-button:0][onclick][execute-file][end].Value
     value=>[magix.data.load][end].Value-10
 if=>[magix.data.load][end].Value>=[magix.data.count][count].Value
   set=>[magix.forms.create-form][controls][panel:2][controls][link-button:1][enabled].Value
     value=>false
 else
-  set=>[magix.forms.create-form][controls][panel:2][controls][link-button:1][onclick][magix.admin.run-file][start].Value
+  set=>[magix.forms.create-form][controls][panel:2][controls][link-button:1][onclick][execute-file][start].Value
     value=>[magix.data.load][start].Value+10
-  set=>[magix.forms.create-form][controls][panel:2][controls][link-button:1][onclick][magix.admin.run-file][end].Value
+  set=>[magix.forms.create-form][controls][panel:2][controls][link-button:1][onclick][execute-file][end].Value
     value=>[magix.data.load][end].Value+10
 if=>[magix.data.load][end].Value>[magix.data.count][count].Value
   set=>[magix.data.load][end].Value
@@ -53,8 +53,7 @@ _dt
         css=>span-3
         text=>edit
         onclick
-          magix.admin.run-file
-            file=>system42/admin/users/edit-single-user.hl
+          execute-file=>system42/admin/users/edit-single-user.hl
       link-button
         css=>span-1 hover-shadow last right z-1 absolute light-red centered
         text=>x
@@ -66,8 +65,7 @@ _dt
           magix.log.append
             header=>user deleted
             body=>user {0} deleted
-          magix.admin.run-file
-            file=>system42/admin/users/users-grid.hl
+          execute-file=>system42/admin/users/users-grid.hl
           magix.viewport.clear-controls
             container=>content3
 
@@ -78,7 +76,7 @@ for-each=>[magix.data.load][objects]
     value=>[.][username].Value
   set=>[/][_dt][panel][controls][label:2][text].Value
     value=>[.][pwd].Value
-  set=>[/][_dt][panel][controls][link-button:0][onclick][magix.admin.run-file][username].Value
+  set=>[/][_dt][panel][controls][link-button:0][onclick][execute-file][username].Value
     value=>[.][username].Value
   set=>[/][_dt][panel][controls][link-button:1][onclick][magix.data.remove][prototype][username].Value
     value=>[.][username].Value
@@ -173,7 +171,7 @@ magix.forms.create-form
               else
                 set=>[@][else][else][magix.data.save][object][username].Value
                   value=>[@][..][magix.forms.get-value][value].Value
-                set=>[@][else][else][magix.admin.run-file:1][username].Value
+                set=>[@][else][else][execute-file:1][username].Value
                   value=>[@][..][magix.forms.get-value][value].Value
                 magix.forms.get-value
                   form-id=>users-grid
@@ -201,10 +199,8 @@ magix.forms.create-form
                     magix.log.append
                       header=>new user created
                       body=>user {0} created
-                    magix.admin.run-file
-                      file=>system42/admin/users/users-grid.hl
-                    magix.admin.run-file
-                      file=>system42/admin/users/edit-single-user.hl
+                    execute-file=>system42/admin/users/users-grid.hl
+                    execute-file=>system42/admin/users/edit-single-user.hl
 
 
 

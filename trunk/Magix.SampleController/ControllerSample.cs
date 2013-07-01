@@ -28,10 +28,10 @@ namespace Magix.SampleController
 			if (!string.IsNullOrEmpty(defaultHyperLispFile))
 			{
 				Node node = new Node ();
-				node ["file"].Value = defaultHyperLispFile;
+				node.Value = defaultHyperLispFile;
 
 				RaiseActiveEvent(
-					"magix.admin.run-file",
+					"magix.execute.execute-file",
 					node);
 			}
 
@@ -141,10 +141,10 @@ run that hyperlisp file, and nothing else, unless http get parameter 'page' is g
 				if (!string.IsNullOrEmpty(defaultHyperLispFile) && page == "default")
 				{
 					Node node = new Node ();
-					node ["file"].Value = defaultHyperLispFile;
+					node.Value = defaultHyperLispFile;
 
 					RaiseActiveEvent(
-						"magix.admin.run-file",
+						"magix.execute.execute-file",
 						node);
 				}
 				else
@@ -177,10 +177,10 @@ run that hyperlisp file, and nothing else, unless http get parameter 'page' is g
 		{
 			Node tmp = new Node();
 
-			tmp["file"].Value = "core-scripts/misc/login-box.hl";
+			tmp.Value = "core-scripts/misc/login-box.hl";
 
 			RaiseActiveEvent(
-				"magix.admin.run-file",
+				"magix.execute.execute-file",
 				tmp);
 		}
 
@@ -216,10 +216,10 @@ run that hyperlisp file, and nothing else, unless http get parameter 'page' is g
 
 			tmp = new Node();
 
-			tmp["file"].Value = "core-scripts/misc/main-menu.hl";
+			tmp.Value = "core-scripts/misc/main-menu.hl";
 
 			RaiseActiveEvent(
-				"magix.admin.run-file",
+				"magix.execute.execute-file",
 				tmp);
 
 			Node del = new Node();

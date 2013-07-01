@@ -11,9 +11,9 @@ if=>[$][directory].Value
     value=>[/][_back]
   set=>[/][magix.forms.create-form][controls][_back].Name
     value=>link-button
-  set=>[/][magix.forms.create-form][events][magix.ide.file-deleted][magix.admin.run-file][directory].Value
+  set=>[/][magix.forms.create-form][events][magix.ide.file-deleted][execute-file][directory].Value
     value=>[$][directory].Value
-  set=>[/][magix.forms.create-form][events][magix.ide.file-saved][magix.admin.run-file][directory].Value
+  set=>[/][magix.forms.create-form][events][magix.ide.file-saved][execute-file][directory].Value
     value=>[$][directory].Value
   set=>[/][_btn][onclick][magix.admin.edit-file][file].Value
     value=>@"{0}/{1}"
@@ -23,7 +23,7 @@ if=>[$][directory].Value
     value=>@"{0}/{1}"
       pr0=>[$][directory].Value
       pr1=>new-directory
-  set=>[/][_newDir][onclick][magix.admin.run-file][directory].Value
+  set=>[/][_newDir][onclick][execute-file][directory].Value
     value=>[$][directory].Value
   set=>[/][_delDir][onclick][magix.viewport.confirm][code][magix.file.delete-directory][path].Value
     value=>[$][directory].Value
@@ -33,9 +33,9 @@ if=>[$][directory].Value
     value=>[$][directory].Value
   set=>[/][magix.forms.create-form][controls][uploader][folder].Value
     value=>[$][directory].Value
-  set=>[/][magix.forms.create-form][controls][uploader][onuploaded][if][magix.admin.run-file][directory].Value
+  set=>[/][magix.forms.create-form][controls][uploader][onuploaded][if][execute-file][directory].Value
     value=>[$][directory].Value
-  set=>[/][magix.forms.create-form][controls][uploader][uploaded][if][magix.admin.run-file][directory].Value
+  set=>[/][magix.forms.create-form][controls][uploader][uploaded][if][execute-file][directory].Value
     value=>[$][directory].Value
 else
   magix.viewport.set-viewstate
@@ -58,10 +58,9 @@ _back
       value=>[@][magix.viewport.get-viewstate][value]
     magix.viewport.set-viewstate
       id=>stack-of-pages
-    set=>[@][magix.admin.run-file][directory].Value
+    set=>[@][execute-file][directory].Value
       value=>[@][magix.viewport.set-viewstate][value][[@][magix.viewport.set-viewstate][value].Count-1].Value
-    magix.admin.run-file
-      file=>system42/admin/file-browser.hl
+    execute-file=>system42/admin/file-browser.hl
 
 _link-button
   css=>span-5 file
@@ -73,12 +72,11 @@ _link-button
 _link-buttonDir
   css=>span-5 directory
   onclick
-    magix.admin.run-file
-      file=>system42/admin/file-browser.hl
+    execute-file=>system42/admin/file-browser.hl
     magix.viewport.get-viewstate
       id=>stack-of-pages
     set=>[@][magix.viewport.get-viewstate][value][[@][magix.viewport.get-viewstate][value].Count].Value
-      value=>[@][magix.admin.run-file][directory].Value
+      value=>[@][execute-file][directory].Value
     add=>[@][magix.viewport.set-viewstate]
       value=>[@][magix.viewport.get-viewstate][value]
     magix.viewport.set-viewstate
@@ -106,7 +104,7 @@ magix.file.list-directories
 for-each=>[magix.file.list-directories][directories]
   set=>[/][_link-buttonDir][text].Value
     value=>[.].Value
-  set=>[/][_link-buttonDir][onclick][magix.admin.run-file][directory].Value
+  set=>[/][_link-buttonDir][onclick][execute-file][directory].Value
     value=>[.].Value
   if=>[$][directory]
     set=>[@][replace][what].Value
@@ -133,8 +131,7 @@ _newDir=>newdir
   onclick
     magix.file.create-directory
       path=>new-directory
-    magix.admin.run-file
-      file=>system42/admin/file-browser.hl
+    execute-file=>system42/admin/file-browser.hl
 
 _delDir=>deldir
   css=>span-3 btn-large last top-1
@@ -144,8 +141,7 @@ _delDir=>deldir
       message=>do you really want to delete the open directory?
       code
         magix.file.delete-directory
-        magix.admin.run-file
-          file=>system42/admin/file-browser.hl
+        execute-file=>system42/admin/file-browser.hl
 
 _ren=>renWrp
   css=>span-9 last top-1 right btn-group
@@ -161,10 +157,9 @@ _ren=>renWrp
         set=>[magix.file.move-directory][to].Value
           value=>[magix.forms.get-value][value].Value
         magix.file.move-directory
-        set=>[magix.admin.run-file][directory].Value
+        set=>[execute-file][directory].Value
           value=>[magix.file.move-directory][to].Value
-        magix.admin.run-file
-          file=>system42/admin/file-browser.hl
+        execute-file=>system42/admin/file-browser.hl
     button=>saveDirName
       css=>span-2 last
       text=>save
@@ -193,12 +188,10 @@ magix.forms.create-form
   events
 
     magix.ide.file-saved
-      magix.admin.run-file
-        file=>system42/admin/file-browser.hl
+      execute-file=>system42/admin/file-browser.hl
 
     magix.ide.file-deleted
-      magix.admin.run-file
-        file=>system42/admin/file-browser.hl
+      execute-file=>system42/admin/file-browser.hl
       magix.viewport.clear-controls
         container=>content2
       magix.viewport.clear-controls
@@ -231,8 +224,7 @@ magix.forms.create-form
           form-id=>file-explorer
           id=>uploader
         if=>![magix.forms.has-more-data][value].Value
-          magix.admin.run-file
-            file=>system42/admin/file-browser.hl
+          execute-file=>system42/admin/file-browser.hl
 
 
 

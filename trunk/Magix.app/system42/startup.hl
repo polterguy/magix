@@ -16,8 +16,8 @@ magix.file.list-files
   filter=>*.hl
 
 for-each=>[magix.file.list-files][files]
-  set=>[@][magix.admin.run-file][file].Value
+  set=>[@][execute-file].Value
     value=>[.].Value
-  magix.admin.run-file
+  execute-file
 
 

@@ -15,9 +15,9 @@ if=>[$][filter].Value
       pr0=>[$][filter].Value
   set=>[magix.forms.create-form][controls][panel:1][controls][panel][controls][text-box][text].Value
     value=>[$][filter].Value
-  set=>[magix.forms.create-form][controls][panel:1][controls][link-button:0][onclick][magix.admin.run-file][filter].Value
+  set=>[magix.forms.create-form][controls][panel:1][controls][link-button:0][onclick][execute-file][filter].Value
     value=>[$][filter].Value
-  set=>[magix.forms.create-form][controls][panel:1][controls][link-button:1][onclick][magix.admin.run-file][filter].Value
+  set=>[magix.forms.create-form][controls][panel:1][controls][link-button:1][onclick][execute-file][filter].Value
     value=>[$][filter].Value
 
 magix.data.load
@@ -89,9 +89,9 @@ if=>[magix.data.load][start].Value==0
 else
   set=>[magix.forms.create-form][controls][panel:1][controls][link-button:0][enabled].Value
     value=>true
-  set=>[magix.forms.create-form][controls][panel:1][controls][link-button:0][onclick][magix.admin.run-file][start].Value
+  set=>[magix.forms.create-form][controls][panel:1][controls][link-button:0][onclick][execute-file][start].Value
     value=>[magix.data.load][start].Value-10
-  set=>[magix.forms.create-form][controls][panel:1][controls][link-button:0][onclick][magix.admin.run-file][end].Value
+  set=>[magix.forms.create-form][controls][panel:1][controls][link-button:0][onclick][execute-file][end].Value
     value=>[magix.data.load][end].Value-10
 if=>[magix.data.load][end].Value>=[magix.data.count][count].Value
   set=>[magix.forms.create-form][controls][panel:1][controls][link-button:1][enabled].Value
@@ -99,9 +99,9 @@ if=>[magix.data.load][end].Value>=[magix.data.count][count].Value
 else
   set=>[magix.forms.create-form][controls][panel:1][controls][link-button:1][enabled].Value
     value=>true
-  set=>[magix.forms.create-form][controls][panel:1][controls][link-button:1][onclick][magix.admin.run-file][start].Value
+  set=>[magix.forms.create-form][controls][panel:1][controls][link-button:1][onclick][execute-file][start].Value
     value=>[magix.data.load][start].Value+10
-  set=>[magix.forms.create-form][controls][panel:1][controls][link-button:1][onclick][magix.admin.run-file][end].Value
+  set=>[magix.forms.create-form][controls][panel:1][controls][link-button:1][onclick][execute-file][end].Value
     value=>[magix.data.load][end].Value+10
 
 magix.forms.create-form
@@ -123,8 +123,7 @@ magix.forms.create-form
           text=>&lt;&lt;
           css=>span-1 left-7
           onclick
-            magix.admin.run-file
-              file=>system42/admin/server-log-grid.hl
+            execute-file=>system42/admin/server-log-grid.hl
         label=>count
           css=>span-2
           text=>54
@@ -132,8 +131,7 @@ magix.forms.create-form
           text=>&gt;&gt;
           css=>span-1
           onclick
-            magix.admin.run-file
-              file=>system42/admin/server-log-grid.hl
+            execute-file=>system42/admin/server-log-grid.hl
         panel
           css=>span-2 right last
           default=>btnSearch
@@ -147,10 +145,9 @@ magix.forms.create-form
                 magix.forms.get-value
                   form-id=>server-log
                   id=>search
-                set=>[magix.admin.run-file][filter].Value
+                set=>[execute-file][filter].Value
                   value=>[magix.forms.get-value][value].Value
-                magix.admin.run-file
-                  file=>system42/admin/server-log-grid.hl
+                execute-file=>system42/admin/server-log-grid.hl
 
 if=>[$][filter].Value
   magix.forms.select-all
