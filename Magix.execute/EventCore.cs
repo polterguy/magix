@@ -49,7 +49,7 @@ magix.execute blocks of code, are being correctly re-mapped";
 					if (idx.Contains("remotable") && idx["remotable"].Get<bool>())
 						ActiveEvents.Instance.MakeRemotable(idx["event"].Get<string>());
 
-					_events[idx["event"].Get<string>()].AddRange(idx["code"].Clone());
+					_events[idx["event"].Get<string>()].ReplaceChildren(idx["code"].Clone());
 				}
 			}
 		}
