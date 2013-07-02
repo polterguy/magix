@@ -36,7 +36,14 @@ namespace Magix.forms
 				ret.Text = node["text"].Get<string>();
 
 			if (node.Contains("url") && node["url"].Value != null)
-				ret.URL = node["url"].Get<string>();
+			{
+				string url = node["url"].Get<string>();
+
+				if (url.StartsWith("~"))
+					url = url.Replace("~", GetApplicationBaseUrl());
+
+				ret.URL = url;
+			}
 
 			if (node.Contains("target") && node["target"].Value != null)
 				ret.Target = node["target"].Get<string>();

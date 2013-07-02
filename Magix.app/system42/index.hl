@@ -39,5 +39,9 @@ else
     else
       execute-file=>system42/pages/run-page.hl
   else
-    execute-file=>system42/pages/run-page.hl
+    if=>[magix.web.get:1][value]
+      magix.web.redirect
+        url=>~
+    else
+      execute-file=>system42/pages/run-page.hl
 
