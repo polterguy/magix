@@ -9,20 +9,15 @@ using System.IO;
 using System.Collections.Generic;
 using Magix.Core;
 
-namespace Magix.SampleController
+namespace Magix.help
 {
-	/**
-	 * Please notice, by removing this assembly, and replacing it with
-	 * another Assembly, containing a controller, which handles the
-	 * "magix.viewport.page-load" event, you can create your 
-	 * own Application Startup logic, which effectively would become the 
-	 * starting point of your application, serving up whatever Module
-	 * you wish to use
+	/*
+	 * implementation of help logic
 	 */
 	public class ControllerHelp : ActiveController
 	{
 		/**
-		 * Starts the Magix Illuminate Help System [AKA; Marvin ...]
+		 * starts help
 		 */
 		[ActiveEvent(Name = "magix.help.start-help")]
 		public void magix_help_start_help(object sender, ActiveEventArgs e)
@@ -111,6 +106,9 @@ button=>next
 			}
 		}
 
+		/*
+		 * sets next help page
+		 */
 		[ActiveEvent(Name = "magix.help.set-next")]
 		public void magix_help_set_next(object sender, ActiveEventArgs e)
 		{
@@ -128,6 +126,9 @@ button=>next
 			Next = e.Params["next"].Get<string>();
 		}
 
+		/*
+		 * sets next help page
+		 */
 		[ActiveEvent(Name = "magix.help.move-next")]
 		public void magix_help_move_next(object sender, ActiveEventArgs e)
 		{
@@ -164,8 +165,8 @@ button=>next
 				node);
 		}
 
-		/**
-		 * Opens a specific page on disc, as if it was html
+		/*
+		 * opens a specific page on disc, as if it was html
 		 */
 		[ActiveEvent(Name = "magix.help.open-file")]
 		public void magix_help_open_file(object sender, ActiveEventArgs e)
@@ -236,8 +237,8 @@ button=>next
 			set { Page.Session["ControllerHelper.CurrentIndex"] = value; }
 		}
 
-		/**
-		 * Adds a page to the stack of forward/backward stored pages
+		/*
+		 * adds a page to the stack of forward/backward stored pages
 		 */
 		[ActiveEvent(Name = "magix.help.add-page")]
 		public void magix_help_add_page(object sender, ActiveEventArgs e)
@@ -269,8 +270,8 @@ of help system.&nbsp;&nbsp;not thread safe";
 			Pages.Add(e.Params["page"].Get<string>());
 		}
 
-		/**
-		 * Moves backkwards to previous help page
+		/*
+		 * moves backkwards to previous help page
 		 */
 		[ActiveEvent(Name = "magix.help.move-backwards")]
 		public void magix_help_move_backwards(object sender, ActiveEventArgs e)
@@ -309,8 +310,8 @@ of help system.&nbsp;&nbsp;not thread safe";
 			e.Params["success"].Value = true;
 		}
 
-		/**
-		 * Moves forwards to next help page
+		/*
+		 * moves forwards to next help page
 		 */
 		[ActiveEvent(Name = "magix.help.move-forwards")]
 		public void magix_help_move_forwards(object sender, ActiveEventArgs e)
