@@ -34,7 +34,6 @@
     <Reference Include="System.Drawing" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AssemblyInfo.cs" />
     <Compile Include="Controls\Basic\Button.cs" />
     <Compile Include="Controls\Basic\CheckBox.cs" />
     <Compile Include="Controls\Basic\HiddenField.cs" />
@@ -82,6 +81,7 @@
     <Compile Include="Controls\Core\AttributeControl.cs" />
     <Compile Include="Controls\Wysiwyg.cs" />
     <Compile Include="Controls\Uploader.cs" />
+    <Compile Include="AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

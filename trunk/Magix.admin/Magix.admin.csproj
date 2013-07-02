@@ -33,7 +33,6 @@
     <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AssemblyInfo.cs" />
     <Compile Include="ExecutorForm.ascx.cs" />
     <Compile Include="EventSniffer.ascx.cs" />
     <Compile Include="EventProfiler.ascx.cs" />

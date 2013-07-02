@@ -33,7 +33,6 @@
     <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AssemblyInfo.cs" />
     <Compile Include="Website.ascx.cs" />
     <Compile Include="Gutenberg.ascx.cs" />
   </ItemGroup>

@@ -34,7 +34,6 @@
     <Reference Include="System.Configuration" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AssemblyInfo.cs" />
     <Compile Include="Controllers\ActiveController.cs" />
     <Compile Include="Controllers\ActiveControllerAttribute.cs" />
     <Compile Include="Events\ActiveEventArgs.cs" />

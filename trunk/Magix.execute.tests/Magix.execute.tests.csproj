@@ -32,7 +32,6 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AssemblyInfo.cs" />
     <Compile Include="ExecuteTest.cs" />
     <Compile Include="SetTest.cs" />
     <Compile Include="IfElseTest.cs" />
