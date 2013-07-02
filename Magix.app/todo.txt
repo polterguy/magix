@@ -32,5 +32,5 @@ execute=>[_exe]
 
 * figure out of magix.execute.override is necessary, since there is magix.execute.event ...?
 
-
+* make magix.data.x conform to eachother
 

@@ -1,0 +1,15 @@
+
+
+inspect=>@"creates the default roles 
+in the system"
+
+
+magix.data.count
+  prototype
+    type=>system42.travel.role
+if=>[magix.data.count][count].Value==0
+  magix.data.save
+    object
+      type=>system42.travel.role
+      name=>admin
+

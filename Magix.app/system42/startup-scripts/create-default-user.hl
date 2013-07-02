@@ -1,0 +1,19 @@
+
+
+inspect=>@"creates the default user 
+in the system"
+
+
+magix.data.count
+  prototype
+    type=>system42.travel.user
+if=>[magix.data.count][count].Value==0
+  magix.data.save
+    object
+      type=>system42.travel.user
+      name=>Ayatholla Khomeini
+      username=>admin
+      pwd=>admin
+      roles
+        admin=>true
+

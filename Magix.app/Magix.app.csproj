@@ -300,5 +300,8 @@
     <None Include="system42\startup-scripts\test-events.hl" />
     <None Include="system42\startup-scripts\magix-admin.hl" />
     <None Include="system42\startup-scripts\test-run-script.hl" />
+    <None Include="system42\startup-scripts\create-default-web-page.hl" />
+    <None Include="system42\startup-scripts\create-default-user.hl" />
+    <None Include="system42\startup-scripts\create-default-roles.hl" />
   </ItemGroup>
 </Project>
