@@ -14,22 +14,30 @@ magix.forms.create-web-page
   form-id=>header
   css=>span-24
 
-magix.web.get-session
-  key=>system42.travel.user
-
 execute-file=>system42/misc/settings-initialize.hl
 
-if=>[magix.web.get-session][value][roles][admin]
-  magix.forms.create-web-page
-    file=>system42/admin/desktop/menu.mml
-    container=>menu
-    form-id=>admin-menu
-    css=>span-5
-  magix.forms.create-web-page
-    file=>system42/admin/desktop/desktop.mml
-    container=>content1
-    form-id=>desktop-admin
-    css=>span-19 last
-else
+magix.web.get=>page
+magix.web.get=>dashboard
+
+if=>[magix.web.get][value]
   execute-file=>system42/pages/run-page.hl
+else
+  magix.web.get-session
+    key=>system42.travel.user
+  if=>[@][magix.web.get-session][value][roles][admin]
+    if=>[magix.web.get:1][value]
+      magix.forms.create-web-page
+        file=>system42/admin/desktop/menu.mml
+        container=>menu
+        form-id=>admin-menu
+        css=>span-5
+      magix.forms.create-web-page
+        file=>system42/admin/desktop/desktop.mml
+        container=>content1
+        form-id=>desktop-admin
+        css=>span-19 last
+    else
+      execute-file=>system42/pages/run-page.hl
+  else
+    execute-file=>system42/pages/run-page.hl
 

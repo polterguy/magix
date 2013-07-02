@@ -27,9 +27,7 @@ namespace Magix.app
 
         private void InitializeViewport()
         {
-			string defaultControl = "Magix.viewports.Website";
-			if (Request.Params["dashboard"] == null)
-				defaultControl = ConfigurationManager.AppSettings["Magix.Core.Viewport"];
+			string defaultControl = ConfigurationManager.AppSettings["Magix.Core.Viewport"];
             Control ctrl = ModuleControllerLoader.Instance.LoadActiveModule(defaultControl);
             Form.Controls.Add(ctrl);
         }

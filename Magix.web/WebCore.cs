@@ -36,7 +36,8 @@ get http parameter as [value].&nbsp;&nbsp;not thread safe";
 			if (string.IsNullOrEmpty(par))
 				throw new ArgumentException("You must tell me which GET parameter you wish to extract");
 
-			e.Params["value"].Value = HttpContext.Current.Request.Params[par];
+			if (HttpContext.Current.Request.Params[par] != null)
+				e.Params["value"].Value = HttpContext.Current.Request.Params[par];
 		}
 
 		/**
