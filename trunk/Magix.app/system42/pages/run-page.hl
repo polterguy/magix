@@ -20,14 +20,12 @@ set=>[magix.data.load][prototype][name].Value
 magix.data.load
   prototype
     type=>magix.pages.page
-    name
 
-set=>[magix.forms.create-web-page][html].Value
-  value=>[magix.data.load][objects][0][value].Value
-
-magix.forms.create-web-page
-  html
-  container=>content4
-  css=>span-24
-  form-id=>webpage
+if=>[magix.data.load][objects].Count>0
+  set=>[@][magix.forms.create-web-page][html].Value
+    value=>[magix.data.load][objects][0][value].Value
+  magix.forms.create-web-page
+    container=>content4
+    css=>span-24
+    form-id=>webpage
 
