@@ -6,6 +6,7 @@
 
 using System;
 using System.IO;
+using System.Web.UI;
 using Magix.Core;
 using Magix.UX.Widgets;
 
@@ -67,10 +68,21 @@ namespace Magix.forms
 						nc);
 
 					if (nc.Contains("_ctrl"))
-						ret.Controls.Add(nc["_ctrl"].Value as System.Web.UI.Control);
+					{
+						if (nc["_ctrl"].Value != null)
+							ret.Controls.Add(nc["_ctrl"].Value as Control);
+						else
+						{
+							// multiple controls returned ...
+							foreach (Node idxCtrl in nc["_ctrl"])
+							{
+								ret.Controls.Add(idxCtrl.Value as Control);
+							}
+						}
+					}
 					else
 					{
-						if (!nc.Contains("_tpl"))
+						if (!node.Contains("_tpl"))
 							throw new ArgumentException("unknown control type in your template control '" + typeName + "'");
 						else
 						{

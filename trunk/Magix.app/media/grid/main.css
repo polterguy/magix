@@ -360,10 +360,8 @@ input[type=button]:hover
 
 input[type=button].btn-large
 {
-	height:32px;
+	height:36px;
 	font-size:16px;
-	margin-top:2px;
-	margin-bottom:2px;
 }
 
 select

@@ -38,3 +38,9 @@ execute=>[_exe]
 
 * active event executor doesn't show all items in autocomplete, due to parent div element not being relative, or something ....
 
+* set focus to missing field while creating a user with incomplete data
+
+* settings doesn't work, they're inconsistent in regards to viewstate/data
+
+* make all web form sample code snippets in inspect create working functioning code
+
