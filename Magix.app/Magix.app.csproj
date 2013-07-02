@@ -193,6 +193,10 @@
       <Project>{00BCDCAD-3B03-4589-9EA1-1619D1242C8B}</Project>
       <Name>Magix.viewport.tests</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Magix.tiedown\Magix.tiedown.csproj">
+      <Project>{512DBA1D-17F4-47B5-8D23-97178E8F14DA}</Project>
+      <Name>Magix.tiedown</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="web.config" />
