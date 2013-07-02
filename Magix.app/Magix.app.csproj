@@ -197,6 +197,10 @@
       <Project>{512DBA1D-17F4-47B5-8D23-97178E8F14DA}</Project>
       <Name>Magix.tiedown</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Magix.help\Magix.help.csproj">
+      <Project>{512D80BA-ED5F-4299-B8D2-BD88ED314522}</Project>
+      <Name>Magix.help</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="web.config" />
