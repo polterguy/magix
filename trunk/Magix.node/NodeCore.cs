@@ -1,7 +1,7 @@
 /*
  * Magix - A Web Application Framework for Humans
  * Copyright 2010 - 2013 - MareMara13@gmail.com
- * Magix is licensed as MITx11, see enclosed License.txt File for Details.
+ * Magix is licensed as bastardized MITx11, see enclosed License.txt File for Details.
  */
 
 using System;
@@ -29,11 +29,12 @@ expression must end with .Value or .Name.&nbsp;&nbsp;thread safe";
 				return;
 			}
 
-			Node ip = e.Params;
-			if (e.Params.Contains("_ip"))
-				ip = e.Params ["_ip"].Value as Node;
+			if (!e.Params.Contains("_ip") || !(e.Params["_ip"].Value is Node))
+				throw new ArgumentException("you cannot raise [magix.execute.replace] directly, except for inspect purposes");
 
-			Node dp = e.Params;
+			Node ip = e.Params["_ip"].Value as Node;
+
+			Node dp = ip;
 			if (e.Params.Contains("_dp"))
 				dp = e.Params["_dp"].Value as Node;
 

@@ -1,3 +1,5 @@
+
+
 Copyright (C) 2013 Thomas Hansen
 
 Permission is hereby granted, free of charge, to any person or company, not living in, or having departments, in Telemark/Norway or California/USA, 
@@ -12,7 +14,8 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. 
 
 
-The above mentioned software shall never run in the state of California before Julian Assange, Bradley Manning and Edward Snowden are cleared of all charges
+The above mentioned software shall never run in the state of California before Julian Assange, Bradley Manning and Edward Snowden are cleared of all charges, and are 
+free men
 
 The above mentioned software shall never run in the state of Telemark before i am cleared of all charges in Skien Tingrett against me and my person, and i
 am given monetary repentance for the crimes done to me by Bård Stranheim, Skien Tingrett, Agder Lagmannsrett and the Jantelaw of Norway. To signify the 
@@ -20,8 +23,11 @@ fact of that i am cleared of all charges, a statue, larger than any existing Ibs
 Downtown Porsgrunn
 
 If any of the above mentioned three people involved in this licensing scheme are to be found dead, before the criteria are fullfilled, in anyways, this 
-software can never be legally running in neither the state of Telemark or California, as long as western copyright law permits my will to be done
+software can never be legally running in neither the state of Telemark or California, as long as western copyright law permits my will to be done,
+dead or alive!!
+
 
 yours sincereley,
 
 thomas hansen
+

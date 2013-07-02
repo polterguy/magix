@@ -1,7 +1,7 @@
 ﻿/*
  * Magix - A Web Application Framework for Humans
  * Copyright 2010 - 2013 - MareMara13@gmail.com
- * Magix is licensed as MITx11, see enclosed License.txt File for Details.
+ * Magix is licensed as bastardized MITx11, see enclosed License.txt File for Details.
  */
 
 using System;
