@@ -5,6 +5,7 @@
  */
 
 using System;
+using System.Configuration;
 using System.Web;
 using Magix.Core;
 using Magix.UX.Builder;
@@ -38,29 +39,6 @@ get http parameter as [value].&nbsp;&nbsp;not thread safe";
 
 			if (HttpContext.Current.Request.Params[par] != null)
 				e.Params["value"].Value = HttpContext.Current.Request.Params[par];
-		}
-
-		/**
-		 * Returns the given Value HTTP cookie as "value"
-		 */
-		[ActiveEvent(Name = "magix.web.get-cookie")]
-		public void magix_web_get_cookie(object sender, ActiveEventArgs e)
-		{
-			if (ShouldInspect(e.Params))
-			{
-				e.Params["event:magix.execute"].Value = null;
-				e.Params["inspect"].Value = @"returns the given
-http cookie parameter as [value] node.&nbsp;&nbsp;not thread safe";
-				e.Params["magix.web.get-cookie"].Value = "some-cookie-name";
-				return;
-			}
-
-			string par = e.Params.Get<string>();
-			if (string.IsNullOrEmpty(par))
-				throw new ArgumentException("you must tell me which cookie you wish to extract");
-
-			if (HttpContext.Current.Request.Cookies.Get(par) != null)
-				e.Params["value"].Value = HttpContext.Current.Request.Cookies[par].Value;
 		}
 
 		[ActiveEvent(Name = "magix.web.set-session")]
@@ -127,7 +105,14 @@ not thread safe";
 			if (!e.Params.Contains("url"))
 				throw new ArgumentException("need [url]");
 
-			Magix.UX.AjaxManager.Instance.Redirect(e.Params["url"].Get<string>());
+			string url = e.Params["url"].Get<string>();
+
+			if (url.StartsWith("~"))
+			{
+				url = url.Replace("~", GetApplicationBaseUrl());
+			}
+
+			Magix.UX.AjaxManager.Instance.Redirect(url);
 		}
 
 		/**
@@ -172,6 +157,54 @@ is used, a default of three years from now will be used.&nbsp;&nbsp;not thread s
 
 				HttpContext.Current.Response.SetCookie(cookie);
 			}
+		}
+
+		/**
+		 * Returns the given Value HTTP cookie as "value"
+		 */
+		[ActiveEvent(Name = "magix.web.get-cookie")]
+		public void magix_web_get_cookie(object sender, ActiveEventArgs e)
+		{
+			if (ShouldInspect(e.Params))
+			{
+				e.Params["event:magix.execute"].Value = null;
+				e.Params["inspect"].Value = @"returns the given
+http cookie parameter as [value] node.&nbsp;&nbsp;not thread safe";
+				e.Params["magix.web.get-cookie"].Value = "some-cookie-name";
+				return;
+			}
+
+			string par = e.Params.Get<string>();
+			if (string.IsNullOrEmpty(par))
+				throw new ArgumentException("you must tell me which cookie you wish to extract");
+
+			if (HttpContext.Current.Request.Cookies.Get(par) != null)
+				e.Params["value"].Value = HttpContext.Current.Request.Cookies[par].Value;
+		}
+		
+		/**
+		 * Returns the given Value HTTP cookie as "value"
+		 */
+		[ActiveEvent(Name = "magix.web.get-config-setting")]
+		public static void magix_web_get_config_setting(object sender, ActiveEventArgs e)
+		{
+			if (ShouldInspect(e.Params))
+			{
+				e.Params["event:magix.execute"].Value = null;
+				e.Params["inspect"].Value = @"returns the given
+web.config setting as [value] node.&nbsp;&nbsp;thread safe";
+				e.Params["magix.web.get-config-setting"].Value = "some-cookie-name";
+				return;
+			}
+
+			string par = e.Params.Get<string>();
+			if (string.IsNullOrEmpty(par))
+				throw new ArgumentException("you must tell me which setting you wish to retrieve");
+
+			string val = ConfigurationManager.AppSettings[par];
+
+			if (!string.IsNullOrEmpty(val))
+				e.Params["value"].Value = val;
 		}
 	}
 }
