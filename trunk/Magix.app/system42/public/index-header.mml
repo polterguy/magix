@@ -113,41 +113,6 @@ panel=>loginWrp
 panel=>logoutWrp
   css=>absolute top right span-4 top-1 z-1 last
   controls
-    lambda=>createLoadDashboard
-      oncreatecontrols
-        magix.web.get-session
-          key=>system42.travel.user
-        if=>[magix.web.get-session][value][roles][admin]
-          _lnk=>load_dashboard
-            text=>dashboard
-            css=>span-4 btn-large bottom-1
-            onclick
-              magix.forms.create-web-page
-                file=>system42/admin/desktop/menu.mml
-                container=>menu
-                form-id=>admin-menu
-                css=>span-5
-              magix.forms.create-web-page
-                file=>system42/admin/desktop/desktop.mml
-                container=>content1
-                form-id=>desktop-admin
-                css=>span-19 last
-              magix.viewport.clear-controls
-                container=>content2
-              magix.viewport.clear-controls
-                container=>content3
-              magix.viewport.clear-controls
-                container=>content4
-              magix.viewport.clear-controls
-                container=>content5
-              magix.viewport.clear-controls
-                container=>content6
-              magix.viewport.clear-controls
-                container=>content7
-          add=>[$]
-            value=>[@][_lnk]
-          set=>[$][_lnk].Name
-            value=>button
     button=>logOut
       css=>span-4 btn-large
       text=>logout
@@ -156,6 +121,28 @@ panel=>logoutWrp
           key=>system42.travel.user
         magix.web.redirect
           url=>~
+    lambda=>createLoadDashboard
+      oncreatecontrols
+        magix.web.get-session
+          key=>system42.travel.user
+        if=>[magix.web.get-session][value][roles][admin]
+          _lnk=>load_dashboard
+            css=>span-4 right-text
+          magix.web.get=>dashboard
+          if=>[@][magix.web.get][value]
+            set=>[if][_lnk][url].Value
+              value=>~
+            set=>[if][_lnk][text].Value
+              value=>website
+          else
+            set=>[if][_lnk][url].Value
+              value=>~?dashboard=
+            set=>[if][_lnk][text].Value
+              value=>dashboard
+          add=>[$]
+            value=>[@][_lnk]
+          set=>[$][_lnk].Name
+            value=>hyperlink
 }}
 </div>
 
