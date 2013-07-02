@@ -1,11 +1,9 @@
 
-event:magix.execute
 
 inspect=>@"creates a text box, where you can type in magix
 markup language, and click preview, to have your 
-markup previewed in another container.&nbsp;&nbsp;
-uses header for editor and menu in span12 for 
-containers.&nbsp;&nbsp;clears content for simplicity"
+markup previewed in another container"
+
 
 magix.viewport.clear-controls
   container=>content2
@@ -33,3 +31,4 @@ button=>preview
       css=>span-24
       html
 }}"
+

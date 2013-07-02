@@ -1,10 +1,12 @@
 
-event:magix.execute
 
-inspect=>@"Will show a screen of all the 
-magix.execute active events in the system, and allow
+inspect=>@"will show a screen of all the 
+tunneled active events in the system, and allow
 the user to inspect them by clicking
-them"
+them.&nbsp;&nbsp;a tunneled event, is an active event 
+which is not invoked locally, but sent over http to 
+another server every time it is invoked"
+
 
 magix.admin.get-active-events
   remoted=>true

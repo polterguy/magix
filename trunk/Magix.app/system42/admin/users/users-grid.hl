@@ -1,5 +1,12 @@
 
 
+inspect=>@"creates the data grid 
+of users, from where you can delete, edit and add 
+new users from.&nbsp;&nbsp;a user is how you log 
+into this system, and is the basis for your access 
+rights to the system, which again changes 
+according to which role the user belongs to"
+
 
 if=>[$][start]
   set=>[magix.data.load][start].Value
@@ -201,6 +208,4 @@ magix.forms.create-form
                       body=>user {0} created
                     execute-file=>system42/admin/users/users-grid.hl
                     execute-file=>system42/admin/users/edit-single-user.hl
-
-
 

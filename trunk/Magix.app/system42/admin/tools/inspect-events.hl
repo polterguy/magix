@@ -1,10 +1,10 @@
 
-event:magix.execute
 
-inspect=>@"Will show a screen of all the 
+inspect=>@"will show a screen of all the 
 active events in the system, and allow 
 the user to inspect them by clicking 
 them"
+
 
 magix.admin.get-active-events
   all=>true

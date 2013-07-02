@@ -1,3 +1,11 @@
+
+
+inspect=>@"creates the edit-roles data grid, 
+from where you can edit existing, delete and 
+add new roles from.&nbsp;&nbsp;the roles defines 
+which access rights to the system a user has"
+
+
 magix.data.load
   prototype
     type=>system42.travel.role

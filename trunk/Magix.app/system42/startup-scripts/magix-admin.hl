@@ -3,9 +3,11 @@
 inspect=>@"file creates some active events
 in the magix.admin namespace"
 
+
 event=>magix.admin.open-event-executor
-  inspect=>@"opens up the active event 
-executor"
+
+  inspect=>@"opens up the active event executor"
+
   code
     if=>[$][container]
       set=>[magix.viewport.load-module][container].Value

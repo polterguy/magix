@@ -3,10 +3,13 @@
 inspect=>@"creates unit tests for testing execution 
 of inline script"
 
+
 event=>magix.test.execute-script-with-parameters
+
   inspect=>@"verifies that running a script 
 with parameters, both input and output, is behaving
 correctly"
+
   code
     execute-script=>@"
 if=>[$][mumbo].Value!=howdy
@@ -18,3 +21,4 @@ set=>[$][jumbo].Value
       throw=>input value not returned
     if=>[execute-file][jumbo].Value!=5
       throw=>output value not returned currectly
+
