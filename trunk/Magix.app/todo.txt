@@ -44,3 +44,5 @@ execute=>[_exe]
 
 * make all web form sample code snippets in inspect create working functioning code
 
+* turn profiler and tracer into a setting, im the settings form
+
