@@ -1,10 +1,12 @@
 
-event:magix.execute
 
-inspect=>@"Will show a screen of all the 
-magix.execute active events in the system, and allow
+inspect=>@"will show a screen of all the 
+open active events in the system, and allow
 the user to inspect them by clicking
-them"
+them.&nbsp;&nbsp;open active events are active events 
+which can be invoked by remote servers, meaning this is crucial
+to understand the security aspect in magix"
+
 
 magix.admin.get-active-events
   open=>true

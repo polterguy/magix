@@ -1,5 +1,11 @@
 
 
+inspect=>@"creates the edit-page web form, from 
+where you can edit, delete and create new web pages, 
+using a word-like wysiwyg editor, which you can inject 
+web forms into"
+
+
 magix.data.load
   prototype
     type=>magix.pages.page
@@ -225,14 +231,4 @@ magix.forms.create-form
     wysiwyg=>wysiwyg
       css=>wysiwyg span-24
       place-holder=>your text ...
-
-
-
-
-
-
-
-
-
-
 

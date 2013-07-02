@@ -20,4 +20,3 @@ for-each=>[magix.file.list-files][files]
     value=>[.].Value
   execute-file
 
-

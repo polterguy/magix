@@ -1,7 +1,10 @@
 
 
-
-
+inspect=>@"will show the desktop according to which 
+events in the system are within the magix.admin.desktop-shortcuts. 
+namespace.&nbsp;&nbsp;see the file events-create-desktop-shortcuts.hl
+in the startup-scripts folder to see an example of how you can extend
+the desktop yourself"
 
 
 magix.admin.get-active-events
@@ -88,23 +91,4 @@ magix.forms.effect
   joined
     e0
       type=>roll-down
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

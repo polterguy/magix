@@ -11,7 +11,6 @@ event=>magix.admin.desktop-shortcuts.defaults
   inspect=>@"returns all the default desktop 
 shortcuts in the system.&nbsp;&nbsp;thread safe"
 
-
   code
     _scripts
       _default_script4
@@ -293,8 +292,7 @@ installation of magix"
             container=>content4
           magix.viewport.clear-controls
             container=>content5
-          execute-file
-            file=>system42/admin/forms/edit-forms.hl
+          execute-file=>system42/admin/forms/edit-forms.hl
           magix.viewport.show-message-if-help-mode
             message=>@"edit web forms within
 your system"
@@ -317,13 +315,4 @@ brain within magix illuminate"
     for-each=>[_scripts]
       add=>[$][scripts]
         value=>[.]
-
-
-
-
-
-
-
-
-
 

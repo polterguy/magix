@@ -1,5 +1,9 @@
 
 
+inspect=>@"creates the edit-forms web form, from which you can 
+create, modify existing and delete forms from"
+
+
 magix.data.load
   prototype
     type=>magix.forms.form

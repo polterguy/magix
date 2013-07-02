@@ -1,5 +1,9 @@
 
 
+inspect=>@"creates the server log grid form, from 
+where you can view the system log from"
+
+
 if=>[$][start]
   set=>[magix.data.load][start].Value
     value=>[$][start].Value
@@ -156,13 +160,4 @@ if=>[$][filter].Value
   magix.forms.set-focus
     form-id=>server-log
     id=>search
-
-
-
-
-
-
-
-
-
 

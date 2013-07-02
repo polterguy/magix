@@ -9,7 +9,9 @@ magix.test. namespace"
 
 
 event=>magix.test.execute-path-1
+
   inspect=>@"checks to see if [execute] with path behaves correctly"
+
   code
     _in
       item1=>hello 1
@@ -27,7 +29,9 @@ correctly in magix.test.verify-execute-path-1
 
 
 event=>magix.test.execute-path-with-internal-exception-handler
+
   inspect=>@"checks to see if [execute], with [try] and [throw] inside of itself behaves correctly"
+
   code
     _exe
       try
@@ -41,7 +45,9 @@ wrong text of exception"
 
 
 event=>magix.test.execute-path-with-external-exception-handler
+
   inspect=>@"checks to see if [execute] with [throw] is correctly catched outside of [execute] statement"
+
   code
     _exe
       throw=>howdy
@@ -55,8 +61,10 @@ wrong text of exception"
 
 
 event=>magix.test.execute.path-with-parameters
+
   inspect=>@"checks to see if parameter passing into 
 [execute], into and out from, is bahving correctly"
+
   code
     _exe
       if=>[$][message].Value!=howdy world
@@ -71,8 +79,10 @@ event=>magix.test.execute.path-with-parameters
       throw=>value not returned input nodes from execute path
 
 event=>magix.test.execute.with-without-period
+
   inspect=>@"verifies that [execute] versus [magix.execute] 
 correctly chops up node tree"
+
   code
     _dt=>test
     _exe1
@@ -86,8 +96,10 @@ correctly chops up node tree"
     magix.execute=>[_exe2]
 
 event=>magix.test.execute.with-without-period-2
+
   inspect=>@"verifies that [execute] versus [magix.execute] 
 correctly chops up node tree"
+
   code
     _exe1
       _dt=>5
@@ -110,4 +122,3 @@ correctly chops up node tree"
     if=>[_exe2][_dt].Value!=5
       throw=>node not correctly changed by [execute]
     
-

@@ -1,10 +1,11 @@
 
 event:magix.execute
 
-inspect=>@"Will show a screen of all the 
-magix.execute active events in the system, and allow
-the user to inspect them by clicking
-them"
+inspect=>@"will show a screen of all the 
+web controls in the system, and allow
+the user to inspect them by clicking them.&nbsp;&nbsp;
+this is useful for teaching yourself for instance how 
+to use the forms-editor"
 
 magix.admin.get-active-events
   begins-with=>magix.forms.controls.

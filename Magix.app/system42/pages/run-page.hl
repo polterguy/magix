@@ -1,5 +1,10 @@
 
 
+inspect=>@"loads the given page, according to the 
+get parameter called ""page"", which is expected to 
+be the name of a page created through the edit-pages 
+web form"
+
 
 _page=>default
 

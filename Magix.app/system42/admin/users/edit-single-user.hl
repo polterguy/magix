@@ -1,5 +1,9 @@
 
 
+inspect=>@"creates an editing form, for 
+editing an existing user"
+
+
 set=>[magix.data.load][prototype][username].Value
   value=>[$][username].Value
 
@@ -197,5 +201,4 @@ magix.forms.set-focus
 magix.forms.select-all
   form-id=>edit-user
   id=>name
-
 

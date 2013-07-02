@@ -1,4 +1,11 @@
 
+
+inspect=>@"initializes application settings, 
+add up your own logic here if you have unique 
+settings, either on application level, session level, or 
+similar"
+
+
 magix.data.load
   prototype
     type=>system42.travel.setting
@@ -25,8 +32,4 @@ else
   magix.web.set-session
     key=>stopped-learning
     value=>(bool)False
-
-
-
-
 

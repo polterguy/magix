@@ -1,4 +1,5 @@
 
+
 <div class="span-5">
 {{
 link-button=>desktop
@@ -26,3 +27,4 @@ you can turn off these tutorial notifications from the settings page.&nbsp;&nbsp
 in the beginning, but probably becomes annoying fast"
 }}
 </div>
+
