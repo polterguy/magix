@@ -34,3 +34,5 @@ execute=>[_exe]
 
 * make magix.data.x conform to eachother
 
+* make all the web.get, web.get-session, viewstate, etc active events have a conforming api
+

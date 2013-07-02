@@ -59,7 +59,8 @@ http cookie parameter as [value] node.&nbsp;&nbsp;not thread safe";
 			if (string.IsNullOrEmpty(par))
 				throw new ArgumentException("you must tell me which cookie you wish to extract");
 
-			e.Params["value"].Value = HttpContext.Current.Request.Cookies[par].Value;
+			if (HttpContext.Current.Request.Cookies.Get(par) != null)
+				e.Params["value"].Value = HttpContext.Current.Request.Cookies[par].Value;
 		}
 
 		[ActiveEvent(Name = "magix.web.set-session")]
