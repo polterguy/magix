@@ -1,7 +1,6 @@
 
 
 <div class="span-24 relative">
-	<h1 class="span-14 top-2 bottom-3">magix illuminate - release lucifer</h1>
 {{
 system42.travel.change-login-box
   magix.web.get-session
@@ -41,8 +40,12 @@ system42.travel.try-login
     magix.web.set-session
       key=>system42.travel.user
       value
-    magix.viewport.execute-javascript
-      script=>@"location.reload();"
+    if=>[magix.data.load][objects][0][roles][admin]
+      magix.web.redirect
+        url=>~?dashboard=
+    else
+      magix.viewport.execute-javascript
+        script=>@"location.reload();"
   else
     magix.forms.set-value
       form-id=>header
@@ -54,6 +57,20 @@ system42.travel.try-login
     magix.forms.select-all
       form-id=>header
       id=>username
+
+lambda=>header
+  oncreatecontrols
+    _lbl=>headerCtrl
+      css=>span-14 top-2 bottom-3
+      text=>magix illuminate - release lucifer
+      tag=>h1
+    magix.web.get-config-setting=>Magix.Core.Portal-Name
+    set=>[_lbl][text].Value
+      value=>[magix.web.get-config-setting][value].Value
+    add=>[$]
+      value=>[_lbl]
+    set=>[$][_lbl].Name
+      value=>label
 
 panel=>loginWrp
   onfirstload
@@ -137,8 +154,8 @@ panel=>logoutWrp
       onclick
         magix.web.set-session
           key=>system42.travel.user
-        magix.viewport.execute-javascript
-          script=>@"location.reload();"
+        magix.web.redirect
+          url=>~
 }}
 </div>
 
