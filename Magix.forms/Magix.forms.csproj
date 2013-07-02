@@ -33,7 +33,6 @@
     <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AssemblyInfo.cs" />
     <Compile Include="FormsCore.cs" />
     <Compile Include="DynamicForm.ascx.cs" />
     <Compile Include="HtmlViewer.ascx.cs" />

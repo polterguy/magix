@@ -38,7 +38,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AssemblyInfo.cs" />
     <Compile Include="DataCore.cs" />
     <Compile Include="Data.cs" />
   </ItemGroup>

@@ -20,7 +20,7 @@ namespace Magix.SampleController
 		{
 		}
 
-		// uncomment below line to create a c# event handler for the application startup active event
+		// uncomment below line to create a c# event handler for the page load active event
 		//[ActiveEvent(Name = "magix.viewport.page-load")]
 		public void magix_viewport_page_load(object sender, ActiveEventArgs e)
 		{
