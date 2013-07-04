@@ -164,7 +164,7 @@ your system"
         category=>security
         code
           magix.web.set-session
-            key=>system42.travel.user
+            key=>magix.core.user
           magix.viewport.execute-javascript
             script=>@"location.reload();"
       _default_script7

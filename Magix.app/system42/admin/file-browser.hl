@@ -91,14 +91,14 @@ magix.file.list-files
 
 for-each=>[magix.file.list-files][files]
   set=>[/][_link-button][text].Value
-    value=>[.].Value
+    value=>[.].Name
   if=>[$][directory]
     set=>[@][replace][what].Value
       value=>@"{0}/"
         pr0=>@"[$][directory].Value"
     replace=>[/][_link-button][text].Value
   set=>[/][_link-button][onclick][magix.admin.edit-file][file].Value
-    value=>[.].Value
+    value=>[.].Name
   add=>[/][magix.forms.create-form][controls]
     value=>[/][_link-button]
   set=>[/][magix.forms.create-form][controls][_link-button].Name
@@ -108,9 +108,9 @@ magix.file.list-directories
 
 for-each=>[magix.file.list-directories][directories]
   set=>[/][_link-buttonDir][text].Value
-    value=>[.].Value
+    value=>[.].Name
   set=>[/][_link-buttonDir][onclick][execute-file][directory].Value
-    value=>[.].Value
+    value=>[.].Name
   if=>[$][directory]
     set=>[@][replace][what].Value
       value=>@"{0}/"

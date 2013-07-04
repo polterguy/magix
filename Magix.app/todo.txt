@@ -12,6 +12,8 @@
 
 * something is very fishy with the admin settings form, it keeps on flashing the scheck boxes randomly off and on ...?
 
+* turn profiler and tracer into a setting, im the settings form
+
 * the execute hyperlisp keyword, should be able to take parameters into the executing code block
   e.e.;
 _exe
@@ -26,23 +28,29 @@ _exe
 execute=>[_exe]
   message=>howdy
 
-* get rid of ControllerSample, or leave it as an empty project template
-
 * implement confirm on delete user and role
 
 * figure out of magix.execute.override is necessary, since there is magix.execute.event ...?
 
-* make magix.data.x conform to eachother
+* make magix.data.x conform to eachother in their passing of nodes
 
-* make all the web.get, web.get-session, viewstate, etc active events have a conforming api
+* make all the web.get, web.get-session, viewstate, etc active events have a conforming api using [id] and [value] and no [key]
 
 * active event executor doesn't show all items in autocomplete, due to parent div element not being relative, or something ....
 
 * set focus to missing field while creating a user with incomplete data
 
-* settings doesn't work, they're inconsistent in regards to viewstate/data
-
 * make all web form sample code snippets in inspect create working functioning code
 
-* turn profiler and tracer into a setting, im the settings form
+* normalize all active event parametrizing to minimize parameters down to minimum level, while at the same time make all non-hyper lisp keywords invokable through active event executor
+
+* create unit tests for magix.file namespace
+
+* execute-file and execute-script doesn't work with parameters, unit tests are wrong!!
+
+* implement more support for expressions in all events within the magix.execute namespace, such as tunnel, open, etc - by using the Expression class from Magix.Core
+
+* create boolean operations for comparing node trees
+
+* put stopped-learning into a proper namespace
 

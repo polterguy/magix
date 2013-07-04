@@ -17,10 +17,10 @@ magix.data.load
   start=(int)>0
   end=(int)>10
   prototype
-    type=>system42.travel.user
+    type=>magix.core.user
 magix.data.count
   prototype
-    type=>system42.travel.user
+    type=>magix.core.user
 if=>[magix.data.load][start].Value==0
   set=>[magix.forms.create-form][controls][panel:2][controls][link-button:0][enabled].Value
     value=>false
@@ -67,7 +67,7 @@ _dt
         onclick
           magix.data.remove
             prototype
-              type=>system42.travel.user
+              type=>magix.core.user
               username=>
           magix.log.append
             header=>user deleted
@@ -193,14 +193,14 @@ magix.forms.create-form
                     value=>[@][..][..][magix.forms.get-value][value].Value
                   magix.data.load
                     prototype
-                      type=>system42.travel.user
+                      type=>magix.core.user
                   if=>[@][magix.data.load][objects].Count>0
                     magix.viewport.show-message
                       message=>user exists from before with same username
                   else
                     magix.data.save
                       object
-                        type=>system42.travel.user
+                        type=>magix.core.user
                     set=>[@][magix.log.append][body][username].Value
                       value=>[@][..][..][magix.forms.get-value:0][value].Value
                     magix.log.append

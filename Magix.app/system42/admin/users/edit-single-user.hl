@@ -9,7 +9,7 @@ set=>[magix.data.load][prototype][username].Value
 
 magix.data.load
   prototype
-    type=>system42.travel.user
+    type=>magix.core.user
 
 set=>[magix.forms.create-form][controls][label][text].Value
   value=>[magix.data.load][objects][0][username].Value
@@ -29,7 +29,7 @@ set=>[_dt2][panel][controls][link-button][onclick][execute-file][username].Value
 
 magix.data.load
   prototype
-    type=>system42.travel.role
+    type=>magix.core.role
 
 _dt
   value=>name
@@ -55,7 +55,7 @@ _dt2
           _role=>will contain name of role
           magix.data.load
             prototype
-              type=>system42.travel.user
+              type=>magix.core.user
               username
           set=>[magix.data.load][objects][0][roles][[_role].Value]
           set=>[magix.data.save][id].Value
@@ -115,7 +115,7 @@ magix.forms.create-form
               id=>name
             magix.data.load
               prototype
-                type=>system42.travel.user
+                type=>magix.core.user
             set=>[magix.data.load][objects][0][name].Value
               value=>[magix.forms.get-value][value].Value
             set=>[magix.data.save][id].Value
@@ -139,7 +139,7 @@ magix.forms.create-form
               id=>pwd
             magix.data.load
               prototype
-                type=>system42.travel.user
+                type=>magix.core.user
             set=>[magix.data.load][objects][0][pwd].Value
               value=>[magix.forms.get-value][value].Value
             set=>[magix.data.save][id].Value
@@ -169,7 +169,7 @@ magix.forms.create-form
               form-id=>edit-user
               id=>ddlRoles
             magix.data.load
-              prototype=>system42.travel.user
+              prototype=>magix.core.user
             if=>[magix.data.load][objects][0][roles][[magix.forms.get-value][value].Value]
               magix.viewport.show-message
                 message=>user belongs to role already ...

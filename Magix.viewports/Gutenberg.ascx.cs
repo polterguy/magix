@@ -201,49 +201,16 @@ end user for some seconds.&nbsp;&nbsp;not thread safe";
 			confirmWrp.Style["display"] = "none";
 		}
 
-		/**
-		 * shows the debug grid
-		 */
-		[ActiveEvent(Name = "magix.viewport.show-grid")]
-		protected void magix_viewport_show_grid(object sender, ActiveEventArgs e)
-		{
-			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
-			{
-				e.Params["inspect"].Value = "shows or hides a debugging grid according to [value] node.&nbsp;&nbsp;not thread safe";
-				e.Params["value"].Value = true;
-				return;
-			}
-
-			Session["magix.viewport.show-grid"] = e.Params["value"].Get<bool>();
-		}
-
-		/**
-		 */
-		[ActiveEvent(Name = "magix.viewport.has-grid")]
-		protected void magix_viewport_has_grid(object sender, ActiveEventArgs e)
-		{
-			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
-			{
-				e.Params["inspect"].Value = @"returns true if grid is visible.&nbsp;&nbsp;
-not thread safe";
-				e.Params["value"].Value = true;
-				return;
-			}
-
-			if (Session["magix.viewport.show-grid"] != null && ((bool)Session["magix.viewport.show-grid"]))
-				e.Params["value"].Value = true;
-		}
-
 		protected override void OnPreRender(EventArgs e)
 		{
-			if (Session["magix.viewport.show-grid"] != null && ((bool)Session["magix.viewport.show-grid"]) && !wrp.CssClass.Contains("showgrid"))
+			if (Session["magix.viewport.show-grid"] != null && ((Node)Session["magix.viewport.show-grid"]).Get<bool>() && !wrp.CssClass.Contains("showgrid"))
 			{
 				wrp.CssClass = wrp.CssClass + " showgrid";
 				wrp.CssClass = wrp.CssClass.Trim();
 			}
-			else if (wrp.CssClass.Contains("showgrid") && (Session["magix.viewport.show-grid"] == null || !((bool)Session["magix.viewport.show-grid"])))
+			else if (wrp.CssClass.Contains("showgrid") && (Session["magix.viewport.show-grid"] == null || !((Node)Session["magix.viewport.show-grid"]).Get<bool>()))
 			{
-				wrp.CssClass = wrp.CssClass.Replace("showgrid", "").Trim();
+				wrp.CssClass = wrp.CssClass.Replace("showgrid", "").Trim().Replace("  ", " ");
 			}
 
 			base.OnPreRender (e);

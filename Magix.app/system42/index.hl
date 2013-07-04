@@ -23,7 +23,7 @@ if=>[magix.web.get][value]
   execute-file=>system42/pages/run-page.hl
 else
   magix.web.get-session
-    key=>system42.travel.user
+    key=>magix.core.user
   if=>[@][magix.web.get-session][value][roles][admin]
     if=>[magix.web.get:1][value]
       magix.forms.create-web-page
