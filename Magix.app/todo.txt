@@ -46,7 +46,7 @@ execute=>[_exe]
 
 * implement more support for expressions in all events within the magix.execute namespace, such as tunnel, open, etc - by using the Expression class from Magix.Core
 
-* create boolean operations for comparing node trees
+* create boolean operations for comparing and "multiplying" node trees
 
 * add up [$] parameters into event handlers of web form controls for "value" and "info" for simplicity
 
