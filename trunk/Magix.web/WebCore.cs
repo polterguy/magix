@@ -48,22 +48,22 @@ get http parameter as [value].&nbsp;&nbsp;not thread safe";
 			{
 				e.Params["event:magix.execute"].Value = null;
 				e.Params["inspect"].Value = @"will create or overwrite
-an existing session variable named [key] with node hierarchy from [value].&nbsp;&nbsp;
+an existing session variable named [id] with node hierarchy from [value].&nbsp;&nbsp;
 not thread safe";
-				e.Params["magix.web.set-session"]["key"].Value = "some_key";
+				e.Params["magix.web.set-session"]["id"].Value = "some_key";
 				e.Params["magix.web.set-session"]["value"].Value = "something to store into session";
 				return;
 			}
 
-			if (!e.Params.Contains("key"))
-				throw new ArgumentException("need [key]");
+			if (!e.Params.Contains("id"))
+				throw new ArgumentException("need [id]");
 
 			if (!e.Params.Contains("value"))
-				Page.Session.Remove(e.Params["key"].Get<string>());
+				Page.Session.Remove(e.Params["id"].Get<string>());
 			else
 			{
 				Node value = e.Params["value"].Clone();
-				Page.Session[e.Params["key"].Get<string>()] = value;
+				Page.Session[e.Params["id"].Get<string>()] = value;
 			}
 		}
 
@@ -74,18 +74,18 @@ not thread safe";
 			{
 				e.Params["event:magix.execute"].Value = null;
 				e.Params["inspect"].Value = @"will return
-an existing session variable named [key] as node hierarchy into [value].&nbsp;&nbsp;
+an existing session variable named [id] as node hierarchy into [value].&nbsp;&nbsp;
 not thread safe";
-				e.Params["magix.web.get-session"]["key"].Value = "some_key";
+				e.Params["magix.web.get-session"]["id"].Value = "some_key";
 				return;
 			}
 
-			if (!e.Params.Contains("key"))
-				throw new ArgumentException("need [key]");
+			if (!e.Params.Contains("id"))
+				throw new ArgumentException("need [id]");
 
-			if (Page.Session[e.Params["key"].Get<string>()] != null &&
-			    Page.Session[e.Params["key"].Get<string>()] is Node)
-				e.Params.Add(Page.Session[e.Params["key"].Get<string>()] as Node);
+			if (Page.Session[e.Params["id"].Get<string>()] != null &&
+			    Page.Session[e.Params["id"].Get<string>()] is Node)
+				e.Params.Add(Page.Session[e.Params["id"].Get<string>()] as Node);
 		}
 
 

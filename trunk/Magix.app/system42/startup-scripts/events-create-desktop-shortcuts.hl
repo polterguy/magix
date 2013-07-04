@@ -159,14 +159,6 @@ of your system"
           magix.viewport.show-message-if-help-mode
             message=>@"view and change settings of 
 your system"
-      _default_scriptx_4
-        text=>logout
-        category=>security
-        code
-          magix.web.set-session
-            key=>magix.core.user
-          magix.viewport.execute-javascript
-            script=>@"location.reload();"
       _default_script7
         text=>magix markup language editor
         category=>tools

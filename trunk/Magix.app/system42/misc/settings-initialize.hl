@@ -7,7 +7,7 @@ similar"
 
 
 magix.web.get-session
-  key=>magix.viewport.show-grid
+  id=>magix.viewport.show-grid
 if=>![magix.web.get-session][value]
   magix.data.load
     prototype
@@ -16,15 +16,15 @@ if=>![magix.web.get-session][value]
 
   if=>[@][magix.data.load][objects][0][value].Value==True
     magix.web.set-session
-      key=>magix.viewport.show-grid
+      id=>magix.viewport.show-grid
       value=(bool)>True
   else
     magix.web.set-session
-      key=>magix.viewport.show-grid
+      id=>magix.viewport.show-grid
       value=(bool)>False
 
 magix.web.get-session
-  key=>magix.help.kill-intrusive-tips
+  id=>magix.help.kill-intrusive-tips
 if=>![magix.web.get-session:1][value]
   magix.data.load
     prototype
@@ -33,10 +33,10 @@ if=>![magix.web.get-session:1][value]
 
   if=>[@][magix.data.load:1][objects][0][value].Value
     magix.web.set-session
-      key=>magix.help.kill-intrusive-tips
+      id=>magix.help.kill-intrusive-tips
       value=(bool)>True
   else
     magix.web.set-session
-      key=>stopped-learning
+      id=>stopped-learning
       value=>(bool)False
 
