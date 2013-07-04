@@ -6,8 +6,7 @@ settings, either on application level, session level, or
 similar"
 
 
-magix.web.get-session
-  id=>magix.viewport.show-grid
+magix.web.get-session=>magix.viewport.show-grid
 if=>![magix.web.get-session][value]
   magix.data.load
     prototype
@@ -15,16 +14,13 @@ if=>![magix.web.get-session][value]
       name=>magix.viewport.show-grid
 
   if=>[@][magix.data.load][objects][0][value].Value==True
-    magix.web.set-session
-      id=>magix.viewport.show-grid
+    magix.web.set-session=>magix.viewport.show-grid
       value=(bool)>True
   else
-    magix.web.set-session
-      id=>magix.viewport.show-grid
+    magix.web.set-session=>magix.viewport.show-grid
       value=(bool)>False
 
-magix.web.get-session
-  id=>magix.help.kill-intrusive-tips
+magix.web.get-session=>magix.help.kill-intrusive-tips
 if=>![magix.web.get-session:1][value]
   magix.data.load
     prototype
@@ -32,11 +28,9 @@ if=>![magix.web.get-session:1][value]
       name=>magix.help.kill-intrusive-tips
 
   if=>[@][magix.data.load:1][objects][0][value].Value
-    magix.web.set-session
-      id=>magix.help.kill-intrusive-tips
+    magix.web.set-session=>magix.help.kill-intrusive-tips
       value=(bool)>True
   else
-    magix.web.set-session
-      id=>stopped-learning
+    magix.web.set-session=>stopped-learning
       value=>(bool)False
 

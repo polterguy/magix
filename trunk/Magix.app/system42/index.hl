@@ -22,8 +22,7 @@ magix.web.get=>dashboard
 if=>[magix.web.get][value]
   execute-file=>system42/pages/run-page.hl
 else
-  magix.web.get-session
-    id=>magix.core.user
+  magix.web.get-session=>magix.core.user
   if=>[@][magix.web.get-session][value][roles][admin]
     if=>[magix.web.get:1][value]
       magix.forms.create-web-page
@@ -40,8 +39,7 @@ else
       execute-file=>system42/pages/run-page.hl
   else
     if=>[magix.web.get:1][value]
-      magix.web.redirect
-        url=>~
+      magix.web.redirect=>~
     else
       execute-file=>system42/pages/run-page.hl
 

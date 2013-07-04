@@ -13,8 +13,7 @@ changed in the settings of the system.&nbsp;&nbsp;
 not thread safe"
 
   code
-    magix.web.get-session
-      id=>magix.help.kill-intrusive-tips
+    magix.web.get-session=>magix.help.kill-intrusive-tips
     if=>![magix.web.get-session][value].Value
       for-each=>[$]
         add=>[@][..][magix.viewport.show-message]
