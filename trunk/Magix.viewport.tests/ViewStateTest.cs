@@ -23,9 +23,9 @@ namespace Magix.tests
 			tmp["event:magix.execute"].Value = null;
 			tmp["inspect"].Value = @"verifies that [magix.viewport.set-viewstate] and get-viewstate
 behaves correctly";
-			tmp["magix.viewport.set-viewstate"]["id"].Value = "some-viewstate-id";
+			tmp["magix.viewport.set-viewstate"].Value = "some-viewstate-id";
 			tmp["magix.viewport.set-viewstate"]["value"]["node-hierarchy"]["hello"].Value = "jo!";
-			tmp["magix.viewport.get-viewstate"]["id"].Value = "some-viewstate-id";
+			tmp["magix.viewport.get-viewstate"].Value = "some-viewstate-id";
 
 			if (ShouldInspect(e.Params))
 			{

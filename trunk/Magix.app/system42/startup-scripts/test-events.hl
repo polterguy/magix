@@ -52,3 +52,25 @@ necessary to test if session retrieve and set works correctly"
     magix.web.get-session=>magix.test.test-session
     if=>[magix.web.get-session:1][value]
       throw=>couldn't delete session object
+
+
+event=>magix.test.viewstate-set-retrieve-delete
+
+  inspect=>@"creates the unit test
+necessary to test if viewstate retrieve and set works correctly"
+
+  code
+    magix.viewport.set-viewstate=>magix.test.test-viewstate
+      value=>howdy
+        child1=>howdy2
+    magix.viewport.get-viewstate=>magix.test.test-viewstate
+    if=>![magix.viewport.get-viewstate][value]
+      throw=>couldn't find viewstate object
+    if=>[magix.viewport.get-viewstate][value].Value!=howdy
+      throw=>couldn't find correct value for session object
+    if=>[magix.viewport.get-viewstate][value][child1].Value!=howdy2
+      throw=>couldn't find correct value for session child node object
+    magix.viewport.set-viewstate=>magix.test.test-viewstate
+    magix.viewport.get-viewstate=>magix.test.test-viewstate
+    if=>[magix.viewport.get-viewstate:1][value]
+      throw=>couldn't delete viewstate object
