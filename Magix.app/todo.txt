@@ -32,8 +32,6 @@ execute=>[_exe]
 
 * make magix.data.x conform to eachother in their passing of nodes
 
-* make all the web.get, web.get-session, viewstate, etc active events have a conforming api using [id] and [value] and no [key]
-
 * active event executor doesn't show all items in autocomplete, due to parent div element not being relative, or something ....
 
 * set focus to missing field while creating a user with incomplete data
@@ -51,4 +49,12 @@ execute=>[_exe]
 * create boolean operations for comparing node trees
 
 * add up [$] parameters into event handlers of web form controls for "value" and "info" for simplicity
+
+* get rid of the :before and :after active events, and replace them with something smarter
+
+* make support for filtering of events in both the profiler and the tracer
+
+* make unit tests for get-session, get-viewstate, etc ...
+
+* make [form-id] optional, and if not given, returns any match for control with given id for simplicity
 

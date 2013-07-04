@@ -9,7 +9,7 @@ you align objects correctly according to the grid system of magix"
   css=>span-1
   onfirstload
     magix.web.get-session
-      key=>magix.viewport.show-grid
+      id=>magix.viewport.show-grid
     if=>[magix.web.get-session][value].Value
       set=>[magix.forms.set-value][value].Value
         value=>true
@@ -42,11 +42,11 @@ you align objects correctly according to the grid system of magix"
       id
     if=>[magix.data.save][object][value].Value==True
       magix.web.set-session
-        key=>magix.viewport.show-grid
+        id=>magix.viewport.show-grid
         value=(bool)>True
     else
       magix.web.set-session
-        key=>magix.viewport.show-grid
+        id=>magix.viewport.show-grid
         value=(bool)>False
 label=>hasGrid
   tip=>@"if checked, will show tips around most objects 
@@ -62,7 +62,7 @@ as you click your way around in magix"
   css=>left-1 span-1
   onfirstload
     magix.web.get-session
-      key=>magix.help.kill-intrusive-tips
+      id=>magix.help.kill-intrusive-tips
     if=>[magix.web.get-session][value].Value
       set=>[magix.forms.set-value][value].Value
         value=(bool)>False
@@ -102,11 +102,11 @@ as you click your way around in magix"
       id
     if=>[magix.data.save][object][value].Value==True
       magix.web.set-session
-        key=>magix.help.kill-intrusive-tips
+        id=>magix.help.kill-intrusive-tips
         value=(bool)>True
     else
       magix.web.set-session
-        key=>magix.help.kill-intrusive-tips
+        id=>magix.help.kill-intrusive-tips
         value=(bool)>False
 label=>hasGTutorialLbl
   tip=>@"iif checked, will show tips around most objects 

@@ -17,8 +17,8 @@ namespace Magix.tests
 		/**
 		 * Tests to see if "magix.data.save/load", works
 		 */
-		[ActiveEvent(Name = "magix.test.data.save-by-key")]
-		public static void magix_test_data_save_by_key(object sender, ActiveEventArgs e)
+		[ActiveEvent(Name = "magix.test.data.save-by-id")]
+		public static void magix_test_data_save_by_id(object sender, ActiveEventArgs e)
 		{
 			Node tmp = new Node();
 

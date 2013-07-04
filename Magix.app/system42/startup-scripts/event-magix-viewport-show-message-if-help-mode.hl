@@ -14,7 +14,7 @@ not thread safe"
 
   code
     magix.web.get-session
-      key=>magix.help.kill-intrusive-tips
+      id=>magix.help.kill-intrusive-tips
     if=>![magix.web.get-session][value].Value
       for-each=>[$]
         add=>[@][..][magix.viewport.show-message]
