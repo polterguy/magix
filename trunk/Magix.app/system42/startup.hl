@@ -17,6 +17,6 @@ magix.file.list-files
 
 for-each=>[magix.file.list-files][files]
   set=>[@][execute-file].Value
-    value=>[.].Value
+    value=>[.].Name
   execute-file
 

@@ -31,8 +31,9 @@ are being correctly re-mapped";
 				return;
 			}
 
+			// first tunneled events
 			Node tmp = new Node();
-			tmp["prototype"]["type"].Value = "magix.execute.tunneled";
+			tmp["prototype"]["type"].Value = "magix.execute.tunnel";
 
 			RaiseActiveEvent(
 				"magix.data.load",
@@ -46,8 +47,9 @@ are being correctly re-mapped";
 				}
 			}
 
+			// then open events
 			tmp = new Node();
-			tmp["prototype"]["type"].Value = "magix.execute.opened";
+			tmp["prototype"]["type"].Value = "magix.execute.open";
 
 			RaiseActiveEvent(
 				"magix.data.load",
@@ -103,7 +105,7 @@ which event to override to go externally.&nbsp;&nbsp;tunnel cannot override null
 				Node n = new Node();
 
 				n["prototype"]["event"].Value = evt;
-				n["prototype"]["type"].Value = "magix.execute.tunneled";
+				n["prototype"]["type"].Value = "magix.execute.tunnel";
 
 				RaiseActiveEvent(
 					"magix.data.remove",
@@ -118,7 +120,7 @@ which event to override to go externally.&nbsp;&nbsp;tunnel cannot override null
 
 				n["id"].Value = Guid.NewGuid();
 				n["object"]["event"].Value = evt;
-				n["object"]["type"].Value = "magix.execute.tunneled";
+				n["object"]["type"].Value = "magix.execute.tunnel";
 
 				RaiseActiveEvent(
 					"magix.data.save",
@@ -163,7 +165,7 @@ server park, or by exposing functionality to other networks.&nbsp;&nbsp;thread s
 
 			n["id"].Value = Guid.NewGuid();
 			n["object"]["event"].Value = evt;
-			n["object"]["type"].Value = "magix.execute.opened";
+			n["object"]["type"].Value = "magix.execute.open";
 
 			RaiseActiveEvent(
 				"magix.data.save",
@@ -201,7 +203,7 @@ value, such that it no longer can be remotely invoked from other servers.&nbsp;&
 			Node n = new Node();
 
 			n["prototype"]["event"].Value = evt;
-			n["prototype"]["type"].Value = "magix.execute.opened";
+			n["prototype"]["type"].Value = "magix.execute.open";
 
 			RaiseActiveEvent(
 				"magix.data.remove",

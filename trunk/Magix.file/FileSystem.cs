@@ -27,18 +27,18 @@ namespace Magix.execute
 			if (ShouldInspect(e.Params))
 			{
 				e.Params["event:magix.execute"].Value = null;
-				e.Params["magix.file.load"]["path"].Value = "core-scripts/some-files.txt";
-				e.Params["inspect"].Value = @"loads the [path] file into the 
-[file] node as text.&nbsp;&nbsp;[path] can be a relative path, to 
+				e.Params["magix.file.load"]["file"].Value = "core-scripts/some-files.txt";
+				e.Params["inspect"].Value = @"loads the [file] node into the 
+[value] node as text.&nbsp;&nbsp;[file] can be a relative path, to 
 fetch a document beneath your web application directory structure, or 
-an http or ftp path, to a document.&nbsp;&nbsp;thread safe";
+an http or ftp path to a document.&nbsp;&nbsp;thread safe";
 				return;
 			}
 
-			if (!e.Params.Contains("path") || e.Params["path"].Get<string>("") == "")
-				throw new ArgumentException("You need to define which file to load, as [path] node");
+			if (!e.Params.Contains("file") || e.Params["file"].Get<string>("") == "")
+				throw new ArgumentException("You need to define which file to load, as [file] node");
 
-			string file = e.Params["path"].Get<string>();
+			string file = e.Params["file"].Get<string>();
 
 			if (file.StartsWith("http") || file.StartsWith("ftp"))
 			{
@@ -47,7 +47,7 @@ an http or ftp path, to a document.&nbsp;&nbsp;thread safe";
 				{
 					using (TextReader reader = new StreamReader(response.GetResponseStream()))
 					{
-						e.Params["file"].Value = reader.ReadToEnd();
+						e.Params["value"].Value = reader.ReadToEnd();
 					}
 				}
 			}
@@ -55,7 +55,7 @@ an http or ftp path, to a document.&nbsp;&nbsp;thread safe";
 			{
 				using (TextReader reader = File.OpenText(HttpContext.Current.Server.MapPath(file)))
 				{
-					e.Params["file"].Value = reader.ReadToEnd();
+					e.Params["value"].Value = reader.ReadToEnd();
 				}
 			}
 		}
@@ -69,13 +69,13 @@ an http or ftp path, to a document.&nbsp;&nbsp;thread safe";
 			if (ShouldInspect(e.Params))
 			{
 				e.Params["event:magix.execute"].Value = null;
-				e.Params["magix.file.save"]["path"].Value = "core-scripts/sample.txt";
-				e.Params["magix.file.save"]["file"].Value = @"contents that will replace the contents
+				e.Params["magix.file.save"]["file"].Value = "core-scripts/sample.txt";
+				e.Params["magix.file.save"]["value"].Value = @"contents that will replace the contents
 in the existing file, alternatively become the 
 contents of a new file";
 				e.Params["inspect"].Value = @"saves a file from the 
 [file] node.&nbsp;&nbsp;the file to save is 
-given as value of the save-file node.&nbsp;&nbsp;
+given as the [value] node.&nbsp;&nbsp;
 will overwrite an existing file, if any,
 otherwise it'll create a new file.&nbsp;&nbsp;if you 
 pass in null as [file] Node, or no [file] node
@@ -84,19 +84,19 @@ new created.&nbsp;&nbsp;thread safe";
 				return;
 			}
 
-			if (!e.Params.Contains("path") || e.Params["path"].Get<string>("") == "")
-				throw new ArgumentException("You need to define which file to save, as [path] node");
+			if (!e.Params.Contains("file") || e.Params["file"].Get<string>("") == "")
+				throw new ArgumentException("You need to define which file to save, as [file] node");
 
-			string file = e.Params["path"].Get<string>();
+			string file = e.Params["file"].Get<string>();
 
-			if (!e.Params.Contains("file") || e.Params["file"].Get<string>() == null)
+			if (!e.Params.Contains("value") || e.Params["value"].Get<string>() == null)
 			{
 				// Deletes an existing file
 				File.Delete(HttpContext.Current.Server.MapPath(file));
 			}
 			else
 			{
-				string fileContent = e.Params["file"].Get<string>();
+				string fileContent = e.Params["value"].Get<string>();
 
 				using (TextWriter writer = 
 				       new StreamWriter(File.OpenWrite(HttpContext.Current.Server.MapPath(file))))
@@ -191,7 +191,7 @@ new created.&nbsp;&nbsp;thread safe";
 				e.Params["magix.file.list-files"]["directory"].Value = "system42";
 				e.Params["magix.file.list-files"]["filter"].Value = "*.hl";
 				e.Params["inspect"].Value = @"lists the files in [files] in the given
-[directory], which must be relative to the app's main path.&nbsp;&nbsp;
+[path], which must be relative to the app's main path.&nbsp;&nbsp;
 use [filter] as a search pattern.&nbsp;&nbsp;thread safe";
 				return;
 			}
@@ -206,11 +206,10 @@ use [filter] as a search pattern.&nbsp;&nbsp;thread safe";
 			else
 				files = Directory.GetFiles(HttpContext.Current.Server.MapPath(dir), filter);
 
-			int idxNo = 0;
 			string rootDir = HttpContext.Current.Server.MapPath("~");
 			foreach (string idxFile in files)
 			{
-				e.Params["files"]["f_" + idxNo++].Value = idxFile.Substring(rootDir.Length);
+				e.Params["files"][idxFile.Substring(rootDir.Length)].Value = null;
 			}
 		}
 
@@ -240,11 +239,10 @@ use [filter] as a search pattern.&nbsp;&nbsp;thread safe";
 			else
 				files = Directory.GetDirectories(HttpContext.Current.Server.MapPath(dir), filter);
 
-			int idxNo = 0;
 			string rootDir = HttpContext.Current.Server.MapPath("~");
 			foreach (string idxFile in files)
 			{
-				e.Params["directories"]["f_" + idxNo++].Value = idxFile.Substring(rootDir.Length);
+				e.Params["directories"][idxFile.Substring(rootDir.Length)].Value = null;
 			}
 		}
 	}

@@ -86,6 +86,7 @@ will be edited, but not created before saved.&nbsp;&nbsp;not thread safe";
 			default:
 			{
 				Node tmp = new Node();
+
 				tmp["script"].Value = "window.open('" + file + "', '_blank').focus();";
 
 				RaiseActiveEvent(

@@ -42,8 +42,8 @@ namespace Magix.ide
 		protected void save_Click(object sender, EventArgs e)
 		{
 			Node tmp = new Node();
-			tmp["file"].Value = surface.Text;
-			tmp["path"].Value = path.Text;
+			tmp["value"].Value = surface.Text;
+			tmp["file"].Value = path.Text;
 
 			RaiseEvent(
 				"magix.file.save",
@@ -69,7 +69,7 @@ namespace Magix.ide
 		{
 			Node c = new Node();
 			c["message"].Value = "are you sure you wish to delete the file " + path.Text + "?";
-			c["code"]["magix.file.save"]["path"].Value = path.Text;
+			c["code"]["magix.file.save"]["file"].Value = path.Text;
 			c["code"]["magix.ide.file-deleted"]["path"].Value = path.Text;
 
 			RaiseEvent(

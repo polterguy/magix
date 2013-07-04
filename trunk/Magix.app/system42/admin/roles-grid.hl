@@ -8,7 +8,7 @@ which access rights to the system a user has"
 
 magix.data.load
   prototype
-    type=>system42.travel.role
+    type=>magix.core.role
 
 _dt
   panel
@@ -21,13 +21,13 @@ _dt
         onclick
           magix.data.remove
             prototype
-              type=>system42.travel.role
+              type=>magix.core.role
               name=>
           set=>[magix.data.load][prototype][roles][[magix.data.remove][prototype][name].Value].Name
             value=>[magix.data.remove][prototype][name].Value
           magix.data.load
             prototype
-              type=>system42.travel.user
+              type=>magix.core.user
               roles
           for-each=>[magix.data.load][objects]
             set=>[.][roles][[/][magix.data.remove][prototype][name].Value]
@@ -101,7 +101,7 @@ magix.forms.create-form
                 value=>[magix.forms.get-value][value].Value
               magix.data.load
                 prototype
-                  type=>system42.travel.role
+                  type=>magix.core.role
               if=>[@][magix.data.load][objects].Count>0
                 magix.viewport.show-message
                   message=>role exists from before
@@ -110,7 +110,7 @@ magix.forms.create-form
                   value=>[magix.forms.get-value][value].Value
                 magix.data.save
                   object
-                    type=>system42.travel.role
+                    type=>magix.core.role
                 set=>[@][magix.log.append][body][role].Value
                   value=>[magix.forms.get-value][value].Value
                 magix.log.append

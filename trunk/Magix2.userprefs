@@ -1,15 +1,23 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Magix.app/todo.txt">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Magix.app/system42/admin/roles-grid.hl">
     <Files>
-      <File FileName="Magix.app/todo.txt" Line="25" Column="15" />
+      <File FileName="Magix.app/todo.txt" Line="34" Column="1" />
+      <File FileName="Magix.app/system42/admin/roles-grid.hl" Line="11" Column="26" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
-        <State expanded="True" selected="True">
+        <State expanded="True">
           <Node name="Core" expanded="True">
-            <Node name="Magix.app" expanded="True" />
+            <Node name="Magix.app" expanded="True">
+              <Node name="system42" expanded="True">
+                <Node name="admin" expanded="True">
+                  <Node name="roles-grid.hl" selected="True" />
+                </Node>
+              </Node>
+            </Node>
           </Node>
+          <Node name="Plugins" expanded="True" />
         </State>
       </Pad>
       <Pad Id="ClassPad">
@@ -17,7 +25,7 @@
       </Pad>
       <Pad Id="MonoDevelop.Debugger.WatchPad">
         <State>
-          <Value>code</Value>
+          <Value>tmp["json"].Value</Value>
         </State>
       </Pad>
     </Pads>

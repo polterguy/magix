@@ -45,13 +45,13 @@ thread safe";
 
 			Node fn = new Node();
 
-			fn["path"].Value = file;
+			fn["file"].Value = file;
 
 			RaiseActiveEvent(
 				"magix.file.load",
 				fn);
 
-			string txt = fn["file"].Get<string>();
+			string txt = fn["value"].Get<string>();
 
 			Node tmp = new Node();
 			tmp["code"].Value = txt;

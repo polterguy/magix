@@ -6,30 +6,37 @@ settings, either on application level, session level, or
 similar"
 
 
-magix.data.load
-  prototype
-    type=>system42.travel.setting
-    name=>has-grid
+magix.web.get-session
+  key=>magix.viewport.show-grid
+if=>![magix.web.get-session][value].Value
+  magix.data.load
+    prototype
+      type=>system42.travel.setting
+      name=>magix.viewport.show-grid
 
-if=>[magix.data.load][objects][0][value].Value==True
-  magix.viewport.show-grid
-    value=(bool)>True
-else
-  magix.viewport.show-grid
-    value=(bool)>False
+  if=>[@][magix.data.load][objects][0][value].Value==True
+    magix.web.set-session
+      key=>magix.viewport.show-grid
+      value=(bool)>True
+  else
+    magix.web.set-session
+      key=>magix.viewport.show-grid
+      value=(bool)>False
 
+magix.web.get-session
+  key=>stopped-learning
+if=>![magix.web.get-session:1][value].Value
+  magix.data.load
+    prototype
+      type=>system42.travel.setting
+      name=>stopped-learning
 
-magix.data.load
-  prototype
-    type=>system42.travel.setting
-    name=>stopped-learning
-
-if=>[magix.data.load:1][objects][0][value].Value
-  magix.web.set-session
-    key=>stopped-learning
-    value=(bool)>True
-else
-  magix.web.set-session
-    key=>stopped-learning
-    value=>(bool)False
+  if=>[@][magix.data.load:1][objects][0][value].Value
+    magix.web.set-session
+      key=>stopped-learning
+      value=(bool)>True
+  else
+    magix.web.set-session
+      key=>stopped-learning
+      value=>(bool)False
 
