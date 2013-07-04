@@ -69,3 +69,5 @@ execute=>[_exe]
 
 * remove the deletion and saving of files out from the AsciiEditor.ascx.cs file and into controllers
 
+* make Active Modules become inspectable through using [inspect]
+
