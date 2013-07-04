@@ -8,7 +8,7 @@ similar"
 
 magix.web.get-session
   key=>magix.viewport.show-grid
-if=>![magix.web.get-session][value].Value
+if=>![magix.web.get-session][value]
   magix.data.load
     prototype
       type=>system42.travel.setting
@@ -24,16 +24,16 @@ if=>![magix.web.get-session][value].Value
       value=(bool)>False
 
 magix.web.get-session
-  key=>stopped-learning
-if=>![magix.web.get-session:1][value].Value
+  key=>magix.help.kill-intrusive-tips
+if=>![magix.web.get-session:1][value]
   magix.data.load
     prototype
       type=>system42.travel.setting
-      name=>stopped-learning
+      name=>magix.help.kill-intrusive-tips
 
   if=>[@][magix.data.load:1][objects][0][value].Value
     magix.web.set-session
-      key=>stopped-learning
+      key=>magix.help.kill-intrusive-tips
       value=(bool)>True
   else
     magix.web.set-session
