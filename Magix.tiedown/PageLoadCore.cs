@@ -8,22 +8,15 @@ using System;
 using System.Configuration;
 using Magix.Core;
 
-namespace Magix.SampleController
+namespace Magix.tiedown
 {
 	/**
-	 * Please notice, by removing this assembly, and replacing it with
-	 * another Assembly, containing a controller, which handles the
-	 * "magix.viewport.page-load" event, you can create your 
-	 * own Application Startup logic, which effectively would become the 
-	 * starting point of your application, serving up whatever Module
-	 * you wish to use
+	 * runs the page load hyper lisp file
 	 */
-	public class ControllerSample : ActiveController
+	public class PageLoadCore : ActiveController
 	{
 		/**
-		 * Handled to make sure we load our Active Event Executor by default.
-		 * Replace this code, with your own Active Event handler, which handles
-		 * the page-load event, and you've got your own application
+		 * runs the page load hyper lisp file
 		 */
 		[ActiveEvent(Name = "magix.viewport.page-load")]
 		public void magix_viewport_page_load_2(object sender, ActiveEventArgs e)

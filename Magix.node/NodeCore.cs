@@ -10,8 +10,14 @@ using Magix.Core;
 
 namespace Magix.execute
 {
+	/**
+	 * helper for manipulating nodes
+	 */
 	public class NodeCore : ActiveController
 	{
+		/**
+		 * replaces node's contents
+		 */
 		[ActiveEvent(Name = "magix.execute.replace")]
 		public void magix_execute_replace_node_value(object sender, ActiveEventArgs e)
 		{
@@ -43,14 +49,17 @@ expression must end with .Value or .Name.&nbsp;&nbsp;thread safe";
 
 			string expr = ip.Get<string>();
 
+			if (string.IsNullOrEmpty(expr))
+				throw new ArgumentException("[replace] needs an expression as value to know where to perform replacement operation");
+
 			string exprNode = Expressions.GetExpressionValue(expr, dp, ip, false) as string;
+
+			if (exprNode == null)
+				throw new ArgumentException("couldn't find the node in [replace], expression was; " + expr);
 
 			string replNode = Expressions.GetExpressionValue(ip["what"].Get<string>(), dp, ip, false) as string;
 
 			string withNode = ip.Contains("with") ? Expressions.GetExpressionValue(ip["with"].Get<string>(""), dp, ip, false) as string : "";
-
-			if (exprNode == null)
-				throw new ArgumentException("couldn't find the node in [replace]");
 
 			Expressions.SetNodeValue(
 				expr, 
