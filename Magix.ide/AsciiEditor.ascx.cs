@@ -19,6 +19,9 @@ using Magix.UX.Widgets.Core;
 
 namespace Magix.ide
 {
+	/**
+	 * edits ascii files
+	 */
     public class AsciiEditor : ActiveModule
     {
 		protected TextArea surface;
