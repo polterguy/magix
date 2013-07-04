@@ -45,7 +45,7 @@ thread safe";
 
 			Node fn = new Node();
 
-			fn["file"].Value = file;
+			fn.Value = file;
 
 			RaiseActiveEvent(
 				"magix.file.load",

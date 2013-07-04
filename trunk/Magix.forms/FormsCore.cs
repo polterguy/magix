@@ -11,13 +11,12 @@ using Magix.Core;
 namespace Magix.forms
 {
 	/**
-	 * Controller that makes it possible to create new 
-	 * dynamically created forms
+	 * controller that makes it possible to create new dynamically created forms
 	 */
 	public class FormsCore : ActiveController
 	{
 		/**
-		 * Will create, and instantiate, a newly created dynamic form
+		 * will create, and instantiate, a newly created dynamic form
 		 */
 		[ActiveEvent(Name = "magix.forms.create-form")]
 		public void magix_forms_create_form(object sender, ActiveEventArgs e)
@@ -52,7 +51,7 @@ contains the controls themselves, [css] becomes the css classes of your form
 		}
 
 		/**
-		 * Will create, and instantiate, a newly created dynamic web page
+		 * will create, and instantiate, a newly created dynamic web page
 		 */
 		[ActiveEvent(Name = "magix.forms.create-web-page")]
 		public void magix_forms_create_web_page(object sender, ActiveEventArgs e)
@@ -62,7 +61,7 @@ contains the controls themselves, [css] becomes the css classes of your form
 				e.Params["event:magix.forms.create-web-page"].Value = null;
 				e.Params["container"].Value = "header";
 				e.Params["form-id"].Value = "harvester";
-				e.Params["html"].Value = "<p>some html, or file.&nbsp;&nbsp;mutually exclusive parameters</p>";
+				e.Params["html"].Value = "<p>some html, or file.&nbsp;&nbsp;[html] and [file] are mutually exclusive parameters</p>";
 				e.Params["file"].Value = "sample-scripts/email-harvester.mml";
 				e.Params["inspect"].Value = @"creates a dynamic html web page,
 loading it into the [container] viewport container.&nbsp;&nbsp;[form-id]
@@ -80,24 +79,29 @@ so on.&nbsp;&nbsp;you can embed forms using this syntax
 				return;
 			}
 
-			if (e.Params.Contains("file"))
+			Node tmp = e.Params.Clone();
+
+			if (!tmp.Contains("container"))
+				throw new ArgumentException("create-web-page needs a [container] parameter");
+
+			if (tmp.Contains("file"))
 			{
-				if (e.Params.Contains("html"))
+				if (tmp.Contains("html"))
 					throw new ArgumentException(
 						@"marvin confused, don't know to use [file] or [html], choose one.&nbsp;&nbsp;
 only one girl-friend at the time.&nbsp;&nbsp;[html] and [file] are two mutually exclusive 
 parameters");
-				using (TextReader reader = File.OpenText(Page.Server.MapPath(e.Params["file"].Get<string>())))
+				using (TextReader reader = File.OpenText(Page.Server.MapPath(tmp["file"].Get<string>())))
 				{
-					e.Params["html"].Value = reader.ReadToEnd();
-					e.Params["file"].UnTie(); // removing file object, to not confuse HtmlViewer ...
+					tmp["html"].Value = reader.ReadToEnd();
+					tmp["file"].UnTie(); // removing file object, to not confuse HtmlViewer ...
 				}
 			}
 
 			LoadModule(
 				"Magix.forms.HtmlViewer", 
-				e.Params["container"].Get<string>(), 
-				e.Params);
+				tmp["container"].Get<string>(), 
+				tmp);
 		}
 	}
 }
