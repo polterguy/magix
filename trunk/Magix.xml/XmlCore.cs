@@ -26,7 +26,7 @@ namespace Magix.execute
 			{
 				e.Params["event:magix.xml.xml-2-node"].Value = null;
 				e.Params["inspect"].Value = @"will return 
-[dom] node structure, parsed from xml in [xml].&nbsp;&nbsp;thread safe";
+[dom] node structure, parsed from xml in value.&nbsp;&nbsp;thread safe";
 				e.Params["xml"].Value = @"
 <xml>
   <value1>howdy</value1>
@@ -35,11 +35,13 @@ namespace Magix.execute
 				return;
 			}
 
-			if (!e.Params.Contains("xml") || e.Params["xml"].Get<string>("") == "")
-				throw new ArgumentException("need [xml] parameter");
+			string xml = e.Params.Get<string>();
+
+			if (string.IsNullOrEmpty(xml))
+				throw new ArgumentException("need xml value to [magix.xml.xml-2-node]");
 
 			XmlDocument doc = new XmlDocument();
-			doc.LoadXml(e.Params["xml"].Get<string>());
+			doc.LoadXml(xml);
 
 			ParseNode(doc.DocumentElement, e.Params["dom"]["_tmp"]);
 		}

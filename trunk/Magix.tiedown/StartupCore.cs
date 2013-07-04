@@ -8,14 +8,14 @@ using System;
 using System.Configuration;
 using Magix.Core;
 
-namespace Magix.SampleController
+namespace Magix.tiedown
 {
-	/*
+	/**
 	 * runs the startup hyper lisp file
 	 */
 	public class StartupCore : ActiveController
 	{
-		/*
+		/**
 		 * runs the startup hyper lisp file
 		 */
 		[ActiveEvent(Name = "magix.core.application-startup")]
