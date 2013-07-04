@@ -73,3 +73,7 @@ execute=>[_exe]
 
 * sanitize the Expression.IsTrue logic ...
 
+* remove some of the unit tests written in code, such as the viewstate one, which is superflous
+
+* make magix.data.save become like magix.file.save, in such that if it doesn't get an object, that is the definition of the delete operation, such that magix.data.remove can be deleted and merged with magix.data.save
+

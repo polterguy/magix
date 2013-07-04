@@ -40,6 +40,7 @@
   <ItemGroup>
     <Compile Include="DataCore.cs" />
     <Compile Include="Data.cs" />
+    <Compile Include="Storage.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
