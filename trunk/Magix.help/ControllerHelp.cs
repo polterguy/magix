@@ -11,11 +11,34 @@ using Magix.Core;
 
 namespace Magix.help
 {
-	/*
+	/**
 	 * implementation of help logic
 	 */
 	public class ControllerHelp : ActiveController
 	{
+		private string Next
+		{
+			get
+			{
+				return Page.Session["ControllerHelper.Next"] as string;
+			}
+			set
+			{
+				Page.Session["ControllerHelper.Next"] = value;
+			}
+		}
+
+		private int CurrentIndex
+		{
+			get
+			{
+				if (Page.Session["ControllerHelper.CurrentIndex"] == null)
+					Page.Session["ControllerHelper.CurrentIndex"] = -1;
+				return (int)Page.Session["ControllerHelper.CurrentIndex"];
+			}
+			set { Page.Session["ControllerHelper.CurrentIndex"] = value; }
+		}
+
 		/**
 		 * starts help
 		 */
@@ -106,7 +129,7 @@ button=>next
 			}
 		}
 
-		/*
+		/**
 		 * sets next help page
 		 */
 		[ActiveEvent(Name = "magix.help.set-next")]
@@ -126,8 +149,8 @@ button=>next
 			Next = e.Params["next"].Get<string>();
 		}
 
-		/*
-		 * sets next help page
+		/**
+		 * moves to next help page
 		 */
 		[ActiveEvent(Name = "magix.help.move-next")]
 		public void magix_help_move_next(object sender, ActiveEventArgs e)
@@ -165,8 +188,8 @@ button=>next
 				node);
 		}
 
-		/*
-		 * opens a specific page on disc, as if it was html
+		/**
+		 * opens a specific page on disc, as if it was mml
 		 */
 		[ActiveEvent(Name = "magix.help.open-file")]
 		public void magix_help_open_file(object sender, ActiveEventArgs e)
@@ -214,30 +237,7 @@ button=>next
 			}
 		}
 
-		private string Next
-		{
-			get
-			{
-				return Page.Session["ControllerHelper.Next"] as string;
-			}
-			set
-			{
-				Page.Session["ControllerHelper.Next"] = value;
-			}
-		}
-
-		private int CurrentIndex
-		{
-			get
-			{
-				if (Page.Session["ControllerHelper.CurrentIndex"] == null)
-					Page.Session["ControllerHelper.CurrentIndex"] = -1;
-				return (int)Page.Session["ControllerHelper.CurrentIndex"];
-			}
-			set { Page.Session["ControllerHelper.CurrentIndex"] = value; }
-		}
-
-		/*
+		/**
 		 * adds a page to the stack of forward/backward stored pages
 		 */
 		[ActiveEvent(Name = "magix.help.add-page")]
@@ -270,7 +270,7 @@ of help system.&nbsp;&nbsp;not thread safe";
 			Pages.Add(e.Params["page"].Get<string>());
 		}
 
-		/*
+		/**
 		 * moves backkwards to previous help page
 		 */
 		[ActiveEvent(Name = "magix.help.move-backwards")]
@@ -310,7 +310,7 @@ of help system.&nbsp;&nbsp;not thread safe";
 			e.Params["success"].Value = true;
 		}
 
-		/*
+		/**
 		 * moves forwards to next help page
 		 */
 		[ActiveEvent(Name = "magix.help.move-forwards")]

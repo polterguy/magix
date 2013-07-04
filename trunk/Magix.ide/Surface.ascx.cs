@@ -161,6 +161,9 @@ namespace Magix.ide
 			RaiseEvent("magix.ide.widget-selected");
 		}
 
+		/**
+		 * lists widgets in form object
+		 */
 		[ActiveEvent(Name="magix.execute.list-widgets")]
 		protected void magix_execute_list_widgets(object sender, ActiveEventArgs e)
 		{
@@ -212,6 +215,9 @@ not thread safe";
 			}
 		}
 
+		/**
+		 * lists widget types that exists in system
+		 */
 		[ActiveEvent(Name="magix.execute.list-widget-types")]
 		protected void magix_execute_list_widget_types(object sender, ActiveEventArgs e)
 		{
@@ -259,6 +265,9 @@ not thread safe";
 			}
 		}
 
+		/**
+		 * adds widget to surface
+		 */
 		[ActiveEvent(Name="magix.execute.add-widget")]
 		protected void magix_execute_add_widget(object sender, ActiveEventArgs e)
 		{
@@ -369,6 +378,9 @@ not thread safe";
 			}
 		}
 
+		/**
+		 * removes widget from surface
+		 */
 		[ActiveEvent(Name="magix.execute.remove-widget")]
 		protected void magix_execute_remove_widget(object sender, ActiveEventArgs e)
 		{
@@ -400,6 +412,9 @@ not thread safe";
 			RaiseEvent("magix.ide.surface-changed");
 		}
 
+		/**
+		 * changes properties of widget
+		 */
 		[ActiveEvent(Name="magix.execute.change-widget")]
 		protected void magix_execute_change_widget(object sender, ActiveEventArgs e)
 		{
@@ -469,6 +484,9 @@ removing [remove] properties.&nbsp;&nbsp;not thread safe";
 			wrp.ReRender();
 		}
 
+		/**
+		 * moves a widget from its current position
+		 */
 		[ActiveEvent(Name="magix.execute.move-widget")]
 		protected void magix_execute_move_widget(object sender, ActiveEventArgs e)
 		{
@@ -519,6 +537,9 @@ not thread safe";
 			RaiseEvent("magix.ide.surface-changed");
 		}
 
+		/**
+		 * selects widget
+		 */
 		[ActiveEvent(Name="magix.execute.select-widget")]
 		protected void magix_execute_select_widget(object sender, ActiveEventArgs e)
 		{
@@ -554,6 +575,9 @@ raises the magix.ide.widget-selected active event when done.&nbsp;&nbsp;not thre
 				tp);
 		}
 
+		/**
+		 * returns selected widget
+		 */
 		[ActiveEvent(Name="magix.execute.get-selected-widget")]
 		protected void magix_execute_get_selected_widget(object sender, ActiveEventArgs e)
 		{
@@ -577,6 +601,9 @@ not thread safe";
 			}
 		}
 
+		/**
+		 * copies widget into clipboard
+		 */
 		[ActiveEvent(Name="magix.execute.copy-widget")]
 		protected void magix_execute_copy_widget(object sender, ActiveEventArgs e)
 		{
@@ -596,6 +623,9 @@ not thread safe";
 			ClipBoard["properties"]["id"].Value = Guid.NewGuid().ToString().Replace("-", "");
 		}
 
+		/**
+		 * cuts widget into clipboard
+		 */
 		[ActiveEvent(Name="magix.execute.cut-widget")]
 		protected void magix_execute_cut_widget(object sender, ActiveEventArgs e)
 		{
@@ -626,6 +656,9 @@ not thread safe";
 			RaiseEvent("magix.ide.surface-changed");
 		}
 
+		/**
+		 * pastes widget
+		 */
 		[ActiveEvent(Name="magix.execute.paste-widget")]
 		protected void magix_execute_paste_widget(object sender, ActiveEventArgs e)
 		{
@@ -720,6 +753,9 @@ not thread safe";
 			}
 		}
 
+		/**
+		 * saves given form
+		 */
 		[ActiveEvent(Name="magix.execute.save-form")]
 		protected void magix_execute_save_form(object sender, ActiveEventArgs e)
 		{
@@ -764,25 +800,9 @@ not thread safe";
 				tmp);
 		}
 
-		[ActiveEvent(Name="magix.execute.get-form")]
-		protected void magix_execute_get_form(object sender, ActiveEventArgs e)
-		{
-			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
-			{
-				e.Params["event:magix.execute"].Value = null;
-				e.Params["inspect"].Value = @"returns the current form node 
-back to caller as [form]";
-				e.Params["get-form"].Value = null;
-				return;
-			}
-
-			Node ip = e.Params;
-			if (e.Params.Contains("_ip"))
-				ip = e.Params["_ip"].Value as Node;
-
-			ip["form"].ReplaceChildren(DataSource.Clone());
-		}
-
+		/**
+		 * loads a form into the surface
+		 */
 		[ActiveEvent(Name="magix.execute.load-form")]
 		protected void magix_execute_load_form(object sender, ActiveEventArgs e)
 		{
@@ -827,7 +847,7 @@ not thread safe";
 			if (tmp.Contains("objects") && tmp["objects"].Count > 0)
 			{
 				DataSource = tmp["objects"][0]["form"][0].Clone();
-				
+
 				SelectedWidgetDna = null;
 
 				BuildForm();
@@ -842,8 +862,30 @@ not thread safe";
 					"magix.viewport.show-message",
 					txt);
 			}
-			
+
 			RaiseEvent("magix.ide.surface-changed");
+		}
+
+		/**
+		 * returns the given form
+		 */
+		[ActiveEvent(Name="magix.execute.get-form")]
+		protected void magix_execute_get_form(object sender, ActiveEventArgs e)
+		{
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			{
+				e.Params["event:magix.execute"].Value = null;
+				e.Params["inspect"].Value = @"returns the current form node 
+back to caller as [form]";
+				e.Params["get-form"].Value = null;
+				return;
+			}
+
+			Node ip = e.Params;
+			if (e.Params.Contains("_ip"))
+				ip = e.Params["_ip"].Value as Node;
+
+			ip["form"].ReplaceChildren(DataSource.Clone());
 		}
 	}
 }

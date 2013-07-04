@@ -33,7 +33,6 @@
     <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AssemblyInfo.cs" />
     <Compile Include="Surface.ascx.cs" />
     <Compile Include="AsciiEditor.ascx.cs" />
     <Compile Include="IdeCore.cs" />

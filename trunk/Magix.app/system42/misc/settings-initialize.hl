@@ -27,7 +27,7 @@ if=>![magix.web.get-session:1][value]
       type=>system42.travel.setting
       name=>magix.help.kill-intrusive-tips
 
-  if=>[@][magix.data.load:1][objects][0][value].Value
+  if=>[@][magix.data.load][objects][0][value].Value
     magix.web.set-session=>magix.help.kill-intrusive-tips
       value=(bool)>True
   else
