@@ -114,7 +114,10 @@ a global unique identifier will be automatically assigned to the object.&nbsp;&n
 			if (!e.Params.Contains("object"))
 				throw new ArgumentException("[object] must be defined for magix.data.save to actually save anything");
 
-			Node value = e.Params["object"].Clone();
+			Node value = null;
+
+			if (e.Params.Contains("object"))
+				value = e.Params["object"].Clone();
 
 			lock (typeof(DataCore))
 			{
@@ -191,7 +194,7 @@ your persistent data storage.&nbsp;&nbsp;thread safe";
 		}
 
 		/**
-		 * Returns the total number of objects in your data storage
+		 * counts objects in database
 		 */
 		[ActiveEvent(Name = "magix.data.count")]
 		public static void magix_data_count(object sender, ActiveEventArgs e)
