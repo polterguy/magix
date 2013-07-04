@@ -10,12 +10,12 @@ using Magix.Core;
 
 namespace Magix.execute
 {
-	/*
+	/**
 	 * hyper lisp implementation
 	 */
 	public class ExecuteCore : ActiveController
 	{
-		/*
+		/**
 		 * hyper lisp implementation
 		 */
 		[ActiveEvent(Name = "magix.execute")]
@@ -60,7 +60,7 @@ thread safe";
 			}
 		}
 
-		/*
+		/**
 		 * internally used event
 		 */
 		[ActiveEvent(Name = "magix._execute")]

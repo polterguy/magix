@@ -10,7 +10,7 @@ using Magix.Core;
 
 namespace Magix.execute
 {
-	/*
+	/**
 	 * debug logic
 	 */
 	public class DebugCore : ActiveController

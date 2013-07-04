@@ -11,12 +11,12 @@ using Magix.Core;
 
 namespace Magix.admin
 {
-	/*
+	/**
 	 * script hyper lisp logic
 	 */
 	public class ScriptCore : ActiveController
 	{
-		/*
+		/**
 		 * executes the given hyper lisp file
 		 */
 		[ActiveEvent(Name = "magix.execute.execute-file")]
@@ -78,7 +78,7 @@ thread safe";
 			}
 		}
 		
-		/*
+		/**
 		 * executes script
 		 */
 		[ActiveEvent(Name = "magix.execute.execute-script")]

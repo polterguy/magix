@@ -9,7 +9,7 @@ using Magix.Core;
 
 namespace Magix.execute
 {
-	/*
+	/**
 	 * exception hyper lisp logic
 	 */
 	public class ExceptionCore : ActiveController
@@ -21,7 +21,7 @@ namespace Magix.execute
 			{ }
 		}
 
-		/*
+		/**
 		 * creates a try block
 		 */
 		[ActiveEvent(Name = "magix.execute.try")]
@@ -90,7 +90,7 @@ statement.&nbsp;&nbsp;thread safe";
 			}
 		}
 
-		/*
+		/**
 		 * throw support
 		 */
 		[ActiveEvent(Name = "magix.execute.throw")]

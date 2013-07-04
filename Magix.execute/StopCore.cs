@@ -9,7 +9,7 @@ using Magix.Core;
 
 namespace Magix.execute
 {
-	/*
+	/**
 	 * stop hyper lisp keyword
 	 */
 	public class StopCore : ActiveController
@@ -18,7 +18,7 @@ namespace Magix.execute
 		{
 		}
 
-		/*
+		/**
 		 * stop hyper lisp keyword
 		 */
 		[ActiveEvent(Name = "magix.execute.stop")]

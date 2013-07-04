@@ -13,22 +13,19 @@ using Magix.Core;
 namespace Magix.execute
 {
 	/**
-	 * Contains logic for creating and manipulating new system threads, aka; Forks
+	 * multi threading
 	 */
 	public class ThreadingCore : ActiveController
 	{
 		private Stack<object> stack = new Stack<object>();
 
-		// TODO: Make thread safe, somehow ...
 		/**
-		 * Spawns a new thread which the given
-		 * code block will be executed within. Useful for long operations, 
-		 * where you'd like to return to caller before the operation is
-		 * finished
+		 * spawns new thread
 		 */
 		[ActiveEvent(Name = "magix.execute.fork")]
 		public void magix_execute_fork(object sender, ActiveEventArgs e)
 		{
+			// TODO: Make thread safe, somehow ...
 			if (ShouldInspect(e.Params))
 			{
 				e.Params["event:magix.execute"].Value = null;
@@ -106,7 +103,7 @@ might have.&nbsp;&nbsp;not thread safe";
 		}
 
 		/**
-		 * Sleeps the current thread for "time" milliseconds
+		 * sleeps the current thread
 		 */
 		[ActiveEvent(Name = "magix.execute.wait")]
 		public void magix_execute_wait(object sender, ActiveEventArgs e)

@@ -11,12 +11,12 @@ using Magix.Core;
 
 namespace Magix.execute
 {
-	/*
+	/**
 	 * remoting hyper lisp support
 	 */
 	public class RemotingCore : ActiveController
 	{
-		/*
+		/**
 		 * remoted hyper lisp support
 		 */
 		[ActiveEvent(Name = "magix.core.application-startup")]
@@ -64,7 +64,7 @@ are being correctly re-mapped";
 			}
 		}
 
-		/*
+		/**
 		 * tunnel hyper lisp keyword
 		 */
 		[ActiveEvent(Name = "magix.execute.tunnel")]
@@ -130,7 +130,7 @@ which event to override to go externally.&nbsp;&nbsp;tunnel cannot override null
 			}
 		}
 
-		/*
+		/**
 		 * open hyper lisp keyword
 		 */
 		[ActiveEvent(Name = "magix.execute.open")]
@@ -174,7 +174,7 @@ server park, or by exposing functionality to other networks.&nbsp;&nbsp;thread s
 			ActiveEvents.Instance.MakeRemotable(evt);
 		}
 
-		/*
+		/**
 		 * close hyper lisp support
 		 */
 		[ActiveEvent(Name = "magix.execute.close")]
@@ -213,16 +213,12 @@ value, such that it no longer can be remotely invoked from other servers.&nbsp;&
 		}
 
 		/**
-		 * Raises a new event remotely, use "url" and "event" to instruct which
-		 * event you wish to raise at which url end-point. Whatever you have 
-		 * as "params" parameters, will be passed into the end-point server
-		 * as the parameters to the active event. "params" will also
-		 * contain the return value Nodes from the server, after the 
-		 * active event is finished executing.
+		 * remotely invokes an event
 		 */
 		[ActiveEvent(Name = "magix.execute.remote")]
 		public static void magix_execute_remote(object sender, ActiveEventArgs e)
 		{
+			// TODO: is this event necessary since we've got tunnel?
 			if (ShouldInspect(e.Params))
 			{
 				e.Params["event:magix.execute"].Value = null;

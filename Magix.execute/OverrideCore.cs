@@ -9,13 +9,13 @@ using Magix.Core;
 
 namespace Magix.execute
 {
-	// TODO: is this class necessary?
-	/*
+	// TODO: is this class necessary, since we have event and tunnel?
+	/**
 	 * override hyper lisp keyword
 	 */
 	public class OverrideCore : ActiveController
 	{
-		/*
+		/**
 		 * override hyper lisp keyword
 		 */
 		[ActiveEvent(Name = "magix.execute.override")]

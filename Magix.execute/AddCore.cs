@@ -14,7 +14,7 @@ namespace Magix.execute
 	 */
 	public class AddCore : ActiveController
 	{
-		/*
+		/**
 		 * add hyper lisp keyword
 		 */
 		[ActiveEvent(Name = "magix.execute.add")]
