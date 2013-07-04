@@ -9,14 +9,14 @@ using Magix.Core;
 
 namespace Magix.execute
 {
-	/*
+	/**
 	 * hyper lisp event support
 	 */
 	public class EventCore : ActiveController
 	{
 		private static Node _events = new Node();
 
-		/*
+		/**
 		 * creates the associations between existing events in the database, and active event references
 		 */
 		[ActiveEvent(Name = "magix.core.application-startup")]
@@ -54,7 +54,7 @@ magix.execute blocks of code, are being correctly re-mapped";
 			}
 		}
 
-		/*
+		/**
 		 * event hyper lisp keyword
 		 */
 		[ActiveEvent(Name = "magix.execute.event")]
@@ -160,6 +160,51 @@ event will be deleted, if you pass in no [code] block.&nbsp;&nbsp;thread safe";
 				_events[activeEvent].UnTie();
 			}
 		}
+		
+		/**
+		 * entry point for hyper lisp created active event overrides
+		 */
+		[ActiveEvent(Name = "magix.execute._active-event-2-code-callback")]
+		public static void magix_data__active_event_2_code_callback(object sender, ActiveEventArgs e)
+		{
+			if (ShouldInspect(e.Params))
+			{
+				e.Params["inspect"].Value = @"dynamically created active event, created with the [magix.execute.event] keyword.&nbsp;&nbsp;
+thread safety is dependent upon the events raised internally within event";
+
+				Node le = new Node();
+
+				le["prototype"]["type"].Value = "magix.execute.event";
+				le["prototype"]["event"].Value = e.Name;
+
+				RaiseActiveEvent(
+					"magix.data.load",
+					le);
+
+				if (le.Contains("objects"))
+				{
+					if (le["objects"][0].Contains("code"))
+						e.Params.AddRange(le["objects"][0]["code"].Clone());
+					if (le["objects"][0].Contains("inspect"))
+						e.Params["inspect"].Value = le["objects"][0]["inspect"].Value;
+				}
+
+				return;
+			}
+
+			Node code = GetEventCode(e.Name);
+
+			if (code != null)
+			{
+				code["$"].AddRange(e.Params);
+
+				RaiseActiveEvent(
+					"magix.execute", 
+					code);
+
+				e.Params.ReplaceChildren(code["$"]);
+			}
+		}
 
 		private static Node GetEventCode(string name)
 		{
@@ -194,51 +239,6 @@ event will be deleted, if you pass in no [code] block.&nbsp;&nbsp;thread safe";
 					_events[name].Value = null;
 					return null;
 				}
-			}
-		}
-
-		/**
-		 * entry point for hyper lisp created active event overrides
-		 */
-		[ActiveEvent(Name = "magix.execute._active-event-2-code-callback")]
-		public static void magix_data__active_event_2_code_callback(object sender, ActiveEventArgs e)
-		{
-			if (ShouldInspect(e.Params))
-			{
-				e.Params["inspect"].Value = @"dynamically created active event, created with the [magix.execute.event] keyword.&nbsp;&nbsp;
-thread safety is dependent upon the events raised internally within event";
-
-				Node le = new Node();
-
-				le["prototype"]["type"].Value = "magix.execute.event";
-				le["prototype"]["event"].Value = e.Name;
-				
-				RaiseActiveEvent(
-					"magix.data.load",
-					le);
-
-				if (le.Contains("objects"))
-				{
-					if (le["objects"][0].Contains("code"))
-						e.Params.AddRange(le["objects"][0]["code"].Clone());
-					if (le["objects"][0].Contains("inspect"))
-						e.Params["inspect"].Value = le["objects"][0]["inspect"].Value;
-				}
-
-				return;
-			}
-
-			Node code = GetEventCode(e.Name);
-
-			if (code != null)
-			{
-				code["$"].AddRange(e.Params);
-
-				RaiseActiveEvent(
-					"magix.execute", 
-					code);
-
-				e.Params.ReplaceChildren(code["$"]);
 			}
 		}
 	}

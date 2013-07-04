@@ -67,7 +67,7 @@ not thread safe";
 			if (!e.Params.Contains("value"))
 			{
 				// removal of existing session object
-				Page.Session.Remove(e.Params["id"].Get<string>());
+				Page.Session.Remove(id);
 			}
 			else
 			{

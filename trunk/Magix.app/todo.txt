@@ -71,3 +71,5 @@ execute=>[_exe]
 
 * make Active Modules become inspectable through using [inspect]
 
+* sanitize the Expression.IsTrue logic ...
+

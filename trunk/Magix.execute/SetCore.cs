@@ -9,12 +9,12 @@ using Magix.Core;
 
 namespace Magix.execute
 {
-	/*
+	/**
 	 * hyper lisp set keyword
 	 */
 	public class SetCore : ActiveController
 	{
-		/*
+		/**
 		 * hyepr lisp set keyword
 		 */
 		[ActiveEvent(Name = "magix.execute.set")]

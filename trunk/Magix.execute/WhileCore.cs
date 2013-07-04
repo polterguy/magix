@@ -10,22 +10,12 @@ using Magix.Core;
 namespace Magix.execute
 {
 	/**
-	 * Controller logic for the "while" logic
+	 * while keyword
 	 */
 	public class WhileCore : ActiveController
 	{
 		/**
-		 * Checks to see if the current 
-		 * statement is returning true, and if so, executes the underlaying nodes
-		 * as code through "magix.execute", repeatedly, expecting them to be keywords to
-		 * the execution engine. You can either compare a node expression
-		 * with another node expression, a node expression with a
-		 * constant value or a single node expression for existence of 
-		 * Node itself, Value or Name. Operators you can use are '!=', '==', '>=',
-		 * '<=', '>' and '<' when comparing two nodes or one node and 
-		 * a constant, and '!' in front of operator if only one 
-		 * expression is given to check for existence to negate the value.
-		 * Functions as a "magix.execute" keyword
+		 * while keyword
 		 */
 		[ActiveEvent(Name = "magix.execute.while")]
 		public static void magix_execute_while(object sender, ActiveEventArgs e)

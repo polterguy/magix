@@ -9,12 +9,12 @@ using Magix.Core;
 
 namespace Magix.execute
 {
-	/*
+	/**
 	 * if/else-if/else hyper lisp active events
 	 */
 	public class IfElseCore : ActiveController
 	{
-		/*
+		/**
 		 * if implementation
 		 */
 		[ActiveEvent(Name = "magix.execute.if")]
@@ -42,7 +42,7 @@ statements will be executed.&nbsp;&nbsp;thread safe";
 				"magix.execute.if");
 		}
 
-		/*
+		/**
 		 * else-if implementation
 		 */
 		[ActiveEvent(Name = "magix.execute.else-if")]
@@ -78,37 +78,7 @@ returns true.&nbsp;&nbsp;thread safe";
 				"magix.execute.else-if");
 		}
 		
-		// Private helper, implementation for both "if" and "else-if" ...
-		private static void IfImplementation (Node pars, string evt)
-		{
-			if (!pars.Contains("_ip") || !(pars["_ip"].Value is Node))
-				throw new ArgumentException("you cannot raise [" + evt + "] directly, except for inspect purposes");
-
-			Node ip = pars["_ip"].Value as Node;
-
-			Node dp = ip;
-			if (pars.Contains("_dp"))
-				dp = pars["_dp"].Value as Node;
-
-			string expr = ip.Value as string;
-
-			if (string.IsNullOrEmpty(expr))
-				throw new ArgumentException("You cannot have an empty [" + evt + "] statement");
-
-			if (Expressions.IsTrue(expr, ip, dp))
-			{
-				// Making sure statement returns "true"
-				ip.Parent["_state_if"].Value = true;
-
-				RaiseActiveEvent(
-					"magix._execute", 
-					pars);
-			}
-			else
-				ip.Parent["_state_if"].UnTie();
-		}
-
-		/*
+		/**
 		 * else implementation
 		 */
 		[ActiveEvent(Name = "magix.execute.else")]
@@ -140,6 +110,36 @@ has returned true.&nbsp;&nbsp;thread safe";
 			RaiseActiveEvent(
 				"magix._execute", 
 				e.Params);
+		}
+
+		// Private helper, implementation for both "if" and "else-if" ...
+		private static void IfImplementation (Node pars, string evt)
+		{
+			if (!pars.Contains("_ip") || !(pars["_ip"].Value is Node))
+				throw new ArgumentException("you cannot raise [" + evt + "] directly, except for inspect purposes");
+
+			Node ip = pars["_ip"].Value as Node;
+
+			Node dp = ip;
+			if (pars.Contains("_dp"))
+				dp = pars["_dp"].Value as Node;
+
+			string expr = ip.Value as string;
+
+			if (string.IsNullOrEmpty(expr))
+				throw new ArgumentException("You cannot have an empty [" + evt + "] statement");
+
+			if (Expressions.IsTrue(expr, ip, dp))
+			{
+				// Making sure statement returns "true"
+				ip.Parent["_state_if"].Value = true;
+
+				RaiseActiveEvent(
+					"magix._execute", 
+					pars);
+			}
+			else
+				ip.Parent["_state_if"].UnTie();
 		}
 	}
 }
