@@ -19,14 +19,15 @@ using Db4objects.Db4o.Config;
 namespace Magix.execute
 {
 	/**
-	 * Controller for helping to save and load data from db4o, which is a minimalistic 
-	 * object database used in this controller to store and retrieve data from permanent
-	 * storage
+	 * data storage
 	 */
 	public class DataCore : ActiveController
 	{
 		private static string _dbFile = "data-storage.db4o";
 
+		/**
+		 * loads an object from database
+		 */
 		[ActiveEvent(Name = "magix.data.load")]
 		public static void magix_data_load(object sender, ActiveEventArgs e)
 		{
@@ -93,54 +94,9 @@ operation.&nbsp;&nbsp;thread safe";
 			}
 		}
 
-		// TODO: make smarter
-		[ActiveEvent(Name = "magix.data.load-distinct")]
-		public static void magix_data_load_distinct(object sender, ActiveEventArgs e)
-		{
-			if (ShouldInspect(e.Params))
-			{
-				e.Params["event:magix.data.load-distinct"].Value = null;
-				e.Params["prototype"]["type"].Value = null;
-				e.Params["inspect"].Value = @"loads the distinct different values 
-of the given prototype, which can contain only one node, signifying which 
-node to load the different distinct values of.
-&nbsp;&nbsp;thread safe";
-				return;
-			}
-
-			if (!e.Params.Contains("prototype"))
-				throw new ArgumentException("need [prototype] and exactly one node path underneath");
-
-			Node prototype = e.Params["prototype"];
-
-			lock (typeof(DataCore))
-			{
-				using (IObjectContainer db = Db4oEmbedded.OpenFile(_dbFile))
-				{
-					db.Ext().Configure().UpdateDepth(1000);
-					db.Ext().Configure().ActivationDepth(1000);
-
-					Dictionary<string, bool> dict = new Dictionary<string, bool>();
-
-					int idxNo = 0;
-					foreach (Storage idx in db.Ext().Query<Storage>(
-						delegate(Storage obj)
-						{
-							return obj.Node.HasNodes(prototype);
-						}))
-					{
-						dict[prototype[0].Name] = true;
-						//e.Params["objects"][idx.Id].ReplaceChildren(idx.Node.Clone());
-					}
-					db.Close();
-					foreach (string idx in dict.Keys)
-					{
-						e.Params["objects"][idx].Value = null;
-					}
-				}
-			}
-		}
-
+		/**
+		 * saves an object to database
+		 */
 		[ActiveEvent(Name = "magix.data.save")]
 		public static void magix_data_save(object sender, ActiveEventArgs e)
 		{
@@ -190,6 +146,9 @@ a global unique identifier will be automatically assigned to the object.&nbsp;&n
 			}
 		}
 
+		/**
+		 * removes an object from database
+		 */
 		[ActiveEvent(Name = "magix.data.remove")]
 		public static void magix_data_remove(object sender, ActiveEventArgs e)
 		{
