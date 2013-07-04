@@ -272,24 +272,26 @@ javascript file on the client side.&nbsp;&nbsp;not thread safe";
 		}
 
 		/**
+		 * sets a viewstate object
 		 */
 		[ActiveEvent(Name = "magix.viewport.set-viewstate")]
 		protected virtual void magix_viewport_set_viewstate(object sender, ActiveEventArgs e)
 		{
 			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
+				e.Params["event:magix.execute"].Value = null;
 				e.Params["inspect"].Value = @"stores [value] node hierarchy into viewstate
-with [id] as key for later lookup.
+with value as key for later retrieval.
 &nbsp;&nbsp;not thread safe";
-				e.Params["id"].Value = "some-id";
-				e.Params["value"]["some-node"]["hierarchy"].Value = "some node hierarchy to store into viewstate";
+				e.Params["magix.viewport.set-viewstate"].Value = "some-id";
+				e.Params["magix.viewport.set-viewstate"]["value"]["some-node"]["hierarchy"].Value = "some node hierarchy to store into viewstate";
 				return;
 			}
 
-			if (!e.Params.Contains("id"))
-				throw new ArgumentException("missing [id] in set-viewstate");
+			string id = e.Params.Get<string>();
 
-			string id = e.Params["id"].Get<string>();
+			if (string.IsNullOrEmpty(id))
+				throw new ArgumentException("need an id as a value to [magix.viewport.set-viewstate]");
 
 			if (!e.Params.Contains("value"))
 			{
@@ -304,6 +306,7 @@ with [id] as key for later lookup.
 		}
 
 		/**
+		 * retrieves a viewstate object
 		 */
 		[ActiveEvent(Name = "magix.viewport.get-viewstate")]
 		protected virtual void magix_viewport_get_viewstate(object sender, ActiveEventArgs e)
@@ -316,10 +319,10 @@ it into [value] node.&nbsp;&nbsp;not thread safe";
 				return;
 			}
 
-			if (!e.Params.Contains("id"))
-				throw new ArgumentException("missing [id] in get-viewstate");
+			string id = e.Params.Get<string>();
 
-			string id = e.Params["id"].Get<string>();
+			if (string.IsNullOrEmpty(id))
+				throw new ArgumentException("need an id as a value to [magix.viewport.get-viewstate]");
 
 			if (ViewState[id] != null && ViewState[id] is Node)
 			{

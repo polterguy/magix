@@ -43,8 +43,7 @@ if=>[$][directory].Value
   set=>[/][magix.forms.create-form][controls][uploader][uploaded][if][execute-file][directory].Value
     value=>[$][directory].Value
 else
-  magix.viewport.set-viewstate
-    id=>stack-of-pages
+  magix.viewport.set-viewstate=>stack-of-pages
     value
       root=>
   set=>[/][_delDir][enabled].Value
@@ -61,8 +60,7 @@ _back
     set=>[@][magix.viewport.get-viewstate][value][[@][magix.viewport.get-viewstate][value].Count-1]
     add=>[@][magix.viewport.set-viewstate]
       value=>[@][magix.viewport.get-viewstate][value]
-    magix.viewport.set-viewstate
-      id=>stack-of-pages
+    magix.viewport.set-viewstate=>stack-of-pages
     set=>[@][execute-file][directory].Value
       value=>[@][magix.viewport.set-viewstate][value][[@][magix.viewport.set-viewstate][value].Count-1].Value
     execute-file=>system42/admin/file-browser.hl
@@ -84,8 +82,7 @@ _link-buttonDir
       value=>[@][execute-file][directory].Value
     add=>[@][magix.viewport.set-viewstate]
       value=>[@][magix.viewport.get-viewstate][value]
-    magix.viewport.set-viewstate
-      id=>stack-of-pages
+    magix.viewport.set-viewstate=>stack-of-pages
 
 magix.file.list-files
 
