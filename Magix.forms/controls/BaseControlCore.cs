@@ -20,15 +20,15 @@ namespace Magix.forms
 		/**
 		 * lists widget types that exists in system
 		 */
-		[ActiveEvent(Name="magix.execute.list-widget-types")]
-		protected static void magix_execute_list_widget_types(object sender, ActiveEventArgs e)
+		[ActiveEvent(Name="magix.forms.list-widget-types")]
+		protected static void magix_forms_list_widget_types(object sender, ActiveEventArgs e)
 		{
 			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
 				e.Params["event:magix.execute"].Value = null;
 				e.Params["inspect"].Value = @"lists all widget types as [types] available in system.&nbsp;&nbsp;
 not thread safe";
-				e.Params["list-widget-types"].Value = null;
+				e.Params["magix.forms.list-widget-types"].Value = null;
 				return;
 			}
 
@@ -39,7 +39,7 @@ not thread safe";
 				"magix.admin.get-active-events",
 				tmp);
 
-			Node ip = e.Params["_ip"].Get<Node>();
+			Node ip = e.Params;
 
 			foreach (Node idx in tmp["events"])
 			{

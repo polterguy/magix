@@ -19,36 +19,39 @@ _dt
         css=>span-1 hover-shadow last right z-1 absolute light-red centered
         text=>x
         onclick
-          magix.data.remove
-            prototype
-              type=>magix.core.role
-              name=>
-          set=>[magix.data.load][prototype][roles][[magix.data.remove][prototype][name].Value].Name
-            value=>[magix.data.remove][prototype][name].Value
-          magix.data.load
-            prototype
-              type=>magix.core.user
-              roles
-          for-each=>[magix.data.load][objects]
-            set=>[.][roles][[/][magix.data.remove][prototype][name].Value]
-            set=>[.ip][..][magix.data.save][object]
-              value=>[.]
-            set=>[.ip][..][magix.data.save][1].Name
-              value=>object
-            set=>[.ip][..][magix.data.save][object].Value
-            set=>[.ip][..][magix.data.save][id].Value
-              value=>[.].Name
-            magix.data.save
-              id
-          set=>[magix.log.append][body][role].Value
-            value=>[magix.data.remove][prototype][name].Value
-          magix.log.append
-            header=>role deleted
-            body=>role {0} was deleted
-          execute-file=>system42/admin/roles-grid.hl
+          magix.viewport.confirm
+            message=>are you sure you wish to delete this role?
+            code
+              magix.data.remove
+                prototype
+                  type=>magix.core.role
+                  name=>
+              set=>[magix.data.load][prototype][roles][[magix.data.remove][prototype][name].Value].Name
+                value=>[magix.data.remove][prototype][name].Value
+              magix.data.load
+                prototype
+                  type=>magix.core.user
+                  roles
+              for-each=>[magix.data.load][objects]
+                set=>[.][roles][[/][magix.data.remove][prototype][name].Value]
+                set=>[.ip][..][magix.data.save][object]
+                  value=>[.]
+                set=>[.ip][..][magix.data.save][1].Name
+                  value=>object
+                set=>[.ip][..][magix.data.save][object].Value
+                set=>[.ip][..][magix.data.save][id].Value
+                  value=>[.].Name
+                magix.data.save
+                  id
+              set=>[magix.log.append][body][role].Value
+                value=>[magix.data.remove][prototype][name].Value
+              magix.log.append
+                header=>role deleted
+                body=>role {0} was deleted
+              execute-file=>system42/admin/roles-grid.hl
 
 for-each=>[magix.data.load][objects]
-  set=>[/][_dt][panel][controls][link-button][onclick][magix.data.remove][prototype][name].Value
+  set=>[/][_dt][panel][controls][link-button][onclick][magix.viewport.confirm][code][magix.data.remove][prototype][name].Value
     value=>[.][name].Value
   set=>[/][_dt][panel][controls][label][text].Value
     value=>[.][name].Value

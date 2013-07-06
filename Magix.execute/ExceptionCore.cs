@@ -106,8 +106,8 @@ active events.&nbsp;&nbsp;[exception] in [catch] becomes the
 value of the [throw] node.&nbsp;&nbsp;use together with
 [try] to handle errors.&nbsp;&nbsp;thread safe";
 				e.Params["try"]["code"]["throw"].Value = "some exception error message";
-				e.Params["try"]["catch"]["set"].Value = "[magix.viewport.show-message][message].Value";
-				e.Params["try"]["catch"]["set"]["value"].Value = "[exception].Value";
+				e.Params["try"]["catch"]["set"].Value = "[@][magix.viewport.show-message][message].Value";
+				e.Params["try"]["catch"]["set"]["value"].Value = "[@][exception].Value";
 				e.Params["try"]["catch"]["magix.viewport.show-message"].Value = null;
 				return;
 			}
