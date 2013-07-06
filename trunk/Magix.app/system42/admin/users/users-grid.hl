@@ -169,6 +169,9 @@ magix.forms.create-form
             if=>![magix.forms.get-value][value].Value
               magix.viewport.show-message
                 message=>you must give new user a name
+              magix.forms.set-focus
+                form-id=>users-grid
+                id=>nName
             else
               set=>[@][else][else][else][magix.data.save][object][name].Value
                 value=>[magix.forms.get-value][value].Value
@@ -178,6 +181,9 @@ magix.forms.create-form
               if=>![@][magix.forms.get-value][value].Value
                 magix.viewport.show-message
                   message=>you must give new user a unique username
+                magix.forms.set-focus
+                  form-id=>users-grid
+                  id=>nUsername
               else
                 set=>[@][else][else][magix.data.save][object][username].Value
                   value=>[@][..][magix.forms.get-value][value].Value
@@ -189,6 +195,9 @@ magix.forms.create-form
                 if=>![@][magix.forms.get-value][value].Value
                   magix.viewport.show-message
                     message=>you must give new user a password
+                  magix.forms.set-focus
+                    form-id=>users-grid
+                    id=>nPwd
                 else
                   set=>[@][else][magix.data.save][object][pwd].Value
                     value=>[@][..][magix.forms.get-value][value].Value

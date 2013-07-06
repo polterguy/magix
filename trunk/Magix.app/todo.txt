@@ -30,10 +30,6 @@ execute=>[_exe]
 
 * make magix.data.x conform to eachother in their passing of nodes
 
-* active event executor doesn't show all items in autocomplete, due to parent div element not being relative, or something ....
-
-* set focus to missing field while creating a user with incomplete data
-
 * make all web form sample code snippets in inspect create working functioning code
 
 * normalize all active event parametrizing to minimize parameters down to minimum level, while at the same time make all non-hyper lisp keywords invokable through active event executor
@@ -52,9 +48,9 @@ execute=>[_exe]
 
 * make support for filtering of events in both the profiler and the tracer
 
-* make unit tests for get-session, get-viewstate, etc ...
-
 * make [form-id] optional, and if not given, returns any match for control with given id for simplicity
+
+* refactor all the get-value, add-css-class, etc in the viewport, and move into widget controllers
 
 * create a database management system
 
