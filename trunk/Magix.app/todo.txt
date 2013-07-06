@@ -81,3 +81,5 @@ execute=>[_exe]
 
 * make [id] become default parameter to magix.data.save
 
+* make it possible for lambda controls to take additional settings, such that they can be reused with different data-input
+

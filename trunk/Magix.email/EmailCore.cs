@@ -13,14 +13,12 @@ using Magix.UX.Builder;
 namespace Magix.execute
 {
 	/**
-	 * Contains logic to help send emails
+	 * contains logic to help send emails
 	 */
 	public class EmailCore : ActiveController
 	{
 		/**
-		 * Sends an email, parameters are "to", "from", "subject" and "message". Will
-		 * use the configuration found in web.config to determine which SMTP server
-		 * to use
+		 * sends an email
 		 */
 		[ActiveEvent(Name = "magix.email.send-email")]
 		public static void magix_email_email(object sender, ActiveEventArgs e)

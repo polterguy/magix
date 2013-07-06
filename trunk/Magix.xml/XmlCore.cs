@@ -24,10 +24,10 @@ namespace Magix.execute
 		{
 			if (ShouldInspect(e.Params))
 			{
-				e.Params["event:magix.xml.xml-2-node"].Value = null;
+				e.Params["event:magix.execute"].Value = null;
 				e.Params["inspect"].Value = @"will return 
 [dom] node structure, parsed from xml in value.&nbsp;&nbsp;thread safe";
-				e.Params["xml"].Value = @"
+				e.Params["magix.xml.xml-2-node"].Value = @"
 <xml>
   <value1>howdy</value1>
   <value2>hello</value2>
