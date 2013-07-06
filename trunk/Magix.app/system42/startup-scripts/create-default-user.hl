@@ -9,7 +9,7 @@ magix.data.count
     type=>magix.core.user
 if=>[magix.data.count][count].Value==0
   magix.data.save
-    object
+    value
       type=>magix.core.user
       name=>Ayatholla Khomeini
       username=>admin

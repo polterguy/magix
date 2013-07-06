@@ -119,8 +119,8 @@ which event to override to go externally.&nbsp;&nbsp;tunnel cannot override null
 				Node n = new Node();
 
 				n["id"].Value = Guid.NewGuid();
-				n["object"]["event"].Value = evt;
-				n["object"]["type"].Value = "magix.execute.tunnel";
+				n["value"]["event"].Value = evt;
+				n["value"]["type"].Value = "magix.execute.tunnel";
 
 				RaiseActiveEvent(
 					"magix.data.save",
@@ -164,8 +164,8 @@ server park, or by exposing functionality to other networks.&nbsp;&nbsp;thread s
 			Node n = new Node();
 
 			n["id"].Value = Guid.NewGuid();
-			n["object"]["event"].Value = evt;
-			n["object"]["type"].Value = "magix.execute.open";
+			n["value"]["event"].Value = evt;
+			n["value"]["type"].Value = "magix.execute.open";
 
 			RaiseActiveEvent(
 				"magix.data.save",

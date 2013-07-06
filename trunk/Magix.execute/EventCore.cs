@@ -119,13 +119,13 @@ event will be deleted, if you pass in no [code] block.&nbsp;&nbsp;thread safe";
 				n = new Node();
 
 				n["id"].Value = Guid.NewGuid().ToString();
-				n["object"]["event"].Value = activeEvent;
-				n["object"]["type"].Value = "magix.execute.event";
-				n["object"]["remotable"].Value = remotable;
-				n["object"]["code"].ReplaceChildren(ip["code"].Clone());
+				n["value"]["event"].Value = activeEvent;
+				n["value"]["type"].Value = "magix.execute.event";
+				n["value"]["remotable"].Value = remotable;
+				n["value"]["code"].ReplaceChildren(ip["code"].Clone());
 
 				if (ip.Contains("inspect"))
-					n["object"]["inspect"].Value = ip["inspect"].Value;
+					n["value"]["inspect"].Value = ip["inspect"].Value;
 
 				RaiseActiveEvent(
 					"magix.data.save",

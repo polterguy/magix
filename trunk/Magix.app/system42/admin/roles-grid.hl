@@ -34,11 +34,11 @@ _dt
                   roles
               for-each=>[magix.data.load][objects]
                 set=>[.][roles][[/][magix.data.remove][prototype][name].Value]
-                set=>[.ip][..][magix.data.save][object]
+                set=>[.ip][..][magix.data.save][value]
                   value=>[.]
                 set=>[.ip][..][magix.data.save][1].Name
-                  value=>object
-                set=>[.ip][..][magix.data.save][object].Value
+                  value=>value
+                set=>[.ip][..][magix.data.save][value].Value
                 set=>[.ip][..][magix.data.save][id].Value
                   value=>[.].Name
                 magix.data.save
@@ -109,10 +109,10 @@ magix.forms.create-form
                 magix.viewport.show-message
                   message=>role exists from before
               else
-                set=>[@][magix.data.save][object][name].Value
+                set=>[@][magix.data.save][value][name].Value
                   value=>[magix.forms.get-value][value].Value
                 magix.data.save
-                  object
+                  value
                     type=>magix.core.role
                 set=>[@][magix.log.append][body][role].Value
                   value=>[magix.forms.get-value][value].Value

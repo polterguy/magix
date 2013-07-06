@@ -32,14 +32,14 @@ you align objects correctly according to the grid system of magix"
     add=>[magix.data.save]
       value=>[magix.data.load][objects][0]
     set=>[magix.data.save][1].Name
-      value=>object
-    set=>[magix.data.save][object][type].Value
+      value=>value
+    set=>[magix.data.save][value][type].Value
       value=>system42.travel.setting
-    set=>[magix.data.save][object][name].Value
+    set=>[magix.data.save][value][name].Value
       value=>magix.viewport.show-grid
     magix.data.save
       id
-    if=>[magix.data.save][object][value].Value==True
+    if=>[magix.data.save][value][value].Value==True
       magix.web.set-session=>magix.viewport.show-grid
         value=(bool)>True
     else
@@ -90,13 +90,13 @@ as you click your way around in magix"
       value=>[magix.data.load][objects][0]
     set=>[magix.data.save][1].Name
       value=>object
-    set=>[magix.data.save][object][type].Value
+    set=>[magix.data.save][value][type].Value
       value=>system42.travel.setting
-    set=>[magix.data.save][object][name].Value
+    set=>[magix.data.save][value][name].Value
       value=>magix.help.kill-intrusive-tips
     magix.data.save
       id
-    if=>[magix.data.save][object][value].Value==True
+    if=>[magix.data.save][value][value].Value==True
       magix.web.set-session=>magix.help.kill-intrusive-tips
         value=(bool)>True
     else

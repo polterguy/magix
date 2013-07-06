@@ -25,7 +25,7 @@ namespace Magix.tests
 			tmp["magix.data.remove"]["id"].Value = "fork-test-buffer-object";
 			tmp["wait"].Value = null;
 			tmp["wait"]["fork"]["magix.data.save"]["id"].Value = "fork-test-buffer-object";
-			tmp["wait"]["fork"]["magix.data.save"]["object"]["value"].Value = "thomas";
+			tmp["wait"]["fork"]["magix.data.save"]["value"]["value"].Value = "thomas";
 			tmp["magix.data.load"]["id"].Value = "fork-test-buffer-object";
 
 			if (ShouldInspect(e.Params))
@@ -64,15 +64,15 @@ by using magix.data.load and magix.data.save to signal between threads for succe
 			tmp["magix.data.remove", 4]["id"].Value = "fork-test-buffer-object5";
 
 			tmp["wait"]["fork", 0]["magix.data.save"]["id"].Value = "fork-test-buffer-object1";
-			tmp["wait"]["fork", 0]["magix.data.save"]["object"]["value"].Value = "thomas1";
+			tmp["wait"]["fork", 0]["magix.data.save"]["value"]["value"].Value = "thomas1";
 			tmp["wait"]["fork", 1]["magix.data.save"]["id"].Value = "fork-test-buffer-object2";
-			tmp["wait"]["fork", 1]["magix.data.save"]["object"]["value"].Value = "thomas2";
+			tmp["wait"]["fork", 1]["magix.data.save"]["value"]["value"].Value = "thomas2";
 			tmp["wait"]["fork", 2]["magix.data.save"]["id"].Value = "fork-test-buffer-object3";
-			tmp["wait"]["fork", 2]["magix.data.save"]["object"]["value"].Value = "thomas3";
+			tmp["wait"]["fork", 2]["magix.data.save"]["value"]["value"].Value = "thomas3";
 			tmp["wait"]["fork", 3]["magix.data.save"]["id"].Value = "fork-test-buffer-object4";
-			tmp["wait"]["fork", 3]["magix.data.save"]["object"]["value"].Value = "thomas4";
+			tmp["wait"]["fork", 3]["magix.data.save"]["value"]["value"].Value = "thomas4";
 			tmp["wait"]["fork", 4]["magix.data.save"]["id"].Value = "fork-test-buffer-object5";
-			tmp["wait"]["fork", 4]["magix.data.save"]["object"]["value"].Value = "thomas5";
+			tmp["wait"]["fork", 4]["magix.data.save"]["value"]["value"].Value = "thomas5";
 
 			tmp["magix.data.load", 0]["id"].Value = "fork-test-buffer-object1";
 			tmp["magix.data.load", 1]["id"].Value = "fork-test-buffer-object2";

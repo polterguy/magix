@@ -741,9 +741,9 @@ not thread safe";
 				tmp["id"].Value = tp["objects"][0].Name;
 			}
 
-			tmp["object"]["form"].Add(DataSource.Clone());
-			tmp["object"]["type"].Value = "magix.forms.form";
-			tmp["object"]["name"].Value = ip["name"].Get<string>();
+			tmp["value"]["form"].Add(DataSource.Clone());
+			tmp["value"]["type"].Value = "magix.forms.form";
+			tmp["value"]["name"].Value = ip["name"].Get<string>();
 
 			RaiseEvent(
 				"magix.data.save",
