@@ -36,8 +36,6 @@ execute=>[_exe]
 
 * create unit tests for magix.file namespace
 
-* execute-file and execute-script doesn't work with parameters, unit tests are wrong!!
-
 * implement more support for expressions in all events within the magix.execute namespace, such as tunnel, open, etc - by using the Expression class from Magix.Core
 
 * create boolean operations for comparing and "multiplying" node trees
@@ -78,4 +76,6 @@ execute=>[_exe]
 * make RaiseActiveEvent and RaiseEvent in modules and controllers have similar names
 
 * make sure all inspect code snippets actually executes
+
+* magix.execute.if always returns false if expression is not found, also on "!=" expression, which for the most parts are wrong results
 

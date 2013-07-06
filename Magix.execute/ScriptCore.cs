@@ -26,9 +26,10 @@ namespace Magix.admin
 			{
 				e.Params.Clear();
 				e.Params["event:magix.execute"].Value = null;
-				e.Params["inspect"].Value = @"runs the hyper lisp [file] given, putting all
-other child nodes into the [$] collection, accessible from inside the file, 
-which again is able to return nodes through the [$] node.&nbsp;&nbsp;
+				e.Params["inspect"].Value = @"runs the hyper lisp file given in value of [execute-file], 
+putting all other child nodes into the [$] collection, accessible from inside the file, 
+which again is able to return nodes through the [$] node, which will become children of the 
+[execute-file] node after execution.&nbsp;&nbsp;
 thread safe";
 				e.Params["execute-file"].Value = "core-scripts/some-script.hl";
 				return;
@@ -59,23 +60,8 @@ thread safe";
 			RaiseActiveEvent(
 				"magix.code.code-2-node",
 				tmp);
-
-			tmp = tmp["json"].Get<Node>();
-
-			foreach (Node idx in ip)
-			{
-				tmp["$"].Add(idx.Clone());
-			}
-
-			RaiseActiveEvent(
-				"magix.execute", 
-				tmp);
-
-			if (tmp.Contains("$"))
-			{
-				ip["$"].UnTie();
-				ip.Add(tmp["$"]);
-			}
+			
+			ExecuteScript(tmp["json"].Get<Node>(), ip);
 		}
 		
 		/**
@@ -88,8 +74,11 @@ thread safe";
 			{
 				e.Params.Clear();
 				e.Params["event:magix.execute"].Value = null;
-				e.Params["inspect"].Value = @"runs the [script] given.
-&nbsp;&nbsp;thread safe";
+				e.Params["inspect"].Value = @"runs the hyper lisp script given in value of [execute-script], 
+putting all other child nodes into the [$] collection, accessible from inside the script, 
+which again is able to return nodes through the [$] node, which will become children of the 
+[execute-script] node after execution.&nbsp;&nbsp;
+thread safe";
 				e.Params["execute-script"].Value =  @"
 _data=>thomas
 if=>[_data].Value==thomas
@@ -114,19 +103,23 @@ if=>[_data].Value==thomas
 				"magix.code.code-2-node",
 				tmp);
 
+			ExecuteScript(tmp["json"].Get<Node>(), ip);
+		}
+
+		private static void ExecuteScript(Node exe, Node ip)
+		{
 			foreach (Node idx in ip)
 			{
-				tmp["$"].Add(idx.Clone());
+				exe["$"].Add(idx.Clone());
 			}
 
 			RaiseActiveEvent(
 				"magix.execute", 
-				tmp["json"].Get<Node>());
+				exe);
 
-			if (tmp.Contains("$"))
+			if (exe.Contains("$"))
 			{
-				ip["$"].UnTie();
-				ip.Add(tmp["$"]);
+				ip.ReplaceChildren(exe["$"]);
 			}
 		}
 	}
