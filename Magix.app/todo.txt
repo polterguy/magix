@@ -77,3 +77,5 @@ execute=>[_exe]
 
 * magix.execute.if always returns false if expression is not found, also on "!=" expression, which for the most parts are wrong results
 
+* for some reasons, if default webpage has carriage returns, it fisslez
+
