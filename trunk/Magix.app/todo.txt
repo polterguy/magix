@@ -26,8 +26,6 @@ _exe
 execute=>[_exe]
   message=>howdy
 
-* implement confirm on delete user and role
-
 * figure out of magix.execute.override is necessary, since there is magix.execute.event ...?
 
 * make magix.data.x conform to eachother in their passing of nodes
@@ -82,4 +80,6 @@ execute=>[_exe]
 * make it possible for lambda controls to take additional settings, such that they can be reused with different data-input
 
 * make RaiseActiveEvent and RaiseEvent in modules and controllers have similar names
+
+* make sure all inspect code snippets actually executes
 

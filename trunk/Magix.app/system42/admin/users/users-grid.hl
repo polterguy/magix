@@ -65,16 +65,19 @@ _dt
         css=>span-1 hover-shadow last right z-1 absolute light-red centered
         text=>x
         onclick
-          magix.data.remove
-            prototype
-              type=>magix.core.user
-              username=>
-          magix.log.append
-            header=>user deleted
-            body=>user {0} deleted
-          execute-file=>system42/admin/users/users-grid.hl
-          magix.viewport.clear-controls
-            container=>content3
+          magix.viewport.confirm
+            message=>are you sure you want to delete this user?
+            code
+              magix.data.remove
+                prototype
+                  type=>magix.core.user
+                  username=>
+              magix.log.append
+                header=>user deleted
+                body=>user {0} deleted
+              execute-file=>system42/admin/users/users-grid.hl
+              magix.viewport.clear-controls
+                container=>content3
 
 for-each=>[magix.data.load][objects]
   set=>[/][_dt][panel][controls][label:0][text].Value
@@ -85,9 +88,9 @@ for-each=>[magix.data.load][objects]
     value=>[.][pwd].Value
   set=>[/][_dt][panel][controls][link-button:0][onclick][execute-file][username].Value
     value=>[.][username].Value
-  set=>[/][_dt][panel][controls][link-button:1][onclick][magix.data.remove][prototype][username].Value
+  set=>[/][_dt][panel][controls][link-button:1][onclick][magix.viewport.confirm][code][magix.data.remove][prototype][username].Value
     value=>[.][username].Value
-  set=>[/][_dt][panel][controls][link-button:1][onclick][magix.log.append][body][username].Value
+  set=>[/][_dt][panel][controls][link-button:1][onclick][magix.viewport.confirm][code][magix.log.append][body][username].Value
     value=>[.][username].Value
   add=>[/][magix.forms.create-form][controls][panel:1][controls]
     value=>[/][_dt][0]
