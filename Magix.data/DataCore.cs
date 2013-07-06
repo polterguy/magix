@@ -104,17 +104,19 @@ operation.&nbsp;&nbsp;thread safe";
 			{
 				e.Params["event:magix.data.save"].Value = null;
 				e.Params["id"].Value = "object-id";
-				e.Params["object"]["value"].Value = "value of object";
-				e.Params["inspect"].Value = @"will serialize the given [object] with 
+				e.Params["value"]["some-value"].Value = "value of object";
+				e.Params["inspect"].Value = @"will serialize the given [value] with 
 the given [id] in the persistent data storage.&nbsp;&nbsp;if no [id] is given, 
-a global unique identifier will be automatically assigned to the object.&nbsp;&nbsp;thread safe";
+a global unique identifier will be automatically assigned to the object.&nbsp;&nbsp;
+if an [id] is given, and an object with that same id exists, object will be overwritten or updated.&nbsp;&nbsp;
+thread safe";
 				return;
 			}
 
-			if (!e.Params.Contains("object"))
-				throw new ArgumentException("[object] must be defined for magix.data.save to actually save anything");
+			if (!e.Params.Contains("value"))
+				throw new ArgumentException("[value] must be defined for magix.data.save to actually save anything");
 
-			Node value = e.Params["object"].Clone();
+			Node value = e.Params["value"].Clone();
 
 			lock (typeof(DataCore))
 			{

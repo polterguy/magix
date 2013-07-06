@@ -73,17 +73,17 @@ parameters added beneath [body] and/or [header] will be formatted into string.&n
 
 			Node node = new Node();
 
-			node["object"]["type"].Value = "magix.log.item";
-			node["object"]["header"].Value = header;
-			node["object"]["body"].Value   = body;
-			node["object"]["date"].Value   = date;
+			node["value"]["type"].Value = "magix.log.item";
+			node["value"]["header"].Value = header;
+			node["value"]["body"].Value   = body;
+			node["value"]["date"].Value   = date;
 
 			if (e.Params.Contains("error"))
-				node["object"]["error"].Value = e.Params["error"].Value;
+				node["value"]["error"].Value = e.Params["error"].Value;
 
 			if (e.Params.Contains("code"))
 			{
-				node["object"]["code"].ReplaceChildren(e.Params["code"].Clone());
+				node["value"]["code"].ReplaceChildren(e.Params["code"].Clone());
 			}
 
 			RaiseActiveEvent(

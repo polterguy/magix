@@ -61,9 +61,9 @@ _dt2
           set=>[magix.data.save][id].Value
             value=>[magix.data.load][objects][0].Name
           set=>[magix.data.load][objects][0].Name
-            value=>object
+            value=>value
           add=>[magix.data.save]
-            value=>[magix.data.load][objects][object]
+            value=>[magix.data.load][objects][value]
           magix.data.save
           set=>[magix.log.append][body][username].Value
             value=>[magix.data.load][prototype][username].Value
@@ -174,18 +174,18 @@ magix.forms.create-form
               magix.viewport.show-message
                 message=>user belongs to role already ...
             else
-              set=>[else][magix.data.save][id].Value
+              set=>[@][magix.data.save][id].Value
                 value=>[magix.data.load][objects][0].Name
               set=>[magix.data.load][objects][0].Name
-                value=>object
-              add=>[else][magix.data.save]
+                value=>value
+              add=>[@][magix.data.save]
                 value=>[magix.data.load][objects][0]
-              set=>[else][magix.data.save][object][roles][[magix.forms.get-value][value].Value].Value
+              set=>[@][magix.data.save][value][roles][[magix.forms.get-value][value].Value].Value
                 value=>true
               magix.data.save
-              set=>[else][magix.log.append][body][username].Value
+              set=>[@][magix.log.append][body][username].Value
                 value=>[magix.data.load][prototype][username].Value
-              set=>[else][magix.log.append][body][role].Value
+              set=>[@][magix.log.append][body][role].Value
                 value=>[magix.forms.get-value][value].Value
               magix.log.append
                 header=>user added to role

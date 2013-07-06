@@ -55,8 +55,7 @@ _back
   css=>span-5 directory back-directory
   text=>..
   onclick
-    magix.viewport.get-viewstate
-      id=>stack-of-pages
+    magix.viewport.get-viewstate=>stack-of-pages
     set=>[@][magix.viewport.get-viewstate][value][[@][magix.viewport.get-viewstate][value].Count-1]
     add=>[@][magix.viewport.set-viewstate]
       value=>[@][magix.viewport.get-viewstate][value]
@@ -76,8 +75,7 @@ _link-buttonDir
   css=>span-5 directory
   onclick
     execute-file=>system42/admin/file-browser.hl
-    magix.viewport.get-viewstate
-      id=>stack-of-pages
+    magix.viewport.get-viewstate=>stack-of-pages
     set=>[@][magix.viewport.get-viewstate][value][[@][magix.viewport.get-viewstate][value].Count].Value
       value=>[@][execute-file][directory].Value
     add=>[@][magix.viewport.set-viewstate]

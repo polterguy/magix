@@ -173,7 +173,7 @@ magix.forms.create-form
                 form-id=>users-grid
                 id=>nName
             else
-              set=>[@][else][else][else][magix.data.save][object][name].Value
+              set=>[@][else][else][else][magix.data.save][value][name].Value
                 value=>[magix.forms.get-value][value].Value
               magix.forms.get-value
                 form-id=>users-grid
@@ -185,7 +185,7 @@ magix.forms.create-form
                   form-id=>users-grid
                   id=>nUsername
               else
-                set=>[@][else][else][magix.data.save][object][username].Value
+                set=>[@][else][else][magix.data.save][value][username].Value
                   value=>[@][..][magix.forms.get-value][value].Value
                 set=>[@][else][else][execute-file:1][username].Value
                   value=>[@][..][magix.forms.get-value][value].Value
@@ -199,7 +199,7 @@ magix.forms.create-form
                     form-id=>users-grid
                     id=>nPwd
                 else
-                  set=>[@][else][magix.data.save][object][pwd].Value
+                  set=>[@][else][magix.data.save][value][pwd].Value
                     value=>[@][..][magix.forms.get-value][value].Value
                   set=>[@][magix.data.load][prototype][username].Value
                     value=>[@][..][..][magix.forms.get-value][value].Value
@@ -211,7 +211,7 @@ magix.forms.create-form
                       message=>user exists from before with same username
                   else
                     magix.data.save
-                      object
+                      value
                         type=>magix.core.user
                     set=>[@][magix.log.append][body][username].Value
                       value=>[@][..][..][magix.forms.get-value:0][value].Value

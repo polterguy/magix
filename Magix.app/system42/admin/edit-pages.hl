@@ -88,19 +88,19 @@ magix.forms.create-form
               magix.viewport.show-message
                 message=>no name given to page
             else
-              set=>[@][magix.data.save][object][name].Value
+              set=>[@][magix.data.save][value][name].Value
                 value=>[magix.forms.get-value][value].Value
               set=>[@][magix.data.remove][prototype][name].Value
                 value=>[magix.forms.get-value][value].Value
-              set=>[@][magix.data.save][object][name].Value
+              set=>[@][magix.data.save][value][name].Value
                 value=>[magix.forms.get-value][value].Value
-              set=>[@][magix.data.save][object][value].Value
+              set=>[@][magix.data.save][value][value].Value
                 value=>[magix.forms.get-value:1][value].Value
               magix.data.remove
                 prototype
                   type=>magix.pages.page
               magix.data.save
-                object
+                value
                   type=>magix.pages.page
               magix.viewport.show-message
                 message=>page was successfully saved

@@ -67,8 +67,6 @@ execute=>[_exe]
 
 * make magix.data.load share logic with magix.data.remove, and magix.data.count, and differentiate upon the name of the active event the implementation of what to do once hit found
 
-* change [object] to [value] in magix.data.save
-
 * make [id] become default parameter to magix.data.save
 
 * make it possible for lambda controls to take additional settings, such that they can be reused with different data-input

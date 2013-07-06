@@ -28,22 +28,22 @@ namespace Magix.tests
 			tmp["execute"]["if"]["throw"].Value = "object didn't delete";
 			tmp["_buffer"].Value = null;
 			tmp["magix.data.save"]["id"].Value = "data-save-test";
-			tmp["magix.data.save"]["object"]["value"].Value = "thomas";
-			tmp["magix.data.save"]["object"]["v_alue1"].Value = "thomas1";
-			tmp["magix.data.save"]["object"]["_value2"].Value = "thomas2";
-			tmp["magix.data.save"]["object"]["gok"]["value"].Value = "thomas3";
-			tmp["magix.data.save"]["object"]["gokk"]["Value"].Value = "thomas4";
-			tmp["magix.data.save"]["object"]["gokk"]["gokk2"]["Value"].Value = "thomas5";
-			tmp["magix.data.save"]["object"]["gokk"]["gokk2"]["Value"].Value = "thomas6";
-			tmp["magix.data.save"]["object"]["tmp"]["Value"].Value = "thomas7";
+			tmp["magix.data.save"]["value"]["value"].Value = "thomas";
+			tmp["magix.data.save"]["value"]["v_alue1"].Value = "thomas1";
+			tmp["magix.data.save"]["value"]["_value2"].Value = "thomas2";
+			tmp["magix.data.save"]["value"]["gok"]["value"].Value = "thomas3";
+			tmp["magix.data.save"]["value"]["gokk"]["Value"].Value = "thomas4";
+			tmp["magix.data.save"]["value"]["gokk"]["gokk2"]["Value"].Value = "thomas5";
+			tmp["magix.data.save"]["value"]["gokk"]["gokk2"]["Value"].Value = "thomas6";
+			tmp["magix.data.save"]["value"]["tmp"]["Value"].Value = "thomas7";
 			tmp["magix.data.save"]["object222222"]["value"].Value = "thomas8";
-			tmp["magix.data.save"]["object"]["object"]["object"]["object"]["object"]["Value"].Value = "thomas9";
-			tmp["magix.data.save"]["object"]["object"]["object"]["Value"].Value = "thomas0";
-			tmp["magix.data.save"]["object"]["Value"]["Value"]["Value"]["Value"]["Value"]["Value"].Value = "thomas2";
+			tmp["magix.data.save"]["value"]["object"]["object"]["object"]["object"]["Value"].Value = "thomas9";
+			tmp["magix.data.save"]["value"]["object"]["object"]["Value"].Value = "thomas0";
+			tmp["magix.data.save"]["value"]["Value"]["Value"]["Value"]["Value"]["Value"]["Value"].Value = "thomas2";
 			tmp["magix.data.save"]["object5"]["Value"].Value = "thomas3";
 			tmp["magix.data.save"]["object4"]["Value"].Value = "thomas|";
 			tmp["magix.data.save"]["object"]["Value7"].Value = "thomash";
-			tmp["magix.data.save"]["object"]["Value3"].Value = "thomasx£#$¤%&/()[]}±?";
+			tmp["magix.data.save"]["value"]["Value3"].Value = "thomasx£#$¤%&/()[]}±?";
 			tmp["magix.data.load"]["id"].Value = "data-save-test";
 
 			if (ShouldInspect(e.Params))
@@ -60,7 +60,7 @@ by [id], behaves as it should";
 				"magix.execute",
 				tmp);
 
-			if (!tmp["magix.data.load"]["objects"][0].HasNodes(tmp["magix.data.save"]["object"]))
+			if (!tmp["magix.data.load"]["objects"][0].HasNodes(tmp["magix.data.save"]["value"]))
 			{
 				throw new ApplicationException(
 					"Failure of executing data-save/load statement with big object");
@@ -81,26 +81,26 @@ by [id], behaves as it should";
 			tmp["_buffer"].Value = null;
 
 			tmp["magix.data.save"]["id"].Value = "data-save-test1";
-			tmp["magix.data.save"]["object"]["x_value"].Value = "thomas";
-			tmp["magix.data.save"]["object"]["v_alue1"].Value = "thomas1";
-			tmp["magix.data.save"]["object"]["_value2"].Value = "thomas2";
+			tmp["magix.data.save"]["value"]["x_value"].Value = "thomas";
+			tmp["magix.data.save"]["value"]["v_alue1"].Value = "thomas1";
+			tmp["magix.data.save"]["value"]["_value2"].Value = "thomas2";
 
 			tmp["magix.data.save2"]["id"].Value = "data-save-test2";
-			tmp["magix.data.save2"]["object"]["x_value"].Value = "thomas";
-			tmp["magix.data.save2"]["object"]["gokk"]["Value"].Value = "thomas4";
-			tmp["magix.data.save2"]["object"]["gokk"]["gokk2"]["Value"].Value = "thomas5";
-			tmp["magix.data.save2"]["object"]["gokk"]["gokk2"]["Value"].Value = "thomas6";
-			tmp["magix.data.save2"]["object"]["tmp"]["Value"].Value = "thomas7";
+			tmp["magix.data.save2"]["value"]["x_value"].Value = "thomas";
+			tmp["magix.data.save2"]["value"]["gokk"]["Value"].Value = "thomas4";
+			tmp["magix.data.save2"]["value"]["gokk"]["gokk2"]["Value"].Value = "thomas5";
+			tmp["magix.data.save2"]["value"]["gokk"]["gokk2"]["Value"].Value = "thomas6";
+			tmp["magix.data.save2"]["value"]["tmp"]["Value"].Value = "thomas7";
 			tmp["magix.data.save2"]["object222222"]["value"].Value = "thomas8";
 
 			tmp["magix.data.save3"]["id"].Value = "data-save-test3";
-			tmp["magix.data.save3"]["object"]["x_value"].Value = "thomas";
-			tmp["magix.data.save3"]["object"]["object"]["object"]["Value"].Value = "thomas0";
-			tmp["magix.data.save3"]["object"]["Value"]["Value"]["Value"]["Value"]["Value"]["Value"].Value = "thomas2";
+			tmp["magix.data.save3"]["value"]["x_value"].Value = "thomas";
+			tmp["magix.data.save3"]["value"]["object"]["object"]["Value"].Value = "thomas0";
+			tmp["magix.data.save3"]["value"]["Value"]["Value"]["Value"]["Value"]["Value"]["Value"].Value = "thomas2";
 			tmp["magix.data.save3"]["object5"]["Value"].Value = "thomas3";
 			tmp["magix.data.save3"]["object4"]["Value"].Value = "thomas|";
-			tmp["magix.data.save3"]["object"]["Value7"].Value = "thomash";
-			tmp["magix.data.save3"]["object"]["Value3"].Value = "thomasx£#$¤%&/()[]}±?";
+			tmp["magix.data.save3"]["value"]["Value7"].Value = "thomash";
+			tmp["magix.data.save3"]["value"]["Value3"].Value = "thomasx£#$¤%&/()[]}±?";
 			tmp["magix.data.load"]["prototype"]["x_value"].Value = "thomas";
 
 			// simplicity ...

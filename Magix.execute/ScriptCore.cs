@@ -106,6 +106,9 @@ if=>[_data].Value==thomas
 			ExecuteScript(tmp["json"].Get<Node>(), ip);
 		}
 
+		/*
+		 * helper for above
+		 */
 		private static void ExecuteScript(Node exe, Node ip)
 		{
 			foreach (Node idx in ip)
