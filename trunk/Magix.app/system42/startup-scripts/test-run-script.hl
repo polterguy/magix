@@ -17,8 +17,8 @@ if=>[$][mumbo].Value!=howdy
 set=>[$][jumbo].Value
   value=>5"
       mumbo=>howdy
-    if=>[execute-file][mumbo].Value!=howdy
+    if=>[execute-script][mumbo].Value!=howdy
       throw=>input value not returned
-    if=>[execute-file][jumbo].Value!=5
+    if=>[execute-script][jumbo].Value!=5
       throw=>output value not returned currectly
 
