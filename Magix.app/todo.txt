@@ -63,8 +63,6 @@ execute=>[_exe]
 * replace all the "load-form"/"save-form" and so on in Magix.ide.Surface.ascx.cs with getters and setters for form, getter already exist, 
   and refactor out the actual saving and loading of forms, since now the Surface contains "business logic" you might say
 
-* move magix.execute.list-widget-types out of surface and into controller
-
 * create general type of clipboard module/controller for nodes
 
 * remove the deletion and saving of files out from the AsciiEditor.ascx.cs file and into controllers
@@ -82,4 +80,6 @@ execute=>[_exe]
 * make [id] become default parameter to magix.data.save
 
 * make it possible for lambda controls to take additional settings, such that they can be reused with different data-input
+
+* make RaiseActiveEvent and RaiseEvent in modules and controllers have similar names
 

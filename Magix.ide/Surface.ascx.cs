@@ -216,56 +216,6 @@ not thread safe";
 		}
 
 		/**
-		 * lists widget types that exists in system
-		 */
-		[ActiveEvent(Name="magix.execute.list-widget-types")]
-		protected void magix_execute_list_widget_types(object sender, ActiveEventArgs e)
-		{
-			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
-			{
-				e.Params["event:magix.execute"].Value = null;
-				e.Params["inspect"].Value = @"lists all widget types as [types] available in system.&nbsp;&nbsp;
-not thread safe";
-				e.Params["list-widget-types"].Value = null;
-				return;
-			}
-
-			Node tmp = new Node();
-			tmp["begins-with"].Value = "magix.forms.controls.";
-
-			RaiseEvent(
-				"magix.admin.get-active-events",
-				tmp);
-
-			Node ip = e.Params["_ip"].Get<Node>();
-
-			foreach (Node idx in tmp["events"])
-			{
-				Node tp = new Node("widget");
-				tp["type"].Value = idx.Get<string>();
-
-				Node tp2 = new Node();
-				tp2["inspect"].Value = null;
-
-				RaiseEvent(
-					idx.Get<string>(),
-					tp2);
-
-				if (tp2.Contains("_no-embed"))
-					tp["_no-embed"].Value = true;
-
-				tp["properties"]["id"].Value = "id";
-				foreach (Node idx2 in tp2["controls"][0])
-				{
-					tp["properties"][idx2.Name].Value = idx2.Value;
-					tp["properties"][idx2.Name].AddRange(idx2);
-				}
-
-				ip["types"].Add(tp);
-			}
-		}
-
-		/**
 		 * adds widget to surface
 		 */
 		[ActiveEvent(Name="magix.execute.add-widget")]
