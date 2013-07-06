@@ -114,10 +114,7 @@ a global unique identifier will be automatically assigned to the object.&nbsp;&n
 			if (!e.Params.Contains("object"))
 				throw new ArgumentException("[object] must be defined for magix.data.save to actually save anything");
 
-			Node value = null;
-
-			if (e.Params.Contains("object"))
-				value = e.Params["object"].Clone();
+			Node value = e.Params["object"].Clone();
 
 			lock (typeof(DataCore))
 			{
