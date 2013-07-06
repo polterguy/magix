@@ -89,7 +89,7 @@ as you click your way around in magix"
     add=>[magix.data.save]
       value=>[magix.data.load][objects][0]
     set=>[magix.data.save][1].Name
-      value=>object
+      value=>value
     set=>[magix.data.save][value][type].Value
       value=>system42.travel.setting
     set=>[magix.data.save][value][name].Value
