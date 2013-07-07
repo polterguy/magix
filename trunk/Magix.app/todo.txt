@@ -79,3 +79,5 @@ execute=>[_exe]
 
 * for some reasons, if default webpage has carriage returns, it fisslez
 
+* make it possible to serialize forms created dynamically, either to c# or some other format in a file
+
