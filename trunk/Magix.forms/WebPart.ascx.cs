@@ -56,22 +56,30 @@ namespace Magix.forms
 		{
 			isFirst = true;
 			Load +=
-				delegate
-				{
+			delegate
+			{
 				if (node.Contains("form-id"))
 					FormID = node["form-id"].Get<string>();
 
-					if (node.Contains("mml"))
+				if (node.Contains("mml"))
+				{
+					// mml form
+					TokenizeMarkup(node);
+				}
+				else
+				{
+					// web controls form
+					DataSource["controls"].Value = node["controls"].Clone();
+
+					if (node.Contains("events"))
 					{
-						// mml form
-						TokenizeMarkup(node);
+						foreach (Node idxEvent in node["events"])
+						{
+							Methods[idxEvent.Name] = idxEvent.Clone();
+						}
 					}
-					else
-					{
-						// web controls form
-						DataSource["controls"].Value = node["controls"].Clone();
-					}
-				};
+				}
+			};
 			base.InitialLoading(node);
 		}
 

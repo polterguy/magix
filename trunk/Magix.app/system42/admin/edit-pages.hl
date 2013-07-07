@@ -59,9 +59,11 @@ magix.forms.create-web-part
         magix.forms.set-value
           form-id=>edit-pages
           id=>name
+          value=>
         magix.forms.set-value
           form-id=>wysiwyg-editor
           id=>wysiwyg
+          value=>
       items
         default=>choose web page ...
     panel=>saveWrp

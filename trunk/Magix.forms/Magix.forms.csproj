@@ -34,9 +34,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FormsCore.cs" />
-    <Compile Include="DynamicForm.ascx.cs" />
-    <Compile Include="HtmlViewer.ascx.cs" />
-    <Compile Include="DynamicFormBase.cs" />
     <Compile Include="controls\LabelCore.cs" />
     <Compile Include="controls\BaseWebControlCore.cs" />
     <Compile Include="controls\LinkButtonCore.cs" />
@@ -71,8 +68,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="DynamicForm.ascx" />
-    <EmbeddedResource Include="HtmlViewer.ascx" />
     <EmbeddedResource Include="WebPart.ascx" />
   </ItemGroup>
   <ItemGroup>
