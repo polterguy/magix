@@ -12,10 +12,12 @@ using Magix.UX.Widgets;
 namespace Magix.forms
 {
 	/**
+	 * image control
 	 */
 	public class ImageCore : BaseWebControlCore
 	{
 		/**
+		 * creates image control
 		 */
 		[ActiveEvent(Name = "magix.forms.controls.image")]
 		public void magix_forms_controls_image(object sender, ActiveEventArgs e)
@@ -46,7 +48,7 @@ namespace Magix.forms
 
 		protected override void Inspect (Node node)
 		{
-			node["event:magix.forms.create-form"].Value = null;
+			node["event:magix.forms.create-web-part"].Value = null;
 			node["inspect"].Value = @"creates an image type of web control.&nbsp;&nbsp;
 useful showing images, where you need dynamic behavior, such as onclick event handlers,
 or changing the image src during execution.&nbsp;&nbsp;use [src] to set image url.&nbsp;&nbsp;

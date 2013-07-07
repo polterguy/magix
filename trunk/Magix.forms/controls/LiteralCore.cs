@@ -6,17 +6,19 @@
 
 using System;
 using System.IO;
-using System.Web.UI.WebControls;
+using System.Web.UI;
 using Magix.Core;
 using Magix.UX.Widgets;
 
 namespace Magix.forms
 {
 	/**
+	 * literal control
 	 */
 	public class LiteralCore : ActiveController
 	{
 		/**
+		 * creates the literal control
 		 */
 		[ActiveEvent(Name = "magix.forms.controls.literal")]
 		public void magix_forms_controls_panel(object sender, ActiveEventArgs e)
@@ -29,7 +31,7 @@ namespace Magix.forms
 
 			Node node = e.Params["_code"].Value as Node;
 
-			Literal ret = new Literal();
+			LiteralControl ret = new LiteralControl();
 			if (node.Contains("text"))
 				ret.Text = node["text"].Get<string>();
 
@@ -38,7 +40,7 @@ namespace Magix.forms
 
 		protected void Inspect(Node node)
 		{
-			node["event:magix.forms.create-form"].Value = null;
+			node["event:magix.forms.create-web-part"].Value = null;
 			node["inspect"].Value = @"creates a literal type of web control.&nbsp;&nbsp;
 put any html into [text] node, to render exact html as web control";
 			node["container"].Value = "content5";

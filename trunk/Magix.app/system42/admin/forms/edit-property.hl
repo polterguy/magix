@@ -6,7 +6,7 @@ to edit a hyper lisp property in the edit-forms web form"
 
 get-selected-widget
 
-set=>[magix.forms.create-form][controls][text-area][ontextchanged][change-widget][dna].Value
+set=>[magix.forms.create-web-part][controls][text-area][ontextchanged][change-widget][dna].Value
   value=>[get-selected-widget][value][dna].Value
 
 if=>[get-selected-widget][value][widget][properties][[$][property].Value].Count>0
@@ -14,17 +14,17 @@ if=>[get-selected-widget][value][widget][properties][[$][property].Value].Count>
     add=>[@][..][magix.code.node-2-code][json]
       value=>[.]
   magix.code.node-2-code
-  set=>[/][magix.forms.create-form][controls][text-area][text].Value
+  set=>[/][magix.forms.create-web-part][controls][text-area][text].Value
     value=>[@][magix.code.node-2-code][code].Value
 
-set=>[magix.forms.create-form][controls][text-area][ontextchanged][_prop].Value
+set=>[magix.forms.create-web-part][controls][text-area][ontextchanged][_prop].Value
   value=>[$][property].Value
 
-set=>[magix.forms.create-form][controls][label][text].Value
+set=>[magix.forms.create-web-part][controls][label][text].Value
   value=>@"edit property {0}"
     pr0=>[$][property].Value
 
-magix.forms.create-form
+magix.forms.create-web-part
   form-id=>edit-property
   container=>content5
   css=>span-22 air-padding boxed bottom-5

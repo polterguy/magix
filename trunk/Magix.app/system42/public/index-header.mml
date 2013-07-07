@@ -5,23 +5,23 @@
 system42.travel.change-login-box
   magix.web.get-session=>magix.core.user
   if=>![magix.web.get-session][value]
-    magix.forms.show-control
+    magix.forms.set-visible
       form-id=>header
       id=>loginWrp
-      visible=>true
-    magix.forms.show-control
+      value=>true
+    magix.forms.set-visible
       form-id=>header
       id=>logoutWrp
-      visible=>false
+      value=>false
   else
-    magix.forms.show-control
+    magix.forms.set-visible
       form-id=>header
       id=>loginWrp
-      visible=>false
-    magix.forms.show-control
+      value=>false
+    magix.forms.set-visible
       form-id=>header
       id=>logoutWrp
-      visible=>true
+      value=>true
 
 system42.travel.try-login
   set=>[magix.data.load][prototype][username].Value

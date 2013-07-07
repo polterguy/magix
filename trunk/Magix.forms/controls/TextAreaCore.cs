@@ -12,11 +12,12 @@ using Magix.UX.Widgets;
 namespace Magix.forms
 {
 	/**
-	 * contains the textarea control
+	 * textarea control
 	 */
 	public class TextAreaCore : BaseWebControlCore
 	{
 		/**
+		 * creates text area control
 		 */
 		[ActiveEvent(Name = "magix.forms.controls.text-area")]
 		public void magix_forms_controls_text_area(object sender, ActiveEventArgs e)
@@ -82,9 +83,105 @@ namespace Magix.forms
 			e.Params["_ctrl"].Value = ret;
 		}
 
+		/**
+		 * sets text value
+		 */
+		[ActiveEvent(Name = "magix.forms.set-value")]
+		public void magix_forms_set_value(object sender, ActiveEventArgs e)
+		{
+			if (ShouldInspect(e.Params))
+			{
+				e.Params["inspect"].Value = "sets the value property of the control";
+				return;
+			}
+
+			if (!e.Params.Contains("value"))
+				throw new ArgumentException("set-value needs [value]");
+
+			TextArea ctrl = FindControl<TextArea>(e.Params);
+
+			if (ctrl != null)
+			{
+				ctrl.Text = e.Params["value"].Get<string>();
+			}
+		}
+
+		/**
+		 * returns value
+		 */
+		[ActiveEvent(Name = "magix.forms.get-value")]
+		public void magix_forms_get_value(object sender, ActiveEventArgs e)
+		{
+			if (ShouldInspect(e.Params))
+			{
+				e.Params["inspect"].Value = "returns the value property of the control";
+				return;
+			}
+
+			TextArea ctrl = FindControl<TextArea>(e.Params);
+
+			if (ctrl != null)
+			{
+				e.Params["value"].Value = ctrl.Text;
+			}
+		}
+
+		/**
+		 * set-enabled
+		 */
+		[ActiveEvent(Name = "magix.forms.set-enabled")]
+		protected void magix_forms_set_enabled(object sender, ActiveEventArgs e)
+		{
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			{
+				e.Params["event:magix.forms.set-enabled"].Value = null;
+				e.Params["id"].Value = "control";
+				e.Params["form-id"].Value = "webpages";
+				e.Params["value"].Value = true;
+				e.Params["inspect"].Value = @"sets the enabled property of the given 
+[id] web control, in the [form-id] form, from [value].&nbsp;&nbsp;not thread safe";
+				return;
+			}
+
+			TextArea ctrl = FindControl<TextArea>(e.Params);
+
+			if (ctrl != null)
+			{
+				bool enabled = false;
+				if (e.Params.Contains("value"))
+					enabled = e.Params["value"].Get<bool>();
+
+				ctrl.Enabled = enabled;
+			}
+		}
+
+		/**
+		 * selects all text
+		 */
+		[ActiveEvent(Name = "magix.forms.select-all")]
+		protected void magix_forms_select_all(object sender, ActiveEventArgs e)
+		{
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			{
+				e.Params["event:magix.forms.select-all"].Value = null;
+				e.Params["id"].Value = "control";
+				e.Params["form-id"].Value = "webpages";
+				e.Params["inspect"].Value = @"selects all text in the specific 
+[id] textbox or textarea, in the [form-id] form.&nbsp;&nbsp;not thread safe";
+				return;
+			}
+
+			TextArea ctrl = FindControl<TextArea>(e.Params);
+
+			if (ctrl != null)
+			{
+				ctrl.Select();
+			}
+		}
+
 		protected override void Inspect (Node node)
 		{
-			node["event:magix.forms.create-form"].Value = null;
+			node["event:magix.forms.create-web-part"].Value = null;
 			node["inspect"].Value = @"creates a text area input type of web control.&nbsp;&nbsp;
 a [text-area] is an input control for text, where the end user can type in 
 text, that can handle multiple lines of text.&nbsp;&nbsp;[place-holder] is shadow text, 

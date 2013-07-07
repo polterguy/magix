@@ -151,7 +151,7 @@ of your system"
             container=>content4
           magix.viewport.clear-controls
             container=>content5
-          magix.forms.create-web-page
+          magix.forms.load-mml-web-part
             file=>system42/admin/admin-settings.mml
             container=>content1
             form-id=>admin-settings

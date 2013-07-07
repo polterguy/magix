@@ -93,7 +93,7 @@ end user such that he can verify his intent.&nbsp;&nbsp;not thread safe";
 			tmp["html"].Value = e.Params["message"].Get<string>();
 
 			RaiseEvent(
-				"magix.forms.create-web-page",
+				"magix.forms.load-mml-web-part",
 				tmp);
 
 			// getting code
@@ -128,7 +128,7 @@ end user such that he can verify his intent.&nbsp;&nbsp;not thread safe";
 ",
 				code["code"].Get<string>());
 			RaiseEvent(
-				"magix.forms.create-web-page",
+				"magix.forms.load-mml-web-part",
 				tmp);
 		}
 

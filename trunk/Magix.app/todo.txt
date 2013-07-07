@@ -81,3 +81,9 @@ execute=>[_exe]
 
 * make it possible to serialize forms created dynamically, either to c# or some other format in a file
 
+* break expressions of comparison down to have multiple child nodes, such as [lhs], [rhs], [operator] and such, which makes trees possible to create
+
+* sanitize all the $ passings, now they're all over the place, and largely some of them redundant
+
+* sanitize names of web controls, such as "check" contra "link-button", etc ...
+

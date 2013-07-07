@@ -109,7 +109,7 @@ namespace Magix.forms
 
 		protected override void Inspect (Node node)
 		{
-			node["event:magix.forms.create-form"].Value = null;
+			node["event:magix.forms.create-web-part"].Value = null;
 			node["inspect"].Value = @"creates a panel type of web control.&nbsp;&nbsp;
 a panel is highly useful, since it can be a container for other controls.&nbsp;&nbsp;
 you can also set the [default] to the id of a specific control, such as a button, 

@@ -12,10 +12,12 @@ using Magix.UX.Widgets;
 namespace Magix.forms
 {
 	/**
+	 * uploader control
 	 */
 	public class UploaderCore : BaseWebControlCore
 	{
 		/**
+		 * creates uploader control
 		 */
 		[ActiveEvent(Name = "magix.forms.controls.uploader")]
 		public void magix_forms_controls_button(object sender, ActiveEventArgs e)
@@ -84,9 +86,33 @@ namespace Magix.forms
 			e.Params["_ctrl"].Value = ret;
 		}
 
+		/**
+		 * has more data
+		 */
+		[ActiveEvent(Name = "magix.forms.has-more-data")]
+		protected void magix_forms_has_more_data(object sender, ActiveEventArgs e)
+		{
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			{
+				e.Params["event:magix.forms.has-more-data"].Value = null;
+				e.Params["id"].Value = "control";
+				e.Params["form-id"].Value = "webpages";
+				e.Params["value"].Value = true;
+				e.Params["inspect"].Value = @"returns true in [value] if there is more data in the given 
+[id] web control, in the [form-id] form, from [value].&nbsp;&nbsp;not thread safe";
+				return;
+			}
+
+			Uploader ctrl = FindControl<Uploader>(e.Params);
+
+			if (ctrl != null)
+			{
+				e.Params["value"].Value = ctrl.SizeOfBatch > ctrl.CurrentNo + 1;
+			}
+		}
 		protected override void Inspect (Node node)
 		{
-			node["event:magix.forms.create-form"].Value = null;
+			node["event:magix.forms.create-web-part"].Value = null;
 			node["inspect"].Value = @"creates a uploader input type of web control.&nbsp;&nbsp;
 [onuploaded] is the event handler";
 			node["container"].Value = "content5";
