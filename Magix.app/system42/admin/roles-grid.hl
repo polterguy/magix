@@ -55,10 +55,10 @@ for-each=>[magix.data.load][objects]
     value=>[.][name].Value
   set=>[/][_dt][panel][controls][label][text].Value
     value=>[.][name].Value
-  add=>[/][magix.forms.create-form][controls][panel:1][controls]
+  add=>[/][magix.forms.create-web-part][controls][panel:1][controls]
     value=>[/][_dt][0]
 
-magix.forms.create-form
+magix.forms.create-web-part
   form-id=>roles-grid
   container=>content2
   css=>span-19 last

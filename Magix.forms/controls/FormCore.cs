@@ -23,7 +23,7 @@ namespace Magix.forms
 		{
 			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
-				e.Params["event:magix.forms.create-form"].Value = null;
+				e.Params["event:magix.forms.create-web-part"].Value = null;
 				e.Params ["_no-embed"].Value = true;
 				e.Params["inspect"].Value = @"creates a form from the given value of the node, 
 the [id] node's value serves as unique id if more than

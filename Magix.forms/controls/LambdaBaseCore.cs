@@ -24,7 +24,7 @@ namespace Magix.forms
 		{
 			if (ShouldInspect(e.Params))
 			{
-				e.Params["event:magix.forms.create-form"].Value = null;
+				e.Params["event:magix.forms.create-web-part"].Value = null;
 				e.Params["inspect"].Value = @"creates a lambda type of web control.&nbsp;&nbsp;
 [oncreatecontrols] is the hyper lisp code executing when the 
 control is lately bound.&nbsp;&nbsp;the [oncreatecontrols] event is expected 

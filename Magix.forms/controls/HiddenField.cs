@@ -12,10 +12,12 @@ using Magix.UX.Widgets;
 namespace Magix.forms
 {
 	/**
+	 * hidden field
 	 */
 	public class HiddenFieldCore : BaseControlCore
 	{
 		/**
+		 * creates hidden field
 		 */
 		[ActiveEvent(Name = "magix.forms.controls.hidden")]
 		public void magix_forms_controls_hidden(object sender, ActiveEventArgs e)
@@ -38,9 +40,52 @@ namespace Magix.forms
 			e.Params["_ctrl"].Value = ret;
 		}
 
+		/**
+		 * sets value
+		 */
+		[ActiveEvent(Name = "magix.forms.set-value")]
+		public void magix_forms_set_value(object sender, ActiveEventArgs e)
+		{
+			if (ShouldInspect(e.Params))
+			{
+				e.Params["inspect"].Value = "sets the value property of the control";
+				return;
+			}
+
+			if (!e.Params.Contains("value"))
+				throw new ArgumentException("set-value needs [value]");
+
+			HiddenField ctrl = FindControl<HiddenField>(e.Params);
+
+			if (ctrl != null)
+			{
+				ctrl.Value = e.Params["value"].Get<string>();
+			}
+		}
+
+		/**
+		 * returns value
+		 */
+		[ActiveEvent(Name = "magix.forms.get-value")]
+		public void magix_forms_get_value(object sender, ActiveEventArgs e)
+		{
+			if (ShouldInspect(e.Params))
+			{
+				e.Params["inspect"].Value = "returns the value property of the control";
+				return;
+			}
+
+			HiddenField ctrl = FindControl<HiddenField>(e.Params);
+
+			if (ctrl != null)
+			{
+				e.Params["value"].Value = ctrl.Value;
+			}
+		}
+
 		protected override void Inspect (Node node)
 		{
-			node["event:magix.forms.create-form"].Value = null;
+			node["event:magix.forms.create-web-part"].Value = null;
 			node["inspect"].Value = @"creates a hidden field input type of web control.&nbsp;&nbsp;
 hidden fields are invisible, but can store any data as test in their [value] node";
 			node["container"].Value = "content5";

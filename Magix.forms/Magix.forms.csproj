@@ -56,6 +56,8 @@
     <Compile Include="controls\WysiwygCore.cs" />
     <Compile Include="controls\UploaderCore.cs" />
     <Compile Include="controls\LambdaBaseCore.cs" />
+    <Compile Include="WebPart.ascx.cs" />
+    <Compile Include="controls\EffectCore.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -71,6 +73,7 @@
   <ItemGroup>
     <EmbeddedResource Include="DynamicForm.ascx" />
     <EmbeddedResource Include="HtmlViewer.ascx" />
+    <EmbeddedResource Include="WebPart.ascx" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="controls\" />

@@ -17,11 +17,11 @@ if=>[$][filter].Value
   set=>[magix.data.count][prototype][body].Value
     value=>@"%{0}%"
       pr0=>[$][filter].Value
-  set=>[magix.forms.create-form][controls][panel:1][controls][panel][controls][text-box][text].Value
+  set=>[magix.forms.create-web-part][controls][panel:1][controls][panel][controls][text-box][text].Value
     value=>[$][filter].Value
-  set=>[magix.forms.create-form][controls][panel:1][controls][link-button:0][onclick][execute-file][filter].Value
+  set=>[magix.forms.create-web-part][controls][panel:1][controls][link-button:0][onclick][execute-file][filter].Value
     value=>[$][filter].Value
-  set=>[magix.forms.create-form][controls][panel:1][controls][link-button:1][onclick][execute-file][filter].Value
+  set=>[magix.forms.create-web-part][controls][panel:1][controls][link-button:1][onclick][execute-file][filter].Value
     value=>[$][filter].Value
 
 magix.data.load
@@ -67,7 +67,7 @@ for-each=>[magix.data.load][objects]
       value=>@"{0} <pre>{1}</pre>"
         pr0=>[/][_dt][panel][controls][label:2][text].Value
         pr1=>[@][magix.code.node-2-code][code].Value
-  add=>[/][magix.forms.create-form][controls][panel][controls]
+  add=>[/][magix.forms.create-web-part][controls][panel][controls]
     value=>[/][_dt][panel]
 
 magix.data.count
@@ -75,40 +75,40 @@ magix.data.count
     type=>magix.log.item
 
 if=>[magix.data.count][count].Value>[magix.data.load][end].Value
-  set=>[magix.forms.create-form][controls][panel:1][controls][label][text].Value
+  set=>[magix.forms.create-web-part][controls][panel:1][controls][label][text].Value
     value=>@"{0}/{1} of {2}"
       pr0=>[magix.data.load][start].Value+1
       pr1=>[magix.data.load][end].Value
       pr2=>[magix.data.count][count].Value
 else
-  set=>[magix.forms.create-form][controls][panel:1][controls][label][text].Value
+  set=>[magix.forms.create-web-part][controls][panel:1][controls][label][text].Value
     value=>@"{0}/{1} of {2}"
       pr0=>[magix.data.load][start].Value+1
       pr1=>[magix.data.count][count].Value
       pr2=>[magix.data.count][count].Value
 
 if=>[magix.data.load][start].Value==0
-  set=>[magix.forms.create-form][controls][panel:1][controls][link-button:0][enabled].Value
+  set=>[magix.forms.create-web-part][controls][panel:1][controls][link-button:0][enabled].Value
     value=>false
 else
-  set=>[magix.forms.create-form][controls][panel:1][controls][link-button:0][enabled].Value
+  set=>[magix.forms.create-web-part][controls][panel:1][controls][link-button:0][enabled].Value
     value=>true
-  set=>[magix.forms.create-form][controls][panel:1][controls][link-button:0][onclick][execute-file][start].Value
+  set=>[magix.forms.create-web-part][controls][panel:1][controls][link-button:0][onclick][execute-file][start].Value
     value=>[magix.data.load][start].Value-10
-  set=>[magix.forms.create-form][controls][panel:1][controls][link-button:0][onclick][execute-file][end].Value
+  set=>[magix.forms.create-web-part][controls][panel:1][controls][link-button:0][onclick][execute-file][end].Value
     value=>[magix.data.load][end].Value-10
 if=>[magix.data.load][end].Value>=[magix.data.count][count].Value
-  set=>[magix.forms.create-form][controls][panel:1][controls][link-button:1][enabled].Value
+  set=>[magix.forms.create-web-part][controls][panel:1][controls][link-button:1][enabled].Value
     value=>false
 else
-  set=>[magix.forms.create-form][controls][panel:1][controls][link-button:1][enabled].Value
+  set=>[magix.forms.create-web-part][controls][panel:1][controls][link-button:1][enabled].Value
     value=>true
-  set=>[magix.forms.create-form][controls][panel:1][controls][link-button:1][onclick][execute-file][start].Value
+  set=>[magix.forms.create-web-part][controls][panel:1][controls][link-button:1][onclick][execute-file][start].Value
     value=>[magix.data.load][start].Value+10
-  set=>[magix.forms.create-form][controls][panel:1][controls][link-button:1][onclick][execute-file][end].Value
+  set=>[magix.forms.create-web-part][controls][panel:1][controls][link-button:1][onclick][execute-file][end].Value
     value=>[magix.data.load][end].Value+10
 
-magix.forms.create-form
+magix.forms.create-web-part
   form-id=>server-log
   container=>content2
   css=>span-19 last

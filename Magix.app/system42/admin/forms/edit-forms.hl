@@ -16,7 +16,7 @@ for-each=>[magix.data.load][objects]
     value=>[.].Name
   set=>[/][_dt][0].Value
     value=>[.][name].Value
-  add=>[/][magix.forms.create-form][controls][select][items]
+  add=>[/][magix.forms.create-web-part][controls][select][items]
     value=>[/][_dt][0]
 
 magix.viewport.load-module
@@ -67,10 +67,10 @@ for-each=>[magix.forms.list-widget-types][types]
       value=>[/][_onclick]
     set=>[/][_buffer][button][_onclick].Name
       value=>onclick
-    add=>[/][magix.forms.create-form][controls][panel:1][controls]
+    add=>[/][magix.forms.create-web-part][controls][panel:1][controls]
       value=>[/][_buffer][0]
 
-magix.forms.create-form
+magix.forms.create-web-part
   form-id=>edit-forms
   container=>content1
   css=>span-19 last
@@ -120,9 +120,9 @@ magix.forms.create-form
         for-each=>[@][_data][widget][properties]
           set=>[/][_label][text].Value
             value=>[.].Name
-          add=>[@][..][magix.forms.create-form][controls][panel][controls]
+          add=>[@][..][magix.forms.create-web-part][controls][panel][controls]
             value=>[/][_label]
-          set=>[@][..][magix.forms.create-form][controls][panel][controls][_label].Name
+          set=>[@][..][magix.forms.create-web-part][controls][panel][controls][_label].Name
             value=>label
           if=>[.].Count>0
             if=>[/][get-selected-widget][value][widget][properties][[.].Name].Count>0
@@ -137,9 +137,9 @@ magix.forms.create-form
               value=>[.].Name
             set=>[/][_link-button][text].Value
               value=>[.].Name
-            add=>[@][..][..][magix.forms.create-form][controls][panel][controls]
+            add=>[@][..][..][magix.forms.create-web-part][controls][panel][controls]
               value=>[/][_link-button]
-            set=>[@][..][..][magix.forms.create-form][controls][panel][controls][_link-button].Name
+            set=>[@][..][..][magix.forms.create-web-part][controls][panel][controls][_link-button].Name
               value=>link-button
           else-if=>[.].Value==hyper lisp code
             if=>[/][get-selected-widget][value][widget][properties][[.].Name].Count>0
@@ -154,9 +154,9 @@ magix.forms.create-form
               value=>[.].Name
             set=>[/][_link-button][onclick][execute-file][property].Value
               value=>[.].Name
-            add=>[@][..][..][magix.forms.create-form][controls][panel][controls]
+            add=>[@][..][..][magix.forms.create-web-part][controls][panel][controls]
               value=>[/][_link-button]
-            set=>[@][..][..][magix.forms.create-form][controls][panel][controls][_link-button].Name
+            set=>[@][..][..][magix.forms.create-web-part][controls][panel][controls][_link-button].Name
               value=>link-button
           else
             set=>[/][_text-box].Value
@@ -170,12 +170,12 @@ magix.forms.create-form
             if=>[/][get-selected-widget][value][widget][properties][[/][_text-box].Value].Value
               set=>[/][_text-box][text].Value
                 value=>[/][get-selected-widget][value][widget][properties][[/][_text-box].Value].Value
-            add=>[@][..][..][magix.forms.create-form][controls][panel][controls]
+            add=>[@][..][..][magix.forms.create-web-part][controls][panel][controls]
               value=>[/][_text-box]
-            set=>[@][..][..][magix.forms.create-form][controls][panel][controls][_text-box].Name
+            set=>[@][..][..][magix.forms.create-web-part][controls][panel][controls][_text-box].Name
               value=>text-box
         _data
-        magix.forms.create-form
+        magix.forms.create-web-part
           form-id=>edit-properties
           container=>content3
           css=>span-24 bottom-1
@@ -513,11 +513,11 @@ magix.forms.create-form
           id=>name
         add=>[magix.forms.show-form][form]
           value=>[get-form][form]
-        magix.forms.create-web-page
+        magix.forms.load-mml-web-part
           container=>content6
           css=>span-24
           form-id=>myPage
-          html=>@"
+          mml=>@"
 <h2 class=""span-24 top-1"">preview of form</h2>
 <p>below is your form in executable style, meaning
 all events and everything is hooked up and ready to be tested<br/>

@@ -7,11 +7,11 @@ markup previewed in another container"
 
 magix.viewport.clear-controls
   container=>content2
-magix.forms.create-web-page
+magix.forms.load-mml-web-part
   container=>content1
   form-id=>mmleditor
   css=>span-19 last
-  html=>@"
+  mml=>@"
 {{
 text-area=>markup
   css=>span-19 min-height-13
@@ -23,9 +23,9 @@ button=>preview
     magix.forms.get-value
       form-id=>mmleditor
       id=>markup
-    set=>[magix.forms.create-web-page][html].Value
+    set=>[magix.forms.load-mml-web-part][html].Value
       value=>[magix.forms.get-value][value].Value
-    magix.forms.create-web-page
+    magix.forms.load-mml-web-part
       container=>content2
       form-id=>wyc
       css=>span-24

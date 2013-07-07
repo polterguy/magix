@@ -8,11 +8,13 @@ an admin role, the desktop will be loaded, or the if the user is
 not an admin, then the run-page.hl script will be executed"
 
 
-magix.forms.create-web-page
+magix.forms.load-mml-web-part
   file=>system42/public/index-header.mml
   container=>header
   form-id=>header
   css=>span-24
+
+
 
 execute-file=>system42/misc/settings-initialize.hl
 
@@ -25,12 +27,12 @@ else
   magix.web.get-session=>magix.core.user
   if=>[@][magix.web.get-session][value][roles][admin]
     if=>[magix.web.get:1][value]
-      magix.forms.create-web-page
+      magix.forms.load-mml-web-part
         file=>system42/admin/desktop/menu.mml
         container=>menu
         form-id=>admin-menu
         css=>span-5
-      magix.forms.create-web-page
+      magix.forms.load-mml-web-part
         file=>system42/admin/desktop/desktop.mml
         container=>content1
         form-id=>desktop-admin

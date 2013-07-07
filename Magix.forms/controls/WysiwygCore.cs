@@ -12,11 +12,12 @@ using Magix.UX.Widgets;
 namespace Magix.forms
 {
 	/**
-	 * contains the wysiwyg control
+	 * wysiwyg control
 	 */
 	public class WysiwygCore : BaseWebControlCore
 	{
 		/**
+		 * creates wysiwyg control
 		 */
 		[ActiveEvent(Name = "magix.forms.controls.wysiwyg")]
 		public void magix_forms_controls_wysiwyg(object sender, ActiveEventArgs e)
@@ -108,9 +109,52 @@ namespace Magix.forms
 			e.Params["_ctrl"].Value = ret;
 		}
 
+		/**
+		 * sets text value
+		 */
+		[ActiveEvent(Name = "magix.forms.set-value")]
+		public void magix_forms_set_value(object sender, ActiveEventArgs e)
+		{
+			if (ShouldInspect(e.Params))
+			{
+				e.Params["inspect"].Value = "sets the value property of the control";
+				return;
+			}
+
+			if (!e.Params.Contains("value"))
+				throw new ArgumentException("set-value needs [value]");
+
+			Wysiwyg ctrl = FindControl<Wysiwyg>(e.Params);
+
+			if (ctrl != null)
+			{
+				ctrl.Text = e.Params["value"].Get<string>();
+			}
+		}
+
+		/**
+		 * returns value
+		 */
+		[ActiveEvent(Name = "magix.forms.get-value")]
+		public void magix_forms_get_value(object sender, ActiveEventArgs e)
+		{
+			if (ShouldInspect(e.Params))
+			{
+				e.Params["inspect"].Value = "returns the value property of the control";
+				return;
+			}
+
+			Wysiwyg ctrl = FindControl<Wysiwyg>(e.Params);
+
+			if (ctrl != null)
+			{
+				e.Params["value"].Value = ctrl.Text;
+			}
+		}
+
 		protected override void Inspect (Node node)
 		{
-			node["event:magix.forms.create-form"].Value = null;
+			node["event:magix.forms.create-web-part"].Value = null;
 			node["inspect"].Value = @"creates a wysiwyg input type of web control.&nbsp;&nbsp;
 [text] is the visible text.&nbsp;&nbso;not thread safe";
 			node["container"].Value = "content5";

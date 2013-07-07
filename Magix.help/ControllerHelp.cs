@@ -87,7 +87,7 @@ button=>next
 </div>
 ";
 			RaiseActiveEvent(
-				"magix.forms.create-web-page",
+				"magix.forms.load-mml-web-part",
 				tmp);
 
 			tmp = new Node();
@@ -102,7 +102,7 @@ button=>next
 			}
 
 			RaiseActiveEvent(
-				"magix.forms.create-web-page",
+				"magix.forms.load-mml-web-part",
 				tmp);
 
 			if (Pages.Count > 0)

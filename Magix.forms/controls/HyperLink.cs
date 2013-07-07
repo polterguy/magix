@@ -12,10 +12,12 @@ using Magix.UX.Widgets;
 namespace Magix.forms
 {
 	/**
+	 * hyper link
 	 */
 	public class HyperLinkCore : BaseWebControlCore
 	{
 		/**
+		 * create hyper link
 		 */
 		[ActiveEvent(Name = "magix.forms.controls.hyperlink")]
 		public void magix_forms_controls_hyperlink(object sender, ActiveEventArgs e)
@@ -54,9 +56,52 @@ namespace Magix.forms
 			e.Params["_ctrl"].Value = ret;
 		}
 
+		/**
+		 * sets value
+		 */
+		[ActiveEvent(Name = "magix.forms.set-value")]
+		public void magix_forms_set_value(object sender, ActiveEventArgs e)
+		{
+			if (ShouldInspect(e.Params))
+			{
+				e.Params["inspect"].Value = "sets the value property of the control";
+				return;
+			}
+
+			if (!e.Params.Contains("value"))
+				throw new ArgumentException("set-value needs [value]");
+
+			HyperLink ctrl = FindControl<HyperLink>(e.Params);
+
+			if (ctrl != null)
+			{
+				ctrl.Text = e.Params["value"].Get<string>();
+			}
+		}
+
+		/**
+		 * returns value
+		 */
+		[ActiveEvent(Name = "magix.forms.get-value")]
+		public void magix_forms_get_value(object sender, ActiveEventArgs e)
+		{
+			if (ShouldInspect(e.Params))
+			{
+				e.Params["inspect"].Value = "returns the value property of the control";
+				return;
+			}
+
+			HyperLink ctrl = FindControl<HyperLink>(e.Params);
+
+			if (ctrl != null)
+			{
+				e.Params["value"].Value = ctrl.Text;
+			}
+		}
+
 		protected override void Inspect (Node node)
 		{
-			node["event:magix.forms.create-form"].Value = null;
+			node["event:magix.forms.create-web-part"].Value = null;
 			node["inspect"].Value = @"creates a hyperlink input type of web control.&nbsp;&nbsp;
 hyperlinks points to other urls, either locally, or externally.&nbsp;&nbsp;
 use [text] to change readable text, [url] to set the url of the document to link to, 

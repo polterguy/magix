@@ -55,7 +55,7 @@ for-each=>[Data][events]
 set=>[cf][controls][panel2].Name
   value=>panel
 set=>[cf].Name
-  value=>magix.forms.create-form
+  value=>magix.forms.create-web-part
 magix.viewport.clear-controls
   container=>content2
 cf

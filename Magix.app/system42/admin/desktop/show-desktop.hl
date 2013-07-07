@@ -6,7 +6,6 @@ namespace.&nbsp;&nbsp;see the file events-create-desktop-shortcuts.hl
 in the startup-scripts folder to see an example of how you can extend
 the desktop yourself"
 
-
 magix.admin.get-active-events
   begins-with=>magix.admin.desktop-shortcuts.
 
@@ -58,9 +57,9 @@ for-each=>[_categories]
           value=>[/][_btn]
         set=>[/][_pnl][controls][panel][controls][_btn].Name
           value=>link-button
-  add=>[/][magix.forms.create-form][controls]
+  add=>[/][magix.forms.create-web-part][controls]
     value=>[/][_pnl]
-  set=>[/][magix.forms.create-form][controls][_pnl].Name
+  set=>[/][magix.forms.create-web-part][controls][_pnl].Name
     value=>panel
 
 _pnl
@@ -72,16 +71,10 @@ _pnl
     panel
       controls
 
-magix.forms.create-form
+magix.forms.create-web-part
   form-id=>desktop-surface
   container=>content2
   css=>span-19 last bottom-5 desktop-surface
-
-magix.forms.effect
-  form-id=>desktop-admin
-  id=>content1
-  type=>fade-out
-  time=>500
 
 magix.forms.effect
   form-id=>desktop-surface

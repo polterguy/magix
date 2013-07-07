@@ -6,6 +6,7 @@
 
 using System;
 using System.IO;
+using System.Web.UI;
 using Magix.Core;
 using Magix.UX.Widgets;
 using Magix.UX.Widgets.Core;
@@ -17,6 +18,121 @@ namespace Magix.forms
 	 */
 	public abstract class BaseWebControlCore : BaseControlCore
 	{
+		/**
+		 * sets css classes
+		 */
+		[ActiveEvent(Name = "magix.forms.set-class")]
+		protected void magix_forms_set_class(object sender, ActiveEventArgs e)
+		{
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			{
+				e.Params["event:magix.forms.set-class"].Value = null;
+				e.Params["id"].Value = "control";
+				e.Params["form-id"].Value = "webpages";
+				e.Params["value"].Value = "some-css-class";
+				e.Params["inspect"].Value = @"sets the css class of the given 
+[id] web control, in the [form-id] form, from [value].&nbsp;&nbsp;not thread safe";
+				return;
+			}
+
+			BaseWebControl ctrl = FindControl<BaseWebControl>(e.Params);
+
+			if (ctrl != null)
+			{
+				string className = "";
+				if (e.Params.Contains("value"))
+					className = e.Params["value"].Get<string>();
+
+				ctrl.CssClass = className;
+			}
+		}
+
+		/**
+		 * adds css class
+		 */
+		[ActiveEvent(Name = "magix.forms.add-css")]
+		protected void magix_forms_add_css(object sender, ActiveEventArgs e)
+		{
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			{
+				e.Params["event:magix.forms.add-css"].Value = null;
+				e.Params["id"].Value = "control";
+				e.Params["form-id"].Value = "webpages";
+				e.Params["css"].Value = "css-class-to-add";
+				e.Params["inspect"].Value = @"adds the given [css] to the css class name of the 
+[id] control.&nbsp;&nbsp;not thread safe";
+				return;
+			}
+
+			if (!e.Params.Contains ("css"))
+				throw new ArgumentException("Missing [css] in add-css");
+
+			BaseWebControl ctrl = FindControl<BaseWebControl>(e.Params);
+
+			if (ctrl != null)
+			{
+				if (ctrl.CssClass.IndexOf(e.Params["css"].Get<string>()) == -1)
+				{
+					ctrl.CssClass = ctrl.CssClass.Trim() + " " + e.Params["css"].Get<string>().Trim();
+				}
+			}
+		}
+
+		/**
+		 * removes css class
+		 */
+		[ActiveEvent(Name = "magix.forms.remove-css")]
+		protected void magix_forms_remove_css(object sender, ActiveEventArgs e)
+		{
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			{
+				e.Params["event:magix.forms.remove-css"].Value = null;
+				e.Params["id"].Value = "control";
+				e.Params["form-id"].Value = "webpages";
+				e.Params["css"].Value = "css-class-to-remove";
+				e.Params["inspect"].Value = @"removes the given [css] from the css class property of the 
+[id] control.&nbsp;&nbsp;not thread safe";
+				return;
+			}
+
+			if (!e.Params.Contains ("css"))
+				throw new ArgumentException("Missing [css] in remove-css");
+
+			BaseWebControl ctrl = FindControl<BaseWebControl>(e.Params);
+
+			if (ctrl != null)
+			{
+				if (ctrl.CssClass.IndexOf(e.Params["css"].Get<string>()) != -1)
+				{
+					ctrl.CssClass = ctrl.CssClass.Replace(e.Params["css"].Get<string>().Trim(), "").Replace("  ", " ").Trim();
+				}
+			}
+		}
+
+		/**
+		 * sets focus to a specific mux web control
+		 */
+		[ActiveEvent(Name = "magix.forms.set-focus")]
+		protected void magix_forms_set_focus(object sender, ActiveEventArgs e)
+		{
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			{
+				e.Params["event:magix.forms.set-focus"].Value = null;
+				e.Params["id"].Value = "control";
+				e.Params["form-id"].Value = "webpages";
+				e.Params["inspect"].Value = @"sets focus to the specific 
+[id] web control, in the [form-id] form.&nbsp;&nbsp;not thread safe";
+				return;
+			}
+
+			BaseWebControl ctrl = FindControl<BaseWebControl>(e.Params);
+
+			if (ctrl != null)
+			{
+					ctrl.Focus();
+			}
+		}
+
 		/**
 		 * fills out the stuff from basewebcontrol
 		 */

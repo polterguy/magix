@@ -12,10 +12,12 @@ using Magix.UX.Widgets;
 namespace Magix.forms
 {
 	/**
+	 * radio button
 	 */
 	public class RadioButtonCore : BaseWebControlCore
 	{
 		/**
+		 * creates radio button control
 		 */
 		[ActiveEvent(Name = "magix.forms.controls.radio")]
 		public void magix_forms_controls_radio(object sender, ActiveEventArgs e)
@@ -62,9 +64,81 @@ namespace Magix.forms
 			e.Params["_ctrl"].Value = ret;
 		}
 
+		/**
+		 * sets checked value
+		 */
+		[ActiveEvent(Name = "magix.forms.set-value")]
+		public void magix_forms_set_value(object sender, ActiveEventArgs e)
+		{
+			if (ShouldInspect(e.Params))
+			{
+				e.Params["inspect"].Value = "sets the value property of the control";
+				return;
+			}
+
+			if (!e.Params.Contains("value"))
+				throw new ArgumentException("set-value needs [value]");
+
+			RadioButton ctrl = FindControl<RadioButton>(e.Params);
+
+			if (ctrl != null)
+			{
+				ctrl.Checked = e.Params["value"].Get<bool>();
+			}
+		}
+
+		/**
+		 * returns value
+		 */
+		[ActiveEvent(Name = "magix.forms.get-value")]
+		public void magix_forms_get_value(object sender, ActiveEventArgs e)
+		{
+			if (ShouldInspect(e.Params))
+			{
+				e.Params["inspect"].Value = "returns the value property of the control";
+				return;
+			}
+
+			RadioButton ctrl = FindControl<RadioButton>(e.Params);
+
+			if (ctrl != null)
+			{
+				e.Params["value"].Value = ctrl.Checked;
+			}
+		}
+
+		/**
+		 * set-enabled
+		 */
+		[ActiveEvent(Name = "magix.forms.set-enabled")]
+		protected void magix_forms_set_enabled(object sender, ActiveEventArgs e)
+		{
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			{
+				e.Params["event:magix.forms.set-enabled"].Value = null;
+				e.Params["id"].Value = "control";
+				e.Params["form-id"].Value = "webpages";
+				e.Params["value"].Value = true;
+				e.Params["inspect"].Value = @"sets the enabled property of the given 
+[id] web control, in the [form-id] form, from [value].&nbsp;&nbsp;not thread safe";
+				return;
+			}
+
+			RadioButton ctrl = FindControl<RadioButton>(e.Params);
+
+			if (ctrl != null)
+			{
+				bool enabled = false;
+				if (e.Params.Contains("value"))
+					enabled = e.Params["value"].Get<bool>();
+
+				ctrl.Enabled = enabled;
+			}
+		}
+
 		protected override void Inspect (Node node)
 		{
-			node["event:magix.forms.create-form"].Value = null;
+			node["event:magix.forms.create-web-part"].Value = null;
 			node["inspect"].Value = @"creates a radio input type of web control.&nbsp;&nbsp;
 several radio controls can be combined together to form a multiple
 choice type of input value in combination.&nbsp;&nbsp; to create a group

@@ -11,16 +11,16 @@ magix.data.load
   prototype
     type=>magix.core.user
 
-set=>[magix.forms.create-form][controls][label][text].Value
+set=>[magix.forms.create-web-part][controls][label][text].Value
   value=>[magix.data.load][objects][0][username].Value
 
-set=>[magix.forms.create-form][controls][panel][controls][text-box:0][text].Value
+set=>[magix.forms.create-web-part][controls][panel][controls][text-box:0][text].Value
   value=>[magix.data.load][objects][0][name].Value
-set=>[magix.forms.create-form][controls][panel][controls][text-box:1][text].Value
+set=>[magix.forms.create-web-part][controls][panel][controls][text-box:1][text].Value
   value=>[magix.data.load][objects][0][pwd].Value
-set=>[magix.forms.create-form][controls][panel][controls][text-box:0][ontextchanged][magix.data.load][prototype][username].Value
+set=>[magix.forms.create-web-part][controls][panel][controls][text-box:0][ontextchanged][magix.data.load][prototype][username].Value
   value=>[magix.data.load][objects][0][username].Value
-set=>[magix.forms.create-form][controls][panel][controls][text-box:1][ontextchanged][magix.data.load][prototype][username].Value
+set=>[magix.forms.create-web-part][controls][panel][controls][text-box:1][ontextchanged][magix.data.load][prototype][username].Value
   value=>[magix.data.load][objects][0][username].Value
 set=>[_dt2][panel][controls][link-button][onclick][magix.data.load][prototype][username].Value
   value=>[magix.data.load][objects][0][username].Value
@@ -39,7 +39,7 @@ for-each=>[magix.data.load:1][objects]
     value=>[.][name].Value
   set=>[/][_dt][0].Value
     value=>[.][name].Value
-  add=>[/][magix.forms.create-form][controls][panel:1][controls][select][items]
+  add=>[/][magix.forms.create-web-part][controls][panel:1][controls][select][items]
     value=>[/][_dt][0]
 
 _dt2
@@ -79,15 +79,15 @@ for-each=>[magix.data.load:0][objects][0][roles]
     value=>[.].Name
   set=>[/][_dt2][panel][controls][link-button][onclick][_role].Value
     value=>[.].Name
-  add=>[/][magix.forms.create-form][controls][panel:1][controls]
+  add=>[/][magix.forms.create-web-part][controls][panel:1][controls]
     value=>[/][_dt2][panel]
 
-set=>[/][magix.forms.create-form][controls][panel:1][controls][select][onselectedindexchanged][magix.data.load][prototype][username].Value
+set=>[/][magix.forms.create-web-part][controls][panel:1][controls][select][onselectedindexchanged][magix.data.load][prototype][username].Value
   value=>[$][username].Value
-set=>[/][magix.forms.create-form][controls][panel:1][controls][select][onselectedindexchanged][else][execute-file][username].Value
+set=>[/][magix.forms.create-web-part][controls][panel:1][controls][select][onselectedindexchanged][else][execute-file][username].Value
   value=>[$][username].Value
 
-magix.forms.create-form
+magix.forms.create-web-part
   form-id=>edit-user
   container=>content3
   css=>span-22 top-3 boxed air-padding bottom-2

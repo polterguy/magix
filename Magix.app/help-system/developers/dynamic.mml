@@ -3,7 +3,7 @@
 <p>magix has dynamic features, you can create forms and code for execution dynamically</p>
 
 <pre>event:magix.execute
-magix.forms.create-form
+magix.forms.create-web-part
   form-id=>my-form
   container=>modal
   controls

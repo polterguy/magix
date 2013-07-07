@@ -22,25 +22,25 @@ magix.data.count
   prototype
     type=>magix.core.user
 if=>[magix.data.load][start].Value==0
-  set=>[magix.forms.create-form][controls][panel:2][controls][link-button:0][enabled].Value
+  set=>[magix.forms.create-web-part][controls][panel:2][controls][link-button:0][enabled].Value
     value=>false
 else
-  set=>[magix.forms.create-form][controls][panel:2][controls][link-button:0][onclick][execute-file][start].Value
+  set=>[magix.forms.create-web-part][controls][panel:2][controls][link-button:0][onclick][execute-file][start].Value
     value=>[magix.data.load][start].Value-10
-  set=>[magix.forms.create-form][controls][panel:2][controls][link-button:0][onclick][execute-file][end].Value
+  set=>[magix.forms.create-web-part][controls][panel:2][controls][link-button:0][onclick][execute-file][end].Value
     value=>[magix.data.load][end].Value-10
 if=>[magix.data.load][end].Value>=[magix.data.count][count].Value
-  set=>[magix.forms.create-form][controls][panel:2][controls][link-button:1][enabled].Value
+  set=>[magix.forms.create-web-part][controls][panel:2][controls][link-button:1][enabled].Value
     value=>false
 else
-  set=>[magix.forms.create-form][controls][panel:2][controls][link-button:1][onclick][execute-file][start].Value
+  set=>[magix.forms.create-web-part][controls][panel:2][controls][link-button:1][onclick][execute-file][start].Value
     value=>[magix.data.load][start].Value+10
-  set=>[magix.forms.create-form][controls][panel:2][controls][link-button:1][onclick][execute-file][end].Value
+  set=>[magix.forms.create-web-part][controls][panel:2][controls][link-button:1][onclick][execute-file][end].Value
     value=>[magix.data.load][end].Value+10
 if=>[magix.data.load][end].Value>[magix.data.count][count].Value
   set=>[magix.data.load][end].Value
     value=>[magix.data.count][count].Value
-set=>[magix.forms.create-form][controls][panel:2][controls][label][text].Value
+set=>[magix.forms.create-web-part][controls][panel:2][controls][label][text].Value
   value=>@"{0} - {1} of {2}"
     pr0=>[magix.data.load][start].Value+1
     pr1=>[magix.data.load][end].Value
@@ -92,10 +92,10 @@ for-each=>[magix.data.load][objects]
     value=>[.][username].Value
   set=>[/][_dt][panel][controls][link-button:1][onclick][magix.viewport.confirm][code][magix.log.append][body][username].Value
     value=>[.][username].Value
-  add=>[/][magix.forms.create-form][controls][panel:1][controls]
+  add=>[/][magix.forms.create-web-part][controls][panel:1][controls]
     value=>[/][_dt][0]
 
-magix.forms.create-form
+magix.forms.create-web-part
   form-id=>users-grid
   container=>content1
   css=>span-19 last
