@@ -33,14 +33,10 @@
     <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Website.ascx.cs" />
     <Compile Include="Gutenberg.ascx.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <EmbeddedResource Include="Website.ascx">
-      <LogicalName>Magix.viewports.Website.ascx</LogicalName>
-    </EmbeddedResource>
     <EmbeddedResource Include="Gutenberg.ascx">
       <LogicalName>Magix.viewports.Gutenberg.ascx</LogicalName>
     </EmbeddedResource>
