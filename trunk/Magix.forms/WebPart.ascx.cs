@@ -94,6 +94,7 @@ namespace Magix.forms
 				if (e.Params.Contains("inspect"))
 				{
 					e.Params["inspect"].Value = "dynamically created active event attached to form object " + FormID;
+					e.Params.AddRange(Methods[e.Name].Clone());
 					return;
 				}
 
@@ -123,7 +124,11 @@ namespace Magix.forms
 			if (e.Params.Contains("inspect"))
 			{
 				e.Params["inspect"].Value = @"returns the given control as [_ctrl] to caller 
-if [form-id] matches and control with given [id] is found";
+if [form-id] matches and control with given [id] is found.&nbsp;&nbsp;
+[form-id] is conditional, and if not given, will return first control that matches [id], 
+which might be dangerous if you have multiple forms on page.&nbsp;&nbsp;
+no sample code, since not invokable through hyper lisp in a sane way.&nbsp;&nbsp;
+not thread safe";
 				return;
 			}
 

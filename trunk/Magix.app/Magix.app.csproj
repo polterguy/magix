@@ -313,5 +313,6 @@
     <None Include="system42\startup-scripts\create-default-roles.hl" />
     <None Include="system42\startup-scripts\test-session.hl" />
     <None Include="system42\startup-scripts\test-viewstate.hl" />
+    <None Include="system42\startup-scripts\test-web-parts.hl" />
   </ItemGroup>
 </Project>
