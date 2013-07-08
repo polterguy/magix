@@ -43,63 +43,71 @@ of wrapping control.&nbsp;&nbsp;not thread safe";
 
 			Node form = new Node();
 
-			form["prototype"]["type"].Value = "magix.forms.form";
+			bool isFirst = node["_first"].Get<bool>();
 
-			form["prototype"]["name"].Value = node.Get<string>();
+			if (node.Contains("_buffer"))
+			{
+				form = node["_buffer"].Get<Node>();
+			}
+			else
+			{
+				form["prototype"]["type"].Value = "magix.forms.form";
 
-			RaiseActiveEvent(
-				"magix.data.load",
-				form);
+				form["prototype"]["name"].Value = node.Get<string>();
+
+				RaiseActiveEvent(
+					"magix.data.load",
+					form);
+			}
 
 			if (form.Contains("objects"))
 			{
-				Node retVal = new Node("widgets");
+				if (form["objects"][0]["form"]["surface"].Contains("controls"))
+				{
+					foreach (Node idx in form["objects"][0]["form"]["surface"]["controls"])
+					{
+						string typeName = idx["type"].Get<string>();
 
-				BuildTemplateControl(form["objects"][0]["form"]["surface"]["controls"], retVal);
+						Node nc = new Node();
 
-				e.Params["_ctrl"].AddRange(retVal);
+						Node idxCtrlCode = new Node(typeName.Replace("magix.forms.controls.", ""));
+
+						foreach (Node idxProp in idx["properties"])
+						{
+							idxCtrlCode[idxProp.Name].Value = idxProp.Value;
+							idxCtrlCode[idxProp.Name].ReplaceChildren(idxProp.Clone());
+						}
+
+						nc["_code"].Value = idxCtrlCode;
+						idxCtrlCode["_first"].Value = isFirst;
+
+						RaiseActiveEvent(
+							typeName,
+							nc);
+
+						idxCtrlCode["_first"].UnTie();
+
+						if (nc.Contains("_ctrl"))
+						{
+							if (nc["_ctrl"].Value != null)
+								e.Params["_ctrl"].Add(new Node("_ct", nc["_ctrl"].Value));
+							else
+							{
+								// multiple controls returned ...
+								foreach (Node idxCtrl in nc["_ctrl"])
+								{
+									e.Params["_ctrl"].Add(new Node("_ct", idxCtrl.Value));
+								}
+							}
+						}
+						else
+							throw new ArgumentException("unknown control type in your form control '" + typeName + "'");
+					}
+				}
 			}
+			node["_buffer"].Value = form.Clone();
 		}
 		
-		[ActiveEvent(Name = "magix.forms.show-form")]
-		public void magix_forms_show_form(object sender, ActiveEventArgs e)
-		{
-			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
-			{
-				e.Params["event:magix.forms.show-form"].Value = null;
-				e.Params["container"].Value = "content1";
-				e.Params["form-id"].Value = "unique-identification-of-your-form";
-				e.Params["form"].Value = "hyper lisp code";
-				e.Params["css"].Value = "css class(es) of your form";
-				e.Params["inspect"].Value = @"creates a dynamic form
-from database format, meaning the same format 
-being used to save and load from database, and 
-not the [create-form] syntax.&nbsp;&nbsp;use [container] 
-and [form-id] as you would in [create-form].&nbsp;&nbsp;
-not thread safe";
-			}
-
-			if (!e.Params.Contains("container"))
-				throw new ArgumentException("you need a [container] for your show-form");
-
-			if (!e.Params.Contains("form-id"))
-				throw new ArgumentException("you need a [form-id] for your show-form");
-
-			Node tmp = new Node();
-
-			tmp["form-id"].Value = e.Params["form-id"].Value;
-
-			if (e.Params.Contains("css"))
-				tmp["css"].Value = e.Params["css"].Value;
-
-			BuildTemplateControl(e.Params["form"]["form"]["controls"], tmp["controls"]);
-
- 			LoadModule(
-				"Magix.forms.DynamicForm", 
-				e.Params["container"].Get<string>(), 
-				tmp);
-		}
-
 		private void BuildTemplateControl(Node path, Node results)
 		{
 			foreach (Node idx in path)
