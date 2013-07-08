@@ -97,3 +97,9 @@ execute=>[_exe]
 
 * create unit tests for form objects and pages, which can be done by remotely invoking methods in loopback to a specific page url, and create event handlers in mml for events which are open
 
+* minimze return parameters from magix.public.get-public-events
+
+* make file system component become smarter
+
+* make spacing at bottom of body or something, see server log and scroll to bottom to understand why
+

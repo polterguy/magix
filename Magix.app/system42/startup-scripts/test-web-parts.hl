@@ -1,0 +1,115 @@
+
+
+inspect=>@"creates unit tests for testing if 
+web parts behaves correctly"
+
+
+event=>magix.test.create-mml-web-part
+
+  inspect=>@"verifies that creating a 
+mml web part behaves the way it should"
+
+  code
+    magix.forms.create-mml-web-part
+      container=>content6
+      form-id=>web-part-test
+      mml=>@"<p>example of html</p>{{
+text-box=>txt1
+  text=>howdy world
+}}"
+
+    magix.forms.get-value
+      form-id=>web-part-test
+      id=>txt1
+    magix.viewport.clear-controls
+      container=>content6
+    if=>[magix.forms.get-value][value].Value==howdy world
+      _success
+    else
+      throw=>didn't get expected value from text-box in magix.test.create-mml-web-part
+
+
+event=>magix.test.create-mml-web-part-no-mml-throws
+
+  inspect=>@"verifies that creating a 
+mml web part without [mml] throws an exception"
+
+  code
+    _success
+    try
+      code
+        magix.forms.create-mml-web-part
+          container=>content6
+          form-id=>web-part-test
+      catch
+        set=>[_success].Value
+          value=>true
+    if=>![_success].Value
+      throw=>create-mml-web-part didn't throw an exception when no [mml] was given
+
+
+event=>magix.test.create-mml-web-part-no-container-throws
+
+  inspect=>@"verifies that creating a 
+mml web part without [container] throws an exception"
+
+  code
+    _success
+    try
+      code
+        magix.forms.create-mml-web-part
+          mml=>@"mumbo jumbo"
+          form-id=>web-part-test
+      catch
+        set=>[_success].Value
+          value=>true
+    if=>![_success].Value
+      throw=>create-mml-web-part didn't throw an exception when no [container] was given
+
+
+event=>magix.test.create-mml-web-part-no-form-id-does-not-throws
+
+  inspect=>@"verifies that creating a 
+mml web part without [form-id] does not throw exception"
+
+  code
+    _success=>true
+    try
+      code
+        magix.forms.create-mml-web-part
+          mml=>@"mumbo jumbo"
+          container=>content6
+      catch
+        set=>[_success].Value
+    magix.viewport.clear-controls
+      container=>content6
+    if=>![_success].Value
+      throw=>create-mml-web-part didn't throw an exception when no [container] was given
+
+
+event=>magix.test.create-mml-web-part-with-lambda
+
+  inspect=>@"verifies that creating a 
+mml web part with a lambda behaves correctly"
+
+  code
+    magix.forms.create-mml-web-part
+      container=>content6
+      form-id=>test-form
+      mml=>@"<p>some html</p>{{
+lambda=>lmb
+  oncreatecontrols
+    _dt
+      text-box=>txt1
+        text=>something
+    add=>[$]
+      value=>[_dt][0]
+}}"
+    magix.forms.get-value
+      form-id=>test-form
+      id=>txt1
+    if=>[magix.forms.get-value][value].Value==something
+      _success
+    else
+      throw=>didn't get expected value from text-box in magix.test.create-mml-web-part-with-lambda
+
