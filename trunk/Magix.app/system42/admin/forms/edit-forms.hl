@@ -508,12 +508,6 @@ magix.forms.create-web-part
       text=>preview
       enabled=>false
       onclick
-        get-form
-        magix.forms.get-value
-          form-id=>edit-forms
-          id=>name
-        add=>[magix.forms.create-web-part][form]
-          value=>[get-form][form]
         magix.forms.create-mml-web-part
           container=>content6
           css=>span-24
@@ -563,6 +557,12 @@ link-button=>closepreview
       container=>content7
 }}
 </p>"
+        get-form
+        magix.forms.get-value
+          form-id=>edit-forms
+          id=>name
+        add=>[magix.forms.create-web-part]
+          value=>[get-form][controls]
         magix.forms.get-value
           id=>name
           form-id=>edit-forms

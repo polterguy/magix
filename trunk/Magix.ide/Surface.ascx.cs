@@ -835,7 +835,47 @@ back to caller as [form]";
 			if (e.Params.Contains("_ip"))
 				ip = e.Params["_ip"].Value as Node;
 
-			ip["form"].ReplaceChildren(DataSource.Clone());
+			Node retVal = new Node();
+
+			foreach (Node idx in DataSource["controls"])
+			{
+				BuildControl(retVal["_tmp"], idx);
+			}
+
+			ip["controls"].ReplaceChildren(retVal);
+		}
+
+		private void BuildControl(Node retVal, Node ctrlNode)
+		{
+			string type = ctrlNode["type"].Get<string>();
+			type = type.Substring(type.LastIndexOf(".") + 1);
+			retVal.Name = type;
+
+			foreach (Node idx in ctrlNode["properties"])
+			{
+				retVal[idx.Name].Value = idx.Value;
+				retVal[idx.Name].ReplaceChildren(idx.Clone());
+			}
+
+			foreach (Node idx in ctrlNode["controls"])
+			{
+				BuildControl(retVal["controls"]["_tmp"], idx);
+			}
 		}
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
