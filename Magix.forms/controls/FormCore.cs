@@ -41,16 +41,12 @@ of wrapping control.&nbsp;&nbsp;not thread safe";
 
 			Node node = e.Params["_code"].Value as Node;
 
-			Node form = new Node();
-
 			bool isFirst = node["_first"].Get<bool>();
 
-			if (node.Contains("_buffer"))
+			if (!node.Contains("_buffer"))
 			{
-				form = node["_buffer"].Get<Node>();
-			}
-			else
-			{
+				Node form = new Node();
+
 				form["prototype"]["type"].Value = "magix.forms.form";
 
 				form["prototype"]["name"].Value = node.Get<string>();
@@ -58,54 +54,60 @@ of wrapping control.&nbsp;&nbsp;not thread safe";
 				RaiseActiveEvent(
 					"magix.data.load",
 					form);
-			}
 
-			if (form.Contains("objects"))
-			{
-				if (form["objects"][0]["form"]["surface"].Contains("controls"))
+				Node buffer = new Node();
+
+				if (form.Contains("objects"))
 				{
-					foreach (Node idx in form["objects"][0]["form"]["surface"]["controls"])
+					e.Params["_ctrl"].Value = null;
+
+					if (form["objects"][0]["form"]["surface"].Contains("controls"))
 					{
-						string typeName = idx["type"].Get<string>();
-
-						Node nc = new Node();
-
-						Node idxCtrlCode = new Node(typeName.Replace("magix.forms.controls.", ""));
-
-						foreach (Node idxProp in idx["properties"])
+						foreach (Node idx in form["objects"][0]["form"]["surface"])
 						{
-							idxCtrlCode[idxProp.Name].Value = idxProp.Value;
-							idxCtrlCode[idxProp.Name].ReplaceChildren(idxProp.Clone());
+							BuildTemplateControl(idx, buffer);
 						}
-
-						nc["_code"].Value = idxCtrlCode;
-						idxCtrlCode["_first"].Value = isFirst;
-
-						RaiseActiveEvent(
-							typeName,
-							nc);
-
-						idxCtrlCode["_first"].UnTie();
-
-						if (nc.Contains("_ctrl"))
-						{
-							if (nc["_ctrl"].Value != null)
-								e.Params["_ctrl"].Add(new Node("_ct", nc["_ctrl"].Value));
-							else
-							{
-								// multiple controls returned ...
-								foreach (Node idxCtrl in nc["_ctrl"])
-								{
-									e.Params["_ctrl"].Add(new Node("_ct", idxCtrl.Value));
-								}
-							}
-						}
-						else
-							throw new ArgumentException("unknown control type in your form control '" + typeName + "'");
 					}
 				}
+				node["_buffer"].Value = buffer;
 			}
-			node["_buffer"].Value = form.Clone();
+
+			Node ctrlNode = node["_buffer"].Value as Node;
+
+			foreach (Node idx in ctrlNode)
+			{
+				// this is a control
+				string evtName = "magix.forms.controls." + idx.Name;
+
+				Node nodeCtrl = new Node(idx.Name);
+
+				nodeCtrl["_code"].Value = idx;
+				idx["_first"].Value = isFirst;
+
+				RaiseActiveEvent(
+					evtName,
+					nodeCtrl);
+
+				idx["_first"].UnTie();
+
+				if (nodeCtrl.Contains("_ctrl"))
+				{
+					if (nodeCtrl["_ctrl"].Value != null)
+						e.Params["_ctrl"].Add(new Node("_x", nodeCtrl["_ctrl"].Value));
+					else
+					{
+						// multiple controls returned ...
+						foreach (Node idxCtrl in nodeCtrl["_ctrl"])
+						{
+							e.Params["_ctrl"].Add(new Node("_x", idxCtrl.Value));
+						}
+					}
+				}
+				else
+				{
+					throw new ArgumentException("unknown control type in your template control '" + idx.Name + "'");
+				}
+			}
 		}
 		
 		private void BuildTemplateControl(Node path, Node results)
@@ -117,7 +119,7 @@ of wrapping control.&nbsp;&nbsp;not thread safe";
 
 				foreach (Node idxProp in idx["properties"])
 				{
-					if (idx.Name == "id")
+					if (idxProp.Name == "id")
 						continue;
 
 					ctrl[idxProp.Name].Value = idxProp.Value;
@@ -127,7 +129,7 @@ of wrapping control.&nbsp;&nbsp;not thread safe";
 					}
 				}
 
-				if (idx.Contains("controls"))
+				if (idx.Contains("controls") && idx["controls"].Count > 0)
 				{
 					BuildTemplateControl(idx["controls"], ctrl["controls"]);
 				}

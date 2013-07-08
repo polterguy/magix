@@ -87,3 +87,5 @@ execute=>[_exe]
 
 * sanitize names of web controls, such as "check" contra "link-button", etc ...
 
+* make sure Wysiwyg control handles => signs correctly, it doesn't now, and needs transformations in WebPart.ascx.cs
+
