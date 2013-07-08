@@ -13,10 +13,12 @@ using Magix.UX.Widgets;
 namespace Magix.forms
 {
 	/**
+	 * panel control
 	 */
 	public class PanelCore : BaseWebControlCore
 	{
 		/**
+		 * creates a panel control
 		 */
 		[ActiveEvent(Name = "magix.forms.controls.panel")]
 		public void magix_forms_controls_panel(object sender, ActiveEventArgs e)
@@ -81,26 +83,7 @@ namespace Magix.forms
 						}
 					}
 					else
-					{
-						if (!node.Contains("_tpl"))
-							throw new ArgumentException("unknown control type in your template control '" + typeName + "'");
-						else
-						{
-							// this is a 'user control', or a 'template control', and we need to
-							// individually traverse it, as if it was embedded into markup, almost
-							// like copy/paste
-							nc = new Node();
-							nc["_code"].Value = idx;
-
-							RaiseActiveEvent(
-								"magix.forms.controls." + node["_tpl"][0].Name,
-								nc);
-							if (nc.Contains("_ctrl"))
-								ret.Controls.Add(nc["_ctrl"].Value as System.Web.UI.Control);
-							else
-								throw new ArgumentException("unknown control type in your template control '" + typeName + "'");
-						}
-					}
+						throw new ArgumentException("unknown control type in your template control '" + typeName + "'");
 				}
 			}
 

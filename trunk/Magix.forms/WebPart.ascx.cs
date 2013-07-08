@@ -276,7 +276,7 @@ if [form-id] matches and control with given [id] is found";
 							// adding up to datasource as web control tree
 							Node tmp = new Node();
 
-							tmp["code"].Value = buffer;
+							tmp["code"].Value = buffer.Replace("&gt;", ">"); // TODO: refactor such that this is done during saving of form
 
 							RaiseEvent(
 								"magix.code.code-2-node",
