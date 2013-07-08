@@ -512,9 +512,9 @@ magix.forms.create-web-part
         magix.forms.get-value
           form-id=>edit-forms
           id=>name
-        add=>[magix.forms.show-form][form]
+        add=>[magix.forms.create-web-part][form]
           value=>[get-form][form]
-        magix.forms.load-mml-web-part
+        magix.forms.create-mml-web-part
           container=>content6
           css=>span-24
           form-id=>myPage
@@ -566,9 +566,9 @@ link-button=>closepreview
         magix.forms.get-value
           id=>name
           form-id=>edit-forms
-        set=>[@][magix.forms.show-form][form-id].Value
+        set=>[@][magix.forms.create-web-part][form-id].Value
           value=>[@][magix.forms.get-value][value].Value
-        magix.forms.show-form
+        magix.forms.create-web-part
           container=>content7
           css=>span-24 showgrid bottom-5
           form-id
