@@ -57,14 +57,7 @@ of wrapping control.&nbsp;&nbsp;not thread safe";
 
 				BuildTemplateControl(form["objects"][0]["form"]["surface"]["controls"], retVal);
 
-				e.Params["_tpl"].AddRange(retVal);
-				if (node.Contains("id") && !string.IsNullOrEmpty(node["id"].Get<string>()))
-					e.Params["_tpl"]["id"].Value = node["id"].Get<string>();
-				if (node.Contains("css") && !string.IsNullOrEmpty(node["css"].Get<string>()))
-					e.Params["_tpl"]["css"].Value = node["css"].Get<string>();
-				if (node.Contains("tag") && !string.IsNullOrEmpty(node["tag"].Get<string>()))
-					e.Params["_tpl"]["tag"].Value = node["tag"].Get<string>();
-				e.Params["_tpl"].Value = form["objects"][0]["name"].Value;
+				e.Params["_ctrl"].AddRange(retVal);
 			}
 		}
 		

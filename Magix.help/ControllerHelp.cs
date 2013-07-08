@@ -58,7 +58,7 @@ namespace Magix.help
 			tmp["form-id"].Value = "help-navigation";
 			tmp["container"].Value = "content1";
 			tmp["css"].Value = "span-19 last";
-			tmp["html"].Value = @"
+			tmp["mml"].Value = @"
 <div class=""span-15 left-4 last bottom-1 btn-group"">
 {{
 button=>back
@@ -87,7 +87,7 @@ button=>next
 </div>
 ";
 			RaiseActiveEvent(
-				"magix.forms.load-mml-web-part",
+				"magix.forms.create-mml-web-part",
 				tmp);
 
 			tmp = new Node();
@@ -102,7 +102,7 @@ button=>next
 			}
 
 			RaiseActiveEvent(
-				"magix.forms.load-mml-web-part",
+				"magix.forms.create-mml-web-part",
 				tmp);
 
 			if (Pages.Count > 0)
