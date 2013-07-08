@@ -95,3 +95,5 @@ execute=>[_exe]
 
 * there is something fishy with magix.forms.controls.literal, in forms editor it messes up if i start pasting in after the control another widget, such as a lambda
 
+* create unit tests for form objects and pages, which can be done by remotely invoking methods in loopback to a specific page url, and create event handlers in mml for events which are open
+
