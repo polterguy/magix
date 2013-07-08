@@ -58,13 +58,11 @@ contains the controls themselves, [css] becomes the css classes of your form
 				e.Params["event:magix.forms.load-mml-web-part"].Value = null;
 				e.Params["container"].Value = "header";
 				e.Params["form-id"].Value = "harvester";
-				e.Params["html"].Value = "<p>some html, or file.&nbsp;&nbsp;[html] and [file] are mutually exclusive parameters</p>";
 				e.Params["file"].Value = "sample-scripts/email-harvester.mml";
-				e.Params["inspect"].Value = @"creates a dynamic html web page,
+				e.Params["inspect"].Value = @"creates a dynamic magix markup language web page from a file,
 loading it into the [container] viewport container.&nbsp;&nbsp;[form-id]
-must be a uniquely identifiable id for later use.&nbsp;&nbsp;[html]
-contains the html, alternatively you can use [file].&nbsp;&nbsp;
-you can intermix webcontrols into your html by creating a control 
+must be a uniquely identifiable id for later use.&nbsp;&nbsp;
+you can intermix webcontrols into your mml by creating a control 
 collection by typing them inside of brackets such as 
 {{...controls, using hyper lisp syntax and code in
 event handlers goes here...}}.&nbsp;&nbsp;internally it 
@@ -72,7 +70,7 @@ calls LoadModule, hence all the parameters that goes
 into your magix.viewport.load-module active event, 
 can also be passed into this, such as [css] and 
 so on.&nbsp;&nbsp;you can embed forms using this syntax
-{{form:name_of_form}}.&nbsp;&nbsp;not thread safe";
+{{form=>name_of_form}}.&nbsp;&nbsp;not thread safe";
 				return;
 			}
 
@@ -129,57 +127,6 @@ link-button=>btn
 				"Magix.forms.WebPart", 
 				e.Params["container"].Get<string>(), 
 				e.Params);
-		}
-
-		/**
-		 * lists all widget types that exists in system
-		 */
-		[ActiveEvent(Name="magix.forms.list-widget-types")]
-		protected static void magix_forms_list_widget_types(object sender, ActiveEventArgs e)
-		{
-			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
-			{
-				e.Params["event:magix.execute"].Value = null;
-				e.Params["inspect"].Value = @"lists all widget types as [types] available in system.&nbsp;&nbsp;
-not thread safe";
-				e.Params["magix.forms.list-widget-types"].Value = null;
-				return;
-			}
-
-			Node tmp = new Node();
-			tmp["begins-with"].Value = "magix.forms.controls.";
-
-			RaiseActiveEvent(
-				"magix.admin.get-active-events",
-				tmp);
-
-			Node ip = e.Params;
-
-			foreach (Node idx in tmp["events"])
-			{
-				Node tp = new Node("widget");
-
-				tp["type"].Value = idx.Get<string>();
-				tp["properties"]["id"].Value = "id";
-
-				Node tp2 = new Node();
-				tp2["inspect"].Value = null;
-
-				RaiseActiveEvent(
-					idx.Get<string>(),
-					tp2);
-
-				if (tp2.Contains("_no-embed"))
-					tp["_no-embed"].Value = true;
-
-				foreach (Node idx2 in tp2["controls"][0])
-				{
-					tp["properties"][idx2.Name].Value = idx2.Value;
-					tp["properties"][idx2.Name].AddRange(idx2);
-				}
-
-				ip["types"].Add(tp);
-			}
 		}
 	}
 }

@@ -41,6 +41,24 @@ to return control(s), or nothing, in the [$] return node";
 
 			if (!code.Contains("oncreatecontrols"))
 			{
+				Label lbl = new Label();
+				lbl.Text = "{{lambda control}}";
+				lbl.ID = code.Value as string;
+				e.Params["_ctrl"].Value = lbl;
+
+				if (code.Contains("onclick"))
+				{
+					// design select support
+					Node codeNode = code["onclick"].Clone();
+
+					lbl.Click += delegate(object sender2, EventArgs e2)
+					{
+						RaiseActiveEvent(
+							"magix.execute",
+							codeNode);
+					};
+				}
+
 				return; // nothing to render unless event handler is defined ...
 			}
 
