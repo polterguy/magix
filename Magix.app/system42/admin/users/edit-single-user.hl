@@ -121,9 +121,9 @@ magix.forms.create-web-part
             set=>[magix.data.save][id].Value
               value=>[magix.data.load][objects][0].Name
             set=>[magix.data.load][objects][0].Name
-              value=>object
+              value=>value
             add=>[magix.data.save]
-              value=>[magix.data.load][objects][object]
+              value=>[magix.data.load][objects][value]
             magix.data.save
             set=>[magix.log.append][body][username].Value
               value=>[magix.data.load][prototype][username].Value
@@ -145,15 +145,15 @@ magix.forms.create-web-part
             set=>[magix.data.save][id].Value
               value=>[magix.data.load][objects][0].Name
             set=>[magix.data.load][objects][0].Name
-              value=>object
+              value=>value
             add=>[magix.data.save]
-              value=>[magix.data.load][objects][object]
-            set=>[magix.log.append][body][username].Value
+              value=>[magix.data.load][objects][value]
+            magix.data.save
+            set=>[magix.log.append][body][pwd].Value
               value=>[magix.data.load][prototype][username].Value
             magix.log.append
               header=>user changed password
               body=>user {0} changed password
-            magix.data.save
             execute-file=>system42/admin/users/users-grid.hl
     panel=>rolesWrap
       css=>span-5 last

@@ -89,3 +89,9 @@ execute=>[_exe]
 
 * make sure Wysiwyg control handles => signs correctly, it doesn't now, and needs transformations in WebPart.ascx.cs
 
+* make it possible to sort in magix.data.load, server log is showing oldest item first
+
+* disable delete button in pages editor when no page is selected
+
+* there is something fishy with magix.forms.controls.literal, in forms editor it messes up if i start pasting in after the control another widget, such as a lambda
+
