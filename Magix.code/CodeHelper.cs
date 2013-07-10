@@ -80,6 +80,15 @@ contain type information for types of int, decimal, datetime and bool.&nbsp;&nbs
 						case "System.DateTime":
 							value += "=(date)>" + idx.Get<DateTime>().ToString ("yyyy.MM.dd HH:mm:ss", CultureInfo.InvariantCulture);
 							break;
+						case "Magix.Core.Node":
+						{
+							string nodeS = "";
+							if (!string.IsNullOrEmpty(idx.Get<Node>().Name))
+								nodeS += idx.Get<Node>().Name;
+							if (idx.Get<Node>().Value != null)
+								nodeS += "=>" + idx.Get<Node>().Get<string>();
+							value += @"=>@""" + nodeS + "\r\n" + ParseNodes(string.IsNullOrEmpty(nodeS) ? 0 : 1, idx.Get<Node>()) + @"""";
+						} break;
 						}
 					}
 					else

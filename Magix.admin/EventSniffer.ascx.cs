@@ -19,12 +19,14 @@ using Magix.UX.Widgets.Core;
 namespace Magix.admin
 {
     /**
-     * Helps you spy on every single event in the system, to debug and run diagnostics
-     * on your server
+     * event sniffer
      */
     public class EventSniffer : ActiveModule
     {
 		protected Label lbl;
+		protected TextBox filter;
+
+		private bool isParsing;
 
 		protected override void OnLoad (EventArgs e)
 		{
@@ -37,47 +39,39 @@ namespace Magix.admin
 		 * single Active Event in the system, and show with its parameters,
 		 * in a div
 		 */
-		[ActiveEvent(Name = ":before")]
+		[ActiveEvent(Name = "")]
 		public void magix_null_event_handler(object sender, ActiveEventArgs e)
 		{
-			if (e.Name == "magix.code.node-2-code")
+			if (isParsing)
 				return;
+
+			if (!string.IsNullOrEmpty(filter.Text))
+				if (!e.Name.Contains(filter.Text))
+					return;
 
 			string code = "";
 			if (e.Params != null)
 			{
 				Node tmp = new Node();
 				tmp["json"].Value = e.Params;
-				RaiseEvent(
-					"magix.code.node-2-code",
-					tmp);
-				code = "<pre class=\"span12\">" + tmp["code"].Get<string>() + "</pre>";
-			}
-			lbl.Text += "<h5>" + e.Name + ":before</h5>" + code;
-		}
 
-		/**
-		 * 'null Active Event Handler', which will swallow almost every
-		 * single Active Event in the system, and show with its parameters,
-		 * in a div
-		 */
-		[ActiveEvent(Name = ":after")]
-		public void magix_null_event_handler_after(object sender, ActiveEventArgs e)
-		{
-			if (e.Name == "magix.code.node-2-code")
-				return;
+				isParsing = true;
 
-			string code = null;
-			if (e.Params != null)
-			{
-				Node tmp = new Node();
-				tmp["json"].Value = e.Params;
-				RaiseEvent(
-					"magix.code.node-2-code",
-					tmp);
-				code = "<pre class=\"span12\">" + tmp["code"].Get<string>() + "</pre>";
+				try
+				{
+					RaiseEvent(
+						"magix.code.node-2-code",
+						tmp);
+				}
+				finally
+				{
+					isParsing = false;
+				}
+
+				if (tmp.Contains("code") && !string.IsNullOrEmpty(tmp["code"].Get<string>()))
+					code = "<pre class=\"span-22 left-1\">" + tmp["code"].Get<string>() + "</pre>";
 			}
-			lbl.Text += "<h5>" + e.Name + ":after</h5>" + code;
+			lbl.Text += "<h5>" + e.Name + (e.Params.Value != null ? "=>" + e.Params.Get<string>() : "") + "</h5>" + code;
 		}
 	}
 }

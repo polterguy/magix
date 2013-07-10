@@ -136,15 +136,6 @@ unloads a container for controls";
 				return;
 
 			ClearControls(dyn);
-
-			// We must raise this event to signal to other controls
-			// that Active Events MIGHT have been removed from the list
-			// of Active Active Events
-			Node node = new Node();
-
-			RaiseEvent(
-				"magix.execute._event-override-removed", 
-				node);
 		}
 
 		/**

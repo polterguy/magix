@@ -52,7 +52,7 @@ namespace Magix.forms
 
 				ret.CheckedChanged += delegate(object sender2, EventArgs e2)
 				{
-					CheckBox that2 = sender as CheckBox;
+					CheckBox that2 = sender2 as CheckBox;
 					if (!string.IsNullOrEmpty(that2.Info))
 						codeNode["$"]["info"].Value = that2.Info;
 

@@ -70,7 +70,7 @@ namespace Magix.forms
 
 				ret.SelectedIndexChanged += delegate(object sender2, EventArgs e2)
 				{
-					SelectList that2 = sender as SelectList;
+					SelectList that2 = sender2 as SelectList;
 					if (!string.IsNullOrEmpty(that2.Info))
 						codeNode["$"]["info"].Value = that2.Info;
 
