@@ -4,12 +4,41 @@ inspect=>@"open the application wizard
 such that you can create your own application, 
 using a wizard interface"
 
+
+magix.file.list-files=>system42/admin/app-wizard/wizards
+
+_dt
+  panel
+    css=>boxed span-5 min-height-7 air-padding bottom-1
+    style=>cursor:pointer;
+    onclick
+      _file
+      set=>[magix.execute.execute-file][file].Value
+        value=>[_file].Value
+      magix.execute.execute-file=>system42/admin/app-wizard/new-app.hl
+    controls
+      label
+        tag=>label
+        text=>name
+      label
+        tag=>p
+        text=>description
+
+for-each=>[magix.file.list-files][files]
+  set=>[@][magix.code.file-2-node].Value
+    value=>[.].Name
+  magix.code.file-2-node
+  set=>[/][_dt][panel][controls][label:0][text].Value
+    value=>[@][magix.code.file-2-node][json][_name].Value
+  set=>[/][_dt][panel][controls][label:1][text].Value
+    value=>[@][magix.code.file-2-node][json][inspect].Value
+  set=>[/][_dt][panel][onclick][_file].Value
+    value=>[.].Name
+  add=>[/][magix.forms.create-web-part][controls]
+    value=>[/][_dt][panel]
+
 magix.forms.create-web-part
   container=>content2
   form-id=>app-wiz
-  css=>span-19 last
-  controls
-    label=>header
-      tag=>h2
-      css=>span-13 last left-6
-      text=>app wizard
+  css=>span-19 last top-1
+

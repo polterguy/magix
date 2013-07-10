@@ -73,7 +73,7 @@ thread safe";
 		 * sets visibility of control
 		 */
 		[ActiveEvent(Name = "magix.forms.set-visible")]
-		protected void magix_forms_set_visible(object sender, ActiveEventArgs e)
+		protected static void magix_forms_set_visible(object sender, ActiveEventArgs e)
 		{
 			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
@@ -102,7 +102,7 @@ thread safe";
 		 * retrieves visibility of control
 		 */
 		[ActiveEvent(Name = "magix.forms.get-visible")]
-		protected void magix_forms_get_visible(object sender, ActiveEventArgs e)
+		protected static void magix_forms_get_visible(object sender, ActiveEventArgs e)
 		{
 			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
@@ -186,7 +186,7 @@ be raised the first time the control is created";
 			node["onfirstload"].Value = "hyper lisp code";
 		}
 
-		protected T FindControl<T>(Node pars) where T : Control
+		protected static T FindControl<T>(Node pars) where T : Control
 		{
 			if (!pars.Contains("id"))
 				throw new ArgumentException("set-value needs [id] parameter");
