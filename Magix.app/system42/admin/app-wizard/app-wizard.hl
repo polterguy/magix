@@ -1,0 +1,15 @@
+
+
+inspect=>@"open the application wizard
+such that you can create your own application, 
+using a wizard interface"
+
+magix.forms.create-web-part
+  container=>content2
+  form-id=>app-wiz
+  css=>span-19 last
+  controls
+    label=>header
+      tag=>h2
+      css=>span-13 last left-6
+      text=>app wizard

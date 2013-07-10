@@ -265,6 +265,22 @@ installation of magix"
           magix.viewport.show-message-if-help-mode
             message=>@"edit web forms within
 your system"
+      _default_script18_TJOBING
+        text=>app wizard
+        category=>applications
+        code
+          magix.viewport.clear-controls
+            container=>content2
+          magix.viewport.clear-controls
+            container=>content3
+          magix.viewport.clear-controls
+            container=>content4
+          magix.viewport.clear-controls
+            container=>content5
+          execute-file=>system42/admin/app-wizard/app-wizard.hl
+          magix.viewport.show-message-if-help-mode
+            message=>@"edit web forms within
+your system"
       _default_script19
         text=>help
         category=>learn
