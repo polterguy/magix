@@ -103,3 +103,15 @@ execute=>[_exe]
 
 * make spacing at bottom of body or something, see server log and scroll to bottom to understand why
 
+* != expression always returns false if left-hand-expression is null, which is a severe bug
+
+* somehow make it possible to copy from form to form
+
+* make the magix.forms.form saving format become the same as the create-web-part format
+
+* implement generic inheritance from BaseWebControlCore, etc, to reduce the number of methods in web controls controllers
+
+* create unit tests for magix.forms.create-web-part
+
+* remove has-more-data in uploader and echange with parameter into event handler
+

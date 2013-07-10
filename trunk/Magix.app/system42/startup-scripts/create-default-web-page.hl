@@ -13,5 +13,10 @@ if=>[magix.data.count][count].Value==0
     value
       type=>magix.pages.page
       name=>default
-      value=>@"<p>magix is an open source web app builder program, which means you can create your own applications with magix.&nbsp;&nbsp;login at the top of this screen with username/password combination <strong>admin/admin</strong></p><p><strong>please change this password asap, or delete the user after creating a new admin user!!</strong></p><p>this software cannot be used in the state of california or the state of telemark!</p><iframe width="420" height="315" src="//www.youtube.com/embed/eIqESwzCGg4" frameborder="0" allowfullscreen></iframe>"
+      value=>@"<p>magix is an open source web app builder program, 
+which means you can create your own applications with magix.&nbsp;&nbsp;
+login at the top of this screen with username/password combination 
+<strong>admin/admin</strong></p><p><strong>please change this password asap, 
+or delete the user after creating a new admin user!!</strong></p>
+<p>this software cannot be used in the state of california or the state of telemark!</p>"
 

@@ -48,6 +48,30 @@ namespace Magix.forms
 		}
 
 		/**
+		 * retrieves css classes
+		 */
+		[ActiveEvent(Name = "magix.forms.get-class")]
+		protected void magix_forms_get_class(object sender, ActiveEventArgs e)
+		{
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			{
+				e.Params["event:magix.forms.get-class"].Value = null;
+				e.Params["id"].Value = "control";
+				e.Params["form-id"].Value = "webpages";
+				e.Params["inspect"].Value = @"retrieves the css class of the given 
+[id] web control, in the [form-id] form, into [value].&nbsp;&nbsp;not thread safe";
+				return;
+			}
+
+			BaseWebControl ctrl = FindControl<BaseWebControl>(e.Params);
+
+			if (ctrl != null)
+			{
+				e.Params["value"].Value = ctrl.CssClass;
+			}
+		}
+
+		/**
 		 * adds css class
 		 */
 		[ActiveEvent(Name = "magix.forms.add-css")]
@@ -168,11 +192,18 @@ namespace Magix.forms
 
 			if (node.Contains("onclick"))
 			{
-				// TODO: is this right? do we need to clone?
 				Node codeNode = node["onclick"].Clone();
 
 				that.Click += delegate(object sender, EventArgs e)
 				{
+					BaseControl that2 = sender as BaseControl;
+					if (!string.IsNullOrEmpty(that2.Info))
+						codeNode["$"]["info"].Value = that2.Info;
+
+					object val = GetValue(that2);
+					if (val != null)
+						codeNode["$"]["value"].Value = val;
+
 					RaiseActiveEvent(
 						"magix.execute",
 						codeNode);
@@ -181,11 +212,18 @@ namespace Magix.forms
 
 			if (node.Contains("ondblclick"))
 			{
-				// TODO: is this right? do we need to clone?
 				Node codeNode = node["ondblclick"].Clone();
 
 				that.DblClick += delegate(object sender, EventArgs e)
 				{
+					BaseControl that2 = sender as BaseControl;
+					if (!string.IsNullOrEmpty(that2.Info))
+						codeNode["$"]["info"].Value = that2.Info;
+
+					object val = GetValue(that2);
+					if (val != null)
+						codeNode["$"]["value"].Value = val;
+
 					RaiseActiveEvent(
 						"magix.execute",
 						codeNode);
@@ -194,11 +232,18 @@ namespace Magix.forms
 
 			if (node.Contains("onmousedown"))
 			{
-				// TODO: is this right? do we need to clone?
 				Node codeNode = node["onmousedown"].Clone();
 
 				that.MouseDown += delegate(object sender, EventArgs e)
 				{
+					BaseControl that2 = sender as BaseControl;
+					if (!string.IsNullOrEmpty(that2.Info))
+						codeNode["$"]["info"].Value = that2.Info;
+
+					object val = GetValue(that2);
+					if (val != null)
+						codeNode["$"]["value"].Value = val;
+
 					RaiseActiveEvent(
 						"magix.execute",
 						codeNode);
@@ -207,11 +252,18 @@ namespace Magix.forms
 
 			if (node.Contains("onmouseup"))
 			{
-				// TODO: is this right? do we need to clone?
 				Node codeNode = node["onmouseup"].Clone();
 
 				that.MouseUp += delegate(object sender, EventArgs e)
 				{
+					BaseControl that2 = sender as BaseControl;
+					if (!string.IsNullOrEmpty(that2.Info))
+						codeNode["$"]["info"].Value = that2.Info;
+
+					object val = GetValue(that2);
+					if (val != null)
+						codeNode["$"]["value"].Value = val;
+
 					RaiseActiveEvent(
 						"magix.execute",
 						codeNode);
@@ -220,11 +272,18 @@ namespace Magix.forms
 
 			if (node.Contains("onmouseover"))
 			{
-				// TODO: is this right? do we need to clone?
 				Node codeNode = node["onmouseover"].Clone();
 
 				that.MouseOver += delegate(object sender, EventArgs e)
 				{
+					BaseControl that2 = sender as BaseControl;
+					if (!string.IsNullOrEmpty(that2.Info))
+						codeNode["$"]["info"].Value = that2.Info;
+
+					object val = GetValue(that2);
+					if (val != null)
+						codeNode["$"]["value"].Value = val;
+
 					RaiseActiveEvent(
 						"magix.execute",
 						codeNode);
@@ -233,11 +292,18 @@ namespace Magix.forms
 
 			if (node.Contains("onmouseout"))
 			{
-				// TODO: is this right? do we need to clone?
 				Node codeNode = node["onmouseout"].Clone();
 
 				that.MouseOut += delegate(object sender, EventArgs e)
 				{
+					BaseControl that2 = sender as BaseControl;
+					if (!string.IsNullOrEmpty(that2.Info))
+						codeNode["$"]["info"].Value = that2.Info;
+
+					object val = GetValue(that2);
+					if (val != null)
+						codeNode["$"]["value"].Value = val;
+
 					RaiseActiveEvent(
 						"magix.execute",
 						codeNode);
@@ -246,11 +312,18 @@ namespace Magix.forms
 
 			if (node.Contains("onkeypress"))
 			{
-				// TODO: is this right? do we need to clone?
 				Node codeNode = node["onkeypress"].Clone();
 
 				that.KeyPress += delegate(object sender, EventArgs e)
 				{
+					BaseControl that2 = sender as BaseControl;
+					if (!string.IsNullOrEmpty(that2.Info))
+						codeNode["$"]["info"].Value = that2.Info;
+
+					object val = GetValue(that2);
+					if (val != null)
+						codeNode["$"]["value"].Value = val;
+
 					RaiseActiveEvent(
 						"magix.execute",
 						codeNode);
@@ -259,11 +332,18 @@ namespace Magix.forms
 
 			if (node.Contains("onesc"))
 			{
-				// TODO: is this right? do we need to clone?
 				Node codeNode = node["onesc"].Clone();
 
 				that.EscKey += delegate(object sender, EventArgs e)
 				{
+					BaseControl that2 = sender as BaseControl;
+					if (!string.IsNullOrEmpty(that2.Info))
+						codeNode["$"]["info"].Value = that2.Info;
+
+					object val = GetValue(that2);
+					if (val != null)
+						codeNode["$"]["value"].Value = val;
+
 					RaiseActiveEvent(
 						"magix.execute",
 						codeNode);

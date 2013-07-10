@@ -113,3 +113,232 @@ lambda=>lmb
     else
       throw=>didn't get expected value from text-box in magix.test.create-mml-web-part-with-lambda
 
+
+event=>magix.test.set-text-box-value
+
+  inspect=>@"verifies that setting a text-box 
+value behaves correctly"
+
+  code
+    magix.forms.create-mml-web-part
+      container=>content6
+      form-id=>test-form
+      mml=>@"{{
+text-box=>txt1
+  text=>howdy
+}}"
+    magix.forms.set-value
+      form-id=>test-form
+      id=>txt1
+      value=>howdy1
+    magix.forms.get-value
+      form-id=>test-form
+      id=>txt1
+    if=>[magix.forms.get-value][value].Value==howdy1
+      _success
+    else
+      throw=>didn't get expected value from text-box
+
+
+event=>magix.test.set-text-box-value-wrong-form-id
+
+  inspect=>@"verifies that setting a text-box 
+value behaves correctly"
+
+  code
+    magix.forms.create-mml-web-part
+      container=>content6
+      form-id=>test-form
+      mml=>@"{{
+text-box=>txt1
+  text=>howdy
+}}"
+    magix.forms.set-value
+      form-id=>test-form-error
+      id=>txt1
+      value=>howdy1
+    magix.forms.get-value
+      form-id=>test-form
+      id=>txt1
+    if=>[magix.forms.get-value][value].Value==howdy
+      _success
+    else
+      throw=>didn't get expected value from text-box
+
+
+event=>magix.test.set-text-box-value-no-form-id
+
+  inspect=>@"verifies that setting a text-box 
+value behaves correctly"
+
+  code
+    magix.forms.create-mml-web-part
+      container=>content6
+      form-id=>test-form
+      mml=>@"{{
+text-box=>txt1
+  text=>howdy
+}}"
+    magix.forms.set-value
+      id=>txt1
+      value=>howdy1
+    magix.forms.get-value
+      form-id=>test-form
+      id=>txt1
+    if=>[magix.forms.get-value][value].Value==howdy1
+      _success
+    else
+      throw=>didn't get expected value from text-box
+
+
+event=>magix.test.set-css-class
+
+  inspect=>@"verifies that setting a text-box 
+css class behaves correctly"
+
+  code
+    magix.forms.create-mml-web-part
+      container=>content6
+      form-id=>test-form
+      mml=>@"{{
+text-box=>txt1
+}}"
+    magix.forms.set-class
+      id=>txt1
+      value=>some-css-class
+    magix.forms.get-class
+      id=>txt1
+    if=>[magix.forms.get-class][value].Value==some-css-class
+      _success
+    else
+      throw=>didn't get expected css from text-box
+
+
+event=>magix.test.test-onfirstload
+
+  inspect=>@"verifies that onfirstload 
+behaves correctly"
+
+  code
+    magix.forms.create-mml-web-part
+      container=>content6
+      form-id=>test-form
+      mml=>@"{{
+text-box=>txt1
+  onfirstload
+    magix.forms.set-value
+      id=>txt1
+      value=>success
+}}"
+    magix.forms.get-value
+      id=>txt1
+    if=>[magix.forms.get-value][value].Value==success
+      _success
+    else
+      throw=>didn't get expected value from text-box
+
+
+event=>magix.test.set-visibility
+
+  inspect=>@"verifies that setting a text-box 
+visibility behaves correctly"
+
+  code
+    magix.forms.create-mml-web-part
+      container=>content6
+      form-id=>test-form
+      mml=>@"{{
+text-box=>txt1
+}}"
+    magix.forms.set-visible
+      id=>txt1
+      value=>false
+    magix.forms.get-visible
+      id=>txt1
+    if=>[magix.forms.get-visible][value].Value==False
+      _success
+    else
+      throw=>didn't get expected visibility from text-box
+
+
+event=>magix.test.set-enabled
+
+  inspect=>@"verifies that setting a text-box 
+enabled property behaves correctly"
+
+  code
+    magix.forms.create-mml-web-part
+      container=>content6
+      form-id=>test-form
+      mml=>@"{{
+text-box=>txt1
+}}"
+    magix.forms.set-enabled
+      id=>txt1
+      value=>false
+    magix.forms.get-enabled
+      id=>txt1
+    if=>[magix.forms.get-enabled][value].Value==False
+      _success
+    else
+      throw=>didn't get expected enabled value from text-box
+
+
+event=>magix.test.text-value-into-event-handlers
+
+  inspect=>@"verifies that value of control is
+passed into event handlers"
+
+  code
+    magix.forms.create-mml-web-part
+      container=>content6
+      form-id=>test-form
+      mml=>@"{{
+text-box=>txt1
+  text=>howdy
+  onfirstload
+    if=>[$][value].Value==howdy
+      _success
+    else
+      throw=>value not passed into event handlers
+}}"
+
+
+event=>magix.test.text-info-into-event-handlers
+
+  inspect=>@"verifies that info of control is
+passed into event handlers"
+
+  code
+    magix.forms.create-mml-web-part
+      container=>content6
+      form-id=>test-form
+      mml=>@"{{
+text-box=>txt1
+  info=>howdy
+  onfirstload
+    if=>[$][info].Value==howdy
+      _success
+    else
+      throw=>value not passed into event handlers
+}}"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

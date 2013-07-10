@@ -1,20 +1,30 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Magix.forms/controls/LambdaBaseCore.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Magix.app/system42/startup-scripts/test-web-parts.hl">
     <Files>
-      <File FileName="Magix.forms/WebPart.ascx.cs" Line="1" Column="1" />
-      <File FileName="Magix.forms/controls/FormCore.cs" Line="1" Column="1" />
-      <File FileName="Magix.forms/controls/LambdaBaseCore.cs" Line="69" Column="22" />
+      <File FileName="Magix.app/todo.txt" Line="107" Column="1" />
+      <File FileName="Magix.app/system42/startup-scripts/test-web-parts.hl" Line="264" Column="30" />
+      <File FileName="Magix.forms/controls/TextBoxCore.cs" Line="244" Column="1" />
+      <File FileName="Magix.forms/controls/BaseWebControlCore.cs" Line="70" Column="45" />
+      <File FileName="Magix.forms/controls/BaseControlCore.cs" Line="122" Column="43" />
+      <File FileName="Magix.forms/controls/TextAreaCore.cs" Line="183" Column="1" />
+      <File FileName="Magix.forms/controls/ButtonCore.cs" Line="141" Column="36" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
-          <Node name="Core" expanded="True" />
+          <Node name="Core" expanded="True">
+            <Node name="Magix.app" expanded="True">
+              <Node name="system42" expanded="True">
+                <Node name="startup-scripts" expanded="True">
+                  <Node name="test-web-parts.hl" selected="True" />
+                </Node>
+              </Node>
+            </Node>
+          </Node>
           <Node name="Plugins" expanded="True">
             <Node name="Magix.forms" expanded="True">
-              <Node name="controls" expanded="True">
-                <Node name="LambdaBaseCore.cs" selected="True" />
-              </Node>
+              <Node name="controls" expanded="True" />
             </Node>
           </Node>
         </State>
@@ -23,9 +33,7 @@
         <State expanded="True" selected="True" />
       </Pad>
       <Pad Id="MonoDevelop.Debugger.WatchPad">
-        <State>
-          <Value>id</Value>
-        </State>
+        <State />
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
