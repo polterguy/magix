@@ -115,3 +115,5 @@ execute=>[_exe]
 
 * remove has-more-data in uploader and echange with parameter into event handler
 
+* check up ActiveEvent.cs, and see if we really need the parsing stuff, to pass in expressions, which i think only supply overhead
+

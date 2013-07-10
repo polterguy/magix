@@ -35,7 +35,6 @@
   <ItemGroup>
     <Compile Include="ExecutorForm.ascx.cs" />
     <Compile Include="EventSniffer.ascx.cs" />
-    <Compile Include="EventProfiler.ascx.cs" />
     <Compile Include="ActiveEventsCore.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
@@ -52,6 +51,5 @@
   <ItemGroup>
     <EmbeddedResource Include="ExecutorForm.ascx" />
     <EmbeddedResource Include="EventSniffer.ascx" />
-    <EmbeddedResource Include="EventProfiler.ascx" />
   </ItemGroup>
 </Project>

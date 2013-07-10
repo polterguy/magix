@@ -55,7 +55,7 @@ namespace Magix.forms
 
 				ret.CheckedChanged += delegate(object sender2, EventArgs e2)
 				{
-					RadioButton that2 = sender as RadioButton;
+					RadioButton that2 = sender2 as RadioButton;
 					if (!string.IsNullOrEmpty(that2.Info))
 						codeNode["$"]["info"].Value = that2.Info;
 

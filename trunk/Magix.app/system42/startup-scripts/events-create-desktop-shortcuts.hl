@@ -198,29 +198,6 @@ modifying it yourself"
             message=>@"turn tracing off in 
 magix, meaning it unloads the trace module, 
 if loaded.&nbsp;&nbsp; see turn on tracer"
-      _default_scriptxx9
-        text=>turn on profiler
-        category=>tools
-        code
-          magix.viewport.load-module
-            container=>trace
-            css=>span-24 top-3 bottom-3
-            name=>Magix.admin.EventProfiler
-          magix.viewport.show-message-if-help-mode
-            message=>@"turn profiler on in 
-magix, such that you can profile every single active
-event raised on the server, in both the before version,
-and in the after version"
-      _default_scriptxx12
-        text=>turn off profiler
-        category=>tools
-        code
-          magix.viewport.clear-controls
-            container=>trace
-          magix.viewport.show-message-if-help-mode
-            message=>@"turn profiler off in 
-magix, meaning it unloads the profiler module, 
-if loaded.&nbsp;&nbsp; see turn on profiler"
       _default_script10
         text=>active event executor
         category=>tools

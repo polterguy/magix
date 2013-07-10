@@ -61,7 +61,7 @@ namespace Magix.forms
 
 				ret.TextChanged += delegate(object sender2, EventArgs e2)
 				{
-					TextArea that2 = sender as TextArea;
+					TextArea that2 = sender2 as TextArea;
 					if (!string.IsNullOrEmpty(that2.Info))
 						codeNode["$"]["info"].Value = that2.Info;
 
@@ -81,7 +81,7 @@ namespace Magix.forms
 
 				ret.TextChanged += delegate(object sender2, EventArgs e2)
 				{
-					TextArea that2 = sender as TextArea;
+					TextArea that2 = sender2 as TextArea;
 					if (!string.IsNullOrEmpty(that2.Info))
 						codeNode["$"]["info"].Value = that2.Info;
 
