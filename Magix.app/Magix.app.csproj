@@ -319,5 +319,6 @@
     <None Include="system42\admin\app-wizard\app-wizard.hl" />
     <None Include="system42\admin\app-wizard\wizards\crud-app.hl" />
     <None Include="system42\admin\app-wizard\new-app.hl" />
+    <None Include="system42\startup-scripts\test-if-logic.hl" />
   </ItemGroup>
 </Project>

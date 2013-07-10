@@ -1,0 +1,96 @@
+
+
+inspect=>@"creates unit tests for testing execution 
+of if sentences"
+
+
+event=>magix.test.if-equals
+
+  inspect=>@"verifies that if returns true 
+if values are equal"
+
+  code
+    _dt1=>tmp1
+    _dt2=>tmp1
+    if=>[_dt1].Value==[_dt2].Value
+      _success
+    else
+      throw=>values didn't match
+
+
+event=>magix.test.if-not-equals
+
+  inspect=>@"verifies that if returns false 
+if values are not equal"
+
+  code
+    _dt1=>tmp2
+    _dt2=>tmp1
+    if=>[_dt1].Value!=[_dt2].Value
+      _success
+    else
+      throw=>values didn't match
+
+
+event=>magix.test.if-equals-lhs-null
+
+  inspect=>@"verifies that if returns false 
+if lhs is null"
+
+  code
+    _dt1
+    _dt2=>tmp1
+    if=>[_dt1].Value==[_dt2].Value
+      throw=>values didn't match
+
+
+event=>magix.test.if-equals-rhs-null
+
+  inspect=>@"verifies that if returns false 
+if lhs is null"
+
+  code
+    _dt1=>tmp1
+    _dt2
+    if=>[_dt1].Value==[_dt2].Value
+      throw=>values didn't match
+
+
+event=>magix.test.if-equals-rhs-null
+
+  inspect=>@"verifies that if returns true 
+if both sides are null"
+
+  code
+    _dt1
+    _dt2
+    if=>[_dt1].Value==[_dt2].Value
+      _success
+    else
+      throw=>values didn't match
+
+
+event=>magix.test.if-equals-rhs-null
+
+  inspect=>@"verifies that if returns true 
+if both sides are not existing"
+
+  code
+    if=>[_dt1].Value==[_dt2].Value
+      _success
+    else
+      throw=>values didn't match
+
+
+event=>magix.test.if-not-equals-lhs-not-existing
+
+  inspect=>@"verifies that if returns true 
+if both sides are not existing"
+
+  code
+    _dt2=>howdy
+    if=>[_dt1].Value!=[_dt2].Value
+      _success
+    else
+      throw=>values didn't match
+

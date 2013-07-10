@@ -46,7 +46,8 @@ wrong text of exception"
 
 event=>magix.test.execute-path-with-external-exception-handler
 
-  inspect=>@"checks to see if [execute] with [throw] is correctly catched outside of [execute] statement"
+  inspect=>@"checks to see if [execute] with [throw] is correctly 
+catched outside of [execute] statement"
 
   code
     _exe
@@ -59,24 +60,6 @@ event=>magix.test.execute-path-with-external-exception-handler
       throw=>@"magix.test.execute-path-with-external-exception failed, 
 wrong text of exception"
 
-
-event=>magix.test.execute.path-with-parameters
-
-  inspect=>@"checks to see if parameter passing into 
-[execute], into and out from, is bahving correctly"
-
-  code
-    _exe
-      if=>[$][message].Value!=howdy world
-        throw=>unit test check parameters with execute path failed
-      set=>[$][ret].Value
-        value=>5
-    execute=>[_exe]
-      message=>howdy world
-    if=>[execute][value].Value!=5
-      throw=>value not returned from execute path
-    if=>[execute][message].Value!=howdy world
-      throw=>value not returned input nodes from execute path
 
 event=>magix.test.execute.with-without-period
 
@@ -101,24 +84,27 @@ event=>magix.test.execute.with-without-period-2
 correctly chops up node tree"
 
   code
+    _dt=>4
     _exe1
       _dt=>5
       execute
         set=>[@][..][_dt].Value
           value=>6
-      if=>[_dt].Value!=6
+      if=>[@][_dt].Value!=6
+        throw=>set inside of execute didn't work
+      if=>[/][_dt].Value!=4
         throw=>set inside of execute didn't work
     execute=>[_exe1]
     _exe2
       _dt=>5
       execute
-        set=>[@][..][_dt].Value
+        set=>[/][_dt].Value
           value=>6
-      if=>[_dt].Value!=6
+      if=>[@][_dt].Value!=6
         throw=>set inside of execute didn't work
     magix.execute=>[_exe2]
     if=>[_exe1][_dt].Value!=6
       throw=>node not correctly changed by [execute]
     if=>[_exe2][_dt].Value!=5
       throw=>node not correctly changed by [execute]
-    
+

@@ -317,6 +317,7 @@ it into [value] node.&nbsp;&nbsp;not thread safe";
 
 			if (ViewState[id] != null && ViewState[id] is Node)
 			{
+				e.Params["value"].Value = (ViewState[id] as Node).Value;
 				e.Params["value"].ReplaceChildren((ViewState[id] as Node).Clone());
 			}
 		}
