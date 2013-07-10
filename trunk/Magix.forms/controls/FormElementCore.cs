@@ -21,7 +21,7 @@ namespace Magix.forms
 		 * set-enabled
 		 */
 		[ActiveEvent(Name = "magix.forms.set-enabled")]
-		protected void magix_forms_set_enabled(object sender, ActiveEventArgs e)
+		protected static void magix_forms_set_enabled(object sender, ActiveEventArgs e)
 		{
 			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
@@ -50,7 +50,7 @@ namespace Magix.forms
 		 * get-enabled
 		 */
 		[ActiveEvent(Name = "magix.forms.get-enabled")]
-		protected void magix_forms_get_enabled(object sender, ActiveEventArgs e)
+		protected static void magix_forms_get_enabled(object sender, ActiveEventArgs e)
 		{
 			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{

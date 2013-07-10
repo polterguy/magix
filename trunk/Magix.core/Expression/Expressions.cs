@@ -50,7 +50,24 @@ namespace Magix.Core
 				object rhs = GetExpressionValue(tokens[2], dp, ip, false);
 
 				if (lhs == null || rhs == null)
-					return false;
+				{
+					// Actual comparison, now our types are hopefully identical, and we can perform actual comparison
+					switch (comparer)
+					{
+						case "!=":
+							return (lhs == null && rhs != null) || (lhs != null && rhs == null);
+						case "<=":
+							return lhs == null;
+						case ">=":
+							return rhs == null;
+						case "<":
+							return rhs != null;
+						case ">":
+							return lhs != null;
+						case "=":
+							return lhs == null && rhs == null;
+					}
+				}
 
 				if (lhs.GetType() != rhs.GetType())
 				{
@@ -540,7 +557,7 @@ namespace Magix.Core
                         }
 						else if (bufferNodeName == "$")
 						{
-							x = x.RootNode()["$"];
+							x = ip.RootNode()["$"];
 							isInside = false;
 							continue;
 						}

@@ -8,6 +8,7 @@ using System;
 using System.IO;
 using System.Web.UI;
 using Magix.Core;
+using Magix.UX.Effects;
 using Magix.UX.Widgets;
 using Magix.UX.Widgets.Core;
 
@@ -153,7 +154,7 @@ namespace Magix.forms
 
 			if (ctrl != null)
 			{
-				ctrl.Focus();
+				new EffectFocusAndSelect(ctrl).Render();
 			}
 		}
 

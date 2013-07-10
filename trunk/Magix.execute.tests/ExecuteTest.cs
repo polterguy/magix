@@ -59,7 +59,7 @@ that the result node set is manipulated as it should be";
 		{
 			Node tmp = new Node();
 			tmp["_data"].Value = "not-set";
-			tmp["_data"]["set"].Value = "[$][ret].Value";
+			tmp["_data"]["set"].Value = "[_data].Value";
 			tmp["_data"]["set"]["value"].Value = "new-value";
 			tmp["execute"].Value = "[_data]";
 
@@ -79,10 +79,10 @@ a node's value to new-value within the block being executed";
 				tmp);
 
 			// Asserting new value is set ...
-			if (tmp["execute"]["ret"].Get<string>() != "new-value")
+			if (tmp["_data"].Get<string>() != "new-value")
 				throw new ApplicationException(
 					string.Format(
-						"Set didn't update as supposed to, expected {0}, got {1}",
+						"set didn't update as supposed to, expected {0}, got {1}",
 						"new-value",
 					tmp["_data"].Get<string>()));
 		}

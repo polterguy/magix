@@ -98,24 +98,17 @@ thread safe";
 			Node ip = e.Params["_ip"].Value as Node;
 			Node dp = e.Params["_dp"].Value as Node;
 
-			if (e.Name == "magix.execute.execute" && ip.Value != null)
+			if (ip.Name == "execute" && ip.Value != null)
 			{
-				Node oldIp = ip;
+				Node newIp = Expressions.GetExpressionValue(ip.Get<string>(), dp, ip, false) as Node; // lambda execute expression
 
-				ip = Expressions.GetExpressionValue(ip.Get<string>(), dp, ip, false) as Node; // lambda execute expression
-
-				if (ip == null)
+				if (newIp == null)
 					throw new ArgumentException("nothing to [execute]");
 
-				Execute(ip, dp, e.Params);
-				if (dp.Contains("$"))
-				{
-					oldIp.AddRange(dp["$"].UnTie());
-				}
-				return;
+				Execute(newIp, dp, e.Params);
 			}
-
-			Execute(ip, dp, e.Params);
+			else
+				Execute(ip, dp, e.Params);
 		}
 
 		/*

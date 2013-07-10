@@ -123,5 +123,3 @@ execute=>[_exe]
 
 * sanitize magix.code.node-2-code etc, and among other things get rid of [code] and exchange with [value] for conformity, also minimize node passing
 
-* there is something fishy about how for instance set-focus gets through several times on page, since multiple event handlers gets a "hit"
-
