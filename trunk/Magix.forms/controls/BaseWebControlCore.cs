@@ -22,7 +22,7 @@ namespace Magix.forms
 		 * sets css classes
 		 */
 		[ActiveEvent(Name = "magix.forms.set-class")]
-		protected void magix_forms_set_class(object sender, ActiveEventArgs e)
+		protected static void magix_forms_set_class(object sender, ActiveEventArgs e)
 		{
 			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
@@ -51,7 +51,7 @@ namespace Magix.forms
 		 * retrieves css classes
 		 */
 		[ActiveEvent(Name = "magix.forms.get-class")]
-		protected void magix_forms_get_class(object sender, ActiveEventArgs e)
+		protected static void magix_forms_get_class(object sender, ActiveEventArgs e)
 		{
 			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
@@ -75,7 +75,7 @@ namespace Magix.forms
 		 * adds css class
 		 */
 		[ActiveEvent(Name = "magix.forms.add-css")]
-		protected void magix_forms_add_css(object sender, ActiveEventArgs e)
+		protected static void magix_forms_add_css(object sender, ActiveEventArgs e)
 		{
 			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
@@ -106,7 +106,7 @@ namespace Magix.forms
 		 * removes css class
 		 */
 		[ActiveEvent(Name = "magix.forms.remove-css")]
-		protected void magix_forms_remove_css(object sender, ActiveEventArgs e)
+		protected static void magix_forms_remove_css(object sender, ActiveEventArgs e)
 		{
 			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
@@ -137,7 +137,7 @@ namespace Magix.forms
 		 * sets focus to a specific mux web control
 		 */
 		[ActiveEvent(Name = "magix.forms.set-focus")]
-		protected void magix_forms_set_focus(object sender, ActiveEventArgs e)
+		protected static void magix_forms_set_focus(object sender, ActiveEventArgs e)
 		{
 			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
@@ -153,7 +153,7 @@ namespace Magix.forms
 
 			if (ctrl != null)
 			{
-					ctrl.Focus();
+				ctrl.Focus();
 			}
 		}
 

@@ -1,0 +1,11 @@
+
+
+inspect=>@"allows you to create an application where 
+you can collect data in lists using a datagrid and crud
+graphical interface"
+
+_name=>crud app
+
+
+magix.viewport.show-message
+  message=>file executed

@@ -19,7 +19,7 @@ namespace Magix.code
 	public class CodeHelper : ActiveController
 	{
 		/**
-		 * Transforms a given "JSON" node into 'code syntax'
+		 * transforms from code to node
 		 */
 		[ActiveEvent(Name = "magix.code.node-2-code")]
 		public static void magix_code_node_2_code(object sender, ActiveEventArgs e)
@@ -116,8 +116,7 @@ contain type information for types of int, decimal, datetime and bool.&nbsp;&nbs
 		}
 
 		/**
-		 * Transforms the given "code" node into a node structure, according to
-		 * spaces which indents the code
+		 * transforms from code to node
 		 */
 		[ActiveEvent(Name = "magix.code.code-2-node")]
 		public static void magix_code_code_2_node(object sender, ActiveEventArgs e)
@@ -272,6 +271,59 @@ code
 			}
 			e.Params["json"].Value = ret;
 		}
+
+		/**
+		 * transforms from file to node
+		 */
+		[ActiveEvent(Name = "magix.code.file-2-node")]
+		public static void magix_code_file_2_node(object sender, ActiveEventArgs e)
+		{
+			if (ShouldInspect(e.Params))
+			{
+				e.Params.Clear();
+				e.Params["event:magix.execute"].Value = null;
+				e.Params["magix.code.file-2-code"].Value = "some-path/to-some/hyper-lisp/file.hl";
+				e.Params["inspect"].Value = @"will transform the given file as value of node to 
+node tree, and return in [json].&nbsp;&nbsp;thread safe";
+				return;
+			}
+
+			if (string.IsNullOrEmpty(e.Params.Get<string>()))
+			{
+				throw new ArgumentException("no file passed into file-2-code");
+			}
+
+			string file = e.Params.Get<string>();
+
+			Node fn = new Node();
+			fn.Value = file;
+
+			RaiseActiveEvent(
+				"magix.file.load",
+				fn);
+
+			Node code = new Node();
+			code["code"].Value = fn["value"].Get<string>();
+
+			RaiseActiveEvent(
+				"magix.code.code-2-node",
+				code);
+
+			e.Params["json"].ReplaceChildren(code["json"].Get<Node>());
+		}
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
 

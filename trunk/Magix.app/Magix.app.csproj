@@ -226,6 +226,7 @@
     <Folder Include="system42\admin\users\" />
     <Folder Include="system42\admin\test-files\" />
     <Folder Include="system42\admin\app-wizard\" />
+    <Folder Include="system42\admin\app-wizard\wizards\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="media\xing-wysihtml5\LICENSE" />
@@ -316,5 +317,7 @@
     <None Include="system42\startup-scripts\test-viewstate.hl" />
     <None Include="system42\startup-scripts\test-web-parts.hl" />
     <None Include="system42\admin\app-wizard\app-wizard.hl" />
+    <None Include="system42\admin\app-wizard\wizards\crud-app.hl" />
+    <None Include="system42\admin\app-wizard\new-app.hl" />
   </ItemGroup>
 </Project>
