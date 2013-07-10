@@ -99,6 +99,39 @@ thread safe";
 		}
 
 		/**
+		 * retrieves visibility of control
+		 */
+		[ActiveEvent(Name = "magix.forms.get-visible")]
+		protected void magix_forms_get_visible(object sender, ActiveEventArgs e)
+		{
+			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			{
+				e.Params["event:magix.forms.get-visible"].Value = null;
+				e.Params["id"].Value = "control";
+				e.Params["form-id"].Value = "webpages";
+				e.Params["value"].Value = true;
+				e.Params["inspect"].Value = @"retrieves the visibility of the given 
+[id] web control, in the [form-id] form, into [value].&nbsp;&nbsp;not thread safe";
+				return;
+			}
+
+			Control ctrl = FindControl<Control>(e.Params);
+
+			if (ctrl != null)
+			{
+				e.Params["value"].Value = ctrl.Visible;
+			}
+		}
+
+		/*
+		 * helper for events such that value can be passed into event handlers
+		 */
+		protected virtual object GetValue(BaseControl that)
+		{
+			return null;
+		}
+
+		/**
 		 * fills out the stuff from basecontrol
 		 */
 		protected virtual void FillOutParameters(Node node, BaseControl ctrl)
@@ -116,11 +149,18 @@ thread safe";
 
 			if (node.Contains("onfirstload") && node.Contains("_first") && node["_first"].Get<bool>())
 			{
-				// TODO: is this right? do we need to clone?
 				Node codeNode = node["onfirstload"].Clone();
 
 				ctrl.Load += delegate(object sender, EventArgs e)
 				{
+					BaseControl that2 = sender as BaseControl;
+					if (!string.IsNullOrEmpty(that2.Info))
+						codeNode["$"]["info"].Value = that2.Info;
+
+					object val = GetValue(that2);
+					if (val != null)
+						codeNode["$"]["value"].Value = val;
+
 					RaiseActiveEvent(
 						"magix.execute",
 						codeNode);

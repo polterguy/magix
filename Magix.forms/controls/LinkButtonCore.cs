@@ -14,7 +14,7 @@ namespace Magix.forms
 	/**
 	 * contains the link button control
 	 */
-	public class LinkButtonCore : BaseWebControlCore
+	public class LinkButtonCore : FormElementCore
 	{
 		/**
 		 * creates link button
@@ -89,35 +89,6 @@ namespace Magix.forms
 			if (ctrl != null)
 			{
 				e.Params["value"].Value = ctrl.Text;
-			}
-		}
-
-		/**
-		 * set-enabled
-		 */
-		[ActiveEvent(Name = "magix.forms.set-enabled")]
-		protected void magix_forms_set_enabled(object sender, ActiveEventArgs e)
-		{
-			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
-			{
-				e.Params["event:magix.forms.set-enabled"].Value = null;
-				e.Params["id"].Value = "control";
-				e.Params["form-id"].Value = "webpages";
-				e.Params["value"].Value = true;
-				e.Params["inspect"].Value = @"sets the enabled property of the given 
-[id] web control, in the [form-id] form, from [value].&nbsp;&nbsp;not thread safe";
-				return;
-			}
-
-			LinkButton ctrl = FindControl<LinkButton>(e.Params);
-
-			if (ctrl != null)
-			{
-				bool enabled = false;
-				if (e.Params.Contains("value"))
-					enabled = e.Params["value"].Get<bool>();
-
-				ctrl.Enabled = enabled;
 			}
 		}
 

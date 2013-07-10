@@ -8,13 +8,14 @@ using System;
 using System.IO;
 using Magix.Core;
 using Magix.UX.Widgets;
+using Magix.UX.Widgets.Core;
 
 namespace Magix.forms
 {
 	/**
 	 * check box
 	 */
-	public class CheckBoxCore : BaseWebControlCore
+	public class CheckBoxCore : FormElementCore
 	{
 		/**
 		 * creates check-box
@@ -47,11 +48,18 @@ namespace Magix.forms
 
 			if (node.Contains("oncheckedchanged"))
 			{
-				// TODO: is this right? do we need to clone?
 				Node codeNode = node["oncheckedchanged"].Clone();
 
 				ret.CheckedChanged += delegate(object sender2, EventArgs e2)
 				{
+					CheckBox that2 = sender as CheckBox;
+					if (!string.IsNullOrEmpty(that2.Info))
+						codeNode["$"]["info"].Value = that2.Info;
+
+					object val = GetValue(that2);
+					if (val != null)
+						codeNode["$"]["value"].Value = val;
+
 					RaiseActiveEvent(
 						"magix.execute",
 						codeNode);
@@ -104,35 +112,6 @@ namespace Magix.forms
 			}
 		}
 
-		/**
-		 * set-enabled
-		 */
-		[ActiveEvent(Name = "magix.forms.set-enabled")]
-		protected void magix_forms_set_enabled(object sender, ActiveEventArgs e)
-		{
-			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
-			{
-				e.Params["event:magix.forms.set-enabled"].Value = null;
-				e.Params["id"].Value = "control";
-				e.Params["form-id"].Value = "webpages";
-				e.Params["value"].Value = true;
-				e.Params["inspect"].Value = @"sets the enabled property of the given 
-[id] web control, in the [form-id] form, from [value].&nbsp;&nbsp;not thread safe";
-				return;
-			}
-
-			CheckBox ctrl = FindControl<CheckBox>(e.Params);
-
-			if (ctrl != null)
-			{
-				bool enabled = false;
-				if (e.Params.Contains("value"))
-					enabled = e.Params["value"].Get<bool>();
-
-				ctrl.Enabled = enabled;
-			}
-		}
-
 		protected override void Inspect (Node node)
 		{
 			node["event:magix.forms.create-web-part"].Value = null;
@@ -148,6 +127,14 @@ true or false, and determines if it is possible to change its state, or not.&nbs
 			node["controls"]["check"]["enabled"].Value = true;
 			base.Inspect(node["controls"]["check"]);
 			node["controls"]["check"]["oncheckedchanged"].Value = "hyper lisp code";
+		}
+		
+		/*
+		 * helper for events such that value can be passed into event handlers
+		 */
+		protected override object GetValue(BaseControl that)
+		{
+			return ((CheckBox)that).Checked;
 		}
 	}
 }

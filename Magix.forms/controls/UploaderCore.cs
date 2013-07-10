@@ -41,7 +41,6 @@ namespace Magix.forms
 
 			if (node.Contains("onuploaded"))
 			{
-				// TODO: is this right? do we need to clone?
 				Node codeNode = node["onuploaded"].Clone();
 
 				ret.Uploaded += delegate(object sender2, EventArgs e2)

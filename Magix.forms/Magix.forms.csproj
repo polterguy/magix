@@ -55,6 +55,7 @@
     <Compile Include="controls\LambdaBaseCore.cs" />
     <Compile Include="WebPart.ascx.cs" />
     <Compile Include="controls\EffectCore.cs" />
+    <Compile Include="controls\FormElementCore.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

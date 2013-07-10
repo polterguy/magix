@@ -8,6 +8,7 @@ using System;
 using System.IO;
 using Magix.Core;
 using Magix.UX.Widgets;
+using Magix.UX.Widgets.Core;
 
 namespace Magix.forms
 {
@@ -92,6 +93,14 @@ hidden fields are invisible, but can store any data as test in their [value] nod
 			node["form-id"].Value = "sample-form";
 			node["controls"]["hidden"]["value"].Value = "whatever you wish to put in as value";
 			base.Inspect(node["controls"]["hidden"]);
+		}
+		
+		/*
+		 * helper for events such that value can be passed into event handlers
+		 */
+		protected override object GetValue(BaseControl that)
+		{
+			return ((HiddenField)that).Value;
 		}
 	}
 }

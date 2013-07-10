@@ -8,13 +8,14 @@ using System;
 using System.IO;
 using Magix.Core;
 using Magix.UX.Widgets;
+using Magix.UX.Widgets.Core;
 
 namespace Magix.forms
 {
 	/**
 	 * textarea control
 	 */
-	public class TextAreaCore : BaseWebControlCore
+	public class TextAreaCore : FormElementCore
 	{
 		/**
 		 * creates text area control
@@ -56,11 +57,18 @@ namespace Magix.forms
 
 			if (node.Contains("ontextchanged"))
 			{
-				// TODO: is this right? do we need to clone?
 				Node codeNode = node["ontextchanged"].Clone();
 
 				ret.TextChanged += delegate(object sender2, EventArgs e2)
 				{
+					TextArea that2 = sender as TextArea;
+					if (!string.IsNullOrEmpty(that2.Info))
+						codeNode["$"]["info"].Value = that2.Info;
+
+					object val = GetValue(that2);
+					if (val != null)
+						codeNode["$"]["value"].Value = val;
+
 					RaiseActiveEvent(
 						"magix.execute",
 						codeNode);
@@ -69,11 +77,18 @@ namespace Magix.forms
 
 			if (node.Contains("onescpressed"))
 			{
-				// TODO: is this right? do we need to clone?
 				Node codeNode = node["onescpressed"].Clone();
 
 				ret.TextChanged += delegate(object sender2, EventArgs e2)
 				{
+					TextArea that2 = sender as TextArea;
+					if (!string.IsNullOrEmpty(that2.Info))
+						codeNode["$"]["info"].Value = that2.Info;
+
+					object val = GetValue(that2);
+					if (val != null)
+						codeNode["$"]["value"].Value = val;
+
 					RaiseActiveEvent(
 						"magix.execute",
 						codeNode);
@@ -127,35 +142,6 @@ namespace Magix.forms
 		}
 
 		/**
-		 * set-enabled
-		 */
-		[ActiveEvent(Name = "magix.forms.set-enabled")]
-		protected void magix_forms_set_enabled(object sender, ActiveEventArgs e)
-		{
-			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
-			{
-				e.Params["event:magix.forms.set-enabled"].Value = null;
-				e.Params["id"].Value = "control";
-				e.Params["form-id"].Value = "webpages";
-				e.Params["value"].Value = true;
-				e.Params["inspect"].Value = @"sets the enabled property of the given 
-[id] web control, in the [form-id] form, from [value].&nbsp;&nbsp;not thread safe";
-				return;
-			}
-
-			TextArea ctrl = FindControl<TextArea>(e.Params);
-
-			if (ctrl != null)
-			{
-				bool enabled = false;
-				if (e.Params.Contains("value"))
-					enabled = e.Params["value"].Get<bool>();
-
-				ctrl.Enabled = enabled;
-			}
-		}
-
-		/**
 		 * selects all text
 		 */
 		[ActiveEvent(Name = "magix.forms.select-all")]
@@ -201,6 +187,14 @@ is pressed, while control has focus";
 			base.Inspect(node["controls"]["text-area"]);
 			node["controls"]["text-area"]["ontextchanged"].Value = "hyper lisp code";
 			node["controls"]["text-area"]["onescpressed"].Value = "hyper lisp code";
+		}
+		
+		/*
+		 * helper for events such that value can be passed into event handlers
+		 */
+		protected override object GetValue(BaseControl that)
+		{
+			return ((TextArea)that).Text;
 		}
 	}
 }

@@ -8,13 +8,14 @@ using System;
 using System.IO;
 using Magix.Core;
 using Magix.UX.Widgets;
+using Magix.UX.Widgets.Core;
 
 namespace Magix.forms
 {
 	/**
 	 * select list
 	 */
-	public class SelectListCore : BaseWebControlCore
+	public class SelectListCore : FormElementCore
 	{
 		/**
 		 * creates the select list control
@@ -65,11 +66,18 @@ namespace Magix.forms
 
 			if (node.Contains("onselectedindexchanged"))
 			{
-				// TODO: is this right? do we need to clone?
 				Node codeNode = node["onselectedindexchanged"].Clone();
 
 				ret.SelectedIndexChanged += delegate(object sender2, EventArgs e2)
 				{
+					SelectList that2 = sender as SelectList;
+					if (!string.IsNullOrEmpty(that2.Info))
+						codeNode["$"]["info"].Value = that2.Info;
+
+					object val = GetValue(that2);
+					if (val != null)
+						codeNode["$"]["value"].Value = val;
+
 					RaiseActiveEvent(
 						"magix.execute",
 						codeNode);
@@ -119,35 +127,6 @@ namespace Magix.forms
 			if (ctrl != null)
 			{
 				e.Params["value"].Value = ctrl.SelectedItem.Value;
-			}
-		}
-
-		/**
-		 * set-enabled
-		 */
-		[ActiveEvent(Name = "magix.forms.set-enabled")]
-		protected void magix_forms_set_enabled(object sender, ActiveEventArgs e)
-		{
-			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
-			{
-				e.Params["event:magix.forms.set-enabled"].Value = null;
-				e.Params["id"].Value = "control";
-				e.Params["form-id"].Value = "webpages";
-				e.Params["value"].Value = true;
-				e.Params["inspect"].Value = @"sets the enabled property of the given 
-[id] web control, in the [form-id] form, from [value].&nbsp;&nbsp;not thread safe";
-				return;
-			}
-
-			SelectList ctrl = FindControl<SelectList>(e.Params);
-
-			if (ctrl != null)
-			{
-				bool enabled = false;
-				if (e.Params.Contains("value"))
-					enabled = e.Params["value"].Get<bool>();
-
-				ctrl.Enabled = enabled;
 			}
 		}
 
@@ -215,6 +194,14 @@ choice.&nbsp;&nbsp;[onselectedindexchanged] is raised when selected item state o
 			node["controls"]["select"]["items"]["item4"].Value = "Item 4";
 			node["controls"]["select"]["items"]["item5"].Value = "Item 5";
 			node["controls"]["check"]["onselectedindexchanged"].Value = "hyper lisp code";
+		}
+		
+		/*
+		 * helper for events such that value can be passed into event handlers
+		 */
+		protected override object GetValue(BaseControl that)
+		{
+			return ((SelectList)that).SelectedItem.Value;
 		}
 	}
 }
