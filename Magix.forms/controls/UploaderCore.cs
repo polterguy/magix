@@ -14,7 +14,7 @@ namespace Magix.forms
 	/**
 	 * uploader control
 	 */
-	public class UploaderCore : BaseWebControlCore
+	public class UploaderCore : BaseControlCore
 	{
 		/**
 		 * creates uploader control
@@ -32,7 +32,8 @@ namespace Magix.forms
 
 			Uploader ret = new Uploader();
 
-			FillOutParameters(node, ret);
+			if (node.Contains("css") && !string.IsNullOrEmpty(node["css"].Get<string>()))
+				ret.CssClass = node["css"].Get<string>();
 
 			string folder = "";
 
@@ -109,7 +110,7 @@ namespace Magix.forms
 				e.Params["value"].Value = ctrl.SizeOfBatch > ctrl.CurrentNo + 1;
 			}
 		}
-		protected override void Inspect (Node node)
+		protected override void Inspect(Node node)
 		{
 			node["event:magix.forms.create-web-part"].Value = null;
 			node["inspect"].Value = @"creates a uploader input type of web control.&nbsp;&nbsp;
@@ -117,7 +118,10 @@ namespace Magix.forms
 			node["container"].Value = "content5";
 			node["form-id"].Value = "sample-form";
 			node["controls"]["uploader"]["folder"].Value = "system42";
+			node["controls"]["uploader"]["css"].Value = "mux-file-uploader";
 			base.Inspect(node["controls"]["uploader"]);
+			node["controls"]["uploader"]["visible"].UnTie(); // makes no sense
+			node["controls"]["uploader"]["info"].UnTie(); // makes no sense
 			node["controls"]["uploader"]["onuploaded"].Value = "hyper lisp code";
 		}
 	}

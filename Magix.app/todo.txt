@@ -1,54 +1,16 @@
 
-
-* when a form is injected into a page, and it has a lambda control, it disregards the fact that oncreatecontrols
-  is only to be run once, and not upon ajax callbacks. the behavior in the DynamicForm class is correct,
-  while the HtmlViewer seems to go bananas, something that can be seen by previewing form in forms editor
-  and adding a show message box in the lambda oncreatecontrols, and create an ajax callback anyway, and see how the form is not re-initialized,
-  while in a page, with a page get paramater, the same form will show the same messagebox upon every single ajax request.
-  sever error!!
-
 * there are no way to traverse trees, hierarchically, currently in magix. this is seen if attempting to construct a tree 
   lamba web control of e.g. namespaces in magix, represented as a tree
-
-* turn profiler and tracer into a setting, im the settings form
-
-* the execute hyperlisp keyword, should be able to take parameters into the executing code block
-  e.e.;
-_exe
-  magix.web.get-session
-    key=>stopped-learning
-  if=>[@][magix.web.get-session][value].Value==False
-    for-each=>[$]
-      add=>[@][..][magix.viewport.show-message]
-        value=>[.]
-    magix.viewport.show-message
-      time=>-1
-execute=>[_exe]
-  message=>howdy
-
-* figure out of magix.execute.override is necessary, since there is magix.execute.event ...?
 
 * make magix.data.x conform to eachother in their passing of nodes
 
 * make all web form sample code snippets in inspect create working functioning code
-
-* normalize all active event parametrizing to minimize parameters down to minimum level, while at the same time make all non-hyper lisp keywords invokable through active event executor
 
 * create unit tests for magix.file namespace
 
 * implement more support for expressions in all events within the magix.execute namespace, such as tunnel, open, etc - by using the Expression class from Magix.Core
 
 * create boolean operations for comparing and "multiplying" node trees
-
-* add up [$] parameters into event handlers of web form controls for "value" and "info" for simplicity
-
-* get rid of the :before and :after active events, and replace them with something smarter
-
-* make support for filtering of events in both the profiler and the tracer
-
-* make [form-id] optional, and if not given, returns any match for control with given id for simplicity
-
-* refactor all the get-value, add-css-class, etc in the viewport, and move into widget controllers
 
 * create a database management system
 
@@ -61,7 +23,7 @@ execute=>[_exe]
 
 * make Active Modules become inspectable through using [inspect]
 
-* sanitize the Expression.IsTrue logic ...
+* refactor the Expression class
 
 * remove some of the unit tests written in code, such as the viewstate one, which is superflous
 
@@ -75,15 +37,7 @@ execute=>[_exe]
 
 * make sure all inspect code snippets actually executes
 
-* magix.execute.if always returns false if expression is not found, also on "!=" expression, which for the most parts are wrong results
-
-* for some reasons, if default webpage has carriage returns, it fisslez
-
 * make it possible to serialize forms created dynamically, either to c# or some other format in a file
-
-* break expressions of comparison down to have multiple child nodes, such as [lhs], [rhs], [operator] and such, which makes trees possible to create
-
-* sanitize all the $ passings, now they're all over the place, and largely some of them redundant
 
 * sanitize names of web controls, such as "check" contra "link-button", etc ...
 
@@ -91,35 +45,31 @@ execute=>[_exe]
 
 * make it possible to sort in magix.data.load, server log is showing oldest item first
 
-* disable delete button in pages editor when no page is selected
-
 * there is something fishy with magix.forms.controls.literal, in forms editor it messes up if i start pasting in after the control another widget, such as a lambda
-
-* create unit tests for form objects and pages, which can be done by remotely invoking methods in loopback to a specific page url, and create event handlers in mml for events which are open
-
-* minimze return parameters from magix.public.get-public-events
 
 * make file system component become smarter
 
 * make spacing at bottom of body or something, see server log and scroll to bottom to understand why
 
-* != expression always returns false if left-hand-expression is null, which is a severe bug
-
 * somehow make it possible to copy from form to form
 
 * make the magix.forms.form saving format become the same as the create-web-part format
 
-* implement generic inheritance from BaseWebControlCore, etc, to reduce the number of methods in web controls controllers
+* implement common controller for all gui get/set methods that are shared among different controls through inheritance
 
-* create unit tests for magix.forms.create-web-part
-
-* remove has-more-data in uploader and echange with parameter into event handler
+* remove has-more-data in uploader and change with parameter into event handler
 
 * check up ActiveEvent.cs, and see if we really need the parsing stuff, to pass in expressions, which i think only supply overhead
-
-* refactor get-active-events
 
 * make ip be default expression getter in Expressions, such that code inside for-each can be the same as outside, and doesn't have to change
 
 * sanitize magix.code.node-2-code etc, and among other things get rid of [code] and exchange with [value] for conformity, also minimize node passing
+
+* make boolean properties of web controls use check boxes in forms editor
+
+* remove controls from editing panel in forms editor
+
+* sanitize the grid system css for input elements, it's a mess
+
+* if there is only one button on form in forms editor, and you set it to invisible, then save complains about javascript bug
 

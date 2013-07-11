@@ -32,10 +32,9 @@ use [css] to set css class of wrapping control, and [tag] to set html tag
 of wrapping control.&nbsp;&nbsp;not thread safe";
 				e.Params["container"].Value = "content5";
 				e.Params["form-id"].Value = "sample-form";
-				e.Params["controls"]["form"].Value = "name-of-my-form";
+				e.Params["controls"]["form"].Value = "name-of-your-form";
 				e.Params["controls"]["id"].Value = "unique-id";
 				e.Params["controls"]["css"].Value = "css-of-div-wrapper";
-				e.Params["controls"]["tag"].Value = "div";
 				return;
 			}
 

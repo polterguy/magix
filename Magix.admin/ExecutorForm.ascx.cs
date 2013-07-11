@@ -90,7 +90,7 @@ namespace Magix.admin
 
 			foreach (Node idx in node["events"])
 			{
-				data += "\"" + idx.Get<string>() + "\",";
+				data += "\"" + idx.Name + "\",";
 			}
 
 			return "[" + data.TrimEnd (',') + "]";

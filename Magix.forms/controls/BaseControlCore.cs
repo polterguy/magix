@@ -46,14 +46,14 @@ thread safe";
 			{
 				Node tp = new Node("widget");
 
-				tp["type"].Value = idx.Get<string>();
+				tp["type"].Value = idx.Name;
 				tp["properties"]["id"].Value = "id";
 
 				Node tp2 = new Node();
 				tp2["inspect"].Value = null;
 
 				RaiseActiveEvent(
-					idx.Get<string>(),
+					idx.Name,
 					tp2);
 
 				if (tp2.Contains("_no-embed"))

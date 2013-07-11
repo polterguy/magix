@@ -114,6 +114,31 @@ namespace Magix.forms
 				}
 			}
 		}
+		
+		/**
+		 * raises form events, if match
+		 */
+		[ActiveEvent(Name = "magix.forms.change-mml")]
+		protected void magix_forms_change_mml(object sender, ActiveEventArgs e)
+		{
+			if (e.Params.Contains("inspect"))
+			{
+				e.Params["inspect"].Value = @"changes the mml of the given [form-id] 
+to the value in [mml]";
+				return;
+			}
+
+			if (FormID == e.Params["form-id"].Get<string>())
+			{
+				DataSource = new Node();
+				Methods.Clear();
+				TokenizeMarkup(e.Params);
+				this.Controls.Clear();
+				isFirst = true;
+				BuildControls();
+				((DynamicPanel)this.Parent).ReRender();
+			}
+		}
 
 		/**
 		 * raises form events, if match

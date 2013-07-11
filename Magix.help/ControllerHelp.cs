@@ -98,7 +98,7 @@ button=>next
 
 			using (TextReader reader = File.OpenText(Page.Server.MapPath("help-system/index.mml")))
 			{
-				tmp["html"].Value = reader.ReadToEnd();
+				tmp["mml"].Value = reader.ReadToEnd();
 			}
 
 			RaiseActiveEvent(
@@ -208,11 +208,11 @@ button=>next
 
 			using (TextReader reader = File.OpenText(Page.Server.MapPath(e.Params["file"].Get<string>())))
 			{
-				tmp["html"].Value = reader.ReadToEnd();
+				tmp["mml"].Value = reader.ReadToEnd();
 			}
 
 			RaiseActiveEvent(
-				"magix.forms.change-html",
+				"magix.forms.change-mml",
 				tmp);
 
 			if (!(e.Params.Contains("freeze-help-stack") && 

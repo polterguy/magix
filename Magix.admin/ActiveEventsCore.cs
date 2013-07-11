@@ -42,10 +42,6 @@ don't match the [begins-with] parameter.&nbsp;&nbsp;thread safe";
 				return;
 			}
 
-			bool takeAll = false;
-			if (e.Params.Contains("all"))
-				takeAll = e.Params["all"].Get<bool>();
-
 			bool open = false;
 			if (e.Params.Contains("open"))
 				open = e.Params["open"].Get<bool>();
@@ -63,51 +59,25 @@ don't match the [begins-with] parameter.&nbsp;&nbsp;thread safe";
 				beginsWith = e.Params["begins-with"].Get<string>();
 
 			Node node = e.Params;
-			int idxNo = 0;
 			foreach (string idx in ActiveEvents.Instance.ActiveEventHandlers)
 			{
-				if (open)
-				{
-					if (ActiveEvents.Instance.IsAllowedRemotely(idx))
-						node["events"]["no_" + idxNo.ToString()].Value = string.IsNullOrEmpty (idx) ? "" : idx;
-					idxNo += 1;
+				if (open && !ActiveEvents.Instance.IsAllowedRemotely(idx))
 					continue;
-				}
-				if (remoted)
-				{
-					if (ActiveEvents.Instance.RemotelyOverriddenURL(idx) != null)
-						node["events"]["no_" + idxNo.ToString()].Value = string.IsNullOrEmpty (idx) ? "" : idx;
-					idxNo += 1;
+				if (remoted && string.IsNullOrEmpty(ActiveEvents.Instance.RemotelyOverriddenURL(idx)))
 					continue;
-				}
-				if (overridden)
-				{
-					if (ActiveEvents.Instance.IsOverride(idx))
-						node["events"]["no_" + idxNo.ToString()].Value = string.IsNullOrEmpty (idx) ? "" : idx;
-					idxNo += 1;
+				if (overridden && !ActiveEvents.Instance.IsOverride(idx))
 					continue;
-				}
-				if (!takeAll && string.IsNullOrEmpty(beginsWith) && idx.StartsWith("magix.test."))
-					continue;
-
-				if (idx.Contains("."))
-				{
-					string[] splits = idx.Split ('.');
-					if (!takeAll && splits[splits.Length - 1].StartsWith("_"))
-						continue; // "Hidden" event ...
-				}
 
 				if (!string.IsNullOrEmpty(beginsWith) && !idx.StartsWith(beginsWith))
 					continue;
 
-				node["events"]["no_" + idxNo.ToString()].Value = string.IsNullOrEmpty (idx) ? "" : idx;
-				idxNo += 1;
+				node["events"][string.IsNullOrEmpty(idx) ? "" : idx].Value = null;
 			}
 
 			node["events"].Sort (
 				delegate(Node left, Node right)
 				{
-					return ((string)left.Value).CompareTo(right.Value as String);
+					return left.Name.CompareTo(right.Name);
 				});
 		}
 	}
