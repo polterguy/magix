@@ -193,7 +193,7 @@ choice.&nbsp;&nbsp;[onselectedindexchanged] is raised when selected item state o
 			node["controls"]["select"]["items"]["item3"].Value = "Item 3";
 			node["controls"]["select"]["items"]["item4"].Value = "Item 4";
 			node["controls"]["select"]["items"]["item5"].Value = "Item 5";
-			node["controls"]["check"]["onselectedindexchanged"].Value = "hyper lisp code";
+			node["controls"]["select"]["onselectedindexchanged"].Value = "hyper lisp code";
 		}
 		
 		/*

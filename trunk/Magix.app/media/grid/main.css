@@ -58,6 +58,7 @@ div {overflow:visible;}
 input[type=text], input[type=password], textarea {border-left:0px none;border-right:0px none;border-top:1px solid #bbb;border-bottom:1px solid #bbb;padding:0;}
 input[type=text] {height:16px;}
 input[type=button] {border:0 none;}
+input[type=checkbox] {height:18px;max-height:18px;margin-bottom:0;margin-left:0;}
 label {font-weight:bold;}
 .small {font-size:.8em;margin-bottom:1.875em;line-height:1.875em;}
 .large {font-size:1.2em;line-height:2.5em;margin-bottom:1.25em;}
@@ -74,7 +75,7 @@ label {font-weight:bold;}
 pre {background-color:#fafafa;padding-top:18px;padding-bottom:18px;}
 
 /* grid system */
-.container {width:950px;margin:0 auto;position:relative;}
+.container {width:950px;margin:0 auto;position:relative;overflow:auto;padding-bottom:100px;}
 .showgrid {background:url(grid.png);overflow:auto;}
 .column, .span-1, .span-2, .span-3, .span-4, .span-5, .span-6, .span-7, .span-8, .span-9, .span-10, .span-11, .span-12, .span-13, .span-14, .span-15, .span-16, .span-17, .span-18, .span-19, .span-20, .span-21, .span-22, .span-23, .span-24 {float:left;margin-right:10px;}
 .last {margin-right:0;}

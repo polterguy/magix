@@ -20,8 +20,8 @@ active event open is crucial"
     magix.admin.get-active-events
       open=(bool)>true
     for-each=>[magix.admin.get-active-events][events]
-      set=>[$][events][[.].Value].Value
-        value=>
+      set=>[$][events][[.].Name].Name
+        value=>[.].Name
 
 open=>magix.public.get-public-events
 

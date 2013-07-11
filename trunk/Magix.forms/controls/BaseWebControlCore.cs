@@ -369,10 +369,10 @@ moved out of control surface.&nbsp;&nbsp;[onkeypress] is raised when a key is pr
 of control.&nbsp;&nbsp;[onesc] is raised when escape key is pressed inside of control.
 &nbsp;&nbsp;not thread safe";
 			node["css"].Value = "css classes";
-			node["dir"].Value = "ltr|rtl";
+			node["dir"].Value = "ltr";
 			node["tab"].Value = 5;
 			node["tip"].Value = "informational tooltip";
-			node["style"].Value = "css style collection";
+			node["style"].Value = "width:120px;height:120px;";
 			base.Inspect(node);
 			node["onclick"].Value = "hyper lisp code";
 			node["ondblclick"].Value = "hyper lisp code";

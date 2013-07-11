@@ -159,7 +159,7 @@ namespace Magix.forms
 [text] is the visible text.&nbsp;&nbso;not thread safe";
 			node["container"].Value = "content5";
 			node["form-id"].Value = "sample-form";
-			node["controls"]["wysiwyg"]["text"].Value = "hello world";
+			node["controls"]["wysiwyg"]["text"].Value = "<p>hello world</p>";
 			node["controls"]["wysiwyg"]["place-holder"].Value = "place holder ...";
 			node["controls"]["wysiwyg"]["has-bold"].Value = true;
 			node["controls"]["wysiwyg"]["has-italic"].Value = true;
@@ -178,6 +178,8 @@ namespace Magix.forms
 			node["controls"]["wysiwyg"]["has-showhtml"].Value = true;
 			node["controls"]["wysiwyg"]["editor-css-file"].Value = "media/grid/main.css";
 			base.Inspect(node["controls"]["wysiwyg"]);
+			node["controls"]["wysiwyg"]["style"].Value = "height:500px;";
+			node["controls"]["wysiwyg"]["css"].Value = "wysiwyg span-24";
 		}
 	}
 }

@@ -94,3 +94,64 @@ if both sides are not existing"
     else
       throw=>values didn't match
 
+
+event=>magix.test.if-equals-boolean-1
+
+  inspect=>@"verifies that if returns true 
+if comparing to boolean"
+
+  code
+    _dt1=(bool)>True
+    if=>[_dt1].Value==true
+      _success
+    else
+      throw=>values didn't match
+
+
+event=>magix.test.if-equals-boolean-2
+
+  inspect=>@"verifies that if returns false 
+if comparing to true boolean"
+
+  code
+    _dt1=(bool)>true
+    if=>[_dt1].Value!=false
+      _success
+    else
+      throw=>values didn't match
+
+
+event=>magix.test.if-equals-boolean-3
+
+  inspect=>@"verifies that if returns false 
+for single-compound statement"
+
+  code
+    _dt1=(bool)>false
+    if=>[_dt1].Value
+      throw=>values didn't match
+
+
+event=>magix.test.if-equals-boolean-4
+
+  inspect=>@"verifies that if returns true 
+for single-compound statement"
+
+  code
+    _dt1=(bool)>true
+    if=>[_dt1].Value
+      _success
+    else
+      throw=>values didn't match
+
+
+event=>magix.test.if-equals-boolean-5
+
+  inspect=>@"verifies that if returns true 
+for dual-compound statement"
+
+  code
+    _dt1=(bool)>true
+    if=>![_dt1].Value
+      throw=>values didn't match
+

@@ -15,7 +15,7 @@ _btn
 
 for-each=>[magix.admin.get-active-events][events]
   set=>[/][_evts][_evt].Name
-    value=>[.].Value
+    value=>[.].Name
 
 _evts
 execute=>[_evts]

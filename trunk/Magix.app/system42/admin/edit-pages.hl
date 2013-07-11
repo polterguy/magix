@@ -56,6 +56,15 @@ magix.forms.create-web-part
             value=>[magix.data.load][objects][0][name].Value
           set=>[magix.forms.set-value:1][value].Value
             value=>[magix.data.load][objects][0][value].Value
+          magix.forms.set-enabled
+            form-id=>edit-pages
+            id=>delete
+            value=>true
+        else
+          magix.forms.set-enabled
+            form-id=>edit-pages
+            id=>delete
+            value=>false
         magix.forms.set-value
           form-id=>edit-pages
           id=>name
@@ -140,9 +149,14 @@ magix.forms.create-web-part
               magix.log.append
                 header=>page created
                 body=>@"page {0} was created or modified"
+              magix.forms.set-enabled
+                form-id=>edit-pages
+                id=>delete
+                value=>true
         button=>delete
           css=>span-3 last
           text=>delete
+          enabled=>false
           onclick
             magix.viewport.confirm
               message=>please confirm deletion of page
@@ -201,6 +215,10 @@ magix.forms.create-web-part
                   magix.log.append
                     header=>page deleted
                     body=>@"page {0} was deleted"
+                  magix.forms.set-enabled
+                    form-id=>edit-pages
+                    id=>delete
+                    value=>false
     select=>form
       css=>span-5 last
       onselectedindexchanged
