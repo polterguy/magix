@@ -51,8 +51,6 @@
 
 * make spacing at bottom of body or something, see server log and scroll to bottom to understand why
 
-* somehow make it possible to copy from form to form
-
 * make the magix.forms.form saving format become the same as the create-web-part format
 
 * implement common controller for all gui get/set methods that are shared among different controls through inheritance
@@ -71,5 +69,19 @@
 
 * sanitize the grid system css for input elements, it's a mess
 
-* if there is only one button on form in forms editor, and you set it to invisible, then save complains about javascript bug
+* if there is only one button on form in forms editor, and you set it to invisible, then save the form, the engine complains about javascript bug
+
+* create btn-group(s) for pages and forms editors
+
+* create close button for editing of hyper lisp property form in forms editor
+
+* create support for // comments, use name, ignore in execute
+
+* implement sane default id's for web controls when created in forms editor, such as e.g. "btn04" and "chk01" instead of guid
+
+* rewrite help system
+
+* make magix.help.open-file use magix.file.load, such that remote files can be loaded
+
+* make all active controllers which are not inherited from "sealed" classes
 

@@ -1,0 +1,134 @@
+
+
+<h2 class="span-14 left-5 last">welcome to magix</h2>
+
+<p>magix is an open source web application platform.&nbsp;&nbsp;this means that 
+you can free of charge use magix illuminate to create your own web applications, without 
+having to pay license fees, as long as you or your company does not reside in neither 
+the state of california/usa, nor the state of telemark/norway</p>
+
+<p>magix is built upon an entirely new paradigm of software development, created around 
+one design pattern called active events, which is the reason why magix can do what magix can do</p>
+
+<p>magix is built with c# on top of mono and xamarin, and can probably be ported to .net, with some effort</p>
+
+<p>you can contact the architect and developer behind magix at 
+<a href="mailto:maremara13@gmail.com">maremara13@gmail.com</a></p>
+
+<p>please choose your path below, or click the next button to learn more about magix</p>
+
+<ul>
+
+<li>
+{{
+link-button=>link1
+  text=>active events
+  css=>bold
+  onclick
+    magix.help.open-file
+      file=>system42/admin/help/active-events/index.mml
+}}
+ - learn about the most important aspect of magix; active events
+</li>
+
+<li>
+{{
+link-button=>link2
+  text=>magix mvc
+  css=>bold
+  onclick
+    magix.help.open-file
+      file=>system42/admin/help/mvc/index.mml
+}}
+ - magix is built upon an mvc model, with some powerful modifications
+</li>
+
+<li>
+{{
+link-button=>link3
+  text=>ajax
+  css=>bold
+  onclick
+    magix.help.open-file
+      file=>system42/admin/help/ajax/index.mml
+}}
+ - with magix, you can create rich ajax apps, with 8kb of javascript
+</li>
+
+<li>
+{{
+link-button=>link4
+  text=>web parts
+  css=>bold
+  onclick
+    magix.help.open-file
+      file=>system42/admin/help/web-parts/index.mml
+}}
+ - how to dynamically create web parts
+</li>
+
+<li>
+{{
+link-button=>link41
+  text=>magix markup language
+  css=>bold
+}}
+ - mixing web controls and html with a breeze
+</li>
+
+<li>
+{{
+link-button=>link5
+  text=>hyper lisp
+  css=>bold
+}}
+ - hyper lisp, the reference guide
+</li>
+
+<li>
+{{
+link-button=>link6
+  text=>admin tools
+  css=>bold
+}}
+ - learn about the different admin tools in magix
+</li>
+
+<li>
+{{
+link-button=>link7
+  text=>oop vs. active events
+  css=>bold
+}}
+ - a comparison of traditional object oriented programming, and the benefits active events gives you
+</li>
+
+<li>
+{{
+link-button=>link8
+  text=>howto and faq
+  css=>bold
+}}
+ - solutions beginning with questions
+</li>
+
+<li>
+{{
+link-button=>link8
+  text=>magix and the singularity
+  css=>bold
+}}
+ - the ethical and moral implications of magix illuminate
+</li>
+
+</ul>
+
+
+
+{{
+lambda=>next
+  oncreatecontrols
+    magix.help.set-next
+      next=>system42/admin/help/active-events/index.mml
+}}
+

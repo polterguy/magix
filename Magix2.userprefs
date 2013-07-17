@@ -1,14 +1,12 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Magix.app/system42/startup-scripts/test-web-parts.hl">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Magix.app/system42/admin/help/web-parts/index.mml">
     <Files>
-      <File FileName="Magix.app/todo.txt" Line="107" Column="1" />
-      <File FileName="Magix.app/system42/startup-scripts/test-web-parts.hl" Line="264" Column="30" />
-      <File FileName="Magix.forms/controls/TextBoxCore.cs" Line="244" Column="1" />
-      <File FileName="Magix.forms/controls/BaseWebControlCore.cs" Line="70" Column="45" />
-      <File FileName="Magix.forms/controls/BaseControlCore.cs" Line="122" Column="43" />
-      <File FileName="Magix.forms/controls/TextAreaCore.cs" Line="183" Column="1" />
-      <File FileName="Magix.forms/controls/ButtonCore.cs" Line="141" Column="36" />
+      <File FileName="Magix.app/system42/admin/help/mvc/summing-up.mml" Line="23" Column="78" />
+      <File FileName="Magix.app/system42/admin/help/ajax/index.mml" Line="83" Column="48" />
+      <File FileName="Magix.app/system42/admin/help/web-parts/index.mml" Line="32" Column="24" />
+      <File FileName="Magix.app/system42/admin/help/index.mml" Line="65" Column="42" />
+      <File FileName="Magix.forms/FormsCore.cs" Line="100" Column="55" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -16,24 +14,33 @@
           <Node name="Core" expanded="True">
             <Node name="Magix.app" expanded="True">
               <Node name="system42" expanded="True">
-                <Node name="startup-scripts" expanded="True">
-                  <Node name="test-web-parts.hl" selected="True" />
+                <Node name="admin" expanded="True">
+                  <Node name="help" expanded="True">
+                    <Node name="active-events" expanded="True" />
+                    <Node name="ajax" expanded="True" />
+                    <Node name="mvc" expanded="True" />
+                    <Node name="web-parts" expanded="True">
+                      <Node name="index.mml" selected="True" />
+                    </Node>
+                  </Node>
                 </Node>
               </Node>
+              <Node name="Default.aspx" expanded="True" />
             </Node>
           </Node>
           <Node name="Plugins" expanded="True">
-            <Node name="Magix.forms" expanded="True">
-              <Node name="controls" expanded="True" />
-            </Node>
+            <Node name="Magix.forms" expanded="True" />
           </Node>
+          <Node name="Samples" expanded="True" />
         </State>
       </Pad>
       <Pad Id="ClassPad">
         <State expanded="True" selected="True" />
       </Pad>
       <Pad Id="MonoDevelop.Debugger.WatchPad">
-        <State />
+        <State>
+          <Value>e.Name</Value>
+        </State>
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>

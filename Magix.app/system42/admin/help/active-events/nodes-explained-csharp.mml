@@ -1,0 +1,55 @@
+
+
+<h2 class="span-14 left-5 last">creating nodes in c#</h2>
+
+<p>you can create and pass around any number of arguments, having any types of relationship between them, 
+below is an example of how to create a list</p>
+
+<pre>
+Node tmp = new Node();
+
+tmp["list"]["item1"].Value = 5;
+tmp["list"]["item2"].Value = "howdy world";
+tmp["list"]["item3"].Value = 8;
+tmp["list"]["item4"].Value = true;
+tmp["list"]["item5"].Value = DateTime.Now;
+</pre>
+
+<p>the above c# code creates a list of 5 items with different values.&nbsp;&nbsp;
+[list] is the root item, and all itemx nodes will become children 
+of the [list] node</p>
+
+<p>if you access a node in c# which doesn't exist, then a new node with that name will be created.&nbsp;&nbsp;
+inside your event handler, you can access these values for instance like this</p>
+
+<pre>
+foreach (Node idx in e.Params["list"])
+{
+	/* will iterate item1 through item5 */
+}
+</pre>
+
+<p>when accessing the parameters, you can have them automatically converted to the type you wish using the Get 
+generic method of the Node class</p>
+
+<pre>
+int myVar = e.Params["list"]["item1"].Get&lt;int&gt;();
+</pre>
+
+<p>you can also check for existence of specific nodes, using the Contains method, 
+which will return true if the given node is found.&nbsp;&nbsp;
+this allows you to extend your parameters, without breaking existing 
+logic that relies upon your existing event.&nbsp;&nbsp;
+this makes versioning of active events largely become obsolete, and 
+allows you to change an implementation, adding more parameters, without 
+breaking existing code</p>
+
+<p>the Node class has many other useful functions and properties</p>
+
+{{
+lambda=>next
+  oncreatecontrols
+    magix.help.set-next
+      next=>system42/admin/help/mvc/index.mml
+}}
+

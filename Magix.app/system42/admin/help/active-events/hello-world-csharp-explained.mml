@@ -1,0 +1,58 @@
+
+
+<h2 class="span-14 left-5 last">active events explained</h2>
+
+<p>by invoking functionality using active events, instead of conventional methods or functions, 
+you gain a lot of advantages</p>
+
+<p>when using active events, you get rid of all dependencies in your system, 
+which facilitates for a much more solid architecture.&nbsp;&nbsp;
+everything becomes a "plugin", and all your active events 
+can be interchanged with other active events in the future.&nbsp;&nbsp;
+the results becomes an agile and flexible, non-monolithic, 
+application end product</p>
+
+<p>the invoker and the handler knows nothing about each other, ergo; <strong>perfect encapsulation</strong></p>
+
+<p>you can invoke this active event from anywhere you wish, which allows for reusability of everything you create</p>
+
+<p>you can also override active events, such that instead of invoking a local in-process method, the invocation is 
+transparently serialized over internet using http and json, and invokes a method on another server, almost like a web service.&nbsp;&nbsp;
+and the invoker of the metod wouldn't even know that your event is being invoked remotely.&nbsp;&nbsp;
+this makes you capable of partitioning your server park into separate logical entities, regardless of how your application 
+is built.&nbsp;&nbsp;due to this, magix scales infinitely out</p>
+
+<p>to override your newly created method to being invoked on another server, use this code</p>
+
+<pre>
+ActiveEvents.Instance.OverrideRemotely(
+	"magix.demo.hello-world", 
+	"http://my-other-server.com/and-my-app-there")
+</pre>
+
+<p>if you run the above code, then everytime you invoke "magix.demo.hello-world", the engine 
+will transparently invoke the method on <em>http://my-other-server.com/and-my-app-there</em> instead of 
+executing the event locally.&nbsp;&nbsp;this is done 100% transparently, and hence scaling out 
+is an intrinsic trait of the built-in polymorphism mechanisms in magix</p>
+
+<p><em>"magix has runtime polymorphism, with support for overriding active events runtime, both internally, and externally"</em></p>
+
+<p>the consequences of the above sentence is difficult to grasp in the beginning, 
+but as your app becomes bigger and more complex and more users are using it, you will 
+understand that benefit, as you scale out your app, with virtually zero pain</p>
+
+<p>to override the method run-time, to go to another server, use the "magix.execute.tunnel" 
+active event</p>
+
+<p>it helps to imagine an active event more like a "url" than a "method".&nbsp;&nbsp;
+think of the active event's name as its "url".&nbsp;&nbsp;
+this way the overriding of active events, might be seen like a dns service, where the underlaying ip 
+can change, to change the underlaying implementation</p>
+
+{{
+lambda=>next
+  oncreatecontrols
+    magix.help.set-next
+      next=>system42/admin/help/active-events/passing-parameters.mml
+}}
+

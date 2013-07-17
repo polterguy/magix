@@ -359,6 +359,17 @@ input[type=button]:hover
 	color:#00a;
 }
 
+input[type=button]:disabled
+{
+	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgba(240, 240, 240, 1)), to(rgba(180, 180, 180, 1)));
+	background-image: -moz-webkit-gradient(rgba(240, 240, 240, 1) 0%, rgba(180, 180, 180, 1) 100%);
+	background-image: -moz-linear-gradient(rgba(240, 240, 240, 1) 0%, rgba(180, 180, 180, 1) 100%);
+	background-image: -o-linear-gradient(rgba(240, 240, 240, 1) 0%, rgba(180, 180, 180, 1) 100%);
+	background-image: -ms-linear-gradient(rgba(240, 240, 240, 1) 0%, rgba(180, 180, 180, 1) 100%);
+	background-image: linear-gradient(rgba(240, 240, 240, 1) 0%, rgba(180, 180, 180, 1) 100%);
+	color:#aaa;
+}
+
 input[type=button].btn-large
 {
 	height:36px;
@@ -1078,7 +1089,7 @@ textarea.ascii-editor
 
 .mux-file-uploader
 {
-	position:absolute;
+	position:fixed;
 	top:0;
 	left:0;
 	width:450px;
@@ -1171,8 +1182,7 @@ textarea.ascii-editor
 
 .start-button
 {
-	height:230px;
-	width:230px;
+	height:190px;
 	display:block;
 	background:transparent url(start-button.png) no-repeat 0 0;
 }

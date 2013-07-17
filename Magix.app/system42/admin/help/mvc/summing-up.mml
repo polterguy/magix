@@ -1,0 +1,37 @@
+
+
+<h2 class="span-14 left-5 last">summing up mvc</h2>
+
+<p>magix is built upon an mvc architecture, minus the model part, due to that the whole model question 
+becomes obsolete, because in the interfacing of your components, there exists only tree structures, in the form of 
+the Node class, json and http.&nbsp;&nbsp;paradoxically, this tree structure is being serialized into its database 
+using db4o, which is an open source object oriented database, with insane scalability</p>
+
+<p>you can anyway easily integrate existing models or domain models</p>
+
+<p>as a final hint, there exist base classes in the Magix.Core project for both creating 
+active controllers and active modules.&nbsp;&nbsp;these classes are called, you guessed it, "ActiveController" and 
+"ActiveModule".&nbsp;&nbsp;sample of usage of these classes can be seen in for instance Magix.forms / WebPart.ascx.cs and 
+Magix.forms / FormsCore.cs.&nbsp;&nbsp; these classes contains helper methods for much of the common stuff, 
+such as short-hands for raising active events, loading modules into your viewport, etc.&nbsp;&nbsp;
+if you inherit from these classes, you do not need to mark your modules and controllers with any attributes, since 
+these base classes are marked as such, and this property is inherited through the inheritence chain</p>
+
+<p>just because magix supplies a model for architecting your applications, using active events, which is superior to oop, 
+and far more easy to understand, doesn't mean your existing oop skills are obsolete.&nbsp;&nbsp;
+magix is a supplement to oop, which just so happens to take all the pain out of oop.&nbsp;&nbsp;
+both from an architectural point of view, and a development point of view</p>
+
+<p><em>"magix illuminate is the fusing of the marvels of hyper lisp and active events, and its extreme scalability capacity, with 
+the ease of use from old-time visual basic, and modern oop from c#, through mechanisms such as rad - rapid application development - with 100% wysiwyg 
+construction of web forms, through the browser even if you wish, combined with access to the entire set of 
+mono classes.&nbsp;&nbsp;said shorter; the best from both dynamic and statically types programming languages, fusing two seemingly 
+impossible worlds together, at its extremes in both ends; the morte, elvis and the einstein, together on one platform, in unity - magix illuminate! ;)"</em></p>
+
+{{
+lambda=>next
+  oncreatecontrols
+    magix.help.set-next
+      next=>system42/admin/help/ajax/index.mml
+}}
+

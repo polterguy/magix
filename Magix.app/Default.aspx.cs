@@ -27,7 +27,7 @@ namespace Magix.app
 
         private void InitializeViewport()
         {
-			string defaultControl = ConfigurationManager.AppSettings["Magix.Core.Viewport"];
+			string defaultControl = ConfigurationManager.AppSettings["magix.core.viewport"];
             Control ctrl = ModuleControllerLoader.Instance.LoadActiveModule(defaultControl);
             Form.Controls.Add(ctrl);
         }
