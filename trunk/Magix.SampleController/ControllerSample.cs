@@ -5,7 +5,6 @@
  */
 
 using System;
-using System.Configuration;
 using Magix.Core;
 
 namespace Magix.SampleController

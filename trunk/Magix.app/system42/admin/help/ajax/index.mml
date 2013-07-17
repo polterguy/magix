@@ -1,0 +1,85 @@
+
+
+<h2 class="span-14 left-5 last">ajax in magix</h2>
+
+<p>magix contains an extremely optimized and light-weight ajax library called "mux", which is an acronym for "magix user experience"</p>
+
+<p>mux can be found in the "Magix.UX" project in your magix solution, and is basically an ajax library, built upon the existing 
+System.Web.UI.WebControls hierarchy in asp.net, which allows you to develop any amounts of complex ajax functionality, 
+with something that is 100% compatible with the web controls you're used to from asp.net</p>
+
+<p>mux is of course prepped up for html5, and 100% standard compliant, and has tons of additional functionality, 
+such as event handlers for every dom event you can imagine, such as mouseover, mouseout, etc.&nbsp;&nbsp;
+in addition, mux has a rich effect library, and some "fancy controls", such as ajax uploaders, wysiwyg editor 
+for editing rich formated text, built upon xing-wysiwyg, timer control, that periodically pings the server, 
+to see if ui needs to be re-rendered, etc, etc, etc</p>
+
+<p>mux is also very easy to extend with your own controls, if you need something different, which is not there in the first place.&nbsp;&nbsp;
+just start out with whatever control most closely resembles the one you're trying to create, and use that as boiler plate code for your 
+own control.&nbsp;&nbsp;or make a wish by contacting me through the project website at google, or something.&nbsp;&nbsp;</p>
+
+<p>mux is the reason why magix development feels like windows development, due to a concept called "managed ajax".&nbsp;&nbsp;
+basically, every mux control is stateful, and changing values of properties are tracked, and transported back to client using extremely optimized json.&nbsp;&nbsp;
+this means that the javascript library at its core, becomes <strong>tiny and light-weight</strong>, and if perfectly 
+optimized in your release build, becomes less than 9kb of javascript, in its entirety, for all the base controls, creating tiny ajax requests and responses, 
+with zero overhead, without being "intrusive" on your coding model, in any ways</p>
+
+<p>since these base controls again themselves can be combined together, to form more complex controls, inside of 
+for instance active modules, and since these base controls themselves are mostly wrappers around single html elements, 
+everything you can do in html5, can easily be done using mux.&nbsp;&nbsp;
+with the crucial difference of having a 100% stateful model, in c# to develop within</p>
+
+<p>anyway, if you want to teach yourself magix, then teach yourself the conventional asp.net web controls, and asp.net, 
+and then just exchange &lt;asp: with &lt;mux:, check up the additional stuff magix provides, and voila! you're set :)</p>
+
+<p>the mux "hello world" application, can basically be seen in the help files for active modules, within the mvc hierarchy</p>
+
+<p>mux, as of this writing, contains these web controls</p>
+
+<ul>
+<li>Button - wraps input type=button html element</li>
+<li>CheckBox - wraps a input type=checkbox html element</li>
+<li>HiddenField - wraps an input type=hidden html element</li>
+<li>HyperLink - wraps an anchor, or "a" html element</li>
+<li>Image - wraps an img html element</li>
+<li>Label - wraps a span html element, but can override its tag to become any html element you wish, such as "p", div, etc</li>
+<li>LinkButton - wraps a hyperlink type of control, or anchor, a - with the difference of that it generates an ajax request, instead of changing the url of the browser when clicked</li>
+<li>Panel - wraps a div html element, is one of few web controls in magix which can contain any type of child web controls, rendered inside the div.&nbsp;&nbsp;kind of like the "big brother" to Label, which can only contain text, and not child controls</li>
+<li>RadioButton - input type=radio</li>
+<li>SelectList - select html element</li>
+<li>TextArea - textarea html element</li>
+<li>TextBox - input type=text html element</li>
+</ul>
+
+<p>the above web controls basically all have their asp.net counterparts within the System.Web.UI.WebControls hierarchy.&nbsp;&nbsp;
+besides these, magix also have some "candy controls"</p>
+
+<ul>
+<li>DynamicPanel - stateful loading of UserControls, or other types of control hierarchies, according to key</li>
+<li>Time - control that can be configured to periodically "tick" towards the server, to check for updates or changes etc</li>
+<li>Uploader - ajax uploader control, where you can drag and drop files from your desktop system and into the browser area, to upload files.&nbsp;&nbsp;comes with support for multiple files</li>
+<li>Wysiwyg - a "what you see is what you get" web control, which allows you to create and edit text in rich format as html5</li>
+</ul>
+
+<p>in addition mux has some other fancy features, such as effects and some helper methods and classes, see the Magix.UX namespace for details</p>
+
+<p>there might also exist some interesting web controls in the first version of this project, at <a href="http://code.google.com/p/magix">google code</a>, 
+but please stay away from using that project as a whole in other ways, since it is a dead-end</p>
+
+<p>mux is basically a complete ajax web control hierarchy, for all your needs in regards to html5, ajax and css3.&nbsp;&nbsp;
+where you never have to leave c#, and diving into javascript is optional.&nbsp;&nbsp;
+creating a much more solid architecture, where the entire "ajax and javascript problem" is just done</p>
+
+<p>this means you can create a more secure architecture, exclusively built upon server-objects, and never have to leak neither business logic 
+nor other secrets through to the browser by accident, also facilitating for a much more solid and easy to understand both architecture and code, 
+without having to compromise on neither flexibility, scalability, nor control</p>
+
+<p><em>"sorry, simply superior!!"</em></p></p>
+
+{{
+lambda=>next
+  oncreatecontrols
+    magix.help.set-next
+      next=>system42/admin/help/web-parts/index.mml
+}}
+

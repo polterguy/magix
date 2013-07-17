@@ -71,13 +71,13 @@ button=>index
   css=>btn-large span-2
   onclick
     magix.help.open-file
-      file=>help-system/index.mml
+      file=>system42/admin/help/index.mml
 button=>tools
   text=>tools
   css=>btn-large span-2
   onclick
     magix.help.open-file
-      file=>help-system/tools.mml
+      file=>system42/admin/help/index.mml
 button=>next
   text=>>>
   css=>btn-large span-2
@@ -96,7 +96,7 @@ button=>next
 			tmp["container"].Value = "content2";
 			tmp["css"].Value = "span-19 last help-system";
 
-			using (TextReader reader = File.OpenText(Page.Server.MapPath("help-system/index.mml")))
+			using (TextReader reader = File.OpenText(Page.Server.MapPath("system42/admin/help/index.mml")))
 			{
 				tmp["mml"].Value = reader.ReadToEnd();
 			}
@@ -121,7 +121,7 @@ button=>next
 			{
 				tmp = new Node();
 				tmp["reset"].Value = true;
-				tmp["page"].Value = "help-system/index.mml";
+				tmp["page"].Value = "system42/admin/help/index.mml";
 
 				RaiseActiveEvent(
 					"magix.help.add-page",
@@ -140,9 +140,10 @@ button=>next
 				e.Params["event:magix.help.set-next"].Value = null;
 				e.Params["inspect"].Value = @"set the next page for the help system.
 &nbsp;&nbsp;not thread safe";
-				e.Params["next"].Value = "help-system/index.mml";
+				e.Params["next"].Value = "system42/admin/help/index.mml";
 				return;
 			}
+
 			if (!e.Params.Contains("next") || e.Params["next"].Get<string>("") == "")
 				throw new ArgumentException("cannot set-next without a next value");
 
@@ -199,7 +200,7 @@ button=>next
 				e.Params["event:magix.help.open-file"].Value = null;
 				e.Params["inspect"].Value = @"opens the given [file] file as html.
 &nbsp;&nbsp;thread safe";
-				e.Params["file"].Value = "help-system/index.html";
+				e.Params["file"].Value = "system42/admin/help/index.mml";
 				return;
 			}
 

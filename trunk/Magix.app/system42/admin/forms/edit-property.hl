@@ -27,8 +27,14 @@ set=>[magix.forms.create-web-part][controls][label][text].Value
 magix.forms.create-web-part
   form-id=>edit-property
   container=>content5
-  css=>span-22 air-padding boxed bottom-5
+  css=>span-22 air-padding boxed bottom-5 relative
   controls
+    link-button=>close
+      css=>absolute top right span-1
+      text=>close
+      onclick
+        magix.viewport.clear-controls
+          container=>content5
     label
       text=>edit property
       tag=>label
@@ -59,6 +65,8 @@ magix.forms.create-web-part
         change-widget
           change
 
-
+magix.forms.set-focus
+  form-id=>edit-property
+  id=>prop
 
 

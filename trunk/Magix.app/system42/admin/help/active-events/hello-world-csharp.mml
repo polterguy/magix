@@ -1,0 +1,48 @@
+
+
+<h2 class="span-14 left-5 last">hello world in c#</h2>
+
+<p>open up the ControllerSample.cs file, residing in the project Samples/Magix.SampleController, and modify it to look like the below</p>
+
+<pre>
+using System;
+using Magix.Core;
+
+namespace Magix.SampleController
+{
+	[ActiveController]
+	public class ControllerSample
+	{
+		[ActiveEvent(Name = "magix.demo.hello-world")]
+		public void magix_demo_hello_world(object sender, ActiveEventArgs e)
+		{
+			Node tmp = new Node();
+			tmp["message"].Value = "hello world";
+
+			ActiveEvents.Instance.RaiseActiveEvent(
+				this,
+				"magix.viewport.show-message",
+				tmp);
+		}
+	}
+}
+</pre>
+
+<p>re-compile and run magix, then open up the "active event executor" from your desktop, and type 
+in "magix.demo.hello-world" into the active event name field on the middle of the screen, click execute, 
+and watch your first magix application unfold</p>
+
+<p>example of how this might look like</p>
+
+<img src="media/images/help-files/screenshots/hello-world-screenshot.png" alt="screenshot of hello world" />
+
+
+
+
+{{
+lambda=>next
+  oncreatecontrols
+    magix.help.set-next
+      next=>system42/admin/help/active-events/hello-world-csharp-explained.mml
+}}
+

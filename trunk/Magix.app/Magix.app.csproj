@@ -62,7 +62,6 @@
     <Content Include="media\xing-wysihtml5\website\img\spr_toolbar_icons_r1.png" />
     <Content Include="media\xing-wysihtml5\dist\wysihtml5-0.4.0pre.js" />
     <Content Include="media\xing-wysihtml5\dist\wysihtml5-0.4.0pre.min.js" />
-    <Content Include="help-system\web.config" />
     <Content Include="media\grid\main.css" />
     <Content Include="media\grid\grid.png" />
     <Content Include="media\grid\start-button.png" />
@@ -70,6 +69,8 @@
     <Content Include="media\grid\RaLogo1600x1600.png" />
     <Content Include="media\grid\arrows.png" />
     <Content Include="system42\web.config" />
+    <Content Include="media\images\help-files\screenshots\hello-world-screenshot.png" />
+    <Content Include="media\images\help-files\screenshots\hello-world-passing-paremeters.png" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Global.asax.cs">
@@ -209,10 +210,6 @@
   <ItemGroup>
     <Folder Include="media\" />
     <Folder Include="code\" />
-    <Folder Include="help-system\" />
-    <Folder Include="help-system\developers\" />
-    <Folder Include="help-system\management\" />
-    <Folder Include="help-system\mortal\" />
     <Folder Include="media\grid\" />
     <Folder Include="system42\" />
     <Folder Include="system42\admin\" />
@@ -227,55 +224,14 @@
     <Folder Include="system42\admin\test-files\" />
     <Folder Include="system42\admin\app-wizard\" />
     <Folder Include="system42\admin\app-wizard\wizards\" />
+    <Folder Include="system42\admin\help\" />
+    <Folder Include="system42\admin\help\active-events\" />
+    <Folder Include="system42\admin\help\mvc\" />
+    <Folder Include="system42\admin\help\ajax\" />
+    <Folder Include="system42\admin\help\web-parts\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="media\xing-wysihtml5\LICENSE" />
-    <None Include="help-system\index.mml" />
-    <None Include="help-system\developers\autistic.mml" />
-    <None Include="help-system\developers\active-events.mml" />
-    <None Include="help-system\developers\ajax.mml" />
-    <None Include="help-system\developers\ajax-2.mml" />
-    <None Include="help-system\developers\ajax-3.mml" />
-    <None Include="help-system\developers\ajax-4.mml" />
-    <None Include="help-system\developers\nodes.mml" />
-    <None Include="help-system\developers\nodes-2.mml" />
-    <None Include="help-system\developers\nodes-3.mml" />
-    <None Include="help-system\developers\nodes-4.mml" />
-    <None Include="help-system\developers\nodes-5.mml" />
-    <None Include="help-system\developers\nodes-6.mml" />
-    <None Include="help-system\developers\mvc.mml" />
-    <None Include="help-system\developers\mvc-10.mml" />
-    <None Include="help-system\developers\mvc-11.mml" />
-    <None Include="help-system\developers\mvc-2.mml" />
-    <None Include="help-system\developers\mvc-3.mml" />
-    <None Include="help-system\developers\mvc-4.mml" />
-    <None Include="help-system\developers\mvc-5.mml" />
-    <None Include="help-system\developers\mvc-6.mml" />
-    <None Include="help-system\developers\mvc-7.mml" />
-    <None Include="help-system\developers\mvc-8.mml" />
-    <None Include="help-system\developers\mvc-9.mml" />
-    <None Include="help-system\info.mml" />
-    <None Include="help-system\info-2.mml" />
-    <None Include="help-system\developers\handler-sample.mml" />
-    <None Include="help-system\management\adhd.mml" />
-    <None Include="help-system\management\adhd-2.mml" />
-    <None Include="help-system\mortal\neuro-typical.mml" />
-    <None Include="help-system\developers\dynamic.mml" />
-    <None Include="help-system\developers\dynamic-2.mml" />
-    <None Include="help-system\developers\dynamic-3.mml" />
-    <None Include="help-system\developers\dynamic-4.mml" />
-    <None Include="help-system\developers\maintenance.mml" />
-    <None Include="help-system\developers\parameters.mml" />
-    <None Include="help-system\developers\project-structure.mml" />
-    <None Include="help-system\developers\project-structure-2.mml" />
-    <None Include="help-system\developers\project-structure-3.mml" />
-    <None Include="help-system\developers\project-structure-4.mml" />
-    <None Include="help-system\developers\project-structure-5.mml" />
-    <None Include="help-system\developers\project-structure-6.mml" />
-    <None Include="help-system\developers\raise.mml" />
-    <None Include="help-system\developers\the-point.mml" />
-    <None Include="help-system\developers\web.mml" />
-    <None Include="help-system\tools.mml" />
     <None Include="todo.txt" />
     <None Include="system42\index.hl" />
     <None Include="system42\startup.hl" />
@@ -320,5 +276,18 @@
     <None Include="system42\admin\app-wizard\wizards\crud-app.hl" />
     <None Include="system42\admin\app-wizard\new-app.hl" />
     <None Include="system42\startup-scripts\test-if-logic.hl" />
+    <None Include="system42\admin\help\index.mml" />
+    <None Include="system42\admin\help\active-events\index.mml" />
+    <None Include="system42\admin\help\active-events\hello-world-csharp.mml" />
+    <None Include="system42\admin\help\active-events\hello-world-csharp-explained.mml" />
+    <None Include="system42\admin\help\active-events\passing-parameters.mml" />
+    <None Include="system42\admin\help\active-events\nodes-explained-csharp.mml" />
+    <None Include="system42\admin\help\mvc\index.mml" />
+    <None Include="system42\admin\help\mvc\controller-explained.mml" />
+    <None Include="system42\admin\help\mvc\modules-explained.mml" />
+    <None Include="system42\admin\help\mvc\viewports-explained.mml" />
+    <None Include="system42\admin\help\ajax\index.mml" />
+    <None Include="system42\admin\help\mvc\summing-up.mml" />
+    <None Include="system42\admin\help\web-parts\index.mml" />
   </ItemGroup>
 </Project>
