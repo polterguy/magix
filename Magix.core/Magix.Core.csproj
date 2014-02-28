@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -39,14 +39,18 @@
     <Compile Include="Events\ActiveEventArgs.cs" />
     <Compile Include="Events\ActiveEventAttribute.cs" />
     <Compile Include="Events\ActiveEvents.cs" />
-    <Compile Include="Modules\ActiveModule.cs" />
+    <Compile Include="Modules\ActiveModule.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="Modules\ActiveModuleAttribute.cs" />
     <Compile Include="Common\Node.cs" />
     <Compile Include="Common\ModuleControllerLoader.cs" />
     <Compile Include="Helpers\AssemblyResourceVirtualFile.cs" />
     <Compile Include="Helpers\AssemblyResourceProvider.cs" />
     <Compile Include="Expression\Expressions.cs" />
-    <Compile Include="Modules\Viewport.cs" />
+    <Compile Include="Modules\Viewport.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
@@ -56,14 +60,7 @@
       </Properties>
     </MonoDevelop>
   </ProjectExtensions>
-  <ItemGroup>
-    <Folder Include="Controllers\" />
-    <Folder Include="Events\" />
-    <Folder Include="Modules\" />
-    <Folder Include="Common\" />
-    <Folder Include="Helpers\" />
-    <Folder Include="Expression\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\Magix.UX\Magix.UX.csproj">
       <Project>{FDD15C94-7DC2-4D19-9AF4-0E9FD8CCC443}</Project>

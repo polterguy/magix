@@ -15,6 +15,7 @@ using Magix.UX.Builder;
 using Db4objects.Db4o;
 using Db4objects.Db4o.Ext;
 using Db4objects.Db4o.Config;
+using System.Web;
 
 namespace Magix.execute
 {
@@ -70,7 +71,7 @@ operation.&nbsp;&nbsp;thread safe";
 
 			lock (typeof(DataCore))
 			{
-				using (IObjectContainer db = Db4oEmbedded.OpenFile(_dbFile))
+				using (IObjectContainer db = Db4oEmbedded.OpenFile(HttpContext.Current.Request.MapPath("~" + _dbFile)))
 				{
 					db.Ext().Configure().UpdateDepth(1000);
 					db.Ext().Configure().ActivationDepth(1000);
@@ -120,7 +121,7 @@ thread safe";
 
 			lock (typeof(DataCore))
 			{
-				using (IObjectContainer db = Db4oEmbedded.OpenFile(_dbFile))
+                using (IObjectContainer db = Db4oEmbedded.OpenFile(HttpContext.Current.Request.MapPath("~" + _dbFile)))
 				{
 					db.Ext().Configure().UpdateDepth(1000);
 					db.Ext().Configure().ActivationDepth(1000);
@@ -172,7 +173,7 @@ your persistent data storage.&nbsp;&nbsp;thread safe";
 
 			lock (typeof(DataCore))
 			{
-				using (IObjectContainer db = Db4oEmbedded.OpenFile(_dbFile))
+                using (IObjectContainer db = Db4oEmbedded.OpenFile(HttpContext.Current.Request.MapPath("~" + _dbFile)))
 				{
 					string id = e.Params.Contains("id") ? e.Params["id"].Get<string>() : null;
 					foreach (Storage idx in db.Ext().Query<Storage>(
@@ -213,7 +214,7 @@ of objects in data storage as [count], add [prototype] to filter results.
 
 			lock (typeof(DataCore))
 			{
-				using (IObjectContainer db = Db4oEmbedded.OpenFile(_dbFile))
+				using (IObjectContainer db = Db4oEmbedded.OpenFile(HttpContext.Current.Request.MapPath("~" + _dbFile)))
 				{
 					db.Ext().Configure().UpdateDepth(1000);
 					db.Ext().Configure().ActivationDepth(1000);

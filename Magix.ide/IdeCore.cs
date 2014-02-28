@@ -39,7 +39,7 @@ will be edited, but not created before saved.&nbsp;&nbsp;not thread safe";
 			if (!e.Params.Contains("file"))
 				throw new ArgumentException("need [file] parameter");
 
-			string file = e.Params["file"].Get<string>();
+			string file = e.Params["file"].Get<string>().Replace("\\", "/");
 
 			string extension = file.Substring(file.LastIndexOf('.') + 1);
 
@@ -65,9 +65,9 @@ will be edited, but not created before saved.&nbsp;&nbsp;not thread safe";
 				Node tmp = new Node();
 				tmp["file"].Value = file;
 
-				if (File.Exists(Page.Server.MapPath(file)))
+				if (File.Exists(Page.Server.MapPath("~/" + file)))
 				{
-					using (TextReader reader = File.OpenText(file))
+					using (TextReader reader = File.OpenText(Page.Server.MapPath("~/" + file)))
 					{
 						tmp["content"].Value = reader.ReadToEnd();
 					}

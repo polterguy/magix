@@ -71,7 +71,7 @@ namespace Magix.tests
 			tmp["event"]["code"]["set"].Value = "[$][Data].Value";
 			tmp["event"]["code"]["set"]["value"].Value = "thomas";
 			tmp["remote"].Value = "foo.bar";
-			tmp["remote"]["url"].Value = "http://127.0.0.1:8080";
+			tmp["remote"]["url"].Value = "http://localhost:8080";
 			tmp.Add (new Node("event", "foo.bar"));
 
 			if (ShouldInspect(e.Params))

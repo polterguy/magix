@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -53,7 +53,9 @@
     <Compile Include="controls\WysiwygCore.cs" />
     <Compile Include="controls\UploaderCore.cs" />
     <Compile Include="controls\LambdaBaseCore.cs" />
-    <Compile Include="WebPart.ascx.cs" />
+    <Compile Include="WebPart.ascx.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="controls\EffectCore.cs" />
     <Compile Include="controls\FormElementCore.cs" />
   </ItemGroup>
@@ -69,9 +71,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="WebPart.ascx" />
+    <EmbeddedResource Include="WebPart.ascx">
+      <SubType>ASPXCodeBehind</SubType>
+    </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="controls\" />
-  </ItemGroup>
+  <ItemGroup />
 </Project>

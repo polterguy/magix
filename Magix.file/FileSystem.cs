@@ -169,7 +169,7 @@ new created.&nbsp;&nbsp;thread safe";
 				return;
 			}
 
-			string from = e.Params.Get<string>();
+			string from = HttpContext.Current.Server.MapPath(e.Params.Get<string>());
 
 			if (string.IsNullOrEmpty(from))
 				throw new ArgumentException("you need to define which directory to copy, as value of [magix.files.move-directory]");
@@ -177,7 +177,7 @@ new created.&nbsp;&nbsp;thread safe";
 			if (!e.Params.Contains("to") || e.Params["to"].Get<string>("") == "")
 				throw new ArgumentException("you need to define which directory to copy to, as [to] node");
 
-			string to = e.Params["to"].Get<string>();
+			string to = HttpContext.Current.Server.MapPath(e.Params["to"].Get<string>());
 
 			Directory.Move(from, to);
 		}
