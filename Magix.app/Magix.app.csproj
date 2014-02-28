@@ -144,10 +144,6 @@
       <Project>{381e2551-3305-4757-b652-afc9adcb9d3e}</Project>
       <Name>Magix.admin</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Magix.code.tests\Magix.code.tests.csproj">
-      <Project>{7825cf11-a8cb-4788-8a5c-c2e064f063de}</Project>
-      <Name>Magix.code.tests</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Magix.code\Magix.code.csproj">
       <Project>{a6695b66-c94d-4433-9d6f-b12e6ed55e38}</Project>
       <Name>Magix.code</Name>
@@ -156,10 +152,6 @@
       <Project>{11376d5f-13bd-4529-ba92-dde415b96220}</Project>
       <Name>Magix.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Magix.data.tests\Magix.data.tests.csproj">
-      <Project>{a81c3236-dd06-4315-ae67-6b0eb833526f}</Project>
-      <Name>Magix.data.tests</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Magix.data\Magix.data.csproj">
       <Project>{4fc8426a-ed89-4100-887e-c571e3dc9c8c}</Project>
       <Name>Magix.data</Name>
@@ -167,14 +159,6 @@
     <ProjectReference Include="..\Magix.email\Magix.email.csproj">
       <Project>{c84d5706-3630-4b80-b3d2-8d232ea9b095}</Project>
       <Name>Magix.email</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Magix.events.tests\Magix.events.tests.csproj">
-      <Project>{b07d7cf9-5c0c-47a1-bd42-ab346b5761f2}</Project>
-      <Name>Magix.events.tests</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Magix.execute.tests\Magix.execute.tests.csproj">
-      <Project>{eb41cee7-b2a5-4a82-8ae6-1cbeabea7438}</Project>
-      <Name>Magix.execute.tests</Name>
     </ProjectReference>
     <ProjectReference Include="..\Magix.execute\Magix.execute.csproj">
       <Project>{7bbd5bd2-e3fe-42c2-94f8-878f4156a03e}</Project>
@@ -196,10 +180,6 @@
       <Project>{686be5b7-2ec5-4adf-9483-a3dd90d472f9}</Project>
       <Name>Magix.ide</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Magix.log.tests\Magix.log.tests.csproj">
-      <Project>{30e34a65-909f-40a6-b366-0158426a4de2}</Project>
-      <Name>Magix.log.tests</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Magix.log\Magix.log.csproj">
       <Project>{15893cbd-d0dd-47df-8083-7b33e0daaff6}</Project>
       <Name>Magix.log</Name>
@@ -208,10 +188,6 @@
       <Project>{c47c4ab9-be13-48f0-81fb-830a83482815}</Project>
       <Name>Magix.node</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Magix.remoting.tests\Magix.remoting.tests.csproj">
-      <Project>{8e639edc-059d-4bb6-b905-e3611aac2e24}</Project>
-      <Name>Magix.remoting.tests</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Magix.SampleController\Magix.SampleController.csproj">
       <Project>{b9d247fe-c4ea-49b2-83e9-0ed75d844b72}</Project>
       <Name>Magix.SampleController</Name>
@@ -219,10 +195,6 @@
     <ProjectReference Include="..\Magix.tests\Magix.tests.csproj">
       <Project>{40e6b621-1424-4a4c-9349-eb5c8fcd7d10}</Project>
       <Name>Magix.tests</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Magix.threading.tests\Magix.threading.tests.csproj">
-      <Project>{e7b4fc0b-2e5d-4cc0-875d-f5a6afaefd5f}</Project>
-      <Name>Magix.threading.tests</Name>
     </ProjectReference>
     <ProjectReference Include="..\Magix.tiedown\Magix.tiedown.csproj">
       <Project>{bf9f868c-7023-4f75-a96a-9401edb50877}</Project>
@@ -243,6 +215,38 @@
     <ProjectReference Include="..\Magix.xml\Magix.xml.csproj">
       <Project>{eae2f2ae-0098-44f1-8b3d-1887266e94cf}</Project>
       <Name>Magix.xml</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Tests\Magix.code.tests\Magix.code.tests.csproj">
+      <Project>{7825cf11-a8cb-4788-8a5c-c2e064f063de}</Project>
+      <Name>Magix.code.tests</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Tests\Magix.data.tests\Magix.data.tests.csproj">
+      <Project>{a81c3236-dd06-4315-ae67-6b0eb833526f}</Project>
+      <Name>Magix.data.tests</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Tests\Magix.events.tests\Magix.events.tests.csproj">
+      <Project>{b07d7cf9-5c0c-47a1-bd42-ab346b5761f2}</Project>
+      <Name>Magix.events.tests</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Tests\Magix.execute.tests\Magix.execute.tests.csproj">
+      <Project>{eb41cee7-b2a5-4a82-8ae6-1cbeabea7438}</Project>
+      <Name>Magix.execute.tests</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Tests\Magix.log.tests\Magix.log.tests.csproj">
+      <Project>{30e34a65-909f-40a6-b366-0158426a4de2}</Project>
+      <Name>Magix.log.tests</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Tests\Magix.remoting.tests\Magix.remoting.tests.csproj">
+      <Project>{8e639edc-059d-4bb6-b905-e3611aac2e24}</Project>
+      <Name>Magix.remoting.tests</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Tests\Magix.threading.tests\Magix.threading.tests.csproj">
+      <Project>{e7b4fc0b-2e5d-4cc0-875d-f5a6afaefd5f}</Project>
+      <Name>Magix.threading.tests</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Tests\Magix.viewport.tests\Magix.viewport.tests.csproj">
+      <Project>{8cabf553-5046-4e53-8918-57652c25a5c7}</Project>
+      <Name>Magix.viewport.tests</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

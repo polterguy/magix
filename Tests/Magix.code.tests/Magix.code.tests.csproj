@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -36,7 +36,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <ProjectReference Include="..\Magix.core\Magix.Core.csproj">
+    <ProjectReference Include="..\..\Magix.core\Magix.Core.csproj">
       <Project>{11376D5F-13BD-4529-BA92-DDE415B96220}</Project>
       <Name>Magix.Core</Name>
     </ProjectReference>

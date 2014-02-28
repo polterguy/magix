@@ -33,7 +33,7 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Magix.core\Magix.Core.csproj">
+    <ProjectReference Include="..\..\Magix.core\Magix.Core.csproj">
       <Project>{11376d5f-13bd-4529-ba92-dde415b96220}</Project>
       <Name>Magix.Core</Name>
     </ProjectReference>
