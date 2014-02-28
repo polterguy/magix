@@ -172,10 +172,6 @@
       <Project>{c84d5706-3630-4b80-b3d2-8d232ea9b095}</Project>
       <Name>Magix.email</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Plugins\Magix.events\Magix.events.csproj">
-      <Project>{e7421bbe-a59d-42c4-949a-a3e0661574b1}</Project>
-      <Name>Magix.events</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Plugins\Magix.execute\Magix.execute.csproj">
       <Project>{7bbd5bd2-e3fe-42c2-94f8-878f4156a03e}</Project>
       <Name>Magix.execute</Name>
@@ -204,17 +200,9 @@
       <Project>{c47c4ab9-be13-48f0-81fb-830a83482815}</Project>
       <Name>Magix.node</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Plugins\Magix.remoting\Magix.remoting.csproj">
-      <Project>{ac81b6b6-15a1-40f2-98e4-5acc23bb27c3}</Project>
-      <Name>Magix.remoting</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Plugins\Magix.tests\Magix.tests.csproj">
       <Project>{40e6b621-1424-4a4c-9349-eb5c8fcd7d10}</Project>
       <Name>Magix.tests</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Plugins\Magix.threading\Magix.threading.csproj">
-      <Project>{5b128787-7719-406b-889d-45737584439c}</Project>
-      <Name>Magix.threading</Name>
     </ProjectReference>
     <ProjectReference Include="..\Plugins\Magix.tiedown\Magix.tiedown.csproj">
       <Project>{bf9f868c-7023-4f75-a96a-9401edb50877}</Project>
