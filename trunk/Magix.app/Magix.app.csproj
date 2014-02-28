@@ -140,65 +140,13 @@
     <EmbeddedResource Include="system42\public\index-header.mml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Magix.admin\Magix.admin.csproj">
-      <Project>{381e2551-3305-4757-b652-afc9adcb9d3e}</Project>
-      <Name>Magix.admin</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Magix.code\Magix.code.csproj">
-      <Project>{a6695b66-c94d-4433-9d6f-b12e6ed55e38}</Project>
-      <Name>Magix.code</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Magix.core\Magix.Core.csproj">
       <Project>{11376d5f-13bd-4529-ba92-dde415b96220}</Project>
       <Name>Magix.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Magix.data\Magix.data.csproj">
-      <Project>{4fc8426a-ed89-4100-887e-c571e3dc9c8c}</Project>
-      <Name>Magix.data</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Magix.email\Magix.email.csproj">
-      <Project>{c84d5706-3630-4b80-b3d2-8d232ea9b095}</Project>
-      <Name>Magix.email</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Magix.execute\Magix.execute.csproj">
-      <Project>{7bbd5bd2-e3fe-42c2-94f8-878f4156a03e}</Project>
-      <Name>Magix.execute</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Magix.file\Magix.file.csproj">
-      <Project>{f357eb84-40b4-4b9f-afc0-df7eebfbaf82}</Project>
-      <Name>Magix.file</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Magix.forms\Magix.forms.csproj">
-      <Project>{71fe057e-9d78-423f-8664-2fae2d0d56a1}</Project>
-      <Name>Magix.forms</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Magix.help\Magix.help.csproj">
-      <Project>{cb7ee54e-9957-4202-af61-fc6c40053b4c}</Project>
-      <Name>Magix.help</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Magix.ide\Magix.ide.csproj">
-      <Project>{686be5b7-2ec5-4adf-9483-a3dd90d472f9}</Project>
-      <Name>Magix.ide</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Magix.log\Magix.log.csproj">
-      <Project>{15893cbd-d0dd-47df-8083-7b33e0daaff6}</Project>
-      <Name>Magix.log</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Magix.node\Magix.node.csproj">
-      <Project>{c47c4ab9-be13-48f0-81fb-830a83482815}</Project>
-      <Name>Magix.node</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Magix.SampleController\Magix.SampleController.csproj">
       <Project>{b9d247fe-c4ea-49b2-83e9-0ed75d844b72}</Project>
       <Name>Magix.SampleController</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Magix.tests\Magix.tests.csproj">
-      <Project>{40e6b621-1424-4a4c-9349-eb5c8fcd7d10}</Project>
-      <Name>Magix.tests</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Magix.tiedown\Magix.tiedown.csproj">
-      <Project>{bf9f868c-7023-4f75-a96a-9401edb50877}</Project>
-      <Name>Magix.tiedown</Name>
     </ProjectReference>
     <ProjectReference Include="..\Magix.UX\Magix.UX.csproj">
       <Project>{fdd15c94-7dc2-4d19-9af4-0e9fd8ccc443}</Project>
@@ -208,11 +156,75 @@
       <Project>{47afbbbe-cdf6-4b3a-8bd8-478406735c99}</Project>
       <Name>Magix.viewports</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Magix.web\Magix.web.csproj">
+    <ProjectReference Include="..\Plugins\Magix.admin\Magix.admin.csproj">
+      <Project>{381e2551-3305-4757-b652-afc9adcb9d3e}</Project>
+      <Name>Magix.admin</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Plugins\Magix.code\Magix.code.csproj">
+      <Project>{a6695b66-c94d-4433-9d6f-b12e6ed55e38}</Project>
+      <Name>Magix.code</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Plugins\Magix.data\Magix.data.csproj">
+      <Project>{4fc8426a-ed89-4100-887e-c571e3dc9c8c}</Project>
+      <Name>Magix.data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Plugins\Magix.email\Magix.email.csproj">
+      <Project>{c84d5706-3630-4b80-b3d2-8d232ea9b095}</Project>
+      <Name>Magix.email</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Plugins\Magix.events\Magix.events.csproj">
+      <Project>{e7421bbe-a59d-42c4-949a-a3e0661574b1}</Project>
+      <Name>Magix.events</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Plugins\Magix.execute\Magix.execute.csproj">
+      <Project>{7bbd5bd2-e3fe-42c2-94f8-878f4156a03e}</Project>
+      <Name>Magix.execute</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Plugins\Magix.file\Magix.file.csproj">
+      <Project>{f357eb84-40b4-4b9f-afc0-df7eebfbaf82}</Project>
+      <Name>Magix.file</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Plugins\Magix.forms\Magix.forms.csproj">
+      <Project>{71fe057e-9d78-423f-8664-2fae2d0d56a1}</Project>
+      <Name>Magix.forms</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Plugins\Magix.help\Magix.help.csproj">
+      <Project>{cb7ee54e-9957-4202-af61-fc6c40053b4c}</Project>
+      <Name>Magix.help</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Plugins\Magix.ide\Magix.ide.csproj">
+      <Project>{686be5b7-2ec5-4adf-9483-a3dd90d472f9}</Project>
+      <Name>Magix.ide</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Plugins\Magix.log\Magix.log.csproj">
+      <Project>{15893cbd-d0dd-47df-8083-7b33e0daaff6}</Project>
+      <Name>Magix.log</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Plugins\Magix.node\Magix.node.csproj">
+      <Project>{c47c4ab9-be13-48f0-81fb-830a83482815}</Project>
+      <Name>Magix.node</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Plugins\Magix.remoting\Magix.remoting.csproj">
+      <Project>{ac81b6b6-15a1-40f2-98e4-5acc23bb27c3}</Project>
+      <Name>Magix.remoting</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Plugins\Magix.tests\Magix.tests.csproj">
+      <Project>{40e6b621-1424-4a4c-9349-eb5c8fcd7d10}</Project>
+      <Name>Magix.tests</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Plugins\Magix.threading\Magix.threading.csproj">
+      <Project>{5b128787-7719-406b-889d-45737584439c}</Project>
+      <Name>Magix.threading</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Plugins\Magix.tiedown\Magix.tiedown.csproj">
+      <Project>{bf9f868c-7023-4f75-a96a-9401edb50877}</Project>
+      <Name>Magix.tiedown</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Plugins\Magix.web\Magix.web.csproj">
       <Project>{ae728f8e-a41f-41ff-b5d4-013c9849d5b2}</Project>
       <Name>Magix.web</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Magix.xml\Magix.xml.csproj">
+    <ProjectReference Include="..\Plugins\Magix.xml\Magix.xml.csproj">
       <Project>{eae2f2ae-0098-44f1-8b3d-1887266e94cf}</Project>
       <Name>Magix.xml</Name>
     </ProjectReference>
