@@ -1,5 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -10,6 +11,18 @@
     <OutputType>Library</OutputType>
     <RootNamespace>Magix.app</RootNamespace>
     <AssemblyName>Magix.app</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>4.0</OldToolsVersion>
+    <UseIISExpress>false</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -31,8 +44,14 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Web" />
     <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
@@ -78,157 +97,153 @@
     </Compile>
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
     <Compile Include="code\Magix_PageStatePersister.cs" />
   </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
   <ProjectExtensions>
     <MonoDevelop>
       <Properties VerifyCodeBehindFields="True" VerifyCodeBehindEvents="True">
         <XspParameters Port="8080" Address="127.0.0.1" SslMode="None" SslProtocol="Default" KeyType="None" CertFile="" KeyFile="" PasswordOptions="None" Password="" Verbose="True" />
       </Properties>
     </MonoDevelop>
+    <VisualStudio>
+      <FlavorProperties GUID="{349C5851-65DF-11DA-9384-00065B846F21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>False</AutoAssignPort>
+          <DevelopmentServerPort>8080</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>
+          </IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
   </ProjectExtensions>
-  <ItemGroup>
-    <ProjectReference Include="..\Magix.UX\Magix.UX.csproj">
-      <Project>{FDD15C94-7DC2-4D19-9AF4-0E9FD8CCC443}</Project>
-      <Name>Magix.UX</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Magix.SampleController\Magix.SampleController.csproj">
-      <Project>{B9D247FE-C4EA-49B2-83E9-0ED75D844B72}</Project>
-      <Name>Magix.SampleController</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Magix.execute\Magix.execute.csproj">
-      <Project>{7BBD5BD2-E3FE-42C2-94F8-878F4156A03E}</Project>
-      <Name>Magix.execute</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Magix.forms\Magix.forms.csproj">
-      <Project>{71FE057E-9D78-423F-8664-2FAE2D0D56A1}</Project>
-      <Name>Magix.forms</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Magix.data\Magix.data.csproj">
-      <Project>{4FC8426A-ED89-4100-887E-C571E3DC9C8C}</Project>
-      <Name>Magix.data</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Magix.core\Magix.Core.csproj">
-      <Project>{11376D5F-13BD-4529-BA92-DDE415B96220}</Project>
-      <Name>Magix.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Magix.viewports\Magix.viewports.csproj">
-      <Project>{47AFBBBE-CDF6-4B3A-8BD8-478406735C99}</Project>
-      <Name>Magix.viewports</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Magix.admin\Magix.admin.csproj">
-      <Project>{381E2551-3305-4757-B652-AFC9ADCB9D3E}</Project>
-      <Name>Magix.admin</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Magix.tests\Magix.tests.csproj">
-      <Project>{40E6B621-1424-4A4C-9349-EB5C8FCD7D10}</Project>
-      <Name>Magix.tests</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Magix.file\Magix.file.csproj">
-      <Project>{F357EB84-40B4-4B9F-AFC0-DF7EEBFBAF82}</Project>
-      <Name>Magix.file</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Magix.email\Magix.email.csproj">
-      <Project>{C84D5706-3630-4B80-B3D2-8D232EA9B095}</Project>
-      <Name>Magix.email</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Magix.web\Magix.web.csproj">
-      <Project>{AE728F8E-A41F-41FF-B5D4-013C9849D5B2}</Project>
-      <Name>Magix.web</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Magix.code\Magix.code.csproj">
-      <Project>{A6695B66-C94D-4433-9D6F-B12E6ED55E38}</Project>
-      <Name>Magix.code</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Magix.execute.tests\Magix.execute.tests.csproj">
-      <Project>{EB41CEE7-B2A5-4A82-8AE6-1CBEABEA7438}</Project>
-      <Name>Magix.execute.tests</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Magix.events.tests\Magix.events.tests.csproj">
-      <Project>{B07D7CF9-5C0C-47A1-BD42-AB346B5761F2}</Project>
-      <Name>Magix.events.tests</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Magix.remoting.tests\Magix.remoting.tests.csproj">
-      <Project>{8E639EDC-059D-4BB6-B905-E3611AAC2E24}</Project>
-      <Name>Magix.remoting.tests</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Magix.threading.tests\Magix.threading.tests.csproj">
-      <Project>{E7B4FC0B-2E5D-4CC0-875D-F5A6AFAEFD5F}</Project>
-      <Name>Magix.threading.tests</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Magix.data.tests\Magix.data.tests.csproj">
-      <Project>{A81C3236-DD06-4315-AE67-6B0EB833526F}</Project>
-      <Name>Magix.data.tests</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Magix.code.tests\Magix.code.tests.csproj">
-      <Project>{7825CF11-A8CB-4788-8A5C-C2E064F063DE}</Project>
-      <Name>Magix.code.tests</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Magix.xml\Magix.xml.csproj">
-      <Project>{EAE2F2AE-0098-44F1-8B3D-1887266E94CF}</Project>
-      <Name>Magix.xml</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Magix.node\Magix.node.csproj">
-      <Project>{C47C4AB9-BE13-48F0-81FB-830A83482815}</Project>
-      <Name>Magix.node</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Magix.log\Magix.log.csproj">
-      <Project>{15893CBD-D0DD-47DF-8083-7B33E0DAAFF6}</Project>
-      <Name>Magix.log</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Magix.log.tests\Magix.log.tests.csproj">
-      <Project>{30E34A65-909F-40A6-B366-0158426A4DE2}</Project>
-      <Name>Magix.log.tests</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Magix.ide\Magix.ide.csproj">
-      <Project>{686BE5B7-2EC5-4ADF-9483-A3DD90D472F9}</Project>
-      <Name>Magix.ide</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Magix.viewport.tests\Magix.viewport.tests.csproj">
-      <Project>{00BCDCAD-3B03-4589-9EA1-1619D1242C8B}</Project>
-      <Name>Magix.viewport.tests</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Magix.tiedown\Magix.tiedown.csproj">
-      <Project>{512DBA1D-17F4-47B5-8D23-97178E8F14DA}</Project>
-      <Name>Magix.tiedown</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Magix.help\Magix.help.csproj">
-      <Project>{512D80BA-ED5F-4299-B8D2-BD88ED314522}</Project>
-      <Name>Magix.help</Name>
-    </ProjectReference>
-  </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="web.config" />
     <EmbeddedResource Include="system42\public\index-header.mml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="media\" />
-    <Folder Include="code\" />
-    <Folder Include="media\grid\" />
-    <Folder Include="system42\" />
-    <Folder Include="system42\admin\" />
-    <Folder Include="system42\misc\" />
-    <Folder Include="system42\pages\" />
-    <Folder Include="system42\public\" />
-    <Folder Include="system42\startup-scripts\" />
-    <Folder Include="system42\admin\desktop\" />
-    <Folder Include="system42\admin\forms\" />
-    <Folder Include="system42\admin\tools\" />
-    <Folder Include="system42\admin\users\" />
-    <Folder Include="system42\admin\test-files\" />
-    <Folder Include="system42\admin\app-wizard\" />
-    <Folder Include="system42\admin\app-wizard\wizards\" />
-    <Folder Include="system42\admin\help\" />
-    <Folder Include="system42\admin\help\active-events\" />
-    <Folder Include="system42\admin\help\mvc\" />
-    <Folder Include="system42\admin\help\ajax\" />
-    <Folder Include="system42\admin\help\web-parts\" />
+    <ProjectReference Include="..\Magix.admin\Magix.admin.csproj">
+      <Project>{381e2551-3305-4757-b652-afc9adcb9d3e}</Project>
+      <Name>Magix.admin</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Magix.code.tests\Magix.code.tests.csproj">
+      <Project>{7825cf11-a8cb-4788-8a5c-c2e064f063de}</Project>
+      <Name>Magix.code.tests</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Magix.code\Magix.code.csproj">
+      <Project>{a6695b66-c94d-4433-9d6f-b12e6ed55e38}</Project>
+      <Name>Magix.code</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Magix.core\Magix.Core.csproj">
+      <Project>{11376d5f-13bd-4529-ba92-dde415b96220}</Project>
+      <Name>Magix.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Magix.data.tests\Magix.data.tests.csproj">
+      <Project>{a81c3236-dd06-4315-ae67-6b0eb833526f}</Project>
+      <Name>Magix.data.tests</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Magix.data\Magix.data.csproj">
+      <Project>{4fc8426a-ed89-4100-887e-c571e3dc9c8c}</Project>
+      <Name>Magix.data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Magix.email\Magix.email.csproj">
+      <Project>{c84d5706-3630-4b80-b3d2-8d232ea9b095}</Project>
+      <Name>Magix.email</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Magix.events.tests\Magix.events.tests.csproj">
+      <Project>{b07d7cf9-5c0c-47a1-bd42-ab346b5761f2}</Project>
+      <Name>Magix.events.tests</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Magix.execute.tests\Magix.execute.tests.csproj">
+      <Project>{eb41cee7-b2a5-4a82-8ae6-1cbeabea7438}</Project>
+      <Name>Magix.execute.tests</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Magix.execute\Magix.execute.csproj">
+      <Project>{7bbd5bd2-e3fe-42c2-94f8-878f4156a03e}</Project>
+      <Name>Magix.execute</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Magix.file\Magix.file.csproj">
+      <Project>{f357eb84-40b4-4b9f-afc0-df7eebfbaf82}</Project>
+      <Name>Magix.file</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Magix.forms\Magix.forms.csproj">
+      <Project>{71fe057e-9d78-423f-8664-2fae2d0d56a1}</Project>
+      <Name>Magix.forms</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Magix.help\Magix.help.csproj">
+      <Project>{cb7ee54e-9957-4202-af61-fc6c40053b4c}</Project>
+      <Name>Magix.help</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Magix.ide\Magix.ide.csproj">
+      <Project>{686be5b7-2ec5-4adf-9483-a3dd90d472f9}</Project>
+      <Name>Magix.ide</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Magix.log.tests\Magix.log.tests.csproj">
+      <Project>{30e34a65-909f-40a6-b366-0158426a4de2}</Project>
+      <Name>Magix.log.tests</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Magix.log\Magix.log.csproj">
+      <Project>{15893cbd-d0dd-47df-8083-7b33e0daaff6}</Project>
+      <Name>Magix.log</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Magix.node\Magix.node.csproj">
+      <Project>{c47c4ab9-be13-48f0-81fb-830a83482815}</Project>
+      <Name>Magix.node</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Magix.remoting.tests\Magix.remoting.tests.csproj">
+      <Project>{8e639edc-059d-4bb6-b905-e3611aac2e24}</Project>
+      <Name>Magix.remoting.tests</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Magix.SampleController\Magix.SampleController.csproj">
+      <Project>{b9d247fe-c4ea-49b2-83e9-0ed75d844b72}</Project>
+      <Name>Magix.SampleController</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Magix.tests\Magix.tests.csproj">
+      <Project>{40e6b621-1424-4a4c-9349-eb5c8fcd7d10}</Project>
+      <Name>Magix.tests</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Magix.threading.tests\Magix.threading.tests.csproj">
+      <Project>{e7b4fc0b-2e5d-4cc0-875d-f5a6afaefd5f}</Project>
+      <Name>Magix.threading.tests</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Magix.tiedown\Magix.tiedown.csproj">
+      <Project>{bf9f868c-7023-4f75-a96a-9401edb50877}</Project>
+      <Name>Magix.tiedown</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Magix.UX\Magix.UX.csproj">
+      <Project>{fdd15c94-7dc2-4d19-9af4-0e9fd8ccc443}</Project>
+      <Name>Magix.UX</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Magix.viewports\Magix.viewports.csproj">
+      <Project>{47afbbbe-cdf6-4b3a-8bd8-478406735c99}</Project>
+      <Name>Magix.viewports</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Magix.web\Magix.web.csproj">
+      <Project>{ae728f8e-a41f-41ff-b5d4-013c9849d5b2}</Project>
+      <Name>Magix.web</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Magix.xml\Magix.xml.csproj">
+      <Project>{eae2f2ae-0098-44f1-8b3d-1887266e94cf}</Project>
+      <Name>Magix.xml</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="media\xing-wysihtml5\LICENSE" />
