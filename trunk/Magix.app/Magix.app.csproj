@@ -196,6 +196,10 @@
       <Project>{15893cbd-d0dd-47df-8083-7b33e0daaff6}</Project>
       <Name>Magix.log</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Plugins\Magix.math\Magix.math.csproj">
+      <Project>{c7a7379b-b495-4d6a-b951-3388f5248fa3}</Project>
+      <Name>Magix.math</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Plugins\Magix.node\Magix.node.csproj">
       <Project>{c47c4ab9-be13-48f0-81fb-830a83482815}</Project>
       <Name>Magix.node</Name>

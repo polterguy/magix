@@ -33,6 +33,7 @@
     <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="StatementHelper.cs" />
     <Compile Include="ExecuteCore.cs" />
     <Compile Include="ExceptionCore.cs" />
     <Compile Include="WhileCore.cs" />

@@ -1,47 +1,15 @@
 
 
-inspect=>@"file run upon every initial page load request, 
-such as refreshing, or first load from user/machine, etc.&nbsp;&nbsp;
-will create the common header, with the login box and logout logic.&nbsp;&nbsp;
-then depending upon if it is a user logged in, belinging to 
-an admin role, the desktop will be loaded, or the if the user is 
-not an admin, then the run-page.hl script will be executed"
+_data
+  foo1=>qw
+  foo2=>we
 
+while=>more-then
+  lhs=>[_data].Count
+  rhs=>0
+  code
+    set=>[_data][0]
+    magix.viewport.show-message
+      message=>natthjemmet!!
 
-magix.forms.load-mml-web-part
-  file=>system42/public/index-header.mml
-  container=>header
-  form-id=>header
-  css=>span-24
-
-
-
-execute-file=>system42/misc/settings-initialize.hl
-
-magix.web.get=>page
-magix.web.get=>dashboard
-
-if=>[magix.web.get][value]
-  execute-file=>system42/pages/run-page.hl
-else
-  magix.web.get-session=>magix.core.user
-  if=>[@][magix.web.get-session][value][roles][admin]
-    if=>[magix.web.get:1][value]
-      magix.forms.load-mml-web-part
-        file=>system42/admin/desktop/menu.mml
-        container=>menu
-        form-id=>admin-menu
-        css=>span-5
-      magix.forms.load-mml-web-part
-        file=>system42/admin/desktop/desktop.mml
-        container=>content1
-        form-id=>desktop-admin
-        css=>span-19 last
-    else
-      execute-file=>system42/pages/run-page.hl
-  else
-    if=>[magix.web.get:1][value]
-      magix.web.redirect=>~
-    else
-      execute-file=>system42/pages/run-page.hl
 
