@@ -23,9 +23,17 @@ namespace Magix.math
             if (ShouldInspect(e.Params))
             {
                 e.Params["event:magix.math.add"].Value = null;
-                e.Params["inspect"].Value = @"&nbsp;&nbsp;thread safe";
+                e.Params["inspect"].Value = @"Adds the underlaying values together and 
+puts the result in value of [magix.math.add] node.&nbsp;&nbsp;thread safe";
                 return;
             }
+
+            decimal result = 0M;
+            foreach (Node idx in e.Params)
+            {
+                result += idx.Get<decimal>();
+            }
+            e.Params.Value = result.ToString();
         }
 	}
 }

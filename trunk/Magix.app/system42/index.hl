@@ -1,15 +1,13 @@
 
 
-_data
-  foo1=>qw
-  foo2=>we
 
-while=>more-then
-  lhs=>[_data].Count
-  rhs=>0
-  code
-    set=>[_data][0]
-    magix.viewport.show-message
-      message=>natthjemmet!!
+magix.math.add
+  foo1=>5
+  foo2=>10
+  foo3=>4
+
+set=>[magix.viewport.show-message][message].Value
+  value=>[magix.math.add].Value
+
 
 
