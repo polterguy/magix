@@ -14,10 +14,12 @@ not thread safe"
 
   code
     magix.web.get-session=>magix.help.kill-intrusive-tips
-    if=>![magix.web.get-session][value].Value
-      for-each=>[$]
-        add=>[@][..][magix.viewport.show-message]
-          value=>[.]
-      magix.viewport.show-message
-        time=>-1
+    if=>not-exist
+      lhs=>[magix.web.get-session][value].Value
+      code
+        for-each=>[$]
+          add=>[@][..][magix.viewport.show-message]
+            value=>[.]
+        magix.viewport.show-message
+          time=>-1
 

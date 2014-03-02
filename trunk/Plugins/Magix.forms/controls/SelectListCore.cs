@@ -29,7 +29,7 @@ namespace Magix.forms
 				return;
 			}
 
-			Node node = e.Params["_code"].Value as Node;
+            Node node = Ip(e.Params)["_code"].Value as Node;
 
 			SelectList ret = new SelectList();
 
@@ -84,7 +84,7 @@ namespace Magix.forms
 				};
 			}
 
-			e.Params["_ctrl"].Value = ret;
+            Ip(e.Params)["_ctrl"].Value = ret;
 		}
 
 		/**
@@ -99,14 +99,14 @@ namespace Magix.forms
 				return;
 			}
 
-			if (!e.Params.Contains("value"))
+            if (!Ip(e.Params).Contains("value"))
 				throw new ArgumentException("set-value needs [value]");
 
-			SelectList ctrl = FindControl<SelectList>(e.Params);
+            SelectList ctrl = FindControl<SelectList>(Ip(e.Params));
 
 			if (ctrl != null)
 			{
-				ctrl.SetSelectedItemAccordingToValue(e.Params["value"].Get<string>());
+                ctrl.SetSelectedItemAccordingToValue(Ip(e.Params)["value"].Get<string>());
 			}
 		}
 
@@ -122,11 +122,11 @@ namespace Magix.forms
 				return;
 			}
 
-			SelectList ctrl = FindControl<SelectList>(e.Params);
+            SelectList ctrl = FindControl<SelectList>(Ip(e.Params));
 
 			if (ctrl != null)
 			{
-				e.Params["value"].Value = ctrl.SelectedItem.Value;
+                Ip(e.Params)["value"].Value = ctrl.SelectedItem.Value;
 			}
 		}
 
@@ -149,15 +149,15 @@ not thread safe";
 				return;
 			}
 
-			SelectList ctrl = FindControl<SelectList>(e.Params);
+            SelectList ctrl = FindControl<SelectList>(Ip(e.Params));
 
 			if (ctrl != null)
 			{
 				SelectList lst = ctrl as SelectList;
 				lst.Items.Clear();
-				if (e.Params.Contains("values"))
+                if (Ip(e.Params).Contains("values"))
 				{
-					foreach (Node idx in e.Params["values"])
+                    foreach (Node idx in Ip(e.Params)["values"])
 					{
 						ListItem it = new ListItem(idx.Get<string>(), idx.Name);
 						lst.Items.Add(it);

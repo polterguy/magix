@@ -29,7 +29,7 @@ namespace Magix.forms
 				return;
 			}
 
-			Node node = e.Params["_code"].Value as Node;
+            Node node = Ip(e.Params)["_code"].Value as Node;
 
 			Button ret = new Button();
 
@@ -47,7 +47,7 @@ namespace Magix.forms
 			    node["enabled"].Value != null)
 				ret.Enabled = node["enabled"].Get<bool>();
 
-			e.Params["_ctrl"].Value = ret;
+            Ip(e.Params)["_ctrl"].Value = ret;
 		}
 
 		/**
@@ -62,14 +62,14 @@ namespace Magix.forms
 				return;
 			}
 
-			if (!e.Params.Contains("value"))
+            if (!Ip(e.Params).Contains("value"))
 				throw new ArgumentException("set-value needs [value]");
 
-			Button ctrl = FindControl<Button>(e.Params);
+            Button ctrl = FindControl<Button>(Ip(e.Params));
 
 			if (ctrl != null)
 			{
-				ctrl.Text = e.Params["value"].Get<string>();
+                ctrl.Text = Ip(e.Params)["value"].Get<string>();
 			}
 		}
 
@@ -85,11 +85,11 @@ namespace Magix.forms
 				return;
 			}
 
-			Button ctrl = FindControl<Button>(e.Params);
+            Button ctrl = FindControl<Button>(Ip(e.Params));
 
 			if (ctrl != null)
 			{
-				e.Params["value"].Value = ctrl.Text;
+                Ip(e.Params)["value"].Value = ctrl.Text;
 			}
 		}
 

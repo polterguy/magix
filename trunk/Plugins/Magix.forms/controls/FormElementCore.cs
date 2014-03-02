@@ -34,13 +34,13 @@ namespace Magix.forms
 				return;
 			}
 
-			BaseWebControlFormElement ctrl = FindControl<BaseWebControlFormElement>(e.Params);
+            BaseWebControlFormElement ctrl = FindControl<BaseWebControlFormElement>(Ip(e.Params));
 
 			if (ctrl != null)
 			{
 				bool enabled = false;
-				if (e.Params.Contains("value"))
-					enabled = e.Params["value"].Get<bool>();
+                if (Ip(e.Params).Contains("value"))
+                    enabled = Ip(e.Params)["value"].Get<bool>();
 
 				ctrl.Enabled = enabled;
 			}
@@ -63,11 +63,11 @@ namespace Magix.forms
 				return;
 			}
 
-			BaseWebControlFormElement ctrl = FindControl<BaseWebControlFormElement>(e.Params);
+            BaseWebControlFormElement ctrl = FindControl<BaseWebControlFormElement>(Ip(e.Params));
 
 			if (ctrl != null)
 			{
-				e.Params["value"].Value = ctrl.Enabled;
+                Ip(e.Params)["value"].Value = ctrl.Enabled;
 			}
 		}
 	}

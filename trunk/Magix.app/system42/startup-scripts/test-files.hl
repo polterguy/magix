@@ -13,8 +13,14 @@ correctly"
   code
     execute-file=>system42/admin/test-files/test-input-pars.hl
       mumbo=>howdy
-    if=>[execute-file][mumbo].Value!=howdy
-      throw=>input value not returned
-    if=>[execute-file][jumbo].Value!=5
-      throw=>output value not returned currectly
+    if=>not-equals
+      lhs=>[execute-file][mumbo].Value
+      rhs=>howdy
+      code
+        throw=>input value not returned
+    if=>not-equals
+      lhs=>[execute-file][jumbo].Value
+      rhs=>5
+      code
+        throw=>output value not returned currectly
 

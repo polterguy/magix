@@ -35,14 +35,14 @@ expression must end with .Value or .Name.&nbsp;&nbsp;thread safe";
 				return;
 			}
 
-			if (!e.Params.Contains("_ip") || !(e.Params["_ip"].Value is Node))
+            if (!Ip(e.Params).Contains("_ip") || !(Ip(e.Params)["_ip"].Value is Node))
 				throw new ArgumentException("you cannot raise [magix.execute.replace] directly, except for inspect purposes");
 
-			Node ip = e.Params["_ip"].Value as Node;
+            Node ip = Ip(e.Params)["_ip"].Value as Node;
 
 			Node dp = ip;
-			if (e.Params.Contains("_dp"))
-				dp = e.Params["_dp"].Value as Node;
+            if (Ip(e.Params).Contains("_dp"))
+                dp = Ip(e.Params)["_dp"].Value as Node;
 
 			if (!ip.Contains("what") || string.IsNullOrEmpty(ip["what"].Get<string>()))
 				throw new ArgumentException("magix.nodes.replace needs [what] parameter");

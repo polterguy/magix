@@ -29,7 +29,7 @@ namespace Magix.forms
 				return;
 			}
 
-			Node node = e.Params["_code"].Value as Node;
+            Node node = Ip(e.Params)["_code"].Value as Node;
 
 			TextArea ret = new TextArea();
 
@@ -95,7 +95,7 @@ namespace Magix.forms
 				};
 			}
 
-			e.Params["_ctrl"].Value = ret;
+            Ip(e.Params)["_ctrl"].Value = ret;
 		}
 
 		/**
@@ -110,14 +110,14 @@ namespace Magix.forms
 				return;
 			}
 
-			if (!e.Params.Contains("value"))
+            if (!Ip(e.Params).Contains("value"))
 				throw new ArgumentException("set-value needs [value]");
 
-			TextArea ctrl = FindControl<TextArea>(e.Params);
+            TextArea ctrl = FindControl<TextArea>(Ip(e.Params));
 
 			if (ctrl != null)
 			{
-				ctrl.Text = e.Params["value"].Get<string>();
+                ctrl.Text = Ip(e.Params)["value"].Get<string>();
 			}
 		}
 
@@ -133,11 +133,11 @@ namespace Magix.forms
 				return;
 			}
 
-			TextArea ctrl = FindControl<TextArea>(e.Params);
+            TextArea ctrl = FindControl<TextArea>(Ip(e.Params));
 
 			if (ctrl != null)
 			{
-				e.Params["value"].Value = ctrl.Text;
+                Ip(e.Params)["value"].Value = ctrl.Text;
 			}
 		}
 
@@ -157,7 +157,7 @@ namespace Magix.forms
 				return;
 			}
 
-			TextArea ctrl = FindControl<TextArea>(e.Params);
+            TextArea ctrl = FindControl<TextArea>(Ip(e.Params));
 
 			if (ctrl != null)
 			{

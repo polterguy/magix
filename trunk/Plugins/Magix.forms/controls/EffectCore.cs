@@ -41,12 +41,12 @@ different effects have different properties.&nbsp;&nbsp;not thread safe";
 				return;
 			}
 
-			Control ctrl = FindControl<Control>(e.Params);
+            Control ctrl = FindControl<Control>(Ip(e.Params));
 
 			if (ctrl == null)
 				throw new ArgumentException("couldn't find control to run effect for");
 
-			Effect tmp = CreateEffect(e.Params, ctrl);
+            Effect tmp = CreateEffect(Ip(e.Params), ctrl);
 			tmp.Render();
 		}
 

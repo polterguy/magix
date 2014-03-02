@@ -144,10 +144,10 @@ button=>next
 				return;
 			}
 
-			if (!e.Params.Contains("next") || e.Params["next"].Get<string>("") == "")
+            if (!Ip(e.Params).Contains("next") || Ip(e.Params)["next"].Get<string>("") == "")
 				throw new ArgumentException("cannot set-next without a next value");
 
-			Next = e.Params["next"].Get<string>();
+            Next = Ip(e.Params)["next"].Get<string>();
 		}
 
 		/**
@@ -207,7 +207,7 @@ button=>next
 			Node tmp = new Node();
 			tmp["form-id"].Value = "help";
 
-			using (TextReader reader = File.OpenText(Page.Server.MapPath(e.Params["file"].Get<string>())))
+            using (TextReader reader = File.OpenText(Page.Server.MapPath(Ip(e.Params)["file"].Get<string>())))
 			{
 				tmp["mml"].Value = reader.ReadToEnd();
 			}
@@ -216,11 +216,11 @@ button=>next
 				"magix.forms.change-mml",
 				tmp);
 
-			if (!(e.Params.Contains("freeze-help-stack") && 
-			    e.Params["freeze-help-stack"].Get<bool>()))
+            if (!(Ip(e.Params).Contains("freeze-help-stack") &&
+                Ip(e.Params)["freeze-help-stack"].Get<bool>()))
 			{
 				tmp = new Node();
-				tmp["page"].Value = e.Params["file"].Get<string>();
+                tmp["page"].Value = Ip(e.Params)["file"].Get<string>();
 
 				RaiseActiveEvent(
 					"magix.help.add-page",
@@ -255,20 +255,20 @@ of help system.&nbsp;&nbsp;not thread safe";
 				return;
 			}
 
-			if (e.Params.Contains("reset") && e.Params["reset"].Get<bool>())
+            if (Ip(e.Params).Contains("reset") && Ip(e.Params)["reset"].Get<bool>())
 			{
 				CurrentIndex = -1;
 				Pages.Clear();
 			}
 
-			if (!e.Params.Contains("page"))
+            if (!Ip(e.Params).Contains("page"))
 				throw new ArgumentException("need to know which page to add");
 
 			while (Pages.Count - 1 > CurrentIndex)
 				Pages.RemoveAt(Pages.Count - 1);
 
 			CurrentIndex += 1;
-			Pages.Add(e.Params["page"].Get<string>());
+            Pages.Add(Ip(e.Params)["page"].Get<string>());
 		}
 
 		/**
@@ -308,7 +308,7 @@ of help system.&nbsp;&nbsp;not thread safe";
 				"magix.help.open-file",
 				tmp);
 
-			e.Params["success"].Value = true;
+            Ip(e.Params)["success"].Value = true;
 		}
 
 		/**

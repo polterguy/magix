@@ -38,18 +38,18 @@ contain type information for types of int, decimal, datetime and bool.&nbsp;&nbs
 				return;
 			}
 
-			if (!e.Params.Contains("json"))
+            if (!Ip(e.Params).Contains("json"))
 			{
 				throw new ArgumentException("no [json] passed into node-2-code");
 			}
 			string txt = "";
 			Node node = null;
-			if (e.Params["json"].Value != null)
-				node = e.Params["json"].Value as Node;
+            if (Ip(e.Params)["json"].Value != null)
+                node = Ip(e.Params)["json"].Value as Node;
 			else
-				node = e.Params["json"].Clone();
+                node = Ip(e.Params)["json"].Clone();
 			txt += ParseNodes(0, node);
-			e.Params["code"].Value = txt;
+            Ip(e.Params)["code"].Value = txt;
 		}
 
 		private static string ParseNodes (int indent, Node node)
@@ -137,10 +137,10 @@ code
 				return;
 			}
 
-			if (!e.Params.Contains("code"))
+            if (!Ip(e.Params).Contains("code"))
 				throw new ArgumentException("No code node passed into _transform-code-2-node");
 
-			string txt = e.Params["code"].Get<string>();
+            string txt = Ip(e.Params)["code"].Get<string>();
 			Node ret = new Node();
 			using (TextReader reader = new StringReader(txt))
 			{
@@ -272,7 +272,7 @@ code
 					}
 				}
 			}
-			e.Params["json"].Value = ret;
+            Ip(e.Params)["json"].Value = ret;
 		}
 
 		/**
@@ -291,12 +291,12 @@ node tree, and return in [json].&nbsp;&nbsp;thread safe";
 				return;
 			}
 
-			if (string.IsNullOrEmpty(e.Params.Get<string>()))
+            if (string.IsNullOrEmpty(Ip(e.Params).Get<string>()))
 			{
 				throw new ArgumentException("no file passed into file-2-code");
 			}
 
-			string file = e.Params.Get<string>();
+            string file = Ip(e.Params).Get<string>();
 
 			Node fn = new Node();
 			fn.Value = file;
@@ -312,7 +312,7 @@ node tree, and return in [json].&nbsp;&nbsp;thread safe";
 				"magix.code.code-2-node",
 				code);
 
-			e.Params["json"].ReplaceChildren(code["json"].Get<Node>());
+            Ip(e.Params)["json"].ReplaceChildren(code["json"].Get<Node>());
 		}
 	}
 }

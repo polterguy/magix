@@ -9,12 +9,16 @@ event=>magix.admin.open-event-executor
   inspect=>@"opens up the active event executor"
 
   code
-    if=>[$][container]
-      set=>[magix.viewport.load-module][container].Value
-        value=>[$][container].Value
-    if=>[$][css]
-      set=>[magix.viewport.load-module][css].Value
-        value=>[$][css].Value
+    if=>exist
+      lhs=>[$][container]
+      code
+        set=>[magix.viewport.load-module][container].Value
+          value=>[$][container].Value
+    if=>exist
+      lhs=>[$][css]
+      code
+        set=>[magix.viewport.load-module][css].Value
+          value=>[$][css].Value
     magix.viewport.load-module
       css=>span-24
       container=>content1
@@ -24,12 +28,16 @@ event=>magix.admin.open-event-sniffer
   inspect=>@"opens up the active 
 event sniffer, or tracer"
   code
-    if=>[$][container]
-      set=>[magix.viewport.load-module][container].Value
-        value=>[$][container].Value
-    if=>[$][css]
-      set=>[magix.viewport.load-module][css].Value
-        value=>[$][css].Value
+    if=>exist
+      lhs=>[$][container]
+      code
+        set=>[magix.viewport.load-module][container].Value
+          value=>[$][container].Value
+    if=>exist
+      lhs=>[$][css]
+      code
+        set=>[magix.viewport.load-module][css].Value
+          value=>[$][css].Value
     magix.viewport.load-module
       css=>span-24
       container=>content1
@@ -40,12 +48,16 @@ event=>magix.admin.load-executor-code
 executor, and pust the [code] node into its input code
 surface"
   code
-    if=>[$][container]
-      set=>[magix.viewport.load-module][container].Value
-        value=>[$][container].Value
-    if=>[$][css]
-      set=>[magix.viewport.load-module][css].Value
-        value=>[$][css].Value
+    if=>exist
+      lhs=>[$][container]
+      code
+        set=>[magix.viewport.load-module][container].Value
+          value=>[$][container].Value
+    if=>exist
+      lhs=>[$][css]
+      code
+        set=>[magix.viewport.load-module][css].Value
+          value=>[$][css].Value
     magix.viewport.load-module
       css=>span-24
       container=>content2
@@ -53,9 +65,11 @@ surface"
     add=>[magix.admin.set-code]
       value=>[$][code]
     magix.admin.set-code
-    if=>[$][event]
-      set=>[@][magix.admin.set-code-event][event].Value
-        value=>[$][event].Value
-      magix.admin.set-code-event
+    if=>exist
+      lhs=>[$][event]
+      code
+        set=>[@][magix.admin.set-code-event][event].Value
+          value=>[$][event].Value
+        magix.admin.set-code-event
 
 

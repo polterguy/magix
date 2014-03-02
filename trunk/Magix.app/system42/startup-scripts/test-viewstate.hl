@@ -14,13 +14,22 @@ necessary to test if viewstate retrieve and set works correctly"
       value=>howdy
         child1=>howdy2
     magix.viewport.get-viewstate=>magix.test.test-viewstate
-    if=>![magix.viewport.get-viewstate][value]
-      throw=>couldn't find viewstate object
-    if=>[magix.viewport.get-viewstate][value].Value!=howdy
-      throw=>couldn't find correct value for session object
-    if=>[magix.viewport.get-viewstate][value][child1].Value!=howdy2
-      throw=>couldn't find correct value for session child node object
+    if=>not-exist
+      lhs=>[magix.viewport.get-viewstate][value]
+      code
+        throw=>couldn't find viewstate object
+    if=>not-equals
+      lhs=>[magix.viewport.get-viewstate][value].Value
+      code
+        throw=>couldn't find correct value for session object
+    if=>not-equals
+      lhs=>[magix.viewport.get-viewstate][value][child1].Value
+      rhs=>howdy2
+      code
+        throw=>couldn't find correct value for session child node object
     magix.viewport.set-viewstate=>magix.test.test-viewstate
     magix.viewport.get-viewstate=>magix.test.test-viewstate
-    if=>[magix.viewport.get-viewstate:1][value]
-      throw=>couldn't delete viewstate object
+    if=>exist
+      lhs=>[magix.viewport.get-viewstate:1][value]
+      code
+        throw=>couldn't delete viewstate object

@@ -109,10 +109,10 @@ namespace Magix.admin
 				return;
 			}
 
-			if (!e.Params.Contains("event"))
+            if (!Ip(e.Params).Contains("event"))
 				throw new ArgumentException("you must pass in an [event] to set-code-event");
 
-			activeEvent.Text = e.Params["event"].Get<string>();
+            activeEvent.Text = Ip(e.Params)["event"].Get<string>();
 		}
 
 		[ActiveEvent(Name = "magix.admin.set-code")]
@@ -134,7 +134,7 @@ if=>[Data].Value==thomas
 			}
 
 			Node tmp = new Node();
-			tmp["code"].Value = e.Params["code"].Get<string>();
+            tmp["code"].Value = Ip(e.Params)["code"].Get<string>();
 
 			RaiseEvent (
 				"magix.code.code-2-node",

@@ -53,7 +53,7 @@ namespace Magix.admin
 			if (e.Params != null)
 			{
 				Node tmp = new Node();
-				tmp["json"].Value = e.Params;
+                tmp["json"].Value = Ip(e.Params);
 
 				isParsing = true;
 
@@ -71,7 +71,7 @@ namespace Magix.admin
 				if (tmp.Contains("code") && !string.IsNullOrEmpty(tmp["code"].Get<string>()))
 					code = "<pre class=\"span-22 left-1\">" + tmp["code"].Get<string>() + "</pre>";
 			}
-			lbl.Text += "<h5>" + e.Name + (e.Params.Value != null ? "=>" + e.Params.Get<string>() : "") + "</h5>" + code;
+            lbl.Text += "<h5>" + e.Name + (Ip(e.Params).Value != null ? "=>" + Ip(e.Params).Get<string>() : "") + "</h5>" + code;
 		}
 	}
 }

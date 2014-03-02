@@ -12,8 +12,11 @@ if values are equal"
   code
     _dt1=>tmp1
     _dt2=>tmp1
-    if=>[_dt1].Value==[_dt2].Value
-      _success
+    if=>equals
+      lhs=>[_dt1].Value
+      rhs=>[_dt2].Value
+      code
+        _success
     else
       throw=>values didn't match
 
@@ -26,8 +29,11 @@ if values are not equal"
   code
     _dt1=>tmp2
     _dt2=>tmp1
-    if=>[_dt1].Value!=[_dt2].Value
-      _success
+    if=>not-equals
+      lhs=>[_dt1].Value
+      rhs=>[_dt2].Value
+      code
+        _success
     else
       throw=>values didn't match
 
@@ -40,8 +46,11 @@ if lhs is null"
   code
     _dt1
     _dt2=>tmp1
-    if=>[_dt1].Value==[_dt2].Value
-      throw=>values didn't match
+    if=>equals
+      lhs=>[_dt1].Value
+      rhs=>[_dt2].Value
+      code
+        throw=>values didn't match
 
 
 event=>magix.test.if-equals-rhs-null
@@ -52,8 +61,11 @@ if lhs is null"
   code
     _dt1=>tmp1
     _dt2
-    if=>[_dt1].Value==[_dt2].Value
-      throw=>values didn't match
+    if=>equals
+      lhs=>[_dt1].Value
+      rhs=>[_dt2].Value
+      code
+        throw=>values didn't match
 
 
 event=>magix.test.if-equals-rhs-null
@@ -64,8 +76,11 @@ if both sides are null"
   code
     _dt1
     _dt2
-    if=>[_dt1].Value==[_dt2].Value
-      _success
+    if=>equals
+      lhs=>[_dt1].Value
+      rhs=>[_dt2].Value
+      code
+        _success
     else
       throw=>values didn't match
 
@@ -76,8 +91,11 @@ event=>magix.test.if-equals-rhs-null
 if both sides are not existing"
 
   code
-    if=>[_dt1].Value==[_dt2].Value
-      _success
+    if=>equals
+      lhs=>[_dt1].Value
+      rhs=>[_dt2].Value
+      code
+        _success
     else
       throw=>values didn't match
 
@@ -89,8 +107,11 @@ if both sides are not existing"
 
   code
     _dt2=>howdy
-    if=>[_dt1].Value!=[_dt2].Value
-      _success
+    if=>not-equals
+      lhs=>[_dt1].Value
+      rhs=>[_dt2].Value
+      code
+        _success
     else
       throw=>values didn't match
 
@@ -102,8 +123,11 @@ if comparing to boolean"
 
   code
     _dt1=(bool)>True
-    if=>[_dt1].Value==true
-      _success
+    if=>equals
+      lhs=>[_dt1].Value
+      rhs=>true
+      code
+        _success
     else
       throw=>values didn't match
 
@@ -115,8 +139,11 @@ if comparing to true boolean"
 
   code
     _dt1=(bool)>true
-    if=>[_dt1].Value!=false
-      _success
+    if=>not-equals
+      lhs=>[_dt1].Value
+      rhs=>false
+      code
+        _success
     else
       throw=>values didn't match
 
@@ -128,8 +155,10 @@ for single-compound statement"
 
   code
     _dt1=(bool)>false
-    if=>[_dt1].Value
-      throw=>values didn't match
+    if=>exist
+      lhs=>[_dt1].Value
+      code
+        throw=>values didn't match
 
 
 event=>magix.test.if-equals-boolean-4
@@ -139,8 +168,9 @@ for single-compound statement"
 
   code
     _dt1=(bool)>true
-    if=>[_dt1].Value
-      _success
+    if=>exist
+      lhs=>[_dt1].Value
+        _success
     else
       throw=>values didn't match
 
@@ -152,6 +182,8 @@ for dual-compound statement"
 
   code
     _dt1=(bool)>true
-    if=>![_dt1].Value
-      throw=>values didn't match
+    if=>not-equals
+      lhs=>[_dt1].Value
+      code
+        throw=>values didn't match
 

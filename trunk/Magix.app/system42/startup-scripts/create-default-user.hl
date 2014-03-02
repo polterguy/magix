@@ -7,13 +7,16 @@ in the system"
 magix.data.count
   prototype
     type=>magix.core.user
-if=>[magix.data.count][count].Value==0
-  magix.data.save
-    value
-      type=>magix.core.user
-      name=>Ayatholla Khomeini
-      username=>admin
-      pwd=>admin
-      roles
-        admin=>true
+if=>equals
+  lhs=>[magix.data.count][count].Value
+  rhs=>0
+  code
+    magix.data.save
+      value
+        type=>magix.core.user
+        name=>Homo Jesus
+        username=>admin
+        pwd=>admin
+        roles
+          admin=>true
 

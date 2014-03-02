@@ -60,27 +60,27 @@ end user for some seconds.&nbsp;&nbsp;not thread safe";
 			}
 
 
-			if (!e.Params.Contains("message") || e.Params["message"].Get<string>("") == "")
+            if (!Ip(e.Params).Contains("message") || Ip(e.Params)["message"].Get<string>("") == "")
 				throw new ArgumentException("cannot show a message box without a [message] argument");
 
 			if (_isFirst)
 			{
-				message.Text = "<p>" + e.Params["message"].Get<string>() + "</p>";
+                message.Text = "<p>" + Ip(e.Params)["message"].Get<string>() + "</p>";
 			}
 			else
 			{
-				message.Text += "<p>" + e.Params["message"].Get<string>() + "</p>";
+                message.Text += "<p>" + Ip(e.Params)["message"].Get<string>() + "</p>";
 			}
 
-			if (e.Params.Contains("color"))
+            if (Ip(e.Params).Contains("color"))
 				message.Style[Styles.backgroundColor] = e.Params["color"].Get<string>();
 			else
 				message.Style[Styles.backgroundColor] = "";
 
-			if (e.Params.Contains("code"))
+            if (Ip(e.Params).Contains("code"))
 			{
 				Node tmp = new Node();
-				Node code = e.Params["code"].Clone();
+                Node code = Ip(e.Params)["code"].Clone();
 				code.Name = "";
 				tmp["json"].Value = code;
 
@@ -94,7 +94,7 @@ end user for some seconds.&nbsp;&nbsp;not thread safe";
 			if (_isFirst)
 			{
 				_isFirst = false;
-				if (e.Params.Contains("time") && e.Params["time"].Get<int>() == -1)
+                if (Ip(e.Params).Contains("time") && Ip(e.Params)["time"].Get<int>() == -1)
 				{
 					new EffectFadeIn(message, 250)
 						.Render();
@@ -103,7 +103,7 @@ end user for some seconds.&nbsp;&nbsp;not thread safe";
 				{
 					new EffectFadeIn(message, 250)
 						.ChainThese(
-							new EffectTimeout(e.Params.Contains("time") ? e.Params["time"].Get<int>(3000) : 3000),
+                            new EffectTimeout(Ip(e.Params).Contains("time") ? Ip(e.Params)["time"].Get<int>(3000) : 3000),
 							new EffectFadeOut(message,250))
 							.Render();
 				}
@@ -133,19 +133,19 @@ end user for some seconds.&nbsp;&nbsp;not thread safe";
 			}
 
 
-			if (!e.Params.Contains("message") || e.Params["message"].Get<string>("") == "")
+            if (!Ip(e.Params).Contains("message") || Ip(e.Params)["message"].Get<string>("") == "")
 				throw new ArgumentException("cannot show a confirm message box without a [message] argument");
 
-			confirmLbl.Text = e.Params["message"].Get<string>();
+            confirmLbl.Text = Ip(e.Params)["message"].Get<string>();
 
-			if (e.Params.Contains("code"))
-				ConfirmCode = e.Params["code"].Clone();
+            if (Ip(e.Params).Contains("code"))
+                ConfirmCode = Ip(e.Params)["code"].Clone();
 			else
 				ConfirmCode = null;
 
 			confirmWrp.Visible = true;
 
-			if (!e.Params.Contains("closable-only") || e.Params["closable-only"].Get<bool>() == false)
+            if (!Ip(e.Params).Contains("closable-only") || Ip(e.Params)["closable-only"].Get<bool>() == false)
 			{
 				ok.Visible = true;
 				cancel.Text = "cancel";
@@ -157,7 +157,7 @@ end user for some seconds.&nbsp;&nbsp;not thread safe";
 
 				if (ConfirmCode != null)
 				{
-					Node code = e.Params["code"].Clone();
+                    Node code = Ip(e.Params)["code"].Clone();
 					code.Name = "";
 					tmp["json"].Value = code;
 
@@ -218,7 +218,7 @@ end user for some seconds.&nbsp;&nbsp;not thread safe";
 
 		protected override void magix_viewport_clear_controls(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+            if (Ip(e.Params).Contains("inspect") && Ip(e.Params)["inspect"].Value == null)
 			{
 				base.magix_viewport_clear_controls(sender, e);
 				return;
@@ -226,8 +226,8 @@ end user for some seconds.&nbsp;&nbsp;not thread safe";
 
 			base.magix_viewport_clear_controls(sender, e);
 			DynamicPanel dyn = Selector.FindControl<DynamicPanel> (
-				this, 
-				e.Params["container"].Get<string>());
+				this,
+                Ip(e.Params)["container"].Get<string>());
 
 			if (dyn == null)
 				return;

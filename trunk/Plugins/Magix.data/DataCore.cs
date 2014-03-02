@@ -51,20 +51,20 @@ operation.&nbsp;&nbsp;thread safe";
 			}
 
 			Node prototype = null;
-			if (e.Params.Contains("prototype"))
-				prototype = e.Params["prototype"];
+            if (Ip(e.Params).Contains("prototype"))
+				prototype = Ip(e.Params)["prototype"];
 
 			string id = null;
-			if (e.Params.Contains("id") && e.Params["id"].Value != null)
-				id = e.Params["id"].Get<string>();
+            if (Ip(e.Params).Contains("id") && Ip(e.Params)["id"].Value != null)
+                id = Ip(e.Params)["id"].Get<string>();
 
 			int start = 0;
-			if (e.Params.Contains("start") && e.Params["start"].Value != null)
-				start = e.Params["start"].Get<int>();
+            if (Ip(e.Params).Contains("start") && Ip(e.Params)["start"].Value != null)
+                start = Ip(e.Params)["start"].Get<int>();
 
 			int end = -1;
-			if (e.Params.Contains("end") && e.Params["end"].Value != null)
-				end = e.Params["end"].Get<int>();
+            if (Ip(e.Params).Contains("end") && Ip(e.Params)["end"].Value != null)
+                end = Ip(e.Params)["end"].Get<int>();
 
 			if (id != null && start != 0 && end != -1 && prototype != null)
 				throw new ArgumentException("if you supply an [id], then [start], [end] and [prototype] cannot be defined");
@@ -87,7 +87,7 @@ operation.&nbsp;&nbsp;thread safe";
 					}))
 					{
 						if (idxNo >= start && (end == -1 || idxNo < end))
-							e.Params["objects"][idx.Id].ReplaceChildren(idx.Node.Clone());
+                            Ip(e.Params)["objects"][idx.Id].ReplaceChildren(idx.Node.Clone());
 						idxNo++;
 					}
 					db.Close();
@@ -114,10 +114,10 @@ thread safe";
 				return;
 			}
 
-			if (!e.Params.Contains("value"))
+            if (!Ip(e.Params).Contains("value"))
 				throw new ArgumentException("[value] must be defined for magix.data.save to actually save anything");
 
-			Node value = e.Params["value"].Clone();
+            Node value = Ip(e.Params)["value"].Clone();
 
 			lock (typeof(DataCore))
 			{
@@ -126,8 +126,8 @@ thread safe";
 					db.Ext().Configure().UpdateDepth(1000);
 					db.Ext().Configure().ActivationDepth(1000);
 
-					string id = e.Params.Contains("id") ? 
-						e.Params["id"].Get<string>() : 
+                    string id = Ip(e.Params).Contains("id") ?
+                        Ip(e.Params)["id"].Get<string>() : 
 						Guid.NewGuid().ToString();
 					bool found = false;
 
@@ -165,17 +165,17 @@ your persistent data storage.&nbsp;&nbsp;thread safe";
 			}
 
 			Node prototype = null;
-			if (e.Params.Contains("prototype"))
-				prototype = e.Params["prototype"];
+            if (Ip(e.Params).Contains("prototype"))
+                prototype = Ip(e.Params)["prototype"];
 
-			if ((!e.Params.Contains("id") || string.IsNullOrEmpty(e.Params["id"].Get<string>())) && prototype == null)
+            if ((!Ip(e.Params).Contains("id") || string.IsNullOrEmpty(Ip(e.Params)["id"].Get<string>())) && prototype == null)
 				throw new ArgumentException("missing [id] or [prototype] while trying to remove object");
 
 			lock (typeof(DataCore))
 			{
                 using (IObjectContainer db = Db4oEmbedded.OpenFile(HttpContext.Current.Request.MapPath("~" + _dbFile)))
 				{
-					string id = e.Params.Contains("id") ? e.Params["id"].Get<string>() : null;
+                    string id = Ip(e.Params).Contains("id") ? Ip(e.Params)["id"].Get<string>() : null;
 					foreach (Storage idx in db.Ext().Query<Storage>(
 						delegate(Storage obj)
 						{
@@ -209,8 +209,8 @@ of objects in data storage as [count], add [prototype] to filter results.
 			}
 
 			Node prototype = null;
-			if (e.Params.Contains("prototype"))
-				prototype = e.Params["prototype"];
+            if (Ip(e.Params).Contains("prototype"))
+                prototype = Ip(e.Params)["prototype"];
 
 			lock (typeof(DataCore))
 			{
@@ -219,7 +219,7 @@ of objects in data storage as [count], add [prototype] to filter results.
 					db.Ext().Configure().UpdateDepth(1000);
 					db.Ext().Configure().ActivationDepth(1000);
 
-					e.Params["count"].Value = db.Ext().Query<Storage>(
+                    Ip(e.Params)["count"].Value = db.Ext().Query<Storage>(
 						delegate(Storage obj)
 						{
 							if (prototype != null)

@@ -11,8 +11,11 @@ to see if passing parameters in and out from dynamically created hyper lisp even
 behaves as expected"
 
   code
-    if=>[$][mumbo].Value!=howdy
-      throw=>input parameter not accessible in [event]
+    if=>not-equals
+      lhs=>[$][mumbo].Value
+      rhs=>howdy
+      code
+        throw=>input parameter not accessible in [event]
     set=>[$][jumbo].Value
       value=>5
 
@@ -26,8 +29,14 @@ correctly"
   code
     magix._test._run-event-with-parameters
       mumbo=>howdy
-    if=>[magix._test._run-event-with-parameters][mumbo].Value!=howdy
-      throw=>input value not returned
-    if=>[magix._test._run-event-with-parameters][jumbo].Value!=5
-      throw=>output value not returned currectly
+    if=>not-equals
+      lhs=>[magix._test._run-event-with-parameters][mumbo].Value
+      rhs=>howdy
+      code
+        throw=>input value not returned
+    if=>not-equals
+      lhs=>[magix._test._run-event-with-parameters][jumbo].Value
+      rhs=>5
+      code
+        throw=>output value not returned currectly
 

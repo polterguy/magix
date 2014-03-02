@@ -10,9 +10,11 @@ _page=>default
 
 magix.web.get=>page
 
-if=>[magix.web.get][value].Value
-  set=>[_page].Value
-    value=>[magix.web.get][value].Value
+if=>exist
+  lhs=>[magix.web.get][value].Value
+  code
+    set=>[_page].Value
+      value=>[magix.web.get][value].Value
 
 set=>[magix.data.load][prototype][name].Value
   value=>[_page].Value
@@ -21,11 +23,14 @@ magix.data.load
   prototype
     type=>magix.pages.page
 
-if=>[magix.data.load][objects].Count>0
-  set=>[@][magix.forms.create-mml-web-part][mml].Value
-    value=>[magix.data.load][objects][0][value].Value
-  magix.forms.create-mml-web-part
-    container=>content4
-    css=>span-24
-    form-id=>webpage
+if=>more-then
+  lhs=>[magix.data.load][objects].Count
+  rhs=>0
+  code
+    set=>[@][magix.forms.create-mml-web-part][mml].Value
+      value=>[magix.data.load][objects][0][value].Value
+    magix.forms.create-mml-web-part
+      container=>content4
+      css=>span-24
+      form-id=>webpage
 

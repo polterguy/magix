@@ -35,7 +35,7 @@ an http or ftp path to a document.&nbsp;&nbsp;thread safe";
 				return;
 			}
 
-			string file = e.Params.Get<string>();
+            string file = Ip(e.Params).Get<string>();
 
 			if (string.IsNullOrEmpty(file))
 				throw new ArgumentException("You need to define which file to load, as value of [magix.file.load]");
@@ -47,7 +47,7 @@ an http or ftp path to a document.&nbsp;&nbsp;thread safe";
 				{
 					using (TextReader reader = new StreamReader(response.GetResponseStream()))
 					{
-						e.Params["value"].Value = reader.ReadToEnd();
+                        Ip(e.Params)["value"].Value = reader.ReadToEnd();
 					}
 				}
 			}
@@ -55,7 +55,7 @@ an http or ftp path to a document.&nbsp;&nbsp;thread safe";
 			{
 				using (TextReader reader = File.OpenText(HttpContext.Current.Server.MapPath(file)))
 				{
-					e.Params["value"].Value = reader.ReadToEnd();
+                    Ip(e.Params)["value"].Value = reader.ReadToEnd();
 				}
 			}
 		}
@@ -85,19 +85,19 @@ new created.&nbsp;&nbsp;thread safe";
 				return;
 			}
 
-			string file = e.Params.Get<string>();
+            string file = Ip(e.Params).Get<string>();
 
 			if (string.IsNullOrEmpty(file))
 				throw new ArgumentException("You need to define which file to save, as value of [magix.file.save]");
 
-			if (!e.Params.Contains("value") || e.Params["value"].Get<string>() == null)
+            if (!Ip(e.Params).Contains("value") || Ip(e.Params)["value"].Get<string>() == null)
 			{
 				// Deletes an existing file
 				File.Delete(HttpContext.Current.Server.MapPath(file));
 			}
 			else
 			{
-				string fileContent = e.Params["value"].Get<string>();
+                string fileContent = Ip(e.Params)["value"].Get<string>();
 
 				using (TextWriter writer = 
 				       new StreamWriter(File.OpenWrite(HttpContext.Current.Server.MapPath(file))))
@@ -122,7 +122,7 @@ new created.&nbsp;&nbsp;thread safe";
 				return;
 			}
 
-			string path = e.Params.Get<string>();
+            string path = Ip(e.Params).Get<string>();
 
 			if (string.IsNullOrEmpty(path))
 				throw new ArgumentException("you need to define which directory to create, as value of [magix.file.create-directory]");
@@ -144,8 +144,8 @@ new created.&nbsp;&nbsp;thread safe";
 &nbsp;&nbsp;thread safe";
 				return;
 			}
-			
-			string path = e.Params.Get<string>();
+
+            string path = Ip(e.Params).Get<string>();
 
 			if (string.IsNullOrEmpty(path))
 				throw new ArgumentException("you need to define which directory to delete, as value of [magix.file.delete-directory]");
@@ -169,15 +169,15 @@ new created.&nbsp;&nbsp;thread safe";
 				return;
 			}
 
-			string from = HttpContext.Current.Server.MapPath(e.Params.Get<string>());
+            string from = HttpContext.Current.Server.MapPath(Ip(e.Params).Get<string>());
 
 			if (string.IsNullOrEmpty(from))
 				throw new ArgumentException("you need to define which directory to copy, as value of [magix.files.move-directory]");
 
-			if (!e.Params.Contains("to") || e.Params["to"].Get<string>("") == "")
+            if (!Ip(e.Params).Contains("to") || Ip(e.Params)["to"].Get<string>("") == "")
 				throw new ArgumentException("you need to define which directory to copy to, as [to] node");
 
-			string to = HttpContext.Current.Server.MapPath(e.Params["to"].Get<string>());
+            string to = HttpContext.Current.Server.MapPath(Ip(e.Params)["to"].Get<string>());
 
 			Directory.Move(from, to);
 		}
@@ -199,8 +199,8 @@ use [filter] as a search pattern.&nbsp;&nbsp;thread safe";
 				return;
 			}
 
-			string dir = e.Params.Value != null ? e.Params.Get<string>().TrimStart('/') : "~/";
-			string filter = e.Params.Contains("filter") ? e.Params["filter"].Get<string>() : null;
+            string dir = Ip(e.Params).Value != null ? Ip(e.Params).Get<string>().TrimStart('/') : "~/";
+            string filter = Ip(e.Params).Contains("filter") ? Ip(e.Params)["filter"].Get<string>() : null;
 
 			string[] files = null;
 
@@ -212,7 +212,7 @@ use [filter] as a search pattern.&nbsp;&nbsp;thread safe";
 			string rootDir = HttpContext.Current.Server.MapPath("~");
 			foreach (string idxFile in files)
 			{
-				e.Params["files"][idxFile.Substring(rootDir.Length)].Value = null;
+                Ip(e.Params)["files"][idxFile.Substring(rootDir.Length)].Value = null;
 			}
 		}
 
@@ -233,8 +233,8 @@ use [filter] as a search pattern.&nbsp;&nbsp;thread safe";
 				return;
 			}
 
-			string dir = e.Params.Value != null ? e.Params.Get<string>().TrimStart('/') : "~/";
-			string filter = e.Params.Contains("filter") ? e.Params["filter"].Get<string>() : null;
+            string dir = Ip(e.Params).Value != null ? Ip(e.Params).Get<string>().TrimStart('/') : "~/";
+            string filter = Ip(e.Params).Contains("filter") ? Ip(e.Params)["filter"].Get<string>() : null;
 
 			string[] files = null;
 
@@ -246,7 +246,7 @@ use [filter] as a search pattern.&nbsp;&nbsp;thread safe";
 			string rootDir = HttpContext.Current.Server.MapPath("~");
 			foreach (string idxFile in files)
 			{
-				e.Params["directories"][idxFile.Substring(rootDir.Length)].Value = null;
+                Ip(e.Params)["directories"][idxFile.Substring(rootDir.Length)].Value = null;
 			}
 		}
 	}

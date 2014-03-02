@@ -7,30 +7,41 @@ similar"
 
 
 magix.web.get-session=>magix.viewport.show-grid
-if=>![magix.web.get-session][value]
-  magix.data.load
-    prototype
-      type=>system42.travel.setting
-      name=>magix.viewport.show-grid
 
-  if=>[@][magix.data.load][objects][0][value].Value==True
-    magix.web.set-session=>magix.viewport.show-grid
-      value=(bool)>True
-  else
-    magix.web.set-session=>magix.viewport.show-grid
-      value=(bool)>False
+if=>not-exist
+  lhs=>[magix.web.get-session][value]
+  code
+    magix.data.load
+      prototype
+        type=>system42.travel.setting
+        name=>magix.viewport.show-grid
+
+    if=>equals
+      lhs=>[@][magix.data.load][objects][0][value].Value
+      rhs=>true
+      code
+        magix.web.set-session=>magix.viewport.show-grid
+          value=(bool)>True
+    else
+      magix.web.set-session=>magix.viewport.show-grid
+        value=(bool)>False
 
 magix.web.get-session=>magix.help.kill-intrusive-tips
-if=>![magix.web.get-session:1][value]
-  magix.data.load
-    prototype
-      type=>system42.travel.setting
-      name=>magix.help.kill-intrusive-tips
 
-  if=>[@][magix.data.load][objects][0][value].Value
-    magix.web.set-session=>magix.help.kill-intrusive-tips
-      value=(bool)>True
-  else
-    magix.web.set-session=>stopped-learning
-      value=>(bool)False
+if=>not-exist
+  lhs=>[magix.web.get-session:1][value]
+  code
+    magix.data.load
+      prototype
+        type=>system42.travel.setting
+        name=>magix.help.kill-intrusive-tips
+
+    if=>exist
+      lhs=>[@][magix.data.load][objects][0][value].Value
+      code
+        magix.web.set-session=>magix.help.kill-intrusive-tips
+          value=(bool)>True
+    else
+      magix.web.set-session=>stopped-learning
+        value=>(bool)False
 

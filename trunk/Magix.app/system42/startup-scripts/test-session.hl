@@ -14,14 +14,24 @@ necessary to test if session retrieve and set works correctly"
       value=>howdy
         child1=>howdy2
     magix.web.get-session=>magix.test.test-session
-    if=>![magix.web.get-session][value]
-      throw=>couldn't find session object
-    if=>[magix.web.get-session][value].Value!=howdy
-      throw=>couldn't find correct value for session object
-    if=>[magix.web.get-session][value][child1].Value!=howdy2
-      throw=>couldn't find correct value for session child node object
+    if=>not-exist
+      lhs=>[magix.web.get-session][value]
+      code
+        throw=>couldn't find session object
+    if=>not-equals
+      lhs=>[magix.web.get-session][value].Value
+      rhs=>howdy
+      code
+        throw=>couldn't find correct value for session object
+    if=>not-equals
+      lhs=>[magix.web.get-session][value][child1].Value
+      rhs=>howdy2
+      code
+        throw=>couldn't find correct value for session child node object
     magix.web.set-session=>magix.test.test-session
     magix.web.get-session=>magix.test.test-session
-    if=>[magix.web.get-session:1][value]
-      throw=>couldn't delete session object
+    if=>not-exist
+      lhs=>[magix.web.get-session:1][value]
+      code
+        throw=>couldn't delete session object
 

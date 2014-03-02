@@ -7,6 +7,7 @@
 using System;
 using System.IO;
 using Magix.Core;
+using System.Globalization;
 
 namespace Magix.math
 {
@@ -15,7 +16,9 @@ namespace Magix.math
 	 */
 	public class MathCore : ActiveController
 	{
-        // TODO: implement delegates for math expressions, since basically all code is the same, except the operators ...
+        private delegate decimal ExecuteFirstExpression(decimal input);
+        private delegate decimal ExecuteSecondExpression(decimal input, decimal result);
+
         /**
          * adds the values of all underlaying nodes
          */
@@ -32,43 +35,15 @@ puts the result in value of [magix.math.add] node.&nbsp;&nbsp;
                 return;
             }
 
-            Node ip = e.Params;
-            if (e.Params.Contains("_ip"))
-                ip = e.Params["_ip"].Value as Node;
-
-            Node dp = e.Params;
-            if (e.Params.Contains("_dp"))
-                dp = e.Params["_dp"].Value as Node;
-
-            decimal result = 0M;
-            foreach (Node idx in ip)
-            {
-                // Checking to see if value is null
-                if (!string.IsNullOrEmpty(idx.Name))
+            RunMathExpression(e.Params,
+                delegate(decimal input)
                 {
-                    // sub-math expression, or active event
-                    string activeEvent = idx.Name;
-                    if (activeEvent.IndexOf(".") == -1)
-                        activeEvent = "magix.math." + activeEvent;
-
-                    Node pars = new Node();
-                    pars["_ip"].Value = idx;
-                    pars["_dp"].Value = dp;
-
-                    RaiseActiveEvent(
-                        activeEvent,
-                        pars);
-
-                    // Adding up sub-expression result
-                    result += Convert.ToDecimal(Expressions.GetExpressionValue(idx.Get<string>(), dp, ip, false));
-                }
-                else
+                    return input;
+                },
+                delegate(decimal input, decimal result)
                 {
-                    // number
-                    result += Convert.ToDecimal(Expressions.GetExpressionValue(idx.Get<string>(), dp, ip, false));
-                }
-            }
-            ip.Value = result;
+                    return result + input;
+                });
         }
 
         /**
@@ -87,56 +62,15 @@ puts the result in value of [magix.math.add] node.&nbsp;&nbsp;
                 return;
             }
 
-            Node ip = e.Params;
-            if (e.Params.Contains("_ip"))
-                ip = e.Params["_ip"].Value as Node;
-
-            Node dp = e.Params;
-            if (e.Params.Contains("_dp"))
-                dp = e.Params["_dp"].Value as Node;
-
-            decimal result = 0M;
-            bool isFirst = true;
-            foreach (Node idx in ip)
-            {
-                // Checking to see if value is null
-                if (!string.IsNullOrEmpty(idx.Name))
+            RunMathExpression(e.Params,
+                delegate(decimal input)
                 {
-                    // sub-math expression or active event
-                    string activeEvent = idx.Name;
-                    if (activeEvent.IndexOf(".") == -1)
-                        activeEvent = "magix.math." + activeEvent;
-
-                    Node pars = new Node();
-                    pars["_ip"].Value = idx;
-                    pars["_dp"].Value = dp;
-
-                    RaiseActiveEvent(
-                        activeEvent,
-                        pars);
-
-                    // Adding up sub-expression result
-                    if (isFirst)
-                    {
-                        isFirst = false;
-                        result += Convert.ToDecimal(Expressions.GetExpressionValue(idx.Get<string>(), dp, ip, false));
-                    }
-                    else
-                        result -= Convert.ToDecimal(Expressions.GetExpressionValue(idx.Get<string>(), dp, ip, false));
-                }
-                else
+                    return input;
+                },
+                delegate(decimal input, decimal result)
                 {
-                    // number
-                    if (isFirst)
-                    {
-                        isFirst = false;
-                        result += Convert.ToDecimal(Expressions.GetExpressionValue(idx.Get<string>(), dp, ip, false));
-                    }
-                    else
-                        result -= Convert.ToDecimal(Expressions.GetExpressionValue(idx.Get<string>(), dp, ip, false));
-                }
-            }
-            ip.Value = result;
+                    return result - input;
+                });
         }
 
         /**
@@ -155,56 +89,15 @@ puts the result in value of [magix.math.add] node.&nbsp;&nbsp;
                 return;
             }
 
-            Node ip = e.Params;
-            if (e.Params.Contains("_ip"))
-                ip = e.Params["_ip"].Value as Node;
-
-            Node dp = e.Params;
-            if (e.Params.Contains("_dp"))
-                dp = e.Params["_dp"].Value as Node;
-
-            decimal result = 0M;
-            bool isFirst = true;
-            foreach (Node idx in ip)
-            {
-                // Checking to see if value is null
-                if (!string.IsNullOrEmpty(idx.Name))
+            RunMathExpression(e.Params,
+                delegate(decimal input)
                 {
-                    // sub-math expression or active event
-                    string activeEvent = idx.Name;
-                    if (activeEvent.IndexOf(".") == -1)
-                        activeEvent = "magix.math." + activeEvent;
-
-                    Node pars = new Node();
-                    pars["_ip"].Value = idx;
-                    pars["_dp"].Value = dp;
-
-                    RaiseActiveEvent(
-                        activeEvent,
-                        pars);
-
-                    // Adding up sub-expression result
-                    if (isFirst)
-                    {
-                        isFirst = false;
-                        result += Convert.ToDecimal(Expressions.GetExpressionValue(idx.Get<string>(), dp, ip, false));
-                    }
-                    else
-                        result *= Convert.ToDecimal(Expressions.GetExpressionValue(idx.Get<string>(), dp, ip, false));
-                }
-                else
+                    return input;
+                },
+                delegate(decimal input, decimal result)
                 {
-                    // number
-                    if (isFirst)
-                    {
-                        isFirst = false;
-                        result += Convert.ToDecimal(Expressions.GetExpressionValue(idx.Get<string>(), dp, ip, false));
-                    }
-                    else
-                        result *= Convert.ToDecimal(Expressions.GetExpressionValue(idx.Get<string>(), dp, ip, false));
-                }
-            }
-            ip.Value = result;
+                    return result * input;
+                });
         }
 
         /**
@@ -223,13 +116,56 @@ puts the result in value of [magix.math.add] node.&nbsp;&nbsp;
                 return;
             }
 
-            Node ip = e.Params;
-            if (e.Params.Contains("_ip"))
-                ip = e.Params["_ip"].Value as Node;
+            RunMathExpression(e.Params,
+                delegate(decimal input)
+                {
+                    return input;
+                },
+                delegate(decimal input, decimal result)
+                {
+                    return result / input;
+                });
+        }
 
-            Node dp = e.Params;
-            if (e.Params.Contains("_dp"))
-                dp = e.Params["_dp"].Value as Node;
+        /**
+         * modulo the values of all underlaying nodes
+         */
+        [ActiveEvent(Name = "magix.math.modulo")]
+        public static void magix_math_modulo(object sender, ActiveEventArgs e)
+        {
+            if (ShouldInspect(e.Params))
+            {
+                e.Params["event:magix.math.add"].Value = null;
+                e.Params["inspect"].Value = @"divides the underlaying values together and 
+returns the remainer in value of [magix.math.add] node.&nbsp;&nbsp;
+[add] nodes can be nested with other magix.math nodes.
+&nbsp;&nbsp;thread safe";
+                return;
+            }
+
+            RunMathExpression(e.Params,
+                delegate(decimal input)
+                {
+                    return input;
+                },
+                delegate(decimal input, decimal result)
+                {
+                    return result % input;
+                });
+        }
+
+        /*
+         * actual implementation of calculation, with delegates taking operators to be used
+         */
+        private static void RunMathExpression(Node pars, ExecuteFirstExpression first, ExecuteSecondExpression second)
+        {
+            Node ip = pars;
+            if (pars.Contains("_ip"))
+                ip = pars["_ip"].Value as Node;
+
+            Node dp = pars;
+            if (pars.Contains("_dp"))
+                dp = pars["_dp"].Value as Node;
 
             decimal result = 0M;
             bool isFirst = true;
@@ -243,22 +179,29 @@ puts the result in value of [magix.math.add] node.&nbsp;&nbsp;
                     if (activeEvent.IndexOf(".") == -1)
                         activeEvent = "magix.math." + activeEvent;
 
-                    Node pars = new Node();
-                    pars["_ip"].Value = idx;
-                    pars["_dp"].Value = dp;
+                    Node parsInner = new Node();
+                    parsInner["_ip"].Value = idx;
+                    parsInner["_dp"].Value = dp;
 
                     RaiseActiveEvent(
                         activeEvent,
-                        pars);
+                        parsInner);
 
                     // Adding up sub-expression result
                     if (isFirst)
                     {
                         isFirst = false;
-                        result += Convert.ToDecimal(Expressions.GetExpressionValue(idx.Get<string>(), dp, ip, false));
+                        result = first(
+                            Convert.ToDecimal(
+                                Expressions.GetExpressionValue(idx.Get<string>(), dp, ip, false), 
+                                CultureInfo.InvariantCulture));
                     }
                     else
-                        result /= Convert.ToDecimal(Expressions.GetExpressionValue(idx.Get<string>(), dp, ip, false));
+                        result = second(
+                            Convert.ToDecimal(
+                                Expressions.GetExpressionValue(idx.Get<string>(), dp, ip, false), 
+                                CultureInfo.InvariantCulture), 
+                            result);
                 }
                 else
                 {
@@ -266,10 +209,17 @@ puts the result in value of [magix.math.add] node.&nbsp;&nbsp;
                     if (isFirst)
                     {
                         isFirst = false;
-                        result += Convert.ToDecimal(Expressions.GetExpressionValue(idx.Get<string>(), dp, ip, false));
+                        result = first(
+                            Convert.ToDecimal(
+                                Expressions.GetExpressionValue(idx.Get<string>(), dp, ip, false), 
+                                CultureInfo.InvariantCulture));
                     }
                     else
-                        result /= Convert.ToDecimal(Expressions.GetExpressionValue(idx.Get<string>(), dp, ip, false));
+                        result = second(
+                            Convert.ToDecimal(
+                                Expressions.GetExpressionValue(idx.Get<string>(), dp, ip, false), 
+                                CultureInfo.InvariantCulture), 
+                            result);
                 }
             }
             ip.Value = result;

@@ -43,22 +43,22 @@ don't match the [begins-with] parameter.&nbsp;&nbsp;thread safe";
 			}
 
 			bool open = false;
-			if (e.Params.Contains("open"))
-				open = e.Params["open"].Get<bool>();
+            if (Ip(e.Params).Contains("open"))
+                open = Ip(e.Params)["open"].Get<bool>();
 
 			bool remoted = false;
-			if (e.Params.Contains("remoted"))
-				remoted = e.Params["remoted"].Get<bool>();
+            if (Ip(e.Params).Contains("remoted"))
+                remoted = Ip(e.Params)["remoted"].Get<bool>();
 
 			bool overridden = false;
-			if (e.Params.Contains("overridden"))
-				overridden = e.Params["overridden"].Get<bool>();
+            if (Ip(e.Params).Contains("overridden"))
+                overridden = Ip(e.Params)["overridden"].Get<bool>();
 
 			string beginsWith = null;
-			if (e.Params.Contains("begins-with"))
-				beginsWith = e.Params["begins-with"].Get<string>();
+            if (Ip(e.Params).Contains("begins-with"))
+                beginsWith = Ip(e.Params)["begins-with"].Get<string>();
 
-			Node node = e.Params;
+            Node node = Ip(e.Params);
 			foreach (string idx in ActiveEvents.Instance.ActiveEventHandlers)
 			{
 				if (open && !ActiveEvents.Instance.IsAllowedRemotely(idx))
