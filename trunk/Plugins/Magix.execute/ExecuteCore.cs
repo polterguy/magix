@@ -15,11 +15,53 @@ namespace Magix.execute
 	 */
 	public class ExecuteCore : ActiveController
 	{
+        private List<string> namespaces;
+
+        public ExecuteCore()
+        {
+            namespaces = new List<string>();
+            namespaces.Add("magix.execute");
+        }
+
+        /**
+         * using keyword implementation
+         */
+        [ActiveEvent(Name = "magix.execute.using")]
+        public void magix_execute_using(object sender, ActiveEventArgs e)
+        {
+            if (ShouldInspect(e.Params))
+            {
+                e.Params["event:magix.execute.using"].Value = null;
+                e.Params["inspect"].Value = @"changes the default namespace 
+for the current scope.&nbsp;&nbsp;thread safe";
+                return;
+            }
+
+            try
+            {
+			    if (!e.Params.Contains("_ip") || !(e.Params["_ip"].Value is Node))
+				    throw new ArgumentException("you cannot raise magix._execute directly besides for inspect purposes");
+
+			    if (!e.Params.Contains("_dp") || !(e.Params["_dp"].Value is Node))
+				    throw new ArgumentException("you cannot raise magix._execute directly besides for inspect purposes");
+
+			    Node ip = e.Params["_ip"].Value as Node;
+                Node dp = e.Params["_dp"].Value as Node;
+
+                namespaces.Add(ip.Get<string>());
+                Execute(ip, dp, e.Params);
+            }
+            finally
+            {
+                namespaces.RemoveAt(namespaces.Count - 1);
+            }
+        }
+
 		/**
 		 * hyper lisp implementation
 		 */
 		[ActiveEvent(Name = "magix.execute")]
-		public static void magix_execute(object sender, ActiveEventArgs e)
+		public void magix_execute(object sender, ActiveEventArgs e)
 		{
 			if (ShouldInspect(e.Params))
 			{
@@ -65,7 +107,7 @@ thread safe";
 		 */
 		[ActiveEvent(Name = "magix._execute")]
 		[ActiveEvent(Name = "magix.execute.execute")]
-		public static void magix_execute_internal(object sender, ActiveEventArgs e)
+		public void magix_execute_internal(object sender, ActiveEventArgs e)
 		{
 			if (ShouldInspect(e.Params))
 			{
@@ -114,7 +156,7 @@ thread safe";
 		/*
 		 * helper method for above ...
 		 */
-		private static void Execute(Node ip, Node dp, Node state)
+		private void Execute(Node ip, Node dp, Node state)
 		{
 			// looping through all keywords/active-events in the child collection
 			for (int idxNo = 0; idxNo < ip.Count; idxNo++)
@@ -147,7 +189,7 @@ thread safe";
 					object oldIp = state.Contains("_ip") ? state["_ip"].Value : null;
 
 					// this is a keyword, and have access to the entire tree, and also needs to have magix.execute. prepended in front of it before being raised
-					activeEvent = "magix.execute." + activeEvent;
+					activeEvent = namespaces[namespaces.Count - 1] + "." + activeEvent;
 
 					state["_ip"].Value = idx;
 

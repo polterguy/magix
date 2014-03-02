@@ -168,9 +168,9 @@ namespace Magix.execute
             switch (objLhsValue.GetType().ToString())
             {
                 case "System.Int32":
-                    return ((int)objLhsValue).CompareTo(objRhsValue);
+                    return ((int)objLhsValue).CompareTo(Convert.ToInt32(objRhsValue));
                 case "System.Decimal":
-                    return ((decimal)objLhsValue).CompareTo(objRhsValue);
+                    return ((decimal)objLhsValue).CompareTo(Convert.ToDecimal(objRhsValue));
                 case "System.DateTime":
                     return ((DateTime)objLhsValue).CompareTo(objRhsValue);
                 case "System.Boolean":
