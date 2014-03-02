@@ -29,7 +29,7 @@ namespace Magix.forms
 				return;
 			}
 
-			Node node = e.Params["_code"].Value as Node;
+            Node node = Ip(e.Params)["_code"].Value as Node;
 
 			Panel ret = new Panel();
 
@@ -87,7 +87,7 @@ namespace Magix.forms
 				}
 			}
 
-			e.Params["_ctrl"].Value = ret;
+            Ip(e.Params)["_ctrl"].Value = ret;
 		}
 
 		protected override void Inspect (Node node)

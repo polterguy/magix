@@ -129,8 +129,8 @@ unloads a container for controls";
 			}
 
 			DynamicPanel dyn = Selector.FindControl<DynamicPanel> (
-                this, 
-                e.Params["container"].Get<string> ());
+                this,
+                Ip(e.Params)["container"].Get<string>());
 
 			if (dyn == null)
 				return;
@@ -154,16 +154,16 @@ not thread safe";
 				return;
 			}
 
-			if (!e.Params.Contains("script"))
+            if (!Ip(e.Params).Contains("script"))
 				throw new ArgumentException("you need a [script] value to execute javascript");
 
-			string script = e.Params["script"].Get<string>();
+            string script = Ip(e.Params)["script"].Get<string>();
 
-			if (e.Params["script"].Count > 0)
+            if (Ip(e.Params)["script"].Count > 0)
 			{
-				for (int idx = 0; idx < e.Params["script"].Count; idx++)
+                for (int idx = 0; idx < Ip(e.Params)["script"].Count; idx++)
 				{
-					script = script.Replace("{" + idx + "}", e.Params["script"][idx].Get<string>());
+                    script = script.Replace("{" + idx + "}", Ip(e.Params)["script"][idx].Get<string>());
 				}
 			}
 
@@ -238,20 +238,20 @@ javascript file on the client side.&nbsp;&nbsp;not thread safe";
 				e.Params["file"].Value = "media/main-debug.css";
 				return;
 			}
-			if (!e.Params.Contains("type"))
+            if (!Ip(e.Params).Contains("type"))
 				throw new ArgumentException("You need to submit a type of file to load, legal values are 'css' and 'javascript'");
-			if (e.Params["type"].Get<string>() == "css")
+            if (Ip(e.Params)["type"].Get<string>() == "css")
 			{
-                string cssFile = e.Params["file"].Get<String>();
+                string cssFile = Ip(e.Params)["file"].Get<String>();
                 if (!CssFiles.Contains(cssFile))
                 {
                     CssFiles.Add(cssFile);
                     IncludeCssFile(cssFile);
                 }
 			}
-			else if (e.Params["type"].Get<string>() == "javascript")
+            else if (Ip(e.Params)["type"].Get<string>() == "javascript")
 			{
-                string js = e.Params["file"].Get<String>();
+                string js = Ip(e.Params)["file"].Get<String>();
                 if (!JsFiles.Contains(js))
                 {
                     JsFiles.Add(js);
@@ -259,7 +259,7 @@ javascript file on the client side.&nbsp;&nbsp;not thread safe";
                 }
 			}
 			else
-				throw new ArgumentException("Only type of javascript and css are legal inclusion files, you tried to include a file of type; " + e.Params["type"].Get<string>());
+                throw new ArgumentException("Only type of javascript and css are legal inclusion files, you tried to include a file of type; " + Ip(e.Params)["type"].Get<string>());
 		}
 
 		/**
@@ -279,19 +279,19 @@ with value as key for later retrieval.
 				return;
 			}
 
-			string id = e.Params.Get<string>();
+            string id = Ip(e.Params).Get<string>();
 
 			if (string.IsNullOrEmpty(id))
 				throw new ArgumentException("need an id as a value to [magix.viewport.set-viewstate]");
 
-			if (!e.Params.Contains("value"))
+            if (!Ip(e.Params).Contains("value"))
 			{
 				if (ViewState[id] != null)
 					ViewState.Remove(id);
 			}
 			else
 			{
-				Node value = e.Params["value"].Clone();
+                Node value = Ip(e.Params)["value"].Clone();
 				ViewState[id] = value;
 			}
 		}
@@ -310,15 +310,15 @@ it into [value] node.&nbsp;&nbsp;not thread safe";
 				return;
 			}
 
-			string id = e.Params.Get<string>();
+            string id = Ip(e.Params).Get<string>();
 
 			if (string.IsNullOrEmpty(id))
 				throw new ArgumentException("need an id as a value to [magix.viewport.get-viewstate]");
 
 			if (ViewState[id] != null && ViewState[id] is Node)
 			{
-				e.Params["value"].Value = (ViewState[id] as Node).Value;
-				e.Params["value"].ReplaceChildren((ViewState[id] as Node).Clone());
+                Ip(e.Params)["value"].Value = (ViewState[id] as Node).Value;
+                Ip(e.Params)["value"].ReplaceChildren((ViewState[id] as Node).Clone());
 			}
 		}
 
@@ -339,23 +339,23 @@ the [name] node.&nbsp;&nbsp;the incoming parameters will be used.&nbsp;&nbsp;not
 				return;
 			}
 
-			string moduleName = e.Params["name"].Get<string>();
+            string moduleName = Ip(e.Params)["name"].Get<string>();
 
 			DynamicPanel dyn = Selector.FindControl<DynamicPanel>(
-            	this, 
-            	e.Params["container"].Get<string>());
+            	this,
+                Ip(e.Params)["container"].Get<string>());
 
 			if (dyn == null)
 				return;
 
 			dyn.Style[Styles.display] = "";
 
-			Node context = e.Params;
+            Node context = Ip(e.Params);
 
 			ClearControls(dyn);
 
-			if (e.Params.Contains("css"))
-				dyn.CssClass = e.Params["css"].Get<string>();
+            if (Ip(e.Params).Contains("css"))
+                dyn.CssClass = Ip(e.Params)["css"].Get<string>();
 
 			dyn.LoadControl(moduleName, context);
         }

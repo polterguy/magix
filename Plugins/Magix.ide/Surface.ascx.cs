@@ -188,7 +188,7 @@ not thread safe";
 				}
 			}
 
-			(e.Params["_ip"].Value as Node).Add(retVal); /*error here ... doesn't list controls of panels ...*/
+            (Ip(e.Params)["_ip"].Value as Node).Add(retVal); /*error here ... doesn't list controls of panels ...*/
 		}
 
 		private void GetWidget(Node widgetNode, Node output)
@@ -235,9 +235,9 @@ not thread safe";
 				return;
 			}
 
-			Node ip = e.Params;
-			if (e.Params.Contains("_ip"))
-				ip = e.Params["_ip"].Value as Node;
+            Node ip = Ip(e.Params);
+            if (Ip(e.Params).Contains("_ip"))
+                ip = Ip(e.Params)["_ip"].Value as Node;
 
 			if (!ip.Contains("widget"))
 				throw new ArgumentException("you need a [widget] for add-widget");
@@ -343,9 +343,7 @@ not thread safe";
 				return;
 			}
 
-			Node ip = e.Params;
-			if (e.Params.Contains("_ip"))
-				ip = e.Params["_ip"].Value as Node;
+            Node ip = Ip(e.Params);
 
 			if (!ip.Contains("dna"))
 				throw new ArgumentException("you need a [dna] for remove-widget");
@@ -379,9 +377,7 @@ removing [remove] properties.&nbsp;&nbsp;not thread safe";
 				return;
 			}
 
-			Node ip = e.Params;
-			if (e.Params.Contains("_ip"))
-				ip = e.Params["_ip"].Value as Node;
+            Node ip = Ip(e.Params);
 
 			if (!ip.Contains("change") && !ip.Contains("remove"))
 				throw new ArgumentException("you need a [change] and/or a [remove] for change-widget to signalize which properties are to be updated");
@@ -451,9 +447,7 @@ not thread safe";
 				return;
 			}
 
-			Node ip = e.Params;
-			if (e.Params.Contains("_ip"))
-				ip = e.Params["_ip"].Value as Node;
+            Node ip = Ip(e.Params);
 
 			if (!ip.Contains("dna"))
 				throw new ArgumentException("you need a [dna] for move-widget");
@@ -504,8 +498,6 @@ raises the magix.ide.widget-selected active event when done.&nbsp;&nbsp;not thre
 			}
 
 			Node ip = e.Params;
-			if (e.Params.Contains("_ip"))
-				ip = e.Params["_ip"].Value as Node;
 
 			if (!ip.Contains("dna"))
 				SelectedWidgetDna = null;
@@ -541,8 +533,6 @@ not thread safe";
 			}
 
 			Node ip = e.Params;
-			if (e.Params.Contains("_ip"))
-				ip = e.Params["_ip"].Value as Node;
 
 			if (!string.IsNullOrEmpty(SelectedWidgetDna))
 			{
@@ -593,7 +583,7 @@ not thread safe";
 
 			RaiseEvent(
 				"magix.execute.copy-widget",
-				e.Params);
+                Ip(e.Params));
 
 			ClipBoard = DataSource.FindDna(SelectedWidgetDna).UnTie();
 			ClipBoard["properties"]["id"].Value = Guid.NewGuid().ToString().Replace("-", "");
@@ -623,9 +613,7 @@ not thread safe";
 				return;
 			}
 
-			Node ip = e.Params;
-			if (e.Params.Contains("_ip"))
-				ip = e.Params["_ip"].Value as Node;
+            Node ip = Ip(e.Params);
 
 			if (ClipBoard == null)
 				throw new ArgumentException("cannot paste a widget, since there are no widgets on the clipboard");
@@ -718,9 +706,7 @@ not thread safe";
 				return;
 			}
 
-			Node ip = e.Params;
-			if (e.Params.Contains("_ip"))
-				ip = e.Params["_ip"].Value as Node;
+            Node ip = Ip(e.Params);
 
 			if (!ip.Contains("name"))
 				throw new ArgumentException("no [name] given to save form as");
@@ -765,9 +751,7 @@ not thread safe";
 				return;
 			}
 
-			Node ip = e.Params;
-			if (e.Params.Contains("_ip"))
-				ip = e.Params["_ip"].Value as Node;
+            Node ip = Ip(e.Params);
 
 			if (!ip.Contains("name"))
 				throw new ArgumentException("no [name] given, don't know which form to load");
@@ -831,9 +815,7 @@ back to caller as [form]";
 				return;
 			}
 
-			Node ip = e.Params;
-			if (e.Params.Contains("_ip"))
-				ip = e.Params["_ip"].Value as Node;
+            Node ip = Ip(e.Params);
 
 			Node retVal = new Node();
 

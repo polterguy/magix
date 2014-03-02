@@ -130,5 +130,15 @@ namespace Magix.Core
                 return HttpContext.Current.Handler as Page;
             }
         }
+
+        /**
+         * returns the instruction pointer. will by default return the given Node if no IP is found in node
+         */
+        protected static Node Ip(Node pars)
+        {
+            if (pars.Contains("_ip"))
+                return pars["_ip"].Value as Node;
+            return pars;
+        }
     }
 }

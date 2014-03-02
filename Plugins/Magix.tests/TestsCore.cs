@@ -44,7 +44,7 @@ that failed.&nbsp;&nbsp;thread safe";
 					if (idx.StartsWith("magix.test."))
 					{
 						tests += 1;
-						e.Params[idx].Value = null;
+                        Ip(e.Params)[idx].Value = null;
 
 						Node tmp = new Node();
 						tmp["inspect"].Value = null;
@@ -52,11 +52,11 @@ that failed.&nbsp;&nbsp;thread safe";
 						RaiseActiveEvent(
 							idx, 
 							tmp);
-						e.Params[idx].Add (tmp["inspect"].UnTie());
+                        Ip(e.Params)[idx].Add(tmp["inspect"].UnTie());
 					}
 				}
-				e.Params["tests"].Value = tests;
-				e.Params["active-events"].Value = av;
+                Ip(e.Params)["tests"].Value = tests;
+                Ip(e.Params)["active-events"].Value = av;
 				return;
 			}
 			string lastTest = "";
@@ -75,16 +75,16 @@ that failed.&nbsp;&nbsp;thread safe";
 						// Assuming this is a test ...
 						idxNo += 1;
 						lastTest = idx;
-						e.Params["tests"][idx]["success"].Value = false;
+                        Ip(e.Params)["tests"][idx]["success"].Value = false;
 						RaiseActiveEvent(idx);
-						e.Params["tests"][idx]["success"].Value = true;
+                        Ip(e.Params)["tests"][idx]["success"].Value = true;
 					}
 				}
 
 				DateTime end = DateTime.Now;
 
-				e.Params["summary"]["no-tests"].Value = idxNo;
-				e.Params["summary"]["success"].Value = true;
+                Ip(e.Params)["summary"]["no-tests"].Value = idxNo;
+                Ip(e.Params)["summary"]["success"].Value = true;
 
 				Node node = new Node();
 
@@ -112,8 +112,8 @@ that failed.&nbsp;&nbsp;thread safe";
 				while (err.InnerException != null)
 					err = err.InnerException;
 
-				e.Params["summary"]["success"].Value = false;
-				e.Params["summary"]["description"].Value = err.Message;
+                Ip(e.Params)["summary"]["success"].Value = false;
+                Ip(e.Params)["summary"]["description"].Value = err.Message;
 
 				Node node = new Node();
 

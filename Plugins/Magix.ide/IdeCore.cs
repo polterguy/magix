@@ -36,10 +36,10 @@ will be edited, but not created before saved.&nbsp;&nbsp;not thread safe";
 				return;
 			}
 
-			if (!e.Params.Contains("file"))
+            if (!Ip(e.Params).Contains("file"))
 				throw new ArgumentException("need [file] parameter");
 
-			string file = e.Params["file"].Get<string>().Replace("\\", "/");
+            string file = Ip(e.Params)["file"].Get<string>().Replace("\\", "/");
 
 			string extension = file.Substring(file.LastIndexOf('.') + 1);
 
@@ -59,7 +59,7 @@ will be edited, but not created before saved.&nbsp;&nbsp;not thread safe";
 			case "asax":
 			case "js":
 			{
-				if (!e.Params.Contains("container"))
+                if (!Ip(e.Params).Contains("container"))
 					throw new ArgumentException("edit-file needs [container]");
 
 				Node tmp = new Node();
@@ -75,12 +75,12 @@ will be edited, but not created before saved.&nbsp;&nbsp;not thread safe";
 				else
 					tmp["content"].Value = "";
 
-				if (e.Params.Contains("css"))
-					tmp["css"].Value = e.Params["css"].Value;
+                if (Ip(e.Params).Contains("css"))
+                    tmp["css"].Value = Ip(e.Params)["css"].Value;
 
 				LoadModule(
-					"Magix.ide.AsciiEditor", 
-					e.Params["container"].Get<string>(), 
+					"Magix.ide.AsciiEditor",
+                    Ip(e.Params)["container"].Get<string>(), 
 					tmp);
 			} break;
 			default:

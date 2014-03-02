@@ -38,13 +38,13 @@ contains the controls themselves, [css] becomes the css classes of your form
 				return;
 			}
 
-			if (!e.Params.Contains("container"))
+            if (!Ip(e.Params).Contains("container"))
 				throw new ArgumentException("you need a [container] for your create-web-part");
 
 			LoadModule(
-				"Magix.forms.WebPart", 
-				e.Params["container"].Get<string>(), 
-				e.Params);
+				"Magix.forms.WebPart",
+                Ip(e.Params)["container"].Get<string>(),
+                Ip(e.Params));
 		}
 		
 		/**
@@ -74,7 +74,7 @@ so on.&nbsp;&nbsp;you can embed forms using this syntax
 				return;
 			}
 
-			Node tmp = e.Params.Clone();
+            Node tmp = Ip(e.Params).Clone();
 
 			if (!tmp.Contains("container"))
 				throw new ArgumentException("load-mml-web-part needs a [container] parameter");
@@ -117,16 +117,16 @@ link-button=>btn
 				return;
 			}
 
-			if (!e.Params.Contains("container"))
+            if (!Ip(e.Params).Contains("container"))
 				throw new ArgumentException("create-web-part needs a [container] parameter");
 
-			if (!e.Params.Contains("mml"))
+            if (!Ip(e.Params).Contains("mml"))
 				throw new ArgumentException("create-web-part needs an [mml] parameter");
 
 			LoadModule(
-				"Magix.forms.WebPart", 
-				e.Params["container"].Get<string>(), 
-				e.Params);
+				"Magix.forms.WebPart",
+                Ip(e.Params)["container"].Get<string>(),
+                Ip(e.Params));
 		}
 	}
 }

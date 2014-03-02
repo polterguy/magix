@@ -37,14 +37,14 @@ to return control(s), or nothing, in the [$] return node";
 				return;
 			}
 
-			Node code = (e.Params["_code"].Value as Node);
+            Node code = (Ip(e.Params)["_code"].Value as Node);
 
 			if (!code.Contains("oncreatecontrols"))
 			{
 				Label lbl = new Label();
 				lbl.Text = "{{lambda control}}";
 				lbl.ID = code.Value as string;
-				e.Params["_ctrl"].Value = lbl;
+                Ip(e.Params)["_ctrl"].Value = lbl;
 
 				if (code.Contains("onclick"))
 				{
@@ -94,7 +94,7 @@ to return control(s), or nothing, in the [$] return node";
 
 			if (!exe.Contains("_stop") && exe.Contains("$"))
 			{
-				e.Params["_ctrl"].Value = null;
+                Ip(e.Params)["_ctrl"].Value = null;
 				foreach (Node idxCtrl in exe["$"])
 				{
 					string evtName = "magix.forms.controls." + idxCtrl.Name;
@@ -113,13 +113,13 @@ to return control(s), or nothing, in the [$] return node";
 					if (node.Contains("_ctrl"))
 					{
 						if (node["_ctrl"].Value != null)
-							e.Params["_ctrl"].Add(new Node("_x", node["_ctrl"].Value));
+                            Ip(e.Params)["_ctrl"].Add(new Node("_x", node["_ctrl"].Value));
 						else
 						{
 							// multiple controls returned ...
 							foreach (Node idxCtrl2 in node["_ctrl"])
 							{
-								e.Params["_ctrl"].Add(new Node("_x", idxCtrl2.Value));
+                                Ip(e.Params)["_ctrl"].Add(new Node("_x", idxCtrl2.Value));
 							}
 						}
 					}
@@ -128,7 +128,7 @@ to return control(s), or nothing, in the [$] return node";
 				}
 			}
 			else
-				e.Params["_ctrl"].Value = null;
+                Ip(e.Params)["_ctrl"].Value = null;
 		}
 	}
 }

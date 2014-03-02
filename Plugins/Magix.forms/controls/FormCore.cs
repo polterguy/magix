@@ -38,7 +38,7 @@ of wrapping control.&nbsp;&nbsp;not thread safe";
 				return;
 			}
 
-			Node node = e.Params["_code"].Value as Node;
+            Node node = Ip(e.Params)["_code"].Value as Node;
 
 			bool isFirst = node["_first"].Get<bool>();
 
@@ -58,7 +58,7 @@ of wrapping control.&nbsp;&nbsp;not thread safe";
 
 				if (form.Contains("objects"))
 				{
-					e.Params["_ctrl"].Value = null;
+                    Ip(e.Params)["_ctrl"].Value = null;
 
 					if (form["objects"][0]["form"]["surface"].Contains("controls"))
 					{
@@ -92,13 +92,13 @@ of wrapping control.&nbsp;&nbsp;not thread safe";
 				if (nodeCtrl.Contains("_ctrl"))
 				{
 					if (nodeCtrl["_ctrl"].Value != null)
-						e.Params["_ctrl"].Add(new Node("_x", nodeCtrl["_ctrl"].Value));
+                        Ip(e.Params)["_ctrl"].Add(new Node("_x", nodeCtrl["_ctrl"].Value));
 					else
 					{
 						// multiple controls returned ...
 						foreach (Node idxCtrl in nodeCtrl["_ctrl"])
 						{
-							e.Params["_ctrl"].Add(new Node("_x", idxCtrl.Value));
+                            Ip(e.Params)["_ctrl"].Add(new Node("_x", idxCtrl.Value));
 						}
 					}
 				}

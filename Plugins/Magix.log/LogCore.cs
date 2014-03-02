@@ -34,37 +34,37 @@ parameters added beneath [body] and/or [header] will be formatted into string.&n
 				return;
 			}
 
-			if (!e.Params.Contains("header") || e.Params["header"].Get<string>("") == "")
+            if (!Ip(e.Params).Contains("header") || Ip(e.Params)["header"].Get<string>("") == "")
 				throw new ArgumentException("no [header] given to log.append");
 
-			if (!e.Params.Contains("body") || e.Params["body"].Get<string>("") == "")
+            if (!Ip(e.Params).Contains("body") || Ip(e.Params)["body"].Get<string>("") == "")
 				throw new ArgumentException("no [body] given to log.append");
 
-			string header = e.Params["header"].Get<string>();
-			string body   = e.Params["body"].Get<string>();
+            string header = Ip(e.Params)["header"].Get<string>();
+            string body = Ip(e.Params)["body"].Get<string>();
 
 			DateTime date = DateTime.Now;
 
-			if (e.Params["body"].Count > 0)
+            if (Ip(e.Params)["body"].Count > 0)
 			{
 				// contains parameters
-				object[] arrs = new object[e.Params["body"].Count];
+                object[] arrs = new object[Ip(e.Params)["body"].Count];
 
 				int idxNo = 0;
-				foreach (Node idx in e.Params["body"])
+                foreach (Node idx in Ip(e.Params)["body"])
 				{
 					arrs[idxNo++] = idx.Value;
 				}
 				body = string.Format(body, arrs);
 			}
 
-			if (e.Params["header"].Count > 0)
+            if (Ip(e.Params)["header"].Count > 0)
 			{
 				// contains parameters
-				object[] arrs = new object[e.Params["header"].Count];
+                object[] arrs = new object[Ip(e.Params)["header"].Count];
 
 				int idxNo = 0;
-				foreach (Node idx in e.Params["header"])
+                foreach (Node idx in Ip(e.Params)["header"])
 				{
 					arrs[idxNo++] = idx.Value;
 				}
@@ -78,12 +78,12 @@ parameters added beneath [body] and/or [header] will be formatted into string.&n
 			node["value"]["body"].Value   = body;
 			node["value"]["date"].Value   = date;
 
-			if (e.Params.Contains("error"))
-				node["value"]["error"].Value = e.Params["error"].Value;
+            if (Ip(e.Params).Contains("error"))
+                node["value"]["error"].Value = Ip(e.Params)["error"].Value;
 
-			if (e.Params.Contains("code"))
+            if (Ip(e.Params).Contains("code"))
 			{
-				node["value"]["code"].ReplaceChildren(e.Params["code"].Clone());
+                node["value"]["code"].ReplaceChildren(Ip(e.Params)["code"].Clone());
 			}
 
 			RaiseActiveEvent(

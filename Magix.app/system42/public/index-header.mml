@@ -4,15 +4,17 @@
 {{
 system42.travel.change-login-box
   magix.web.get-session=>magix.core.user
-  if=>![magix.web.get-session][value]
-    magix.forms.set-visible
-      form-id=>header
-      id=>loginWrp
-      value=>true
-    magix.forms.set-visible
-      form-id=>header
-      id=>logoutWrp
-      value=>false
+  if=>not-exist
+    lhs=>[magix.web.get-session][value]
+    code
+      magix.forms.set-visible
+        form-id=>header
+        id=>loginWrp
+        value=>true
+      magix.forms.set-visible
+        form-id=>header
+        id=>logoutWrp
+        value=>false
   else
     magix.forms.set-visible
       form-id=>header
@@ -31,18 +33,23 @@ system42.travel.try-login
   magix.data.load
     prototype
       type=>magix.core.user
-  if=>[magix.data.load][objects].Count>0
-    set=>[@][magix.web.set-session][value]
-      value=>[magix.data.load][objects][0]
-    set=>[@][magix.web.set-session][0].Name
-      value=>value
-    magix.web.set-session=>magix.core.user
-      value
-    if=>[magix.data.load][objects][0][roles][admin]
-      magix.web.redirect=>~?dashboard=
-    else
-      magix.viewport.execute-javascript
-        script=>@"location.reload();"
+  if=>more-then
+    lhs=>[magix.data.load][objects].Count
+    rhs=>0
+    code
+      set=>[@][magix.web.set-session][value]
+        value=>[magix.data.load][objects][0]
+      set=>[@][magix.web.set-session][0].Name
+        value=>value
+      magix.web.set-session=>magix.core.user
+        value
+      if=>exist
+        lhs=>[magix.data.load][objects][0][roles][admin]
+        code
+          magix.web.redirect=>~?dashboard=
+      else
+        magix.viewport.execute-javascript
+          script=>@"location.reload();"
   else
     magix.forms.set-value
       form-id=>header
@@ -119,24 +126,28 @@ panel=>logoutWrp
     lambda=>createLoadDashboard
       oncreatecontrols
         magix.web.get-session=>magix.core.user
-        if=>[magix.web.get-session][value][roles][admin]
-          _lnk=>load_dashboard
-            css=>span-4 right-text
-          magix.web.get=>dashboard
-          if=>[@][magix.web.get][value]
-            set=>[if][_lnk][url].Value
-              value=>~
-            set=>[if][_lnk][text].Value
-              value=>website
-          else
-            set=>[if][_lnk][url].Value
-              value=>~?dashboard=
-            set=>[if][_lnk][text].Value
-              value=>dashboard
-          add=>[$]
-            value=>[@][_lnk]
-          set=>[$][_lnk].Name
-            value=>hyperlink
+        if=>exist
+          lhs=>[magix.web.get-session][value][roles][admin]
+          code
+            _lnk=>load_dashboard
+              css=>span-4 right-text
+            magix.web.get=>dashboard
+            if=>exist
+              lhs=>[@][magix.web.get][value]
+              code
+                set=>[if][_lnk][url].Value
+                  value=>~
+                set=>[if][_lnk][text].Value
+                  value=>website
+            else
+              set=>[if][_lnk][url].Value
+                value=>~?dashboard=
+              set=>[if][_lnk][text].Value
+                value=>dashboard
+            add=>[$]
+              value=>[@][_lnk]
+            set=>[$][_lnk].Name
+              value=>hyperlink
 }}
 </div>
 

@@ -40,7 +40,7 @@ thread safe";
 				"magix.admin.get-active-events",
 				tmp);
 
-			Node ip = e.Params;
+            Node ip = Ip(e.Params);
 
 			foreach (Node idx in tmp["events"])
 			{
@@ -86,13 +86,13 @@ thread safe";
 				return;
 			}
 
-			Control ctrl = FindControl<Control>(e.Params);
+            Control ctrl = FindControl<Control>(Ip(e.Params));
 
 			if (ctrl != null)
 			{
 				bool visible = false;
-				if (e.Params.Contains("value"))
-					visible = e.Params["value"].Get<bool>();
+                if (Ip(e.Params).Contains("value"))
+                    visible = Ip(e.Params)["value"].Get<bool>();
 
 				ctrl.Visible = visible;
 			}
@@ -115,11 +115,11 @@ thread safe";
 				return;
 			}
 
-			Control ctrl = FindControl<Control>(e.Params);
+            Control ctrl = FindControl<Control>(Ip(e.Params));
 
 			if (ctrl != null)
 			{
-				e.Params["value"].Value = ctrl.Visible;
+                Ip(e.Params)["value"].Value = ctrl.Visible;
 			}
 		}
 

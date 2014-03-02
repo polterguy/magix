@@ -35,7 +35,7 @@ namespace Magix.execute
 				return;
 			}
 
-			string xml = e.Params.Get<string>();
+            string xml = Ip(e.Params).Get<string>();
 
 			if (string.IsNullOrEmpty(xml))
 				throw new ArgumentException("need xml value to [magix.xml.xml-2-node]");
@@ -43,7 +43,7 @@ namespace Magix.execute
 			XmlDocument doc = new XmlDocument();
 			doc.LoadXml(xml);
 
-			ParseNode(doc.DocumentElement, e.Params["dom"]["_tmp"]);
+            ParseNode(doc.DocumentElement, Ip(e.Params)["dom"]["_tmp"]);
 		}
 
 		private static void ParseNode(XmlNode xml, Node node)

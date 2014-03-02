@@ -29,7 +29,7 @@ namespace Magix.forms
 				return;
 			}
 
-			Node node = e.Params["_code"].Value as Node;
+            Node node = Ip(e.Params)["_code"].Value as Node;
 
 			CheckBox ret = new CheckBox();
 
@@ -66,7 +66,7 @@ namespace Magix.forms
 				};
 			}
 
-			e.Params["_ctrl"].Value = ret;
+            Ip(e.Params)["_ctrl"].Value = ret;
 		}
 
 		/**
@@ -81,14 +81,14 @@ namespace Magix.forms
 				return;
 			}
 
-			if (!e.Params.Contains("value"))
+            if (!Ip(e.Params).Contains("value"))
 				throw new ArgumentException("set-value needs [value]");
 
-			CheckBox ctrl = FindControl<CheckBox>(e.Params);
+            CheckBox ctrl = FindControl<CheckBox>(Ip(e.Params));
 
 			if (ctrl != null)
 			{
-				ctrl.Checked = e.Params["value"].Get<bool>();
+                ctrl.Checked = Ip(e.Params)["value"].Get<bool>();
 			}
 		}
 
@@ -104,11 +104,11 @@ namespace Magix.forms
 				return;
 			}
 
-			CheckBox ctrl = FindControl<CheckBox>(e.Params);
+            CheckBox ctrl = FindControl<CheckBox>(Ip(e.Params));
 
 			if (ctrl != null)
 			{
-				e.Params["value"].Value = ctrl.Checked;
+                Ip(e.Params)["value"].Value = ctrl.Checked;
 			}
 		}
 

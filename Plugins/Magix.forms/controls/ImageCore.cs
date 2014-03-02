@@ -28,7 +28,7 @@ namespace Magix.forms
 				return;
 			}
 
-			Node node = e.Params["_code"].Value as Node;
+            Node node = Ip(e.Params)["_code"].Value as Node;
 
 			Image ret = new Image();
 
@@ -43,7 +43,7 @@ namespace Magix.forms
 			if (node.Contains("key") && node["key"].Value != null)
 				ret.AccessKey = node["key"].Get<string>();
 
-			e.Params["_ctrl"].Value = ret;
+            Ip(e.Params)["_ctrl"].Value = ret;
 		}
 
 		protected override void Inspect (Node node)

@@ -32,12 +32,12 @@ get http parameter as [value], if existing.&nbsp;&nbsp;not thread safe";
 				return;
 			}
 
-			string par = e.Params.Get<string>();
+            string par = Ip(e.Params).Get<string>();
 			if (string.IsNullOrEmpty(par))
 				throw new ArgumentException("[magix.web.get] needs a value defining which get parameter to fetch");
 
 			if (HttpContext.Current.Request.Params[par] != null)
-				e.Params["value"].Value = HttpContext.Current.Request.Params[par];
+                Ip(e.Params)["value"].Value = HttpContext.Current.Request.Params[par];
 		}
 
 		/**
@@ -59,12 +59,12 @@ not thread safe";
 				return;
 			}
 
-			string id = e.Params.Get<string>();
+            string id = Ip(e.Params).Get<string>();
 
 			if (string.IsNullOrEmpty(id))
 				throw new ArgumentException("[magix.web.set-session] needs a value to know which session object to fetch");
 
-			if (!e.Params.Contains("value"))
+            if (!Ip(e.Params).Contains("value"))
 			{
 				// removal of existing session object
 				Page.Session.Remove(id);
@@ -72,7 +72,7 @@ not thread safe";
 			else
 			{
 				// adding or overwiting existing value
-				Node value = e.Params["value"].Clone();
+                Node value = Ip(e.Params)["value"].Clone();
 				Page.Session[id] = value;
 			}
 		}
@@ -94,14 +94,14 @@ not thread safe";
 				return;
 			}
 
-			string id = e.Params.Get<string>();
+            string id = Ip(e.Params).Get<string>();
 
 			if (string.IsNullOrEmpty(id))
 				throw new ArgumentException("need a value for [magix.web.get-session]");
 
 			if (Page.Session[id] != null &&
 			    Page.Session[id] is Node)
-				e.Params.Add(Page.Session[id] as Node);
+                Ip(e.Params).Add(Page.Session[id] as Node);
 		}
 
 		/**
@@ -122,7 +122,7 @@ not thread safe";
 				return;
 			}
 
-			string url = e.Params.Get<string>();
+            string url = Ip(e.Params).Get<string>();
 
 			if (string.IsNullOrEmpty(url))
 				throw new ArgumentException("need url as value for [magix.web.redirect] to function");
@@ -155,14 +155,14 @@ be removed.&nbsp;&nbsp;not thread safe";
 				return;
 			}
 
-			string par = e.Params.Get<string>();
+            string par = Ip(e.Params).Get<string>();
 			if (string.IsNullOrEmpty(par))
 				throw new ArgumentException("[magix.web.set-cookie] needs a value to know which cookie to set");
 
 			string value = null;
 
-			if (e.Params.Contains("value"))
-				value = e.Params["value"].Get<string>();
+            if (Ip(e.Params).Contains("value"))
+                value = Ip(e.Params)["value"].Get<string>();
 
 			if (value == null)
 			{
@@ -173,8 +173,8 @@ be removed.&nbsp;&nbsp;not thread safe";
 				HttpCookie cookie = new HttpCookie(par, value);
 				cookie.HttpOnly = true;
 				DateTime expires = DateTime.Now.AddYears(3);
-				if (e.Params.Contains("expires"))
-					expires = e.Params["expires"].Get<DateTime>();
+                if (Ip(e.Params).Contains("expires"))
+                    expires = Ip(e.Params)["expires"].Get<DateTime>();
 				cookie.Expires = expires;
 
 				HttpContext.Current.Response.SetCookie(cookie);
@@ -196,12 +196,12 @@ http cookie parameter as [value] node.&nbsp;&nbsp;not thread safe";
 				return;
 			}
 
-			string par = e.Params.Get<string>();
+            string par = Ip(e.Params).Get<string>();
 			if (string.IsNullOrEmpty(par))
 				throw new ArgumentException("[magix.web.get-cookie] nneds a value to know which cookie to fetch");
 
 			if (HttpContext.Current.Request.Cookies.Get(par) != null)
-				e.Params["value"].Value = HttpContext.Current.Request.Cookies[par].Value;
+                Ip(e.Params)["value"].Value = HttpContext.Current.Request.Cookies[par].Value;
 		}
 		
 		/**
@@ -219,14 +219,14 @@ web.config setting as [value] node.&nbsp;&nbsp;thread safe";
 				return;
 			}
 
-			string par = e.Params.Get<string>();
+            string par = Ip(e.Params).Get<string>();
 			if (string.IsNullOrEmpty(par))
 				throw new ArgumentException("you must tell me which web.config setting you wish to retrieve as value to [magix.web.get-config-setting]");
 
 			string val = ConfigurationManager.AppSettings[par];
 
 			if (!string.IsNullOrEmpty(val))
-				e.Params["value"].Value = val;
+                Ip(e.Params)["value"].Value = val;
 		}
 	}
 }

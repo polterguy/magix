@@ -28,7 +28,7 @@ namespace Magix.forms
 				return;
 			}
 
-			Node node = e.Params["_code"].Value as Node;
+            Node node = Ip(e.Params)["_code"].Value as Node;
 
 			Uploader ret = new Uploader();
 
@@ -83,7 +83,7 @@ namespace Magix.forms
 					}
 				};
 			}
-			e.Params["_ctrl"].Value = ret;
+            Ip(e.Params)["_ctrl"].Value = ret;
 		}
 
 		/**
@@ -103,11 +103,11 @@ namespace Magix.forms
 				return;
 			}
 
-			Uploader ctrl = FindControl<Uploader>(e.Params);
+            Uploader ctrl = FindControl<Uploader>(Ip(e.Params));
 
 			if (ctrl != null)
 			{
-				e.Params["value"].Value = ctrl.SizeOfBatch > ctrl.CurrentNo + 1;
+                Ip(e.Params)["value"].Value = ctrl.SizeOfBatch > ctrl.CurrentNo + 1;
 			}
 		}
 		protected override void Inspect(Node node)

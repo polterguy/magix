@@ -36,13 +36,13 @@ namespace Magix.forms
 				return;
 			}
 
-			BaseWebControl ctrl = FindControl<BaseWebControl>(e.Params);
+            BaseWebControl ctrl = FindControl<BaseWebControl>(Ip(e.Params));
 
 			if (ctrl != null)
 			{
 				string className = "";
-				if (e.Params.Contains("value"))
-					className = e.Params["value"].Get<string>();
+                if (Ip(e.Params).Contains("value"))
+                    className = Ip(e.Params)["value"].Get<string>();
 
 				ctrl.CssClass = className;
 			}
@@ -64,11 +64,11 @@ namespace Magix.forms
 				return;
 			}
 
-			BaseWebControl ctrl = FindControl<BaseWebControl>(e.Params);
+            BaseWebControl ctrl = FindControl<BaseWebControl>(Ip(e.Params));
 
 			if (ctrl != null)
 			{
-				e.Params["value"].Value = ctrl.CssClass;
+                Ip(e.Params)["value"].Value = ctrl.CssClass;
 			}
 		}
 
@@ -89,16 +89,16 @@ namespace Magix.forms
 				return;
 			}
 
-			if (!e.Params.Contains ("css"))
+            if (!Ip(e.Params).Contains("css"))
 				throw new ArgumentException("Missing [css] in add-css");
 
-			BaseWebControl ctrl = FindControl<BaseWebControl>(e.Params);
+            BaseWebControl ctrl = FindControl<BaseWebControl>(Ip(e.Params));
 
 			if (ctrl != null)
 			{
-				if (ctrl.CssClass.IndexOf(e.Params["css"].Get<string>()) == -1)
+                if (ctrl.CssClass.IndexOf(Ip(e.Params)["css"].Get<string>()) == -1)
 				{
-					ctrl.CssClass = ctrl.CssClass.Trim() + " " + e.Params["css"].Get<string>().Trim();
+                    ctrl.CssClass = ctrl.CssClass.Trim() + " " + Ip(e.Params)["css"].Get<string>().Trim();
 				}
 			}
 		}
@@ -120,16 +120,16 @@ namespace Magix.forms
 				return;
 			}
 
-			if (!e.Params.Contains ("css"))
+            if (!Ip(e.Params).Contains("css"))
 				throw new ArgumentException("Missing [css] in remove-css");
 
-			BaseWebControl ctrl = FindControl<BaseWebControl>(e.Params);
+            BaseWebControl ctrl = FindControl<BaseWebControl>(Ip(e.Params));
 
 			if (ctrl != null)
 			{
-				if (ctrl.CssClass.IndexOf(e.Params["css"].Get<string>()) != -1)
+                if (ctrl.CssClass.IndexOf(Ip(e.Params)["css"].Get<string>()) != -1)
 				{
-					ctrl.CssClass = ctrl.CssClass.Replace(e.Params["css"].Get<string>().Trim(), "").Replace("  ", " ").Trim();
+                    ctrl.CssClass = ctrl.CssClass.Replace(Ip(e.Params)["css"].Get<string>().Trim(), "").Replace("  ", " ").Trim();
 				}
 			}
 		}
@@ -150,7 +150,7 @@ namespace Magix.forms
 				return;
 			}
 
-			BaseWebControl ctrl = FindControl<BaseWebControl>(e.Params);
+            BaseWebControl ctrl = FindControl<BaseWebControl>(Ip(e.Params));
 
 			if (ctrl != null)
 			{

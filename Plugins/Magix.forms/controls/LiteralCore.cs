@@ -29,13 +29,13 @@ namespace Magix.forms
 				return;
 			}
 
-			Node node = e.Params["_code"].Value as Node;
+            Node node = Ip(e.Params)["_code"].Value as Node;
 
 			LiteralControl ret = new LiteralControl();
 			if (node.Contains("text"))
 				ret.Text = node["text"].Get<string>();
 
-			e.Params["_ctrl"].Value = ret;
+            Ip(e.Params)["_ctrl"].Value = ret;
 		}
 
 		protected void Inspect(Node node)

@@ -8,12 +8,15 @@ magix.data.count
   prototype
     type=>magix.pages.page
     name=>default
-if=>[magix.data.count][count].Value==0
-  magix.data.save
-    value
-      type=>magix.pages.page
-      name=>default
-      value=>@"<p>magix is an open source web app builder program, 
+if=>equals
+  lhs=>[magix.data.count][count].Value
+  rhs=>0
+  code
+    magix.data.save
+      value
+        type=>magix.pages.page
+        name=>default
+        value=>@"<p>magix is an open source web app builder program, 
 which means you can create your own applications with magix.&nbsp;&nbsp;
 login at the top of this screen with username/password combination 
 <strong>admin/admin</strong></p><p><strong>please change this password asap, 

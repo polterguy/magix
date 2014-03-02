@@ -29,7 +29,7 @@ namespace Magix.forms
 				return;
 			}
 
-			Node node = e.Params["_code"].Value as Node;
+            Node node = Ip(e.Params)["_code"].Value as Node;
 
 			HiddenField ret = new HiddenField();
 
@@ -38,7 +38,7 @@ namespace Magix.forms
 			if (node.Contains("value") && node["value"].Value != null)
 				ret.Value = node["value"].Get<string>();
 
-			e.Params["_ctrl"].Value = ret;
+            Ip(e.Params)["_ctrl"].Value = ret;
 		}
 
 		/**
@@ -53,14 +53,14 @@ namespace Magix.forms
 				return;
 			}
 
-			if (!e.Params.Contains("value"))
+            if (!Ip(e.Params).Contains("value"))
 				throw new ArgumentException("set-value needs [value]");
 
-			HiddenField ctrl = FindControl<HiddenField>(e.Params);
+            HiddenField ctrl = FindControl<HiddenField>(Ip(e.Params));
 
 			if (ctrl != null)
 			{
-				ctrl.Value = e.Params["value"].Get<string>();
+                ctrl.Value = Ip(e.Params)["value"].Get<string>();
 			}
 		}
 
@@ -76,11 +76,11 @@ namespace Magix.forms
 				return;
 			}
 
-			HiddenField ctrl = FindControl<HiddenField>(e.Params);
+            HiddenField ctrl = FindControl<HiddenField>(Ip(e.Params));
 
 			if (ctrl != null)
 			{
-				e.Params["value"].Value = ctrl.Value;
+                Ip(e.Params)["value"].Value = ctrl.Value;
 			}
 		}
 

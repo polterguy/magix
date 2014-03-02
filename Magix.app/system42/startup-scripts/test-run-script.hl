@@ -12,13 +12,22 @@ correctly"
 
   code
     execute-script=>@"
-if=>[$][mumbo].Value!=howdy
-  throw=>input parameter not accessible in file
+if=>not-equals
+  lhs=>[$][mumbo].Value
+  rhs=>howdy
+  code
+    throw=>input parameter not accessible in file
 set=>[$][jumbo].Value
   value=>5"
       mumbo=>howdy
-    if=>[execute-script][mumbo].Value!=howdy
-      throw=>input value not returned
-    if=>[execute-script][jumbo].Value!=5
-      throw=>output value not returned currectly
+    if=>not-equals
+      lhs=>[execute-script][mumbo].Value
+      rhs=>howdy
+      code
+        throw=>input value not returned
+    if=>not-equals
+      lhs=>[execute-script][jumbo].Value
+      rhs=>5
+      code
+        throw=>output value not returned currectly
 

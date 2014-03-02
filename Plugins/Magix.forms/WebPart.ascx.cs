@@ -101,8 +101,8 @@ namespace Magix.forms
 				Node tmp = Methods[e.Name].Clone();
 
 				// cloning in the incoming parameters
-				if (e.Params.Count > 0)
-					tmp["$"].AddRange(e.Params.Clone());
+                if (Ip(e.Params).Count > 0)
+                    tmp["$"].AddRange(Ip(e.Params).Clone());
 
 				RaiseEvent(
 					"magix.execute",
@@ -110,7 +110,7 @@ namespace Magix.forms
 
 				if (tmp.Contains("$"))
 				{
-					e.Params.ReplaceChildren(tmp["$"]);
+                    Ip(e.Params).ReplaceChildren(tmp["$"]);
 				}
 			}
 		}
@@ -128,11 +128,11 @@ to the value in [mml]";
 				return;
 			}
 
-			if (FormID == e.Params["form-id"].Get<string>())
+            if (FormID == Ip(e.Params)["form-id"].Get<string>())
 			{
 				DataSource = new Node();
 				Methods.Clear();
-				TokenizeMarkup(e.Params);
+                TokenizeMarkup(Ip(e.Params));
 				this.Controls.Clear();
 				isFirst = true;
 				BuildControls();
@@ -157,13 +157,13 @@ not thread safe";
 				return;
 			}
 
-			if (!e.Params.Contains("id"))
+            if (!Ip(e.Params).Contains("id"))
 				throw new ArgumentException("need [id] to know which control to find");
 
-			if (!e.Params.Contains("form-id") || FormID == e.Params["form-id"].Get<string>())
+            if (!Ip(e.Params).Contains("form-id") || FormID == Ip(e.Params)["form-id"].Get<string>())
 			{
-				Control ctrl = Selector.FindControl<Control>(this.Parent /* to include viewport */, e.Params["id"].Get<string>());
-				e.Params["_ctrl"].Value = ctrl;
+                Control ctrl = Selector.FindControl<Control>(this.Parent /* to include viewport */, Ip(e.Params)["id"].Get<string>());
+                Ip(e.Params)["_ctrl"].Value = ctrl;
 			}
 		}
 
