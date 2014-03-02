@@ -1,13 +1,16 @@
 
 
+_data=>4
+  foo=>2
 
-magix.math.add
-  foo1=>5
-  foo2=>10
-  foo3=>4
+using=>magix.math
+  divide
+    subtract
+      =>18
+      add
+        =>2
+        =>[_data].Value
+    =>[_data][foo].Value
 
-set=>[magix.viewport.show-message][message].Value
-  value=>[magix.math.add].Value
-
-
+debug
 

@@ -39,6 +39,7 @@
 				id="cancel"
 				CssClass="info-message-cancel btn-large span-3 last"
 				Text="Cancel"
+                AccessKey="C"
 				OnClick="CancelClick" />
 		</div>
 	</mux:Panel>

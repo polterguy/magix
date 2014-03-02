@@ -180,14 +180,17 @@ code
 					string name = "";
 					object value = null;
 
-					string tmp = line.TrimStart ();
+					string tmp = line.TrimStart();
 					if (!tmp.Contains("="))
 					{
 						name = tmp;
 					}
 					else
 					{
-						name = tmp.Split(new string[]{"="}, StringSplitOptions.RemoveEmptyEntries)[0];
+                        if (tmp[0] == '=')
+                            name = ""; // empty name ...
+                        else
+    						name = tmp.Split(new string[]{"="}, StringSplitOptions.RemoveEmptyEntries)[0];
 						switch (tmp.Substring(name.Length).Split('>')[0] + ">")
 						{
 						case "=>":
