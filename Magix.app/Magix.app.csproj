@@ -255,8 +255,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="media\xing-wysihtml5\LICENSE" />
-    <Content Include="system42\index.hl.backup" />
-    <Content Include="system42\startup.hl.backup" />
     <None Include="todo.txt" />
     <None Include="system42\index.hl" />
     <None Include="system42\startup.hl" />
