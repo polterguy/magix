@@ -5,7 +5,10 @@ into and out from hyper lisp files.&nbsp;&nbsp;
 used in combination with [magix.test.execute-file-with-parameters]"
 
 
-if=>[$][mumbo].Value!=howdy
-  throw=>input parameter not accessible in file
+if=>not-equals
+  lhs=>[$][mumbo].Value
+  rhs=>howdy
+  code
+    throw=>input parameter not accessible in file
 set=>[$][jumbo].Value
   value=>5

@@ -51,15 +51,18 @@ magix.forms.create-web-part
         set=>[magix.data.load][id].Value
           value=>[magix.forms.get-value][value].Value
         magix.data.load
-        if=>[magix.data.load][objects].Count>0
-          set=>[magix.forms.set-value:0][value].Value
-            value=>[magix.data.load][objects][0][name].Value
-          set=>[magix.forms.set-value:1][value].Value
-            value=>[magix.data.load][objects][0][value].Value
-          magix.forms.set-enabled
-            form-id=>edit-pages
-            id=>delete
-            value=>true
+        if=>more-then
+          lhs=>[magix.data.load][objects].Count
+          rhs=>0
+          code
+            set=>[magix.forms.set-value:0][value].Value
+              value=>[magix.data.load][objects][0][name].Value
+            set=>[magix.forms.set-value:1][value].Value
+              value=>[magix.data.load][objects][0][value].Value
+            magix.forms.set-enabled
+              form-id=>edit-pages
+              id=>delete
+              value=>true
         else
           magix.forms.set-enabled
             form-id=>edit-pages
@@ -95,9 +98,11 @@ magix.forms.create-web-part
             magix.forms.get-value
               form-id=>edit-pages
               id=>page
-            if=>![magix.forms.get-value:0][value].Value
-              magix.viewport.show-message
-                message=>no name given to page
+            if=>not-exist
+              lhs=>[magix.forms.get-value:0][value].Value
+              code
+                magix.viewport.show-message
+                  message=>no name given to page
             else
               set=>[@][magix.data.save][value][name].Value
                 value=>[magix.forms.get-value][value].Value
@@ -120,9 +125,12 @@ magix.forms.create-web-part
                   type=>magix.pages.page
               _id
               for-each=>[@][magix.data.load][objects]
-                if=>[.][name].Value==[/][magix.forms.get-value][value].Value
-                  set=>[@][..][..][_id].Value
-                    value=>[.].Name
+                if=>equals
+                  lhs=>[.][name].Value
+                  rhs=>[/][magix.forms.get-value][value].Value
+                  code
+                    set=>[@][..][..][..][_id].Value
+                      value=>[.].Name
                 _dt
                   name=>value
                 set=>[@][_dt][0].Name
@@ -169,9 +177,11 @@ magix.forms.create-web-part
                 magix.data.load
                   prototype
                     type=>magix.pages.page
-                if=>![magix.data.load][objects]
-                  magix.viewport.show-message
-                    message=>no such page
+                if=>not-exist
+                  lhs=>[magix.data.load][objects]
+                  code
+                    magix.viewport.show-message
+                      message=>no such page
                 else
                   set=>[@][magix.data.remove][id].Value
                     value=>[/][magix.data.load][objects][0].Name
@@ -225,19 +235,22 @@ magix.forms.create-web-part
         magix.forms.get-value
           form-id=>edit-pages
           id=>form
-        if=>[magix.forms.get-value][value].Value!=default
-          set=>[@][magix.data.load][id].Value
-            value=>[magix.forms.get-value][value].Value
-          magix.data.load
-          set=>[@][set:2][value][pr0].Value
-            value=>[@][magix.data.load][objects][0][name].Value
-          set=>[@][magix.viewport.execute-javascript][script].Value
-            value=>@"window.actualEditor.composer.commands.exec('insertHTML', '{{{{form=>{0}}}}}');"
-          magix.viewport.execute-javascript
-          magix.forms.set-value
-            form-id=>edit-pages
-            id=>form
-            value=>default
+        if=>not-equals
+          lhs=>[magix.forms.get-value][value].Value
+          rhs=>default
+          code
+            set=>[@][magix.data.load][id].Value
+              value=>[magix.forms.get-value][value].Value
+            magix.data.load
+            set=>[@][set:2][value][pr0].Value
+              value=>[@][magix.data.load][objects][0][name].Value
+            set=>[@][magix.viewport.execute-javascript][script].Value
+              value=>@"window.actualEditor.composer.commands.exec('insertHTML', '{{{{form=>{0}}}}}');"
+            magix.viewport.execute-javascript
+            magix.forms.set-value
+              form-id=>edit-pages
+              id=>form
+              value=>default
       items
         default=>insert form ...
 

@@ -170,9 +170,11 @@ magix.forms.create-web-part
               id=>ddlRoles
             magix.data.load
               prototype=>magix.core.user
-            if=>[magix.data.load][objects][0][roles][[magix.forms.get-value][value].Value]
-              magix.viewport.show-message
-                message=>user belongs to role already ...
+            if=>exist
+              lhs=>[magix.data.load][objects][0][roles][[magix.forms.get-value][value].Value]
+              code
+                magix.viewport.show-message
+                  message=>user belongs to role already ...
             else
               set=>[@][magix.data.save][id].Value
                 value=>[magix.data.load][objects][0].Name

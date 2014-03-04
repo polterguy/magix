@@ -1,7 +1,6 @@
 <%@ Page 
     Language="C#" 
     AutoEventWireup="true" 
-    ValidateRequest="false" 
     Inherits="Magix.app.MainWebPage" 
     Codebehind="Default.aspx.cs" %>
 

@@ -50,25 +50,30 @@ choose either before or after as the position of the node"
         time=>1000
 
 for-each=>[magix.forms.list-widget-types][types]
-  if=>![.][_no-embed]
-    while=>[/][_buffer].Count>0
-      set=>[/][_buffer][0]
-    set=>[/][_buffer][button].Value
-      value=>[.][type].Value
-    set=>[/][_buffer][button][text].Value
-      value=>[.][type].Value
-    replace=>[/][_buffer][button][text].Value
-      what=>magix.forms.controls.
-    set=>[/][_buffer][button][css].Value
-      value=>span-2 bottom-1
-    set=>[/][_onclick][try][code][add-widget][widget][type].Value
-      value=>[.][type].Value
-    add=>[/][_buffer][button]
-      value=>[/][_onclick]
-    set=>[/][_buffer][button][_onclick].Name
-      value=>onclick
-    add=>[/][magix.forms.create-web-part][controls][panel:1][controls]
-      value=>[/][_buffer][0]
+  if=>not-exist
+    lhs=>[.][_no-embed]
+    code
+      while=>more-then
+        lhs=>[/][_buffer].Count
+        rhs=>0
+        code
+          set=>[/][_buffer][0]
+      set=>[/][_buffer][button].Value
+        value=>[.][type].Value
+      set=>[/][_buffer][button][text].Value
+        value=>[.][type].Value
+      replace=>[/][_buffer][button][text].Value
+        what=>magix.forms.controls.
+      set=>[/][_buffer][button][css].Value
+        value=>span-2 bottom-1
+      set=>[/][_onclick][try][code][add-widget][widget][type].Value
+        value=>[.][type].Value
+      add=>[/][_buffer][button]
+        value=>[/][_onclick]
+      set=>[/][_buffer][button][_onclick].Name
+        value=>onclick
+      add=>[/][magix.forms.create-web-part][controls][panel:1][controls]
+        value=>[/][_buffer][0]
 
 magix.forms.create-web-part
   form-id=>edit-forms
@@ -116,118 +121,161 @@ magix.forms.create-web-part
       magix.viewport.clear-controls
         container=>content5
       get-selected-widget
-      if=>[get-selected-widget][value][widget]
-        magix.forms.set-enabled
-          form-id=>edit-forms
-          id=>copy
-          value=>true
-        magix.forms.set-enabled
-          form-id=>edit-forms
-          id=>cut
-          value=>true
-        magix.forms.list-widget-types
-        for-each=>[@][magix.forms.list-widget-types][types]
-          if=>[.][type].Value==[/][get-selected-widget][value][widget][type].Value
-            add=>[@][..][..][_data]
-              value=>[.]
+      if=>exist
+        lhs=>[get-selected-widget][value][widget]
+        code
+          magix.forms.set-enabled
+            form-id=>edit-forms
+            id=>copy
+            value=>true
+          magix.forms.set-enabled
+            form-id=>edit-forms
+            id=>cut
+            value=>true
+          magix.forms.list-widget-types
+          for-each=>[@][magix.forms.list-widget-types][types]
+            if=>equals
+              lhs=>[.][type].Value
+              rhs=>[/][get-selected-widget][value][widget][type].Value
+              code
+                add=>[@][..][..][..][_data]
+                  value=>[.]
 
-        for-each=>[@][_data][widget][properties]
-          _type
-          if=>[.].Name==controls
-            set=>[@][..][_type].Value
-              value=>nothing
-          else-if=>[.].Count>0
-            set=>[@][..][_type].Value
-              value=>link-button
-          else-if=>[.].Value==hyper lisp code
-            set=>[@][..][_type].Value
-              value=>link-button
-          else
-            if=>[.].Value==true
-              set=>[@][..][..][_type].Value
-                value=>check
-            else-if=>[.].Value==false
-              set=>[@][..][..][_type].Value
-                value=>check
+          for-each=>[@][_data][widget][properties]
+            _type
+            if=>equals
+              lhs=>[.].Name
+              rhs=>controls
+              code
+                set=>[@][..][..][_type].Value
+                  value=>nothing
+            else-if=>more-then
+              lhs=>[.].Count
+              rhs=>0
+              code
+                set=>[@][..][..][_type].Value
+                  value=>link-button
+            else-if=>equals
+              lhs=>[.].Value
+              rhs=>hyper lisp code
+              code
+                set=>[@][..][..][_type].Value
+                  value=>link-button
             else
-              set=>[@][..][..][_type].Value
-                value=>text-box
-          if=>[@][_type].Value!=nothing
-            set=>[/][_label][text].Value
-              value=>[.].Name
-            add=>[@][..][..][magix.forms.create-web-part][controls][panel][controls]
-              value=>[/][_label]
-            set=>[@][..][..][magix.forms.create-web-part][controls][panel][controls][_label].Name
-              value=>label
-          if=>[@][_type].Value==link-button
-            if=>[/][get-selected-widget][value][widget][properties][[.].Name].Count>0
-              set=>[/][_link-button][css].Value
-                value=>span-4 top-1 bold
-            else
-              set=>[/][_link-button][css].Value
-                value=>span-4 top-1
-            set=>[/][_link-button].Value
-              value=>[.].Name
-            set=>[/][_link-button][text].Value
-              value=>[.].Name
-            set=>[/][_link-button][onclick][execute-file][property].Value
-              value=>[.].Name
-            add=>[@][..][..][magix.forms.create-web-part][controls][panel][controls]
-              value=>[/][_link-button]
-            set=>[@][..][..][magix.forms.create-web-part][controls][panel][controls][_link-button].Name
-              value=>link-button
-          else-if=>[@][_type].Value==text-box
-            set=>[/][_text-box].Value
-              value=>[.].Name
-            set=>[/][_text-box][ontextchanged][magix.forms.get-value][id].Value
-              value=>[.].Name
-            set=>[/][_text-box][place-holder].Value
-              value=>[@][..][..][_data][0][properties][[/][_text-box].Value].Value
-            set=>[/][_text-box][text].Value
-              value=>
-            if=>[/][get-selected-widget][value][widget][properties][[/][_text-box].Value].Value
-              set=>[/][_text-box][text].Value
-                value=>[/][get-selected-widget][value][widget][properties][[/][_text-box].Value].Value
-            add=>[@][..][..][magix.forms.create-web-part][controls][panel][controls]
-              value=>[/][_text-box]
-            set=>[@][..][..][magix.forms.create-web-part][controls][panel][controls][_text-box].Name
-              value=>text-box
-          else-if=>[@][_type].Value==check
-            set=>[/][_check].Value
-              value=>[.].Name
-            set=>[/][_check][oncheckedchanged][magix.forms.get-value][id].Value
-              value=>[.].Name
-            if=>[/][get-selected-widget][value][widget][properties][[/][_check].Value].Value==false
-              set=>[/][_check][checked].Value
-                value=>false
-            else-if=>[@][..][..][_data][0][properties][[/][_check].Value].Value==true
-              set=>[/][_check][checked].Value
-                value=>true
-            else
-              set=>[/][_check][checked].Value
-                value=>true
-            add=>[@][..][..][magix.forms.create-web-part][controls][panel][controls]
-              value=>[/][_check]
-            set=>[@][..][..][magix.forms.create-web-part][controls][panel][controls][_check].Name
-              value=>check
+              if=>equals
+                lhs=>[.].Value
+                rhs=>true
+                code
+                  set=>[@][..][..][..][_type].Value
+                    value=>check
+              else-if=>equals
+                lhs=>[.].Value
+                rhs=>false
+                code
+                  set=>[@][..][..][..][_type].Value
+                    value=>check
+              else
+                set=>[@][..][..][_type].Value
+                  value=>text-box
+            if=>not-equals
+              lhs=>[@][_type].Value
+              rhs=>nothing
+              code
+                set=>[/][_label][text].Value
+                  value=>[.].Name
+                add=>[@][..][..][..][magix.forms.create-web-part][controls][panel][controls]
+                  value=>[/][_label]
+                set=>[@][..][..][..][magix.forms.create-web-part][controls][panel][controls][_label].Name
+                  value=>label
+            if=>equals
+              lhs=>[@][_type].Value
+              rhs=>link-button
+              code
+                if=>more-then
+                  lhs=>[/][get-selected-widget][value][widget][properties][[.].Name].Count
+                  rhs=>0
+                  code
+                    set=>[/][_link-button][css].Value
+                      value=>span-4 top-1 bold
+                else
+                  set=>[/][_link-button][css].Value
+                    value=>span-4 top-1
+                set=>[/][_link-button].Value
+                  value=>[.].Name
+                set=>[/][_link-button][text].Value
+                  value=>[.].Name
+                set=>[/][_link-button][onclick][execute-file][property].Value
+                  value=>[.].Name
+                add=>[@][..][..][..][magix.forms.create-web-part][controls][panel][controls]
+                  value=>[/][_link-button]
+                set=>[@][..][..][..][magix.forms.create-web-part][controls][panel][controls][_link-button].Name
+                  value=>link-button
+            else-if=>equals
+              lhs=>[@][_type].Value
+              rhs=>text-box
+              code
+                set=>[/][_text-box].Value
+                  value=>[.].Name
+                set=>[/][_text-box][ontextchanged][magix.forms.get-value][id].Value
+                  value=>[.].Name
+                set=>[/][_text-box][place-holder].Value
+                  value=>[@][..][..][..][_data][0][properties][[/][_text-box].Value].Value
+                set=>[/][_text-box][text].Value
+                  value=>
+                if=>exist
+                  lhs=>[/][get-selected-widget][value][widget][properties][[/][_text-box].Value].Value
+                  code
+                    set=>[/][_text-box][text].Value
+                      value=>[/][get-selected-widget][value][widget][properties][[/][_text-box].Value].Value
+                add=>[@][..][..][..][magix.forms.create-web-part][controls][panel][controls]
+                  value=>[/][_text-box]
+                set=>[@][..][..][..][magix.forms.create-web-part][controls][panel][controls][_text-box].Name
+                  value=>text-box
+            else-if=>equals
+              lhs=>[@][_type].Value
+              rhs=>check
+              code
+                set=>[/][_check].Value
+                  value=>[.].Name
+                set=>[/][_check][oncheckedchanged][magix.forms.get-value][id].Value
+                  value=>[.].Name
+                if=>equals
+                  lhs=>[/][get-selected-widget][value][widget][properties][[/][_check].Value].Value
+                  rhs=>false
+                  code
+                    set=>[/][_check][checked].Value
+                      value=>false
+                else-if=>equals
+                  lhs=>[@][..][..][..][_data][0][properties][[/][_check].Value].Value
+                  rhs=>true
+                  code
+                    set=>[/][_check][checked].Value
+                      value=>true
+                else
+                  set=>[/][_check][checked].Value
+                    value=>true
+                add=>[@][..][..][..][magix.forms.create-web-part][controls][panel][controls]
+                  value=>[/][_check]
+                set=>[@][..][..][..][magix.forms.create-web-part][controls][panel][controls][_check].Name
+                  value=>check
 
-        _data
-        magix.forms.create-web-part
-          form-id=>edit-properties
-          container=>content3
-          css=>span-24 bottom-1
-          controls
-            panel=>propWrp
-              css=>span-22 boxed air-padding
-              controls
-                label=>desc2
-                  css=>span-22 last
-                  text=>properties
-                  tag=>label
-        magix.forms.set-enabled
-          form-id=>edit-forms
-          id=>deleteWidg
-          value=>true
+          _data
+          magix.forms.create-web-part
+            form-id=>edit-properties
+            container=>content3
+            css=>span-24 bottom-1
+            controls
+              panel=>propWrp
+                css=>span-22 boxed air-padding
+                controls
+                  label=>desc2
+                    css=>span-22 last
+                    text=>properties
+                    tag=>label
+          magix.forms.set-enabled
+            form-id=>edit-forms
+            id=>deleteWidg
+            value=>true
       else
         magix.forms.set-enabled
           form-id=>edit-forms
@@ -243,6 +291,8 @@ magix.forms.create-web-part
           value=>false
         magix.viewport.clear-controls
           container=>content4
+      debug
+      stop
 
     magix.ide.surface-changed
       list-widgets
@@ -269,11 +319,14 @@ magix.forms.create-web-part
         form-id=>edit-forms
         id=>widget
         value=>default
-      if=>[list-widgets][widgets].Count>0
-        magix.forms.set-enabled
-          form-id=>edit-forms
-          id=>preview
-          value=>true
+      if=>more-then
+        lhs=>[list-widgets][widgets].Count
+        rhs=>0
+        code
+          magix.forms.set-enabled
+            form-id=>edit-forms
+            id=>preview
+            value=>true
       else
         magix.forms.set-enabled
           form-id=>edit-forms
@@ -313,11 +366,14 @@ magix.forms.create-web-part
           form-id=>edit-forms
           id=>name
         magix.ide.active-control-changed
-        if=>[magix.forms.get-value][value].Value!=default
-          magix.forms.set-enabled
-            form-id=>edit-forms
-            id=>delete
-            value=>true
+        if=>not-equals
+          lhs=>[magix.forms.get-value][value].Value
+          rhs=>default
+          code
+            magix.forms.set-enabled
+              form-id=>edit-forms
+              id=>delete
+              value=>true
         else
           magix.forms.set-enabled
             form-id=>edit-forms
@@ -338,11 +394,13 @@ magix.forms.create-web-part
             magix.forms.get-value
               form-id=>edit-forms
               id=>name
-            if=>[magix.forms.get-value][value].Value
-              magix.forms.set-enabled
-                form-id=>edit-forms
-                id=>delete
-                value=>false
+            if=>exist
+              lhs=>[magix.forms.get-value][value].Value
+              code
+                magix.forms.set-enabled
+                  form-id=>edit-forms
+                  id=>delete
+                  value=>false
             else
               magix.forms.set-enabled
                 form-id=>edit-forms
@@ -367,9 +425,12 @@ magix.forms.create-web-part
             for-each=>[@][magix.data.load][objects]
               _dt
                 name=>value
-              if=>[/][magix.forms.get-value][value].Value==[.][name].Value
-                set=>[@][..][..][_lst].Value
-                  value=>[.].Name
+              if=>equals
+                lhs=>[/][magix.forms.get-value][value].Value
+                rhs=>[.][name].Value
+                code
+                  set=>[@][..][..][..][_lst].Value
+                    value=>[.].Name
               set=>[@][_dt][0].Name
                 value=>[.].Name
               set=>[@][_dt][0].Value
@@ -415,9 +476,11 @@ magix.forms.create-web-part
                 magix.data.load
                   prototype
                     type=>magix.forms.form
-                if=>![magix.data.load][objects]
-                  magix.viewport.show-message
-                    message=>no such form
+                if=>not-exist
+                  lhs=>[magix.data.load][objects]
+                  code
+                    magix.viewport.show-message
+                      message=>no such form
                 else
                   set=>[@][magix.data.remove][id].Value
                     value=>[/][magix.data.load][objects][0].Name
@@ -480,9 +543,12 @@ magix.forms.create-web-part
             magix.forms.get-value
               form-id=>edit-forms
               id=>widget
-            if=>[magix.forms.get-value][value].Value!=default
-              set=>[select-widget][dna].Value
-                value=>[magix.forms.get-value][value].Value
+            if=>not-equals
+              lhs=>[magix.forms.get-value][value].Value
+              rhs=>default
+              code
+                set=>[/][select-widget][dna].Value
+                  value=>[magix.forms.get-value][value].Value
             select-widget
           items
             default=>select widget ...
@@ -495,11 +561,14 @@ magix.forms.create-web-part
         magix.forms.get-value
           form-id=>edit-forms
           id=>widget
-        set=>[if][remove-widget][dna].Value
+        set=>[if][code][remove-widget][dna].Value
           value=>[magix.forms.get-value][value].Value
-        if=>[magix.forms.get-value][value].Value!=default
-          remove-widget
-          select-widget
+        if=>not-equals
+          lhs=>[magix.forms.get-value][value].Value
+          rhs=>default
+          code
+            remove-widget
+            select-widget
         else
           magix.viewport.show-message
             message=>choose a widget first
@@ -567,11 +636,13 @@ check=>showgrid
       value=>[magix.forms.get-value:1][value].Value
     set=>[else][magix.forms.remove-css][form-id].Value
       value=>[magix.forms.get-value:1][value].Value
-    if=>[magix.forms.get-value][value].Value
-      magix.forms.add-css
-        form-id=>preview-form
-        id=>content7
-        css=>showgrid
+    if=>exists
+      lhs=>[magix.forms.get-value][value].Value
+      code
+        magix.forms.add-css
+          form-id=>preview-form
+          id=>content7
+          css=>showgrid
     else
       magix.forms.remove-css
         form-id=>preview-form
