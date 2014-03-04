@@ -222,8 +222,10 @@ magix.forms.create-web-part
         magix.forms.has-more-data
           form-id=>file-explorer
           id=>uploader
-        if=>![magix.forms.has-more-data][value].Value
-          execute-file=>system42/admin/file-browser.hl
+        if=>not-exist
+          lhs=>[magix.forms.has-more-data][value].Value
+          code
+            execute-file=>system42/admin/file-browser.hl
 
 le-browser.hl
 

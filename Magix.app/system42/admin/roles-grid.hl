@@ -96,18 +96,23 @@ magix.forms.create-web-part
             magix.forms.get-value
               form-id=>roles-grid
               id=>nName
-            if=>![magix.forms.get-value][value].Value
-              magix.viewport.show-message
-                message=>you must give your role a name
+            if=>not-exist
+              lhs=>[magix.forms.get-value][value].Value
+              code
+                magix.viewport.show-message
+                  message=>you must give your role a name
             else
               set=>[@][magix.data.load][prototype][name].Value
                 value=>[magix.forms.get-value][value].Value
               magix.data.load
                 prototype
                   type=>magix.core.role
-              if=>[@][magix.data.load][objects].Count>0
-                magix.viewport.show-message
-                  message=>role exists from before
+              if=>more-then
+                lhs=>[@][magix.data.load][objects].Count
+                rhs=>0
+                code
+                  magix.viewport.show-message
+                    message=>role exists from before
               else
                 set=>[@][magix.data.save][value][name].Value
                   value=>[magix.forms.get-value][value].Value

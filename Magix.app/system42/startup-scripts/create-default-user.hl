@@ -3,7 +3,6 @@
 inspect=>@"creates the default user 
 in the system"
 
-
 magix.data.count
   prototype
     type=>magix.core.user

@@ -24,7 +24,7 @@ text-box=>txt1
     magix.viewport.clear-controls
       container=>content6
     if=>equals
-	  lhs=>[magix.forms.get-value][value].Value
+      lhs=>[magix.forms.get-value][value].Value
       rhs=>howdy world
       code
         _success
