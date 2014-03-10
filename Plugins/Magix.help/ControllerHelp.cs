@@ -57,7 +57,7 @@ namespace Magix.help
 
 			tmp["form-id"].Value = "help-navigation";
 			tmp["container"].Value = "content1";
-			tmp["css"].Value = "span-19 last";
+			tmp["css"].Value = "span-17 last";
 			tmp["mml"].Value = @"
 <div class=""span-15 left-4 last bottom-1 btn-group"">
 {{
@@ -94,7 +94,7 @@ button=>next
 
 			tmp["form-id"].Value = "help";
 			tmp["container"].Value = "content2";
-			tmp["css"].Value = "span-19 last help-system";
+			tmp["css"].Value = "span-17 last help-system";
 
 			using (TextReader reader = File.OpenText(Page.Server.MapPath("system42/admin/help/index.mml")))
 			{

@@ -188,7 +188,7 @@ not thread safe";
 				}
 			}
 
-            (Ip(e.Params)["_ip"].Value as Node).Add(retVal); /*error here ... doesn't list controls of panels ...*/
+            (e.Params["_ip"].Value as Node).Add(retVal); /*error here ... doesn't list controls of panels ...*/
 		}
 
 		private void GetWidget(Node widgetNode, Node output)
@@ -236,8 +236,6 @@ not thread safe";
 			}
 
             Node ip = Ip(e.Params);
-            if (Ip(e.Params).Contains("_ip"))
-                ip = Ip(e.Params)["_ip"].Value as Node;
 
 			if (!ip.Contains("widget"))
 				throw new ArgumentException("you need a [widget] for add-widget");
@@ -497,7 +495,7 @@ raises the magix.ide.widget-selected active event when done.&nbsp;&nbsp;not thre
 				return;
 			}
 
-			Node ip = e.Params;
+			Node ip = Ip(e.Params);
 
 			if (!ip.Contains("dna"))
 				SelectedWidgetDna = null;
@@ -532,7 +530,7 @@ not thread safe";
 				return;
 			}
 
-			Node ip = e.Params;
+			Node ip = Ip(e.Params);
 
 			if (!string.IsNullOrEmpty(SelectedWidgetDna))
 			{

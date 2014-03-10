@@ -1,6 +1,6 @@
 
 
-<div class="span-5">
+<div class="span-5 start-button-wrapper">
 {{
 link-button=>desktop
   css=>start-button

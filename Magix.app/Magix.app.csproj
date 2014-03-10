@@ -62,6 +62,7 @@
     <Content Include="media\bootstrap\css\bootstrap-responsive.min.css" />
     <Content Include="media\bootstrap\img\glyphicons-halflings.png" />
     <Content Include="media\bootstrap\img\glyphicons-halflings-white.png" />
+    <Content Include="media\grid\background.png" />
     <Content Include="media\images\magix-logo.png" />
     <Content Include="media\images\magix-logo-small.png" />
     <Content Include="media\images\magix-logo-tiny.png" />
@@ -136,7 +137,9 @@
     </VisualStudio>
   </ProjectExtensions>
   <ItemGroup>
-    <EmbeddedResource Include="web.config" />
+    <EmbeddedResource Include="web.config">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="system42\public\index-header.mml" />
   </ItemGroup>
   <ItemGroup>
@@ -220,38 +223,6 @@
       <Project>{eae2f2ae-0098-44f1-8b3d-1887266e94cf}</Project>
       <Name>Magix.xml</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Tests\Magix.code.tests\Magix.code.tests.csproj">
-      <Project>{7825cf11-a8cb-4788-8a5c-c2e064f063de}</Project>
-      <Name>Magix.code.tests</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Tests\Magix.data.tests\Magix.data.tests.csproj">
-      <Project>{a81c3236-dd06-4315-ae67-6b0eb833526f}</Project>
-      <Name>Magix.data.tests</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Tests\Magix.events.tests\Magix.events.tests.csproj">
-      <Project>{b07d7cf9-5c0c-47a1-bd42-ab346b5761f2}</Project>
-      <Name>Magix.events.tests</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Tests\Magix.execute.tests\Magix.execute.tests.csproj">
-      <Project>{eb41cee7-b2a5-4a82-8ae6-1cbeabea7438}</Project>
-      <Name>Magix.execute.tests</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Tests\Magix.log.tests\Magix.log.tests.csproj">
-      <Project>{30e34a65-909f-40a6-b366-0158426a4de2}</Project>
-      <Name>Magix.log.tests</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Tests\Magix.remoting.tests\Magix.remoting.tests.csproj">
-      <Project>{8e639edc-059d-4bb6-b905-e3611aac2e24}</Project>
-      <Name>Magix.remoting.tests</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Tests\Magix.threading.tests\Magix.threading.tests.csproj">
-      <Project>{e7b4fc0b-2e5d-4cc0-875d-f5a6afaefd5f}</Project>
-      <Name>Magix.threading.tests</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Tests\Magix.viewport.tests\Magix.viewport.tests.csproj">
-      <Project>{8cabf553-5046-4e53-8918-57652c25a5c7}</Project>
-      <Name>Magix.viewport.tests</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="media\xing-wysihtml5\LICENSE" />
@@ -261,7 +232,6 @@
     <None Include="system42\startup-scripts\event-magix-viewport-show-message-if-help-mode.hl" />
     <None Include="system42\startup-scripts\events-create-desktop-shortcuts.hl" />
     <None Include="system42\startup-scripts\event-server-discovery.hl" />
-    <None Include="system42\startup-scripts\test-execute-paths.hl" />
     <None Include="system42\pages\run-page.hl" />
     <None Include="system42\misc\settings-initialize.hl" />
     <None Include="system42\admin\admin-settings.mml" />
@@ -281,24 +251,16 @@
     <None Include="system42\admin\tools\magix-markup-editor.hl" />
     <None Include="system42\admin\forms\edit-forms.hl" />
     <None Include="system42\admin\forms\edit-property.hl" />
-    <None Include="system42\admin\desktop\desktop.mml" />
     <None Include="system42\admin\desktop\menu.mml" />
     <None Include="system42\admin\desktop\show-desktop.hl" />
-    <None Include="system42\startup-scripts\test-files.hl" />
     <None Include="system42\admin\test-files\test-input-pars.hl" />
-    <None Include="system42\startup-scripts\test-events.hl" />
     <None Include="system42\startup-scripts\magix-admin.hl" />
-    <None Include="system42\startup-scripts\test-run-script.hl" />
     <None Include="system42\startup-scripts\create-default-web-page.hl" />
     <None Include="system42\startup-scripts\create-default-user.hl" />
     <None Include="system42\startup-scripts\create-default-roles.hl" />
-    <None Include="system42\startup-scripts\test-session.hl" />
-    <None Include="system42\startup-scripts\test-viewstate.hl" />
-    <None Include="system42\startup-scripts\test-web-parts.hl" />
     <None Include="system42\admin\app-wizard\app-wizard.hl" />
     <None Include="system42\admin\app-wizard\wizards\crud-app.hl" />
     <None Include="system42\admin\app-wizard\new-app.hl" />
-    <None Include="system42\startup-scripts\test-if-logic.hl" />
     <None Include="system42\admin\help\index.mml" />
     <None Include="system42\admin\help\active-events\index.mml" />
     <None Include="system42\admin\help\active-events\hello-world-csharp.mml" />

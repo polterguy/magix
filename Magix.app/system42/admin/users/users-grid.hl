@@ -57,7 +57,7 @@ set=>[magix.forms.create-web-part][controls][panel:2][controls][label][text].Val
 
 _dt
   panel
-    css=>span-19 hover-shadow relative
+    css=>span-17 hover-shadow relative
     controls
       label
         css=>span-5
@@ -107,7 +107,7 @@ for-each=>[magix.data.load][objects]
 magix.forms.create-web-part
   form-id=>users-grid
   container=>content1
-  css=>span-19 last
+  css=>span-17 last
   controls
     label=>header
       css=>span-13 last left-6
@@ -141,10 +141,10 @@ magix.forms.create-web-part
           tag=>label
           tip=>delete user
     panel=>userGrdWrp
-      css=>span-19 light-green
+      css=>span-17 light-green
       controls
     panel=>pagerWrp
-      css=>span-19
+      css=>span-17
       controls
         link-button=>previous
           text=>&lt;&lt;

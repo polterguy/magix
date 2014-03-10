@@ -27,12 +27,12 @@
 		runat="server"
 		ID="exeWrp"
 		DefaultWidget="run"
-		CssClass="btn-group span-19 last">
+		CssClass="btn-group span-17 last">
 		<mux:TextBox
 			id="activeEvent"
 			runat="server"
 			PlaceHolder="active event ..."
-			CssClass="span-13 monospaced input-large" />
+			CssClass="span-11 monospaced input-large" />
 		<mux:Button
 			runat="server"
 			id="run"

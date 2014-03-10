@@ -37,11 +37,7 @@ else
             container=>menu
             form-id=>admin-menu
             css=>span-5
-          magix.forms.load-mml-web-part
-            file=>system42/admin/desktop/desktop.mml
-            container=>content1
-            form-id=>desktop-admin
-            css=>span-19 last
+          execute-file=>system42/admin/desktop/show-desktop.hl
       else
         execute-file=>system42/pages/run-page.hl
   else

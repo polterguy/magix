@@ -131,14 +131,14 @@ else
 magix.forms.create-web-part
   form-id=>server-log
   container=>content2
-  css=>span-19 last
+  css=>span-17 last
   controls
     label=>header
       css=>span-13 left-6 last
       text=>server log
       tag=>h2
     panel=>items
-      css=>span-19 last
+      css=>span-17 last
       controls
     panel=>pagerWrp
       css=>span-19

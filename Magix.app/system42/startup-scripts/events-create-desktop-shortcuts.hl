@@ -155,7 +155,7 @@ of your system"
             file=>system42/admin/admin-settings.mml
             container=>content1
             form-id=>admin-settings
-            css=>span-19 last
+            css=>span-17 last
           magix.viewport.show-message-if-help-mode
             message=>@"view and change settings of 
 your system"
@@ -203,7 +203,7 @@ if loaded.&nbsp;&nbsp; see turn on tracer"
         category=>tools
         code
           magix.admin.open-event-executor
-            css=>span-19 last
+            css=>span-17 last
           magix.viewport.clear-controls
             container=>content2
           magix.viewport.clear-controls
