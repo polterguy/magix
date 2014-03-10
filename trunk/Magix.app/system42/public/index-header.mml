@@ -66,7 +66,7 @@ lambda=>header
   oncreatecontrols
     _lbl=>headerCtrl
       css=>span-14 top-2 bottom-3
-      text=>magix illuminate - release lucifer
+      text=>magix illuminate - phosphobius
       tag=>h1
     magix.web.get-config-setting=>Magix.Core.Portal-Name
     set=>[_lbl][text].Value

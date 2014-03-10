@@ -156,8 +156,8 @@ magix.forms.create-web-part
                 set=>[@][..][..][_type].Value
                   value=>link-button
             else-if=>equals
-              lhs=>[.].Value
-              rhs=>hyper lisp code
+              lhs=>hyper lisp code
+              rhs=>[.].Value
               code
                 set=>[@][..][..][_type].Value
                   value=>link-button
@@ -169,8 +169,8 @@ magix.forms.create-web-part
                   set=>[@][..][..][..][_type].Value
                     value=>check
               else-if=>equals
-                lhs=>[.].Value
-                rhs=>false
+                lhs=>false
+                rhs=>[.].Value
                 code
                   set=>[@][..][..][..][_type].Value
                     value=>check
@@ -211,8 +211,8 @@ magix.forms.create-web-part
                 set=>[@][..][..][..][magix.forms.create-web-part][controls][panel][controls][_link-button].Name
                   value=>link-button
             else-if=>equals
-              lhs=>[@][_type].Value
-              rhs=>text-box
+              lhs=>text-box
+              rhs=>[@][_type].Value
               code
                 set=>[/][_text-box].Value
                   value=>[.].Name
@@ -232,22 +232,22 @@ magix.forms.create-web-part
                 set=>[@][..][..][..][magix.forms.create-web-part][controls][panel][controls][_text-box].Name
                   value=>text-box
             else-if=>equals
-              lhs=>[@][_type].Value
-              rhs=>check
+              lhs=>check
+              rhs=>[@][_type].Value
               code
                 set=>[/][_check].Value
                   value=>[.].Name
                 set=>[/][_check][oncheckedchanged][magix.forms.get-value][id].Value
                   value=>[.].Name
                 if=>equals
-                  lhs=>[/][get-selected-widget][value][widget][properties][[/][_check].Value].Value
-                  rhs=>false
+                  lhs=>false
+                  rhs=>[/][get-selected-widget][value][widget][properties][[/][_check].Value].Value
                   code
                     set=>[/][_check][checked].Value
                       value=>false
                 else-if=>equals
-                  lhs=>[@][..][..][..][_data][0][properties][[/][_check].Value].Value
-                  rhs=>true
+                  lhs=>true
+                  rhs=>[@][..][..][..][_data][0][properties][[/][_check].Value].Value
                   code
                     set=>[/][_check][checked].Value
                       value=>true
@@ -291,8 +291,6 @@ magix.forms.create-web-part
           value=>false
         magix.viewport.clear-controls
           container=>content4
-      debug
-      stop
 
     magix.ide.surface-changed
       list-widgets
@@ -367,8 +365,8 @@ magix.forms.create-web-part
           id=>name
         magix.ide.active-control-changed
         if=>not-equals
-          lhs=>[magix.forms.get-value][value].Value
-          rhs=>default
+          lhs=>default
+          rhs=>[magix.forms.get-value][value].Value
           code
             magix.forms.set-enabled
               form-id=>edit-forms

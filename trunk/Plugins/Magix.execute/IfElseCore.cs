@@ -177,4 +177,3 @@ has returned true.&nbsp;&nbsp;thread safe";
         }
 	}
 }
-

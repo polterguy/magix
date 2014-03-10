@@ -79,12 +79,4 @@ magix.forms.create-web-part
   container=>content2
   css=>span-19 last bottom-5 desktop-surface
 
-magix.forms.effect
-  form-id=>desktop-surface
-  id=>content2
-  type=>fade-in
-  time=>500
-  joined
-    e0
-      type=>roll-down
 

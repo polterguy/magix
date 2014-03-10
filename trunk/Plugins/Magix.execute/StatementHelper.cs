@@ -168,15 +168,27 @@ namespace Magix.execute
             switch (objLhsValue.GetType().ToString())
             {
                 case "System.Int32":
+                    int tmpVal;
+                    if (!int.TryParse(objRhsValue.ToString(), out tmpVal))
+                        return (objLhsValue.ToString()).CompareTo(objRhsValue.ToString());
                     return ((int)objLhsValue).CompareTo(Convert.ToInt32(objRhsValue));
                 case "System.Decimal":
+                    decimal tmpVal2;
+                    if (!decimal.TryParse(objRhsValue.ToString(), NumberStyles.None, CultureInfo.InvariantCulture, out tmpVal2))
+                        return (objLhsValue.ToString()).CompareTo(objRhsValue.ToString());
                     return ((decimal)objLhsValue).CompareTo(Convert.ToDecimal(objRhsValue));
                 case "System.DateTime":
+                    DateTime tmpVal3;
+                    if (!DateTime.TryParseExact(objRhsValue.ToString(), "yyyy.MM.dd hh:MM:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out tmpVal3))
+                        return (objLhsValue.ToString()).CompareTo(objRhsValue.ToString());
                     return ((DateTime)objLhsValue).CompareTo(objRhsValue);
                 case "System.Boolean":
+                    bool tmpVal4;
+                    if (!bool.TryParse(objRhsValue.ToString(), out tmpVal4))
+                        return (objLhsValue.ToString()).CompareTo(objRhsValue.ToString());
                     return ((bool)objLhsValue).CompareTo(objRhsValue);
                 default:
-                    return (objLhsValue.ToString()).CompareTo(objRhsValue);
+                    return (objLhsValue.ToString()).CompareTo(objRhsValue.ToString());
             }
         }
     }

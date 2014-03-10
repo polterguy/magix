@@ -73,7 +73,7 @@ namespace Magix.admin
 					tmp);
 
 				activeEvent.Attributes.Add(new AttributeControl.Attribute("data-provide", "typeahead"));
-				activeEvent.Attributes.Add(new AttributeControl.Attribute("data-items", "42"));
+				activeEvent.Attributes.Add(new AttributeControl.Attribute("data-items", "12"));
 				activeEvent.Attributes.Add(new AttributeControl.Attribute("data-source", GetDataSource()));
 			}
 		}
@@ -163,7 +163,17 @@ if=>[Data].Value==thomas
 
 		protected void move_Click(object sender, EventArgs e)
 		{
-			txtIn.Text = txtOut.Text;
+            // Removing "inspect" node
+            Node tmp = new Node();
+            tmp["code"].Value = txtOut.Text;
+            RaiseEvent(
+                "magix.code.code-2-node",
+                tmp);
+            (tmp["json"].Value as Node)["inspect"].UnTie();
+            RaiseEvent(
+                "magix.code.node-2-code",
+                tmp);
+			txtIn.Text = tmp["code"].Get<string>();
 		}
 
 		protected void run_Click(object sender, EventArgs e)
