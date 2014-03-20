@@ -222,8 +222,8 @@ input[type=button]:disabled
     margin-top:19px;
 	display:block;
 	background:transparent url(../grid/start-button.png) no-repeat -15px -15px;
-	-webkit-box-shadow: 3px 3px 12px rgba(0, 0, 0, .7);
-	-webkit-border-radius:84px;
+	box-shadow: 3px 3px 12px rgba(0, 0, 0, .7);
+	border-radius:84px;
 	-webkit-animation-name: start-button-animation-off;
 	-webkit-animation-duration: .5s;
 	-webkit-animation-direction: normal;
@@ -241,21 +241,8 @@ input[type=button]:disabled
 .desktop-widget
 {
 	display:block;
-	-moz-border-radius:5px;
-	-webkit-border-radius:5px;
-	-o-border-radius:5px;
-	-ms-border-radius:5px;
 	border-radius:5px;
-	-webkit-box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
-	-moz-box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
-	-o-box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
-	-ms-box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
 	box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
-	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgba(240, 240, 240, .1)), to(rgba(210, 210, 210, .1)));
-	background-image: -moz-webkit-gradient(rgba(250, 250, 250, .1) 0%, rgba(210, 210, 210, .1) 100%);
-	background-image: -moz-linear-gradient(rgba(250, 250, 250, .1) 0%, rgba(210, 210, 210, .1) 100%);
-	background-image: -o-linear-gradient(rgba(250, 250, 250, .1) 0%, rgba(210, 210, 210, .1) 100%);
-	background-image: -ms-linear-gradient(rgba(250, 250, 250, .1) 0%, rgba(210, 210, 210, .1) 100%);
 	background-image: linear-gradient(rgba(250, 250, 250, .1) 0%, rgba(210, 210, 210, .1) 100%);
 	padding:18px 40px;
 }

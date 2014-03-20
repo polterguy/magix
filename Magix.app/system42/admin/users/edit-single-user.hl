@@ -175,6 +175,10 @@ magix.forms.create-web-part
               code
                 magix.viewport.show-message
                   message=>user belongs to role already ...
+                magix.forms.set-value
+                  form-id=>edit-user
+                  id=>ddlRoles
+                  value=>_default
             else
               set=>[@][magix.data.save][id].Value
                 value=>[magix.data.load][objects][0].Name

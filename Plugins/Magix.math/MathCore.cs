@@ -12,7 +12,7 @@ using System.Globalization;
 namespace Magix.math
 {
 	/**
-	 * contains the Magix.math main active events
+	 * contains the magix.math main active events
 	 */
 	public class MathCore : ActiveController
 	{

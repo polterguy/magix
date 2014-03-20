@@ -7,7 +7,6 @@ then depending upon if it is a user logged in, belinging to
 an admin role, the desktop will be loaded, or the if the user is 
 not an admin, then the run-page.hl script will be executed"
 
-
 magix.execute
   magix.data.load
     id=>magix.admin.settings.default-front-end-css-file

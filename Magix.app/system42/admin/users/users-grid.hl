@@ -28,22 +28,39 @@ if=>equals
   rhs=>0
   code
     set=>[magix.forms.create-web-part][controls][panel:2][controls][link-button:0][enabled].Value
-      value=>false
+      value=(bool)>False
 else
+  using=>magix.math
+    subtract
+      =>[magix.data.load][start].Value
+      =>10
+  using=>magix.math
+    subtract
+      =>[magix.data.load][end].Value
+      =>10
   set=>[magix.forms.create-web-part][controls][panel:2][controls][link-button:0][onclick][execute-file][start].Value
-    value=>[magix.data.load][start].Value-10
+    value=>[@][using:0][subtract].Value
   set=>[magix.forms.create-web-part][controls][panel:2][controls][link-button:0][onclick][execute-file][end].Value
-    value=>[magix.data.load][end].Value-10
-if=>exist
-  lhs=>[magix.data.load][end].Value>=[magix.data.count][count].Value
+    value=>[@][using:1][subtract].Value
+if=>more-then-equals
+  lhs=>[magix.data.load][end].Value
+  rhs=>[magix.data.count][count].Value
   code
     set=>[magix.forms.create-web-part][controls][panel:2][controls][link-button:1][enabled].Value
-      value=>false
+      value=(bool)>False
 else
+  using=>magix.math
+    add
+      =>[magix.data.load][start].Value
+      =>10
+  using=>magix.math
+    add
+      =>[magix.data.load][end].Value
+      =>10
   set=>[magix.forms.create-web-part][controls][panel:2][controls][link-button:1][onclick][execute-file][start].Value
-    value=>[magix.data.load][start].Value+10
+    value=>[@][using:0][add].Value
   set=>[magix.forms.create-web-part][controls][panel:2][controls][link-button:1][onclick][execute-file][end].Value
-    value=>[magix.data.load][end].Value+10
+    value=>[@][using:1][add].Value
 if=>exist
   lhs=>[magix.data.load][end].Value>[magix.data.count][count].Value
   code
@@ -64,9 +81,9 @@ _dt
       label
         css=>span-5
       label
-        css=>span-5
+        css=>span-4
       link-button
-        css=>span-3
+        css=>span-2
         text=>edit
         onclick
           execute-file=>system42/admin/users/edit-single-user.hl
@@ -126,12 +143,12 @@ magix.forms.create-web-part
           tag=>label
           tip=>username of user
         label=>headPwd
-          css=>span-5
+          css=>span-4
           text=>password
           tag=>label
           tip=>password of user
         label=>headEdit
-          css=>span-3
+          css=>span-2
           text=>edit
           tag=>label
           tip=>edit user
@@ -149,12 +166,16 @@ magix.forms.create-web-part
         link-button=>previous
           text=>&lt;&lt;
           css=>span-1 left-7
+          onclick
+            execute-file=>system42/admin/users/users-grid.hl
         label=>count
           css=>span-2
           text=>54
         link-button=>next
           text=>&gt;&gt;
           css=>span-1
+          onclick
+            execute-file=>system42/admin/users/users-grid.hl
     panel=>newUserWrp
       css=>span-19 top-1
       default=>addBtn
