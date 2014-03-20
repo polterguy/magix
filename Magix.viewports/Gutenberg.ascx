@@ -6,8 +6,6 @@
     AutoEventWireup="true" 
     Inherits="Magix.viewports.Gutenberg" %>
 
-<link href="media/grid/main.css" rel="stylesheet" media="screen" />
-
 <mux:Panel
     runat="server"
 	CssClass="container"

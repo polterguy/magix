@@ -2,9 +2,14 @@
 
 
 inspect=>@"creates the default settings for your portal"
-magix.data.save
+magix.data.load
   id=>magix.admin.settings.default-front-end-css-file
-  value
-    file=>media\front-end\default.css
+if=>not-exist
+  lhs=>[magix.data.load][objects]
+  code
+    magix.data.save
+      id=>magix.admin.settings.default-front-end-css-file
+      value
+        file=>media\front-end\default.css
 
 

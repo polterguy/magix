@@ -256,135 +256,6 @@ textarea.min-height-30,.min-height-30 {min-height:576px;}
 
 html, body, form {width:100%;min-height:100%;}
 
-.container
-{
-    margin-top:36px;
-    padding-left:40px;
-    padding-right:40px;
-	-webkit-border-radius:15px;
-	-webkit-box-shadow: 0px 0px 54px rgba(255, 255, 255, 1);
-	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgba(250, 250, 250, 1)), to(rgba(200, 200, 200, 1)));
-	background-image: -moz-webkit-gradient(rgba(250, 250, 250, 1) 0%, rgba(200, 200, 200, 1) 100%);
-	background-image: -moz-linear-gradient(rgba(250, 250, 250, 1) 0%, rgba(200, 200, 200, 1) 100%);
-	background-image: -o-linear-gradient(rgba(250, 250, 250, 1) 0%, rgba(200, 200, 200, 1) 100%);
-	background-image: -ms-linear-gradient(rgba(250, 250, 250, 1) 0%, rgba(200, 200, 200, 1) 100%);
-	background-image: linear-gradient(rgba(250, 250, 250, 1) 0%, rgba(200, 200, 200, 1) 100%);
-}
-
-.boxed
-{
-	display:block;
-	-moz-border-radius:5px;
-	-webkit-border-radius:5px;
-	-o-border-radius:5px;
-	-ms-border-radius:5px;
-	border-radius:5px;
-	-webkit-box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
-	-moz-box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
-	-o-box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
-	-ms-box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
-	box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
-	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgba(240, 240, 240, 1)), to(rgba(210, 210, 210, 1)));
-	background-image: -moz-webkit-gradient(rgba(250, 250, 250, 1) 0%, rgba(210, 210, 210, 1) 100%);
-	background-image: -moz-linear-gradient(rgba(250, 250, 250, 1) 0%, rgba(210, 210, 210, 1) 100%);
-	background-image: -o-linear-gradient(rgba(250, 250, 250, 1) 0%, rgba(210, 210, 210, 1) 100%);
-	background-image: -ms-linear-gradient(rgba(250, 250, 250, 1) 0%, rgba(210, 210, 210, 1) 100%);
-	background-image: linear-gradient(rgba(250, 250, 250, 1) 0%, rgba(210, 210, 210, 1) 100%);
-}
-
-.boxed-light-green
-{
-	display:block;
-	-moz-border-radius:5px;
-	-webkit-border-radius:5px;
-	-o-border-radius:5px;
-	-ms-border-radius:5px;
-	border-radius:5px;
-	-webkit-box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
-	-moz-box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
-	-o-box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
-	-ms-box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
-	box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
-	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgba(200, 240, 200, .5)), to(rgba(180, 210, 180, -5)));
-	background-image: -moz-webkit-gradient(rgba(200, 240, 200, .5) 0%, rgba(180, 210, 180, .5) 100%);
-	background-image: -moz-linear-gradient(rgba(200, 240, 200, .5) 0%, rgba(180, 210, 180, .5) 100%);
-	background-image: -o-linear-gradient(rgba(200, 240, 200, .5) 0%, rgba(180, 210, 180, .5) 100%);
-	background-image: -ms-linear-gradient(rgba(200, 240, 200, .5) 0%, rgba(180, 210, 180, .5) 100%);
-	background-image: linear-gradient(rgba(200, 240, 200, .5) 0%, rgba(180, 210, 180, .5) 100%);
-}
-
-.boxed-light-red
-{
-	display:block;
-	-moz-border-radius:5px;
-	-webkit-border-radius:5px;
-	-o-border-radius:5px;
-	-ms-border-radius:5px;
-	border-radius:5px;
-	-webkit-box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
-	-moz-box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
-	-o-box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
-	-ms-box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
-	box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
-	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgba(240, 200, 200, .5)), to(rgba(210, 180, 180, -5)));
-	background-image: -moz-webkit-gradient(rgba(240, 200, 200, .5) 0%, rgba(210, 180, 180, .5) 100%);
-	background-image: -moz-linear-gradient(rgba(240, 200, 200, .5) 0%, rgba(210, 180, 180, .5) 100%);
-	background-image: -o-linear-gradient(rgba(240, 200, 200, .5) 0%, rgba(210, 180, 180, .5) 100%);
-	background-image: -ms-linear-gradient(rgba(240, 200, 200, .5) 0%, rgba(210, 180, 180, .5) 100%);
-	background-image: linear-gradient(rgba(240, 200, 200, .5) 0%, rgba(210, 180, 180, .5) 100%);
-}
-
-input[type=button]
-{
-	display:block;
-	-moz-border-radius:5px;
-	-webkit-border-radius:5px;
-	-o-border-radius:5px;
-	-ms-border-radius:5px;
-	border-radius:5px;
-	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgba(240, 240, 240, 1)), to(rgba(210, 210, 210, 1)));
-	background-image: -moz-webkit-gradient(rgba(250, 250, 250, 1) 0%, rgba(210, 210, 210, 1) 100%);
-	background-image: -moz-linear-gradient(rgba(250, 250, 250, 1) 0%, rgba(210, 210, 210, 1) 100%);
-	background-image: -o-linear-gradient(rgba(250, 250, 250, 1) 0%, rgba(210, 210, 210, 1) 100%);
-	background-image: -ms-linear-gradient(rgba(250, 250, 250, 1) 0%, rgba(210, 210, 210, 1) 100%);
-	background-image: linear-gradient(rgba(250, 250, 250, 1) 0%, rgba(210, 210, 210, 1) 100%);
-	-moz-transition-property:color;
-	-moz-transition-duration:.2s;
-	-webkit-transition-property:color;
-	-webkit-transition-duration:.2s;
-	-o-transition-property:color;
-	-o-transition-duration:.2s;
-	-ms-transition-property:color;
-	-ms-transition-duration:.2s;
-	transition-property:color;
-	transition-duration:.2s;
-	margin-top:0px;
-	margin-bottom:0px;
-	height:18px;
-}
-
-input[type=button]:hover
-{
-	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgba(240, 240, 240, 1)), to(rgba(180, 180, 180, 1)));
-	background-image: -moz-webkit-gradient(rgba(240, 240, 240, 1) 0%, rgba(180, 180, 180, 1) 100%);
-	background-image: -moz-linear-gradient(rgba(240, 240, 240, 1) 0%, rgba(180, 180, 180, 1) 100%);
-	background-image: -o-linear-gradient(rgba(240, 240, 240, 1) 0%, rgba(180, 180, 180, 1) 100%);
-	background-image: -ms-linear-gradient(rgba(240, 240, 240, 1) 0%, rgba(180, 180, 180, 1) 100%);
-	background-image: linear-gradient(rgba(240, 240, 240, 1) 0%, rgba(180, 180, 180, 1) 100%);
-	color:#00a;
-}
-
-input[type=button]:disabled
-{
-	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgba(240, 240, 240, 1)), to(rgba(180, 180, 180, 1)));
-	background-image: -moz-webkit-gradient(rgba(240, 240, 240, 1) 0%, rgba(180, 180, 180, 1) 100%);
-	background-image: -moz-linear-gradient(rgba(240, 240, 240, 1) 0%, rgba(180, 180, 180, 1) 100%);
-	background-image: -o-linear-gradient(rgba(240, 240, 240, 1) 0%, rgba(180, 180, 180, 1) 100%);
-	background-image: -ms-linear-gradient(rgba(240, 240, 240, 1) 0%, rgba(180, 180, 180, 1) 100%);
-	background-image: linear-gradient(rgba(240, 240, 240, 1) 0%, rgba(180, 180, 180, 1) 100%);
-	color:#aaa;
-}
-
 input[type=button].btn-large
 {
 	height:36px;
@@ -398,72 +269,9 @@ select
 	height:18px;
 }
 
-.hover-shadow
-{
-	background-color:transparent;
-	-moz-transition-property:background-color;
-	-moz-transition-duration:.5s;
-	-webkit-transition-property:background-color;
-	-webkit-transition-duration:.5s;
-	-o-transition-property:background-color;
-	-o-transition-duration:.5s;
-	-ms-transition-property:background-color;
-	-ms-transition-duration:.5s;
-	transition-property:background-color;
-	transition-duration:.5s;
-}
-
-.hover-shadow:hover
-{
-	background-color:rgba(220, 220, 220, 0.2);
-}
-
-.light-green
-{
-	background-color:rgba(220, 255, 220, 0.2);
-}
-
-.light-red
-{
-	background-color:rgba(255, 220, 220, 0.2);
-}
-
 .centered
 {
 	text-align:center;
-}
-
-.info-message
-{
-	position:fixed;
-	top:0;
-	left:0;
-	width:100%;
-	font-size:larger;
-	padding-top:18px;
-	min-height:90px;
-	background-color:rgba(255, 255, 220, 1);
-	z-index:1000;
-	-webkit-box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
-	-moz-box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
-	-o-box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
-	-ms-box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
-	box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
-}
-
-.info-message p
-{
-	width:940px;
-	margin-left:auto;
-	margin-right:auto;
-}
-
-.air-padding
-{
-	padding-left:40px;
-	padding-right:40px;
-	padding-top:18px;
-	padding-bottom:18px;
 }
 
 .hide, input[type=button].hide {display:none;}
@@ -1231,96 +1039,11 @@ textarea.ascii-editor
 	color:Red;
 }
 
-@-webkit-keyframes start-button-animation
-{
- from {
-	-webkit-box-shadow: 3px 3px 12px rgba(0, 0, 0, .7);
-    -webkit-transform: rotateZ(0deg);
- }
- to {
-	-webkit-box-shadow: 0px 0px 54px rgba(255, 216, 0, 1);
-    -webkit-transform: rotateZ(19deg);
- }
-}
-
-@-webkit-keyframes start-button-animation-off
-{
- from {
-	-webkit-box-shadow: 0px 0px 54px rgba(255, 216, 0, 1);
-    -webkit-transform: rotateZ(19deg);
- }
- to {
-	-webkit-box-shadow: 3px 3px 12px rgba(0, 0, 0, .7);
-    -webkit-transform: rotateZ(0deg);
- }
-}
-
-.start-button-wrapper
-{
-	height:190px;
-	display:block;
-}
-
-.start-button
-{
-	height:160px;
-    width:160px;
-    margin-left:19px;
-    margin-top:19px;
-	display:block;
-	background:transparent url(start-button.png) no-repeat -15px -15px;
-	-webkit-box-shadow: 3px 3px 12px rgba(0, 0, 0, .7);
-	-webkit-border-radius:84px;
-	-webkit-animation-name: start-button-animation-off;
-	-webkit-animation-duration: .5s;
-	-webkit-animation-direction: normal;
-}
-
-.start-button:hover
-{
-	-webkit-animation-name: start-button-animation;
-	-webkit-animation-duration: 1s;
-	-webkit-animation-direction: normal;
-	-webkit-box-shadow: 0px 0px 54px rgba(255, 216, 0, 1);
-    -webkit-transform: rotateZ(19deg);
-}
-
-.desktop-widget
-{
-	display:block;
-	-moz-border-radius:5px;
-	-webkit-border-radius:5px;
-	-o-border-radius:5px;
-	-ms-border-radius:5px;
-	border-radius:5px;
-	-webkit-box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
-	-moz-box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
-	-o-box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
-	-ms-box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
-	box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
-	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgba(240, 240, 240, .1)), to(rgba(210, 210, 210, .1)));
-	background-image: -moz-webkit-gradient(rgba(250, 250, 250, .1) 0%, rgba(210, 210, 210, .1) 100%);
-	background-image: -moz-linear-gradient(rgba(250, 250, 250, .1) 0%, rgba(210, 210, 210, .1) 100%);
-	background-image: -o-linear-gradient(rgba(250, 250, 250, .1) 0%, rgba(210, 210, 210, .1) 100%);
-	background-image: -ms-linear-gradient(rgba(250, 250, 250, .1) 0%, rgba(210, 210, 210, .1) 100%);
-	background-image: linear-gradient(rgba(250, 250, 250, .1) 0%, rgba(210, 210, 210, .1) 100%);
-	padding:18px 40px;
-}
-
-.desktop-surface
-{
-}
-
-.desktop-widget-item:hover
-{
-	background-color:rgba(220, 220, 220, .2);
-}
-
 .indent-event-executor
 {
 	z-index:5;
 	position:absolute;
-	top 5px;
+	top:5px;
 	right:5px;
 	width:36px;
 	height:36px;
@@ -1342,7 +1065,7 @@ textarea.ascii-editor
 {
 	z-index:5;
 	position:absolute;
-	top 5px;
+	top:5px;
 	right:41px;
 	width:36px;
 	height:36px;
