@@ -15,8 +15,6 @@ magix.forms.load-mml-web-part
   css=>span-24
 
 
-execute-file=>system42/misc/settings-initialize.hl
-
 magix.web.get=>page
 magix.web.get=>dashboard
 

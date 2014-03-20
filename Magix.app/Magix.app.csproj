@@ -229,11 +229,9 @@
     <None Include="todo.txt" />
     <None Include="system42\index.hl" />
     <None Include="system42\startup.hl" />
-    <None Include="system42\startup-scripts\event-magix-viewport-show-message-if-help-mode.hl" />
     <None Include="system42\startup-scripts\events-create-desktop-shortcuts.hl" />
     <None Include="system42\startup-scripts\event-server-discovery.hl" />
     <None Include="system42\pages\run-page.hl" />
-    <None Include="system42\misc\settings-initialize.hl" />
     <None Include="system42\admin\admin-settings.mml" />
     <None Include="system42\admin\edit-pages.hl" />
     <None Include="system42\admin\file-browser.hl" />

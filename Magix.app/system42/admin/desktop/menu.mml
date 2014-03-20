@@ -20,11 +20,6 @@ link-button=>desktop
     magix.viewport.clear-controls
       container=>content7
     execute-file=>system42/admin/desktop/show-desktop.hl
-    magix.viewport.show-message-if-help-mode
-      message=>@"think of this like your start menu, from here you can accomplish most tasks in magix.&nbsp;&nbsp;
-anytime you wish to access your start menu, you can click the horus-ra button.&nbsp;&nbsp;
-you can turn off these tutorial notifications from the settings page.&nbsp;&nbsp;these tips may be useful
-in the beginning, but probably becomes annoying fast"
 }}
 </div>
 
