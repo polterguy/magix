@@ -47,6 +47,8 @@ for the current scope.&nbsp;&nbsp;thread safe";
             finally
             {
                 e.Params["_namespaces"][e.Params["_namespaces"].Count - 1].UnTie();
+                if (e.Params["_namespaces"].Count == 0)
+                    e.Params["_namespaces"].UnTie();
             }
         }
 
