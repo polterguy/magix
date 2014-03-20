@@ -19,7 +19,7 @@ namespace Magix.execute
         /**
          * using keyword implementation
          */
-        /*[ActiveEvent(Name = "magix.execute.using")]
+        [ActiveEvent(Name = "magix.execute.using")]
         public void magix_execute_using(object sender, ActiveEventArgs e)
         {
             if (ShouldInspect(e.Params))
@@ -40,15 +40,15 @@ for the current scope.&nbsp;&nbsp;thread safe";
 
 			    Node ip = e.Params["_ip"].Value as Node;
                 Node dp = e.Params["_dp"].Value as Node;
+                e.Params["_namespaces"].Add(new Node("item", ip.Get<string>()));
 
-                namespaces.Add(ip.Get<string>());
                 Execute(ip, dp, e.Params);
             }
             finally
             {
-                namespaces.RemoveAt(namespaces.Count - 1);
+                e.Params["_namespaces"][e.Params["_namespaces"].Count - 1].UnTie();
             }
-        }*/
+        }
 
 		/**
 		 * hyper lisp implementation
@@ -181,8 +181,12 @@ thread safe";
 				{
 					object oldIp = state.Contains("_ip") ? state["_ip"].Value : null;
 
-					// this is a keyword, and have access to the entire tree, and also needs to have magix.execute. prepended in front of it before being raised
-					activeEvent = "magix.execute." + activeEvent;
+					// this is a keyword, and have access to the entire tree, and also needs to have magix.execute. 
+                    // prepended in front of it before being raised
+                    if (state.Contains("_namespaces") && state["_namespaces"].Count > 0)
+                        activeEvent = state["_namespaces"][state["_namespaces"].Count - 1].Get<string>() + "." + activeEvent;
+                    else
+    					activeEvent = "magix.execute." + activeEvent;
 
 					state["_ip"].Value = idx;
 

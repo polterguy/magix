@@ -39,22 +39,52 @@ body
 	background-image: linear-gradient(rgba(240, 200, 200, .5) 0%, rgba(210, 180, 180, .5) 100%);
 }
 
+@-webkit-keyframes button-animation-on
+{
+ from {
+	box-shadow: 4px 4px 3px rgba(0, 0, 0, 0.8);
+	color:#a61;
+ }
+ to {
+	box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.5);
+	color:#00f;
+ }
+}
+
+@-webkit-keyframes button-animation-off
+{
+ from {
+	box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.5);
+	color:#00f;
+ }
+ to {
+	box-shadow: 4px 4px 3px rgba(0, 0, 0, 0.8);
+	color:#a61;
+ }
+}
+
 input[type=button]
 {
 	display:block;
 	border-radius:5px;
 	background-image: linear-gradient(rgba(250, 250, 250, 1) 0%, rgba(210, 210, 210, 1) 100%);
-	transition-property:color;
-	transition-duration:.2s;
+	box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.5);
 	margin-top:0px;
 	margin-bottom:0px;
 	height:18px;
+	color:#00f;
+	-webkit-animation-name: button-animation-on;
+	-webkit-animation-duration: .5s;
+	-webkit-animation-direction: normal;
 }
 
 input[type=button]:hover
 {
-	background-image: linear-gradient(rgba(240, 240, 240, 1) 0%, rgba(180, 180, 180, 1) 100%);
-	color:#00a;
+	box-shadow: 4px 4px 3px rgba(0, 0, 0, 0.8);
+	color:#a61;
+	-webkit-animation-name: button-animation-off;
+	-webkit-animation-duration: .5s;
+	-webkit-animation-direction: normal;
 }
 
 input[type=button]:disabled
@@ -152,12 +182,12 @@ input[type=button]:disabled
     margin-top:19px;
 	display:block;
 	background:transparent url(../grid/start-button.png) no-repeat -15px -15px;
-	box-shadow: 4px 4px 5px rgba(0, 0, 0, 1);
 	border-radius:84px;
     -webkit-transform: scale(1, 1) rotateZ(0deg);
 	-webkit-animation-name: start-button-animation-off;
 	-webkit-animation-duration: .5s;
 	-webkit-animation-direction: normal;
+	box-shadow: 4px 4px 5px rgba(0, 0, 0, 1);
 }
 
 .start-button:hover
@@ -169,34 +199,106 @@ input[type=button]:disabled
 	box-shadow: 10px 10px 10px rgba(0, 0, 0, 1);
 }
 
+@-webkit-keyframes desktop-widget-on
+{
+ from {
+	box-shadow: 4px 4px 5px rgba(0, 0, 0, 1);
+	background-image: linear-gradient(rgba(255, 255, 230, 1) 0%, rgba(210, 210, 180, 1) 100%);
+ }
+ to {
+	box-shadow: 10px 10px 10px rgba(0, 0, 0, 1);
+	background-image: linear-gradient(rgba(255, 255, 250, 1) 0%, rgba(210, 210, 210, 1) 100%);
+ }
+}
+
+@-webkit-keyframes desktop-widget-off
+{
+ from {
+	box-shadow: 10px 10px 10px rgba(0, 0, 0, 1);
+	background-image: linear-gradient(rgba(255, 255, 250, 1) 0%, rgba(210, 210, 210, 1) 100%);
+ }
+ to {
+	box-shadow: 4px 4px 5px rgba(0, 0, 0, 1);
+	background-image: linear-gradient(rgba(255, 255, 230, 1) 0%, rgba(210, 210, 180, 1) 100%);
+ }
+}
+
 .desktop-widget
 {
 	display:block;
-	-moz-border-radius:5px;
-	-webkit-border-radius:5px;
-	-o-border-radius:5px;
-	-ms-border-radius:5px;
 	border-radius:5px;
-	-webkit-box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
-	-moz-box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
-	-o-box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
-	-ms-box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
 	box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
-	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgba(240, 240, 240, .1)), to(rgba(210, 210, 210, .1)));
-	background-image: -moz-webkit-gradient(rgba(250, 250, 250, .1) 0%, rgba(210, 210, 210, .1) 100%);
-	background-image: -moz-linear-gradient(rgba(250, 250, 250, .1) 0%, rgba(210, 210, 210, .1) 100%);
-	background-image: -o-linear-gradient(rgba(250, 250, 250, .1) 0%, rgba(210, 210, 210, .1) 100%);
-	background-image: -ms-linear-gradient(rgba(250, 250, 250, .1) 0%, rgba(210, 210, 210, .1) 100%);
-	background-image: linear-gradient(rgba(250, 250, 250, .1) 0%, rgba(210, 210, 210, .1) 100%);
+	background-image: linear-gradient(rgba(255, 255, 230, 1) 0%, rgba(210, 210, 180, 1) 100%);
 	padding:18px 40px;
+	-webkit-animation-name: desktop-widget-off;
+	-webkit-animation-duration: .5s;
+	-webkit-animation-direction: normal;
+	box-shadow: 4px 4px 5px rgba(0, 0, 0, 1);
+}
+
+.desktop-widget:hover
+{
+	display:block;
+	border-radius:5px;
+	box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
+	background-image: linear-gradient(rgba(255, 255, 250, 1) 0%, rgba(210, 210, 210, 1) 100%);
+	padding:18px 40px;
+	-webkit-animation-name: desktop-widget-on;
+	-webkit-animation-duration: .5s;
+	-webkit-animation-direction: normal;
+	box-shadow: 10px 10px 10px rgba(0, 0, 0, 1);
 }
 
 .desktop-surface
 {
 }
 
+@-webkit-keyframes desktop-widget-item-on
+{
+ from {
+    text-shadow: 4px 4px 5px rgba(0, 0, 0, .3);
+    color:rgba(0, 0, 0, 1);
+    background-color:rgba(255, 255, 255, .4);
+ }
+ to {
+    text-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
+    color:rgba(0, 0, 180, 1);
+    background-color:rgba(255, 255, 255, 0);
+ }
+}
+
+@-webkit-keyframes desktop-widget-item-off
+{
+ from {
+    text-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
+    color:rgba(0, 0, 180, 1);
+    background-color:rgba(255, 255, 255, .4);
+ }
+ to {
+    text-shadow: 4px 4px 5px rgba(0, 0, 0, .3);
+    color:rgba(0, 0, 0, 1);
+    background-color:rgba(255, 255, 255, .4);
+ }
+}
+
+.desktop-widget-item
+{
+	-webkit-animation-name: desktop-widget-item-on;
+	-webkit-animation-duration: .2s;
+	-webkit-animation-direction: normal;
+    text-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
+    color:rgba(0, 0, 180, 1);
+    background-color:rgba(255, 255, 255, 0);
+    border-radius:4px;
+}
+
 .desktop-widget-item:hover
 {
-	background-color:rgba(220, 220, 220, .2);
+	-webkit-animation-name: desktop-widget-item-off;
+	-webkit-animation-duration: .2s;
+	-webkit-animation-direction: normal;
+    text-shadow: 4px 4px 5px rgba(0, 0, 0, .3);
+    color:rgba(0, 0, 0, 1);
+    background-color:rgba(255, 255, 255, .4);
 }
 
