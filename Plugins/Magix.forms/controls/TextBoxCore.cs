@@ -165,7 +165,7 @@ namespace Magix.forms
 		[ActiveEvent(Name = "magix.forms.set-value")]
 		public void magix_forms_set_value(object sender, ActiveEventArgs e)
 		{
-			if (ShouldInspect(e.Params))
+            if (ShouldInspectOrHasInspected(e.Params))
 			{
 				e.Params["inspect"].Value = "sets the value property of the control";
 				return;
@@ -188,7 +188,7 @@ namespace Magix.forms
 		[ActiveEvent(Name = "magix.forms.get-value")]
 		public void magix_forms_get_value(object sender, ActiveEventArgs e)
 		{
-			if (ShouldInspect(e.Params))
+            if (ShouldInspectOrHasInspected(e.Params))
 			{
 				e.Params["inspect"].Value = "returns the value property of the control";
 				return;

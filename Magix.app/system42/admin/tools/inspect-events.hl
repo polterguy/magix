@@ -18,13 +18,13 @@ for-each=>[Data][events]
       onclick
         void.foo
           inspect
-        set=>[2][value].Value
+        set=>[magix.forms.set-value][value].Value
           value=>[0][inspect].Value
         magix.forms.set-value
           form-id=>form1
           id=>desc
           value
-        set=>[4][value].Value
+        set=>[magix.forms.set-value:1][value].Value
           value=>[0].Name
         magix.forms.set-value
           form-id=>form1
@@ -35,14 +35,12 @@ for-each=>[Data][events]
           value=>[0]
         magix.code.node-2-code
           json
-        set=>[9][value].Value
+        set=>[magix.forms.set-value:2][value].Value
           value=>[magix.code.node-2-code][code].Value
         magix.forms.set-value
           form-id=>form1
           id=>code
           value
-        set=>[0][inspect].Name
-          value=>inspect
   set=>[.ip][..][_tpl][link-button][onclick][0].Name
     value=>[.].Name
   set=>[.ip][..][_tpl][link-button][text].Value

@@ -22,10 +22,18 @@ namespace Magix.Core
 		/**
 		 * return true if we are supposed to inspect the active event, and not execute it
 		 */
-		protected static bool ShouldInspect(Node node)
-		{
-			return node.Contains("inspect") && node["inspect"].Value == null;
-		}
+        protected static bool ShouldInspect(Node node)
+        {
+            return node.Contains("inspect") && node["inspect"].Value == null;
+        }
+
+        /**
+         * return true if we are supposed to inspect the active event, and not execute it, or if we have previously inspected it
+         */
+        protected static bool ShouldInspectOrHasInspected(Node node)
+        {
+            return node.Contains("inspect");
+        }
 
         /**
          * Loads the given module and puts it into your default container

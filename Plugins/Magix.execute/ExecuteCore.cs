@@ -91,7 +91,7 @@ thread safe";
 					return; // do nothing, execution stopped
 
 				// re-throw all other exceptions ...
-				throw err;
+				throw;
 			}
 		}
 

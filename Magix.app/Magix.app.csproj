@@ -62,7 +62,9 @@
     <Content Include="media\bootstrap\css\bootstrap-responsive.min.css" />
     <Content Include="media\bootstrap\img\glyphicons-halflings.png" />
     <Content Include="media\bootstrap\img\glyphicons-halflings-white.png" />
-    <Content Include="media\grid\background.png" />
+    <Content Include="media\front-end\hipster.css" />
+    <Content Include="media\front-end\default.css" />
+    <Content Include="media\images\background.png" />
     <Content Include="media\images\magix-logo.png" />
     <Content Include="media\images\magix-logo-small.png" />
     <Content Include="media\images\magix-logo-tiny.png" />
@@ -226,6 +228,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="media\xing-wysihtml5\LICENSE" />
+    <Content Include="system42\startup-scripts\create-default-settings.hl" />
     <None Include="todo.txt" />
     <None Include="system42\index.hl" />
     <None Include="system42\startup.hl" />

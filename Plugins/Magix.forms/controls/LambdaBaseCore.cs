@@ -102,7 +102,7 @@ to return control(s), or nothing, in the [$] return node";
 					Node node = new Node();
 
 					node["_code"].Value = idxCtrl;
-					idxCtrl["_first"].Value = idxCtrl["_first"].Value;
+                    idxCtrl["_first"].Value = code["_first"].Value;
 
 					RaiseActiveEvent(
 						evtName,

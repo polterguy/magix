@@ -4,7 +4,7 @@
 html {margin:0;padding:0;border:0;}
 body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, code, del, dfn, em, img, q, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, dialog, figure, footer, header, hgroup, nav, section {margin:0;padding:0;border:0;font-weight:inherit;font-style:inherit;font-size:100%;font-family:inherit;vertical-align:baseline;}
 article, aside, dialog, figure, footer, header, hgroup, nav, section {display:block;}
-body {line-height:1.5;background:white;}
+body {line-height:1.5;}
 table {border-collapse:separate;border-spacing:0;}
 caption, th, td {text-align:left;font-weight:normal;float:none !important;}
 table, th, td {vertical-align:middle;}
@@ -15,7 +15,7 @@ a img {border:none;}
 
 /* typography.css */
 html {font-size:100.01%;}
-body {font-size:75%;color:#222;background:#fff;font-family:"Helvetica Neue", Arial, Helvetica, sans-serif;}
+body {font-size:75%;color:#222;font-family:"Helvetica Neue", Arial, Helvetica, sans-serif;}
 h1, h2, h3, h4, h5, h6 {font-weight:normal;color:#111;}
 h1 {font-size:3em;line-height:1;margin-bottom:0.5em;}
 h2 {font-size:2em;margin-bottom:0.75em;}
@@ -255,11 +255,6 @@ textarea.min-height-30,.min-height-30 {min-height:576px;}
 .bold {font-weight:bold;}
 
 html, body, form {width:100%;min-height:100%;}
-
-body
-{
-    background-image:url(background.png);
-}
 
 .container
 {

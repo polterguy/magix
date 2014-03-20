@@ -25,8 +25,8 @@ namespace Magix.forms
 		[ActiveEvent(Name = "magix.forms.set-class")]
 		protected static void magix_forms_set_class(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
-			{
+            if (ShouldInspect(e.Params))
+            {
 				e.Params["event:magix.forms.set-class"].Value = null;
 				e.Params["id"].Value = "control";
 				e.Params["form-id"].Value = "webpages";
@@ -54,8 +54,8 @@ namespace Magix.forms
 		[ActiveEvent(Name = "magix.forms.get-class")]
 		protected static void magix_forms_get_class(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
-			{
+            if (ShouldInspect(e.Params))
+            {
 				e.Params["event:magix.forms.get-class"].Value = null;
 				e.Params["id"].Value = "control";
 				e.Params["form-id"].Value = "webpages";
@@ -78,8 +78,8 @@ namespace Magix.forms
 		[ActiveEvent(Name = "magix.forms.add-css")]
 		protected static void magix_forms_add_css(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
-			{
+            if (ShouldInspect(e.Params))
+            {
 				e.Params["event:magix.forms.add-css"].Value = null;
 				e.Params["id"].Value = "control";
 				e.Params["form-id"].Value = "webpages";
@@ -109,8 +109,8 @@ namespace Magix.forms
 		[ActiveEvent(Name = "magix.forms.remove-css")]
 		protected static void magix_forms_remove_css(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
-			{
+            if (ShouldInspect(e.Params))
+            {
 				e.Params["event:magix.forms.remove-css"].Value = null;
 				e.Params["id"].Value = "control";
 				e.Params["form-id"].Value = "webpages";
@@ -140,8 +140,8 @@ namespace Magix.forms
 		[ActiveEvent(Name = "magix.forms.set-focus")]
 		protected static void magix_forms_set_focus(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
-			{
+            if (ShouldInspect(e.Params))
+            {
 				e.Params["event:magix.forms.set-focus"].Value = null;
 				e.Params["id"].Value = "control";
 				e.Params["form-id"].Value = "webpages";

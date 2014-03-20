@@ -24,7 +24,7 @@ namespace Magix.forms
 		[ActiveEvent(Name="magix.forms.list-widget-types")]
 		protected static void magix_forms_list_widget_types(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+			if (ShouldInspect(e.Params))
 			{
 				e.Params["event:magix.execute"].Value = null;
 				e.Params["inspect"].Value = @"lists all widget types as [types] available in system.&nbsp;&nbsp;
@@ -75,8 +75,8 @@ thread safe";
 		[ActiveEvent(Name = "magix.forms.set-visible")]
 		protected static void magix_forms_set_visible(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
-			{
+            if (ShouldInspect(e.Params))
+            {
 				e.Params["event:magix.forms.set-visible"].Value = null;
 				e.Params["id"].Value = "control";
 				e.Params["form-id"].Value = "webpages";
@@ -104,8 +104,8 @@ thread safe";
 		[ActiveEvent(Name = "magix.forms.get-visible")]
 		protected static void magix_forms_get_visible(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
-			{
+            if (ShouldInspect(e.Params))
+            {
 				e.Params["event:magix.forms.get-visible"].Value = null;
 				e.Params["id"].Value = "control";
 				e.Params["form-id"].Value = "webpages";
