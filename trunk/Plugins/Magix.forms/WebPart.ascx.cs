@@ -226,8 +226,8 @@ not thread safe";
 
 				Node node = new Node();
 
-				node["_code"].Value = ctrlNode;
-				ctrlNode["_first"].Value = isFirst;
+                ctrlNode["_first"].Value = isFirst;
+                node["_code"].Value = ctrlNode;
 
 				RaiseEvent(
 					evtName,

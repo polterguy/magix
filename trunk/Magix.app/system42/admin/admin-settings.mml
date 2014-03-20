@@ -3,5 +3,39 @@
 <h2 class="span-13 last left-6">admin settings</h2>
 
 <div class="span-17 last boxed air-padding">{{
+label=>frontEndCssLbl
+  text=>front end css file
+  css=>span-3
+  tag=>label
+lambda=>lmda
+  oncreatecontrols
+    _data
+      select=>frontEndCss
+        css=>span-5
+        onselectedindexchanged
+          magix.forms.get-value
+            id=>frontEndCss
+          set=>[magix.data.save][value][file].Value
+            value=>[magix.forms.get-value][value].Value
+          magix.data.save
+            id=>magix.admin.settings.default-front-end-css-file
+          magix.viewport.show-message
+            message=>please reload page to view site with new css file
+        onfirstload
+          magix.data.load
+            id=>magix.admin.settings.default-front-end-css-file
+          set=>[magix.forms.set-value][value].Value
+            value=>[magix.data.load][objects][0][file].Value
+          magix.forms.set-value
+            form-id=>admin-settings
+            id=>frontEndCss
+    magix.file.list-files=>media/front-end
+    for-each=>[magix.file.list-files][files]
+      set=>[/][_data][select][items][[.].Name].Value
+        value=>[.].Name
+      replace=>[/][_data][select][items][[.].Name].Value
+        what=>media\front-end\
+    add=>[$]
+      value=>[_data][select]
 }}</div>
 

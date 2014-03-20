@@ -1,0 +1,10 @@
+﻿
+
+
+inspect=>@"creates the default settings for your portal"
+magix.data.save
+  id=>magix.admin.settings.default-front-end-css-file
+  value
+    file=>media\front-end\default.css
+
+

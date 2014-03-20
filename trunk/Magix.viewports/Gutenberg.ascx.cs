@@ -42,6 +42,20 @@ namespace Magix.viewports
 		protected Button cancel;
 		private bool _isFirst = true;
 
+        protected override void OnLoad(EventArgs e)
+        {
+            if (IsPostBack && !AjaxManager.Instance.IsCallback || !IsPostBack)
+            {
+                Node node = new Node();
+                node["type"].Value = "css";
+                node["file"].Value = "media/grid/main.css";
+                RaiseEvent(
+                    "magix.viewport.include-client-file",
+                    node);
+            }
+            base.OnLoad(e);
+        }
+
 		/**
          * Shows a Message Box to the end user, which can be configured
          */
@@ -234,7 +248,6 @@ end user for some seconds.&nbsp;&nbsp;not thread safe";
 
 			dyn.CssClass = "";
 		}
-
 	}
 }
 

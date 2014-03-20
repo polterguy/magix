@@ -5,24 +5,18 @@ get parameter called ""page"", which is expected to
 be the name of a page created through the edit-pages 
 web form"
 
-
 _page=>default
-
 magix.web.get=>page
-
 if=>exist
   lhs=>[magix.web.get][value].Value
   code
     set=>[_page].Value
       value=>[magix.web.get][value].Value
-
 set=>[magix.data.load][prototype][name].Value
   value=>[_page].Value
-
 magix.data.load
   prototype
     type=>magix.pages.page
-
 if=>more-then
   lhs=>[magix.data.load][objects].Count
   rhs=>0
