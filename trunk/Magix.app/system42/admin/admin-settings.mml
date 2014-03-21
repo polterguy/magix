@@ -19,8 +19,7 @@ lambda=>lmda
             value=>[magix.forms.get-value][value].Value
           magix.data.save
             id=>magix.admin.settings.default-front-end-css-file
-          magix.viewport.show-message
-            message=>please reload page to view site with new css file
+          magix.web.redirect=>?dashboard=
         onfirstload
           magix.data.load
             id=>magix.admin.settings.default-front-end-css-file
