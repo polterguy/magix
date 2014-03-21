@@ -19,7 +19,7 @@ namespace Magix.tiedown
 		 * runs the page load hyper lisp file
 		 */
 		[ActiveEvent(Name = "magix.viewport.page-load")]
-		public void magix_viewport_page_load_2(object sender, ActiveEventArgs e)
+		public void magix_viewport_page_load(object sender, ActiveEventArgs e)
 		{
 			if (ShouldInspect(e.Params))
 			{

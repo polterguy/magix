@@ -7,11 +7,12 @@ body
 
 .container
 {
-    margin-top:36px;
-    padding-left:40px;
-    padding-right:40px;
+    margin-top:35px;
+    padding-left:39px;
+    padding-right:39px;
 	border-radius:15px;
 	box-shadow: 15px 15px 10px rgba(0, 0, 0, 1);
+    border:1px solid rgba(0, 0, 0, .3);
 	background-image: linear-gradient(rgba(255, 246, 180, 1) 0%, rgba(180, 160, 140, 1) 100%);
 }
 
