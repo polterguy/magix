@@ -62,8 +62,10 @@
     <Content Include="media\bootstrap\css\bootstrap-responsive.min.css" />
     <Content Include="media\bootstrap\img\glyphicons-halflings.png" />
     <Content Include="media\bootstrap\img\glyphicons-halflings-white.png" />
+    <Content Include="media\front-end\white.css" />
     <Content Include="media\front-end\hipster.css" />
     <Content Include="media\front-end\default.css" />
+    <Content Include="media\front-end\pink.css" />
     <Content Include="media\images\background.png" />
     <Content Include="media\images\magix-logo.png" />
     <Content Include="media\images\magix-logo-small.png" />

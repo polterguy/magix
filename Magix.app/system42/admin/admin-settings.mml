@@ -11,7 +11,7 @@ lambda=>lmda
   oncreatecontrols
     _data
       select=>frontEndCss
-        css=>span-5
+        css=>span-3
         onselectedindexchanged
           magix.forms.get-value
             id=>frontEndCss
@@ -20,6 +20,23 @@ lambda=>lmda
           magix.data.save
             id=>magix.admin.settings.default-front-end-css-file
           magix.web.redirect=>?dashboard=
+          magix.web.postpone-execution
+            code
+              magix.viewport.clear-controls
+                container=>content2
+              magix.viewport.clear-controls
+                container=>content3
+              magix.viewport.clear-controls
+                container=>content4
+              magix.viewport.clear-controls
+                container=>content5
+              magix.forms.load-mml-web-part
+                file=>system42/admin/admin-settings.mml
+                container=>content1
+                form-id=>admin-settings
+                css=>span-17 last
+              magix.viewport.show-message
+                message=>theme was changed and portal was reloaded
         onfirstload
           magix.data.load
             id=>magix.admin.settings.default-front-end-css-file
@@ -34,6 +51,8 @@ lambda=>lmda
         value=>[.].Name
       replace=>[/][_data][select][items][[.].Name].Value
         what=>media\front-end\
+      replace=>[/][_data][select][items][[.].Name].Value
+        what=>.css
     add=>[$]
       value=>[_data][select]
 }}</div>

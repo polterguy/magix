@@ -77,9 +77,12 @@ not thread safe";
 			}
 		}
 
-		/**
-		 * returns an existing session object
-		 */
+        /**
+         * postpones execution of hyper lisp til next page load of site
+         */
+        /**
+         * returns an existing session object
+         */
 		[ActiveEvent(Name = "magix.web.get-session")]
 		public void magix_web_get_session(object sender, ActiveEventArgs e)
 		{
@@ -228,6 +231,48 @@ web.config setting as [value] node.&nbsp;&nbsp;thread safe";
 			if (!string.IsNullOrEmpty(val))
                 Ip(e.Params)["value"].Value = val;
 		}
-	}
+
+        [ActiveEvent(Name = "magix.web.postpone-execution")]
+        public void magix_web_postpone_execution(object sender, ActiveEventArgs e)
+        {
+            if (ShouldInspect(e.Params))
+            {
+                e.Params["event:magix.execute"].Value = null;
+                e.Params["inspect"].Value = @"will store a block 
+of hyper lisp, which it will execute upon the next page 
+load of the site for the given session.&nbsp;&nbsp;not thread safe";
+                e.Params["magix.web.postpone-execution"]["code"]["magix.viewport.show-message"].Value = "will not be shown before page is loaded initially over again";
+                return;
+            }
+
+            if (!Ip(e.Params).Contains("code"))
+                throw new ArgumentException("[magix.web.postpone-execution] needs a [code] block to execute");
+
+            // adding or overwiting existing value
+            Node value = Ip(e.Params)["code"].Clone();
+            Page.Session["magix.web.postpone-execution"] = value;
+        }
+
+        /**
+         * executes the postponed hyper lisp, if any
+         */
+        [ActiveEvent(Name = "magix.viewport.page-load")]
+        public void magix_viewport_page_load(object sender, ActiveEventArgs e)
+        {
+            if (ShouldInspectOrHasInspected(e.Params))
+            {
+                return;
+            }
+
+            if (Page.Session["magix.web.postpone-execution"] != null)
+            {
+                Node code = Page.Session["magix.web.postpone-execution"] as Node;
+                RaiseActiveEvent(
+                    "magix.execute",
+                    code);
+                Page.Session.Remove("magix.web.postpone-execution");
+            }
+        }
+    }
 }
 
