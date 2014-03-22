@@ -12,6 +12,9 @@ concatenate=>[magix.forms.create-web-part][controls][label][text].Value
 concatenate=>[magix.forms.create-web-part][events][magix.crud-app.rebind-data-grid][magix.data.load][id].Value
   what=>[$][name].Value
 
+concatenate=>[magix.forms.create-web-part][events][magix.crud-app.delete-field][magix.data.load][id].Value
+  what=>[$][name].Value
+
 concatenate=>[magix.forms.create-web-part][controls][panel][controls][button][onclick][magix.data.load][id].Value
   what=>[$][name].Value
 
@@ -33,12 +36,33 @@ magix.forms.create-web-part
   css=>span-17 last
 
   events
+    magix.crud-app.delete-field
+      magix.data.load
+        id=>magix.crud-app.template.
+      for-each=>[magix.data.load][objects][0][fields]
+        if=>equals
+          lhs=>[.][field-name].Value
+          rhs=>[$][name].Value
+          code
+            set=>[.]
+      set=>[magix.data.save][id].Value
+        value=>[magix.data.load][id].Value
+      add=>[magix.data.save]
+        value=>[magix.data.load][objects][0]
+      set=>[magix.data.save][1].Name
+        value=>value
+      magix.data.save
+      magix.crud-app.rebind-data-grid
+      magix.viewport.show-message
+        message=>field deleted
+
     magix.crud-app.rebind-data-grid
       _label
         css=>span-5
       magix.data.load
         id=>magix.crud-app.template.
       for-each=>[magix.data.load][objects][0][fields]
+
         set=>[/][_label][css].Value
           value=>span-5 clear
         set=>[/][_label][text].Value
@@ -47,6 +71,7 @@ magix.forms.create-web-part
           value=>[/][_label]
         set=>[/][magix.forms.create-web-part][controls][panel][controls][_label].Name
           value=>label
+
         set=>[/][_label][css].Value
           value=>span-5
         set=>[/][_label][text].Value
@@ -55,6 +80,18 @@ magix.forms.create-web-part
           value=>[/][_label]
         set=>[/][magix.forms.create-web-part][controls][panel][controls][_label].Name
           value=>label
+
+        set=>[/][_label][css].Value
+          value=>span-1
+        set=>[/][_label][text].Value
+          value=>X
+        set=>[/][_label][onclick][magix.crud-app.delete-field][name].Value
+          value=>[.][field-name].Value
+        add=>[/][magix.forms.create-web-part][controls][panel][controls]
+          value=>[/][_label]
+        set=>[/][magix.forms.create-web-part][controls][panel][controls][_label].Name
+          value=>link-button
+
       magix.forms.create-web-part
         container=>content3
         form-id=>init-app-fields
@@ -68,9 +105,16 @@ magix.forms.create-web-part
             tag=>label
             text=>type
             css=>span-5
+          label=>lblDelete
+            tag=>label
+            css=>span-5
+            text=>delete
           panel=>pnlWrpGrid
             css=>span-17
             controls
+      magix.forms.set-focus
+        form-id=>init-app
+        id=>name
 
   controls
     hidden=>nameOfApp
@@ -115,6 +159,16 @@ magix.forms.create-web-part
             magix.forms.get-value
               form-id=>init-app
               id=>fieldType
+            if=>equals
+              lhs=>[@][magix.forms.get-value:0][value].Value
+              rhs=>_default
+              code
+                magix.viewport.show-message
+                  message=>please choose type of field to add
+                magix.forms.set-focus
+                  form-id=>init-app
+                  id=>fieldType
+                stop
             magix.forms.get-value
               form-id=>init-app
               id=>name
