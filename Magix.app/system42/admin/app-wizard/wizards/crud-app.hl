@@ -9,13 +9,138 @@ _name=>crud app
 concatenate=>[magix.forms.create-web-part][controls][label][text].Value
   what=>[$][name].Value
 
+concatenate=>[magix.forms.create-web-part][events][magix.crud-app.rebind-data-grid][magix.data.load][id].Value
+  what=>[$][name].Value
+
+concatenate=>[magix.forms.create-web-part][controls][panel][controls][button][onclick][magix.data.load][id].Value
+  what=>[$][name].Value
+
+concatenate=>[magix.forms.create-web-part][controls][panel][controls][button][onclick][magix.data.save][id].Value
+  what=>[$][name].Value
+
+concatenate=>[magix.forms.create-web-part][controls][panel][controls][button][onclick][if][code][magix.data.load][id].Value
+  what=>[$][name].Value
+
+concatenate=>[magix.forms.create-web-part][controls][panel][controls][button][onclick][if][code][magix.data.save][id].Value
+  what=>[$][name].Value
+
+set=>[magix.forms.create-web-part][controls][hidden][value].Value
+  value=>[$][name].Value
+
 magix.forms.create-web-part
   container=>content2
   form-id=>init-app
-  css=>span-17 top-3 last
-  controls
-    label=>lblHeader
-      text=>fields of -  
-      css=>span-10
-      tag=>label
+  css=>span-17 last
 
+  events
+    magix.crud-app.rebind-data-grid
+      _label
+        css=>span-5
+      magix.data.load
+        id=>magix.crud-app.template.
+      for-each=>[magix.data.load][objects][0][fields]
+        set=>[/][_label][css].Value
+          value=>span-5 clear
+        set=>[/][_label][text].Value
+          value=>[.][field-name].Value
+        add=>[/][magix.forms.create-web-part][controls][panel][controls]
+          value=>[/][_label]
+        set=>[/][magix.forms.create-web-part][controls][panel][controls][_label].Name
+          value=>label
+        set=>[/][_label][css].Value
+          value=>span-5
+        set=>[/][_label][text].Value
+          value=>[.][field-type].Value
+        add=>[/][magix.forms.create-web-part][controls][panel][controls]
+          value=>[/][_label]
+        set=>[/][magix.forms.create-web-part][controls][panel][controls][_label].Name
+          value=>label
+      magix.forms.create-web-part
+        container=>content3
+        form-id=>init-app-fields
+        css=>span-17 top-1 last
+        controls
+          label=>lblHeaderName
+            tag=>label
+            text=>name
+            css=>span-5
+          label=>lblHeaderType
+            tag=>label
+            text=>type
+            css=>span-5
+          panel=>pnlWrpGrid
+            css=>span-17
+            controls
+
+  controls
+    hidden=>nameOfApp
+    label=>lblHeader
+      text=>fields of - 
+      css=>span-10
+      tag=>h2
+    panel=>newWrp
+      default=>addBtn
+      controls
+        text-box=>name
+          css=>clear span-5
+          place-holder=>name of field ...
+        select=>fieldType
+          css=>span-5
+          items
+            _default=>field type ...
+            text-box=>text
+            text-area=>big text
+        button=>addBtn
+          css=>span-3
+          text=>+
+          onclick
+            magix.data.load
+              id=>magix.crud-app.template.
+            if=>not-exist
+              lhs=>[magix.data.load][objects]
+              code
+                set=>[@][magix.data.save][value][name].Value
+                  value=>[magix.forms.get-value][value].Value
+                magix.data.save
+                  id=>magix.crud-app.template.
+                  value
+                    type=>magix.crud-app.template
+                magix.data.load
+                  id=>magix.crud-app.template.
+                add=>[magix.data.load][objects]
+                  value=>[@][magix.data.load][objects][0]
+            _data
+              field-type
+              field-name
+            magix.forms.get-value
+              form-id=>init-app
+              id=>fieldType
+            magix.forms.get-value
+              form-id=>init-app
+              id=>name
+            set=>[@][_data][field-type].Value
+              value=>[@][magix.forms.get-value:0][value].Value
+            set=>[@][_data][field-name].Value
+              value=>[@][magix.forms.get-value:1][value].Value
+            add=>[magix.data.load][objects][0][fields]
+              value=>[@][_data]
+            set=>[magix.data.load][objects][0][fields][_data].Name
+              value=>field
+            for-each=>[magix.data.load][objects][0]
+              add=>[/][magix.data.save][value]
+                value=>[.]
+            magix.data.save
+              id=>magix.crud-app.template.
+            magix.forms.set-value
+              form-id=>init-app
+              id=>fieldType
+              value=>_default
+            magix.forms.set-value
+              form-id=>init-app
+              id=>name
+              value=>
+            magix.crud-app.rebind-data-grid
+            magix.viewport.show-message
+              message=>fields were updated
+
+magix.crud-app.rebind-data-grid

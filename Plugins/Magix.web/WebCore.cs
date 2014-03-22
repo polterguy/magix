@@ -239,9 +239,10 @@ web.config setting as [value] node.&nbsp;&nbsp;thread safe";
             {
                 e.Params["event:magix.execute"].Value = null;
                 e.Params["inspect"].Value = @"will store a block 
-of hyper lisp, which it will execute upon the next page 
+of hyper lisp from the [core] parameter, which it will execute upon the next page 
 load of the site for the given session.&nbsp;&nbsp;not thread safe";
-                e.Params["magix.web.postpone-execution"]["code"]["magix.viewport.show-message"].Value = "will not be shown before page is loaded initially over again";
+                e.Params["magix.web.postpone-execution"]["code"]["magix.viewport.show-message"].Value = 
+                    "will not be shown before page is loaded initially over again";
                 return;
             }
 
@@ -249,8 +250,7 @@ load of the site for the given session.&nbsp;&nbsp;not thread safe";
                 throw new ArgumentException("[magix.web.postpone-execution] needs a [code] block to execute");
 
             // adding or overwiting existing value
-            Node value = Ip(e.Params)["code"].Clone();
-            Page.Session["magix.web.postpone-execution"] = value;
+            Page.Session["magix.web.postpone-execution"] = Ip(e.Params)["code"].Clone();
         }
 
         /**
