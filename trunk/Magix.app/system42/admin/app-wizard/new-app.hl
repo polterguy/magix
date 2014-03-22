@@ -3,9 +3,46 @@
 inspect=>@"initializes the common settings for a 
 new wizard application"
 
+_data
+set=>[_data].Value
+  value=>[$][file].Value
+replace=>[_data].Value
+  what=>system42\admin\app-wizard\wizards\
+replace=>[_data].Value
+  what=>.hl
+
+set=>[magix.data.load][prototype][type].Value
+  value=>@"magix.{0}.template"
+    v0=>[_data].Value
+
+magix.data.load
+  prototype
+    type
+
+for-each=>[magix.data.load][objects]
+  _data
+  set=>[@][_data][0].Name
+    value=>[.].Name
+  set=>[@][_data][0].Value
+    value=>[.].Name
+  replace=>[@][_data][0].Value
+    what=>magix.crud-app.template.
+  replace=>[@][_data][0].Name
+    what=>magix.crud-app.template.
+  add=>[/][magix.forms.create-web-part][controls][panel][controls][select][items]
+    value=>[@][_data][0]
 
 set=>[magix.forms.create-web-part][controls][panel][controls][button][onclick][magix.execute.execute-file].Value
   value=>[$][file].Value
+set=>[magix.forms.create-web-part][controls][panel][controls][select][onselectedindexchanged][magix.execute.execute-file].Value
+  value=>[$][file].Value
+
+set=>[magix.forms.create-web-part][controls][panel][controls][button][onclick][set][value][v0].Value
+  value=>[$][file].Value
+replace=>[magix.forms.create-web-part][controls][panel][controls][button][onclick][set][value][v0].Value
+  what=>system42\admin\app-wizard\wizards\
+replace=>[magix.forms.create-web-part][controls][panel][controls][button][onclick][set][value][v0].Value
+  what=>.hl
 
 magix.forms.create-web-part
   container=>content2
@@ -16,19 +53,41 @@ magix.forms.create-web-part
       default=>next
       controls
         label
-          text=>give your new application a name
+          text=>give your new application a name, or edit existing
           tag=>label
           css=>span-14 last bottom-1
+        select=>editExisting
+          css=>span-5
+          items
+            _default=>choose existing app ...
+          onselectedindexchanged
+            magix.forms.get-value
+              form-id=>init-app
+              id=>editExisting
+            set=>[magix.execute.execute-file][name].Value
+              value=>[magix.forms.get-value][value].Value
+            magix.execute.execute-file
         text-box=>name
           place-holder=>name ...
           css=>span-6
         button=>next
           text=>next >>
-          css=>span-3 left-3 last clear
+          css=>span-3 left-8 last clear
           onclick
             magix.forms.get-value
               form-id=>init-app
               id=>name
+            set=>[magix.data.load][id].Value
+              value=>magix.{0}.template.{1}
+                v0
+                v1=>[magix.forms.get-value][value].Value
+            magix.data.load
+            if=>exist
+              lhs=>[magix.data.load][objects]
+              code=>
+                magix.viewport.show-message
+                  message=>application with that name already exists
+                stop
             set=>[magix.execute.execute-file][name].Value
               value=>[magix.forms.get-value][value].Value
             magix.execute.execute-file

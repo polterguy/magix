@@ -15,7 +15,6 @@ namespace Magix.execute
 	 */
 	public class ExecuteCore : ActiveController
 	{
-        // TODO: Doesn't work. Implement sending namespace through Node structure
         /**
          * using keyword implementation
          */
