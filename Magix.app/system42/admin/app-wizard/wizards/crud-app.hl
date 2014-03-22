@@ -172,6 +172,17 @@ magix.forms.create-web-part
             magix.forms.get-value
               form-id=>init-app
               id=>name
+            for-each=>[magix.data.load][objects][0][fields]
+              if=>equals
+                lhs=>[.][field-name].Value
+                rhs=>[/][magix.forms.get-value:1][value].Value
+                code
+                  magix.viewport.show-message
+                    message=>use a unique name for your field, name already exist
+                  magix.forms.set-focus
+                    form-id=>init-app
+                    id=>name
+                  stop
             set=>[@][_data][field-type].Value
               value=>[@][magix.forms.get-value:0][value].Value
             set=>[@][_data][field-name].Value
