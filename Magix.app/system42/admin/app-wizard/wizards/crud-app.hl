@@ -249,21 +249,12 @@ magix.forms.create-web-part
           message=>are you sure you wish to delete this application
           code
             magix.data.remove
-            magix.viewport.clear-controls
-              container=>content1
-            magix.viewport.clear-controls
-              container=>content2
+            execute-file=>system42/admin/app-wizard/new-app.hl
+              file=>system42\admin\app-wizard\wizards\crud-app.hl
             magix.viewport.clear-controls
               container=>content3
             magix.viewport.clear-controls
               container=>content4
-            magix.viewport.clear-controls
-              container=>content5
-            magix.viewport.clear-controls
-              container=>content6
-            magix.viewport.clear-controls
-              container=>content7
-            execute-file=>system42/admin/desktop/show-desktop.hl
             magix.viewport.show-message
               message=>crud application was deleted
 magix.crud-app.rebind-data-grid
