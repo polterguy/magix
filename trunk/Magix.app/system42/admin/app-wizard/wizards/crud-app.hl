@@ -48,8 +48,12 @@ set=>[magix.forms.create-web-part:1][controls][button:1][onclick][magix.viewport
   value=>@"magix.crud-app.template.{0}"
     v0=>[$][name].Value
 
-set=>[magix.forms.create-web-part:1][controls][button:2][onclick][execute-file][file].Value
+set=>[magix.forms.create-web-part][events][magix.crud-app.generate-application][execute-file][name].Value
   value=>[$][name].Value
+
+set=>[magix.forms.create-web-part][events][magix.crud-app.generate-application][magix.data.load][id].Value
+  value=>@"magix.crud-app.template.{0}"
+    v0=>[$][name].Value
 
 magix.forms.create-web-part
   container=>content2
@@ -57,6 +61,12 @@ magix.forms.create-web-part
   css=>span-17 last
 
   events
+
+    magix.crud-app.generate-application
+      magix.data.load
+      add=>[execute-file]
+        value=>[magix.data.load][objects][0][fields]
+      execute-file=>system42/admin/app-wizard/wizards/crud-app/crud-app-generator.hl
 
     magix.crud-app.delete-field
       magix.data.load
@@ -166,8 +176,6 @@ magix.forms.create-web-part
             if=>not-exist
               lhs=>[magix.data.load][objects]
               code
-                set=>[@][magix.data.save][value][name].Value
-                  value=>[magix.forms.get-value][value].Value
                 magix.data.save
                   id=>magix.crud-app.template.
                   value
@@ -276,6 +284,6 @@ magix.forms.create-web-part
       css=>span-3 top-1
       text=>generate app
       onclick
-        execute-file=>system42/admin/app-wizard/wizards/crud-app/crud-app-generator.hl
+        magix.crud-app.generate-application
 
 magix.crud-app.rebind-data-grid
