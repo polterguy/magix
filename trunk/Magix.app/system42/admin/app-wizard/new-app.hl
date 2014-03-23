@@ -32,16 +32,16 @@ for-each=>[magix.data.load][objects]
   add=>[/][magix.forms.create-web-part][controls][panel][controls][select][items]
     value=>[@][_data][0]
 
-set=>[magix.forms.create-web-part][controls][panel][controls][button][onclick][magix.execute.execute-file].Value
+set=>[magix.forms.create-web-part][controls][panel][controls][button:1][onclick][magix.execute.execute-file].Value
   value=>[$][file].Value
 set=>[magix.forms.create-web-part][controls][panel][controls][select][onselectedindexchanged][magix.execute.execute-file].Value
   value=>[$][file].Value
 
-set=>[magix.forms.create-web-part][controls][panel][controls][button][onclick][set][value][v0].Value
+set=>[magix.forms.create-web-part][controls][panel][controls][button:1][onclick][set][value][v0].Value
   value=>[$][file].Value
-replace=>[magix.forms.create-web-part][controls][panel][controls][button][onclick][set][value][v0].Value
+replace=>[magix.forms.create-web-part][controls][panel][controls][button:1][onclick][set][value][v0].Value
   what=>system42\admin\app-wizard\wizards\
-replace=>[magix.forms.create-web-part][controls][panel][controls][button][onclick][set][value][v0].Value
+replace=>[magix.forms.create-web-part][controls][panel][controls][button:1][onclick][set][value][v0].Value
   what=>.hl
 
 magix.forms.create-web-part
@@ -70,9 +70,14 @@ magix.forms.create-web-part
         text-box=>name
           place-holder=>name ...
           css=>span-6
+        button=>wizard
+          text=>wizard
+          css=>span-3 left-5 top-1 clear
+          onclick
+            execute-file=>system42/admin/app-wizard/app-wizard.hl
         button=>next
           text=>next >>
-          css=>span-3 left-8 last clear
+          css=>span-3 last top-1
           onclick
             magix.forms.get-value
               form-id=>init-app
