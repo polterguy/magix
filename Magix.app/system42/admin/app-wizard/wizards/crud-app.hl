@@ -44,7 +44,7 @@ set=>[magix.forms.create-web-part][controls][panel][controls][button][onclick][i
 set=>[magix.forms.create-web-part][controls][hidden][value].Value
   value=>[$][name].Value
 
-set=>[magix.forms.create-web-part:1][controls][button][onclick][magix.viewport.confirm][code][magix.data.remove][id].Value
+set=>[magix.forms.create-web-part:1][controls][button:1][onclick][magix.viewport.confirm][code][magix.data.remove][id].Value
   value=>@"magix.crud-app.template.{0}"
     v0=>[$][name].Value
 
@@ -150,8 +150,9 @@ magix.forms.create-web-part
           css=>span-5
           items
             _default=>field type ...
-            text-box=>text
-            text-area=>big text
+            text-box=>text-box
+            text-area=>text-area
+            check=>check
         button=>addBtn
           css=>span-3
           text=>+
@@ -241,9 +242,19 @@ magix.forms.create-web-part
   form-id=>init-delete-app
   css=>span-17 last
   controls
+    button=>back
+      css=>span-3 left-4 top-1
+      text=>back
+      onclick
+        execute-file=>system42/admin/app-wizard/new-app.hl
+          file=>system42\admin\app-wizard\wizards\crud-app.hl
+        magix.viewport.clear-controls
+          container=>content3
+        magix.viewport.clear-controls
+          container=>content4
     button=>deleteApp
-      css=>span-3 left-10 top-1
-      text=>delete app
+      css=>span-3 top-1
+      text=>delete template
       onclick
         magix.viewport.confirm
           message=>are you sure you wish to delete this application
@@ -257,4 +268,9 @@ magix.forms.create-web-part
               container=>content4
             magix.viewport.show-message
               message=>crud application was deleted
+    button=>generateApp
+      css=>span-3 top-1
+      text=>generate app
+      onclick
+
 magix.crud-app.rebind-data-grid
