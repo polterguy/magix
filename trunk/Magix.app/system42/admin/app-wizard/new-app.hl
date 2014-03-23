@@ -53,7 +53,7 @@ magix.forms.create-web-part
       default=>next
       controls
         label
-          text=>give your new application a name, or edit existing
+          text=>give your new application template a name, or edit existing template
           tag=>label
           css=>span-14 last bottom-1
         select=>editExisting
