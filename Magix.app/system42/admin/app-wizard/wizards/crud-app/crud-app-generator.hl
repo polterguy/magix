@@ -1,0 +1,8 @@
+
+
+inspect=>@"generator for crud applications"
+
+debug
+stop
+magix.viewport.show-message
+  message=>crud application was generated
