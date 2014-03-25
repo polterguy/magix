@@ -231,6 +231,7 @@
   <ItemGroup>
     <None Include="media\xing-wysihtml5\LICENSE" />
     <Content Include="system42\startup-scripts\create-default-settings.hl" />
+    <Content Include="system42\admin\app-wizard\wizards\crud-app\crud-app-generator.hl" />
     <None Include="todo.txt" />
     <None Include="system42\index.hl" />
     <None Include="system42\startup.hl" />
@@ -277,5 +278,8 @@
     <None Include="system42\admin\help\ajax\index.mml" />
     <None Include="system42\admin\help\mvc\summing-up.mml" />
     <None Include="system42\admin\help\web-parts\index.mml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="system42\admin\apps\" />
   </ItemGroup>
 </Project>
