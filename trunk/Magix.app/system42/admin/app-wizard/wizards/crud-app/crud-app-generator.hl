@@ -3,5 +3,33 @@
 inspect=>@"generator for crud applications.&nbsp;&nbsp;
 will create crud application according to given parameters."
 
-debug
-stop
+set=>[_file-name].Value
+  value=>system42\admin\apps\{0}.hl
+    v0=>[$][name].Value
+
+_file-name
+
+set=>[session-event][code][magix.file.save].Value
+  value=>[_file-name].Value
+
+session-event=>magix.crud-app-generator.create-application
+  code
+    magix.file.save
+      value=>howdy world
+    session-event=>magix.crud-app-generator.create-application
+    magix.viewport.show-message
+      message=>application was created
+
+magix.file.list-files=>system42\admin\apps\
+
+for-each=>[magix.file.list-files][files]
+  if=>equals
+    lhs=>[.].Name
+    rhs=>[/][_file-name].Value
+    code
+      magix.viewport.confirm
+        message=>application with that name already exists, do you wish to overwrite the old application?
+        code
+          magix.crud-app-generator.create-application
+
+
