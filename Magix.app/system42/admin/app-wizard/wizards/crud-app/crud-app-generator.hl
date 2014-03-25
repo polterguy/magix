@@ -1,9 +1,7 @@
 
 
-inspect=>@"generator for crud applications"
+inspect=>@"generator for crud applications.&nbsp;&nbsp;
+will create crud application according to given parameters."
 
 debug
 stop
-
-magix.viewport.show-message
-  message=>crud application was generated
