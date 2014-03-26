@@ -206,13 +206,14 @@ end user for some seconds.&nbsp;&nbsp;not thread safe";
 
 		protected void OKClick(object sender, EventArgs e)
 		{
-			RaiseEvent(
+            confirmWrp.Visible = false;
+            confirmWrp.Style["display"] = "none";
+            
+            RaiseEvent(
 				"magix.execute",
 				ConfirmCode);
 
 			ConfirmCode = null;
-			confirmWrp.Visible = false;
-			confirmWrp.Style["display"] = "none";
 		}
 
 		protected override void OnPreRender(EventArgs e)
