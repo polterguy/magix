@@ -98,6 +98,7 @@ new created.&nbsp;&nbsp;thread safe";
 			else
 			{
                 string fileContent = Ip(e.Params)["value"].Get<string>();
+                File.Delete(HttpContext.Current.Server.MapPath(file));
 
 				using (TextWriter writer = 
 				       new StreamWriter(File.OpenWrite(HttpContext.Current.Server.MapPath(file))))

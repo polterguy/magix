@@ -58,6 +58,9 @@ set=>[magix.forms.create-web-part][events][magix.crud-app.generate-application][
 set=>[magix.forms.create-web-part][events][magix.crud-app.generate-application][set][value][v0].Value
   value=>[$][name].Value
 
+set=>[magix.forms.create-web-part][events][magix.crud-app.preview-application][set][value][v0].Value
+  value=>[$][name].Value
+
 magix.forms.create-web-part
   container=>content2
   form-id=>init-app
@@ -71,7 +74,30 @@ magix.forms.create-web-part
         value=>magix.generic-apps.datasource.crud-app.{0}
       add=>[execute-file]
         value=>[magix.data.load][objects][0][fields]
+      for-each=>[$]
+        add=>[/][execute-file][_after-code]
+          value=>[.]
       execute-file=>system42/admin/app-wizard/wizards/crud-app/crud-app-generator.hl
+
+    magix.crud-app.preview-application
+      set=>[execute-file].Value
+        value=>system42\admin\apps\{0}.hl
+      execute-file
+        container=>content5
+        css=>span-22 last top-3
+      magix.forms.create-web-part
+        container=>content6
+        form-id=>close-preview
+        css=>span-22 last top-3
+        controls
+          button=>btnClosePreview
+            css=>btn-large span-5 right last
+            text=>close preview
+            onclick
+              magix.viewport.clear-controls
+                container=>content5
+              magix.viewport.clear-controls
+                container=>content6
 
     magix.crud-app.delete-field
       magix.data.load
@@ -260,8 +286,8 @@ magix.forms.create-web-part
   css=>span-17 last
   controls
     button=>back
-      css=>span-3 left-4 top-1
-      text=>back
+      css=>span-3 left-1 top-1
+      text=>&lt;&lt; back
       onclick
         execute-file=>system42/admin/app-wizard/new-app.hl
           file=>system42\admin\app-wizard\wizards\crud-app.hl
@@ -271,7 +297,7 @@ magix.forms.create-web-part
           container=>content4
     button=>deleteApp
       css=>span-3 top-1
-      text=>delete template
+      text=>delete
       onclick
         magix.viewport.confirm
           message=>are you sure you wish to delete this application
@@ -287,8 +313,15 @@ magix.forms.create-web-part
               message=>crud application was deleted
     button=>generateApp
       css=>span-3 top-1
-      text=>generate app
+      text=>generate
       onclick
         magix.crud-app.generate-application
+    button=>preview
+      css=>span-3 top-1
+      text=>preview
+      tip=>will generate application and then preview it
+      onclick
+        magix.crud-app.generate-application
+          magix.crud-app.preview-application
 
 magix.crud-app.rebind-data-grid

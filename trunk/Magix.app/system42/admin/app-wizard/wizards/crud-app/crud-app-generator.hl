@@ -1,26 +1,143 @@
 
-
 inspect=>@"generator for crud applications.&nbsp;&nbsp;
 will create crud application according to given parameters."
+
+for-each=>[$]
+  add=>[/][session-event][code][_pars]
+    value=>[.]
+
+session-event=>magix.crud-app-generator.create-application
+  code
+    session-event=>magix.crud-app-generator.create-application
+    _data
+      inspect=>@"automatically generated file
+which contains logic for crud-app-generated application"
+      if=>exist
+        lhs=>[$][container]
+        code
+          set=>[magix.forms.create-web-part][container].Value
+            value=>[$][container].Value
+      if=>exist
+        lhs=>[$][css]
+        code
+          set=>[magix.forms.create-web-part][css].Value
+            value=>[$][css].Value
+      magix.data.load
+      for-each=>[magix.data.load][objects]
+        _text-label
+        _hr
+          tag=>hr
+      magix.forms.create-web-part
+        container=>content1
+        form-id=>crud-app-main-form
+        css=>span-22 last
+        controls
+          label=>lblHeader
+            tag=>h2
+
+    set=>[_data][magix.forms.create-web-part][controls][label][text].Value
+      value=>[_pars][name].Value
+
+    set=>[@][for-each][_not-first].Value
+    _not-first
+    for-each=>[_pars][fields]
+      _label
+        css=>span-5
+        tag=>label
+      set=>[@][_label][text].Value
+        value=>[.][field-name].Value
+      add=>[/][_data][magix.forms.create-web-part][controls]
+        value=>[@][_label]
+      set=>[/][_data][magix.forms.create-web-part][controls][_label].Name
+        value=>label
+      if=>equals
+        lhs=>[.][field-type].Value
+        rhs=>check
+        code
+      else
+        set=>[/][_data][for-each][_set].Value
+          value=>\[@][_text-label][css].Value
+        if=>exist
+          lhs=>[/][_not-first].Value
+          code
+            set=>[/][_data][for-each][_set][value].Value
+              value=>span-5
+        else
+          set=>[/][_data][for-each][_set][value].Value
+            value=>span-5 clear
+        set=>[/][_data][for-each][_set].Name
+          value=>set
+
+        set=>[/][_data][for-each][_set].Value
+          value=>\[@][_text-label][text].Value
+        set=>[/][_data][for-each][_set][value].Value
+          value=>\[.][{0}].Value
+            v0=>[.][field-name].Value
+        set=>[/][_data][for-each][_set].Name
+          value=>set
+
+        set=>[/][_data][for-each][_add].Value
+          value=>\[/][magix.forms.create-web-part][controls]
+        set=>[/][_data][for-each][_add][value].Value
+          value=>\[@][_text-label]
+        set=>[/][_data][for-each][_add].Name
+          value=>add
+
+        set=>[/][_data][for-each][_set].Value
+          value=>\[/][magix.forms.create-web-part][controls][_text-label].Name
+        set=>[/][_data][for-each][_set][value].Value
+          value=>label
+        set=>[/][_data][for-each][_set].Name
+          value=>set
+
+      set=>[/][_not-first].Value
+        value=>true
+
+    set=>[/][_data][for-each][_add].Value
+      value=>\[/][magix.forms.create-web-part][controls]
+    set=>[/][_data][for-each][_add][value].Value
+      value=>\[@][_hr]
+    set=>[/][_data][for-each][_add].Name
+      value=>add
+    set=>[/][_data][for-each][_set].Value
+      value=>\[/][magix.forms.create-web-part][controls][_hr].Name
+    set=>[/][_data][for-each][_set][value].Value
+      value=>label
+    set=>[/][_data][for-each][_set].Name
+      value=>set
+
+    set=>[_data][magix.data.load][prototype][type].Value
+      value=>[_pars][datasource].Value
+
+    set=>[magix.code.node-2-code][json].Value
+      value=>[_data]
+    magix.code.node-2-code
+
+    set=>[magix.file.save].Value
+      value=>system42\admin\apps\{0}.hl
+        v0=>[_pars][name].Value
+
+    set=>[magix.file.save][value].Value
+      value=>[magix.code.node-2-code][code].Value
+
+    magix.file.save
+      value=>howdy world
+
+    if=>exist
+      lhs=>[_pars][_after-code]
+      code
+        execute=>[_pars][_after-code]
+    magix.viewport.show-message
+      message=>application was created
+
+
+magix.file.list-files=>system42\admin\apps\
 
 set=>[_file-name].Value
   value=>system42\admin\apps\{0}.hl
     v0=>[$][name].Value
 
 _file-name
-
-set=>[session-event][code][magix.file.save].Value
-  value=>[_file-name].Value
-
-session-event=>magix.crud-app-generator.create-application
-  code
-    magix.file.save
-      value=>howdy world
-    session-event=>magix.crud-app-generator.create-application
-    magix.viewport.show-message
-      message=>application was created
-
-magix.file.list-files=>system42\admin\apps\
 
 for-each=>[magix.file.list-files][files]
   if=>equals
@@ -31,5 +148,5 @@ for-each=>[magix.file.list-files][files]
         message=>application with that name already exists, do you wish to overwrite the old application?
         code
           magix.crud-app-generator.create-application
-
-
+      stop
+magix.crud-app-generator.create-application

@@ -42,13 +42,12 @@ contain type information for types of int, decimal, datetime and bool.&nbsp;&nbs
 			{
 				throw new ArgumentException("no [json] passed into node-2-code");
 			}
-			string txt = "";
 			Node node = null;
             if (Ip(e.Params)["json"].Value != null)
                 node = Ip(e.Params)["json"].Value as Node;
 			else
                 node = Ip(e.Params)["json"].Clone();
-			txt += ParseNodes(0, node);
+			string txt = ParseNodes(0, node);
             Ip(e.Params)["code"].Value = txt;
 		}
 
