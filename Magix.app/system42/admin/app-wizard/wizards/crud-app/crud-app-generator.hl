@@ -6,6 +6,9 @@ for-each=>[$]
   add=>[/][session-event][code][_pars]
     value=>[.]
 
+set=>[session-event][code][_button][onclick][magix.data.save][value][type].Value
+  value=>[$][datasource].Value
+
 session-event=>magix.crud-app-generator.create-application
   code
     session-event=>magix.crud-app-generator.create-application
@@ -42,6 +45,8 @@ which contains logic for crud-app-generated application"
             tag=>h2
           panel=>headerWrapper
           dynamic=>dataGrid
+          panel=>editWrapper
+            default=>addButton
       magix.crud-app.databind-grid
 
     set=>[_data][magix.forms.create-web-part][controls][label][text].Value
@@ -53,12 +58,59 @@ which contains logic for crud-app-generated application"
       _label
         css=>span-5
         tag=>h3
+      _text-box
+        css=>span-5
+      _text-area
+        css=>span-5
+        rows=>5
       set=>[@][_label][text].Value
         value=>[.][field-name].Value
       add=>[/][_data][magix.forms.create-web-part][controls][panel:0][controls]
         value=>[@][_label]
       set=>[/][_data][magix.forms.create-web-part][controls][panel:0][controls][_label].Name
         value=>label
+      if=>equals
+        lhs=>[.][field-type].Value
+        rhs=>text-box
+        code
+          if=>exist
+            lhs=>[/][_not-first].Value
+            code
+              set=>[@][..][..][_text-box][css].Value
+                value=>span-5
+          else
+            set=>[@][..][..][_text-box][css].Value
+              value=>span-5 clear
+          set=>[@][..][..][_text-box][place-holder].Value
+            value=>{0} ...
+              v0=>[.][field-name].Value
+          set=>[@][..][..][_text-box].Value
+            value=>[.][field-name].Value
+          add=>[/][_data][magix.forms.create-web-part][controls][panel:1][controls]
+            value=>[@][..][..][_text-box]
+          set=>[/][_data][magix.forms.create-web-part][controls][panel:1][controls][_text-box].Name
+            value=>text-box
+      if=>equals
+        lhs=>[.][field-type].Value
+        rhs=>text-area
+        code
+          if=>exist
+            lhs=>[/][_not-first].Value
+            code
+              set=>[@][..][..][_text-area][css].Value
+                value=>span-5
+          else
+            set=>[@][..][..][_text-area][css].Value
+              value=>span-5 clear
+          set=>[@][..][..][_text-area][place-holder].Value
+            value=>{0} ...
+              v0=>[.][field-name].Value
+          set=>[@][..][..][_text-area].Value
+            value=>[.][field-name].Value
+          add=>[/][_data][magix.forms.create-web-part][controls][panel:1][controls]
+            value=>[@][..][..][_text-area]
+          set=>[/][_data][magix.forms.create-web-part][controls][panel:1][controls][_text-area].Name
+            value=>text-area
       if=>equals
         lhs=>[.][field-type].Value
         rhs=>check
@@ -101,6 +153,31 @@ which contains logic for crud-app-generated application"
 
       set=>[/][_not-first].Value
         value=>true
+
+    _button=>addButton
+      css=>span-3
+      text=>update
+      onclick
+        magix.forms.get-values
+          form-id=>crud-app-main-form
+          id=>editWrapper
+        set=>[magix.forms.get-values][values][addButton]
+        for-each=>[magix.forms.get-values][values]
+          set=>[/][magix.data.save][value][[.].Name].Value
+            value=>[.].Value
+          set=>[@][magix.forms.set-value][id].Value
+            value=>[.].Name
+          magix.forms.set-value
+            form-id=>crud-app-main-form
+            value=>
+        magix.data.save
+        magix.viewport.show-message
+          message=>object was saved
+        magix.crud-app.databind-grid
+    add=>[/][_data][magix.forms.create-web-part][controls][panel:1][controls]
+      value=>[@][_button]
+    set=>[/][_data][magix.forms.create-web-part][controls][panel:1][controls][_button].Name
+      value=>button
 
     set=>[/][_data][magix.forms.create-web-part][events][magix.crud-app.databind-grid][for-each][_add].Value
       value=>\[/][magix.forms.create-web-part][controls]
