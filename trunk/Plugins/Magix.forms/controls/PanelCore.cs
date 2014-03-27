@@ -90,6 +90,58 @@ namespace Magix.forms
             Ip(e.Params)["_ctrl"].Value = ret;
 		}
 
+		/**
+		 * returns values
+		 */
+        [ActiveEvent(Name = "magix.forms.get-values")]
+        public void magix_forms_get_values(object sender, ActiveEventArgs e)
+        {
+            if (ShouldInspectOrHasInspected(e.Params))
+            {
+                e.Params["inspect"].Value = @"returns the values property of all child controls
+which are direct children of the panel in the [values] node, with name being id of control, 
+and value being the value of the control";
+                return;
+            }
+
+            Panel ctrl = FindControl<Panel>(Ip(e.Params));
+
+            foreach (Control idx in ctrl.Controls)
+            {
+                object value = null;
+                if (idx is Button)
+                    value = (idx as Button).Text;
+                if (idx is CheckBox)
+                    value = (idx as CheckBox).Checked;
+                if (idx is HiddenField)
+                    value = (idx as HiddenField).Value;
+                if (idx is HyperLink)
+                    value = (idx as HyperLink).Text;
+                if (idx is Image)
+                    value = (idx as Image).ImageUrl;
+                if (idx is Label)
+                    value = (idx as Label).Text;
+                if (idx is LinkButton)
+                    value = (idx as LinkButton).Text;
+                if (idx is LiteralControl)
+                    value = (idx as LiteralControl).Text;
+                if (idx is RadioButton)
+                    value = (idx as RadioButton).Checked;
+                if (idx is SelectList)
+                    value = (idx as SelectList).SelectedItem.Value;
+                if (idx is TextArea)
+                    value = (idx as TextArea).Text;
+                if (idx is TextBox)
+                    value = (idx as TextBox).Text;
+                if (idx is Uploader)
+                    value = (idx as Uploader).GetFileName();
+                if (idx is Wysiwyg)
+                    value = (idx as Wysiwyg).Text;
+                if (value != null)
+                    Ip(e.Params)["values"][idx.ID].Value = value;
+            }
+        }
+
 		protected override void Inspect (Node node)
 		{
 			node["event:magix.forms.create-web-part"].Value = null;

@@ -91,7 +91,7 @@ magix.forms.create-web-part
         css=>span-22 last top-3
         controls
           button=>btnClosePreview
-            css=>btn-large span-5 right last
+            css=>span-3 right last
             text=>close preview
             onclick
               magix.viewport.clear-controls
@@ -197,7 +197,6 @@ magix.forms.create-web-part
             _default=>field type ...
             text-box=>text-box
             text-area=>text-area
-            check=>check
         button=>addBtn
           css=>span-3
           text=>+

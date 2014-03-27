@@ -189,7 +189,7 @@ be raised the first time the control is created";
 		protected static T FindControl<T>(Node pars) where T : Control
 		{
 			if (!pars.Contains("id"))
-				throw new ArgumentException("set-value needs [id] parameter");
+				throw new ArgumentException("set-value(s)/get-value(s) needs [id] parameter");
 
 			Node ctrlNode = new Node();
 

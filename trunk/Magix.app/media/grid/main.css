@@ -55,7 +55,7 @@ tbody tr:nth-child(even) td, tbody tr.even td {background:#e5ecf9;}
 tfoot {font-style:italic;}
 caption {background:#eee;}
 div {overflow:visible;}
-input[type=text], input[type=password], textarea {border-left:0px none;border-right:0px none;border-top:1px solid #bbb;border-bottom:1px solid #bbb;padding:0;}
+input[type=text], input[type=password], textarea {border-left:0px none;border-right:0px none;border-top:1px solid #bbb;border-bottom:1px solid #bbb;padding:0;margin-top:0px;margin-bottom:0px;}
 input[type=text] {height:16px;}
 input[type=button] {border:0 none;}
 input[type=checkbox] {height:18px;max-height:18px;margin-bottom:0;margin-left:0;}
