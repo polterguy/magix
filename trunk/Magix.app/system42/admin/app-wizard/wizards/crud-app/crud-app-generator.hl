@@ -30,6 +30,15 @@ which contains logic for crud-app-generated application"
         form-id=>crud-app-main-form
         css=>span-22 last
         events
+
+          magix.crud-app.delete-row
+            set=>[magix.data.remove][id].Value
+              value=>[$][id].Value
+            magix.data.remove
+            magix.crud-app.databind-grid
+            magix.viewport.show-message
+              message=>row was deleted
+
           magix.crud-app.databind-grid
             magix.data.load
             for-each=>[magix.data.load][objects]
@@ -37,6 +46,9 @@ which contains logic for crud-app-generated application"
               _hr
                 tag=>hr
                 css=>clear
+              _link-button
+                css=>span-1 right
+                text=>delete
             magix.forms.create-web-part
               container=>dataGrid
               form-id=>crud-app-grid
@@ -47,6 +59,7 @@ which contains logic for crud-app-generated application"
           dynamic=>dataGrid
           panel=>editWrapper
             default=>addButton
+            css=>clear
       magix.crud-app.databind-grid
 
     set=>[_data][magix.forms.create-web-part][controls][label][text].Value
@@ -63,12 +76,14 @@ which contains logic for crud-app-generated application"
       _text-area
         css=>span-5
         rows=>5
+
       set=>[@][_label][text].Value
         value=>[.][field-name].Value
       add=>[/][_data][magix.forms.create-web-part][controls][panel:0][controls]
         value=>[@][_label]
       set=>[/][_data][magix.forms.create-web-part][controls][panel:0][controls][_label].Name
         value=>label
+
       if=>equals
         lhs=>[.][field-type].Value
         rhs=>text-box
@@ -90,7 +105,7 @@ which contains logic for crud-app-generated application"
             value=>[@][..][..][_text-box]
           set=>[/][_data][magix.forms.create-web-part][controls][panel:1][controls][_text-box].Name
             value=>text-box
-      if=>equals
+      else-if=>equals
         lhs=>[.][field-type].Value
         rhs=>text-area
         code
@@ -111,45 +126,41 @@ which contains logic for crud-app-generated application"
             value=>[@][..][..][_text-area]
           set=>[/][_data][magix.forms.create-web-part][controls][panel:1][controls][_text-area].Name
             value=>text-area
-      if=>equals
-        lhs=>[.][field-type].Value
-        rhs=>check
+
+      set=>[/][_data][magix.forms.create-web-part][events][magix.crud-app.databind-grid][for-each][_set].Value
+        value=>\[@][_text-label][css].Value
+      if=>exist
+        lhs=>[/][_not-first].Value
         code
-      else
-        set=>[/][_data][magix.forms.create-web-part][events][magix.crud-app.databind-grid][for-each][_set].Value
-          value=>\[@][_text-label][css].Value
-        if=>exist
-          lhs=>[/][_not-first].Value
-          code
-            set=>[/][_data][magix.forms.create-web-part][events][magix.crud-app.databind-grid][for-each][_set][value].Value
-              value=>span-5
-        else
           set=>[/][_data][magix.forms.create-web-part][events][magix.crud-app.databind-grid][for-each][_set][value].Value
-            value=>span-5 clear
-        set=>[/][_data][magix.forms.create-web-part][events][magix.crud-app.databind-grid][for-each][_set].Name
-          value=>set
-
-        set=>[/][_data][magix.forms.create-web-part][events][magix.crud-app.databind-grid][for-each][_set].Value
-          value=>\[@][_text-label][text].Value
+            value=>span-5
+      else
         set=>[/][_data][magix.forms.create-web-part][events][magix.crud-app.databind-grid][for-each][_set][value].Value
-          value=>\[.][{0}].Value
-            v0=>[.][field-name].Value
-        set=>[/][_data][magix.forms.create-web-part][events][magix.crud-app.databind-grid][for-each][_set].Name
-          value=>set
+          value=>span-5 clear
+      set=>[/][_data][magix.forms.create-web-part][events][magix.crud-app.databind-grid][for-each][_set].Name
+        value=>set
 
-        set=>[/][_data][magix.forms.create-web-part][events][magix.crud-app.databind-grid][for-each][_add].Value
-          value=>\[/][magix.forms.create-web-part][controls]
-        set=>[/][_data][magix.forms.create-web-part][events][magix.crud-app.databind-grid][for-each][_add][value].Value
-          value=>\[@][_text-label]
-        set=>[/][_data][magix.forms.create-web-part][events][magix.crud-app.databind-grid][for-each][_add].Name
-          value=>add
+      set=>[/][_data][magix.forms.create-web-part][events][magix.crud-app.databind-grid][for-each][_set].Value
+        value=>\[@][_text-label][text].Value
+      set=>[/][_data][magix.forms.create-web-part][events][magix.crud-app.databind-grid][for-each][_set][value].Value
+        value=>\[.][{0}].Value
+          v0=>[.][field-name].Value
+      set=>[/][_data][magix.forms.create-web-part][events][magix.crud-app.databind-grid][for-each][_set].Name
+        value=>set
 
-        set=>[/][_data][magix.forms.create-web-part][events][magix.crud-app.databind-grid][for-each][_set].Value
-          value=>\[/][magix.forms.create-web-part][controls][_text-label].Name
-        set=>[/][_data][magix.forms.create-web-part][events][magix.crud-app.databind-grid][for-each][_set][value].Value
-          value=>label
-        set=>[/][_data][magix.forms.create-web-part][events][magix.crud-app.databind-grid][for-each][_set].Name
-          value=>set
+      set=>[/][_data][magix.forms.create-web-part][events][magix.crud-app.databind-grid][for-each][_add].Value
+        value=>\[/][magix.forms.create-web-part][controls]
+      set=>[/][_data][magix.forms.create-web-part][events][magix.crud-app.databind-grid][for-each][_add][value].Value
+        value=>\[@][_text-label]
+      set=>[/][_data][magix.forms.create-web-part][events][magix.crud-app.databind-grid][for-each][_add].Name
+        value=>add
+
+      set=>[/][_data][magix.forms.create-web-part][events][magix.crud-app.databind-grid][for-each][_set].Value
+        value=>\[/][magix.forms.create-web-part][controls][_text-label].Name
+      set=>[/][_data][magix.forms.create-web-part][events][magix.crud-app.databind-grid][for-each][_set][value].Value
+        value=>label
+      set=>[/][_data][magix.forms.create-web-part][events][magix.crud-app.databind-grid][for-each][_set].Name
+        value=>set
 
       set=>[/][_not-first].Value
         value=>true
@@ -172,12 +183,32 @@ which contains logic for crud-app-generated application"
             value=>
         magix.data.save
         magix.viewport.show-message
-          message=>object was saved
+          message=>row was saved
         magix.crud-app.databind-grid
     add=>[/][_data][magix.forms.create-web-part][controls][panel:1][controls]
       value=>[@][_button]
     set=>[/][_data][magix.forms.create-web-part][controls][panel:1][controls][_button].Name
       value=>button
+
+    set=>[/][_data][magix.forms.create-web-part][events][magix.crud-app.databind-grid][for-each][_set].Value
+      value=>\[@][_link-button][onclick][magix.crud-app.delete-row][id].Value
+    set=>[/][_data][magix.forms.create-web-part][events][magix.crud-app.databind-grid][for-each][_set][value].Value
+      value=>\[.].Name
+    set=>[/][_data][magix.forms.create-web-part][events][magix.crud-app.databind-grid][for-each][_set].Name
+      value=>set
+
+    set=>[/][_data][magix.forms.create-web-part][events][magix.crud-app.databind-grid][for-each][_add].Value
+      value=>\[/][magix.forms.create-web-part][controls]
+    set=>[/][_data][magix.forms.create-web-part][events][magix.crud-app.databind-grid][for-each][_add][value].Value
+      value=>\[@][_link-button]
+    set=>[/][_data][magix.forms.create-web-part][events][magix.crud-app.databind-grid][for-each][_add].Name
+      value=>add
+    set=>[/][_data][magix.forms.create-web-part][events][magix.crud-app.databind-grid][for-each][_set].Value
+      value=>\[/][magix.forms.create-web-part][controls][_link-button].Name
+    set=>[/][_data][magix.forms.create-web-part][events][magix.crud-app.databind-grid][for-each][_set][value].Value
+      value=>link-button
+    set=>[/][_data][magix.forms.create-web-part][events][magix.crud-app.databind-grid][for-each][_set].Name
+      value=>set
 
     set=>[/][_data][magix.forms.create-web-part][events][magix.crud-app.databind-grid][for-each][_add].Value
       value=>\[/][magix.forms.create-web-part][controls]

@@ -10,6 +10,4 @@ if=>not-exist
     magix.data.save
       id=>magix.admin.settings.default-front-end-css-file
       value
-        file=>media\front-end\default.css
-
-
+        file=>media\front-end\hipster.css
