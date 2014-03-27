@@ -371,7 +371,7 @@ the [name] node.&nbsp;&nbsp;the incoming parameters will be used.&nbsp;&nbsp;not
             {
 				// Since this is the Initial Loading of our module
 				// We'll need to make sure our Initial Loading procedure is being
-				// caled, if Module is of type ActiveModule
+				// called, if Module is of type ActiveModule
                 Node nn = e.Extra as Node;
                 ctrl.Init +=
                     delegate
