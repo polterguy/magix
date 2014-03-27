@@ -61,6 +61,13 @@ set=>[magix.forms.create-web-part][events][magix.crud-app.generate-application][
 set=>[magix.forms.create-web-part][events][magix.crud-app.preview-application][set][value][v0].Value
   value=>[$][name].Value
 
+set=>[magix.forms.create-web-part][events][magix.crud-app.preview-application][magix.forms.create-web-part][controls][label:1][text].Value
+  value=>@"inspect=>@""to open application, use code below""
+execute-file=>system42\admin\apps\{0}.hl
+  css=>span-22
+  container=>content3"
+    v0=>[$][name].Value
+
 magix.forms.create-web-part
   container=>content2
   form-id=>init-app
@@ -90,6 +97,11 @@ magix.forms.create-web-part
         form-id=>close-preview
         css=>span-22 last top-3
         controls
+          label=>spacer
+            tag=>hr
+          label=>runDescription
+            css=>span-10
+            tag=>pre
           button=>btnClosePreview
             css=>span-3 right last
             text=>close preview
@@ -294,6 +306,10 @@ magix.forms.create-web-part
           container=>content3
         magix.viewport.clear-controls
           container=>content4
+        magix.viewport.clear-controls
+          container=>content5
+        magix.viewport.clear-controls
+          container=>content6
     button=>deleteApp
       css=>span-3 top-1
       text=>delete
