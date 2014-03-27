@@ -22,18 +22,27 @@ which contains logic for crud-app-generated application"
         code
           set=>[magix.forms.create-web-part][css].Value
             value=>[$][css].Value
-      magix.data.load
-      for-each=>[magix.data.load][objects]
-        _text-label
-        _hr
-          tag=>hr
       magix.forms.create-web-part
         container=>content1
         form-id=>crud-app-main-form
         css=>span-22 last
+        events
+          magix.crud-app.databind-grid
+            magix.data.load
+            for-each=>[magix.data.load][objects]
+              _text-label
+              _hr
+                tag=>hr
+                css=>clear
+            magix.forms.create-web-part
+              container=>dataGrid
+              form-id=>crud-app-grid
         controls
           label=>lblHeader
             tag=>h2
+          panel=>headerWrapper
+          dynamic=>dataGrid
+      magix.crud-app.databind-grid
 
     set=>[_data][magix.forms.create-web-part][controls][label][text].Value
       value=>[_pars][name].Value
@@ -43,70 +52,70 @@ which contains logic for crud-app-generated application"
     for-each=>[_pars][fields]
       _label
         css=>span-5
-        tag=>label
+        tag=>h3
       set=>[@][_label][text].Value
         value=>[.][field-name].Value
-      add=>[/][_data][magix.forms.create-web-part][controls]
+      add=>[/][_data][magix.forms.create-web-part][controls][panel:0][controls]
         value=>[@][_label]
-      set=>[/][_data][magix.forms.create-web-part][controls][_label].Name
+      set=>[/][_data][magix.forms.create-web-part][controls][panel:0][controls][_label].Name
         value=>label
       if=>equals
         lhs=>[.][field-type].Value
         rhs=>check
         code
       else
-        set=>[/][_data][for-each][_set].Value
+        set=>[/][_data][magix.forms.create-web-part][events][magix.crud-app.databind-grid][for-each][_set].Value
           value=>\[@][_text-label][css].Value
         if=>exist
           lhs=>[/][_not-first].Value
           code
-            set=>[/][_data][for-each][_set][value].Value
+            set=>[/][_data][magix.forms.create-web-part][events][magix.crud-app.databind-grid][for-each][_set][value].Value
               value=>span-5
         else
-          set=>[/][_data][for-each][_set][value].Value
+          set=>[/][_data][magix.forms.create-web-part][events][magix.crud-app.databind-grid][for-each][_set][value].Value
             value=>span-5 clear
-        set=>[/][_data][for-each][_set].Name
+        set=>[/][_data][magix.forms.create-web-part][events][magix.crud-app.databind-grid][for-each][_set].Name
           value=>set
 
-        set=>[/][_data][for-each][_set].Value
+        set=>[/][_data][magix.forms.create-web-part][events][magix.crud-app.databind-grid][for-each][_set].Value
           value=>\[@][_text-label][text].Value
-        set=>[/][_data][for-each][_set][value].Value
+        set=>[/][_data][magix.forms.create-web-part][events][magix.crud-app.databind-grid][for-each][_set][value].Value
           value=>\[.][{0}].Value
             v0=>[.][field-name].Value
-        set=>[/][_data][for-each][_set].Name
+        set=>[/][_data][magix.forms.create-web-part][events][magix.crud-app.databind-grid][for-each][_set].Name
           value=>set
 
-        set=>[/][_data][for-each][_add].Value
+        set=>[/][_data][magix.forms.create-web-part][events][magix.crud-app.databind-grid][for-each][_add].Value
           value=>\[/][magix.forms.create-web-part][controls]
-        set=>[/][_data][for-each][_add][value].Value
+        set=>[/][_data][magix.forms.create-web-part][events][magix.crud-app.databind-grid][for-each][_add][value].Value
           value=>\[@][_text-label]
-        set=>[/][_data][for-each][_add].Name
+        set=>[/][_data][magix.forms.create-web-part][events][magix.crud-app.databind-grid][for-each][_add].Name
           value=>add
 
-        set=>[/][_data][for-each][_set].Value
+        set=>[/][_data][magix.forms.create-web-part][events][magix.crud-app.databind-grid][for-each][_set].Value
           value=>\[/][magix.forms.create-web-part][controls][_text-label].Name
-        set=>[/][_data][for-each][_set][value].Value
+        set=>[/][_data][magix.forms.create-web-part][events][magix.crud-app.databind-grid][for-each][_set][value].Value
           value=>label
-        set=>[/][_data][for-each][_set].Name
+        set=>[/][_data][magix.forms.create-web-part][events][magix.crud-app.databind-grid][for-each][_set].Name
           value=>set
 
       set=>[/][_not-first].Value
         value=>true
 
-    set=>[/][_data][for-each][_add].Value
+    set=>[/][_data][magix.forms.create-web-part][events][magix.crud-app.databind-grid][for-each][_add].Value
       value=>\[/][magix.forms.create-web-part][controls]
-    set=>[/][_data][for-each][_add][value].Value
+    set=>[/][_data][magix.forms.create-web-part][events][magix.crud-app.databind-grid][for-each][_add][value].Value
       value=>\[@][_hr]
-    set=>[/][_data][for-each][_add].Name
+    set=>[/][_data][magix.forms.create-web-part][events][magix.crud-app.databind-grid][for-each][_add].Name
       value=>add
-    set=>[/][_data][for-each][_set].Value
+    set=>[/][_data][magix.forms.create-web-part][events][magix.crud-app.databind-grid][for-each][_set].Value
       value=>\[/][magix.forms.create-web-part][controls][_hr].Name
-    set=>[/][_data][for-each][_set][value].Value
+    set=>[/][_data][magix.forms.create-web-part][events][magix.crud-app.databind-grid][for-each][_set][value].Value
       value=>label
-    set=>[/][_data][for-each][_set].Name
+    set=>[/][_data][magix.forms.create-web-part][events][magix.crud-app.databind-grid][for-each][_set].Name
       value=>set
 
-    set=>[_data][magix.data.load][prototype][type].Value
+    set=>[_data][magix.forms.create-web-part][events][magix.crud-app.databind-grid][magix.data.load][prototype][type].Value
       value=>[_pars][datasource].Value
 
     set=>[magix.code.node-2-code][json].Value
