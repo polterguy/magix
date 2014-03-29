@@ -324,6 +324,10 @@ magix.forms.create-web-part
               container=>content3
             magix.viewport.clear-controls
               container=>content4
+            magix.viewport.clear-controls
+              container=>content5
+            magix.viewport.clear-controls
+              container=>content6
             magix.viewport.show-message
               message=>crud application was deleted
     button=>generateApp

@@ -65,11 +65,16 @@ which contains logic for crud-app-generated application"
                 tag=>hr
                 css=>clear
               _link-button
-                css=>span-1 right
+                css=>span-1 right clear
                 text=>delete
               _link-button2
                 css=>span-1 right
                 text=>edit
+                onclick
+                  magix.forms.set-visible
+                    form-id=>crud-app-main-form
+                    id=>cancelButton
+                    value=>true
             magix.forms.create-web-part
               container=>dataGrid
               form-id=>crud-app-grid
@@ -92,7 +97,7 @@ which contains logic for crud-app-generated application"
     _not-first
     for-each=>[_pars][fields]
       _label
-        css=>span-5
+        css=>span-5 bottom-1
         tag=>h3
       _text-box
         css=>span-5
@@ -189,13 +194,14 @@ which contains logic for crud-app-generated application"
         value=>true
 
     _button=>addButton
-      css=>span-3 right
+      css=>span-3 right clear
       text=>update
       onclick
         magix.forms.get-values
           form-id=>crud-app-main-form
           id=>editWrapper
         set=>[magix.forms.get-values][values][addButton]
+        set=>[magix.forms.get-values][values][cancelButton]
         for-each=>[magix.forms.get-values][values]
           set=>[/][magix.data.save][value][[.].Name].Value
             value=>[.].Value
@@ -204,6 +210,10 @@ which contains logic for crud-app-generated application"
           magix.forms.set-value
             form-id=>crud-app-main-form
             value=>
+        magix.forms.set-visible
+          form-id=>crud-app-main-form
+          id=>cancelButton
+          value=>false
         magix.forms.get-value
           form-id=>crud-app-main-form
           id=>editingRow
@@ -224,6 +234,35 @@ which contains logic for crud-app-generated application"
     add=>[/][_data][magix.forms.create-web-part][controls][panel:1][controls]
       value=>[@][_button]
     set=>[/][_data][magix.forms.create-web-part][controls][panel:1][controls][_button].Name
+      value=>button
+
+    _button2=>cancelButton
+      css=>span-3 right
+      text=>cancel
+      visible=>false
+      onclick
+        magix.forms.get-values
+          form-id=>crud-app-main-form
+          id=>editWrapper
+        set=>[magix.forms.get-values][values][cancelButton]
+        set=>[magix.forms.get-values][values][addButton]
+        for-each=>[magix.forms.get-values][values]
+          set=>[@][magix.forms.set-value][id].Value
+            value=>[.].Name
+          magix.forms.set-value
+            form-id=>crud-app-main-form
+            value=>
+        magix.forms.set-value
+          form-id=>crud-app-main-form
+          id=>editingRow
+          value=>
+        magix.forms.set-visible
+          form-id=>crud-app-main-form
+          id=>cancelButton
+          value=>false
+    add=>[/][_data][magix.forms.create-web-part][controls][panel:1][controls]
+      value=>[@][_button2]
+    set=>[/][_data][magix.forms.create-web-part][controls][panel:1][controls][_button2].Name
       value=>button
 
     set=>[/][_data][magix.forms.create-web-part][events][magix.crud-app.databind-grid][for-each][_set].Value
