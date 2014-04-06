@@ -9,12 +9,63 @@ for-each=>[$]
 set=>[session-event][code][_button][onclick][magix.data.save][value][type].Value
   value=>[$][datasource].Value
 
+set=>[session-event][code][_data][magix.forms.create-web-part][controls][panel][controls][link-button:0][onclick][execute-file].Value
+  value=>@"system42\admin\apps\{0}.hl"
+    v0=>[$][name].Value
+set=>[session-event][code][_data][magix.forms.create-web-part][controls][panel][controls][link-button:1][onclick][execute-file].Value
+  value=>@"system42\admin\apps\{0}.hl"
+    v0=>[$][name].Value
+
 session-event=>magix.crud-app-generator.create-application
   code
     session-event=>magix.crud-app-generator.create-application
     _data
       inspect=>@"automatically generated file
 which contains logic for crud-app-generated application"
+      if=>not-exist
+        lhs=>[$][start]
+        code
+          set=>[$][start].Value
+            value=>0
+      if=>not-exist
+        lhs=>[$][end]
+        code
+          set=>[$][end].Value
+            value=>10
+
+      for-each=>[$]
+        set=>[/][magix.forms.create-web-part][controls][panel][controls][link-button:0][onclick][execute-file][[.].Name].Value
+          value=>[.].Value
+        set=>[/][magix.forms.create-web-part][controls][panel][controls][link-button:1][onclick][execute-file][[.].Name].Value
+          value=>[.].Value
+
+      using=>magix.math
+        add
+          =>[$][start].Value
+          =>10
+      using=>magix.math
+        add
+          =>[$][end].Value
+          =>10
+
+      using=>magix.math
+        subtract
+          =>[$][start].Value
+          =>10
+      using=>magix.math
+        subtract
+          =>[$][end].Value
+          =>10
+      set=>[magix.forms.create-web-part][controls][panel][controls][link-button:0][onclick][execute-file][start].Value
+        value=>[using:0][add].Value
+      set=>[magix.forms.create-web-part][controls][panel][controls][link-button:0][onclick][execute-file][end].Value
+        value=>[using:1][add].Value
+
+      set=>[magix.forms.create-web-part][controls][panel][controls][link-button:1][onclick][execute-file][start].Value
+        value=>[using:2][subtract].Value
+      set=>[magix.forms.create-web-part][controls][panel][controls][link-button:1][onclick][execute-file][end].Value
+        value=>[using:3][subtract].Value
+
       if=>exist
         lhs=>[$][container]
         code
@@ -25,6 +76,19 @@ which contains logic for crud-app-generated application"
         code
           set=>[magix.forms.create-web-part][css].Value
             value=>[$][css].Value
+
+      if=>exist
+        lhs=>[$][start]
+        code
+          set=>[magix.forms.create-web-part][events][magix.crud-app.databind-grid][magix.data.load][start].Value
+            value=>[$][start].Value
+
+      if=>exist
+        lhs=>[$][end]
+        code
+          set=>[magix.forms.create-web-part][events][magix.crud-app.databind-grid][magix.data.load][end].Value
+            value=>[$][end].Value
+
       magix.forms.create-web-part
         container=>content1
         form-id=>crud-app-main-form
@@ -58,7 +122,52 @@ which contains logic for crud-app-generated application"
               id=>editingRow
 
           magix.crud-app.databind-grid
+            set=>[magix.data.count][prototype][type].Value
+              value=>[magix.data.load][prototype][type].Value
+            magix.data.count
+            if=>less-then
+              lhs=>[magix.data.count][count].Value
+              rhs=>[magix.data.load][end].Value
+              code
+                set=>[set:1][value][v1].Value
+                  value=>[magix.data.count][count].Value
+            set=>[magix.forms.set-value][value].Value
+              value=>@"{0}/{1} of {2}"
+                v0=>[magix.data.load][start].Value
+                v1=>[magix.data.load][end].Value
+                v2=>[magix.data.count][count].Value
+            magix.forms.set-value
+              id=>pageTxt
+              form-id=>crud-app-main-form
+            if=>more-then
+              lhs=>[magix.data.load][start].Value
+              rhs=>0
+              code
+                magix.forms.set-enabled
+                  form-id=>crud-app-main-form
+                  id=>previous
+                  value=>true
+            else
+              magix.forms.set-enabled
+                form-id=>crud-app-main-form
+                id=>previous
+                value=>false
+            if=>less-then
+              lhs=>[magix.data.load][end].Value
+              rhs=>[magix.data.count][count].Value
+              code
+                magix.forms.set-enabled
+                  form-id=>crud-app-main-form
+                  id=>next
+                  value=>true
+            else
+              magix.forms.set-enabled
+                form-id=>crud-app-main-form
+                id=>next
+                value=>false
             magix.data.load
+              start=>0
+              end=>10
             for-each=>[magix.data.load][objects]
               _text-label
               _hr
@@ -84,6 +193,15 @@ which contains logic for crud-app-generated application"
           panel=>headerWrapper
             controls
               hidden=>editingRow
+              link-button=>next
+                css=>span-1 last right
+                text=>&gt;&gt;
+              link-button=>previous
+                css=>span-1 right
+                text=>&lt;&lt;
+              label=>pageTxt
+                css=>span-2 right clear last
+                text=>x-y of z
           dynamic=>dataGrid
           panel=>editWrapper
             default=>addButton
