@@ -65,7 +65,9 @@ set=>[magix.forms.create-web-part][events][magix.crud-app.preview-application][m
   value=>@"inspect=>@""to open application, use code below""
 execute-file=>system42\admin\apps\{0}.hl
   css=>span-22
-  container=>content3"
+  container=>content3
+  start=>0
+  end=>10"
     v0=>[$][name].Value
 
 magix.forms.create-web-part
