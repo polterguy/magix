@@ -81,34 +81,49 @@ namespace Magix.Core
 				valueToSet = string.Format(valueToSet.ToString(), arrs);
 			}
 
-			if (valueToSet == null && !noRemove)
-			{
-				Remove(exprDestination, source, ip);
-				return;
-			}
+            if (valueToSet == null && !noRemove)
+            {
+                // Removing node or value
+                string lastEntity = "";
+                Node x = GetNode(exprDestination, source, ip, ref lastEntity, false);
 
-			string lastEntity = "";
-			Node x = GetNode(exprDestination, source, ip, ref lastEntity, true);
+                if (x == null)
+                    return;
 
-			if (lastEntity.StartsWith(".Value"))
-			{
-               x.Value = valueToSet;
-			}
-            else if (lastEntity.StartsWith(".Name"))
-			{
-				if (!(valueToSet is string))
-					throw new ArgumentException("Cannot set the Name of a node to something which is not a string literal");
-                x.Name = valueToSet.ToString();
-			}
-            else if (lastEntity == "")
-			{
-				Node clone = (valueToSet as Node).Clone();
-				x.ReplaceChildren(clone);
-				x.Name = clone.Name;
-				x.Value = clone.Value;
-			}
+                if (lastEntity == ".Value")
+                    x.Value = null;
+                else if (lastEntity == ".Name")
+                    throw new ArgumentException("cannot remove a name of a node");
+                else if (lastEntity == "")
+                    x.UnTie();
+                else
+                    throw new ArgumentException("couldn't understand the last parts of your expression '" + lastEntity + "'");
+            }
             else
-                throw new ArgumentException("Couldn't understand the last parts of your expression '" + lastEntity + "'");
+            {
+                string lastEntity = "";
+                Node x = GetNode(exprDestination, source, ip, ref lastEntity, true);
+
+                if (lastEntity.StartsWith(".Value"))
+                {
+                    x.Value = valueToSet;
+                }
+                else if (lastEntity.StartsWith(".Name"))
+                {
+                    if (!(valueToSet is string))
+                        throw new ArgumentException("Cannot set the Name of a node to something which is not a string literal");
+                    x.Name = valueToSet.ToString();
+                }
+                else if (lastEntity == "")
+                {
+                    Node clone = (valueToSet as Node).Clone();
+                    x.ReplaceChildren(clone);
+                    x.Name = clone.Name;
+                    x.Value = clone.Value;
+                }
+                else
+                    throw new ArgumentException("Couldn't understand the last parts of your expression '" + lastEntity + "'");
+            }
 		}
 
 		// Helper for finding nodes
@@ -130,12 +145,9 @@ namespace Magix.Core
                 char tmp = expr[idx];
                 if (isInside)
                 {
-					if (tmp == '[')
+					if (tmp == '[' && string.IsNullOrEmpty(bufferNodeName))
 					{
 						// Nested statement
-						if (!string.IsNullOrEmpty (bufferNodeName))
-							throw new ArgumentException("Don't understand: " + bufferNodeName);
-
 						// Spooling forward to end of nested statement
 						string entireSubStatement = "";
 						int braceIndex = 0;
@@ -210,44 +222,72 @@ namespace Magix.Core
                             isInside = false;
                             continue;
                         }
-						else if (bufferNodeName.Contains(":"))
-						{
-							int idxNo = int.Parse(bufferNodeName.Split(':')[1].TrimStart());
-							int curNo = 0;
-							int totIdx = 0;
-							bool found = false;
-							bufferNodeName = bufferNodeName.Split(':')[0].TrimEnd();
+                        else if (bufferNodeName.Contains("=>"))
+                        {
+                            string[] splits = bufferNodeName.Split(new string[] { "=>" }, StringSplitOptions.None);
+                            string name = splits[0];
+                            string value = splits[1];
 
-							foreach (Node idxNode in x)
-							{
-								if (idxNode.Name == bufferNodeName)
-								{
-									if (curNo++ == idxNo)
-									{
-										found = true;
-										x = x[totIdx];
-										break;
-									}
-								}
-								totIdx += 1;
-							}
-							if (!found)
-							{
-								if (forcePath)
-								{
-									while (idxNo >= curNo++)
-									{
-										x.Add(new Node(bufferNodeName));
-									}
-									x = x[x.Count - 1];
-								}
-								else
-									return null;
-							}
-							bufferNodeName = "";
-							isInside = false;
-							continue;
-						}
+                            foreach (Node idxNode in x)
+                            {
+                                if (idxNode.Name == name && idxNode.Get<string>() == value)
+                                {
+                                    x = idxNode;
+                                    bufferNodeName = "";
+                                    break;
+                                }
+                            }
+                            if (!string.IsNullOrEmpty(bufferNodeName))
+                            {
+                                // didn't find criteria
+                                if (!forcePath)
+                                    return null;
+
+                                // creating node with given value
+                                x.Add(new Node(name, value));
+                                x = x[x.Count - 1];
+                            }
+                            isInside = false;
+                            continue;
+                        }
+                        else if (bufferNodeName.Contains(":"))
+                        {
+                            int idxNo = int.Parse(bufferNodeName.Split(':')[1].TrimStart());
+                            int curNo = 0;
+                            int totIdx = 0;
+                            bool found = false;
+                            bufferNodeName = bufferNodeName.Split(':')[0].TrimEnd();
+
+                            foreach (Node idxNode in x)
+                            {
+                                if (idxNode.Name == bufferNodeName)
+                                {
+                                    if (curNo++ == idxNo)
+                                    {
+                                        found = true;
+                                        x = x[totIdx];
+                                        break;
+                                    }
+                                }
+                                totIdx += 1;
+                            }
+                            if (!found)
+                            {
+                                if (forcePath)
+                                {
+                                    while (idxNo >= curNo++)
+                                    {
+                                        x.Add(new Node(bufferNodeName));
+                                    }
+                                    x = x[x.Count - 1];
+                                }
+                                else
+                                    return null;
+                            }
+                            bufferNodeName = "";
+                            isInside = false;
+                            continue;
+                        }
                         else
                         {
                             foreach (char idxC in bufferNodeName)
@@ -261,31 +301,31 @@ namespace Magix.Core
                             if (allNumber)
                             {
                                 int intIdx = int.Parse(bufferNodeName);
-								if (x.Count > intIdx)
-									x = x[intIdx];
-								else if (forcePath)
-								{
-									while (x.Count <= intIdx)
-									{
-										x.Add(new Node("item"));
-									}
-									x = x[intIdx];
-								}
-								else
-									return null;
+                                if (x.Count > intIdx)
+                                    x = x[intIdx];
+                                else if (forcePath)
+                                {
+                                    while (x.Count <= intIdx)
+                                    {
+                                        x.Add(new Node("item"));
+                                    }
+                                    x = x[intIdx];
+                                }
+                                else
+                                    return null;
                             }
                             else
                             {
-								if (x.Contains(bufferNodeName))
-									x = x[bufferNodeName];
-								else if (forcePath)
-								{
-									x = x[bufferNodeName];
-								}
-								else
-								{
-									return null;
-								}
+                                if (x.Contains(bufferNodeName))
+                                    x = x[bufferNodeName];
+                                else if (forcePath)
+                                {
+                                    x = x[bufferNodeName];
+                                }
+                                else
+                                {
+                                    return null;
+                                }
                             }
                             bufferNodeName = "";
                             isInside = false;
@@ -306,24 +346,6 @@ namespace Magix.Core
                 }
             }
 			return x;
-		}
-
-		private static void Remove(string expression, Node source, Node ip)
-		{
-			string lastEntity = "";
-			Node x = GetNode(expression, source, ip, ref lastEntity, false);
-
-			if (x == null)
-				return;
-
-            if (lastEntity == ".Value")
-				x.Value = null;
-            else if (lastEntity == ".Name")
-				throw new ArgumentException("cannot remove a name of a node");
-            else if (lastEntity == "")
-                x.UnTie ();
-            else
-                throw new ArgumentException("couldn't understand the last parts of your expression '" + lastEntity + "'");
 		}
 	}
 }
