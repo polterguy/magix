@@ -9,10 +9,10 @@ for-each=>[$]
 set=>[session-event][code][_button][onclick][magix.data.save][value][type].Value
   value=>[$][datasource].Value
 
-set=>[session-event][code][_data][magix.forms.create-web-part][controls][panel][controls][link-button:0][onclick][execute-file].Value
+set=>[session-event][code][_data][magix.forms.create-web-part][controls][panel][controls][link-button=>next][onclick][execute-file].Value
   value=>@"system42\admin\apps\{0}.hl"
     v0=>[$][name].Value
-set=>[session-event][code][_data][magix.forms.create-web-part][controls][panel][controls][link-button:1][onclick][execute-file].Value
+set=>[session-event][code][_data][magix.forms.create-web-part][controls][panel][controls][link-button=>previous][onclick][execute-file].Value
   value=>@"system42\admin\apps\{0}.hl"
     v0=>[$][name].Value
 
@@ -34,9 +34,9 @@ which contains logic for crud-app-generated application"
             value=>10
 
       for-each=>[$]
-        set=>[/][magix.forms.create-web-part][controls][panel][controls][link-button:0][onclick][execute-file][[.].Name].Value
+        set=>[/][magix.forms.create-web-part][controls][panel][controls][link-button=>next][onclick][execute-file][[.].Name].Value
           value=>[.].Value
-        set=>[/][magix.forms.create-web-part][controls][panel][controls][link-button:1][onclick][execute-file][[.].Name].Value
+        set=>[/][magix.forms.create-web-part][controls][panel][controls][link-button=>previous][onclick][execute-file][[.].Name].Value
           value=>[.].Value
 
       using=>magix.math
@@ -56,14 +56,14 @@ which contains logic for crud-app-generated application"
         subtract
           =>[$][end].Value
           =>10
-      set=>[magix.forms.create-web-part][controls][panel][controls][link-button:0][onclick][execute-file][start].Value
+      set=>[magix.forms.create-web-part][controls][panel][controls][link-button=>next][onclick][execute-file][start].Value
         value=>[using:0][add].Value
-      set=>[magix.forms.create-web-part][controls][panel][controls][link-button:0][onclick][execute-file][end].Value
+      set=>[magix.forms.create-web-part][controls][panel][controls][link-button=>next][onclick][execute-file][end].Value
         value=>[using:1][add].Value
 
-      set=>[magix.forms.create-web-part][controls][panel][controls][link-button:1][onclick][execute-file][start].Value
+      set=>[magix.forms.create-web-part][controls][panel][controls][link-button=>previous][onclick][execute-file][start].Value
         value=>[using:2][subtract].Value
-      set=>[magix.forms.create-web-part][controls][panel][controls][link-button:1][onclick][execute-file][end].Value
+      set=>[magix.forms.create-web-part][controls][panel][controls][link-button=>previous][onclick][execute-file][end].Value
         value=>[using:3][subtract].Value
 
       if=>exist
