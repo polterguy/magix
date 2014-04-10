@@ -93,7 +93,7 @@ for-each=>[magix.file.list-files][files]
     lhs=>[$][directory]
     code
       set=>[@][replace][what].Value
-        value=>@"{0}/"
+        value=>@"{0}\"
           pr0=>@"[$][directory].Value"
       replace=>[/][_link-button][text].Value
   set=>[/][_link-button][onclick][magix.admin.edit-file][file].Value
@@ -114,7 +114,7 @@ for-each=>[magix.file.list-directories][directories]
     lhs=>[$][directory]
     code
       set=>[@][replace][what].Value
-        value=>@"{0}/"
+        value=>@"{0}\"
           pr0=>@"[$][directory].Value"
       replace=>[/][_link-buttonDir][text].Value
   add=>[/][magix.forms.create-web-part][controls]

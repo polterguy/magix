@@ -8,7 +8,6 @@
 
 <mux:Panel
 	runat="server"
-	DefaultWidget="save"
 	id="wrp">
 	<label class="fill-width">file name</label>
 	<mux:TextBox
