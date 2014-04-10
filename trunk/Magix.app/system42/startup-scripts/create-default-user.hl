@@ -13,7 +13,7 @@ if=>equals
     magix.data.save
       value
         type=>magix.core.user
-        name=>Homo Jesus
+        name=>Phosphorus Admin
         username=>admin
         pwd=>admin
         roles

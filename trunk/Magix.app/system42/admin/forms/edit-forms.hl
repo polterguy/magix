@@ -621,39 +621,6 @@ magix.forms.create-web-part
 <p>below is your form in executable style, meaning
 all events and everything is hooked up and ready to be tested<br/>
 {{
-check=>showgrid
-  checked=>true
-  oncheckedchanged
-    magix.forms.get-value
-      form-id=>myPage
-      id=>showgrid
-    magix.forms.get-value
-      form-id=>edit-forms
-      id=>name
-    set=>[if][magix.forms.add-css][form-id].Value
-      value=>[magix.forms.get-value:1][value].Value
-    set=>[else][magix.forms.remove-css][form-id].Value
-      value=>[magix.forms.get-value:1][value].Value
-    if=>exists
-      lhs=>[magix.forms.get-value][value].Value
-      code
-        magix.forms.add-css
-          form-id=>preview-form
-          id=>content7
-          css=>showgrid
-    else
-      magix.forms.remove-css
-        form-id=>preview-form
-        id=>content7
-        css=>showgrid
-label=>descr
-  tag=>label
-  for=>showgrid
-  text=>show grid
-  tip=>@""hides or shows the grid system behind the preview of your form, 
-such that you can see if it is aligned according to the typography system
-in magix""
-}}&nbsp;&nbsp;{{
 link-button=>closepreview
   text=>close preview
   onclick
