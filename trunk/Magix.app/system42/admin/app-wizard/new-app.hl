@@ -2,7 +2,6 @@
 
 inspect=>@"initializes the common settings for a 
 new wizard application"
-
 _data
 set=>[_data].Value
   value=>[$][file].Value

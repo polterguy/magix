@@ -202,6 +202,19 @@ shortcuts in the system.&nbsp;&nbsp;thread safe"
           magix.viewport.clear-controls
             container=>content5
           magix.help.start-help
+      _default_scriptQrCode
+        text=>qr codes
+        category=>tools
+        code
+          magix.viewport.clear-controls
+            container=>content2
+          magix.viewport.clear-controls
+            container=>content3
+          magix.viewport.clear-controls
+            container=>content4
+          magix.viewport.clear-controls
+            container=>content5
+          execute-file=>system42\admin\tools\qr-code-generator.hl
     for-each=>[_scripts]
       add=>[$][scripts]
         value=>[.]

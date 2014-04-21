@@ -117,9 +117,10 @@ be an expression referencing another node, which will be executed instead of the
 incoming parameter nodes.&nbsp;&nbsp;
 thread safe";
 				e.Params["_data"]["value"].Value = "thomas";
-				e.Params["if"].Value = "[_data][value].Value==thomas";
-				e.Params["if"]["magix.viewport.show-message"].Value = null;
-				e.Params["if"]["magix.viewport.show-message"]["message"].Value = "hi thomas";
+				e.Params["if"].Value = "equals";
+                e.Params["if"]["lhs"].Value = "[_data][value].Value";
+                e.Params["if"]["rhs"].Value = "thomas";
+                e.Params["if"]["code"]["magix.viewport.show-message"]["message"].Value = "hi thomas";
 				e.Params["else"]["magix.viewport.show-message"].Value = null;
 				e.Params["else"]["magix.viewport.show-message"]["message"].Value = "hi stranger";
 				return;

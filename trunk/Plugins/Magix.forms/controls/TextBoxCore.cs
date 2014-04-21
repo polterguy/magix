@@ -71,17 +71,23 @@ namespace Magix.forms
 				case "normal":
 					ret.TextMode = TextBox.TextBoxMode.Normal;
 					break;
-				case "phone":
+                case "password":
+                    ret.TextMode = TextBox.TextBoxMode.Password;
+                    break;
+                case "email":
+                    ret.TextMode = TextBox.TextBoxMode.Email;
+                    break;
+                case "phone":
 					ret.TextMode = TextBox.TextBoxMode.Phone;
 					break;
-				case "search":
+                case "number":
+                    ret.TextMode = TextBox.TextBoxMode.Number;
+                    break;
+                case "search":
 					ret.TextMode = TextBox.TextBoxMode.Search;
 					break;
 				case "url":
 					ret.TextMode = TextBox.TextBoxMode.Url;
-					break;
-				case "email":
-					ret.TextMode = TextBox.TextBoxMode.Email;
 					break;
 				case "datetime":
 					ret.TextMode = TextBox.TextBoxMode.DateTime;
@@ -101,17 +107,11 @@ namespace Magix.forms
 				case "datetimelocal":
 					ret.TextMode = TextBox.TextBoxMode.DateTimeLocal;
 					break;
-				case "number":
-					ret.TextMode = TextBox.TextBoxMode.Number;
-					break;
 				case "range":
 					ret.TextMode = TextBox.TextBoxMode.Range;
 					break;
 				case "color":
 					ret.TextMode = TextBox.TextBoxMode.Color;
-					break;
-				case "password":
-					ret.TextMode = TextBox.TextBoxMode.Password;
 					break;
 				}
 			}

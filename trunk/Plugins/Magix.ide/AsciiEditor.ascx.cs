@@ -67,18 +67,28 @@ namespace Magix.ide
 				"magix.ide.file-saved",
 				tmp);
 		}
-		
-		protected void delete_Click(object sender, EventArgs e)
-		{
-			Node c = new Node();
-			c["message"].Value = "are you sure you wish to delete the file " + path.Text + "?";
-			c["code"]["magix.file.save"].Value = path.Text;
-			c["code"]["magix.ide.file-deleted"]["path"].Value = path.Text;
 
-			RaiseEvent(
-				"magix.viewport.confirm",
-				c);
-		}
-	}
+        protected void delete_Click(object sender, EventArgs e)
+        {
+            Node c = new Node();
+            c["message"].Value = "are you sure you wish to delete the file " + path.Text + "?";
+            c["code"]["magix.file.delete"].Value = path.Text;
+            c["code"]["magix.ide.file-deleted"]["path"].Value = path.Text;
+
+            RaiseEvent(
+                "magix.viewport.confirm",
+                c);
+        }
+
+        protected void close_Click(object sender, EventArgs e)
+        {
+            Node c = new Node();
+            c["container"].Value = this.Parent.ID;
+
+            RaiseEvent(
+                "magix.viewport.clear-controls",
+                c);
+        }
+    }
 }
 
