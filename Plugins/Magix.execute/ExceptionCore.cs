@@ -44,8 +44,8 @@ statement.&nbsp;&nbsp;thread safe";
 				e.Params["try"].Value = null;
 				e.Params["try"]["code"]["throw"].Value = "to try or not to try";
 				e.Params["try"]["code"]["magix.viewport.show-message"]["message"].Value = "crap, didn't work";
-				e.Params["try"]["catch"]["set"].Value = "[magix.viewport.show-message][message].Value";
-				e.Params["try"]["catch"]["set"]["value"].Value = "[exception].Value";
+				e.Params["try"]["catch"]["set"].Value = "[@][magix.viewport.show-message][message].Value";
+				e.Params["try"]["catch"]["set"]["value"].Value = "[@][exception].Value";
 				e.Params["try"]["catch"]["magix.viewport.show-message"].Value = null;
 				return;
 			}
