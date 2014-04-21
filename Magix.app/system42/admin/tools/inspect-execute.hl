@@ -7,6 +7,7 @@ the user to inspect them by clicking them"
 
 magix.admin.get-active-events
   begins-with=>magix.execute.
+  all=>false
 set=>[magix.admin.get-active-events].Name
   value=>Data
 for-each=>[Data][events]
@@ -42,6 +43,8 @@ for-each=>[Data][events]
           value
         set=>[0][inspect].Name
           value=>inspect
+        magix.viewport.clear-controls
+          container=>content2
   set=>[.ip][..][_tpl][link-button][onclick][0].Name
     value=>[.].Name
   set=>[.ip][..][_tpl][link-button][text].Value

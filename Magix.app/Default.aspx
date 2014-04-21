@@ -7,7 +7,7 @@
 <!DOCTYPE html>
 <html>
     <head id="Head1" runat="server">
-        <title>Magix Illuminate - Crescent Moon!</title>
+        <title>Magix Illuminate - Phosphorus!</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     </head>
     <body>

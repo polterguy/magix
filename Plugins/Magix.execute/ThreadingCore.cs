@@ -30,9 +30,14 @@ namespace Magix.execute
 			{
 				e.Params["event:magix.execute"].Value = null;
 				e.Params["fork"]["_data"]["value"].Value = "thomas";
-				e.Params["fork"]["if"].Value = "[_data][value].Value==thomas";
-				e.Params["fork"]["if"]["raise"].Value = "magix.viewport.show-message";
-				e.Params["fork"]["if"]["raise"]["message"].Value = "hi thomas";
+				e.Params["fork"]["if"].Value = "equals";
+                e.Params["fork"]["if"]["lhs"].Value = "[_data][value].Value";
+                e.Params["fork"]["if"]["rhs"].Value = "thomas";
+			    e.Params["fork"]["if"]["code"]["magix.viewport.show-message"]["message"].Value = @"this message box won't show, 
+since it is spawned on a thread which is not the gui thread, 
+but instead throw an exception, which will never be handled, 
+since it will try to access the page object, which is not accessible
+on anything but the main gui thread";
 				e.Params["inspect"].Value = @"spawns a new thread, which the given
 code block will be executed within.&nbsp;&nbsp;useful for long operations, 
 where you'd like to return to caller, before the operation is

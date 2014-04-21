@@ -163,7 +163,8 @@ not thread safe";
             if (!Ip(e.Params).Contains("form-id") || FormID == Ip(e.Params)["form-id"].Get<string>())
 			{
                 Control ctrl = Selector.FindControl<Control>(this.Parent /* to include viewport */, Ip(e.Params)["id"].Get<string>());
-                Ip(e.Params)["_ctrl"].Value = ctrl;
+                if (ctrl != null)
+                    Ip(e.Params)["_ctrl"].Value = ctrl;
 			}
 		}
 

@@ -266,6 +266,36 @@ namespace Magix.UX.Widgets
                 case TextBoxMode.Number:
                     el.AddAttribute("type", "number");
                     break;
+                case TextBoxMode.Search:
+                    el.AddAttribute("type", "search");
+                    break;
+                case TextBoxMode.Url:
+                    el.AddAttribute("type", "url");
+                    break;
+                case TextBoxMode.DateTime:
+                    el.AddAttribute("type", "datetime");
+                    break;
+                case TextBoxMode.Date:
+                    el.AddAttribute("type", "date");
+                    break;
+                case TextBoxMode.Month:
+                    el.AddAttribute("type", "month");
+                    break;
+                case TextBoxMode.Week:
+                    el.AddAttribute("type", "week");
+                    break;
+                case TextBoxMode.Time:
+                    el.AddAttribute("type", "time");
+                    break;
+                case TextBoxMode.DateTimeLocal:
+                    el.AddAttribute("type", "datetimelocal");
+                    break;
+                case TextBoxMode.Range:
+                    el.AddAttribute("type", "range");
+                    break;
+                case TextBoxMode.Color:
+                    el.AddAttribute("type", "color");
+                    break;
             }
             if (MaxLength > 0)
                 el.AddAttribute("maxlength", MaxLength.ToString());

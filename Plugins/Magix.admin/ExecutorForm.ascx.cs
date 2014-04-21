@@ -103,7 +103,7 @@ namespace Magix.admin
 			{
 				e.Params.Clear();
 				e.Params["event:magix.admin.set-code-event"].Value = null;
-				e.Params["inspect"].Value = @"sets the active evtn to what is given in [event].
+				e.Params["inspect"].Value = @"sets the active event to what is given in [event].
 &nbsp;&nbsp;not thread safe";
 				e.Params["event"].Value = "magix.execute";
 				return;
@@ -147,6 +147,7 @@ if=>[Data].Value==thomas
 				if (idx.Name.StartsWith("event:"))
 				{
 					activeEvent.Text = idx.Name.Substring(6);
+                    idx.UnTie();
 					break;
 				}
 			}
@@ -170,6 +171,15 @@ if=>[Data].Value==thomas
                 "magix.code.code-2-node",
                 tmp);
             (tmp["json"].Value as Node)["inspect"].UnTie();
+            foreach (Node idx in (tmp["json"].Value as Node))
+            {
+                if (idx.Name.StartsWith("event:"))
+                {
+                    activeEvent.Text = idx.Name.Replace("event:", "");
+                    idx.UnTie();
+                    break;
+                }
+            }
             RaiseEvent(
                 "magix.code.node-2-code",
                 tmp);

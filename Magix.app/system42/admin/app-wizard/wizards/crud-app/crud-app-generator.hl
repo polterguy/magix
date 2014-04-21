@@ -203,10 +203,10 @@ which contains logic for crud-app-generated application"
                 css=>span-2 right clear last
                 text=>x-y of z
           dynamic=>dataGrid
+            onfirstload
+              magix.crud-app.databind-grid
           panel=>editWrapper
-            default=>addButton
             css=>clear top-1
-      magix.crud-app.databind-grid
 
     set=>[_data][magix.forms.create-web-part][controls][label][text].Value
       value=>[_pars][name].Value

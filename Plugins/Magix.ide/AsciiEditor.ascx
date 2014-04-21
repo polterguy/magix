@@ -31,5 +31,11 @@
 		CssClass="btn-large span-3 right"
 		Text="save"
 		OnClick="save_Click" />
+	<mux:Button
+		runat="server"
+		id="close"
+		CssClass="btn-large span-3 right"
+		Text="close"
+		OnClick="close_Click" />
 </mux:Panel>
 

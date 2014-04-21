@@ -110,8 +110,9 @@ the [lhs] and [rhs] nodes can be either an expression, or a hardcoded value.&nbs
 				e.Params["inspect"].Value = @"executes the underlaying code block,
 but only if no paired [if] or [else-if] statement
 has returned true.&nbsp;&nbsp;thread safe";
-				e.Params["if"].Value = "[if].Name==x_if";
-				e.Params["if"]["magix.viewport.show-message"]["message"].Value = "ohh crap";
+				e.Params["if"].Value = "exist";
+                e.Params["if"]["lhs"].Value = "[_not-existing-node]";
+				e.Params["if"]["code"]["magix.viewport.show-message"]["message"].Value = "ohh crap";
 				e.Params["else"]["magix.viewport.show-message"]["message"].Value = "yup, still sane";
 				return;
 			}

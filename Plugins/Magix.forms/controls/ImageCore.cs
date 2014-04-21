@@ -46,7 +46,50 @@ namespace Magix.forms
             Ip(e.Params)["_ctrl"].Value = ret;
 		}
 
-		protected override void Inspect (Node node)
+        /**
+         * sets value
+         */
+        [ActiveEvent(Name = "magix.forms.set-value")]
+        public void magix_forms_set_value(object sender, ActiveEventArgs e)
+        {
+            if (ShouldInspectOrHasInspected(e.Params))
+            {
+                e.Params["inspect"].Value = "sets the value property of the control";
+                return;
+            }
+
+            if (!Ip(e.Params).Contains("value"))
+                throw new ArgumentException("set-value needs [value]");
+
+            Image ctrl = FindControl<Image>(Ip(e.Params));
+
+            if (ctrl != null)
+            {
+                ctrl.ImageUrl = Ip(e.Params)["value"].Get<string>();
+            }
+        }
+
+        /**
+         * returns value
+         */
+        [ActiveEvent(Name = "magix.forms.get-value")]
+        public void magix_forms_get_value(object sender, ActiveEventArgs e)
+        {
+            if (ShouldInspectOrHasInspected(e.Params))
+            {
+                e.Params["inspect"].Value = "returns the value property of the control";
+                return;
+            }
+
+            Image ctrl = FindControl<Image>(Ip(e.Params));
+
+            if (ctrl != null)
+            {
+                Ip(e.Params)["value"].Value = ctrl.ImageUrl;
+            }
+        }
+
+        protected override void Inspect(Node node)
 		{
 			node["event:magix.forms.create-web-part"].Value = null;
 			node["inspect"].Value = @"creates an image type of web control.&nbsp;&nbsp;

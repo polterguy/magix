@@ -1,0 +1,67 @@
+﻿
+inspect=>@"generator for qr code generator.&nbsp;&nbsp;
+will create qr code generator application according 
+to given parameters."
+
+for-each=>[$]
+  add=>[/][_data][magix.forms.create-web-part][controls][button][onclick][magix.qr.create]
+    value=>[.]
+
+_data
+  inspect=>@"automatically generated file
+which contains logic for qr-code-generator application"
+  for-each=>[$]
+    set=>[/][magix.forms.create-web-part][[.].Name].Value
+      value=>[.].Value
+  magix.forms.create-web-part
+    container=>content1
+    form-id=>qr-code-generator-main-form
+    css=>span-22 last
+    controls
+      label=>lblUrl
+        tag=>label
+        css=>span-8
+        text=>url
+      text-area=>url
+        css=>span-8 clear
+        rows=>4
+        place-holder=>text or url goes here ...
+      button=>create
+        css=>span-4 left-4 btn-large clear
+        text=>create
+        onclick
+          magix.forms.get-value
+            form-id=>qr-code-generator-main-form
+            id=>url
+          set=>[magix.qr.create][url].Value
+            value=>[magix.forms.get-value][value].Value
+          magix.qr.create
+          set=>[magix.forms.set-value][value].Value
+            value=>[magix.qr.create][file-name].Value
+          magix.forms.set-value
+            form-id=>qr-code-generator-main-form
+            id=>qrCodeImage
+          magix.forms.set-visible
+            form-id=>qr-code-generator-main-form
+            id=>qrCodeImage
+            value=>true
+      image=>qrCodeImage
+        alt=>qr code rendered for you
+        css=>clear blocked top-1
+        visible=>false
+        tip=>@"will show the resulting qr code once generated.
+drag'n'drop, or righ-click and choose 'save as',
+to download and embed in documents"
+
+set=>[magix.code.node-2-code][json].Value
+  value=>[_data]
+magix.code.node-2-code
+
+set=>[magix.file.save].Value
+  value=>system42\admin\apps\{0}.hl
+    v0=>[$][name].Value
+set=>[magix.file.save][value].Value
+  value=>[magix.code.node-2-code][code].Value
+magix.file.save
+
+

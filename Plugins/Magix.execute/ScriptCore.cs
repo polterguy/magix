@@ -79,11 +79,18 @@ putting all other child nodes into the [$] collection, accessible from inside th
 which again is able to return nodes through the [$] node, which will become children of the 
 [execute-script] node after execution.&nbsp;&nbsp;
 thread safe";
-				e.Params["execute-script"].Value =  @"
+				e.Params["execute-script"].Value = @"
 _data=>thomas
-if=>[_data].Value==thomas
-  magix.viewport.show-message
-    message=>hello world";
+if=>equals
+  lhs=>[_data].Value
+  rhs=>thomas
+  code
+    set=>[@][magix.viewport.show-message][message].Value
+      value=>[$][input].Value
+    magix.viewport.show-message
+    set=>[$][output].Value
+      value=>dude's still thomas";
+                e.Params["execute-script"]["input"].Value = "hello world";
 				return;
 			}
 

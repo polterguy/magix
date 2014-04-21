@@ -3,7 +3,6 @@
 inspect=>@"creates the edit-property web form, used
 to edit a hyper lisp property in the edit-forms web form"
 
-
 get-selected-widget
 
 set=>[magix.forms.create-web-part][controls][text-area][ontextchanged][change-widget][dna].Value
@@ -14,7 +13,7 @@ if=>more-then
   rhs=>0
   code
     for-each=>[get-selected-widget][value][widget][properties][[$][property].Value]
-      add=>[@][..][..][magix.code.node-2-code][json]
+      add=>[@][..][magix.code.node-2-code][json]
         value=>[.]
     magix.code.node-2-code
     set=>[/][magix.forms.create-web-part][controls][text-area][text].Value

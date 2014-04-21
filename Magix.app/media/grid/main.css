@@ -55,8 +55,8 @@ tbody tr:nth-child(even) td, tbody tr.even td {background:#e5ecf9;}
 tfoot {font-style:italic;}
 caption {background:#eee;}
 div {overflow:visible;}
-input[type=text], input[type=password], textarea {border-left:0px none;border-right:0px none;border-top:1px solid #bbb;border-bottom:1px solid #bbb;padding:0;}
-input[type=text] {height:16px;}
+input[type=text], input[type=password], input[type=color], input[type=number], input[type=phone], input[type=email], input[type=search], input[type=url], input[type=datetime], input[type=date], input[type=month], input[type=week], input[type=time], input[type=datetimelocal], input[type=range], textarea {border-left:0px none;border-right:0px none;border-top:1px solid #bbb;border-bottom:1px solid #bbb;padding:0;}
+input[type=text], input[type=password], input[type=color], input[type=number], input[type=phone], input[type=email], input[type=search], input[type=url], input[type=datetime], input[type=date], input[type=month], input[type=week], input[type=time], input[type=datetimelocal], input[type=range] {height:16px;}
 input[type=button] {border:0 none;}
 input[type=checkbox] {height:18px;max-height:18px;margin-bottom:0;margin-left:0;}
 label {font-weight:bold;}
@@ -1113,12 +1113,159 @@ textarea.ascii-editor
 	opacity:1;
 }
 
+input[type=button].toolbox-button,
+input[type=button].toolbox-check,
+input[type=button].toolbox-dynamic,
+input[type=button].toolbox-hidden,
+input[type=button].toolbox-hyperlink,
+input[type=button].toolbox-image,
+input[type=button].toolbox-label,
+input[type=button].toolbox-lambda,
+input[type=button].toolbox-link-button,
+input[type=button].toolbox-literal,
+input[type=button].toolbox-panel,
+input[type=button].toolbox-radio,
+input[type=button].toolbox-select,
+input[type=button].toolbox-text-area,
+input[type=button].toolbox-text-box,
+input[type=button].toolbox-uploader,
+input[type=button].toolbox-wysiwyg
+{
+    background:url(../images/toolbox-icons.png);
+    background-repeat:no-repeat;
+    padding-left:20px;
+    text-align:left;
+    padding-top:0px;
+    border:1px solid rgba(0, 0, 0, .2);
+    width:94px;
+}
 
+input[type=button].toolbox-button
+{
+    background-position:0px 0px;
+}
 
+input[type=button].toolbox-check
+{
+    background-position:0px -16px;
+}
 
+input[type=button].toolbox-dynamic
+{
+    background-position:0px -33px;
+}
 
+input[type=button].toolbox-hidden
+{
+    background-position:0px -49px;
+}
 
+input[type=button].toolbox-hyperlink
+{
+    background-position:0px -65px;
+}
 
+input[type=button].toolbox-image
+{
+    background-position:0px -82px;
+}
 
+input[type=button].toolbox-label
+{
+    background-position:0px -98px;
+}
 
+input[type=button].toolbox-lambda
+{
+    background-position:0px -113px;
+}
+
+input[type=button].toolbox-link-button
+{
+    background-position:0px -129px;
+}
+
+input[type=button].toolbox-literal
+{
+    background-position:0px -145px;
+}
+
+input[type=button].toolbox-panel
+{
+    background-position:0px -161px;
+}
+
+input[type=button].toolbox-radio
+{
+    background-position:0px -177px;
+}
+
+input[type=button].toolbox-select
+{
+    background-position:0px -193px;
+}
+
+input[type=button].toolbox-text-area
+{
+    background-position:0px -209px;
+}
+
+input[type=button].toolbox-text-box
+{
+    background-position:0px -224px;
+}
+
+input[type=button].toolbox-uploader
+{
+    background-position:0px -241px;
+}
+
+input[type=button].toolbox-wysiwyg
+{
+    background-position:0px -257px;
+}
+
+.qr-code-preview
+{
+    width:100px;
+    height:100px;
+}
+
+.blocked
+{
+    display:block;
+    float:left;
+}
+
+.text-browse-btn
+{
+    margin-left:-30px;
+    width:20px;
+    display:block;
+    float:left;
+    border-radius:0 !important;
+    border:none 0;
+    box-shadow:none !important;
+    -webkit-animation:none !important;
+    height:17px !important;
+    padding-top:0px;
+    padding-bottom:0px;
+    border-top:solid 1px #bbb !important;
+}
+
+.text-browse-btn-last
+{
+    margin-left:-20px;
+    width:20px;
+    display:block;
+    float:left;
+    border-radius:0 !important;
+    border:none 0;
+    box-shadow:none !important;
+    -webkit-animation:none !important;
+    height:17px !important;
+    padding-top:0px;
+    padding-bottom:0px;
+    border-top:solid 1px #bbb !important;
+}
 

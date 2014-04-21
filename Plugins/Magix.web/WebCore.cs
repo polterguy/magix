@@ -273,6 +273,24 @@ load of the site for the given session.&nbsp;&nbsp;not thread safe";
                 Page.Session.Remove("magix.web.postpone-execution");
             }
         }
+
+        /**
+         * returns the base url of the application
+         */
+        [ActiveEvent(Name = "magix.web.get-base-directory")]
+        public void magix_get_base_directory(object sender, ActiveEventArgs e)
+        {
+            if (ShouldInspect(e.Params))
+            {
+                e.Params["event:magix.execute"].Value = null;
+                e.Params["inspect"].Value = @"returns the base directory of the web application.
+&nbsp;&nbsp;thread safe";
+                e.Params["magix.web.get-base-directory"].Value = null;
+                return;
+            }
+
+            e.Params["value"].Value = GetApplicationBaseUrl();
+        }
     }
 }
 

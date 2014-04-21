@@ -26,7 +26,7 @@ namespace Magix.admin
 			{
 				e.Params.Clear();
 				e.Params["event:magix.admin.get-active-events"].Value = null;
-				e.Params["all"].Value = false;
+				e.Params["all"].Value = true;
 				e.Params["open"].Value = false;
 				e.Params["remoted"].Value = false;
 				e.Params["overridden"].Value = false;
@@ -34,19 +34,23 @@ namespace Magix.admin
 				e.Params["inspect"].Value = @"returns all active events 
 within the system.&nbsp;&nbsp;add [all], [open], [remoted], [overridden] 
 or [begins-with] to filter the events returned.&nbsp;&nbsp;active events 
-are returned in [events].&nbsp;&nbsp;by default, unit tests and active events starting with _
-as their name, will not be returned, unless [all] is true.&nbsp;&nbsp;
+are returned in [events].&nbsp;&nbsp;will not return unit tests and active events starting with _ 
+if [all] is false.&nbsp;&nbsp;
 if [all], [open], [remoted] or [overridden] is defined, it will return all events 
 fullfilling criteria, regardless of whether or not they are private events, tests or
 don't match the [begins-with] parameter.&nbsp;&nbsp;thread safe";
 				return;
 			}
 
-			bool open = false;
+            bool open = false;
             if (Ip(e.Params).Contains("open"))
                 open = Ip(e.Params)["open"].Get<bool>();
 
-			bool remoted = false;
+            bool all = true;
+            if (Ip(e.Params).Contains("all"))
+                all = Ip(e.Params)["all"].Get<bool>();
+
+            bool remoted = false;
             if (Ip(e.Params).Contains("remoted"))
                 remoted = Ip(e.Params)["remoted"].Get<bool>();
 
@@ -65,10 +69,13 @@ don't match the [begins-with] parameter.&nbsp;&nbsp;thread safe";
 					continue;
 				if (remoted && string.IsNullOrEmpty(ActiveEvents.Instance.RemotelyOverriddenURL(idx)))
 					continue;
-				if (overridden && !ActiveEvents.Instance.IsOverride(idx))
-					continue;
+                if (overridden && !ActiveEvents.Instance.IsOverride(idx))
+                    continue;
 
-				if (!string.IsNullOrEmpty(beginsWith) && !idx.StartsWith(beginsWith))
+                if (!all && idx.Replace(beginsWith ?? "", "").Contains("_"))
+                    continue;
+
+                if (!string.IsNullOrEmpty(beginsWith) && !idx.StartsWith(beginsWith))
 					continue;
 
 				node["events"][string.IsNullOrEmpty(idx) ? "" : idx].Value = null;

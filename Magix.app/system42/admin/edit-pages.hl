@@ -63,10 +63,32 @@ magix.forms.create-web-part
               form-id=>edit-pages
               id=>delete
               value=>true
+            magix.forms.set-visible
+              form-id=>edit-pages
+              id=>preview
+              value=>true
+            set=>[@][magix.forms.set-value][value].Value
+              value=>tmp/{0}.png
+                v0=>[/][magix.data.load][objects][0][name].Value
+            magix.forms.set-value
+              form-id=>edit-pages
+              id=>imgQrCode
+            magix.forms.set-visible
+              form-id=>edit-pages
+              id=>imgQrCode
+              value=>true
         else
           magix.forms.set-enabled
             form-id=>edit-pages
             id=>delete
+            value=>false
+          magix.forms.set-visible
+            form-id=>edit-pages
+            id=>preview
+            value=>false
+          magix.forms.set-visible
+            form-id=>edit-pages
+            id=>imgQrCode
             value=>false
         magix.forms.set-value
           form-id=>edit-pages
@@ -161,6 +183,31 @@ magix.forms.create-web-part
                 form-id=>edit-pages
                 id=>delete
                 value=>true
+              magix.forms.set-visible
+                form-id=>edit-pages
+                id=>preview
+                value=>true
+              magix.web.get-base-directory
+              set=>[@][magix.qr.create][url].Value
+                value=>{0}?page={1}
+                  v0=>[@][magix.web.get-base-directory][value].Value
+                  v1=>[/][magix.forms.get-value][value].Value
+              set=>[@][magix.qr.create][file-name].Value
+                value=>tmp/{0}.png
+                  v0=>[/][magix.forms.get-value][value].Value
+              magix.qr.create
+                size=>4
+                err=>Q
+              set=>[@][magix.forms.set-value:1][value].Value
+                value=>tmp/{0}.png
+                  v0=>[/][magix.forms.get-value][value].Value
+              magix.forms.set-value
+                form-id=>edit-pages
+                id=>imgQrCode
+              magix.forms.set-visible
+                form-id=>edit-pages
+                id=>imgQrCode
+                value=>true
         button=>delete
           css=>span-3 last
           text=>delete
@@ -229,8 +276,19 @@ magix.forms.create-web-part
                     form-id=>edit-pages
                     id=>delete
                     value=>false
+                  magix.forms.set-visible
+                    form-id=>edit-pages
+                    id=>preview
+                    value=>false
+                  magix.forms.set-visible
+                    form-id=>edit-pages
+                    id=>imgQrCode
+                    value=>false
+                  set=>[@][magix.file.delete].Value
+                    value=>tmp/{0}.png
+                      v0=>[/][magix.forms.get-value][value].Value
     select=>form
-      css=>span-5 last
+      css=>span-3
       onselectedindexchanged
         magix.forms.get-value
           form-id=>edit-pages
@@ -253,6 +311,26 @@ magix.forms.create-web-part
               value=>default
       items
         default=>insert form ...
+    button=>preview
+      css=>span-2 last
+      text=>preview
+      visible=>false
+      onclick
+        magix.forms.get-value
+          form-id=>edit-pages
+          id=>name
+        set=>[magix.viewport.execute-javascript][script][v0].Value
+          value=>[magix.forms.get-value][value].Value
+        magix.viewport.execute-javascript
+          script=>@"window.open('?page={0}', '_blank').focus();"
+    image=>imgQrCode
+      visible=>false
+      alt=>qr code
+      tip=>@"qr code for accessing page through qr code scanner. 
+qr code is smaller than what appears once downloaded.
+right-click, or drag-n-drop, to download and use in paper-based 
+marketing material, to have a qr code to access this specific page"
+      css=>qr-code-preview
 
 
 magix.forms.create-web-part

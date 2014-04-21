@@ -77,7 +77,7 @@ magix.execute blocks of code, are being correctly re-mapped";
 				e.Params["event:magix.execute"].Value = null;
 				e.Params["inspect"].Value = @"overrides the active event in [event]
 with the hyper lisp in the [code] expression.&nbsp;&nbsp;these types
-of functions can take and return parameters, if you wish
+of functions can take and return parameters.&nbsp;&nbsp;if you wish
 to pass in or retrieve parameters, then as you invoke the 
 function, just append your args underneath the function invocation,
 and they will be passed into the function, where they will
@@ -87,15 +87,16 @@ outside of the function/event itself, you can access these
 parameters directly underneath the active event itself.&nbsp;&nbsp;
 event will be deleted, if you pass in no [code] block.&nbsp;&nbsp;thread safe";
 				e.Params["event"].Value = "foo.bar";
-				e.Params["inspect"].Value = "description of your event";
 				e.Params["event"]["remotable"].Value = false;
 				e.Params["event"]["code"]["_data"].Value = "thomas";
 				e.Params["event"]["code"]["_backup"].Value = "thomas";
-				e.Params["event"]["code"]["if"].Value = "[_data].Value==[_backup].Value";
-				e.Params["event"]["code"]["if"]["set"].Value = "[/][P][output].Value";
-				e.Params["event"]["code"]["if"]["set"]["value"].Value = "return-value";
-				e.Params["event"]["code"]["if"].Add (new Node("set", "[.ip][/][magix.viewport.show-message][message].Value"));
-				e.Params["event"]["code"]["if"][e.Params["event"]["code"]["if"].Count - 1]["value"].Value = "[/][$][input].Value";
+				e.Params["event"]["code"]["if"].Value = "equals";
+                e.Params["event"]["code"]["if"]["lhs"].Value = "[_data].Value";
+                e.Params["event"]["code"]["if"]["rhs"].Value = "[_backup].Value";
+				e.Params["event"]["code"]["if"]["code"]["set"].Value = "[$][output].Value";
+                e.Params["event"]["code"]["if"]["code"]["set"]["value"].Value = "return-value";
+                e.Params["event"]["code"]["if"]["code"].Add(new Node("set", "[/][magix.viewport.show-message][message].Value"));
+                e.Params["event"]["code"]["if"]["code"][e.Params["event"]["code"]["if"]["code"].Count - 1]["value"].Value = "[$][input].Value";
 				e.Params["event"]["code"]["magix.viewport.show-message"].Value = null;
 				e.Params["foo.bar"].Value = null;
 				e.Params["foo.bar"]["input"].Value = "hello world 2.0";
@@ -238,20 +239,21 @@ parts of your code block, into your function invocation.&nbsp;&nbsp;from
 outside of the function/event itself, you can access these 
 parameters directly underneath the active event itself.&nbsp;&nbsp;
 event will be deleted, if you pass in no [code] block.&nbsp;&nbsp;thread safe";
-                e.Params["event"].Value = "foo.bar";
-                e.Params["inspect"].Value = "description of your event";
-                e.Params["event"]["remotable"].Value = false;
-                e.Params["event"]["code"]["_data"].Value = "thomas";
-                e.Params["event"]["code"]["_backup"].Value = "thomas";
-                e.Params["event"]["code"]["if"].Value = "[_data].Value==[_backup].Value";
-                e.Params["event"]["code"]["if"]["set"].Value = "[/][P][output].Value";
-                e.Params["event"]["code"]["if"]["set"]["value"].Value = "return-value";
-                e.Params["event"]["code"]["if"].Add(new Node("set", "[.ip][/][magix.viewport.show-message][message].Value"));
-                e.Params["event"]["code"]["if"][e.Params["event"]["code"]["if"].Count - 1]["value"].Value = "[/][$][input].Value";
-                e.Params["event"]["code"]["magix.viewport.show-message"].Value = null;
+                e.Params["session-event"].Value = "foo.bar";
+                e.Params["session-event"]["remotable"].Value = false;
+                e.Params["session-event"]["code"]["_data"].Value = "thomas";
+                e.Params["session-event"]["code"]["_backup"].Value = "thomas";
+                e.Params["session-event"]["code"]["if"].Value = "equals";
+                e.Params["session-event"]["code"]["if"]["lhs"].Value = "[_data].Value";
+                e.Params["session-event"]["code"]["if"]["rhs"].Value = "[_backup].Value";
+                e.Params["session-event"]["code"]["if"]["code"]["set"].Value = "[$][output].Value";
+                e.Params["session-event"]["code"]["if"]["code"]["set"]["value"].Value = "return-value";
+                e.Params["session-event"]["code"]["if"]["code"].Add(new Node("set", "[/][magix.viewport.show-message][message].Value"));
+                e.Params["session-event"]["code"]["if"]["code"][e.Params["session-event"]["code"]["if"]["code"].Count - 1]["value"].Value = "[$][input].Value";
+                e.Params["session-event"]["code"]["magix.viewport.show-message"].Value = null;
                 e.Params["foo.bar"].Value = null;
                 e.Params["foo.bar"]["input"].Value = "hello world 2.0";
-                e.Params.Add(new Node("event", "foo.bar"));
+                e.Params.Add(new Node("session-event", "foo.bar"));
                 return;
             }
 

@@ -32,7 +32,7 @@ namespace Magix.execute
 				e.Params["_data"]["items"]["message6"].Value = "howdy world 6.0";
 				e.Params["_data"]["items"]["message7"].Value = "howdy world 7.0";
 				e.Params["for-each"].Value = "[_data][items]";
-				e.Params["for-each"]["set"].Value = "[/][for-each][magix.viewport.show-message][message].Value";
+				e.Params["for-each"]["set"].Value = "[@][magix.viewport.show-message][message].Value";
 				e.Params["for-each"]["set"]["value"].Value = "[.].Value";
 				e.Params["inspect"].Value = @"loops through all the nodes
 in the given node-list expression, setting the 
