@@ -23,9 +23,12 @@ namespace Magix.execute
         {
             if (ShouldInspect(e.Params))
             {
-                e.Params["event:magix.execute.using"].Value = null;
+                e.Params["event:magix.execute"].Value = null;
                 e.Params["inspect"].Value = @"changes the default namespace 
 for the current scope.&nbsp;&nbsp;thread safe";
+                e.Params["using"].Value = "magix.math";
+                e.Params["using"]["add"][""].Value = 4;
+                e.Params["using"]["add"]["", 1].Value = 1;
                 return;
             }
 
