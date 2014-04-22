@@ -12,9 +12,9 @@ _dt
     style=>cursor:pointer;
     onclick
       _file
-      set=>[magix.execute.execute-file][file].Value
+      set=>[execute-file][file].Value
         value=>[_file].Value
-      magix.execute.execute-file=>system42/admin/app-wizard/new-app.hl
+      execute-file=>system42/admin/app-wizard/new-app.hl
     controls
       label
         tag=>label
@@ -27,6 +27,8 @@ for-each=>[magix.file.list-files][files]
   set=>[@][magix.code.file-2-node].Value
     value=>[.].Name
   magix.code.file-2-node
+  set=>[/][_dt][panel][css].Value
+    value=>[@][magix.code.file-2-node][json][_css].Value
   set=>[/][_dt][panel][controls][label:0][text].Value
     value=>[@][magix.code.file-2-node][json][_name].Value
   set=>[/][_dt][panel][controls][label:1][text].Value

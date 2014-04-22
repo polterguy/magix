@@ -1,0 +1,23 @@
+
+
+inspect=>@"creates unit tests to 
+test the [magix.execute.join] keyword"
+
+
+event=>magix.test.join
+  inspect=>@"asserts that [join] works the 
+way it should work"
+  code
+    _data
+      =>some 
+      =>text 
+      =>that 
+      =>will 
+      =>be 
+      =>joined!
+    join=>[_data]
+    if=>not-equals
+      lhs=>[join][result].Value
+      rhs=>some text that will be joined!
+      code
+        throw=>[join] did not correctly join string as expected

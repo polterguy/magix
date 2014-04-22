@@ -92,7 +92,7 @@ cf
           text=>description
         label=>desc
           css=>span-13
-          text=>@"lists the active events within your system whiah
+          text=>@"lists the active events within your system which
 are to be remotely invoked, or which are overridden to go
 to other serv end-points.&nbsp;&nbsp;please take care when
 overriding active events to go to a different server, since it

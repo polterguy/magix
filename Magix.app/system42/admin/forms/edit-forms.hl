@@ -701,7 +701,7 @@ link-button=>closepreview
               value=>[@][magix.forms.get-value][value].Value
             magix.forms.create-web-part
               container=>content7
-              css=>span-24 showgrid bottom-5
+              css=>span-24 bottom-2
               form-id
 
         panel=>ctrlWrp

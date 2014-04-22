@@ -1,0 +1,76 @@
+
+
+inspect=>@"creates unit tests to 
+test the [magix.execute] keyword"
+
+
+event=>magix.test.execute-allow-access-outside
+  inspect=>@"asserts that modifying nodes outside
+of the [execute] scope works, when [execute] is 
+invoked without the magix. prefix.&nbsp;&nbsp;
+when [execute] is invoked without the magix. 
+prefix, then it is supposed to have access to
+the entire tree"
+  code
+    _outside
+    _data
+      set=>[_outside].Value
+        value=>executed
+    execute=>[_data]
+    if=>not-equals
+      lhs=>[_outside].Value
+      rhs=>executed
+      code
+        throw=>code outside of [execute] was not modified when expected
+
+event=>magix.test.execute-do-not-allow-access-outside
+  inspect=>@"asserts that modifying nodes outside
+of the [magix.execute] scope does not work, when [magix.execute] is 
+invoked with the magix. prefix.&nbsp;&nbsp;
+when [magix.execute] is invoked with the magix. prefix,
+then the execute branch is not supposed to have 
+access to the entire tree, but only the parts
+underneath the node being executed, and only as a deep copy
+of the original nodes.&nbsp;&nbsp;
+in this case, only the nodes underneath the [magix.execute]
+is supposed to be accessible"
+  code
+    _outside
+    magix.execute
+      _tmp
+      set=>[/][_outside].Value
+        value=>executed
+      set=>[/][_tmp].Value
+        value=>changed
+    if=>equals
+      lhs=>[_outside].Value
+      rhs=>executed
+      code
+        throw=>@"code outside of [execute] was modified when 
+not expected to be modified"
+    if=>not-equals
+      lhs=>[magix.execute][_tmp].Value
+      rhs=>changed
+      code
+        throw=>@"code outside of [execute] was modified when 
+not expected to be modified"
+
+event=>magix.test.execute-children-allow-access-outside
+  inspect=>@"asserts that modifying nodes outside
+of the [execute] scope works, when [execute] is 
+invoked without the magix. prefix and children, 
+instead of a path pointing to another executing node.&nbsp;&nbsp;
+when [execute] is invoked without the magix. 
+prefix, then it is supposed to have access to
+the entire tree"
+  code
+    _outside
+    execute
+      set=>[_outside].Value
+        value=>executed
+    if=>not-equals
+      lhs=>[_outside].Value
+      rhs=>executed
+      code
+        throw=>code outside of [execute] was not modified when expected
+

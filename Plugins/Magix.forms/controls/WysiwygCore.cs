@@ -159,7 +159,7 @@ namespace Magix.forms
 [text] is the visible text.&nbsp;&nbso;not thread safe";
 			node["container"].Value = "content5";
 			node["form-id"].Value = "sample-form";
-			node["controls"]["wysiwyg"]["text"].Value = "<p>hello world</p>";
+			node["controls"]["wysiwyg"]["text"].Value = "html markup of wysiwyg control goes here";
 			node["controls"]["wysiwyg"]["place-holder"].Value = "place holder ...";
 			node["controls"]["wysiwyg"]["has-bold"].Value = true;
 			node["controls"]["wysiwyg"]["has-italic"].Value = true;

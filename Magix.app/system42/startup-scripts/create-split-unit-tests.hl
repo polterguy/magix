@@ -1,0 +1,50 @@
+
+
+inspect=>@"creates unit tests to 
+test the [magix.execute.split] keyword"
+
+
+event=>magix.test.split
+  inspect=>@"asserts that [split] works the 
+way it should work"
+  code
+    _data=>@"  howdy   world this is cool   "
+    split=>[_data].Value
+      what=>@" "
+    if=>not-equals
+      lhs=>[split][result].Count
+      rhs=>5
+      code
+        throw=>@"[split] did not return 
+right number of occurrences"
+    if=>not-equals
+      lhs=>[split][result][0].Value
+      rhs=>howdy
+      code
+        throw=>@"[split] did not return 
+right value"
+    if=>not-equals
+      lhs=>[split][result][1].Value
+      rhs=>world
+      code
+        throw=>@"[split] did not return 
+right value"
+    if=>not-equals
+      lhs=>[split][result][2].Value
+      rhs=>this
+      code
+        throw=>@"[split] did not return 
+right value"
+    if=>not-equals
+      lhs=>[split][result][3].Value
+      rhs=>is
+      code
+        throw=>@"[split] did not return 
+right value"
+    if=>not-equals
+      lhs=>[split][result][4].Value
+      rhs=>cool
+      code
+        throw=>@"[split] did not return 
+right value"
+

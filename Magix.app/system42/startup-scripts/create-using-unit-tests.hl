@@ -1,0 +1,20 @@
+
+
+inspect=>@"creates unit tests to 
+test the [magix.execute.using] keyword"
+
+
+event=>magix.test.using
+  inspect=>@"asserts that using works the 
+way it should work"
+  code
+    using=>magix.math
+      add
+        =>5
+        =>4
+        =>3
+    if=>not-equals
+      lhs=>[using][add].Value
+      rhs=>12
+      code
+        throw=>[using] did not work as expected

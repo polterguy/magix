@@ -82,11 +82,9 @@ is entered into a [text-box], or something similar, within the scope of the [pan
 control within your panel.&nbsp;&nbsp;";
 			node["container"].Value = "content5";
 			node["form-id"].Value = "sample-form";
-			node["controls"]["panel"]["tag"].Value = "p|div|address|etc";
-			node["controls"]["panel"]["default"].Value = "default-button";
-			base.Inspect(node["controls"]["panel"]);
-			node["controls"]["panel"]["controls"]["button"].Value = "default-button";
-			node["controls"]["panel"]["controls"]["button"]["text"].Value = "don't work";
+			node["controls"]["dynamic"]["tag"].Value = "p|div|address|etc";
+            node["controls"]["dynamic"]["default"].Value = "default-button";
+            base.Inspect(node["controls"]["dynamic"]);
 		}
 	}
 }

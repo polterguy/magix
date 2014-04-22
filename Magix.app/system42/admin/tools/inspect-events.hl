@@ -41,6 +41,10 @@ for-each=>[Data][events]
           form-id=>form1
           id=>code
           value
+        magix.viewport.clear-controls
+          container=>content2
+        magix.viewport.clear-controls
+          container=>content5
   set=>[.ip][..][_tpl][link-button][onclick][0].Name
     value=>[.].Name
   set=>[.ip][..][_tpl][link-button][text].Value
@@ -59,14 +63,14 @@ cf
   container=>content1
   controls
     panel2
-      css=>span-13
+      css=>span-12
       controls
         label=>header
           text=>name of active event
-          css=>span-13
+          css=>span-12 last
           tag=>h3
         label=>code
-          css=>span-13
+          css=>span-12 last
           text=>code example
           tag=>pre
         button=>run
@@ -79,17 +83,17 @@ cf
             set=>[.ip][..][magix.admin.load-executor-code][code].Value
               value=>[.ip][..][magix.forms.get-value][value].Value
             magix.admin.load-executor-code
-              event=>magix.execute
               code
               css=>span-19 last left-5 bottom-3 top-1
         label=>lblDesc
-          css=>span-13 top-2
+          css=>span-12 last top-2
           tag=>label
           text=>description
         label=>desc
-          css=>span-13 bottom-5
+          css=>span-12 last bottom-5
           text=>@"description of your magix active event.&nbsp;&nbsp;
 click any of the active events to the right to inspect them"
     panel=>wrp
-      css=>span-6 last
+      css=>span-7 last
+      style=>height:360px;overflow-y:auto;overflow-x:visible;
       controls

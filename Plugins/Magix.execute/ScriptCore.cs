@@ -31,8 +31,11 @@ putting all other child nodes into the [$] collection, accessible from inside th
 which again is able to return nodes through the [$] node, which will become children of the 
 [execute-file] node after execution.&nbsp;&nbsp;
 thread safe";
-				e.Params["execute-file"].Value = "core-scripts/some-script.hl";
-				return;
+                e.Params["execute-file"].Value = "core-scripts/some-script.hl";
+                e.Params["execute-file"]["parameter"].Value = @"some parameter passsed into the file, accessible
+from the [$] collection from inside the file.&nbsp;&nbsp;
+thread safe, if hyper lisp file is thread safe";
+                return;
 			}
 
 			Node ip = e.Params;
@@ -127,10 +130,7 @@ if=>equals
 				"magix.execute", 
 				exe);
 
-			if (exe.Contains("$"))
-			{
-				ip.ReplaceChildren(exe["$"]);
-			}
+			ip.ReplaceChildren(exe["$"]);
 		}
 	}
 }

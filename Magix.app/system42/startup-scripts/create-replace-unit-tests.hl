@@ -1,0 +1,19 @@
+
+
+inspect=>@"creates unit tests to 
+test the [magix.execute.replace] keyword"
+
+
+event=>magix.test.replace
+  inspect=>@"asserts that [replace] works the 
+way it should work"
+  code
+    _data=>howdy this is   a test of replace
+    replace=>[_data].Value
+      what=>@" "
+      with=>|
+    if=>not-equals
+      lhs=>[_data].Value
+      rhs=>howdy|this|is|||a|test|of|replace
+      code
+        throw=>[replace] didn't function as expected

@@ -93,7 +93,7 @@ namespace Magix.Core
                 if (lastEntity == ".Value")
                     x.Value = null;
                 else if (lastEntity == ".Name")
-                    throw new ArgumentException("cannot remove a name of a node");
+                    x.Name = "";
                 else if (lastEntity == "")
                     x.UnTie();
                 else
@@ -106,6 +106,8 @@ namespace Magix.Core
 
                 if (lastEntity.StartsWith(".Value"))
                 {
+                    if (valueToSet is Node)
+                        valueToSet = (valueToSet as Node).Clone(); // to make sure we can add nodes as values into the same nodes, recursively ...
                     x.Value = valueToSet;
                 }
                 else if (lastEntity.StartsWith(".Name"))
@@ -116,6 +118,9 @@ namespace Magix.Core
                 }
                 else if (lastEntity == "")
                 {
+                    if (!(valueToSet is Node))
+                        throw new ArgumentException("you can only set a node-list to another node-list, and not a string or some other constant value");
+
                     Node clone = (valueToSet as Node).Clone();
                     x.ReplaceChildren(clone);
                     x.Name = clone.Name;

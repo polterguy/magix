@@ -6,6 +6,8 @@ graphical interface"
 
 _name=>crud app
 
+_css=>boxed span-5 min-height-7 air-padding bottom-1 crud-app-bg
+
 set=>[magix.forms.create-web-part][controls][label][text].Value
   value=>@"{0}{1}"
     v0=>[magix.forms.create-web-part][controls][label][text].Value
