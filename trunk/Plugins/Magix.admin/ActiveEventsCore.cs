@@ -72,7 +72,10 @@ don't match the [begins-with] parameter.&nbsp;&nbsp;thread safe";
                 if (overridden && !ActiveEvents.Instance.IsOverride(idx))
                     continue;
 
-                if (!all && idx.Replace(beginsWith ?? "", "").Contains("_"))
+                if (!all && !string.IsNullOrEmpty(beginsWith) && idx.Replace(beginsWith, "").Contains("_"))
+                    continue;
+
+                if (!all && idx.StartsWith("magix.test."))
                     continue;
 
                 if (!string.IsNullOrEmpty(beginsWith) && !idx.StartsWith(beginsWith))

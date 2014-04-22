@@ -44,6 +44,10 @@ for-each=>[Data][events]
           value
         set=>[0][inspect].Name
           value=>inspect
+        magix.viewport.clear-controls
+          container=>content2
+        magix.viewport.clear-controls
+          container=>content5
   set=>[.ip][..][_tpl][link-button][onclick][0].Name
     value=>[.].Name
   set=>[.ip][..][_tpl][link-button][text].Value
@@ -85,7 +89,6 @@ cf
               value=>[.ip][..][magix.forms.get-value][value].Value
             magix.admin.load-executor-code
               code
-              event=>magix.execute
               css=>span-19 last left-5 bottom-3 top-1
         label=>lblDesc
           css=>span-13 top-2

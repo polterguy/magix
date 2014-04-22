@@ -6,6 +6,8 @@ specific webpage on smartphones"
 
 _name=>vanity qr code generator
 
+_css=>boxed span-5 min-height-7 air-padding bottom-1 qr-codes-bg
+
 set=>[magix.forms.create-web-part][controls][panel=>qr-code-wrap][controls][button=>generate][onclick][magix.data.save][value][type].Value
   value=>@"magix.qr-code-generator.template"
 set=>[magix.forms.create-web-part][controls][panel=>qr-code-wrap][controls][button=>generate][onclick][magix.data.save][value][name].Value
@@ -334,6 +336,20 @@ defaults to Comic Sans MS"
               form-id=>qr-codes
               id=>qrImage
               value=>true
+        button=>back
+          css=>span-3 left-1 top-1 btn-large right
+          text=>&lt;&lt; back
+          onclick
+            execute-file=>system42/admin/app-wizard/new-app.hl
+              file=>system42\admin\app-wizard\wizards\qr-code-generator.hl
+            magix.viewport.clear-controls
+              container=>content3
+            magix.viewport.clear-controls
+              container=>content4
+            magix.viewport.clear-controls
+              container=>content5
+            magix.viewport.clear-controls
+              container=>content6
         dynamic=>file-browser
           css=>span-17 last
         label=>lblDescriptionStartQrCode

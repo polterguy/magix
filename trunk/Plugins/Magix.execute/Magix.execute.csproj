@@ -33,6 +33,10 @@
     <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="LambdaCore.cs" />
+    <Compile Include="IndexOfCore.cs" />
+    <Compile Include="JoinCore.cs" />
+    <Compile Include="SplitCore.cs" />
     <Compile Include="StatementHelper.cs" />
     <Compile Include="ExecuteCore.cs" />
     <Compile Include="ExceptionCore.cs" />

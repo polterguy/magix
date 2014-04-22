@@ -75,11 +75,9 @@ body
 {
  from {
 	box-shadow: 4px 4px 3px rgba(0, 0, 0, 0.8);
-	color:#a61;
  }
  to {
 	box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.5);
-	color:#00f;
  }
 }
 
@@ -87,11 +85,9 @@ body
 {
  from {
 	box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.5);
-	color:#00f;
  }
  to {
 	box-shadow: 4px 4px 3px rgba(0, 0, 0, 0.8);
-	color:#a61;
  }
 }
 
@@ -104,7 +100,6 @@ input[type=button]
 	margin-top:0px;
 	margin-bottom:0px;
 	height:18px;
-	color:#00f;
 	-webkit-animation-name: button-animation-on;
 	-webkit-animation-duration: .5s;
 	-webkit-animation-direction: normal;
@@ -113,10 +108,20 @@ input[type=button]
 input[type=button]:hover
 {
 	box-shadow: 4px 4px 3px rgba(0, 0, 0, 0.8);
-	color:#a61;
 	-webkit-animation-name: button-animation-off;
 	-webkit-animation-duration: .5s;
 	-webkit-animation-direction: normal;
+}
+
+input[type=button]:disabled
+{
+	-webkit-animation-name:none;
+	box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.5);
+}
+
+input[type=button]:disabled:hover
+{
+	-webkit-animation-name:none;
 }
 
 input[type=button]:disabled

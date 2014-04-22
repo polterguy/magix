@@ -68,10 +68,7 @@ as hyper lisp, meaning it will raise everything containing a '.',
 while everything not starting with a '_' will be assumed to be a hyper lisp 
 keyword, and appended behind 'magix.execute.', before that string is raised as an active event.&nbsp;&nbsp;
 a hyper lisp keyword will have access to the entire data tree, while a normal active 
-event will get a deep copy of the tree underneath its own node.&nbsp;&nbsp;
-if the [magix.execute]/[execute]/root-node has a value, it will be expected to 
-be an expression referencing another node, which will be executed instead of the 
-incoming parameter nodes.&nbsp;&nbsp;
+event will only be able to modify the parts of the tree from underneath its own node.&nbsp;&nbsp;
 thread safe";
 				e.Params["_data"]["value"].Value = "thomas";
 				e.Params["if"].Value = "[_data][value].Value==thomas";
@@ -84,6 +81,8 @@ thread safe";
 
 			try
 			{
+                if (e.Params.Value != null)
+                    throw new ArgumentException("you cannot pass in a path to [magix.execute] when using the fully qualified namespace");
 				Execute(e.Params, e.Params, new Node(e.Params.Name, e.Params.Value));
 			}
 			catch (Exception err)
@@ -112,10 +111,11 @@ thread safe";
 				e.Params["inspect"].Value = @"executes the incoming parameters 
 as hyper lisp, meaning it will raise everything containing a '.', 
 while everything not starting with a '_' will be assumed to be a hyper lisp 
-keyword, and appended behind 'magix.execute.', before that string is raised as an active event.&nbsp;&nbsp;
+keyword, and appended behind 'magix.execute.', or the currently
+used namespace, before that string is raised as an active event.&nbsp;&nbsp;
 a hyper lisp keyword will have access to the entire data tree, while a normal active 
 event will get a deep copy of the tree underneath its own node.&nbsp;&nbsp;
-if the [magix.execute]/[execute]/root-node has a value, it will be expected to 
+if the [execute] has a value, it will be expected to 
 be an expression referencing another node, which will be executed instead of the 
 incoming parameter nodes.&nbsp;&nbsp;
 thread safe";
@@ -163,7 +163,7 @@ thread safe";
 				string activeEvent = idx.Name;
 
 				// checking to see if this is just a data buffer ...
-				if (activeEvent.StartsWith("_") || activeEvent == "inspect" || activeEvent == "$")
+                if (activeEvent.StartsWith("_") || activeEvent == "inspect" || activeEvent == "$")
 					continue;
 
 				if (activeEvent.Contains("."))

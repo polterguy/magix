@@ -31,9 +31,9 @@ for-each=>[magix.data.load][objects]
   add=>[/][magix.forms.create-web-part][controls][panel][controls][select][items]
     value=>[@][_data][0]
 
-set=>[magix.forms.create-web-part][controls][panel][controls][button:1][onclick][magix.execute.execute-file].Value
+set=>[magix.forms.create-web-part][controls][panel][controls][button:1][onclick][execute-file].Value
   value=>[$][file].Value
-set=>[magix.forms.create-web-part][controls][panel][controls][select][onselectedindexchanged][magix.execute.execute-file].Value
+set=>[magix.forms.create-web-part][controls][panel][controls][select][onselectedindexchanged][execute-file].Value
   value=>[$][file].Value
 
 set=>[magix.forms.create-web-part][controls][panel][controls][button:1][onclick][set][value][v0].Value
@@ -63,9 +63,9 @@ magix.forms.create-web-part
             magix.forms.get-value
               form-id=>init-app
               id=>editExisting
-            set=>[magix.execute.execute-file][name].Value
+            set=>[execute-file][name].Value
               value=>[magix.forms.get-value][value].Value
-            magix.execute.execute-file
+            execute-file
         text-box=>name
           place-holder=>name ...
           css=>span-6
@@ -102,9 +102,9 @@ magix.forms.create-web-part
                 magix.viewport.show-message
                   message=>application with that name already exists
                 stop
-            set=>[magix.execute.execute-file][name].Value
+            set=>[execute-file][name].Value
               value=>[magix.forms.get-value][value].Value
-            magix.execute.execute-file
+            execute-file
 
 magix.forms.set-focus
   form-id=>init-app

@@ -67,6 +67,7 @@
     <Content Include="media\front-end\default.css" />
     <Content Include="media\front-end\pink.css" />
     <Content Include="media\images\background.png" />
+    <Content Include="media\images\crud-app-bg.png" />
     <Content Include="media\images\magix-logo.png" />
     <Content Include="media\images\magix-logo-small.png" />
     <Content Include="media\images\magix-logo-tiny.png" />
@@ -79,6 +80,7 @@
     <Content Include="media\images\help-files\mux.png" />
     <Content Include="media\images\help-files\new-project.png" />
     <Content Include="media\images\av-background.png" />
+    <Content Include="media\images\qr-codes.png" />
     <Content Include="media\images\toolbox-icons.png" />
     <Content Include="media\xing-wysihtml5\parser_rules\advanced.js" />
     <Content Include="media\xing-wysihtml5\parser_rules\simple.js" />
@@ -244,6 +246,15 @@
     <Content Include="system42\admin\tools\qr-code-generator.hl" />
     <Content Include="system42\admin\app-wizard\wizards\qr-code-generator.hl" />
     <Content Include="system42\admin\app-wizard\wizards\qr-code-generator\qr-code-generator-generator.hl" />
+    <Content Include="system42\startup-scripts\create-execute-unit-tests.hl" />
+    <Content Include="system42\startup-scripts\create-lambda-unit-tests.hl" />
+    <Content Include="system42\startup-scripts\create-index-of-unit-tests.hl" />
+    <Content Include="system42\startup-scripts\create-split-unit-tests.hl" />
+    <Content Include="system42\startup-scripts\create-join-unit-tests.hl" />
+    <Content Include="system42\startup-scripts\create-execute-script-unit-tests.hl" />
+    <Content Include="system42\startup-scripts\create-replace-unit-tests.hl" />
+    <Content Include="system42\startup-scripts\create-exception-unit-tests.hl" />
+    <Content Include="system42\startup-scripts\create-using-unit-tests.hl" />
     <None Include="todo.txt" />
     <None Include="system42\index.hl" />
     <None Include="system42\startup.hl" />
@@ -292,6 +303,7 @@
     <None Include="system42\admin\help\web-parts\index.mml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="database\" />
     <Folder Include="system42\admin\apps\" />
   </ItemGroup>
 </Project>

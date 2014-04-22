@@ -10,6 +10,7 @@ keyword, or an event which is overridden with another"
 
 magix.admin.get-active-events
   overridden=(bool)>True
+  all=>false
 set=>[magix.admin.get-active-events].Name
   value=>Data
 for-each=>[Data][events]

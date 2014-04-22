@@ -24,7 +24,7 @@ namespace Magix.execute
 	 */
 	public class DataCore : ActiveController
 	{
-		private static string _dbFile = "data-storage.db4o";
+		private static string _dbFile = "database/data-storage.db4o";
 
 		/**
 		 * loads an object from database
@@ -71,7 +71,7 @@ operation.&nbsp;&nbsp;thread safe";
 
 			lock (typeof(DataCore))
 			{
-				using (IObjectContainer db = Db4oEmbedded.OpenFile(HttpContext.Current.Request.MapPath("~" + _dbFile)))
+				using (IObjectContainer db = Db4oEmbedded.OpenFile(HttpContext.Current.Request.MapPath("~/" + _dbFile)))
 				{
 					db.Ext().Configure().UpdateDepth(1000);
 					db.Ext().Configure().ActivationDepth(1000);
@@ -121,7 +121,7 @@ thread safe";
 
 			lock (typeof(DataCore))
 			{
-                using (IObjectContainer db = Db4oEmbedded.OpenFile(HttpContext.Current.Request.MapPath("~" + _dbFile)))
+                using (IObjectContainer db = Db4oEmbedded.OpenFile(HttpContext.Current.Request.MapPath("~/" + _dbFile)))
 				{
 					db.Ext().Configure().UpdateDepth(1000);
 					db.Ext().Configure().ActivationDepth(1000);
@@ -173,7 +173,7 @@ your persistent data storage.&nbsp;&nbsp;thread safe";
 
 			lock (typeof(DataCore))
 			{
-                using (IObjectContainer db = Db4oEmbedded.OpenFile(HttpContext.Current.Request.MapPath("~" + _dbFile)))
+                using (IObjectContainer db = Db4oEmbedded.OpenFile(HttpContext.Current.Request.MapPath("~/" + _dbFile)))
 				{
                     string id = Ip(e.Params).Contains("id") ? Ip(e.Params)["id"].Get<string>() : null;
 					foreach (Storage idx in db.Ext().Query<Storage>(
@@ -214,7 +214,7 @@ of objects in data storage as [count], add [prototype] to filter results.
 
 			lock (typeof(DataCore))
 			{
-				using (IObjectContainer db = Db4oEmbedded.OpenFile(HttpContext.Current.Request.MapPath("~" + _dbFile)))
+				using (IObjectContainer db = Db4oEmbedded.OpenFile(HttpContext.Current.Request.MapPath("~/" + _dbFile)))
 				{
 					db.Ext().Configure().UpdateDepth(1000);
 					db.Ext().Configure().ActivationDepth(1000);

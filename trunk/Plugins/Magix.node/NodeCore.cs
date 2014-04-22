@@ -26,9 +26,13 @@ namespace Magix.execute
 				e.Params.Clear();
 				e.Params["event:magix.execute"].Value = null;
 				e.Params["_expression"].Value = "some value to be replaced";
-				e.Params["inspect"].Value = @"replaces [what] value/expression with [with] value/expression in 
+				e.Params["inspect"].Value = @"replaces the [what] value/expression with [with] value/expression in 
 the value of the [replace] node's expression.&nbsp;&nbsp;
-expression must end with .Value or .Name.&nbsp;&nbsp;thread safe";
+both [what] and [with] can be either constants or expression.&nbsp;&nbsp;
+[with] is optional, and if not given, the [what] parts of the value of 
+[replace] will simply be removed.&nbsp;&nbsp;
+the value of [replace] must be an expression, and cannot be a constant.&nbsp;&nbsp;
+thread safe";
 				e.Params["replace"].Value = "[_expression].Value";
 				e.Params["replace"]["what"].Value = "some";
 				e.Params["replace"]["with"].Value = "some other";
@@ -42,7 +46,7 @@ expression must end with .Value or .Name.&nbsp;&nbsp;thread safe";
 
 			Node dp = ip;
             if (e.Params.Contains("_dp"))
-                dp =e.Params["_dp"].Value as Node;
+                dp = e.Params["_dp"].Value as Node;
 
 			if (!ip.Contains("what") || string.IsNullOrEmpty(ip["what"].Get<string>()))
 				throw new ArgumentException("magix.nodes.replace needs [what] parameter");
@@ -59,7 +63,9 @@ expression must end with .Value or .Name.&nbsp;&nbsp;thread safe";
 
 			string replNode = Expressions.GetExpressionValue(ip["what"].Get<string>(), dp, ip, false) as string;
 
-			string withNode = ip.Contains("with") ? Expressions.GetExpressionValue(ip["with"].Get<string>(""), dp, ip, false) as string : "";
+			string withNode = ip.Contains("with") ? 
+                Expressions.GetExpressionValue(ip["with"].Get<string>(""), dp, ip, false) as string : 
+                "";
 
 			Expressions.SetNodeValue(
 				expr, 

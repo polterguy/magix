@@ -1,0 +1,44 @@
+
+
+inspect=>@"creates unit tests to 
+test the [magix.execute.index-of] keyword"
+
+
+event=>magix.test.index-of
+  inspect=>@"asserts that [index-of] works the 
+way it should work"
+  code
+    _data=>howdy world this is cool
+    index-of=>[_data].Value
+      what=>@" "
+    if=>not-equals
+      lhs=>[index-of][result].Count
+      rhs=>4
+      code
+        throw=>@"[index-of] did not return 
+the correct number of occurencies"
+    if=>not-equals
+      lhs=>[index-of][result][0].Value
+      rhs=>5
+      code
+        throw=>@"[index-of] did not return 
+the correct value"
+    if=>not-equals
+      lhs=>[index-of][result][1].Value
+      rhs=>11
+      code
+        throw=>@"[index-of] did not return 
+the correct value"
+    if=>not-equals
+      lhs=>[index-of][result][2].Value
+      rhs=>16
+      code
+        throw=>@"[index-of] did not return 
+the correct value"
+    if=>not-equals
+      lhs=>[index-of][result][3].Value
+      rhs=>19
+      code
+        throw=>@"[index-of] did not return 
+the correct value"
+

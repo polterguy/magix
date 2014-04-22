@@ -1,0 +1,27 @@
+
+
+inspect=>@"creates unit tests to 
+test the [magix.execute.throw], 
+[magix.execute.catch] and [magix.execute.try] keyword"
+
+
+event=>magix.test.exception
+  inspect=>@"asserts that exceptions works the 
+way it should work"
+  code
+    _thrown
+    try
+      code
+        throw=>exception thrown
+      catch
+        if=>equals
+          lhs=>[@][exception].Value
+          rhs=>exception thrown
+          code
+            set=>[_thrown].Value
+              value=>yes
+    if=>not-equals
+      lhs=>[_thrown].Value
+      rhs=>yes
+      code
+        throw=>exceptions didn't work as expected
