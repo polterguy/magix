@@ -25,8 +25,9 @@ namespace Magix.ide
     public class AsciiEditor : ActiveModule
     {
 		protected TextArea surface;
-		protected Button save;
-		protected TextBox path;
+        protected Button save;
+        protected Button preview;
+        protected TextBox path;
 
 		public override void InitialLoading(Node node)
 		{
@@ -39,34 +40,55 @@ namespace Magix.ide
 				path.Text = node["file"].Get<string>("empty.txt");
 				path.Select();
 				path.Focus();
+                if (path.Text.LastIndexOf(".mml") == path.Text.Length - 4)
+                    preview.Visible = true;
 			};
 		}
-		
-		protected void save_Click(object sender, EventArgs e)
-		{
-			Node tmp = new Node();
-			tmp["value"].Value = surface.Text;
-			tmp.Value = path.Text;
 
-			RaiseEvent(
-				"magix.file.save",
-				tmp);
+        protected void save_Click(object sender, EventArgs e)
+        {
+            SaveFileContent();
+        }
 
-			tmp = new Node();
-			tmp["message"].Value = "file saved";
-			tmp["time"].Value = 500;
+        protected void preview_Click(object sender, EventArgs e)
+        {
+            SaveFileContent();
 
-			RaiseEvent(
-				"magix.viewport.show-message",
-				tmp);
-			
-			tmp = new Node();
-			tmp["path"].Value = path.Text;
+            Node tmp = new Node();
+            tmp["file"].Value = path.Text;
+            tmp["container"].Value = "content3";
+            tmp["css"].Value = "span-24 last top-1";
 
-			RaiseEvent(
-				"magix.ide.file-saved",
-				tmp);
-		}
+            RaiseActiveEvent(
+                "magix.forms.load-mml-web-part",
+                tmp);
+        }
+
+        private void SaveFileContent()
+        {
+            Node tmp = new Node();
+            tmp["value"].Value = surface.Text;
+            tmp.Value = path.Text;
+
+            RaiseActiveEvent(
+                "magix.file.save",
+                tmp);
+
+            tmp = new Node();
+            tmp["message"].Value = "file saved";
+            tmp["time"].Value = 500;
+
+            RaiseActiveEvent(
+                "magix.viewport.show-message",
+                tmp);
+
+            tmp = new Node();
+            tmp["path"].Value = path.Text;
+
+            RaiseActiveEvent(
+                "magix.ide.file-saved",
+                tmp);
+        }
 
         protected void delete_Click(object sender, EventArgs e)
         {
@@ -75,7 +97,7 @@ namespace Magix.ide
             c["code"]["magix.file.delete"].Value = path.Text;
             c["code"]["magix.ide.file-deleted"]["path"].Value = path.Text;
 
-            RaiseEvent(
+            RaiseActiveEvent(
                 "magix.viewport.confirm",
                 c);
         }
@@ -85,7 +107,7 @@ namespace Magix.ide
             Node c = new Node();
             c["container"].Value = this.Parent.ID;
 
-            RaiseEvent(
+            RaiseActiveEvent(
                 "magix.viewport.clear-controls",
                 c);
         }

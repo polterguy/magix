@@ -193,14 +193,6 @@ shortcuts in the system.&nbsp;&nbsp;thread safe"
         text=>help
         category=>learn
         code
-          magix.viewport.clear-controls
-            container=>content2
-          magix.viewport.clear-controls
-            container=>content3
-          magix.viewport.clear-controls
-            container=>content4
-          magix.viewport.clear-controls
-            container=>content5
           magix.help.start-help
       _default_scriptQrCode
         text=>qr codes

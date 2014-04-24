@@ -1,0 +1,41 @@
+﻿
+<h2>active controller methods</h2>
+
+<p>the ActiveController base class, has a lot of methods to help you accomplish what you want to accomplish. 
+some of the more important methods are described underneath</p>
+
+<ul>
+<li><strong>LoadModule</strong> - helps you load up {{
+link-button=>go-to-active-modules
+  text=>active modules
+  onclick
+    magix.help.open-file
+      file=>system42\admin\help\csharp\active-modules\index.mml
+}}</li>
+<li><strong>RaiseActiveEvent</strong> - shorthand for raising {{
+link-button=>go-to-active-events
+  text=>active events
+  onclick
+    magix.help.open-file
+      file=>system42\admin\help\csharp\active-events\index.mml
+}}</li>
+<li><strong>GetApplicationBaseUrl</strong> - return the base url of your application</li>
+<li><strong>Page</strong> property - returns the asp.net Page object currently being executed</li>
+</ul>
+
+<p>in addition, the ActiveController class has a couple of other methods, which are for advanced usage. one of which 
+is ShouldInspect. ShouldInspect returns true, if the caller of the active event does not want to actually invoke the 
+active event, but rather inspect it, and have its documentation. this feature is heavily used in the core of magix to 
+create the documentation for magix, and is at the core of the literate parts of magix. this is what allows the user 
+to invoke any active event with the "inspect" parameter, to have its documentation. you can only inspect methods 
+locally, and not over a remote connection. meaning, you cannot by default inspect active events remotely</p>
+
+<p>the Ip method is for creating hyper lisp extensions within the magix.execute namespace. don't bother with 
+this method, unless you're creating your own hyper lisp keywords within the magix.execute namespace</p>
+
+{{
+lambda=>next
+  oncreatecontrols
+    magix.help.set-next
+      next=>system42\admin\help\csharp\active-modules\index.mml
+}}

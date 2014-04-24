@@ -17,7 +17,7 @@
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
     <OldToolsVersion>4.0</OldToolsVersion>
-    <UseIISExpress>false</UseIISExpress>
+    <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -128,12 +128,11 @@
     <VisualStudio>
       <FlavorProperties GUID="{349C5851-65DF-11DA-9384-00065B846F21}">
         <WebProjectProperties>
-          <UseIIS>False</UseIIS>
+          <UseIIS>True</UseIIS>
           <AutoAssignPort>False</AutoAssignPort>
           <DevelopmentServerPort>8080</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>
-          </IISUrl>
+          <IISUrl>http://localhost:9951/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
@@ -255,6 +254,24 @@
     <Content Include="system42\startup-scripts\create-replace-unit-tests.hl" />
     <Content Include="system42\startup-scripts\create-exception-unit-tests.hl" />
     <Content Include="system42\startup-scripts\create-using-unit-tests.hl" />
+    <Content Include="system42\startup-scripts\create-if-unit-tests.hl" />
+    <Content Include="system42\startup-scripts\create-while-unit-tests.hl" />
+    <Content Include="system42\startup-scripts\create-set-unit-tests.hl" />
+    <Content Include="system42\startup-scripts\create-remoting-unit-tests.hl" />
+    <Content Include="system42\admin\help\csharp\active-events\index.mml" />
+    <Content Include="system42\admin\help\csharp\active-events\node-class.mml" />
+    <Content Include="system42\admin\help\csharp\active-events\sample-csharp-active-event.mml" />
+    <Content Include="system42\admin\help\index-2.mml" />
+    <Content Include="system42\admin\help\index.mml" />
+    <Content Include="system42\admin\help\hyper-lisp\index.mml" />
+    <Content Include="system42\admin\help\csharp\active-controllers\index.mml" />
+    <Content Include="system42\admin\help\backend\index.mml" />
+    <Content Include="system42\admin\help\csharp\active-modules\index.mml" />
+    <Content Include="system42\admin\help\csharp\active-events\more-nodes.mml" />
+    <Content Include="system42\admin\help\csharp\active-controllers\static-versus-instance.mml" />
+    <Content Include="system42\admin\help\csharp\active-controllers\methods.mml" />
+    <Content Include="system42\admin\help\csharp\ajax\index.mml" />
+    <Content Include="system42\admin\help\csharp\active-modules\active-modules-with-active-events.mml" />
     <None Include="todo.txt" />
     <None Include="system42\index.hl" />
     <None Include="system42\startup.hl" />
@@ -288,19 +305,6 @@
     <None Include="system42\admin\app-wizard\app-wizard.hl" />
     <None Include="system42\admin\app-wizard\wizards\crud-app.hl" />
     <None Include="system42\admin\app-wizard\new-app.hl" />
-    <None Include="system42\admin\help\index.mml" />
-    <None Include="system42\admin\help\active-events\index.mml" />
-    <None Include="system42\admin\help\active-events\hello-world-csharp.mml" />
-    <None Include="system42\admin\help\active-events\hello-world-csharp-explained.mml" />
-    <None Include="system42\admin\help\active-events\passing-parameters.mml" />
-    <None Include="system42\admin\help\active-events\nodes-explained-csharp.mml" />
-    <None Include="system42\admin\help\mvc\index.mml" />
-    <None Include="system42\admin\help\mvc\controller-explained.mml" />
-    <None Include="system42\admin\help\mvc\modules-explained.mml" />
-    <None Include="system42\admin\help\mvc\viewports-explained.mml" />
-    <None Include="system42\admin\help\ajax\index.mml" />
-    <None Include="system42\admin\help\mvc\summing-up.mml" />
-    <None Include="system42\admin\help\web-parts\index.mml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="database\" />

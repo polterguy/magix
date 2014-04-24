@@ -1,0 +1,85 @@
+
+
+inspect=>@"creates unit tests to 
+test the [magix.execute.set] keyword"
+
+
+event=>magix.test.set-complex-expression
+  inspect=>@"asserts that [set] works the 
+way it should work, and assigns 
+the correct node, when a complex
+expression is given to [set]"
+  code
+    _data=>y1
+      buffer=>howdy
+      buffer=>howdy2
+        x
+        x=>y
+          z=>
+          z=>z
+            =>
+            =>
+              value=>failure
+              value=>success
+    _value
+    set=>[_value].Value
+      value=>[_data][buffer=>howdy2][x=>y][z=>z][1][value:1].Value
+    if=>not-equals
+      lhs=>[_value].Value
+      rhs=>success
+      code
+        throw=>@"[set] expression didn't
+correctly set the node it was supposed to set"
+
+
+event=>magix.test.set-multiple-statements
+  inspect=>@"asserts that [set] works the 
+way it should work, and assigns 
+the correct value, in several
+consecutive calls to [set]"
+  code
+    _data1
+      value1=>howdy
+      value2=>world
+    _buffer=>old value
+      _result=>old value
+    set=>[_buffer][_result]
+      value=>[_data1]
+    if=>not-equals
+      lhs=>[_buffer][0].Name
+      rhs=>_data1
+      code
+        throw=>@"[set] expression didn't
+correctly set the node it was supposed to set"
+    if=>equals
+      lhs=>[_buffer][0].Value
+      rhs=>old value
+      code
+        throw=>@"[set] expression didn't
+correctly set the node it was supposed to set"
+    if=>not-equals
+      lhs=>[_buffer][0][0].Value
+      rhs=>howdy
+      code
+        throw=>@"[set] expression didn't
+correctly set the node it was supposed to set"
+    set=>[_data1]
+    if=>exist
+      lhs=>[_data1]
+      code
+        throw=>@"[set] expression didn't
+correctly set the node it was supposed to set"
+    set=>[_buffer].Value
+    if=>exist
+      lhs=>[_buffer].Value
+      code
+        throw=>@"[set] expression didn't
+correctly set the node it was supposed to set"
+    set=>[_buffer].Name
+    if=>not-equals
+      lhs=>[0].Name
+      rhs=>
+      code
+        throw=>@"[set] expression didn't
+correctly set the node it was supposed to set"
+

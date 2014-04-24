@@ -1,0 +1,65 @@
+<h2>index</h2>
+
+<p>the c# parts are for developers who want to use magix in combination with visual studio. the other 
+parts are for everyone, including consumers of magix. choose your path below</p>
+
+<label>backend, usage for non-technical staff</label>
+<ul>
+<li>{{
+link-button=>backend
+  text=>backend
+  onclick
+    magix.help.open-file
+      file=>system42\admin\help\backend\index.mml
+}}</li>
+</ul>
+<label>c# and visual studio development</label>
+<ul>
+<li>{{
+link-button=>active-events
+  text=>active events
+  onclick
+    magix.help.open-file
+      file=>system42\admin\help\csharp\active-events\index.mml
+}}</li>
+<li>{{
+link-button=>active-controllers
+  text=>active controllers
+  onclick
+    magix.help.open-file
+      file=>system42\admin\help\csharp\active-controllers\index.mml
+}}</li>
+<li>{{
+link-button=>active-modules
+  text=>active modules
+  onclick
+    magix.help.open-file
+      file=>system42\admin\help\csharp\active-modules\index.mml
+}}</li>
+<li>{{
+link-button=>ajax
+  text=>managed ajax
+  onclick
+    magix.help.open-file
+      file=>system42\admin\help\csharp\ajax\index.mml
+}}</li>
+</ul>
+<p>in addition, there's {{
+link-button=>hyperlisp
+  text=>hyper lisp
+  onclick
+    magix.help.open-file
+      file=>system42\admin\help\hyper-lisp\index.mml
+}}, which is a programming language, which can be used through the browser 
+ide, which is significantly easier to understand than c# or other "complex" programming languages. 
+for non-technical staff, who wants to do advanced stuff, hyper lisp should be your first place to start. 
+hyper lisp is a tool for creating advanced functionality, through a turing complete programming 
+language, which though is much easier to learn than most other programming languages. hyper lisp 
+can be created through the backend web based interface</p>
+
+{{
+lambda=>next
+  oncreatecontrols
+    magix.help.set-next
+      next=>system42\admin\help\csharp\active-events\index.mml
+}}

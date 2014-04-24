@@ -1,0 +1,259 @@
+
+
+inspect=>@"creates unit tests to 
+test the [magix.execute.if] keyword"
+
+
+event=>magix.test.if-complex-true
+  inspect=>@"asserts that [if] works the 
+way it should work, and returns 
+true if a complex expresssion is given, 
+and it is true"
+  code
+    _data1=>x1
+    _data2=>y1
+    if=>equals
+      lhs=>[_data1].Value
+      rhs=>x
+      and=>equals
+        lhs=>[_data2].Value
+        rhs=>y
+      or=>equals
+        lhs=>[_data1].Value
+        rhs=>x1
+        and=>equals
+          lhs=>[@][_data2].Value
+          rhs=>y1
+      code
+    else
+      throw=>@"[if] expression that should have 
+evaluated true returned false"
+
+event=>magix.test.if-complex-false
+  inspect=>@"asserts that [if] works the 
+way it should work, and returns 
+false if a complex expresssion is given, 
+and it is false"
+  code
+    _data1=>x1
+    _data2=>y
+    if=>equals
+      lhs=>[_data1].Value
+      rhs=>x
+      and=>equals
+        lhs=>[_data2].Value
+        rhs=>y
+      or=>equals
+        lhs=>[_data1].Value
+        rhs=>x1
+        and=>equals
+          lhs=>[@][_data2].Value
+          rhs=>y1
+      code
+        throw=>@"[if] expression that should have 
+evaluated false returned true"
+
+
+event=>magix.test.if-complex-multiple-and-true
+  inspect=>@"asserts that [if] works the 
+way it should work, and returns 
+true if a complex expresssion is given, 
+and it is true, and it has multiple [and]
+nodes"
+  code
+    _data1=>x
+    _data2=>y
+    _data3=>z
+    _data4=>q
+    if=>equals
+      lhs=>[_data1].Value
+      rhs=>x
+      and=>equals
+        lhs=>[_data2].Value
+        rhs=>y
+      and=>equals
+        lhs=>[_data3].Value
+        rhs=>z
+      and=>equals
+        lhs=>[_data4].Value
+        rhs=>q
+      code
+    else
+      throw=>@"[if] expression that should have 
+evaluated true returned false"
+
+
+event=>magix.test.if-complex-multiple-and-false
+  inspect=>@"asserts that [if] works the 
+way it should work, and returns 
+false if a complex expresssion is given, 
+and it is false, and it has multiple [and]
+nodes"
+  code
+    _data1=>x
+    _data2=>y
+    _data3=>z
+    _data4=>q1
+    if=>equals
+      lhs=>[_data1].Value
+      rhs=>x
+      and=>equals
+        lhs=>[_data2].Value
+        rhs=>y
+      and=>equals
+        lhs=>[_data3].Value
+        rhs=>z
+      and=>equals
+        lhs=>[_data4].Value
+        rhs=>q
+      code
+        throw=>@"[if] expression that should have 
+evaluated false returned true"
+
+
+event=>magix.test.if-complex-multiple-or-true
+  inspect=>@"asserts that [if] works the 
+way it should work, and returns 
+true if a complex expresssion is given, 
+and it is true, and it has multiple [or]
+nodes"
+  code
+    _data1=>x1
+    _data2=>y1
+    _data3=>z1
+    _data4=>q
+    if=>equals
+      lhs=>[_data1].Value
+      rhs=>x
+      or=>equals
+        lhs=>[_data2].Value
+        rhs=>y
+      or=>equals
+        lhs=>[_data3].Value
+        rhs=>z
+      or=>equals
+        lhs=>[_data4].Value
+        rhs=>q
+      code
+    else
+      throw=>@"[if] expression that should have 
+evaluated true returned false"
+
+
+event=>magix.test.if-complex-multiple-or-false
+  inspect=>@"asserts that [if] works the 
+way it should work, and returns 
+false if a complex expresssion is given, 
+and it is false, and it has multiple [or]
+nodes"
+  code
+    _data1=>x1
+    _data2=>y1
+    _data3=>z1
+    _data4=>q1
+    if=>equals
+      lhs=>[_data1].Value
+      rhs=>x
+      or=>equals
+        lhs=>[_data2].Value
+        rhs=>y
+      or=>equals
+        lhs=>[_data3].Value
+        rhs=>z
+      or=>equals
+        lhs=>[_data4].Value
+        rhs=>q
+      code
+        throw=>@"[if] expression that should have 
+evaluated false returned true"
+
+
+event=>magix.test.if-complex-tree-and-true
+  inspect=>@"asserts that [if] works the 
+way it should work, and returns 
+true if a complex expresssion is given, 
+and it is true, and it has multiple [and]
+nodes, inside of each other, like a 
+deep tree"
+  code
+    _data1=>x
+    _data2=>y
+    _data3=>z
+    _data4=>q
+    if=>equals
+      lhs=>[_data1].Value
+      rhs=>x
+      and=>equals
+        lhs=>[_data2].Value
+        rhs=>y
+        and=>equals
+          lhs=>[_data3].Value
+          rhs=>z
+          and=>equals
+            lhs=>[@][_data4].Value
+            rhs=>q
+      code
+    else
+      throw=>@"[if] expression that should have 
+evaluated true returned false"
+
+
+event=>magix.test.if-complex-tree-or-true
+  inspect=>@"asserts that [if] works the 
+way it should work, and returns 
+true if a complex expresssion is given, 
+and it is true, and it has multiple [or]
+nodes, inside of each other, like a 
+deep tree"
+  code
+    _data1=>x1
+    _data2=>y1
+    _data3=>z1
+    _data4=>q
+    if=>equals
+      lhs=>[_data1].Value
+      rhs=>x
+      or=>equals
+        lhs=>[_data2].Value
+        rhs=>y
+        or=>equals
+          lhs=>[_data3].Value
+          rhs=>z
+          or=>equals
+            lhs=>[@][_data4].Value
+            rhs=>q
+      code
+    else
+      throw=>@"[if] expression that should have 
+evaluated true returned false"
+
+
+event=>magix.test.if-complex-tree-or-false
+  inspect=>@"asserts that [if] works the 
+way it should work, and returns 
+false if a complex expresssion is given, 
+and it is false, and it has multiple [or]
+nodes, inside of each other, like a 
+deep tree"
+  code
+    _data1=>x1
+    _data2=>y1
+    _data3=>z1
+    _data4=>q1
+    if=>equals
+      lhs=>[_data1].Value
+      rhs=>x
+      or=>equals
+        lhs=>[_data2].Value
+        rhs=>y
+        or=>equals
+          lhs=>[_data3].Value
+          rhs=>z
+          or=>equals
+            lhs=>[@][_data4].Value
+            rhs=>q
+      code
+        throw=>@"[if] expression that should have 
+evaluated true returned false"
+
+

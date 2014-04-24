@@ -1,134 +1,54 @@
+﻿<h2>welcome to magix</h2>
 
+<img src="media/images/marvin-headshot.png" 
+  style="margin-right:10px;float:left;" 
+  class="blockable" 
+  alt="marvin, your friendly neighborhood super-intelligent robot!" />
 
-<h2 class="span-14 left-5 last">welcome to magix</h2>
+<p>magix is an open source, free software, web application development platform for .net. the main feature 
+of magix, is that it significantly reduces the time it takes to develop web applications. it also lowers 
+the bar in regards to creating web apps, to such an extent, that most tasks which would normally require a 
+team of developers to implement, can be done easily in magix by your non-technical staff</p>
 
-<p>magix is an open source web application platform.&nbsp;&nbsp;this means that 
-you can free of charge use magix illuminate to create your own web applications, without 
-having to pay license fees, as long as you or your company does not reside in neither 
-the state of california/usa, nor the state of telemark/norway</p>
-
-<p>magix is built upon an entirely new paradigm of software development, created around 
-one design pattern called active events, which is the reason why magix can do what magix can do</p>
-
-<p>magix is built with c# on top of mono and xamarin, and can probably be ported to .net, with some effort</p>
-
-<p>you can contact the architect and developer behind magix at 
-<a href="mailto:isa.lightbringer@gmail.com">isa.lightbringer@gmail.com</a></p>
-
-<p>please choose your path below, or click the next button to learn more about magix</p>
-
-<ul>
-
-<li>
-{{
-link-button=>link1
+<p>this is possible due to one innovation in magix, which is called {{
+link-button=>active-events
   text=>active events
-  css=>bold
   onclick
     magix.help.open-file
-      file=>system42/admin/help/active-events/index.mml
-}}
- - learn about the most important aspect of magix; active events
-</li>
-
-<li>
-{{
-link-button=>link2
-  text=>magix mvc
-  css=>bold
+      file=>system42\admin\help\csharp\active-events\index.mml
+}}, which the entire 
+framework is built around. active events allows for the separation between data and logic, in an 
+entirely new way, such that your application to a large extent becomes "configurable" through 
+the supplied browser based {{
+link-button=>go-to-ide
+  text=>ide
   onclick
     magix.help.open-file
-      file=>system42/admin/help/mvc/index.mml
-}}
- - magix is built upon an mvc model, with some powerful modifications
-</li>
-
-<li>
-{{
-link-button=>link3
-  text=>ajax
-  css=>bold
-  onclick
-    magix.help.open-file
-      file=>system42/admin/help/ajax/index.mml
-}}
- - with magix, you can create rich ajax apps, with 8kb of javascript
-</li>
-
-<li>
-{{
-link-button=>link4
-  text=>web parts
-  css=>bold
-  onclick
-    magix.help.open-file
-      file=>system42/admin/help/web-parts/index.mml
-}}
- - how to dynamically create web parts
-</li>
-
-<li>
-{{
-link-button=>link41
-  text=>magix markup language
-  css=>bold
-}}
- - mixing web controls and html with a breeze
-</li>
-
-<li>
-{{
-link-button=>link5
+      file=>system42/admin/help/backend/index.mml
+}}. once your domain logic is implemented, your non-technical staff 
+can wire together the domain logic, through the use of {{
+link-button=>go-to-hyper-lisp
   text=>hyper lisp
-  css=>bold
-}}
- - hyper lisp, the reference guide
-</li>
+  onclick
+    magix.help.open-file
+      file=>system42/admin/help/hyper-lisp/index.mml
+}}, which is really 
+just a wrapper around active events</p>
 
-<li>
-{{
-link-button=>link6
-  text=>admin tools
-  css=>bold
-}}
- - learn about the different admin tools in magix
-</li>
+<p>with magix, the art of creating web applications is reduced so significantly, that it becomes 
+almost in its entirety possible to do for people who have never done any system development before. all this 
+without compromising the power of the platform. this means that your developers can create 
+their most rich and advanced functionality you can fathom, while your non-technical staff 
+can wire together the code created by your developers. this frees up precious resources from 
+your development team, while empowering your non-technical staff</p>
 
-<li>
-{{
-link-button=>link7
-  text=>oop vs. active events
-  css=>bold
-}}
- - a comparison of traditional object oriented programming, and the benefits active events gives you
-</li>
-
-<li>
-{{
-link-button=>link8
-  text=>howto and faq
-  css=>bold
-}}
- - solutions beginning with questions
-</li>
-
-<li>
-{{
-link-button=>link8
-  text=>magix and the singularity
-  css=>bold
-}}
- - the ethical and moral implications of magix illuminate
-</li>
-
-</ul>
-
-
+<p>contact the architect behind magix at <a href="mailto:isa.lightbringer@gmail.com">isa.lightbringer@gmail.com</a>, 
+or download magix and its source code <a href="http://code.google.com/p/magix-illuminate-2">here</a></p>
 
 {{
 lambda=>next
   oncreatecontrols
     magix.help.set-next
-      next=>system42/admin/help/active-events/index.mml
+      next=>system42\admin\help\index-2.mml
 }}
 

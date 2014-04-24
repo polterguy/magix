@@ -1,0 +1,115 @@
+﻿
+<h2>active modules</h2>
+
+<p>an active module is the equivalent of a view in traditional mvc. though active modules in magix, 
+are much more powerful than what you've seen in for instance microsoft mvc, or ruby on rails. in traditional mvc, 
+you have a one-to-one relationship between a controller and a view. in magix, this constraint doesn't exist, and 
+you can also have one page contain many active modules if you wish. this means that there is not a one-to-one 
+relationship between a url and an active module in any ways. in magix, an active module is more like a user control, 
+with support for both raising and handling active events, than the views you are used to from mvc</p>
+
+<p>in fact, an active module is a user control, and the way you create it, is by creating a .ascx file, which 
+you inherit from the ActiveModule class. combine these features with the magix ux ajax library, and you've got 
+a recipe for creating rich internet applications, without needing to resort to propritary frameworks, such 
+as silverlight, flash or other types of activex2.0 technologies. consider the two files below</p>
+
+<label>SampleModule.ascx</label>
+<pre>
+&lt;%@ Assembly 
+    Name="Magix.sample" %&gt;
+&lt;%@ Control 
+    Language="C#" 
+    AutoEventWireup="true" 
+    Inherits="Magix.sample.SampleModule" %&gt;
+
+&lt;mux:Button
+    runat="server"
+    id="btn"
+    OnClick="btn_Click"
+    Text="Click Me!"
+    CssClass="span-3 btn-large"/&gt;
+</pre>
+
+<label>SampleModule.ascx.cs</label>
+<pre>
+using System;
+using System.Web;
+using System.Web.UI;
+using Magix.Core;
+using Magix.UX.Widgets;
+
+namespace Magix.sample
+{
+    public class SampleModule : ActiveModule
+    {
+        protected Button btn;
+
+        protected void btn_Click(object sender, EventArgs e)
+        {
+            btn.Text ="howdy world";
+        }
+    }
+}</pre>
+
+<p>as you can see, it looks just like a normal UserControl file, except for some minor details. first of all, the class 
+is inheriting from ActiveModule and not UserControl. this is not necessary, but it helps you by giving you some 
+helper methods. you could if you wish, inherit the class from UserControl, but then you'd have to mark the class 
+with the attribute ActiveModule</p>
+
+<p>the next difference is that it doesn't use the familiar &lt;asp: syntax, but instead it uses &lt;mux: to 
+declare the controls inside the markup file. this is because it uses {{
+link-button=>magix-ux-ajax-controls
+  text=>magix ux ajax controls
+  onclick
+    magix.help.open-file
+      file=>system42\admin\help\csharp\ajax\index.mml
+}}, and not normal postpack controls. you could use normal asp.net web controls if you wish, but then you'd loose 
+the ajax parts, and your site would be a normal postback website</p>
+
+<p>however, the most important difference is not visible. the user control files have to be embedded as resources 
+into your project build. this means that there won't exist any .ascx files on disc when you deploy your active modules.
+instead, the modules will be loaded as embedded resources from the dll. this makes a project completely self-contained, 
+and 100% encapsulated, and makes it much easier to deploy, since you can just drop the dll output from your project 
+into the bin folder of your web application, and you have access to the modules within that project from anywhere 
+you wish from within your website!</p>
+
+<p>the last point is crucial to understand the consequences of. among other things, the module is loaded according 
+to its fully qualified namespace. meaning, to load the above module, you'd have to use code similar to the code below</p>
+
+<pre>
+Magix.Core.ModuleControllerLoader.Instance.LoadActiveModule("Magix.sample.SampleModule");
+</pre>
+
+<p>now of course, if you're loading the module from an {{
+link-button=>active-controllers
+  text=>active controller
+  onclick
+    magix.help.open-file
+      file=>system42\admin\help\csharp\active-controllers\index.mml
+}}, you should use the LoadActiveModule shorthand, and in fact, you should try to avoid loading modules by going 
+directly to the ModuleControllerLoader, since it allows for shooting yourself in your leg, 
+but it is still important to understand how .net treats embedded resources. for instance, a resource will by default 
+have its resource locator name be the default namespace of your project, plus any potential folders it is kept within. 
+for the above module, this means that you'd have to have that module inside an assembly with the default namespace of 
+"Magix.sample". in addition, the .ascx file would have to be directly on the root of that project file structure 
+in visual studio. in addition the name of the class which wraps the module, must be the exact same name as the 
+resource locator name. the assembly name must also be the same as the default namespace, and the assembly name 
+must be explicitly given in the .ascx file, through the Assembly user control directive, as shown in the above 
+code</p>
+
+<p>for instance, if you have a project called "Magix.demo", with the default namespace of "Magix.demo", and a folder 
+inside of this project called "modules", and inside of this folder you have an active module with the file name 
+of "ShowCoolStuff.ascx". then the fully qualified name of your class, which implements the module, must be 
+"Magix.demo.modules.ShowCoolStuff". to load this module, you'd use "Magix.demo.modules.ShowCoolStuff" as 
+the module name</p>
+
+<p>to mark an ascx file as an embedded resource in visual studio, right click the file, choose properties, and then set 
+the build action to embedded resource</p>
+
+{{
+lambda=>next
+  oncreatecontrols
+    magix.help.set-next
+      next=>system42\admin\help\csharp\active-modules\active-modules-with-active-events.mml
+}}
+

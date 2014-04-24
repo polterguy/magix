@@ -1,0 +1,79 @@
+
+
+inspect=>@"creates unit tests to 
+test the [magix.execute.remote],
+[magix.execute.open],
+[magix.execute.close] and
+[magix.execute.event] keywords"
+
+
+event=>magix.test.open-remote
+  inspect=>@"asserts that [open] and [remote] works the 
+way it should work, by passing parameters in through 
+the [remote] keyword, and checking to 
+see if they become correctly serialized"
+  code
+    event=>magix.test.temp-test-event
+      code
+        set=>[$][output].Value
+          value=>{0} {1}
+            =>[$][input].Value
+            =>world
+    open=>magix.test.temp-test-event
+    try
+      code
+        magix.web.get-base-directory
+        set=>[@][remote][url].Value
+          value=>[@][magix.web.get-base-directory][value].Value
+        remote=>magix.test.temp-test-event
+          params
+            input=>hello
+      catch
+    close=>magix.test.temp-test-event
+    event=>magix.test.temp-test-event
+    if=>not-equals
+      lhs=>[try][code][remote][params][output].Value
+      rhs=>hello world
+      code
+        throw=>@"opened active event didn't
+return value as expected when it was remotely invoked"
+    magix.admin.get-active-events
+      open=>true
+    if=>exist
+      lhs=>[magix.admin.get-active-events][events][magix.test.temp-test-event]
+      code
+        throw=>@"opened active event was not correctly 
+closed after being supposed to be closed"
+
+
+event=>magix.test.open-remote-throw-inspect
+  inspect=>@"asserts that [open] and [remote] works the 
+way it should work, and that it throws an exception, 
+if an event is attempted to be inspected by 
+appending the [inspect] parameter to the invocation 
+through the [remote] keyword"
+  code
+    _success=>false
+    event=>magix.test.temp-test-event
+      code
+    open=>magix.test.temp-test-event
+    try
+      code
+        magix.web.get-base-directory
+        set=>[@][remote][url].Value
+          value=>[@][magix.web.get-base-directory][value].Value
+        remote=>magix.test.temp-test-event
+          params
+            inspect
+      catch
+        set=>[_success].Value
+          value=>true
+    close=>magix.test.temp-test-event
+    event=>magix.test.temp-test-event
+    if=>not-equals
+      lhs=>[_success].Value
+      rhs=>true
+      code
+        throw=>@"opened active event didn't
+throw an exception as expected when inspected 
+externally"

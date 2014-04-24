@@ -22,7 +22,7 @@ namespace Magix.Core
      * Inherit your Viewports from this class to get most of the functionality 
      * you need in your viewports for free
      */
-    public class Viewport : ActiveModule
+    public abstract class Viewport : ActiveModule
     {
 		protected override void OnInit (EventArgs e)
 		{
@@ -38,6 +38,8 @@ namespace Magix.Core
 				};
 			base.OnInit (e);
 		}
+
+        protected abstract string GetDefaultContainer();
 
 		private void Page_Load_Initializing ()
 		{
@@ -57,9 +59,10 @@ namespace Magix.Core
 						if (!string.IsNullOrEmpty (Page.Request["params"]))
 							node = Node.FromJSONString (Page.Request["params"]);
 
-						node["remote"].Value = true;
+                        if (node.Contains("inspect"))
+                            throw new ArgumentException("no events can be remotely inspected, through the [inspect] feature");
 
-						RaiseEvent(
+						RaiseActiveEvent(
 							Page.Request["event"],
 							node);
 
@@ -341,9 +344,14 @@ the [name] node.&nbsp;&nbsp;the incoming parameters will be used.&nbsp;&nbsp;not
 
             string moduleName = Ip(e.Params)["name"].Get<string>();
 
+            string container = GetDefaultContainer();
+
+            if (Ip(e.Params).Contains("container"))
+                container = Ip(e.Params)["container"].Get<string>();
+
 			DynamicPanel dyn = Selector.FindControl<DynamicPanel>(
             	this,
-                Ip(e.Params)["container"].Get<string>());
+                container);
 
 			if (dyn == null)
 				return;
@@ -356,6 +364,8 @@ the [name] node.&nbsp;&nbsp;the incoming parameters will be used.&nbsp;&nbsp;not
 
             if (Ip(e.Params).Contains("css"))
                 dyn.CssClass = Ip(e.Params)["css"].Get<string>();
+            else
+                dyn.CssClass = "";
 
 			dyn.LoadControl(moduleName, context);
         }

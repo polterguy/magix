@@ -38,10 +38,10 @@ namespace Magix.Core
         /**
          * Loads the given module and puts it into your default container
          */
-        protected Node LoadModule(string name)
+        protected Node LoadActiveModule(string name)
         {
             Node node = new Node();
-            LoadModule(name, null, node);
+            LoadActiveModule(name, null, node);
             return node;
         }
 
@@ -49,10 +49,10 @@ namespace Magix.Core
          * Loads the given module and puts it into the given container. 
          * Will return the node created and passed into creation
          */
-        protected Node LoadModule(string name, string container)
+        protected Node LoadActiveModule(string name, string container)
         {
             Node node = new Node();
-            LoadModule(name, container, node);
+            LoadActiveModule(name, container, node);
             return node;
         }
 
@@ -60,7 +60,7 @@ namespace Magix.Core
          * Shorthand method for Loading a specific Module and putting it into
          * the given container, with the given Node structure.
          */
-        protected void LoadModule(string name, string container, Node node)
+        protected void LoadActiveModule(string name, string container, Node node)
         {
             if (string.IsNullOrEmpty(name))
                 throw new ApplicationException("You have to specify which Module you want to load");
@@ -117,7 +117,7 @@ namespace Magix.Core
         /**
          * Will return the 'base' URL of your application
          */
-        protected static string GetApplicationBaseUrl()
+        protected string GetApplicationBaseUrl()
         {
             return string.Format(
                 "{0}://{1}{2}",
@@ -131,7 +131,7 @@ namespace Magix.Core
         /**
          * Shorthand for getting access to our "Page" object.
          */
-        protected static Page Page
+        protected Page Page
         {
             get
             {
