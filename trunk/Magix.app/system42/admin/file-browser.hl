@@ -113,6 +113,8 @@ _link-button
     magix.admin.edit-file
       container=>content2
       css=>span-24 min-height-16 top-1
+    magix.viewport.clear-controls
+      container=>content3
 
 _link-buttonDir
   css=>span-5 directory

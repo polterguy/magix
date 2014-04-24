@@ -104,7 +104,7 @@ namespace Magix.forms
                 if (Ip(e.Params).Count > 0)
                     tmp["$"].AddRange(Ip(e.Params).Clone());
 
-				RaiseEvent(
+				RaiseActiveEvent(
 					"magix.execute",
 					tmp);
 
@@ -230,7 +230,7 @@ not thread safe";
                 ctrlNode["_first"].Value = isFirst;
                 node["_code"].Value = ctrlNode;
 
-				RaiseEvent(
+				RaiseActiveEvent(
 					evtName,
 					node);
 
@@ -309,7 +309,7 @@ not thread safe";
 
 							tmp["code"].Value = buffer.Replace("&gt;", ">"); // TODO: refactor such that this is done during saving of form
 
-							RaiseEvent(
+							RaiseActiveEvent(
 								"magix.code.code-2-node",
 								tmp);
 

@@ -59,7 +59,7 @@ namespace Magix.admin
 
 				try
 				{
-					RaiseEvent(
+					RaiseActiveEvent(
 						"magix.code.node-2-code",
 						tmp);
 				}

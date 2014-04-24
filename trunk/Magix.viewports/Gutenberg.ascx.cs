@@ -32,8 +32,9 @@ namespace Magix.viewports
 		protected DynamicPanel content4;
 		protected DynamicPanel content5;
 		protected DynamicPanel content6;
-		protected DynamicPanel content7;
-		protected DynamicPanel footer;
+        protected DynamicPanel content7;
+        protected DynamicPanel help;
+        protected DynamicPanel footer;
 		protected DynamicPanel trace;
 		protected Label message;
 		protected Panel confirmWrp;
@@ -49,11 +50,16 @@ namespace Magix.viewports
                 Node node = new Node();
                 node["type"].Value = "css";
                 node["file"].Value = "media/grid/main.css";
-                RaiseEvent(
+                RaiseActiveEvent(
                     "magix.viewport.include-client-file",
                     node);
             }
             base.OnLoad(e);
+        }
+
+        protected override string GetDefaultContainer()
+        {
+            return "content1";
         }
 
 		/**
@@ -98,7 +104,7 @@ end user for some seconds.&nbsp;&nbsp;not thread safe";
 				code.Name = "";
 				tmp["json"].Value = code;
 
-				RaiseEvent(
+				RaiseActiveEvent(
 					"magix.code.node-2-code",
 					tmp);
 
@@ -175,7 +181,7 @@ end user for some seconds.&nbsp;&nbsp;not thread safe";
 					code.Name = "";
 					tmp["json"].Value = code;
 
-					RaiseEvent(
+					RaiseActiveEvent(
 						"magix.code.node-2-code",
 						tmp);
 
@@ -209,7 +215,7 @@ end user for some seconds.&nbsp;&nbsp;not thread safe";
             confirmWrp.Visible = false;
             confirmWrp.Style["display"] = "none";
             
-            RaiseEvent(
+            RaiseActiveEvent(
 				"magix.execute",
 				ConfirmCode);
 

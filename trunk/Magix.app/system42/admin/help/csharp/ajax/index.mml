@@ -1,0 +1,102 @@
+﻿
+<h2>ajax - mux</h2>
+
+<p>magix contains an ajax library which is called mux. mux is as acronym, and means magix user experience. mux is built 
+around a concept called managed ajax, which is in most regards far superior to for instance asp.net ajax. first of 
+all, the syntax is the same syntax as the asp.net postback web controls, which means it's easier to learn and use 
+than asp.net ajax. secondly, mux uses far less bandwith than asp.net ajax in its requests to the server, since 
+asp.net ajax is largely reliant upon partial rendering, where mux is largely not dependent upon this. thirdly, 
+the javascript library files for mux, is a fraction of the size of the javascript files for asp.net ajax. though 
+the most important feature of mux, is that javascript knowledge is optional! you do not need to know anything 
+about javascript to create very rich and advanced ajax applications with mux!</p>
+
+<p>if you compare mux with other ajax libraries, such as jquery, telerik and such, you will find that mux 
+scores better than all of these libraries in regards to most parameters. with mux, ajax just happens!</p>
+
+<p>if you're used to using web controls from asp.net, then mux should be very familiar to you. in fact the 
+only difference is that instead of using &lt;asp: you use &lt;mux: when declaring your web controls. and in the 
+codebehind of your aspx and ascx file, you will be using the Magix.UX namespace instead of System.Web.UI 
+namespace. besides from that, the api is the same, except for of course, that mux has support for many things 
+that the conventional web control libraries does not have</p>
+
+<p>below is an example of an active module, using mux instead of conventional web controls. remember to embed 
+the active module as an embedded resource if you attempt to try to compile this sample</p>
+
+<label>SampleModule.ascx</label>
+<pre>
+&lt;%@ Assembly 
+    Name="Magix.sample" %&gt;
+&lt;%@ Control 
+    Language="C#" 
+    AutoEventWireup="true" 
+    Inherits="Magix.sample.SampleModule" %&gt;
+
+&lt;mux:Button
+    runat="server"
+    id="btn"
+    OnClick="btn_Click"
+    Text="Click Me!"
+    CssClass="span-3 btn-large"/&gt;
+
+&lt;mux:Label
+    runat="server"
+    id="lbl"
+    Text="to be changed ..."
+    OnMouseOver="lbl_MouseOver"
+    CssClass="span-5"/&gt;
+</pre>
+
+<label>SampleModule.ascx.cs</label>
+<pre>
+using System;
+using System.Web;
+using System.Web.UI;
+using Magix.Core;
+using Magix.UX.Widgets;
+
+namespace Magix.sample
+{
+    public class SampleModule : ActiveModule
+    {
+        protected Button btn;
+        protected Label lbl;
+
+        protected void btn_Click(object sender, EventArgs e)
+        {
+            lbl.Text ="label text was changed!";
+        }
+
+        protected void lbl_MouseOver(object sender, EventArgs e)
+        {
+            lbl.Text ="DON'T TOUCH ME!!! OUCH!";
+        }
+    }
+}</pre>
+
+<p>with the conventional asp.net web controls, you can mostly handle the click events and such on the server. with 
+mux, you can virtually handle all dom events that exists, in event handlers on the server, from where you can 
+modify all other mux controls as you wish, in ajax callbacks. this facilitates for a much cleaner architecture for 
+your solutions, where all the business logic ends up on the server, and doesn't end up leaking out into the 
+client environment in your browser environment</p>
+
+<p>you will find most controls you need in the Magix.UX namespace from the Magix.UX project. however, below 
+is an exhaustive list</p>
+
+<ul>
+<li>Button</li>
+<li>CheckBox</li>
+<li>HiddenField</li>
+<li>HyperLink</li>
+<li>Image</li>
+<li>Label</li>
+<li>LinkButton</li>
+<li>Panel</li>
+<li>RadioButton</li>
+<li>SelectList</li>
+<li>TextArea</li>
+<li>TextBox</li>
+<li>DynamicPanel</li>
+<li>Timer</li>
+<li>Uploader</li>
+<li>Wysiwyg</li>
+</ul>

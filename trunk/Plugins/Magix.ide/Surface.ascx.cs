@@ -112,7 +112,7 @@ namespace Magix.ide
 			Node ctrlRaise = new Node();
 			ctrlRaise["_code"].Value = tmp;
 
-			RaiseEvent(
+			RaiseActiveEvent(
 				type,
 				ctrlRaise);
 
@@ -157,8 +157,8 @@ namespace Magix.ide
 			BuildForm();
 			wrp.ReRender();
 
-			RaiseEvent("magix.ide.surface-changed");
-			RaiseEvent("magix.ide.widget-selected");
+			RaiseActiveEvent("magix.ide.surface-changed");
+			RaiseActiveEvent("magix.ide.widget-selected");
 		}
 
 		/**
@@ -287,7 +287,7 @@ not thread safe";
 					Node tp = new Node();
 					tp["inspect"].Value = null;
 
-					RaiseEvent(
+					RaiseActiveEvent(
 						whereNode["type"].Get<string>(),
 						tp);
 
@@ -308,12 +308,12 @@ not thread safe";
 				BuildForm();
 				wrp.ReRender();
 				
-				RaiseEvent("magix.ide.surface-changed");
+				RaiseActiveEvent("magix.ide.surface-changed");
 
 				Node tp = new Node();
 				tp["dna"].Value = SelectedWidgetDna;
 
-				RaiseEvent(
+				RaiseActiveEvent(
 					"magix.ide.widget-selected",
 					tp);
 			}
@@ -322,7 +322,7 @@ not thread safe";
 				BuildForm();
 				wrp.ReRender();
 				
-				RaiseEvent("magix.ide.surface-changed");
+				RaiseActiveEvent("magix.ide.surface-changed");
 			}
 		}
 
@@ -355,7 +355,7 @@ not thread safe";
 			BuildForm();
 			wrp.ReRender();
 			
-			RaiseEvent("magix.ide.surface-changed");
+			RaiseActiveEvent("magix.ide.surface-changed");
 		}
 
 		/**
@@ -394,7 +394,7 @@ removing [remove] properties.&nbsp;&nbsp;not thread safe";
 
 						tmp["code"].Value = idx.Get<string>();
 
-						RaiseEvent(
+						RaiseActiveEvent(
 							"magix.code.code-2-node",
 							tmp);
 
@@ -476,7 +476,7 @@ not thread safe";
 			BuildForm();
 			wrp.ReRender();
 			
-			RaiseEvent("magix.ide.surface-changed");
+			RaiseActiveEvent("magix.ide.surface-changed");
 		}
 
 		/**
@@ -510,7 +510,7 @@ raises the magix.ide.widget-selected active event when done.&nbsp;&nbsp;not thre
 			Node tp = new Node();
 			tp["dna"].Value = SelectedWidgetDna;
 
-			RaiseEvent(
+			RaiseActiveEvent(
 				"magix.ide.widget-selected",
 				tp);
 		}
@@ -579,7 +579,7 @@ not thread safe";
 			if (SelectedWidgetDna == null)
 				throw new ArgumentException("no widget currently selected, you must select widget before you can cut it");
 
-			RaiseEvent(
+			RaiseActiveEvent(
 				"magix.execute.copy-widget",
                 Ip(e.Params));
 
@@ -591,7 +591,7 @@ not thread safe";
 			BuildForm();
 			wrp.ReRender();
 			
-			RaiseEvent("magix.ide.surface-changed");
+			RaiseActiveEvent("magix.ide.surface-changed");
 		}
 
 		/**
@@ -650,7 +650,7 @@ not thread safe";
 					Node tp = new Node();
 					tp["inspect"].Value = null;
 
-					RaiseEvent(
+					RaiseActiveEvent(
 						destinationNode["type"].Get<string>(),
 						tp);
 
@@ -671,12 +671,12 @@ not thread safe";
 				BuildForm();
 				wrp.ReRender();
 				
-				RaiseEvent("magix.ide.surface-changed");
+				RaiseActiveEvent("magix.ide.surface-changed");
 
 				Node tp = new Node();
 				tp["dna"].Value = SelectedWidgetDna;
 
-				RaiseEvent(
+				RaiseActiveEvent(
 					"magix.ide.widget-selected",
 					tp);
 			}
@@ -685,7 +685,7 @@ not thread safe";
 				BuildForm();
 				wrp.ReRender();
 				
-				RaiseEvent("magix.ide.surface-changed");
+				RaiseActiveEvent("magix.ide.surface-changed");
 			}
 		}
 
@@ -714,7 +714,7 @@ not thread safe";
 			tp["prototype"]["type"].Value = "magix.forms.form";
 			tp["prototype"]["name"].Value = ip["name"].Get<string>();
 
-			RaiseEvent(
+			RaiseActiveEvent(
 				"magix.data.load",
 				tp);
 
@@ -729,7 +729,7 @@ not thread safe";
 			tmp["value"]["type"].Value = "magix.forms.form";
 			tmp["value"]["name"].Value = ip["name"].Get<string>();
 
-			RaiseEvent(
+			RaiseActiveEvent(
 				"magix.data.save",
 				tmp);
 		}
@@ -763,7 +763,7 @@ not thread safe";
 
 				BuildForm();
 				wrp.ReRender();
-				RaiseEvent("magix.ide.surface-changed");
+				RaiseActiveEvent("magix.ide.surface-changed");
 				return;
 			}
 
@@ -772,7 +772,7 @@ not thread safe";
 			tmp["prototype"]["name"].Value = ip["name"].Get<string>();
 			tmp["prototype"]["type"].Value = "magix.forms.form";
 
-			RaiseEvent(
+			RaiseActiveEvent(
 				"magix.data.load",
 				tmp);
 
@@ -790,12 +790,12 @@ not thread safe";
 				Node txt = new Node();
 				txt["message"].Value = "no such form";
 
-				RaiseEvent(
+				RaiseActiveEvent(
 					"magix.viewport.show-message",
 					txt);
 			}
 
-			RaiseEvent("magix.ide.surface-changed");
+			RaiseActiveEvent("magix.ide.surface-changed");
 		}
 
 		/**

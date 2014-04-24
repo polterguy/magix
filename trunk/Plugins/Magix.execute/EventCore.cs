@@ -17,7 +17,7 @@ namespace Magix.execute
 	{
 		private static Node _events = new Node();
 
-        private static Dictionary<string, Node> SessionEvents
+        private Dictionary<string, Node> SessionEvents
         {
             get
             {
@@ -222,7 +222,7 @@ thread safety is dependent upon the events raised internally within event";
          * session-event hyper lisp keyword
          */
         [ActiveEvent(Name = "magix.execute.session-event")]
-        public static void magix_execute_session_event(object sender, ActiveEventArgs e)
+        public void magix_execute_session_event(object sender, ActiveEventArgs e)
         {
             if (ShouldInspect(e.Params))
             {
@@ -238,7 +238,7 @@ be accessible underneath a [$] node, appended as the last
 parts of your code block, into your function invocation.&nbsp;&nbsp;from
 outside of the function/event itself, you can access these 
 parameters directly underneath the active event itself.&nbsp;&nbsp;
-event will be deleted, if you pass in no [code] block.&nbsp;&nbsp;thread safe";
+event will be deleted, if you pass in no [code] block.&nbsp;&nbsp;not thread safe";
                 e.Params["session-event"].Value = "foo.bar";
                 e.Params["session-event"]["remotable"].Value = false;
                 e.Params["session-event"]["code"]["_data"].Value = "thomas";
@@ -283,7 +283,7 @@ event will be deleted, if you pass in no [code] block.&nbsp;&nbsp;thread safe";
          * entry point for hyper lisp created active session-event overrides
          */
         [ActiveEvent(Name = "")]
-        public static void magix_data__active_event_2_code_callback_session_events(object sender, ActiveEventArgs e)
+        public void magix_data__active_event_2_code_callback_session_events(object sender, ActiveEventArgs e)
         {
             if (SessionEvents.ContainsKey(e.Name))
             {

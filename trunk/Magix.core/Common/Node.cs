@@ -338,7 +338,7 @@ namespace Magix.Core
                     default:
                         throw new ArgumentException(
                             string.Format(
-                                "Illegal token found in json string at character {0}, token was {1}, string was; \"{2}\"",
+                                "illegal token found in json string at character {0}, token was {1}, string was; \"{2}\"",
                                 idx,
                                 json[idx],
                                 json.Substring(Math.Max(0, idx - 5))));

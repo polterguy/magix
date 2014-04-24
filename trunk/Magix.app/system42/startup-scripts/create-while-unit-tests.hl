@@ -1,0 +1,36 @@
+
+
+inspect=>@"creates unit tests to 
+test the [magix.execute.while] keyword"
+
+
+event=>magix.test.while-complex
+  inspect=>@"asserts that [while] works the 
+way it should work, and returns 
+true if a complex expresssion is given, 
+and it is true"
+  code
+    _data1=>x1
+    _data2=>y1
+    while=>equals
+      lhs=>[_data1].Value
+      rhs=>x
+      and=>equals
+        lhs=>[_data2].Value
+        rhs=>y
+      or=>equals
+        lhs=>[_data1].Value
+        rhs=>x1
+        and=>equals
+          lhs=>[@][_data2].Value
+          rhs=>y1
+      code
+        set=>[_data1].Value
+          value=>x
+    if=>not-equals
+      lhs=>[_data1].Value
+      rhs=>x
+      code
+        throw=>@"[while] expression didn't
+execute correctly"
+

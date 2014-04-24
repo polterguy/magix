@@ -41,7 +41,7 @@ contains the controls themselves, [css] becomes the css classes of your form
             if (!Ip(e.Params).Contains("container"))
 				throw new ArgumentException("you need a [container] for your create-web-part");
 
-			LoadModule(
+			LoadActiveModule(
 				"Magix.forms.WebPart",
                 Ip(e.Params)["container"].Get<string>(),
                 Ip(e.Params));
@@ -88,7 +88,7 @@ so on.&nbsp;&nbsp;you can embed forms using this syntax
 				tmp["file"].UnTie(); // removing file object, to not confuse HtmlViewer ...
 			}
 
-			LoadModule(
+			LoadActiveModule(
 				"Magix.forms.WebPart", 
 				tmp["container"].Get<string>(), 
 				tmp);
@@ -123,7 +123,7 @@ link-button=>btn
             if (!Ip(e.Params).Contains("mml"))
 				throw new ArgumentException("create-web-part needs an [mml] parameter");
 
-			LoadModule(
+			LoadActiveModule(
 				"Magix.forms.WebPart",
                 Ip(e.Params)["container"].Get<string>(),
                 Ip(e.Params));

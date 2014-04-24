@@ -93,7 +93,7 @@ within your server, it will be polymorphistically raised, on your
 
 			if (string.IsNullOrEmpty(ip.Get<string>()))
 				throw new ArgumentException(
-					@"magix.execute.tunnel needs value, being active event name, to know 
+					@"[magix.execute.tunnel] needs value, being active event name, to know 
 which event to override to go externally.&nbsp;&nbsp;tunnel cannot override null event handler");
 
 			string url = ip.Contains("url") ? ip["url"].Get<string>() : null;
@@ -223,13 +223,17 @@ value, such that it no longer can be remotely invoked from other servers.&nbsp;&
 			{
 				e.Params["event:magix.execute"].Value = null;
 				e.Params["inspect"].Value = @"remotely invokes the active event from
-value on the given [url].&nbsp;&nbsp;this effectively works like the 
-magix.execute.raise keyword, except the event will be serialized
-over http, and invoked on another server, returning
-transparently back to the caller, as if it was invoked locally.&nbsp;&nbsp;thread safe";
+value on [remote] on the given [url], passing in all
+nodes in [pars] as parameters to your active event, returning
+any return values from event beneath [params].&nbsp;&nbsp;
+this effectively works like the magix.execute.raise keyword, 
+except the event will be serialized over http, and invoked on 
+another server, returning transparently back to the caller, 
+as if it was invoked locally.&nbsp;&nbsp;thread safe";
 				e.Params["remote"].Value = "magix.namespace.foo";
-				e.Params["remote"]["url"].Value = "http://127.0.0.1:8080";
-				return;
+                e.Params["remote"]["url"].Value = "http://127.0.0.1:8080";
+                e.Params["remote"]["params"]["your-parameters-goes-here"].Value = "http://127.0.0.1:8080";
+                return;
 			}
 
 			if (!e.Params.Contains("_ip") || !(e.Params["_ip"].Value is Node))
@@ -248,13 +252,17 @@ transparently back to the caller, as if it was invoked locally.&nbsp;&nbsp;threa
 
 			HttpWebRequest req = WebRequest.Create(url) as System.Net.HttpWebRequest;
             req.Method = "POST";
-            req.Referer = GetApplicationBaseUrl();
             req.ContentType = "application/x-www-form-urlencoded";
 
             using (StreamWriter writer = new StreamWriter(req.GetRequestStream()))
             {
                 writer.Write("event=" + System.Web.HttpUtility.UrlEncode(evt));
-                writer.Write("&params=" + System.Web.HttpUtility.UrlEncode(ip.ToJSONString()));
+                if (ip.Contains("params"))
+                {
+                    Node tmp = new Node(ip.Name, ip.Value);
+                    tmp.ReplaceChildren(ip["params"]);
+                    writer.Write("&params=" + System.Web.HttpUtility.UrlEncode(tmp.ToJSONString()));
+                }
             }
 
             using (HttpWebResponse resp = req.GetResponse() as HttpWebResponse)
@@ -273,9 +281,7 @@ transparently back to the caller, as if it was invoked locally.&nbsp;&nbsp;threa
                         if (val.Length > 7)
 						{
 							Node tmp = Node.FromJSONString(val.Substring(7));
-                            ip.ReplaceChildren (tmp);
-							ip.Name = tmp.Name;
-							ip.Value = tmp.Value;
+                            ip["params"].ReplaceChildren(tmp);
 						}
                     }
 					else

@@ -78,7 +78,7 @@ will be edited, but not created before saved.&nbsp;&nbsp;not thread safe";
                 if (Ip(e.Params).Contains("css"))
                     tmp["css"].Value = Ip(e.Params)["css"].Value;
 
-				LoadModule(
+				LoadActiveModule(
 					"Magix.ide.AsciiEditor",
                     Ip(e.Params)["container"].Get<string>(), 
 					tmp);

@@ -60,7 +60,7 @@ namespace Magix.admin
 				tmp["type"].Value = "javascript";
 				tmp["file"].Value = "media/bootstrap/js/jQuery.js";
 
-				RaiseEvent(
+				RaiseActiveEvent(
 					"magix.viewport.include-client-file",
 					tmp);
 
@@ -68,7 +68,7 @@ namespace Magix.admin
 				tmp["type"].Value = "javascript";
 				tmp["file"].Value = "media/bootstrap/js/bootstrap.min.js";
 
-				RaiseEvent(
+				RaiseActiveEvent(
 					"magix.viewport.include-client-file",
 					tmp);
 
@@ -82,7 +82,7 @@ namespace Magix.admin
 		{
 			Node node = new Node();
 
-			RaiseEvent(
+			RaiseActiveEvent(
 				"magix.admin.get-active-events", 
 				node);
 
@@ -136,7 +136,7 @@ if=>[Data].Value==thomas
 			Node tmp = new Node();
             tmp["code"].Value = Ip(e.Params)["code"].Get<string>();
 
-			RaiseEvent (
+			RaiseActiveEvent (
 				"magix.code.code-2-node",
 				tmp);
 
@@ -155,7 +155,7 @@ if=>[Data].Value==thomas
 			tmp = new Node();
 			tmp["json"].Value = json;
 
-			RaiseEvent (
+			RaiseActiveEvent (
 				"magix.code.node-2-code",
 				tmp);
 
@@ -167,7 +167,7 @@ if=>[Data].Value==thomas
             // Removing "inspect" node
             Node tmp = new Node();
             tmp["code"].Value = txtOut.Text;
-            RaiseEvent(
+            RaiseActiveEvent(
                 "magix.code.code-2-node",
                 tmp);
             (tmp["json"].Value as Node)["inspect"].UnTie();
@@ -180,7 +180,7 @@ if=>[Data].Value==thomas
                     break;
                 }
             }
-            RaiseEvent(
+            RaiseActiveEvent(
                 "magix.code.node-2-code",
                 tmp);
 			txtIn.Text = tmp["code"].Get<string>();
@@ -193,7 +193,7 @@ if=>[Data].Value==thomas
 				Node tmp = new Node();
 				tmp["code"].Value = txtIn.Text;
 
-				RaiseEvent(
+				RaiseActiveEvent(
 					"magix.code.code-2-node",
 					tmp);
 
@@ -209,11 +209,11 @@ if=>[Data].Value==thomas
 					}
 				}
 
-				RaiseEvent(
+				RaiseActiveEvent(
 					activeEvent.Text, 
 					tmp["json"].Get<Node>());
 
-				RaiseEvent(
+				RaiseActiveEvent(
 					"magix.code.node-2-code", 
 					tmp);
 
@@ -221,12 +221,12 @@ if=>[Data].Value==thomas
 			}
 			else
 			{
-				Node node = RaiseEvent(activeEvent.Text);
+				Node node = RaiseActiveEvent(activeEvent.Text);
 
 				Node tmp = new Node();
 				tmp["json"].Value = node;
 
-				RaiseEvent(
+				RaiseActiveEvent(
 					"magix.code.node-2-code", 
 					tmp);
 

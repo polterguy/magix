@@ -5,6 +5,7 @@
  */
 
 using System;
+using System.Collections.Generic;
 using Magix.Core;
 
 namespace Magix.tests
@@ -68,7 +69,8 @@ that failed.&nbsp;&nbsp;thread safe";
 
 				// Loops through all active events in the system, and raises
 				// all event that starts with "magix.test."
-				foreach (string idx in ActiveEvents.Instance.ActiveEventHandlers)
+                List<string> evts = new List<string>(ActiveEvents.Instance.ActiveEventHandlers);
+				foreach (string idx in evts)
 				{
 					if (idx.StartsWith("magix.test."))
 					{
@@ -101,7 +103,8 @@ that failed.&nbsp;&nbsp;thread safe";
 				node = new Node();
 
 				node["header"].Value = "unit tests executed successfully";
-				node["body"].Value = "magix.tests.run was running successfully, " + idxNo + " tests executed successfully";
+				node["body"].Value = "magix.tests.run was running successfully, " + 
+                    idxNo + " tests executed successfully in " + time + " milliseconds";
 
 				RaiseActiveEvent(
 					"magix.log.append",

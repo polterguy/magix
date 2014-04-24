@@ -1,0 +1,34 @@
+﻿
+<h2>static versus instance active event handlers</h2>
+
+<p>when you create you active events inside your controllers, you can choose if you wish to create these 
+as static or instance events. this have important impact upon your active events, and you should carefully 
+consider if you wish to create them as static events or instance events</p>
+
+<p>a static event handler, will be executing from anywhere you raise it, regardless of whether 
+or not you have an actual http request object or not. this means that a static event handler, will 
+not necessarily have access to the page object, or in other ways be able to modify the page in any ways. 
+this means that if you have a static event handler, it might not be able to load {{
+link-button=>go-to-active-modules
+  text=>active modules
+  onclick
+    magix.help.open-file
+      file=>system42\admin\help\csharp\active-modules\index.mml
+}}, or do other things which requires access to the page object</p>
+
+<p>of course, this depends upon where you raise your active event from, but as a general rule; 
+<strong>active events which are thread safe, should be static. all other events should be instance methods!</strong></p>
+
+<p>the reason is that active event classes are instantiated automatically during the beginning of the page life cycle, 
+upon every http request being made towards the website. they're also being instantiated in such a way, that every 
+single http request will have their own object of your active controller type. this is the reason why you have to 
+have a publicly available constructor for all of your active controllers. your constructors should also be executing 
+fast, and not take a lot of time to process, since if they're slow, this will create overhead for all of your web 
+requests</p>
+
+{{
+lambda=>next
+  oncreatecontrols
+    magix.help.set-next
+      next=>system42\admin\help\csharp\active-controllers\methods.mml
+}}

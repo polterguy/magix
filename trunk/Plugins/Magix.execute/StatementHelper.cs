@@ -20,21 +20,55 @@ namespace Magix.execute
          */
         public static bool CheckExpressions(Node ip, Node dp)
         {
-            string oper = ip.Get<string>();
+            return RecursivelyCheckExpression(ip, ip, dp);
+        }
+
+        private static bool RecursivelyCheckExpression(Node where, Node ip, Node dp)
+        {
+            string oper = where.Get<string>();
             object objLhsVal;
             object objRhsVal;
-            ExtractValues(ip, dp, oper, out objLhsVal, out objRhsVal);
-            return RunComparison(oper, objLhsVal, objRhsVal);
+            ExtractValues(where, ip, dp, oper, out objLhsVal, out objRhsVal);
+
+            bool retVal = RunComparison(oper, objLhsVal, objRhsVal);
+
+            if (retVal && where.Contains("and"))
+            {
+                foreach (Node idx in where)
+                {
+                    if (idx.Name == "and")
+                    {
+                        retVal = RecursivelyCheckExpression(idx, ip, dp);
+                        if (!retVal)
+                            break;
+                    }
+                }
+            }
+            if (!retVal && where.Contains("or"))
+            {
+                foreach (Node idx in where)
+                {
+                    if (idx.Name == "or")
+                    {
+                        retVal = RecursivelyCheckExpression(idx, ip, dp);
+                        if (retVal)
+                            break;
+                    }
+                }
+            }
+
+            return retVal;
         }
 
         private static void ExtractValues(
+            Node where,
             Node ip,
             Node dp,
             string oper,
             out object objLhsVal,
             out object objRhsVal)
         {
-            string lhsRawValue = ip["lhs"].Get<string>();
+            string lhsRawValue = where["lhs"].Get<string>();
             string rhsRawValue = null;
             objLhsVal = null;
             objRhsVal = null;
@@ -43,10 +77,10 @@ namespace Magix.execute
 
             if (oper != "exist" && oper != "not-exist")
             {
-                if (!ip.Contains("rhs"))
+                if (!where.Contains("rhs"))
                     throw new ArgumentException("missing [rhs] node in expression");
 
-                rhsRawValue = ip["rhs"].Get<string>();
+                rhsRawValue = where["rhs"].Get<string>();
                 ChangeType(rhsRawValue, out objRhsVal, ip, dp);
             }
             else if (ip.Contains("rhs"))

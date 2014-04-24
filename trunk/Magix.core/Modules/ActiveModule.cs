@@ -40,7 +40,7 @@ namespace Magix.Core
          * Shorthand for raising events. Will return a node, initially created empty, 
          * but passed onto the Event Handler(s)
          */
-        protected Node RaiseEvent(string eventName)
+        protected Node RaiseActiveEvent(string eventName)
         {
             Node node = new Node();
             ActiveEvents.Instance.RaiseActiveEvent(
@@ -53,7 +53,7 @@ namespace Magix.Core
         /**
          * Shorthand for raising events
          */
-        protected void RaiseEvent(string eventName, Node node)
+        protected void RaiseActiveEvent(string eventName, Node node)
         {
             ActiveEvents.Instance.RaiseActiveEvent(
                 this,

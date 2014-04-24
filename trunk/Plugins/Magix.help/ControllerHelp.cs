@@ -48,7 +48,7 @@ namespace Magix.help
 			if (ShouldInspect(e.Params))
 			{
 				e.Params["event:magix.help.start-help"].Value = null;
-				e.Params["inspect"].Value = @"opens the help files in modal container.
+				e.Params["inspect"].Value = @"opens the help files in the help container.
 &nbsp;&nbsp;not thread safe";
 				return;
 			}
@@ -56,10 +56,16 @@ namespace Magix.help
 			Node tmp = new Node();
 
 			tmp["form-id"].Value = "help-navigation";
-			tmp["container"].Value = "content1";
-			tmp["css"].Value = "span-17 last";
+			tmp["container"].Value = "help";
+			tmp["css"].Value = "span-22 last top-1";
 			tmp["mml"].Value = @"
-<div class=""span-15 left-4 last bottom-1 btn-group"">
+<div class=""span-22 last top-1"">
+{{
+dynamic=>help-content
+  css=>span-22 last
+}}
+</div>
+<div class=""span-18 left-4 last bottom-1 btn-group top-2"">
 {{
 button=>back
   text=><<
@@ -72,12 +78,12 @@ button=>index
   onclick
     magix.help.open-file
       file=>system42/admin/help/index.mml
-button=>tools
-  text=>tools
+button=>close
+  text=>close
   css=>btn-large span-2
   onclick
-    magix.help.open-file
-      file=>system42/admin/help/index.mml
+    magix.viewport.clear-controls
+      container=>help
 button=>next
   text=>>>
   css=>btn-large span-2
@@ -93,8 +99,8 @@ button=>next
 			tmp = new Node();
 
 			tmp["form-id"].Value = "help";
-			tmp["container"].Value = "content2";
-			tmp["css"].Value = "span-17 last help-system";
+            tmp["container"].Value = "help-content";
+			tmp["css"].Value = "span-22 last help-system";
 
 			using (TextReader reader = File.OpenText(Page.Server.MapPath("system42/admin/help/index.mml")))
 			{
@@ -194,7 +200,7 @@ button=>next
 		 */
 		[ActiveEvent(Name = "magix.help.open-file")]
 		public void magix_help_open_file(object sender, ActiveEventArgs e)
-		{
+        {
 			if (ShouldInspect(e.Params))
 			{
 				e.Params["event:magix.help.open-file"].Value = null;

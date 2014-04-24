@@ -33,6 +33,7 @@
     <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="SwitchCore.cs" />
     <Compile Include="LambdaCore.cs" />
     <Compile Include="IndexOfCore.cs" />
     <Compile Include="JoinCore.cs" />

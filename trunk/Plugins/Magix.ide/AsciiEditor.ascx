@@ -21,10 +21,17 @@
 		id="surface" />
 	<mux:Button
 		runat="server"
-		id="delete"
+		id="Button1"
 		CssClass="btn-large span-3 right last"
 		Text="delete"
 		OnClick="delete_Click" />
+	<mux:Button
+		runat="server"
+		id="preview"
+		CssClass="btn-large span-3 right"
+        Visible="false"
+		Text="preview"
+		OnClick="preview_Click" />
 	<mux:Button
 		runat="server"
 		id="save"
