@@ -16,7 +16,7 @@ namespace Magix.UX.Widgets
 {
 	/**
      * Widget encapsulating an HTML5 drag and drop File Uploader control,
-     * with progree bar and support for multiple files
+     * with progress bar and support for multiple files
      */
 	public class Uploader : BaseWebControl
 	{
