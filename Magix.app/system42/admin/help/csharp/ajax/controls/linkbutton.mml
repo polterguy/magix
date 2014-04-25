@@ -1,10 +1,24 @@
 ﻿
 <h2>mux LinkButton</h2>
 
-<p></p>
+<p>a clickable anchor button. use when you 
+need a clickable thing, which you do not want to resemble a button. see also the {{
+link-button=>magix-ux-button
+  text=>Button
+  onclick
+    magix.help.open-file
+      file=>system42\admin\help\csharp\ajax\controls\button.mml
+}} for 
+an alternative. also remember that any control in mux can be made 
+clickable, so you can also use a label as your 'clickable thingie' if you wish. 
+even though anything can be made clickable in mux, it is often an 
+advantage to use buttons or link buttons since these elements will mostly 
+be recognized by screen readers and such, and it is hence more 'polite' 
+to use these specially designed types of 'clickable objects' such as the 
+LinkButton</p>
 
 
-<p>below is an example of an active module, using a mux button instead of conventional web controls. remember to embed 
+<p>below is an example of an active module, using a mux link button instead of conventional web controls. remember to embed 
 the active module as an embedded resource if you attempt to try to compile this sample</p>
 
 <label>SampleModule.ascx</label>
@@ -16,12 +30,12 @@ the active module as an embedded resource if you attempt to try to compile this 
     AutoEventWireup="true" 
     Inherits="Magix.sample.SampleModule" %&gt;
 
-&lt;mux:Button
+&lt;mux:LinkButton
     runat="server"
     id="btn"
     OnClick="btn_Click"
-    Text="Click Me!"
-    CssClass="span-3 btn-large"/&gt;
+    Text="click me!"
+    CssClass="span-5"/&gt;
 </pre>
 
 <label>SampleModule.ascx.cs</label>
@@ -36,14 +50,27 @@ namespace Magix.sample
 {
     public class SampleModule : ActiveModule
     {
-        protected Button btn;
+        protected LinkButton btn;
 
         protected void btn_Click(object sender, EventArgs e)
         {
-            lbl.Text ="label text was changed!";
+            lbl.Text ="link button was clicked!";
         }
     }
 }</pre>
+
+<label>example of a mux LinkButton</label>
+<div class="sample-web-control">
+{{
+link-button=>btn
+  text=>click me!
+  css=>span-5 btn-large
+  onclick
+    magix.forms.set-value
+      id=>btn
+      value=>link button was clicked!
+}}
+</div>
 
 {{
 lambda=>next
