@@ -8,7 +8,7 @@ is your friend</p>
 
 
 <p>below is an example of an active module, using a mux hyperlink instead of conventional anchor html element. remember to embed 
-the active module as an embedded resource if you attempt to try to compile this sample</p>
+the active module as an embedded resource if you want to compile this sample</p>
 
 <label>SampleModule.ascx</label>
 <pre>

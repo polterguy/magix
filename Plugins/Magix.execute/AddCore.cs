@@ -115,7 +115,10 @@ thread safe";
             if (rightNode == null)
                 throw new ArgumentException("both [add-children] and [value] must return an existing node-list, [value] node returned null, expression was; " + right);
 
-            leftNode.ReplaceChildren(rightNode.Clone());
+            foreach (Node idx in rightNode)
+            {
+                leftNode.Add(idx.Clone());
+            }
         }
     }
 }

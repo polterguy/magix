@@ -54,7 +54,6 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="slett_meg.aspx" />
     <Content Include="Global.asax" />
     <Content Include="Default.aspx" />
     <Content Include="media\bootstrap\css\bootstrap.css" />
@@ -101,13 +100,6 @@
     <Content Include="media\images\help-files\screenshots\hello-world-passing-paremeters.png" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="slett_meg.aspx.cs">
-      <DependentUpon>slett_meg.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="slett_meg.aspx.designer.cs">
-      <DependentUpon>slett_meg.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -296,6 +288,7 @@
     <Content Include="system42\admin\help\csharp\ajax\controls\timer.mml" />
     <Content Include="system42\admin\help\csharp\ajax\controls\uploader.mml" />
     <Content Include="system42\admin\help\csharp\ajax\controls\wysiwyg.mml" />
+    <Content Include="system42\startup-scripts\create-controls-dox-event.hl" />
     <None Include="todo.txt" />
     <None Include="system42\index.hl" />
     <None Include="system42\startup.hl" />

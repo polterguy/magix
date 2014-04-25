@@ -17,9 +17,18 @@ be recognized by screen readers and such, and it is hence more 'polite'
 to use these specially designed types of 'clickable objects' such as the 
 Button</p>
 
+<label>methods and properties of control</label>
+{{
+dynamic=>methods
+  onfirstload
+    magix.forms.dox.create-dox-for-web-control
+      css=>dox-for-web-control
+      control=>button
+      container=>methods
+}}
 
 <p>below is an example of an active module, using a mux button instead of conventional web controls. remember to embed 
-the active module as an embedded resource if you attempt to try to compile this sample</p>
+the active module as an embedded resource if you want to compile this sample</p>
 
 <label>SampleModule.ascx</label>
 <pre>

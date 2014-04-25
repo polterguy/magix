@@ -1,0 +1,124 @@
+﻿
+
+inspect=>@"creates the event needed to 
+retrieve all the public properties 
+for controls and web controls in magix"
+
+event=>magix.forms.dox.get-control-methods
+  inspect=>@"returns all the public c# methods and 
+properties for all controls in magix"
+  code
+    _data
+      ID=>@"id for control. 
+this must be unique for the entire module.&nbsp;&nbsp;preferably 
+for the entire page"
+      Visible=>@"determines if the control 
+is visible or not.&nbsp;&nbsp;if this value is 
+true, thyen control is visible.&nbsp;&nbsp;if it 
+is not true, then control is in-visible"
+      Info=>@"additional information which is in-visible 
+for the user, but might be useful 
+for the developer"
+    add-children=>[$]
+      value=>[_data]
+
+
+event=>magix.forms.dox.get-web-control-methods
+  inspect=>@"returns all the public c# methods and 
+properties for all web controls in magix"
+  code
+    _data
+      CssClass=>@"sets the css class(es) for the 
+web control"
+      Dir=>@"sets the reading direction for the 
+web control.&nbsp;&nbsp;legal values here are ltr, which
+is the default value, and rtl.&nbsp;&nbsp;rtl means 
+right-to-left, and should be used for languages where 
+reading starts at the right side, such as for instance 
+arabic and hebrew"
+      TabIndex=>@"a number indicating what order in the 
+tab order your web control has, if any.&nbsp;&nbsp;the tab 
+order is a number.&nbsp;&nbsp;a higher number will have a later
+tab order than a lower number, meaning if you use the tab key 
+to jump between controls, then the lower number will be reached 
+before the higher number"
+      ToolTip=>@"tooltip for your web control, which 
+becomes visible when the mouse is hovered over the web control"
+      style=>@"defines the css styles for your web control.&nbsp;&nbsp;
+normally it's a better idea to use a css class, and the CssClass property, 
+but sometimes the style collection might be useful.&nbsp;&nbsp;separate 
+the different styles values with a semicolon ';' and the name and 
+value with a :, like you would do in a css file"
+      OnClick=>@"event handler for the click dom event.&nbsp;&nbsp;
+raised when user clicks the web control"
+      OnDblClick=>@"event handler for the double click dom event.&nbsp;&nbsp;
+raised when user double clicks the web control"
+      OnMouseDown=>@"event handler for the mouse down dom event.&nbsp;&nbsp;
+raised when user clicks the web control, and when the left 
+mouse button is down.&nbsp;&nbsp;raised before the OnClick event, 
+and raised even if mouse is never released, as opposed to OnClick"
+      OnMouseUp=>@"event handler for the mouse up dom event.&nbsp;&nbsp;
+raised when user clicks, and release, the left mouse button
+on the the web control"
+      OnMouseOver=>@"event handler for the hover dom event.&nbsp;&nbsp;
+raised when user moves the mouse over the web control"
+      OnMouseOut=>@"event handler for the mouse out dom event.&nbsp;&nbsp;
+raised when user has moved the mouse over the web control first,
+for then to move the mouse out of the surface of the web control"
+      OnKeyPress=>@"event handler for the keypress dom event.&nbsp;&nbsp;
+raised when web control has focus somehow, and the user presses a key
+on his keyboard"
+      OnEsc=>@"raised when user clicks the escape key on 
+his keyboard, and the control has focus"
+    add-children=>[$]
+      value=>[_data]
+
+
+event=>magix.forms.dox.create-dox-for.button
+
+event=>magix.forms.dox.create-dox-for-web-control
+  inspect=>@"creates the documentation for 
+a mux control"
+  code
+    magix.forms.dox.get-control-methods
+    magix.forms.dox.get-web-control-methods
+    set=>[_evt].Name
+      value=>{0}.{1}
+        v0=>magix.forms.dox.create-dox-for
+        v1=>[$][control].Value
+    _evt
+    add-children=>[_data]
+      value=>[magix.forms.dox.get-control-methods]
+    add-children=>[_data]
+      value=>[magix.forms.dox.get-web-control-methods]
+    add-children=>[_data]
+      value=>[3]
+    set=>[magix.forms.create-web-part][container].Value
+      value=>[$][container].Value
+    set=>[magix.forms.create-web-part][css].Value
+      value=>[$][css].Value
+    for-each=>[_data]
+      _lit
+      set=>[@][_lit][text].Value
+        value=>@"<li><strong>{0}</strong> - {1}</li>"
+          v0=>[.].Name
+          v1=>[.].Value
+      add=>[/][magix.forms.create-web-part][controls]
+        value=>[@][_lit]
+      set=>[/][magix.forms.create-web-part][controls][_lit].Name
+        value=>literal
+    set=>[magix.forms.create-web-part][controls][_lit][text].Value
+      value=>@"</ul>"
+    set=>[magix.forms.create-web-part][controls][_lit].Name
+      value=>literal
+    magix.forms.create-web-part
+      form-id=>methods
+      controls
+        literal
+          text=>@"<ul>"
+    _data
+
+
+
+
+
