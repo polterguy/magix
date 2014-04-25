@@ -39,9 +39,9 @@ namespace Magix.forms
 
             FillOutParameters(node, ret);
 
-			if (node.Contains("tick"))
+			if (node.Contains("ontick"))
 			{
-				Node codeNode = node["tick"].Clone();
+				Node codeNode = node["ontick"].Clone();
 
 				ret.Tick += delegate(object sender2, EventArgs e2)
 				{
@@ -68,7 +68,7 @@ a [timer] is a control which will periodically run to the server in intervalls o
 			node["form-id"].Value = "sample-form";
 			node["controls"]["timer"]["interval"].Value = "1000";
 			base.Inspect(node["controls"]["timer"]);
-			node["controls"]["timer"]["tick"].Value = "hyper lisp code";
+			node["controls"]["timer"]["ontick"].Value = "hyper lisp code";
 		}
 	}
 }
