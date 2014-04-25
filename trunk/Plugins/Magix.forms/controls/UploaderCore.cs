@@ -57,7 +57,6 @@ namespace Magix.forms
 					using(FileStream stream = File.Create(fileName))
 					{
 						stream.Write(content, 0, content.Length);
-
 					}
 
 					RaiseActiveEvent(

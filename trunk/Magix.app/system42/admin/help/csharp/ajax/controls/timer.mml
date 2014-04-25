@@ -19,9 +19,11 @@ the active module as an embedded resource if you attempt to try to compile this 
 &lt;mux:Timer
     runat="server"
     id="timer"
-    OnClick="btn_Click"
-    Text="Click Me!"
-    CssClass="span-3 btn-large"/&gt;
+    OnTick="timer_Tick" /&gt;
+&lt;mux:Label
+    runat="server"
+    Text="tick"
+    id="lbl" /&gt;
 </pre>
 
 <label>SampleModule.ascx.cs</label>
@@ -36,14 +38,32 @@ namespace Magix.sample
 {
     public class SampleModule : ActiveModule
     {
-        protected Button btn;
+        protected Label lbl;
 
-        protected void btn_Click(object sender, EventArgs e)
+        protected void timer_Tick(object sender, EventArgs e)
         {
-            lbl.Text ="label text was changed!";
+            lbl.Text += "-tick";
         }
     }
 }</pre>
+
+<label>example of a mux TextBox</label>
+<div class="sample-web-control">
+{{
+timer=>timer
+  tick
+    magix.forms.get-value
+      id=>lbl
+    set=>[magix.forms.set-value][value].Value
+      value=>{0}{1}
+        v0=>[magix.forms.get-value][value].Value
+        v1=>-tick
+    magix.forms.set-value
+      id=>lbl
+label=>lbl
+  text=>tick
+}}
+</div>
 
 {{
 lambda=>next

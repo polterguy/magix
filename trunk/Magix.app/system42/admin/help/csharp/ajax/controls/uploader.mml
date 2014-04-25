@@ -1,10 +1,10 @@
 ﻿
 <h2>mux Uploader</h2>
 
-<p></p>
+<p>control which allows for uploading files to server by dragging and dropping them onto the browwser surface</p>
 
 
-<p>below is an example of an active module, using a mux button instead of conventional web controls. remember to embed 
+<p>below is an example of an active module, using a mux uploader. remember to embed 
 the active module as an embedded resource if you attempt to try to compile this sample</p>
 
 <label>SampleModule.ascx</label>
@@ -16,12 +16,9 @@ the active module as an embedded resource if you attempt to try to compile this 
     AutoEventWireup="true" 
     Inherits="Magix.sample.SampleModule" %&gt;
 
-&lt;mux:Button
-    runat="server"
-    id="btn"
-    OnClick="btn_Click"
-    Text="Click Me!"
-    CssClass="span-3 btn-large"/&gt;
+&lt;mux:Uploader
+    id="upl"
+    OnUploaded="upl_Uploaded" /&gt;
 </pre>
 
 <label>SampleModule.ascx.cs</label>
@@ -36,14 +33,27 @@ namespace Magix.sample
 {
     public class SampleModule : ActiveModule
     {
-        protected Button btn;
-
-        protected void btn_Click(object sender, EventArgs e)
+        protected void upl_Uploaded(object sender, EventArgs e)
         {
-            lbl.Text ="label text was changed!";
+            Node node = new Node();
+            node["message"].Value = "file uploaded to tmp folder";
+            RaiseActiveEvent(
+                "magix.viewport.show-message",
+                node);
         }
     }
 }</pre>
+
+<label>example of a mux uploader</label>
+<div class="sample-web-control">
+{{
+uploader=>upl
+  folder=>tmp
+  onuploaded
+    magix.viewport.show-message
+      message=>file uploaded to tmp folder
+}} try to drag and drop files onto the surface of the browser
+</div>
 
 {{
 lambda=>next
