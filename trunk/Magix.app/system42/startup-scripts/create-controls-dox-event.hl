@@ -75,6 +75,24 @@ his keyboard, and the control has focus"
 
 
 event=>magix.forms.dox.create-dox-for.button
+  inspect=>@"creates the documentation for 
+the mux button control"
+  code
+    _data
+      OnBlur=>@"dom event for when the 
+button looses focus"
+      OnFocused=>@"dom event for when the 
+button gains focus"
+      Text=>@"visible text of button"
+      AccessKey=>@"what keyboard shortcut is used 
+to access the button"
+      Enabled=>@"if true, then button is enabled.&nbsp;&nbsp;
+if false, then button is not enabled, and cannot 
+be clicked or chosen"
+      BlurEffect=>@"effect(s) to run when control is loosing focus"
+      FocusedEffect=>@"effect(s) to run when control is gaining focus"
+    add-children=>[$]
+      value=>[_data]
 
 event=>magix.forms.dox.create-dox-for-web-control
   inspect=>@"creates the documentation for 

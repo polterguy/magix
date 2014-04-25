@@ -1322,6 +1322,7 @@ input[type=button].toolbox-timer
     clear:both;
     display:block;
     overflow:auto;
+    margin-bottom:18px;
 }
 
 .dox-for-web-control ul li

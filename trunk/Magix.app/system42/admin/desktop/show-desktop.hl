@@ -77,6 +77,6 @@ _pnl
 magix.forms.create-web-part
   form-id=>desktop-surface
   container=>content2
-  css=>span-19 last bottom-5 desktop-surface
+  css=>span-19 last bottom-1 desktop-surface
 
 

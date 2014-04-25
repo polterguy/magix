@@ -19,12 +19,12 @@ Button</p>
 
 <label>methods and properties of control</label>
 {{
-dynamic=>methods
+dynamic=>methods-for-button
   onfirstload
     magix.forms.dox.create-dox-for-web-control
       css=>dox-for-web-control
       control=>button
-      container=>methods
+      container=>methods-for-button
 }}
 
 <p>below is an example of an active module, using a mux button instead of conventional web controls. remember to embed 
