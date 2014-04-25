@@ -1,10 +1,21 @@
 ﻿
 <h2>mux TextArea</h2>
 
-<p></p>
+<p>a multiple line type of 'give me some text input' type of widget. it wraps the
+textarea html element. if you only need single lines of input, you should
+probably rather use the {{
+link-button=>magix-ux-textbox
+  text=>TextBox
+  onclick
+    magix.help.open-file
+      file=>system42\admin\help\csharp\ajax\controls\textbox.mml
+}} control. however this widget is useful for cases
+when you need multiple lines of text input. see also the Wysiwyg control if
+you need rich formatting of your text
+</p>
 
 
-<p>below is an example of an active module, using a mux button instead of conventional web controls. remember to embed 
+<p>below is an example of an active module, using a mux text area instead of conventional web controls. remember to embed 
 the active module as an embedded resource if you attempt to try to compile this sample</p>
 
 <label>SampleModule.ascx</label>
@@ -16,12 +27,12 @@ the active module as an embedded resource if you attempt to try to compile this 
     AutoEventWireup="true" 
     Inherits="Magix.sample.SampleModule" %&gt;
 
-&lt;mux:Button
+&lt;mux:TextArea
     runat="server"
-    id="btn"
-    OnClick="btn_Click"
-    Text="Click Me!"
-    CssClass="span-3 btn-large"/&gt;
+    id="txt"
+    Rows="5"
+    Text="multiple lines of text"
+    CssClass="span-5"/&gt;
 </pre>
 
 <label>SampleModule.ascx.cs</label>
@@ -36,14 +47,18 @@ namespace Magix.sample
 {
     public class SampleModule : ActiveModule
     {
-        protected Button btn;
-
-        protected void btn_Click(object sender, EventArgs e)
-        {
-            lbl.Text ="label text was changed!";
-        }
     }
 }</pre>
+
+<label>example of a mux TextArea</label>
+<div class="sample-web-control">
+{{
+text-area=>txt
+  text=>multiple lines of text
+  rows=>5
+  css=>span-5
+}}
+</div>
 
 {{
 lambda=>next
