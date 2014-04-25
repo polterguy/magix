@@ -1,0 +1,54 @@
+﻿
+<h2>mux Image</h2>
+
+<p></p>
+
+
+<p>below is an example of an active module, using a mux button instead of conventional web controls. remember to embed 
+the active module as an embedded resource if you attempt to try to compile this sample</p>
+
+<label>SampleModule.ascx</label>
+<pre>
+&lt;%@ Assembly 
+    Name="Magix.sample" %&gt;
+&lt;%@ Control 
+    Language="C#" 
+    AutoEventWireup="true" 
+    Inherits="Magix.sample.SampleModule" %&gt;
+
+&lt;mux:Button
+    runat="server"
+    id="btn"
+    OnClick="btn_Click"
+    Text="Click Me!"
+    CssClass="span-3 btn-large"/&gt;
+</pre>
+
+<label>SampleModule.ascx.cs</label>
+<pre>
+using System;
+using System.Web;
+using System.Web.UI;
+using Magix.Core;
+using Magix.UX.Widgets;
+
+namespace Magix.sample
+{
+    public class SampleModule : ActiveModule
+    {
+        protected Button btn;
+
+        protected void btn_Click(object sender, EventArgs e)
+        {
+            lbl.Text ="label text was changed!";
+        }
+    }
+}</pre>
+
+{{
+lambda=>next
+  oncreatecontrols
+    magix.help.set-next
+      next=>system42\admin\help\csharp\ajax\controls\label.mml
+}}
+

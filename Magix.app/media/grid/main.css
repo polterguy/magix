@@ -1293,3 +1293,15 @@ input[type=button].toolbox-wysiwyg
     background-repeat:no-repeat;
 }
 
+.sample-web-control
+{
+    background:#aeaeae;
+    border:dashed 2px Black;
+    padding-left:40px;
+    padding-right:40px;
+    padding-top:18px;
+    padding-bottom:18px;
+    clear:both;
+    display:block;
+}
+

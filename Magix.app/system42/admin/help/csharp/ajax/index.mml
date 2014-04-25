@@ -83,20 +83,124 @@ client environment in your browser environment</p>
 is an exhaustive list</p>
 
 <ul>
-<li>Button</li>
-<li>CheckBox</li>
-<li>HiddenField</li>
-<li>HyperLink</li>
-<li>Image</li>
-<li>Label</li>
-<li>LinkButton</li>
-<li>Panel</li>
-<li>RadioButton</li>
-<li>SelectList</li>
-<li>TextArea</li>
-<li>TextBox</li>
-<li>DynamicPanel</li>
-<li>Timer</li>
-<li>Uploader</li>
-<li>Wysiwyg</li>
+<li>{{
+link-button=>magix-ux-button
+  text=>Button
+  onclick
+    magix.help.open-file
+      file=>system42\admin\help\csharp\ajax\controls\button.mml
+}}</li>
+<li>{{
+link-button=>magix-ux-checkbox
+  text=>CheckBox
+  onclick
+    magix.help.open-file
+      file=>system42\admin\help\csharp\ajax\controls\checkbox.mml
+}}</li>
+<li>{{
+link-button=>magix-ux-hiddenfield
+  text=>HiddenField
+  onclick
+    magix.help.open-file
+      file=>system42\admin\help\csharp\ajax\controls\hiddenfield.mml
+}}</li>
+<li>{{
+link-button=>magix-ux-hyperlink
+  text=>HyperLink
+  onclick
+    magix.help.open-file
+      file=>system42\admin\help\csharp\ajax\controls\hyperlink.mml
+}}</li>
+<li>{{
+link-button=>magix-ux-image
+  text=>Image
+  onclick
+    magix.help.open-file
+      file=>system42\admin\help\csharp\ajax\controls\image.mml
+}}</li>
+<li>{{
+link-button=>magix-ux-label
+  text=>Label
+  onclick
+    magix.help.open-file
+      file=>system42\admin\help\csharp\ajax\controls\label.mml
+}}</li>
+<li>{{
+link-button=>magix-ux-linkbutton
+  text=>LinkButton
+  onclick
+    magix.help.open-file
+      file=>system42\admin\help\csharp\ajax\controls\linkbutton.mml
+}}</li>
+<li>{{
+link-button=>magix-ux-panel
+  text=>Panel
+  onclick
+    magix.help.open-file
+      file=>system42\admin\help\csharp\ajax\controls\panel.mml
+}}</li>
+<li>{{
+link-button=>magix-ux-radiobutton
+  text=>RadioButton
+  onclick
+    magix.help.open-file
+      file=>system42\admin\help\csharp\ajax\controls\radiobutton.mml
+}}</li>
+<li>{{
+link-button=>magix-ux-selectlist
+  text=>SelectList
+  onclick
+    magix.help.open-file
+      file=>system42\admin\help\csharp\ajax\controls\selectlist.mml
+}}</li>
+<li>{{
+link-button=>magix-ux-textarea
+  text=>TextArea
+  onclick
+    magix.help.open-file
+      file=>system42\admin\help\csharp\ajax\controls\textarea.mml
+}}</li>
+<li>{{
+link-button=>magix-ux-textbox
+  text=>TextBox
+  onclick
+    magix.help.open-file
+      file=>system42\admin\help\csharp\ajax\controls\textbox.mml
+}}</li>
+<li>{{
+link-button=>magix-ux-dynamicpanel
+  text=>DynamicPanel
+  onclick
+    magix.help.open-file
+      file=>system42\admin\help\csharp\ajax\controls\dynamicpanel.mml
+}}</li>
+<li>{{
+link-button=>magix-ux-timer
+  text=>Timer
+  onclick
+    magix.help.open-file
+      file=>system42\admin\help\csharp\ajax\controls\timer.mml
+}}</li>
+<li>{{
+link-button=>magix-ux-uploader
+  text=>Uploader
+  onclick
+    magix.help.open-file
+      file=>system42\admin\help\csharp\ajax\controls\uploader.mml
+}}</li>
+<li>{{
+link-button=>magix-ux-wysiwyg
+  text=>Wysiwyg
+  onclick
+    magix.help.open-file
+      file=>system42\admin\help\csharp\ajax\controls\wysiwyg.mml
+}}</li>
 </ul>
+
+{{
+lambda=>next
+  oncreatecontrols
+    magix.help.set-next
+      next=>system42\admin\help\csharp\ajax\controls\button.mml
+}}
+
