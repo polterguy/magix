@@ -1,10 +1,10 @@
 ﻿
 <h2>mux Timer</h2>
 
-<p></p>
+<p>a timer that will periodically call the server according ot its Interval, where it will 
+raise the Tick event handler</p>
 
-
-<p>below is an example of an active module, using a mux button instead of conventional web controls. remember to embed 
+<p>below is an example of an active module, using a mux timer. remember to embed 
 the active module as an embedded resource if you attempt to try to compile this sample</p>
 
 <label>SampleModule.ascx</label>
@@ -16,9 +16,9 @@ the active module as an embedded resource if you attempt to try to compile this 
     AutoEventWireup="true" 
     Inherits="Magix.sample.SampleModule" %&gt;
 
-&lt;mux:Button
+&lt;mux:Timer
     runat="server"
-    id="btn"
+    id="timer"
     OnClick="btn_Click"
     Text="Click Me!"
     CssClass="span-3 btn-large"/&gt;

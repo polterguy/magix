@@ -33,6 +33,7 @@
     <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="controls\TimerCore.cs" />
     <Compile Include="controls\DynamicCore.cs" />
     <Compile Include="FormsCore.cs" />
     <Compile Include="controls\LabelCore.cs" />

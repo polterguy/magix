@@ -1,10 +1,34 @@
 ﻿
 <h2>mux TextBox</h2>
 
-<p></p>
+<p>a single-line type of 'give me some text input' type of control. this control
+is a wrapper around the input type="text" type of control. if you need
+multiple lines of input, you should rather use the {{
+link-button=>magix-ux-textarea
+  text=>TextArea
+  onclick
+    magix.help.open-file
+      file=>system42\admin\help\csharp\ajax\controls\textarea.mml
+}} control. however
+this widget is useful for cases when you need the user to give you one line
+of text input. see also the {{
+link-button=>magix-ux-wysiwyg
+  text=>Wysiwyg
+  onclick
+    magix.help.open-file
+      file=>system42\admin\help\csharp\ajax\controls\wysiwyg.mml
+}} control if you need rich formatting
+of your text. this control can also be set to 'password mode', which means
+whatever is typed into the widget, will not be visible on the screen. please
+notice though that by default, this will be transfered to the server in an
+unsecure manner, so this is only a mechanism to make sure that other people
+cannot read over your shoulder to see what you're 'secretly' trying to type
+into your TextBox. use ssl, or other types of security to actually implement
+safe transmitting of your passwords and similar 'secret text strings'
+</p>
 
 
-<p>below is an example of an active module, using a mux button instead of conventional web controls. remember to embed 
+<p>below is an example of an active module, using a mux textbox instead of conventional web controls. remember to embed 
 the active module as an embedded resource if you attempt to try to compile this sample</p>
 
 <label>SampleModule.ascx</label>
@@ -16,12 +40,11 @@ the active module as an embedded resource if you attempt to try to compile this 
     AutoEventWireup="true" 
     Inherits="Magix.sample.SampleModule" %&gt;
 
-&lt;mux:Button
+&lt;mux:TextBox
     runat="server"
-    id="btn"
-    OnClick="btn_Click"
-    Text="Click Me!"
-    CssClass="span-3 btn-large"/&gt;
+    id="txt"
+    Text="text strings"
+    CssClass="span-5"/&gt;
 </pre>
 
 <label>SampleModule.ascx.cs</label>
@@ -36,14 +59,17 @@ namespace Magix.sample
 {
     public class SampleModule : ActiveModule
     {
-        protected Button btn;
-
-        protected void btn_Click(object sender, EventArgs e)
-        {
-            lbl.Text ="label text was changed!";
-        }
     }
 }</pre>
+
+<label>example of a mux TextBox</label>
+<div class="sample-web-control">
+{{
+text-box=>txt
+  text=>text strings
+  css=>span-5
+}}
+</div>
 
 {{
 lambda=>next
