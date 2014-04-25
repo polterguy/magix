@@ -47,7 +47,7 @@ namespace Magix.sample
     }
 }</pre>
 
-<label>example of a mux TextBox</label>
+<label>example of a mux Timer</label>
 <div class="sample-web-control">
 {{
 timer=>timer

@@ -44,7 +44,7 @@ namespace Magix.sample
     }
 }</pre>
 
-<label>example of a mux uploader</label>
+<label>example of a mux Uploader</label>
 <div class="sample-web-control">
 {{
 uploader=>upl
