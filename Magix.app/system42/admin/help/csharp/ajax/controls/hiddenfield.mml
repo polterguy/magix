@@ -22,8 +22,20 @@ viewstate and cookies are neither safe against tampering</p>
 
 &lt;mux:HiddenField
     runat="server"
-    id="hid"
-    Value="Click Me!" /&gt;
+    Value="empty"
+    id="hid" /&gt;
+&lt;mux:Button
+    runat="server"
+    id="btn"
+    OnClick="btn_Click"
+    Text="then click me!"
+    CssClass="span-5 btn-large"/&gt;
+&lt;mux:Button
+    runat="server"
+    id="btn2"
+    OnClick="btn2_Click"
+    Text="click first!"
+    CssClass="span-5 btn-large"/&gt;
 </pre>
 
 <label>SampleModule.ascx.cs</label>
@@ -39,13 +51,49 @@ namespace Magix.sample
     public class SampleModule : ActiveModule
     {
         protected HiddenField hid;
+        protected Button btn;
+        protected Button btn2;
 
-        protected void where_ever_you_wish(object sender, EventArgs e)
+        protected void btn_Click(object sender, EventArgs e)
         {
-            hid.Value ="setting value of hidden field";
+            hid.Value ="new value";
+            btn2.Text = "then me again!";
+        }
+
+        protected void btn2_Click(object sender, EventArgs e)
+        {
+            btn2.Text = hid.Value;
         }
     }
 }</pre>
+
+<label>example of a mux Button</label>
+<div class="sample-web-control">
+{{
+hidden=>hid
+  value=>empty
+button=>btn
+  text=>then click me!
+  css=>span-5 btn-large
+  onclick
+    magix.forms.set-value
+      id=>hid
+      value=>new value
+    magix.forms.set-value
+      id=>btn2
+      value=>then me again!
+button=>btn2
+  text=>click first!
+  css=>span-5 btn-large
+  onclick
+    magix.forms.get-value
+      id=>hid
+    set=>[magix.forms.set-value][value].Value
+      value=>[magix.forms.get-value][value].Value
+    magix.forms.set-value
+      id=>btn2
+}}
+</div>
 
 {{
 lambda=>next
