@@ -35,7 +35,7 @@ the active module as an embedded resource if you attempt to try to compile this 
     id="btn"
     OnClick="btn_Click"
     Text="click me!"
-    CssClass="span-3 btn-large"/&gt;
+    CssClass="span-5 btn-large"/&gt;
 </pre>
 
 <label>SampleModule.ascx.cs</label>
@@ -60,11 +60,11 @@ namespace Magix.sample
 }</pre>
 
 <label>example of a mux Button</label>
-
 <div class="sample-web-control">
 {{
 button=>btn
   text=>click me!
+  css=>span-5 btn-large
   onclick
     magix.forms.set-value
       id=>btn
