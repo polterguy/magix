@@ -1,10 +1,13 @@
 ﻿
 <h2>mux HyperLink</h2>
 
-<p></p>
+<p>a wrapper around a hyper link, or anchor html element. 
+sometimes you will need to create links that might change or needs 
+changes after initially created. for such scenarios, this control 
+is your friend</p>
 
 
-<p>below is an example of an active module, using a mux button instead of conventional web controls. remember to embed 
+<p>below is an example of an active module, using a mux hyperlink instead of conventional anchor html element. remember to embed 
 the active module as an embedded resource if you attempt to try to compile this sample</p>
 
 <label>SampleModule.ascx</label>
@@ -16,12 +19,13 @@ the active module as an embedded resource if you attempt to try to compile this 
     AutoEventWireup="true" 
     Inherits="Magix.sample.SampleModule" %&gt;
 
-&lt;mux:Button
+&lt;mux:HyperLink
     runat="server"
-    id="btn"
-    OnClick="btn_Click"
-    Text="Click Me!"
-    CssClass="span-3 btn-large"/&gt;
+    id="hpl"
+    Text="click me!"
+    URL="http://google.com"
+    Target="_blank"
+    CssClass="span-3"/&gt;
 </pre>
 
 <label>SampleModule.ascx.cs</label>
@@ -36,14 +40,18 @@ namespace Magix.sample
 {
     public class SampleModule : ActiveModule
     {
-        protected Button btn;
-
-        protected void btn_Click(object sender, EventArgs e)
-        {
-            lbl.Text ="label text was changed!";
-        }
     }
 }</pre>
+
+<label>example of a mux HyperLink</label>
+<div class="sample-web-control">
+{{
+hyperlink=>hpl
+  text=>click me!
+  url=>http://www.google.com
+  target=>_blank
+}}
+</div>
 
 {{
 lambda=>next
