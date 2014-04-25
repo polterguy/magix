@@ -18,7 +18,7 @@ or water'. add up your choices by adding up ListItems inside of your SelectList
 
 
 <p>below is an example of an active module, using a mux select list instead of conventional web controls. remember to embed 
-the active module as an embedded resource if you attempt to try to compile this sample</p>
+the active module as an embedded resource if you want to compile this sample</p>
 
 <label>SampleModule.ascx</label>
 <pre>

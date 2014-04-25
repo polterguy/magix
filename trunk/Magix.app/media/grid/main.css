@@ -1312,3 +1312,20 @@ input[type=button].toolbox-timer
     overflow:auto;
 }
 
+.dox-for-web-control
+{
+    background:#dedede;
+    padding-left:40px;
+    padding-right:40px;
+    padding-top:18px;
+    padding-bottom:18px;
+    clear:both;
+    display:block;
+    overflow:auto;
+}
+
+.dox-for-web-control ul li
+{
+    list-style:none;
+    margin-top:18px;
+}
