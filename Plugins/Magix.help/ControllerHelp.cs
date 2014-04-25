@@ -57,14 +57,12 @@ namespace Magix.help
 
 			tmp["form-id"].Value = "help-navigation";
 			tmp["container"].Value = "help";
-			tmp["css"].Value = "span-22 last top-1";
+			tmp["css"].Value = "span-22 last";
 			tmp["mml"].Value = @"
-<div class=""span-22 last top-1"">
 {{
 dynamic=>help-content
   css=>span-22 last
 }}
-</div>
 <div class=""span-18 left-4 last bottom-1 btn-group top-2"">
 {{
 button=>back
