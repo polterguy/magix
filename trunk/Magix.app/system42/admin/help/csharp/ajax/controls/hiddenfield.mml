@@ -67,7 +67,7 @@ namespace Magix.sample
     }
 }</pre>
 
-<label>example of a mux Button</label>
+<label>example of a mux HiddenField</label>
 <div class="sample-web-control">
 {{
 hidden=>hid

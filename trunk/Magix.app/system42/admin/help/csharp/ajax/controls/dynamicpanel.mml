@@ -73,7 +73,7 @@ namespace Magix.sample
     }
 }</pre>
 
-<label>example of a mux CheckBox</label>
+<label>example of a mux DynamicPanel</label>
 <div class="sample-web-control">
 {{
 button=>btn
