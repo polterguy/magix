@@ -4,8 +4,12 @@
 <p></p>
 
 
-<p>below is an example of an active module, using a mux button instead of conventional web controls. remember to embed 
-the active module as an embedded resource if you attempt to try to compile this sample</p>
+<p>hidden field ajax web control. useful for having state you wish to pass on to the client 
+but don't want it to be visible for the end user. notice that this is not a 
+safe place to put things that the user is not supposed to see, like passwords 
+and such. do not trust the value of this element to not be tampered with. 
+alternatives for using this widget is viewstate, cookies and the session object. 
+viewstate and cookies are neither safe against tampering</p>
 
 <label>SampleModule.ascx</label>
 <pre>
@@ -16,12 +20,10 @@ the active module as an embedded resource if you attempt to try to compile this 
     AutoEventWireup="true" 
     Inherits="Magix.sample.SampleModule" %&gt;
 
-&lt;mux:Button
+&lt;mux:HiddenField
     runat="server"
-    id="btn"
-    OnClick="btn_Click"
-    Text="Click Me!"
-    CssClass="span-3 btn-large"/&gt;
+    id="hid"
+    Value="Click Me!" /&gt;
 </pre>
 
 <label>SampleModule.ascx.cs</label>
@@ -36,11 +38,11 @@ namespace Magix.sample
 {
     public class SampleModule : ActiveModule
     {
-        protected Button btn;
+        protected HiddenField hid;
 
-        protected void btn_Click(object sender, EventArgs e)
+        protected void where_ever_you_wish(object sender, EventArgs e)
         {
-            lbl.Text ="label text was changed!";
+            hid.Value ="setting value of hidden field";
         }
     }
 }</pre>

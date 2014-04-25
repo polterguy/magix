@@ -1,11 +1,23 @@
 ﻿
 <h2>mux DynamicPanel</h2>
 
-<p></p>
+<p>control for making it easier to dynamically instantiate new controls and add 
+them into your page. completely abstracts away the entire hassle of storing 
+whether or not a control has been previously loaded into the page or not. 
+call the method LoadControl or AppendControl with a unique id defining 
+which control you wish to load, for instance the name of a UserControl file 
+on disc, and until you explicitly clear your DynamicControl, the same control 
+will be automatically loaded every time. if you do not create a Reload event 
+handler for your widget, and you call LoadControl, then the DynamicControl 
+will assume that what you're passing in is a fully qualifed path to a 
+UserControl, and attempt to load it as such. you can use the Extra parameter 
+to add extra initialization parameters into the control upon its first load 
+</p>
 
-
-<p>below is an example of an active module, using a mux button instead of conventional web controls. remember to embed 
-the active module as an embedded resource if you attempt to try to compile this sample</p>
+<p>magix is in its entirety built around dynamic panels, for instance the viewport is 
+just a collection of dynamic panels. this is why the viewport can remember which 
+controls it has previously loaded, and reload them upon every callback to the server 
+automatically</p>
 
 <label>SampleModule.ascx</label>
 <pre>
@@ -19,9 +31,12 @@ the active module as an embedded resource if you attempt to try to compile this 
 &lt;mux:Button
     runat="server"
     id="btn"
-    OnClick="btn_Click"
-    Text="Click Me!"
-    CssClass="span-3 btn-large"/&gt;
+    Text="click me!"
+    OnClick="btn_Click" /&gt;
+&lt;mux:DynamicPanel
+    runat="server"
+    OnReload="dyn_Reload"
+    id="dyn" /&gt;
 </pre>
 
 <label>SampleModule.ascx.cs</label>
@@ -36,14 +51,52 @@ namespace Magix.sample
 {
     public class SampleModule : ActiveModule
     {
-        protected Button btn;
+        protected void dyn_Reload(object sender, DynamicPanel.ReloadEventArgs e)
+        {
+            if (e.Key == "button")
+            {
+                Button tmp = new Button();
+                tmp.Text = "click me too";
+                tmp.Click +=
+                    delegate
+                    {
+                        tmp.Text = "i was clicked";
+                    };
+                dyn.Controls.Add(tmp);
+            }
+        }
 
         protected void btn_Click(object sender, EventArgs e)
         {
-            lbl.Text ="label text was changed!";
+            dyn.LoadControl("button");
         }
     }
 }</pre>
+
+<label>example of a mux CheckBox</label>
+<div class="sample-web-control">
+{{
+button=>btn
+  text=>click me!
+  onclick
+    set=>[magix.forms.create-mml-web-part][mml].Value
+      value=>{0}{1}{2}{3}{4}
+        v0=>{
+        v1=>{
+        v2=>@"
+button=>tmp
+  text=>click me too
+  onclick
+    magix.forms.set-value
+      id=>tmp
+      value=>i was clicked"
+        v3=>}
+        v4=>}
+    magix.forms.create-mml-web-part
+      container=>dyn
+dynamic=>dyn
+}}
+</div>
 
 {{
 lambda=>next

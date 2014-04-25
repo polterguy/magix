@@ -1,10 +1,13 @@
 ﻿
 <h2>mux CheckBox</h2>
 
-<p></p>
+<p>a CheckBox is a 'two state button' which you can turn 'on' and 'off'. useful
+for boolean ui situations, where user must choose between two options, for
+instance 'yes' or 'no' situations
+</p>
 
 
-<p>below is an example of an active module, using a mux button instead of conventional web controls. remember to embed 
+<p>below is an example of an active module, using a mux checkbox instead of conventional web controls. remember to embed 
 the active module as an embedded resource if you attempt to try to compile this sample</p>
 
 <label>SampleModule.ascx</label>
@@ -16,12 +19,18 @@ the active module as an embedded resource if you attempt to try to compile this 
     AutoEventWireup="true" 
     Inherits="Magix.sample.SampleModule" %&gt;
 
-&lt;mux:Button
+&lt;mux:Label
     runat="server"
-    id="btn"
-    OnClick="btn_Click"
-    Text="Click Me!"
-    CssClass="span-3 btn-large"/&gt;
+    id="lbl"
+    Tag="label"
+    CssClass="span-5 right-text"
+    Text="associated with checkbox"
+    For="chk"/&gt;
+&lt;mux:CheckBox
+    runat="server"
+    id="chk"
+    CssClass="span-1"
+    OnCheckedChanged="chk_CheckedChanged"/&gt;
 </pre>
 
 <label>SampleModule.ascx.cs</label>
@@ -36,14 +45,45 @@ namespace Magix.sample
 {
     public class SampleModule : ActiveModule
     {
-        protected Button btn;
+        protected CheckBox chk;
+        protected Label lbl;
 
-        protected void btn_Click(object sender, EventArgs e)
+        protected void chk_CheckedChanged(object sender, EventArgs e)
         {
-            lbl.Text ="label text was changed!";
+            if (chk.Checked)
+                lbl.Text ="checkbox is on!";
+            else
+                lbl.Text ="checkbox is off!";
         }
     }
 }</pre>
+
+<label>example of a mux CheckBox</label>
+<div class="sample-web-control">
+{{
+label=>lbl
+  text=>associated with checkbox
+  tag=>label
+  for=>chk
+  css=>span-5 right-text
+check=>chk
+  css=>span-1
+  oncheckedchanged
+    magix.forms.get-value
+      id=>chk
+    if=>equals
+      lhs=>[magix.forms.get-value][value].Value
+      rhs=>true
+      code
+        magix.forms.set-value
+          id=>lbl
+          value=>checkbox is on!
+    else
+      magix.forms.set-value
+        id=>lbl
+        value=>checkbox is off!
+}}
+</div>
 
 {{
 lambda=>next

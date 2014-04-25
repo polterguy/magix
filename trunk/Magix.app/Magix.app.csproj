@@ -54,6 +54,7 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="slett_meg.aspx" />
     <Content Include="Global.asax" />
     <Content Include="Default.aspx" />
     <Content Include="media\bootstrap\css\bootstrap.css" />
@@ -100,6 +101,13 @@
     <Content Include="media\images\help-files\screenshots\hello-world-passing-paremeters.png" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="slett_meg.aspx.cs">
+      <DependentUpon>slett_meg.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="slett_meg.aspx.designer.cs">
+      <DependentUpon>slett_meg.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -272,6 +280,22 @@
     <Content Include="system42\admin\help\csharp\active-controllers\methods.mml" />
     <Content Include="system42\admin\help\csharp\ajax\index.mml" />
     <Content Include="system42\admin\help\csharp\active-modules\active-modules-with-active-events.mml" />
+    <Content Include="system42\admin\help\csharp\ajax\controls\button.mml" />
+    <Content Include="system42\admin\help\csharp\ajax\controls\checkbox.mml" />
+    <Content Include="system42\admin\help\csharp\ajax\controls\hiddenfield.mml" />
+    <Content Include="system42\admin\help\csharp\ajax\controls\hyperlink.mml" />
+    <Content Include="system42\admin\help\csharp\ajax\controls\image.mml" />
+    <Content Include="system42\admin\help\csharp\ajax\controls\label.mml" />
+    <Content Include="system42\admin\help\csharp\ajax\controls\linkbutton.mml" />
+    <Content Include="system42\admin\help\csharp\ajax\controls\panel.mml" />
+    <Content Include="system42\admin\help\csharp\ajax\controls\radiobutton.mml" />
+    <Content Include="system42\admin\help\csharp\ajax\controls\selectlist.mml" />
+    <Content Include="system42\admin\help\csharp\ajax\controls\textarea.mml" />
+    <Content Include="system42\admin\help\csharp\ajax\controls\textbox.mml" />
+    <Content Include="system42\admin\help\csharp\ajax\controls\dynamicpanel.mml" />
+    <Content Include="system42\admin\help\csharp\ajax\controls\timer.mml" />
+    <Content Include="system42\admin\help\csharp\ajax\controls\uploader.mml" />
+    <Content Include="system42\admin\help\csharp\ajax\controls\wysiwyg.mml" />
     <None Include="todo.txt" />
     <None Include="system42\index.hl" />
     <None Include="system42\startup.hl" />
