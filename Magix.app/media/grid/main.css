@@ -1138,6 +1138,7 @@ input[type=button].toolbox-radio,
 input[type=button].toolbox-select,
 input[type=button].toolbox-text-area,
 input[type=button].toolbox-text-box,
+input[type=button].toolbox-timer,
 input[type=button].toolbox-uploader,
 input[type=button].toolbox-wysiwyg
 {
@@ -1233,6 +1234,11 @@ input[type=button].toolbox-uploader
 input[type=button].toolbox-wysiwyg
 {
     background-position:0px -257px;
+}
+
+input[type=button].toolbox-timer
+{
+    background-position:0px -272px;
 }
 
 .qr-code-preview

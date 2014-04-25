@@ -51,7 +51,7 @@ namespace Magix.sample
 <div class="sample-web-control">
 {{
 timer=>timer
-  tick
+  ontick
     magix.forms.get-value
       id=>lbl
     set=>[magix.forms.set-value][value].Value
