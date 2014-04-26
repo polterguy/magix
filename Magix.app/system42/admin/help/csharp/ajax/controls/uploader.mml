@@ -3,6 +3,15 @@
 
 <p>control which allows for uploading files to server by dragging and dropping them onto the browwser surface</p>
 
+<label>methods and properties of control</label>
+{{
+dynamic=>methods-for-uploader
+  onfirstload
+    magix.forms.dox.create-dox-for-control
+      css=>dox-for-web-control
+      control=>uploader
+      container=>methods-for-uploader
+}}
 
 <p>below is an example of an active module, using a mux uploader. remember to embed 
 the active module as an embedded resource if you want to compile this sample</p>

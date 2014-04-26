@@ -14,6 +14,8 @@ using Magix.UX.Widgets.Core;
 
 namespace Magix.UX.Widgets
 {
+    // TODO: Remove inheritance from BaseWebControl and implement CssClass by hand, in this 
+    // control, since it is overkill, and carries a lot of properties not needed, i think ...?
 	/**
      * Widget encapsulating an HTML5 drag and drop File Uploader control,
      * with progress bar and support for multiple files

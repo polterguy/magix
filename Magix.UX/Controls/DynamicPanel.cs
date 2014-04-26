@@ -252,7 +252,7 @@ namespace Magix.UX.Widgets
         }
 
         // TODO: Document ...!!!
-        public void AppendControl(string key, object extra, bool insertAtBeginning)
+        private void AppendControl(string key, object extra, bool insertAtBeginning)
         {
             if (string.IsNullOrEmpty(_key))
                 _key = "";
@@ -263,16 +263,6 @@ namespace Magix.UX.Widgets
             LoadDynamicControl(true, extra);
             _key = newKey;
             ReRender();
-        }
-
-        /**
-         * Removes the first Control from the collection of controls, which usually 
-         * means the oldest control
-         */
-        public void RemoveFirst()
-        {
-            Key = Key.Substring(Key.IndexOf("|") + 1);
-            Controls.RemoveAt(0);
         }
 
         /**

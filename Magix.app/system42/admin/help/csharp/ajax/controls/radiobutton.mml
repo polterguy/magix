@@ -9,6 +9,15 @@ GroupName property. if you do, then only one of these radio buttons can at any s
 time be selected and checked of
 </p>
 
+<label>methods and properties of control</label>
+{{
+dynamic=>methods-for-radiobutton
+  onfirstload
+    magix.forms.dox.create-dox-for-web-control
+      css=>dox-for-web-control
+      control=>radiobutton
+      container=>methods-for-radiobutton
+}}
 
 <p>below is an example of an active module, using a mux radio button instead of conventional web controls. remember to embed 
 the active module as an embedded resource if you want to compile this sample</p>

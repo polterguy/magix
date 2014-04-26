@@ -16,6 +16,15 @@ is more useful for cases where you have fewer choices, such as choose 'coffee, t
 or water'. add up your choices by adding up ListItems inside of your SelectList
 </p>
 
+<label>methods and properties of control</label>
+{{
+dynamic=>methods-for-selectlist
+  onfirstload
+    magix.forms.dox.create-dox-for-web-control
+      css=>dox-for-web-control
+      control=>selectlist
+      container=>methods-for-selectlist
+}}
 
 <p>below is an example of an active module, using a mux select list instead of conventional web controls. remember to embed 
 the active module as an embedded resource if you want to compile this sample</p>

@@ -59,10 +59,6 @@ namespace Magix.help
 			tmp["container"].Value = "help";
 			tmp["css"].Value = "span-22 last";
 			tmp["mml"].Value = @"
-{{
-dynamic=>help-content
-  css=>span-22 last
-}}
 <div class=""span-18 left-4 last bottom-1 btn-group top-2"">
 {{
 button=>back
@@ -89,6 +85,10 @@ button=>next
     magix.help.move-next
 }}
 </div>
+{{
+dynamic=>help-content
+  css=>span-22 last
+}}
 ";
 			RaiseActiveEvent(
 				"magix.forms.create-mml-web-part",

@@ -6,6 +6,15 @@ sometimes you will need to create links that might change or needs
 changes after initially created. for such scenarios, this control 
 is your friend</p>
 
+<label>methods and properties of control</label>
+{{
+dynamic=>methods-for-hyperlink
+  onfirstload
+    magix.forms.dox.create-dox-for-web-control
+      css=>dox-for-web-control
+      control=>hyperlink
+      container=>methods-for-hyperlink
+}}
 
 <p>below is an example of an active module, using a mux hyperlink instead of conventional anchor html element. remember to embed 
 the active module as an embedded resource if you want to compile this sample</p>

@@ -7,6 +7,15 @@ to display other types of controls, such as the panel or a label
 and set it to display an image through using something such as
 background-image through css or something similar</p>
 
+<label>methods and properties of control</label>
+{{
+dynamic=>methods-for-image
+  onfirstload
+    magix.forms.dox.create-dox-for-web-control
+      css=>dox-for-web-control
+      control=>image
+      container=>methods-for-image
+}}
 
 <p>below is an example of an active module, using a mux image instead of conventional html img element. remember to embed 
 the active module as an embedded resource if you want to compile this sample</p>

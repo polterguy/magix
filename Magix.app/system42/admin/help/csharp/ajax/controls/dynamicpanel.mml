@@ -19,6 +19,16 @@ just a collection of dynamic panels. this is why the viewport can remember which
 controls it has previously loaded, and reload them upon every callback to the server 
 automatically</p>
 
+<label>methods and properties of control</label>
+{{
+dynamic=>methods-for-dynamicpanel
+  onfirstload
+    magix.forms.dox.create-dox-for-web-control
+      css=>dox-for-web-control
+      control=>dynamicpanel
+      container=>methods-for-dynamicpanel
+}}
+
 <label>SampleModule.ascx</label>
 <pre>
 &lt;%@ Assembly 
