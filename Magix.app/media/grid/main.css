@@ -1329,3 +1329,20 @@ input[type=button].toolbox-timer
 {
     list-style:none;
 }
+
+ul.list-no-type
+{
+    list-style:none;
+}
+
+ul.list-no-type li
+{
+    text-align:right;
+}
+
+ul.list-no-type li span
+{
+    text-align:left;
+}
+
+
