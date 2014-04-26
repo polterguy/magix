@@ -5,7 +5,7 @@
 some of the more important methods are described underneath</p>
 
 <ul>
-<li><strong>LoadModule</strong> - helps you load up {{
+<li><strong>LoadActiveModule</strong> - helps you load up {{
 link-button=>go-to-active-modules
   text=>active modules
   onclick
@@ -52,7 +52,7 @@ namespace Magix.sample
         [ActiveEvent(Name = "magix.sample.load-module")]
         public void magix_sample_load_module(object sender, ActiveEventArgs e)
         {
-            LoadModule(
+            LoadActiveModule(
                 "Magix.sample.SampleModule",
                 "content1");
 
@@ -67,7 +67,7 @@ namespace Magix.sample
 }
 </pre>
 
-<p>notice the second parameter to the LoadModule method.&nbsp;&nbsp;this parameter tells magix 
+<p>notice the second parameter to the LoadActiveModule method.&nbsp;&nbsp;this parameter tells magix 
 which container inside the viewport to load up the module in.&nbsp;&nbsp;read more about {{
 link-button=>viewport
   text=>viewports

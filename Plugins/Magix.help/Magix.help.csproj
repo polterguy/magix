@@ -41,6 +41,10 @@
       <Project>{11376d5f-13bd-4529-ba92-dde415b96220}</Project>
       <Name>Magix.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Magix.UX\Magix.UX.csproj">
+      <Project>{fdd15c94-7dc2-4d19-9af4-0e9fd8ccc443}</Project>
+      <Name>Magix.UX</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />

@@ -89,6 +89,7 @@ namespace Magix.UX.Widgets.Core
          */
         public event EventHandler KeyPress;
 
+        // TODO: This is redundant, since there's another bugger just like this in another class ...? [WTF?]
         /** 
          * Event raised when the escape key is pressed
          */

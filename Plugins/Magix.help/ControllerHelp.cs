@@ -53,14 +53,32 @@ namespace Magix.help
 				return;
 			}
 
-			Node tmp = new Node();
+            // Including JavaScript files ...
+            Node tmp = new Node();
+
+            tmp["type"].Value = "javascript";
+            tmp["file"].Value = "media/bootstrap/js/jQuery.js";
+
+            RaiseActiveEvent(
+                "magix.viewport.include-client-file",
+                tmp);
+
+            tmp = new Node();
+            tmp["type"].Value = "javascript";
+            tmp["file"].Value = "media/bootstrap/js/bootstrap.min.js";
+
+            RaiseActiveEvent(
+                "magix.viewport.include-client-file",
+                tmp);
+            
+            tmp = new Node();
 
 			tmp["form-id"].Value = "help-navigation";
 			tmp["container"].Value = "help";
 			tmp["css"].Value = "span-22 last";
-			tmp["mml"].Value = @"
-<div class=""span-18 left-4 last bottom-1 btn-group top-2"">
-{{
+			tmp["mml"].Value = string.Format(@"
+<div class=""span-23 last bottom-1 btn-group top-2"">
+{{{{
 button=>back
   text=><<
   css=>btn-large span-2
@@ -78,21 +96,60 @@ button=>close
   onclick
     magix.viewport.clear-controls
       container=>help
-button=>next
-  text=>>>
-  css=>btn-large span-2
+text-box=>search
+  place-holder=>search ...
+  css=>span-13 input-large
+  complete=>false
+  @data-provide=>typeahead
+  @data-items=>12
+  @data-source=>{0}
+  onenterpressed
+    set=>[magix.help.search-for-file][file-header].Value
+      value=>[$][value].Value
+    magix.help.search-for-file
+    magix.forms.set-focus
+      id=>next-page
+    magix.forms.set-value
+      id=>search
+      value=>
+button=>next-page
+  text=>next page
+  css=>btn-large span-3
   onclick
     magix.help.move-next
-}}
+      force-page=>true
+button=>next
+  text=>>>
+  css=>btn-large span-2 last
+  onclick
+    magix.help.move-next
+}}}}
 </div>
-{{
+{{{{
 dynamic=>help-content
   css=>span-22 last
-}}
-";
+}}}}
+<div class=""span-6 last right btn-group"">
+{{{{
+button=>back-2
+  text=>back
+  css=>btn-large span-3
+  onclick
+    magix.help.move-backwards
+button=>next-page-2
+  text=>next page
+  css=>btn-large span-3 last
+  onclick
+    magix.help.move-next
+      force-page=>true
+}}}}
+</div>
+", GetAllHelpHeaders());
 			RaiseActiveEvent(
 				"magix.forms.create-mml-web-part",
 				tmp);
+
+            string idOfSearch = Magix.UX.Selector.FindControl<Magix.UX.Widgets.TextBox>(Page, "search").ClientID;
 
 			tmp = new Node();
 
@@ -132,6 +189,83 @@ dynamic=>help-content
 					tmp);
 			}
 		}
+
+        private static string _helpHeaders = "";
+        private static Dictionary<string, string> _helpFiles = new Dictionary<string, string>();
+        private string GetAllHelpHeaders()
+        {
+            if (string.IsNullOrEmpty(_helpHeaders))
+            {
+                lock (_helpHeaders)
+                {
+                    if (string.IsNullOrEmpty(_helpHeaders))
+                    {
+                        _helpHeaders += "[";
+                        GetHelpFilesForDirectory(Page.MapPath("~/system42/admin/help"));
+                        _helpHeaders = _helpHeaders.Trim(',');
+                        _helpHeaders += "]";
+                    }
+                }
+            }
+            return _helpHeaders;
+        }
+
+        private void GetHelpFilesForDirectory(string folder)
+        {
+            foreach (string idx in Directory.GetFiles(folder, "*.mml"))
+            {
+                using (TextReader reader = File.OpenText(idx))
+                {
+                    string fileContent = reader.ReadToEnd();
+                    if (!fileContent.Contains("<h2>"))
+                        continue;
+                    string[] h2 = fileContent.Split(new string[] {"</h2>"}, StringSplitOptions.RemoveEmptyEntries);
+                    string helpFileHeader = ("x" + h2[0]).Split(new string[] { "<h2>" }, StringSplitOptions.RemoveEmptyEntries)[1];
+                    _helpFiles[helpFileHeader] = idx.Substring(idx.IndexOf("system42"));
+                    _helpHeaders += "\"" + helpFileHeader.Replace("\"", "\\\"") + "\",";
+                }
+            }
+            foreach (string idxFolder in Directory.GetDirectories(folder))
+            {
+                GetHelpFilesForDirectory(idxFolder);
+            }
+        }
+
+		/**
+		 * sets next help page
+		 */
+        [ActiveEvent(Name = "magix.help.search-for-file")]
+        public void magix_help_search_for_file(object sender, ActiveEventArgs e)
+        {
+            if (e.Params.Contains("inspect"))
+            {
+                e.Params["event:magix.help.search-for-file"].Value = null;
+                e.Params["inspect"].Value = @"search for a help file with the given header";
+                e.Params["file-header"].Value = "active events";
+                return;
+            }
+
+            string fileHeader = e.Params["file-header"].Get<string>();
+
+            if (!_helpFiles.ContainsKey(fileHeader))
+            {
+                Node tmp = new Node();
+                tmp["message"].Value = "file not found!";
+                RaiseActiveEvent(
+                    "magix.viewport.show-message",
+                    tmp);
+            }
+            else
+            {
+                string fileName = _helpFiles[fileHeader];
+
+                Node tmp = new Node();
+                tmp["file"].Value = fileName;
+                RaiseActiveEvent(
+                    "magix.help.open-file",
+                    tmp);
+            }
+        }
 
 		/**
 		 * sets next help page
@@ -173,7 +307,11 @@ dynamic=>help-content
 
 			Node node = new Node();
 
-			if (CurrentIndex < Pages.Count - 1)
+            if (e.Params.Contains("force-page") && e.Params["force-page"].Get<bool>())
+            {
+                next = Next;
+            }
+			else if (CurrentIndex < Pages.Count - 1)
 			{
 				// Mowing "forward" since we've got "forward history"
 				CurrentIndex += 1;
