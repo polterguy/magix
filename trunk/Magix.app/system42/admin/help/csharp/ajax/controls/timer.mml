@@ -4,6 +4,16 @@
 <p>a timer that will periodically call the server according ot its Interval, where it will 
 raise the Tick event handler</p>
 
+<label>methods and properties of control</label>
+{{
+dynamic=>methods-for-timer
+  onfirstload
+    magix.forms.dox.create-dox-for-control
+      css=>dox-for-web-control
+      control=>timer
+      container=>methods-for-timer
+}}
+
 <p>below is an example of an active module, using a mux timer. remember to embed 
 the active module as an embedded resource if you want to compile this sample</p>
 

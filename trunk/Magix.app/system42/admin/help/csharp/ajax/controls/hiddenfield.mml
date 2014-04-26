@@ -1,8 +1,6 @@
 ﻿
 <h2>mux HiddenField</h2>
 
-<p></p>
-
 
 <p>hidden field ajax web control. useful for having state you wish to pass on to the client 
 but don't want it to be visible for the end user. notice that this is not a 
@@ -10,6 +8,19 @@ safe place to put things that the user is not supposed to see, like passwords
 and such. do not trust the value of this element to not be tampered with. 
 alternatives for using this widget is viewstate, cookies and the session object. 
 viewstate and cookies are neither safe against tampering</p>
+
+<label>methods and properties of control</label>
+{{
+dynamic=>methods-for-hiddenfield
+  onfirstload
+    magix.forms.dox.create-dox-for-control
+      css=>dox-for-web-control
+      control=>hiddenfield
+      container=>methods-for-hiddenfield
+}}
+
+<p>below is an example of an active module, using a mux hidden field instead of conventional web controls. remember to embed 
+the active module as an embedded resource if you want to compile this sample</p>
 
 <label>SampleModule.ascx</label>
 <pre>

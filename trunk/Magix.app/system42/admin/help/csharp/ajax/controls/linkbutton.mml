@@ -17,6 +17,15 @@ be recognized by screen readers and such, and it is hence more 'polite'
 to use these specially designed types of 'clickable objects' such as the 
 LinkButton</p>
 
+<label>methods and properties of control</label>
+{{
+dynamic=>methods-for-linkbutton
+  onfirstload
+    magix.forms.dox.create-dox-for-web-control
+      css=>dox-for-web-control
+      control=>linkbutton
+      container=>methods-for-linkbutton
+}}
 
 <p>below is an example of an active module, using a mux link button instead of conventional web controls. remember to embed 
 the active module as an embedded resource if you want to compile this sample</p>

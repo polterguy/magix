@@ -22,7 +22,6 @@ for the developer"
     add-children=>[$]
       value=>[_data]
 
-
 event=>magix.forms.dox.get-web-control-methods
   inspect=>@"returns all the public c# methods and 
 properties for all web controls in magix"
@@ -94,9 +93,405 @@ be clicked or chosen"
     add-children=>[$]
       value=>[_data]
 
+event=>magix.forms.dox.create-dox-for.checkbox
+  inspect=>@"creates the documentation for 
+the mux checkbox control"
+  code
+    _data
+      OnCheckedChanged=>@"dom event raised when 
+the checked state of the checkbox is changed"
+      OnBlur=>@"dom event raised when 
+the checkbox looses focus"
+      OnFocused=>@"dom event raised when 
+the checkbox gains focus"
+      Checked=>@"boolean indicating if the 
+checkbox is checked or not"
+      AccessKey=>@"which keyboard shortcut 
+to use to access and change the value of 
+the checkbox"
+      Enabled=>@"if true, then button is enabled.&nbsp;&nbsp;
+if false, then button is not enabled, and cannot 
+be clicked or chosen"
+      BlurEffect=>@"effect(s) to run when control is loosing focus"
+      FocusedEffect=>@"effect(s) to run when control is gaining focus"
+    add-children=>[$]
+      value=>[_data]
+
+event=>magix.forms.dox.create-dox-for.dynamicpanel
+  inspect=>@"creates the documentation for 
+the mux dynamic panel control"
+  code
+    _data
+      OnReload=>@"server side event raised when 
+the control needs to reload its controls.&nbsp;&nbsp;
+use the Key property of the incoming ReloadEventArgs to 
+determine which control to load"
+      Key=>@"which Key the dynamic panel had its 
+controls loaded with the last time it was reloaded"
+      LoadControl=>@"method to load a new set of controls 
+into the dynamic panel.&nbsp;&nbsp;has multiple overloads"
+      AppendControl=>@"method to load an additional set of controls 
+into the dynamic panel, in addition to the controls the dynamic 
+panel already has.&nbsp;&nbsp;has multiple overloads"
+      ClearControls=>@"clears all the controls curently 
+inside of the dynamic panel"
+      Tag=>@"which html tag to use to render 
+the dynamic panel"
+      DefaultWidget=>@"id of another web control, usually a button, which will 
+be 'clicked' when user clicks the carriage return 
+key inside of the dynamic panel"
+    add-children=>[$]
+      value=>[_data]
+
+event=>magix.forms.dox.create-dox-for.hiddenfield
+  inspect=>@"creates the documentation for 
+the mux hiddenfield control"
+  code
+    _data
+      Value=>@"actual value of hidden field, 
+you can put any text information here"
+    add-children=>[$]
+      value=>[_data]
+
+event=>magix.forms.dox.create-dox-for.hyperlink
+  inspect=>@"creates the documentation for 
+the mux hyperlink control"
+  code
+    _data
+      OnBlur=>@"dom event raised when 
+the checkbox looses focus"
+      OnFocused=>@"dom event raised when 
+the checkbox gains focus"
+      Text=>@"text display to end user.&nbsp;&nbsp;
+also known as anchor text"
+      URL=>@"which url the hyperlink points to"
+      Target=>@"browser window target the url points to.&nbsp;&nbsp;
+use for instance _blank to use a new browser window to 
+display the website when the url is clicked"
+      AccessKey=>@"which keyboard shortcut 
+to use to access and change the value of 
+the checkbox"
+      BlurEffect=>@"effect(s) to run when control is loosing focus"
+      FocusedEffect=>@"effect(s) to run when control is gaining focus"
+    add-children=>[$]
+      value=>[_data]
+
+event=>magix.forms.dox.create-dox-for.image
+  inspect=>@"creates the documentation for 
+the mux image control"
+  code
+    _data
+      ImageUrl=>@"url for the image the web control displays"
+      AlternateText=>@"text to display if image cannopt be found, or 
+while image is being loaded"
+      AccessKey=>@"which keyboard shortcut 
+to use to access and change the value of 
+the checkbox"
+    add-children=>[$]
+      value=>[_data]
+
+event=>magix.forms.dox.create-dox-for.label
+  inspect=>@"creates the documentation for 
+the mux label control"
+  code
+    _data
+      Text=>@"the visible text of the web control"
+      Tag=>@"what html tag to render the control within, 
+the default is label.&nbsp;&nbsp;but this can be changed 
+to anything you wish, including p, div, address and so on"
+      For=>@"if you set the Tag property to label, you can assign 
+the label to another control on your page, such as a checkbox or 
+a radio button.&nbsp;&nbsp;if you do, then clicking the label 
+will toggle the checkbox or radiobutton"
+    add-children=>[$]
+      value=>[_data]
+
+event=>magix.forms.dox.create-dox-for.linkbutton
+  inspect=>@"creates the documentation for 
+the mux linkbutton control"
+  code
+    _data
+      OnBlur=>@"dom event for when the 
+button looses focus"
+      OnFocused=>@"dom event for when the 
+button gains focus"
+      Text=>@"visible text of button"
+      AccessKey=>@"what keyboard shortcut is used 
+to access the button"
+      Enabled=>@"if true, then button is enabled.&nbsp;&nbsp;
+if false, then button is not enabled, and cannot 
+be clicked or chosen"
+      BlurEffect=>@"effect(s) to run when control is loosing focus"
+      FocusedEffect=>@"effect(s) to run when control is gaining focus"
+    add-children=>[$]
+      value=>[_data]
+
+event=>magix.forms.dox.create-dox-for.panel
+  inspect=>@"creates the documentation for 
+the mux panel web control"
+  code
+    _data
+      Tag=>@"what html tag to render the control within, 
+the default is div.&nbsp;&nbsp;but this can be changed 
+to anything you wish, including p, span, address and so on"
+      DefaultWidget=>@"if defined, will make it such that 
+if the carriage return key is pressed when something inside 
+of the panel has focus, then the web control with the ID of 
+this property will be clicked.&nbsp;&nbsp;useful if you 
+wish to have a default action upon every textbox, etc, within 
+the panel"
+    add-children=>[$]
+      value=>[_data]
+
+event=>magix.forms.dox.create-dox-for.radiobutton
+  inspect=>@"creates the documentation for 
+the mux radiobutton control"
+  code
+    _data
+      OnCheckedChanged=>@"dom event raised when 
+the checked state of the checkbox is changed"
+      OnBlur=>@"dom event raised when 
+the checkbox looses focus"
+      OnFocused=>@"dom event raised when 
+the checkbox gains focus"
+      GroupName=>@"if defined, will group together 
+all radio buttons with the same group name, such 
+that if one is selected, any previously selected 
+radiobuttons will be de-selected"
+      Checked=>@"boolean indicating if the 
+web control is checked or not"
+      AccessKey=>@"which keyboard shortcut 
+to use to access and change the value of 
+the checkbox"
+      Enabled=>@"if true, then button is enabled.&nbsp;&nbsp;
+if false, then button is not enabled, and cannot 
+be clicked or chosen"
+      BlurEffect=>@"effect(s) to run when control is loosing focus"
+      FocusedEffect=>@"effect(s) to run when control is gaining focus"
+    add-children=>[$]
+      value=>[_data]
+
+event=>magix.forms.dox.create-dox-for.selectlist
+  inspect=>@"creates the documentation for 
+the mux select list control"
+  code
+    _data
+      OnSelectedIndexChanged=>@"dom event raised when 
+the selected item of the web control is changed"
+      Size=>@"integer value for how many rows of 
+items to show at the same time.&nbsp;&nbsp;if this 
+value is anything but 1, then the web control will 
+show multiple items at the same time.&nbsp;&nbsp;if it 
+is 1, the web control will be in drop-down state"
+      Items=>@"actual list items of different values 
+within the web control"
+      SelectedItem=>@"which item is currently selected"
+      SelectedIndex=>@"same as SelectedItem, except this 
+returns the index of the selected item, and not the item 
+itself"
+      OnBlur=>@"dom event raised when 
+the checkbox looses focus"
+      OnFocused=>@"dom event raised when 
+the checkbox gains focus"
+      AccessKey=>@"which keyboard shortcut 
+to use to access and change the value of 
+the checkbox"
+      Enabled=>@"if true, then button is enabled.&nbsp;&nbsp;
+if false, then button is not enabled, and cannot 
+be clicked or chosen"
+      BlurEffect=>@"effect(s) to run when control is loosing focus"
+      FocusedEffect=>@"effect(s) to run when control is gaining focus"
+    add-children=>[$]
+      value=>[_data]
+
+event=>magix.forms.dox.create-dox-for.textarea
+  inspect=>@"creates the documentation for 
+the mux text area control"
+  code
+    _data
+      OnTextChanged=>@"dom event triggered when the 
+text of the web control has changed, and focus is lost"
+      OnEscPressed=>@"dom event triggered when the 
+control has focus, and the escape key is pressed"
+      OnBlur=>@"dom event raised when 
+the checkbox looses focus"
+      OnFocused=>@"dom event raised when 
+the checkbox gains focus"
+      Select=>@"method for selecting all text within 
+the web control, for then to give the web control focus"
+      PlaceHolder=>@"shadow text displayed when 
+web control does not have any text content"
+      Rows=>@"how many rows of text to 
+show at the same time"
+      Text=>@"actual text input value of web control"
+      AccessKey=>@"which keyboard shortcut 
+to use to access and change the value of 
+the checkbox"
+      Enabled=>@"if true, then button is enabled.&nbsp;&nbsp;
+if false, then button is not enabled, and cannot 
+be clicked or chosen"
+      BlurEffect=>@"effect(s) to run when control is loosing focus"
+      FocusedEffect=>@"effect(s) to run when control is gaining focus"
+    add-children=>[$]
+      value=>[_data]
+
+event=>magix.forms.dox.create-dox-for.textbox
+  inspect=>@"creates the documentation for 
+the mux text box control"
+  code
+    _data
+      OnEnterPressed=>@"dom event triggered when the 
+carriage return key is pressed, and textbox has focus"
+      OnTextChanged=>@"dom event triggered when the 
+text of the web control has changed, and focus is lost"
+      OnBlur=>@"dom event raised when 
+the web control looses focus"
+      OnFocused=>@"dom event raised when 
+the web control gains focus"
+      Select=>@"method for selecting all text within 
+the web control, for then to give the web control focus"
+      TextMode=>@"mode of text box, this value can be any 
+of the following values; Normal, Phone, Search, 
+Url, Email, DateTime, Date, Month, Time, DateTimeLocal, 
+Number, Range, Color or Password"
+      PlaceHolder=>@"shadow text displayed when 
+web control does not have any text content"
+      AutoCapitalize=>@"if true, will automatically 
+capitalize the first word of the text box if browser 
+supports it"
+      AutoCorrect=>@"if true, will automatically 
+correct spelling errors in the text box, if browser 
+supports it"
+      AutoComplete=>@"if true, will automatically 
+complete text in the text box, if browser 
+supports it"
+      MaxLength=>@"if given, will not allow 
+the text of the text box to exceed its value"
+      Text=>@"actual text input value of web control"
+      AccessKey=>@"which keyboard shortcut 
+to use to access and change the value of 
+the checkbox"
+      Enabled=>@"if true, then button is enabled.&nbsp;&nbsp;
+if false, then button is not enabled, and cannot 
+be clicked or chosen"
+      BlurEffect=>@"effect(s) to run when control is loosing focus"
+      FocusedEffect=>@"effect(s) to run when control is gaining focus"
+    add-children=>[$]
+      value=>[_data]
+
+event=>magix.forms.dox.create-dox-for.timer
+  inspect=>@"creates the documentation for 
+the mux timer control"
+  code
+    _data
+      OnTick=>@"server side event raised every n'th millisecond, where 
+n is defined in its Interval property"
+      Restart=>@"method to restart the timer, such 
+that it starts counting Interval milliseconds from 0"
+      Enabled=>@"if true, the timer will periodically raise 
+the OnTick event.&nbsp;&nbsp;if false, the timer is 
+disabled, and will not raise server side events through 
+the OnTick event"
+      Interval=>@"an integer value which is the number 
+of milliseconds between each time the server side OnTick 
+event is raised"
+    add-children=>[$]
+      value=>[_data]
+
+event=>magix.forms.dox.create-dox-for.uploader
+  inspect=>@"creates the documentation for 
+the mux uploader control"
+  code
+    _data
+      OnUploaded=>@"server side event raised when a file is finished 
+being transfered to the server"
+      GetFileName=>@"returns the client-side 
+filename for the file transfered"
+      SizeOfBatch=>@"returns the number of files 
+being currently transfered.&nbsp;&nbsp;the uploader 
+control has support for transfering multiple files 
+at the same time.&nbsp;&nbsp;this integer value, 
+helps you determine how many files have been transfered 
+in current drag'n'drop operation"
+      CurrentNo=>@"index of currently processed 
+file.&nbsp;&nbsp;since the uploader control has support 
+for dragging and dropping multiple files, we will need 
+to track which file is currently being handled in the OnUploaded 
+event"
+      CssClass=>@"sets the css class(es) for the 
+web control, which is being used on the notification area 
+for the files being transfered"
+    add-children=>[$]
+      value=>[_data]
+
+event=>magix.forms.dox.create-dox-for.wysiwyg
+  inspect=>@"creates the documentation for 
+the mux wysiwyg web control"
+  code
+    _data
+      OnTextChanged=>@"dom event triggered when the 
+text of the web control has changed, and focus is lost"
+      OnEscPressed=>@"dom event triggered when the 
+control has focus, and the escape key is pressed"
+      OnBlur=>@"dom event raised when 
+the checkbox looses focus"
+      OnFocused=>@"dom event raised when 
+the checkbox gains focus"
+      Select=>@"method for selecting all text within 
+the web control, for then to give the web control focus"
+      PlaceHolder=>@"shadow text displayed when 
+web control does not have any text content"
+      Text=>@"actual html text input value of web control.&nbsp;&nbsp;
+this text will be displayed as html, and possible to 
+modify, using the built-in html editor capacity"
+      EditorCssFile=>@"which css file to include 
+for the editor's html editing area"
+      AccessKey=>@"which keyboard shortcut 
+to use to access and change the value of 
+the checkbox"
+      Enabled=>@"if true, then button is enabled.&nbsp;&nbsp;
+if false, then button is not enabled, and cannot 
+be clicked or chosen"
+      HasBold=>@"if true, then editor's menu bar 
+has the set bold button visible"
+      HasItalics=>@"if true, then editor's menu bar 
+has the set italics button visible"
+      HasUnorderedList=>@"if true, then editor's menu bar 
+has the create un-ordered list button visible"
+      HasOrderedList=>@"if true, then editor's menu bar 
+has the create ordered list button visible"
+      HasCreateLink=>@"if true, then editor's menu bar 
+has the insert hyperlink button visible"
+      HasInsertImage=>@"if true, then editor's menu bar 
+has the insert image button visible"
+      HasH1=>@"if true, then editor's menu bar 
+has the create header size 1 button visible"
+      HasH2=>@"if true, then editor's menu bar 
+has the create header size 2 button visible"
+      HasH3=>@"if true, then editor's menu bar 
+has the create header size 3 button visible"
+      HasH4=>@"if true, then editor's menu bar 
+has the create header size 4 button visible"
+      HasH5=>@"if true, then editor's menu bar 
+has the create header size 5 button visible"
+      HasH6=>@"if true, then editor's menu bar 
+has the create header size 6 button visible"
+      HasForeColor=>@"if true, then editor's menu bar 
+has the set foreground color button visible"
+      HasInsertSpeech=>@"if true, then editor's menu bar 
+has the insert speech button visible"
+      HasChangeView=>@"if true, then editor's menu bar 
+has the toggle view between html and wysiwyg button visible"
+      Enabled=>@"if true, then editor's menu bar 
+has the set bold button visible"
+      BlurEffect=>@"effect(s) to run when control is loosing focus"
+      FocusedEffect=>@"effect(s) to run when control is gaining focus"
+    add-children=>[$]
+      value=>[_data]
+
 event=>magix.forms.dox.create-dox-for-web-control
   inspect=>@"creates the documentation for 
-a mux control"
+a mux web control"
   code
     magix.forms.dox.get-control-methods
     magix.forms.dox.get-web-control-methods
@@ -118,7 +513,46 @@ a mux control"
     for-each=>[_data]
       _lit
       set=>[@][_lit][text].Value
-        value=>@"<li><strong>{0}</strong> - {1}</li>"
+        value=>@"<li><strong class=""span-4 bottom-1"">{0}</strong><span class=""span-15 bottom-1 last"">{1}</span></li>"
+          v0=>[.].Name
+          v1=>[.].Value
+      add=>[/][magix.forms.create-web-part][controls]
+        value=>[@][_lit]
+      set=>[/][magix.forms.create-web-part][controls][_lit].Name
+        value=>literal
+    set=>[magix.forms.create-web-part][controls][_lit][text].Value
+      value=>@"</ul>"
+    set=>[magix.forms.create-web-part][controls][_lit].Name
+      value=>literal
+    magix.forms.create-web-part
+      form-id=>methods
+      controls
+        literal
+          text=>@"<ul>"
+    _data
+
+event=>magix.forms.dox.create-dox-for-control
+  inspect=>@"creates the documentation for 
+a mux control"
+  code
+    magix.forms.dox.get-control-methods
+    set=>[_evt].Name
+      value=>{0}.{1}
+        v0=>magix.forms.dox.create-dox-for
+        v1=>[$][control].Value
+    _evt
+    add-children=>[_data]
+      value=>[magix.forms.dox.get-control-methods]
+    add-children=>[_data]
+      value=>[2]
+    set=>[magix.forms.create-web-part][container].Value
+      value=>[$][container].Value
+    set=>[magix.forms.create-web-part][css].Value
+      value=>[$][css].Value
+    for-each=>[_data]
+      _lit
+      set=>[@][_lit][text].Value
+        value=>@"<li><strong class=""span-4 bottom-1"">{0}</strong><span class=""span-15 bottom-1 last"">{1}</span></li>"
           v0=>[.].Name
           v1=>[.].Value
       add=>[/][magix.forms.create-web-part][controls]

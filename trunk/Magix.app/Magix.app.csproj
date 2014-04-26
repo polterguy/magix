@@ -261,7 +261,6 @@
     <Content Include="system42\admin\help\csharp\active-events\index.mml" />
     <Content Include="system42\admin\help\csharp\active-events\node-class.mml" />
     <Content Include="system42\admin\help\csharp\active-events\sample-csharp-active-event.mml" />
-    <Content Include="system42\admin\help\index-2.mml" />
     <Content Include="system42\admin\help\index.mml" />
     <Content Include="system42\admin\help\hyper-lisp\index.mml" />
     <Content Include="system42\admin\help\csharp\active-controllers\index.mml" />

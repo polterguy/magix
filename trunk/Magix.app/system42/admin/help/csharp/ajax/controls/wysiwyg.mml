@@ -3,6 +3,15 @@
 
 <p>wysiwyg control, which allows for rich/html editing of text</p>
 
+<label>methods and properties of control</label>
+{{
+dynamic=>methods-for-wysiwyg
+  onfirstload
+    magix.forms.dox.create-dox-for-web-control
+      css=>dox-for-web-control
+      control=>wysiwyg
+      container=>methods-for-wysiwyg
+}}
 
 <p>below is an example of an active module, using a mux wysiwyg control. remember to embed 
 the active module as an embedded resource if you want to compile this sample</p>

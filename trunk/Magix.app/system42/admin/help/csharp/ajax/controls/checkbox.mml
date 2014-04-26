@@ -6,6 +6,15 @@ for boolean ui situations, where user must choose between two options, for
 instance 'yes' or 'no' situations
 </p>
 
+<label>methods and properties of control</label>
+{{
+dynamic=>methods-for-checkbox
+  onfirstload
+    magix.forms.dox.create-dox-for-web-control
+      css=>dox-for-web-control
+      control=>checkbox
+      container=>methods-for-checkbox
+}}
 
 <p>below is an example of an active module, using a mux checkbox instead of conventional web controls. remember to embed 
 the active module as an embedded resource if you want to compile this sample</p>
@@ -51,9 +60,9 @@ namespace Magix.sample
         protected void chk_CheckedChanged(object sender, EventArgs e)
         {
             if (chk.Checked)
-                lbl.Text ="checkbox is on!";
+                lbl.Text = "checkbox is on!";
             else
-                lbl.Text ="checkbox is off!";
+                lbl.Text = "checkbox is off!";
         }
     }
 }</pre>

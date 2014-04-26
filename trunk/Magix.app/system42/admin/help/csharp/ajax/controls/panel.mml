@@ -15,6 +15,16 @@ link-button=>magix-ux-label
 }} control and not the Panel control
 </p>
 
+<label>methods and properties of control</label>
+{{
+dynamic=>methods-for-panel
+  onfirstload
+    magix.forms.dox.create-dox-for-web-control
+      css=>dox-for-web-control
+      control=>panel
+      container=>methods-for-panel
+}}
+
 <p>below is an example of an active module, using a mux panel instead of conventional web controls. remember to embed 
 the active module as an embedded resource if you want to compile this sample</p>
 

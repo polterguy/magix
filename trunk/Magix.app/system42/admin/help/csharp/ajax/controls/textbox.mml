@@ -27,6 +27,15 @@ into your TextBox. use ssl, or other types of security to actually implement
 safe transmitting of your passwords and similar 'secret text strings'
 </p>
 
+<label>methods and properties of control</label>
+{{
+dynamic=>methods-for-textbox
+  onfirstload
+    magix.forms.dox.create-dox-for-web-control
+      css=>dox-for-web-control
+      control=>textbox
+      container=>methods-for-textbox
+}}
 
 <p>below is an example of an active module, using a mux textbox instead of conventional web controls. remember to embed 
 the active module as an embedded resource if you want to compile this sample</p>

@@ -9,6 +9,15 @@ then the panel widget is more appropriate to use than the label. unless
 the Tag property is changed, this widget will render as a span
 </p>
 
+<label>methods and properties of control</label>
+{{
+dynamic=>methods-for-label
+  onfirstload
+    magix.forms.dox.create-dox-for-web-control
+      css=>dox-for-web-control
+      control=>label
+      container=>methods-for-label
+}}
 
 <p>below is an example of an active module, using a mux label instead of conventional web controls. remember to embed 
 the active module as an embedded resource if you want to compile this sample</p>
