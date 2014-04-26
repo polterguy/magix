@@ -66,7 +66,7 @@ you can intermix webcontrols into your mml by creating a control
 collection by typing them inside of brackets such as 
 {{...controls, using hyper lisp syntax and code in
 event handlers goes here...}}.&nbsp;&nbsp;internally it 
-calls LoadModule, hence all the parameters that goes
+calls LoadActiveModule, hence all the parameters that goes
 into your magix.viewport.load-module active event, 
 can also be passed into this, such as [css] and 
 so on.&nbsp;&nbsp;you can embed forms using this syntax

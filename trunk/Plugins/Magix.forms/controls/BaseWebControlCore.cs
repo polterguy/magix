@@ -350,6 +350,29 @@ namespace Magix.forms
 						codeNode);
 				};
 			}
+
+            // filling out extra attributes for control
+            if (ctrl is AttributeControl)
+            {
+                AttributeControl atrCtrl = ctrl as AttributeControl;
+                foreach (Node idx in node)
+                {
+                    if (idx.Name.StartsWith("@"))
+                    {
+                        atrCtrl.Attributes.Add(new AttributeControl.Attribute(idx.Name.Substring(1), idx.Get<string>()));
+                    }
+                }
+            }
+            else
+            {
+                foreach (Node idx in node)
+                {
+                    if (idx.Name.StartsWith("@"))
+                    {
+                        throw new ArgumentException("tried to add up a generic attribute to a control which didn't support it");
+                    }
+                }
+            }
 		}
 
 		protected override void Inspect(Node node)
@@ -367,7 +390,8 @@ double clicked.&nbsp;&nbsp;[onmousedown] is raised when mouse is pressed down, o
 raised when mouse is hovered over control.&nbsp;&nbsp;[onmouseout] is raised when mouse is 
 moved out of control surface.&nbsp;&nbsp;[onkeypress] is raised when a key is pressed inside 
 of control.&nbsp;&nbsp;[onesc] is raised when escape key is pressed inside of control.
-&nbsp;&nbsp;not thread safe";
+&nbsp;&nbsp;if web control is of type attribute control, you can add generic attributes by 
+prepending an '@' character before the name of the attribute.&nbsp;&nbsp;not thread safe";
 			node["css"].Value = "css classes";
 			node["dir"].Value = "ltr";
 			node["tab"].Value = 5;

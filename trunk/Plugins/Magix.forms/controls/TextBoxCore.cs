@@ -140,7 +140,7 @@ namespace Magix.forms
 			{
 				Node codeNode = node["onescpressed"].Clone();
 
-				ret.TextChanged += delegate(object sender2, EventArgs e2)
+				ret.EscPressed += delegate(object sender2, EventArgs e2)
 				{
 					TextBox that2 = sender2 as TextBox;
 					if (!string.IsNullOrEmpty(that2.Info))
@@ -155,6 +155,26 @@ namespace Magix.forms
 						codeNode);
 				};
 			}
+
+            if (node.Contains("onenterpressed"))
+            {
+                Node codeNode = node["onenterpressed"].Clone();
+
+                ret.EnterPressed += delegate(object sender2, EventArgs e2)
+                {
+                    TextBox that2 = sender2 as TextBox;
+                    if (!string.IsNullOrEmpty(that2.Info))
+                        codeNode["$"]["info"].Value = that2.Info;
+
+                    object val = GetValue(that2);
+                    if (val != null)
+                        codeNode["$"]["value"].Value = val;
+
+                    RaiseActiveEvent(
+                        "magix.execute",
+                        codeNode);
+                };
+            }
 
             Ip(e.Params)["_ctrl"].Value = ret;
 		}

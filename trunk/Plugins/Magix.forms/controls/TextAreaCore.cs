@@ -79,7 +79,7 @@ namespace Magix.forms
 			{
 				Node codeNode = node["onescpressed"].Clone();
 
-				ret.TextChanged += delegate(object sender2, EventArgs e2)
+				ret.EscPressed += delegate(object sender2, EventArgs e2)
 				{
 					TextArea that2 = sender2 as TextArea;
 					if (!string.IsNullOrEmpty(that2.Info))
