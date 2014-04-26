@@ -1,0 +1,52 @@
+﻿
+<h2>hyper lisp syntax</h2>
+
+<p>hyper lisp doesn't really have any syntax, and its dialect might change from server-installation to server-installation.&nbsp;&nbsp;
+instead of syntax, you are actually directly modifying the execution tree itself.&nbsp;&nbsp;to understand what this mean, 
+consider that the code below is really nothing but a tree structure representation of the {{
+link-button=>go-to-node
+  text=>Node
+  onclick
+    magix.help.open-file
+      file=>system42\admin\help\csharp\active-events\node-class.mml
+}} class</p>
+
+<pre>
+_data=>hello world
+if=>equals
+  lhs=>[_data].Value
+  rhs=>hello world
+  code
+    magix.viewport.show-message
+      message=>if statement evaluated to true
+else
+  magix.viewport.show-message
+    message=>if statement evaluated to false
+</pre>
+
+<p>if you take a close look at the above code, you will see that there for instance are two spaces indentation for the [lhs] and the 
+[if] statement the [lhs] node exists within.&nbsp;&nbsp;this is because the [lhs] node is a child of the [if] node, physically in the 
+structure of the node's tree hierarchical structure.&nbsp;&nbsp;for instance, in the above code, there are three root nodes; [_data], 
+[if] and [else], the rest of the nodes are children of one of the previously mentioned nodes.&nbsp;&nbsp;the [if] node, has three children 
+again; [lhs], [rhs] and [code].&nbsp;&nbsp;while the [else] node only has one child; [magix.viewport.show-message].&nbsp;&nbspand so on.
+&nbsp;&nbsp;it might be understandable when you realize how this would look like in c#.&nbsp;&nbsp;below is an example 
+of how to produce the exact same tree structure with c#</p>
+
+<pre>
+Node node = new Node();
+node["_data"].Value = "hello world";
+node["if"]["lhs"].Value = "[_data].Value";
+node["if"]["rhs"].Value = "hello world";
+node["if"]["code"]["magix.viewport.show-message"]["message"].Value = "if statement evaluated to true";
+node["else"]["magix.viewport.show-message"]["message"].Value = "if statement evaluated to false";
+</pre>
+
+<p>so as you can see, hyper lisp is really nothing but a tree structure, and doesn't actually have any syntax, the way 
+a traditional programming language would have</p>
+
+{{
+lambda=>next
+  oncreatecontrols
+    magix.help.set-next
+      next=>system42\admin\help\hyper-lisp\hyper-lisp-execute.mml
+}}

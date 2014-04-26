@@ -1,1 +1,78 @@
-﻿hyper lisp
+﻿
+<h2>hyper lisp</h2>
+
+<p>hyper lisp is a programming language which is unique for magix.&nbsp;&nbsp;among some of its traits, is that 
+instead of being interpreted and/or compiled, you actually directly access the execution tree.&nbsp;&nbsp;to understand 
+the benefits of doing such a thing, can be difficult in the beginning, but with hyper lisp, you can do 
+things you cannot even imagine in other programming languages</p>
+
+<p>among other things, hyper lisp is at its core a distributed language.&nbsp;&nbsp;this means that you can override 
+and run active events on other servers, serialized over the http protocol, completely transparent, without any modification 
+to your existing code.&nbsp;&nbsp;this comes from the fact of that you can override an active event, during runtime execution, 
+such that it no longer executes locally, but instead executes on another server endpoint, with a different url</p>
+
+<p>in fact, hyper lisp is just a tiny wrapper around active events, and actually doesn't really have any syntax.&nbsp;&nbsp;
+it is also heavily influenced from the ideas of lisp, although most lisp programmers wouldn't really recognize it at all 
+before they inderstand the power of it.&nbsp;&nbsp;hyper lisp is not lisp though.&nbsp;&nbsp;you can 
+also develop hyper lisp through your browser, with the built-in web-based integrated development environment of magix</p>
+
+<p>also, with hyper lisp, you can transfer pieces of code from one server to another, allowing for map reduce functionality, 
+where one of your servers invokes events on a different server, transfering executable code to be executed on the other server</p>
+
+<p>in the beginning, hyper lisp might be cumbersome to understand, since it's completely different than any other programming 
+languages you've ever seen, but you'll get the grasp of it fast as you proceed.&nbsp;&nbsp;hyper lisp is also extendable, meaning 
+you can extend the language with your own keywords, easily.&nbsp;&nbsp;in fact, you can extend hyper lisp with hyper lisp 
+code</p>
+
+<p>the most important difference between hyper lisp and other programming languages is that in hyper lisp, there doesn't 
+exist composite statements, meaning every single part of the language is reduced to its smallest imaginable piece of 
+logic, where every single executable statement is reduced down to its tiniest parts, making the language completely 
+self-modifiable, and able to parse itself, without resorting to parsing or string manipulation.&nbsp;&nbsp;in hyper 
+lisp, every single line of code is an atomic piece of statement, not possible to further reduce into smaller pieces of code.&nbsp;&nbsp;
+with hyper lisp, you access the execution tree directly, and do not ever parse or compile anything.&nbsp;&nbsp;with hyper lisp, 
+what you create in code, is exactly what gets executed by the hyper lisp engine</p>
+
+<p>caveats; hyper lisp is not built for extreme speed, such as 3d rendering or game engines.&nbsp;&nbsp;but if you need extreme speed, 
+then you can tap into c# easily, by creating active events, which you can consume in hyper lisp.&nbsp;&nbsp;with hyper lisp, 
+there exists no real borrder of execution between c# and hypoer lisp, and to have access to functionality in c# from hyper lisp, 
+is as easy as creating an active event, and invoking it from hyper lisp</p>
+
+<p>with hyper lisp, some things will require more lines of code to express.&nbsp;&nbsp;this is because of that there doesn't 
+exist composite statements in hyper lisp.&nbsp;&nbsp;while other things, will take a lot of less lines of code to express.&nbsp;&nbsp;
+for instance, the hello world application in hyper lisp, is literally two lines of code, and contains code that modifies and 
+creates new code, in the execution pointer itself!</p>
+
+<label>hello world in hyper lisp</label>
+<pre>
+set=>[magix.viewport.show-message][message].Value
+  value=>hello world
+</pre>
+
+<p>if you execute the above code in for instance the active event executor, you will see that it creates a message box for you, 
+even though there exists no reference to a message box in the actual code.&nbsp;&nbsp;this is because of that the set statement 
+actually will create a new hyper lisp node for you.&nbsp;&nbsp;it will create an invocation to magix.viewport.show-message, 
+and append the message node as its child</p>
+
+<p>the above example actually modifies the execution tree directly, as the execution tree is being executed!&nbsp;&nbsp;think about 
+that for a while.&nbsp;&nbsp;to explain, the above code will become the code below as it is being eexecuted</p>
+
+<label>hello world in hyper lisp, after the excution</label>
+<pre>
+set=>[magix.viewport.show-message][message].Value
+  value=>hello world
+magix.viewport.show-message
+  message=>hello world
+</pre>
+
+<p>notice how there are two more lines of code in the latter example compared to the first example.&nbsp;&nbsp;this is because of that 
+the set statement will actually create the second two statements, since they don't exist from before</p>
+
+<p>with hyper lisp, it is common convention to represent a statement, or a node to be more specific with braces.&nbsp;&nbsp;
+this means that if you would like to refer to the set statement above, you would do so like this; [set]</p>
+
+{{
+lambda=>next
+  oncreatecontrols
+    magix.help.set-next
+      next=>system42\admin\help\hyper-lisp\hyper-lisp-syntax.mml
+}}

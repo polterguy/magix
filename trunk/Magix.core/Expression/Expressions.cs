@@ -341,7 +341,7 @@ namespace Magix.Core
                 }
                 else
                 {
-                    if (tmp == '[')
+                    if (tmp == '[' && string.IsNullOrEmpty(lastEntity))
                     {
                         bufferNodeName = "";
                         isInside = true;
@@ -349,6 +349,14 @@ namespace Magix.Core
                     }
                     lastEntity += tmp;
                 }
+            }
+            if (lastEntity.StartsWith(".Value") && lastEntity.Length > 6)
+            {
+                // this is a concatenated expression, returning a Node list, where we wish to directly 
+                // access another node inside of the node by reference
+                string innerLastReference = "";
+                x = GetNode(lastEntity.Substring(6), x.Value as Node, x.Value as Node, ref innerLastReference, forcePath);
+                lastEntity = innerLastReference;
             }
 			return x;
 		}
