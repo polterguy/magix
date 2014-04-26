@@ -1,0 +1,65 @@
+﻿
+<h2>inspecting active events - the [inspect] keyword</h2>
+
+<p>magix is self-documenting, or literate as donald knuth would have put it.&nbsp;&nbsp;this means that the system 
+creates its own documentation.&nbsp;&nbsp;it does this through a keyword, which you can check for the existence 
+of within your active events, called "inspect".&nbsp;&nbsp;consider the following code</p>
+
+<pre>
+using System;
+using Magix.Core;
+
+namespace Magix.sample
+{
+   public class SampleController : ActiveController
+   {
+      [ActiveEvent(Name = "magix.sample.self-documenting")]
+      public static void magix_sample_self_documenting(object sender, ActiveEventArgs e)
+      {
+          if (ShouldInspect(e.Params))
+          {
+              e.Params["event:magix.execute"].Value = null;
+              e.Params["inspect"].Value = "description of what your active event actually does";
+              e.Params["magix.sample.self-documenting"]["parameter"].Value = "some parameter";
+              return;
+          }
+          /* ... */
+      }
+   }
+}
+</pre>
+
+<p>if you raise the above active event with a child node called "inspect", which should have a null value, then 
+the ShouldExpect method call will return true, and the active event won't actually be executed, since it will 
+only return the description of your event, and not actually execute it.&nbsp;&nbsp;by intelligently using this 
+feature, your solutions will be completely self-documenting and "literate".&nbsp;&nbsp;this is useful to 
+make sure the documentation is always up to date, and also saves you of a lot of time and explaining further 
+down the road.&nbsp;&nbsp;to retrieve the documentation for your above active event, invoke it as shown below</p>
+
+<pre>Node node = new Node();
+node["inspect"].Value = null; // important that the inspect node is null!
+
+Magix.Core.ActiveEvents.Instance.RaiseActiveEvent(
+   this, 
+   "magix.sample.self-documenting",
+   node);
+
+string description = node["inspect"].Get&lt;string&gt;();</pre>
+
+<p>the entire node tree, as returned from the above active event, would in hyper lisp look like the below</p>
+
+<pre>event:magix.execute
+inspect=>@"description of what your active event actually does"
+magix.sample.self-documenting
+  parameter=>some parameter
+</pre>
+
+<p>if you put the above hyper lisp into for instance the active event executor, you would be able to raise the 
+active event directly, through the magix.execute keyword</p>
+
+{{
+lambda=>next
+  oncreatecontrols
+    magix.help.set-next
+      next=>system42\admin\help\csharp\active-controllers\index.mml
+}}

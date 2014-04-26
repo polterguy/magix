@@ -25,13 +25,56 @@ link-button=>go-to-active-events
 
 <p>in addition, the ActiveController class has a couple of other methods, which are for advanced usage. one of which 
 is ShouldInspect. ShouldInspect returns true, if the caller of the active event does not want to actually invoke the 
-active event, but rather inspect it, and have its documentation. this feature is heavily used in the core of magix to 
+active event, but rather {{
+link-button=>go-to-inspect
+  text=>inspect
+  onclick
+    magix.help.open-file
+      file=>system42\admin\help\csharp\active-events\inspecting-active-events.mml
+}} it, and have its documentation. this feature is heavily used in the core of magix to 
 create the documentation for magix, and is at the core of the literate parts of magix. this is what allows the user 
 to invoke any active event with the "inspect" parameter, to have its documentation. you can only inspect methods 
 locally, and not over a remote connection. meaning, you cannot by default inspect active events remotely</p>
 
 <p>the Ip method is for creating hyper lisp extensions within the magix.execute namespace. don't bother with 
 this method, unless you're creating your own hyper lisp keywords within the magix.execute namespace</p>
+
+<p>below is an example of an active controller that loads up a module, and then raises an active event</p>
+
+<pre>
+using System;
+using Magix.Core;
+
+namespace Magix.sample
+{
+    public class SampleController : ActiveController
+    {
+        [ActiveEvent(Name = "magix.sample.load-module")]
+        public void magix_sample_load_module(object sender, ActiveEventArgs e)
+        {
+            LoadModule(
+                "Magix.sample.SampleModule",
+                "content1");
+
+            Node node = new Node();
+            node["data"].Value = 5;
+
+            RaiseActiveEvent(
+                "magix.sample.some-event",
+                node);
+        }
+    }
+}
+</pre>
+
+<p>notice the second parameter to the LoadModule method.&nbsp;&nbsp;this parameter tells magix 
+which container inside the viewport to load up the module in.&nbsp;&nbsp;read more about {{
+link-button=>viewport
+  text=>viewports
+  onclick
+    magix.help.open-file
+      file=>system42\admin\help\csharp\active-modules\viewport.mml
+}}</p>
 
 {{
 lambda=>next

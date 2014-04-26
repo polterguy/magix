@@ -45,6 +45,7 @@ your development team, while empowering your non-technical staff</p>
 <p>contact the architect behind magix at <a href="mailto:isa.lightbringer@gmail.com">isa.lightbringer@gmail.com</a>, 
 or download magix and its source code <a href="http://code.google.com/p/magix-illuminate-2">here</a></p>
 
+<div class="left-3">
 <p>the c# parts are for developers who want to use magix in combination with visual studio. the other 
 parts are for everyone, including consumers of magix. choose your path below</p>
 
@@ -101,6 +102,7 @@ for non-technical staff, who wants to do advanced stuff, hyper lisp should be yo
 hyper lisp is a tool for creating advanced functionality, through a turing complete programming 
 language, which though is much easier to learn than most other programming languages. hyper lisp 
 can be created through the backend web based interface</p>
+</div>
 
 {{
 lambda=>next
