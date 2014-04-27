@@ -1,0 +1,21 @@
+﻿
+<h2>hyper lisp keywords</h2>
+
+<p>as previously mentioned, what keywords you have in your installation of magix, might vary from installation to installation.&nbsp;&nbsp;
+and in fact, you can easily create your own keywords, by using the [event] keyword, and create an active event which 
+is within the namespace of "magix.execute".&nbsp;&nbsp;however, to see which keywords are in this particular installation, 
+check out the {{
+link-button=>open-executor
+  text=>hyper lisp keywords
+  onclick
+    execute-file=>system42/admin/tools/inspect-execute.hl
+}} and inspect them as you wish</p>
+
+<p>the most common keywords, and their usage, is listed below though</p>
+
+{{
+lambda=>next
+  oncreatecontrols
+    magix.help.set-next
+      next=>system42\admin\help\hyper-lisp\existing-keywords.mml
+}}
