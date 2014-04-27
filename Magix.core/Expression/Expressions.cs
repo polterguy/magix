@@ -355,7 +355,19 @@ namespace Magix.Core
                 // this is a concatenated expression, returning a Node list, where we wish to directly 
                 // access another node inside of the node by reference
                 string innerLastReference = "";
-                x = GetNode(lastEntity.Substring(6), x.Value as Node, x.Value as Node, ref innerLastReference, forcePath);
+                Node x2 = x.Value as Node;
+                if (x2 == null)
+                {
+                    // value of node is probably a string, try to convert it to a node first
+                    Node tmpNode = new Node();
+                    tmpNode["code"].Value = x.Get<string>();
+                    ActiveEvents.Instance.RaiseActiveEvent(
+                        typeof (Expressions),
+                        "magix.code.code-2-node",
+                        tmpNode);
+                    x2 = tmpNode["json"].Value as Node;
+                }
+                x = GetNode(lastEntity.Substring(6), x2, x2, ref innerLastReference, forcePath);
                 lastEntity = innerLastReference;
             }
 			return x;
