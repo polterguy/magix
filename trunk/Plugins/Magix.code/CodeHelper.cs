@@ -51,7 +51,7 @@ contain type information for types of int, decimal, datetime and bool.&nbsp;&nbs
             Ip(e.Params)["code"].Value = txt;
 		}
 
-		private static string ParseNodes (int indent, Node node)
+		private static string ParseNodes(int indent, Node node)
 		{
 			string retVal = "";
 			foreach (Node idx in node)
@@ -74,10 +74,10 @@ contain type information for types of int, decimal, datetime and bool.&nbsp;&nbs
 							value += "=(bool)>" + idx.Get<string>();
 							break;
 						case "System.Decimal":
-							value += "=(dec)>" + idx.Get<decimal>().ToString (CultureInfo.InvariantCulture);
+							value += "=(dec)>" + idx.Get<decimal>().ToString(CultureInfo.InvariantCulture);
 							break;
 						case "System.DateTime":
-							value += "=(date)>" + idx.Get<DateTime>().ToString ("yyyy.MM.dd HH:mm:ss", CultureInfo.InvariantCulture);
+							value += "=(date)>" + idx.Get<DateTime>().ToString("yyyy.MM.dd HH:mm:ss", CultureInfo.InvariantCulture);
 							break;
 						case "Magix.Core.Node":
 						{
@@ -86,7 +86,7 @@ contain type information for types of int, decimal, datetime and bool.&nbsp;&nbs
 								nodeS += idx.Get<Node>().Name;
 							if (idx.Get<Node>().Value != null)
 								nodeS += "=>" + idx.Get<Node>().Get<string>();
-							value += @"=(node)>@""" + nodeS + "\r\n" + ParseNodes(string.IsNullOrEmpty(nodeS) ? 0 : 1, idx.Get<Node>()) + @"""";
+							value += @"=(node)>@""" + nodeS + ParseNodes(string.IsNullOrEmpty(nodeS) ? 0 : 1, idx.Get<Node>()).Trim() + @"""";
 						} break;
 						}
 					}
@@ -240,7 +240,40 @@ code
 							value = decimal.Parse(tmp.Substring (name.Length + 7).Trim(), CultureInfo.InvariantCulture);
 							break;
                         case "=(node)>":
-                            value = Node.FromJSONString(tmp.Substring(name.Length + 8).Trim());
+							string tmpLine2 = tmp.Substring(name.Length + 8).TrimStart();
+							tmpLine2 = tmpLine2.Substring(2);
+							while (true)
+							{
+								int noFnut = 0;
+								for (int idxNo = tmpLine2.Length - 1; idxNo >= 0; idxNo--)
+								{
+									if (tmpLine2[idxNo] == '"')
+										noFnut += 1;
+									else
+										break;
+								}
+
+								value += tmpLine2.Replace("\"\"", "\"");
+
+								if (noFnut % 2 != 0)
+								{
+									value = ((string)value).TrimEnd().Substring(0, ((string)value).Length - 1);
+									break;
+								}
+
+								value += "\n";
+								tmpLine2 = reader.ReadLine();
+
+								if (tmpLine2 == null)
+									throw new ArgumentException("Unfinished string literal: " + value);
+							}
+
+                            Node tmpNode = new Node();
+                            tmpNode["code"].Value = value.ToString().Trim();
+                            RaiseActiveEvent(
+                                "magix.code.code-2-node",
+                                tmpNode);
+                            value = tmpNode["json"].Value;
                             break;
 						}
 					}
@@ -248,7 +281,7 @@ code
 					if (currentIndents == indents)
 					{
 						Node xNode = new Node(name, value);
-						idxNode.Add (xNode);
+						idxNode.Add(xNode);
 					}
 
 					// Decreasing, upwards in hierarchy...
