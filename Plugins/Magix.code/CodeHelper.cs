@@ -33,7 +33,8 @@ code syntax, and return in [code].&nbsp;&nbsp;code returned will be the
 textual representation of the original tree hierarchy, such that 
 two spaces ' ' opens up the child collection.&nbsp;&nbsp;=> separates 
 name and value of node, name first.&nbsp;&nbsp;code returned might also
-contain type information for types of int, decimal, datetime and bool.&nbsp;&nbsp;thread safe";
+contain type information for types of int, decimal, datetime and bool.&nbsp;&nbsp;
+if [remove-root] is true, then the root node will be removed.&nbsp;&nbsp;thread safe";
 				e.Params["json"]["something"].Value =  "something-else";
 				return;
 			}
@@ -47,6 +48,10 @@ contain type information for types of int, decimal, datetime and bool.&nbsp;&nbs
                 node = Ip(e.Params)["json"].Value as Node;
 			else
                 node = Ip(e.Params)["json"].Clone();
+            if (Ip(e.Params).Contains("remove-root") && Ip(e.Params)["remove-root"].Get<bool>())
+            {
+                node = node[0];
+            }
 			string txt = ParseNodes(0, node);
             Ip(e.Params)["code"].Value = txt;
 		}
