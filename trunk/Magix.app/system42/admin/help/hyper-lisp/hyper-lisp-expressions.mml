@@ -27,9 +27,101 @@ _data
   v0=>5
 </pre>
 
+<p>imagine you have a deep data tree structure hierarchy, such as the one below</p>
+
+<pre>
+_data
+  some-node
+    child-1=>5
+  another-node
+    child-of-another=>7
+</pre>
+
+<p>if you wish to access the [child-of-another] node's value, you'd have to create an expression similar to the one below</p>
+
+<pre>
+[_data][another-node][child-of-another].Value
+</pre>
+
+<p>to see a working piece of code, doing just that, imagine the following code</p>
+
+<pre>
+_data
+  some-node
+    child-1=>5
+  another-node
+    child-of-another=>hello world
+set=>[magix.viewport.show-message][message].Value
+  value=>[_data][another-node][child-of-another].Value
+</pre>
+
+<p>the above code, will fetch the value of [child-of-another] node, and put it into a message box.&nbsp;&nbsp;if you have multiple 
+nodes with the same name, you can reference them by index, such as below</p>
+
+<pre>
+_data
+  some-node
+    child-1=>5
+  another-node
+    child-of-another=>hello world
+  another-node
+    child-of-another=>hello world 2
+set=>[magix.viewport.show-message][message].Value
+  value=>[_data][another-node:0][child-of-another].Value
+set=>[magix.viewport.show-message:1][message].Value
+  value=>[_data][another-node:1][child-of-another].Value
+</pre>
+
+<p>which will produce the following output</p>
+
+<pre>
+_data
+  some-node
+    child-1=>5
+  another-node
+    child-of-another=>hello world
+  another-node
+    child-of-another=>hello world 2
+set=>[magix.viewport.show-message][message].Value
+  value=>[_data][another-node:0][child-of-another].Value
+set=>[magix.viewport.show-message:1][message].Value
+  value=>[_data][another-node:1][child-of-another].Value
+magix.viewport.show-message
+  message=>hello world
+magix.viewport.show-message
+  message=>hello world 2
+</pre>
+
+<p>you can also de-reference nodes by index alone, such as the code below</p>
+
+<pre>
+_data
+  some-node
+    child-1=>5
+  another-node
+    child-of-another=>hello world 3
+set=>[magix.viewport.show-message][message].Value
+  value=>[0][1][0].Value
+</pre>
+
+<p>or you can de-reference nodes with a specific value, such as the code below</p>
+
+<pre>
+_data
+  message=>msg1
+    content=>hello world
+  message=>msg2
+    content=>hello world 2
+set=>[magix.viewport.show-message][message].Value
+  value=>[_data][message=>msg2][content].Value
+</pre>
+
+<p>the above code, will look for the [message] node containing the value of "msg2", and use the [content] of that node 
+as the parameter to the message box, due to the <strong>"=&gt;"</strong> criteria in the [message=>msg2] parts of the expression</p>
+
 {{
 lambda=>next
   oncreatecontrols
     magix.help.set-next
-      next=>system42\admin\help\hyper-lisp\hyper-lisp-expressions.mml
+      next=>system42\admin\help\hyper-lisp\expression-operators.mml
 }}

@@ -1,0 +1,11 @@
+﻿
+<h2>expression operators</h2>
+
+<p>there exist many special operators which you can use in your expressions to access specific parts of the node tree</p>
+
+{{
+lambda=>next
+  oncreatecontrols
+    magix.help.set-next
+      next=>system42\admin\help\hyper-lisp\expression-operators.mml
+}}
