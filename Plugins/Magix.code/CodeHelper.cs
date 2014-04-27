@@ -86,7 +86,7 @@ contain type information for types of int, decimal, datetime and bool.&nbsp;&nbs
 								nodeS += idx.Get<Node>().Name;
 							if (idx.Get<Node>().Value != null)
 								nodeS += "=>" + idx.Get<Node>().Get<string>();
-							value += @"=>@""" + nodeS + "\r\n" + ParseNodes(string.IsNullOrEmpty(nodeS) ? 0 : 1, idx.Get<Node>()) + @"""";
+							value += @"=(node)>@""" + nodeS + "\r\n" + ParseNodes(string.IsNullOrEmpty(nodeS) ? 0 : 1, idx.Get<Node>()) + @"""";
 						} break;
 						}
 					}
@@ -234,11 +234,14 @@ code
 							value = DateTime.ParseExact(tmp.Substring (name.Length + 8).Trim(), "yyyy.MM.dd HH:mm:ss", CultureInfo.InvariantCulture);
 							break;
 						case "=(bool)>":
-							value = bool.Parse (tmp.Substring (name.Length + 8).Trim());
+							value = bool.Parse(tmp.Substring (name.Length + 8).Trim());
 							break;
 						case "=(dec)>":
 							value = decimal.Parse(tmp.Substring (name.Length + 7).Trim(), CultureInfo.InvariantCulture);
 							break;
+                        case "=(node)>":
+                            value = Node.FromJSONString(tmp.Substring(name.Length + 8).Trim());
+                            break;
 						}
 					}
 

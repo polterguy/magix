@@ -1,0 +1,35 @@
+﻿
+<h2>hyper lisp expressions</h2>
+
+<p>in hyper lisp, there doesn't exist the variables.&nbsp;&nbsp;this is because you're executing the execution tree 
+directly, and hence everything is modifiable in hyper lisp.&nbsp;&nbsp;instead of having variables, you can just modify whatever 
+node in the tree you wish.&nbsp;&nbsp;in hyper lisp, all nodes in the tree are potential data nodes, and hence everything 
+is a variable</p>
+
+<p>to de-reference a node, you must use expressions though.&nbsp;&nbsp;some hyper lisp keywords, allows for the use of 
+expressions.&nbsp;&nbsp;an expression looks like the following</p>
+
+<pre>
+set=>[_data][v0].Value
+  value=>5
+</pre>
+
+<p>above, the [set] statement contains an expression.&nbsp;&nbsp;what the above expression will do, is to de-reference a node 
+called [v0], which it expects to find underneath the [_data] node.&nbsp;&nbsp;of course, this expression won't find that node, 
+hence it will create it, since this is one of the features of the [set] statement.&nbsp;&nbsp;this way, you can create expressions 
+which are "paths" to find specific nodes, and their values and names within your execution tree.&nbsp;&nbsp;the above code will 
+create the followwing result</p>
+
+<pre>
+set=>[_data][v0].Value
+  value=>5
+_data
+  v0=>5
+</pre>
+
+{{
+lambda=>next
+  oncreatecontrols
+    magix.help.set-next
+      next=>system42\admin\help\hyper-lisp\hyper-lisp-expressions.mml
+}}

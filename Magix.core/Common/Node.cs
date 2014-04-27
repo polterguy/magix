@@ -776,15 +776,12 @@ namespace Magix.Core
                     case "System.String":
                         value = Value.ToString().Replace("\"", "\\\"");
                         break;
-
                     case "System.DateTime":
                         value = ((DateTime)Value).ToString("yyyy.MM.dd HH:mm:ss", CultureInfo.InvariantCulture);
                         break;
-
                     case "System.Decimal":
                         value = ((Decimal)Value).ToString(CultureInfo.InvariantCulture);
                         break;
-
                     default:
                         value = Value.ToString().Replace("\"", "\\\"");
                         break;
