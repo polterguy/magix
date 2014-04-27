@@ -107,7 +107,16 @@ namespace Magix.Core
                 if (lastEntity.StartsWith(".Value"))
                 {
                     if (valueToSet is Node)
+                    {
                         valueToSet = (valueToSet as Node).Clone(); // to make sure we can add nodes as values into the same nodes, recursively ...
+                        
+                        // we must create a root node, to conform with the api for serializing nodes
+                        // such that when we assign a node's value to be another node, we actually add a 
+                        // non-existing parent node, and not the node itself in fact
+                        Node tmpNode = new Node();
+                        tmpNode.Add(valueToSet as Node);
+                        valueToSet = tmpNode;
+                    }
                     x.Value = valueToSet;
                 }
                 else if (lastEntity.StartsWith(".Name"))

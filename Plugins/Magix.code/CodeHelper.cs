@@ -74,10 +74,10 @@ contain type information for types of int, decimal, datetime and bool.&nbsp;&nbs
 							value += "=(bool)>" + idx.Get<string>();
 							break;
 						case "System.Decimal":
-							value += "=(dec)>" + idx.Get<decimal>().ToString(CultureInfo.InvariantCulture);
+							value += "=(dec)>" + idx.Get<decimal>().ToString (CultureInfo.InvariantCulture);
 							break;
 						case "System.DateTime":
-							value += "=(date)>" + idx.Get<DateTime>().ToString("yyyy.MM.dd HH:mm:ss", CultureInfo.InvariantCulture);
+							value += "=(date)>" + idx.Get<DateTime>().ToString ("yyyy.MM.dd HH:mm:ss", CultureInfo.InvariantCulture);
 							break;
 						case "Magix.Core.Node":
 						{
@@ -86,7 +86,7 @@ contain type information for types of int, decimal, datetime and bool.&nbsp;&nbs
 								nodeS += idx.Get<Node>().Name;
 							if (idx.Get<Node>().Value != null)
 								nodeS += "=>" + idx.Get<Node>().Get<string>();
-							value += @"=(node)>@""" + nodeS + ParseNodes(string.IsNullOrEmpty(nodeS) ? 0 : 1, idx.Get<Node>()).Trim() + @"""";
+							value += @"=(node)>@""" + nodeS + "\r\n" + ParseNodes(string.IsNullOrEmpty(nodeS) ? 0 : 1, idx.Get<Node>()) + @"""";
 						} break;
 						}
 					}
