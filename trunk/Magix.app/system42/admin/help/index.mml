@@ -49,6 +49,63 @@ or download magix and its source code <a href="http://code.google.com/p/magix-il
 <p>the c# parts are for developers who want to use magix in combination with visual studio. the other 
 parts are for everyone, including consumers of magix. choose your path below</p>
 
+<label>backend, usage for non-technical staff</label>
+<ul>
+<li>{{
+link-button=>backend
+  text=>backend
+  onclick
+    magix.help.open-file
+      file=>system42\admin\help\backend\index.mml
+}}</li>
+</ul>
+  
+<label>hyper lisp, coding for neuro-typicals</label>
+<ul>
+<li>{{
+link-button=>hyperlisp
+  text=>hyper lisp
+  onclick
+    magix.help.open-file
+      file=>system42\admin\help\hyper-lisp\index.mml
+}}</li>
+<li>{{
+link-button=>hyperlisp-2
+  text=>hyper lisp syntax
+  onclick
+    magix.help.open-file
+      file=>system42\admin\help\hyper-lisp\hyper-lisp-syntax.mml
+}}</li>
+<li>{{
+link-button=>hyperlisp-3
+  text=>how magix execute works
+  onclick
+    magix.help.open-file
+      file=>system42\admin\help\hyper-lisp\hyper-lisp-execute.mml
+}}</li>
+<li>{{
+link-button=>hyperlisp-4
+  text=>expressions
+  onclick
+    magix.help.open-file
+      file=>system42\admin\help\hyper-lisp\hyper-lisp-expressions.mml
+}}</li>
+<li>{{
+link-button=>hyperlisp-5
+  text=>common keywords
+  onclick
+    magix.help.open-file
+      file=>system42\admin\help\hyper-lisp\common-hyper-lisp-statements.mml
+}}</li>
+<li>{{
+link-button=>hyperlisp-6
+  text=>common keywords
+  onclick
+    magix.help.open-file
+      file=>system42\admin\help\hyper-lisp\existing-keywords.mml
+}}</li>
+</ul>
+
 <label>c# and visual studio development</label>
 <ul>
 <li>{{
@@ -80,28 +137,6 @@ link-button=>ajax
       file=>system42\admin\help\csharp\ajax\index.mml
 }}</li>
 </ul>
-<label>backend, usage for non-technical staff</label>
-<ul>
-<li>{{
-link-button=>backend
-  text=>backend
-  onclick
-    magix.help.open-file
-      file=>system42\admin\help\backend\index.mml
-}}</li>
-</ul>
-<p>in addition, there's {{
-link-button=>hyperlisp
-  text=>hyper lisp
-  onclick
-    magix.help.open-file
-      file=>system42\admin\help\hyper-lisp\index.mml
-}}, which is a programming language, which can be used through the browser 
-ide, which is significantly easier to understand than c# or other "complex" programming languages. 
-for non-technical staff, who wants to do advanced stuff, hyper lisp should be your first place to start. 
-hyper lisp is a tool for creating advanced functionality, through a turing complete programming 
-language, which though is much easier to learn than most other programming languages. hyper lisp 
-can be created through the backend web based interface</p>
 </div>
 
 {{

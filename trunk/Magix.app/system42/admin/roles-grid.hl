@@ -107,7 +107,7 @@ magix.forms.create-web-part
               magix.data.load
                 prototype
                   type=>magix.core.role
-              if=>more-then
+              if=>more-than
                 lhs=>[@][magix.data.load][objects].Count
                 rhs=>0
                 code

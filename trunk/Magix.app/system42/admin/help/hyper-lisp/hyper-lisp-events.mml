@@ -1,0 +1,11 @@
+﻿
+<h2>hyper lisp events</h2>
+
+<p>asdouh asdouh asd</p>
+
+{{
+lambda=>next
+  oncreatecontrols
+    magix.help.set-next
+      next=>system42\admin\help\hyper-lisp\common-hyper-lisp-statements.mml
+}}

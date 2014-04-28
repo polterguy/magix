@@ -1,4 +1,4 @@
-<h2>active events</h2>
+<h2>c# active events</h2>
 
 <p>an active event is an alternative way to invoke functionality. instead of using functions or methods when 
 you have functionality you wish to invoke, you can use active events. in conventional oo programming, you would 

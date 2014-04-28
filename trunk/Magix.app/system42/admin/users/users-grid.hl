@@ -42,7 +42,7 @@ else
     value=>[@][using:0][subtract].Value
   set=>[magix.forms.create-web-part][controls][panel:2][controls][link-button:0][onclick][execute-file][end].Value
     value=>[@][using:1][subtract].Value
-if=>more-then-equals
+if=>more-than-equals
   lhs=>[magix.data.load][end].Value
   rhs=>[magix.data.count][count].Value
   code
@@ -242,7 +242,7 @@ magix.forms.create-web-part
                   magix.data.load
                     prototype
                       type=>magix.core.user
-                  if=>more-then
+                  if=>more-than
                     lhs=>[@][magix.data.load][objects].Count
                     rhs=>0
                     code

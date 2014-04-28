@@ -25,7 +25,9 @@ namespace Magix.execute
 			{
 				e.Params["event:magix.execute"].Value = null;
 				e.Params["inspect"].Value = @"show the entire stack of hyper lisp tree 
-in a modal message box.&nbsp;&nbsp;not thread safe";
+in a modal message box.&nbsp;&nbsp;
+alternatively, you can submit an expression, pointing to a node 
+list, to show only a subsection of the tree.&nbsp;&nbsp;not thread safe";
 				e.Params["debug"].Value = null;
 				return;
 			}
@@ -34,10 +36,20 @@ in a modal message box.&nbsp;&nbsp;not thread safe";
 				throw new ArgumentException("you cannot raise [magix.execute.add] directly, except for inspect purposes");
 
 			Node ip = e.Params ["_ip"].Value as Node;
+			Node dp = e.Params ["_dp"].Value as Node;
+
+            if (!string.IsNullOrEmpty(ip.Get<string>()))
+            {
+                ip = Expressions.GetExpressionValue(ip.Get<string>(), dp, ip, false) as Node;
+                if (ip == null)
+                    throw new ArgumentException("tried to debug a non-existing node tree in [debug]");
+            }
+            else
+                ip = ip.RootNode();
 
 			Node tmp = new Node();
 
-			tmp["code"].AddRange(ip.RootNode().Clone());
+			tmp["code"].AddRange(ip.Clone());
 			tmp["code"]["_state"].UnTie();
 			tmp["message"].Value = "stackdump of tree from debug instruction";
 			tmp["closable-only"].Value = true;

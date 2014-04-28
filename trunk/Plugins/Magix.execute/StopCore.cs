@@ -31,7 +31,7 @@ namespace Magix.execute
 of code nodes in the tree.&nbsp;&nbsp;affects [while], [for-each] and other code scopes, 
 such as events and event handlers.&nbsp;&nbsp;thread safe";
 				e.Params["_data"].Value = 5;
-				e.Params["while"].Value = "more-then-equals";
+				e.Params["while"].Value = "more-than-equals";
                 e.Params["while"]["lhs"].Value = "[_data].Value";
                 e.Params["while"]["rhs"].Value = "1";
                 e.Params["while"]["code"]["using"].Value = "magix.math";

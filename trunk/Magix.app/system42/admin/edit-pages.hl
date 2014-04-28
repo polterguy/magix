@@ -51,7 +51,7 @@ magix.forms.create-web-part
         set=>[magix.data.load][id].Value
           value=>[magix.forms.get-value][value].Value
         magix.data.load
-        if=>more-then
+        if=>more-than
           lhs=>[magix.data.load][objects].Count
           rhs=>0
           code

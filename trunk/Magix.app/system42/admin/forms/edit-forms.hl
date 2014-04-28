@@ -53,7 +53,7 @@ for-each=>[magix.forms.list-widget-types][types]
   if=>not-exist
     lhs=>[.][_no-embed]
     code
-      while=>more-then
+      while=>more-than
         lhs=>[/][_buffer].Count
         rhs=>0
         code
@@ -150,7 +150,7 @@ magix.forms.create-web-part
               code
                 set=>[@][..][..][_type].Value
                   value=>nothing
-            else-if=>more-then
+            else-if=>more-than
               lhs=>[.].Count
               rhs=>0
               code
@@ -192,7 +192,7 @@ magix.forms.create-web-part
               lhs=>[@][_type].Value
               rhs=>link-button
               code
-                if=>more-then
+                if=>more-than
                   lhs=>[/][get-selected-widget][value][widget][properties][[.].Name].Count
                   rhs=>0
                   code
@@ -318,7 +318,7 @@ magix.forms.create-web-part
         form-id=>edit-forms
         id=>widget
         value=>default
-      if=>more-then
+      if=>more-than
         lhs=>[list-widgets][widgets].Count
         rhs=>0
         code

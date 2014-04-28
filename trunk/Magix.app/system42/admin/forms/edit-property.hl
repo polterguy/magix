@@ -8,7 +8,7 @@ get-selected-widget
 set=>[magix.forms.create-web-part][controls][text-area][ontextchanged][change-widget][dna].Value
   value=>[get-selected-widget][value][dna].Value
 
-if=>more-then
+if=>more-than
   lhs=>[get-selected-widget][value][widget][properties][[$][property].Value].Count
   rhs=>0
   code

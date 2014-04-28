@@ -17,7 +17,7 @@ set=>[magix.data.load][prototype][name].Value
 magix.data.load
   prototype
     type=>magix.pages.page
-if=>more-then
+if=>more-than
   lhs=>[magix.data.load][objects].Count
   rhs=>0
   code

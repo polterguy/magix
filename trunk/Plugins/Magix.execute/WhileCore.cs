@@ -28,8 +28,8 @@ namespace Magix.execute
 underlaying code block repeatedly, as long as the
 statement in the value of [while] is true.&nbsp;&nbsp;the operator used to compare the [lhs] 
 and the [rhs] nodes must be defined using the value of the [while] node.&nbsp;&nbsp;
-legal values for the operator type is exist, not-exist, equals, not-equals, less-then, 
-more-then, less-then-equals and more-then-equals.&nbsp;&nbsp;
+legal values for the operator type is exist, not-exist, equals, not-equals, less-than, 
+more-than, less-than-equals and more-than-equals.&nbsp;&nbsp;
 the engine will convert automatically between int, decimal, date and bool, or 
 resort to string if no conversion is possible.&nbsp;&nbsp;
 the [lhs] and [rhs] nodes can be either an expression, or a hardcoded value.&nbsp;&nbsp;thread safe";
