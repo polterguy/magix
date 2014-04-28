@@ -232,6 +232,10 @@ if=>[Data].Value==thomas
 
 				txtOut.Text = tmp["code"].Get<string>();
 			}
+
+            // showing a visual clue to end user that code is done executing
+            new EffectHighlight(txtOut, 500)
+                .Render();
 		}
 		
 		protected void indent_Click(object sender, EventArgs e)
