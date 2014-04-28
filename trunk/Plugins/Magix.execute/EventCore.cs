@@ -85,7 +85,10 @@ be accessible underneath a [$] node, appended as the last
 parts of your code block, into your function invocation.&nbsp;&nbsp;from
 outside of the function/event itself, you can access these 
 parameters directly underneath the active event itself.&nbsp;&nbsp;
-event will be deleted, if you pass in no [code] block.&nbsp;&nbsp;thread safe";
+event will be deleted, if you pass in no [code] block.&nbsp;&nbsp;
+if you set the [remotable] node to true, then the active event 
+will be possible to invoke by remote servers, and marked as open.&nbsp;&nbsp;
+thread safe";
 				e.Params["event"].Value = "foo.bar";
 				e.Params["event"]["remotable"].Value = false;
 				e.Params["event"]["code"]["_data"].Value = "thomas";

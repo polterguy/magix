@@ -80,10 +80,18 @@ namespace Magix.Core
         /**
          * Will return the given Value for the given Key Active Event Override
          */
-        public string GetEventMappingValue(string key)
+        public string GetEventMappingValue(string key, ref string originalName)
         {
-			if (_eventMappers.ContainsKey(key))
-				return _eventMappers[key];
+            while (true)
+            {
+                if (_eventMappers.ContainsKey(key) && _eventMappers[key] != key)
+                {
+                    originalName = key;
+                    key = _eventMappers[key];
+                }
+                else
+                    break;
+            }
 			return key;
         }
 
@@ -156,13 +164,13 @@ namespace Magix.Core
 			{
 				foreach (string idx in _staticEvents.Keys)
 				{
-					if (!_eventMappers.ContainsKey (idx))
+					if (!_eventMappers.ContainsKey(idx))
 						yield return idx;
 				}
 				foreach (string idx in InstanceMethod.Keys)
 				{
-					if (!_eventMappers.ContainsKey (idx) && 
-					    !_staticEvents.ContainsKey (idx))
+					if (!_eventMappers.ContainsKey(idx) && 
+					    !_staticEvents.ContainsKey(idx))
 						yield return idx;
 				}
 				foreach (string idx in _eventMappers.Keys)
@@ -238,7 +246,7 @@ namespace Magix.Core
 		 * Returns true if Active Event is an override, meaning somebody have overridden the
 		 * original active event, and are pointing you to another handler
 		 */
-		public bool IsOverride (string key)
+		public bool IsOverride(string key)
 		{
 			return _eventMappers.ContainsKey(key) && _eventMappers[key] != key;
 		}
@@ -247,7 +255,7 @@ namespace Magix.Core
 		/**
 		 * Returns true if Active Event is an override of an existing active event
 		 */
-		public bool IsOverrideSystem (string key)
+		public bool IsOverrideSystem(string key)
 		{
 			bool retVal = _eventMappers.ContainsKey(key);
 			if (retVal)
@@ -291,7 +299,6 @@ namespace Magix.Core
                     retVal.Add(idx);
                 }
             }
-
 			return retVal;
 		}
 
@@ -340,7 +347,7 @@ namespace Magix.Core
             string name, 
             Node pars)
         {
-			RaiseActiveEvent (sender, name, pars, false);
+			RaiseActiveEvent(sender, name, pars, false);
         }
 
         /**
@@ -466,7 +473,7 @@ namespace Magix.Core
             }
 		}
 
-		private void RaiseEventDoneParsing (
+		private void RaiseEventDoneParsing(
 			object sender, 
 			string name, 
 			List<string> tokens, 
@@ -483,8 +490,8 @@ namespace Magix.Core
 			string originalName = name;
 			if (!forceNoOverride)
 			{
-				name = GetEventMappingValue(name);
-				if (name != originalName && _urlMappers.ContainsKey (name))
+				name = GetEventMappingValue(name, ref originalName);
+				if (name != originalName && _urlMappers.ContainsKey(name))
 				{
 					ExecuteRemotelyEvent(name, pars, _urlMappers[name]);
 					return;
@@ -520,7 +527,7 @@ namespace Magix.Core
             }
 		}
 
-		private Node RaiseSingleEventWithTokens (
+		private Node RaiseSingleEventWithTokens(
 			object sender, 
 			string name, 
 			List<string> tokens, 
@@ -544,7 +551,7 @@ namespace Magix.Core
 						tokens.RemoveAt (0);
 						string nextName = tokens[0];
 						tokens.RemoveAt (0);
-						return RaiseSingleEventWithTokens (sender, nextName, tokens, pars, false);
+						return RaiseSingleEventWithTokens(sender, nextName, tokens, pars, false);
 					}
 					else
 						throw new ArgumentException("Don't know how to parse parameters at end");
@@ -632,7 +639,7 @@ namespace Magix.Core
 						tokens.RemoveAt (0);
 						string nextName = tokens[0];
 						tokens.RemoveAt (0);
-						return RaiseSingleEventWithTokens (sender, nextName, tokens, pars, false);
+						return RaiseSingleEventWithTokens(sender, nextName, tokens, pars, false);
 					}
 					else
 						throw new ArgumentException("Don't know how to parse parameters at end");
