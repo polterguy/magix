@@ -40,7 +40,9 @@ you can handle exceptions being raised in
 sub-functions, or even recursively invoked active events, or natively thrown
 exceptions this way.&nbsp;&nbsp;if an exception is thrown, you can access 
 the description of the exception in the [exception] node underneath your catch 
-statement.&nbsp;&nbsp;thread safe";
+statement.&nbsp;&nbsp;you can also add a [finally] piece of code block underneath 
+the [try], which will always be executed, regardless of whether or not an 
+exception was thrown.&nbsp;&nbsp;thread safe";
 				e.Params["try"].Value = null;
 				e.Params["try"]["code"]["throw"].Value = "to try or not to try";
 				e.Params["try"]["code"]["magix.viewport.show-message"]["message"].Value = "crap, didn't work";
@@ -85,8 +87,22 @@ statement.&nbsp;&nbsp;thread safe";
 			}
 			finally
 			{
-				if (oldIp != null)
-					e.Params["_ip"].Value = oldIp;
+                try
+                {
+                    if (ip.Contains("finally"))
+                    {
+                        e.Params["_ip"].Value = ip["finally"];
+
+                        RaiseActiveEvent(
+                            "magix._execute",
+                            e.Params);
+                    }
+                }
+                finally
+                {
+                    if (oldIp != null)
+                        e.Params["_ip"].Value = oldIp;
+                }
 			}
 		}
 
