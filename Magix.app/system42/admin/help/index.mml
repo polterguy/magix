@@ -92,24 +92,45 @@ link-button=>hyperlisp-4
 }}</li>
 <li>{{
 link-button=>hyperlisp-5
-  text=>common keywords
+  text=>common keywords explained
   onclick
     magix.help.open-file
       file=>system42\admin\help\hyper-lisp\common-hyper-lisp-statements.mml
 }}</li>
 <li>{{
 link-button=>hyperlisp-6
-  text=>common keywords
+  text=>all default keywords
   onclick
     magix.help.open-file
       file=>system42\admin\help\hyper-lisp\existing-keywords.mml
+}}</li>
+<li>{{
+link-button=>hyperlisp-7
+  text=>create your own hyper lisp keyword
+  onclick
+    magix.help.open-file
+      file=>system42\admin\help\hyper-lisp\create-keyword.mml
+}}</li>
+<li>{{
+link-button=>hyperlisp-8
+  text=>creating active events and polymorphism
+  onclick
+    magix.help.open-file
+      file=>system42\admin\help\hyper-lisp\hyper-lisp-events.mml
+}}</li>
+<li>{{
+link-button=>hyperlisp-9
+  text=>remote active events
+  onclick
+    magix.help.open-file
+      file=>system42\admin\help\hyper-lisp\remote-active-events.mml
 }}</li>
 </ul>
 
 <label>c# and visual studio development</label>
 <ul>
 <li>{{
-link-button=>active-events
+link-button=>active-events-2
   text=>active events
   onclick
     magix.help.open-file
