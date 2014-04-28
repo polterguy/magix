@@ -2,7 +2,13 @@
 <h2>hyper lisp keywords</h2>
 
 <p>as previously mentioned, what keywords you have in your installation of magix, might vary from installation to installation.&nbsp;&nbsp;
-and in fact, you can easily create your own keywords, by using the [event] keyword, and create an active event which 
+and in fact, you can easily {{
+link-button=>create-keywords
+  text=>create your own keywords
+  onclick
+    magix.help.open-file
+      file=>system42\admin\help\hyper-lisp\create-keyword.mml
+}}, by using the [event] keyword, and create an active event which 
 is within the namespace of "magix.execute".&nbsp;&nbsp;however, to see which keywords are in this particular installation, 
 check out the {{
 link-button=>open-executor
@@ -14,45 +20,45 @@ link-button=>open-executor
 <p>some of the most common keywords, and their usage, is listed below though</p>
 
 <ul>
-  <li>[add] - adds one node into another node's children collection</li>
-  <li>[add-children] - adds the children from one node into another node's children collection</li>
-  <li>[close] - closes an opened active event, such that it can no longer be remotely invoked from other servers</li>
-  <li>[if] - checks one or two expressions, and conditionally executes a piece of code block, depending upon the result of the check</li>
-  <li>[else-if] - checks one or two expressions, and conditionally executes a piece of code block, depending upon the result of the check, but
+  <li><strong>[add]</strong> - adds one node into another node's children collection</li>
+  <li><strong>[add-children]</strong> - adds the children from one node into another node's children collection</li>
+  <li><strong>[close]</strong> - closes an opened active event, such that it can no longer be remotely invoked from other servers</li>
+  <li><strong>[if]</strong> - checks one or two expressions, and conditionally executes a piece of code block, depending upon the result of the check</li>
+  <li><strong>[else-if]</strong> - checks one or two expressions, and conditionally executes a piece of code block, depending upon the result of the check, but
   only if any previous [if] or [else-if] have returned false</li>
-  <li>[else] - executes a piece of code block, but only if all other [if] and [else-if] statements have returned false</li>
-  <li>[event] - creates a new active event dynamically, which allows for execution of hyper lisp</li>
-  <li>[exeute] - executes a block of hyper lisp code.&nbsp;&nbsp;can also point to another piece of code block in an expression, which 
+  <li><strong>[else]</strong> - executes a piece of code block, but only if all other [if] and [else-if] statements have returned false</li>
+  <li><strong>[event]</strong> - creates a new active event dynamically, which allows for execution of hyper lisp</li>
+  <li><strong>[exeute]</strong> - executes a block of hyper lisp code.&nbsp;&nbsp;can also point to another piece of code block in an expression, which 
   then will be executed instead of the children nodes underneath the [execute] statement</li>
-  <li>[execute-file] - executes a file of hyper lisp code</li>
-  <li>[execute-script] - executes a piece of text, expecting it to be hyper lisp</li>
-  <li>[for-each] - iterates through a list of nodes, pointed through in the expression in its value, and sets its data node to the currently iterated node</li>
-  <li>[fork] - creates a new thread of execution</li>
-  <li>[index-of] - returns the index(es) of a search string within another node's value, found through its expression</li>
-  <li>[join] - joins a set of nodes into one piece of text</li>
-  <li>[lambda] - executes a list of nodes, with possibility of passing parameters in and out of the execution tree</li>
-  <li>[open] - opens up an active event, such that it can be remotely invoked from other servers</li>
-  <li>[override] - overrides an existing active event, such that it executes a new active event when a specific active event is invoked</li>
-  <li>[remote] - remotely invokes another active event, on another server, over the http protocol</li>
-  <li>[replace] - replaces occurencies of one piece of text found within the value of one node, with another piece of text</li>
-  <li>[session-event] - same as [event], but creates the event only for the current session.&nbsp;&nbsp;useful for throw away events</li>
-  <li>[set] - sets a node's value, name or node itself from the result of an expression</li>
-  <li>[split] - splits a string into several nodes, according to either a list of numbers pointing into indexes of that node, or a search string</li>
-  <li>[stop] - stops the execution of the currently executed piece of code block.&nbsp;&nbsp;keywords affected are code blocks inside of events, 
+  <li><strong>[execute-file]</strong> - executes a file of hyper lisp code</li>
+  <li><strong>[execute-script]</strong> - executes a piece of text, expecting it to be hyper lisp</li>
+  <li><strong>[for-each]</strong> - iterates through a list of nodes, pointed through in the expression in its value, and sets its data node to the currently iterated node</li>
+  <li><strong>[fork]</strong> - creates a new thread of execution</li>
+  <li><strong>[index-of]</strong> - returns the index(es) of a search string within another node's value, found through its expression</li>
+  <li><strong>[join]</strong> - joins a set of nodes into one piece of text</li>
+  <li><strong>[lambda]</strong> - executes a list of nodes, with possibility of passing parameters in and out of the execution tree</li>
+  <li><strong>[open]</strong> - opens up an active event, such that it can be remotely invoked from other servers</li>
+  <li><strong>[override]</strong> - overrides an existing active event, such that it executes a new active event when a specific active event is invoked</li>
+  <li><strong>[remote]</strong> - remotely invokes another active event, on another server, over the http protocol</li>
+  <li><strong>[replace]</strong> - replaces occurencies of one piece of text found within the value of one node, with another piece of text</li>
+  <li><strong>[session-event]</strong> - same as [event], but creates the event only for the current session.&nbsp;&nbsp;useful for throw away events</li>
+  <li><strong>[set]</strong> - sets a node's value, name or node itself from the result of an expression</li>
+  <li><strong>[split]</strong> - splits a string into several nodes, according to either a list of numbers pointing into indexes of that node, or a search string</li>
+  <li><strong>[stop]</strong> - stops the execution of the currently executed piece of code block.&nbsp;&nbsp;keywords affected are code blocks inside of events, 
   [execute], [lambda], [while] and similar keywords</li>
-  <li>[switch] - creates a switch/case statement, checking an expression or a value for multiple different values, executing different pieces 
+  <li><strong>[switch]</strong> - creates a switch/case statement, checking an expression or a value for multiple different values, executing different pieces 
   of code, depending upon the content of the [switch]</li>
-  <li>[throw] - throws an exception</li>
-  <li>[try] - tries a piece of code block, such that if an exception is thrown, a specific piece of code block can be executed as a consequence</li>
-  <li>[tunnel] - creates a remote override for a specific active event.&nbsp;&nbsp;like [override], except creates a remote override</li>
-  <li>[using] - changes the default namespace of the execution engine from magix.execute, to anything you wish</li>
-  <li>[wait] - waits for multiple threads to finish before letting execution go past the [wait] block</li>
-  <li>[while] - loops through a piece of code block, as long as the statement(s) inside of the while evaluates to true</li>
+  <li><strong>[throw]</strong> - throws an exception</li>
+  <li><strong>[try]</strong> - tries a piece of code block, such that if an exception is thrown, a specific piece of code block can be executed as a consequence</li>
+  <li><strong>[tunnel]</strong> - creates a remote override for a specific active event.&nbsp;&nbsp;like [override], except creates a remote override</li>
+  <li><strong>[using]</strong> - changes the default namespace of the execution engine from magix.execute, to anything you wish</li>
+  <li><strong>[wait]</strong> - waits for multiple threads to finish before letting execution go past the [wait] block</li>
+  <li><strong>[while]</strong> - loops through a piece of code block, as long as the statement(s) inside of the while evaluates to true</li>
 </ul>
 
 {{
 lambda=>next
   oncreatecontrols
     magix.help.set-next
-      next=>system42\admin\help\hyper-lisp\existing-keywords.mml
+      next=>system42\admin\help\hyper-lisp\common-hyper-lisp-statements.mml
 }}

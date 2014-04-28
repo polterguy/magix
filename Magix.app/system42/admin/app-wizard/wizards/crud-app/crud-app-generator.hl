@@ -125,7 +125,7 @@ which contains logic for crud-app-generated application"
             set=>[magix.data.count][prototype][type].Value
               value=>[magix.data.load][prototype][type].Value
             magix.data.count
-            if=>less-then
+            if=>less-than
               lhs=>[magix.data.count][count].Value
               rhs=>[magix.data.load][end].Value
               code
@@ -139,7 +139,7 @@ which contains logic for crud-app-generated application"
             magix.forms.set-value
               id=>pageTxt
               form-id=>crud-app-main-form
-            if=>more-then
+            if=>more-than
               lhs=>[magix.data.load][start].Value
               rhs=>0
               code
@@ -152,7 +152,7 @@ which contains logic for crud-app-generated application"
                 form-id=>crud-app-main-form
                 id=>previous
                 value=>false
-            if=>less-then
+            if=>less-than
               lhs=>[magix.data.load][end].Value
               rhs=>[magix.data.count][count].Value
               code

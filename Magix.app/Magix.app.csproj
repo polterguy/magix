@@ -300,6 +300,15 @@
     <Content Include="system42\admin\help\hyper-lisp\existing-keywords.mml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="system42\admin\help\hyper-lisp\create-keyword.mml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="system42\admin\help\hyper-lisp\common-hyper-lisp-statements.mml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="system42\admin\help\hyper-lisp\hyper-lisp-events.mml">
+      <SubType>Designer</SubType>
+    </Content>
     <None Include="todo.txt" />
     <None Include="system42\index.hl" />
     <None Include="system42\startup.hl" />

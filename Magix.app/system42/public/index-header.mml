@@ -33,7 +33,7 @@ system42.travel.try-login
   magix.data.load
     prototype
       type=>magix.core.user
-  if=>more-then
+  if=>more-than
     lhs=>[magix.data.load][objects].Count
     rhs=>0
     code

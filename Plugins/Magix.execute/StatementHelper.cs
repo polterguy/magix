@@ -174,16 +174,16 @@ namespace Magix.execute
                 case "not-equals":
                     expressionIsTrue = CompareValues(objLhsVal, objRhsVal) != 0;
                     break;
-                case "more-then":
+                case "more-than":
                     expressionIsTrue = CompareValues(objLhsVal, objRhsVal) == 1;
                     break;
-                case "less-then":
+                case "less-than":
                     expressionIsTrue = CompareValues(objLhsVal, objRhsVal) == -1;
                     break;
-                case "more-then-equals":
+                case "more-than-equals":
                     expressionIsTrue = CompareValues(objLhsVal, objRhsVal) != -1;
                     break;
-                case "less-then-equals":
+                case "less-than-equals":
                     expressionIsTrue = CompareValues(objLhsVal, objRhsVal) != 1;
                     break;
             }

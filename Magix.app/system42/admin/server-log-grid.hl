@@ -67,7 +67,7 @@ for-each=>[magix.data.load][objects]
     lhs=>[.][code]
     code
       set=>[@][magix.code.node-2-code][json]
-      while=>more-then
+      while=>more-than
         lhs=>[.][code].Count
         rhs=>0
         code
@@ -86,7 +86,7 @@ magix.data.count
   prototype
     type=>magix.log.item
 
-if=>more-then
+if=>more-than
   lhs=>[magix.data.count][count].Value
   rhs=>[magix.data.load][end].Value
   code
