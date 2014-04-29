@@ -18,6 +18,19 @@ shortcuts in the system.&nbsp;&nbsp;thread safe"
         category=>learn
         code
           execute-file=>system42/admin/tools/inspect-execute.hl
+      _default_script18_TJOBING
+        text=>app wizard
+        category=>applications
+        code
+          magix.viewport.clear-controls
+            container=>content2
+          magix.viewport.clear-controls
+            container=>content3
+          magix.viewport.clear-controls
+            container=>content4
+          magix.viewport.clear-controls
+            container=>content5
+          execute-file=>system42/admin/app-wizard/app-wizard.hl
       _default_script17
         text=>pages
         category=>applications
@@ -176,19 +189,6 @@ shortcuts in the system.&nbsp;&nbsp;thread safe"
           magix.viewport.clear-controls
             container=>content5
           execute-file=>system42/admin/forms/edit-forms.hl
-      _default_script18_TJOBING
-        text=>app wizard
-        category=>applications
-        code
-          magix.viewport.clear-controls
-            container=>content2
-          magix.viewport.clear-controls
-            container=>content3
-          magix.viewport.clear-controls
-            container=>content4
-          magix.viewport.clear-controls
-            container=>content5
-          execute-file=>system42/admin/app-wizard/app-wizard.hl
       _default_script19
         text=>help
         category=>learn

@@ -87,5 +87,5 @@ certain about that you can trust the source of the code</p>
 lambda=>next
   oncreatecontrols
     magix.help.set-next
-      next=>system42\admin\help\backend\learn.mml
+      next=>system42\admin\help\backend\applications.mml
 }}
