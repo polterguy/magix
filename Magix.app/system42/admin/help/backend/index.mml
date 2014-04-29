@@ -1,1 +1,40 @@
-﻿back end
+﻿
+<h2>magix backend features</h2>
+
+<p>the backend of magix is a place from where you can do almost anything you wish.&nbsp;&nbsp;
+from the back-end administrative interface of magix, you can do almost everything described in these help files, 
+including create applications in hyper lisp.&nbsp;&nbsp;
+from the backend parts of magix, you can</p>
+
+<ul>
+<li>create {{
+link-button=>go-to-hyper-lisp
+  text=>hyper lisp
+  onclick
+    magix.help.open-file
+      file=>system42/admin/help/hyper-lisp/index.mml
+}} applications through the supplied browser-based integrated development environment</li>
+<li>publish and manage web pages in your system, as you would from a cms or publishing system</li>
+<li>create, edit and manage applications, through for instance the built-in integrated development environment</li>
+<li>configure magix as a cloud system, override active events such that they are running externally, or open local events for external invocation</li>
+<li>edit, create and manage files through the file browser</li>
+<li>created qr codes, for easy access to your system from smart phones, and similar technologies</li>
+<li>change security settings of your system</li>
+<li>play around with hyper lisp code to teach yourself the system through the built-in active event executor</li>
+</ul>
+
+<p>when you open up magix, you will see 4 different main panels; learn, applications, security and tools.&nbsp;&nbsp;
+learn is the place you go to teach yourself magix.&nbsp;&nbsp;applications is where you create new applications or pages from.&nbsp;&nbsp;
+security contains helpers for managing the security of your system.&nbsp;&nbsp;tools are additional tools for your convenience.&nbsp;&nbsp;
+in addition, the magix logo itself serves as a <em>"go home button"</em>, since it will show these panels once clicked, such that 
+you can find back to the "desktop" of magix easily, regardless of where you are</p>
+
+<p>every part of magix is also accessible from smart phones, such that you can play around with everything in magix from your 
+phone, on the bus, or where ever you are in this world</p>
+
+{{
+lambda=>next
+  oncreatecontrols
+    magix.help.set-next
+      next=>system42\admin\help\backend\learn.mml
+}}

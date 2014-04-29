@@ -58,6 +58,13 @@ link-button=>backend
     magix.help.open-file
       file=>system42\admin\help\backend\index.mml
 }}</li>
+<li>{{
+link-button=>learn
+  text=>learn magix
+  onclick
+    magix.help.open-file
+      file=>system42\admin\help\backend\learn.mml
+}}</li>
 </ul>
   
 <label>hyper lisp, coding for neuro-typicals</label>
@@ -164,5 +171,5 @@ link-button=>ajax
 lambda=>next
   oncreatecontrols
     magix.help.set-next
-      next=>system42\admin\help\csharp\active-events\index.mml
+      next=>system42\admin\help\backend\index.mml
 }}
