@@ -65,6 +65,13 @@ link-button=>learn
     magix.help.open-file
       file=>system42\admin\help\backend\learn.mml
 }}</li>
+<li>{{
+link-button=>dynamic-apps
+  text=>dynamic applications
+  onclick
+    magix.help.open-file
+      file=>system42\admin\help\backend\applications.mml
+}}</li>
 </ul>
   
 <label>hyper lisp, coding for neuro-typicals</label>

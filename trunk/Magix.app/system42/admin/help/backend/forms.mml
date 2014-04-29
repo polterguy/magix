@@ -1,0 +1,49 @@
+﻿
+<h2>dynamic forms</h2>
+
+<p>the forms builder is one of the more important places for you in magix if you wish to dynamically create your own web applications.
+&nbsp;&nbsp;from the forms builder, you can create new web forms, containing web controls, based upon hyper lisp, which you can inject 
+other places in your system</p>
+
+<p>when you open up the forms builder, you will see three main rows.&nbsp;&nbsp;you will see the top row, from where you can 
+save, load, preview etc your web form.&nbsp;&nbsp;from here you can also copy and paste web controls from one place to another.&nbsp;&nbsp;
+in addition, you will see a box, containing all the different web controls in your system.&nbsp;&nbsp;if you click any one of these, 
+the specified web control will be added to your form, to the right of the currently selected web control you have in your design surface.
+&nbsp;&nbsp;the third row, contains the design surface of your web form.&nbsp;&nbsp;this is where your form will be shown, as you 
+create it.&nbsp;&nbsp;in the design surface, you can click specific web controls, to edit them, copy, cut, change settings for them, 
+and so on</p>
+
+<h3>web controls properties and event handlers</h3>
+
+<p>if you add up a web control, then you will see the properties for that particular web control.&nbsp;&nbsp;from the properties 
+panel, you can change the name of a web control, the css class(es) it uses, and so on.&nbsp;&nbsp;what properties are available 
+for you, depends upon what web control you're editing.&nbsp;&nbsp;in addition, you can create event handlers, which contains {{
+link-button=>go-to-hyper-lisp
+  text=>hyper lisp
+  onclick
+    magix.help.open-file
+      file=>system42/admin/help/hyper-lisp/index.mml
+}} code to be executed upon whatever event you have chosen to handle.&nbsp;&nbsp;all event handlers have names starting with 
+<em>"on"</em>, such as "onclick" for instance</p>
+
+<p>if you for instance have a button, and you handle its onclick event handler, and attach the code from below to the onclick 
+event handler, then the engine will display a message box, every time the button is clicked</p>
+
+<pre>
+magix.viewport.show-message
+  message=>howdy world
+</pre>
+
+<p>an event handler for your web control, that has some sort of hyper lisp code attached to it, will be shown in <strong>bold</strong> 
+text.&nbsp;&nbsp;what event handlers are possible for you to handle, vary from web control to web control</p>
+
+<p>you can build virtually any type of web form you wish from the forms module of magix&nbsp;&nbsp;and due to hyper lisp, 
+you can map together almost eny type of business logic you wish with your forms.&nbsp;&nbsp;entirely through the browser.&nbsp;&nbsp;
+you might want to see some of the videos about magix to understand the power of the forms builder</p>
+
+{{
+lambda=>next
+  oncreatecontrols
+    magix.help.set-next
+      next=>system42\admin\help\backend\magix-markup-language.mml
+}}

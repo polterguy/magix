@@ -1,0 +1,78 @@
+﻿
+<h2>magix markup language</h2>
+
+<p>from the <em>"pages"</em> link, within the applications panel, or the <em>"magix markup language editor"</em> beneath 
+your tools, you can visually create magix markup language.&nbsp;&nbsp;
+magix markup language is a superset of html, and allows you to create any html you wish.&nbsp;&nbsp;in addition to plain 
+html, you can also create web controls declaratively inside your html</p>
+
+<p>the way you do this, is to create {{
+link-button=>hyperlisp
+  text=>hyper lisp
+  onclick
+    magix.help.open-file
+      file=>system42\admin\help\hyper-lisp\index.mml
+}} code, declaring your web controls.&nbsp;&nbsp;notice, you cannot directly create hyper lisp, as you would any other place, since 
+what you're really doing in magix markup language, is to declare web controls, using hyper lisp as your medium.&nbsp;&nbsp;consider 
+the following magix markup language</p>
+
+<pre>
+&lt;p&gt;some paragraph&lt;/p&gt;{{label=>begin
+  onfirstload
+    set=>[magix.forms.set-value][value].Value
+      value=>{0}{1}
+        v0=>{
+        v1=>{
+    magix.forms.set-value
+      id=>begin
+}}
+button=>my-button
+  text=>click me
+  css=>span-5 btn-large
+  onclick
+    magix.viewport.show-message
+      message=>hello world
+{{
+label=>end
+  onfirstload
+    set=>[magix.forms.set-value][value].Value
+      value=>{0}{1}
+        v0=>}
+        v1=>}
+    magix.forms.set-value
+      id=>end
+}}
+&lt;p class="clear top-1 span-5"&gt;then another paragraph&lt;/p&gt;
+</pre>
+
+<p>above we are is mixing in a server-side web control of type <em>"button"</em> in between two paragraphs of 
+html.&nbsp;&nbsp;this is useful for mixing in rich interactive web forms with your html, such that you can combine html and 
+web controls, to create rich applications.&nbsp;&nbsp;this will produce the following result</p>
+
+<div class="sample-web-control bottom-1">
+<p>some paragraph</p>{{
+button=>my-button
+  text=>click me
+  css=>span-5 btn-large
+  onclick
+    magix.viewport.show-message
+      message=>hello world
+}}
+<p class="clear top-1 span-5">then another paragraph</p>
+</div>
+
+<p>please notice that you cannot just simply add up any type of hyper lisp code inside of your magix markup language, since what you're 
+doing is actually declaring web controls, and not creating any arbitrary hyper lisp for execution.&nbsp;&nbsp;to see which 
+web controls are available for you in your installation, click the <em>"web controls"</em> link, underneath the learn panel from 
+your desktop</p>
+
+<p>for the record, within the event handlers of your web controls, you can type in any hyper lisp you wish.&nbsp;&nbsp;this allows 
+you to build virtually any web form you can think of, by combining html and web controls together, where your web controls 
+execute any piece of logic you can imagine in their event handlers</p>
+
+{{
+lambda=>next
+  oncreatecontrols
+    magix.help.set-next
+      next=>system42\admin\help\backend\magix-markup-language.mml
+}}

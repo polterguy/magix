@@ -13,7 +13,13 @@ link-button=>go-to-hyper-lisp
   onclick
     magix.help.open-file
       file=>system42/admin/help/hyper-lisp/index.mml
-}} applications through the supplied browser-based integrated development environment</li>
+}} applications through the supplied browser-based {{
+link-button=>go-to-apps
+  text=>integrated development environment
+  onclick
+    magix.help.open-file
+      file=>system42/admin/help/backend/applications.mml
+}}</li>
 <li>publish and manage web pages in your system, as you would from a cms or publishing system</li>
 <li>create, edit and manage applications, through for instance the built-in integrated development environment</li>
 <li>configure magix as a cloud system, override active events such that they are running externally, or open local events for external invocation</li>
