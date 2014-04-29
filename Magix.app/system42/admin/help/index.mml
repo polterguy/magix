@@ -72,6 +72,41 @@ link-button=>dynamic-apps
     magix.help.open-file
       file=>system42\admin\help\backend\applications.mml
 }}</li>
+<li>{{
+link-button=>magix-markup-language
+  text=>magix markup language
+  onclick
+    magix.help.open-file
+      file=>system42\admin\help\backend\magix-markup-language.mml
+}}</li>
+<li>{{
+link-button=>unit-tests
+  text=>unit testing magix
+  onclick
+    magix.help.open-file
+      file=>system42\admin\help\backend\unit-tests.mml
+}}</li>
+<li>{{
+link-button=>overridden
+  text=>overridden active events
+  onclick
+    magix.help.open-file
+      file=>system42\admin\help\backend\overriding-events.mml
+}}</li>
+<li>{{
+link-button=>remoting
+  text=>tunneling and opening active events
+  onclick
+    magix.help.open-file
+      file=>system42\admin\help\backend\remoting.mml
+}}</li>
+<li>{{
+link-button=>users
+  text=>administrating users and roles
+  onclick
+    magix.help.open-file
+      file=>system42\admin\help\backend\user-administration.mml
+}}</li>
 </ul>
   
 <label>hyper lisp, coding for neuro-typicals</label>
