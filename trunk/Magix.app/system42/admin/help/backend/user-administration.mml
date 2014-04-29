@@ -1,0 +1,46 @@
+﻿
+<h2>user and roles administration</h2>
+
+{{
+lambda=>lmb
+  oncreatecontrols
+    magix.data.count
+      prototype
+        type=>magix.core.user
+        username=>admin
+        pwd=>admin
+    if=>more-than-equals
+      lhs=>[magix.data.count][count].Value
+      rhs=>1
+      code
+        _label=>error
+          css=>error centered span-20 last dox-for-web-control
+          text=>please change the password of your admin user as fast as possible
+          tag=>label
+        add=>[$]
+          value=>[@][_label]
+        set=>[$][_label].Name
+          value=>label
+}}
+
+<p>from the <em>"user"</em> and <em>"roles"</em> links on your dashboard, you can edit and administrate your users, and which 
+roles your users belongs to.&nbsp;&nbsp;authentication and authorization is often done for a role, and not on one single user object.&nbsp;&nbsp;
+for instance, all users who belongs to the <em>"admin"</em> role, can access the administrative interface of magix.&nbsp;&nbsp;
+this makes it easier to administrate access for users to specific objects in your system</p>
+
+<p>from the <em>"edit users"</em> link on your dashboard, you can edit and manage all your system's users.&nbsp;&nbsp;from your 
+<em>"edit roles"</em> you can manage all the roles within your system</p>
+
+<p>one user may belong to several roles.&nbsp;&nbsp;this is convenient, since you can allow access to specific objects only to 
+users belonging to specific roles.&nbsp;&nbsp;this way, you can allow access to an object in your system, only to users belonging to 
+one specific role, and add this role up to all the users whom you want to allow to access the object</p>
+
+<p>when you install magix, one user is by default created for you, with the username and password of <em>"admin"</em>.&nbsp;&nbsp;
+it is absolutely crucial that you change the password of this user as fast as you can</p>
+
+{{
+lambda=>next
+  oncreatecontrols
+    magix.help.set-next
+      next=>system42\admin\help\backend\remoting.mml
+}}

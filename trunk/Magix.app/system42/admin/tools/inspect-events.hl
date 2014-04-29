@@ -35,6 +35,7 @@ for-each=>[Data][events]
           value=>[0]
         magix.code.node-2-code
           json
+          remove-root=>true
         set=>[magix.forms.set-value:2][value].Value
           value=>[magix.code.node-2-code][code].Value
         magix.forms.set-value

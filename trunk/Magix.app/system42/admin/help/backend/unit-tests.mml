@@ -1,0 +1,57 @@
+﻿
+<h2>unit testing magix</h2>
+
+<p>a unit test, is a small piece of code, created with the purpose of validating that your system is functioning corrdectly.&nbsp;&nbsp;
+magix comes with lots of pre-built unit tests, in addition to that you can create your own tests, either in {{
+link-button=>go-to-hyper-lisp
+  text=>hyper lisp
+  onclick
+    magix.help.open-file
+      file=>system42/admin/help/hyper-lisp/index.mml
+}}, or in {{
+link-button=>active-events-2
+  text=>c#
+  onclick
+    magix.help.open-file
+      file=>system42\admin\help\csharp\active-events\index.mml
+}}.&nbsp;&nbsp;a unit test, is an {{
+link-button=>active-events
+  text=>active event
+  onclick
+    magix.help.open-file
+      file=>system42\admin\help\hyper-lisp\hyper-lisp-events.mml
+}} which starts with the namespace <em>"magix.tests"</em>.&nbsp;&nbsp;any active event you create, starting out with the text 
+"magix.tests.", will automatically be registered in your system as a unit test</p>
+
+<p>to see all the unit tests of your particular installation, please check out the <em>"unit tests"</em> from within your 
+security panel, in the desktop of your administrative interface.&nbsp;&nbsp;below is an example of how to create a unit test</p>
+
+<pre>
+event=>magix.tests.sample-test
+  code
+    _data=>5
+    if=>not-equals
+      lhs=>[_data].Value
+      rhs=>5
+      code
+        throw=>equality operator doesn't behave as expected
+</pre>
+
+<p>the whole idea with a unit test, is that if it doesn't succeed, it just throws an exception, with a description of 
+what went wrong.&nbsp;&nbsp;successfully executed unit tests, does not need to do anything in particular, except avoiding 
+throwing exceptions</p>
+
+<p>when you create new functionality in magix, you should create unit tests for your functionality, such that you can be certain about 
+that it functions, also in the future.&nbsp;&nbsp;this way, you have assurance of that your functionality functions correctly, when 
+you for instance install updates to the magix core, or in other ways modifies the state of magix.&nbsp;&nbsp;you should also 
+periodically run through all unit tests within magix, to verify that your system is functioning correctly</p>
+
+<p>the system doesn't really discriminate between unit tests created in hyper lisp, and unit tests created with c#.&nbsp;&nbsp;both 
+are equally important, and threated the same</p>
+
+{{
+lambda=>next
+  oncreatecontrols
+    magix.help.set-next
+      next=>system42\admin\help\backend\overriding-events.mml
+}}

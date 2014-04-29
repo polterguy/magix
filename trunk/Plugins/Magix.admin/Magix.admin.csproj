@@ -53,7 +53,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="ExecutorForm.ascx" />
+    <EmbeddedResource Include="ExecutorForm.ascx">
+      <SubType>ASPXCodeBehind</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="EventSniffer.ascx">
       <SubType>ASPXCodeBehind</SubType>
     </EmbeddedResource>

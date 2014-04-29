@@ -1,0 +1,43 @@
+﻿
+<h2>administrating overridden active events</h2>
+
+<p>in magix, through the backend administrative interface, you can override active events, such that they no longer run the 
+original active event, but instead run another implementation.&nbsp;&nbsp;in traditional programming, this is called <em>"polymorphism"</em>.
+&nbsp;&nbsp;in traditional programming languages, you will have to create complex code to achieve this, and often you need to deploy 
+a completely new version of your software.&nbsp;&nbsp;in magix, you can easily configure this up during runtime, and you probably don't even
+have to bring your applications down</p>
+
+<p>you can administrate which active events are overridden from the <em>"overridden active events"</em> link, from the security panel 
+from your main magix administrative desktop.&nbsp;&nbsp;if you click an overridden active event, you will get to inspect its documentation, 
+and if the active event is a dynamic active event, created with the [event] {{
+link-button=>hyperlisp
+  text=>hyper lisp
+  onclick
+    magix.help.open-file
+      file=>system42\admin\help\hyper-lisp\index.mml
+}} keywords, you can even inspect its code, and load 
+the code up into the active event executor</p>
+
+<p>when you override an active event, you are changing the pointer to what piece of code is being executed when the active event is raised.
+&nbsp;&nbsp;this is highly useful for changing your system, and allows old pieces of code to run new code, without breaking backwards 
+compatibility.&nbsp;&nbsp;if you wish to override an existing active event called <em>"magix.sample.old-event"</em>, then in 
+hyper lisp you would accomplish that with the code below</p>
+
+<pre>
+override=>magix.sample.old-event
+  value=>magix.sample.new-event
+</pre>
+
+<p>if you run the code above, every single time any piece of code raises the magix.sample.old-event active event, the system will actually 
+raise magix.sample.new-event instead.&nbsp;&nbsp;this way, you can intercept and change any existing parts of your system, with new 
+functionality, as you wish</p>
+
+<p>in addition, the overridden active event link from the security panel also displays all active events which are dynamically created, 
+through the [event] keyword.&nbsp;&nbsp;if you click a dynamically created active event, you can even see its code</p>
+
+{{
+lambda=>next
+  oncreatecontrols
+    magix.help.set-next
+      next=>system42\admin\help\backend\remoting.mml
+}}
