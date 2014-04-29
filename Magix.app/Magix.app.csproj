@@ -266,7 +266,9 @@
     </Content>
     <Content Include="system42\admin\help\hyper-lisp\index.mml" />
     <Content Include="system42\admin\help\csharp\active-controllers\index.mml" />
-    <Content Include="system42\admin\help\backend\index.mml" />
+    <Content Include="system42\admin\help\backend\index.mml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="system42\admin\help\csharp\active-modules\index.mml" />
     <Content Include="system42\admin\help\csharp\active-events\more-nodes.mml" />
     <Content Include="system42\admin\help\csharp\active-controllers\static-versus-instance.mml" />
@@ -318,6 +320,27 @@
     <Content Include="system42\admin\help\backend\applications.mml" />
     <Content Include="system42\admin\help\backend\forms.mml" />
     <Content Include="system42\admin\help\backend\magix-markup-language.mml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="system42\admin\help\backend\unit-tests.mml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="system42\admin\help\backend\overriding-events.mml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="system42\admin\help\backend\remoting.mml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="system42\admin\help\backend\user-administration.mml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="system42\admin\help\backend\active-events.mml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="system42\admin\help\backend\tracer.mml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="system42\admin\help\backend\active-event-executor.mml">
       <SubType>Designer</SubType>
     </Content>
     <None Include="todo.txt" />
