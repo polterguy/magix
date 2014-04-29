@@ -107,6 +107,20 @@ link-button=>users
     magix.help.open-file
       file=>system42\admin\help\backend\user-administration.mml
 }}</li>
+<li>{{
+link-button=>active-event-list
+  text=>viewing and inspecting active events
+  onclick
+    magix.help.open-file
+      file=>system42\admin\help\backend\active-events.mml
+}}</li>
+<li>{{
+link-button=>active-event-executor-start
+  text=>active event executor
+  onclick
+    magix.help.open-file
+      file=>system42\admin\help\backend\active-event-executor.mml
+}}</li>
 </ul>
   
 <label>hyper lisp, coding for neuro-typicals</label>
