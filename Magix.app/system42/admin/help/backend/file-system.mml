@@ -1,0 +1,23 @@
+﻿
+<h2>the file system</h2>
+
+<p>from the <em>"file system"</em> link on your dashboard, you can access all files in your magix installation.&nbsp;&nbsp;it 
+also allows you to edit and modify some file types, such as css and text files, in addition to that it allows you to upload new 
+files</p>
+
+<p>if you wish to upload one or more files to your server, you first browse to whatever folder you wish to upload these files to, 
+then you can just drag and drop files from your desktop machine, and onto your browser area, and the files will be automatically uploaded</p>
+
+<p>you can also create new files from the files system, such as text files, or css files.&nbsp;&nbsp;in addition, you can delete 
+files through the file system.&nbsp;&nbsp;files which cannot be edited directly through magix, such as images and such, will be 
+opened up and viewed instead of edited.&nbsp;&nbsp;in addition, you can also create, delete and rename both directories and 
+files from the file system link</p>
+
+<p>you can think of the file system link as your magix' version of the windows explorer, if you wish</p>
+
+{{
+lambda=>next
+  oncreatecontrols
+    magix.help.set-next
+      next=>system42\admin\help\backend\qr-codes.mml
+}}
