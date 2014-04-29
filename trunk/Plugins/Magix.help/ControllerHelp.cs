@@ -370,7 +370,7 @@ button=>next-page-2
 			}
 
             Node js = new Node();
-            js["script"].Value = string.Format("MUX.$('{0}').scrollIntoView();",
+            js["script"].Value = string.Format("setTimeout(function(){{MUX.$('{0}').scrollIntoView();}},1);",
                 Magix.UX.Selector.FindControl<System.Web.UI.Control>(Page, "help").ClientID);
 
             RaiseActiveEvent(

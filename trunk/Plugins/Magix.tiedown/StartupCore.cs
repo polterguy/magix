@@ -15,6 +15,8 @@ namespace Magix.tiedown
 	 */
 	public class StartupCore : ActiveController
 	{
+        private static string _lock = "";
+
 		/**
 		 * runs the startup hyper lisp file
 		 */
@@ -29,17 +31,20 @@ expects it to be a pointer to a hyper lisp file, which will be executed";
 				return;
 			}
 
-			string defaultHyperLispFile = ConfigurationManager.AppSettings["Magix.Core.AppStart-HyperLispFile"];
+            lock (_lock)
+            {
+                string defaultHyperLispFile = ConfigurationManager.AppSettings["Magix.Core.AppStart-HyperLispFile"];
 
-			if (!string.IsNullOrEmpty(defaultHyperLispFile))
-			{
-				Node node = new Node ();
-				node.Value = defaultHyperLispFile;
+                if (!string.IsNullOrEmpty(defaultHyperLispFile))
+                {
+                    Node node = new Node();
+                    node.Value = defaultHyperLispFile;
 
-				RaiseActiveEvent(
-					"magix.execute.execute-file",
-					node);
-			}
+                    RaiseActiveEvent(
+                        "magix.execute.execute-file",
+                        node);
+                }
+            }
 		}
 	}
 }

@@ -1,0 +1,91 @@
+﻿
+<h2>teach yourself magix</h2>
+
+<p>in addition to the help files themselves, there are several tools in magix which you can use to teach yourself the system.&nbsp;&nbsp;
+these tools are made in such a way, that they're unique to your system.&nbsp;&nbsp;meaning, as you change the system's state, your 
+tools for teaching yourself magix also changes</p>
+
+<h3>hyper lisp reference</h3>
+
+<p>the {{
+link-button=>hyper-lisp-reference
+  text=>hyper lisp reference
+  onclick
+    execute-file=>system42/admin/tools/inspect-execute.hl
+}} link inside the learn panel, traverses your system for all {{
+link-button=>hyperlisp
+  text=>hyper lisp
+  onclick
+    magix.help.open-file
+      file=>system42\admin\help\hyper-lisp\index.mml
+}} keywords, and shows them in a list.&nbsp;&nbsp;
+from this list, you can click the keywords themselves, to view and inspect what they do and how they work.&nbsp;&nbsp;
+in addition, you can load up the active event executor by clicking the inspect button underneath the description of the keyword, 
+to load up example code, that illustrates the keyword, and its usage</p>
+
+<h3>web controls</h3>
+
+<p>the {{
+link-button=>web-controls
+  text=>web controls
+  onclick
+    execute-file=>system42/admin/tools/inspect-web-controls.hl
+}} link inside the learn panel, works similar to the hyper lisp reference link.&nbsp;&nbsp;it will traverse the system for all web controls 
+you have inside of your system, and display the such that you can click them, to inspect them.&nbsp;&nbsp;also the web controls can 
+be viewed and inspected, which will load up the active event executor, such that you can play around with sample code, illustrating 
+how to use the web controls</p>
+
+<h3>the active event executor - hyper lisp executor</h3>
+
+<p>the {{
+link-button=>executor
+  text=>active event executor
+  onclick
+    magix.admin.open-event-executor
+      css=>span-17 last
+    magix.viewport.clear-controls
+      container=>content2
+    magix.viewport.clear-controls
+      container=>content3
+    magix.viewport.clear-controls
+      container=>content4
+    magix.viewport.clear-controls
+      container=>content5
+}}, which is used both by the hyper lisp reference and the web controls learn links, is an environment, from where you can 
+edit and execute any piece of hyperlisp, and instantly see its result.&nbsp;&nbsp;you may think of it like a command line prompt, 
+for executing hyper lisp, which gives you instant feedback about what your hyper lisp code does.&nbsp;&nbsp;now technically, 
+it is actually an active event executor, from where you can execute any specific active events, but since hyper lisp in itself 
+is an active event, it becomes also a hyper lisp executor</p>
+
+<h3>backup your system</h3>
+
+<p>be careful when executing hyper lisp in the active event executor though.&nbsp;&nbsp;many pieces of code might actually 
+change your system's state, and create unpredictable results.&nbsp;&nbsp;it is easy to crash your system from here, by for instance 
+changing contents of active events, or overriding active events which are crucial for the system to function, and so on.&nbsp;&nbsp;
+it may be wise to create periodical backups of your database for these reasons, such that if your system crashes, you can 
+load up an earlier database of your system, to put it back online.&nbsp;&nbsp;it may also be wise to periodically backup your 
+system's folder structure.&nbsp;&nbsp;especially the system42 folder and the media folder.&nbsp;&nbsp;if you wish to create 
+backup jobs, or create a backup, then the folders you'll need to backup are</p>
+
+<ul>
+  <li>database</li>
+  <li>media</li>
+  <li>system42</li>
+</ul>
+
+<p>then, when you wish to reload a backup, you delete the above folders from your server-installation, copy back the backuped versions 
+of the folders into your system, before you reset internet information server, such that it reloads and restart your web application</p>
+
+
+<h3>warning!</h3>
+
+<p>be <strong>very careful with executing hyper lisp code from sources you don't trust!</strong>&nbsp;&nbsp;it is very easy to install 
+viruses, and other pieces of malware into your system, by executing hyper lisp code.&nbsp;&nbsp;never execute hyper lisp code, unless you're 
+certain about that you can trust the source of the code</p>
+
+{{
+lambda=>next
+  oncreatecontrols
+    magix.help.set-next
+      next=>system42\admin\help\backend\learn.mml
+}}
