@@ -1325,6 +1325,11 @@ input[type=button].toolbox-timer
     margin-bottom:18px;
 }
 
+ul.list-no-bullet li
+{
+    list-style:none;
+}
+
 .dox-for-web-control ul li
 {
     list-style:none;

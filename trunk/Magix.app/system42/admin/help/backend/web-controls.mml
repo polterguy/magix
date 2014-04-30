@@ -1,48 +1,48 @@
 ﻿
-<h2>hyper lisp keywords</h2>
+<h2>web controls</h2>
 
-<p>as previously mentioned, what keywords you have in your installation of magix, might vary from installation to installation.&nbsp;&nbsp;
-and in fact, you can easily {{
-link-button=>create-keywords
-  text=>create your own keywords
+<p>when you create {{
+link-button=>magix-markup-language
+  text=>magix markup language
   onclick
     magix.help.open-file
-      file=>system42\admin\help\hyper-lisp\create-keyword.mml
-}}, by using the [event] keyword, and create an active event which 
-is within the namespace of "magix.execute".&nbsp;&nbsp;however, to see which keywords are in this particular installation, 
-check out the {{
-link-button=>open-executor
-  text=>hyper lisp keywords
+      file=>system42\admin\help\backend\magix-markup-language.mml
+}} you can embed {{
+link-button=>go-to-hyper-lisp
+  text=>hyper lisp
   onclick
-    execute-file=>system42/admin/tools/inspect-execute.hl
-}} and inspect them as you wish</p>
+    magix.help.open-file
+      file=>system42/admin/help/hyper-lisp/index.mml
+}} web controls, directly into your html.&nbsp;&nbsp;this way you can create web controls, running on your server, 
+directly inline into your html.&nbsp;&nbsp;this allows you to create rich web forms, as an intrinsic part of your 
+html, mixed together seemlessly.&nbsp;&nbsp;these web controls, are really nothing but active events, within 
+the namespace <em>"magix.forms.controls"</em></p>
 
-<p>below are all the hyper lisp keywords of your installation, with their documentation</p>
+<p>below is an extensive list of all the web controls within your system</p>
 
 <ul class="list-no-bullet">
 {{
-lambda=>lmb-keywords
+lambda=>lmb
   oncreatecontrols
     magix.admin.get-active-events
-      begins-with=>magix.execute.
-      all=>false
+      begins-with=>magix.forms.controls.
     for-each=>[magix.admin.get-active-events][events]
       _pnl
         tag=>li
         css=>bottom-1 span-19 last
         controls
           label
-            css=>span-3
+            css=>span-2
             tag=>label
           label
-            css=>span-16 last
+            css=>span-17 last
           label
-            css=>left-3 span-16 last
+            css=>left-2 span-17 last
             tag=>pre
       set=>[@][_pnl][controls][label:0][text].Value
         value=>[.].Name
       replace=>[@][_pnl][controls][label:0][text].Value
-        what=>magix.execute.
+        what=>magix.forms.controls.
       _lmb
         set=>[1].Name
           value=>[$][name].Value
@@ -51,7 +51,6 @@ lambda=>lmb-keywords
         set=>[$][description].Value
           value=>[1][inspect].Value
         set=>[1][inspect]
-        set=>[1][0]
         set=>[magix.code.node-2-code][json].Value
           value=>[1]
         magix.code.node-2-code
@@ -72,10 +71,9 @@ lambda=>lmb-keywords
 }}
 </ul>
 
-
 {{
 lambda=>next
   oncreatecontrols
     magix.help.set-next
-      next=>system42\admin\help\hyper-lisp\common-hyper-lisp-statements.mml
+      next=>system42\admin\help\backend\unit-tests.mml
 }}
