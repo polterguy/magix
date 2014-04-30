@@ -40,14 +40,15 @@ namespace Magix.forms
 
 		protected void Inspect(Node node)
 		{
-			node["event:magix.forms.create-web-part"].Value = null;
-			node["inspect"].Value = @"<p>creates a literal type of web control.&nbsp;&nbsp;
-put any html into [text] node, to render exactly the html you wish</p>
-<p><strong>properties for literal</strong></p><p>[text] is the contents of your literal</p>";
-			node["container"].Value = "content5";
-			node["form-id"].Value = "sample-form";
-			node["controls"]["literal"].Value = null;
-			node["controls"]["literal"]["text"].Value = "&lt;h1&gt;hello&lt;/h1&gt;";
+			node["inspect"].Value = @"
+<p>creates a literal type of web control.&nbsp;&nbsp;
+put any html into [text] node, to render exactly the 
+html you wish</p><p><strong>properties for literal
+</strong></p><p>[text] is the contents of your literal</p>";
+            node["magix.forms.create-web-part"]["container"].Value = "content5";
+            node["magix.forms.create-web-part"]["form-id"].Value = "sample-form";
+            node["magix.forms.create-web-part"]["controls"]["literal"].Value = null;
+            node["magix.forms.create-web-part"]["controls"]["literal"]["text"].Value = "&lt;h1&gt;hello&lt;/h1&gt;";
 		}
 	}
 }

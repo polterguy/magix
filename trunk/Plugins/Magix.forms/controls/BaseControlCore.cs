@@ -56,14 +56,28 @@ thread safe";
 					idx.Name,
 					tp2);
 
-				if (tp2.Contains("_no-embed"))
+                if (tp2["magix.forms.create-web-part"].Contains("_no-embed"))
 					tp["_no-embed"].Value = true;
 
-				foreach (Node idx2 in tp2["controls"][0])
+				foreach (Node idx2 in tp2["magix.forms.create-web-part"]["controls"][0])
 				{
 					tp["properties"][idx2.Name].Value = idx2.Value;
 					tp["properties"][idx2.Name].AddRange(idx2);
 				}
+
+                tp["properties"].Sort(
+                    delegate(Node left, Node right)
+                    {
+                        if (left.Name == "id")
+                            return -1;
+                        if (right.Name == "id")
+                            return 1;
+                        if (left.Name.StartsWith("on"))
+                            return 1;
+                        if (right.Name.StartsWith("on"))
+                            return -1;
+                        return left.Name.CompareTo(right.Name);
+                    });
 
 				ip["types"].Add(tp);
 			}

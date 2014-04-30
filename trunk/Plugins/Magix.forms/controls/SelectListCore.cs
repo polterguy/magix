@@ -168,39 +168,46 @@ not thread safe";
 		}
 		protected override void Inspect (Node node)
 		{
-			node["event:magix.forms.create-web-part"].Value = null;
-            node["inspect"].Value = node["inspect"].Get<string>("") + @"<p>creates a select list input type of web control.&nbsp;&nbsp;
-select lists are useful since they can be used much the same way a radio buttons can be 
-used, but they take less space.&nbsp;&nbsp;a select list can have several [items], where 
-the name of your node underneath [items] becomes its value, and value becomes its 
-text to show to end user.&nbsp;&nbsp;user can then choose only one of these items to 
-be set as active</p>";
-            base.Inspect(node["controls"]["select"]);
-            node["inspect"].Value = node["inspect"].Get<string>("") + @"<p><strong>properties for select list</strong></p>
-<p>[size] changes how many visible choices there shall be at 
-the same time</p><p>[key] is the keyboard shortcut.&nbsp;&nbsp;
-how to invoke the keyboard shortcut is different from system to system, but on a windows system, you normally 
-invoke the keyboard shortcut with alt+shift+your-key.&nbsp;&nbsp;if you have for instance 's' as your keyboard 
-shortcut, then the end user will have to click shift+alt+s at the same time to invoke the keyboard shortcut 
-for your web control</p><p>[enabled] enables or disables the web control.&nbsp;&nbsp;this can be changed or retrieved after the 
-button is created by invoking the [magix.forms.set-enabled] or [magix.forms.get-enabled] active events.&nbsp;&nbsp;
-legal values are true and false</p><p>[items] contains a collection of 
-value/text pairs, which is used as the different options to the select list</p><p>
-[selected] can be set to the value of any of its items, to set an initially selected
-choice</p><p>[onselectedindexchanged] is raised when selected item state of control changes</p>";
-			node["container"].Value = "content5";
-			node["form-id"].Value = "sample-form";
-			node["controls"]["select"]["size"].Value = 5;
-			node["controls"]["select"]["key"].Value = "C";
-			node["controls"]["select"]["enabled"].Value = true;
-			node["controls"]["select"]["selected"].Value = "item3";
-			// TODO: implement design support for items ...
-			node["controls"]["select"]["items"]["item1"].Value = "Item 1";
-			node["controls"]["select"]["items"]["item2"].Value = "Item 2";
-			node["controls"]["select"]["items"]["item3"].Value = "Item 3";
-			node["controls"]["select"]["items"]["item4"].Value = "Item 4";
-			node["controls"]["select"]["items"]["item5"].Value = "Item 5";
-			node["controls"]["select"]["onselectedindexchanged"].Value = "hyper lisp code";
+            node["inspect"].Value = @"
+<p>creates a select list input type of web control.&nbsp;&nbsp;
+select lists are useful since they can be used much the same 
+way a radio buttons can be used, but they take less space.
+&nbsp;&nbsp;a select list can have several [items], where the 
+name of your node underneath [items] becomes its value, and 
+value becomes its text to show to end user.&nbsp;&nbsp;user 
+can then choose only one of these items to be set as active</p>";
+            node["magix.forms.create-web-part"]["container"].Value = "content5";
+            node["magix.forms.create-web-part"]["form-id"].Value = "sample-form";
+            base.Inspect(node["magix.forms.create-web-part"]["controls"]["select"]);
+            node["magix.forms.create-web-part"]["controls"]["select"]["size"].Value = 5;
+            node["magix.forms.create-web-part"]["controls"]["select"]["key"].Value = "C";
+            node["magix.forms.create-web-part"]["controls"]["select"]["enabled"].Value = true;
+            node["magix.forms.create-web-part"]["controls"]["select"]["selected"].Value = "item3";
+            node["magix.forms.create-web-part"]["controls"]["select"]["onselectedindexchanged"].Value = "hyper lisp code";
+            node["magix.forms.create-web-part"]["controls"]["select"]["items"]["item1"].Value = "Item 1";
+            node["magix.forms.create-web-part"]["controls"]["select"]["items"]["item2"].Value = "Item 2";
+            node["magix.forms.create-web-part"]["controls"]["select"]["items"]["item3"].Value = "Item 3";
+            node["magix.forms.create-web-part"]["controls"]["select"]["items"]["item4"].Value = "Item 4";
+            node["magix.forms.create-web-part"]["controls"]["select"]["items"]["item5"].Value = "Item 5";
+            node["inspect"].Value = node["inspect"].Value + @"
+<p><strong>properties for select list</strong></p><p>[size] 
+changes how many visible choices there shall be at the same 
+time</p><p>[key] is the keyboard shortcut.&nbsp;&nbsp;how to 
+invoke the keyboard shortcut is different from system to 
+system, but on a windows system, you normally invoke the 
+keyboard shortcut with alt+shift+your-key.&nbsp;&nbsp;if 
+you have for instance 's' as your keyboard shortcut, then 
+the end user will have to click shift+alt+s at the same 
+time to invoke the keyboard shortcut for your web control</p>
+<p>[enabled] enables or disables the web control.&nbsp;&nbsp;
+this can be changed or retrieved after the button is created by 
+invoking the [magix.forms.set-enabled] or [magix.forms.get-enabled] 
+active events.&nbsp;&nbsp;legal values are true and false</p>
+<p>[items] contains a collection of value/text pairs, which is 
+used as the different options to the select list</p><p>[selected] 
+can be set to the value of any of its items, to set an initially 
+selected choice</p><p>[onselectedindexchanged] is raised when 
+selected item state of control changes</p>";
 		}
 		
 		/*

@@ -70,24 +70,30 @@ namespace Magix.forms
 
 		protected override void Inspect (Node node)
 		{
-			node["event:magix.forms.create-web-part"].Value = null;
-            node["inspect"].Value = node["inspect"].Get<string>("") + @"<p>creates a dynamic panel type of web control.&nbsp;&nbsp;
-a dynamic panel is a viewport container, which you can load with controls 
-the same way you can load controls into a regular viewport, using for instance 
-[magix.forms.create-web-part].&nbsp;&nbsp;you can also set the [default] to the id of a specific control, 
-such as a button, which will automatically raise [onclick] on that control if carriage return
-is entered into a [text-box], or something similar, within the scope of the web control.&nbsp;&nbsp; a dynamic, is basically 
-a [panel], except it can dynamically load controls into itself</p>";
-            base.Inspect(node["controls"]["dynamic"]);
-            node["inspect"].Value = node["inspect"].Get<string>("") + @"<p><strong>properties for dynamic</strong>
-<p>[tag] sets html tag to render panel as.&nbsp;&nbsp;
-you can change this to any html tag you wish for the control to be rendered within, such as p, div, label, span or address, etc</p>
-<p>[default] sets the default control within your web control.&nbsp;&nbsp;this is the control which will be automatically 
-clicked if carriage return is pressed while a child control of the dynamic hass focus</p>";
-			node["container"].Value = "content5";
-			node["form-id"].Value = "sample-form";
-			node["controls"]["dynamic"]["tag"].Value = "p|div|address|etc";
-            node["controls"]["dynamic"]["default"].Value = "default-button";
+            node["inspect"].Value = @"
+<p>creates a dynamic panel type of web control.&nbsp;&nbsp;
+a dynamic panel is a viewport container, which you can load 
+with controls the same way you can load controls into a regular 
+viewport, using for instance [magix.forms.create-web-part].
+&nbsp;&nbsp;you can also set the [default] to the id of a 
+specific control, such as a button, which will automatically 
+raise [onclick] on that control if carriage returnis entered 
+into a [text-box], or something similar, within the scope of 
+the web control.&nbsp;&nbsp; a dynamic, is basically a [panel], 
+except it can dynamically load controls into itself</p>";
+            node["magix.forms.create-web-part"]["container"].Value = "content5";
+            node["magix.forms.create-web-part"]["form-id"].Value = "sample-form";
+            base.Inspect(node["magix.forms.create-web-part"]["controls"]["dynamic"]);
+            node["magix.forms.create-web-part"]["controls"]["dynamic"]["tag"].Value = "p|div|address|etc";
+            node["magix.forms.create-web-part"]["controls"]["dynamic"]["default"].Value = "default-button";
+            node["inspect"].Value = node["inspect"].Value + @"
+<p><strong>properties for dynamic</strong><p>[tag] sets html 
+tag to render panel as.&nbsp;&nbsp;you can change this to any 
+html tag you wish for the control to be rendered within, such 
+as p, div, label, span or address, etc</p><p>[default] sets 
+the default control within your web control.&nbsp;&nbsp;this 
+is the control which will be automatically clicked if carriage 
+return is pressed while a child control of the dynamic hass focus</p>";
 		}
 	}
 }

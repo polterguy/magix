@@ -46,6 +46,22 @@ else
             form-id=>admin-menu
             css=>span-5
           execute-file=>system42/admin/desktop/show-desktop.hl
+          magix.web.get-session=>magix.admin.setting.show-help
+          if=>not-exist
+            lhs=>[@][magix.web.get-session][0]
+            code
+              magix.data.load
+                prototype
+                  type=>magix.admin.setting.show-help
+              set=>[@][magix.web.set-session][value].Value
+                value=>[@][magix.data.load][objects][0][value].Value
+              magix.web.set-session=>magix.admin.setting.show-help
+          magix.web.get-session=>magix.admin.setting.show-help
+          if=>equals
+            lhs=>[@][magix.web.get-session:1][value].Value
+            rhs=>true
+            code
+              magix.help.start-help
       else
         execute-file=>system42/pages/run-page.hl
   else

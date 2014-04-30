@@ -18,7 +18,8 @@ directly inline into your html.&nbsp;&nbsp;this allows you to create rich web fo
 html, mixed together seemlessly.&nbsp;&nbsp;these web controls, are really nothing but active events, within 
 the namespace <em>"magix.forms.controls"</em></p>
 
-<p>below is an extensive list of all the web controls within your system</p>
+<p>to understand web controls, and how to use them, in for instance magix markup language, you will need to have some knowledge 
+about hyper lisp.&nbsp;&nbsp;below is an extensive list of all the web controls within your system</p>
 
 <ul class="list-no-bullet">
 {{

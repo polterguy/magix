@@ -144,25 +144,33 @@ and value being the value of the control";
 
 		protected override void Inspect (Node node)
 		{
-            node["event:magix.forms.create-web-part"].Value = null;
-            node["inspect"].Value = node["inspect"].Get<string>("") + @"<p>creates a panel type of web control.&nbsp;&nbsp;
-a panel is a container control for other web controls.&nbsp;&nbsp;add up other web controls and controls 
-into its [control] collection, such that your panel serves as a wrapper for your other controls.&nbsp;&nbsp;
-you can also set the [default] to the id of a specific control, 
-such as a button, which will automatically raise [onclick] on that control if carriage return
-is entered into a [text-box], or something similar, within the scope of the web control</p>";
-            base.Inspect(node["controls"]["dynamic"]);
-            node["inspect"].Value = node["inspect"].Get<string>("") + @"<p><strong>properties for panel</strong>
-<p>[tag] sets html tag to render panel as.&nbsp;&nbsp;
-you can change this to any html tag you wish for the control to be rendered within, such as p, div, label, span or address, etc</p>
-<p>[default] sets the default control within your web control.&nbsp;&nbsp;this is the control which will be automatically 
-clicked if carriage return is pressed while a child control of the dynamic hass focus</p>";
-            node["container"].Value = "content5";
-			node["form-id"].Value = "sample-form";
-			node["controls"]["panel"]["tag"].Value = "p|div|address|etc";
-			node["controls"]["panel"]["default"].Value = "default-button";
-			node["controls"]["panel"]["controls"]["button"].Value = "default-button";
-			node["controls"]["panel"]["controls"]["button"]["text"].Value = "don't work";
+            node["inspect"].Value = @"
+<p>creates a panel type of web control.&nbsp;&nbsp;
+a panel is a container control for other web controls.
+&nbsp;&nbsp;add up other web controls and controls 
+into its [control] collection, such that your panel 
+serves as a wrapper for your other controls.&nbsp;&nbsp;
+you can also set the [default] to the id of a specific 
+control, such as a button, which will automatically 
+raise [onclick] on that control if carriage return is 
+entered into a [text-box], or something similar, within 
+the scope of the web control</p>";
+            node["magix.forms.create-web-part"]["container"].Value = "content5";
+            node["magix.forms.create-web-part"]["form-id"].Value = "sample-form";
+            base.Inspect(node["magix.forms.create-web-part"]["controls"]["panel"]);
+            node["magix.forms.create-web-part"]["controls"]["panel"]["tag"].Value = "p|div|address|etc";
+            node["magix.forms.create-web-part"]["controls"]["panel"]["default"].Value = "default-button";
+            node["magix.forms.create-web-part"]["controls"]["panel"]["controls"]["button"].Value = "default-button";
+            node["magix.forms.create-web-part"]["controls"]["panel"]["controls"]["button"]["text"].Value = "don't work";
+            node["inspect"].Value = node["inspect"].Value + @"
+<p><strong>properties for panel</strong><p>[tag] sets 
+html tag to render panel as.&nbsp;&nbsp;you can change 
+this to any html tag you wish for the control to be 
+rendered within, such as p, div, label, span or address, 
+etc</p><p>[default] sets the default control within your 
+web control.&nbsp;&nbsp;this is the control which will 
+be automatically clicked if carriage return is pressed 
+while a child control of the dynamic hass focus</p>";
 		}
 	}
 }

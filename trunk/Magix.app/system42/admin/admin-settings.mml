@@ -4,7 +4,7 @@
 
 <div class="span-17 last boxed air-padding">{{
 label=>frontEndCssLbl
-  text=>front end css file
+  text=>skin css file
   css=>span-3
   tag=>label
 lambda=>lmda
@@ -55,5 +55,53 @@ lambda=>lmda
         what=>.css
     add=>[$]
       value=>[_data][select]
+label=>lblHelp
+  text=>show help in admin panel
+  css=>span-4 left-1
+  tag=>label
+  for=>chkHelp
+check=>chkHelp
+  css=>span-1
+  onfirstload
+    magix.data.load
+      prototype
+        type=>magix.admin.setting.show-help
+    if=>equals
+      lhs=>[magix.data.load][objects][0][value].Value
+      rhs=>true
+      code
+        magix.forms.set-value
+          id=>chkHelp
+          value=>true
+    else
+      magix.forms.set-value
+        id=>chkHelp
+        value=>false
+  oncheckedchanged
+    magix.data.remove
+      prototype
+        type=>magix.admin.setting.show-help
+    magix.forms.get-value
+      id=>chkHelp
+    if=>equals
+      lhs=>[magix.forms.get-value][value].Value
+      rhs=>true
+      code
+        magix.data.save
+          value
+            type=>magix.admin.setting.show-help
+            value=>true
+        magix.web.set-session=>magix.admin.setting.show-help
+          value=>true
+        magix.help.start-help
+    else
+      magix.data.save
+        value
+          type=>magix.admin.setting.show-help
+          value=>false
+      magix.web.set-session=>magix.admin.setting.show-help
+        value=>false
+      magix.viewport.clear-controls
+        container=>help
 }}</div>
 

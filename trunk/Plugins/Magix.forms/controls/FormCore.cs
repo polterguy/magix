@@ -23,18 +23,19 @@ namespace Magix.forms
 		{
 			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
-				e.Params["event:magix.forms.create-web-part"].Value = null;
-				e.Params ["_no-embed"].Value = true;
-				e.Params["inspect"].Value = @"<p>creates a form from the given value of the node, 
-the [id] node's value serves as unique id if more than
-one form of the same type is injected onto the same page.&nbsp;&nbsp;
-use [css] to set css class of wrapping control, and [tag] to set html tag
-of wrapping control</p>";
-				e.Params["container"].Value = "content5";
-				e.Params["form-id"].Value = "sample-form";
-				e.Params["controls"]["form"].Value = "name-of-your-form";
-				e.Params["controls"]["id"].Value = "unique-id";
-				e.Params["controls"]["css"].Value = "css-of-div-wrapper";
+				e.Params["inspect"].Value = @"
+<p>creates a form from the given value of the node, 
+the [id] node's value serves as unique id if more 
+than one form of the same type is injected onto the 
+same page.&nbsp;&nbsp;use [css] to set css class of 
+wrapping control, and [tag] to set html tag of 
+wrapping control</p>";
+                e.Params["magix.forms.create-web-part"]["_no-embed"].Value = true;
+                e.Params["magix.forms.create-web-part"]["container"].Value = "content5";
+                e.Params["magix.forms.create-web-part"]["form-id"].Value = "sample-form";
+                e.Params["magix.forms.create-web-part"]["controls"]["form"].Value = "name-of-your-form";
+                e.Params["magix.forms.create-web-part"]["controls"]["id"].Value = "unique-id";
+                e.Params["magix.forms.create-web-part"]["controls"]["css"].Value = "css-of-div-wrapper";
 				return;
 			}
 

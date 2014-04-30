@@ -167,34 +167,41 @@ namespace Magix.forms
 
 		protected override void Inspect (Node node)
 		{
-			node["event:magix.forms.create-web-part"].Value = null;
-            node["inspect"].Value = node["inspect"].Get<string>("") + @"<p>creates a text area input type of web control.&nbsp;&nbsp;
-a text area is an input control for text, where the end user can type in 
-text, that can handle multiple lines of text</p>";
-            base.Inspect(node["controls"]["text-area"]);
-            node["inspect"].Value = node["inspect"].Get<string>("") + @"<p><strong>properties for text area</strong></p>
-<p>[place-holder] is shadow text, 
-only visible when input area is empty.&nbsp;&nbsp;use this property to display some information 
-about your web control</p><p>[rows] is how many visible rows 
-of text there shall be at the same time</p><p>[text] is what text the control 
-shall have, or currently have been changed to.&nbsp;&nbsp;this is the property which is changed or retrieved 
-when you invoke the [magix.forms.set-value] and the [magix.forms.get-value] for your web control</p>
-<p>[key] is the keyboard shortcut.&nbsp;&nbsp;
-how to invoke the keyboard shortcut is different from system to system, but on a windows system, you normally 
-invoke the keyboard shortcut with alt+shift+your-key.&nbsp;&nbsp;if you have for instance 's' as your keyboard 
-shortcut, then the end user will have to click shift+alt+s at the same time to invoke the keyboard shortcut 
-for your web control</p><p>[enabled] enables or disables the web control.&nbsp;&nbsp;this can be changed or retrieved after the 
-button is created by invoking the [magix.forms.set-enabled] or [magix.forms.get-enabled] active events.&nbsp;&nbsp;
-legal values are true and false</p><p>[ontextchanged] is raised when 
-text is changed by user, and user moves focus out from the web control somehow</p>";
-			node["container"].Value = "content5";
-			node["form-id"].Value = "sample-form";
-			node["controls"]["text-area"]["place-holder"].Value = "shadow text ...";
-			node["controls"]["text-area"]["rows"].Value = 5;
-			node["controls"]["text-area"]["text"].Value = "is there anybody out there?";
-			node["controls"]["text-area"]["key"].Value = "T";
-			node["controls"]["text-area"]["enabled"].Value = true;
-			node["controls"]["text-area"]["ontextchanged"].Value = "hyper lisp code";
+            node["inspect"].Value = @"
+<p>creates a text area input type of web control.&nbsp;&nbsp;
+a text area is an input control for text, where the end user 
+can type in text, that can handle multiple lines of text</p>";
+            node["magix.forms.create-web-part"]["container"].Value = "content5";
+            node["magix.forms.create-web-part"]["form-id"].Value = "sample-form";
+            base.Inspect(node["magix.forms.create-web-part"]["controls"]["text-area"]);
+            node["magix.forms.create-web-part"]["controls"]["text-area"]["place-holder"].Value = "shadow text ...";
+            node["magix.forms.create-web-part"]["controls"]["text-area"]["rows"].Value = 5;
+            node["magix.forms.create-web-part"]["controls"]["text-area"]["text"].Value = "is there anybody out there?";
+            node["magix.forms.create-web-part"]["controls"]["text-area"]["key"].Value = "T";
+            node["magix.forms.create-web-part"]["controls"]["text-area"]["enabled"].Value = true;
+            node["magix.forms.create-web-part"]["controls"]["text-area"]["ontextchanged"].Value = "hyper lisp code";
+            node["inspect"].Value = node["inspect"].Value + @"
+<p><strong>properties for text area</strong></p><p>[place-holder] 
+is shadow text, only visible when input area is empty.&nbsp;&nbsp;
+use this property to display some information about your web 
+control</p><p>[rows] is how many visible rows of text there shall 
+be at the same time</p><p>[text] is what text the control shall 
+have, or currently have been changed to.&nbsp;&nbsp;this is the 
+property which is changed or retrieved when you invoke the 
+[magix.forms.set-value] and the [magix.forms.get-value] for your 
+web control</p><p>[key] is the keyboard shortcut.&nbsp;&nbsp;
+how to invoke the keyboard shortcut is different from system 
+to system, but on a windows system, you normally invoke the 
+keyboard shortcut with alt+shift+your-key.&nbsp;&nbsp;if you 
+have for instance 's' as your keyboard shortcut, then the end 
+user will have to click shift+alt+s at the same time to invoke 
+the keyboard shortcut for your web control</p><p>[enabled] 
+enables or disables the web control.&nbsp;&nbsp;this can be 
+changed or retrieved after the button is created by invoking 
+the [magix.forms.set-enabled] or [magix.forms.get-enabled] 
+active events.&nbsp;&nbsp;legal values are true and false</p>
+<p>[ontextchanged] is raised when text is changed by user, 
+and user moves focus out from the web control somehow</p>";
 		}
 		
 		/*
