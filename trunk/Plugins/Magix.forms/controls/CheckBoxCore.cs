@@ -115,17 +115,30 @@ namespace Magix.forms
 		protected override void Inspect (Node node)
 		{
 			node["event:magix.forms.create-web-part"].Value = null;
-			node["inspect"].Value = @"creates a checkbox input type of web control.&nbsp;&nbsp;
-useful for representing choices like yes or no.&nbsp;&nbsp;[checked] determines its 
-state, true or false.&nbsp;&nbsp;key is keyboard shortcut.&nbsp;&nbsp;[enabled] can be 
-true or false, and determines if it is possible to change its state, or not.&nbsp;&nbsp;
-[oncheckedchanged] is raised when checked state of control changes";
+            node["inspect"].Value = node["inspect"].Get<string>("") + @"<p>creates a checkbox input type of web control.&nbsp;&nbsp;
+the checkbox web control is useful for representing choices like yes or no.&nbsp;&nbsp;
+the checkbox web control renders like &lt;input type='check' .../&gt;.&nbsp;&nbsp;if you wish to execute hyper lisp 
+code when the checked state is changed, then handle the [oncheckedchanged] active event</p>";
+            base.Inspect(node["controls"]["check"]);
+            node["inspect"].Value = node["inspect"].Get<string>("") + @"<p><strong>properties for checkbox</strong></p>
+<p>[checked] determines its 
+state.&nbsp;&nbsp; if [checked] is true, then the checkbox is checked, and has a visual clue that 
+informs the user of that is is selected.&nbsp;&nbsp;if [checked] is false, then is is not selected.&nbsp;&nbsp;
+this is the property which is changed or retrieved 
+when you invoke the [magix.forms.set-value] and the [magix.forms.get-value] for your web control</p>
+<p>[key] is the keyboard shortcut.&nbsp;&nbsp;
+how to invoke the keyboard shortcut is different from system to system, but on a windows system, you normally 
+invoke the keyboard shortcut with alt+shift+your-key.&nbsp;&nbsp;if you have for instance 's' as your keyboard 
+shortcut, then the end user will have to click shift+alt+s at the same time to invoke the keyboard shortcut 
+for your web control</p><p>[enabled] enables or disables the web control.&nbsp;&nbsp;this can be changed or retrieved after the 
+button is created by invoking the [magix.forms.set-enabled] or [magix.forms.get-enabled] active events.&nbsp;&nbsp;
+legal values are true and false</p>
+<p>[oncheckedchanged] is raised when checked state of control changes</p>";
 			node["container"].Value = "content5";
 			node["form-id"].Value = "sample-form";
 			node["controls"]["check"]["checked"].Value = true;
 			node["controls"]["check"]["key"].Value = "C";
 			node["controls"]["check"]["enabled"].Value = true;
-			base.Inspect(node["controls"]["check"]);
 			node["controls"]["check"]["oncheckedchanged"].Value = "hyper lisp code";
 		}
 		
