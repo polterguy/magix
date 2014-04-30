@@ -86,16 +86,20 @@ namespace Magix.forms
 
 		protected override void Inspect (Node node)
 		{
-			node["event:magix.forms.create-web-part"].Value = null;
-            node["inspect"].Value = node["inspect"].Get<string>("") + @"<p>creates a hidden field input type of control.&nbsp;&nbsp;
-hidden fields are invisible to the user, but can store any data as text strings within their [value] node</p>";
-            base.Inspect(node["controls"]["hidden"]);
-            node["inspect"].Value = node["inspect"].Get<string>("") + @"<p><strong>properties for hidden</strong>
-<p>[value] is the actual value of the hidden field.&nbsp;&nbsp;this is the property which is changed or retrieved 
-when you invoke the [magix.forms.set-value] and the [magix.forms.get-value] for your control</p>";
-            node["container"].Value = "content5";
-			node["form-id"].Value = "sample-form";
-			node["controls"]["hidden"]["value"].Value = "whatever you wish to put in as value";
+            node["inspect"].Value = @"
+<p>creates a hidden field input type of control.&nbsp;&nbsp;
+hidden fields are invisible to the user, but can store any 
+data as text strings within their [value] node</p>";
+            node["magix.forms.create-web-part"]["container"].Value = "content5";
+            node["magix.forms.create-web-part"]["form-id"].Value = "sample-form";
+            base.Inspect(node["magix.forms.create-web-part"]["controls"]["hidden"]);
+            node["magix.forms.create-web-part"]["controls"]["hidden"]["value"].Value = "whatever you wish to put in as value";
+            node["inspect"].Value = node["inspect"].Value + @"
+<p><strong>properties for hidden</strong><p>[value] is the 
+actual value of the hidden field.&nbsp;&nbsp;this is the 
+property which is changed or retrieved when you invoke the 
+[magix.forms.set-value] and the [magix.forms.get-value] for 
+your control</p>";
 		}
 		
 		/*

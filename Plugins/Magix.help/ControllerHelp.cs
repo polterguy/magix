@@ -128,6 +128,8 @@ button=>next
 {{{{
 dynamic=>help-content
   css=>span-22 last
+  onfirstload
+    magix.help.open-help-files
 }}}}
 <div class=""span-6 last right btn-group"">
 {{{{
@@ -148,10 +150,12 @@ button=>next-page-2
 			RaiseActiveEvent(
 				"magix.forms.create-mml-web-part",
 				tmp);
+        }
 
-            string idOfSearch = Magix.UX.Selector.FindControl<Magix.UX.Widgets.TextBox>(Page, "search").ClientID;
-
-			tmp = new Node();
+        [ActiveEvent(Name = "magix.help.open-help-files")]
+        protected void magix_help_open_help_files(object sender, ActiveEventArgs e)
+        {
+			Node tmp = new Node();
 
 			tmp["form-id"].Value = "help";
             tmp["container"].Value = "help-content";

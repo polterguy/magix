@@ -154,44 +154,54 @@ namespace Magix.forms
 
 		protected override void Inspect (Node node)
 		{
-			node["event:magix.forms.create-web-part"].Value = null;
-            node["inspect"].Value = node["inspect"].Get<string>("") + @"<p>creates a wysiwyg input type of web control.&nbsp;&nbsp;
-a wysiwyg web control ise useful for allowing the end user to type in html or magix markup language to submit to the server</p>";
-            base.Inspect(node["controls"]["wysiwyg"]);
-            node["inspect"].Value = node["inspect"].Get<string>("") + @"<p><strong>properties for wysiwyg</strong></p>
-<p>[text] sets the visible text of your web control.&nbsp;&nbsp;this is the property which is changed or retrieved 
-when you invoke the [magix.forms.set-value] and the [magix.forms.get-value] for your web control</p>
-<p>[place-holder] is shadow text, 
-only visible when input area is empty.&nbsp;&nbsp;use this property to display some information 
-about your web control</p>
-<p>[editor-css-file] is a url to a css file which will be injected into the wysiwyg control, to style the contents 
-of the html within it</p><p>all the properties that starts with 'has', are booleans that determines whether or 
-not the wysiwyg control has a specific feature or not.&nbsp;&nbsp;if these properties are set to true, then 
-the toolbar of the web control will have a button which allows for formatting of text, or insertion of 
-elements, according to whatever the property turns on or off</p><p>legal properties for turning on and off 
-features are; [has-bold], [has-italic], [has-unorderedlist], [has-orderedlist], [has-createlink], 
-[has-insertimage], [has-h1], [has-h2], [has-h3], [has-h4], [has-h5], [has-h6], [has-forecolor], 
-[has-insertspeech] and [has-showhtml]</p>";
-            node["container"].Value = "content5";
-			node["form-id"].Value = "sample-form";
-			node["controls"]["wysiwyg"]["text"].Value = "html markup of wysiwyg control goes here";
-			node["controls"]["wysiwyg"]["place-holder"].Value = "place holder ...";
-			node["controls"]["wysiwyg"]["has-bold"].Value = true;
-			node["controls"]["wysiwyg"]["has-italic"].Value = true;
-			node["controls"]["wysiwyg"]["has-unorderedlist"].Value = true;
-			node["controls"]["wysiwyg"]["has-orderedlist"].Value = true;
-			node["controls"]["wysiwyg"]["has-createlink"].Value = true;
-			node["controls"]["wysiwyg"]["has-insertimage"].Value = true;
-			node["controls"]["wysiwyg"]["has-h1"].Value = true;
-			node["controls"]["wysiwyg"]["has-h2"].Value = true;
-			node["controls"]["wysiwyg"]["has-h3"].Value = false;
-			node["controls"]["wysiwyg"]["has-h4"].Value = false;
-			node["controls"]["wysiwyg"]["has-h5"].Value = false;
-			node["controls"]["wysiwyg"]["has-h6"].Value = false;
-			node["controls"]["wysiwyg"]["has-forecolor"].Value = true;
-			node["controls"]["wysiwyg"]["has-insertspeech"].Value = true;
-			node["controls"]["wysiwyg"]["has-showhtml"].Value = true;
-			node["controls"]["wysiwyg"]["editor-css-file"].Value = "media/grid/main.css";
+            node["inspect"].Value = @"
+<p>creates a wysiwyg input type of web control.&nbsp;&nbsp;
+a wysiwyg web control ise useful for allowing the end user 
+to type in html or magix markup language to submit to the 
+server</p>";
+            node["magix.forms.create-web-part"]["container"].Value = "content5";
+            node["magix.forms.create-web-part"]["form-id"].Value = "sample-form";
+            base.Inspect(node["magix.forms.create-web-part"]["controls"]["wysiwyg"]);
+            node["magix.forms.create-web-part"]["controls"]["wysiwyg"]["text"].Value = "html markup of wysiwyg control goes here";
+            node["magix.forms.create-web-part"]["controls"]["wysiwyg"]["place-holder"].Value = "place holder ...";
+            node["magix.forms.create-web-part"]["controls"]["wysiwyg"]["has-bold"].Value = true;
+            node["magix.forms.create-web-part"]["controls"]["wysiwyg"]["has-italic"].Value = true;
+            node["magix.forms.create-web-part"]["controls"]["wysiwyg"]["has-unorderedlist"].Value = true;
+            node["magix.forms.create-web-part"]["controls"]["wysiwyg"]["has-orderedlist"].Value = true;
+            node["magix.forms.create-web-part"]["controls"]["wysiwyg"]["has-createlink"].Value = true;
+            node["magix.forms.create-web-part"]["controls"]["wysiwyg"]["has-insertimage"].Value = true;
+            node["magix.forms.create-web-part"]["controls"]["wysiwyg"]["has-h1"].Value = true;
+            node["magix.forms.create-web-part"]["controls"]["wysiwyg"]["has-h2"].Value = true;
+            node["magix.forms.create-web-part"]["controls"]["wysiwyg"]["has-h3"].Value = false;
+            node["magix.forms.create-web-part"]["controls"]["wysiwyg"]["has-h4"].Value = false;
+            node["magix.forms.create-web-part"]["controls"]["wysiwyg"]["has-h5"].Value = false;
+            node["magix.forms.create-web-part"]["controls"]["wysiwyg"]["has-h6"].Value = false;
+            node["magix.forms.create-web-part"]["controls"]["wysiwyg"]["has-forecolor"].Value = true;
+            node["magix.forms.create-web-part"]["controls"]["wysiwyg"]["has-insertspeech"].Value = true;
+            node["magix.forms.create-web-part"]["controls"]["wysiwyg"]["has-showhtml"].Value = true;
+            node["magix.forms.create-web-part"]["controls"]["wysiwyg"]["editor-css-file"].Value = "media/grid/main.css";
+            node["inspect"].Value = node["inspect"].Value + @"
+<p><strong>properties for wysiwyg</strong></p><p>[text] 
+sets the visible text of your web control.&nbsp;&nbsp;this 
+is the property which is changed or retrieved when you invoke 
+the [magix.forms.set-value] and the [magix.forms.get-value] 
+for your web control</p><p>[place-holder] is shadow text, only 
+visible when input area is empty.&nbsp;&nbsp;use this property 
+to display some information about your web control</p>
+<p>[editor-css-file] is a url to a css file which will be 
+injected into the wysiwyg control, to style the contents 
+of the html within it</p><p>all the properties that starts 
+with 'has', are booleans that determines whether or not the 
+wysiwyg control has a specific feature or not.&nbsp;&nbsp;
+if these properties are set to true, then the toolbar of the 
+web control will have a button which allows for formatting 
+of text, or insertion of elements, according to whatever the 
+property turns on or off</p><p>legal properties for turning 
+on and off features are; [has-bold], [has-italic], 
+[has-unorderedlist], [has-orderedlist], [has-createlink], 
+[has-insertimage], [has-h1], [has-h2], [has-h3], [has-h4], 
+[has-h5], [has-h6], [has-forecolor], [has-insertspeech] and 
+[has-showhtml]</p>";
 		}
 	}
 }
