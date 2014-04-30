@@ -249,17 +249,28 @@ namespace Magix.forms
 		protected override void Inspect (Node node)
 		{
 			node["event:magix.forms.create-web-part"].Value = null;
-			node["inspect"].Value = @"creates a text box input type of web control.&nbsp;&nbsp;
-a [text-box] is a control where the end user can type in text he wish to submit 
-in a form.&nbsp;&nbsp;text-box only supports lines of text, without carriage return.&nbsp;&nbsp;
-use [text-area] if you need multiple lines of text.&nbsp;&nbsp;[place-holder] is shadow text, 
-only visible when input area is empty.&nbsp;&nbsp;[text] is what text the control 
-shall have, or currently have been changed to.&nbsp;&nbsp;[key] is keyboard shortcut 
-to active, or give focus to text area.&nbsp;&nbsp;[capitalize] will automatically 
-correctly capitalize entities, as if you are typing a name.&nbsp;&nbsp;[correct] will 
-automatically suggest corrections for typos.&nbsp;&nbsp;[complete] will suggest 
-previously typed values for you, and attempt to automatically complete the value.&nbsp;&nbsp;
-[max] is maximum number of characters in text-box.&nbsp;&nbsp;";
+            node["inspect"].Value = node["inspect"].Get<string>("") + @"<p>creates a text box input type of web control.&nbsp;&nbsp;
+a text box is a web control where the end user can type in text to submit 
+in a form.&nbsp;&nbsp;text-box only supports one line of text, without carriage return.&nbsp;&nbsp;
+use [text-area] if you need multiple lines of text</p>";
+            base.Inspect(node["controls"]["text-box"]);
+            node["inspect"].Value = node["inspect"].Get<string>("") + @"<p><strong>properties for text box</strong></p>
+<p>[place-holder] is shadow text, 
+only visible when input area is empty</p><p>[text] is what text the control 
+shall have, or currently have been changed to.&nbsp;&nbsp;this is the property which is changed or retrieved 
+when you invoke the [magix.forms.set-value] and the [magix.forms.get-value] for your web control</p><p>[key] is the keyboard shortcut.&nbsp;&nbsp;
+how to invoke the keyboard shortcut is different from system to system, but on a windows system, you normally 
+invoke the keyboard shortcut with alt+shift+your-key.&nbsp;&nbsp;if you have for instance 's' as your keyboard 
+shortcut, then the end user will have to click shift+alt+s at the same time to invoke the keyboard shortcut 
+for your web control</p><p>[enabled] enables or disables the web control.&nbsp;&nbsp;this can be changed or retrieved after the 
+button is created by invoking the [magix.forms.set-enabled] or [magix.forms.get-enabled] active events.&nbsp;&nbsp;
+legal values are true and false</p><p>[capitalize] will automatically 
+correctly capitalize entities, as if you are typing text</p><p>[correct] will 
+automatically suggest corrections for typos</p>[complete] will suggest 
+previously typed values for you, and attempt to automatically complete the value</p>
+<p>[max] is maximum number of characters in web control</p><p>[mode] determines the mode of the text box.&nbsp;&nbsp;
+this depends upon the type of input you wish that your text box shall be taking.&nbsp;&nbsp;if you want the user 
+to type in an email address for instance, then use 'email' as the value of this property</p>";
 			node["container"].Value = "content5";
 			node["form-id"].Value = "sample-form";
 			node["controls"]["text-box"]["place-holder"].Value = "shadow text ...";
@@ -270,7 +281,6 @@ previously typed values for you, and attempt to automatically complete the value
 			node["controls"]["text-box"]["max"].Value = 25;
 			node["controls"]["text-box"]["text"].Value = "hello world";
 			node["controls"]["text-box"]["mode"].Value = "normal|phone|search|url|email|datetime|date|month|week|time|datetimelocal|number|range|color|password";
-			base.Inspect(node["controls"]["text-box"]);
 		}
 		
 		/*

@@ -25,10 +25,18 @@ namespace Magix.forms
 			if (ShouldInspect(e.Params))
 			{
 				e.Params["event:magix.forms.create-web-part"].Value = null;
-				e.Params["inspect"].Value = @"creates a lambda type of web control.&nbsp;&nbsp;
-[oncreatecontrols] is the hyper lisp code executing when the 
+				e.Params["inspect"].Value = @"<p>creates a lambda type of web control.&nbsp;&nbsp;
+the lambda control is a control which have late creation of its child controls.&nbsp;&nbsp;this means 
+that when the lambda is declared, it is not obvious which controls it will contain, but rather due to 
+hyper lisp logic within your [oncreatecontrols] hyper lisp active event, the lambda control will dynamically 
+create its child control collection, only once rendered.&nbsp;&nbsp;the lambda might appear similar to the dynamic control, 
+but has some unique features which makes it useful in places where the dynamic web control doesn't quite do the trick</p>
+<p><strong>properties for label</strong></p>
+<p>[oncreatecontrols] is the hyper lisp code executing when the 
 control is lately bound.&nbsp;&nbsp;the [oncreatecontrols] event is expected 
-to return control(s), or nothing, in the [$] return node";
+to return control(s), or nothing, in the [$] return node.&nbsp;&nbsp;return for instance [link-button] inside the 
+[$] collection to create a link-button.&nbsp;&nbsp;the lambda control doesn't render any outher html, but only 
+serves as a container of other controls, without any markup of its own</p>";
 				e.Params["container"].Value = "content5";
 				e.Params["form-id"].Value = "sample-form";
 				e.Params["controls"]["lambda"].Value = "idOfLambda";

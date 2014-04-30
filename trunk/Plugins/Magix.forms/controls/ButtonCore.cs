@@ -97,7 +97,7 @@ namespace Magix.forms
 		{
             node["event:magix.forms.create-web-part"].Value = null;
             node["inspect"].Value = node["inspect"].Get<string>("") + @"<p>creates a button input type of web control.&nbsp;&nbsp;
-the button is probably the most commonly used web control, both in magix, and on the web in general.&nbsp;&nbsp;
+the button is probably one of the most commonly used web control, both in magix, and on the web in general.&nbsp;&nbsp;
 it renders as &lt;input type='button' ... /&gt;.&nbsp;&nbsp;buttons 
 are clickable objects, and logically similar to [link-button], though rendered differently.&nbsp;&nbsp;
 although virtually anything can be a clickable object in magix, it is often more polite to use buttons and link-buttons 

@@ -250,6 +250,32 @@ use [filter] as a search pattern.&nbsp;&nbsp;thread safe";
                 Ip(e.Params)["directories"][idxFile.Substring(rootDir.Length)].Value = null;
 			}
 		}
-	}
+
+        /**
+         * return true if directory exists
+         */
+        [ActiveEvent(Name = "magix.file.directory-exist")]
+        public static void magix_file_directory_exist(object sender, ActiveEventArgs e)
+        {
+            if (ShouldInspect(e.Params))
+            {
+                e.Params["event:magix.execute"].Value = null;
+                e.Params["magix.file.directory-exist"].Value = "system42";
+                e.Params["inspect"].Value = @"returns true as [value] if the directory in the value of the 
+node exist.&nbsp;&nbsp;thread safe";
+                return;
+            }
+
+            if (string.IsNullOrEmpty(Ip(e.Params).Get<string>()))
+                throw new ArgumentException("you didn't supply a directory for [directory-exist]");
+
+            string dir = Ip(e.Params).Get<string>().TrimStart('/');
+
+            if (Directory.Exists(HttpContext.Current.Server.MapPath(dir)))
+                Ip(e.Params)["value"].Value = true;
+            else
+                Ip(e.Params)["value"].Value = false;
+        }
+    }
 }
 

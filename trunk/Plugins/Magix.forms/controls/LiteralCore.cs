@@ -41,8 +41,9 @@ namespace Magix.forms
 		protected void Inspect(Node node)
 		{
 			node["event:magix.forms.create-web-part"].Value = null;
-			node["inspect"].Value = @"creates a literal type of web control.&nbsp;&nbsp;
-put any html into [text] node, to render exact html as web control";
+			node["inspect"].Value = @"<p>creates a literal type of web control.&nbsp;&nbsp;
+put any html into [text] node, to render exactly the html you wish</p>
+<p><strong>properties for literal</strong></p><p>[text] is the contents of your literal</p>";
 			node["container"].Value = "content5";
 			node["form-id"].Value = "sample-form";
 			node["controls"]["literal"].Value = null;

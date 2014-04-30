@@ -61,13 +61,17 @@ namespace Magix.forms
 		protected override void Inspect (Node node)
 		{
 			node["event:magix.forms.create-web-part"].Value = null;
-			node["inspect"].Value = @"creates a timer type of control.&nbsp;&nbsp;
-a [timer] is a control which will periodically run to the server in intervalls of 
-[interval] milliseconds where it will raise the [tick] event handler";
-			node["container"].Value = "content5";
+            node["inspect"].Value = node["inspect"].Get<string>("") + @"<p>creates a timer type of control.&nbsp;&nbsp;
+a timer is a control which will periodically run to the server in intervalls of 
+[interval] milliseconds where it will raise the [tick] event handler.&nbsp;&nbsp;this control is useful for periodically 
+checking for updates on the server, if you're waiting for something to occur, such as a chat client, or something similar</p>";
+            base.Inspect(node["controls"]["timer"]);
+            node["inspect"].Value = node["inspect"].Get<string>("") + @"<p><strong>properties for timer</strong></p>
+<p>[interval] is the number of milliseconds between each time the timer should go to the server, and raise the 
+[ontick] event</p><p>[ontick] is the active event for that will be raised each time the [interval] time hass passed</p>";
+            node["container"].Value = "content5";
 			node["form-id"].Value = "sample-form";
 			node["controls"]["timer"]["interval"].Value = "1000";
-			base.Inspect(node["controls"]["timer"]);
 			node["controls"]["timer"]["ontick"].Value = "hyper lisp code";
 		}
 	}

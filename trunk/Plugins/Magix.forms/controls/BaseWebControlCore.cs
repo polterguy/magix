@@ -385,6 +385,9 @@ namespace Magix.forms
 <p>[css] is the css class(es) for your control.&nbsp;&nbsp;these can be modified or retrieved after you 
 have created your control, with for instance [magix.forms.set-class] and [magix.forms.add-css], 
 or [magix.forms.get-class] and [magix.forms.remove-css]</p>
+<p>[style] is a collection of inline css styles.&nbsp;&nbsp;create these the same way you would within a css class in a css 
+file.&nbsp;&nbsp;name of styles and values of styles are separated by colon ':', while a style setting must end with a 
+semi-colon ';'.&nbsp;&nbsp;for example ""width:100px;height:50px;""</p>
 <p>[dir] is the reading direction of text on your web control, and can be either 'ltr', or 
 'rtl'.&nbsp;&nbsp;ltr means left-to-right, and is what is used for most languages.&nbsp;&nbsp;
 use rtl as the [dir] for languages such as arabic and hebrew, which reads from right to left</p>
