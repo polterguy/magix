@@ -380,24 +380,51 @@ namespace Magix.forms
 			Node tmp = node;
 			while (!tmp.Contains("inspect"))
 				tmp = tmp.Parent;
-			tmp["inspect"].Value = tmp["inspect"].Get<string>() + @".&nbsp;&nbsp;
-[css] is the css class(es) for your control, [dir] is reading direction, and can be ltr, or 
-rtl.&nbsp;&nbsp;[tab] is the tab index, or order in tab hierarchy.&nbsp;&nbsp;[tip] 
-is an informational tool tip, shown when for instance mouse is hovered above control.&nbsp;&nbsp;
-[onclick] is raised when control is clicked.&nbsp;&nbsp;[ondblclick] when controls is 
-double clicked.&nbsp;&nbsp;[onmousedown] is raised when mouse is pressed down, on control.&nbsp;&nbsp;
-[onmouseup] is raised when mouse is released again, on top of control.&nbsp;&nbsp;[onmouseover] is 
-raised when mouse is hovered over control.&nbsp;&nbsp;[onmouseout] is raised when mouse is 
-moved out of control surface.&nbsp;&nbsp;[onkeypress] is raised when a key is pressed inside 
-of control.&nbsp;&nbsp;[onesc] is raised when escape key is pressed inside of control.
-&nbsp;&nbsp;if web control is of type attribute control, you can add generic attributes by 
-prepending an '@' character before the name of the attribute.&nbsp;&nbsp;not thread safe";
+            base.Inspect(node);
+            tmp["inspect"].Value = tmp["inspect"].Get<string>() + @"<p><strong>properties inherited from web control</strong></p>
+<p>[css] is the css class(es) for your control.&nbsp;&nbsp;these can be modified or retrieved after you 
+have created your control, with for instance [magix.forms.set-class] and [magix.forms.add-css], 
+or [magix.forms.get-class] and [magix.forms.remove-css]</p>
+<p>[dir] is the reading direction of text on your web control, and can be either 'ltr', or 
+'rtl'.&nbsp;&nbsp;ltr means left-to-right, and is what is used for most languages.&nbsp;&nbsp;
+use rtl as the [dir] for languages such as arabic and hebrew, which reads from right to left</p>
+<p>[tab] is the tab index, or order in your forms tab hierarchy.&nbsp;&nbsp;the lower this number is, the earlier 
+the control will gain focus in the tab order.&nbsp;&nbsp;for instance, if you have two controls, 
+one with [tab] equal to 1, and another with [tab] equal to 5, then the control with tab order 
+of 1 will have focus before the one with tab order of 5, as the end user clicks tab to 
+move focus through the form's controls</p><p>[tip] 
+is an informational tool tip, shown when the mouse is hovered above control.&nbsp;&nbsp;notice that this 
+property only works for desktop system, which has a mouse, which can be hovered above your control's surface</p><p>
+[onclick] is raised when control is clicked.&nbsp;&nbsp;attach any hyper lisp code you wish here</p>
+<p>[ondblclick] is raised when controls is 
+double clicked.&nbsp;&nbsp;attach any hyper lisp code you wish here</p>
+<p>[onmousedown] is raised when the left mouse button is pressed down on control, but before it 
+is released.&nbsp;&nbsp;attach any hyper lisp code you wish here</p><p>
+[onmouseup] is raised when mouse is released again.&nbsp;&nbsp;attach any hyper lisp code you wish here</p><p>[onmouseover] is 
+raised when mouse is hovered over control.&nbsp;&nbsp;with magix, the [onmouseover] and [onmouseout] is 
+logically fixed in regards to the html standard, such that if you have a panel, which has child controls, then 
+as long as you move the mouse over the panel, it will raise the [onmouseover].&nbsp;&nbsp;and not before you 
+move the mouse outside of the panel and its child controls, the [onmouseout] will be raised.&nbsp;&nbsp;
+please notice that this is different from the default brower logic, though more sensible in regards to 
+your web application development.&nbsp;&nbsp;attach any hyper lisp code you wish here</p>
+<p>[onmouseout] is raised when mouse is 
+moved out of control surface.&nbsp;&nbsp;with magix, the [onmouseover] and [onmouseout] is 
+logically fixed in regards to the html standard, such that if you have a panel, which has child controls, then 
+as long as you move the mouse over the panel, it will raise the [onmouseover].&nbsp;&nbsp;and not before you 
+move the mouse outside of the panel and its child controls, the [onmouseout] will be raised.&nbsp;&nbsp;
+please notice that this is different from the default brower logic, though more sensible in regards to 
+your web application development.&nbsp;&nbsp;attach any hyper lisp code you wish here</p>
+<p>[onkeypress] is raised when a key is pressed inside 
+of web control, and your web control has focus somehow.&nbsp;&nbsp;attach any hyper lisp code you wish here</p>
+<p>[onesc] is raised when escape key is pressed inside of control.&nbsp;&nbsp;this is an active event which 
+are added for convenience, since very often it is interesting knowing if the user clicks esc, such that 
+the application can close forms, or undo actions, and similar types of functionality.&nbsp;&nbsp;
+attach any hyper lisp code you wish here</p>";
 			node["css"].Value = "css classes";
 			node["dir"].Value = "ltr";
 			node["tab"].Value = 5;
 			node["tip"].Value = "informational tooltip";
 			node["style"].Value = "width:120px;height:120px;";
-			base.Inspect(node);
 			node["onclick"].Value = "hyper lisp code";
 			node["ondblclick"].Value = "hyper lisp code";
 			node["onmousedown"].Value = "hyper lisp code";

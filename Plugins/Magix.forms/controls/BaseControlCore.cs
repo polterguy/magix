@@ -173,13 +173,30 @@ thread safe";
 			Node tmp = node;
 			while (!tmp.Contains("inspect"))
 				tmp = tmp.Parent;
-			tmp["inspect"].Value = tmp["inspect"].Get<string>() + @".&nbsp;&nbsp;
-[visible] can be true or false, [info] is any additional textually represented 
-information you like to attach with control.&nbsp;&nbsp;useful for adding in 
-id strings, and such.&nbsp;&nbsp;control_id must be a unique id within your 
-form.&nbsp;&nbsp;use [onfirstload] as the means to run initialization code
-during first initial creation in form.&nbsp;&nbsp;[onfirstload] will only 
-be raised the first time the control is created";
+            tmp["inspect"].Value = tmp["inspect"].Get<string>() + @"<p>all active event handlers, will have 
+the [info] value, and whatever value the control 
+has, automatically added to the [$] collection when any active events are raised.&nbsp;&nbsp;to retreieve 
+these values, use either [$][info] or [$][value] in your expressions, from within your active event 
+handlers.&nbsp;&nbsp;active event handlers are recognized by the fact of that they start with the 
+text 'on' as their property name</p>
+<p><strong>properties inherited from control</strong></p>
+<p>'control_id', or the value 
+of the node, must be a unique id within your 
+form, and will become the control's unique identification within your form.&nbsp;&nbsp;this is the 
+id you use to change or retrieve a control's state after it has been created, in for example the 
+[magix.forms.get-value] active event</p><p>
+[visible] can be true or false, and determines if the control is visible or not.&nbsp;&nbsp;
+you can change or retrieve a controls's visibility with the [magix.forms.set-visible] or [magix.forms.get-visible] active events</p>
+<p>[info] is any additional textually represented 
+piece of information you'd like to attach with your control.&nbsp;&nbsp;[info] is useful for attaching
+meta data with your control, which shouldn't be visible, but still coupled with your 
+control somehow.&nbsp;&nbsp;[info] will be passed in automatically into your control's 
+event handlers for you, together with your control's value through the [$] collection</p>
+<p>[onfirstload] can be used as the means to run initialization code
+during the initial creation of your control in your form.&nbsp;&nbsp;[onfirstload] will only 
+be raised the first time the control is created.&nbsp;&nbsp;this active event is useful for initializing 
+properties for your control, or run code which is only supposed to run once, during the initial initialization 
+of your control</p>";
 			node.Value = "control_id";
 			node["visible"].Value = true;
 			node["info"].Value = "any arbitrary additional info";

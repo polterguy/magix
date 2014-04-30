@@ -185,7 +185,7 @@ namespace Magix.Core
 		 * you raise it internally within your system, it will go polymorphistically
 		 * and transparently towards your URL end-point, and raise the event instead
 		 */
-		public void OverrideRemotely (string activeEvent, string url)
+		public void OverrideRemotely(string activeEvent, string url)
 		{
 			_urlMappers[activeEvent] = url;
 		}
@@ -194,7 +194,7 @@ namespace Magix.Core
 		 * Removes a remotely overridden event, meaning once raise, the event will NOT go towards
 		 * the URL end-point anymore
 		 */
-		public void RemoveRemoteOverride (string activeEvent)
+		public void RemoveRemoteOverride(string activeEvent)
 		{
 			if (!_urlMappers.ContainsKey (activeEvent))
 				return;
@@ -205,7 +205,7 @@ namespace Magix.Core
 		 * Returns the URL of the remote server the active event is
 		 * overridden to, or null if no remote override exists
 		 */
-		public string RemotelyOverriddenURL (string activeEvent)
+		public string RemotelyOverriddenURL(string activeEvent)
 		{
 			if (_urlMappers.ContainsKey (activeEvent))
 				return _urlMappers[activeEvent];
@@ -216,7 +216,7 @@ namespace Magix.Core
 		 * Returns true if the event is allowed to be remotely invoked by another server,
 		 * using remotely activated events, to raise events on your server
 		 */
-		public bool IsAllowedRemotely (string str)
+		public bool IsAllowedRemotely(string str)
 		{
 			return _remotelyActivated.ContainsKey(str);
 		}
@@ -226,7 +226,7 @@ namespace Magix.Core
 		 * that other servers can invoke this Active Event on your server over
 		 * HTTP
 		 */
-		public void MakeRemotable (string str)
+		public void MakeRemotable(string str)
 		{
 			_remotelyActivated[str] = true;
 		}
@@ -360,71 +360,7 @@ namespace Magix.Core
             Node pars,
 			bool forceNoOverride)
         {
-            pars = RaiseEventImplementation(sender, name, pars, forceNoOverride);
-        }
-
-		private Node ExtractParsAndRaise (string name, Node pars, string parameters, object sender)
-		{
-			parameters = parameters.Trim ();
-			if (parameters.Length != 0 && parameters.IndexOf ("[") != 0)
-			{
-				// This is a Reference to another Active Event
-				// Extract Event, Recursively Invoke with any potential Parameters, 
-				// before executing outer most Active Event
-				pars = RaiseEventImplementation(sender, parameters, pars, false);
-				pars = RaiseEventImplementation(sender, name, pars, false);
-			}
-			else
-			{
-				if (parameters.Length != 0)
-				{
-					// Traversing tree according to Expression
-					object expressionValue = Expressions.GetExpressionValue(parameters, pars, pars, false);
-					if (name == null)
-						return expressionValue as Node;
-					pars = RaiseEventImplementation(sender, name, (Node)expressionValue, false);
-				}
-				else
-				{
-					pars = RaiseEventImplementation(sender, name, pars, false);
-				}
-			}
-			return pars;
-		}
-
-        private static List<string> ExtractTokens(string json)
-        {
-            List<string> tokens = new List<string>();
-			string buffer = "";
-            for (int idx = 0; idx < json.Length; idx++)
-            {
-                switch (json[idx])
-                {
-                case '&':
-                case '(':
-                case ')':
-					if (!string.IsNullOrEmpty (buffer))
-					{
-						tokens.Add (buffer);
-						buffer = "";
-					}
-                    tokens.Add(new string(json[idx], 1));
-                    break;
-                case ' ':
-                case '\t':
-                case '\r':
-                case '\n':
-                    break;
-                default:
-					buffer += json[idx];
-					break;
-                }
-            }
-			if (!string.IsNullOrEmpty (buffer))
-			{
-				tokens.Add (buffer);
-			}
-            return tokens;
+            RaiseEventDoneParsing(sender, name, pars, forceNoOverride);
         }
 
 		private void ExecuteRemotelyEvent (string evt, Node pars, string url)
@@ -476,7 +412,6 @@ namespace Magix.Core
 		private void RaiseEventDoneParsing(
 			object sender, 
 			string name, 
-			List<string> tokens, 
 			Node pars,
 			bool forceNoOverride)
 		{
@@ -526,139 +461,6 @@ namespace Magix.Core
                 	ExecuteEventMethod(idx.Item1, idx.Item2, sender, e);
             }
 		}
-
-		private Node RaiseSingleEventWithTokens(
-			object sender, 
-			string name, 
-			List<string> tokens, 
-			Node pars,
-			bool forceNoOverride)
-		{
-			if (tokens.Count == 0 || 
-			    (tokens.Count >= 2 && tokens[0] == "(" && tokens[1] == ")"))
-			{
-				// Either only an event name, or an event name followed by two parantheses
-				if (tokens.Count >= 2 && tokens[0] == "(" && tokens[1] == ")")
-				{
-					tokens.RemoveAt (0);
-					tokens.RemoveAt (0);
-				}
-				RaiseEventDoneParsing(sender, name, tokens, pars, forceNoOverride);
-				if (tokens.Count > 0)
-				{
-					if(tokens[0] == "&")
-					{
-						tokens.RemoveAt (0);
-						string nextName = tokens[0];
-						tokens.RemoveAt (0);
-						return RaiseSingleEventWithTokens(sender, nextName, tokens, pars, false);
-					}
-					else
-						throw new ArgumentException("Don't know how to parse parameters at end");
-				}
-			}
-			else if (tokens.Count > 2 && 
-			         tokens[0] == "(" && 
-			         tokens[1] != ")" && 
-			         tokens[1].IndexOf("[") != 0)
-			{
-				// Another Active Event inside of Parantheses
-				// First raise Inner Event(s), then raise current
-				tokens.RemoveAt (0);
-				int parantheses = 0;
-				int index = 0;
-				while (true)
-				{
-					if(parantheses == 0 && tokens[index] == ")")
-					{
-						tokens.RemoveAt (index);
-						break;
-					}
-					else if(tokens[index] == "(")
-						parantheses += 1;
-					else if(tokens[index] == ")")
-						parantheses -= 1;
-					index += 1;
-				}
-				string nameInner = tokens[0];
-				tokens.RemoveAt (0);
-
-				// Raising "Inner" event(s) first
-				pars = RaiseSingleEventWithTokens (sender, nameInner, tokens, pars, false);
-
-				// Then raising "this" event
-				RaiseEventDoneParsing(sender, name, tokens, pars, forceNoOverride);
-				if (tokens.Count > 0)
-				{
-					if(tokens[0] == "&")
-					{
-						tokens.RemoveAt (0);
-						string nextName = tokens[0];
-						tokens.RemoveAt (0);
-						return RaiseSingleEventWithTokens (sender, nextName, tokens, pars, false);
-					}
-					else
-						throw new ArgumentException("Don't know how to parse parameters at end");
-				}
-			}
-			else if (tokens.Count > 2 && 
-			         tokens[0] == "(" && 
-			         tokens[1] != ")" && 
-			         tokens[1].IndexOf("[") == 0)
-			{
-				// Expression inside of Parantheses
-				// First parse Expression, then raise current
-				tokens.RemoveAt (0);
-				int parantheses = 0;
-				int index = 0;
-				while (true)
-				{
-					if(parantheses == 0 && tokens[index] == ")")
-					{
-						tokens.RemoveAt (index);
-						break;
-					}
-					else if(tokens[index] == "(")
-						parantheses += 1;
-					else if(tokens[index] == ")")
-						parantheses -= 1;
-					index += 1;
-				}
-
-				object exprValue = Expressions.GetExpressionValue(tokens[0], pars, pars, false);
-
-				tokens.RemoveAt (0);
-
-				// Then raising "this" event
-				RaiseEventDoneParsing(sender, name, tokens, (Node)exprValue, forceNoOverride);
-
-				if (tokens.Count > 0)
-				{
-					if(tokens[0] == "&")
-					{
-						tokens.RemoveAt (0);
-						string nextName = tokens[0];
-						tokens.RemoveAt (0);
-						return RaiseSingleEventWithTokens(sender, nextName, tokens, pars, false);
-					}
-					else
-						throw new ArgumentException("Don't know how to parse parameters at end");
-				}
-			}
-			return pars;
-		}
-
-		private Node RaiseEventImplementation (object sender, 
-			string code, 
-			Node pars,
-		    bool forceNoOverride)
-		{
-			List<string> tokens = ExtractTokens(code);
-			string name = tokens.Count == 0 ? "" : tokens[0];
-			if (tokens.Count > 0)
-				tokens.RemoveAt(0);
-			return RaiseSingleEventWithTokens(sender, name, tokens, pars, forceNoOverride);
-        }
 
         internal void AddListener(object context, MethodInfo method, string name)
         {
