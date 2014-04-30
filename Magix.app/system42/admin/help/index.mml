@@ -80,6 +80,13 @@ link-button=>magix-markup-language
       file=>system42\admin\help\backend\magix-markup-language.mml
 }}</li>
 <li>{{
+link-button=>web-controls-hl
+  text=>web controls
+  onclick
+    magix.help.open-file
+      file=>system42\admin\help\backend\web-controls.mml
+}}</li>
+<li>{{
 link-button=>unit-tests
   text=>unit testing magix
   onclick
@@ -176,7 +183,7 @@ link-button=>hyperlisp-5
 }}</li>
 <li>{{
 link-button=>hyperlisp-6
-  text=>all default keywords
+  text=>all hyper lisp keywords
   onclick
     magix.help.open-file
       file=>system42\admin\help\hyper-lisp\existing-keywords.mml
