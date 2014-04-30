@@ -25,11 +25,11 @@ namespace Magix.forms
 			{
 				e.Params["event:magix.forms.create-web-part"].Value = null;
 				e.Params ["_no-embed"].Value = true;
-				e.Params["inspect"].Value = @"creates a form from the given value of the node, 
+				e.Params["inspect"].Value = @"<p>creates a form from the given value of the node, 
 the [id] node's value serves as unique id if more than
 one form of the same type is injected onto the same page.&nbsp;&nbsp;
 use [css] to set css class of wrapping control, and [tag] to set html tag
-of wrapping control.&nbsp;&nbsp;not thread safe";
+of wrapping control</p>";
 				e.Params["container"].Value = "content5";
 				e.Params["form-id"].Value = "sample-form";
 				e.Params["controls"]["form"].Value = "name-of-your-form";

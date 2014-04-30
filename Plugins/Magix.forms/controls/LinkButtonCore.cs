@@ -95,16 +95,32 @@ namespace Magix.forms
 		protected override void Inspect (Node node)
 		{
 			node["event:magix.forms.create-web-part"].Value = null;
-			node["inspect"].Value = @"creates a link button type of web control.&nbsp;&nbsp;
-a link button looks, and renders, like a [hyperlink], but acts like a [button].&nbsp;&nbsp;
-[text] is visible text, or anchor text.&nbsp;&nbsp;[key] is keyboard shortcut.&nbsp;&nbsp;
-[enabled] can be true or false";
+            node["inspect"].Value = node["inspect"].Get<string>("") + @"<p>creates a link-button type of web control.&nbsp;&nbsp;
+a link-button looks, and renders, like a [hyperlink], but acts like a [button].&nbsp;&nbsp;
+the link-button is probably one of the most commonly used web control, both in magix, and on the web in general.&nbsp;&nbsp;
+it renders as &lt;a href='...'&gt;anchor text&lt;/a&gt;.&nbsp;&nbsp;the link-button 
+is a clickable object, and logically similar to [button], though rendered differently.&nbsp;&nbsp;
+although virtually anything can be a clickable object in magix, it is often more polite to use buttons and link-buttons 
+as your clickable objects.&nbsp;&nbsp;first of all, since these web controls are recognized by screen readers and 
+such.&nbsp;&nbsp;secondly, because it keeps the semantic parts of your website more 
+correct</p>";
+            base.Inspect(node["controls"]["link-button"]);
+            node["inspect"].Value = node["inspect"].Get<string>("") + @"<p><strong>properties for link-button</strong></p>
+<p>[text] is the visible text, or anchor text.&nbsp;&nbsp;this is the property which is changed or retrieved 
+when you invoke the [magix.forms.set-value] and the [magix.forms.get-value] for your web control</p>
+<p>[key] is the keyboard shortcut.&nbsp;&nbsp;
+how to invoke the keyboard shortcut is different from system to system, but on a windows system, you normally 
+invoke the keyboard shortcut with alt+shift+your-key.&nbsp;&nbsp;if you have for instance 's' as your keyboard 
+shortcut, then the end user will have to click shift+alt+s at the same time to invoke the keyboard shortcut 
+for your web control</p>
+<p>[enabled] enables or disables the web control.&nbsp;&nbsp;this can be changed or retrieved after the 
+button is created by invoking the [magix.forms.set-enabled] or [magix.forms.get-enabled] active events.&nbsp;&nbsp;
+legal values are true and false</p>";
 			node["container"].Value = "content5";
 			node["form-id"].Value = "sample-form";
 			node["controls"]["link-button"]["text"].Value = "hello world";
 			node["controls"]["link-button"]["key"].Value = "C";
 			node["controls"]["link-button"]["enabled"].Value = true;
-			base.Inspect(node["controls"]["link-button"]);
 		}
 	}
 }

@@ -144,19 +144,23 @@ and value being the value of the control";
 
 		protected override void Inspect (Node node)
 		{
-			node["event:magix.forms.create-web-part"].Value = null;
-			node["inspect"].Value = @"creates a panel type of web control.&nbsp;&nbsp;
-a panel is highly useful, since it can be a container for other controls.&nbsp;&nbsp;
-you can also set the [default] to the id of a specific control, such as a button, 
-which will automatically raise [onclick] on that control if carriage return
-is entered into a [text-box], or something similar, within the scope of the [panel].&nbsp;&nbsp;
-[tag] sets html tag to render panel as.&nbsp;&nbsp;[default] sets the defaul 
-control within your panel.&nbsp;&nbsp;[controls] contains a child control collection";
-			node["container"].Value = "content5";
+            node["event:magix.forms.create-web-part"].Value = null;
+            node["inspect"].Value = node["inspect"].Get<string>("") + @"<p>creates a panel type of web control.&nbsp;&nbsp;
+a panel is a container control for other web controls.&nbsp;&nbsp;add up other web controls and controls 
+into its [control] collection, such that your panel serves as a wrapper for your other controls.&nbsp;&nbsp;
+you can also set the [default] to the id of a specific control, 
+such as a button, which will automatically raise [onclick] on that control if carriage return
+is entered into a [text-box], or something similar, within the scope of the web control</p>";
+            base.Inspect(node["controls"]["dynamic"]);
+            node["inspect"].Value = node["inspect"].Get<string>("") + @"<p><strong>properties for panel</strong>
+<p>[tag] sets html tag to render panel as.&nbsp;&nbsp;
+you can change this to any html tag you wish for the control to be rendered within, such as p, div, label, span or address, etc</p>
+<p>[default] sets the default control within your web control.&nbsp;&nbsp;this is the control which will be automatically 
+clicked if carriage return is pressed while a child control of the dynamic hass focus</p>";
+            node["container"].Value = "content5";
 			node["form-id"].Value = "sample-form";
 			node["controls"]["panel"]["tag"].Value = "p|div|address|etc";
 			node["controls"]["panel"]["default"].Value = "default-button";
-			base.Inspect(node["controls"]["panel"]);
 			node["controls"]["panel"]["controls"]["button"].Value = "default-button";
 			node["controls"]["panel"]["controls"]["button"]["text"].Value = "don't work";
 		}

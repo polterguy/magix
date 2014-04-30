@@ -118,23 +118,30 @@ namespace Magix.forms
 		protected override void Inspect (Node node)
 		{
 			node["event:magix.forms.create-web-part"].Value = null;
-			node["inspect"].Value = @"creates a radio input type of web control.&nbsp;&nbsp;
-several radio controls can be combined together to form a multiple
+            node["inspect"].Value = node["inspect"].Get<string>("") + @"<p>creates a radio button type of web control.&nbsp;&nbsp;
+several radio buttons can be combined together to form a multiple
 choice type of input value in combination.&nbsp;&nbsp; to create a group
 of related [radio] controls, make sure all grouped radio controls have the 
 same [group] value.&nbsp;&nbsp;then only one of your radio controls can be 
 selected at the same time.&nbsp;&nbsp;meaning you can ask questions such as, 
-'chicken, fish or veggies?'.&nbsp;&nbsp;[groups] sets group association of control.&nbsp;&nbsp;
-[checked] sets its state to true or false.&nbsp;&nbsp;[key] changes keyboard shortcut.&nbsp;&nbsp;
-[enabled] changes the enabled state of your control to true or false.&nbsp;&nbsp;
-[oncheckedchanged] is raised when checked state of control changes";
+'chicken, fish or veggies?'</p>";
+            base.Inspect(node["controls"]["radio"]);
+            node["inspect"].Value = node["inspect"].Get<string>("") + @"<p><strong>properties for radio button</strong></p>
+[group] sets group association of control.&nbsp;&nbsp;only one radio button belonging to the same group can at any 
+one particular time be checked</p>
+<p>[checked] sets its state to true or false</p><p>[key] is the keyboard shortcut.&nbsp;&nbsp;
+how to invoke the keyboard shortcut is different from system to system, but on a windows system, you normally 
+invoke the keyboard shortcut with alt+shift+your-key.&nbsp;&nbsp;if you have for instance 's' as your keyboard 
+shortcut, then the end user will have to click shift+alt+s at the same time to invoke the keyboard shortcut 
+for your web control</p><p>[enabled] enables or disables the web control.&nbsp;&nbsp;this can be changed or retrieved after the 
+button is created by invoking the [magix.forms.set-enabled] or [magix.forms.get-enabled] active events.&nbsp;&nbsp;
+legal values are true and false</p>";
 			node["container"].Value = "content5";
 			node["form-id"].Value = "sample-form";
 			node["controls"]["radio"]["group"].Value = "id_of_group";
 			node["controls"]["radio"]["checked"].Value = true;
 			node["controls"]["radio"]["key"].Value = "C";
 			node["controls"]["radio"]["enabled"].Value = true;
-			base.Inspect(node["controls"]["radio"]);
 			node["controls"]["radio"]["oncheckedchanged"].Value = "hyper lisp code";
 		}
 		

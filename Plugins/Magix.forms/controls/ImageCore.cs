@@ -92,16 +92,25 @@ namespace Magix.forms
         protected override void Inspect(Node node)
 		{
 			node["event:magix.forms.create-web-part"].Value = null;
-			node["inspect"].Value = @"creates an image type of web control.&nbsp;&nbsp;
-useful showing images, where you need dynamic behavior, such as onclick event handlers,
-or changing the image src during execution.&nbsp;&nbsp;use [src] to set image url.&nbsp;&nbsp;
-use [alt] to set alternating text.&nbsp;&nbsp;use [key] to set keyboard shortcut";
+            node["inspect"].Value = node["inspect"].Get<string>("") + @"<p>creates an image type of web control.&nbsp;&nbsp;
+the image web control is useful for showing images, where you need dynamic behavior, such as onclick event handlers,
+or the ability to change the image shown during execution</p>";
+            base.Inspect(node["controls"]["image"]);
+            node["inspect"].Value = node["inspect"].Get<string>("") + @"<p><strong>properties for hyperlink</strong></p>
+<p>[src] sets the image url.&nbsp;&nbsp;this is the property which is changed or retrieved 
+when you invoke the [magix.forms.set-value] and the [magix.forms.get-value] for your web control</p>
+<p>[alt] sets alternating text.&nbsp;&nbsp;the alternating text will be displayed while image is loading, or 
+if the image cannot be found.&nbsp;&nbsp;in addition, the [alt] teext will also be the descriptive text 
+that screen readers will read up loud to the user</p><p>[key] is the keyboard shortcut.&nbsp;&nbsp;
+how to invoke the keyboard shortcut is different from system to system, but on a windows system, you normally 
+invoke the keyboard shortcut with alt+shift+your-key.&nbsp;&nbsp;if you have for instance 's' as your keyboard 
+shortcut, then the end user will have to click shift+alt+s at the same time to invoke the keyboard shortcut 
+for your web control</p>";
 			node["container"].Value = "content5";
 			node["form-id"].Value = "sample-form";
 			node["controls"]["image"]["src"].Value = "media/images/magix-logo.png";
 			node["controls"]["image"]["alt"].Value = "alternative text";
 			node["controls"]["image"]["key"].Value = "C";
-			base.Inspect(node["controls"]["image"]);
 		}
 	}
 }

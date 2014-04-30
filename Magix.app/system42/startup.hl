@@ -11,11 +11,17 @@ int this event, since it is the equivalent of the starting of application
 pool process"
 
 
-magix.file.list-files=>system42/startup-scripts
-  filter=>*.hl
+magix.file.directory-exist=>system42/startup-scripts
 
-for-each=>[magix.file.list-files][files]
-  set=>[@][execute-file].Value
-    value=>[.].Name
-  execute-file
+if=>equals
+  lhs=>[magix.file.directory-exist][value].Value
+  rhs=>true
+  code
+    magix.file.list-files=>system42/startup-scripts
+      filter=>*.hl
+
+    for-each=>[@][magix.file.list-files][files]
+      set=>[@][execute-file].Value
+        value=>[.].Name
+      execute-file
 
