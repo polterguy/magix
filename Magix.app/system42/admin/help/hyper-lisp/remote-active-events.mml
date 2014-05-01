@@ -21,6 +21,7 @@ if you wish.&nbsp;&nbsp;consider the following code</p>
 
 <pre>
 event=>magix.sample.remotely-accessible
+  persist=>false
   code
     _do_some_piece_of_logic_here
 open=>magix.sample.remotely-accessible

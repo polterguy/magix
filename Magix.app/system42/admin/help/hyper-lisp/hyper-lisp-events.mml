@@ -12,6 +12,7 @@ a normal active event</p>
 
 <pre>
 event=>magix.sample.foo
+  persist=>false
   code
     magix.viewport.show-message
       message=>howdy world
@@ -29,6 +30,7 @@ the [remotable] node, and set its value to true, as below</p>
 
 <pre>
 event=>magix.sample.foo
+  persist=>false
   <strong>remotable=>true</strong>
   code
     _do_mumbo_jumbo_code
@@ -58,6 +60,7 @@ different invocations, change the event to show the debug window with the follow
 
 <pre>
 event=>magix.sample.foo
+  persist=>false
   code
     debug
 </pre>
@@ -84,6 +87,7 @@ and can actually modify parts of the tree, which are outside of itself.&nbsp;&nb
 
 <pre>
 event=>magix.sample.bar
+  persist=>false
   code
     if=>exist
       lhs=>[$][_dp]
@@ -126,6 +130,7 @@ keyword.&nbsp;&nbsp;consider the following</p>
 
 <pre>
 event=>magix.sample.foo-2
+  persist=>false
   code
     magix.viewport.show-message
       message=>howdy world

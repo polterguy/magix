@@ -5,6 +5,7 @@ test the [magix.execute.lambda] keyword"
 
 
 event=>magix.test.lambda
+  persist=>false
   inspect=>@"asserts that [lambda] works the 
 way it should work, and that it allows for 
 passing parameters in and out of the expression.&nbsp;&nbsp;

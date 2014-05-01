@@ -5,6 +5,7 @@ test the [magix.execute.if] keyword"
 
 
 event=>magix.test.if-complex-true
+  persist=>false
   inspect=>@"asserts that [if] works the 
 way it should work, and returns 
 true if a complex expresssion is given, 
@@ -30,6 +31,7 @@ and it is true"
 evaluated true returned false"
 
 event=>magix.test.if-complex-false
+  persist=>false
   inspect=>@"asserts that [if] works the 
 way it should work, and returns 
 false if a complex expresssion is given, 
@@ -55,6 +57,7 @@ evaluated false returned true"
 
 
 event=>magix.test.if-complex-multiple-and-true
+  persist=>false
   inspect=>@"asserts that [if] works the 
 way it should work, and returns 
 true if a complex expresssion is given, 
@@ -84,6 +87,7 @@ evaluated true returned false"
 
 
 event=>magix.test.if-complex-multiple-and-false
+  persist=>false
   inspect=>@"asserts that [if] works the 
 way it should work, and returns 
 false if a complex expresssion is given, 
@@ -112,6 +116,7 @@ evaluated false returned true"
 
 
 event=>magix.test.if-complex-multiple-or-true
+  persist=>false
   inspect=>@"asserts that [if] works the 
 way it should work, and returns 
 true if a complex expresssion is given, 
@@ -141,6 +146,7 @@ evaluated true returned false"
 
 
 event=>magix.test.if-complex-multiple-or-false
+  persist=>false
   inspect=>@"asserts that [if] works the 
 way it should work, and returns 
 false if a complex expresssion is given, 
@@ -169,6 +175,7 @@ evaluated false returned true"
 
 
 event=>magix.test.if-complex-tree-and-true
+  persist=>false
   inspect=>@"asserts that [if] works the 
 way it should work, and returns 
 true if a complex expresssion is given, 
@@ -199,6 +206,7 @@ evaluated true returned false"
 
 
 event=>magix.test.if-complex-tree-or-true
+  persist=>false
   inspect=>@"asserts that [if] works the 
 way it should work, and returns 
 true if a complex expresssion is given, 
@@ -229,6 +237,7 @@ evaluated true returned false"
 
 
 event=>magix.test.if-complex-tree-or-false
+  persist=>false
   inspect=>@"asserts that [if] works the 
 way it should work, and returns 
 false if a complex expresssion is given, 

@@ -5,6 +5,7 @@ test the [magix.execute.index-of] keyword"
 
 
 event=>magix.test.index-of
+  persist=>false
   inspect=>@"asserts that [index-of] works the 
 way it should work"
   code

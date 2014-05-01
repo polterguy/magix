@@ -5,6 +5,7 @@ test the [magix.execute.join] keyword"
 
 
 event=>magix.test.join
+  persist=>false
   inspect=>@"asserts that [join] works the 
 way it should work"
   code

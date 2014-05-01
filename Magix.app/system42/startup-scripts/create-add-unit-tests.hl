@@ -5,6 +5,7 @@ test the [magix.execute.add] keyword"
 
 
 event=>magix.test.add-with-value
+  persist=>false
   inspect=>@"asserts that [add] works the 
 way it should work, by trying to add a list
 of nodes, pointed to by the [value] child
@@ -22,7 +23,9 @@ node"
         throw=>@"[add] didn't behave as expected 
 when invoking with an expression in the [value] node"
 
+
 event=>magix.test.add-with-children
+  persist=>false
   inspect=>@"asserts that [add] works the 
 way it should work, by trying to add a list
 of nodes, whom are children nodes of the 
@@ -38,4 +41,26 @@ of nodes, whom are children nodes of the
       code
         throw=>@"[add] didn't behave as expected 
 when invoking with a list of child nodes"
+
+
+event=>magix.test.add-no-children
+  persist=>false
+  inspect=>@"asserts that [add] works the 
+way it should work, by trying to add a list
+of nodes, whom are pointed to by the [value] 
+node, with the [children-only] set to true"
+  code
+    _data1
+      tmp=>testing
+    _buffer
+    add=>[_buffer]
+      value=>[_data1]
+      children-only=>true
+    if=>not-equals
+      lhs=>[_buffer][tmp].Value
+      rhs=>testing
+      code
+        throw=>@"[add] didn't behave as expected 
+when invoking with a list of child nodes, with 
+children-only set to true"
 

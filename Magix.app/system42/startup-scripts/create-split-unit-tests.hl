@@ -5,6 +5,7 @@ test the [magix.execute.split] keyword"
 
 
 event=>magix.test.split
+  persist=>false
   inspect=>@"asserts that [split] works the 
 way it should work"
   code

@@ -5,6 +5,7 @@ test the [magix.execute.while] keyword"
 
 
 event=>magix.test.while-complex
+  persist=>false
   inspect=>@"asserts that [while] works the 
 way it should work, and returns 
 true if a complex expresssion is given, 

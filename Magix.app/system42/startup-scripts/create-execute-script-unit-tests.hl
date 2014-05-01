@@ -5,6 +5,7 @@ test the [magix.execute.execute-script] keyword"
 
 
 event=>magix.test.execute-script-pass-parameters
+  persist=>false
   inspect=>@"asserts that [execute-script] works the 
 way it should work"
   code
@@ -21,6 +22,7 @@ set=>[$][output].Value
         throw=>[execute-script] did not correctly pass parameters
 
 event=>magix.test.execute-script-remove-parameters
+  persist=>false
   inspect=>@"asserts that [execute-script] removes
 output parameters when expected"
   code
