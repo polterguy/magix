@@ -45,6 +45,31 @@ your development team, while empowering your non-technical staff</p>
 <p>contact the architect behind magix at <a href="mailto:isa.lightbringer@gmail.com">isa.lightbringer@gmail.com</a>, 
 or download magix and its source code <a href="http://code.google.com/p/magix-illuminate-2">here</a></p>
 
+<p>the help parts of magix are context sensitive, which means that as you click around in magix, the help 
+files will automatically update to reflect your choices, and show information relevant to whatever you're 
+clicking around within.&nbsp;&nbsp;this might be useful in the beginning, when you start using magix, but 
+it might also become very tiring after a while.&nbsp;&nbsp;turn off the help feature by opening up 
+your {{
+link-button=>go-to-settings
+  text=>settings
+  onclick
+    magix.viewport.clear-controls
+      container=>content2
+    magix.viewport.clear-controls
+      container=>content3
+    magix.viewport.clear-controls
+      container=>content4
+    magix.viewport.clear-controls
+      container=>content5
+    magix.forms.load-mml-web-part
+      file=>system42/admin/admin-settings.mml
+      container=>content1
+      form-id=>admin-settings
+      css=>span-17 last
+    magix.browser.scroll
+}} and change the <em>"show help in admin panel"</em> to false.&nbsp;&nbsp;you can still access help if you do, 
+by explicitly opening up help from your dashboard</p>
+
 <div class="left-3">
 <p>the c# parts are for developers who want to use magix in combination with visual studio. the other 
 parts are for everyone, including consumers of magix. choose your path below</p>

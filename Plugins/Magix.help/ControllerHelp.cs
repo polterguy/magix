@@ -372,14 +372,6 @@ button=>next-page-2
 					"magix.help.add-page",
 					tmp);
 			}
-
-            Node js = new Node();
-            js["script"].Value = string.Format("setTimeout(function(){{MUX.$('{0}').scrollIntoView();}},1);",
-                Magix.UX.Selector.FindControl<System.Web.UI.Control>(Page, "help").ClientID);
-
-            RaiseActiveEvent(
-                "magix.viewport.execute-javascript",
-                js);
 		}
 
 		private List<string> Pages
