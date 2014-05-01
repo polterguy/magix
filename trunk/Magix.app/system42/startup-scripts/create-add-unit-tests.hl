@@ -1,0 +1,41 @@
+
+
+inspect=>@"creates unit tests to 
+test the [magix.execute.add] keyword"
+
+
+event=>magix.test.add-with-value
+  inspect=>@"asserts that [add] works the 
+way it should work, by trying to add a list
+of nodes, pointed to by the [value] child
+node"
+  code
+    _data1
+      tmp=>testing
+    _buffer
+    add=>[_buffer]
+      value=>[_data1]
+    if=>not-equals
+      lhs=>[_buffer][_data1][tmp].Value
+      rhs=>testing
+      code
+        throw=>@"[add] didn't behave as expected 
+when invoking with an expression in the [value] node"
+
+event=>magix.test.add-with-children
+  inspect=>@"asserts that [add] works the 
+way it should work, by trying to add a list
+of nodes, whom are children nodes of the 
+[add] node"
+  code
+    _buffer
+    add=>[_buffer]
+      _data1
+        tmp=>testing
+    if=>not-equals
+      lhs=>[_buffer][_data1][tmp].Value
+      rhs=>testing
+      code
+        throw=>@"[add] didn't behave as expected 
+when invoking with a list of child nodes"
+

@@ -34,37 +34,37 @@ namespace Magix.execute
 		{
 			if (ShouldInspect(e.Params))
 			{
-				e.Params["event:magix.data.load"].Value = null;
-				e.Params["id"].Value = "object-id";
-				e.Params["inspect"].Value = @"loads the given [id] object, or 
-use [prototype] as filter.&nbsp;&nbsp;returns objects found as [objects], with 
-child nodes of [objects] being the matching objects.&nbsp;&nbsp;
-use [start] and [end] to fetch a specific slice of objects, [start] defaults 
+				e.Params["inspect"].Value = @"<p>loads the first object matching the given [id], 
+or if you supply a [prototype], it will return all objects matching your prototype</p>
+<p>returns objects found as [objects], with child nodes of [objects] being the matching 
+objects</p>
+<p>use [start] and [end] to fetch a specific slice of objects, [start] defaults 
 to 0 and [end] defaults to -1, which means all objects matching criteria.&nbsp;&nbsp;
-[start], [end] and [prototype] cannot be defined if [id] is given, since [id] is unique,
-and will make sure only one object is loaded.&nbsp;&nbsp;
-if [value] has children, these will be sequentially treated as insertion values
-for a string.format operation.&nbsp;&nbsp;if a [prototype] node is
-given, it can contain node values with % to signify wildcards for a match 
-operation.&nbsp;&nbsp;thread safe";
-				return;
+[start], [end] and [prototype] cannot be defined if [id] is given, since [id] is supposed 
+to be unique, and will make sure only one object is loaded</p><p>if a [prototype] node is 
+given, it can contain node values with % to signify wildcards for a match operation</p>
+<p>thread safe</p>";
+                e.Params["magix.data.load"]["id"].Value = "object-id";
+                return;
 			}
 
+            Node ip = Ip(e.Params);
+
 			Node prototype = null;
-            if (Ip(e.Params).Contains("prototype"))
-				prototype = Ip(e.Params)["prototype"];
+            if (ip.Contains("prototype"))
+				prototype = ip["prototype"];
 
 			string id = null;
-            if (Ip(e.Params).Contains("id") && Ip(e.Params)["id"].Value != null)
-                id = Ip(e.Params)["id"].Get<string>();
+            if (ip.Contains("id") && ip["id"].Value != null)
+                id = ip["id"].Get<string>();
 
 			int start = 0;
-            if (Ip(e.Params).Contains("start") && Ip(e.Params)["start"].Value != null)
-                start = Ip(e.Params)["start"].Get<int>();
+            if (ip.Contains("start") && ip["start"].Value != null)
+                start = ip["start"].Get<int>();
 
 			int end = -1;
-            if (Ip(e.Params).Contains("end") && Ip(e.Params)["end"].Value != null)
-                end = Ip(e.Params)["end"].Get<int>();
+            if (ip.Contains("end") && ip["end"].Value != null)
+                end = ip["end"].Get<int>();
 
 			if (id != null && start != 0 && end != -1 && prototype != null)
 				throw new ArgumentException("if you supply an [id], then [start], [end] and [prototype] cannot be defined");
@@ -87,7 +87,7 @@ operation.&nbsp;&nbsp;thread safe";
 					}))
 					{
 						if (idxNo >= start && (end == -1 || idxNo < end))
-                            Ip(e.Params)["objects"][idx.Id].ReplaceChildren(idx.Node.Clone());
+                            ip["objects"][idx.Id].ReplaceChildren(idx.Node.Clone());
 						idxNo++;
 					}
 					db.Close();
@@ -103,21 +103,22 @@ operation.&nbsp;&nbsp;thread safe";
 		{
 			if (ShouldInspect(e.Params))
 			{
-				e.Params["event:magix.data.save"].Value = null;
-				e.Params["id"].Value = "object-id";
-				e.Params["value"]["some-value"].Value = "value of object";
-				e.Params["inspect"].Value = @"will serialize the given [value] with 
-the given [id] in the persistent data storage.&nbsp;&nbsp;if no [id] is given, 
-a global unique identifier will be automatically assigned to the object.&nbsp;&nbsp;
-if an [id] is given, and an object with that same id exists, object will be overwritten or updated.&nbsp;&nbsp;
-thread safe";
+                e.Params["inspect"].Value = @"<p>will serialize the given [value] node with 
+the given [id] in the persistent data storage</p><p>if no [id] is given, a global unique 
+identifier will be automatically assigned to the object.&nbsp;&nbsp;if an [id] is given, 
+and an object with that same id exists, object will be overwritten or updated</p><p>
+thread safe</p>";
+                e.Params["magix.data.save"]["id"].Value = "object-id";
+                e.Params["magix.data.save"]["value"]["some-value"].Value = "value of object";
 				return;
 			}
 
-            if (!Ip(e.Params).Contains("value"))
+            Node ip = Ip(e.Params);
+
+            if (!ip.Contains("value"))
 				throw new ArgumentException("[value] must be defined for magix.data.save to actually save anything");
 
-            Node value = Ip(e.Params)["value"].Clone();
+            Node value = ip["value"].Clone();
 
 			lock (typeof(DataCore))
 			{
@@ -126,8 +127,8 @@ thread safe";
 					db.Ext().Configure().UpdateDepth(1000);
 					db.Ext().Configure().ActivationDepth(1000);
 
-                    string id = Ip(e.Params).Contains("id") ?
-                        Ip(e.Params)["id"].Get<string>() : 
+                    string id = ip.Contains("id") ?
+                        ip["id"].Get<string>() : 
 						Guid.NewGuid().ToString();
 					bool found = false;
 
@@ -157,25 +158,26 @@ thread safe";
 		{
 			if (ShouldInspect(e.Params))
 			{
-				e.Params["event:magix.data.remove"].Value = null;
-				e.Params["id"].Value = "object-id";
-				e.Params["inspect"].Value = @"removes the given [id] or [prototype] object(s) from 
-your persistent data storage.&nbsp;&nbsp;thread safe";
-				return;
+				e.Params["inspect"].Value = @"<p>removes the given [id] or [prototype] object(s) from 
+your persistent data storage</p><p>thread safe</p>";
+                e.Params["magix.data.remove"]["id"].Value = "object-id";
+                return;
 			}
 
-			Node prototype = null;
-            if (Ip(e.Params).Contains("prototype"))
-                prototype = Ip(e.Params)["prototype"];
+            Node ip = Ip(e.Params);
 
-            if ((!Ip(e.Params).Contains("id") || string.IsNullOrEmpty(Ip(e.Params)["id"].Get<string>())) && prototype == null)
+			Node prototype = null;
+            if (ip.Contains("prototype"))
+                prototype = ip["prototype"];
+
+            if ((!ip.Contains("id") || string.IsNullOrEmpty(ip["id"].Get<string>())) && prototype == null)
 				throw new ArgumentException("missing [id] or [prototype] while trying to remove object");
 
 			lock (typeof(DataCore))
 			{
                 using (IObjectContainer db = Db4oEmbedded.OpenFile(HttpContext.Current.Request.MapPath("~/" + _dbFile)))
 				{
-                    string id = Ip(e.Params).Contains("id") ? Ip(e.Params)["id"].Get<string>() : null;
+                    string id = ip.Contains("id") ? ip["id"].Get<string>() : null;
 					foreach (Storage idx in db.Ext().Query<Storage>(
 						delegate(Storage obj)
 						{
@@ -201,16 +203,17 @@ your persistent data storage.&nbsp;&nbsp;thread safe";
 		{
 			if (ShouldInspect(e.Params))
 			{
-				e.Params["event:magix.data.count"].Value = null;
-				e.Params["inspect"].Value = @"returns the total number 
-of objects in data storage as [count], add [prototype] to filter results.
-&nbsp;&nbsp;thread safe";
+				e.Params["inspect"].Value = @"<p>returns the total number of objects in 
+data storage as [count]&nbsp;&nbsp;add [prototype] to filter results</p><p>thread safe</p>";
+                e.Params["magix.data.count"].Value = null;
 				return;
 			}
 
+            Node ip = Ip(e.Params);
+
 			Node prototype = null;
-            if (Ip(e.Params).Contains("prototype"))
-                prototype = Ip(e.Params)["prototype"];
+            if (ip.Contains("prototype"))
+                prototype = ip["prototype"];
 
 			lock (typeof(DataCore))
 			{
@@ -219,7 +222,7 @@ of objects in data storage as [count], add [prototype] to filter results.
 					db.Ext().Configure().UpdateDepth(1000);
 					db.Ext().Configure().ActivationDepth(1000);
 
-                    Ip(e.Params)["count"].Value = db.Ext().Query<Storage>(
+                    ip["count"].Value = db.Ext().Query<Storage>(
 						delegate(Storage obj)
 						{
 							if (prototype != null)

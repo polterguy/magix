@@ -19,8 +19,9 @@ is not true, then control is in-visible"
       Info=>@"additional information which is in-visible 
 for the user, but might be useful 
 for the developer"
-    add-children=>[$]
+    add=>[$]
       value=>[_data]
+      children-only=>true
 
 event=>magix.forms.dox.get-web-control-methods
   inspect=>@"returns all the public c# methods and 
@@ -69,8 +70,9 @@ raised when web control has focus somehow, and the user presses a key
 on his keyboard"
       OnEsc=>@"raised when user clicks the escape key on 
 his keyboard, and the control has focus"
-    add-children=>[$]
+    add=>[$]
       value=>[_data]
+      children-only=>true
 
 
 event=>magix.forms.dox.create-dox-for.button
@@ -90,8 +92,9 @@ if false, then button is not enabled, and cannot
 be clicked or chosen"
       BlurEffect=>@"effect(s) to run when control is loosing focus"
       FocusedEffect=>@"effect(s) to run when control is gaining focus"
-    add-children=>[$]
+    add=>[$]
       value=>[_data]
+      children-only=>true
 
 event=>magix.forms.dox.create-dox-for.checkbox
   inspect=>@"creates the documentation for 
@@ -114,8 +117,9 @@ if false, then button is not enabled, and cannot
 be clicked or chosen"
       BlurEffect=>@"effect(s) to run when control is loosing focus"
       FocusedEffect=>@"effect(s) to run when control is gaining focus"
-    add-children=>[$]
+    add=>[$]
       value=>[_data]
+      children-only=>true
 
 event=>magix.forms.dox.create-dox-for.dynamicpanel
   inspect=>@"creates the documentation for 
@@ -140,8 +144,9 @@ the dynamic panel"
       DefaultWidget=>@"id of another web control, usually a button, which will 
 be 'clicked' when user clicks the carriage return 
 key inside of the dynamic panel"
-    add-children=>[$]
+    add=>[$]
       value=>[_data]
+      children-only=>true
 
 event=>magix.forms.dox.create-dox-for.hiddenfield
   inspect=>@"creates the documentation for 
@@ -150,8 +155,9 @@ the mux hiddenfield control"
     _data
       Value=>@"actual value of hidden field, 
 you can put any text information here"
-    add-children=>[$]
+    add=>[$]
       value=>[_data]
+      children-only=>true
 
 event=>magix.forms.dox.create-dox-for.hyperlink
   inspect=>@"creates the documentation for 
@@ -173,8 +179,9 @@ to use to access and change the value of
 the checkbox"
       BlurEffect=>@"effect(s) to run when control is loosing focus"
       FocusedEffect=>@"effect(s) to run when control is gaining focus"
-    add-children=>[$]
+    add=>[$]
       value=>[_data]
+      children-only=>true
 
 event=>magix.forms.dox.create-dox-for.image
   inspect=>@"creates the documentation for 
@@ -187,8 +194,9 @@ while image is being loaded"
       AccessKey=>@"which keyboard shortcut 
 to use to access and change the value of 
 the checkbox"
-    add-children=>[$]
+    add=>[$]
       value=>[_data]
+      children-only=>true
 
 event=>magix.forms.dox.create-dox-for.label
   inspect=>@"creates the documentation for 
@@ -203,8 +211,9 @@ to anything you wish, including p, div, address and so on"
 the label to another control on your page, such as a checkbox or 
 a radio button.&nbsp;&nbsp;if you do, then clicking the label 
 will toggle the checkbox or radiobutton"
-    add-children=>[$]
+    add=>[$]
       value=>[_data]
+      children-only=>true
 
 event=>magix.forms.dox.create-dox-for.linkbutton
   inspect=>@"creates the documentation for 
@@ -223,8 +232,9 @@ if false, then button is not enabled, and cannot
 be clicked or chosen"
       BlurEffect=>@"effect(s) to run when control is loosing focus"
       FocusedEffect=>@"effect(s) to run when control is gaining focus"
-    add-children=>[$]
+    add=>[$]
       value=>[_data]
+      children-only=>true
 
 event=>magix.forms.dox.create-dox-for.panel
   inspect=>@"creates the documentation for 
@@ -240,8 +250,9 @@ of the panel has focus, then the web control with the ID of
 this property will be clicked.&nbsp;&nbsp;useful if you 
 wish to have a default action upon every textbox, etc, within 
 the panel"
-    add-children=>[$]
+    add=>[$]
       value=>[_data]
+      children-only=>true
 
 event=>magix.forms.dox.create-dox-for.radiobutton
   inspect=>@"creates the documentation for 
@@ -268,8 +279,9 @@ if false, then button is not enabled, and cannot
 be clicked or chosen"
       BlurEffect=>@"effect(s) to run when control is loosing focus"
       FocusedEffect=>@"effect(s) to run when control is gaining focus"
-    add-children=>[$]
+    add=>[$]
       value=>[_data]
+      children-only=>true
 
 event=>magix.forms.dox.create-dox-for.selectlist
   inspect=>@"creates the documentation for 
@@ -301,8 +313,9 @@ if false, then button is not enabled, and cannot
 be clicked or chosen"
       BlurEffect=>@"effect(s) to run when control is loosing focus"
       FocusedEffect=>@"effect(s) to run when control is gaining focus"
-    add-children=>[$]
+    add=>[$]
       value=>[_data]
+      children-only=>true
 
 event=>magix.forms.dox.create-dox-for.textarea
   inspect=>@"creates the documentation for 
@@ -332,8 +345,9 @@ if false, then button is not enabled, and cannot
 be clicked or chosen"
       BlurEffect=>@"effect(s) to run when control is loosing focus"
       FocusedEffect=>@"effect(s) to run when control is gaining focus"
-    add-children=>[$]
+    add=>[$]
       value=>[_data]
+      children-only=>true
 
 event=>magix.forms.dox.create-dox-for.textbox
   inspect=>@"creates the documentation for 
@@ -376,8 +390,9 @@ if false, then button is not enabled, and cannot
 be clicked or chosen"
       BlurEffect=>@"effect(s) to run when control is loosing focus"
       FocusedEffect=>@"effect(s) to run when control is gaining focus"
-    add-children=>[$]
+    add=>[$]
       value=>[_data]
+      children-only=>true
 
 event=>magix.forms.dox.create-dox-for.timer
   inspect=>@"creates the documentation for 
@@ -395,8 +410,9 @@ the OnTick event"
       Interval=>@"an integer value which is the number 
 of milliseconds between each time the server side OnTick 
 event is raised"
-    add-children=>[$]
+    add=>[$]
       value=>[_data]
+      children-only=>true
 
 event=>magix.forms.dox.create-dox-for.uploader
   inspect=>@"creates the documentation for 
@@ -421,8 +437,9 @@ event"
       CssClass=>@"sets the css class(es) for the 
 web control, which is being used on the notification area 
 for the files being transfered"
-    add-children=>[$]
+    add=>[$]
       value=>[_data]
+      children-only=>true
 
 event=>magix.forms.dox.create-dox-for.wysiwyg
   inspect=>@"creates the documentation for 
@@ -486,8 +503,9 @@ has the toggle view between html and wysiwyg button visible"
 has the set bold button visible"
       BlurEffect=>@"effect(s) to run when control is loosing focus"
       FocusedEffect=>@"effect(s) to run when control is gaining focus"
-    add-children=>[$]
+    add=>[$]
       value=>[_data]
+      children-only=>true
 
 event=>magix.forms.dox.create-dox-for-web-control
   inspect=>@"creates the documentation for 
@@ -500,12 +518,15 @@ a mux web control"
         v0=>magix.forms.dox.create-dox-for
         v1=>[$][control].Value
     _evt
-    add-children=>[_data]
+    add=>[_data]
       value=>[magix.forms.dox.get-control-methods]
-    add-children=>[_data]
+      children-only=>true
+    add=>[_data]
       value=>[magix.forms.dox.get-web-control-methods]
-    add-children=>[_data]
+      children-only=>true
+    add=>[_data]
       value=>[3]
+      children-only=>true
     set=>[magix.forms.create-web-part][container].Value
       value=>[$][container].Value
     set=>[magix.forms.create-web-part][css].Value
@@ -541,10 +562,12 @@ a mux control"
         v0=>magix.forms.dox.create-dox-for
         v1=>[$][control].Value
     _evt
-    add-children=>[_data]
+    add=>[_data]
       value=>[magix.forms.dox.get-control-methods]
-    add-children=>[_data]
+      children-only=>true
+    add=>[_data]
       value=>[2]
+      children-only=>true
     set=>[magix.forms.create-web-part][container].Value
       value=>[$][container].Value
     set=>[magix.forms.create-web-part][css].Value
