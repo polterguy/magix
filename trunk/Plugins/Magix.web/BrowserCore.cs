@@ -20,7 +20,7 @@ namespace Magix.execute
 		/**
 		 * scrolls the browser window
 		 */
-		[ActiveEvent(Name = "magix.browser.scroll")]
+		[ActiveEvent(Name = "magix.viewport.scroll")]
 		public void magix_browser_scroll(object sender, ActiveEventArgs e)
 		{
 			if (ShouldInspect(e.Params))
@@ -30,7 +30,7 @@ namespace Magix.execute
 such that is shows a specific element.&nbsp;&nbsp;if no element 
 is given, it will scroll the browser window to the top.
 &nbsp;&nbsp;not thread safe";
-				e.Params["magix.browser.scroll"].Value = "id-of-some-element";
+				e.Params["magix.viewport.scroll"].Value = "id-of-some-element";
 				return;
 			}
 

@@ -142,15 +142,20 @@ if=>[Data].Value==thomas
 
 			Node json = tmp["json"].Get<Node>();
 
+            bool foundEvent = false;
 			foreach (Node idx in json)
 			{
 				if (idx.Name.StartsWith("event:"))
 				{
 					activeEvent.Text = idx.Name.Substring(6);
                     idx.UnTie();
+                    foundEvent = true;
 					break;
 				}
 			}
+
+            if (!foundEvent)
+                activeEvent.Text = "magix.execute";
 
 			tmp = new Node();
 			tmp["json"].Value = json;

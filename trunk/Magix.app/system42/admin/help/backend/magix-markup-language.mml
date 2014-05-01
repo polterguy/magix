@@ -91,7 +91,7 @@ link-button=>web-controls
   text=>web controls
   onclick
     execute-file=>system42/admin/tools/inspect-web-controls.hl
-    magix.browser.scroll
+    magix.viewport.scroll
 }}, if you wish to know all the types of web controls you can add up into your magix markup language.&nbsp;&nbsp;to understand the 
 syntax of magix markup language, it is useful to understand the {{
 link-button=>hyperlisp-syntax

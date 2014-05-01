@@ -177,10 +177,6 @@
       <Project>{4fc8426a-ed89-4100-887e-c571e3dc9c8c}</Project>
       <Name>Magix.data</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Plugins\Magix.email\Magix.email.csproj">
-      <Project>{c84d5706-3630-4b80-b3d2-8d232ea9b095}</Project>
-      <Name>Magix.email</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Plugins\Magix.execute\Magix.execute.csproj">
       <Project>{7bbd5bd2-e3fe-42c2-94f8-878f4156a03e}</Project>
       <Name>Magix.execute</Name>
