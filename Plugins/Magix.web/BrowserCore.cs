@@ -37,11 +37,11 @@ is given, it will scroll the browser window to the top.
             if (!string.IsNullOrEmpty(Ip(e.Params).Get<string>()))
             {
                 string id = Ip(e.Params).Get<string>();
-                Magix.UX.Selector.FindControl<System.Web.UI.Control>(Page, id);
+                string clientId = Magix.UX.Selector.FindControl<System.Web.UI.Control>(Page, id).ClientID;
 
                 Node js = new Node();
                 js["script"].Value = string.Format("setTimeout(function(){{MUX.$('{0}').scrollIntoView();}}, 1);",
-                    id);
+                    clientId);
 
                 RaiseActiveEvent(
                     "magix.viewport.execute-javascript",
