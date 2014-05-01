@@ -15,7 +15,7 @@ link-button=>open-executor
   text=>hyper lisp keywords
   onclick
     execute-file=>system42/admin/tools/inspect-execute.hl
-    magix.browser.scroll
+    magix.viewport.scroll
 }} and inspect them as you wish</p>
 
 <p>below are all the hyper lisp keywords of your installation, with their documentation</p>

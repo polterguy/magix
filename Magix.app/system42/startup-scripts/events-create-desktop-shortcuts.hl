@@ -228,7 +228,7 @@ shortcuts in the system.&nbsp;&nbsp;thread safe"
         category=>learn
         code
           magix.help.start-help
-          magix.browser.scroll=>help
+          magix.viewport.scroll=>help
       _default_scriptQrCode
         text=>qr codes
         category=>tools

@@ -226,9 +226,50 @@ not thread safe";
             AjaxManager.Instance.IncludeScriptFromFile(jsFile);
         }
 
-		/**
-		 * Will include a file on the client side of the given "type", which can
-		 * be "JavaScript" or "CSS"
+        /**
+         * scrolls the browser window
+         */
+        [ActiveEvent(Name = "magix.viewport.scroll")]
+        public void magix_viewport_scroll(object sender, ActiveEventArgs e)
+        {
+            if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+            {
+                e.Params["event:magix.execute"].Value = null;
+                e.Params["inspect"].Value = @"will scroll the browser window 
+such that is shows a specific element.&nbsp;&nbsp;if no element 
+is given, it will scroll the browser window to the top.
+&nbsp;&nbsp;not thread safe";
+                e.Params["magix.viewport.scroll"].Value = "id-of-some-element";
+                return;
+            }
+
+            if (!string.IsNullOrEmpty(Ip(e.Params).Get<string>()))
+            {
+                string id = Ip(e.Params).Get<string>();
+                string clientId = Magix.UX.Selector.FindControl<System.Web.UI.Control>(Page, id).ClientID;
+
+                Node js = new Node();
+                js["script"].Value = string.Format("setTimeout(function(){{MUX.$('{0}').scrollIntoView();}}, 1);",
+                    clientId);
+
+                RaiseActiveEvent(
+                    "magix.viewport.execute-javascript",
+                    js);
+            }
+            else
+            {
+                Node js = new Node();
+                js["script"].Value = "setTimeout(function(){parent.scrollTo(0,0)}, 1);";
+
+                RaiseActiveEvent(
+                    "magix.viewport.execute-javascript",
+                    js);
+            }
+        }
+
+        /**
+         * Will include a file on the client side of the given "type", which can
+         * be "JavaScript" or "CSS"
          */
         [ActiveEvent(Name = "magix.viewport.include-client-file")]
 		protected void magix_viewport_include_client_file(object sender, ActiveEventArgs e)

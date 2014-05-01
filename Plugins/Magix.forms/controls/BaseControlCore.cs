@@ -161,7 +161,7 @@ thread safe";
 			if (node.Contains("info") && !string.IsNullOrEmpty(node["info"].Get<string>()))
 				ctrl.Info = node["info"].Get<string>();
 
-			if (node.Contains("onfirstload") && node.Contains("_first") && node["_first"].Get<bool>())
+			if (node.Contains("onfirstload") && node.Contains("_first") && node["_first"].Get<bool>() && node["onfirstload"].Count > 0)
 			{
 				Node codeNode = node["onfirstload"].Clone();
 

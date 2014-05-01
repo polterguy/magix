@@ -66,7 +66,7 @@ link-button=>go-to-settings
       container=>content1
       form-id=>admin-settings
       css=>span-17 last
-    magix.browser.scroll
+    magix.viewport.scroll
 }} and change the <em>"show help in admin panel"</em> to false.&nbsp;&nbsp;you can still access help if you do, 
 by explicitly opening up help from your dashboard</p>
 
