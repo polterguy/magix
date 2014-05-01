@@ -80,14 +80,15 @@ then as you invoke the function, just append your parameters underneath the func
 invocation, and they will be passed into the function, where they will be accessible 
 underneath the [$] node, appended as the last parts of your code block, into your function 
 invocation.&nbsp;&nbsp;from outside of the function/event itself, you can access these 
-parameters directly underneath the active event itself</p><p>event will be deleted, 
-if you pass in no [code] block</p><p>if you set the [remotable] node to true, then the 
-active event will be possible to invoke by remote servers, and marked as open.&nbsp;&nbsp;
-if you set [persist] to false, then the active event will not be serialized into the 
-data storage, meaning it will only last as long as the application is not restarted.
-&nbsp;&nbsp;this is useful for active events whom are created for instance during the 
-startup of your application, since it will save time, since they will anyway be overwritten 
-the next time your application restarts</p><p>thread safe</p>";
+parameters directly underneath the active event itself</p><p>any existing event with 
+the name from the [event] node's value will be deleted, if you pass in no [code] block</p>
+<p>if you set the [remotable] node to true, then the active event will be possible to 
+invoke by remote servers, and marked as open.&nbsp;&nbsp;if you set [persist] to false, 
+then the active event will not be serialized into the data storage, meaning it will only 
+last as long as the application is not restarted.&nbsp;&nbsp;this is useful for active 
+events whom are created for instance during the startup of your application, since it 
+will save time, since they will anyway be overwritten the next time your application 
+restarts</p><p>thread safe</p>";
 				e.Params["event"].Value = "foo.bar";
                 e.Params["event"]["remotable"].Value = false;
                 e.Params["event"]["persist"].Value = false;
@@ -232,19 +233,15 @@ events raised internally within event</p>";
         {
             if (ShouldInspect(e.Params))
             {
-                e.Params.Clear();
-                e.Params["event:magix.execute"].Value = null;
-                e.Params["inspect"].Value = @"overrides the active event in [session-event]
-with the hyper lisp in the [code] expression for the current session.&nbsp;&nbsp;these types
-of functions can take and return parameters, if you wish
-to pass in or retrieve parameters, then as you invoke the 
-function, just append your args underneath the function invocation,
-and they will be passed into the function, where they will
-be accessible underneath a [$] node, appended as the last
-parts of your code block, into your function invocation.&nbsp;&nbsp;from
-outside of the function/event itself, you can access these 
-parameters directly underneath the active event itself.&nbsp;&nbsp;
-event will be deleted, if you pass in no [code] block.&nbsp;&nbsp;not thread safe";
+                e.Params["inspect"].Value = @"<p>overrides the active event in [session-event]
+with the hyper lisp in the [code] expression for the current session</p><p>these types of active 
+events can take and return parameters.&nbsp;&nbsp;if you wish to pass in or retrieve parameters, 
+then as you invoke the function, just append your args underneath the function invocation, and 
+they will be passed into the function, where they will be accessible underneath a [$] node, 
+appended as the last parts of your code block, into your function invocation.&nbsp;&nbsp;from
+outside of the function/event itself, you can access these parameters directly underneath the 
+active event itself</p><p>event will be deleted, if you pass in no [code] block</p><p>not thread 
+safe</p>";
                 e.Params["session-event"].Value = "foo.bar";
                 e.Params["session-event"]["remotable"].Value = false;
                 e.Params["session-event"]["code"]["_data"].Value = "thomas";
@@ -331,7 +328,7 @@ event will be deleted, if you pass in no [code] block.&nbsp;&nbsp;not thread saf
 					if (n.Contains("objects"))
 					{
 						Node caller = n["objects"][0]["code"];
-						_events[name].AddRange(caller);
+						_events[name].AddRange(caller.UnTie());
 						return _events[name].Clone();
 					}
 					_events[name].Value = null;
