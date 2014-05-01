@@ -6,6 +6,7 @@ test the [magix.execute.throw],
 
 
 event=>magix.test.exception
+  persist=>false
   inspect=>@"asserts that exceptions works the 
 way it should work"
   code

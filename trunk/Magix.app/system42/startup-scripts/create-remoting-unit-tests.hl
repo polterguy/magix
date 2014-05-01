@@ -8,12 +8,14 @@ test the [magix.execute.remote],
 
 
 event=>magix.test.open-remote
+  persist=>false
   inspect=>@"asserts that [open] and [remote] works the 
 way it should work, by passing parameters in through 
 the [remote] keyword, and checking to 
 see if they become correctly serialized"
   code
     event=>magix.test.temp-test-event
+      persist=>false
       code
         set=>[$][output].Value
           value=>{0} {1}
@@ -47,6 +49,7 @@ closed after being supposed to be closed"
 
 
 event=>magix.test.open-remote-throw-inspect
+  persist=>false
   inspect=>@"asserts that [open] and [remote] works the 
 way it should work, and that it throws an exception, 
 if an event is attempted to be inspected by 
@@ -55,6 +58,7 @@ through the [remote] keyword"
   code
     _success=>false
     event=>magix.test.temp-test-event
+      persist=>false
       code
     open=>magix.test.temp-test-event
     try

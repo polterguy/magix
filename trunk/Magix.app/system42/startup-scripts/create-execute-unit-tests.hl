@@ -5,6 +5,7 @@ test the [magix.execute] keyword"
 
 
 event=>magix.test.execute-allow-access-outside
+  persist=>false
   inspect=>@"asserts that modifying nodes outside
 of the [execute] scope works, when [execute] is 
 invoked without the magix. prefix.&nbsp;&nbsp;
@@ -24,6 +25,7 @@ the entire tree"
         throw=>code outside of [execute] was not modified when expected
 
 event=>magix.test.execute-do-not-allow-access-outside
+  persist=>false
   inspect=>@"asserts that modifying nodes outside
 of the [magix.execute] scope does not work, when [magix.execute] is 
 invoked with the magix. prefix.&nbsp;&nbsp;
@@ -56,6 +58,7 @@ not expected to be modified"
 not expected to be modified"
 
 event=>magix.test.execute-children-allow-access-outside
+  persist=>false
   inspect=>@"asserts that modifying nodes outside
 of the [execute] scope works, when [execute] is 
 invoked without the magix. prefix and children, 

@@ -5,6 +5,7 @@ retrieve all the public properties
 for controls and web controls in magix"
 
 event=>magix.forms.dox.get-control-methods
+  persist=>false
   inspect=>@"returns all the public c# methods and 
 properties for all controls in magix"
   code
@@ -24,6 +25,7 @@ for the developer"
       children-only=>true
 
 event=>magix.forms.dox.get-web-control-methods
+  persist=>false
   inspect=>@"returns all the public c# methods and 
 properties for all web controls in magix"
   code
@@ -76,6 +78,7 @@ his keyboard, and the control has focus"
 
 
 event=>magix.forms.dox.create-dox-for.button
+  persist=>false
   inspect=>@"creates the documentation for 
 the mux button control"
   code
@@ -97,6 +100,7 @@ be clicked or chosen"
       children-only=>true
 
 event=>magix.forms.dox.create-dox-for.checkbox
+  persist=>false
   inspect=>@"creates the documentation for 
 the mux checkbox control"
   code
@@ -122,6 +126,7 @@ be clicked or chosen"
       children-only=>true
 
 event=>magix.forms.dox.create-dox-for.dynamicpanel
+  persist=>false
   inspect=>@"creates the documentation for 
 the mux dynamic panel control"
   code
@@ -149,6 +154,7 @@ key inside of the dynamic panel"
       children-only=>true
 
 event=>magix.forms.dox.create-dox-for.hiddenfield
+  persist=>false
   inspect=>@"creates the documentation for 
 the mux hiddenfield control"
   code
@@ -160,6 +166,7 @@ you can put any text information here"
       children-only=>true
 
 event=>magix.forms.dox.create-dox-for.hyperlink
+  persist=>false
   inspect=>@"creates the documentation for 
 the mux hyperlink control"
   code
@@ -184,6 +191,7 @@ the checkbox"
       children-only=>true
 
 event=>magix.forms.dox.create-dox-for.image
+  persist=>false
   inspect=>@"creates the documentation for 
 the mux image control"
   code
@@ -199,6 +207,7 @@ the checkbox"
       children-only=>true
 
 event=>magix.forms.dox.create-dox-for.label
+  persist=>false
   inspect=>@"creates the documentation for 
 the mux label control"
   code
@@ -216,6 +225,7 @@ will toggle the checkbox or radiobutton"
       children-only=>true
 
 event=>magix.forms.dox.create-dox-for.linkbutton
+  persist=>false
   inspect=>@"creates the documentation for 
 the mux linkbutton control"
   code
@@ -237,6 +247,7 @@ be clicked or chosen"
       children-only=>true
 
 event=>magix.forms.dox.create-dox-for.panel
+  persist=>false
   inspect=>@"creates the documentation for 
 the mux panel web control"
   code
@@ -255,6 +266,7 @@ the panel"
       children-only=>true
 
 event=>magix.forms.dox.create-dox-for.radiobutton
+  persist=>false
   inspect=>@"creates the documentation for 
 the mux radiobutton control"
   code
@@ -284,6 +296,7 @@ be clicked or chosen"
       children-only=>true
 
 event=>magix.forms.dox.create-dox-for.selectlist
+  persist=>false
   inspect=>@"creates the documentation for 
 the mux select list control"
   code
@@ -318,6 +331,7 @@ be clicked or chosen"
       children-only=>true
 
 event=>magix.forms.dox.create-dox-for.textarea
+  persist=>false
   inspect=>@"creates the documentation for 
 the mux text area control"
   code
@@ -350,6 +364,7 @@ be clicked or chosen"
       children-only=>true
 
 event=>magix.forms.dox.create-dox-for.textbox
+  persist=>false
   inspect=>@"creates the documentation for 
 the mux text box control"
   code
@@ -395,6 +410,7 @@ be clicked or chosen"
       children-only=>true
 
 event=>magix.forms.dox.create-dox-for.timer
+  persist=>false
   inspect=>@"creates the documentation for 
 the mux timer control"
   code
@@ -415,6 +431,7 @@ event is raised"
       children-only=>true
 
 event=>magix.forms.dox.create-dox-for.uploader
+  persist=>false
   inspect=>@"creates the documentation for 
 the mux uploader control"
   code
@@ -442,6 +459,7 @@ for the files being transfered"
       children-only=>true
 
 event=>magix.forms.dox.create-dox-for.wysiwyg
+  persist=>false
   inspect=>@"creates the documentation for 
 the mux wysiwyg web control"
   code
@@ -508,6 +526,7 @@ has the set bold button visible"
       children-only=>true
 
 event=>magix.forms.dox.create-dox-for-web-control
+  persist=>false
   inspect=>@"creates the documentation for 
 a mux web control"
   code
@@ -553,6 +572,7 @@ a mux web control"
     _data
 
 event=>magix.forms.dox.create-dox-for-control
+  persist=>false
   inspect=>@"creates the documentation for 
 a mux control"
   code

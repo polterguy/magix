@@ -6,6 +6,7 @@ in hyper lisp, you would need to do something such as the code below</p>
 
 <pre>
 event=>magix.execute.add-numbers
+  persist=>false
   code
     for-each=>[$][_ip].Value
       add=>[@][..][using][add]
@@ -17,8 +18,9 @@ event=>magix.execute.add-numbers
 
 <p>the above active event, will loop through all child nodes of [add-numbers] and add these nodes up as children to the [using] 
 keyword.&nbsp;&nbsp;then the [using] statement will calculate the sum of these numbers, before finally the [set] statement will 
-set the value of the [add-numbers] as the result of this add operation.&nbsp;&nbsp;to use the above event, consider the following 
-hyper lisp code</p>
+set the value of the [add-numbers] as the result of this add operation.&nbsp;&nbsp;the [serialize] node, tells the engine whether 
+or not it should actually persist the active event to the data storage or not.&nbsp;&nbsp;to use the above event, consider the 
+following hyper lisp code</p>
 
 <pre>
 add-numbers
@@ -47,6 +49,7 @@ to the event itself, and then execute it.&nbsp;&nbsp;modify the active event wit
 
 <pre>
 event=>magix.execute.add-numbers
+  persist=>false
   code
     for-each=>[$][_ip].Value
       add=>[@][..][using][add]

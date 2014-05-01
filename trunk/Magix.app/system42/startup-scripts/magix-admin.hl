@@ -5,7 +5,7 @@ in the magix.admin namespace"
 
 
 event=>magix.admin.open-event-executor
-
+  persist=>false
   inspect=>@"opens up the active event executor"
 
   code
@@ -25,6 +25,7 @@ event=>magix.admin.open-event-executor
       name=>Magix.admin.ExecutorForm
 
 event=>magix.admin.open-event-sniffer
+  persist=>false
   inspect=>@"opens up the active 
 event sniffer, or tracer"
   code
@@ -44,6 +45,7 @@ event sniffer, or tracer"
       name=>Magix.admin.EventSniffer
 
 event=>magix.admin.load-executor-code
+  persist=>false
   inspect=>@"opens up the active event 
 executor, and pust the [code] node into its input code
 surface"

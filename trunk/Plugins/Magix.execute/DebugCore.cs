@@ -23,11 +23,9 @@ namespace Magix.execute
 		{
 			if (ShouldInspect(e.Params))
 			{
-				e.Params["event:magix.execute"].Value = null;
-				e.Params["inspect"].Value = @"show the entire stack of hyper lisp tree 
-in a modal message box.&nbsp;&nbsp;
-alternatively, you can submit an expression, pointing to a node 
-list, to show only a subsection of the tree.&nbsp;&nbsp;not thread safe";
+				e.Params["inspect"].Value = @"<p>shows the entire stack of hyper lisp code 
+in a modal message box.&nbsp;&nbsp;alternatively, you can submit an expression, pointing 
+to a node list, to show only a subsection of the tree</p><p>not thread safe</p>";
 				e.Params["debug"].Value = null;
 				return;
 			}
@@ -38,18 +36,21 @@ list, to show only a subsection of the tree.&nbsp;&nbsp;not thread safe";
 			Node ip = e.Params ["_ip"].Value as Node;
 			Node dp = e.Params ["_dp"].Value as Node;
 
+
+            Node stack = null;
+
             if (!string.IsNullOrEmpty(ip.Get<string>()))
             {
-                ip = Expressions.GetExpressionValue(ip.Get<string>(), dp, ip, false) as Node;
-                if (ip == null)
+                stack = Expressions.GetExpressionValue(ip.Get<string>(), dp, ip, false) as Node;
+                if (stack == null)
                     throw new ArgumentException("tried to debug a non-existing node tree in [debug]");
             }
             else
-                ip = ip.RootNode();
+                stack = ip.RootNode();
 
 			Node tmp = new Node();
 
-			tmp["code"].AddRange(ip.Clone());
+			tmp["code"].AddRange(stack.Clone());
 			tmp["code"]["_state"].UnTie();
 			tmp["message"].Value = "stackdump of tree from debug instruction";
 			tmp["closable-only"].Value = true;

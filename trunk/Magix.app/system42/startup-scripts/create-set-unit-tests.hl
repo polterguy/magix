@@ -5,6 +5,7 @@ test the [magix.execute.set] keyword"
 
 
 event=>magix.test.set-complex-expression
+  persist=>false
   inspect=>@"asserts that [set] works the 
 way it should work, and assigns 
 the correct node, when a complex
@@ -33,6 +34,7 @@ correctly set the node it was supposed to set"
 
 
 event=>magix.test.set-multiple-statements
+  persist=>false
   inspect=>@"asserts that [set] works the 
 way it should work, and assigns 
 the correct value, in several

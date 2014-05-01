@@ -73,25 +73,25 @@ magix.execute blocks of code, are being correctly re-mapped";
         {
             if (ShouldInspect(e.Params))
 			{
-				e.Params.Clear();
-				e.Params["event:magix.execute"].Value = null;
-				e.Params["inspect"].Value = @"overrides the active event in [event]
-with the hyper lisp in the [code] expression.&nbsp;&nbsp;these types
-of functions can take and return parameters.&nbsp;&nbsp;if you wish
-to pass in or retrieve parameters, then as you invoke the 
-function, just append your args underneath the function invocation,
-and they will be passed into the function, where they will
-be accessible underneath a [$] node, appended as the last
-parts of your code block, into your function invocation.&nbsp;&nbsp;from
-outside of the function/event itself, you can access these 
-parameters directly underneath the active event itself.&nbsp;&nbsp;
-event will be deleted, if you pass in no [code] block.&nbsp;&nbsp;
-if you set the [remotable] node to true, then the active event 
-will be possible to invoke by remote servers, and marked as open.&nbsp;&nbsp;
-thread safe";
+				e.Params["inspect"].Value = @"<p>overrides the active event in [event]
+with the hyper lisp code in the [code] expression</p><p>these types of active events 
+can take and return parameters.&nbsp;&nbsp;if you wish to pass in or retrieve parameters, 
+then as you invoke the function, just append your parameters underneath the function 
+invocation, and they will be passed into the function, where they will be accessible 
+underneath the [$] node, appended as the last parts of your code block, into your function 
+invocation.&nbsp;&nbsp;from outside of the function/event itself, you can access these 
+parameters directly underneath the active event itself</p><p>event will be deleted, 
+if you pass in no [code] block</p><p>if you set the [remotable] node to true, then the 
+active event will be possible to invoke by remote servers, and marked as open.&nbsp;&nbsp;
+if you set [persist] to false, then the active event will not be serialized into the 
+data storage, meaning it will only last as long as the application is not restarted.
+&nbsp;&nbsp;this is useful for active events whom are created for instance during the 
+startup of your application, since it will save time, since they will anyway be overwritten 
+the next time your application restarts</p><p>thread safe</p>";
 				e.Params["event"].Value = "foo.bar";
-				e.Params["event"]["remotable"].Value = false;
-				e.Params["event"]["code"]["_data"].Value = "thomas";
+                e.Params["event"]["remotable"].Value = false;
+                e.Params["event"]["persist"].Value = false;
+                e.Params["event"]["code"]["_data"].Value = "thomas";
 				e.Params["event"]["code"]["_backup"].Value = "thomas";
 				e.Params["event"]["code"]["if"].Value = "equals";
                 e.Params["event"]["code"]["if"]["lhs"].Value = "[_data].Value";
@@ -108,7 +108,7 @@ thread safe";
 			}
 
 			if (!e.Params.Contains("_ip") || !(e.Params["_ip"].Value is Node))
-				throw new ArgumentException("you cannot raise [magix.execute.event] directly, except for inspect purposes");
+				throw new ArgumentException("you cannot raise [event] directly, except for inspect purposes");
 
 			Node ip = e.Params ["_ip"].Value as Node;
 
@@ -121,30 +121,33 @@ thread safe";
 
 			if (ip.Contains("code"))
 			{
-				// removing any previous siimilar events
-				Node n = new Node();
+                if (!ip.Contains("persist") || ip["persist"].Get<bool>())
+                {
+                    // removing any previous similar events
+                    Node n = new Node();
 
-				n["prototype"]["event"].Value = activeEvent;
-				n["prototype"]["type"].Value = "magix.execute.event";
+                    n["prototype"]["event"].Value = activeEvent;
+                    n["prototype"]["type"].Value = "magix.execute.event";
 
-				RaiseActiveEvent(
-					"magix.data.remove",
-					n);
+                    RaiseActiveEvent(
+                        "magix.data.remove",
+                        n);
 
-				n = new Node();
+                    n = new Node();
 
-				n["id"].Value = Guid.NewGuid().ToString();
-				n["value"]["event"].Value = activeEvent;
-				n["value"]["type"].Value = "magix.execute.event";
-				n["value"]["remotable"].Value = remotable;
-				n["value"]["code"].ReplaceChildren(ip["code"].Clone());
+                    n["id"].Value = Guid.NewGuid().ToString();
+                    n["value"]["event"].Value = activeEvent;
+                    n["value"]["type"].Value = "magix.execute.event";
+                    n["value"]["remotable"].Value = remotable;
+                    n["value"]["code"].ReplaceChildren(ip["code"].Clone());
 
-				if (ip.Contains("inspect"))
-					n["value"]["inspect"].Value = ip["inspect"].Value;
+                    if (ip.Contains("inspect"))
+                        n["value"]["inspect"].Value = ip["inspect"].Value;
 
-				RaiseActiveEvent(
-					"magix.data.save",
-					n);
+                    RaiseActiveEvent(
+                        "magix.data.save",
+                        n);
+                }
 
 				ActiveEvents.Instance.CreateEventMapping(
 					activeEvent, 
@@ -184,8 +187,9 @@ thread safe";
         {
             if (ShouldInspect(e.Params))
             {
-                e.Params["inspect"].Value = @"dynamically created active event, created with the [magix.execute.event] keyword.&nbsp;&nbsp;
-thread safety is dependent upon the events raised internally within event";
+                e.Params["inspect"].Value = @"<p>dynamically created active event, 
+created with the [event] keyword.&nbsp;&nbsp;thread safety is dependent upon the 
+events raised internally within event</p>";
 
                 Node le = new Node();
 
@@ -203,7 +207,6 @@ thread safety is dependent upon the events raised internally within event";
                     if (le["objects"][0].Contains("inspect"))
                         e.Params["inspect"].Value = le["objects"][0]["inspect"].Value;
                 }
-
                 return;
             }
 
