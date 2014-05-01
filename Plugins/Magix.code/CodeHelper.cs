@@ -27,7 +27,6 @@ namespace Magix.code
 			if (ShouldInspect(e.Params))
 			{
 				e.Params.Clear();
-				e.Params["event:magix.code.node-2-code"].Value = null;
 				e.Params["inspect"].Value = @"will transform the [json] node to 
 code syntax, and return in [code].&nbsp;&nbsp;code returned will be the 
 textual representation of the original tree hierarchy, such that 
@@ -35,7 +34,7 @@ two spaces ' ' opens up the child collection.&nbsp;&nbsp;=> separates
 name and value of node, name first.&nbsp;&nbsp;code returned might also
 contain type information for types of int, decimal, datetime and bool.&nbsp;&nbsp;
 if [remove-root] is true, then the root node will be removed.&nbsp;&nbsp;thread safe";
-				e.Params["json"]["something"].Value =  "something-else";
+                e.Params["magix.code.node-2-code"]["json"]["something"].Value = "something-else";
 				return;
 			}
 
@@ -43,17 +42,21 @@ if [remove-root] is true, then the root node will be removed.&nbsp;&nbsp;thread 
 			{
 				throw new ArgumentException("no [json] passed into node-2-code");
 			}
+
+            Node ip = Ip(e.Params);
+
 			Node node = null;
-            if (Ip(e.Params)["json"].Value != null)
-                node = Ip(e.Params)["json"].Value as Node;
+            if (ip["json"].Value != null)
+                node = ip["json"].Value as Node;
 			else
-                node = Ip(e.Params)["json"].Clone();
-            if (Ip(e.Params).Contains("remove-root") && Ip(e.Params)["remove-root"].Get<bool>())
+                node = ip["json"].Clone();
+            if (ip.Contains("remove-root") && ip["remove-root"].Get<bool>())
             {
                 node = node[0];
             }
+
 			string txt = ParseNodes(0, node);
-            Ip(e.Params)["code"].Value = txt;
+            ip["code"].Value = txt;
 		}
 
 		private static string ParseNodes(int indent, Node node)
@@ -141,10 +144,12 @@ code
 				return;
 			}
 
-            if (!Ip(e.Params).Contains("code"))
-				throw new ArgumentException("No code node passed into _transform-code-2-node");
+            Node ip = Ip(e.Params);
 
-            string txt = Ip(e.Params)["code"].Get<string>();
+            if (!ip.Contains("code"))
+				throw new ArgumentException("No [code] node passed into _transform-code-2-node");
+
+            string txt = ip["code"].Get<string>();
 			Node ret = new Node();
 			using (TextReader reader = new StringReader(txt))
 			{
@@ -312,7 +317,7 @@ code
 					}
 				}
 			}
-            Ip(e.Params)["json"].Value = ret;
+            ip["json"].Value = ret;
 		}
 
 		/**
@@ -331,12 +336,14 @@ node tree, and return in [json].&nbsp;&nbsp;thread safe";
 				return;
 			}
 
-            if (string.IsNullOrEmpty(Ip(e.Params).Get<string>()))
+            Node ip = Ip(e.Params);
+
+            if (string.IsNullOrEmpty(ip.Get<string>()))
 			{
 				throw new ArgumentException("no file passed into file-2-code");
 			}
 
-            string file = Ip(e.Params).Get<string>();
+            string file = ip.Get<string>();
 
 			Node fn = new Node();
 			fn.Value = file;
@@ -352,7 +359,7 @@ node tree, and return in [json].&nbsp;&nbsp;thread safe";
 				"magix.code.code-2-node",
 				code);
 
-            Ip(e.Params)["json"].ReplaceChildren(code["json"].Get<Node>());
+            ip["json"].ReplaceChildren(code["json"].Get<Node>());
 		}
 	}
 }
