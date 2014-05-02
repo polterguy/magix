@@ -34,10 +34,7 @@ when application pool is restarted</p><p>thread safe</p>";
 				return;
 			}
 
-			if (!e.Params.Contains("_ip") || !(e.Params["_ip"].Value is Node))
-				throw new ArgumentException("you cannot raise [override] directly, except for inspect purposes");
-
-			Node ip = e.Params["_ip"].Value as Node;
+            Node ip = Ip(e.Params);
 
             string activeEvent = ip.Get<string>();
             if (string.IsNullOrEmpty(activeEvent))
