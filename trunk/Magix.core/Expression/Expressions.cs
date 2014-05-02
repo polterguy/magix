@@ -374,9 +374,9 @@ namespace Magix.Core
                     tmpNode["code"].Value = x.Get<string>();
                     ActiveEvents.Instance.RaiseActiveEvent(
                         typeof (Expressions),
-                        "magix.code.code-2-node",
+                        "magix.execute.code-2-node",
                         tmpNode);
-                    x2 = tmpNode["json"].Value as Node;
+                    x2 = tmpNode["node"].Clone();
                 }
                 x = GetNode(lastEntity.Substring(6), x2, x2, ref innerLastReference, forcePath);
                 lastEntity = innerLastReference;

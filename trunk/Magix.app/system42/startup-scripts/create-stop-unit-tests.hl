@@ -1,0 +1,41 @@
+
+
+inspect=>@"creates unit tests to 
+test the [magix.execute.stop] keyword"
+
+
+event=>magix.test.stop
+  persist=>false
+  inspect=>@"asserts that [stop] works the 
+way it should work, by trying to stop, for then 
+to throw exceptions"
+  code
+    magix.execute
+      _ranAll=>false
+      magix.execute
+        execute
+          stop
+          throw=>@"[stop] didn't behave as expected 
+when invoking within an execute block"
+        while=>exist
+          lhs=>[while]
+          code
+            stop
+            throw=>@"[stop] didn't behave as expected 
+when invoking within a while loop"
+        for-each=>[/]
+          stop
+          throw=>@"[stop] didn't behave as expected 
+when invoking within a for-each"
+          stop
+          throw=>@"[stop] didn't behave as expected 
+when invoking within an event"
+      set=>[@][_ranAll].Value
+        value=>true
+    if=>not-equals
+      lhs=>[magix.execute][_ranAll].Value
+      rhs=>true
+      code
+        throw=>@"not all tests did run in [stop] test"
+
+

@@ -1,0 +1,28 @@
+
+
+inspect=>@"creates unit tests to 
+test the [node-2-code] and [code-2-node] keywords"
+
+
+event=>magix.test.node-2-code
+  persist=>false
+  inspect=>@"asserts that [node-2-code] works the 
+way it should work, by trying to convert from node 
+to code"
+  code
+    _data=>jo
+      buffer=>5
+      buffer=>4
+    set=>[node-2-code][node].Value
+      value=>[_data]
+    node-2-code
+    if=>not-equals
+      lhs=>[node-2-code][code].Value
+      rhs=>@"_data=>jo
+  buffer=>5
+  buffer=>4
+"
+      code
+        throw=>@"[node-2-code] didn't behave as expected"
+
+
