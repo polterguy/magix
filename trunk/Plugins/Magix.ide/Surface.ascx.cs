@@ -399,7 +399,7 @@ removing [remove] properties.&nbsp;&nbsp;not thread safe";
 							tmp);
 
 						widgetNode["properties"][idx.Name].Clear();
-						widgetNode["properties"][idx.Name].AddRange(tmp["node"].Get<Node>());
+						widgetNode["properties"][idx.Name].AddRange(tmp["node"].Clone());
 					}
 					else if (idx.Name.StartsWith("on") && string.IsNullOrEmpty(idx.Get<string>()))
 					{

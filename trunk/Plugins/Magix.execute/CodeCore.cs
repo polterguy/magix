@@ -26,11 +26,12 @@ namespace Magix.code
 			if (ShouldInspect(e.Params))
 			{
 				e.Params["inspect"].Value = @"<p>will transform the [node] node to code syntax, 
-and return in [code]</p><p>code returned will be the textual representation of the original tree 
-hierarchy, such that two spaces ' ' opens up the child collection.&nbsp;&nbsp;=&gt; separates 
-name and value of node, name first.&nbsp;&nbsp;code returned might also contain type information 
-for types of int, decimal, datetime and bool.&nbsp;&nbsp;if [remove-root] is true, then the root 
-node will be removed</p><p>thread safe</p>";
+and return in [code]</p><p>[node] can either have its nodes as the value of the [node], or as 
+children nodes, directly underneath the [node] node.&nbsp;&nbsp;code returned will be the textual 
+representation of the original tree hierarchy, such that two spaces ' ' opens up the child collection.
+&nbsp;&nbsp;=&gt; separates name and value of node, name first.&nbsp;&nbsp;code returned might also 
+contain type information for types of int, decimal, datetime and bool.&nbsp;&nbsp;if [remove-root] is 
+true, then the root node will be removed</p><p>thread safe</p>";
                 e.Params["node-2-code"]["node"]["something"].Value = "something-else";
 				return;
 			}
@@ -132,7 +133,7 @@ node will be removed</p><p>thread safe</p>";
 spaces open up child collection, =&gt; assings to value, and first parts are name of node.&nbsp;&nbsp;
 also supports =(int)&gt;, =(datetime)&gt;, =(decimal)&gt; and =(bool)&gt; to assign specific type to 
 value</p><p>thread safe</p>";
-				e.Params["code"].Value =  @"
+				e.Params["code-2-node"]["code"].Value =  @"
 code
   goes
     here";
@@ -145,7 +146,7 @@ code
 				throw new ArgumentException("No [code] node passed into [code-2-node]");
 
             string txt = ip["code"].Get<string>();
-			Node ret = new Node();
+			Node ret = ip["node"];
 			using (TextReader reader = new StringReader(txt))
 			{
 				int indents = 0;
@@ -278,7 +279,7 @@ code
                             RaiseActiveEvent(
                                 "magix.execute.code-2-node",
                                 tmpNode);
-                            value = tmpNode["node"].Value;
+                            value = tmpNode["node"].Clone();
                             break;
 						}
 					}
@@ -312,7 +313,6 @@ code
 					}
 				}
 			}
-            ip["node"].Value = ret;
 		}
 
 		/**
@@ -352,7 +352,7 @@ node tree, and return in [node]</p><p>thread safe</p>";
 				"magix.execute.code-2-node",
 				code);
 
-            ip["node"].ReplaceChildren(code["node"].Get<Node>());
+            ip["node"].ReplaceChildren(code["node"]);
 		}
 	}
 }
