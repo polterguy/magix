@@ -22,19 +22,12 @@ namespace Magix.execute
 		{
 			if (ShouldInspect(e.Params))
 			{
-				e.Params.Clear();
-				e.Params["event:magix.execute"].Value = null;
-				e.Params["inspect"].Value = @"[switch] creates a comparison 
-between all the children [case] nodes, and executes 
-the code within the [case] node who's value equals 
-the content of the [switch] node.&nbsp;&nbsp;
-the [switch] node's value can be either a constant 
-or an expression.&nbsp;&nbsp;
-if no match is found, then [default] will be
-executed, if it exist.&nbsp;&nbsp;
-notice how both the [switch] node itself, 
-and [case] nodes can be expressions.
-&nbsp;&nbsp;thread safe";
+				e.Params["inspect"].Value = @"<p>[switch] creates a comparison between all the 
+children [case] nodes, and executes the code within the [case] node who's value equals the content 
+of the [switch] node</p><p>the [switch] node's value can be either a constant or an expression.
+&nbsp;&nbsp;if no match is found, then [default] will be executed, if it exist.&nbsp;&nbsp;notice 
+how both the [switch] node itself, and [case] nodes can be expressions</p><p>&nbsp;&nbsp;thread 
+safe</p>";
                 e.Params["_data"].Value = "3";
                 e.Params["_success"].Value = "3";
                 e.Params["switch"].Value = "[_data].Value";
@@ -49,18 +42,16 @@ and [case] nodes can be expressions.
 			}
 
 			if (!e.Params.Contains("_ip") || !(e.Params["_ip"].Value is Node))
-				throw new ArgumentException("you cannot raise [magix.execute.switch] directly, except for inspect purposes");
+				throw new ArgumentException("you cannot raise [switch] directly, except for inspect purposes");
 
-			Node ip = e.Params["_ip"].Value as Node;
+			Node ip = Ip(e.Params);
 
-			Node dp = ip;
-			if (e.Params.Contains("_dp"))
-				dp = e.Params["_dp"].Value as Node;
+			Node dp = e.Params["_dp"].Value as Node;
 
 			if (!ip.Contains("case"))
 				throw new ArgumentException("[switch] needs at least one [case] value");
 
-			string value = Expressions.GetExpressionValue(ip.Get<string>(), dp, ip, false).ToString();
+			string value = Expressions.GetExpressionValue(ip.Get<string>(), dp, ip, false) as string;
             if (value == null)
                 throw new ArgumentException("[switch] statement value was null");
 
