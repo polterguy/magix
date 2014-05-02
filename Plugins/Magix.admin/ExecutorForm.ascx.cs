@@ -6,15 +6,16 @@
 
 using System;
 using System.IO;
+using System.Web;
 using System.Web.UI;
+using System.Drawing;
+using System.Diagnostics;
+using System.Configuration;
+using System.Collections.Generic;
 using Magix.UX;
 using Magix.UX.Widgets;
 using Magix.UX.Effects;
 using Magix.Core;
-using System.Web;
-using System.Configuration;
-using System.Collections.Generic;
-using System.Diagnostics;
 using Magix.UX.Widgets.Core;
 
 namespace Magix.admin
@@ -45,12 +46,13 @@ namespace Magix.admin
 				string code = Page.Request["code"];
 
 				if (string.IsNullOrEmpty(evt))
-					activeEvent.Text = "magix.viewport.show-message";
+					activeEvent.Text = "magix.execute";
 				else
 					activeEvent.Text = evt;
 
-				if (string.IsNullOrEmpty (code))
-					txtIn.Text = "inspect";
+				if (string.IsNullOrEmpty(code))
+					txtIn.Text = @"magix.viewport.show-message
+  message=>howdy world!";
 				else
 					txtIn.Text = code;
 
@@ -137,10 +139,10 @@ if=>[Data].Value==thomas
             tmp["code"].Value = Ip(e.Params)["code"].Get<string>();
 
 			RaiseActiveEvent (
-				"magix.code.code-2-node",
+				"magix.execute.code-2-node",
 				tmp);
 
-			Node json = tmp["json"].Get<Node>();
+			Node json = tmp["node"].Get<Node>();
 
             bool foundEvent = false;
 			foreach (Node idx in json)
@@ -158,10 +160,10 @@ if=>[Data].Value==thomas
                 activeEvent.Text = "magix.execute";
 
 			tmp = new Node();
-			tmp["json"].Value = json;
+			tmp["node"].Value = json;
 
 			RaiseActiveEvent (
-				"magix.code.node-2-code",
+				"magix.execute.node-2-code",
 				tmp);
 
 			txtIn.Text = tmp["code"].Get<string>();
@@ -173,10 +175,10 @@ if=>[Data].Value==thomas
             Node tmp = new Node();
             tmp["code"].Value = txtOut.Text;
             RaiseActiveEvent(
-                "magix.code.code-2-node",
+                "magix.execute.code-2-node",
                 tmp);
-            (tmp["json"].Value as Node)["inspect"].UnTie();
-            foreach (Node idx in (tmp["json"].Value as Node))
+            (tmp["node"].Value as Node)["inspect"].UnTie();
+            foreach (Node idx in (tmp["node"].Value as Node))
             {
                 if (idx.Name.StartsWith("event:"))
                 {
@@ -186,7 +188,7 @@ if=>[Data].Value==thomas
                 }
             }
             RaiseActiveEvent(
-                "magix.code.node-2-code",
+                "magix.execute.node-2-code",
                 tmp);
 			txtIn.Text = tmp["code"].Get<string>();
 		}
@@ -199,27 +201,27 @@ if=>[Data].Value==thomas
 				tmp["code"].Value = txtIn.Text;
 
 				RaiseActiveEvent(
-					"magix.code.code-2-node",
+					"magix.execute.code-2-node",
 					tmp);
 
-				foreach (Node idx in tmp["json"].Get<Node>())
+				foreach (Node idx in tmp["node"].Get<Node>())
 				{
 					if (idx.Name.StartsWith("event:"))
 					{
 						activeEvent.Text = idx.Name.Substring(6);
-						tmp["json"].Get<Node>().Remove(idx);
-						if (tmp["json"].Get<Node>().Contains("inspect"))
-							tmp["json"].Get<Node>().Remove(tmp["json"].Get<Node>()["inspect"]);
+						tmp["node"].Get<Node>().Remove(idx);
+						if (tmp["node"].Get<Node>().Contains("inspect"))
+							tmp["node"].Get<Node>().Remove(tmp["node"].Get<Node>()["inspect"]);
 						break;
 					}
 				}
 
 				RaiseActiveEvent(
 					activeEvent.Text, 
-					tmp["json"].Get<Node>());
+					tmp["node"].Get<Node>());
 
 				RaiseActiveEvent(
-					"magix.code.node-2-code", 
+					"magix.execute.node-2-code", 
 					tmp);
 
 				txtOut.Text = tmp["code"].Get<string>();
@@ -229,10 +231,10 @@ if=>[Data].Value==thomas
 				Node node = RaiseActiveEvent(activeEvent.Text);
 
 				Node tmp = new Node();
-				tmp["json"].Value = node;
+				tmp["node"].Value = node;
 
 				RaiseActiveEvent(
-					"magix.code.node-2-code", 
+					"magix.execute.node-2-code", 
 					tmp);
 
 				txtOut.Text = tmp["code"].Get<string>();

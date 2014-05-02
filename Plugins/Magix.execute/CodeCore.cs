@@ -13,43 +13,40 @@ using Magix.Core;
 namespace Magix.code
 {
 	/**
-	 * Helps you to transform Nodes back and forth between code syntax, which
-	 * is being used in the Active Event Executor
+     * transforms from node to code and vice versa
 	 */
-	public class CodeHelper : ActiveController
+	public class CodeCore : ActiveController
 	{
 		/**
 		 * transforms from code to node
 		 */
-		[ActiveEvent(Name = "magix.code.node-2-code")]
-		public static void magix_code_node_2_code(object sender, ActiveEventArgs e)
+		[ActiveEvent(Name = "magix.execute.node-2-code")]
+		public static void magix_exeute_node_2_code(object sender, ActiveEventArgs e)
 		{
 			if (ShouldInspect(e.Params))
 			{
-				e.Params.Clear();
-				e.Params["inspect"].Value = @"will transform the [json] node to 
-code syntax, and return in [code].&nbsp;&nbsp;code returned will be the 
-textual representation of the original tree hierarchy, such that 
-two spaces ' ' opens up the child collection.&nbsp;&nbsp;=> separates 
-name and value of node, name first.&nbsp;&nbsp;code returned might also
-contain type information for types of int, decimal, datetime and bool.&nbsp;&nbsp;
-if [remove-root] is true, then the root node will be removed.&nbsp;&nbsp;thread safe";
-                e.Params["magix.code.node-2-code"]["json"]["something"].Value = "something-else";
+				e.Params["inspect"].Value = @"<p>will transform the [node] node to code syntax, 
+and return in [code]</p><p>code returned will be the textual representation of the original tree 
+hierarchy, such that two spaces ' ' opens up the child collection.&nbsp;&nbsp;=&gt; separates 
+name and value of node, name first.&nbsp;&nbsp;code returned might also contain type information 
+for types of int, decimal, datetime and bool.&nbsp;&nbsp;if [remove-root] is true, then the root 
+node will be removed</p><p>thread safe</p>";
+                e.Params["node-2-code"]["node"]["something"].Value = "something-else";
 				return;
-			}
-
-            if (!Ip(e.Params).Contains("json"))
-			{
-				throw new ArgumentException("no [json] passed into node-2-code");
 			}
 
             Node ip = Ip(e.Params);
 
+            if (!ip.Contains("node"))
+			{
+				throw new ArgumentException("no [node] node passed into node-2-code");
+			}
+
 			Node node = null;
-            if (ip["json"].Value != null)
-                node = ip["json"].Value as Node;
+            if (ip["node"].Value != null)
+                node = ip["node"].Value as Node;
 			else
-                node = ip["json"].Clone();
+                node = ip["node"].Clone();
             if (ip.Contains("remove-root") && ip["remove-root"].Get<bool>())
             {
                 node = node[0];
@@ -125,18 +122,16 @@ if [remove-root] is true, then the root node will be removed.&nbsp;&nbsp;thread 
 		/**
 		 * transforms from code to node
 		 */
-		[ActiveEvent(Name = "magix.code.code-2-node")]
-		public static void magix_code_code_2_node(object sender, ActiveEventArgs e)
+		[ActiveEvent(Name = "magix.execute.code-2-node")]
+		public static void magix_execute_code_2_node(object sender, ActiveEventArgs e)
 		{
 			if (ShouldInspect(e.Params))
 			{
-				e.Params["event:magix.code.code-2-node"].Value = null;
-				e.Params["inspect"].Value = @"will transform the [code] node to 
-a node tree.&nbsp;&nbsp;the code will be returned in [json]
-as node structure, according to indentation.&nbsp;&nbsp;two spaces open up child 
-collection, => assings to value, and first parts are name of node.&nbsp;&nbsp;
-also supports =(int)>, =(datetime)>, =(decimal)> and =(bool)> to assign 
-specific type to value.&nbsp;&nbsp;thread safe";
+				e.Params["inspect"].Value = @"<p>will transform the [code] node to a node tree</p>
+<p>the code will be returned in [node] as node structure, according to indentation.&nbsp;&nbsp;two 
+spaces open up child collection, =&gt; assings to value, and first parts are name of node.&nbsp;&nbsp;
+also supports =(int)&gt;, =(datetime)&gt;, =(decimal)&gt; and =(bool)&gt; to assign specific type to 
+value</p><p>thread safe</p>";
 				e.Params["code"].Value =  @"
 code
   goes
@@ -147,7 +142,7 @@ code
             Node ip = Ip(e.Params);
 
             if (!ip.Contains("code"))
-				throw new ArgumentException("No [code] node passed into _transform-code-2-node");
+				throw new ArgumentException("No [code] node passed into [code-2-node]");
 
             string txt = ip["code"].Get<string>();
 			Node ret = new Node();
@@ -183,7 +178,7 @@ code
 						currentIndents += 1;
 					}
 					if (currentIndents % 2 != 0)
-						throw new ArgumentException("Only even number of indents allowed in json code syntax");
+						throw new ArgumentException("only even number of indents allowed in code syntax");
 					currentIndents = currentIndents / 2; // Number of nodes inwards/outwards
 
 					string name = "";
@@ -234,7 +229,7 @@ code
 									tmpLine = reader.ReadLine();
 
 									if (tmpLine == null)
-										throw new ArgumentException("Unfinished string literal: " + value);
+										throw new ArgumentException("unfinished string literal: " + value);
 								}
 							} break;
 						case "=(int)>":
@@ -275,15 +270,15 @@ code
 								tmpLine2 = reader.ReadLine();
 
 								if (tmpLine2 == null)
-									throw new ArgumentException("Unfinished string literal: " + value);
+									throw new ArgumentException("unfinished string literal: " + value);
 							}
 
                             Node tmpNode = new Node();
                             tmpNode["code"].Value = value.ToString().Trim();
                             RaiseActiveEvent(
-                                "magix.code.code-2-node",
+                                "magix.execute.code-2-node",
                                 tmpNode);
-                            value = tmpNode["json"].Value;
+                            value = tmpNode["node"].Value;
                             break;
 						}
 					}
@@ -317,30 +312,28 @@ code
 					}
 				}
 			}
-            ip["json"].Value = ret;
+            ip["node"].Value = ret;
 		}
 
 		/**
 		 * transforms from file to node
 		 */
-		[ActiveEvent(Name = "magix.code.file-2-node")]
-		public static void magix_code_file_2_node(object sender, ActiveEventArgs e)
+		[ActiveEvent(Name = "magix.execute.file-2-node")]
+		public static void magix_execute_file_2_node(object sender, ActiveEventArgs e)
 		{
 			if (ShouldInspect(e.Params))
 			{
-				e.Params.Clear();
-				e.Params["event:magix.execute"].Value = null;
-				e.Params["magix.code.file-2-code"].Value = "some-path/to-some/hyper-lisp/file.hl";
-				e.Params["inspect"].Value = @"will transform the given file as value of node to 
-node tree, and return in [json].&nbsp;&nbsp;thread safe";
-				return;
+				e.Params["inspect"].Value = @"<p>will transform the given file as value of node to 
+node tree, and return in [node]</p><p>thread safe</p>";
+                e.Params["file-2-code"].Value = "some-path/to-some/hyper-lisp/file.hl";
+                return;
 			}
 
             Node ip = Ip(e.Params);
 
             if (string.IsNullOrEmpty(ip.Get<string>()))
 			{
-				throw new ArgumentException("no file passed into file-2-code");
+				throw new ArgumentException("no file passed into [file-2-code]");
 			}
 
             string file = ip.Get<string>();
@@ -356,10 +349,10 @@ node tree, and return in [json].&nbsp;&nbsp;thread safe";
 			code["code"].Value = fn["value"].Get<string>();
 
 			RaiseActiveEvent(
-				"magix.code.code-2-node",
+				"magix.execute.code-2-node",
 				code);
 
-            ip["json"].ReplaceChildren(code["json"].Get<Node>());
+            ip["node"].ReplaceChildren(code["node"].Get<Node>());
 		}
 	}
 }

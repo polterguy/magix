@@ -310,10 +310,10 @@ not thread safe";
 							tmp["code"].Value = buffer.Replace("&gt;", ">"); // TODO: refactor such that this is done during saving of form
 
 							RaiseActiveEvent(
-								"magix.code.code-2-node",
+								"magix.execute.code-2-node",
 								tmp);
 
-							DataSource.Add(new Node("controls", tmp["json"].Get<Node>()));
+							DataSource.Add(new Node("controls", tmp["node"].Get<Node>()));
 
 							// resetting buffer
 							buffer = "";
