@@ -6,14 +6,14 @@ namespace.&nbsp;&nbsp;see the file events-create-desktop-shortcuts.hl
 in the startup-scripts folder to see an example of how you can extend
 the desktop yourself"
 
-magix.admin.get-active-events
+list-events
   begins-with=>magix.admin.desktop-shortcuts.
 
 _btn
   css=>span-6 last desktop-widget-item
   onclick
 
-for-each=>[magix.admin.get-active-events][events]
+for-each=>[list-events][events]
   set=>[/][_evts][_evt].Name
     value=>[.].Name
 

@@ -136,7 +136,7 @@ event=>magix.sample.foo-2
       message=>howdy world
 
 override=>magix.sample.doesnt-exist
-  value=>magix.sample.foo-2
+  with=>magix.sample.foo-2
 magix.sample.doesnt-exist
 </pre>
 

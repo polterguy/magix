@@ -8,9 +8,9 @@ which is not invoked locally, but sent over http to
 another server every time it is invoked"
 
 
-magix.admin.get-active-events
+list-events
   remoted=>true
-set=>[magix.admin.get-active-events].Name
+set=>[list-events].Name
   value=>Data
 for-each=>[Data][events]
   _tpl

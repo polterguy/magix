@@ -39,10 +39,10 @@ see if they become correctly serialized"
       code
         throw=>@"opened active event didn't
 return value as expected when it was remotely invoked"
-    magix.admin.get-active-events
+    list-events
       open=>true
     if=>exist
-      lhs=>[magix.admin.get-active-events][events][magix.test.temp-test-event]
+      lhs=>[list-events][events][magix.test.temp-test-event]
       code
         throw=>@"opened active event was not correctly 
 closed after being supposed to be closed"

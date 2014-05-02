@@ -5,10 +5,10 @@ magix.execute active events in the system, aka; hyper lisp keywords - and allow
 the user to inspect them by clicking them"
 
 
-magix.admin.get-active-events
+list-events
   begins-with=>magix.execute.
   all=>false
-set=>[magix.admin.get-active-events].Name
+set=>[list-events].Name
   value=>Data
 for-each=>[Data][events]
   _tpl

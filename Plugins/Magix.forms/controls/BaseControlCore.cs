@@ -37,7 +37,7 @@ thread safe";
 			tmp["begins-with"].Value = "magix.forms.controls.";
 
 			RaiseActiveEvent(
-				"magix.admin.get-active-events",
+                "magix.execute.list-events",
 				tmp);
 
             Node ip = Ip(e.Params);

@@ -24,45 +24,50 @@ namespace Magix.execute
 		{
 			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
-				e.Params["event:magix.core.application-startup"].Value = null;
-				e.Params["inspect"].Value = @"called during startup
+				e.Params["inspect"].Value = @"<p>called during startup
 of application to make sure our active events, which are dynamically remotely overridden
-are being correctly re-mapped";
+are being correctly re-mapped</p>";
 				return;
 			}
-
-			// first tunneled events
-			Node tmp = new Node();
-			tmp["prototype"]["type"].Value = "magix.execute.tunnel";
-
-			RaiseActiveEvent(
-				"magix.data.load",
-				tmp);
-
-			if (tmp.Contains("objects"))
-			{
-				foreach (Node idx in tmp["objects"])
-				{
-					ActiveEvents.Instance.OverrideRemotely(idx.Name, idx["url"].Get<string>());
-				}
-			}
-
-			// then open events
-			tmp = new Node();
-			tmp["prototype"]["type"].Value = "magix.execute.open";
-
-			RaiseActiveEvent(
-				"magix.data.load",
-				tmp);
-
-			if (tmp.Contains("objects"))
-			{
-				foreach (Node idx in tmp["objects"])
-				{
-					ActiveEvents.Instance.MakeRemotable(idx.Name);
-				}
-			}
+            RemapTunneledEvents();
+            RemapOpenEvents();
 		}
+
+        private static void RemapOpenEvents()
+        {
+            Node tmp = new Node();
+            tmp["prototype"]["type"].Value = "magix.execute.open";
+
+            RaiseActiveEvent(
+                "magix.data.load",
+                tmp);
+
+            if (tmp.Contains("objects"))
+            {
+                foreach (Node idx in tmp["objects"])
+                {
+                    ActiveEvents.Instance.MakeRemotable(idx.Name);
+                }
+            }
+        }
+
+        private static void RemapTunneledEvents()
+        {
+            Node tmp = new Node();
+            tmp["prototype"]["type"].Value = "magix.execute.tunnel";
+
+            RaiseActiveEvent(
+                "magix.data.load",
+                tmp);
+
+            if (tmp.Contains("objects"))
+            {
+                foreach (Node idx in tmp["objects"])
+                {
+                    ActiveEvents.Instance.OverrideRemotely(idx.Name, idx["url"].Get<string>());
+                }
+            }
+        }
 
 		/**
 		 * tunnel hyper lisp keyword
@@ -72,15 +77,15 @@ are being correctly re-mapped";
 		{
 			if (ShouldInspect(e.Params))
 			{
-				e.Params["event:magix.execute"].Value = null;
-				e.Params["inspect"].Value = @"creates an external override towards the given 
-[url] for the event found in value.&nbsp;&nbsp;if you pass
-in a null value as a [url], or no [url] node, the override is removed.&nbsp;&nbsp;
-make sure the other side has marked the active event as
-remotable.&nbsp;&nbsp;once a method is 'tunneled', it will no longer be
-raised locally, but every time the active event is raised internally
-within your server, it will be polymorphistically raised, on your 
-[url] end-point server instead.&nbsp;&nbsp;thread safe";
+				e.Params["inspect"].Value = @"<p>creates an external override towards the given 
+[url] for the event found in value.&nbsp;&nbsp;if you pass in a null value as a [url], or no [url] 
+node, the tunneling is removed</p><p>make sure the other side has marked the active event as 
+remotable.&nbsp;&nbsp;once a method is 'tunneled', it will no longer be raised locally, but every 
+time the active event is raised internally within your server, it will be polymorphistically 
+raised, on your [url] end-point server instead</p></p>if a [persist] parameter exists, and it has 
+a value of false, then the tunnel will not be serialized into the data layer, which is useful for 
+active events which anyway will be re-mapped when the application pool is restarted<p><p>thread 
+safe</p>";
 				e.Params["tunnel"].Value = "magix.namespace.foo";
 				e.Params["tunnel"]["url"].Value = "http://127.0.0.1:8080";
 				return;
@@ -91,42 +96,54 @@ within your server, it will be polymorphistically raised, on your
 
 			Node ip = e.Params["_ip"].Value as Node;
 
-			if (string.IsNullOrEmpty(ip.Get<string>()))
+            string activeEvent = ip.Get<string>();
+			if (string.IsNullOrEmpty(activeEvent))
 				throw new ArgumentException(
-					@"[magix.execute.tunnel] needs value, being active event name, to know 
-which event to override to go externally.&nbsp;&nbsp;tunnel cannot override null event handler");
+					@"[tunnel] needs value, being active event name, to know which event to override to go externally");
 
 			string url = ip.Contains("url") ? ip["url"].Get<string>() : null;
-			string evt = ip.Get<string>();
 
 			if (string.IsNullOrEmpty(url))
 			{
-				// removing event
-				Node n = new Node();
+                if (!ip.Contains("persist") || ip["persist"].Get<bool>())
+                {
+                    Node removeNode = new Node();
 
-				n["prototype"]["event"].Value = evt;
-				n["prototype"]["type"].Value = "magix.execute.tunnel";
+                    removeNode["prototype"]["event"].Value = activeEvent;
+                    removeNode["prototype"]["type"].Value = "magix.execute.tunnel";
 
-				RaiseActiveEvent(
-					"magix.data.remove",
-					n);
+                    RaiseActiveEvent(
+                        "magix.data.remove",
+                        removeNode);
+                }
 
-				ActiveEvents.Instance.RemoveRemoteOverride(evt);
+				ActiveEvents.Instance.RemoveRemoteOverride(activeEvent);
 			}
 			else
 			{
-				// adding event
-				Node n = new Node();
+                if (!ip.Contains("persist") || ip["persist"].Get<bool>())
+                {
+                    Node removeNode = new Node();
 
-				n["id"].Value = Guid.NewGuid();
-				n["value"]["event"].Value = evt;
-				n["value"]["type"].Value = "magix.execute.tunnel";
+                    removeNode["prototype"]["event"].Value = activeEvent;
+                    removeNode["prototype"]["type"].Value = "magix.execute.tunnel";
 
-				RaiseActiveEvent(
-					"magix.data.save",
-					n);
+                    RaiseActiveEvent(
+                        "magix.data.remove",
+                        removeNode);
 
-				ActiveEvents.Instance.OverrideRemotely(evt, url);
+                    Node saveNode = new Node();
+
+                    saveNode["id"].Value = Guid.NewGuid();
+                    saveNode["value"]["event"].Value = activeEvent;
+                    saveNode["value"]["type"].Value = "magix.execute.tunnel";
+                    saveNode["value"]["url"].Value = url;
+
+                    RaiseActiveEvent(
+                        "magix.data.save",
+                        saveNode);
+                }
+				ActiveEvents.Instance.OverrideRemotely(activeEvent, url);
 			}
 		}
 
@@ -138,40 +155,51 @@ which event to override to go externally.&nbsp;&nbsp;tunnel cannot override null
 		{
 			if (ShouldInspect(e.Params))
 			{
-				e.Params["event:magix.execute"].Value = null;
-				e.Params["inspect"].Value = @"allows the given value active event
-to be remotely invoked.&nbsp;&nbsp;this means that other servers, can
-call your active event, on your server.&nbsp;&nbsp;you could 
-create a server-api for web-services, by opening 
-active events for being remotely invoked, and such connect
-servers together, either internally as a part of your
-server park, or by exposing functionality to other networks.&nbsp;&nbsp;thread safe";
+				e.Params["inspect"].Value = @"<p>allows the given value active event
+to be remotely invoked.&nbsp;&nbsp;this means that other servers, can call your active 
+event, on your server</p><p>you can create a server-api for web-services, by opening 
+active events for being remotely invoked, and such connect servers together, either 
+internally as a part of your server park, or by exposing functionality to other networks
+</p><p>if you set [persist] to false, then the active event will not be serialized into 
+the data storage, meaning it will only last as long as the application is not restarted.
+&nbsp;&nbsp;this is useful for active events whom are created for instance during the 
+startup of your application, since it will save time, since they will anyway be overwritten 
+the next time your application restarts</p><p>thread safe</p>";
 				e.Params["open"].Value = "magix.namespace.foo";
 				return;
 			}
 
 			if (!e.Params.Contains("_ip") || !(e.Params["_ip"].Value is Node))
-				throw new ArgumentException("you cannot raise [magix.execute.tunnel] directly, except for inspect purposes");
+				throw new ArgumentException("you cannot raise [open] directly, except for inspect purposes");
 
 			Node ip = e.Params["_ip"].Value as Node;
 
-			if (string.IsNullOrEmpty(ip.Get<string>()))
-				throw new ArgumentException("magix.execute.open needs event parameter to know which event to raise externally");
+            string activeEvent = ip.Get<string>();
+            if (string.IsNullOrEmpty(activeEvent))
+				throw new ArgumentException("[open] needs event parameter to know which event to raise externally");
 
-			string evt = ip.Get<string>();
+            if (!ip.Contains("persist") || ip["persist"].Get<bool>())
+            {
+                Node removeNode = new Node();
 
-			// adding event
-			Node n = new Node();
+                removeNode["prototype"]["event"].Value = activeEvent;
+                removeNode["prototype"]["type"].Value = "magix.execute.open";
 
-			n["id"].Value = Guid.NewGuid();
-			n["value"]["event"].Value = evt;
-			n["value"]["type"].Value = "magix.execute.open";
+                RaiseActiveEvent(
+                    "magix.data.remove",
+                    removeNode);
 
-			RaiseActiveEvent(
-				"magix.data.save",
-				n);
+                Node saveNode = new Node();
 
-			ActiveEvents.Instance.MakeRemotable(evt);
+                saveNode["id"].Value = Guid.NewGuid();
+                saveNode["value"]["event"].Value = activeEvent;
+                saveNode["value"]["type"].Value = "magix.execute.open";
+
+                RaiseActiveEvent(
+                    "magix.data.save",
+                    saveNode);
+            }
+			ActiveEvents.Instance.MakeRemotable(activeEvent);
 		}
 
 		/**
@@ -182,9 +210,14 @@ server park, or by exposing functionality to other networks.&nbsp;&nbsp;thread s
 		{
 			if (ShouldInspect(e.Params))
 			{
-				e.Params["event:magix.execute"].Value = null;
-				e.Params["inspect"].Value = @"closes the active event found in
-value, such that it no longer can be remotely invoked from other servers.&nbsp;&nbsp;thread safe";
+				e.Params["inspect"].Value = @"<p>closes the active event found in
+the value of [clode], such that it no longer can be remotely invoked from other 
+servers</p><p>if you set [persist] to false, then the active event will not be 
+serialized into the data storage, meaning it will only last as long as the application 
+is not restarted.&nbsp;&nbsp;this is useful for active events whom are created for 
+instance during the startup of your application, since it will save time, since they 
+will anyway be overwritten the next time your application restarts</p><p>thread safe
+</p>";
 				e.Params["close"].Value = "magix.namespace.foo";
 				return;
 			}
@@ -194,22 +227,24 @@ value, such that it no longer can be remotely invoked from other servers.&nbsp;&
 
 			Node ip = e.Params["_ip"].Value as Node;
 
-			if (string.IsNullOrEmpty(ip.Get<string>()))
-				throw new ArgumentException("magix.execute.open needs event parameter to know which event to raise externally");
+            string activeEvent = ip.Get<string>();
 
-			string evt = ip.Get<string>();
+            if (string.IsNullOrEmpty(activeEvent))
+				throw new ArgumentException("[close] needs a value, pointing to an active event, to know which event to raise externally");
 
-			// adding event
-			Node n = new Node();
+            if (!ip.Contains("persist") || ip["persist"].Get<bool>())
+            {
+                Node removeNode = new Node();
 
-			n["prototype"]["event"].Value = evt;
-			n["prototype"]["type"].Value = "magix.execute.open";
+                removeNode["prototype"]["event"].Value = activeEvent;
+                removeNode["prototype"]["type"].Value = "magix.execute.open";
 
-			RaiseActiveEvent(
-				"magix.data.remove",
-				n);
+                RaiseActiveEvent(
+                    "magix.data.remove",
+                    removeNode);
+            }
 
-			ActiveEvents.Instance.RemoveRemotable(evt);
+			ActiveEvents.Instance.RemoveRemotable(activeEvent);
 		}
 
 		/**
@@ -218,45 +253,48 @@ value, such that it no longer can be remotely invoked from other servers.&nbsp;&
 		[ActiveEvent(Name = "magix.execute.remote")]
 		public static void magix_execute_remote(object sender, ActiveEventArgs e)
 		{
-			// TODO: is this event necessary since we've got tunnel?
 			if (ShouldInspect(e.Params))
 			{
-				e.Params["event:magix.execute"].Value = null;
-				e.Params["inspect"].Value = @"remotely invokes the active event from
-value on [remote] on the given [url], passing in all
-nodes in [pars] as parameters to your active event, returning
-any return values from event beneath [params].&nbsp;&nbsp;
-this effectively works like the magix.execute.raise keyword, 
-except the event will be serialized over http, and invoked on 
-another server, returning transparently back to the caller, 
-as if it was invoked locally.&nbsp;&nbsp;thread safe";
+				e.Params["inspect"].Value = @"<p>remotely invokes the active event from
+value on [remote] on the given [url], passing in all nodes in [pars] as parameters to 
+your active event, returning any return values from event beneath [params]</p><p>this 
+effectively raises an active event, except the event will be serialized over http, and 
+invoked on another server, returning transparently back to the caller, as if it was 
+invoked locally</p><p>thread safe</p>";
 				e.Params["remote"].Value = "magix.namespace.foo";
                 e.Params["remote"]["url"].Value = "http://127.0.0.1:8080";
-                e.Params["remote"]["params"]["your-parameters-goes-here"].Value = "http://127.0.0.1:8080";
+                e.Params["remote"]["params"]["your-parameters-goes-here"].Value = "value of parameter";
                 return;
 			}
 
 			if (!e.Params.Contains("_ip") || !(e.Params["_ip"].Value is Node))
-				throw new ArgumentException("you cannot raise [magix.execute.tunnel] directly, except for inspect purposes");
+				throw new ArgumentException("you cannot raise [remote] directly, except for inspect purposes");
 
 			Node ip = e.Params["_ip"].Value as Node;
 
-			if (!ip.Contains("url") || string.IsNullOrEmpty(ip["url"].Get<string>()))
-				throw new ArgumentException("magix.execute.remote needs url parameter to know which endpoint to go towards");
+            string activeEvent = ip.Get<string>();
+            if (string.IsNullOrEmpty(activeEvent))
+                throw new ArgumentException("[remote] needs an event parameter to know which event to raise externally");
 
-			if (string.IsNullOrEmpty(ip.Get<string>()))
-				throw new ArgumentException("magix.execute.remote needs event parameter to know which event to raise externally");
+            if (!ip.Contains("url") || string.IsNullOrEmpty(ip["url"].Get<string>()))
+				throw new ArgumentException("[remote] needs a url parameter to know which endpoint to go towards");
+            string url = ip["url"].Get<string>();
 
-			string url = ip["url"].Get<string>();
-			string evt = ip.Get<string>();
+            RemotelyInvokeActiveEvent(ip, activeEvent, url);
+		}
 
-			HttpWebRequest req = WebRequest.Create(url) as System.Net.HttpWebRequest;
+        /*
+         * helper for above
+         */
+        private static void RemotelyInvokeActiveEvent(Node ip, string activeEvent, string url)
+        {
+            HttpWebRequest req = WebRequest.Create(url) as System.Net.HttpWebRequest;
             req.Method = "POST";
             req.ContentType = "application/x-www-form-urlencoded";
 
             using (StreamWriter writer = new StreamWriter(req.GetRequestStream()))
             {
-                writer.Write("event=" + System.Web.HttpUtility.UrlEncode(evt));
+                writer.Write("event=" + System.Web.HttpUtility.UrlEncode(activeEvent));
                 if (ip.Contains("params"))
                 {
                     Node tmp = new Node(ip.Name, ip.Value);
@@ -279,16 +317,16 @@ as if it was invoked locally.&nbsp;&nbsp;thread safe";
                                 "'. Server responded with: " + val);
 
                         if (val.Length > 7)
-						{
-							Node tmp = Node.FromJSONString(val.Substring(7));
+                        {
+                            Node tmp = Node.FromJSONString(val.Substring(7));
                             ip["params"].ReplaceChildren(tmp);
-						}
+                        }
                     }
-					else
-						throw new ArgumentException("Couldn't find event '" + evt + "' on " + url);
+                    else
+                        throw new ArgumentException("couldn't find event '" + activeEvent + "' on " + url);
                 }
             }
-		}
+        }
 	}
 }
 

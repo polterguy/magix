@@ -25,7 +25,7 @@ hyper lisp you would accomplish that with the code below</p>
 
 <pre>
 override=>magix.sample.old-event
-  value=>magix.sample.new-event
+  with=>magix.sample.new-event
 </pre>
 
 <p>if you run the code above, every single time any piece of code raises the magix.sample.old-event active event, the system will actually 

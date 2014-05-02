@@ -8,10 +8,10 @@ created active event, through using the [event] hyper lisp
 keyword, or an event which is overridden with another"
 
 
-magix.admin.get-active-events
+list-events
   overridden=(bool)>True
   all=>false
-set=>[magix.admin.get-active-events].Name
+set=>[list-events].Name
   value=>Data
 for-each=>[Data][events]
   _tpl

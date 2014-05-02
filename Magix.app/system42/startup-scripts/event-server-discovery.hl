@@ -17,9 +17,9 @@ if you want to create an api for your server and services, then having this
 active event open is crucial"
 
   code
-    magix.admin.get-active-events
+    list-events
       open=(bool)>true
-    for-each=>[magix.admin.get-active-events][events]
+    for-each=>[list-events][events]
       set=>[$][events][[.].Name].Name
         value=>[.].Name
 

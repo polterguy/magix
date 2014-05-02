@@ -83,7 +83,7 @@ namespace Magix.admin
 			Node node = new Node();
 
 			RaiseActiveEvent(
-				"magix.admin.get-active-events", 
+                "magix.execute.list-events", 
 				node);
 
 			string data = "";

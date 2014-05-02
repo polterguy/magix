@@ -6,9 +6,9 @@ the user to inspect them by clicking
 them"
 
 
-magix.admin.get-active-events
+list-events
   all=>true
-set=>[magix.admin.get-active-events].Name
+set=>[list-events].Name
   value=>Data
 for-each=>[Data][events]
   _tpl
