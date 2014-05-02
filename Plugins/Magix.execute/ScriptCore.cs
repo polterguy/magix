@@ -24,47 +24,34 @@ namespace Magix.admin
 		{
 			if (ShouldInspect(e.Params))
 			{
-				e.Params.Clear();
-				e.Params["event:magix.execute"].Value = null;
-				e.Params["inspect"].Value = @"runs the hyper lisp file given in value of [execute-file], 
-putting all other child nodes into the [$] collection, accessible from inside the file, 
-which again is able to return nodes through the [$] node, which will become children of the 
-[execute-file] node after execution.&nbsp;&nbsp;
-thread safe";
-                e.Params["execute-file"].Value = "core-scripts/some-script.hl";
-                e.Params["execute-file"]["parameter"].Value = @"some parameter passsed into the file, accessible
-from the [$] collection from inside the file.&nbsp;&nbsp;
-thread safe, if hyper lisp file is thread safe";
+				e.Params["inspect"].Value = @"<p>runs the hyper lisp file given in value of [execute-file], 
+putting all other child nodes into the [$] collection, accessible from inside the file, which again is able 
+to return nodes through the [$] node, which will become children of the [execute-file] node after execution
+</p><p>thread safe</p>";
+                e.Params["execute-file"].Value = "core-scripts/doesnt-exist.hl";
+                e.Params["execute-file"]["parameter"].Value = @"some parameter";
                 return;
 			}
 
-			Node ip = e.Params;
-			if (e.Params.Contains("_ip") && e.Params["_ip"].Value is Node)
-				ip = e.Params["_ip"].Value as Node;
-
-			if (ip.Value == null)
-				throw new ArgumentException("execute-file needs value object pointing to existing hyper lisp file");
-
+            Node ip = Ip(e.Params);
 			string file = ip.Get<string>();
+            if (string.IsNullOrEmpty(file))
+                throw new ArgumentException("[execute-file] needs a file to execute as the value of the [execute-file] node");
 
-			Node fn = new Node();
-
-			fn.Value = file;
-
+			Node loadFileNode = new Node();
+			loadFileNode.Value = file;
 			RaiseActiveEvent(
 				"magix.file.load",
-				fn);
+				loadFileNode);
 
-			string txt = fn["value"].Get<string>();
+			string txt = loadFileNode["value"].Get<string>();
 
-			Node tmp = new Node();
-			tmp["code"].Value = txt;
-
+			Node executeFileNode = new Node();
+			executeFileNode["code"].Value = txt;
 			RaiseActiveEvent(
 				"magix.code.code-2-node",
-				tmp);
-			
-			ExecuteScript(tmp["json"].Get<Node>(), ip);
+				executeFileNode);
+			ExecuteScript(executeFileNode["json"].Get<Node>(), ip);
 		}
 		
 		/**
@@ -75,13 +62,10 @@ thread safe, if hyper lisp file is thread safe";
 		{
 			if (ShouldInspect(e.Params))
 			{
-				e.Params.Clear();
-				e.Params["event:magix.execute"].Value = null;
-				e.Params["inspect"].Value = @"runs the hyper lisp script given in value of [execute-script], 
-putting all other child nodes into the [$] collection, accessible from inside the script, 
-which again is able to return nodes through the [$] node, which will become children of the 
-[execute-script] node after execution.&nbsp;&nbsp;
-thread safe";
+				e.Params["inspect"].Value = @"<p>runs the hyper lisp script given in value of 
+[execute-script], putting all other child nodes into the [$] collection, accessible from inside 
+the script, which again is able to return nodes through the [$] node, which will become children 
+of the [execute-script] node after execution</p><p>thread safe</p>";
 				e.Params["execute-script"].Value = @"
 _data=>thomas
 if=>equals
@@ -97,23 +81,15 @@ if=>equals
 				return;
 			}
 
-			Node ip = e.Params;
-			if (e.Params.Contains("_ip") && e.Params["_ip"].Value is Node)
-				ip = e.Params["_ip"].Value as Node;
+            Node ip = Ip(e.Params);
+			string script = ip.Get<string>();
 
-			if (ip.Value == null)
-				throw new ArgumentException("need script value for [execute-script]");
-
-			string txt = ip.Get<string>();
-
-			Node tmp = new Node();
-			tmp["code"].Value = txt;
-
+			Node conversionNode = new Node();
+			conversionNode["code"].Value = script;
 			RaiseActiveEvent(
 				"magix.code.code-2-node",
-				tmp);
-
-			ExecuteScript(tmp["json"].Get<Node>(), ip);
+				conversionNode);
+			ExecuteScript(conversionNode["json"].Get<Node>(), ip);
 		}
 
 		/*
@@ -129,7 +105,6 @@ if=>equals
 			RaiseActiveEvent(
 				"magix.execute", 
 				exe);
-
 			ip.ReplaceChildren(exe["$"]);
 		}
 	}

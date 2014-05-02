@@ -24,7 +24,6 @@ namespace Magix.execute
 		{
 			if (ShouldInspect(e.Params))
 			{
-				e.Params["event:magix.execute"].Value = null;
 				e.Params["_data"].Value = "some text which will be split for every space";
 				e.Params["split"].Value = "[_data].Value";
 				e.Params["split"]["what"].Value = " ";

@@ -61,13 +61,13 @@ namespace Magix.Core
 		 * expression, else it will be assumed to be a static value
 		 */
 		public static void SetNodeValue(
-			string exprDestination, 
-			string exprSource, 
+			string destinationExpression, 
+			string sourceExpression, 
 			Node source, 
 			Node ip,
 			bool noRemove)
 		{
-			object valueToSet = GetExpressionValue(exprSource, source, ip, false);
+			object valueToSet = GetExpressionValue(sourceExpression, source, ip, false);
 
 			// checking to see if this is a string.Format expression
 			if (ip.Contains("value") && ip["value"].Count > 0)
@@ -85,24 +85,26 @@ namespace Magix.Core
             {
                 // Removing node or value
                 string lastEntity = "";
-                Node x = GetNode(exprDestination, source, ip, ref lastEntity, false);
-
-                if (x == null)
+                Node destinationNode = GetNode(destinationExpression, source, ip, ref lastEntity, false);
+                if (destinationNode == null)
                     return;
 
                 if (lastEntity == ".Value")
-                    x.Value = null;
+                    destinationNode.Value = null;
                 else if (lastEntity == ".Name")
-                    x.Name = "";
+                    destinationNode.Name = "";
                 else if (lastEntity == "")
-                    x.UnTie();
+                    destinationNode.UnTie();
                 else
                     throw new ArgumentException("couldn't understand the last parts of your expression '" + lastEntity + "'");
             }
             else
             {
-                string lastEntity = "";
-                Node x = GetNode(exprDestination, source, ip, ref lastEntity, true);
+                string lastEntity = ".Value";
+                Node destinationNode = ip;
+                
+                if (destinationExpression != null)
+                    destinationNode = GetNode(destinationExpression, source, ip, ref lastEntity, true);
 
                 if (lastEntity.StartsWith(".Value"))
                 {
@@ -117,13 +119,13 @@ namespace Magix.Core
                         tmpNode.Add(valueToSet as Node);
                         valueToSet = tmpNode;
                     }
-                    x.Value = valueToSet;
+                    destinationNode.Value = valueToSet;
                 }
                 else if (lastEntity.StartsWith(".Name"))
                 {
                     if (!(valueToSet is string))
                         throw new ArgumentException("Cannot set the Name of a node to something which is not a string literal");
-                    x.Name = valueToSet.ToString();
+                    destinationNode.Name = valueToSet.ToString();
                 }
                 else if (lastEntity == "")
                 {
@@ -131,9 +133,9 @@ namespace Magix.Core
                         throw new ArgumentException("you can only set a node-list to another node-list, and not a string or some other constant value");
 
                     Node clone = (valueToSet as Node).Clone();
-                    x.ReplaceChildren(clone);
-                    x.Name = clone.Name;
-                    x.Value = clone.Value;
+                    destinationNode.ReplaceChildren(clone);
+                    destinationNode.Name = clone.Name;
+                    destinationNode.Value = clone.Value;
                 }
                 else
                     throw new ArgumentException("Couldn't understand the last parts of your expression '" + lastEntity + "'");
