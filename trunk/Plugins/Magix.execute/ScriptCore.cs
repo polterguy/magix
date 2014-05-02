@@ -49,9 +49,9 @@ to return nodes through the [$] node, which will become children of the [execute
 			Node executeFileNode = new Node();
 			executeFileNode["code"].Value = txt;
 			RaiseActiveEvent(
-				"magix.code.code-2-node",
+				"magix.execute.code-2-node",
 				executeFileNode);
-			ExecuteScript(executeFileNode["json"].Get<Node>(), ip);
+			ExecuteScript(executeFileNode["node"].Get<Node>(), ip);
 		}
 		
 		/**
@@ -87,9 +87,9 @@ if=>equals
 			Node conversionNode = new Node();
 			conversionNode["code"].Value = script;
 			RaiseActiveEvent(
-				"magix.code.code-2-node",
+				"magix.execute.code-2-node",
 				conversionNode);
-			ExecuteScript(conversionNode["json"].Get<Node>(), ip);
+			ExecuteScript(conversionNode["node"].Get<Node>(), ip);
 		}
 
 		/*

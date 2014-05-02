@@ -33,6 +33,8 @@
     <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CodeCore.cs" />
+    <Compile Include="ReplaceCore.cs" />
     <Compile Include="SwitchCore.cs" />
     <Compile Include="LambdaCore.cs" />
     <Compile Include="IndexOfCore.cs" />

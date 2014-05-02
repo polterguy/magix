@@ -395,11 +395,11 @@ removing [remove] properties.&nbsp;&nbsp;not thread safe";
 						tmp["code"].Value = idx.Get<string>();
 
 						RaiseActiveEvent(
-							"magix.code.code-2-node",
+							"magix.execute.code-2-node",
 							tmp);
 
 						widgetNode["properties"][idx.Name].Clear();
-						widgetNode["properties"][idx.Name].AddRange(tmp["json"].Get<Node>());
+						widgetNode["properties"][idx.Name].AddRange(tmp["node"].Get<Node>());
 					}
 					else if (idx.Name.StartsWith("on") && string.IsNullOrEmpty(idx.Get<string>()))
 					{

@@ -53,14 +53,14 @@ namespace Magix.admin
 			if (e.Params != null)
 			{
 				Node tmp = new Node();
-                tmp["json"].Value = Ip(e.Params);
+                tmp["node"].Value = Ip(e.Params);
 
 				isParsing = true;
 
 				try
 				{
 					RaiseActiveEvent(
-						"magix.code.node-2-code",
+						"magix.execute.node-2-code",
 						tmp);
 				}
 				finally
