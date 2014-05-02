@@ -26,10 +26,9 @@ namespace Magix.execute
 		{
 			if (ShouldInspect(e.Params))
 			{
-				e.Params["event:magix.execute"].Value = null;
-				e.Params["inspect"].Value = @"stops the execution of the current level
-of code nodes in the tree.&nbsp;&nbsp;affects [while], [for-each] and other code scopes, 
-such as events and event handlers.&nbsp;&nbsp;thread safe";
+				e.Params["inspect"].Value = @"<p>stops the execution of the current level
+of code nodes in the tree</p><p>affects [while], [for-each] and other code scopes, such 
+as events and event handlers</p><p>thread safe</p>";
 				e.Params["_data"].Value = 5;
 				e.Params["while"].Value = "more-than-equals";
                 e.Params["while"]["lhs"].Value = "[_data].Value";
@@ -43,7 +42,6 @@ such as events and event handlers.&nbsp;&nbsp;thread safe";
                 e.Params["while"]["code"]["stop"].Value = null;
 				return;
 			}
-
 			throw new HyperLispStopException();
 		}
 	}

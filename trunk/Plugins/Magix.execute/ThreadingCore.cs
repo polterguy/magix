@@ -28,33 +28,25 @@ namespace Magix.execute
 			// TODO: Make thread safe, somehow ...
 			if (ShouldInspect(e.Params))
 			{
-				e.Params["event:magix.execute"].Value = null;
-				e.Params["fork"]["_data"]["value"].Value = "thomas";
+                e.Params["inspect"].Value = @"<p>spawns a new thread, which the given code block 
+will be executed within</p><p>[fork] is useful for long operations, where you'd like to return to 
+caller, before the operation is finished.&nbsp;&nbsp;the entire node-list underneath the [fork]
+keyword, will be cloned, and passed into the magix.execute active event, for execution on a different 
+thread</p><p>the forked thread will not be able to change any data on the original node set.&nbsp;&nbsp;
+if the value of [fork] is true, the new thread will be executed as a fire-and-forget thread, bypassing 
+any [wait] statements you might have</p><p>not thread safe</p>";
+                e.Params["fork"]["_data"]["value"].Value = "thomas";
 				e.Params["fork"]["if"].Value = "equals";
                 e.Params["fork"]["if"]["lhs"].Value = "[_data][value].Value";
                 e.Params["fork"]["if"]["rhs"].Value = "thomas";
-			    e.Params["fork"]["if"]["code"]["magix.viewport.show-message"]["message"].Value = @"this message box won't show, 
-since it is spawned on a thread which is not the gui thread, 
-but instead throw an exception, which will never be handled, 
-since it will try to access the page object, which is not accessible
-on anything but the main gui thread";
-				e.Params["inspect"].Value = @"spawns a new thread, which the given
-code block will be executed within.&nbsp;&nbsp;useful for long operations, 
-where you'd like to return to caller, before the operation is
-finished.&nbsp;&nbsp;the entire node-list underneath the [fork]
-keyword, will be cloned, and passed into the magix.execute.fork active event,
-for execution on a different thread.&nbsp;&nbsp;the forked
-thread will not change any data on the original node set.&nbsp;&nbsp;
-if the value of [fork] is true, the new thread will be executed 
-as a fire-and-forget thread, bypassing any [wait] statements you 
-might have.&nbsp;&nbsp;not thread safe";
+			    e.Params["fork"]["if"]["code"]["magix.viewport.show-message"]["message"].Value = @"won't show up";
 				return;
 			}
 
 			if (!e.Params.Contains("_ip") || !(e.Params["_ip"].Value is Node))
-				throw new ArgumentException("you cannot raise [magix.execute.set] directly, except for inspect purposes");
+				throw new ArgumentException("you cannot raise [fork] directly, except for inspect purposes");
 
-			Node ip = e.Params["_ip"].Value as Node;
+			Node ip = Ip(e.Params);
 
 			Node node = ip.Clone();
 
@@ -115,26 +107,23 @@ might have.&nbsp;&nbsp;not thread safe";
 		{
 			if (ShouldInspect(e.Params))
 			{
-				e.Params["event:magix.execute"].Value = null;
-				e.Params["wait"].Value = null;
+                e.Params["inspect"].Value = @"<p>will wait for multiple treads to finish</p><p>
+all [fork] blocks created underneath [wait], will have to be finished, before the execution will 
+leave the [wait] block.&nbsp;&nbsp;you can optionally set a maximum number of milliseconds, before 
+the wait is dismissed as an integer value of [wait]</p><p>thread safe</p>";
+                e.Params["wait"].Value = null;
 				e.Params["wait"]["fork"].Value = null;
-				e.Params["inspect"].Value = @"will wait for multiple treads to finish.&nbsp;&nbsp;
-all [fork] blocks created underneath [wait], will have to be finished, before the 
-execution will leave the [wait] block.&nbsp;&nbsp;you can optionally set a maximum number 
-of milliseconds, before the wait is dismissed as an integer value of [wait].&nbsp;&nbsp;thread safe";
 				return;
 			}
 
 			if (!e.Params.Contains("_ip") || !(e.Params["_ip"].Value is Node))
-				throw new ArgumentException("you cannot raise [magix.execute.set] directly, except for inspect purposes");
+				throw new ArgumentException("you cannot raise [wait] directly, except for inspect purposes");
 
-			Node ip = e.Params["_ip"].Value as Node;
-
+            Node ip = Ip(e.Params);
 			int milliseconds = ip.Get<int>(-1);
-
 			ManualResetEvent evt = new ManualResetEvent(false);
 
-			lock (stack)
+            lock (stack)
 				stack.Push(evt);
 			try
 			{

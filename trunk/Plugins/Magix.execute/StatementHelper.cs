@@ -25,12 +25,12 @@ namespace Magix.execute
 
         private static bool RecursivelyCheckExpression(Node where, Node ip, Node dp)
         {
-            string oper = where.Get<string>();
+            string expressionOperator = where.Get<string>();
             object objLhsVal;
             object objRhsVal;
-            ExtractValues(where, ip, dp, oper, out objLhsVal, out objRhsVal);
+            ExtractValues(where, ip, dp, expressionOperator, out objLhsVal, out objRhsVal);
 
-            bool retVal = RunComparison(oper, objLhsVal, objRhsVal);
+            bool retVal = RunComparison(expressionOperator, objLhsVal, objRhsVal);
 
             if (retVal && where.Contains("and"))
             {
@@ -64,7 +64,7 @@ namespace Magix.execute
             Node where,
             Node ip,
             Node dp,
-            string oper,
+            string expressionOperator,
             out object objLhsVal,
             out object objRhsVal)
         {
@@ -75,7 +75,7 @@ namespace Magix.execute
 
             ChangeType(lhsRawValue, out objLhsVal, ip, dp);
 
-            if (oper != "exist" && oper != "not-exist")
+            if (expressionOperator != "exist" && expressionOperator != "not-exist")
             {
                 if (!where.Contains("rhs"))
                     throw new ArgumentException("missing [rhs] node in expression");
@@ -156,11 +156,11 @@ namespace Magix.execute
             objectValue = valueOfExpression;
         }
 
-        private static bool RunComparison(string oper, object objLhsVal, object objRhsVal)
+        private static bool RunComparison(string expressionOperator, object objLhsVal, object objRhsVal)
         {
             bool expressionIsTrue = false;
 
-            switch (oper)
+            switch (expressionOperator)
             {
                 case "exist":
                     expressionIsTrue = objLhsVal != null;
@@ -186,6 +186,8 @@ namespace Magix.execute
                 case "less-than-equals":
                     expressionIsTrue = CompareValues(objLhsVal, objRhsVal) != 1;
                     break;
+                default:
+                    throw new ArgumentException("tried to pass in a comparison operator which doesn't exist, operator was; " + expressionOperator);
             }
             return expressionIsTrue;
         }
