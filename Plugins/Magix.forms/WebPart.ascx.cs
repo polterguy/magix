@@ -313,7 +313,7 @@ not thread safe";
 								"magix.execute.code-2-node",
 								tmp);
 
-							DataSource.Add(new Node("controls", tmp["node"].Get<Node>()));
+							DataSource.Add(new Node("controls", tmp["node"].Clone()));
 
 							// resetting buffer
 							buffer = "";

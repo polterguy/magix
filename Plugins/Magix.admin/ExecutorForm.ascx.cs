@@ -142,7 +142,7 @@ if=>[Data].Value==thomas
 				"magix.execute.code-2-node",
 				tmp);
 
-			Node json = tmp["node"].Get<Node>();
+			Node json = tmp["node"].Clone();
 
             bool foundEvent = false;
 			foreach (Node idx in json)
@@ -177,8 +177,9 @@ if=>[Data].Value==thomas
             RaiseActiveEvent(
                 "magix.execute.code-2-node",
                 tmp);
-            (tmp["node"].Value as Node)["inspect"].UnTie();
-            foreach (Node idx in (tmp["node"].Value as Node))
+            Node node = tmp["node"].Clone();
+            node["inspect"].UnTie();
+            foreach (Node idx in node)
             {
                 if (idx.Name.StartsWith("event:"))
                 {
@@ -204,21 +205,26 @@ if=>[Data].Value==thomas
 					"magix.execute.code-2-node",
 					tmp);
 
-				foreach (Node idx in tmp["node"].Get<Node>())
+                Node node = tmp["node"].Clone();
+
+				foreach (Node idx in node)
 				{
 					if (idx.Name.StartsWith("event:"))
 					{
 						activeEvent.Text = idx.Name.Substring(6);
-						tmp["node"].Get<Node>().Remove(idx);
-						if (tmp["node"].Get<Node>().Contains("inspect"))
-							tmp["node"].Get<Node>().Remove(tmp["node"].Get<Node>()["inspect"]);
+						node.Remove(idx);
+						if (node.Contains("inspect"))
+							node.Remove(node["inspect"]);
 						break;
 					}
 				}
 
 				RaiseActiveEvent(
 					activeEvent.Text, 
-					tmp["node"].Get<Node>());
+					node);
+
+                tmp = new Node();
+                tmp["node"].AddRange(node);
 
 				RaiseActiveEvent(
 					"magix.execute.node-2-code", 

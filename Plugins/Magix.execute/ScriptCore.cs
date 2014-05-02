@@ -51,7 +51,7 @@ to return nodes through the [$] node, which will become children of the [execute
 			RaiseActiveEvent(
 				"magix.execute.code-2-node",
 				executeFileNode);
-			ExecuteScript(executeFileNode["node"].Get<Node>(), ip);
+			ExecuteScript(executeFileNode["node"].Clone(), ip);
 		}
 		
 		/**
@@ -89,7 +89,7 @@ if=>equals
 			RaiseActiveEvent(
 				"magix.execute.code-2-node",
 				conversionNode);
-			ExecuteScript(conversionNode["node"].Get<Node>(), ip);
+			ExecuteScript(conversionNode["node"].Clone(), ip);
 		}
 
 		/*
