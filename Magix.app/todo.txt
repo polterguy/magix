@@ -61,7 +61,7 @@
 
 * make ip be default expression getter in Expressions, such that code inside for-each can be the same as outside, and doesn't have to change
 
-* sanitize magix.code.node-2-code etc, and among other things get rid of [code] and exchange with [value] for conformity, also minimize node passing
+* sanitize node-2-code etc, and among other things get rid of [code] and exchange with [value] for conformity, also minimize node passing
 
 * make boolean properties of web controls use check boxes in forms editor
 

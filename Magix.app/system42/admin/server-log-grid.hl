@@ -66,19 +66,19 @@ for-each=>[magix.data.load][objects]
   if=>exist
     lhs=>[.][code]
     code
-      set=>[@][magix.code.node-2-code][json]
+      set=>[@][node-2-code][node]
       while=>more-than
         lhs=>[.][code].Count
         rhs=>0
         code
-          add=>[@][..][magix.code.node-2-code][json]
+          add=>[@][..][node-2-code][node]
             value=>[.][code][0]
           set=>[.][code][0]
-      magix.code.node-2-code
+      node-2-code
       set=>[/][_dt][panel][controls][label:2][text].Value
         value=>@"{0} <pre>{1}</pre>"
           pr0=>[/][_dt][panel][controls][label:2][text].Value
-          pr1=>[@][magix.code.node-2-code][code].Value
+          pr1=>[@][node-2-code][code].Value
   add=>[/][magix.forms.create-web-part][controls][panel][controls]
     value=>[/][_dt][panel]
 

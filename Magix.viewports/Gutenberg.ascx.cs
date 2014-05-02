@@ -102,10 +102,10 @@ end user for some seconds.&nbsp;&nbsp;not thread safe";
 				Node tmp = new Node();
                 Node code = Ip(e.Params)["code"].Clone();
 				code.Name = "";
-				tmp["json"].Value = code;
+				tmp["node"].Value = code;
 
 				RaiseActiveEvent(
-					"magix.code.node-2-code",
+					"magix.execute.node-2-code",
 					tmp);
 
 				message.Text += "<pre style='text-align:left;margin-left:120px;overflow:auto;max-height:300px;'>" + tmp["code"].Get<string>().Replace("<", "&lt;").Replace(">", "&gt;") + "</pre>";
@@ -179,10 +179,10 @@ end user for some seconds.&nbsp;&nbsp;not thread safe";
 				{
                     Node code = Ip(e.Params)["code"].Clone();
 					code.Name = "";
-					tmp["json"].Value = code;
+					tmp["node"].Value = code;
 
 					RaiseActiveEvent(
-						"magix.code.node-2-code",
+						"magix.execute.node-2-code",
 						tmp);
 
 					confirmLbl.Text += "<pre style='text-align:left;margin-left:120px;overflow:auto;max-height:300px;'>" + tmp["code"].Get<string>().Replace("<", "&lt;").Replace(">", "&gt;") + "</pre>";

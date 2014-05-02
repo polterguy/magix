@@ -52,12 +52,12 @@ lambda=>lmb
         set=>[$][description].Value
           value=>[1][inspect].Value
         set=>[1][inspect]
-        set=>[magix.code.node-2-code][json].Value
+        set=>[node-2-code][node].Value
           value=>[1]
-        magix.code.node-2-code
+        node-2-code
           remove-root=>true
         set=>[$][code].Value
-          value=>[magix.code.node-2-code][code].Value
+          value=>[node-2-code][code].Value
       set=>[@][lambda][name].Value
         value=>[.].Name
       lambda=>[@][_lmb]

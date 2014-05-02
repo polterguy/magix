@@ -13,11 +13,11 @@ if=>more-than
   rhs=>0
   code
     for-each=>[get-selected-widget][value][widget][properties][[$][property].Value]
-      add=>[@][..][magix.code.node-2-code][json]
+      add=>[@][..][node-2-code][node]
         value=>[.]
-    magix.code.node-2-code
+    node-2-code
     set=>[/][magix.forms.create-web-part][controls][text-area][text].Value
-      value=>[@][magix.code.node-2-code][code].Value
+      value=>[@][node-2-code][code].Value
 
 set=>[magix.forms.create-web-part][controls][text-area][ontextchanged][_prop].Value
   value=>[$][property].Value

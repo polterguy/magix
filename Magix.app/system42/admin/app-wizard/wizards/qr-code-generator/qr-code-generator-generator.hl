@@ -53,16 +53,16 @@ which contains logic for qr-code-generator application"
 drag'n'drop, or righ-click and choose 'save as',
 to download and embed in documents"
 
-set=>[magix.code.node-2-code][json].Value
+set=>[node-2-code][node].Value
   value=>[_data]
-magix.code.node-2-code
+node-2-code
   remove-root=>true
 
 set=>[magix.file.save].Value
   value=>system42\admin\apps\{0}.hl
     v0=>[$][name].Value
 set=>[magix.file.save][value].Value
-  value=>[magix.code.node-2-code][code].Value
+  value=>[node-2-code][code].Value
 magix.file.save
 
 
