@@ -4,9 +4,9 @@ inspect=>@"will show a screen of all the
 unit tests in the system, and allow
 the user to inspect them by clicking them"
 
-magix.admin.get-active-events
+list-events
   begins-with=>magix.test.
-set=>[magix.admin.get-active-events].Name
+set=>[list-events].Name
   value=>Data
 for-each=>[Data][events]
   _tpl

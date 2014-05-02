@@ -23,8 +23,11 @@ namespace Magix.execute
 		{
 			if (ShouldInspect(e.Params))
 			{
-				e.Params["event:magix.execute"].Value = null;
-				e.Params["_data"]["items"]["message1"].Value = "howdy world 1.0";
+                e.Params["inspect"].Value = @"<p>loops through all the nodes in the given 
+node-list expression, setting the data-pointer to the currently processed item</p><p>your 
+code will execute once for every single node you have in your return expression.&nbsp;&nbsp;
+use the [.] expression to de-reference the currently iterated node</p><p>thread safe</p>";
+                e.Params["_data"]["items"]["message1"].Value = "howdy world 1.0";
 				e.Params["_data"]["items"]["message2"].Value = "howdy world 2.0";
 				e.Params["_data"]["items"]["message3"].Value = "howdy world 3.0";
 				e.Params["_data"]["items"]["message4"].Value = "howdy world 4.0";
@@ -34,38 +37,27 @@ namespace Magix.execute
 				e.Params["for-each"].Value = "[_data][items]";
 				e.Params["for-each"]["set"].Value = "[@][magix.viewport.show-message][message].Value";
 				e.Params["for-each"]["set"]["value"].Value = "[.].Value";
-				e.Params["inspect"].Value = @"loops through all the nodes
-in the given node-list expression, setting the 
-data-pointer to the currently processed item.&nbsp;&nbsp;
-your code will execute once
-for every single node you have in your return
-expression.&nbsp;&nbsp;use the [.] expression to de-reference
-the currently iterated node.&nbsp;&nbsp;thread safe";
 				return;
 			}
 
 			if (!e.Params.Contains("_ip") || !(e.Params["_ip"].Value is Node))
-				throw new ArgumentException("you cannot raise [magix.execute.for-each] directly, except for inspect purposes");
+				throw new ArgumentException("you cannot raise [for-each] directly, except for inspect purposes");
 
 			Node ip = e.Params["_ip"].Value as Node;
+			Node dp = e.Params["_dp"].Value as Node;
 
-			Node dp = ip;
-			if (e.Params.Contains("_dp"))
-				dp = e.Params["_dp"].Value as Node;
+            if (string.IsNullOrEmpty(ip.Get<string>()))
+                throw new ArgumentException("you must supply an expression to [for-each]");
 
 			Node tmp = Expressions.GetExpressionValue(ip.Get<string>(), dp, ip, false) as Node;
-
-
 			if (tmp != null)
 			{
-				object oldDp = e.Params.Contains("_dp") ? e.Params["_dp"].Value : null;
-
-				try
+                object oldDp = e.Params["_dp"].Value;
+                try
 				{
 					for (int idxNo = 0; idxNo < tmp.Count; idxNo++)
 					{
 						e.Params["_dp"].Value = tmp[idxNo];
-
 						RaiseActiveEvent(
 							"magix._execute", 
 							e.Params);
@@ -73,8 +65,7 @@ the currently iterated node.&nbsp;&nbsp;thread safe";
 				}
 				finally
 				{
-					if (oldDp != null)
-						e.Params["_dp"].Value = oldDp;
+					e.Params["_dp"].Value = oldDp;
 				}
 			}
 		}

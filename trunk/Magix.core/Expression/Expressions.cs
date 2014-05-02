@@ -21,7 +21,7 @@ namespace Magix.Core
          * Returns the value of the given expression, which might return a string, 
          * list of nodes, or any other object your node tree might contain
          */
-        public static object GetExpressionValue(string expression, Node source, Node ip, bool createPath)
+        public static object GetExpressionValue(string expression, Node dp, Node ip, bool createPath)
         {
             if (expression == null)
                 return null;
@@ -34,7 +34,7 @@ namespace Magix.Core
                 return expression;
 
             string lastEntity = "";
-            Node x = GetNode(expression, source, ip, ref lastEntity, createPath);
+            Node x = GetNode(expression, dp, ip, ref lastEntity, createPath);
 
             if (x == null)
                 return null;

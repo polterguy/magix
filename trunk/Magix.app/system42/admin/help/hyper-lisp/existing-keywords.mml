@@ -24,10 +24,10 @@ link-button=>open-executor
 {{
 lambda=>lmb-keywords
   oncreatecontrols
-    magix.admin.get-active-events
+    list-events
       begins-with=>magix.execute.
       all=>false
-    for-each=>[magix.admin.get-active-events][events]
+    for-each=>[list-events][events]
       _pnl
         tag=>li
         css=>bottom-1 span-19 last

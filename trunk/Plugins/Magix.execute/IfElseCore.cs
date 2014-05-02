@@ -23,19 +23,16 @@ namespace Magix.execute
 		{
 			if (ShouldInspect(e.Params))
 			{
-				e.Params["event:magix.execute"].Value = null;
-				e.Params["inspect"].Value = @"executes the [code] nodes as an execution
-block, but only if the [if] statement returns true.&nbsp;&nbsp;
-pair together with [else-if] and [else] to create
-branching and control of flow of your program.&nbsp;&nbsp;if an if
-statement returns true, then no paired [else-if] or [else]
-statements will be executed.&nbsp;&nbsp;the operator used to compare the [lhs] 
-and the [rhs] nodes must be defined using the value of the [if] node.&nbsp;&nbsp;
-legal values for the operator type is exist, not-exist, equals, not-equals, less-than, 
-more-than, less-than-equals and more-than-equals.&nbsp;&nbsp;
-the engine will convert automatically between int, decimal, date and bool, or 
-resort to string if no conversion is possible.&nbsp;&nbsp;
-the [lhs] and [rhs] nodes can be either an expression, or a hardcoded value.&nbsp;&nbsp;thread safe";
+				e.Params["inspect"].Value = @"<p>executes the [code] block of nodes as an execution
+block, but only if the [if] statement returns true</p><p>pair your [if] statements together with 
+[else-if] and [else] to create branching and control of flow of your program.&nbsp;&nbsp;if an [if]
+statement returns true, then no paired [else-if] or [else] statements will be executed</p><p>the 
+operator used to compare the [lhs] and the [rhs] nodes must be defined using the value of the [if] 
+node.&nbsp;&nbsp;legal values for the operator type is 'exist', 'not-exist', 'equals', 'not-equals', 
+'less-than', 'more-than', 'less-than-equals' and 'more-than-equals'</p><p>the engine will convert 
+automatically between int, decimal, date and bool, or resort to string if no conversion is possible.
+&nbsp;&nbsp;the [lhs] and [rhs] nodes can be either an expression, or a hardcoded value</p><p>thread 
+safe</p>";
 				e.Params["_data"]["item"].Value = "cache-object";
 				e.Params["_data"]["cache"].Value = null;
                 e.Params["if"].Value = "not-equals";
@@ -47,7 +44,7 @@ the [lhs] and [rhs] nodes can be either an expression, or a hardcoded value.&nbs
 			}
 
             if (!e.Params.Contains("_ip") || !(e.Params["_ip"].Value is Node))
-                throw new ArgumentException("you cannot raise [magix.execute.if] directly, except for inspect purposes");
+                throw new ArgumentException("you cannot raise [if] directly, except for inspect purposes");
 
             IfImplementation(
 				e.Params, 
@@ -62,17 +59,15 @@ the [lhs] and [rhs] nodes can be either an expression, or a hardcoded value.&nbs
 		{
 			if (ShouldInspect(e.Params))
 			{
-				e.Params["event:magix.execute"].Value = null;
-				e.Params["inspect"].Value = @"executes the underlaying [code] node,
-but only if no previous [if] or [else-if] statement has returned true,
-and the statement inside the value of the [else-if] 
-returns true.&nbsp;&nbsp;the operator used to compare the [lhs] 
-and the [rhs] nodes must be defined using the value of the [if] node.&nbsp;&nbsp;
-legal values for the operator type is exist, not-exist, equals, not-equals, less-than, 
-more-than, less-than-equals and more-than-equals.&nbsp;&nbsp;
-the engine will convert automatically between int, decimal, date and bool, or 
-resort to string if no conversion is possible.&nbsp;&nbsp;
-the [lhs] and [rhs] nodes can be either an expression, or a hardcoded value.&nbsp;&nbsp;thread safe";
+				e.Params["inspect"].Value = @"<p>executes the underlaying [code] node,
+but only if no previous [if] or [else-if] statement has returned true, and the statement 
+inside the value of the [else-if] returns true</p><p>the operator used to compare the 
+[lhs] and the [rhs] nodes must be defined using the value of the [else-if] node.&nbsp;
+&nbsp;legal values for the operator type is 'exist', 'not-exist', 'equals', 'not-equals', 
+'less-than', 'more-than', 'less-than-equals' and 'more-than-equals'</p><p>the engine will 
+convert automatically between int, decimal, date and bool, or resort to string if no 
+conversion is possible.&nbsp;&nbsp;the [lhs] and [rhs] nodes can be either an expression, 
+or a hardcoded value</p><p>thread safe</p>";
 				e.Params["_data"]["node"].Value = null;
                 e.Params["if"].Value = "exist";
                 e.Params["if"]["lhs"].Value = "[_data][node].Value";
@@ -84,7 +79,7 @@ the [lhs] and [rhs] nodes can be either an expression, or a hardcoded value.&nbs
 			}
 			
 			if (!e.Params.Contains("_ip") || !(e.Params["_ip"].Value is Node))
-				throw new ArgumentException("you cannot raise [magix.execute.else-if] directly, except for inspect purposes");
+				throw new ArgumentException("you cannot raise [else-if] directly, except for inspect purposes");
 
 			Node ip = e.Params["_ip"].Value as Node;
 
@@ -106,10 +101,9 @@ the [lhs] and [rhs] nodes can be either an expression, or a hardcoded value.&nbs
 		{
 			if (ShouldInspect(e.Params))
 			{
-				e.Params["event:magix.execute"].Value = null;
-				e.Params["inspect"].Value = @"executes the underlaying code block,
-but only if no paired [if] or [else-if] statement
-has returned true.&nbsp;&nbsp;thread safe";
+				e.Params["inspect"].Value = @"<p>executes the underlaying code block,
+but only if no paired [if] or [else-if] statement has returned true</p><p>thread safe
+</p>";
 				e.Params["if"].Value = "exist";
                 e.Params["if"]["lhs"].Value = "[_not-existing-node]";
 				e.Params["if"]["code"]["magix.viewport.show-message"]["message"].Value = "ohh crap";
@@ -118,7 +112,7 @@ has returned true.&nbsp;&nbsp;thread safe";
 			}
 
 			if (!e.Params.Contains("_ip") || !(e.Params["_ip"].Value is Node))
-				throw new ArgumentException("you cannot raise [magix.execute.else] directly, except for inspect purposes");
+				throw new ArgumentException("you cannot raise [else] directly, except for inspect purposes");
 
 			Node ip = e.Params["_ip"].Value as Node;
 

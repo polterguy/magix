@@ -56,6 +56,7 @@ to download and embed in documents"
 set=>[magix.code.node-2-code][json].Value
   value=>[_data]
 magix.code.node-2-code
+  remove-root=>true
 
 set=>[magix.file.save].Value
   value=>system42\admin\apps\{0}.hl

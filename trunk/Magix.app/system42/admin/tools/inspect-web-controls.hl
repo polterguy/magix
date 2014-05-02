@@ -7,9 +7,9 @@ the user to inspect them by clicking them.&nbsp;&nbsp;
 this is useful for teaching yourself for instance how 
 to use the forms-editor"
 
-magix.admin.get-active-events
+list-events
   begins-with=>magix.forms.controls.
-set=>[magix.admin.get-active-events].Name
+set=>[list-events].Name
   value=>Data
 for-each=>[Data][events]
   _tpl

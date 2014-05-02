@@ -15,7 +15,8 @@ namespace Magix.execute
 	 */
 	public class EventCore : ActiveController
 	{
-		private static Node _events = new Node();
+        private static Node _events = new Node();
+        private static Node _inspect = new Node();
 
         private Dictionary<string, Node> SessionEvents
         {
@@ -27,18 +28,17 @@ namespace Magix.execute
             }
         }
 
-		/**
-		 * creates the associations between existing events in the database, and active event references
-		 */
+        /**
+         * creates the associations between existing events in the database, and active event references
+         */
 		[ActiveEvent(Name = "magix.core.application-startup")]
 		public static void magix_core_application_startup(object sender, ActiveEventArgs e)
 		{
 			if (ShouldInspect(e.Params))
 			{
-				e.Params["event:magix.core.application-startup"].Value = null;
-				e.Params["inspect"].Value = @"called during startup
-of application to make sure our active events, which are dynamically tied towards serialized 
-magix.execute blocks of code, are being correctly re-mapped";
+				e.Params["inspect"].Value = @"<p>called during startup of application 
+to make sure our active events, which are dynamically tied towards serialized hyper 
+lisp blocks of code, are being correctly re-mapped</p>";
 				return;
 			}
 
@@ -60,7 +60,8 @@ magix.execute blocks of code, are being correctly re-mapped";
 					if (idx.Contains("remotable") && idx["remotable"].Get<bool>())
 						ActiveEvents.Instance.MakeRemotable(idx["event"].Get<string>());
 
-					_events[idx["event"].Get<string>()].ReplaceChildren(idx["code"].Clone());
+					_events[idx["event"].Get<string>()].ReplaceChildren(idx["code"]);
+                    _inspect[idx["event"].Get<string>()].ReplaceChildren(idx["inspect"]);
 				}
 			}
 		}
@@ -125,29 +126,29 @@ restarts</p><p>thread safe</p>";
                 if (!ip.Contains("persist") || ip["persist"].Get<bool>())
                 {
                     // removing any previous similar events
-                    Node n = new Node();
+                    Node removeNode = new Node();
 
-                    n["prototype"]["event"].Value = activeEvent;
-                    n["prototype"]["type"].Value = "magix.execute.event";
+                    removeNode["prototype"]["event"].Value = activeEvent;
+                    removeNode["prototype"]["type"].Value = "magix.execute.event";
 
                     RaiseActiveEvent(
                         "magix.data.remove",
-                        n);
+                        removeNode);
 
-                    n = new Node();
+                    Node saveNode = new Node();
 
-                    n["id"].Value = Guid.NewGuid().ToString();
-                    n["value"]["event"].Value = activeEvent;
-                    n["value"]["type"].Value = "magix.execute.event";
-                    n["value"]["remotable"].Value = remotable;
-                    n["value"]["code"].ReplaceChildren(ip["code"].Clone());
+                    saveNode["id"].Value = Guid.NewGuid().ToString();
+                    saveNode["value"]["event"].Value = activeEvent;
+                    saveNode["value"]["type"].Value = "magix.execute.event";
+                    saveNode["value"]["remotable"].Value = remotable;
+                    saveNode["value"]["code"].ReplaceChildren(ip["code"].Clone());
 
                     if (ip.Contains("inspect"))
-                        n["value"]["inspect"].Value = ip["inspect"].Value;
+                        saveNode["value"]["inspect"].Value = ip["inspect"].Value;
 
                     RaiseActiveEvent(
                         "magix.data.save",
-                        n);
+                        saveNode);
                 }
 
 				ActiveEvents.Instance.CreateEventMapping(
@@ -160,23 +161,30 @@ restarts</p><p>thread safe</p>";
 					ActiveEvents.Instance.RemoveRemotable(activeEvent);
 
 				_events[activeEvent].Clear();
-				_events[activeEvent].AddRange(ip["code"].Clone());
+                _events[activeEvent].AddRange(ip["code"].Clone());
+
+                _inspect[activeEvent].Clear();
+                _inspect[activeEvent].Value = ip["inspect"].Value;
 			}
 			else
 			{
-				Node n = new Node();
+                if (!ip.Contains("persist") || ip["persist"].Get<bool>())
+                {
+                    Node removeNode = new Node();
 
-				n["prototype"]["event"].Value = activeEvent;
-				n["prototype"]["type"].Value = "magix.execute.event";
+                    removeNode["prototype"]["event"].Value = activeEvent;
+                    removeNode["prototype"]["type"].Value = "magix.execute.event";
 
-				RaiseActiveEvent(
-					"magix.data.remove",
-					n);
+                    RaiseActiveEvent(
+                        "magix.data.remove",
+                        removeNode);
+                }
 
 				ActiveEvents.Instance.RemoveMapping(activeEvent);
 				ActiveEvents.Instance.RemoveRemotable(activeEvent);
 
-				_events[activeEvent].UnTie();
+                _events[activeEvent].UnTie();
+                _inspect[activeEvent].UnTie();
 			}
 		}
 
@@ -192,27 +200,19 @@ restarts</p><p>thread safe</p>";
 created with the [event] keyword.&nbsp;&nbsp;thread safety is dependent upon the 
 events raised internally within event</p>";
 
-                Node le = new Node();
-
-                le["prototype"]["type"].Value = "magix.execute.event";
-                le["prototype"]["event"].Value = e.Name;
-
-                RaiseActiveEvent(
-                    "magix.data.load",
-                    le);
-
-                if (le.Contains("objects"))
+                if (_events.Contains(e.Name))
                 {
-                    if (le["objects"][0].Contains("code"))
-                        e.Params.AddRange(le["objects"][0]["code"].Clone());
-                    if (le["objects"][0].Contains("inspect"))
-                        e.Params["inspect"].Value = le["objects"][0]["inspect"].Value;
+                    if (_inspect.Contains(e.Name))
+                        e.Params["inspect"].Value = _inspect[e.Name].Value;
+                    foreach (Node idx in _events[e.Name])
+                    {
+                        e.Params.Add(idx.Clone().UnTie());
+                    }
                 }
                 return;
             }
 
             Node code = GetEventCode(e.Name);
-
             if (code != null)
             {
                 code["$"].AddRange(e.Params);
@@ -301,6 +301,80 @@ safe</p>";
             }
         }
 
+        /*
+         * get active events active event
+         */
+        [ActiveEvent(Name = "magix.execute.list-events")]
+        public static void magix_execute_list_events(object sender, ActiveEventArgs e)
+        {
+            if (ShouldInspect(e.Params))
+            {
+                e.Params["inspect"].Value = @"<p>returns all active events 
+within the system.&nbsp;&nbsp;add [all], [open], [remoted], [overridden] or 
+[begins-with] to filter the events returned</p>active events are returned 
+in [events].&nbsp;&nbsp;will not return unit tests and active events starting 
+with _ if [all] is false.&nbsp;&nbsp;if [all], [open], [remoted] or [overridden] 
+is defined, it will return all events fullfilling criteria, regardless of 
+whether or not they are private events, tests or don't match the [begins-with] 
+parameter</p><p>thread safe</p>";
+                e.Params["list-events"]["all"].Value = true;
+                e.Params["list-events"]["open"].Value = false;
+                e.Params["list-events"]["remoted"].Value = false;
+                e.Params["list-events"]["overridden"].Value = false;
+                e.Params["list-events"]["begins-with"].Value = "magix.execute.";
+                return;
+            }
+
+            Node ip = Ip(e.Params);
+
+            bool open = false;
+            if (ip.Contains("open"))
+                open = ip["open"].Get<bool>();
+
+            bool all = true;
+            if (ip.Contains("all"))
+                all = ip["all"].Get<bool>();
+
+            bool remoted = false;
+            if (ip.Contains("remoted"))
+                remoted = ip["remoted"].Get<bool>();
+
+            bool overridden = false;
+            if (ip.Contains("overridden"))
+                overridden = ip["overridden"].Get<bool>();
+
+            string beginsWith = null;
+            if (ip.Contains("begins-with"))
+                beginsWith = ip["begins-with"].Get<string>();
+
+            foreach (string idx in ActiveEvents.Instance.ActiveEventHandlers)
+            {
+                if (open && !ActiveEvents.Instance.IsAllowedRemotely(idx))
+                    continue;
+                if (remoted && string.IsNullOrEmpty(ActiveEvents.Instance.RemotelyOverriddenURL(idx)))
+                    continue;
+                if (overridden && !ActiveEvents.Instance.IsOverride(idx))
+                    continue;
+
+                if (!all && !string.IsNullOrEmpty(beginsWith) && idx.Replace(beginsWith, "").Contains("_"))
+                    continue;
+
+                if (!all && idx.StartsWith("magix.test."))
+                    continue;
+
+                if (!string.IsNullOrEmpty(beginsWith) && !idx.StartsWith(beginsWith))
+                    continue;
+
+                ip["events"][idx].Value = null;
+            }
+
+            ip["events"].Sort(
+                delegate(Node left, Node right)
+                {
+                    return left.Name.CompareTo(right.Name);
+                });
+        }
+
         private static Node GetEventCode(string name)
 		{
 			if (_events.Contains(name) && _events[name].Count > 0)
@@ -316,20 +390,20 @@ safe</p>";
 					return null;
 				else
 				{
-					Node n = new Node();
+					Node evtNode = new Node();
 
-					n["prototype"]["type"].Value = "magix.execute.event";
-					n["prototype"]["event"].Value = name;
+					evtNode["prototype"]["type"].Value = "magix.execute.event";
+					evtNode["prototype"]["event"].Value = name;
 
 					RaiseActiveEvent(
 						"magix.data.load",
-						n);
+						evtNode);
 
-					if (n.Contains("objects"))
+					if (evtNode.Contains("objects"))
 					{
-						Node caller = n["objects"][0]["code"];
-						_events[name].AddRange(caller.UnTie());
-						return _events[name].Clone();
+                        _events[name].AddRange(evtNode["objects"][0]["code"].UnTie());
+                        _inspect[name].AddRange(evtNode["objects"][0]["inspect"].UnTie());
+                        return _events[name].Clone();
 					}
 					_events[name].Value = null;
 					return null;

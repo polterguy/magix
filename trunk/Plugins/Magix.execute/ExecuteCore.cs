@@ -23,9 +23,11 @@ namespace Magix.execute
         {
             if (ShouldInspect(e.Params))
             {
-                e.Params["event:magix.execute"].Value = null;
-                e.Params["inspect"].Value = @"changes the default namespace 
-for the current scope.&nbsp;&nbsp;thread safe";
+                e.Params["inspect"].Value = @"<p>changes the default namespace 
+for the current scope.&nbsp;&nbsp;this allows you to raise active events which 
+you normally would have to raise with a period in their name, without the period, 
+which allows active events which normally cannot access the entire execution tree, 
+to do just that</p><p>thread safe</p>";
                 e.Params["using"].Value = "magix.math";
                 e.Params["using"]["add"][""].Value = 4;
                 e.Params["using"]["add"]["", 1].Value = 1;
@@ -62,14 +64,13 @@ for the current scope.&nbsp;&nbsp;thread safe";
 		{
 			if (ShouldInspect(e.Params))
 			{
-				e.Params["event:magix.execute"].Value = null;
-				e.Params["inspect"].Value = @"executes the incoming parameters 
-as hyper lisp, meaning it will raise everything containing a '.', 
-while everything not starting with a '_' will be assumed to be a hyper lisp 
-keyword, and appended behind 'magix.execute.', before that string is raised as an active event.&nbsp;&nbsp;
-a hyper lisp keyword will have access to the entire data tree, while a normal active 
-event will only be able to modify the parts of the tree from underneath its own node.&nbsp;&nbsp;
-thread safe";
+				e.Params["inspect"].Value = @"<p>executes the incoming parameters 
+as hyper lisp, meaning it will raise everything containing a period, while everything 
+not starting with a '_' will be assumed to be a hyper lisp keyword, and appended 
+behind 'magix.execute.', before that string is raised as an active event</p><p>a 
+hyper lisp keyword will have access to the entire data tree, while a normal active 
+event will only be able to modify the parts of the tree from underneath its own node
+</p><p>thread safe</p>";
 				e.Params["_data"]["value"].Value = "thomas";
 				e.Params["if"].Value = "[_data][value].Value==thomas";
 				e.Params["if"]["magix.viewport.show-message"].Value = null;
@@ -107,18 +108,15 @@ thread safe";
 		{
 			if (ShouldInspect(e.Params))
 			{
-				e.Params["event:magix.execute"].Value = null;
-				e.Params["inspect"].Value = @"executes the incoming parameters 
-as hyper lisp, meaning it will raise everything containing a '.', 
-while everything not starting with a '_' will be assumed to be a hyper lisp 
-keyword, and appended behind 'magix.execute.', or the currently
-used namespace, before that string is raised as an active event.&nbsp;&nbsp;
-a hyper lisp keyword will have access to the entire data tree, while a normal active 
-event will get a deep copy of the tree underneath its own node.&nbsp;&nbsp;
-if the [execute] has a value, it will be expected to 
-be an expression referencing another node, which will be executed instead of the 
-incoming parameter nodes.&nbsp;&nbsp;
-thread safe";
+				e.Params["inspect"].Value = @"<p>executes the incoming parameters 
+as hyper lisp, meaning it will raise everything containing a '.' as an active event, 
+while everything not starting with a '_', or containing a period, will be assumed to 
+be a hyper lisp keyword, and appended behind 'magix.execute.', or the currently used 
+namespace, before that string is raised as an active event</p><p>a hyper lisp keyword 
+will have access to the entire data tree, while a normal active event will get a deep 
+copy of the tree underneath its own node.&nbsp;&nbsp;if the [execute] has a value, it 
+will be expected to be an expression referencing another node, which will be executed 
+instead of the incoming parameter nodes</p><p>thread safe</p>";
 				e.Params["_data"]["value"].Value = "thomas";
 				e.Params["if"].Value = "equals";
                 e.Params["if"]["lhs"].Value = "[_data][value].Value";

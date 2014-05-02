@@ -22,18 +22,18 @@ namespace Magix.execute
 		{
 			if (ShouldInspect(e.Params))
 			{
-				e.Params["event:magix.execute"].Value = null;
+                e.Params["inspect"].Value = @"<p>executes the expression in the 
+[lambda] node creating a deep copy of the expression's nodes</p><p>[lambda] can 
+be given parameters, which will be accessible in the lambda code through the [$] 
+collection.&nbsp;&nbsp;anything you return as [$] from inside the code being 
+executed, will become directly accessible as children nodes from outside of the 
+lambda execution, after the execution is finished</p><p>thread safe</p>";
                 e.Params["_data"]["set"].Value = "[$][output].Value";
                 e.Params["_data"]["set"]["value"].Value = "{0} {1}";
                 e.Params["_data"]["set"]["value"]["v0"].Value = "[$][input].Value";
                 e.Params["_data"]["set"]["value"]["v1"].Value = "hansen";
                 e.Params["lambda"].Value = "[_data]";
                 e.Params["lambda"]["input"].Value = "thomas";
-                e.Params["inspect"].Value = @"executes the expression in the 
-[lambda] node creating a deep copy of the expression's nodes.&nbsp;&nbsp;
-[lambda] can be given parameters, which will be 
-accessible in the lambda code through the [$] collection.&nbsp;&nbsp;
-thread safe";
 				return;
 			}
 
@@ -42,24 +42,26 @@ thread safe";
 
 			Node ip = e.Params["_ip"].Value as Node;
 
-			Node dp = ip;
-			if (e.Params.Contains("_dp"))
-				dp = e.Params["_dp"].Value as Node;
+			Node dp = e.Params["_dp"].Value as Node;
 
-			string lambda = ip.Get<string>();
+			string lambdaExpression = ip.Get<string>();
+            Node lambdaCodeBlock = (Expressions.GetExpressionValue(lambdaExpression, dp, ip, false) as Node);
 
-            Node lambdaExpression = (Expressions.GetExpressionValue(lambda, dp, ip, false) as Node).Clone();
+            if (lambdaCodeBlock == null)
+                throw new ArgumentException("[lambda] couldn't find a block of code to execute from its expression");
+
+            lambdaCodeBlock = lambdaCodeBlock.Clone();
 
             foreach (Node idx in ip)
             {
-                lambdaExpression["$"].Add(idx.Clone());
+                lambdaCodeBlock["$"].Add(idx);
             }
 
             RaiseActiveEvent(
                 "magix.execute",
-                lambdaExpression);
+                lambdaCodeBlock);
 
-            ip.ReplaceChildren(lambdaExpression["$"]);
+            ip.ReplaceChildren(lambdaCodeBlock["$"]);
         }
 	}
 }

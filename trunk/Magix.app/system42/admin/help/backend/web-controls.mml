@@ -25,9 +25,9 @@ about hyper lisp.&nbsp;&nbsp;below is an extensive list of all the web controls 
 {{
 lambda=>lmb
   oncreatecontrols
-    magix.admin.get-active-events
+    list-events
       begins-with=>magix.forms.controls.
-    for-each=>[magix.admin.get-active-events][events]
+    for-each=>[list-events][events]
       _pnl
         tag=>li
         css=>bottom-1 span-19 last

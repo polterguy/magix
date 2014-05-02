@@ -8,9 +8,9 @@ which can be invoked by remote servers, meaning this is crucial
 to understand the security aspect in magix"
 
 
-magix.admin.get-active-events
+list-events
   open=>true
-set=>[magix.admin.get-active-events].Name
+set=>[list-events].Name
   value=>Data
 for-each=>[Data][events]
   _tpl
