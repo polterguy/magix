@@ -8,7 +8,7 @@ event=>magix.test.node-2-code
   persist=>false
   inspect=>@"asserts that [node-2-code] works the 
 way it should work, by trying to convert from node 
-to code"
+to code, where [node] contains the nodes as value"
   code
     _data=>jo
       buffer=>5
@@ -24,5 +24,48 @@ to code"
 "
       code
         throw=>@"[node-2-code] didn't behave as expected"
+
+event=>magix.test.node-2-code-as-children
+  persist=>false
+  inspect=>@"asserts that [node-2-code] works the 
+way it should work, by trying to convert from node 
+to code, where [node] contains nodes as children nodes"
+  code
+    _data=>jo
+      buffer=>5
+      buffer=>4
+    add=>[node-2-code][node]
+      value=>[_data]
+    node-2-code
+    if=>not-equals
+      lhs=>[node-2-code][code].Value
+      rhs=>@"_data=>jo
+  buffer=>5
+  buffer=>4
+"
+      code
+        throw=>@"[node-2-code] didn't behave as expected"
+
+event=>magix.test.code-2-node
+  persist=>false
+  inspect=>@"asserts that [code-2-node] works the 
+way it should work, by trying to convert from code 
+to nodes"
+  code
+    code-2-node
+      code=>@"_data=>jo
+  buffer=>5
+  buffer=>4"
+    if=>not-equals
+      lhs=>[code-2-node][node][_data][buffer:0].Value
+      rhs=>5
+      or=>not-equals
+        lhs=>[code-2-node][node][_data][buffer:1].Value
+        rhs=>4
+      or=>not-equals
+        lhs=>[code-2-node][node][_data].Value
+        rhs=>jo
+      code
+        throw=>@"[code-2-node] didn't behave as expected"
 
 
