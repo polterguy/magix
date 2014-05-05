@@ -84,12 +84,14 @@ button=>back
   css=>btn-large span-2
   onclick
     magix.help.move-backwards
+    magix.viewport.scroll=>help
 button=>index
   text=>index
   css=>btn-large span-2
   onclick
     magix.help.open-file
       file=>system42/admin/help/index.mml
+    magix.viewport.scroll=>help
 button=>close
   text=>close
   css=>btn-large span-2
@@ -118,11 +120,13 @@ button=>next-page
   onclick
     magix.help.move-next
       force-page=>true
+    magix.viewport.scroll=>help
 button=>next
   text=>>>
   css=>btn-large span-2 last
   onclick
     magix.help.move-next
+    magix.viewport.scroll=>help
 }}}}
 </div>
 {{{{
@@ -138,12 +142,14 @@ button=>back-2
   css=>btn-large span-3
   onclick
     magix.help.move-backwards
+    magix.viewport.scroll=>help
 button=>next-page-2
   text=>next page
   css=>btn-large span-3 last
   onclick
     magix.help.move-next
       force-page=>true
+    magix.viewport.scroll=>help
 }}}}
 </div>
 ", GetAllHelpHeaders());
