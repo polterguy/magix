@@ -161,7 +161,7 @@ safe</p>";
 					db.Ext().Configure().ActivationDepth(1000);
 
                     string id = ip.Contains("id") ?
-                        ip["id"].Get<string>() : 
+                        Expressions.GetExpressionValue(ip["id"].Get<string>(), dp, ip, false) as string : 
 						Guid.NewGuid().ToString();
 					bool found = false;
 
