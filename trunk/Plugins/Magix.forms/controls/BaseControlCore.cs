@@ -161,21 +161,15 @@ thread safe";
 			if (node.Contains("info") && !string.IsNullOrEmpty(node["info"].Get<string>()))
 				ctrl.Info = node["info"].Get<string>();
 
-			if (node.Contains("onfirstload") && node.Contains("_first") && node["_first"].Get<bool>() && node["onfirstload"].Count > 0)
+			if (ShouldHandleEvent("onfirstload", node) && 
+                node.Contains("_first") && 
+                node["_first"].Get<bool>())
 			{
 				Node codeNode = node["onfirstload"].Clone();
-
 				ctrl.Load += delegate(object sender, EventArgs e)
 				{
-					BaseControl that2 = sender as BaseControl;
-					if (!string.IsNullOrEmpty(that2.Info))
-						codeNode["$"]["info"].Value = that2.Info;
-
-					object val = GetValue(that2);
-					if (val != null)
-						codeNode["$"]["value"].Value = val;
-
-					RaiseActiveEvent(
+                    FillOutEventInputParameters(codeNode, sender);
+                    RaiseActiveEvent(
 						"magix.execute",
 						codeNode);
 				};
@@ -241,6 +235,24 @@ of your control</p>";
 
 			return default(T);
 		}
+
+        protected bool ShouldHandleEvent(string evt, Node node)
+        {
+            if (node.Contains(evt) && node[evt].Count > 0)
+                return true;
+            return false;
+        }
+
+        protected void FillOutEventInputParameters(Node node, object sender)
+        {
+            BaseControl that2 = sender as BaseControl;
+            if (!string.IsNullOrEmpty(that2.Info))
+                node["$"]["info"].Value = that2.Info;
+
+            object val = GetValue(that2);
+            if (val != null)
+                node["$"]["value"].Value = val;
+        }
 	}
 }
 

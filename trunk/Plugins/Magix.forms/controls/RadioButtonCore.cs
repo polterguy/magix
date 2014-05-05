@@ -49,21 +49,13 @@ namespace Magix.forms
 			    node["enabled"].Value != null)
 				ret.Enabled = node["enabled"].Get<bool>();
 
-			if (node.Contains("oncheckedchanged"))
+			if (ShouldHandleEvent("oncheckedchanged", node))
 			{
 				Node codeNode = node["oncheckedchanged"].Clone();
-
 				ret.CheckedChanged += delegate(object sender2, EventArgs e2)
 				{
-					RadioButton that2 = sender2 as RadioButton;
-					if (!string.IsNullOrEmpty(that2.Info))
-						codeNode["$"]["info"].Value = that2.Info;
-
-					object val = GetValue(that2);
-					if (val != null)
-						codeNode["$"]["value"].Value = val;
-
-					RaiseActiveEvent(
+                    FillOutEventInputParameters(codeNode, sender2);
+                    RaiseActiveEvent(
 						"magix.execute",
 						codeNode);
 				};

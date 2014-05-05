@@ -55,41 +55,25 @@ namespace Magix.forms
 			    node["enabled"].Value != null)
 				ret.Enabled = node["enabled"].Get<bool>();
 
-			if (node.Contains("ontextchanged"))
+			if (ShouldHandleEvent("ontextchanged", node))
 			{
 				Node codeNode = node["ontextchanged"].Clone();
-
 				ret.TextChanged += delegate(object sender2, EventArgs e2)
 				{
-					TextArea that2 = sender2 as TextArea;
-					if (!string.IsNullOrEmpty(that2.Info))
-						codeNode["$"]["info"].Value = that2.Info;
-
-					object val = GetValue(that2);
-					if (val != null)
-						codeNode["$"]["value"].Value = val;
-
-					RaiseActiveEvent(
+                    FillOutEventInputParameters(codeNode, sender2);
+                    RaiseActiveEvent(
 						"magix.execute",
 						codeNode);
 				};
 			}
 
-			if (node.Contains("onescpressed"))
+			if (ShouldHandleEvent("onescpressed", node))
 			{
 				Node codeNode = node["onescpressed"].Clone();
-
 				ret.EscPressed += delegate(object sender2, EventArgs e2)
 				{
-					TextArea that2 = sender2 as TextArea;
-					if (!string.IsNullOrEmpty(that2.Info))
-						codeNode["$"]["info"].Value = that2.Info;
-
-					object val = GetValue(that2);
-					if (val != null)
-						codeNode["$"]["value"].Value = val;
-
-					RaiseActiveEvent(
+                    FillOutEventInputParameters(codeNode, sender2);
+                    RaiseActiveEvent(
 						"magix.execute",
 						codeNode);
 				};

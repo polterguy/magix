@@ -40,16 +40,15 @@ namespace Magix.forms
 			if (node.Contains("folder") && !string.IsNullOrEmpty(node["folder"].Get<string>()))
 				folder = node["folder"].Get<string>();
 
-			if (node.Contains("onuploaded"))
+			if (ShouldHandleEvent("onuploaded", node))
 			{
 				Node codeNode = node["onuploaded"].Clone();
-
 				ret.Uploaded += delegate(object sender2, EventArgs e2)
 				{
-					Uploader that = sender2 as Uploader;
+                    FillOutEventInputParameters(codeNode, sender2);
+                    Uploader that = sender2 as Uploader;
 
 					string fileName = Page.Server.MapPath(folder.Trim('/') + "/" + that.GetFileName());
-
 					if (File.Exists(fileName))
 						File.Delete(fileName);
 
@@ -58,7 +57,6 @@ namespace Magix.forms
 					{
 						stream.Write(content, 0, content.Length);
 					}
-
 					RaiseActiveEvent(
 						"magix.execute",
 						codeNode);
