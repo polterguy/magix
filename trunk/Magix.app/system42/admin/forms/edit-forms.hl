@@ -415,6 +415,13 @@ magix.forms.create-web-part
                 magix.forms.get-value
                   form-id=>edit-forms
                   id=>name
+                if=>equals
+                  lhs=>[magix.forms.get-value][value].Value
+                  rhs=>
+                  code
+                    magix.viewport.show-message
+                      message=>you need to supply a name for your form
+                    stop
                 set=>[save-form][name].Value
                   value=>[magix.forms.get-value][value].Value
                 save-form

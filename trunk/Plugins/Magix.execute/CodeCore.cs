@@ -325,7 +325,7 @@ code
 			{
 				e.Params["inspect"].Value = @"<p>will transform the given file as value of node to 
 node tree, and return in [node]</p><p>thread safe</p>";
-                e.Params["file-2-code"].Value = "some-path/to-some/hyper-lisp/file.hl";
+                e.Params["file-2-node"].Value = "some-path/to-some/hyper-lisp/file.hl";
                 return;
 			}
 

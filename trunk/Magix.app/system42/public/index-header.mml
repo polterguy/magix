@@ -135,14 +135,14 @@ panel=>logoutWrp
             if=>exist
               lhs=>[@][magix.web.get][value]
               code
-                set=>[if][_lnk][url].Value
+                set=>[if][code][_lnk][url].Value
                   value=>~
-                set=>[if][_lnk][text].Value
+                set=>[if][code][_lnk][text].Value
                   value=>website
             else
-              set=>[if][_lnk][url].Value
+              set=>[if][code][_lnk][url].Value
                 value=>~?dashboard=
-              set=>[if][_lnk][text].Value
+              set=>[if][code][_lnk][text].Value
                 value=>dashboard
             add=>[$]
               value=>[@][_lnk]
