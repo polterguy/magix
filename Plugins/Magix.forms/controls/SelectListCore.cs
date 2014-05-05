@@ -1,3 +1,4 @@
+
 /*
  * Magix - A Web Application Framework for Humans
  * Copyright 2010 - 2014 - isa.lightbringer@gmail.com
@@ -64,21 +65,13 @@ namespace Magix.forms
 				ret.SetSelectedItemAccordingToValue(node["selected"].Get<string>());
 			}
 
-			if (node.Contains("onselectedindexchanged"))
+			if (ShouldHandleEvent("onselectedindexchanged", node))
 			{
 				Node codeNode = node["onselectedindexchanged"].Clone();
-
 				ret.SelectedIndexChanged += delegate(object sender2, EventArgs e2)
 				{
-					SelectList that2 = sender2 as SelectList;
-					if (!string.IsNullOrEmpty(that2.Info))
-						codeNode["$"]["info"].Value = that2.Info;
-
-					object val = GetValue(that2);
-					if (val != null)
-						codeNode["$"]["value"].Value = val;
-
-					RaiseActiveEvent(
+                    FillOutEventInputParameters(codeNode, sender2);
+                    RaiseActiveEvent(
 						"magix.execute",
 						codeNode);
 				};

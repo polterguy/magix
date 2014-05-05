@@ -74,7 +74,6 @@ of its own</p>";
 							codeNode);
 					};
 				}
-
 				return; // nothing to render unless event handler is defined ...
 			}
 

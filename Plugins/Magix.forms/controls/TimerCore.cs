@@ -39,17 +39,13 @@ namespace Magix.forms
 
             FillOutParameters(node, ret);
 
-			if (node.Contains("ontick"))
+			if (ShouldHandleEvent("ontick", node))
 			{
 				Node codeNode = node["ontick"].Clone();
-
 				ret.Tick += delegate(object sender2, EventArgs e2)
 				{
-					Timer that2 = sender2 as Timer;
-					if (!string.IsNullOrEmpty(that2.Info))
-						codeNode["$"]["info"].Value = that2.Info;
-
-					RaiseActiveEvent(
+                    FillOutEventInputParameters(codeNode, sender2);
+                    RaiseActiveEvent(
 						"magix.execute",
 						codeNode);
 				};

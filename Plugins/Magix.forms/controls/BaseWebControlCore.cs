@@ -191,161 +191,97 @@ namespace Magix.forms
 				}
 			}
 
-			if (node.Contains("onclick"))
+			if (ShouldHandleEvent("onclick", node))
 			{
 				Node codeNode = node["onclick"].Clone();
-
 				that.Click += delegate(object sender, EventArgs e)
 				{
-					BaseControl that2 = sender as BaseControl;
-					if (!string.IsNullOrEmpty(that2.Info))
-						codeNode["$"]["info"].Value = that2.Info;
-
-					object val = GetValue(that2);
-					if (val != null)
-						codeNode["$"]["value"].Value = val;
-
+                    FillOutEventInputParameters(codeNode, sender);
 					RaiseActiveEvent(
 						"magix.execute",
 						codeNode);
 				};
 			}
 
-			if (node.Contains("ondblclick"))
+			if (ShouldHandleEvent("ondblclick", node))
 			{
 				Node codeNode = node["ondblclick"].Clone();
-
 				that.DblClick += delegate(object sender, EventArgs e)
 				{
-					BaseControl that2 = sender as BaseControl;
-					if (!string.IsNullOrEmpty(that2.Info))
-						codeNode["$"]["info"].Value = that2.Info;
-
-					object val = GetValue(that2);
-					if (val != null)
-						codeNode["$"]["value"].Value = val;
-
-					RaiseActiveEvent(
+                    FillOutEventInputParameters(codeNode, sender);
+                    RaiseActiveEvent(
 						"magix.execute",
 						codeNode);
 				};
 			}
 
-			if (node.Contains("onmousedown"))
+			if (ShouldHandleEvent("onmousedown", node))
 			{
 				Node codeNode = node["onmousedown"].Clone();
-
 				that.MouseDown += delegate(object sender, EventArgs e)
 				{
-					BaseControl that2 = sender as BaseControl;
-					if (!string.IsNullOrEmpty(that2.Info))
-						codeNode["$"]["info"].Value = that2.Info;
-
-					object val = GetValue(that2);
-					if (val != null)
-						codeNode["$"]["value"].Value = val;
-
-					RaiseActiveEvent(
+                    FillOutEventInputParameters(codeNode, sender);
+                    RaiseActiveEvent(
 						"magix.execute",
 						codeNode);
 				};
 			}
 
-			if (node.Contains("onmouseup"))
+			if (ShouldHandleEvent("onmouseup", node))
 			{
 				Node codeNode = node["onmouseup"].Clone();
-
 				that.MouseUp += delegate(object sender, EventArgs e)
 				{
-					BaseControl that2 = sender as BaseControl;
-					if (!string.IsNullOrEmpty(that2.Info))
-						codeNode["$"]["info"].Value = that2.Info;
-
-					object val = GetValue(that2);
-					if (val != null)
-						codeNode["$"]["value"].Value = val;
-
-					RaiseActiveEvent(
+                    FillOutEventInputParameters(codeNode, sender);
+                    RaiseActiveEvent(
 						"magix.execute",
 						codeNode);
 				};
 			}
 
-			if (node.Contains("onmouseover"))
+			if (ShouldHandleEvent("onmouseover", node))
 			{
 				Node codeNode = node["onmouseover"].Clone();
-
 				that.MouseOver += delegate(object sender, EventArgs e)
 				{
-					BaseControl that2 = sender as BaseControl;
-					if (!string.IsNullOrEmpty(that2.Info))
-						codeNode["$"]["info"].Value = that2.Info;
-
-					object val = GetValue(that2);
-					if (val != null)
-						codeNode["$"]["value"].Value = val;
-
-					RaiseActiveEvent(
+                    FillOutEventInputParameters(codeNode, sender);
+                    RaiseActiveEvent(
 						"magix.execute",
 						codeNode);
 				};
 			}
 
-			if (node.Contains("onmouseout"))
+			if (ShouldHandleEvent("onmouseout", node))
 			{
 				Node codeNode = node["onmouseout"].Clone();
-
 				that.MouseOut += delegate(object sender, EventArgs e)
 				{
-					BaseControl that2 = sender as BaseControl;
-					if (!string.IsNullOrEmpty(that2.Info))
-						codeNode["$"]["info"].Value = that2.Info;
-
-					object val = GetValue(that2);
-					if (val != null)
-						codeNode["$"]["value"].Value = val;
-
-					RaiseActiveEvent(
+                    FillOutEventInputParameters(codeNode, sender);
+                    RaiseActiveEvent(
 						"magix.execute",
 						codeNode);
 				};
 			}
 
-			if (node.Contains("onkeypress"))
+			if (ShouldHandleEvent("onkeypress", node))
 			{
 				Node codeNode = node["onkeypress"].Clone();
-
 				that.KeyPress += delegate(object sender, EventArgs e)
 				{
-					BaseControl that2 = sender as BaseControl;
-					if (!string.IsNullOrEmpty(that2.Info))
-						codeNode["$"]["info"].Value = that2.Info;
-
-					object val = GetValue(that2);
-					if (val != null)
-						codeNode["$"]["value"].Value = val;
-
-					RaiseActiveEvent(
+                    FillOutEventInputParameters(codeNode, sender);
+                    RaiseActiveEvent(
 						"magix.execute",
 						codeNode);
 				};
 			}
 
-			if (node.Contains("onesc"))
+			if (ShouldHandleEvent("onesc", node))
 			{
 				Node codeNode = node["onesc"].Clone();
-
 				that.EscKey += delegate(object sender, EventArgs e)
 				{
-					BaseControl that2 = sender as BaseControl;
-					if (!string.IsNullOrEmpty(that2.Info))
-						codeNode["$"]["info"].Value = that2.Info;
-
-					object val = GetValue(that2);
-					if (val != null)
-						codeNode["$"]["value"].Value = val;
-
-					RaiseActiveEvent(
+                    FillOutEventInputParameters(codeNode, sender);
+                    RaiseActiveEvent(
 						"magix.execute",
 						codeNode);
 				};
