@@ -36,8 +36,9 @@ namespace Magix.viewports
         protected DynamicPanel help;
         protected DynamicPanel footer;
 		protected DynamicPanel trace;
-		protected Label message;
-		protected Panel confirmWrp;
+        protected Label message;
+        protected Label messageSmall;
+        protected Panel confirmWrp;
 		protected Label confirmLbl;
 		protected Button ok;
 		protected Button cancel;
@@ -70,61 +71,91 @@ namespace Magix.viewports
 		{
 			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
-				e.Params["message"].Value = "message to show to end user";
-				e.Params["inspect"].Value = @"shows a message box to the 
-end user for some seconds.&nbsp;&nbsp;not thread safe";
-				e.Params["code"].Value = "code goes underneath here";
+				e.Params["inspect"].Value = @"<p>shows a message box to the 
+end user for some seconds.&nbsp;&nbsp;all arguments can either be a constant 
+or an expression.&nbsp;&nbsp[code] is optional code to show to end user.&nbsp;
+&nbsp;[time] is optional number of milliseconds to display the message box.
+&nbsp;&nbsp;[color] is optional background-color to use for the message box</p>
+<p>if you create multiple message boxes within the same request, then all 
+messages will show, but only the first invocation will decide the other 
+parameters, such as how long time to show the message box, what background-color 
+to use, and so on</p><p>not thread safe</p>";
+                e.Params["message"].Value = "message to show to end user";
+                e.Params["code"].Value = "code goes underneath here";
 				e.Params["time"].Value = 3000;
 				e.Params["color"].Value = "LightGreen";
 				return;
 			}
 
+            Node ip = Ip(e.Params);
+            Node dp = ip;
+            if (e.Params.Contains("_dp"))
+                dp = e.Params["_dp"].Get<Node>();
 
-            if (!Ip(e.Params).Contains("message") || Ip(e.Params)["message"].Get<string>("") == "")
+            if (!ip.Contains("message") || string.IsNullOrEmpty(ip["message"].Get<string>()))
 				throw new ArgumentException("cannot show a message box without a [message] argument");
+
+            string msgTxt = Expressions.GetExpressionValue(ip["message"].Get<string>(), dp, ip, false) as string;
+            if (string.IsNullOrEmpty(msgTxt))
+                throw new ArgumentException("you must supply a [message] for your message box");
+
+            Label whichMsg = message;
+            if (!ip.Contains("code"))
+            {
+                whichMsg = messageSmall;
+            }
 
 			if (_isFirst)
 			{
-                message.Text = "<p>" + Ip(e.Params)["message"].Get<string>() + "</p>";
+                whichMsg.Text = "<p>" + msgTxt + "</p>";
 			}
 			else
 			{
-                message.Text += "<p>" + Ip(e.Params)["message"].Get<string>() + "</p>";
+                whichMsg.Text += "<p>" + msgTxt + "</p>";
 			}
 
-            if (Ip(e.Params).Contains("color"))
-				message.Style[Styles.backgroundColor] = e.Params["color"].Get<string>();
-			else
-				message.Style[Styles.backgroundColor] = "";
+            if (ip.Contains("color"))
+                whichMsg.Style[Styles.backgroundColor] = Expressions.GetExpressionValue(ip["color"].Get<string>(), dp, ip, false) as string;
+            else
+                whichMsg.Style[Styles.backgroundColor] = "";
 
-            if (Ip(e.Params).Contains("code"))
+            if (ip.Contains("code"))
 			{
-				Node tmp = new Node();
-                Node code = Ip(e.Params)["code"].Clone();
+                Node code = null;
+                if (string.IsNullOrEmpty(ip["code"].Get<string>()))
+                    code = ip["code"].Clone();
+                else
+                    code = (Expressions.GetExpressionValue(ip["code"].Get<string>(), dp, ip, false) as Node ?? new Node()).Clone();
 				code.Name = "";
-				tmp["node"].Value = code;
+                
+                Node tmp = new Node();
+                tmp["node"].Value = code;
 
 				RaiseActiveEvent(
 					"magix.execute.node-2-code",
 					tmp);
 
-				message.Text += "<pre style='text-align:left;margin-left:120px;overflow:auto;max-height:300px;'>" + tmp["code"].Get<string>().Replace("<", "&lt;").Replace(">", "&gt;") + "</pre>";
+                whichMsg.Text += "<pre style='text-align:left;margin-left:120px;overflow:auto;max-height:300px;'>" + 
+                    tmp["code"].Get<string>().Replace("<", "&lt;").Replace(">", "&gt;") + "</pre>";
 			}
 
 			if (_isFirst)
 			{
 				_isFirst = false;
-                if (Ip(e.Params).Contains("time") && Ip(e.Params)["time"].Get<int>() == -1)
+                int time = 3000;
+                if (ip.Contains("time"))
+                    time = int.Parse(Expressions.GetExpressionValue(ip["time"].Get<string>(), dp, ip, false) as string);
+                if (time == -1)
 				{
-					new EffectFadeIn(message, 250)
+                    new EffectFadeIn(whichMsg, 250)
 						.Render();
 				}
 				else
 				{
-					new EffectFadeIn(message, 250)
+                    new EffectFadeIn(whichMsg, 250)
 						.ChainThese(
-                            new EffectTimeout(Ip(e.Params).Contains("time") ? Ip(e.Params)["time"].Get<int>(3000) : 3000),
-							new EffectFadeOut(message,250))
+                            new EffectTimeout(time),
+                            new EffectFadeOut(whichMsg, 250))
 							.Render();
 				}
 			}
