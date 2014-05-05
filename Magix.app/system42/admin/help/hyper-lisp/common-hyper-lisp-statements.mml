@@ -103,7 +103,34 @@ and whatever checks the [else-if] itself has evaluates to true.&nbsp;&nbsp;the s
 parts.&nbsp;&nbsp;this creates a comparison which in plain words become <em>"if [lhs] [operator] [rhs], then execute [code]"</em>.&nbsp;&nbsp;
 for instance, if you had a [lhs] node containing 5, an [rhs] node containing 4 and an operator of 'equals', then in plain words this would 
 become; <em>"if 5 equals 4, then execute [code] block"</em>, which of course would evaluate to false.&nbsp;&nbsp;the [lhs] node is 
-always the one first in the comparison, regardless of where it is in regards to order beneath the [if] and [else-if] statement</p>
+always the one first in the comparison, regardless of where it is in regards to the order beneath the [if] and [else-if] statement</p>
+
+<p>you can also compare two node trees for equality, which will run a deep comparison between the two node trees, comparing their name, 
+value and children, to see if it is a match.&nbsp;&nbsp;consider the following code</p>
+
+<pre>
+_data
+  data=>howdy
+    v0=>jo
+    v1=>hello
+      q=>query
+  data=>howdy
+    v0=>jo
+    v1=>hello
+      q=>queryXXX
+if=>equals
+  lhs=>[_data][0]
+  rhs=>[_data][1]
+  code
+    magix.viewport.show-message
+      message=>crap...
+else
+  magix.viewport.show-message
+    message=>yup, still sane
+</pre>
+
+<p>the above comparison will not return true, since the [q] node's value is different in the first [data] node, compared to the second.&nbsp;&nbsp;
+therefor the else code block will execute</p>
 
 <p>the [while] statement has the exact same syntax, except it will keep on executing the same piece of [code] block, for as long 
 as the statement(s) inside of the [while] evaluates to true</p>

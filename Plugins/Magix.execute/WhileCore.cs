@@ -30,7 +30,9 @@ type is 'exist', 'not-exist', 'equals', 'not-equals', 'less-than', 'more-than',
 'less-than-equals' and 'more-than-equals'</p><p>the engine will convert automatically 
 between int, decimal, date and bool, or resort to string if no conversion is possible, 
 to compare values of [lhs] and [rhs].&nbsp;&nbsp;the [lhs] and [rhs] nodes can be either 
-an expression, or a hardcoded value</p><p>thread safe</p>";
+an expression, or a hardcoded value.&nbsp;&nbsp;you can compare two node trees in [lhs] 
+and [rhs], which means that the node trees will be compared deeply, comparing their name, 
+value and children for equality</p><p>thread safe</p>";
 				e.Params["_data"]["txt1"].Value = "hello world 1.0";
 				e.Params["_data"]["txt2"].Value = "hello world 2.0";
 				e.Params["_data"]["txt3"].Value = "hello world 3.0";

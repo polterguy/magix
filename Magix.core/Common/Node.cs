@@ -855,7 +855,7 @@ namespace Magix.Core
             return r;
         }
 
-		private bool CompareChildren (Node rhs)
+		private bool CompareChildren(Node rhs)
 		{
 			if (Count != rhs.Count)
 				return false;
@@ -873,7 +873,7 @@ namespace Magix.Core
 		 * if the Name, Value and all Children nodes are equal to
 		 * the this object
 		 */
-		public override bool Equals (object obj)
+		public override bool Equals(object obj)
 		{
 			if (obj == null || !(obj is Node))
 				return false;
@@ -881,7 +881,7 @@ namespace Magix.Core
 			Node rhs = obj as Node;
 			return Name == rhs.Name && 
 				 (Value == null && rhs.Value == null || 
-				   (Value != null && Value.Equals (rhs.Value))) && 
+				   (Value != null && Value.Equals(rhs.Value))) && 
 				 CompareChildren(rhs);
 		}
     }
