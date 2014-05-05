@@ -158,7 +158,7 @@ shortcuts in the system.&nbsp;&nbsp;thread safe"
         code
           magix.viewport.load-module
             container=>trace
-            css=>span-24 top-3 bottom-3
+            css=>span-22 top-1
             name=>Magix.admin.EventSniffer
           magix.help.open-file
             file=>system42\admin\help\backend\tracer.mml

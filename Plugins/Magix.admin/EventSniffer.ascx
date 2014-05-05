@@ -6,13 +6,10 @@
     AutoEventWireup="true" 
     Inherits="Magix.admin.EventSniffer" %>
 
-<mux:TextBox
-	runat="server"
-	id="filter"
-	PlaceHolder="filter ..."
-	CssClass="span-6 left-17"/>
+<h3>stack trace of all hyper lisp code</h3>
+
 <mux:Label
 	runat="server"
 	id="lbl"
 	Tag="div"
-	CssClass="span-24" />
+	CssClass="span-22 last" />

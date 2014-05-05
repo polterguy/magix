@@ -74,9 +74,11 @@ either a constant pointing to a file locally or externally, or an expression</p>
 			{
                 e.Params["inspect"].Value = @"<p>saves a file defined by the value of 
 [magix.file.save]</p><p>the file to save is given as the [value] node.&nbsp;&nbsp;
-[magix.file.save] will overwrite an existing file, if any exist,otherwise it will 
+[magix.file.save] will overwrite an existing file, if any exist, otherwise it will 
 create a new file.&nbsp;&nbsp;if you pass in null as [value] Node, or no [value] node
-at all, any existing file will be deleted, and no new file created</p><p>thread safe</p>";
+at all, any existing file will be deleted, and no new file created.&nbsp;&nbsp;both the 
+file name, and the [value] node can be both expressions or constants</p><p>thread safe
+</p>";
                 e.Params["magix.file.save"].Value = "tmp/sample.txt";
 				e.Params["magix.file.save"]["value"].Value = @"contents of file";
 				return;
@@ -98,7 +100,7 @@ at all, any existing file will be deleted, and no new file created</p><p>thread 
 			}
 			else
 			{
-                string fileContent = ip["value"].Get<string>();
+                string fileContent = Expressions.GetExpressionValue(ip["value"].Get<string>(), dp, ip, false) as string;
                 File.Delete(HttpContext.Current.Server.MapPath(file));
 				using (TextWriter writer = new StreamWriter(File.OpenWrite(HttpContext.Current.Server.MapPath(file))))
 				{
