@@ -258,6 +258,14 @@ link-button=>hyperlisp-9
       file=>system42\admin\help\hyper-lisp\remote-active-events.mml
     magix.viewport.scroll=>help
 }}</li>
+<li>{{
+link-button=>hyperlisp-10
+  text=>what to use hyper lisp for
+  onclick
+    magix.help.open-file
+      file=>system42\admin\help\hyper-lisp\hyper-lisp-general-info.mml
+    magix.viewport.scroll=>help
+}}</li>
 </ul>
 </div>
   

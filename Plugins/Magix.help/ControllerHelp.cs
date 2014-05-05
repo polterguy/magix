@@ -47,9 +47,8 @@ namespace Magix.help
 		{
 			if (ShouldInspect(e.Params))
 			{
-				e.Params["event:magix.help.start-help"].Value = null;
-				e.Params["inspect"].Value = @"opens the help files in the help container.
-&nbsp;&nbsp;not thread safe";
+				e.Params["inspect"].Value = @"<p>opens the help files in the help 
+container</p><p>not thread safe</p>";
 				return;
 			}
 

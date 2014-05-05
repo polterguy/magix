@@ -12,6 +12,11 @@
     id="wrp">
     <mux:Label
 		runat="server"
+		id="messageSmall"
+		style="display:none;"
+		CssClass="info-message-small" />
+    <mux:Label
+		runat="server"
 		id="message"
 		style="display:none;"
 		CssClass="info-message" />
