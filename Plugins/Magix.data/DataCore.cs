@@ -35,36 +35,58 @@ namespace Magix.execute
 			if (ShouldInspect(e.Params))
 			{
 				e.Params["inspect"].Value = @"<p>loads the first object matching the given [id], 
-or if you supply a [prototype], it will return all objects matching your prototype</p>
-<p>returns objects found as [objects], with child nodes of [objects] being the matching 
-objects</p>
-<p>use [start] and [end] to fetch a specific slice of objects, [start] defaults 
-to 0 and [end] defaults to -1, which means all objects matching criteria.&nbsp;&nbsp;
-[start], [end] and [prototype] cannot be defined if [id] is given, since [id] is supposed 
-to be unique, and will make sure only one object is loaded</p><p>if a [prototype] node is 
-given, it can contain node values with % to signify wildcards for a match operation</p>
-<p>thread safe</p>";
+or if you supply a [prototype], it will return all objects matching your prototype</p><p>returns 
+objects found as [objects], with child nodes of [objects] being the matching objects</p><p>use 
+[start] and [end] to fetch a specific slice of objects, [start] defaults to 0 and [end] defaults 
+to -1, which means all objects matching criteria.&nbsp;&nbsp;[start], [end] and [prototype] cannot 
+be defined if [id] is given, since [id] is supposed to be unique, and will make sure only one 
+object is loaded</p><p>if a [prototype] node is given, it can contain node values with % to signify 
+wildcards for a match operation.&nbsp;&nbsp;both [id], [prototype], [start] and [end] can be both 
+constant values, nodes or expressions pointing to an id or a prototype object, which will be used 
+as the criteria to load objects</p><p>thread safe</p>";
                 e.Params["magix.data.load"]["id"].Value = "object-id";
                 return;
 			}
 
             Node ip = Ip(e.Params);
+            Node dp = ip;
+            if (e.Params.Contains("_dp"))
+                dp = e.Params["_dp"].Get<Node>();
 
 			Node prototype = null;
             if (ip.Contains("prototype"))
-				prototype = ip["prototype"];
+            {
+                if (!string.IsNullOrEmpty(ip["prototype"].Get<string>()) && ip["prototype"].Get<string>().StartsWith("["))
+                {
+                    prototype = Expressions.GetExpressionValue(ip["prototype"].Get<string>(), dp, ip, false) as Node;
+                }
+                else
+                {
+                    prototype = ip["prototype"];
+                }
+            }
 
 			string id = null;
             if (ip.Contains("id") && ip["id"].Value != null)
-                id = ip["id"].Get<string>();
+                id = Expressions.GetExpressionValue(ip["id"].Get<string>(), dp, ip, false) as string;
 
 			int start = 0;
             if (ip.Contains("start") && ip["start"].Value != null)
-                start = ip["start"].Get<int>();
+            {
+                if (ip["start"].Get<string>().StartsWith("["))
+                    start = int.Parse(Expressions.GetExpressionValue(ip["start"].Get<string>(), dp, ip, false) as string);
+                else
+                    start = ip["start"].Get<int>();
+            }
 
 			int end = -1;
             if (ip.Contains("end") && ip["end"].Value != null)
-                end = ip["end"].Get<int>();
+            {
+                if (ip["end"].Get<string>().StartsWith("["))
+                    end = int.Parse(Expressions.GetExpressionValue(ip["end"].Get<string>(), dp, ip, false) as string);
+                else
+                    end = ip["end"].Get<int>();
+            }
 
 			if (id != null && start != 0 && end != -1 && prototype != null)
 				throw new ArgumentException("if you supply an [id], then [start], [end] and [prototype] cannot be defined");
@@ -106,19 +128,30 @@ given, it can contain node values with % to signify wildcards for a match operat
                 e.Params["inspect"].Value = @"<p>will serialize the given [value] node with 
 the given [id] in the persistent data storage</p><p>if no [id] is given, a global unique 
 identifier will be automatically assigned to the object.&nbsp;&nbsp;if an [id] is given, 
-and an object with that same id exists, object will be overwritten or updated</p><p>
-thread safe</p>";
+and an object with that same id exists, object will be overwritten or updated.&nbsp;&nbsp;
+both the [value] and [id] can either be expressions or constant strings/nodes</p><p>thread 
+safe</p>";
                 e.Params["magix.data.save"]["id"].Value = "object-id";
                 e.Params["magix.data.save"]["value"]["some-value"].Value = "value of object";
 				return;
 			}
 
             Node ip = Ip(e.Params);
+            Node dp = ip;
+            if (e.Params.Contains("_dp"))
+                dp = e.Params["_dp"].Get<Node>();
 
             if (!ip.Contains("value"))
 				throw new ArgumentException("[value] must be defined for magix.data.save to actually save anything");
 
-            Node value = ip["value"].Clone();
+            Node value = null;
+
+            if (!string.IsNullOrEmpty(ip["value"].Get<string>()) && ip["value"].Get<string>().StartsWith("["))
+            {
+                value = (Expressions.GetExpressionValue(ip["value"].Get<string>(), dp, ip, false) as Node).Clone();
+            }
+            else
+                value = ip["value"].Clone();
 
 			lock (typeof(DataCore))
 			{
@@ -159,16 +192,29 @@ thread safe</p>";
 			if (ShouldInspect(e.Params))
 			{
 				e.Params["inspect"].Value = @"<p>removes the given [id] or [prototype] object(s) from 
-your persistent data storage</p><p>thread safe</p>";
+your persistent data storage</p><p>both [id] and [prototype] can be both expressions or constant values
+</p><p>thread safe</p>";
                 e.Params["magix.data.remove"]["id"].Value = "object-id";
                 return;
 			}
 
             Node ip = Ip(e.Params);
+            Node dp = ip;
+            if (e.Params.Contains("_dp"))
+                dp = e.Params["_dp"].Get<Node>();
 
-			Node prototype = null;
+            Node prototype = null;
             if (ip.Contains("prototype"))
-                prototype = ip["prototype"];
+            {
+                if (!string.IsNullOrEmpty(ip["prototype"].Get<string>()) && ip["prototype"].Get<string>().StartsWith("["))
+                {
+                    prototype = Expressions.GetExpressionValue(ip["prototype"].Get<string>(), dp, ip, false) as Node;
+                }
+                else
+                {
+                    prototype = ip["prototype"];
+                }
+            }
 
             if ((!ip.Contains("id") || string.IsNullOrEmpty(ip["id"].Get<string>())) && prototype == null)
 				throw new ArgumentException("missing [id] or [prototype] while trying to remove object");
@@ -177,7 +223,7 @@ your persistent data storage</p><p>thread safe</p>";
 			{
                 using (IObjectContainer db = Db4oEmbedded.OpenFile(HttpContext.Current.Request.MapPath("~/" + _dbFile)))
 				{
-                    string id = ip.Contains("id") ? ip["id"].Get<string>() : null;
+                    string id = ip.Contains("id") ? Expressions.GetExpressionValue(ip["id"].Get<string>(), dp, ip, false) as string : null;
 					foreach (Storage idx in db.Ext().Query<Storage>(
 						delegate(Storage obj)
 						{
@@ -204,16 +250,30 @@ your persistent data storage</p><p>thread safe</p>";
 			if (ShouldInspect(e.Params))
 			{
 				e.Params["inspect"].Value = @"<p>returns the total number of objects in 
-data storage as [count]&nbsp;&nbsp;add [prototype] to filter results</p><p>thread safe</p>";
+data storage as [count]&nbsp;&nbsp;add [prototype] to filter results</p><p>[prototype], 
+if given, can be either an expression or a constant</p><p>thread safe</p>";
                 e.Params["magix.data.count"].Value = null;
 				return;
 			}
 
             Node ip = Ip(e.Params);
 
-			Node prototype = null;
+            Node dp = ip;
+            if (e.Params.Contains("_dp"))
+                dp = e.Params["_dp"].Get<Node>();
+
+            Node prototype = null;
             if (ip.Contains("prototype"))
-                prototype = ip["prototype"];
+            {
+                if (!string.IsNullOrEmpty(ip["prototype"].Get<string>()) && ip["prototype"].Get<string>().StartsWith("["))
+                {
+                    prototype = Expressions.GetExpressionValue(ip["prototype"].Get<string>(), dp, ip, false) as Node;
+                }
+                else
+                {
+                    prototype = ip["prototype"];
+                }
+            }
 
 			lock (typeof(DataCore))
 			{

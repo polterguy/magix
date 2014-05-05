@@ -136,7 +136,7 @@ instead of the incoming parameter nodes</p><p>thread safe</p>";
 			Node ip = e.Params["_ip"].Value as Node;
 			Node dp = e.Params["_dp"].Value as Node;
 
-			if (ip.Name == "execute" && ip.Value != null)
+			if (ip.Name == "execute" && ip.Value != null && ip.Get<string>().StartsWith("["))
 			{
 				Node newIp = Expressions.GetExpressionValue(ip.Get<string>(), dp, ip, false) as Node; // lambda execute expression
 
