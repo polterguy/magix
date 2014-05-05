@@ -31,8 +31,9 @@ operator used to compare the [lhs] and the [rhs] nodes must be defined using the
 node.&nbsp;&nbsp;legal values for the operator type is 'exist', 'not-exist', 'equals', 'not-equals', 
 'less-than', 'more-than', 'less-than-equals' and 'more-than-equals'</p><p>the engine will convert 
 automatically between int, decimal, date and bool, or resort to string if no conversion is possible.
-&nbsp;&nbsp;the [lhs] and [rhs] nodes can be either an expression, or a hardcoded value</p><p>thread 
-safe</p>";
+&nbsp;&nbsp;the [lhs] and [rhs] nodes can be either an expression, or a hardcoded value.&nbsp;&nbsp;
+you can compare two node trees in [lhs] and [rhs], which means that the node trees will be compared 
+deeply, comparing their name, value and children for equality</p><p>thread safe</p>";
 				e.Params["_data"]["item"].Value = "cache-object";
 				e.Params["_data"]["cache"].Value = null;
                 e.Params["if"].Value = "not-equals";
@@ -67,7 +68,9 @@ inside the value of the [else-if] returns true</p><p>the operator used to compar
 'less-than', 'more-than', 'less-than-equals' and 'more-than-equals'</p><p>the engine will 
 convert automatically between int, decimal, date and bool, or resort to string if no 
 conversion is possible.&nbsp;&nbsp;the [lhs] and [rhs] nodes can be either an expression, 
-or a hardcoded value</p><p>thread safe</p>";
+or a hardcoded value.&nbsp;&nbsp;you can compare two node trees in [lhs] and [rhs], which 
+means that the node trees will be compared deeply, comparing their name, value and children 
+for equality</p><p>thread safe</p>";
 				e.Params["_data"]["node"].Value = null;
                 e.Params["if"].Value = "exist";
                 e.Params["if"]["lhs"].Value = "[_data][node].Value";

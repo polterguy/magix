@@ -223,6 +223,8 @@ namespace Magix.execute
                     if (!bool.TryParse(objRhsValue.ToString(), out tmpVal4))
                         return (objLhsValue.ToString()).CompareTo(objRhsValue.ToString());
                     return ((bool)objLhsValue).CompareTo(objRhsValue);
+                case "Magix.Core.Node":
+                    return ((Node)objLhsValue).Equals(objRhsValue) ? 0 : -1;
                 default:
                     return (objLhsValue.ToString()).CompareTo(objRhsValue.ToString());
             }

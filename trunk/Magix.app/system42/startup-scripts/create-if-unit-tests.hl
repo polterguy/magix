@@ -266,3 +266,57 @@ deep tree"
 evaluated true returned false"
 
 
+event=>magix.test.if-comparing-nodes-false
+  persist=>false
+  inspect=>@"asserts that [if] works the 
+way it should work, and returns 
+false if two node trees are compared, and 
+they are not similar"
+  code
+    _data
+      v1
+        x=>y
+        z=>q
+          c=>4
+          w=>a
+      v1
+        x=>y
+        z=>q
+          c=>4
+          w=>b
+    if=>equals
+      lhs=>[_data][0]
+      rhs=>[_data][1]
+      code
+        throw=>@"[if] expression that should have 
+evaluated false returned true when comparing two
+node trees"
+
+
+event=>magix.test.if-comparing-nodes-true
+  persist=>false
+  inspect=>@"asserts that [if] works the 
+way it should work, and returns 
+true if two node trees are compared, and 
+they are similar"
+  code
+    _data
+      v1
+        x=>y
+        z=>q
+          c=>4
+          w=>a
+      v1
+        x=>y
+        z=>q
+          c=>4
+          w=>a
+    if=>not-equals
+      lhs=>[_data][0]
+      rhs=>[_data][1]
+      code
+        throw=>@"[if] expression that should have 
+evaluated true returned false when comparing two
+node trees"
+
+
