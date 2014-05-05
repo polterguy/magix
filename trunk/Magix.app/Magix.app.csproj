@@ -243,7 +243,7 @@
     <Content Include="system42\startup-scripts\create-exception-unit-tests.hl" />
     <Content Include="system42\startup-scripts\create-using-unit-tests.hl" />
     <Content Include="system42\startup-scripts\create-if-unit-tests.hl" />
-    <Content Include="system42\startup-scripts\create-while-unit-tests.hl" />
+    <Content Include="system42\create-while-unit-tests.hl" />
     <Content Include="system42\startup-scripts\create-set-unit-tests.hl" />
     <Content Include="system42\startup-scripts\create-remoting-unit-tests.hl" />
     <Content Include="system42\admin\help\csharp\active-events\index.mml" />

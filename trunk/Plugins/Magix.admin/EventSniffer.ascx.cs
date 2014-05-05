@@ -24,9 +24,6 @@ namespace Magix.admin
     public class EventSniffer : ActiveModule
     {
 		protected Label lbl;
-		protected TextBox filter;
-
-		private bool isParsing;
 
 		protected override void OnLoad (EventArgs e)
 		{
@@ -42,12 +39,8 @@ namespace Magix.admin
 		[ActiveEvent(Name = "")]
 		public void magix_null_event_handler(object sender, ActiveEventArgs e)
 		{
-			if (isParsing)
-				return;
-
-			if (!string.IsNullOrEmpty(filter.Text))
-				if (!e.Name.Contains(filter.Text))
-					return;
+            if (e.Name != "magix.execute")
+                return;
 
 			string code = "";
 			if (e.Params != null)
@@ -55,23 +48,14 @@ namespace Magix.admin
 				Node tmp = new Node();
                 tmp["node"].Value = Ip(e.Params);
 
-				isParsing = true;
-
-				try
-				{
-					RaiseActiveEvent(
-						"magix.execute.node-2-code",
-						tmp);
-				}
-				finally
-				{
-					isParsing = false;
-				}
+				RaiseActiveEvent(
+					"magix.execute.node-2-code",
+					tmp);
 
 				if (tmp.Contains("code") && !string.IsNullOrEmpty(tmp["code"].Get<string>()))
-					code = "<pre class=\"span-22 left-1\">" + tmp["code"].Get<string>() + "</pre>";
+					code = "<pre class=\"span-22 last bottom-1\">" + tmp["code"].Get<string>() + "</pre>";
 			}
-            lbl.Text += "<h5>" + e.Name + (Ip(e.Params).Value != null ? "=>" + Ip(e.Params).Get<string>() : "") + "</h5>" + code;
+            lbl.Text += code;
 		}
 	}
 }
