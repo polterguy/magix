@@ -1,0 +1,176 @@
+
+
+inspect=>@"creates unit tests to 
+test the the magix.file namespace"
+
+
+event=>magix.test.file-load
+  persist=>false
+  inspect=>@"asserts that [magix.file.load] works the 
+way it should work, by trying to load a file from disc,
+and verify that it is loaded"
+  code
+    magix.file.load=>system42/startup-scripts/create-file-unit-tests.hl
+    if=>not-exist
+      lhs=>[magix.file.load].Value
+      code
+        throw=>@"[magix.file.load] didn't behave as expected 
+when invoking with a constant pointing to an existing file 
+underneath the local file system"
+
+
+event=>magix.test.file-load-expression-path
+  persist=>false
+  inspect=>@"asserts that [magix.file.load] works the 
+way it should work, by trying to load a file from disc,
+and verify that it is loaded, having the file path being 
+an expression, pointing to a node, who's value contains a 
+file path"
+  code
+    _file-path=>system42/startup-scripts/create-file-unit-tests.hl
+    using=>magix.file
+      load=>[_file-path].Value
+    if=>not-exist
+      lhs=>[using][load].Value
+      or=>equals
+        lhs=>[using][load].Value
+        rhs=>
+      code
+        throw=>@"[magix.file.load] didn't behave as expected 
+when invoking with an expression pointing to an existing file 
+underneath the local file system"
+
+
+event=>magix.test.file-save
+  persist=>false
+  inspect=>@"asserts that [magix.file.save] works the 
+way it should work, by trying to save a file to disc,
+and verify that it exist afterwards, using a constant 
+pointing to the file's path"
+  code
+    magix.file.save=>tmp/mumbo.txt
+      value=>@"howdy world"
+    magix.file.file-exist=>tmp/mumbo.txt
+    if=>not-equals
+      lhs=>[magix.file.file-exist][value].Value
+      rhs=>true
+      code
+        throw=>@"[magix.file.save] didn't behave as expected 
+since no file exist after creation of file"
+    magix.file.load=>tmp/mumbo.txt
+    if=>not-equals
+      lhs=>[magix.file.load][value].Value
+      rhs=>@"howdy world"
+      code
+        throw=>@"[magix.file.save] didn't behave as expected 
+since file content was not what was expected after loading again 
+after creation of file"
+    magix.file.delete=>tmp/mumbo.txt
+
+
+event=>magix.test.file-save-expression
+  persist=>false
+  inspect=>@"asserts that [magix.file.save] works the 
+way it should work, by trying to save a file to disc,
+and verify that it exist afterwards, using an expression
+pointing to the file's path"
+  code
+    _data=>tmp/mumbo.txt
+    using=>magix.file
+      save=>[_data].Value
+        value=>@"howdy world"
+    using=>magix.file
+      file-exist=>[_data].Value
+    if=>not-equals
+      lhs=>[using:1][file-exist][value].Value
+      rhs=>true
+      code
+        throw=>@"[magix.file.save] didn't behave as expected 
+since no file exist after creation of file"
+    using=>magix.file
+      load=>[_data].Value
+    if=>not-equals
+      lhs=>[using:2][load][value].Value
+      rhs=>@"howdy world"
+      code
+        throw=>@"[magix.file.save] didn't behave as expected 
+since file content was not what was expected after loading again 
+after creation of file"
+    using=>magix.file
+      delete=>[_data].Value
+
+
+event=>magix.test.directory-create
+  persist=>false
+  inspect=>@"asserts that [magix.file.create-directory] works the 
+way it should work, by trying to create a directory, for then to 
+delete it"
+  code
+    _data=>tmp/mumbo
+    using=>magix.file
+      create-directory=>[_data].Value
+    using=>magix.file
+      directory-exist=>[_data].Value
+    if=>not-equals
+      lhs=>[using:1][directory-exist][value].Value
+      rhs=>true
+      code
+        throw=>@"[magix.file.create-directory] didn't behave as expected 
+since no directory exist after creation of directory"
+    using=>magix.file
+      delete-directory=>[_data].Value
+
+
+event=>magix.test.directory-delete
+  persist=>false
+  inspect=>@"asserts that [magix.file.delete-directory] works the 
+way it should work, by trying to create a directory"
+  code
+    _data=>tmp/mumbo
+    using=>magix.file
+      create-directory=>[_data].Value
+    using=>magix.file
+      directory-exist=>[_data].Value
+    if=>not-equals
+      lhs=>[using:1][directory-exist][value].Value
+      rhs=>true
+      code
+        throw=>@"[magix.file.create-directory] didn't behave as expected 
+since no directory exist after creation of directory"
+    using=>magix.file
+      delete-directory=>[_data].Value
+    using=>magix.file
+      directory-exist=>[_data].Value
+    if=>not-equals
+      lhs=>[using:3][directory-exist][value].Value
+      rhs=>false
+      code
+        throw=>@"[magix.file.delete-directory] didn't behave as expected 
+since directory existed after deletion of directory"
+
+
+event=>magix.test.directory-move
+  persist=>false
+  inspect=>@"asserts that [magix.file.move-directory] works the 
+way it should work, by trying to create a directory, for then to 
+move it"
+  code
+    _data1=>tmp/mumbo1
+    _data2=>tmp/mumbo2
+    using=>magix.file
+      create-directory=>[_data1].Value
+    using=>magix.file
+      move-directory=>[_data1].Value
+        to=>[_data2].Value
+    using=>magix.file
+      directory-exist=>[_data2].Value
+    if=>not-equals
+      lhs=>[using:2][directory-exist][value].Value
+      rhs=>true
+      code
+        throw=>@"[magix.file.move-directory] didn't behave as expected 
+since directory didn't exist after moving it"
+    using=>magix.file
+      delete-directory=>[_data2].Value
+
+
