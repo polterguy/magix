@@ -21,6 +21,7 @@ set=>[$][output].Value
       code
         throw=>[execute-script] did not correctly pass parameters
 
+
 event=>magix.test.execute-script-remove-parameters
   persist=>false
   inspect=>@"asserts that [execute-script] removes
@@ -33,3 +34,4 @@ set=>[$][input]"
       lhs=>[execute-script][input]
       code
         throw=>[execute-script] did not correctly remove parameters
+

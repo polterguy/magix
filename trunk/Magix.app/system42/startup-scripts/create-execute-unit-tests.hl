@@ -24,6 +24,7 @@ the entire tree"
       code
         throw=>code outside of [execute] was not modified when expected
 
+
 event=>magix.test.execute-do-not-allow-access-outside
   persist=>false
   inspect=>@"asserts that modifying nodes outside
@@ -57,6 +58,7 @@ not expected to be modified"
         throw=>@"code outside of [execute] was modified when 
 not expected to be modified"
 
+
 event=>magix.test.execute-children-allow-access-outside
   persist=>false
   inspect=>@"asserts that modifying nodes outside
@@ -76,4 +78,28 @@ the entire tree"
       rhs=>executed
       code
         throw=>code outside of [execute] was not modified when expected
+
+
+event=>magix.test.execute-named-execution
+  persist=>false
+  inspect=>@"asserts executing an [execute] block of code, 
+with a label, works the correct way"
+  code
+    _outside
+    execute=>testing execution
+      set=>[_outside].Value
+        value=>executed
+      set=>[@][_inside].Value
+        value=>executed
+      _inside
+    if=>not-equals
+      lhs=>[_outside].Value
+      rhs=>executed
+      code
+        throw=>code outside of [execute] was not modified when expected
+    if=>not-equals
+      lhs=>[execute=>testing execution][_inside].Value
+      rhs=>executed
+      code
+        throw=>code inside of [execute] was not modified when expected
 
