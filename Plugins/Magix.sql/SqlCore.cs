@@ -20,8 +20,8 @@ namespace Magix.sql
         /**
          * selects from ms sql server
          */
-        [ActiveEvent(Name = "magix.sql.select")]
-        public static void magix_sql_select(object sender, ActiveEventArgs e)
+        [ActiveEvent(Name = "microsoft.sql.select")]
+        public static void microsoft_sql_select(object sender, ActiveEventArgs e)
         {
             if (ShouldInspect(e.Params))
             {
@@ -34,9 +34,9 @@ node</p><p>both [query] and [connection] can be either expressions or constant v
 of typing in the connection string in code by prefixing the [connection] value with web.config:
 NamedConnection, and such reference the connection string from your web.config called 
 ""NamedConnection""</p><p>thread safe</p>";
-                e.Params["magix.sql.select"]["connection"].Value = "Data Source=(localdb)\\v11.0;Initial Catalog=Northwind;Integrated Security=True";
-                e.Params["magix.sql.select"]["query"].Value = "select * from Customers where ContactTitle=@ContactTitle";
-                e.Params["magix.sql.select"]["params"]["ContactTitle"].Value = "owner";
+                e.Params["microsoft.sql.select"]["connection"].Value = "Data Source=(localdb)\\v11.0;Initial Catalog=Northwind;Integrated Security=True";
+                e.Params["microsoft.sql.select"]["query"].Value = "select * from Customers where ContactTitle=@ContactTitle";
+                e.Params["microsoft.sql.select"]["params"]["ContactTitle"].Value = "owner";
                 return;
             }
 
@@ -84,23 +84,23 @@ NamedConnection, and such reference the connection string from your web.config c
         /**
          * updates and executes sql to ms sql server
          */
-        [ActiveEvent(Name = "magix.sql.execute")]
-        public static void magix_sql_execute(object sender, ActiveEventArgs e)
+        [ActiveEvent(Name = "microsoft.sql.execute")]
+        public static void microsoft_sql_execute(object sender, ActiveEventArgs e)
         {
             if (ShouldInspect(e.Params))
             {
                 e.Params["inspect"].Value = @"<p>executes a non-query sql statement towards 
-a microsoft sql server, and returns the number of rows affected</p><p>add up parameters 
-underneath the [params] node, and make sure you have a valid connection string to an ms sql 
-database in your [connection] parameter.&nbsp;&nbsp;put the actual sql query in the [query] 
-parameter node</p><p>both [query] and [connection] can be either expressions or constant 
-values.&nbsp;&nbsp;if you wish, you can de-reference a connection string from your web.config 
-file, instead of typing in the connection string in code by prefixing the [connection] value 
-with web.config:NamedConnection, and such reference the connection string from your web.config 
-called ""NamedConnection""</p><p>thread safe</p>";
-                e.Params["magix.sql.execute"]["connection"].Value = "Data Source=(localdb)\\v11.0;Initial Catalog=Northwind;Integrated Security=True";
-                e.Params["magix.sql.execute"]["query"].Value = "update Customers set ContactTitle='owner' where ContactTitle=@ContactTitle";
-                e.Params["magix.sql.execute"]["params"]["ContactTitle"].Value = "Owner";
+a microsoft sql server, and returns the number of rows affected in the [result] node</p><p>
+add up parameters underneath the [params] node, and make sure you have a valid connection 
+string to an ms sql database in your [connection] parameter.&nbsp;&nbsp;put the actual sql 
+query in the [query] parameter node</p><p>both [query] and [connection] can be either 
+expressions or constant values.&nbsp;&nbsp;if you wish, you can de-reference a connection 
+string from your web.config file, instead of typing in the connection string in code by 
+prefixing the [connection] value with web.config:NamedConnection, and such reference the 
+connection string from your web.config called ""NamedConnection""</p><p>thread safe</p>";
+                e.Params["microsoft.sql.execute"]["connection"].Value = "Data Source=(localdb)\\v11.0;Initial Catalog=Northwind;Integrated Security=True";
+                e.Params["microsoft.sql.execute"]["query"].Value = "update Customers set ContactTitle='big boss' where ContactTitle=@ContactTitle";
+                e.Params["microsoft.sql.execute"]["params"]["ContactTitle"].Value = "Owner";
                 return;
             }
 
