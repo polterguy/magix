@@ -102,10 +102,12 @@ as the criteria to load objects</p><p>thread safe</p>";
 					foreach (Storage idx in db.Ext().Query<Storage>(
 						delegate(Storage obj)
 						{
-						if (id != null)
-							return obj.Id == id;
-						else
-							return obj.Node.HasNodes(prototype);
+                            if (id != null)
+                                return obj.Id == id;
+                            else if (prototype != null)
+                                return obj.Node.HasNodes(prototype);
+                            else
+                                return true;
 					}))
 					{
 						if (idxNo >= start && (end == -1 || idxNo < end))
@@ -227,10 +229,12 @@ your persistent data storage</p><p>both [id] and [prototype] can be both express
 					foreach (Storage idx in db.Ext().Query<Storage>(
 						delegate(Storage obj)
 						{
-						if (id != null)
-							return obj.Id == id;
-						else
-							return obj.Node.HasNodes(prototype);
+						    if (id != null)
+							    return obj.Id == id;
+                            else if (prototype != null)
+                                return obj.Node.HasNodes(prototype);
+                            else
+                                return true;
 					}))
 					{
 						db.Delete(idx);

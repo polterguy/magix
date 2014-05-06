@@ -1,0 +1,136 @@
+﻿
+<h2>hyper lisp data access</h2>
+
+<p>magix comes with a data layer, which allows you to save and load data to an object oriented database.&nbsp;&nbsp;this is not meant 
+to be a solution for all of your data needs, but rather for internal use for the system.&nbsp;&nbsp;with magix though, you can hook up 
+any database you wish, including your existing legacy data from before.&nbsp;&nbsp;the database access layer in magix, should not be 
+used for huge amounts of data, but for the internals of magix, such as events, settings, and so on.&nbsp;&nbsp;if you wish to store 
+large amounts of data, you should implement this yourself, by exposing active events, that allows you to access a <em>"real database"
+</em>.&nbsp;&nbsp;the database layer in magix does not scale for hundreds of thousands records</p>
+
+<p>however, if you wish to use the database access layer in magix, this can be found in the <em>"magix.data"</em> namespace.&nbsp;&nbsp;
+below is a list of all database layer active events</p>
+
+<h3>database access layer active events</h3>
+
+<ul class="list-no-bullet">
+{{
+lambda=>lmb-database
+  oncreatecontrols
+    list-events
+      begins-with=>magix.data.
+      all=>false
+    for-each=>[list-events][events]
+      _pnl
+        tag=>li
+        css=>bottom-1 span-19 last
+        controls
+          label
+            css=>span-3
+            tag=>label
+          label
+            css=>span-16 last
+          label
+            css=>left-3 span-16 last
+            tag=>pre
+      set=>[@][_pnl][controls][label:0][text].Value
+        value=>[.].Name
+      _lmb
+        set=>[1].Name
+          value=>[$][name].Value
+        _1
+          inspect
+        set=>[$][description].Value
+          value=>[1][inspect].Value
+        set=>[1][inspect]
+        set=>[node-2-code][node].Value
+          value=>[1]
+        node-2-code
+          remove-root=>true
+        set=>[$][code].Value
+          value=>[node-2-code][code].Value
+      set=>[@][lambda][name].Value
+        value=>[.].Name
+      lambda=>[@][_lmb]
+      set=>[@][_pnl][controls][label:1][text].Value
+        value=>[@][lambda][description].Value
+      set=>[@][_pnl][controls][label:2][text].Value
+        value=>[@][lambda][code].Value
+      add=>[$]
+        value=>[@][_pnl]
+      set=>[$][_pnl].Name
+        value=>panel
+}}
+</ul>
+
+<h3 style="clear:both;">the [prototype] parameter and querying</h3>
+
+<p>when you [load], [remove] or [count] the objects in your database, you can optionally use a [prototype] to filter what objects you'd 
+like to work with.&nbsp;&nbsp;the [prototype] parameter creates a template for filtering which objects to work with.&nbsp;&nbsp;consider the 
+following code</p>
+
+<pre>
+magix.data.load
+  prototype
+    type=>magix.test
+    name=>somewhere % rainbow%
+</pre>
+
+<p>the above invocation to [magix.data.load] will return all objects from your database that matches the [type] of <em>"magix.test"</em>, 
+while also their [name] contains the text <em>"somewhere % rainbow"</em>.&nbsp;&nbsp;the percentage sign means wildcard search, which means 
+that the result set will contain all objects that matches <em>"somewhere xxxx rainbow"</em>.&nbsp;&nbsp;this will return for instance 
+<em>"somewhere over the rainbow"</em>, in addition to <em>"somewhere where there are rainbows"</em></p>
+
+<p>the objects returned from [load] will be returned within the [objects] node, beneath the [load] node.&nbsp;&nbsp;below is an example 
+of how this will look like</p>
+
+<pre>
+magix.data.load
+  prototype
+    type=>magix.core.role
+  objects
+    e0452c14-6c2f-45ba-8068-320a9168a60f
+      type=>magix.core.role
+      name=>admin
+    a2e5c74a-39ff-4861-b83e-c5ed297f1419
+      type=>magix.core.role
+      name=>user
+</pre>
+
+<p>the root node's name of the object will always be the [id] of the object, as given when saved.&nbsp;&nbsp;if you save an object 
+with no [id], then a unique id will be automatically assigned</p>
+
+<p>if you wish, you can also query an object with a specific [id].&nbsp;&nbsp;consider the following code</p>
+
+<pre>
+magix.data.load
+  id=>e0452c14-6c2f-45ba-8068-320a9168a60f
+</pre>
+
+<p>the above code will produce the following result</p>
+
+<pre>
+magix.data.load
+  id=>e0452c14-6c2f-45ba-8068-320a9168a60f
+  objects
+    e0452c14-6c2f-45ba-8068-320a9168a60f
+      type=>magix.core.role
+      name=>admin
+</pre>
+
+<p>please notice that the ids of your objects, in your database, will probably be different from the ids used in the above code 
+samples.&nbsp;&nbsp;both [magix.data.load], [magix.data.remove] and [magix.data.count] can take a [prototype] parameter.&nbsp;&nbsp;
+[magix.data.load] and [magix.data.remove] can instead of the [prototype] parameter take an [id] parameter, to work with a specific 
+object in your database</p>
+
+<p><strong>notice!</strong>&nbsp;&nbsp;you do not want to use the internal database access layer for storing huge amounts 
+of data.&nbsp;&nbsp;if you need to store thousands or millions of records, you should use something else, since the 
+database access layer in magix, within the magix.data namespace, does not scale for thousands or millions of records.&nbsp;&nbsp;
+if you store too much data in the magix.data database access layer, then your entire website will become sluggish and slow</p>
+
+{{
+lambda=>next
+  oncreatecontrols
+    magix.help.set-next
+      next=>system42\admin\help\csharp\active-events\index.mml
+}}

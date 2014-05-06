@@ -348,6 +348,9 @@
     <Content Include="system42\admin\help\hyper-lisp\hyper-lisp-general-info.mml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="system42\admin\help\hyper-lisp\data-access.mml">
+      <SubType>Designer</SubType>
+    </Content>
     <None Include="todo.txt" />
     <None Include="system42\index.hl" />
     <None Include="system42\startup.hl" />
