@@ -1,0 +1,90 @@
+﻿
+<h2>hyper lisp and microsoft sql server</h2>
+
+<p>magix comes with active events that wraps microsoft sql server for easy access to a relational database.&nbsp;&nbsp;this gives you 
+access to a much more powerful database for storing data in, than the magix.data data access layer can give you.&nbsp;&nbsp;magix will 
+automatically convert from an sql select statement to a node result set.&nbsp;&nbsp;in addition, through the <em>"magix.sql.execute"</em>, 
+you can run any non-query statements towards the database you wish, such that you can update and delete rows for instance</p>
+
+<p>if you wish to use the ms sql database access layer in magix, this can be found in the <em>"magix.sql"</em> namespace.&nbsp;&nbsp;
+below is a list of all ms sql database layer active events</p>
+
+<h3>ms sql active events</h3>
+
+<ul class="list-no-bullet">
+{{
+lambda=>lmb-sql-database
+  oncreatecontrols
+    list-events
+      begins-with=>magix.sql.
+      all=>false
+    for-each=>[list-events][events]
+      _pnl
+        tag=>li
+        css=>bottom-1 span-19 last
+        controls
+          label
+            css=>span-3
+            tag=>label
+          label
+            css=>span-16 last
+          label
+            css=>left-3 span-16 last
+            tag=>pre
+      set=>[@][_pnl][controls][label:0][text].Value
+        value=>[.].Name
+      _lmb
+        set=>[1].Name
+          value=>[$][name].Value
+        _1
+          inspect
+        set=>[$][description].Value
+          value=>[1][inspect].Value
+        set=>[1][inspect]
+        set=>[node-2-code][node].Value
+          value=>[1]
+        node-2-code
+          remove-root=>true
+        set=>[$][code].Value
+          value=>[node-2-code][code].Value
+      set=>[@][lambda][name].Value
+        value=>[.].Name
+      lambda=>[@][_lmb]
+      set=>[@][_pnl][controls][label:1][text].Value
+        value=>[@][lambda][description].Value
+      set=>[@][_pnl][controls][label:2][text].Value
+        value=>[@][lambda][code].Value
+      add=>[$]
+        value=>[@][_pnl]
+      set=>[$][_pnl].Name
+        value=>panel
+}}
+</ul>
+
+<p style="clear:both;">to select all rows from the northwind customer database tabel for instance, consider the following hyper lisp and sql</p>
+
+<pre>
+magix.sql.select
+  connection=>Data Source=(localdb)\v11.0;Initial Catalog=Northwind;Integrated Security=True
+  query=>select * from Customers
+</pre>
+
+<p>if you wish to update the name of a customer in the customer table, you could use the following execute hyper lisp and sql</p>
+
+<pre>
+magix.sql.execute
+  connection=>Data Source=(localdb)\v11.0;Initial Catalog=Northwind;Integrated Security=True
+  query=>update Customers set ContactName='Thomas Statsminister Hansen' where CustomerID='ALFKI'
+</pre>
+
+<p>sql syntax is beyond the scope of this help file, but can easily be found online, on for instance the microsoft.com website.&nbsp;&nbsp;
+you can use the <em>"magix.sql.select"</em> active event for both selecting multiple rows, or aggregate values such as <em>"select count(*) 
+from Customers"</em>
+</p>
+
+{{
+lambda=>next
+  oncreatecontrols
+    magix.help.set-next
+      next=>system42\admin\help\csharp\active-events\index.mml
+}}
