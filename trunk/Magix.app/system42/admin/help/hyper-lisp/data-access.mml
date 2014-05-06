@@ -6,7 +6,15 @@ to be a solution for all of your data needs, but rather for internal use for the
 any database you wish, including your existing legacy data from before.&nbsp;&nbsp;the database access layer in magix, should not be 
 used for huge amounts of data, but for the internals of magix, such as events, settings, and so on.&nbsp;&nbsp;if you wish to store 
 large amounts of data, you should implement this yourself, by exposing active events, that allows you to access a <em>"real database"
-</em>.&nbsp;&nbsp;the database layer in magix does not scale for hundreds of thousands records</p>
+</em>.&nbsp;&nbsp;the database layer in magix does not scale for hundreds of thousands records.&nbsp;&nbsp;if you need a <em>"real 
+database"</em> for your data needs, you can use the {{
+link-button=>ms-sql-1
+  text=>microsoft sql server wrapper
+  onclick
+    magix.help.open-file
+      file=>system42\admin\help\hyper-lisp\microsoft-sql.mml
+    magix.viewport.scroll=>help
+}} active events to gain access to a <em>"real"</em> database with magix</p>
 
 <p>however, if you wish to use the database access layer in magix, this can be found in the <em>"magix.data"</em> namespace.&nbsp;&nbsp;
 below is a list of all database layer active events</p>
@@ -123,14 +131,28 @@ samples.&nbsp;&nbsp;both [magix.data.load], [magix.data.remove] and [magix.data.
 [magix.data.load] and [magix.data.remove] can instead of the [prototype] parameter take an [id] parameter, to work with a specific 
 object in your database</p>
 
+<p>you can store any types of node structures in the magix.data data access layer.&nbsp;&nbsp;complex tree structures, with relational 
+data are just as easily stored as records and table based nodes</p>
+
 <p><strong>notice!</strong>&nbsp;&nbsp;you do not want to use the internal database access layer for storing huge amounts 
 of data.&nbsp;&nbsp;if you need to store thousands or millions of records, you should use something else, since the 
 database access layer in magix, within the magix.data namespace, does not scale for thousands or millions of records.&nbsp;&nbsp;
-if you store too much data in the magix.data database access layer, then your entire website will become sluggish and slow</p>
+if you store too much data in the magix.data database access layer, then your entire website will become sluggish and slow, since 
+the system uses this internally to store things such as events, forms and pages.&nbsp;&nbsp;if your system becomes sluggish, then 
+it is often because you are using the magix.data database access layer for things you shouldn't, and that it has too many records</p>
+
+<p>if you wish, you can use the {{
+link-button=>ms-sql
+  text=>microsoft sql wrapper
+  onclick
+    magix.help.open-file
+      file=>system42\admin\help\hyper-lisp\microsoft-sql.mml
+    magix.viewport.scroll=>help
+}} active events to gain access to a <em>"real"</em> database with magix</p>
 
 {{
 lambda=>next
   oncreatecontrols
     magix.help.set-next
-      next=>system42\admin\help\csharp\active-events\index.mml
+      next=>system42\admin\help\hyper-lisp\microsoft-sql.mml
 }}
