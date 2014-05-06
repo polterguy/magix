@@ -161,11 +161,13 @@ namespace Magix.forms
 		/**
 		 * fills out the stuff from basewebcontrol
 		 */
-		protected override void FillOutParameters(Node node, BaseControl ctrl)
+		protected override void FillOutParameters(Node pars, BaseControl ctrl)
 		{
-			base.FillOutParameters(node, ctrl);
+			base.FillOutParameters(pars, ctrl);
 
-			BaseWebControl that = ctrl as BaseWebControl;
+            Node node = Ip(pars)["_code"].Value as Node;
+
+            BaseWebControl that = ctrl as BaseWebControl;
 
 			if (node.Contains("css") && !string.IsNullOrEmpty(node["css"].Get<string>()))
 				that.CssClass = node["css"].Get<string>();

@@ -33,7 +33,7 @@ namespace Magix.forms
 
 			HiddenField ret = new HiddenField();
 
-			FillOutParameters(node, ret);
+            FillOutParameters(e.Params, ret);
 
 			if (node.Contains("value") && node["value"].Value != null)
 				ret.Value = node["value"].Get<string>();

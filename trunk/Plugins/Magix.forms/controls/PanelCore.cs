@@ -33,7 +33,7 @@ namespace Magix.forms
 
 			Panel ret = new Panel();
 
-			FillOutParameters(node, ret);
+            FillOutParameters(e.Params, ret);
 
 			if (node.Contains("tag") && node["tag"].Value != null)
 				ret.Tag = node["tag"].Get<string>();
@@ -64,6 +64,9 @@ namespace Magix.forms
 
 					Node nc = new Node();
 					nc["_code"].Value = idx;
+
+                    if (e.Params.Contains("_first"))
+                        nc["_first"].Value = e.Params["_first"].Value;
 
 					RaiseActiveEvent(
 						evtName,

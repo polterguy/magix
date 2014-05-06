@@ -57,7 +57,7 @@ namespace Magix.forms
                     dynamic.Controls.Add(ctrl);
                 };
 
-			FillOutParameters(node, ret);
+            FillOutParameters(e.Params, ret);
 
             if (node.Contains("tag") && node["tag"].Value != null)
                 ret.Tag = node["tag"].Get<string>();

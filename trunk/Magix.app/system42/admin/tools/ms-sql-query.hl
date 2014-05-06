@@ -1,0 +1,50 @@
+
+
+inspect=>@"opens up the microsoft sql 
+server query tool"
+
+
+magix.viewport.clear-controls
+  container=>content2
+magix.forms.create-web-part
+  container=>content1
+  css=>span-17 last
+  form-id=>sql
+  controls
+    label=>lblHeader
+      tag=>h3
+      text=>ms sql query tool
+    panel=>connectionWrp
+      css=>span-17 last
+      controls
+        label=>conLbl
+          tag=>label
+          css=>span-2 right-text
+          text=>connection:
+        select=>ddlConnection
+          css=>span-4
+          onfirstload
+            magix.data.load
+              prototype
+                type=>microsoft.sql.connection
+            for-each=>[magix.data.load][objects]
+              _set=>[/][magix.forms.set-values][items]
+            magix.forms.set-values
+              form-id=>sql
+              id=>ddlConnection
+              values
+                _default=>choose connection ...
+
+
+
+
+
+
+
+
+
+
+
+
+
+

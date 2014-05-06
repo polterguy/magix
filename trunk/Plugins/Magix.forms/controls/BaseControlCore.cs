@@ -148,9 +148,11 @@ thread safe";
 		/**
 		 * fills out the stuff from basecontrol
 		 */
-		protected virtual void FillOutParameters(Node node, BaseControl ctrl)
+		protected virtual void FillOutParameters(Node pars, BaseControl ctrl)
 		{
-			if (node.Contains("id") && !string.IsNullOrEmpty(node["id"].Get<string>()))
+            Node node = Ip(pars)["_code"].Value as Node;
+
+            if (node.Contains("id") && !string.IsNullOrEmpty(node["id"].Get<string>()))
 				ctrl.ID = node["id"].Get<string>();
 			else if (node.Value != null)
 				ctrl.ID = node.Get<string>();
@@ -162,8 +164,8 @@ thread safe";
 				ctrl.Info = node["info"].Get<string>();
 
 			if (ShouldHandleEvent("onfirstload", node) && 
-                node.Contains("_first") && 
-                node["_first"].Get<bool>())
+                pars.Contains("_first") && 
+                pars["_first"].Get<bool>())
 			{
 				Node codeNode = node["onfirstload"].Clone();
 				ctrl.Load += delegate(object sender, EventArgs e)

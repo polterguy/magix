@@ -33,7 +33,7 @@ namespace Magix.forms
 
 			TextBox ret = new TextBox();
 
-			FillOutParameters(node, ret);
+            FillOutParameters(e.Params, ret);
 
 			if (node.Contains("place-holder") && 
 			    !string.IsNullOrEmpty(node["place-holder"].Get<string>()))

@@ -34,7 +34,7 @@ namespace Magix.forms
 
 			SelectList ret = new SelectList();
 
-			FillOutParameters(node, ret);
+			FillOutParameters(e.Params, ret);
 
 			if (node.Contains("size") && node["size"].Value != null)
 				ret.Size = node["size"].Get<int>();
@@ -208,6 +208,8 @@ selected item state of control changes</p>";
 		 */
 		protected override object GetValue(BaseControl that)
 		{
+            if (((SelectList)that).SelectedItem == null)
+                return null;
 			return ((SelectList)that).SelectedItem.Value;
 		}
 	}

@@ -133,6 +133,25 @@ connection string from your web.config called ""NamedConnection""</p><p>thread s
                 ip["result"].Value = cmd.ExecuteNonQuery();
             }
         }
+
+        /**
+         * plugin for the desktop
+         */
+        [ActiveEvent(Name = "magix.admin.desktop-shortcuts.microsoft.sql")]
+        public static void magix_admin_desktop_shortcuts_microsoft_sql(object sender, ActiveEventArgs e)
+        {
+            if (ShouldInspect(e.Params))
+            {
+                e.Params["inspect"].Value = @"<p>returns the desktop shortcut for 
+the microsoft.sql components</p><p>thread safe</p>";
+                return;
+            }
+
+            Node ip = Ip(e.Params);
+            ip["launch-microsoft-sql-server-manager"]["text"].Value = "ms sql query tool";
+            ip["launch-microsoft-sql-server-manager"]["category"].Value = "tools";
+            ip["launch-microsoft-sql-server-manager"]["code"]["execute-file"].Value = "system42/admin/tools/ms-sql-query.hl";
+        }
     }
 }
 

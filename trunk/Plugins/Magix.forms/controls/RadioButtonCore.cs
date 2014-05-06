@@ -33,7 +33,7 @@ namespace Magix.forms
 
 			RadioButton ret = new RadioButton();
 
-			FillOutParameters(node, ret);
+            FillOutParameters(e.Params, ret);
 
 			if (node.Contains("group") && node["group"].Value != null)
 				ret.GroupName = node["group"].Get<string>();

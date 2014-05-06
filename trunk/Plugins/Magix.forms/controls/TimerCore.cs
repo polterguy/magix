@@ -37,7 +37,7 @@ namespace Magix.forms
                 node["interval"].Value != null)
                 ret.Interval = node["interval"].Get<int>();
 
-            FillOutParameters(node, ret);
+            FillOutParameters(e.Params, ret);
 
 			if (ShouldHandleEvent("ontick", node))
 			{
