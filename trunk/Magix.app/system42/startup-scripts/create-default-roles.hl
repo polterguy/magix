@@ -15,4 +15,8 @@ if=>equals
       value
         type=>magix.core.role
         name=>admin
+    magix.data.save
+      value
+        type=>magix.core.role
+        name=>user
 
