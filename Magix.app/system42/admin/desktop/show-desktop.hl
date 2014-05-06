@@ -21,7 +21,7 @@ _evts
 execute=>[_evts]
 
 for-each=>[_evts]
-  for-each=>[.][scripts]
+  for-each=>[.]
     set=>[/][_categories][[.][category].Value].Value
       value=>
 
@@ -42,7 +42,7 @@ for-each=>[_categories]
     value=>@"{0}WrpOuter"
       pr0=>[/][_curCat].Value
   for-each=>[/][_evts]
-    for-each=>[.][scripts]
+    for-each=>[.]
       if=>equals
         lhs=>[.][category].Value
         rhs=>[/][_curCat].Value

@@ -32,7 +32,7 @@ namespace Magix.forms
 
 			Wysiwyg ret = new Wysiwyg();
 
-			FillOutParameters(node, ret);
+            FillOutParameters(e.Params, ret);
 
 			if (node.Contains("text") && 
 			    !string.IsNullOrEmpty(node["text"].Get<string>()))

@@ -32,7 +32,7 @@ namespace Magix.forms
 
 			HyperLink ret = new HyperLink();
 
-			FillOutParameters(node, ret);
+            FillOutParameters(e.Params, ret);
 
 			if (node.Contains("text") && node["text"].Value != null)
 				ret.Text = node["text"].Get<string>();

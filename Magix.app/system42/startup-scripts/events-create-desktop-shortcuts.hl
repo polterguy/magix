@@ -245,6 +245,6 @@ shortcuts in the system.&nbsp;&nbsp;thread safe"
           magix.help.open-file
             file=>system42\admin\help\backend\qr-codes.mml
     for-each=>[_scripts]
-      add=>[$][scripts]
+      add=>[$]
         value=>[.]
 

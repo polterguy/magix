@@ -32,7 +32,7 @@ namespace Magix.forms
 
 			Image ret = new Image();
 
-			FillOutParameters(node, ret);
+            FillOutParameters(e.Params, ret);
 
 			if (node.Contains("src") && node["src"].Value != null)
 				ret.ImageUrl = node["src"].Get<string>();

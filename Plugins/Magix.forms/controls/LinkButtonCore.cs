@@ -33,7 +33,7 @@ namespace Magix.forms
 
 			LinkButton ret = new LinkButton();
 
-			FillOutParameters(node, ret);
+            FillOutParameters(e.Params, ret);
 
 			if (node.Contains("text") && 
 			    !string.IsNullOrEmpty(node["text"].Get<string>()))
