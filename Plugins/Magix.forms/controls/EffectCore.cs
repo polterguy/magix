@@ -58,101 +58,99 @@ different effects have different properties.&nbsp;&nbsp;not thread safe";
 			switch (pars["type"].Get<string>())
 			{
 				case "fade-in":
-			{
-				decimal frm = 0.0M;
-				decimal to = 1.0M;
-				int milliseconds = -1;
-				if (pars.Contains("time"))
-					milliseconds = pars["time"].Get<int>();
-				if (pars.Contains("from"))
-					frm = pars["from"].Get<decimal>();
-				if (pars.Contains("to"))
-					to = pars["to"].Get<decimal>();
-				tmp = new EffectFadeIn(ctrl, milliseconds, frm, to);
-			} break;
+			    {
+				    decimal frm = 0.0M;
+				    decimal to = 1.0M;
+				    int milliseconds = -1;
+				    if (pars.Contains("time"))
+					    milliseconds = pars["time"].Get<int>();
+				    if (pars.Contains("from"))
+					    frm = pars["from"].Get<decimal>();
+				    if (pars.Contains("to"))
+					    to = pars["to"].Get<decimal>();
+				    tmp = new EffectFadeIn(ctrl, milliseconds, frm, to);
+			    } break;
 				case "fade-out":
-			{
-				decimal frm = 1.0M;
-				decimal to = 0.0M;
-				int milliseconds = -1;
-				if (pars.Contains("time"))
-					milliseconds = pars["time"].Get<int>();
-				if (pars.Contains("from"))
-					frm = pars["from"].Get<decimal>();
-				if (pars.Contains("to"))
-					to = pars["to"].Get<decimal>();
-				tmp = new EffectFadeOut(ctrl, milliseconds, frm, to);
-			} break;
+			    {
+				    decimal frm = 1.0M;
+				    decimal to = 0.0M;
+				    int milliseconds = -1;
+				    if (pars.Contains("time"))
+					    milliseconds = pars["time"].Get<int>();
+				    if (pars.Contains("from"))
+					    frm = pars["from"].Get<decimal>();
+				    if (pars.Contains("to"))
+					    to = pars["to"].Get<decimal>();
+				    tmp = new EffectFadeOut(ctrl, milliseconds, frm, to);
+			    } break;
 				case "focus-and-select":
-			{
-				if (string.IsNullOrEmpty(id))
-					throw new ArgumentException("focus-and-select effect needs an [id] for widget to select");
-				tmp = new EffectFocusAndSelect(ctrl);
-			} break;
+			    {
+				    tmp = new EffectFocusAndSelect(ctrl);
+			    } break;
 				case "highlight":
-			{
-				int milliseconds = -1;
-				if (pars.Contains("time"))
-					milliseconds = pars["time"].Get<int>();
-				tmp = new EffectHighlight(ctrl, milliseconds);
-			} break;
+			    {
+				    int milliseconds = -1;
+				    if (pars.Contains("time"))
+					    milliseconds = pars["time"].Get<int>();
+				    tmp = new EffectHighlight(ctrl, milliseconds);
+			    } break;
 				case "move":
-			{
-				int left = -1;
-				int top = -1;
-				int milliseconds = -1;
-				if (pars.Contains("time"))
-					milliseconds = pars["time"].Get<int>();
-				if (pars.Contains("left"))
-					left = pars["left"].Get<int>();
-				if (pars.Contains("top"))
-					top = pars["top"].Get<int>();
-				tmp = new EffectMove(ctrl, milliseconds, left, top);
-			} break;
+			    {
+				    int left = -1;
+				    int top = -1;
+				    int milliseconds = -1;
+				    if (pars.Contains("time"))
+					    milliseconds = pars["time"].Get<int>();
+				    if (pars.Contains("left"))
+					    left = pars["left"].Get<int>();
+				    if (pars.Contains("top"))
+					    top = pars["top"].Get<int>();
+				    tmp = new EffectMove(ctrl, milliseconds, left, top);
+			    } break;
 				case "roll-up":
-			{
-				int milliseconds = -1;
-				if (pars.Contains("time"))
-					milliseconds = pars["time"].Get<int>();
-				tmp = new EffectRollUp(ctrl, milliseconds);
-			} break;
+			    {
+				    int milliseconds = -1;
+				    if (pars.Contains("time"))
+					    milliseconds = pars["time"].Get<int>();
+				    tmp = new EffectRollUp(ctrl, milliseconds);
+			    } break;
 				case "roll-down":
-			{
-				int milliseconds = -1;
-				if (pars.Contains("time"))
-					milliseconds = pars["time"].Get<int>();
-				tmp = new EffectRollDown(ctrl, milliseconds);
-			} break;
+			    {
+				    int milliseconds = -1;
+				    if (pars.Contains("time"))
+					    milliseconds = pars["time"].Get<int>();
+				    tmp = new EffectRollDown(ctrl, milliseconds);
+			    } break;
 				case "size":
-			{
-				int width = -1;
-				int height = -1;
-				int milliseconds = -1;
-				if (pars.Contains("time"))
-					milliseconds = pars["time"].Get<int>();
-				if (pars.Contains("width"))
-					width = pars["width"].Get<int>();
-				if (pars.Contains("height"))
-					height = pars["height"].Get<int>();
-				tmp = new EffectSize(ctrl, milliseconds, width, height);
-			} break;
+			    {
+				    int width = -1;
+				    int height = -1;
+				    int milliseconds = -1;
+				    if (pars.Contains("time"))
+					    milliseconds = pars["time"].Get<int>();
+				    if (pars.Contains("width"))
+					    width = pars["width"].Get<int>();
+				    if (pars.Contains("height"))
+					    height = pars["height"].Get<int>();
+				    tmp = new EffectSize(ctrl, milliseconds, width, height);
+			    } break;
 				case "slide":
-			{
-				int offset = -1;
-				int milliseconds = -1;
-				if (pars.Contains("time"))
-					milliseconds = pars["time"].Get<int>();
-				if (pars.Contains("offset"))
-					offset = pars["offset"].Get<int>();
-				tmp = new EffectSlide(ctrl, milliseconds, offset);
-			} break;
+			    {
+				    int offset = -1;
+				    int milliseconds = -1;
+				    if (pars.Contains("time"))
+					    milliseconds = pars["time"].Get<int>();
+				    if (pars.Contains("offset"))
+					    offset = pars["offset"].Get<int>();
+				    tmp = new EffectSlide(ctrl, milliseconds, offset);
+			    } break;
 				case "timeout":
-			{
-				int milliseconds = -1;
-				if (pars.Contains("time"))
-					milliseconds = pars["time"].Get<int>();
-				tmp = new EffectTimeout(milliseconds);
-			} break;
+			    {
+				    int milliseconds = -1;
+				    if (pars.Contains("time"))
+					    milliseconds = pars["time"].Get<int>();
+				    tmp = new EffectTimeout(milliseconds);
+			    } break;
 			}
 
 			if (pars.Contains("joined"))

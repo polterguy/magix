@@ -10,32 +10,344 @@ magix.forms.create-web-part
   container=>content1
   css=>span-17 last
   form-id=>sql
+
+  events
+
+    microsoft.sql.populate-selector
+      magix.data.load
+        prototype
+          type=>microsoft.sql.connection
+      for-each=>[magix.data.load][objects]
+        _con
+        set=>[@][0].Name
+          value=>[.].Name
+        set=>[@][0].Value
+          value=>[.][connection].Value
+        add=>[/][magix.forms.set-values][values]
+          value=>[@][0]
+      magix.forms.set-values
+        form-id=>sql
+        id=>ddlConnection
+        values
+          _default=>choose connection ...
+
+    microsoft.sql.open-selected-connection
+      magix.forms.get-value
+        form-id=>sql
+        id=>ddlConnection
+      set=>[magix.data.load][id].Value
+        value=>[magix.forms.get-value][value].Value
+      magix.data.load
+      set=>[magix.forms.set-value][value].Value
+        value=>[magix.data.load][objects][0][connection].Value
+      magix.forms.set-value
+        form-id=>sql
+        id=>txtNewConnection
+      set=>[microsoft.sql.select][connection].Value
+        value=>[magix.data.load][objects][0][connection].Value
+      microsoft.sql.select
+        query=>select distinct * from information_schema.tables where table_type='base table'
+      for-each=>[microsoft.sql.select][result]
+        _lb
+          onclick
+            magix.forms.get-value
+              form-id=>sql
+              id=>txtNewConnection
+            set=>[microsoft.sql.select][connection].Value
+              value=>[magix.forms.get-value][value].Value
+            set=>[microsoft.sql.select][query].Value
+              value=>@"select * from information_schema.columns where table_name = N'{0}'"
+                v0=>[$][info].Value
+            microsoft.sql.select
+            for-each=>[microsoft.sql.select][result]
+              _lb
+              set=>[@][_lb][text].Value
+                value=>[.][COLUMN_NAME].Value
+              set=>[@][_lb][css].Value
+                value=>span-5 clear
+              add=>[/][magix.forms.create-web-part:0][controls]
+                value=>[@][_lb]
+              set=>[/][magix.forms.create-web-part:0][controls][_lb].Name
+                value=>label
+
+              set=>[@][_lb][text].Value
+                value=>[.][DATA_TYPE].Value
+              set=>[@][_lb][css].Value
+                value=>span-2
+              add=>[/][magix.forms.create-web-part:0][controls]
+                value=>[@][_lb]
+              set=>[/][magix.forms.create-web-part:0][controls][_lb].Name
+                value=>label
+
+              set=>[@][_lb][text].Value
+                value=>@"&nbsp;{0}"
+                  v0=>[.][CHARACTER_MAXIMUM_LENGTH].Value
+              set=>[@][_lb][css].Value
+                value=>span-3
+              add=>[/][magix.forms.create-web-part:0][controls]
+                value=>[@][_lb]
+              set=>[/][magix.forms.create-web-part:0][controls][_lb].Name
+                value=>label
+              if=>equals
+                lhs=>[.][IS_NULLABLE].Value
+                rhs=>NO
+                code
+                  set=>[@][..][..][_lb][text].Value
+                    value=>not nullable
+                  set=>[@][..][..][_lb][css].Value
+                    value=>span-2
+                  add=>[/][magix.forms.create-web-part:0][controls]
+                    value=>[@][..][..][_lb]
+                  set=>[/][magix.forms.create-web-part:0][controls][_lb].Name
+                    value=>label
+              else
+                set=>[@][..][_lb][text].Value
+                  value=>nullable
+                set=>[@][..][_lb][css].Value
+                  value=>span-2
+                add=>[/][magix.forms.create-web-part:0][controls]
+                  value=>[@][..][_lb]
+                set=>[/][magix.forms.create-web-part:0][controls][_lb].Name
+                  value=>label
+            set=>[magix.forms.create-web-part:0][controls][label:1][text].Value
+              value=>[$][info].Value
+            magix.forms.create-web-part
+              container=>column-list
+              forms-id=>column-list
+              css=>span-17 last
+              controls
+                label
+                  tag=>hr
+                label
+                  tag=>h3
+            magix.forms.get-value
+              form-id=>select-query
+              id=>sqlQuery
+              value=>
+            split=>[magix.forms.get-value:1][value].Value
+              what=>
+            if=>less-than
+              lhs=>[split][result].Count
+              rhs=>40
+              code
+                set=>[@][..][..][magix.forms.create-web-part:1][controls][text-area][text].Value
+                  value=>@"select * from [{0}]"
+                    v0=>[$][info].Value
+            else
+              set=>[@][..][magix.forms.create-web-part:1][controls][text-area][text].Value
+                value=>[@][..][magix.forms.get-value:1][value].Value
+            magix.forms.create-web-part
+              container=>select-query
+              form-id=>select-query
+              css=>span-17 last
+              controls
+                text-area=>sqlQuery
+                  css=>span-17 top-1 last
+                  rows=>10
+                  place-holder=>type your sql query here ...
+                button=>btnRunQuery
+                  css=>span-3 btn-large right last
+                  text=>run
+                  onclick
+                    microsoft.sql.run-query
+            magix.forms.effect
+              type=>fade-in
+              form-id=>select-query
+              id=>select-query
+              time=>500
+              joined
+                e0
+                  type=>roll-down
+        set=>[@][_lb][text].Value
+          value=>[.][TABLE_NAME].Value
+        set=>[@][_lb][info].Value
+          value=>[.][TABLE_NAME].Value
+        set=>[@][_lb][css].Value
+          value=>span-5
+        add=>[/][magix.forms.create-web-part][controls]
+          value=>[@][_lb]
+        set=>[/][magix.forms.create-web-part][controls][_lb].Name
+          value=>link-button
+
+      magix.forms.create-web-part
+        css=>span-17 last
+        container=>table-list
+        form-id=>table-list
+        controls
+          label=>tblHeader
+            tag=>h3
+            css=>top-1 left-6
+            text=>list of tables
+      magix.forms.effect
+        type=>fade-in
+        form-id=>table-list
+        id=>table-list
+        time=>500
+        joined
+          e0
+            type=>roll-down
+
+    microsoft.sql.close-selected-connection
+      magix.forms.set-value
+        form-id=>sql
+        id=>txtNewConnection
+        value=>
+      magix.viewport.clear-controls
+        container=>table-list
+      magix.viewport.clear-controls
+        container=>select-query
+      magix.viewport.clear-controls
+        container=>content2
+
+    microsoft.sql.run-query
+      magix.forms.get-value
+        form-id=>select-query
+        id=>sqlQuery
+      magix.forms.get-value
+        form-id=>sql
+        id=>txtNewConnection
+      index-of=>[magix.forms.get-value][value].Value
+        what=>select
+      if=>less-than
+        lhs=>[index-of][result][0].Value
+        rhs=>10
+        code
+          set=>[@][try][code][microsoft.sql.select][query].Value
+            value=>[magix.forms.get-value:0][value].Value
+          set=>[@][try][code][microsoft.sql.select][connection].Value
+            value=>[magix.forms.get-value:1][value].Value
+          try
+            code
+              microsoft.sql.select
+            catch
+              set=>[@][magix.viewport.show-message][message].Value
+                value=>[@][exception].Value
+              magix.viewport.show-message
+                time=>10000
+                color=>#ffaaaa
+              stop
+          for-each=>[@][try][code][microsoft.sql.select][result][0]
+            _th
+              tag=>th
+            set=>[@][_th][text].Value
+              value=>[.].Name
+            add=>[@][..][magix.forms.create-web-part][controls][panel][controls][panel][controls]
+              value=>[@][_th]
+            set=>[@][..][magix.forms.create-web-part][controls][panel][controls][panel][controls][_th].Name
+              value=>label
+          for-each=>[@][try][code][microsoft.sql.select][result]
+            set=>[@][_pnl][controls]
+            _pnl
+              tag=>tr
+            for-each=>[.]
+              _lbl
+                tag=>td
+              set=>[@][_lbl][text].Value
+                value=>[.].Value
+              add=>[@][..][_pnl][controls]
+                value=>[@][_lbl]
+              set=>[@][..][_pnl][controls][_lbl].Name
+                value=>label
+            add=>[@][..][magix.forms.create-web-part][controls][panel][controls]
+              value=>[@][_pnl]
+            set=>[@][..][magix.forms.create-web-part][controls][panel][controls][_pnl].Name
+              value=>panel
+
+          magix.forms.create-web-part
+            container=>content2
+            form-id=>sql-result
+            css=>span-22 last top-1
+            controls
+              panel=>tbl
+                tag=>table
+                css=>sql-result-table
+                controls
+                  panel
+                    tag=>tr
+
   controls
     label=>lblHeader
-      tag=>h3
+      tag=>h2
       text=>ms sql query tool
     panel=>connectionWrp
       css=>span-17 last
+      default=>btnNew
       controls
         label=>conLbl
           tag=>label
           css=>span-2 right-text
-          text=>connection:
+          text=>connection
         select=>ddlConnection
           css=>span-4
           onfirstload
-            magix.data.load
-              prototype
-                type=>microsoft.sql.connection
-            for-each=>[magix.data.load][objects]
-              _set=>[/][magix.forms.set-values][items]
-            magix.forms.set-values
+            microsoft.sql.populate-selector
+          onselectedindexchanged
+            if=>not-equals
+              lhs=>[$][value].Value
+              rhs=>_default
+              code
+                magix.forms.set-enabled
+                  form-id=>sql
+                  id=>delete
+                  value=>true
+                microsoft.sql.open-selected-connection
+            else
+              magix.forms.set-enabled
+                form-id=>sql
+                id=>delete
+                value=>false
+              microsoft.sql.close-selected-connection
+        button=>delete
+          css=>span-2
+          text=>delete
+          enabled=>false
+          onclick
+            magix.forms.get-value
               form-id=>sql
               id=>ddlConnection
-              values
-                _default=>choose connection ...
-
-
+            set=>[magix.data.remove][id].Value
+              value=>[magix.forms.get-value][value].Value
+            magix.data.remove
+            microsoft.sql.populate-selector
+            magix.forms.set-enabled
+              form-id=>sql
+              id=>delete
+              value=>false
+            microsoft.sql.close-selected-connection
+        label=>lblNew
+          tag=>label
+          css=>span-3 right-text
+          text=>or create new
+        text-box=>txtNewConnection
+          place-holder=>connection string ...
+          css=>span-4
+        button=>btnNew
+          text=>create
+          css=>span-2 last
+          onclick
+            magix.forms.get-value
+              form-id=>sql
+              id=>txtNewConnection
+            set=>[magix.data.save][value][connection].Value
+              value=>[magix.forms.get-value][value].Value
+            magix.data.save
+              value
+                type=>microsoft.sql.connection
+            microsoft.sql.populate-selector
+            set=>[magix.forms.set-value][value].Value
+              value=>[magix.data.save][id].Value
+            magix.forms.set-value
+              form-id=>sql
+              id=>ddlConnection
+            magix.forms.set-enabled
+              form-id=>sql
+              id=>delete
+              value=>true
+            microsoft.sql.open-selected-connection
+    dynamic=>table-list
+    dynamic=>column-list
+    dynamic=>txt-query
+    dynamic=>select-query
 
 
 
