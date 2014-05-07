@@ -34,10 +34,14 @@ will become null.&nbsp;&nbsp;if it's a name, the name will be set to the empty s
 must be an expression, unless it's a null value, at which point the result of the set will 
 be put into the value of the [set] itself</p><p>you can set a value of a node to either a 
 name, value of another node or a node-list.&nbsp;&nbsp;you can set a node-list to another 
-node-list, at which case the entire node will be exchanged with a deep copy of the node 
-from value.&nbsp;&nbsp;you can set the name of a node to a string, either through a constant 
-or an expression</p><p>if you try to set a node that does not exist, the node will be created, 
-and added to the tree</p><p>thread safe</p>";
+node-list, at which case the entire node will be exchanged with a deep copy of the node list 
+return from [value].&nbsp;&nbsp;you can set the name of a node to a string, either through a 
+constant or an expression</p><p>you can also add up child nodes of the [value] node, which 
+can be de-referenced as a string.format statement, such that {0} will be replaced with the 
+value of the first child node from beneath [value], and {2} will be replaced with the value 
+of the third child node from beneath the [value], and so on</p><p>if you try to set a node 
+that does not exist, the node will be created, and added to the execution tree</p><p>thread 
+safe</p>";
 				return;
 			}
 
