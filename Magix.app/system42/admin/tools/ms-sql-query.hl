@@ -234,11 +234,17 @@ magix.forms.create-web-part
               microsoft.sql.select
                 start=>0
                 end=>10
+              if=>more-than
+                lhs=>[@][microsoft.sql.select][end].Value
+                rhs=>[@][microsoft.sql.select][record-count].Value
+                code
+                  set=>[@][..][..][set][value][v1].Value
+                    value=>[@][..][..][microsoft.sql.select][record-count].Value
               set=>[/][if=>less-than][code][magix.forms.create-web-part][controls][panel=>tblPaging][controls][label=>lblCount][text].Value
                 value=>@"{0}/{1} of {2}"
                   v0=>[@][microsoft.sql.select][start].Value
-                  v0=>[@][microsoft.sql.select][end].Value
-                  v0=>[@][microsoft.sql.select][record-count].Value
+                  v1=>[@][microsoft.sql.select][end].Value
+                  v2=>[@][microsoft.sql.select][record-count].Value
               set=>[@][magix.viewport.set-viewstate][value][count].Value
                 value=>[@][microsoft.sql.select][record-count].Value
               magix.viewport.set-viewstate=>microsoft.sql.select-sub-section
@@ -428,15 +434,3 @@ magix.forms.create-web-part
     dynamic=>column-list
     dynamic=>txt-query
     dynamic=>select-query
-
-
-
-
-
-
-
-
-
-
-
-
