@@ -256,6 +256,21 @@ textarea.min-height-30,.min-height-30 {min-height:576px;}
 
 html, body, form {width:100%;min-height:100%;}
 
+.text-left
+{
+  text-align: left;
+}
+
+.text-right
+{
+  text-align: right;
+}
+
+.text-center
+{
+  text-align: center;
+}
+
 input[type=button].btn-large
 {
 	height:36px;

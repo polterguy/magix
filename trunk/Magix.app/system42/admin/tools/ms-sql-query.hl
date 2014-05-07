@@ -195,6 +195,8 @@ magix.forms.create-web-part
       magix.viewport.clear-controls
         container=>table-list
       magix.viewport.clear-controls
+        container=>column-list
+      magix.viewport.clear-controls
         container=>select-query
       magix.viewport.clear-controls
         container=>content2
@@ -218,7 +220,31 @@ magix.forms.create-web-part
             value=>[magix.forms.get-value:1][value].Value
           try
             code
+              if=>exist
+                lhs=>[$][start]
+                code
+                  set=>[@][..][..][microsoft.sql.select][start].Value
+                    value=>[$][start].Value
+                  set=>[@][..][..][microsoft.sql.select][end].Value
+                    value=>[$][end].Value
+                  set=>[@][..][..][magix.viewport.set-viewstate][value][start].Value
+                    value=>[$][start].Value
+                  set=>[@][..][..][magix.viewport.set-viewstate][value][end].Value
+                    value=>[$][end].Value
               microsoft.sql.select
+                start=>0
+                end=>10
+              set=>[/][if=>less-than][code][magix.forms.create-web-part][controls][panel=>tblPaging][controls][label=>lblCount][text].Value
+                value=>@"{0}/{1} of {2}"
+                  v0=>[@][microsoft.sql.select][start].Value
+                  v0=>[@][microsoft.sql.select][end].Value
+                  v0=>[@][microsoft.sql.select][record-count].Value
+              set=>[@][magix.viewport.set-viewstate][value][count].Value
+                value=>[@][microsoft.sql.select][record-count].Value
+              magix.viewport.set-viewstate=>microsoft.sql.select-sub-section
+                value
+                  start=>0
+                  end=>10
             catch
               set=>[@][magix.viewport.show-message][message].Value
                 value=>[@][exception].Value
@@ -231,9 +257,9 @@ magix.forms.create-web-part
               tag=>th
             set=>[@][_th][text].Value
               value=>[.].Name
-            add=>[@][..][magix.forms.create-web-part][controls][panel][controls][panel][controls]
+            add=>[@][..][magix.forms.create-web-part][controls][panel=>tbl][controls][panel][controls]
               value=>[@][_th]
-            set=>[@][..][magix.forms.create-web-part][controls][panel][controls][panel][controls][_th].Name
+            set=>[@][..][magix.forms.create-web-part][controls][panel=>tbl][controls][panel][controls][_th].Name
               value=>label
           for-each=>[@][try][code][microsoft.sql.select][result]
             set=>[@][_pnl][controls]
@@ -248,9 +274,9 @@ magix.forms.create-web-part
                 value=>[@][_lbl]
               set=>[@][..][_pnl][controls][_lbl].Name
                 value=>label
-            add=>[@][..][magix.forms.create-web-part][controls][panel][controls]
+            add=>[@][..][magix.forms.create-web-part][controls][panel=>tbl][controls]
               value=>[@][_pnl]
-            set=>[@][..][magix.forms.create-web-part][controls][panel][controls][_pnl].Name
+            set=>[@][..][magix.forms.create-web-part][controls][panel=>tbl][controls][_pnl].Name
               value=>panel
 
           magix.forms.create-web-part
@@ -258,6 +284,60 @@ magix.forms.create-web-part
             form-id=>sql-result
             css=>span-22 last top-1
             controls
+              panel=>tblPaging
+                css=>span-6 left-18 last bottom-1
+                controls
+                  link-button=>previous
+                    css=>span-1
+                    text=>&lt;&lt;
+                    onclick
+                      magix.viewport.get-viewstate=>microsoft.sql.select-sub-section
+                      if=>equals
+                        lhs=>[magix.viewport.get-viewstate][value][start].Value
+                        rhs=>0
+                        code
+                          magix.viewport.show-message
+                            message=>already at beginning
+                          stop
+                      using=>magix.math
+                        subtract
+                          =>[/][magix.viewport.get-viewstate][value][start].Value
+                          =>10
+                        subtract
+                          =>[/][magix.viewport.get-viewstate][value][end].Value
+                          =>10
+                      set=>[microsoft.sql.run-query][start].Value
+                        value=>[using][subtract:0].Value
+                      set=>[microsoft.sql.run-query][end].Value
+                        value=>[using][subtract:1].Value
+                      microsoft.sql.run-query
+                  label=>lblCount
+                    css=>span-4 text-center
+                    text=>count
+                  link-button=>next
+                    css=>span-1 last
+                    text=>&gt;&gt;
+                    onclick
+                      magix.viewport.get-viewstate=>microsoft.sql.select-sub-section
+                      if=>more-than-equals
+                        lhs=>[magix.viewport.get-viewstate][value][end].Value
+                        rhs=>[magix.viewport.get-viewstate][value][count].Value
+                        code
+                          magix.viewport.show-message
+                            message=>already at end
+                          stop
+                      using=>magix.math
+                        add
+                          =>[/][magix.viewport.get-viewstate][value][start].Value
+                          =>10
+                        add
+                          =>[/][magix.viewport.get-viewstate][value][end].Value
+                          =>10
+                      set=>[microsoft.sql.run-query][start].Value
+                        value=>[using][add:0].Value
+                      set=>[microsoft.sql.run-query][end].Value
+                        value=>[using][add:1].Value
+                      microsoft.sql.run-query
               panel=>tbl
                 tag=>table
                 css=>sql-result-table

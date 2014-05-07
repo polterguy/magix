@@ -33,8 +33,17 @@ node</p><p>both [query] and [connection] can be either expressions or constant v
 &nbsp;if you wish, you can de-reference a connection string from your web.config file, instead 
 of typing in the connection string in code by prefixing the [connection] value with web.config:
 NamedConnection, and such reference the connection string from your web.config called 
-""NamedConnection""</p><p>thread safe</p>";
+""NamedConnection""</p><p>if you supply a [start] and [end] node, then the query will only 
+return the subsection of result inbetween the integer value from [start] and [end], which is 
+useful for queries returning huge results.&nbsp;&nbsp;[start] and [end] are optional, and if 
+they are not given, the query will return all records matching your sql.&nbsp;&nbsp;[start] 
+and [end] can be either constants or expressions.&nbsp;&nbsp;if you supply a [start] and [end] 
+node, then the active event will return the number of records totally in the query in the 
+[record-count] return node, unless you also supply a [count] node, with the value of false
+</p><p>thread safe</p>";
                 e.Params["microsoft.sql.select"]["connection"].Value = "Data Source=(localdb)\\v11.0;Initial Catalog=Northwind;Integrated Security=True";
+                e.Params["microsoft.sql.select"]["start"].Value = 0;
+                e.Params["microsoft.sql.select"]["end"].Value = 20;
                 e.Params["microsoft.sql.select"]["query"].Value = "select * from Customers where ContactTitle=@ContactTitle";
                 e.Params["microsoft.sql.select"]["params"]["ContactTitle"].Value = "owner";
                 return;
@@ -55,6 +64,18 @@ NamedConnection, and such reference the connection string from your web.config c
                 throw new ArgumentException("you need to supply a [query] to know what query to run");
             string query = Expressions.GetExpressionValue(ip["query"].Get<string>(), dp, ip, false) as string;
 
+            int start = -1;
+            if (ip.Contains("start"))
+                start = ip["start"].Get<int>();
+
+            int end = -1;
+            if (ip.Contains("end"))
+                end = ip["end"].Get<int>();
+
+            bool count = true;
+            if (ip.Contains("count"))
+                count = ip["count"].Get<bool>();
+
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 SqlCommand cmd = new SqlCommand(query, connection);
@@ -71,12 +92,22 @@ NamedConnection, and such reference the connection string from your web.config c
                     int idxRecordNo = 0;
                     while (reader.Read())
                     {
-                        for (int idxNo = 0; idxNo < reader.VisibleFieldCount; idxNo++)
+                        if (start == -1 || idxRecordNo >= start)
                         {
-                            ip["result"][idxRecordNo.ToString()][reader.GetName(idxNo)].Value = reader[idxNo];
+                            if (end == -1 || idxRecordNo < end)
+                            {
+                                for (int idxNo = 0; idxNo < reader.VisibleFieldCount; idxNo++)
+                                {
+                                    ip["result"][idxRecordNo.ToString()][reader.GetName(idxNo)].Value = reader[idxNo];
+                                }
+                            }
+                            else if (!count)
+                                break;
                         }
                         idxRecordNo += 1;
                     }
+                    if (count)
+                        ip["record-count"].Value = idxRecordNo;
                 }
             }
         }
