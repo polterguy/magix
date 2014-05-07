@@ -63,7 +63,18 @@ use the [.] expression to de-reference the currently iterated node</p><p>thread 
 							e.Params);
 					}
 				}
-				finally
+                catch (Exception err)
+                {
+                    while (err.InnerException != null)
+                        err = err.InnerException;
+
+                    if (err is StopCore.HyperLispStopException)
+                        return; // do nothing, execution stopped
+
+                    // re-throw all other exceptions ...
+                    throw;
+                }
+                finally
 				{
 					e.Params["_dp"].Value = oldDp;
 				}

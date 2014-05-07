@@ -1362,4 +1362,13 @@ ul.list-no-type li span
     text-align:left;
 }
 
+.table-column
+{
+}
+
+.primary-key-column
+{
+    font-weight:bold;
+}
+
 

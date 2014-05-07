@@ -50,6 +50,8 @@ magix.forms.create-web-part
       for-each=>[microsoft.sql.select][result]
         _lb
           onclick
+            magix.viewport.clear-controls
+              container=>content2
             magix.forms.get-value
               form-id=>sql
               id=>txtNewConnection
@@ -59,12 +61,49 @@ magix.forms.create-web-part
               value=>@"select * from information_schema.columns where table_name = N'{0}'"
                 v0=>[$][info].Value
             microsoft.sql.select
+            
+            set=>[microsoft.sql.select:1][connection].Value
+              value=>[magix.forms.get-value][value].Value
+            set=>[microsoft.sql.select:1][query].Value
+              value=>@"select * from 
+    information_schema.table_constraints tab, 
+    information_schema.constraint_column_usage col 
+where 
+    col.constraint_name = tab.constraint_name
+    and col.table_name = tab.table_name
+    and constraint_type = 'primary key'
+    and col.table_name = N'{0}'"
+                v0=>[$][info].Value
+            microsoft.sql.select
+
             for-each=>[microsoft.sql.select][result]
               _lb
               set=>[@][_lb][text].Value
                 value=>[.][COLUMN_NAME].Value
               set=>[@][_lb][css].Value
-                value=>span-5 clear
+                value=>span-5 clear table-column
+              _pk
+              set=>[@][_pk].Value
+                value=>[.][COLUMN_NAME].Value
+              for-each=>[@][..][microsoft.sql.select:1][result]
+                if=>equals
+                  lhs=>[.][COLUMN_NAME].Value
+                  rhs=>[@][..][_pk].Value
+                  code
+                    set=>[@][..][..][..][_pk].Value
+                      value=>true
+                    stop
+              if=>equals
+                lhs=>[@][_pk].Value
+                rhs=>true
+                code
+                  set=>[@][..][..][_lb][css].Value
+                    value=>{0} primary-key-column
+                      v0=>[@][..][..][_lb][css].Value
+                  set=>[@][..][..][_lb][tip].Value
+                    value=>primary key
+              else
+                set=>[@][..][_lb][tip]
               add=>[/][magix.forms.create-web-part:0][controls]
                 value=>[@][_lb]
               set=>[/][magix.forms.create-web-part:0][controls][_lb].Name
