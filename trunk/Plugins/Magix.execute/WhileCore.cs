@@ -63,10 +63,24 @@ value and children for equality</p><p>thread safe</p>";
                 tmp["_ip"].Value = ip["code"];
                 tmp["_dp"].Value = dp;
 
-                RaiseActiveEvent(
-					"magix._execute", 
-					tmp);
-			}
+                try
+                {
+                    RaiseActiveEvent(
+                        "magix._execute",
+                        tmp);
+                }
+                catch (Exception err)
+                {
+                    while (err.InnerException != null)
+                        err = err.InnerException;
+
+                    if (err is StopCore.HyperLispStopException)
+                        return; // do nothing, execution stopped
+
+                    // re-throw all other exceptions ...
+                    throw;
+                }
+            }
 		}
 	}
 }
