@@ -129,10 +129,10 @@ as the criteria to load objects</p><p>thread safe</p>";
 			{
                 e.Params["inspect"].Value = @"<p>will serialize the given [value] node with 
 the given [id] in the persistent data storage</p><p>if no [id] is given, a global unique 
-identifier will be automatically assigned to the object.&nbsp;&nbsp;if an [id] is given, 
-and an object with that same id exists, object will be overwritten or updated.&nbsp;&nbsp;
-both the [value] and [id] can either be expressions or constant strings/nodes</p><p>thread 
-safe</p>";
+identifier will be automatically assigned to the object, and returned as [id].&nbsp;&nbsp;
+if an [id] is given, and an object with that same id exists, object will be overwritten or 
+updated.&nbsp;&nbsp;both the [value] and [id] can either be expressions or constant strings
+/nodes</p><p>thread safe</p>";
                 e.Params["magix.data.save"]["id"].Value = "object-id";
                 e.Params["magix.data.save"]["value"]["some-value"].Value = "value of object";
 				return;
@@ -166,6 +166,7 @@ safe</p>";
                         Expressions.GetExpressionValue(ip["id"].Get<string>(), dp, ip, false) as string : 
 						Guid.NewGuid().ToString();
 					bool found = false;
+                    ip["id"].Value = id;
 
 					// checking to see if we should update existing object
 					foreach (Storage idx in db.QueryByExample(new Storage(null, id)))
