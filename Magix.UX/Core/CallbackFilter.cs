@@ -21,28 +21,28 @@ namespace Magix.UX.Core
 
         public override bool CanRead
         {
-            get { return false; }
+            get { return _stream.CanRead; }
         }
 
         public override bool CanSeek
         {
-            get { return false; }
+            get { return _stream.CanSeek; }
         }
 
         public override bool CanWrite
         {
-            get { return true; }
+            get { return _stream.CanWrite; }
         }
 
         public override long Length
         {
-            get { return 0; }
+            get { return _stream.Length; }
         }
 
         public override long Position
         {
-            get { return 0; }
-            set { }
+            get { return _stream.Position; }
+            set { _stream.Position = value; }
         }
 
         public override void Close()
@@ -53,20 +53,22 @@ namespace Magix.UX.Core
 
         public override void Flush()
         {
+            _stream.Flush();
         }
 
         public override long Seek(long offset, SeekOrigin origin)
         {
-            return 0;
+            return _stream.Seek(offset, origin);
         }
 
         public override void SetLength(long value)
         {
+            _stream.SetLength(value);
         }
 
         public override int Read(byte[] buffer, int offset, int count)
         {
-            return 0;
+            return _stream.Read(buffer, offset, count);
         }
 
         public override void Write(byte[] buffer, int offset, int count)
