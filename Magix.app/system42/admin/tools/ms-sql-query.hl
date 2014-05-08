@@ -31,6 +31,24 @@ magix.forms.create-web-part
         values
           _default=>choose connection ...
 
+    microsoft.sql.test-connection
+      set=>[try][code][microsoft.sql.select][connection].Value
+        value=>[$][connection].Value
+      try
+        code
+          microsoft.sql.select
+            query=>@"use master"
+          set=>[$][success].Value
+            value=>true
+        catch
+          set=>[@][magix.viewport.show-message][message].Value
+            value=>[@][exception].Value
+          set=>[$][success].Value
+            value=>false
+          magix.viewport.show-message
+            color=>#ffaaaa
+            time=>5000
+
     microsoft.sql.open-selected-connection
       magix.forms.get-value
         form-id=>sql
@@ -38,6 +56,18 @@ magix.forms.create-web-part
       set=>[magix.data.load][id].Value
         value=>[magix.forms.get-value][value].Value
       magix.data.load
+      set=>[microsoft.sql.test-connection][connection].Value
+        value=>[magix.data.load][objects][0][connection].Value
+      microsoft.sql.test-connection
+      if=>equals
+        lhs=>[microsoft.sql.test-connection][success].Value
+        rhs=>false
+        code
+          magix.viewport.show-message
+            message=>that is not a valid connection
+            color=>#ffaaaa
+            time=>5000
+          stop
       set=>[magix.forms.set-value][value].Value
         value=>[magix.data.load][objects][0][connection].Value
       magix.forms.set-value
@@ -475,6 +505,16 @@ where
             magix.forms.get-value
               form-id=>sql
               id=>txtNewConnection
+            set=>[microsoft.sql.test-connection][connection].Value
+              value=>[magix.forms.get-value][value].Value
+            microsoft.sql.test-connection
+            if=>equals
+              lhs=>[microsoft.sql.test-connection][success].Value
+              rhs=>false
+              code
+                magix.viewport.show-message
+                  message=>that is not a good connection
+                stop
             set=>[magix.data.save][value][connection].Value
               value=>[magix.forms.get-value][value].Value
             magix.data.save
