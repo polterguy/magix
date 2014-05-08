@@ -58,6 +58,14 @@ magix.forms.create-web-part
       magix.data.load
       set=>[microsoft.sql.test-connection][connection].Value
         value=>[magix.data.load][objects][0][connection].Value
+      magix.viewport.clear-controls
+        container=>table-list
+      magix.viewport.clear-controls
+        container=>column-list
+      magix.viewport.clear-controls
+        container=>select-query
+      magix.viewport.clear-controls
+        container=>content2
       microsoft.sql.test-connection
       if=>equals
         lhs=>[microsoft.sql.test-connection][success].Value
@@ -533,5 +541,4 @@ where
             microsoft.sql.open-selected-connection
     dynamic=>table-list
     dynamic=>column-list
-    dynamic=>txt-query
     dynamic=>select-query
