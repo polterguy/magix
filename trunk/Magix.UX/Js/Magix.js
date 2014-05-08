@@ -622,7 +622,7 @@
       this.options.onBefore.apply(this.options.callingContext, []);
       var args = this.options.args;
       if (args && args.length > 0) {
-        args += '&__RA_CALLBACK=true';
+        args += '&__MUX_CALLBACK=true';
       }
       var form = new MUX.Form(this.options.form, {
         args: args,

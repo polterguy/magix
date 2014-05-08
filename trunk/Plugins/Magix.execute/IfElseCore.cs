@@ -87,8 +87,8 @@ for equality</p><p>thread safe</p>";
 			Node ip = e.Params["_ip"].Value as Node;
 
 			// Checking to see if a previous "if" or "else-if" statement has returned true
-			if (ip.Parent.Contains("_state_if") &&
-			    ip.Parent["_state_if"].Get<bool>())
+			if (e.Params.Contains("_state_if") &&
+			    e.Params["_state_if"].Get<bool>())
 				return;
 
 			IfImplementation(
@@ -120,8 +120,8 @@ but only if no paired [if] or [else-if] statement has returned true</p><p>thread
 			Node ip = e.Params["_ip"].Value as Node;
 
 			// Checking to see if a previous "if" or "else-if" statement has returned true
-			if (ip.Parent.Contains("_state_if") &&
-			    ip.Parent["_state_if"].Get<bool>())
+            if (e.Params.Contains("_state_if") &&
+                e.Params["_state_if"].Get<bool>())
 				return;
 
 
@@ -151,15 +151,15 @@ but only if no paired [if] or [else-if] statement has returned true</p><p>thread
                 throw new ArgumentException("you must supply an operator for your [" + evt + "] expressions as Value of [" + evt + "]");
 
             bool shouldExecuteCode = StatementHelper.CheckExpressions(ip, dp);
-            ExecuteCode(ip, dp, shouldExecuteCode);
+            ExecuteCode(pars, ip, dp, shouldExecuteCode);
 		}
 
-        private static void ExecuteCode(Node ip, Node dp, bool expressionIsTrue)
+        private static void ExecuteCode(Node pars, Node ip, Node dp, bool expressionIsTrue)
         {
             if (expressionIsTrue)
             {
                 // Changing state, to signal any later [else-if] and [else] expressions that expression has executed
-                ip.Parent["_state_if"].Value = true;
+                pars["_state_if"].Value = true;
 
                 Node tmp = new Node();
 
@@ -171,7 +171,7 @@ but only if no paired [if] or [else-if] statement has returned true</p><p>thread
                     tmp);
             }
             else
-                ip.Parent["_state_if"].UnTie();
+                pars["_state_if"].UnTie();
         }
 	}
 }

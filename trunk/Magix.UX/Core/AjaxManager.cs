@@ -21,7 +21,7 @@ namespace Magix.UX
 {
     public sealed class AjaxManager
     {
-        private List<BaseControl> _raControls = new List<BaseControl>();
+        private List<BaseControl> _muxControls = new List<BaseControl>();
         private List<string> _scriptIncludes = new List<string>();
         private List<string> _dynamicScriptIncludes = new List<string>();
         private string _redirectUrl;
@@ -31,11 +31,6 @@ namespace Magix.UX
         private HtmlTextWriter _writerBack;
         private string _requestViewState;
 
-        /**
-         * Public accessor, only way to access instance of AjaxManager. The AjaxManager is
-         * the "glue" that ties everything together. Use this property to retrieve the only
-         * existing object of type AjaxManager.
-         */
         public static AjaxManager Instance
         {
             get
@@ -46,19 +41,14 @@ namespace Magix.UX
             }
         }
 
-        private List<BaseControl> RaControls
+        private List<BaseControl> MuxControls
         {
-            get { return _raControls; }
+            get { return _muxControls; }
         }
 
-        /**
-         * Returns true if this is a Ra-Ajax callback. A Ra-Ajax callback is also a "subset" of
-         * a normal Postback, which means that if this property is true, then the IsPostBack from 
-         * ASP.NET's System.Web.UI.Page will also be true.
-         */
         public bool IsCallback
         {
-            get { return HttpContext.Current.Request.Params["__RA_CALLBACK"] == "true" && HttpContext.Current.Request.Params["HTTP_X_MICROSOFTAJAX"] == null; }
+            get { return HttpContext.Current.Request.Params["__MUX_CALLBACK"] == "true"; }
         }
 
         internal HtmlTextWriter Writer
@@ -75,15 +65,6 @@ namespace Magix.UX
             }
         }
 
-        /**
-         * Use this method to append you own script and/or HTML or other output which will be executed 
-         * on the client when the request returns. Notice though that the JavaScript Ajax engine of
-         * Ra-Ajax will expect whatever is being returned to the client to be JavaScript. This means that
-         * if you want to return other types of values and objects back to the client you need to wrap this
-         * somehow inside of JavaScript by using e.g. JSON or some similar mechanism. Also you should always
-         * end your JavaScript statements with semicolon (;) since otherwise other parts of the JavaScript
-         * returned probably will fissle.
-         */
         public HtmlTextWriter WriterAtBack
         {
             get
@@ -100,31 +81,33 @@ namespace Magix.UX
 
         internal void InitializeControl(BaseControl ctrl)
         {
-            // We store all Ra Controls in a list for easily access later down the road...
-            RaControls.Add(ctrl);
+            // We store all MUX Controls in a list for easily access later down the road...
+            MuxControls.Add(ctrl);
 
             // Making sure we only run the initialization logic ONCE...!!
-            if (RaControls.Count == 1)
+            if (MuxControls.Count == 1)
             {
                 if (((Page)HttpContext.Current.CurrentHandler).Request.Params["HTTP_X_MICROSOFTAJAX"] != null)
                     return;
 
                 if (IsCallback)
                 {
-                    // This is a Ra-Ajax callback, we need to wait until the Page Load 
+                    // This is a MUX-Ajax callback, we need to wait until the Page Load 
                     // events are finished loading and then find the control which
                     // wants to fire an event and do so...
                     ((Page)HttpContext.Current.CurrentHandler).LoadComplete += CurrentPage_LoadComplete;
 
                     // Checking to see if the Filtering logic has been supressed
-                    ((Page)HttpContext.Current.CurrentHandler).Response.Filter = new CallbackFilter(((Page)HttpContext.Current.CurrentHandler).Response.Filter);
+                    ((Page)HttpContext.Current.CurrentHandler).Response.Filter = 
+                        new CallbackFilter(((Page)HttpContext.Current.CurrentHandler).Response.Filter);
                 }
                 else
                 {
                     ((Page)HttpContext.Current.CurrentHandler).LoadComplete += CurrentPage_LoadComplete_NO_AJAX;
 
                     // Checking to see if the Filtering logic has been supressed
-                    ((Page)HttpContext.Current.CurrentHandler).Response.Filter = new PostbackFilter(((Page)HttpContext.Current.CurrentHandler).Response.Filter);
+                    ((Page)HttpContext.Current.CurrentHandler).Response.Filter = 
+                        new PostbackFilter(((Page)HttpContext.Current.CurrentHandler).Response.Filter);
                 }
             }
         }
@@ -132,7 +115,7 @@ namespace Magix.UX
         void CurrentPage_LoadComplete_NO_AJAX(object sender, EventArgs e)
         {
             string browser = 
-                ((Page) HttpContext.Current.CurrentHandler).Request.Browser.Browser.ToLower();
+                ((Page)HttpContext.Current.CurrentHandler).Request.Browser.Browser.ToLower();
             if (browser == "firefox" || 
                 browser == "iceweasel" ||
                 browser == "netscape" ||
@@ -165,12 +148,14 @@ namespace Magix.UX
                 MethodInfo webMethod = ExtractMethod(functionName, ref ctrlToCallFor);
 
                 if (webMethod == null || webMethod.GetCustomAttributes(typeof(Magix.UX.Core.WebMethod), false).Length == 0)
-                    throw new Exception("Cannot call a method without a WebMethod attribute");
+                    throw new Exception("cannot call a method without a 'WebMethod' attribute");
 
                 ParameterInfo[] parameters = webMethod.GetParameters();
 
                 object[] args = new object[parameters.Length];
-                for (int idx = 0; idx < parameters.Length && ((Page)HttpContext.Current.CurrentHandler).Request.Params["__ARG" + idx] != null; idx++)
+                for (int idx = 0; 
+                    idx < parameters.Length && ((Page)HttpContext.Current.CurrentHandler).Request.Params["__ARG" + idx] != null; 
+                    idx++)
                 {
                     args[idx] = Convert.ChangeType(((Page)HttpContext.Current.CurrentHandler).Request.Params["__ARG" + idx], parameters[idx].ParameterType);
                 }
@@ -183,19 +168,19 @@ namespace Magix.UX
                 return;
             }
 
-            BaseControl ctrl = RaControls.Find(
+            BaseControl ctrl = MuxControls.Find(
                 delegate(BaseControl idx)
                 {
                     return idx.ClientID == idOfControl;
                 });
 
             if (ctrl == null)
-                throw new ApplicationException("There seems to be something wrong with the way you [re-] load controls in your page. The control that raised this event, doesn't exist, which means it was never re-created on the server on the second request ...");
+                throw new ApplicationException("there seems to be something wrong with the way you [re-] load controls in your page. the control that raised this event, doesn't exist, which means it was never re-created on the server on the second request");
 
             // Getting the name of the event the control raised
             string eventName = ((Page)HttpContext.Current.CurrentHandler).Request.Params["__MUX_EVENT"];
 
-            // Dispatching the event to our Ra Control...
+            // Dispatching the event to our MUX Control...
             ctrl.RaiseEvent(eventName);
         }
 
@@ -281,7 +266,7 @@ namespace Magix.UX
         /**
          * Includes a JavaScript file from a resource with the given resource id. This one 
          * is mostly for Control developers to make sure your script files are being included.
-         * Note that Ra-Ajax can include ANY JavaScrip file even in Ajax Callbacks. But in order for
+         * Note that MUX can include ANY JavaScrip file even in Ajax Callbacks. But in order for
          * this to work you must use the methods for JavaScript file inclusions in the
          * AjaxManager like for instance this method.
          */
@@ -301,7 +286,7 @@ namespace Magix.UX
         }
 
         /**
-         * Includes a JavaScript file from a file path. Note that Ra-Ajax can 
+         * Includes a JavaScript file from a file path. Note that MUX-Ajax can 
          * include ANY JavaScrip file even in Ajax Callbacks. But in order for
          * this to work you must use the methods for JavaScript file inclusions in the
          * AjaxManager like for instance this method.
@@ -332,8 +317,8 @@ namespace Magix.UX
         }
 
         /**
-         * Use to redirect to another page from a Ra-Ajax Callback. Note the default ASP.NET implementation
-         * that redirects on Response.Redirect does NOT work in Ra-Ajax callbacks. This method might be used
+         * Use to redirect to another page from a MUX-Ajax Callback. Note the default ASP.NET implementation
+         * that redirects on Response.Redirect does NOT work in MUX-Ajax callbacks. This method might be used
          * instead of the default Response.Redirect method though.
          */
         public void Redirect(string url)
@@ -369,7 +354,7 @@ namespace Magix.UX
             AddScriptIncludes(builder, true);
             AddInitializationScripts(builder);
 
-            // Replacing the </body> element with the client-side object creation scripts for the Ra Controls...
+            // Replacing the </body> element with the client-side object creation scripts for the MUX Controls...
             Regex reg = new Regex("</body>", RegexOptions.IgnoreCase);
             wholePageContent = reg.Replace(wholePageContent, builder.ToString());
 
@@ -386,7 +371,7 @@ namespace Magix.UX
             writer.Flush();
         }
 
-        // We only come here if this is a Ra-Ajax Callback (IsCallback == true)
+        // We only come here if this is a MUX-Ajax Callback (IsCallback == true)
         // We don't really care about the HTML rendered by the page here.
         // We just short-circut the whole HTML rendering phase here and only render
         // back changes to the client
@@ -397,25 +382,29 @@ namespace Magix.UX
                 Writer.Flush();
                 _memStream.Flush();
                 _memStream.Position = 0;
-                
-                TextReader readerContent = new StreamReader(_memStream);
-                string allContent = readerContent.ReadToEnd();
-                using (TextWriter writer = new StreamWriter(next))
+
+                using (TextReader readerContent = new StreamReader(_memStream))
                 {
-                    AddDynamicScriptIncludes(writer);
-                    writer.WriteLine(allContent);
+                    string allContent = readerContent.ReadToEnd();
+                    using (TextWriter writer = new StreamWriter(next))
+                    {
+                        AddDynamicScriptIncludes(writer);
+                        writer.WriteLine(allContent);
 
-                    UpdateViewState(content, writer);
+                        UpdateViewState(content, writer);
 
-                    WriterAtBack.Flush();
-                    _memStreamBack.Flush();
-                    _memStreamBack.Position = 0;
+                        WriterAtBack.Flush();
+                        _memStreamBack.Flush();
+                        _memStreamBack.Position = 0;
 
-                    readerContent = new StreamReader(_memStreamBack);
-                    string allContentAtBack = readerContent.ReadToEnd();
-                    writer.WriteLine(allContentAtBack);
+                        using (TextReader readerContent2 = new StreamReader(_memStreamBack))
+                        {
+                            string allContentAtBack = readerContent2.ReadToEnd();
+                            writer.WriteLine(allContentAtBack);
+                        }
 
-                    writer.Flush();
+                        writer.Flush();
+                    }
                 }
             }
         }
