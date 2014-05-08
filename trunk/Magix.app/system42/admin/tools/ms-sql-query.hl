@@ -252,6 +252,8 @@ where
       if=>less-than
         lhs=>[index-of][result][0].Value
         rhs=>10
+        and=>exist
+          lhs=>[index-of][result]
         code
           set=>[@][try][code][microsoft.sql.select][query].Value
             value=>[magix.forms.get-value:0][value].Value
@@ -389,6 +391,26 @@ where
                 controls
                   panel
                     tag=>tr
+      else
+        set=>[@][try][code][microsoft.sql.execute][query].Value
+          value=>[/][magix.forms.get-value:0][value].Value
+        set=>[@][try][code][microsoft.sql.execute][connection].Value
+          value=>[/][magix.forms.get-value:1][value].Value
+        try
+          code
+            microsoft.sql.execute
+            set=>[@][magix.viewport.show-message][message].Value
+              value=>@"{0} records affected"
+                v0=>[@][microsoft.sql.execute][result].Value
+            magix.viewport.show-message
+              time=>5000
+              color=>#aaffaa
+          catch
+            set=>[magix.viewport.show-message][message].Value
+              value=>[@][exception].Value
+            magix.viewporet.show-message
+              time=>10000
+              color=>#ffaaaa
 
   controls
     label=>lblHeader

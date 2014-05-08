@@ -83,8 +83,6 @@ namespace Magix.execute
                 rhsRawValue = where["rhs"].Get<string>();
                 ChangeType(rhsRawValue, out objRhsVal, ip, dp);
             }
-            else if (ip.Contains("rhs"))
-                throw new ArgumentException("meaningless [rhs] node in expression since operator is 'exist' or 'not-exist'");
         }
 
         private static void ChangeType(
