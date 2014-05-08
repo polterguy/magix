@@ -152,24 +152,6 @@ shortcuts in the system.&nbsp;&nbsp;thread safe"
           execute-file=>system42/admin/tools/magix-markup-editor.hl
           magix.help.open-file
             file=>system42\admin\help\backend\magix-markup-language.mml
-      _default_script9
-        text=>turn on tracer
-        category=>tools
-        code
-          magix.viewport.load-module
-            container=>trace
-            css=>span-22 top-1
-            name=>Magix.admin.EventSniffer
-          magix.help.open-file
-            file=>system42\admin\help\backend\tracer.mml
-      _default_script12
-        text=>turn off tracer
-        category=>tools
-        code
-          magix.viewport.clear-controls
-            container=>trace
-          magix.help.open-file
-            file=>system42\admin\help\backend\tracer.mml
       _default_script10
         text=>active event executor
         category=>tools

@@ -36,12 +36,24 @@ namespace Magix.Core
 		                IncludeAllJsFiles();
 		            }
 				};
-			base.OnInit (e);
+			base.OnInit(e);
+            Page_Init_Initializing();
 		}
+
+        private void Page_Init_Initializing()
+        {
+            Node node = new Node();
+            node["is-postback"].Value = IsPostBack;
+
+            ActiveEvents.Instance.RaiseActiveEvent(
+                this,
+                "magix.viewport.page-init",
+                node);
+        }
 
         protected abstract string GetDefaultContainer();
 
-		private void Page_Load_Initializing ()
+		private void Page_Load_Initializing()
 		{
 			if (!IsPostBack)
 			{
@@ -52,7 +64,7 @@ namespace Magix.Core
 	                !string.IsNullOrEmpty(Page.Request["event"]))
 	            {
 					// We only raise events which are allowed to be remotely invoked
-					if (ActiveEvents.Instance.IsAllowedRemotely (Page.Request["event"]))
+					if (ActiveEvents.Instance.IsAllowedRemotely(Page.Request["event"]))
 					{
 						Node node = new Node();
 
