@@ -20,7 +20,7 @@ link-button=>magix-ux-label
 dynamic=>methods-for-panel
   onfirstload
     magix.forms.dox.create-dox-for-web-control
-      css=>dox-for-web-control
+      class=>dox-for-web-control
       control=>panel
       container=>methods-for-panel
 }}

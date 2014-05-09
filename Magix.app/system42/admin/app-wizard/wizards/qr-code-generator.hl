@@ -21,7 +21,7 @@ set=>[magix.forms.create-web-part][controls][panel=>qr-code-wrap][controls][butt
 set=>[magix.forms.create-web-part][controls][panel=>qr-code-wrap][controls][label=>lblDescriptionStartQrCode][value].Value
   value=>@"inspect=>@""to open application, use code below""
 execute-file=>system42\admin\apps\{0}.hl
-  css=>span-22
+  class=>span-22
   container=>content3"
     v0=>[$][name].Value
 
@@ -31,7 +31,7 @@ set=>[magix.forms.create-web-part][controls][label][onfirstload][magix.data.load
 magix.forms.create-web-part
   container=>content2
   form-id=>qr-codes
-  css=>span-17 last
+  class=>span-17 last
 
   events
     magix.qr-code-generator.generate-application
@@ -185,7 +185,7 @@ parts of qr code. defaults to bumpy-white.png"
                 item=>media\images\textures
             execute-file=>system42/admin/file-browser.hl
               container=>file-browser
-              css=>span-17 last
+              class=>span-17 last
               mode=>select
               directory=>media\images\textures
               keep-stack
@@ -214,7 +214,7 @@ parts of qr code. defaults to bumby-black.png"
           onclick
             execute-file=>system42/admin/file-browser.hl
               container=>file-browser
-              css=>span-17 last
+              class=>span-17 last
               mode=>select
               directory=>media\images\textures
               select-file

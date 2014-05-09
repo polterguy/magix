@@ -10,7 +10,7 @@ magix.viewport.clear-controls
 magix.forms.create-mml-web-part
   container=>content1
   form-id=>mmleditor
-  css=>span-17 last
+  class=>span-17 last
   mml=>@"
 {{
 text-area=>markup

@@ -25,7 +25,7 @@ namespace Magix.forms
 			{
 				e.Params["event:magix.forms.create-web-part"].Value = "content1";
 				e.Params["container"].Value = "content1";
-				e.Params["css"].Value = "css class(es) of your form";
+				e.Params["class"].Value = "css class(es) of your form";
 				e.Params["form-id"].Value = "unique-identification-of-your-form";
 				e.Params["events"]["magix.forms.widget-selected"]["magix.forms.show-message"]["message"].Value = "jo, something was selected";
 				e.Params["controls"]["button"].Value = "btn";
@@ -33,7 +33,7 @@ namespace Magix.forms
 				e.Params["inspect"].Value = @"creates a dynamic form
 and loading it into the [container] viewport container.&nbsp;&nbsp;[form-id]
 must be a uniquely identifiable id for later use.&nbsp;&nbsp;[controls]
-contains the controls themselves, [css] becomes the css classes of your form
+contains the controls themselves, [class] becomes the css classes of your form
 .&nbsp;&nbsp;not thread safe";
 				return;
 			}
@@ -68,7 +68,7 @@ collection by typing them inside of brackets such as
 event handlers goes here...}}.&nbsp;&nbsp;internally it 
 calls LoadActiveModule, hence all the parameters that goes
 into your magix.viewport.load-module active event, 
-can also be passed into this, such as [css] and 
+can also be passed into this, such as [class] and 
 so on.&nbsp;&nbsp;you can embed forms using this syntax
 {{form=>name_of_form}}.&nbsp;&nbsp;not thread safe";
 				return;
@@ -108,7 +108,7 @@ so on.&nbsp;&nbsp;you can embed forms using this syntax
 &nbsp;&nbsp;not thread safe";
 				e.Params["container"].Value = "header";
 				e.Params["form-id"].Value = "my-form";
-				e.Params["css"].Value = "css-classes-of-container";
+				e.Params["class"].Value = "css-classes-of-container";
 				e.Params["mml"].Value = @"<p>magix markup language goes here
 {{
 link-button=>btn

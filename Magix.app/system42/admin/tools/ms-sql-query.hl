@@ -8,7 +8,7 @@ magix.viewport.clear-controls
   container=>content2
 magix.forms.create-web-part
   container=>content1
-  css=>span-17 last
+  class=>span-17 last
   form-id=>sql
 
   events
@@ -191,7 +191,7 @@ where
             magix.forms.create-web-part
               container=>column-list
               forms-id=>column-list
-              css=>span-17 last
+              class=>span-17 last
               controls
                 label
                   tag=>hr
@@ -216,7 +216,7 @@ where
             magix.forms.create-web-part
               container=>select-query
               form-id=>select-query
-              css=>span-17 last
+              class=>span-17 last
               controls
                 text-area=>sqlQuery
                   class=>span-17 top-1 last
@@ -247,7 +247,7 @@ where
           value=>link-button
 
       magix.forms.create-web-part
-        css=>span-17 last
+        class=>span-17 last
         container=>table-list
         form-id=>table-list
         controls
@@ -367,7 +367,7 @@ where
           magix.forms.create-web-part
             container=>content2
             form-id=>sql-result
-            css=>span-22 last top-1
+            class=>span-22 last top-1
             controls
               panel=>tblPaging
                 class=>span-6 left-18 last bottom-1

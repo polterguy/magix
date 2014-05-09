@@ -44,7 +44,7 @@ link-button=>executor
   value=>active event executor
   onclick
     magix.admin.open-event-executor
-      css=>span-17 last
+      class=>span-17 last
     magix.viewport.clear-controls
       container=>content2
     magix.viewport.clear-controls

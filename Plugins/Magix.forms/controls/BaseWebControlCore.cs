@@ -320,7 +320,7 @@ namespace Magix.forms
 				tmp = tmp.Parent;
             base.Inspect(node);
             tmp["inspect"].Value = tmp["inspect"].Get<string>() + @"<p><strong>properties inherited from web control</strong></p>
-<p>[css] is the css class(es) for your control.&nbsp;&nbsp;these can be modified or retrieved after you 
+<p>[class] is the css class(es) for your control.&nbsp;&nbsp;these can be modified or retrieved after you 
 have created your control, with for instance [magix.forms.set-class] and [magix.forms.add-css], 
 or [magix.forms.get-class] and [magix.forms.remove-css]</p>
 <p>[style] is a collection of inline css styles.&nbsp;&nbsp;create these the same way you would within a css class in a css 

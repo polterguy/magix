@@ -19,7 +19,7 @@ you need rich formatting of your text
 dynamic=>methods-for-textarea
   onfirstload
     magix.forms.dox.create-dox-for-web-control
-      css=>dox-for-web-control
+      class=>dox-for-web-control
       control=>textarea
       container=>methods-for-textarea
 }}

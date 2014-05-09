@@ -61,7 +61,7 @@ for-each=>[magix.data.load][objects]
 magix.forms.create-web-part
   form-id=>roles-grid
   container=>content2
-  css=>span-19 last
+  class=>span-19 last
   controls
     label=>header
       class=>span-13 left-6 last

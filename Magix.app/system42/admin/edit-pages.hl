@@ -36,7 +36,7 @@ for-each=>[magix.data.load:1][objects]
 magix.forms.create-web-part
   form-id=>edit-pages
   container=>content1
-  css=>span-19 last
+  class=>span-19 last
   controls
     label=>header
       tag=>h2
@@ -336,8 +336,7 @@ marketing material, to have a qr code to access this specific page"
 magix.forms.create-web-part
   form-id=>wysiwyg-editor
   container=>content2
-  css=>span-24
-  parent-css=>span-24
+  class=>span-24
   controls
     wysiwyg=>wysiwyg
       class=>wysiwyg span-24

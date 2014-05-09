@@ -112,7 +112,7 @@ _link-button
   onclick
     magix.admin.edit-file
       container=>content2
-      css=>span-24 min-height-16 top-1
+      class=>span-24 min-height-16 top-1
     magix.viewport.clear-controls
       container=>content3
 
@@ -176,7 +176,7 @@ _btn=>newfile
   value=>new file
   onclick
     magix.admin.edit-file
-      css=>span-24 last top-1
+      class=>span-24 last top-1
       container=>content2
       file=>empty.txt
 
@@ -245,10 +245,10 @@ if=>exist
       value=>[$][container].Value
 
 if=>exist
-  lhs=>[$][css]
+  lhs=>[$][class]
   code
-    set=>[magix.forms.create-web-part][css].Value
-      value=>[$][css].Value
+    set=>[magix.forms.create-web-part][class].Value
+      value=>[$][class].Value
 
 if=>equals
   lhs=>[$][mode].Value
@@ -264,6 +264,10 @@ if=>equals
       value=>false
 
 magix.forms.create-web-part
+  container=>content1
+  form-id=>file-explorer
+  class=>span-19 last
+
   events
 
     magix.ide.file-saved
@@ -280,9 +284,6 @@ magix.forms.create-web-part
       magix.viewport.clear-controls
         container=>content5
 
-  container=>content1
-  form-id=>file-explorer
-  css=>span-19 last
   controls
     label=>desc
       class=>span-15 last left-4

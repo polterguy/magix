@@ -124,7 +124,7 @@ for-each=>[magix.data.load][objects]
 magix.forms.create-web-part
   form-id=>users-grid
   container=>content1
-  css=>span-17 last
+  class=>span-17 last
   controls
     label=>header
       class=>span-13 last left-6

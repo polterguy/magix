@@ -27,7 +27,7 @@ namespace Magix.forms
 <p>creates a form from the given value of the node, 
 the [id] node's value serves as unique id if more 
 than one form of the same type is injected onto the 
-same page.&nbsp;&nbsp;use [css] to set css class of 
+same page.&nbsp;&nbsp;use [class] to set css class of 
 wrapping control, and [tag] to set html tag of 
 wrapping control</p>";
                 e.Params["magix.forms.create-web-part"]["_no-embed"].Value = true;
@@ -35,7 +35,7 @@ wrapping control</p>";
                 e.Params["magix.forms.create-web-part"]["form-id"].Value = "sample-form";
                 e.Params["magix.forms.create-web-part"]["controls"]["form"].Value = "name-of-your-form";
                 e.Params["magix.forms.create-web-part"]["controls"]["id"].Value = "unique-id";
-                e.Params["magix.forms.create-web-part"]["controls"]["css"].Value = "css-of-div-wrapper";
+                e.Params["magix.forms.create-web-part"]["controls"]["class"].Value = "css-of-div-wrapper";
 				return;
 			}
 

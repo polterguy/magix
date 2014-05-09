@@ -22,7 +22,7 @@ magix.forms.load-mml-web-part
   file=>system42/public/index-header.mml
   container=>header
   form-id=>header
-  css=>span-24
+  class=>span-24
 
 
 magix.web.get=>page
@@ -44,7 +44,7 @@ else
             file=>system42/admin/desktop/menu.mml
             container=>menu
             form-id=>admin-menu
-            css=>span-5
+            class=>span-5
           execute-file=>system42/admin/desktop/show-desktop.hl
           magix.web.get-session=>magix.admin.setting.show-help
           if=>not-exist

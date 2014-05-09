@@ -16,7 +16,7 @@ which contains logic for qr-code-generator application"
   magix.forms.create-web-part
     container=>content1
     form-id=>qr-code-generator-main-form
-    css=>span-22 last
+    class=>span-22 last
     controls
       label=>lblUrl
         tag=>label

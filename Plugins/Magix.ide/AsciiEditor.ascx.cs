@@ -57,7 +57,7 @@ namespace Magix.ide
             Node tmp = new Node();
             tmp["file"].Value = path.Value;
             tmp["container"].Value = "content3";
-            tmp["css"].Value = "span-24 last top-1";
+            tmp["class"].Value = "span-24 last top-1";
 
             RaiseActiveEvent(
                 "magix.forms.load-mml-web-part",

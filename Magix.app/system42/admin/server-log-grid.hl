@@ -147,7 +147,7 @@ else
 magix.forms.create-web-part
   form-id=>server-log
   container=>content2
-  css=>span-17 last
+  class=>span-17 last
   controls
     label=>header
       class=>span-13 left-6 last

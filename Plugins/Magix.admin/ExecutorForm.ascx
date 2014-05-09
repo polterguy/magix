@@ -26,7 +26,7 @@
 	<mux:Panel
 		runat="server"
 		ID="exeWrp"
-		DefaultWidget="run"
+		Default="run"
 		Class="btn-group span-17 last">
 		<mux:TextBox
 			id="activeEvent"

@@ -14,7 +14,7 @@ time be selected and checked of
 dynamic=>methods-for-radiobutton
   onfirstload
     magix.forms.dox.create-dox-for-web-control
-      css=>dox-for-web-control
+      class=>dox-for-web-control
       control=>radiobutton
       container=>methods-for-radiobutton
 }}
