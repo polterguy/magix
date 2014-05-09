@@ -359,6 +359,7 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="system42\admin\tools\ms-sql-query.hl" />
+    <Content Include="system42\startup-scripts\create-expressions-unit-tests.hl" />
     <None Include="todo.txt" />
     <None Include="system42\index.hl" />
     <None Include="system42\startup.hl" />
