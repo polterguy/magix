@@ -72,10 +72,10 @@ which contains logic for crud-app-generated application"
           set=>[magix.forms.create-web-part][container].Value
             value=>[$][container].Value
       if=>exist
-        lhs=>[$][css]
+        lhs=>[$][class]
         code
-          set=>[magix.forms.create-web-part][css].Value
-            value=>[$][css].Value
+          set=>[magix.forms.create-web-part][class].Value
+            value=>[$][class].Value
 
       if=>exist
         lhs=>[$][start]
@@ -92,7 +92,7 @@ which contains logic for crud-app-generated application"
       magix.forms.create-web-part
         container=>content1
         form-id=>crud-app-main-form
-        css=>span-22 last
+        class=>span-22 last
         events
 
           magix.crud-app.delete-row

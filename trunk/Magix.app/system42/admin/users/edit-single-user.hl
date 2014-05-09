@@ -90,7 +90,7 @@ set=>[/][magix.forms.create-web-part][controls][panel:1][controls][select][onsel
 magix.forms.create-web-part
   form-id=>edit-user
   container=>content3
-  css=>span-22 top-3 boxed air-padding bottom-2
+  class=>span-22 top-3 boxed air-padding bottom-2
   controls
     label=>username
       class=>span-22

@@ -34,7 +34,7 @@ lambda=>lmda
                 file=>system42/admin/admin-settings.mml
                 container=>content1
                 form-id=>admin-settings
-                css=>span-17 last
+                class=>span-17 last
               magix.viewport.show-message
                 message=>theme was changed and portal was reloaded
         onfirstload

@@ -371,7 +371,7 @@ not thread safe";
 removing [remove] properties.&nbsp;&nbsp;not thread safe";
 				e.Params["change-widget"]["dna"].Value = "root-0-0";
 				e.Params["change-widget"]["change"]["id"].Value = "myId";
-				e.Params["change-widget"]["remove"]["css"].Value = null;
+				e.Params["change-widget"]["remove"]["class"].Value = null;
 				return;
 			}
 

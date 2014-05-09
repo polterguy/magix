@@ -15,12 +15,12 @@ event=>magix.admin.open-event-executor
         set=>[magix.viewport.load-module][container].Value
           value=>[$][container].Value
     if=>exist
-      lhs=>[$][css]
+      lhs=>[$][class]
       code
-        set=>[magix.viewport.load-module][css].Value
-          value=>[$][css].Value
+        set=>[magix.viewport.load-module][class].Value
+          value=>[$][class].Value
     magix.viewport.load-module
-      css=>span-24
+      class=>span-24
       container=>content1
       name=>Magix.admin.ExecutorForm
 
@@ -35,12 +35,12 @@ event sniffer, or tracer"
         set=>[magix.viewport.load-module][container].Value
           value=>[$][container].Value
     if=>exist
-      lhs=>[$][css]
+      lhs=>[$][class]
       code
-        set=>[magix.viewport.load-module][css].Value
-          value=>[$][css].Value
+        set=>[magix.viewport.load-module][class].Value
+          value=>[$][class].Value
     magix.viewport.load-module
-      css=>span-24
+      class=>span-24
       container=>content1
       name=>Magix.admin.EventSniffer
 
@@ -56,12 +56,12 @@ surface"
         set=>[magix.viewport.load-module][container].Value
           value=>[$][container].Value
     if=>exist
-      lhs=>[$][css]
+      lhs=>[$][class]
       code
-        set=>[magix.viewport.load-module][css].Value
-          value=>[$][css].Value
+        set=>[magix.viewport.load-module][class].Value
+          value=>[$][class].Value
     magix.viewport.load-module
-      css=>span-24
+      class=>span-24
       container=>content2
       name=>Magix.admin.ExecutorForm
     add=>[magix.admin.set-code]

@@ -144,7 +144,7 @@ shortcuts in the system.&nbsp;&nbsp;thread safe"
             file=>system42/admin/admin-settings.mml
             container=>content1
             form-id=>admin-settings
-            css=>span-17 last
+            class=>span-17 last
       _default_script7
         text=>magix markup language editor
         category=>tools
@@ -157,7 +157,7 @@ shortcuts in the system.&nbsp;&nbsp;thread safe"
         category=>tools
         code
           magix.admin.open-event-executor
-            css=>span-17 last
+            class=>span-17 last
           magix.viewport.clear-controls
             container=>content2
           magix.viewport.clear-controls

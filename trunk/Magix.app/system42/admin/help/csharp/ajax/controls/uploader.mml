@@ -8,7 +8,7 @@
 dynamic=>methods-for-uploader
   onfirstload
     magix.forms.dox.create-dox-for-control
-      css=>dox-for-web-control
+      class=>dox-for-web-control
       control=>uploader
       container=>methods-for-uploader
 }}

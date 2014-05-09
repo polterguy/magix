@@ -31,7 +31,7 @@ in whatever editor makes sense according to its extension, or download directly 
 if none.&nbsp;&nbsp;if file doesn't exist, an empty file 
 will be edited, but not created before saved.&nbsp;&nbsp;not thread safe";
 				e.Params["file"].Value = "media/grid/main.css";
-				e.Params["css"].Value = "css classes of editor";
+				e.Params["class"].Value = "css classes of editor";
 				e.Params["container"].Value = "content5";
 				return;
 			}
@@ -75,8 +75,8 @@ will be edited, but not created before saved.&nbsp;&nbsp;not thread safe";
 				else
 					tmp["content"].Value = "";
 
-                if (Ip(e.Params).Contains("css"))
-                    tmp["css"].Value = Ip(e.Params)["css"].Value;
+                if (Ip(e.Params).Contains("class"))
+                    tmp["class"].Value = Ip(e.Params)["class"].Value;
 
 				LoadActiveModule(
 					"Magix.ide.AsciiEditor",

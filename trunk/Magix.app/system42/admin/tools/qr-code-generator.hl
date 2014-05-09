@@ -11,7 +11,7 @@ magix.viewport.clear-controls
 magix.forms.create-web-part
   container=>content1
   form-id=>qr-codes
-  css=>span-17 last
+  class=>span-17 last
   controls
     label=>header
       value=>vanity qr code generator
@@ -122,7 +122,7 @@ parts of qr code. defaults to bumpy-white.png"
                 item=>media\images\textures
             execute-file=>system42/admin/file-browser.hl
               container=>file-browser
-              css=>span-17 last
+              class=>span-17 last
               mode=>select
               directory=>media\images\textures
               keep-stack
@@ -151,7 +151,7 @@ parts of qr code. defaults to bumby-black.png"
           onclick
             execute-file=>system42/admin/file-browser.hl
               container=>file-browser
-              css=>span-17 last
+              class=>span-17 last
               mode=>select
               directory=>media\images\textures
               select-file

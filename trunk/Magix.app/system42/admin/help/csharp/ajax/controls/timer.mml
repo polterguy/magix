@@ -9,7 +9,7 @@ raise the Tick event handler</p>
 dynamic=>methods-for-timer
   onfirstload
     magix.forms.dox.create-dox-for-control
-      css=>dox-for-web-control
+      class=>dox-for-web-control
       control=>timer
       container=>methods-for-timer
 }}

@@ -29,7 +29,7 @@ set=>[magix.forms.create-web-part][controls][label][value].Value
 magix.forms.create-web-part
   form-id=>edit-property
   container=>content5
-  css=>span-22 air-padding boxed bottom-5 relative
+  class=>span-22 air-padding boxed bottom-5 relative
   controls
     link-button=>close
       class=>absolute top right span-1

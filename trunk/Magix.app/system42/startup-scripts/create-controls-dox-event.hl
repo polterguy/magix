@@ -538,8 +538,8 @@ a mux web control"
       children-only=>true
     set=>[magix.forms.create-web-part][container].Value
       value=>[$][container].Value
-    set=>[magix.forms.create-web-part][css].Value
-      value=>[$][css].Value
+    set=>[magix.forms.create-web-part][class].Value
+      value=>[$][class].Value
     for-each=>[_data]
       _lit
       set=>[@][_lit][text].Value
@@ -580,8 +580,8 @@ a mux control"
       children-only=>true
     set=>[magix.forms.create-web-part][container].Value
       value=>[$][container].Value
-    set=>[magix.forms.create-web-part][css].Value
-      value=>[$][css].Value
+    set=>[magix.forms.create-web-part][class].Value
+      value=>[$][class].Value
     for-each=>[_data]
       _lit
       set=>[@][_lit][text].Value

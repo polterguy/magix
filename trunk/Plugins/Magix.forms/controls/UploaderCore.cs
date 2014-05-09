@@ -126,7 +126,7 @@ files to the server</p>";
 <p><strong>properties for uploader</strong></p><p>[folder] 
 is the folder where the files will be uploaded.&nbsp;&nbsp;
 the filename of the file from the client, will be the same 
-when the file is uploaded to the server</p><p>[css] is the 
+when the file is uploaded to the server</p><p>[class] is the 
 css class asssociated with your uploader, and what determines 
 the looks of the 'wait for files to upload' parts of your 
 uploader</p><p>[onuploaded] is the active event which will 

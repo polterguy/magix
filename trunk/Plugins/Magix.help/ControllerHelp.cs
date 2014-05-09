@@ -74,7 +74,7 @@ container</p><p>not thread safe</p>";
 
 			tmp["form-id"].Value = "help-navigation";
 			tmp["container"].Value = "help";
-			tmp["css"].Value = "span-22 last";
+			tmp["class"].Value = "span-22 last";
 			tmp["mml"].Value = string.Format(@"
 <div class=""span-23 last bottom-1 btn-group top-2"">
 {{{{
@@ -164,7 +164,7 @@ button=>next-page-2
 
 			tmp["form-id"].Value = "help";
             tmp["container"].Value = "help-content";
-			tmp["css"].Value = "span-22 last help-system";
+			tmp["class"].Value = "span-22 last help-system";
 
 			using (TextReader reader = File.OpenText(Page.Server.MapPath("system42/admin/help/index.mml")))
 			{

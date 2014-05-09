@@ -25,6 +25,6 @@ if=>more-than
       value=>[magix.data.load][objects][0][value].Value
     magix.forms.create-mml-web-part
       container=>content4
-      css=>span-24
+      class=>span-24
       form-id=>webpage
 

@@ -32,7 +32,7 @@ safe transmitting of your passwords and similar 'secret text strings'
 dynamic=>methods-for-textbox
   onfirstload
     magix.forms.dox.create-dox-for-web-control
-      css=>dox-for-web-control
+      class=>dox-for-web-control
       control=>textbox
       container=>methods-for-textbox
 }}
