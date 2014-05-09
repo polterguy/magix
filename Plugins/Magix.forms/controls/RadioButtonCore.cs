@@ -31,12 +31,12 @@ namespace Magix.forms
 
             Node node = Ip(e.Params)["_code"].Value as Node;
 
-			RadioButton ret = new RadioButton();
+			Radio ret = new Radio();
 
             FillOutParameters(e.Params, ret);
 
 			if (node.Contains("group") && node["group"].Value != null)
-				ret.GroupName = node["group"].Get<string>();
+				ret.Name = node["group"].Get<string>();
 
 			if (node.Contains("checked") && node["checked"].Value != null)
 				ret.Checked = node["checked"].Get<bool>();
@@ -79,7 +79,7 @@ namespace Magix.forms
             if (!Ip(e.Params).Contains("value"))
 				throw new ArgumentException("set-value needs [value]");
 
-            RadioButton ctrl = FindControl<RadioButton>(Ip(e.Params));
+            Radio ctrl = FindControl<Radio>(Ip(e.Params));
 
 			if (ctrl != null)
 			{
@@ -99,7 +99,7 @@ namespace Magix.forms
 				return;
 			}
 
-            RadioButton ctrl = FindControl<RadioButton>(Ip(e.Params));
+            Radio ctrl = FindControl<Radio>(Ip(e.Params));
 
 			if (ctrl != null)
 			{
@@ -150,7 +150,7 @@ legal values are true and false</p>";
 		 */
 		protected override object GetValue(BaseControl that)
 		{
-			return ((RadioButton)that).Checked;
+			return ((Radio)that).Checked;
 		}
 	}
 }

@@ -30,15 +30,15 @@ namespace Magix.forms
 
             Node node = Ip(e.Params)["_code"].Value as Node;
 
-			Image ret = new Image();
+			Img ret = new Img();
 
             FillOutParameters(e.Params, ret);
 
 			if (node.Contains("src") && node["src"].Value != null)
-				ret.ImageUrl = node["src"].Get<string>();
+				ret.Src = node["src"].Get<string>();
 
 			if (node.Contains("alt") && node["alt"].Value != null)
-				ret.AlternateText = node["alt"].Get<string>();
+				ret.Alt = node["alt"].Get<string>();
 
 			if (node.Contains("key") && node["key"].Value != null)
 				ret.AccessKey = node["key"].Get<string>();
@@ -61,11 +61,11 @@ namespace Magix.forms
             if (!Ip(e.Params).Contains("value"))
                 throw new ArgumentException("set-value needs [value]");
 
-            Image ctrl = FindControl<Image>(Ip(e.Params));
+            Img ctrl = FindControl<Img>(Ip(e.Params));
 
             if (ctrl != null)
             {
-                ctrl.ImageUrl = Ip(e.Params)["value"].Get<string>();
+                ctrl.Src = Ip(e.Params)["value"].Get<string>();
             }
         }
 
@@ -81,11 +81,11 @@ namespace Magix.forms
                 return;
             }
 
-            Image ctrl = FindControl<Image>(Ip(e.Params));
+            Img ctrl = FindControl<Img>(Ip(e.Params));
 
             if (ctrl != null)
             {
-                Ip(e.Params)["value"].Value = ctrl.ImageUrl;
+                Ip(e.Params)["value"].Value = ctrl.Src;
             }
         }
 

@@ -15,47 +15,33 @@ namespace Magix.UX.Widgets
     /*
      * image ajax control
      */
-    public class Image : BaseWebControl
+    public class Img : BaseWebControlFormElement
     {
         /*
          * url of image
          */
-        public string ImageUrl
+        public string Src
         {
-            get { return ViewState["ImageURL"] == null ? "" : (string)ViewState["ImageURL"]; }
+            get { return ViewState["Src"] == null ? "" : (string)ViewState["Src"]; }
             set
             {
-                if (value != ImageUrl)
+                if (value != Src)
                     SetJsonGeneric("src", value);
-                ViewState["ImageURL"] = value;
+                ViewState["Src"] = value;
             }
         }
 
         /*
          * alternate text
          */
-        public string AlternateText
+        public string Alt
         {
-            get { return ViewState["AlternateText"] == null ? "" : (string)ViewState["AlternateText"]; }
+            get { return ViewState["Alt"] == null ? "" : (string)ViewState["Alt"]; }
             set
             {
-                if (value != AlternateText)
+                if (value != Alt)
                     SetJsonGeneric("alt", value);
-                ViewState["AlternateText"] = value;
-            }
-        }
-
-        /*
-         * keyboard shortcut
-         */
-        public string AccessKey
-        {
-            get { return ViewState["AccessKey"] == null ? "" : (string)ViewState["AccessKey"]; }
-            set
-            {
-                if (value != AccessKey)
-                    SetJsonValue("AccessKey", value);
-                ViewState["AccessKey"] = value;
+                ViewState["Alt"] = value;
             }
         }
 
@@ -69,11 +55,15 @@ namespace Magix.UX.Widgets
 
         protected override void AddAttributes(Element el)
         {
-            el.AddAttribute("src", ImageUrl);
-            el.AddAttribute("alt", AlternateText);
+            el.AddAttribute("src", Src);
+            el.AddAttribute("alt", Alt);
             if (!string.IsNullOrEmpty(AccessKey))
                 el.AddAttribute("accesskey", AccessKey);
             base.AddAttributes(el);
+        }
+
+        protected override void SetValue()
+        {
         }
     }
 }

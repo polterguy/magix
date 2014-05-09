@@ -17,6 +17,20 @@ namespace Magix.UX.Widgets.Core
      */
     public abstract class BaseWebControlFormElementInputText : BaseWebControlFormElementText
     {
+        /*
+         * shown when value is empty
+         */
+        public string PlaceHolder
+        {
+            get { return ViewState["PlaceHolder"] == null ? "" : (string)ViewState["PlaceHolder"]; }
+            set
+            {
+                if (value != PlaceHolder)
+                    SetJsonGeneric("placeholder", value);
+                ViewState["PlaceHolder"] = value;
+            }
+        }
+
         private static readonly string[] _handlerNames = new string[]
         {
             "change"
@@ -114,6 +128,8 @@ namespace Magix.UX.Widgets.Core
         {
             if (ShouldAddValue)
                 el.AddAttribute("value", Value);
+            if (!string.IsNullOrEmpty(PlaceHolder))
+                el.AddAttribute("placeholder", PlaceHolder);
             el.AddAttribute("name", ClientID);
             base.AddAttributes(el);
         }

@@ -1,5 +1,5 @@
 ﻿
-<h2>mux Image</h2>
+<h2>mux Img</h2>
 
 <p>image ajax web control. useful for showing images that needs ajax
 functionality somehow. notice that most times it's more efficient
@@ -29,10 +29,10 @@ the active module as an embedded resource if you want to compile this sample</p>
     AutoEventWireup="true" 
     Inherits="Magix.sample.SampleModule" %&gt;
 
-&lt;mux:Image
+&lt;mux:Img
     runat="server"
-    ImageUrl="media/images/marvin-headshot.png"
-    AlternateText="marvin"
+    Src="media/images/marvin-headshot.png"
+    Alt="marvin"
     id="img" /&gt;
 </pre>
 
@@ -51,7 +51,7 @@ namespace Magix.sample
     }
 }</pre>
 
-<label>example of a mux Image</label>
+<label>example of a mux Img</label>
 <div class="sample-web-control">
 {{
 image=>img

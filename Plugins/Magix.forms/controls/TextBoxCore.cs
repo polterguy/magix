@@ -69,49 +69,49 @@ namespace Magix.forms
 				switch(node["mode"].Get<string>())
 				{
 				case "normal":
-					ret.TextMode = TextBox.TextBoxMode.Text;
+					ret.Type = TextBox.TextBoxType.Text;
 					break;
                 case "password":
-                    ret.TextMode = TextBox.TextBoxMode.Password;
+                    ret.Type = TextBox.TextBoxType.Password;
                     break;
                 case "email":
-                    ret.TextMode = TextBox.TextBoxMode.Email;
+                    ret.Type = TextBox.TextBoxType.Email;
                     break;
                 case "phone":
-					ret.TextMode = TextBox.TextBoxMode.Tel;
+					ret.Type = TextBox.TextBoxType.Tel;
 					break;
                 case "number":
-                    ret.TextMode = TextBox.TextBoxMode.Number;
+                    ret.Type = TextBox.TextBoxType.Number;
                     break;
                 case "search":
-					ret.TextMode = TextBox.TextBoxMode.Search;
+					ret.Type = TextBox.TextBoxType.Search;
 					break;
 				case "url":
-					ret.TextMode = TextBox.TextBoxMode.Url;
+					ret.Type = TextBox.TextBoxType.Url;
 					break;
 				case "datetime":
-					ret.TextMode = TextBox.TextBoxMode.DateTime;
+					ret.Type = TextBox.TextBoxType.DateTime;
 					break;
 				case "date":
-					ret.TextMode = TextBox.TextBoxMode.Date;
+					ret.Type = TextBox.TextBoxType.Date;
 					break;
 				case "month":
-					ret.TextMode = TextBox.TextBoxMode.Month;
+					ret.Type = TextBox.TextBoxType.Month;
 					break;
 				case "week":
-					ret.TextMode = TextBox.TextBoxMode.Week;
+					ret.Type = TextBox.TextBoxType.Week;
 					break;
 				case "time":
-					ret.TextMode = TextBox.TextBoxMode.Time;
+					ret.Type = TextBox.TextBoxType.Time;
 					break;
 				case "datetimelocal":
-					ret.TextMode = TextBox.TextBoxMode.DateTimeLocal;
+					ret.Type = TextBox.TextBoxType.DateTimeLocal;
 					break;
 				case "range":
-					ret.TextMode = TextBox.TextBoxMode.Range;
+					ret.Type = TextBox.TextBoxType.Range;
 					break;
 				case "color":
-					ret.TextMode = TextBox.TextBoxMode.Color;
+					ret.Type = TextBox.TextBoxType.Color;
 					break;
 				}
 			}

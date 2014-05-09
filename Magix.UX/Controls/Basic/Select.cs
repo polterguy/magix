@@ -17,7 +17,7 @@ namespace Magix.UX.Widgets
      * select ajax control
      */
     [ParseChildren(true, "Items")]
-    public class SelectList : BaseWebControlListFormElement
+    public class Select : BaseWebControlListFormElement
     {
         /*
          * raised when selected item changes

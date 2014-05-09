@@ -1,19 +1,19 @@
 ﻿
-<h2>mux SelectList</h2>
+<h2>mux Select</h2>
 
 <p>a drop down list type of control, although it can also be set into a non-drop
 down mode. basically multiple choices type of widget. to some extent, it
 overlaps the logical functionality of the {{
 link-button=>magix-ux-radiobutton
-  value=>RadioButton
+  value=>Radio
   onclick
     magix.help.open-file
       file=>system42\admin\help\csharp\ajax\controls\radiobutton.mml
 }} control, although the
-SelectList is more useful for cases where you have a massive number of choices,
-like for instance choose one out of 300 different languages, while the RadioButton
+Select is more useful for cases where you have a massive number of choices,
+like for instance choose one out of 300 different languages, while the Radio
 is more useful for cases where you have fewer choices, such as choose 'coffee, tea
-or water'. add up your choices by adding up ListItems inside of your SelectList
+or water'. add up your choices by adding up ListItems inside of your Select
 </p>
 
 <label>methods and properties of control</label>
@@ -38,13 +38,13 @@ the active module as an embedded resource if you want to compile this sample</p>
     AutoEventWireup="true" 
     Inherits="Magix.sample.SampleModule" %&gt;
 
-&lt;mux:SelectList
+&lt;mux:Select
     runat="server"
     id="lst"&gt;
     &lt;ListItem Text="howdy" Value="val0" /&gt;
     &lt;ListItem Text="hello" Value="val1" /&gt;
     &lt;ListItem Text="jo" Value="val2" /&gt;
-&lt;/mux:SelectList&gt;
+&lt;/mux:Select&gt;
 </pre>
 
 <label>SampleModule.ascx.cs</label>
@@ -59,11 +59,11 @@ namespace Magix.sample
 {
     public class SampleModule : ActiveModule
     {
-        protected SelectList lst;
+        protected Select lst;
     }
 }</pre>
 
-<label>example of a mux SelectList</label>
+<label>example of a mux Select</label>
 <div class="sample-web-control">
 {{
 select=>btn

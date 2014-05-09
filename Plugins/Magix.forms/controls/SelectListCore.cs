@@ -32,7 +32,7 @@ namespace Magix.forms
 
             Node node = Ip(e.Params)["_code"].Value as Node;
 
-			SelectList ret = new SelectList();
+			Select ret = new Select();
 
 			FillOutParameters(e.Params, ret);
 
@@ -95,7 +95,7 @@ namespace Magix.forms
             if (!Ip(e.Params).Contains("value"))
 				throw new ArgumentException("set-value needs [value]");
 
-            SelectList ctrl = FindControl<SelectList>(Ip(e.Params));
+            Select ctrl = FindControl<Select>(Ip(e.Params));
 
 			if (ctrl != null)
 			{
@@ -115,7 +115,7 @@ namespace Magix.forms
 				return;
 			}
 
-            SelectList ctrl = FindControl<SelectList>(Ip(e.Params));
+            Select ctrl = FindControl<Select>(Ip(e.Params));
 
 			if (ctrl != null)
 			{
@@ -142,11 +142,11 @@ not thread safe";
 				return;
 			}
 
-            SelectList ctrl = FindControl<SelectList>(Ip(e.Params));
+            Select ctrl = FindControl<Select>(Ip(e.Params));
 
 			if (ctrl != null)
 			{
-				SelectList lst = ctrl as SelectList;
+				Select lst = ctrl as Select;
 				lst.Items.Clear();
                 if (Ip(e.Params).Contains("values"))
 				{
@@ -208,9 +208,9 @@ selected item state of control changes</p>";
 		 */
 		protected override object GetValue(BaseControl that)
 		{
-            if (((SelectList)that).SelectedItem == null)
+            if (((Select)that).SelectedItem == null)
                 return null;
-			return ((SelectList)that).SelectedItem.Value;
+			return ((Select)that).SelectedItem.Value;
 		}
 	}
 }

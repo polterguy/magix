@@ -19,20 +19,6 @@ namespace Magix.UX.Widgets
     public class TextArea : BaseWebControlFormElementInputText
     {
         /*
-         * shown when value is empty
-         */
-        public string PlaceHolder
-        {
-            get { return ViewState["PlaceHolder"] == null ? "" : (string)ViewState["PlaceHolder"]; }
-            set
-            {
-                if (value != PlaceHolder)
-                    SetJsonGeneric("placeholder", value);
-                ViewState["PlaceHolder"] = value;
-            }
-        }
-
-        /*
          * height of control
          */
         public int Rows
@@ -62,8 +48,6 @@ namespace Magix.UX.Widgets
 
         protected override void AddAttributes(Element el)
         {
-            if (!string.IsNullOrEmpty(PlaceHolder))
-                el.AddAttribute("placeholder", PlaceHolder);
             if (Rows != -1)
                 el.AddAttribute("rows", Rows.ToString());
             base.AddAttributes(el);

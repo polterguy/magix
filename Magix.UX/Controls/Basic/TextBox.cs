@@ -20,7 +20,7 @@ namespace Magix.UX.Widgets
         /*
          * type of text
          */
-        public enum TextBoxMode
+        public enum TextBoxType
         {
             Color,
             Email,
@@ -47,28 +47,14 @@ namespace Magix.UX.Widgets
         /*
          * type of input
          */
-        public TextBoxMode TextMode
+        public TextBoxType Type
         {
-            get { return ViewState["TextMode"] == null ? TextBoxMode.Text : (TextBoxMode)ViewState["TextMode"]; }
+            get { return ViewState["Type"] == null ? TextBoxType.Text : (TextBoxType)ViewState["Type"]; }
             set
             {
-                if (value != TextMode)
+                if (value != Type)
                     SetJsonValue("Type", value.ToString().ToLower());
-                ViewState["TextMode"] = value;
-            }
-        }
-
-        /*
-         * shown when value is empty
-         */
-        public string PlaceHolder
-        {
-            get { return ViewState["PlaceHolder"] == null ? "" : (string)ViewState["PlaceHolder"]; }
-            set
-            {
-                if (value != PlaceHolder)
-                    SetJsonGeneric("placeholder", value);
-                ViewState["PlaceHolder"] = value;
+                ViewState["Type"] = value;
             }
         }
 
@@ -122,10 +108,8 @@ namespace Magix.UX.Widgets
             get { return ViewState["MaxLength"] == null ? 0 : (int)ViewState["MaxLength"]; }
             set 
             {
-                if (value < 0)
-                    throw new ArgumentOutOfRangeException("value", "The MaxLength property can not have a negative value.");
-                else if (value != MaxLength)
-                    SetJsonGeneric("maxLength", value.ToString());
+                if (value != MaxLength)
+                    SetJsonGeneric("maxlength", value.ToString());
                 ViewState["MaxLength"] = value;
             }
         }
@@ -166,7 +150,7 @@ namespace Magix.UX.Widgets
 
         protected override void AddAttributes(Element el)
         {
-            el.AddAttribute("type", TextMode.ToString().ToLower());
+            el.AddAttribute("type", Type.ToString().ToLower());
             if (MaxLength > 0)
                 el.AddAttribute("maxlength", MaxLength.ToString());
             if (AutoCapitalize)

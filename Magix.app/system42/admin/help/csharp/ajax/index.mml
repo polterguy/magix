@@ -101,7 +101,7 @@ link-button=>magix-ux-checkbox
 }} <span class="span-18 last">a two state check box control, useful for yes or no questions</span></li>
 <li>{{
 link-button=>magix-ux-hiddenfield
-  value=>HiddenField
+  value=>Hidden
   css=>span-3 clear
   onclick
     magix.help.open-file
@@ -109,7 +109,7 @@ link-button=>magix-ux-hiddenfield
 }} <span class="span-18 last">a hidden value control.&nbsp;&nbsp;not visible for the user, but can carry any text string you wish</span></li>
 <li>{{
 link-button=>magix-ux-hyperlink
-  value=>HyperLink
+  value=>Link
   css=>span-3 clear
   onclick
     magix.help.open-file
@@ -117,7 +117,7 @@ link-button=>magix-ux-hyperlink
 }} <span class="span-18 last">a hyperlink, leading to another url</span></li>
 <li>{{
 link-button=>magix-ux-image
-  value=>Image
+  value=>Img
   css=>span-3 clear
   onclick
     magix.help.open-file
@@ -149,7 +149,7 @@ link-button=>magix-ux-panel
 }} <span class="span-18 last">a web control for wrapping other controls within.&nbsp;&nbsp;a container web control for other web controls and controls</span></li>
 <li>{{
 link-button=>magix-ux-radiobutton
-  value=>RadioButton
+  value=>Radio
   css=>span-3 clear
   onclick
     magix.help.open-file
@@ -159,7 +159,7 @@ for the end user to choose only one value.&nbsp;&nbsp;handy for choose one item,
 of questions</span></li>
 <li>{{
 link-button=>magix-ux-selectlist
-  value=>SelectList
+  value=>Select
   css=>span-3 clear
   onclick
     magix.help.open-file

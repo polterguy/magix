@@ -36,14 +36,14 @@
   <ItemGroup>
     <Compile Include="Controls\Basic\Button.cs" />
     <Compile Include="Controls\Basic\CheckBox.cs" />
-    <Compile Include="Controls\Basic\HiddenField.cs" />
-    <Compile Include="Controls\Basic\HyperLink.cs" />
-    <Compile Include="Controls\Basic\Image.cs" />
+    <Compile Include="Controls\Basic\Hidden.cs" />
+    <Compile Include="Controls\Basic\Link.cs" />
+    <Compile Include="Controls\Basic\Img.cs" />
     <Compile Include="Controls\Basic\Label.cs" />
     <Compile Include="Controls\Basic\LinkButton.cs" />
     <Compile Include="Controls\Basic\Panel.cs" />
-    <Compile Include="Controls\Basic\RadioButton.cs" />
-    <Compile Include="Controls\Basic\SelectList.cs" />
+    <Compile Include="Controls\Basic\Radio.cs" />
+    <Compile Include="Controls\Basic\Select.cs" />
     <Compile Include="Controls\Basic\TextArea.cs" />
     <Compile Include="Controls\Basic\TextBox.cs" />
     <Compile Include="Controls\Core\BaseControl.cs" />
