@@ -13,4 +13,4 @@
 	runat="server"
 	id="lbl" 
 	Tag="div"
-	CssClass="span-22 last" />
+	Class="span-22 last" />

@@ -46,7 +46,7 @@ namespace Magix.viewports
 
         protected override void OnLoad(EventArgs e)
         {
-            if (IsPostBack && !AjaxManager.Instance.IsCallback || !IsPostBack)
+            if (IsPostBack && !Manager.Instance.IsAjaxCallback || !IsPostBack)
             {
                 Node node = new Node();
                 node["type"].Value = "css";
@@ -107,11 +107,11 @@ to use, and so on</p><p>not thread safe</p>";
 
 			if (_isFirst)
 			{
-                whichMsg.Text = "<p>" + msgTxt + "</p>";
+                whichMsg.Value = "<p>" + msgTxt + "</p>";
 			}
 			else
 			{
-                whichMsg.Text += "<p>" + msgTxt + "</p>";
+                whichMsg.Value += "<p>" + msgTxt + "</p>";
 			}
 
             if (ip.Contains("color"))
@@ -135,7 +135,7 @@ to use, and so on</p><p>not thread safe</p>";
 					"magix.execute.node-2-code",
 					tmp);
 
-                whichMsg.Text += "<pre style='text-align:left;margin-left:120px;overflow:auto;max-height:300px;'>" + 
+                whichMsg.Value += "<pre style='text-align:left;margin-left:120px;overflow:auto;max-height:300px;'>" + 
                     tmp["code"].Get<string>().Replace("<", "&lt;").Replace(">", "&gt;") + "</pre>";
 			}
 
@@ -187,7 +187,7 @@ end user for some seconds.&nbsp;&nbsp;not thread safe";
             if (!Ip(e.Params).Contains("message") || Ip(e.Params)["message"].Get<string>("") == "")
 				throw new ArgumentException("cannot show a confirm message box without a [message] argument");
 
-            confirmLbl.Text = Ip(e.Params)["message"].Get<string>();
+            confirmLbl.Value = Ip(e.Params)["message"].Get<string>();
 
             if (Ip(e.Params).Contains("code"))
                 ConfirmCode = Ip(e.Params)["code"].Clone();
@@ -199,11 +199,11 @@ end user for some seconds.&nbsp;&nbsp;not thread safe";
             if (!Ip(e.Params).Contains("closable-only") || Ip(e.Params)["closable-only"].Get<bool>() == false)
 			{
 				ok.Visible = true;
-				cancel.Text = "cancel";
+				cancel.Value = "cancel";
 			}
 			else
 			{
-				cancel.Text = "close";
+				cancel.Value = "close";
 				Node tmp = new Node();
 
 				if (ConfirmCode != null)
@@ -216,7 +216,7 @@ end user for some seconds.&nbsp;&nbsp;not thread safe";
 						"magix.execute.node-2-code",
 						tmp);
 
-					confirmLbl.Text += "<pre style='text-align:left;margin-left:120px;overflow:auto;max-height:300px;'>" + tmp["code"].Get<string>().Replace("<", "&lt;").Replace(">", "&gt;") + "</pre>";
+					confirmLbl.Value += "<pre style='text-align:left;margin-left:120px;overflow:auto;max-height:300px;'>" + tmp["code"].Get<string>().Replace("<", "&lt;").Replace(">", "&gt;") + "</pre>";
 				}
 				ok.Visible = false;
 			}
@@ -255,14 +255,14 @@ end user for some seconds.&nbsp;&nbsp;not thread safe";
 
 		protected override void OnPreRender(EventArgs e)
 		{
-			if (Session["magix.viewport.show-grid"] != null && ((Node)Session["magix.viewport.show-grid"]).Get<bool>() && !wrp.CssClass.Contains("showgrid"))
+			if (Session["magix.viewport.show-grid"] != null && ((Node)Session["magix.viewport.show-grid"]).Get<bool>() && !wrp.Class.Contains("showgrid"))
 			{
-				wrp.CssClass = wrp.CssClass + " showgrid";
-				wrp.CssClass = wrp.CssClass.Trim();
+				wrp.Class = wrp.Class + " showgrid";
+				wrp.Class = wrp.Class.Trim();
 			}
-			else if (wrp.CssClass.Contains("showgrid") && (Session["magix.viewport.show-grid"] == null || !((Node)Session["magix.viewport.show-grid"]).Get<bool>()))
+			else if (wrp.Class.Contains("showgrid") && (Session["magix.viewport.show-grid"] == null || !((Node)Session["magix.viewport.show-grid"]).Get<bool>()))
 			{
-				wrp.CssClass = wrp.CssClass.Replace("showgrid", "").Trim().Replace("  ", " ");
+				wrp.Class = wrp.Class.Replace("showgrid", "").Trim().Replace("  ", " ");
 			}
 
 			base.OnPreRender (e);
@@ -284,7 +284,7 @@ end user for some seconds.&nbsp;&nbsp;not thread safe";
 			if (dyn == null)
 				return;
 
-			dyn.CssClass = "";
+			dyn.Class = "";
 		}
 	}
 }

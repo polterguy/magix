@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -56,12 +56,13 @@
     <Compile Include="Core\Builder\Element.cs" />
     <Compile Include="Core\Builder\HtmlBuilder.cs" />
     <Compile Include="Core\Selector\Selector.cs" />
-    <Compile Include="Core\CallbackFilter.cs" />
+    <Compile Include="Core\AjaxFilter.cs" />
     <Compile Include="Core\ListItem.cs" />
     <Compile Include="Core\ListItemCollection.cs" />
-    <Compile Include="Core\PostbackFilter.cs" />
+    <Compile Include="Core\ResponseFilter.cs" />
     <Compile Include="Core\StyleCollection.cs" />
     <Compile Include="Core\StyleCollectionStyles.cs" />
+    <Compile Include="Core\StyleValue.cs" />
     <Compile Include="Core\WebMethod.cs" />
     <Compile Include="Effects\Effect.cs" />
     <Compile Include="Effects\EffectFadeIn.cs" />
@@ -75,7 +76,7 @@
     <Compile Include="Effects\EffectSlide.cs" />
     <Compile Include="Effects\EffectTimeout.cs" />
     <Compile Include="Helpers\StringHelper.cs" />
-    <Compile Include="Core\AjaxManager.cs" />
+    <Compile Include="Core\Manager.cs" />
     <Compile Include="Controls\Timer.cs" />
     <Compile Include="Controls\DynamicPanel.cs" />
     <Compile Include="Controls\Core\AttributeControl.cs" />

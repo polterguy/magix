@@ -3,7 +3,7 @@
 
 <p>raising and handling {{
 link-button=>active-events
-  text=>active events
+  value=>active events
   onclick
     magix.help.open-file
       file=>system42\admin\help\csharp\active-events\index.mml
@@ -25,8 +25,8 @@ raises an active event when the button is clicked, and handles another active ev
     runat="server"
     id="btn"
     OnClick="btn_Click"
-    Text="Click Me!"
-    CssClass="span-3 btn-large"/&gt;
+    Value="Click Me!"
+    Class="span-3 btn-large"/&gt;
 </pre>
 
 <label>SampleModule.ascx.cs</label>
@@ -51,7 +51,7 @@ namespace Magix.sample
         [ActiveEvent(Name = "magix.sample.another-active-event")]
         protected void magix_sample_another_active_event(object sender, ActiveEventArgs e)
         {
-            btn.Text = "event invoked!";
+            btn.Value = "event invoked!";
         }
     }
 }</pre>

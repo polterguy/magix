@@ -34,8 +34,8 @@ namespace Magix.forms
 
             FillOutParameters(e.Params, ret);
 
-			if (node.Contains("text") && node["text"].Value != null)
-				ret.Text = node["text"].Get<string>();
+			if (node.Contains("value") && node["value"].Value != null)
+				ret.Value = node["value"].Get<string>();
 
 			if (node.Contains("url") && node["url"].Value != null)
 			{
@@ -75,7 +75,7 @@ namespace Magix.forms
 
 			if (ctrl != null)
 			{
-                ctrl.Text = Ip(e.Params)["value"].Get<string>();
+                ctrl.Value = Ip(e.Params)["value"].Get<string>();
 			}
 		}
 
@@ -95,7 +95,7 @@ namespace Magix.forms
 
 			if (ctrl != null)
 			{
-                Ip(e.Params)["value"].Value = ctrl.Text;
+                Ip(e.Params)["value"].Value = ctrl.Value;
 			}
 		}
 
@@ -109,12 +109,12 @@ in the same window, or another browser window</p>";
             node["magix.forms.create-web-part"]["container"].Value = "content5";
             node["magix.forms.create-web-part"]["form-id"].Value = "sample-form";
             base.Inspect(node["magix.forms.create-web-part"]["controls"]["hyperlink"]);
-            node["magix.forms.create-web-part"]["controls"]["hyperlink"]["text"].Value = "anchor text of hyperlink";
+            node["magix.forms.create-web-part"]["controls"]["hyperlink"]["value"].Value = "anchor text of hyperlink";
             node["magix.forms.create-web-part"]["controls"]["hyperlink"]["url"].Value = "http://google.com";
             node["magix.forms.create-web-part"]["controls"]["hyperlink"]["target"].Value = "_blank";
             node["magix.forms.create-web-part"]["controls"]["hyperlink"]["key"].Value = "C";
             node["inspect"].Value = node["inspect"].Value + @"
-<p><strong>properties for hyperlink</strong></p><p>[text] is 
+<p><strong>properties for hyperlink</strong></p><p>[value] is 
 the readable text, displayed to the end user of the web 
 control.&nbsp;&nbsp;this is the property which is changed or 
 retrieved when you invoke the [magix.forms.set-value] and 

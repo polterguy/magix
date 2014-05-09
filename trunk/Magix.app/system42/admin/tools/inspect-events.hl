@@ -47,7 +47,7 @@ for-each=>[Data][events]
           container=>content5
   set=>[.ip][..][_tpl][link-button][onclick][0].Name
     value=>[.].Name
-  set=>[.ip][..][_tpl][link-button][text].Value
+  set=>[.ip][..][_tpl][link-button][value].Value
     value=>[.].Name
   add=>[/][cf][controls][panel][controls]
     value=>[.ip][..][_tpl][link-button]
@@ -66,15 +66,15 @@ cf
       css=>span-12
       controls
         label=>header
-          text=>name of active event
+          value=>name of active event
           css=>span-12 last
           tag=>h3
         label=>code
           css=>span-12 last
-          text=>code example
+          value=>code example
           tag=>pre
         button=>run
-          text=>inspect
+          value=>inspect
           css=>span-2
           onclick
             magix.forms.get-value
@@ -88,10 +88,10 @@ cf
         label=>lblDesc
           css=>span-12 last top-2
           tag=>label
-          text=>description
+          value=>description
         label=>desc
           css=>span-12 last bottom-5
-          text=>@"description of your magix active event.&nbsp;&nbsp;
+          value=>@"description of your magix active event.&nbsp;&nbsp;
 click any of the active events to the right to inspect them"
     panel=>wrp
       css=>span-7 last

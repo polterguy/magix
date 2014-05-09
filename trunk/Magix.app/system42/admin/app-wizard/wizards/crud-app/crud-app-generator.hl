@@ -175,10 +175,10 @@ which contains logic for crud-app-generated application"
                 css=>clear
               _link-button
                 css=>span-1 right clear
-                text=>delete
+                value=>delete
               _link-button2
                 css=>span-1 right
-                text=>edit
+                value=>edit
                 onclick
                   magix.forms.set-visible
                     form-id=>crud-app-main-form
@@ -195,20 +195,20 @@ which contains logic for crud-app-generated application"
               hidden=>editingRow
               link-button=>next
                 css=>span-1 last right
-                text=>&gt;&gt;
+                value=>&gt;&gt;
               link-button=>previous
                 css=>span-1 right
-                text=>&lt;&lt;
+                value=>&lt;&lt;
               label=>pageTxt
                 css=>span-2 right clear last
-                text=>x-y of z
+                value=>x-y of z
           dynamic=>dataGrid
             onfirstload
               magix.crud-app.databind-grid
           panel=>editWrapper
             css=>clear top-1
 
-    set=>[_data][magix.forms.create-web-part][controls][label][text].Value
+    set=>[_data][magix.forms.create-web-part][controls][label][value].Value
       value=>[_pars][name].Value
 
     set=>[@][for-each][_not-first].Value
@@ -223,7 +223,7 @@ which contains logic for crud-app-generated application"
         css=>span-5
         rows=>5
 
-      set=>[@][_label][text].Value
+      set=>[@][_label][value].Value
         value=>[.][field-name].Value
       add=>[/][_data][magix.forms.create-web-part][controls][panel:0][controls]
         value=>[@][_label]
@@ -287,7 +287,7 @@ which contains logic for crud-app-generated application"
         value=>set
 
       set=>[/][_data][magix.forms.create-web-part][events][magix.crud-app.databind-grid][for-each][_set].Value
-        value=>\[@][_text-label][text].Value
+        value=>\[@][_text-label][value].Value
       set=>[/][_data][magix.forms.create-web-part][events][magix.crud-app.databind-grid][for-each][_set][value].Value
         value=>\[.][{0}].Value
           v0=>[.][field-name].Value
@@ -313,7 +313,7 @@ which contains logic for crud-app-generated application"
 
     _button=>addButton
       css=>span-3 right clear
-      text=>update
+      value=>update
       onclick
         magix.forms.get-values
           form-id=>crud-app-main-form
@@ -356,7 +356,7 @@ which contains logic for crud-app-generated application"
 
     _button2=>cancelButton
       css=>span-3 right
-      text=>cancel
+      value=>cancel
       visible=>false
       onclick
         magix.forms.get-values

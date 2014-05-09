@@ -5,7 +5,7 @@
 is a wrapper around the input type="text" type of control. if you need
 multiple lines of input, you should rather use the {{
 link-button=>magix-ux-textarea
-  text=>TextArea
+  value=>TextArea
   onclick
     magix.help.open-file
       file=>system42\admin\help\csharp\ajax\controls\textarea.mml
@@ -13,7 +13,7 @@ link-button=>magix-ux-textarea
 this widget is useful for cases when you need the user to give you one line
 of text input. see also the {{
 link-button=>magix-ux-wysiwyg
-  text=>Wysiwyg
+  value=>Wysiwyg
   onclick
     magix.help.open-file
       file=>system42\admin\help\csharp\ajax\controls\wysiwyg.mml
@@ -52,8 +52,8 @@ the active module as an embedded resource if you want to compile this sample</p>
 &lt;mux:TextBox
     runat="server"
     id="txt"
-    Text="text strings"
-    CssClass="span-5"/&gt;
+    Value="text strings"
+    Class="span-5"/&gt;
 </pre>
 
 <label>SampleModule.ascx.cs</label>
@@ -75,7 +75,7 @@ namespace Magix.sample
 <div class="sample-web-control">
 {{
 text-box=>txt
-  text=>text strings
+  value=>text strings
   css=>span-5
 }}
 </div>

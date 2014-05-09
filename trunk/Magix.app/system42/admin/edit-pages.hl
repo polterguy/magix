@@ -41,7 +41,7 @@ magix.forms.create-web-part
     label=>header
       tag=>h2
       css=>span-13 last left-6
-      text=>edit pages
+      value=>edit pages
     select=>page
       css=>span-4
       onselectedindexchanged
@@ -109,7 +109,7 @@ magix.forms.create-web-part
           css=>span-4
         button=>save
           css=>span-3
-          text=>save
+          value=>save
           onclick
             magix.forms.get-value
               form-id=>edit-pages
@@ -210,8 +210,8 @@ magix.forms.create-web-part
                 value=>true
         button=>delete
           css=>span-3 last
-          text=>delete
-          enabled=>false
+          value=>delete
+          disabled=>true
           onclick
             magix.viewport.confirm
               message=>please confirm deletion of page
@@ -313,7 +313,7 @@ magix.forms.create-web-part
         default=>insert form ...
     button=>preview
       css=>span-2 last
-      text=>preview
+      value=>preview
       visible=>false
       onclick
         magix.forms.get-value

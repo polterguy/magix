@@ -30,7 +30,7 @@ event=>magix.forms.dox.get-web-control-methods
 properties for all web controls in magix"
   code
     _data
-      CssClass=>@"sets the css class(es) for the 
+      Class=>@"sets the css class(es) for the 
 web control"
       Dir=>@"sets the reading direction for the 
 web control.&nbsp;&nbsp;legal values here are ltr, which
@@ -44,10 +44,10 @@ order is a number.&nbsp;&nbsp;a higher number will have a later
 tab order than a lower number, meaning if you use the tab key 
 to jump between controls, then the lower number will be reached 
 before the higher number"
-      ToolTip=>@"tooltip for your web control, which 
+      Title=>@"tooltip for your web control, which 
 becomes visible when the mouse is hovered over the web control"
       style=>@"defines the css styles for your web control.&nbsp;&nbsp;
-normally it's a better idea to use a css class, and the CssClass property, 
+normally it's a better idea to use a css class, and the Class property, 
 but sometimes the style collection might be useful.&nbsp;&nbsp;separate 
 the different styles values with a semicolon ';' and the name and 
 value with a :, like you would do in a css file"
@@ -87,12 +87,11 @@ the mux button control"
 button looses focus"
       OnFocused=>@"dom event for when the 
 button gains focus"
-      Text=>@"visible text of button"
+      Value=>@"visible text of button"
       AccessKey=>@"what keyboard shortcut is used 
 to access the button"
-      Enabled=>@"if true, then button is enabled.&nbsp;&nbsp;
-if false, then button is not enabled, and cannot 
-be clicked or chosen"
+      Disabled=>@"if true, then control is disabled 
+and can not be interacted with"
       BlurEffect=>@"effect(s) to run when control is loosing focus"
       FocusedEffect=>@"effect(s) to run when control is gaining focus"
     add=>[$]
@@ -116,9 +115,8 @@ checkbox is checked or not"
       AccessKey=>@"which keyboard shortcut 
 to use to access and change the value of 
 the checkbox"
-      Enabled=>@"if true, then button is enabled.&nbsp;&nbsp;
-if false, then button is not enabled, and cannot 
-be clicked or chosen"
+      Disabled=>@"if true, then control is disabled 
+and can not be interacted with"
       BlurEffect=>@"effect(s) to run when control is loosing focus"
       FocusedEffect=>@"effect(s) to run when control is gaining focus"
     add=>[$]
@@ -175,7 +173,7 @@ the mux hyperlink control"
 the checkbox looses focus"
       OnFocused=>@"dom event raised when 
 the checkbox gains focus"
-      Text=>@"text display to end user.&nbsp;&nbsp;
+      Value=>@"text display to end user.&nbsp;&nbsp;
 also known as anchor text"
       URL=>@"which url the hyperlink points to"
       Target=>@"browser window target the url points to.&nbsp;&nbsp;
@@ -212,7 +210,7 @@ event=>magix.forms.dox.create-dox-for.label
 the mux label control"
   code
     _data
-      Text=>@"the visible text of the web control"
+      Value=>@"the visible text of the web control"
       Tag=>@"what html tag to render the control within, 
 the default is label.&nbsp;&nbsp;but this can be changed 
 to anything you wish, including p, div, address and so on"
@@ -234,12 +232,11 @@ the mux linkbutton control"
 button looses focus"
       OnFocused=>@"dom event for when the 
 button gains focus"
-      Text=>@"visible text of button"
+      Value=>@"visible text of button"
       AccessKey=>@"what keyboard shortcut is used 
 to access the button"
-      Enabled=>@"if true, then button is enabled.&nbsp;&nbsp;
-if false, then button is not enabled, and cannot 
-be clicked or chosen"
+      Disabled=>@"if true, then control is disabled 
+and can not be interacted with"
       BlurEffect=>@"effect(s) to run when control is loosing focus"
       FocusedEffect=>@"effect(s) to run when control is gaining focus"
     add=>[$]
@@ -286,9 +283,8 @@ web control is checked or not"
       AccessKey=>@"which keyboard shortcut 
 to use to access and change the value of 
 the checkbox"
-      Enabled=>@"if true, then button is enabled.&nbsp;&nbsp;
-if false, then button is not enabled, and cannot 
-be clicked or chosen"
+      Disabled=>@"if true, then control is disabled 
+and can not be interacted with"
       BlurEffect=>@"effect(s) to run when control is loosing focus"
       FocusedEffect=>@"effect(s) to run when control is gaining focus"
     add=>[$]
@@ -321,9 +317,8 @@ the checkbox gains focus"
       AccessKey=>@"which keyboard shortcut 
 to use to access and change the value of 
 the checkbox"
-      Enabled=>@"if true, then button is enabled.&nbsp;&nbsp;
-if false, then button is not enabled, and cannot 
-be clicked or chosen"
+      Disabled=>@"if true, then control is disabled 
+and can not be interacted with"
       BlurEffect=>@"effect(s) to run when control is loosing focus"
       FocusedEffect=>@"effect(s) to run when control is gaining focus"
     add=>[$]
@@ -350,13 +345,12 @@ the web control, for then to give the web control focus"
 web control does not have any text content"
       Rows=>@"how many rows of text to 
 show at the same time"
-      Text=>@"actual text input value of web control"
+      Value=>@"actual text input value of web control"
       AccessKey=>@"which keyboard shortcut 
 to use to access and change the value of 
 the checkbox"
-      Enabled=>@"if true, then button is enabled.&nbsp;&nbsp;
-if false, then button is not enabled, and cannot 
-be clicked or chosen"
+      Disabled=>@"if true, then control is disabled 
+and can not be interacted with"
       BlurEffect=>@"effect(s) to run when control is loosing focus"
       FocusedEffect=>@"effect(s) to run when control is gaining focus"
     add=>[$]
@@ -396,13 +390,12 @@ complete text in the text box, if browser
 supports it"
       MaxLength=>@"if given, will not allow 
 the text of the text box to exceed its value"
-      Text=>@"actual text input value of web control"
+      Value=>@"actual text input value of web control"
       AccessKey=>@"which keyboard shortcut 
 to use to access and change the value of 
 the checkbox"
-      Enabled=>@"if true, then button is enabled.&nbsp;&nbsp;
-if false, then button is not enabled, and cannot 
-be clicked or chosen"
+      Disabled=>@"if true, then control is disabled 
+and can not be interacted with"
       BlurEffect=>@"effect(s) to run when control is loosing focus"
       FocusedEffect=>@"effect(s) to run when control is gaining focus"
     add=>[$]
@@ -419,10 +412,8 @@ the mux timer control"
 n is defined in its Interval property"
       Restart=>@"method to restart the timer, such 
 that it starts counting Interval milliseconds from 0"
-      Enabled=>@"if true, the timer will periodically raise 
-the OnTick event.&nbsp;&nbsp;if false, the timer is 
-disabled, and will not raise server side events through 
-the OnTick event"
+      Disabled=>@"if true, then control is disabled 
+and can not be interacted with"
       Interval=>@"an integer value which is the number 
 of milliseconds between each time the server side OnTick 
 event is raised"
@@ -451,7 +442,7 @@ file.&nbsp;&nbsp;since the uploader control has support
 for dragging and dropping multiple files, we will need 
 to track which file is currently being handled in the OnUploaded 
 event"
-      CssClass=>@"sets the css class(es) for the 
+      Class=>@"sets the css class(es) for the 
 web control, which is being used on the notification area 
 for the files being transfered"
     add=>[$]
@@ -476,7 +467,7 @@ the checkbox gains focus"
 the web control, for then to give the web control focus"
       PlaceHolder=>@"shadow text displayed when 
 web control does not have any text content"
-      Text=>@"actual html text input value of web control.&nbsp;&nbsp;
+      Value=>@"actual html text input value of web control.&nbsp;&nbsp;
 this text will be displayed as html, and possible to 
 modify, using the built-in html editor capacity"
       EditorCssFile=>@"which css file to include 
@@ -484,9 +475,8 @@ for the editor's html editing area"
       AccessKey=>@"which keyboard shortcut 
 to use to access and change the value of 
 the checkbox"
-      Enabled=>@"if true, then button is enabled.&nbsp;&nbsp;
-if false, then button is not enabled, and cannot 
-be clicked or chosen"
+      Disabled=>@"if true, then control is disabled 
+and can not be interacted with"
       HasBold=>@"if true, then editor's menu bar 
 has the set bold button visible"
       HasItalics=>@"if true, then editor's menu bar 
@@ -517,8 +507,8 @@ has the set foreground color button visible"
 has the insert speech button visible"
       HasChangeView=>@"if true, then editor's menu bar 
 has the toggle view between html and wysiwyg button visible"
-      Enabled=>@"if true, then editor's menu bar 
-has the set bold button visible"
+      Disabled=>@"if true, then control is disabled 
+and can not be interacted with"
       BlurEffect=>@"effect(s) to run when control is loosing focus"
       FocusedEffect=>@"effect(s) to run when control is gaining focus"
     add=>[$]
@@ -568,7 +558,7 @@ a mux web control"
       form-id=>methods
       controls
         literal
-          text=>@"<ul>"
+          value=>@"<ul>"
     _data
 
 event=>magix.forms.dox.create-dox-for-control
@@ -610,7 +600,7 @@ a mux control"
       form-id=>methods
       controls
         literal
-          text=>@"<ul>"
+          value=>@"<ul>"
     _data
 
 

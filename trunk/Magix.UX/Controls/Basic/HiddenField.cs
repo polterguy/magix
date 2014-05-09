@@ -13,23 +13,13 @@ using Magix.UX.Widgets.Core;
 
 namespace Magix.UX.Widgets
 {
-    /**
-     * Hidden field widget. Useful for having state you wish to pass on to the client
-     * but don't want it to be visible for the end user. Notice that this is not a
-     * safe place to put things that the user is not supposed to see, like passwords
-     * and such. Do NOT trust the value of this element to not be tampered with.
-     * Alternatives for using this widget is ViewState, cookies and the Session object.
-     * ViewState and cookies are neither 'safe' against tampering.
+    /*
+     * hidden field ajax control
      */
     public class HiddenField : BaseControl
     {
-        /**
-         * The value of the hidden field. The default value is string.Empty.
-         * Please notice that the HiddenField is not a 'safe' place to store 
-         * things you do not want to show the end user, so only use this for
-         * non-secure-critical information, such as for instance UI states 
-         * and such. No 'secrets' in this value, since this value is very easy 
-         * to figure out for the end user.
+        /*
+         * value of control
          */
         public string Value
         {
@@ -42,12 +32,8 @@ namespace Magix.UX.Widgets
             }
         }
 
-		// Overridden to make sure we extract the value form the HTTP request.
 		protected override void OnInit(EventArgs e)
 		{
-			// Please notice that this logic only kicks in if ViewState is disabled.
-			// If ViewState is turned on, then LoadViewState will take
-			// care of de-serializing the value sent from the client.
 			if (!IsViewStateEnabled && Page.IsPostBack)
 				SetValue();
 			base.OnInit(e);
@@ -55,10 +41,10 @@ namespace Magix.UX.Widgets
 
 		private void SetValue()
 		{
-			string valueOfHiddenField = Page.Request.Params[ClientID];
-			if (valueOfHiddenField != Value)
+			string value = Page.Request.Params[ClientID];
+			if (value != Value)
 			{
-				ViewState["Value"] = valueOfHiddenField;
+				ViewState["Value"] = value;
 			}
 		}
 

@@ -33,7 +33,7 @@ namespace Magix.forms
 			Uploader ret = new Uploader();
 
 			if (node.Contains("css") && !string.IsNullOrEmpty(node["css"].Get<string>()))
-				ret.CssClass = node["css"].Get<string>();
+				ret.Class = node["css"].Get<string>();
 
 			string folder = "";
 

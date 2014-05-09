@@ -34,9 +34,9 @@ namespace Magix.forms
 
             FillOutParameters(e.Params, ret);
 
-			if (node.Contains("text") && 
-			    !string.IsNullOrEmpty(node["text"].Get<string>()))
-				ret.Text = node["text"].Get<string>();
+			if (node.Contains("value") && 
+			    !string.IsNullOrEmpty(node["value"].Get<string>()))
+				ret.Value = node["value"].Get<string>();
 
 			if (node.Contains("has-bold") && 
 			    !string.IsNullOrEmpty(node["has-bold"].Get<string>()))
@@ -128,7 +128,7 @@ namespace Magix.forms
 
 			if (ctrl != null)
 			{
-                ctrl.Text = Ip(e.Params)["value"].Get<string>();
+                ctrl.Value = Ip(e.Params)["value"].Get<string>();
 			}
 		}
 
@@ -148,7 +148,7 @@ namespace Magix.forms
 
 			if (ctrl != null)
 			{
-                Ip(e.Params)["value"].Value = ctrl.Text;
+                Ip(e.Params)["value"].Value = ctrl.Value;
 			}
 		}
 
@@ -162,7 +162,7 @@ server</p>";
             node["magix.forms.create-web-part"]["container"].Value = "content5";
             node["magix.forms.create-web-part"]["form-id"].Value = "sample-form";
             base.Inspect(node["magix.forms.create-web-part"]["controls"]["wysiwyg"]);
-            node["magix.forms.create-web-part"]["controls"]["wysiwyg"]["text"].Value = "html markup of wysiwyg control goes here";
+            node["magix.forms.create-web-part"]["controls"]["wysiwyg"]["value"].Value = "html markup of wysiwyg control goes here";
             node["magix.forms.create-web-part"]["controls"]["wysiwyg"]["place-holder"].Value = "place holder ...";
             node["magix.forms.create-web-part"]["controls"]["wysiwyg"]["has-bold"].Value = true;
             node["magix.forms.create-web-part"]["controls"]["wysiwyg"]["has-italic"].Value = true;
@@ -181,7 +181,7 @@ server</p>";
             node["magix.forms.create-web-part"]["controls"]["wysiwyg"]["has-showhtml"].Value = true;
             node["magix.forms.create-web-part"]["controls"]["wysiwyg"]["editor-css-file"].Value = "media/grid/main.css";
             node["inspect"].Value = node["inspect"].Value + @"
-<p><strong>properties for wysiwyg</strong></p><p>[text] 
+<p><strong>properties for wysiwyg</strong></p><p>[value] 
 sets the visible text of your web control.&nbsp;&nbsp;this 
 is the property which is changed or retrieved when you invoke 
 the [magix.forms.set-value] and the [magix.forms.get-value] 

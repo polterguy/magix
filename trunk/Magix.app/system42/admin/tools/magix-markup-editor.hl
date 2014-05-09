@@ -18,7 +18,7 @@ text-area=>markup
   place-holder=>type in magix markup language here ...
 button=>preview
   css=>span-3 left-16 last
-  text=>preview
+  value=>preview
   onclick
     magix.forms.get-value
       form-id=>mmleditor

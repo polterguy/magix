@@ -34,9 +34,9 @@ namespace Magix.forms
 
             FillOutParameters(e.Params, ret);
 
-			if (node.Contains("text") && 
-			    !string.IsNullOrEmpty(node["text"].Get<string>()))
-				ret.Text = node["text"].Get<string>();
+			if (node.Contains("value") && 
+			    !string.IsNullOrEmpty(node["value"].Get<string>()))
+				ret.Value = node["value"].Get<string>();
 
 			if (node.Contains("tag") && 
 			    !string.IsNullOrEmpty(node["tag"].Get<string>()))
@@ -68,7 +68,7 @@ namespace Magix.forms
 
 			if (ctrl != null)
 			{
-                ctrl.Text = Ip(e.Params)["value"].Get<string>();
+                ctrl.Value = Ip(e.Params)["value"].Get<string>();
 			}
 		}
 
@@ -88,7 +88,7 @@ namespace Magix.forms
 
 			if (ctrl != null)
 			{
-                Ip(e.Params)["value"].Value = ctrl.Text;
+                Ip(e.Params)["value"].Value = ctrl.Value;
 			}
 		}
 
@@ -103,11 +103,11 @@ to the id if your checkbox or radiobutton</p>";
             node["magix.forms.create-web-part"]["container"].Value = "content5";
             node["magix.forms.create-web-part"]["form-id"].Value = "sample-form";
             base.Inspect(node["magix.forms.create-web-part"]["controls"]["label"]);
-            node["magix.forms.create-web-part"]["controls"]["label"]["text"].Value = "hello world";
+            node["magix.forms.create-web-part"]["controls"]["label"]["value"].Value = "hello world";
             node["magix.forms.create-web-part"]["controls"]["label"]["tag"].Value = "p|div|span|etc";
             node["magix.forms.create-web-part"]["controls"]["label"]["for"].Value = "another-control-id";
             node["inspect"].Value = node["inspect"].Value + @"
-<p><strong>properties for label</strong></p><p>[text] 
+<p><strong>properties for label</strong></p><p>[value] 
 sets the visible text of label.&nbsp;&nbsp;this is the 
 property which is changed or retrieved when you invoke 
 the [magix.forms.set-value] and the [magix.forms.get-value] 

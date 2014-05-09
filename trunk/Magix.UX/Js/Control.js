@@ -153,7 +153,7 @@
 
 
     // Expects only a string
-    CssClass: function(val) {
+    Class: function (val) {
       this.element.className = val;
     },
 
@@ -168,9 +168,9 @@
       }
     },
 
-    // Expects only a Text string, does a replace on the innerHTML with the updated text string
+    // Expects only a string, does a replace on the innerHTML with the updated text string
     // Useful for labels, textareas and so on...
-    Text: function(val) {
+    InnerHtml: function(val) {
       this.element.setContent(val);
     },
 
@@ -313,7 +313,7 @@
 
     callback: function(evt, func, params) {
       var T = this;
-      var arguments = '__MUX_CONTROL_CALLBACK=' + this.element.id + '&__MUX_EVENT=' + evt;
+      var arguments = 'magix.ux.callback-control=' + this.element.id + '&magix.ux.event-name=' + evt;
       if (params) {
         for (var idx = 0; idx < params.length; idx++) {
           arguments += '&' + params[idx]['name'] + '=' + params[idx]['value'];
@@ -434,7 +434,7 @@
   };
 
   MUX.Control.callServerMethod = function(method, opt, args) {
-    var mArgs = '__FUNCTION_NAME=' + method;
+    var mArgs = 'magix.ux.function-name=' + method;
 
     opt = MUX.extend({
       onSuccess: function() { },
@@ -443,16 +443,16 @@
 
     if (args) {
       for (var idx = 0; idx < args.length; idx++) {
-        mArgs += '&__ARG' + idx + '=' + args[idx];
+        mArgs += '&magix.ux.function-parameter' + idx + '=' + args[idx];
       }
     }
 
-    MUX.Control._methodReturnValue = null;
+    MUX.Control._functionReturnValue = null;
     var x = new MUX.Ajax({
       args: mArgs,
       onSuccess: function(resp) {
         eval(resp);
-        opt.onSuccess(MUX.Control._methodReturnValue);
+        opt.onSuccess(MUX.Control._functionReturnValue);
       },
       onError: function(stat, trc) {
         opt.onError(stat, trc);

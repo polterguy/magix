@@ -18,45 +18,24 @@ using Magix.UX.Helpers;
 
 namespace Magix.UX.Widgets.Core
 {
-    /**
-     * Abstract base class for mostly all widgets in Magix UX. This is where the Ajax
-     * 'core engine' to a large extent exists within Magix UX. Contains several 
-     * interesting features, such as for instance the Info property, which can take 
-     * any string information and serialize back and forth between server-requests. 
-     * If you need to create your own Ajx Control, you should either directly, or most
-     * probably indirectly, inherit from this MuxBaseControl.
-     * If you inherit, directly or indirectly, form this class you need to override
-     * several methods from this class. The most notable is RenderMuxControl.
-     * If you have a 'visual widget', you will mostly inherit from MuxBaseWebControl
-     * instead of this class. If your control is 'non-visual', such as the MUX Timer,
-     * you will mostly inherit from this class.
+    /*
+     * base classe for all ajax controls
      */
     [ViewStateModeById]
     public abstract class BaseControl : Control
 	{
-        private bool _hasBeenRendered;
-        private bool _forceReRender;
-        private Dictionary<string, object> _json = new Dictionary<string, object>();
-        protected bool _gainedFocusThisRequest;
+        private bool _rendered;
+        private bool _reRender;
+        private Dictionary<string, object> _ajaxUpdates = new Dictionary<string, object>();
+        protected bool _hasFocus;
 
-        /**
-         * Event raised when the Widget is rendered for the firt time, meaning it will
-         * be triggered upon re-renderings and such, but not during normal postbacks. But
-         * obviously, if a parent Widget is being re-rendered, then also this Event will be
-         * raised again, even though the Widget hasn't changed any of its properties.
+        /*
+         * raised when control is initially rendered
          */
         public event EventHandler InitiallyLoaded;
 
-        /**
-         * Additional information you wish to attach to your widget somehow. Useful
-         * for things such as Repeaters where you have the same event handler for
-         * several buttons on your page, but need to know specifically which button
-         * was actually pressed. 
-         * PS!
-         * Just like the HiddenField the value in this property should not be trusted
-         * to be securely serialized since internally it uses the ViewState to serialize 
-         * this additional information, and ViewState is (by default) not encrypted in
-         * any ways.
+        /*
+         * extra information
          */
         public string Info
         {
@@ -64,174 +43,97 @@ namespace Magix.UX.Widgets.Core
             set { ViewState["Info"] = value; }
         }
 
-        protected override void LoadControlState(object state)
+        protected override void LoadControlState(object savedState)
 		{
-            if (state != null)
-			{
-                // If there is any ControlState in our control, then unless some
-                // control developer, further up in our inheritance hierarchy have messed
-                // it completely up, this value should be a boolean, indicating whether
-                // or not the control has been rendered, and hence we set the has rendered 
-                // field to the value of this boolean.
-				_hasBeenRendered = (bool)state;
-			}
+            if (savedState != null)
+            {
+                object[] controlState = savedState as object[];
+                if (controlState != null)
+                {
+                    if (controlState[0] != null && controlState[0].GetType() == typeof(bool))
+                        _rendered = (bool)controlState[0];
+                    base.LoadControlState(controlState[1]);
+                }
+            }
 		}
 
 		protected override object SaveControlState()
 		{
-            // The Visible part of our control must be tracked since it's the only
-            // way we know how to serialize towards the control on the client-side.
-            // Meaning, if the control has been rendered before, the rendering route
-            // is completely different than the default rendering mechanism.
-			return Visible;
+            object[] controlState = new object[2];
+            controlState[0] = Visible;
+            controlState[1] = base.SaveControlState();
+            return controlState;
 		}
 
-        /**
-         * Will return true if this widget has been rendered before. Kind of
-         * like an 'IsPostback logic' on a control level. Useful for determining
-         * if this is the first time this control is being rendered, or not.
+        /*
+         * returns true if control has been rendered before
          */
-        public bool HasRendered
+        public bool Rendered
         {
-            get { return _hasBeenRendered; }
+            get { return _rendered; }
         }
 
-        /**
-         * Returns true if this control is either not rendered from before, or
-         * has been signaled to re-render as HTML (and JS object registration)
-         * Notice though that the control still might be rendering HTML due to
-         * an ancestor control, any way upwards in this control's ancestor hierarchy
-         * has been signaled to re-render. Meaning, this is not by any means any 
-         * 'absolute definition' of whether or not this control will render HTML.
-         * If you need absolute proof for some reasons of whether or not this
-         * control will render as HTML you need to check this property, but also the
-         * AreAncestorsRenderingHTML method to find out whether or not any of its 
-         * ancestor controls are re-rendering.
-         */
-        public bool RenderingHtml
-        {
-            get { return _forceReRender || !HasRendered; }
-        }
-
-        /**
-         * Forces the control to re-render as HTML. This is basically a revert
-         * to UpdatePanel logic for those extreme cases where such is needed.
-         * In general terms you should really only use this method if you either
-         * are wrapping non-MUX controls inside of MUX Ajax controls, or you
-         * have changed the control collection by either adding or removing new
-         * controls from this control's Control collection. There exists several
-         * tutorials on this matter at the MUX website.
+        /*
+         * forces a re-rendering of control as plain html
          */
         public void ReRender()
 		{
-            if (HasRendered && AjaxManager.Instance.IsCallback)
+            if (Rendered && Manager.Instance.IsAjaxCallback)
             {
                 // We only set this flag if the control has *not* been rendered
                 // from before, and the current request is a MUX Request.
-                _forceReRender = true;
+                _reRender = true;
             }
 		}
 
-        /**
-         * Override this method to handle events that are being raised on 
-         * the client-side. Theoretically you can raise events in code yourself
-         * to mimick whatever event you wish to mimick, but 99% of the times you
-         * think you would want to do such a thing, you're really doing something
-         * very bad. DON'T...!
-         * At least unless you know very well that this is exactly what you want 
-         * to do.
+        /*
+         * raises events
          */
         public virtual void RaiseEvent(string name)
         {
             throw new ArgumentException(
-                "DispatchEvent call bubbled all the way to the top and nothing would handle '" + 
-                name + 
-                "' for the control with the ClientID of '" + 
-                this.ClientID + 
-                "'.");
-        }
-
-        public void RaiseInitiallyLoaded()
-        {
-            if (InitiallyLoaded != null)
-            {
-                InitiallyLoaded(this, new EventArgs());
-            }
+                "oops, '" + name + "' for '" + this.ClientID + "' wasn't handled");
         }
 
 		public override void RenderControl(HtmlTextWriter writer)
 		{
-            if (DesignMode)
+            if (Visible)
             {
-                ControlVisibleForFirstTime(writer);
+                RenderVisibleControl(writer);
             }
             else
             {
-                if (Visible)
-                {
-                    RenderVisibleControl(writer);
-                }
-                else
-                {
-                    RenderInVisibleControl(writer);
-                }
+                RenderInVisibleControl(writer);
             }
 		}
 
         private void RenderVisibleControl(HtmlTextWriter writer)
         {
-            if (AjaxManager.Instance.IsCallback)
+            if (Manager.Instance.IsAjaxCallback)
             {
-                // This is a MUX Ajax Callback...
                 RenderVisibleControlInCallback(writer);
             }
             else
             {
-                // This is *NOT* a MUX Ajax Callback, and hence we
-                // render the whole thing as if it was never rendered before...
-                // It may be a PostBack, but that is really irellevant...
-                // It may also be an initial page rendering, but that too is 
-                // irellevant...
                 HtmlBuilder builder = new HtmlBuilder(writer);
                 RenderMuxControl(builder);
-                AjaxManager.Instance.Writer.WriteLine(GetClientSideScript());
+                Manager.Instance.InternalJavaScriptWriter.Write(GetClientSideScript());
             }
         }
 
         private void RenderVisibleControlInCallback(HtmlTextWriter writer)
         {
-            if (AreAncestorsRenderingHTML())
-            {
-                // Some ancestor, some place upwards in this widget's hierarchy
-                // is for some reasons being re-rendered...
+            if (IsReRendered())
                 AncestorReRendering(writer);
-            }
-            else if (_forceReRender)
-            {
-                // This specific widget is being re-rendered...
+            else if (_reRender)
                 ReRenderWidget(writer);
-            }
-            else if (HasRendered)
-            {
-                // Here we're only rendering the JSON properties to the control...
+            else if (Rendered)
                 RenderJson(writer);
-            }
             else
-            {
-                // Control was being made visible for the first time...
                 ControlVisibleForFirstTime(writer);
-            }
         }
 
-        /**
-         * Will return true, if for some reasons, any ancestor control are being
-         * rendered as pure HTML. This might happen due to an ancestor control are being
-         * re-rendered, or it may happen due to an ancestor control being set to visible
-         * for the first time. This is in general terms an *EXPENSIVE* method call since
-         * it needs to traverse the entire ancestor hierarchy until it hits the Page. Hence
-         * be *CAREFUL* with using it...!!
-         */
-        public bool AreAncestorsRenderingHTML()
+        private bool IsReRendered()
         {
             Control idx = Parent;
             while (idx != null)
@@ -239,7 +141,7 @@ namespace Magix.UX.Widgets.Core
                 BaseControl tmp = idx as BaseControl;
                 if (tmp != null)
                 {
-                    if (tmp.RenderingHtml)
+                    if (tmp._reRender || !tmp._rendered)
                         return true;
                 }
                 idx = idx.Parent;
@@ -247,16 +149,12 @@ namespace Magix.UX.Widgets.Core
             return false;
         }
 
-        /**
-         * Only override this one if you truly know what you're doing, and you really
-         * need some modified logic.
-         */
         protected virtual void RenderJson(HtmlTextWriter writer)
         {
             string json = SerializeJson();
             if (!string.IsNullOrEmpty(json))
             {
-                AjaxManager.Instance.Writer.WriteLine(
+                Manager.Instance.InternalJavaScriptWriter.Write(
                     "MUX.Control.$('{1}').JSON({0});",
                     json,
                     ClientID);
@@ -266,17 +164,12 @@ namespace Magix.UX.Widgets.Core
 
         private void ReRenderWidget(HtmlTextWriter writer)
         {
-            // Notice that we just 'discards' the given writer here, and
-            // instead writes to our own Ajax stream here...
-            // That's basically because all JavaScript goes into our
-            // 'own' stream, and not in the main 'HTML stream'...
-            // This is to make sure we can get it at the bottom of our response.
-            // Since we need it to be the last thing rendered.
+            // discarding incoming writer
             using (HtmlBuilder builder = new HtmlBuilder())
             {
                 RenderMuxControl(builder);
-                AjaxManager.Instance.Writer.Write(
-                    "\r\nMUX.Control.$('{0}').reRender('{1}');\r\n{2}",
+                Manager.Instance.InternalJavaScriptWriter.Write(
+                    "MUX.Control.$('{0}').reRender('{1}');{2}",
                     ClientID,
                     builder.ToStringJson(),
                     GetChildrenClientSideScript(Controls));
@@ -285,14 +178,6 @@ namespace Magix.UX.Widgets.Core
 
         private void AncestorReRendering(HtmlTextWriter writer)
         {
-            // Here we render into the given stream.
-            // This is only the HTML portions of our control.
-            // The JavaScript initialization string will be rendered
-            // another place.
-            // In fact, the JavaScript registration will be rendered at
-            // the *END* of the Parent widget that was re-rendering its content
-            // to make sure all HTML is present before any JS initialization
-            // code is ran.
             HtmlBuilder builder = new HtmlBuilder(writer);
             RenderMuxControl(builder);
         }
@@ -302,7 +187,7 @@ namespace Magix.UX.Widgets.Core
             using (HtmlBuilder builder = new HtmlBuilder())
             {
                 RenderMuxControl(builder);
-                AjaxManager.Instance.Writer.Write(
+                Manager.Instance.InternalJavaScriptWriter.Write(
                     "MUX.$('{0}').repl('{1}');{2}{3}",
                     ClientID,
                     builder.ToStringJson(),
@@ -311,69 +196,42 @@ namespace Magix.UX.Widgets.Core
             }
         }
 
-        // Called when the Control is in-visible
         private void RenderInVisibleControl(HtmlTextWriter writer)
         {
-            if (AjaxManager.Instance.IsCallback)
-            {
+            if (Manager.Instance.IsAjaxCallback)
                 RenderInVisibleControlInCallback(writer);
-            }
             else
-            {
                 writer.Write(GetControlInvisibleHTML());
-            }
         }
 
         private void RenderInVisibleControlInCallback(HtmlTextWriter writer)
         {
-            if (!this.AreAncestorsRenderingHTML() && HasRendered)
-            {
-                // Control has been rendered, visible, before, and we need
-                // to 'destroy' it and replace it with its in-visible HTML...
-                AjaxManager.Instance.Writer.Write(
-                    "\r\nMUX.Control.$('{0}').destroy('{1}');",
+            if (!this.IsReRendered() && Rendered)
+                Manager.Instance.InternalJavaScriptWriter.Write(
+                    "MUX.Control.$('{0}').destroy('{1}');",
                     ClientID,
                     GetControlInvisibleHTML());
-            }
             else
-            {
                 writer.Write(GetControlInvisibleHTML());
-            }
         }
 
-        /**
-         * Retrieves a specific JSON collection values. Used by the style classes and to
-         * add up generic attributes to the DOM elements.
-         */
-		public Dictionary<string, string> GetJsonValues(string key)
+		internal Dictionary<string, string> GetJsonValues(string key)
 		{
-			if (!_json.ContainsKey(key))
+			if (!_ajaxUpdates.ContainsKey(key))
 			{
-				_json[key] = new Dictionary<string, string>();
+				_ajaxUpdates[key] = new Dictionary<string, string>();
 			}
-			return (Dictionary<string, string>)_json[key];
+			return (Dictionary<string, string>)_ajaxUpdates[key];
 		}
 
-        /**
-         * This one should be used in properties and such for control developers.
-         * Please notice that there is no way we can track values being set before
-         * the ViewState is finished loading, and hence all properties and such
-         * being set before the ViewState is loaded will be ignored...
-         */
 		protected void SetJsonValue(string key, object value)
 		{
             if (IsTrackingViewState)
             {
-                _json[key] = value;
+                _ajaxUpdates[key] = value;
             }
 		}
 
-        /**
-         * This method will set a 'generic' property for you control. Useful
-         * for JS client-side mappings that doesn't really exists since these
-         * key/values pairs will be rendered as additional attributes back to the
-         * client.
-         */
 		protected void SetJsonGeneric(string key, string value)
 		{
 			if (IsTrackingViewState)
@@ -385,33 +243,22 @@ namespace Magix.UX.Widgets.Core
 			}
 		}
 
-        /**
-         * If called, this will set the focus to this widget on the client-side.
-         * Please notice that there's no 'multiple calls guard' in this logic, which
-         * means if you call this method for several controls, only the last method call
-         * will actually 'succeed'...
-         */
 		public override void Focus()
 		{
-            if (AjaxManager.Instance.IsCallback)
+            if (Manager.Instance.IsAjaxCallback)
                 SetJsonValue("Focus", "");
             else
-                _gainedFocusThisRequest = true;
+                _hasFocus = true;
 		}
 
-        // This method will be called if the control has already been rendered
-        // and it is not currently being re-rendered. For those cases, all we
-        // need to do is to send changes back to the client. This is being done
-        // by passing over new/changed values as JSON, which again is being hendled
-        // on the client-side.
 		protected string SerializeJson()
 		{
-			if (_json.Count == 0)
+			if (_ajaxUpdates.Count == 0)
 				return null;
 			StringBuilder values = new StringBuilder();
-            foreach (string idx in _json.Keys)
+            foreach (string idx in _ajaxUpdates.Keys)
             {
-                object val = _json[idx];
+                object val = _ajaxUpdates[idx];
                 SerializeJSONValue(idx, val, values);
             }
 			if (values.Length > 0)
@@ -419,13 +266,6 @@ namespace Magix.UX.Widgets.Core
 			return string.Empty;
 		}
 
-        /**
-         * Helper method to serialize *ONE* JSON value. Can by default handle
-         * a range of different types, such as Rectangle, Point, string, decimal,
-         * int, bool etc. If you need to be able to serialize other types, then
-         * this can easily be accomplished through overriding this method in
-         * your own widget and handle that specific type/property yourself.
-         */
 		protected virtual void SerializeJSONValue(
             string key, 
             object value, 
@@ -511,14 +351,11 @@ namespace Magix.UX.Widgets.Core
                     if (dictValues != null)
                         SerializeGenericValues(key, dictValues, builder);
                     else
-                        throw new ArgumentException("Type cannot be serialized because we don't have a mapper for it. Something is seriously wrong in one of your custom widgets...!");
+                        throw new ArgumentException("unknown type serialized as json in BaseControl");
                     break;
             }
 		}
 
-        // This is where we serialize the 'generic value', which basically are
-        // wrappers around attributes which do not have 'custom handlers' on
-        // the client-side of MUX.
         private static void SerializeGenericValues(
             string key, 
             Dictionary<string, string> values, 
@@ -540,19 +377,6 @@ namespace Magix.UX.Widgets.Core
                     string val = values[idxKey];
                     string key2 = idxKey;
 
-                    switch (idxKey)
-                    {
-                        case "backgroundImage":
-                        {
-                            if (val.Contains("linear-gradient"))
-                            {
-                                val = val.Replace(
-                                    "linear-gradient",
-                                    StyleCollection.GetBrowserPrefix() + "linear-gradient");
-                            }
-                        } break;
-                    }
-
                     builder.AppendFormat("[\"{0}\",\"{1}\"]",
                         key2,
                         val.Replace("\\", "\\\\").Replace("\"", "\\\""));
@@ -561,25 +385,15 @@ namespace Magix.UX.Widgets.Core
             }
         }
 
-        // We override this one since we first of all need to make sure we have
-        // all JS files included, secondly because we need to register the control
-        // to ASP.NET as a ControlState control.
 		protected override void OnInit(EventArgs e)
 		{
-            if (!DesignMode)
-            {
-                AjaxManager.Instance.InitializeControl(this);
-                AjaxManager.Instance.IncludeMainRaScript();
-                AjaxManager.Instance.IncludeMainControlScripts();
-                Page.RegisterRequiresControlState(this);
-            }
+            Manager.Instance.InitializePage(this);
+            Manager.Instance.IncludeCoreJavaScript();
+            Manager.Instance.IncludeCoreControlScripts();
+            Page.RegisterRequiresControlState(this);
 			base.OnInit(e);
 		}
 
-        // When a control, with children, are being re-rendered for some reason
-        // its child controls must not render their JS initialization code
-        // before the control being re-rendered is completely finished re-rendering.
-        // Hence this method being called from the core rendering logic.
 		private string GetChildrenClientSideScript(ControlCollection controls)
 		{
             StringBuilder builder = new StringBuilder();
@@ -597,13 +411,6 @@ namespace Magix.UX.Widgets.Core
 			return builder.ToString();
 		}
 
-        /**
-         * Method for registering the control on the client-side. Most control
-         * will only need this base functionality, but most controls that have 
-         * specific JavaScript needs, will need to override this method.
-         * One example of a control that needs to override this method is
-         * the MUX Timer.
-         */
         protected virtual string GetClientSideScript()
 		{
             string options = GetClientSideScriptOptions();
@@ -618,78 +425,37 @@ namespace Magix.UX.Widgets.Core
             if (!string.IsNullOrEmpty(optionsString))
 				optionsString = ",{" + optionsString + "}";
 
-            return string.Format("\r\n{2}('{0}'{1});", 
+            return string.Format("{2}('{0}'{1});", 
 				ClientID, 
 				optionsString,
 				GetClientSideScriptType());
 		}
 
-        /**
-         * If the only thing you need to override when you're creating your own controls
-         * are the 'JavaScript type', then you should override this method only to
-         * change the JS type being sent back as the registering script to the client.
-         * The default value is 'MUX.C', which is a shorthand for 'MUX.Control', which
-         * is the common Control JS class for most controls in MUX.
-         */
 		protected virtual string GetClientSideScriptType()
 		{
 			return "MUX.C";
 		}
 
-        /**
-         * This is the method you need to override, when creating your own controls, and
-         * you have server-side events you need to handle. The return value of this method
-         * is expected to be something such as "['click'],['mouseover']" etc. It will create
-         * handlers for those DOM events on the client-side and automatically create an Ajax
-         * Request going towards the server when those DOM events are raised.
-         */
 		protected virtual string GetEventsRegisterScript()
 		{
 			return string.Empty;
 		}
 
-        /**
-         * This method makes it possible for you to return custom options according to
-         * what properties/options your custom widget have. The method is expected to 
-         * return something similar to "handle:'xyz',color:'Red'" which will automatically 
-         * map towards the JS client-side options of your custom widget class.
-         */
 		protected virtual string GetClientSideScriptOptions()
 		{
-			if (_gainedFocusThisRequest)
+			if (_hasFocus)
 				return "focus:true";
 			return "";
 		}
 
-        /**
-         * For Ajax Control creators, this is your most important method.
-         * This is the method that expects you to build up the HTML markup
-         * for your control. Most controls will only build one HTML DOM
-         * element, but you can build any amount of complexity up with
-         * the help of the HtmlBuilder class and its related classes.
-         */
         protected virtual void RenderMuxControl(HtmlBuilder builder)
         { }
 
-        /**
-         * Override this method to add up attributes and their values 
-         * to your custom widget. Only override this method if you're an Ajax
-         * Custom Control builder. Within this method you're expected to only
-         * put logic such as 'el.AddAttribute("attributeName", "attributeValue");'
-         */
         protected virtual void AddAttributes(Element el)
         {
             el.AddAttribute("id", ClientID);
         }
 
-        /**
-         * Some, but very few, controls need specific in-visible HTML. The default
-         * value of this method will be rendering a 'span' with the style value of 
-         * display:none. Some custom widgets needs to be able to override this markup,
-         * for instance because they they needs to render list-elements (HTML li element)
-         * to be semantically correct. Override this method to make sure your HTML 
-         * becomes semantically correct for such cases.
-         */
 		protected virtual string GetControlInvisibleHTML()
 		{
             return string.Format("<span id=\"{0}\" style=\"display:none;\"></span>", ClientID);

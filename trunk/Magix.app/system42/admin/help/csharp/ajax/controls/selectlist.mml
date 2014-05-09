@@ -5,7 +5,7 @@
 down mode. basically multiple choices type of widget. to some extent, it
 overlaps the logical functionality of the {{
 link-button=>magix-ux-radiobutton
-  text=>RadioButton
+  value=>RadioButton
   onclick
     magix.help.open-file
       file=>system42\admin\help\csharp\ajax\controls\radiobutton.mml

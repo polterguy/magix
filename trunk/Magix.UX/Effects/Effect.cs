@@ -63,7 +63,7 @@ namespace Magix.UX.Effects
 
         protected Effect(Control control, int milliseconds)
 		{
-            AjaxManager.Instance.IncludeScriptFromResource("Effects.js");
+            Manager.Instance.IncludeResourceScript("Effects.js");
             _control = control;
 			_milliseconds = milliseconds;
             _type = Transition.Explosive;
@@ -84,7 +84,7 @@ namespace Magix.UX.Effects
         public void Render()
         {
             List<Effect> chained = new List<Effect>(_chained);
-            AjaxManager.Instance.WriterAtBack.WriteLine(RenderImplementation(true, chained));
+            Manager.Instance.JavaScriptWriter.WriteLine(RenderImplementation(true, chained));
         }
 
         public string RenderString()

@@ -30,7 +30,7 @@ namespace Magix.Core
 				delegate
 				{
 					Page_Load_Initializing();
-		            if (!AjaxManager.Instance.IsCallback && IsPostBack)
+		            if (!Manager.Instance.IsAjaxCallback && IsPostBack)
 		            {
 		                IncludeAllCssFiles();
 		                IncludeAllJsFiles();
@@ -59,7 +59,7 @@ namespace Magix.Core
 			{
 				// Checking to see if this is a remotely activated Active Event
 				// And if so, raising the "magix.viewport.remote-event" active event
-	            if (!AjaxManager.Instance.IsCallback && 
+	            if (!Manager.Instance.IsAjaxCallback && 
 	                Request.HttpMethod == "POST" &&
 	                !string.IsNullOrEmpty(Page.Request["event"]))
 	            {
@@ -182,7 +182,7 @@ not thread safe";
 				}
 			}
 
-			AjaxManager.Instance.WriterAtBack.Write(script);
+			Manager.Instance.JavaScriptWriter.Write(script);
 		}
 
         private List<string> CssFiles
@@ -215,9 +215,9 @@ not thread safe";
 					appPath = appPath.Substring (0, appPath.LastIndexOf ('/'));
 					cssFile = cssFile.Replace ("~", appPath);
 				}
-				if (AjaxManager.Instance.IsCallback)
+				if (Manager.Instance.IsAjaxCallback)
 				{
-					AjaxManager.Instance.WriterAtBack.Write (
+					Manager.Instance.JavaScriptWriter.Write (
                         @"MUX.Element.prototype.includeCSS('<link href=""{0}"" rel=""stylesheet"" type=""text/css"" />');", cssFile);
 				}
 				else
@@ -235,7 +235,7 @@ not thread safe";
         private void IncludeJsFile(string jsFile)
         {
             jsFile = jsFile.Replace("~/", GetApplicationBaseUrl());
-            AjaxManager.Instance.IncludeScriptFromFile(jsFile);
+            Manager.Instance.IncludeFileScript(jsFile);
         }
 
         /**
@@ -416,9 +416,9 @@ the [name] node.&nbsp;&nbsp;the incoming parameters will be used.&nbsp;&nbsp;not
 			ClearControls(dyn);
 
             if (Ip(e.Params).Contains("css"))
-                dyn.CssClass = Ip(e.Params)["css"].Get<string>();
+                dyn.Class = Ip(e.Params)["css"].Get<string>();
             else
-                dyn.CssClass = "";
+                dyn.Class = "";
 
 			dyn.LoadControl(moduleName, context);
         }

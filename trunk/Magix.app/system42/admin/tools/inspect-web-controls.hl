@@ -50,9 +50,9 @@ for-each=>[Data][events]
           container=>content5
   set=>[.ip][..][_tpl][link-button][onclick][0].Name
     value=>[.].Name
-  set=>[.ip][..][_tpl][link-button][text].Value
+  set=>[.ip][..][_tpl][link-button][value].Value
     value=>[.].Name
-  replace=>[.ip][..][_tpl][link-button][text].Value
+  replace=>[.ip][..][_tpl][link-button][value].Value
     what=>magix.forms.controls.
   add=>[/][cf][controls][panel][controls]
     value=>[.ip][..][_tpl][link-button]
@@ -71,15 +71,15 @@ cf
       css=>span-13
       controls
         label=>header
-          text=>web control name
+          value=>web control name
           css=>span-13
           tag=>h3
         label=>code
           css=>span-13
-          text=>code example
+          value=>code example
           tag=>pre
         button=>run
-          text=>inspect
+          value=>inspect
           css=>span-2
           onclick
             magix.forms.get-value
@@ -93,10 +93,10 @@ cf
         label=>lblDesc
           css=>span-13 top-2
           tag=>label
-          text=>description
+          value=>description
         label=>desc
           css=>span-13
-          text=>@"description of your web control.&nbsp;&nbsp;
+          value=>@"description of your web control.&nbsp;&nbsp;
 to the right are all web controls currently installed in the system, 
 click any one to inspect and play with their properties"
     panel=>wrp

@@ -10,7 +10,7 @@ from the same controller, and vice versa</p>
 <p>there are only two places where you can put an active event handler. either you have to put your active events 
 in an {{
 link-button=>go-to-active-modules
-  text=>active modules
+  value=>active modules
   onclick
     magix.help.open-file
       file=>system42/admin/help/csharp/active-modules/index.mml
@@ -83,7 +83,7 @@ makes a lot of helper methods available for your controller classes</p>
 <p>in the above code, we are not passing in parameters to the events we're raising. to see how to do this, 
 please check out the {{
 link-button=>go-to-active-events
-  text=>active events
+  value=>active events
   onclick
     magix.help.open-file
       file=>system42\admin\help\csharp\active-events\sample-csharp-active-event.mml

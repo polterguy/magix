@@ -32,7 +32,7 @@ namespace Magix.UX.Widgets
 
 		public Uploader()
 		{
-			CssClass = "mux-file-uploader";
+			Class = "mux-file-uploader";
 		}
 
 		/**
@@ -90,7 +90,7 @@ namespace Magix.UX.Widgets
 
 		protected override void OnPreRender(EventArgs e)
 		{
-			AjaxManager.Instance.IncludeScriptFromResource(
+			Manager.Instance.IncludeResourceScript(
 				typeof(Timer),
 				"Magix.UX.Js.Uploader.js");
 			base.OnPreRender(e);

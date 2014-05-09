@@ -158,7 +158,7 @@ hyper lisp, but might be useful for you even though, therefor we mention it brie
 a search piece of logic, where you want to search through several different data sources, this feature might come in handy, 
 to be able to search through different components of your application.&nbsp;&nbsp;check out the documentation for {{
 link-button=>active-events-2
-  text=>active events
+  value=>active events
   onclick
     magix.help.open-file
       file=>system42\admin\help\csharp\active-events\index.mml

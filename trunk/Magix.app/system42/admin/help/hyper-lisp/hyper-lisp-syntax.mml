@@ -5,7 +5,7 @@
 instead of syntax, you are actually directly modifying the execution tree itself.&nbsp;&nbsp;to understand what this mean, 
 consider that the code below is really nothing but a tree structure representation of the {{
 link-button=>go-to-node
-  text=>Node
+  value=>Node
   onclick
     magix.help.open-file
       file=>system42\admin\help\csharp\active-events\node-class.mml

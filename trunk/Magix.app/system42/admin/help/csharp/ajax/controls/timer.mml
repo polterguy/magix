@@ -32,7 +32,7 @@ the active module as an embedded resource if you want to compile this sample</p>
     OnTick="timer_Tick" /&gt;
 &lt;mux:Label
     runat="server"
-    Text="tick"
+    Value="tick"
     id="lbl" /&gt;
 </pre>
 
@@ -52,7 +52,7 @@ namespace Magix.sample
 
         protected void timer_Tick(object sender, EventArgs e)
         {
-            lbl.Text += "-tick";
+            lbl.Value += "-tick";
         }
     }
 }</pre>
@@ -71,7 +71,7 @@ timer=>timer
     magix.forms.set-value
       id=>lbl
 label=>lbl
-  text=>tick
+  value=>tick
 }}
 </div>
 

@@ -7,14 +7,14 @@ some of the more important methods are described underneath</p>
 <ul>
 <li><strong>LoadActiveModule</strong> - helps you load up {{
 link-button=>go-to-active-modules
-  text=>active modules
+  value=>active modules
   onclick
     magix.help.open-file
       file=>system42\admin\help\csharp\active-modules\index.mml
 }}</li>
 <li><strong>RaiseActiveEvent</strong> - shorthand for raising {{
 link-button=>go-to-active-events
-  text=>active events
+  value=>active events
   onclick
     magix.help.open-file
       file=>system42\admin\help\csharp\active-events\index.mml
@@ -27,7 +27,7 @@ link-button=>go-to-active-events
 is ShouldInspect. ShouldInspect returns true, if the caller of the active event does not want to actually invoke the 
 active event, but rather {{
 link-button=>go-to-inspect
-  text=>inspect
+  value=>inspect
   onclick
     magix.help.open-file
       file=>system42\admin\help\csharp\active-events\inspecting-active-events.mml
@@ -70,7 +70,7 @@ namespace Magix.sample
 <p>notice the second parameter to the LoadActiveModule method.&nbsp;&nbsp;this parameter tells magix 
 which container inside the viewport to load up the module in.&nbsp;&nbsp;read more about {{
 link-button=>viewport
-  text=>viewports
+  value=>viewports
   onclick
     magix.help.open-file
       file=>system42\admin\help\csharp\active-modules\viewport.mml

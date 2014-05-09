@@ -61,8 +61,8 @@
               var ul = MUX.$(T.element.id + '_ul');
               MUX.$(ul.children[0]).addClassName('mux-uploader-processing');
               var x = new MUX.Ajax({
-                args: '__MUX_CONTROL_CALLBACK=' + T.element.id + 
-                  '&__MUX_EVENT=uploaded' + 
+                  args: 'magix.ux.callback-control=' + T.element.id +
+                  '&magix.ux.event-name=uploaded' +
                   '&__MUX_TOTAL=' + files.length +
                   '&__MUX_CURRENT=' + (idxNo++) + 
                   '&__FILE=' + encodeURIComponent(img) + 

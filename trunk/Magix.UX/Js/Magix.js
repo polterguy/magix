@@ -14,7 +14,7 @@
 
   MUX = {};
 
-  MUX.emptyFunction = function() { };
+  MUX.emp = function() { };
 
   MUX.Browser = {
     IE: window.attachEvent && !window.opera,
@@ -121,9 +121,9 @@
     init: function(url, opt) {
       this.url = url;
       this.options = MUX.extend({
-        onSuccess: MUX.emptyFunction,
-        onError: MUX.emptyFunction,
-        onTimeout: MUX.emptyFunction,
+        onSuccess: MUX.emp,
+        onError: MUX.emp,
+        onTimeout: MUX.emp,
         body: '',
         autoStart: true,
         callingContext: this
@@ -493,8 +493,8 @@
 
       this.options = MUX.extend({
         args: '',
-        onFinished: MUX.emptyFunction,
-        onError: MUX.emptyFunction,
+        onFinished: MUX.emp,
+        onError: MUX.emp,
         callingContext: this,
         autoCallback: false
       }, opt || {});
@@ -605,9 +605,9 @@
       this.options = MUX.extend({
         args: '',
         form: null, // Defaults to first form on page
-        onBefore: MUX.emptyFunction,
-        onSuccess: MUX.emptyFunction,
-        onError: MUX.emptyFunction,
+        onBefore: MUX.emp,
+        onSuccess: MUX.emp,
+        onError: MUX.emp,
         callingContext: this
       }, opt || {});
       MUX.Ajax._requests.push(this);
@@ -622,7 +622,7 @@
       this.options.onBefore.apply(this.options.callingContext, []);
       var args = this.options.args;
       if (args && args.length > 0) {
-        args += '&__MUX_CALLBACK=true';
+        args += '&magix.ux.manager.is-callback=true';
       }
       var form = new MUX.Form(this.options.form, {
         args: args,

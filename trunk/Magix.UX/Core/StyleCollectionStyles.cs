@@ -106,6 +106,19 @@ namespace Magix.UX.Widgets
         unicodeBidi,
         whiteSpace,
         wordSpacing,
-        opacity
+        opacity,
+        borderRadius,
+        animationName,
+        animationDuration,
+        animationIterationCount,
+        animationDirection,
+        animationTimingFunction,
+        animationDelay,
+        animationPlayState,
+        animationFillMode,
+        transitionProperty,
+        transitionDuration,
+        boxShadow,
+        backgroundClip
     }
 }

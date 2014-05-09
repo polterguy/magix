@@ -26,8 +26,8 @@ as silverlight, flash or other types of activex2.0 technologies. consider the tw
     runat="server"
     id="btn"
     OnClick="btn_Click"
-    Text="Click Me!"
-    CssClass="span-3 btn-large"/&gt;
+    Value="Click Me!"
+    Class="span-3 btn-large"/&gt;
 </pre>
 
 <label>SampleModule.ascx.cs</label>
@@ -46,7 +46,7 @@ namespace Magix.sample
 
         protected void btn_Click(object sender, EventArgs e)
         {
-            btn.Text ="howdy world";
+            btn.Value ="howdy world";
         }
     }
 }</pre>
@@ -59,7 +59,7 @@ with the attribute ActiveModule</p>
 <p>the next difference is that it doesn't use the familiar &lt;asp: syntax, but instead it uses &lt;mux: to 
 declare the controls inside the markup file. this is because it uses {{
 link-button=>magix-ux-ajax-controls
-  text=>magix ux ajax controls
+  value=>magix ux ajax controls
   onclick
     magix.help.open-file
       file=>system42\admin\help\csharp\ajax\index.mml
@@ -82,7 +82,7 @@ Magix.Core.ModuleControllerLoader.Instance.LoadActiveModule("Magix.sample.Sample
 
 <p>now of course, if you're loading the module from an {{
 link-button=>active-controllers
-  text=>active controller
+  value=>active controller
   onclick
     magix.help.open-file
       file=>system42\admin\help\csharp\active-controllers\index.mml

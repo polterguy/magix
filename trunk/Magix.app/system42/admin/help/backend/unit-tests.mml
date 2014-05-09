@@ -4,19 +4,19 @@
 <p>a unit test, is a small piece of code, created with the purpose of validating that your system is functioning corrdectly.&nbsp;&nbsp;
 magix comes with lots of pre-built unit tests, in addition to that you can create your own tests, either in {{
 link-button=>go-to-hyper-lisp
-  text=>hyper lisp
+  value=>hyper lisp
   onclick
     magix.help.open-file
       file=>system42/admin/help/hyper-lisp/index.mml
 }}, or in {{
 link-button=>active-events-2
-  text=>c#
+  value=>c#
   onclick
     magix.help.open-file
       file=>system42\admin\help\csharp\active-events\index.mml
 }}.&nbsp;&nbsp;a unit test, is an {{
 link-button=>active-events
-  text=>active event
+  value=>active event
   onclick
     magix.help.open-file
       file=>system42\admin\help\hyper-lisp\hyper-lisp-events.mml

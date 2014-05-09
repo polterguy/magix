@@ -30,7 +30,7 @@ _categories
 _curCat
 
 for-each=>[_categories]
-  set=>[/][_pnl][controls][label][text].Value
+  set=>[/][_pnl][controls][label][value].Value
     value=>[.].Name
   set=>[/][_pnl][controls][panel][controls]
   set=>[/][_curCat].Value
@@ -47,7 +47,7 @@ for-each=>[_categories]
         lhs=>[.][category].Value
         rhs=>[/][_curCat].Value
         code
-          set=>[/][_btn][text].Value
+          set=>[/][_btn][value].Value
             value=>[.][text].Value
           set=>[/][_btn].Value
             value=>[.].Name

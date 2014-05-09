@@ -45,9 +45,9 @@ namespace Magix.forms
 			    !string.IsNullOrEmpty(node["key"].Get<string>()))
 				ret.AccessKey = node["key"].Get<string>();
 
-			if (node.Contains("enabled") && 
-			    node["enabled"].Value != null)
-				ret.Enabled = node["enabled"].Get<bool>();
+            if (node.Contains("disabled") &&
+                node["disabled"].Value != null)
+                ret.Disabled = node["disabled"].Get<bool>();
 
 			if (ShouldHandleEvent("oncheckedchanged", node))
 			{
@@ -124,7 +124,7 @@ ask questions such as, 'chicken, fish or veggies?'</p>";
             node["magix.forms.create-web-part"]["controls"]["radio"]["group"].Value = "id_of_group";
             node["magix.forms.create-web-part"]["controls"]["radio"]["checked"].Value = true;
             node["magix.forms.create-web-part"]["controls"]["radio"]["key"].Value = "C";
-            node["magix.forms.create-web-part"]["controls"]["radio"]["enabled"].Value = true;
+            node["magix.forms.create-web-part"]["controls"]["radio"]["disabled"].Value = false;
             node["magix.forms.create-web-part"]["controls"]["radio"]["oncheckedchanged"].Value = "hyper lisp code";
             node["inspect"].Value = node["inspect"].Value + @"
 <p><strong>properties for radio button</strong></p>[group] 
@@ -138,7 +138,7 @@ keyboard shortcut with alt+shift+your-key.&nbsp;&nbsp;if you
 have for instance 's' as your keyboard shortcut, then the 
 end user will have to click shift+alt+s at the same time to 
 invoke the keyboard shortcut for your web control</p><p>
-[enabled] enables or disables the web control.&nbsp;&nbsp;
+[disabled] enables or disables the web control.&nbsp;&nbsp;
 this can be changed or retrieved after the button is 
 created by invoking the [magix.forms.set-enabled] or 
 [magix.forms.get-enabled] active events.&nbsp;&nbsp;

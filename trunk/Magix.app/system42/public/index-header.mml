@@ -66,10 +66,10 @@ lambda=>header
   oncreatecontrols
     _lbl=>headerCtrl
       css=>span-14 top-2 bottom-3
-      text=>magix illuminate - phosphorus
+      value=>magix illuminate - phosphorus
       tag=>h1
     magix.web.get-config-setting=>Magix.Core.Portal-Name
-    set=>[_lbl][text].Value
+    set=>[_lbl][value].Value
       value=>[magix.web.get-config-setting][value].Value
     add=>[$]
       value=>[_lbl]
@@ -87,7 +87,7 @@ panel=>loginWrp
       controls
         label=>descr
           tag=>label
-          text=>please login
+          value=>please login
         text-box=>username
           place-holder=>username ...
           css=>span-4
@@ -98,7 +98,7 @@ panel=>loginWrp
         label=>error
           css=>error span-2
         button=>loginBtn
-          text=>login
+          value=>login
           css=>right span-2 btn-large last
           onclick
             magix.forms.get-value
@@ -119,7 +119,7 @@ panel=>logoutWrp
   controls
     button=>logOut
       css=>span-4 btn-large
-      text=>logout
+      value=>logout
       onclick
         magix.web.set-session=>magix.core.user
         magix.web.redirect=>~
@@ -137,12 +137,12 @@ panel=>logoutWrp
               code
                 set=>[if][code][_lnk][url].Value
                   value=>~
-                set=>[if][code][_lnk][text].Value
+                set=>[if][code][_lnk][value].Value
                   value=>website
             else
               set=>[if][code][_lnk][url].Value
                 value=>~?dashboard=
-              set=>[if][code][_lnk][text].Value
+              set=>[if][code][_lnk][value].Value
                 value=>dashboard
             add=>[$]
               value=>[@][_lnk]

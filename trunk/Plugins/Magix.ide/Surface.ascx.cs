@@ -127,7 +127,7 @@ namespace Magix.ide
 				{
 					if (ctrl is BaseWebControl)
 					{
-						(ctrl as BaseWebControl).CssClass += " selected";
+						(ctrl as BaseWebControl).Class += " selected";
 					}
 				}
 
@@ -231,7 +231,7 @@ not thread safe";
 				e.Params["add-widget"]["where"]["position"].Value = "before|after|child";
 				e.Params["add-widget"]["widget"]["type"].Value = "magix.forms.controls.installed-widget";
 				e.Params["add-widget"]["widget"]["properties"]["id"].Value = "myWidget";
-				e.Params["add-widget"]["widget"]["properties"]["text"].Value = "hello world";
+				e.Params["add-widget"]["widget"]["properties"]["value"].Value = "hello world";
 				return;
 			}
 

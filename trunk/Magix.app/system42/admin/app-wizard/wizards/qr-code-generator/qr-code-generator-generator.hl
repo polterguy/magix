@@ -21,14 +21,14 @@ which contains logic for qr-code-generator application"
       label=>lblUrl
         tag=>label
         css=>span-8
-        text=>url
+        value=>url
       text-area=>url
         css=>span-8 clear
         rows=>4
         place-holder=>text or url goes here ...
       button=>create
         css=>span-4 left-4 btn-large clear
-        text=>create
+        value=>create
         onclick
           magix.forms.get-value
             form-id=>qr-code-generator-main-form

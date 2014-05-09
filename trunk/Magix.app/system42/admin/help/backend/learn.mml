@@ -9,13 +9,13 @@ tools for teaching yourself magix also changes</p>
 
 <p>the {{
 link-button=>hyper-lisp-reference
-  text=>hyper lisp reference
+  value=>hyper lisp reference
   onclick
     execute-file=>system42/admin/tools/inspect-execute.hl
     magix.viewport.scroll
 }} link inside the learn panel, traverses your system for all {{
 link-button=>hyperlisp
-  text=>hyper lisp
+  value=>hyper lisp
   onclick
     magix.help.open-file
       file=>system42\admin\help\hyper-lisp\index.mml
@@ -28,7 +28,7 @@ to load up example code, that illustrates the keyword, and its usage</p>
 
 <p>the {{
 link-button=>web-controls
-  text=>web controls
+  value=>web controls
   onclick
     execute-file=>system42/admin/tools/inspect-web-controls.hl
     magix.viewport.scroll
@@ -41,7 +41,7 @@ how to use the web controls</p>
 
 <p>the {{
 link-button=>executor
-  text=>active event executor
+  value=>active event executor
   onclick
     magix.admin.open-event-executor
       css=>span-17 last

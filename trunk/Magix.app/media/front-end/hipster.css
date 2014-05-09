@@ -16,7 +16,7 @@ body
 	background-image: linear-gradient(rgba(255, 246, 180, 1) 0%, rgba(180, 160, 140, 1) 100%);
 }
 
-@-webkit-keyframes boxed-widget-on
+@keyframes boxed-widget-on
 {
  from {
 	box-shadow: 10px 10px 10px rgba(0, 0, 0, 1);
@@ -26,7 +26,7 @@ body
  }
 }
 
-@-webkit-keyframes boxed-widget-off
+@keyframes boxed-widget-off
 {
  from {
 	box-shadow: 4px 4px 5px rgba(0, 0, 0, 1);
@@ -42,17 +42,17 @@ body
 	border-radius:5px;
 	box-shadow: 4px 4px 5px rgba(0, 0, 0, 1);
 	background-image: linear-gradient(rgba(250, 250, 250, 1) 0%, rgba(210, 210, 210, 1) 100%);
-	-webkit-animation-name: boxed-widget-on;
-	-webkit-animation-duration: .5s;
-	-webkit-animation-direction: normal;
+	animation-name: boxed-widget-on;
+	animation-duration: .5s;
+	animation-direction: normal;
 }
 
 .boxed:hover
 {
 	box-shadow: 10px 10px 10px rgba(0, 0, 0, 1);
-	-webkit-animation-name: boxed-widget-off;
-	-webkit-animation-duration: .5s;
-	-webkit-animation-direction: normal;
+	animation-name: boxed-widget-off;
+	animation-duration: .5s;
+	animation-direction: normal;
 }
 
 .boxed-light-green
@@ -71,7 +71,7 @@ body
 	background-image: linear-gradient(rgba(240, 200, 200, .5) 0%, rgba(210, 180, 180, .5) 100%);
 }
 
-@-webkit-keyframes button-animation-on
+@keyframes button-animation-on
 {
  from {
 	box-shadow: 4px 4px 3px rgba(0, 0, 0, 0.8);
@@ -81,7 +81,7 @@ body
  }
 }
 
-@-webkit-keyframes button-animation-off
+@keyframes button-animation-off
 {
  from {
 	box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.5);
@@ -100,28 +100,28 @@ input[type=button]
 	margin-top:0px;
 	margin-bottom:0px;
 	height:18px;
-	-webkit-animation-name: button-animation-on;
-	-webkit-animation-duration: .5s;
-	-webkit-animation-direction: normal;
+	animation-name: button-animation-on;
+	animation-duration: .5s;
+	animation-direction: normal;
 }
 
 input[type=button]:hover
 {
 	box-shadow: 4px 4px 3px rgba(0, 0, 0, 0.8);
-	-webkit-animation-name: button-animation-off;
-	-webkit-animation-duration: .5s;
-	-webkit-animation-direction: normal;
+	animation-name: button-animation-off;
+	animation-duration: .5s;
+	animation-direction: normal;
 }
 
 input[type=button]:disabled
 {
-	-webkit-animation-name:none;
+	animation-name:none;
 	box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.5);
 }
 
 input[type=button]:disabled:hover
 {
-	-webkit-animation-name:none;
+	animation-name:none;
 }
 
 input[type=button]:disabled
@@ -198,27 +198,27 @@ input[type=button]:disabled
 	padding-bottom:18px;
 }
 
-@-webkit-keyframes start-button-animation
+@keyframes start-button-animation
 {
  from {
 	box-shadow: 4px 4px 5px rgba(0, 0, 0, 1);
-    -webkit-transform: scale(1, 1) rotateZ(0deg);
+    transform: scale(1, 1) rotateZ(0deg);
  }
  to {
 	box-shadow: 10px 10px 10px rgba(0, 0, 0, 1);
-    -webkit-transform: scale(1.1, 1.1) rotateZ(19deg);
+    transform: scale(1.1, 1.1) rotateZ(19deg);
  }
 }
 
-@-webkit-keyframes start-button-animation-off
+@keyframes start-button-animation-off
 {
  from {
 	box-shadow: 10px 10px 10px rgba(0, 0, 0, 1);
-    -webkit-transform: scale(1.1, 1.1) rotateZ(19deg);
+    transform: scale(1.1, 1.1) rotateZ(19deg);
  }
  to {
 	box-shadow: 4px 4px 5px rgba(0, 0, 0, 1);
-    -webkit-transform: scale(1, 1) rotateZ(0deg);
+    transform: scale(1, 1) rotateZ(0deg);
  }
 }
 
@@ -237,23 +237,23 @@ input[type=button]:disabled
 	display:block;
 	background:transparent url(../grid/start-button.png) no-repeat -15px -15px;
 	border-radius:84px;
-    -webkit-transform: scale(1, 1) rotateZ(0deg);
-	-webkit-animation-name: start-button-animation-off;
-	-webkit-animation-duration: .5s;
-	-webkit-animation-direction: normal;
+    transform: scale(1, 1) rotateZ(0deg);
+	animation-name: start-button-animation-off;
+	animation-duration: .5s;
+	animation-direction: normal;
 	box-shadow: 4px 4px 5px rgba(0, 0, 0, 1);
 }
 
 .start-button:hover
 {
-	-webkit-animation-name: start-button-animation;
-	-webkit-animation-duration: 1s;
-	-webkit-animation-direction: normal;
-    -webkit-transform: scale(1.1, 1.1) rotateZ(19deg);
+	animation-name: start-button-animation;
+	animation-duration: 1s;
+	animation-direction: normal;
+    transform: scale(1.1, 1.1) rotateZ(19deg);
 	box-shadow: 10px 10px 10px rgba(0, 0, 0, 1);
 }
 
-@-webkit-keyframes desktop-widget-on
+@keyframes desktop-widget-on
 {
  from {
 	box-shadow: 4px 4px 5px rgba(0, 0, 0, 1);
@@ -265,7 +265,7 @@ input[type=button]:disabled
  }
 }
 
-@-webkit-keyframes desktop-widget-off
+@keyframes desktop-widget-off
 {
  from {
 	box-shadow: 10px 10px 10px rgba(0, 0, 0, 1);
@@ -284,9 +284,9 @@ input[type=button]:disabled
 	box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
 	background-image: linear-gradient(rgba(255, 255, 230, 1) 0%, rgba(210, 210, 180, 1) 100%);
 	padding:18px 40px;
-	-webkit-animation-name: desktop-widget-off;
-	-webkit-animation-duration: .5s;
-	-webkit-animation-direction: normal;
+	animation-name: desktop-widget-off;
+	animation-duration: .5s;
+	animation-direction: normal;
 	box-shadow: 4px 4px 5px rgba(0, 0, 0, 1);
 }
 
@@ -297,9 +297,9 @@ input[type=button]:disabled
 	box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
 	background-image: linear-gradient(rgba(255, 255, 250, 1) 0%, rgba(210, 210, 210, 1) 100%);
 	padding:18px 40px;
-	-webkit-animation-name: desktop-widget-on;
-	-webkit-animation-duration: .5s;
-	-webkit-animation-direction: normal;
+	animation-name: desktop-widget-on;
+	animation-duration: .5s;
+	animation-direction: normal;
 	box-shadow: 10px 10px 10px rgba(0, 0, 0, 1);
 }
 
@@ -307,7 +307,7 @@ input[type=button]:disabled
 {
 }
 
-@-webkit-keyframes desktop-widget-item-on
+@keyframes desktop-widget-item-on
 {
  from {
     text-shadow: 4px 4px 5px rgba(0, 0, 0, .3);
@@ -321,7 +321,7 @@ input[type=button]:disabled
  }
 }
 
-@-webkit-keyframes desktop-widget-item-off
+@keyframes desktop-widget-item-off
 {
  from {
     text-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
@@ -337,9 +337,9 @@ input[type=button]:disabled
 
 .desktop-widget-item
 {
-	-webkit-animation-name: desktop-widget-item-on;
-	-webkit-animation-duration: .2s;
-	-webkit-animation-direction: normal;
+	animation-name: desktop-widget-item-on;
+	animation-duration: .2s;
+	animation-direction: normal;
     text-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
     color:rgba(0, 0, 180, 1);
     background-color:rgba(255, 255, 255, 0);
@@ -348,9 +348,9 @@ input[type=button]:disabled
 
 .desktop-widget-item:hover
 {
-	-webkit-animation-name: desktop-widget-item-off;
-	-webkit-animation-duration: .2s;
-	-webkit-animation-direction: normal;
+	animation-name: desktop-widget-item-off;
+	animation-duration: .2s;
+	animation-direction: normal;
     text-shadow: 4px 4px 5px rgba(0, 0, 0, .3);
     color:rgba(0, 0, 0, 1);
     background-color:rgba(255, 255, 255, .4);

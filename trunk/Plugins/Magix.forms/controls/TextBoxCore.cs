@@ -51,17 +51,17 @@ namespace Magix.forms
 			    node["complete"].Value != null)
 				ret.AutoComplete = node["complete"].Get<bool>();
 
-			if (node.Contains("enabled") && 
-			    node["enabled"].Value != null)
-				ret.Enabled = node["enabled"].Get<bool>();
+			if (node.Contains("disabled") &&
+                node["disabled"].Value != null)
+                ret.Disabled = node["disabled"].Get<bool>();
 
 			if (node.Contains("max") && 
 			    node["max"].Value != null)
 				ret.MaxLength = node["max"].Get<int>();
 
-			if (node.Contains("text") && 
-			    !string.IsNullOrEmpty(node["text"].Get<string>()))
-				ret.Text = node["text"].Get<string>();
+			if (node.Contains("value") && 
+			    !string.IsNullOrEmpty(node["value"].Get<string>()))
+				ret.Value = node["value"].Get<string>();
 
 			if (node.Contains("mode") && 
 				node["mode"].Value != null)
@@ -69,7 +69,7 @@ namespace Magix.forms
 				switch(node["mode"].Get<string>())
 				{
 				case "normal":
-					ret.TextMode = TextBox.TextBoxMode.Normal;
+					ret.TextMode = TextBox.TextBoxMode.Text;
 					break;
                 case "password":
                     ret.TextMode = TextBox.TextBoxMode.Password;
@@ -78,7 +78,7 @@ namespace Magix.forms
                     ret.TextMode = TextBox.TextBoxMode.Email;
                     break;
                 case "phone":
-					ret.TextMode = TextBox.TextBoxMode.Phone;
+					ret.TextMode = TextBox.TextBoxMode.Tel;
 					break;
                 case "number":
                     ret.TextMode = TextBox.TextBoxMode.Number;
@@ -131,7 +131,7 @@ namespace Magix.forms
 			if (ShouldHandleEvent("onescpressed", node))
 			{
 				Node codeNode = node["onescpressed"].Clone();
-				ret.EscPressed += delegate(object sender2, EventArgs e2)
+				ret.EscKey += delegate(object sender2, EventArgs e2)
 				{
                     FillOutEventInputParameters(codeNode, sender2);
                     RaiseActiveEvent(
@@ -174,7 +174,7 @@ namespace Magix.forms
 
 			if (ctrl != null)
 			{
-                ctrl.Text = Ip(e.Params)["value"].Get<string>();
+                ctrl.Value = Ip(e.Params)["value"].Get<string>();
 			}
 		}
 
@@ -194,7 +194,7 @@ namespace Magix.forms
 
 			if (ctrl != null)
 			{
-                Ip(e.Params)["value"].Value = ctrl.Text;
+                Ip(e.Params)["value"].Value = ctrl.Value;
 			}
 		}
 
@@ -237,14 +237,14 @@ one line of text, without carriage return.&nbsp;&nbsp;use
             node["magix.forms.create-web-part"]["controls"]["text-box"]["capitalize"].Value = false;
             node["magix.forms.create-web-part"]["controls"]["text-box"]["correct"].Value = true;
             node["magix.forms.create-web-part"]["controls"]["text-box"]["complete"].Value = false;
-            node["magix.forms.create-web-part"]["controls"]["text-box"]["enabled"].Value = true;
+            node["magix.forms.create-web-part"]["controls"]["text-box"]["disabled"].Value = false;
             node["magix.forms.create-web-part"]["controls"]["text-box"]["max"].Value = 25;
-            node["magix.forms.create-web-part"]["controls"]["text-box"]["text"].Value = "hello world";
+            node["magix.forms.create-web-part"]["controls"]["text-box"]["value"].Value = "hello world";
             node["magix.forms.create-web-part"]["controls"]["text-box"]["mode"].Value = "normal|phone|search|url|email|datetime|date|month|week|time|datetimelocal|number|range|color|password";
             node["inspect"].Value = node["inspect"].Value + @"
 <p><strong>properties for text box</strong></p><p>[place-holder] 
 is shadow text, only visible when input area is empty</p><p>
-[text] is what text the control shall have, or currently have 
+[value] is what text the control shall have, or currently have 
 been changed to.&nbsp;&nbsp;this is the property which is changed 
 or retrieved when you invoke the [magix.forms.set-value] and 
 the [magix.forms.get-value] for your web control</p><p>[key] 
@@ -254,7 +254,7 @@ system, you normally invoke the keyboard shortcut with
 alt+shift+your-key.&nbsp;&nbsp;if you have for instance 's' as 
 your keyboard shortcut, then the end user will have to click 
 shift+alt+s at the same time to invoke the keyboard shortcut 
-for your web control</p><p>[enabled] enables or disables the 
+for your web control</p><p>[disabled] enables or disables the 
 web control.&nbsp;&nbsp;this can be changed or retrieved after 
 the button is created by invoking the [magix.forms.set-enabled] 
 or [magix.forms.get-enabled] active events.&nbsp;&nbsp;legal 
@@ -276,7 +276,7 @@ property</p>";
 		 */
 		protected override object GetValue(BaseControl that)
 		{
-			return ((TextBox)that).Text;
+			return ((TextBox)that).Value;
 		}
 	}
 }

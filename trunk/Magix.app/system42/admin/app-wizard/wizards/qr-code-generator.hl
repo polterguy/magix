@@ -18,7 +18,7 @@ set=>[magix.forms.create-web-part][controls][panel=>qr-code-wrap][controls][butt
 set=>[magix.forms.create-web-part][controls][panel=>qr-code-wrap][controls][button=>generate][onclick][magix.qr-code-generator.generate-application][name].Value
   value=>[$][name].Value
 
-set=>[magix.forms.create-web-part][controls][panel=>qr-code-wrap][controls][label=>lblDescriptionStartQrCode][text].Value
+set=>[magix.forms.create-web-part][controls][panel=>qr-code-wrap][controls][label=>lblDescriptionStartQrCode][value].Value
   value=>@"inspect=>@""to open application, use code below""
 execute-file=>system42\admin\apps\{0}.hl
   css=>span-22
@@ -48,7 +48,7 @@ magix.forms.create-web-part
 
   controls
     label=>header
-      text=>vanity qr code generator
+      value=>vanity qr code generator
       tag=>h2
       onfirstload
         magix.data.load
@@ -69,7 +69,7 @@ magix.forms.create-web-part
 
     label=>description
       css=>span-17 last
-      text=>@"create a vanity qr code generator, which 
+      value=>@"create a vanity qr code generator, which 
 you can for instance embed into your front end 
 webpages.&nbsp;&nbsp;this way you can have a branded 
 qr code generator, which your users use to create their 
@@ -83,19 +83,19 @@ for the url/text to his qr code"
         label=>urlDescription
           css=>span-2 right-text clear
           tip=>url, or text of qr code. only mandatory parameter
-          text=>url(*)
+          value=>url(*)
           tag=>label
         text-area=>url
           css=>span-7
           tip=>url for qr code, can also be a text string. only mandatory parameter
           place-holder=>url or text ...
           rows=>3
-          enabled=>false
-          text=>supplied by end user ...
+          disabled=>true
+          value=>supplied by end user ...
         label=>textDescription
           css=>span-2 right-text
           tip=>friendly text displayed beneath qr code
-          text=>friendly text
+          value=>friendly text
           tag=>label
         text-box=>text
           css=>span-2
@@ -105,7 +105,7 @@ for the url/text to his qr code"
           tag=>label
           css=>span-1 right-text
           for=>anti-pixelated
-          text=>burn
+          value=>burn
           tip=>will anti-pixelate code and make it less squary if checked
         check=>anti-pixelated
           css=>span-1
@@ -114,7 +114,7 @@ for the url/text to his qr code"
         label=>roundedDescription
           css=>span-2 right-text top-1
           tip=>radius of corners
-          text=>corners
+          value=>corners
           tag=>label
         text-box=>rounded-corners
           css=>span-2 top-1
@@ -124,7 +124,7 @@ for the url/text to his qr code"
         label=>scaleDescription
           css=>span-2 right-text clear top-1
           tip=>numbers of pixels pr pixel in qr code
-          text=>scale
+          value=>scale
           tag=>label
         text-box=>scale
           css=>span-2 top-1
@@ -134,7 +134,7 @@ for the url/text to his qr code"
         label=>errDescription
           css=>span-3 right-text top-1
           tip=>error correction of qr code
-          text=>error correction
+          value=>error correction
           tag=>label
         select=>err
           css=>span-2 top-1
@@ -146,7 +146,7 @@ for the url/text to his qr code"
             M=>M
         label=>bgColorDescription
           tag=>label
-          text=>bg-color
+          value=>bg-color
           css=>span-2 right-text top-1
           tip=>background color of qr code. overrides the background image if given
         text-box=>bg-color
@@ -155,7 +155,7 @@ for the url/text to his qr code"
           place-holder=>bg-color ...
         label=>fgColorDescription
           tag=>label
-          text=>fg-color
+          value=>fg-color
           css=>span-2 right-text top-1
           tip=>foreground color of qr code. overrides the foreground image if given
         text-box=>fg-color
@@ -165,17 +165,17 @@ for the url/text to his qr code"
         label=>bgImageDescription
           tag=>label
           css=>span-2 top-1 right-text clear
-          text=>bg-image
+          value=>bg-image
           tip=>background image of qr code, used to render the background parts
         text-box=>bg-image
           css=>span-7 top-1
           tip=>@"background image used to render background 
 parts of qr code. defaults to bumpy-white.png"
           place-holder=>background image ...
-          text=>media/images/textures/bumpy-white.png
+          value=>media/images/textures/bumpy-white.png
         button=>bg-image-browse
           css=>text-browse-btn top-1
-          text=>...
+          value=>...
           onclick
             magix.viewport.set-viewstate=>stack-of-pages
               value
@@ -200,17 +200,17 @@ parts of qr code. defaults to bumpy-white.png"
         label=>fgImageDescription
           tag=>label
           css=>span-2 top-1 right-text
-          text=>fg-image
+          value=>fg-image
           tip=>foreground image of qr code, used to render the foreground parts
         text-box=>fg-image
           css=>span-6 top-1 last
           tip=>@"foreground image used to render background
 parts of qr code. defaults to bumby-black.png"
           place-holder=>foreground image ...
-          text=>media/images/textures/bumpy-black.png
+          value=>media/images/textures/bumpy-black.png
         button=>fg-image-browse
           css=>text-browse-btn-last top-1
-          text=>...
+          value=>...
           onclick
             execute-file=>system42/admin/file-browser.hl
               container=>file-browser
@@ -228,7 +228,7 @@ parts of qr code. defaults to bumby-black.png"
         label=>fontNameDescription
           tag=>label
           css=>span-2 top-1 right-text clear
-          text=>font name
+          value=>font name
           tip=>font to use to render descriptive text below qr code
         text-box=>font-name
           css=>span-3 top-1
@@ -238,7 +238,7 @@ defaults to Comic Sans MS"
         label=>fontSizeDescription
           tag=>label
           css=>span-2 top-1 right-text
-          text=>font size
+          value=>font size
           tip=>font size to use to render descriptive text below qr code
         text-box=>font-size
           css=>span-2 top-1
@@ -248,7 +248,7 @@ defaults to Comic Sans MS"
         label=>fontColorDescription
           tag=>label
           css=>span-2 top-1 right-text
-          text=>font color
+          value=>font color
           tip=>color used to render descriptive text beneath qr code
         text-box=>font-color
           css=>span-2 top-1
@@ -257,7 +257,7 @@ defaults to Comic Sans MS"
         label=>rotateDescription
           tag=>label
           css=>span-2 top-1 right-text
-          text=>rotate
+          value=>rotate
           tip=>angle of rotation for qr code
         text-box=>rotate
           css=>span-2 top-1 last
@@ -266,7 +266,7 @@ defaults to Comic Sans MS"
           mode=>number
         button=>generate
           css=>span-4 btn-large right clear top-1 last
-          text=>generate
+          value=>generate
           onclick
             magix.viewport.clear-controls
               container=>file-browser
@@ -338,7 +338,7 @@ defaults to Comic Sans MS"
               value=>true
         button=>back
           css=>span-3 left-1 top-1 btn-large right
-          text=>&lt;&lt; back
+          value=>&lt;&lt; back
           onclick
             execute-file=>system42/admin/app-wizard/new-app.hl
               file=>system42\admin\app-wizard\wizards\qr-code-generator.hl

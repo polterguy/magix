@@ -16,7 +16,7 @@
       this.options = MUX.extend({
         interval: 1000
       }, this.options || {});
-      if (this.options.enabled)
+      if (!this.options.disabled)
         this.start();
     },
 
@@ -28,24 +28,24 @@
     },
 
     tick: function() {
-      if (this.options.enabled) {
+      if (!this.options.disabled) {
         this.callback();
       }
     },
 
     callback: function() {
       var x = new MUX.Ajax({
-        args: '__MUX_CONTROL_CALLBACK=' + this.element.id + '&__MUX_EVENT=tick',
+          args: 'magix.ux.callback-control=' + this.element.id + '&magix.ux.event-name=tick',
         onSuccess: this.onFinishedTicking,
         callingContext: this
       });
     },
 
-    Enabled: function(value) {
-      if (value && !this.options.enabled) {
+    Disabled: function(value) {
+      if (!value && this.options.disabled) {
         this.start();
       }
-      this.options.enabled = value;
+      this.options.disabled = value;
     },
 
     Restart: function() {
@@ -59,14 +59,14 @@
 
     onFinishedTicking: function(response) {
       this.onFinishedRequest(response);
-      if (this.options.enabled) {
+      if (!this.options.disabled) {
         this.start();
       }
     },
 
     destroyThis: function() {
       // To make sure the next 'tick' never goes through ...!
-      this.options.enabled = false;
+      this.options.disabled = true;
       this._destroyThisControl();
     }
   });

@@ -15,7 +15,7 @@ public void magix_sample_active_event(object sender, ActiveEventArgs e)
 <p>an active event has almost the exact same signature as any other .net events. the only difference is that instead of taking an EventArgs, it takes an ActiveEventArgs object. the ActiveEventArgs object has support for both sending parameters into the active event, and returning parameters from the active event. to accomplish this task, it uses a class which is called 
 {{
 link-button=>go-to-node
-  text=>Node
+  value=>Node
   onclick
     magix.help.open-file
       file=>system42\admin\help\csharp\active-events\node-class.mml
@@ -40,7 +40,7 @@ active event and a consumer of that active event</p>
 
 <p>please notice that you need to put your active events inside either an {{
 link-button=>go-to-active-controllers
-  text=>active controller
+  value=>active controller
   onclick
     magix.help.open-file
       file=>system42\admin\help\csharp\active-controllers\index.mml

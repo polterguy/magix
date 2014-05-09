@@ -3,7 +3,7 @@
 
 <p>when you {{
 link-button=>override
-  text=>override
+  value=>override
   onclick
     magix.help.open-file
       file=>system42\admin\help\backend\overriding-events.mml

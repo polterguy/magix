@@ -11,7 +11,7 @@ have to bring your applications down</p>
 from your main magix administrative desktop.&nbsp;&nbsp;if you click an overridden active event, you will get to inspect its documentation, 
 and if the active event is a dynamic active event, created with the [event] {{
 link-button=>hyperlisp
-  text=>hyper lisp
+  value=>hyper lisp
   onclick
     magix.help.open-file
       file=>system42\admin\help\hyper-lisp\index.mml

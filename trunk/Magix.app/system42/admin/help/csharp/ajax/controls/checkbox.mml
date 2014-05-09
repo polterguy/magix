@@ -32,13 +32,13 @@ the active module as an embedded resource if you want to compile this sample</p>
     runat="server"
     id="lbl"
     Tag="label"
-    CssClass="span-5 right-text"
-    Text="associated with checkbox"
+    Class="span-5 right-text"
+    Value="associated with checkbox"
     For="chk"/&gt;
 &lt;mux:CheckBox
     runat="server"
     id="chk"
-    CssClass="span-1"
+    Class="span-1"
     OnCheckedChanged="chk_CheckedChanged"/&gt;
 </pre>
 
@@ -60,9 +60,9 @@ namespace Magix.sample
         protected void chk_CheckedChanged(object sender, EventArgs e)
         {
             if (chk.Checked)
-                lbl.Text = "checkbox is on!";
+                lbl.Value = "checkbox is on!";
             else
-                lbl.Text = "checkbox is off!";
+                lbl.Value = "checkbox is off!";
         }
     }
 }</pre>
@@ -71,7 +71,7 @@ namespace Magix.sample
 <div class="sample-web-control">
 {{
 label=>lbl
-  text=>associated with checkbox
+  value=>associated with checkbox
   tag=>label
   for=>chk
   css=>span-5 right-text

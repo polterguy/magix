@@ -8,9 +8,9 @@ _name=>crud app
 
 _css=>boxed span-5 min-height-7 air-padding bottom-1 crud-app-bg
 
-set=>[magix.forms.create-web-part][controls][label][text].Value
+set=>[magix.forms.create-web-part][controls][label][value].Value
   value=>@"{0}{1}"
-    v0=>[magix.forms.create-web-part][controls][label][text].Value
+    v0=>[magix.forms.create-web-part][controls][label][value].Value
     v1=>[$][name].Value
 
 set=>[magix.forms.create-web-part][events][magix.crud-app.rebind-data-grid][magix.data.load][id].Value
@@ -63,7 +63,7 @@ set=>[magix.forms.create-web-part][events][magix.crud-app.generate-application][
 set=>[magix.forms.create-web-part][events][magix.crud-app.preview-application][set][value][v0].Value
   value=>[$][name].Value
 
-set=>[magix.forms.create-web-part][events][magix.crud-app.preview-application][magix.forms.create-web-part][controls][label:1][text].Value
+set=>[magix.forms.create-web-part][events][magix.crud-app.preview-application][magix.forms.create-web-part][controls][label:1][value].Value
   value=>@"inspect=>@""to open application, use code below""
 execute-file=>system42\admin\apps\{0}.hl
   css=>span-22
@@ -108,7 +108,7 @@ magix.forms.create-web-part
             tag=>pre
           button=>btnClosePreview
             css=>span-3 right last
-            text=>close preview
+            value=>close preview
             onclick
               magix.viewport.clear-controls
                 container=>content5
@@ -144,7 +144,7 @@ magix.forms.create-web-part
 
         set=>[/][_label][css].Value
           value=>span-5 clear
-        set=>[/][_label][text].Value
+        set=>[/][_label][value].Value
           value=>[.][field-name].Value
         add=>[/][magix.forms.create-web-part][controls][panel][controls]
           value=>[/][_label]
@@ -153,7 +153,7 @@ magix.forms.create-web-part
 
         set=>[/][_label][css].Value
           value=>span-5
-        set=>[/][_label][text].Value
+        set=>[/][_label][value].Value
           value=>[.][field-type].Value
         add=>[/][magix.forms.create-web-part][controls][panel][controls]
           value=>[/][_label]
@@ -162,7 +162,7 @@ magix.forms.create-web-part
 
         set=>[/][_label][css].Value
           value=>span-3 right-text
-        set=>[/][_label][text].Value
+        set=>[/][_label][value].Value
           value=>X
         set=>[/][_label][onclick][magix.crud-app.delete-field][name].Value
           value=>[.][field-name].Value
@@ -178,16 +178,16 @@ magix.forms.create-web-part
         controls
           label=>lblHeaderName
             tag=>label
-            text=>name
+            value=>name
             css=>span-5
           label=>lblHeaderType
             tag=>label
-            text=>type
+            value=>type
             css=>span-5
           label=>lblDelete
             tag=>label
             css=>span-3 right-text
-            text=>delete
+            value=>delete
           panel=>pnlWrpGrid
             css=>span-17
             controls
@@ -198,7 +198,7 @@ magix.forms.create-web-part
   controls
     hidden=>nameOfApp
     label=>lblHeader
-      text=>fields of - 
+      value=>fields of - 
       css=>span-10
       tag=>h2
     panel=>newWrp
@@ -215,7 +215,7 @@ magix.forms.create-web-part
             text-area=>text-area
         button=>addBtn
           css=>span-3
-          text=>+
+          value=>+
           onclick
             magix.data.load
               id=>magix.crud-app.template.
@@ -302,7 +302,7 @@ magix.forms.create-web-part
   controls
     button=>back
       css=>span-3 left-1 top-1
-      text=>&lt;&lt; back
+      value=>&lt;&lt; back
       onclick
         execute-file=>system42/admin/app-wizard/new-app.hl
           file=>system42\admin\app-wizard\wizards\crud-app.hl
@@ -316,7 +316,7 @@ magix.forms.create-web-part
           container=>content6
     button=>deleteApp
       css=>span-3 top-1
-      text=>delete
+      value=>delete
       onclick
         magix.viewport.confirm
           message=>are you sure you wish to delete this application
@@ -336,12 +336,12 @@ magix.forms.create-web-part
               message=>crud application was deleted
     button=>generateApp
       css=>span-3 top-1
-      text=>generate
+      value=>generate
       onclick
         magix.crud-app.generate-application
     button=>preview
       css=>span-3 top-1
-      text=>preview
+      value=>preview
       tip=>will generate application and then preview it
       onclick
         magix.crud-app.generate-application

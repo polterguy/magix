@@ -112,7 +112,7 @@ to use in an active event raised with a "." in its invocation name.&nbsp;&nbsp;t
 <p>you can also of course create your hyper lisp keywords as active events in c#.&nbsp;&nbsp;for how to do this, 
 check out the {{
 link-button=>csharp
-  text=>c# section
+  value=>c# section
   onclick
     magix.help.open-file
       file=>system42\admin\help\csharp\active-events\index.mml

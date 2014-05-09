@@ -12,18 +12,13 @@ using Magix.UX.Widgets.Core;
 
 namespace Magix.UX.Widgets
 {
-    /**
-     * Image Ajax Widget. Useful for showing images that needs Ajax 
-     * functionality somehow. Notice that most times it's more efficient
-     * to display other types of widgets, such as the Panel or a Label
-     * and set it to display an image through using something such as 
-     * background-image through CSS or something similar. 
+    /*
+     * image ajax control
      */
     public class Image : BaseWebControl
     {
-        /**
-         * The URL of where your image is. This is the image that will be displayed to
-         * the end user.
+        /*
+         * url of image
          */
         public string ImageUrl
         {
@@ -36,10 +31,8 @@ namespace Magix.UX.Widgets
             }
         }
 
-        /**
-         * This is the text that will be displayed if the link to the image is broken.
-         * It is also the text that most screen-readers will read up loud to the end
-         * user.
+        /*
+         * alternate text
          */
         public string AlternateText
         {
@@ -52,14 +45,8 @@ namespace Magix.UX.Widgets
             }
         }
 
-        /**
-         * What keyboard shortcut the user will have to use to mimick a 'click' on 
-         * the widget. Often the keyboard shortcut will be mixed up with other
-         * keys, depending upon your operating system or browser. For FireFox 
-         * on Windows for instance the keyboard combination is ALT+SHIFT+whatever
-         * key you choose here. So if you choose 'J' as the AccessKey, the user
-         * will have to hold down ALT+SHIFT and press 'J' to use the keyboard 
-         * shortcut.
+        /*
+         * keyboard shortcut
          */
         public string AccessKey
         {

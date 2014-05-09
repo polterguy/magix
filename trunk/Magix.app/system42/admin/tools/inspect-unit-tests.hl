@@ -47,9 +47,9 @@ for-each=>[Data][events]
           container=>content5
   set=>[.ip][..][_tpl][link-button][onclick][0].Name
     value=>[.].Name
-  set=>[.ip][..][_tpl][link-button][text].Value
+  set=>[.ip][..][_tpl][link-button][value].Value
     value=>[.].Name
-  replace=>[.ip][..][_tpl][link-button][text].Value
+  replace=>[.ip][..][_tpl][link-button][value].Value
     what=>magix.test.
   add=>[/][cf][controls][panel][controls]
     value=>[.ip][..][_tpl][link-button]
@@ -68,15 +68,15 @@ cf
       css=>span-13
       controls
         label=>header
-          text=>name of unit test
+          value=>name of unit test
           css=>span-13
           tag=>h3
         label=>code
           css=>span-13
-          text=>code example
+          value=>code example
           tag=>pre
         button=>run
-          text=>inspect
+          value=>inspect
           css=>span-2
           onclick
             magix.forms.get-value
@@ -88,7 +88,7 @@ cf
               code
               css=>span-19 last left-5 bottom-3 top-1
         button=>run2
-          text=>run test
+          value=>run test
           css=>span-2
           onclick
             magix.forms.get-value
@@ -101,17 +101,17 @@ cf
               message=>test executed successfully
               time=>250
         button=>run3
-          text=>run all
+          value=>run all
           css=>span-2
           onclick
             magix.tests.run
         label=>lblDesc
           css=>span-13 top-2
           tag=>label
-          text=>description
+          value=>description
         label=>desc
           css=>span-13
-          text=>@"description of your unit test.&nbsp;&nbsp;
+          value=>@"description of your unit test.&nbsp;&nbsp;
 click unit test to the right to inspect or run individual unit
 tests, or click run all to run all unit tests in the system.&nbsp;&nbsp;
 all active events prefixed with the magix.test. namespace, will

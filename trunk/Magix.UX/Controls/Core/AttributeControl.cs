@@ -15,21 +15,19 @@ using Magix.UX.Helpers;
 
 namespace Magix.UX.Widgets.Core
 {
-    /**
-     * Control with support for custom attributes
+    /*
+     * control with attributes
      */
     public abstract class AttributeControl : BaseWebControl
     {
-		/**
-		 * One custom attribute
+		/*
+		 * attribute wrapper
 		 */
 		[Serializable]
 		public class Attribute
 		{
 			public Attribute ()
-			{
-				
-			}
+			{ }
 
 			public Attribute (string name, string value)
 			{
@@ -37,8 +35,8 @@ namespace Magix.UX.Widgets.Core
 				Value = value;
 			}
 
-			/**
-			 * Name of attribute
+			/*
+			 * name
 			 */
 			public string Name
 			{
@@ -46,8 +44,8 @@ namespace Magix.UX.Widgets.Core
 				set;
 			}
 
-			/**
-			 * Value of attribute
+			/*
+			 * value
 			 */
 			public string Value
 			{
@@ -56,9 +54,8 @@ namespace Magix.UX.Widgets.Core
 			}
 		}
 
-		// TODO: implement support for changing in ajax callbacks, see how StyleCollection is implemented
-		/**
-		 * List of custom attributes associated with control
+		/*
+		 * attributes
 		 */
 		public List<Attribute> Attributes
 		{

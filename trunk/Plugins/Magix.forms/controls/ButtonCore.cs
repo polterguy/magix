@@ -35,17 +35,17 @@ namespace Magix.forms
 
             FillOutParameters(e.Params, ret);
 
-			if (node.Contains("text") && 
-			    !string.IsNullOrEmpty(node["text"].Get<string>()))
-				ret.Text = node["text"].Get<string>();
+			if (node.Contains("value") && 
+			    !string.IsNullOrEmpty(node["value"].Get<string>()))
+				ret.Value = node["value"].Get<string>();
 
 			if (node.Contains("key") && 
 			    !string.IsNullOrEmpty(node["key"].Get<string>()))
 				ret.AccessKey = node["key"].Get<string>();
 
-			if (node.Contains("enabled") && 
-			    node["enabled"].Value != null)
-				ret.Enabled = node["enabled"].Get<bool>();
+			if (node.Contains("disabled") && 
+			    node["disabled"].Value != null)
+				ret.Disabled = node["disabled"].Get<bool>();
 
             Ip(e.Params)["_ctrl"].Value = ret;
 		}
@@ -69,7 +69,7 @@ namespace Magix.forms
 
 			if (ctrl != null)
 			{
-                ctrl.Text = Ip(e.Params)["value"].Get<string>();
+                ctrl.Value = Ip(e.Params)["value"].Get<string>();
 			}
 		}
 
@@ -89,7 +89,7 @@ namespace Magix.forms
 
 			if (ctrl != null)
 			{
-                Ip(e.Params)["value"].Value = ctrl.Text;
+                Ip(e.Params)["value"].Value = ctrl.Value;
 			}
 		}
 
@@ -110,11 +110,11 @@ it keeeps the semantic parts of your website more correct</p>";
             node["magix.forms.create-web-part"]["container"].Value = "content5";
             node["magix.forms.create-web-part"]["form-id"].Value = "sample-form";
             base.Inspect(node["magix.forms.create-web-part"]["controls"]["button"]);
-            node["magix.forms.create-web-part"]["controls"]["button"]["text"].Value = "hello world";
+            node["magix.forms.create-web-part"]["controls"]["button"]["value"].Value = "hello world";
             node["magix.forms.create-web-part"]["controls"]["button"]["key"].Value = "C";
-            node["magix.forms.create-web-part"]["controls"]["button"]["enabled"].Value = true;
+            node["magix.forms.create-web-part"]["controls"]["button"]["disabled"].Value = false;
             node["inspect"].Value += node["inspect"].Value + @"
-<p><strong>properties for button</strong></p>[text] is the visible 
+<p><strong>properties for button</strong></p>[value] is the visible 
 text of your button.&nbsp;&nbsp;this is the property which is 
 changed or retrieved when you invoke the [magix.forms.set-value] 
 and the [magix.forms.get-value] for your web control</p><p>[key] 
@@ -124,7 +124,7 @@ system, you normally invoke the keyboard shortcut with
 alt+shift+your-key.&nbsp;&nbsp;if you have for instance 's' 
 as your keyboard shortcut, then the end user will have to click 
 shift+alt+s at the same time to invoke the keyboard shortcut 
-for your web control</p><p>[enabled] enables or disables the 
+for your web control</p><p>[disabled] enables or disables the 
 web control.&nbsp;&nbsp;this can be changed or retrieved after the 
 button is created by invoking the [magix.forms.set-enabled] 
 or [magix.forms.get-enabled] active events.&nbsp;&nbsp;legal 

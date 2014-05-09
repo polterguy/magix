@@ -8,7 +8,7 @@ paragraphs (p...) for instance.
 if you only need to display text on your page, and you need to use web controls for
 this, you should use the {{
 link-button=>magix-ux-label
-  text=>Label
+  value=>Label
   onclick
     magix.help.open-file
       file=>system42\admin\help\csharp\ajax\controls\label.mml
@@ -41,11 +41,11 @@ the active module as an embedded resource if you want to compile this sample</p>
     runat="server"
     id="pnl"
     OnMouseOver="pnl_MouseOver"
-    CssClass="span-5 boxed"&gt;
+    Class="span-5 boxed"&gt;
     &lt;mux:Label
         runat="server"
         id="lbl"
-        Text="changes when mouse moves over panel"/&gt;
+        Value="changes when mouse moves over panel"/&gt;
 &lt;/mux:Panel&gt;
 </pre>
 
@@ -65,7 +65,7 @@ namespace Magix.sample
 
         protected void pnl_MouseOver(object sender, EventArgs e)
         {
-            lbl.Text ="don't touch me! ouch!";
+            lbl.Value ="don't touch me! ouch!";
         }
     }
 }</pre>
@@ -81,7 +81,7 @@ panel=>pnl
       value=>don't touch me! ouch!
   controls
     label=>lbl
-      text=>changes when mouse moves over panel
+      value=>changes when mouse moves over panel
 }}
 </div>
 

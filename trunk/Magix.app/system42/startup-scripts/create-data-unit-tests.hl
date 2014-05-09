@@ -71,7 +71,8 @@ for then to reload it again"
       code
         throw=>@"[magix.data.load/save] didn't behave as expected 
 when invoking with an expression in the [id] node"
-    magix.data.remove
-      id=>[_id].Value
+    using=>magix.data
+      remove
+        id=>[_id].Value
 
 

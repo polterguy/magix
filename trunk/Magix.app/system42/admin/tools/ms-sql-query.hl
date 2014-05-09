@@ -116,7 +116,7 @@ where
 
             for-each=>[microsoft.sql.select][result]
               _lb
-              set=>[@][_lb][text].Value
+              set=>[@][_lb][value].Value
                 value=>[.][COLUMN_NAME].Value
               set=>[@][_lb][css].Value
                 value=>span-5 clear table-column
@@ -147,7 +147,7 @@ where
               set=>[/][magix.forms.create-web-part:0][controls][_lb].Name
                 value=>label
 
-              set=>[@][_lb][text].Value
+              set=>[@][_lb][value].Value
                 value=>[.][DATA_TYPE].Value
               set=>[@][_lb][css].Value
                 value=>span-2
@@ -156,7 +156,7 @@ where
               set=>[/][magix.forms.create-web-part:0][controls][_lb].Name
                 value=>label
 
-              set=>[@][_lb][text].Value
+              set=>[@][_lb][value].Value
                 value=>@"&nbsp;{0}"
                   v0=>[.][CHARACTER_MAXIMUM_LENGTH].Value
               set=>[@][_lb][css].Value
@@ -169,7 +169,7 @@ where
                 lhs=>[.][IS_NULLABLE].Value
                 rhs=>NO
                 code
-                  set=>[@][..][..][_lb][text].Value
+                  set=>[@][..][..][_lb][value].Value
                     value=>not nullable
                   set=>[@][..][..][_lb][css].Value
                     value=>span-2
@@ -178,7 +178,7 @@ where
                   set=>[/][magix.forms.create-web-part:0][controls][_lb].Name
                     value=>label
               else
-                set=>[@][..][_lb][text].Value
+                set=>[@][..][_lb][value].Value
                   value=>nullable
                 set=>[@][..][_lb][css].Value
                   value=>span-2
@@ -186,7 +186,7 @@ where
                   value=>[@][..][_lb]
                 set=>[/][magix.forms.create-web-part:0][controls][_lb].Name
                   value=>label
-            set=>[magix.forms.create-web-part:0][controls][label:1][text].Value
+            set=>[magix.forms.create-web-part:0][controls][label:1][value].Value
               value=>[$][info].Value
             magix.forms.create-web-part
               container=>column-list
@@ -207,11 +207,11 @@ where
               lhs=>[split][result].Count
               rhs=>40
               code
-                set=>[@][..][..][magix.forms.create-web-part:1][controls][text-area][text].Value
+                set=>[@][..][..][magix.forms.create-web-part:1][controls][text-area][value].Value
                   value=>@"select * from [{0}]"
                     v0=>[$][info].Value
             else
-              set=>[@][..][magix.forms.create-web-part:1][controls][text-area][text].Value
+              set=>[@][..][magix.forms.create-web-part:1][controls][text-area][value].Value
                 value=>[@][..][magix.forms.get-value:1][value].Value
             magix.forms.create-web-part
               container=>select-query
@@ -224,7 +224,7 @@ where
                   place-holder=>type your sql query here ...
                 button=>btnRunQuery
                   css=>span-3 btn-large right last
-                  text=>run
+                  value=>run
                   onclick
                     microsoft.sql.run-query
             magix.forms.effect
@@ -235,7 +235,7 @@ where
               joined
                 e0
                   type=>roll-down
-        set=>[@][_lb][text].Value
+        set=>[@][_lb][value].Value
           value=>[.][TABLE_NAME].Value
         set=>[@][_lb][info].Value
           value=>[.][TABLE_NAME].Value
@@ -254,7 +254,7 @@ where
           label=>tblHeader
             tag=>h3
             css=>top-1 left-6
-            text=>list of tables
+            value=>list of tables
       magix.forms.effect
         type=>fade-in
         form-id=>table-list
@@ -319,7 +319,7 @@ where
                 code
                   set=>[@][..][..][set][value][v1].Value
                     value=>[@][..][..][microsoft.sql.select][record-count].Value
-              set=>[/][if=>less-than][code][magix.forms.create-web-part][controls][panel=>tblPaging][controls][label=>lblCount][text].Value
+              set=>[/][if=>less-than][code][magix.forms.create-web-part][controls][panel=>tblPaging][controls][label=>lblCount][value].Value
                 value=>@"{0}/{1} of {2}"
                   v0=>[@][microsoft.sql.select][start].Value
                   v1=>[@][microsoft.sql.select][end].Value
@@ -340,7 +340,7 @@ where
           for-each=>[@][try][code][microsoft.sql.select][result][0]
             _th
               tag=>th
-            set=>[@][_th][text].Value
+            set=>[@][_th][value].Value
               value=>[.].Name
             add=>[@][..][magix.forms.create-web-part][controls][panel=>tbl][controls][panel][controls]
               value=>[@][_th]
@@ -353,7 +353,7 @@ where
             for-each=>[.]
               _lbl
                 tag=>td
-              set=>[@][_lbl][text].Value
+              set=>[@][_lbl][value].Value
                 value=>[.].Value
               add=>[@][..][_pnl][controls]
                 value=>[@][_lbl]
@@ -374,7 +374,7 @@ where
                 controls
                   link-button=>previous
                     css=>span-1
-                    text=>&lt;&lt;
+                    value=>&lt;&lt;
                     onclick
                       magix.viewport.get-viewstate=>microsoft.sql.select-sub-section
                       if=>equals
@@ -398,10 +398,10 @@ where
                       microsoft.sql.run-query
                   label=>lblCount
                     css=>span-4 text-center
-                    text=>count
+                    value=>count
                   link-button=>next
                     css=>span-1 last
-                    text=>&gt;&gt;
+                    value=>&gt;&gt;
                     onclick
                       magix.viewport.get-viewstate=>microsoft.sql.select-sub-section
                       if=>more-than-equals
@@ -453,7 +453,7 @@ where
   controls
     label=>lblHeader
       tag=>h2
-      text=>ms sql query tool
+      value=>ms sql query tool
     panel=>connectionWrp
       css=>span-17 last
       default=>btnNew
@@ -461,7 +461,7 @@ where
         label=>conLbl
           tag=>label
           css=>span-2 right-text
-          text=>connection
+          value=>connection
         select=>ddlConnection
           css=>span-4
           onfirstload
@@ -484,8 +484,8 @@ where
               microsoft.sql.close-selected-connection
         button=>delete
           css=>span-2
-          text=>delete
-          enabled=>false
+          value=>delete
+          disabled=>true
           onclick
             magix.forms.get-value
               form-id=>sql
@@ -502,12 +502,12 @@ where
         label=>lblNew
           tag=>label
           css=>span-3 right-text
-          text=>or create new
+          value=>or create new
         text-box=>txtNewConnection
           place-holder=>connection string ...
           css=>span-4
         button=>btnNew
-          text=>create
+          value=>create
           css=>span-2 last
           onclick
             magix.forms.get-value

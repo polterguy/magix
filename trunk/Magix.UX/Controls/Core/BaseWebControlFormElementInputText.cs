@@ -12,43 +12,30 @@ using Magix.UX.Helpers;
 
 namespace Magix.UX.Widgets.Core
 {
-    /**
-     * Abstract base class for widgets being BaseWebControlFormElementText type
-     * of controls, but also uses the Text portions as an input value which the user
-     * can change himself through interacting with the widget.
+    /*
+     * class for form elements taking text input
      */
     public abstract class BaseWebControlFormElementInputText : BaseWebControlFormElementText
     {
         private static readonly string[] _handlerNames = new string[]
         {
-            "esc",
             "change"
         };
 
-        private bool _hasSetSelect;
+        private bool _wasSelected;
 
-        /**
-         * Raised when widget changes its Text property. Normally a TextBox and a TextArea
-         * won't raise this event before they're loosing focus, since that's when we know
-         * what the Text property is actually changed to.
+        /*
+         * raised when text changes
          */
         public event EventHandler TextChanged;
 
-        /**
-         * Raise when widget has focus and user clicks ESC. Useful for being able to create
-         * 'discardable operations' types of logic.
-         */
-        public event EventHandler EscPressed;
-
-        /**
-         * Selects the whole text portions of the widget and gives the widget focus. Useful
-         * for widgets where you know the user will want to change its entire Text content
-         * when returned.
+        /*
+         * selects all text
          */
         public void Select()
         {
-            _hasSetSelect = true;
-            if (AjaxManager.Instance.IsCallback)
+            _wasSelected = true;
+            if (Manager.Instance.IsAjaxCallback)
             {
                 SetJsonValue("Select", "");
             }
@@ -57,9 +44,9 @@ namespace Magix.UX.Widgets.Core
         protected override void SetValue()
         {
             string valueOfTextBox = Page.Request.Params[ClientID];
-            if (valueOfTextBox != Text)
+            if (valueOfTextBox != Value)
             {
-                ViewState["Text"] = valueOfTextBox;
+                ViewState["Value"] = valueOfTextBox;
             }
         }
 
@@ -71,10 +58,6 @@ namespace Magix.UX.Widgets.Core
                     if (TextChanged != null)
                         TextChanged(this, new EventArgs());
                     break;
-                case "esc":
-                    if (EscPressed != null)
-                        EscPressed(this, new EventArgs());
-                    break;
                 default:
                     base.RaiseEvent(name);
                     break;
@@ -84,7 +67,7 @@ namespace Magix.UX.Widgets.Core
         protected override string GetClientSideScriptOptions()
         {
             string retVal = base.GetClientSideScriptOptions();
-            if (_hasSetSelect)
+            if (_wasSelected)
             {
                 if (!string.IsNullOrEmpty(retVal))
                     retVal += ",";
@@ -101,14 +84,11 @@ namespace Magix.UX.Widgets.Core
             return retVal;
         }
 
-        // Helper method for serializing events into the JS initialization script
-        // which goes to the client.
         private string GetEventsInitializationString()
         {
             string evts = string.Empty;
             EventHandler[] handlers = new EventHandler[]
             {
-                EscPressed,
                 TextChanged
             };
             for (int idx = 0; idx < handlers.Length; idx++)
@@ -127,13 +107,13 @@ namespace Magix.UX.Widgets.Core
 
         protected virtual bool ShouldAddValue
         {
-            get { return true; }
+            get { return !string.IsNullOrEmpty(Value); }
         }
 
         protected override void AddAttributes(Element el)
         {
             if (ShouldAddValue)
-                el.AddAttribute("value", Text);
+                el.AddAttribute("value", Value);
             el.AddAttribute("name", ClientID);
             base.AddAttributes(el);
         }
