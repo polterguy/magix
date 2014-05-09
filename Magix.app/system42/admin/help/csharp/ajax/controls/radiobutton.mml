@@ -76,21 +76,21 @@ namespace Magix.sample
 <div class="sample-web-control">
 {{
 label=>lbl1
-  css=>span-2
+  class=>span-2
   value=>coffee?
   tag=>label
   for=>rdo1
 radio=>rdo1
   group=>radios
-  css=>span-1
+  class=>span-1
 label=>lbl2
-  css=>span-2 clear
+  class=>span-2 clear
   value=>tea?
   tag=>label
   for=>rdo2
 radio=>rdo2
   group=>radios
-  css=>span-1
+  class=>span-1
 }}
 </div>
 

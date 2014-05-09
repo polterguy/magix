@@ -79,7 +79,7 @@ namespace Magix.UX.Widgets.Core
         /*
          * raised when control has focus and escape is pressed
          */
-        public event EventHandler EscKey;
+        public event EventHandler Esc;
 
         public BaseWebControl()
         {
@@ -280,11 +280,11 @@ namespace Magix.UX.Widgets.Core
                         KeyPress(this, new EventArgs());
                     break;
                 case "esc":
-                    if (EscKey != null)
-                        EscKey(this, new EventArgs());
+                    if (Esc != null)
+                        Esc(this, new EventArgs());
                     break;
                 default:
-                    throw new ApplicationException("Unknown event fired for control");
+                    throw new ArgumentException("unknown event fired for control");
             }
         }
 
@@ -310,7 +310,7 @@ namespace Magix.UX.Widgets.Core
                 MouseOver,
                 MouseOut,
                 KeyPress,
-                EscKey
+                Esc
             };
             for (int idx = 0; idx < handlers.Length; idx++)
             {

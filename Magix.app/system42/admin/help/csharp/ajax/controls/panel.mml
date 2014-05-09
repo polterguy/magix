@@ -74,7 +74,7 @@ namespace Magix.sample
 <div class="sample-web-control">
 {{
 panel=>pnl
-  css=>span-10 desktop-widget
+  class=>span-10 desktop-widget
   onmouseover
     magix.forms.set-value
       id=>lbl

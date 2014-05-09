@@ -11,7 +11,7 @@ is your friend</p>
 dynamic=>methods-for-hyperlink
   onfirstload
     magix.forms.dox.create-dox-for-web-control
-      css=>dox-for-web-control
+      class=>dox-for-web-control
       control=>hyperlink
       container=>methods-for-hyperlink
 }}

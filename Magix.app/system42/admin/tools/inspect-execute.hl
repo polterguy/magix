@@ -13,7 +13,7 @@ set=>[list-events].Name
 for-each=>[Data][events]
   _tpl
     link-button
-      css=>span-3 hover-shadow
+      class=>span-3 hover-shadow
       text
       onclick
         void.foo
@@ -73,19 +73,19 @@ cf
   container=>content1
   controls
     panel2
-      css=>span-15
+      class=>span-15
       controls
         label=>header
           value=>keyword name
-          css=>span-15
+          class=>span-15
           tag=>h3
         label=>code
-          css=>span-15
+          class=>span-15
           value=>code example
           tag=>pre
         button=>run
           value=>inspect
-          css=>span-2
+          class=>span-2
           onclick
             magix.forms.get-value
               form-id=>form1
@@ -96,13 +96,13 @@ cf
               code
               css=>span-19 last left-5 bottom-3 top-1
         label=>lblDesc
-          css=>span-15 top-2
+          class=>span-15 top-2
           tag=>label
           value=>description
         label=>desc
-          css=>span-15
+          class=>span-15
           value=>@"description of your magix.execute keyword.&nbsp;&nbsp;
 click any of the keyword active events to the right to inspect them"
     panel=>wrp
-      css=>span-4 last
+      class=>span-4 last
       controls

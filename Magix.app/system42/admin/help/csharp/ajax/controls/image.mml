@@ -12,7 +12,7 @@ background-image through css or something similar</p>
 dynamic=>methods-for-image
   onfirstload
     magix.forms.dox.create-dox-for-web-control
-      css=>dox-for-web-control
+      class=>dox-for-web-control
       control=>image
       container=>methods-for-image
 }}

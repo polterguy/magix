@@ -38,13 +38,13 @@ _dt
   panel
     controls
       label
-        css=>span-13
+        class=>span-13
         tag=>label
         text
       label
-        css=>right
+        class=>right
       label
-        css=>span-17 last
+        class=>span-17 last
         text
 
 for-each=>[magix.data.load][objects]
@@ -58,10 +58,10 @@ for-each=>[magix.data.load][objects]
     lhs=>[.][error].Value
     rhs=>true
     code
-      set=>[/][_dt][panel][css].Value
+      set=>[/][_dt][panel][class].Value
         value=>span-17 boxed-light-red air-padding bottom-1 relative
   else
-    set=>[/][_dt][panel][css].Value
+    set=>[/][_dt][panel][class].Value
       value=>span-17 boxed-light-green air-padding bottom-1 relative
   if=>exist
     lhs=>[.][code]
@@ -150,37 +150,37 @@ magix.forms.create-web-part
   css=>span-17 last
   controls
     label=>header
-      css=>span-13 left-6 last
+      class=>span-13 left-6 last
       value=>server log
       tag=>h2
     panel=>items
-      css=>span-17 last
+      class=>span-17 last
       controls
     panel=>pagerWrp
-      css=>span-19
+      class=>span-19
       controls
         link-button=>previous
           value=>&lt;&lt;
-          css=>span-1 left-7
+          class=>span-1 left-7
           onclick
             execute-file=>system42/admin/server-log-grid.hl
         label=>count
-          css=>span-2
+          class=>span-2
           value=>54
         link-button=>next
           value=>&gt;&gt;
-          css=>span-1
+          class=>span-1
           onclick
             execute-file=>system42/admin/server-log-grid.hl
         panel
-          css=>span-2 right last
+          class=>span-2 right last
           default=>btnSearch
           controls
             text-box=>search
               place-holder=>filter ...
-              css=>span-2
+              class=>span-2
             button=>btnSearch
-              css=>hide
+              class=>hide
               onclick
                 magix.forms.get-value
                   form-id=>server-log

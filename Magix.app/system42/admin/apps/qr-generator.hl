@@ -10,14 +10,14 @@ magix.forms.create-web-part
   controls
     label=>lblUrl
       tag=>label
-      css=>span-8
+      class=>span-8
       text=>url
     text-area=>url
-      css=>span-8 clear
+      class=>span-8 clear
       rows=>4
       place-holder=>text or url goes here ...
     button=>create
-      css=>span-4 left-4 btn-large clear
+      class=>span-4 left-4 btn-large clear
       text=>create
       onclick
         magix.forms.get-value
@@ -47,7 +47,7 @@ magix.forms.create-web-part
           value=>true
     image=>qrCodeImage
       alt=>qr code rendered for you
-      css=>clear blocked top-1
+      class=>clear blocked top-1
       visible=>false
       tip=>@"will show the resulting qr code once generated.
 drag'n'drop, or righ-click and choose 'save as',

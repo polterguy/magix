@@ -28,7 +28,7 @@ the following magix markup language</p>
 }}
 button=>my-button
   value=>click me
-  css=>span-5 btn-large
+  class=>span-5 btn-large
   onclick
     magix.viewport.show-message
       message=>hello world
@@ -53,7 +53,7 @@ web controls, to create rich applications.&nbsp;&nbsp;this will produce the foll
 <p>some paragraph</p>{{
 button=>my-button
   value=>click me
-  css=>span-5 btn-large
+  class=>span-5 btn-large
   onclick
     magix.viewport.show-message
       message=>hello world

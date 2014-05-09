@@ -74,21 +74,21 @@ set=>[magix.forms.create-web-part][controls][panel:2][controls][label][value].Va
 
 _dt
   panel
-    css=>span-17 hover-shadow relative
+    class=>span-17 hover-shadow relative
     controls
       label
-        css=>span-5
+        class=>span-5
       label
-        css=>span-5
+        class=>span-5
       label
-        css=>span-4
+        class=>span-4
       link-button
-        css=>span-2
+        class=>span-2
         value=>edit
         onclick
           execute-file=>system42/admin/users/edit-single-user.hl
       link-button
-        css=>span-1 hover-shadow last right z-1 absolute light-red centered
+        class=>span-1 hover-shadow last right z-1 absolute light-red centered
         value=>x
         onclick
           magix.viewport.confirm
@@ -127,70 +127,70 @@ magix.forms.create-web-part
   css=>span-17 last
   controls
     label=>header
-      css=>span-13 last left-6
+      class=>span-13 last left-6
       value=>edit users
       tag=>h2
     panel=>userGrdHeader
       controls
         label=>headName
-          css=>span-5
+          class=>span-5
           value=>name
           tag=>label
           tip=>name of user
         label=>headUsername
-          css=>span-5
+          class=>span-5
           value=>username
           tag=>label
           tip=>username of user
         label=>headPwd
-          css=>span-4
+          class=>span-4
           value=>password
           tag=>label
           tip=>password of user
         label=>headEdit
-          css=>span-2
+          class=>span-2
           value=>edit
           tag=>label
           tip=>edit user
         label=>headDelete
-          css=>span-1 last
+          class=>span-1 last
           value=>del
           tag=>label
           tip=>delete user
     panel=>userGrdWrp
-      css=>span-17 light-green
+      class=>span-17 light-green
       controls
     panel=>pagerWrp
-      css=>span-17
+      class=>span-17
       controls
         link-button=>previous
           value=>&lt;&lt;
-          css=>span-1 left-7
+          class=>span-1 left-7
           onclick
             execute-file=>system42/admin/users/users-grid.hl
         label=>count
-          css=>span-2
+          class=>span-2
           value=>54
         link-button=>next
           value=>&gt;&gt;
-          css=>span-1
+          class=>span-1
           onclick
             execute-file=>system42/admin/users/users-grid.hl
     panel=>newUserWrp
-      css=>span-19 top-1
+      class=>span-19 top-1
       default=>addBtn
       controls
         text-box=>nName
-          css=>span-5
+          class=>span-5
           place-holder=>name of new user ...
         text-box=>nUsername
-          css=>span-5
+          class=>span-5
           place-holder=>username ...
         text-box=>nPwd
-          css=>span-5 right-4 last
+          class=>span-5 right-4 last
           place-holder=>password ...
         button=>addBtn
-          css=>btn-large span-3 clear
+          class=>btn-large span-3 clear
           value=>add
           onclick
             magix.forms.get-value

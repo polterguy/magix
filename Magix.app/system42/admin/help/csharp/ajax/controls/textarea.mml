@@ -65,7 +65,7 @@ namespace Magix.sample
 text-area=>txt
   value=>multiple lines of text
   rows=>5
-  css=>span-5
+  class=>span-5
 }}
 </div>
 

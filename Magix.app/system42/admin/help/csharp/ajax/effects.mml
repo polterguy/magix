@@ -64,7 +64,7 @@ having an effect run as the user clicks a web control</p>
 {{
 button=>btn
   value=>click me!
-  css=>span-3 btn-large
+  class=>span-3 btn-large
   onclick
     magix.forms.effect
       id=>lbl
@@ -77,7 +77,7 @@ button=>btn
           time=>500
 label=>lbl
   value=>watch when button is clicked
-  css=>span-5
+  class=>span-5
 }}
 
 {{

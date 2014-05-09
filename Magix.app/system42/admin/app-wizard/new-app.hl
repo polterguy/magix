@@ -54,9 +54,9 @@ magix.forms.create-web-part
         label
           value=>give your new application template a name, or edit existing template
           tag=>label
-          css=>span-14 last bottom-1
+          class=>span-14 last bottom-1
         select=>editExisting
-          css=>span-5
+          class=>span-5
           items
             _default=>choose existing app ...
           onselectedindexchanged
@@ -68,15 +68,15 @@ magix.forms.create-web-part
             execute-file
         text-box=>name
           place-holder=>name ...
-          css=>span-6
+          class=>span-6
         button=>wizard
           value=>&lt;&lt; back
-          css=>span-3 left-5 top-1 clear
+          class=>span-3 left-5 top-1 clear
           onclick
             execute-file=>system42/admin/app-wizard/app-wizard.hl
         button=>next
           value=>next &gt;&gt;
-          css=>span-3 last top-1
+          class=>span-3 last top-1
           onclick
             magix.forms.get-value
               form-id=>init-app

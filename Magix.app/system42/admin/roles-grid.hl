@@ -12,11 +12,11 @@ magix.data.load
 
 _dt
   panel
-    css=>span-19 hover-shadow relative
+    class=>span-19 hover-shadow relative
     controls
       label
       link-button
-        css=>span-1 hover-shadow last right z-1 absolute light-red centered
+        class=>span-1 hover-shadow last right z-1 absolute light-red centered
         value=>x
         onclick
           magix.viewport.confirm
@@ -64,33 +64,33 @@ magix.forms.create-web-part
   css=>span-19 last
   controls
     label=>header
-      css=>span-13 left-6 last
+      class=>span-13 left-6 last
       value=>edit roles
       tag=>h2
     panel=>roleGrdHeader
       controls
         label=>headName
-          css=>span-18
+          class=>span-18
           value=>name
           tag=>label
           tip=>name of role
         label=>headDelete
-          css=>span-1 last
+          class=>span-1 last
           value=>del
           tag=>label
           tip=>delete role
     panel=>roleGrdWrp
-      css=>span-19 light-green
+      class=>span-19 light-green
       controls
     panel=>newRoleWrp
-      css=>span-19 top-1
+      class=>span-19 top-1
       default=>addBtn
       controls
         text-box=>nName
-          css=>span-5 right-14 last
+          class=>span-5 right-14 last
           place-holder=>name of new role ...
         button=>addBtn
-          css=>btn-large span-3 clear
+          class=>btn-large span-3 clear
           value=>add
           onclick
             magix.forms.get-value

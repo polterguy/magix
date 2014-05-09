@@ -32,8 +32,8 @@ namespace Magix.forms
 
 			Uploader ret = new Uploader();
 
-			if (node.Contains("css") && !string.IsNullOrEmpty(node["css"].Get<string>()))
-				ret.Class = node["css"].Get<string>();
+			if (node.Contains("class") && !string.IsNullOrEmpty(node["class"].Get<string>()))
+				ret.Class = node["class"].Get<string>();
 
 			string folder = "";
 
@@ -118,7 +118,7 @@ files to the server</p>";
             node["magix.forms.create-web-part"]["form-id"].Value = "sample-form";
             base.Inspect(node["magix.forms.create-web-part"]["controls"]["uploader"]);
             node["magix.forms.create-web-part"]["controls"]["uploader"]["folder"].Value = "system42";
-            node["magix.forms.create-web-part"]["controls"]["uploader"]["css"].Value = "mux-file-uploader";
+            node["magix.forms.create-web-part"]["controls"]["uploader"]["class"].Value = "mux-file-uploader";
             node["magix.forms.create-web-part"]["controls"]["uploader"]["visible"].UnTie(); // makes no sense
             node["magix.forms.create-web-part"]["controls"]["uploader"]["info"].UnTie(); // makes no sense
             node["magix.forms.create-web-part"]["controls"]["uploader"]["onuploaded"].Value = "hyper lisp code";

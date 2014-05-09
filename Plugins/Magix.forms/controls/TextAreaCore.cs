@@ -70,7 +70,7 @@ namespace Magix.forms
 			if (ShouldHandleEvent("onescpressed", node))
 			{
 				Node codeNode = node["onescpressed"].Clone();
-				ret.EscKey += delegate(object sender2, EventArgs e2)
+				ret.Esc += delegate(object sender2, EventArgs e2)
 				{
                     FillOutEventInputParameters(codeNode, sender2);
                     RaiseActiveEvent(

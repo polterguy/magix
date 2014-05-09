@@ -22,7 +22,7 @@ Button</p>
 dynamic=>methods-for-button
   onfirstload
     magix.forms.dox.create-dox-for-web-control
-      css=>dox-for-web-control
+      class=>dox-for-web-control
       control=>button
       container=>methods-for-button
 }}
@@ -73,7 +73,7 @@ namespace Magix.sample
 {{
 button=>btn
   value=>click me!
-  css=>span-5 btn-large
+  class=>span-5 btn-large
   onclick
     magix.forms.set-value
       id=>btn

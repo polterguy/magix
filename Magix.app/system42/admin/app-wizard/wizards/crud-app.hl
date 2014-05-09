@@ -104,10 +104,10 @@ magix.forms.create-web-part
           label=>spacer
             tag=>hr
           label=>runDescription
-            css=>span-10
+            class=>span-10
             tag=>pre
           button=>btnClosePreview
-            css=>span-3 right last
+            class=>span-3 right last
             value=>close preview
             onclick
               magix.viewport.clear-controls
@@ -137,12 +137,12 @@ magix.forms.create-web-part
 
     magix.crud-app.rebind-data-grid
       _label
-        css=>span-5
+        class=>span-5
       magix.data.load
         id=>magix.crud-app.template.
       for-each=>[magix.data.load][objects][0][fields]
 
-        set=>[/][_label][css].Value
+        set=>[/][_label][class].Value
           value=>span-5 clear
         set=>[/][_label][value].Value
           value=>[.][field-name].Value
@@ -151,7 +151,7 @@ magix.forms.create-web-part
         set=>[/][magix.forms.create-web-part][controls][panel][controls][_label].Name
           value=>label
 
-        set=>[/][_label][css].Value
+        set=>[/][_label][class].Value
           value=>span-5
         set=>[/][_label][value].Value
           value=>[.][field-type].Value
@@ -160,7 +160,7 @@ magix.forms.create-web-part
         set=>[/][magix.forms.create-web-part][controls][panel][controls][_label].Name
           value=>label
 
-        set=>[/][_label][css].Value
+        set=>[/][_label][class].Value
           value=>span-3 right-text
         set=>[/][_label][value].Value
           value=>X
@@ -179,17 +179,17 @@ magix.forms.create-web-part
           label=>lblHeaderName
             tag=>label
             value=>name
-            css=>span-5
+            class=>span-5
           label=>lblHeaderType
             tag=>label
             value=>type
-            css=>span-5
+            class=>span-5
           label=>lblDelete
             tag=>label
-            css=>span-3 right-text
+            class=>span-3 right-text
             value=>delete
           panel=>pnlWrpGrid
-            css=>span-17
+            class=>span-17
             controls
       magix.forms.set-focus
         form-id=>init-app
@@ -199,22 +199,22 @@ magix.forms.create-web-part
     hidden=>nameOfApp
     label=>lblHeader
       value=>fields of - 
-      css=>span-10
+      class=>span-10
       tag=>h2
     panel=>newWrp
       default=>addBtn
       controls
         text-box=>name
-          css=>clear span-5
+          class=>clear span-5
           place-holder=>name of field ...
         select=>fieldType
-          css=>span-5
+          class=>span-5
           items
             _default=>field type ...
             text-box=>text-box
             text-area=>text-area
         button=>addBtn
-          css=>span-3
+          class=>span-3
           value=>+
           onclick
             magix.data.load
@@ -301,7 +301,7 @@ magix.forms.create-web-part
   css=>span-17 last
   controls
     button=>back
-      css=>span-3 left-1 top-1
+      class=>span-3 left-1 top-1
       value=>&lt;&lt; back
       onclick
         execute-file=>system42/admin/app-wizard/new-app.hl
@@ -315,7 +315,7 @@ magix.forms.create-web-part
         magix.viewport.clear-controls
           container=>content6
     button=>deleteApp
-      css=>span-3 top-1
+      class=>span-3 top-1
       value=>delete
       onclick
         magix.viewport.confirm
@@ -335,12 +335,12 @@ magix.forms.create-web-part
             magix.viewport.show-message
               message=>crud application was deleted
     button=>generateApp
-      css=>span-3 top-1
+      class=>span-3 top-1
       value=>generate
       onclick
         magix.crud-app.generate-application
     button=>preview
-      css=>span-3 top-1
+      class=>span-3 top-1
       value=>preview
       tip=>will generate application and then preview it
       onclick

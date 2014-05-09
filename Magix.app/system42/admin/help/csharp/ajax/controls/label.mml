@@ -14,7 +14,7 @@ the Tag property is changed, this widget will render as a span
 dynamic=>methods-for-label
   onfirstload
     magix.forms.dox.create-dox-for-web-control
-      css=>dox-for-web-control
+      class=>dox-for-web-control
       control=>label
       container=>methods-for-label
 }}
