@@ -44,7 +44,7 @@ namespace Magix.forms
                 if (Ip(e.Params).Contains("value"))
                     className = Ip(e.Params)["value"].Get<string>();
 
-				ctrl.CssClass = className;
+				ctrl.Class = className;
 			}
 		}
 
@@ -68,7 +68,7 @@ namespace Magix.forms
 
 			if (ctrl != null)
 			{
-                Ip(e.Params)["value"].Value = ctrl.CssClass;
+                Ip(e.Params)["value"].Value = ctrl.Class;
 			}
 		}
 
@@ -96,9 +96,9 @@ namespace Magix.forms
 
 			if (ctrl != null)
 			{
-                if (ctrl.CssClass.IndexOf(Ip(e.Params)["css"].Get<string>()) == -1)
+                if (ctrl.Class.IndexOf(Ip(e.Params)["css"].Get<string>()) == -1)
 				{
-                    ctrl.CssClass = ctrl.CssClass.Trim() + " " + Ip(e.Params)["css"].Get<string>().Trim();
+                    ctrl.Class = ctrl.Class.Trim() + " " + Ip(e.Params)["css"].Get<string>().Trim();
 				}
 			}
 		}
@@ -127,9 +127,9 @@ namespace Magix.forms
 
 			if (ctrl != null)
 			{
-                if (ctrl.CssClass.IndexOf(Ip(e.Params)["css"].Get<string>()) != -1)
+                if (ctrl.Class.IndexOf(Ip(e.Params)["css"].Get<string>()) != -1)
 				{
-                    ctrl.CssClass = ctrl.CssClass.Replace(Ip(e.Params)["css"].Get<string>().Trim(), "").Replace("  ", " ").Trim();
+                    ctrl.Class = ctrl.Class.Replace(Ip(e.Params)["css"].Get<string>().Trim(), "").Replace("  ", " ").Trim();
 				}
 			}
 		}
@@ -170,7 +170,7 @@ namespace Magix.forms
             BaseWebControl that = ctrl as BaseWebControl;
 
 			if (node.Contains("css") && !string.IsNullOrEmpty(node["css"].Get<string>()))
-				that.CssClass = node["css"].Get<string>();
+				that.Class = node["css"].Get<string>();
 
 			if (node.Contains("dir") && !string.IsNullOrEmpty(node["dir"].Get<string>()))
 				that.Dir = node["dir"].Get<string>();
@@ -179,7 +179,7 @@ namespace Magix.forms
 				that.TabIndex = node["tab"].Get<string>();
 
 			if (node.Contains("tip") && !string.IsNullOrEmpty(node["tip"].Get<string>()))
-				that.ToolTip = node["tip"].Get<string>();
+				that.Title = node["tip"].Get<string>();
 
 			if (node.Contains("style") && !string.IsNullOrEmpty(node["style"].Get<string>()))
 			{

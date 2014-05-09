@@ -13,18 +13,13 @@ using Magix.UX.Widgets.Core;
 
 namespace Magix.UX.Widgets
 {
-    /**
-     * A multiple line type of 'give me some text input' type of widget. It wraps the
-     * textarea HTML element. If you only need single lines of input, you should
-     * probably rather use the TextBox widget. However this widget is useful for cases
-     * when you need multiple lines of text input. See also the RichEdit widget if
-     * you need rich formatting of your text.
+    /*
+     * textarea ajax control
      */
     public class TextArea : BaseWebControlFormElementInputText
     {
-        /**
-         * Ghost text displayed only if there is no value in the textbox. Useful for giving 
-         * end user hints and clues about what type of field this is.
+        /*
+         * shown when value is empty
          */
         public string PlaceHolder
         {
@@ -37,8 +32,8 @@ namespace Magix.UX.Widgets
             }
         }
 
-        /**
-         * Number of rows on textarea HTML element
+        /*
+         * height of control
          */
         public int Rows
         {
@@ -56,7 +51,7 @@ namespace Magix.UX.Widgets
             using (Element el = builder.CreateElement("textarea"))
             {
                 AddAttributes(el);
-                el.Write(Text);
+                el.Write(Value);
             }
         }
 

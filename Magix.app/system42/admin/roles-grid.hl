@@ -17,7 +17,7 @@ _dt
       label
       link-button
         css=>span-1 hover-shadow last right z-1 absolute light-red centered
-        text=>x
+        value=>x
         onclick
           magix.viewport.confirm
             message=>are you sure you wish to delete this role?
@@ -53,7 +53,7 @@ _dt
 for-each=>[magix.data.load][objects]
   set=>[/][_dt][panel][controls][link-button][onclick][magix.viewport.confirm][code][magix.data.remove][prototype][name].Value
     value=>[.][name].Value
-  set=>[/][_dt][panel][controls][label][text].Value
+  set=>[/][_dt][panel][controls][label][value].Value
     value=>[.][name].Value
   add=>[/][magix.forms.create-web-part][controls][panel:1][controls]
     value=>[/][_dt][0]
@@ -65,18 +65,18 @@ magix.forms.create-web-part
   controls
     label=>header
       css=>span-13 left-6 last
-      text=>edit roles
+      value=>edit roles
       tag=>h2
     panel=>roleGrdHeader
       controls
         label=>headName
           css=>span-18
-          text=>name
+          value=>name
           tag=>label
           tip=>name of role
         label=>headDelete
           css=>span-1 last
-          text=>del
+          value=>del
           tag=>label
           tip=>delete role
     panel=>roleGrdWrp
@@ -91,7 +91,7 @@ magix.forms.create-web-part
           place-holder=>name of new role ...
         button=>addBtn
           css=>btn-large span-3 clear
-          text=>add
+          value=>add
           onclick
             magix.forms.get-value
               form-id=>roles-grid

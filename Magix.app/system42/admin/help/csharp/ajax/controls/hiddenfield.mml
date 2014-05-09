@@ -39,14 +39,14 @@ the active module as an embedded resource if you want to compile this sample</p>
     runat="server"
     id="btn"
     OnClick="btn_Click"
-    Text="then click me!"
-    CssClass="span-5 btn-large"/&gt;
+    Value="then click me!"
+    Class="span-5 btn-large"/&gt;
 &lt;mux:Button
     runat="server"
     id="btn2"
     OnClick="btn2_Click"
-    Text="click first!"
-    CssClass="span-5 btn-large"/&gt;
+    Value="click first!"
+    Class="span-5 btn-large"/&gt;
 </pre>
 
 <label>SampleModule.ascx.cs</label>
@@ -68,12 +68,12 @@ namespace Magix.sample
         protected void btn_Click(object sender, EventArgs e)
         {
             hid.Value ="new value";
-            btn2.Text = "then me again!";
+            btn2.Value = "then me again!";
         }
 
         protected void btn2_Click(object sender, EventArgs e)
         {
-            btn2.Text = hid.Value;
+            btn2.Value = hid.Value;
         }
     }
 }</pre>
@@ -84,7 +84,7 @@ namespace Magix.sample
 hidden=>hid
   value=>empty
 button=>btn
-  text=>then click me!
+  value=>then click me!
   css=>span-5 btn-large
   onclick
     magix.forms.set-value
@@ -94,7 +94,7 @@ button=>btn
       id=>btn2
       value=>then me again!
 button=>btn2
-  text=>click first!
+  value=>click first!
   css=>span-5 btn-large
   onclick
     magix.forms.get-value

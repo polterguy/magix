@@ -52,7 +52,7 @@ magix.forms.create-web-part
       default=>next
       controls
         label
-          text=>give your new application template a name, or edit existing template
+          value=>give your new application template a name, or edit existing template
           tag=>label
           css=>span-14 last bottom-1
         select=>editExisting
@@ -70,12 +70,12 @@ magix.forms.create-web-part
           place-holder=>name ...
           css=>span-6
         button=>wizard
-          text=>&lt;&lt; back
+          value=>&lt;&lt; back
           css=>span-3 left-5 top-1 clear
           onclick
             execute-file=>system42/admin/app-wizard/app-wizard.hl
         button=>next
-          text=>next &gt;&gt;
+          value=>next &gt;&gt;
           css=>span-3 last top-1
           onclick
             magix.forms.get-value

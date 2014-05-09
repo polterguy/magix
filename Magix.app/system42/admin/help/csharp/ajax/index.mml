@@ -35,15 +35,15 @@ the active module as an embedded resource if you want to compile this sample</p>
     runat="server"
     id="btn"
     OnClick="btn_Click"
-    Text="Click Me!"
-    CssClass="span-3 btn-large"/&gt;
+    Value="Click Me!"
+    Class="span-3 btn-large"/&gt;
 
 &lt;mux:Label
     runat="server"
     id="lbl"
-    Text="to be changed ..."
+    Value="to be changed ..."
     OnMouseOver="lbl_MouseOver"
-    CssClass="span-5"/&gt;
+    Class="span-5"/&gt;
 </pre>
 
 <label>SampleModule.ascx.cs</label>
@@ -63,12 +63,12 @@ namespace Magix.sample
 
         protected void btn_Click(object sender, EventArgs e)
         {
-            lbl.Text ="label text was changed!";
+            lbl.Value ="label text was changed!";
         }
 
         protected void lbl_MouseOver(object sender, EventArgs e)
         {
-            lbl.Text ="DON'T TOUCH ME!!! OUCH!";
+            lbl.Value ="DON'T TOUCH ME!!! OUCH!";
         }
     }
 }</pre>
@@ -85,7 +85,7 @@ is an exhaustive list</p>
 <ul class="list-no-type">
 <li>{{
 link-button=>magix-ux-button
-  text=>Button
+  value=>Button
   css=>span-3 clear
   onclick
     magix.help.open-file
@@ -93,7 +93,7 @@ link-button=>magix-ux-button
 }} <span class="span-18 last">a button type of control</span></li>
 <li>{{
 link-button=>magix-ux-checkbox
-  text=>CheckBox
+  value=>CheckBox
   css=>span-3 clear
   onclick
     magix.help.open-file
@@ -101,7 +101,7 @@ link-button=>magix-ux-checkbox
 }} <span class="span-18 last">a two state check box control, useful for yes or no questions</span></li>
 <li>{{
 link-button=>magix-ux-hiddenfield
-  text=>HiddenField
+  value=>HiddenField
   css=>span-3 clear
   onclick
     magix.help.open-file
@@ -109,7 +109,7 @@ link-button=>magix-ux-hiddenfield
 }} <span class="span-18 last">a hidden value control.&nbsp;&nbsp;not visible for the user, but can carry any text string you wish</span></li>
 <li>{{
 link-button=>magix-ux-hyperlink
-  text=>HyperLink
+  value=>HyperLink
   css=>span-3 clear
   onclick
     magix.help.open-file
@@ -117,7 +117,7 @@ link-button=>magix-ux-hyperlink
 }} <span class="span-18 last">a hyperlink, leading to another url</span></li>
 <li>{{
 link-button=>magix-ux-image
-  text=>Image
+  value=>Image
   css=>span-3 clear
   onclick
     magix.help.open-file
@@ -125,7 +125,7 @@ link-button=>magix-ux-image
 }} <span class="span-18 last">shows an image on the page</span></li>
 <li>{{
 link-button=>magix-ux-label
-  text=>Label
+  value=>Label
   css=>span-3 clear
   onclick
     magix.help.open-file
@@ -133,7 +133,7 @@ link-button=>magix-ux-label
 }} <span class="span-18 last">a control for text strings, which doesn't necessarily have any rich formatting, or doesn't require the user to interact with them</span></li>
 <li>{{
 link-button=>magix-ux-linkbutton
-  text=>LinkButton
+  value=>LinkButton
   css=>span-3 clear
   onclick
     magix.help.open-file
@@ -141,7 +141,7 @@ link-button=>magix-ux-linkbutton
 }} <span class="span-18 last">a button type of control, but rendered and recognized as a hyperlink by the browser</span></li>
 <li>{{
 link-button=>magix-ux-panel
-  text=>Panel
+  value=>Panel
   css=>span-3 clear
   onclick
     magix.help.open-file
@@ -149,7 +149,7 @@ link-button=>magix-ux-panel
 }} <span class="span-18 last">a web control for wrapping other controls within.&nbsp;&nbsp;a container web control for other web controls and controls</span></li>
 <li>{{
 link-button=>magix-ux-radiobutton
-  text=>RadioButton
+  value=>RadioButton
   css=>span-3 clear
   onclick
     magix.help.open-file
@@ -159,7 +159,7 @@ for the end user to choose only one value.&nbsp;&nbsp;handy for choose one item,
 of questions</span></li>
 <li>{{
 link-button=>magix-ux-selectlist
-  text=>SelectList
+  value=>SelectList
   css=>span-3 clear
   onclick
     magix.help.open-file
@@ -168,7 +168,7 @@ link-button=>magix-ux-selectlist
 its default state, is to be shown as a drop-down list of different values, where only one value can be chosen</span></li>
 <li>{{
 link-button=>magix-ux-textarea
-  text=>TextArea
+  value=>TextArea
   css=>span-3 clear
   onclick
     magix.help.open-file
@@ -177,7 +177,7 @@ link-button=>magix-ux-textarea
 of text input</span></li>
 <li>{{
 link-button=>magix-ux-textbox
-  text=>TextBox
+  value=>TextBox
   css=>span-3 clear
   onclick
     magix.help.open-file
@@ -186,7 +186,7 @@ link-button=>magix-ux-textbox
 supports different modes, such as password mode, numeric mode, email mode, etc </span></li>
 <li>{{
 link-button=>magix-ux-dynamicpanel
-  text=>DynamicPanel
+  value=>DynamicPanel
   css=>span-3 clear
   onclick
     magix.help.open-file
@@ -197,7 +197,7 @@ which controls it has previously loaded earlier across web requests.&nbsp;&nbsp;
 controls it loaded previously upon every callback and postback to page</span></li>
 <li>{{
 link-button=>magix-ux-timer
-  text=>Timer
+  value=>Timer
   css=>span-3 clear
   onclick
     magix.help.open-file
@@ -206,7 +206,7 @@ link-button=>magix-ux-timer
 periodically check for changes, every n'th millisecond</span></li>
 <li>{{
 link-button=>magix-ux-uploader
-  text=>Uploader
+  value=>Uploader
   css=>span-3 clear
   onclick
     magix.help.open-file
@@ -214,7 +214,7 @@ link-button=>magix-ux-uploader
 }} <span class="span-18 last">allows for dragging and dropping files onto the browser area, to upload files to your server</span></li>
 <li>{{
 link-button=>magix-ux-wysiwyg
-  text=>Wysiwyg
+  value=>Wysiwyg
   css=>span-3 clear
   onclick
     magix.help.open-file

@@ -5,7 +5,7 @@
 textarea html element. if you only need single lines of input, you should
 probably rather use the {{
 link-button=>magix-ux-textbox
-  text=>TextBox
+  value=>TextBox
   onclick
     magix.help.open-file
       file=>system42\admin\help\csharp\ajax\controls\textbox.mml
@@ -40,8 +40,8 @@ the active module as an embedded resource if you want to compile this sample</p>
     runat="server"
     id="txt"
     Rows="5"
-    Text="multiple lines of text"
-    CssClass="span-5"/&gt;
+    Value="multiple lines of text"
+    Class="span-5"/&gt;
 </pre>
 
 <label>SampleModule.ascx.cs</label>
@@ -63,7 +63,7 @@ namespace Magix.sample
 <div class="sample-web-control">
 {{
 text-area=>txt
-  text=>multiple lines of text
+  value=>multiple lines of text
   rows=>5
   css=>span-5
 }}

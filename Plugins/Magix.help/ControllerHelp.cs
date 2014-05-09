@@ -79,20 +79,20 @@ container</p><p>not thread safe</p>";
 <div class=""span-23 last bottom-1 btn-group top-2"">
 {{{{
 button=>back
-  text=><<
+  value=><<
   css=>btn-large span-2
   onclick
     magix.help.move-backwards
     magix.viewport.scroll=>help
 button=>index
-  text=>index
+  value=>index
   css=>btn-large span-2
   onclick
     magix.help.open-file
       file=>system42/admin/help/index.mml
     magix.viewport.scroll=>help
 button=>close
-  text=>close
+  value=>close
   css=>btn-large span-2
   onclick
     magix.viewport.clear-controls
@@ -114,14 +114,14 @@ text-box=>search
       id=>search
       value=>
 button=>next-page
-  text=>next page
+  value=>next page
   css=>btn-large span-3
   onclick
     magix.help.move-next
       force-page=>true
     magix.viewport.scroll=>help
 button=>next
-  text=>>>
+  value=>>>
   css=>btn-large span-2 last
   onclick
     magix.help.move-next
@@ -137,13 +137,13 @@ dynamic=>help-content
 <div class=""span-6 last right btn-group"">
 {{{{
 button=>back-2
-  text=>back
+  value=>back
   css=>btn-large span-3
   onclick
     magix.help.move-backwards
     magix.viewport.scroll=>help
 button=>next-page-2
-  text=>next page
+  value=>next page
   css=>btn-large span-3 last
   onclick
     magix.help.move-next

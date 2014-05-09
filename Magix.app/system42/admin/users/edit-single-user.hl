@@ -11,12 +11,12 @@ magix.data.load
   prototype
     type=>magix.core.user
 
-set=>[magix.forms.create-web-part][controls][label][text].Value
+set=>[magix.forms.create-web-part][controls][label][value].Value
   value=>[magix.data.load][objects][0][username].Value
 
-set=>[magix.forms.create-web-part][controls][panel][controls][text-box:0][text].Value
+set=>[magix.forms.create-web-part][controls][panel][controls][text-box:0][value].Value
   value=>[magix.data.load][objects][0][name].Value
-set=>[magix.forms.create-web-part][controls][panel][controls][text-box:1][text].Value
+set=>[magix.forms.create-web-part][controls][panel][controls][text-box:1][value].Value
   value=>[magix.data.load][objects][0][pwd].Value
 set=>[magix.forms.create-web-part][controls][panel][controls][text-box:0][ontextchanged][magix.data.load][prototype][username].Value
   value=>[magix.data.load][objects][0][username].Value
@@ -50,7 +50,7 @@ _dt2
         css=>span-4 hover-shadow light-green
       link-button
         css=>span-1 hover-shadow light-red last
-        text=>x
+        value=>x
         onclick
           _role=>will contain name of role
           magix.data.load
@@ -75,7 +75,7 @@ _dt2
           execute-file=>system42/admin/users/edit-single-user.hl
 
 for-each=>[magix.data.load:0][objects][0][roles]
-  set=>[/][_dt2][panel][controls][label][text].Value
+  set=>[/][_dt2][panel][controls][label][value].Value
     value=>[.].Name
   set=>[/][_dt2][panel][controls][link-button][onclick][_role].Value
     value=>[.].Name
@@ -100,11 +100,11 @@ magix.forms.create-web-part
       default=>save
       controls
         label
-          text=>name
+          value=>name
           css=>span-5
           tag=>label
         label
-          text=>password
+          value=>password
           css=>span-5 last
           tag=>label
         text-box=>name
@@ -159,7 +159,7 @@ magix.forms.create-web-part
       css=>span-5 last
       controls
         label
-          text=>roles
+          value=>roles
           tag=>label
           css=>span-5
         select=>ddlRoles

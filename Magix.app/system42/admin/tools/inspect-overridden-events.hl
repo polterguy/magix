@@ -48,7 +48,7 @@ for-each=>[Data][events]
           value=>inspect
   set=>[.ip][..][_tpl][link-button][onclick][0].Name
     value=>[.].Name
-  set=>[.ip][..][_tpl][link-button][text].Value
+  set=>[.ip][..][_tpl][link-button][value].Value
     value=>[.].Name
   add=>[/][cf][controls][panel][controls]
     value=>[.ip][..][_tpl][link-button]
@@ -67,15 +67,15 @@ cf
       css=>span-13
       controls
         label=>header
-          text=>overridden active event name
+          value=>overridden active event name
           css=>span-13
           tag=>h3
         label=>code
           css=>span-13
-          text=>code example
+          value=>code example
           tag=>pre
         button=>run
-          text=>inspect
+          value=>inspect
           css=>span-2
           onclick
             magix.forms.get-value
@@ -89,10 +89,10 @@ cf
         label=>lblDesc
           css=>span-13 top-2
           tag=>label
-          text=>description
+          value=>description
         label=>desc
           css=>span-13
-          text=>@"description of your overridden active event, please
+          value=>@"description of your overridden active event, please
 be careful when overriding active events, since there is a security risk
 involved unless you know what you are doing.&nbsp;&nbsp;
 all dynamically created active events, through the [magix.execute.event]/[event] keyword,

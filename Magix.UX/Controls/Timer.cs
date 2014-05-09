@@ -30,14 +30,14 @@ namespace Magix.UX.Widgets
          * will not raise tick events before enabled again
          */
         [DefaultValue(true)]
-        public bool Enabled
+        public bool Disabled
         {
-            get { return ViewState["Enabled"] == null ? true : (bool)ViewState["Enabled"]; }
+            get { return ViewState["Disabled"] == null ? false : (bool)ViewState["Disabled"]; }
             set
             {
-                if (value != Enabled)
-                    SetJsonValue("Enabled", value);
-                ViewState["Enabled"] = value;
+                if (value != Disabled)
+                    SetJsonValue("Disabled", value);
+                ViewState["Disabled"] = value;
             }
         }
 
@@ -58,7 +58,7 @@ namespace Magix.UX.Widgets
 
         protected override void OnPreRender(EventArgs e)
         {
-            AjaxManager.Instance.IncludeScriptFromResource(
+            Manager.Instance.IncludeResourceScript(
                 typeof(Timer),
                 "Magix.UX.Js.Timer.js");
             base.OnPreRender(e);
@@ -78,11 +78,11 @@ namespace Magix.UX.Widgets
 		protected override string GetClientSideScriptOptions()
 		{
 			string retVal = base.GetClientSideScriptOptions();
-            if (Enabled && Tick != null)
+            if (!Disabled && Tick != null)
             {
                 if (!string.IsNullOrEmpty(retVal))
                     retVal += ",";
-                retVal += "enabled:true";
+                retVal += "disabled:true";
             }
 			if (Interval != 1000)
 			{

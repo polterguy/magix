@@ -12,30 +12,22 @@ using Magix.UX.Widgets.Core;
 
 namespace Magix.UX.Widgets
 {
-    /**
-     * This widget is another type of 'button widget', though this will be rendered
-     * using anchor HTML element (anchor element...)
-     * Even though everything can be made 'clickable' in Magix UX, it is definitely
-     * semantically much more 'correct' to constraint yourself to the ones that
-     * are expected to be 'clickable', such as this widget (LinkButton), Button, 
-     * ImageButton etc. Among other things screen-readers and such will recognize 
-     * these types of elements as 'clickable' and present the end user with the
-     * option of clicking these types of widgets.
+    /*
+     * ajax hyperlink control
      */
     public class LinkButton : BaseWebControlFormElementText
     {
-        /**
-         * The text property of the LinkButton. This is the 'anchor text' of the widget.
-         * Basically what the user will 'see' on the screen.
+        /*
+         * anchor text
          */
-        public override string Text
+        public override string Value
         {
-            get { return ViewState["Text"] == null ? "" : (string)ViewState["Text"]; }
+            get { return ViewState["Value"] == null ? "" : (string)ViewState["Value"]; }
             set
             {
-                if (value != Text)
-                    SetJsonValue("Text", value);
-                ViewState["Text"] = value;
+                if (value != Value)
+                    SetJsonValue("InnerHtml", value);
+                ViewState["Value"] = value;
             }
         }
 
@@ -44,14 +36,14 @@ namespace Magix.UX.Widgets
             using (Element el = builder.CreateElement("a"))
             {
                 AddAttributes(el);
-                el.Write(Text);
+                el.Write(Value);
                 RenderChildren(builder.Writer);
             }
         }
 
         protected override void AddAttributes(Element el)
         {
-            el.AddAttribute("href", "javascript:MUX.emptyFunction();");
+            el.AddAttribute("href", "javascript:MUX.emp();");
             base.AddAttributes(el);
         }
 

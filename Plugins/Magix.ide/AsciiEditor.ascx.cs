@@ -36,11 +36,11 @@ namespace Magix.ide
 			Load +=
 				delegate
 			{
-				surface.Text = node["content"].Get<string>();
-				path.Text = node["file"].Get<string>("empty.txt");
+				surface.Value = node["content"].Get<string>();
+				path.Value = node["file"].Get<string>("empty.txt");
 				path.Select();
 				path.Focus();
-                if (path.Text.LastIndexOf(".mml") == path.Text.Length - 4)
+                if (path.Value.LastIndexOf(".mml") == path.Value.Length - 4)
                     preview.Visible = true;
 			};
 		}
@@ -55,7 +55,7 @@ namespace Magix.ide
             SaveFileContent();
 
             Node tmp = new Node();
-            tmp["file"].Value = path.Text;
+            tmp["file"].Value = path.Value;
             tmp["container"].Value = "content3";
             tmp["css"].Value = "span-24 last top-1";
 
@@ -67,8 +67,8 @@ namespace Magix.ide
         private void SaveFileContent()
         {
             Node tmp = new Node();
-            tmp["value"].Value = surface.Text;
-            tmp.Value = path.Text;
+            tmp["value"].Value = surface.Value;
+            tmp.Value = path.Value;
 
             RaiseActiveEvent(
                 "magix.file.save",
@@ -83,7 +83,7 @@ namespace Magix.ide
                 tmp);
 
             tmp = new Node();
-            tmp["path"].Value = path.Text;
+            tmp["path"].Value = path.Value;
 
             RaiseActiveEvent(
                 "magix.ide.file-saved",
@@ -93,9 +93,9 @@ namespace Magix.ide
         protected void delete_Click(object sender, EventArgs e)
         {
             Node c = new Node();
-            c["message"].Value = "are you sure you wish to delete the file " + path.Text + "?";
-            c["code"]["magix.file.delete"].Value = path.Text;
-            c["code"]["magix.ide.file-deleted"]["path"].Value = path.Text;
+            c["message"].Value = "are you sure you wish to delete the file " + path.Value + "?";
+            c["code"]["magix.file.delete"].Value = path.Value;
+            c["code"]["magix.ide.file-deleted"]["path"].Value = path.Value;
 
             RaiseActiveEvent(
                 "magix.viewport.confirm",

@@ -14,24 +14,18 @@ using Magix.UX.Helpers;
 
 namespace Magix.UX.Widgets
 {
-    /**
-     * A CheckBox is a 'two state button' which you can turn 'on' and 'off'. Useful
-     * for boolean UI situations where use must choose between two options, for
-     * instance 'yes' or 'no' situations.
+    /*
+     * checkbox ajax control
      */
     public class CheckBox : BaseWebControlFormElement
     {
-        /**
-         * Event raised when the checked state of the widget changes. Use the
-         * Checked property to determine if the CheckBox is 'on' or 'off'.
+        /*
+         * raised when checked state is changed
          */
         public event EventHandler CheckedChanged;
 
-        /**
-         * Use this property to determine if the widget is checked or not. 
-         * If this property is true, then the widget is checked. The default
-         * value is 'false'. You can also set this value in your code to change 
-         * the state of the checked value.
+        /*
+         * if true, then checkbox is checked
          */
         public bool Checked
         {
@@ -46,13 +40,10 @@ namespace Magix.UX.Widgets
 
         protected override void SetValue()
         {
-            bool valueOfChecked = Page.Request.Params[ClientID] == "on";
-            if (valueOfChecked != Checked)
+            bool value = Page.Request.Params[ClientID] == "on";
+            if (value != Checked)
             {
-                // Notice that to avoid the string taking up bandwidth BACK to the client
-                // which it obviously does not need to do we set the ViewState value here directly instead
-                // of going through the Checked property which will also modify the JSON collection
-                ViewState["Checked"] = valueOfChecked;
+                ViewState["Checked"] = value;
             }
         }
 

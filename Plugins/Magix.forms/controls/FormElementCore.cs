@@ -38,11 +38,11 @@ namespace Magix.forms
 
 			if (ctrl != null)
 			{
-				bool enabled = false;
+				bool disabled = false;
                 if (Ip(e.Params).Contains("value"))
-                    enabled = Ip(e.Params)["value"].Get<bool>();
+                    disabled = Ip(e.Params)["value"].Get<bool>();
 
-				ctrl.Enabled = enabled;
+				ctrl.Disabled = !disabled;
 			}
 		}
 
@@ -67,7 +67,7 @@ namespace Magix.forms
 
 			if (ctrl != null)
 			{
-                Ip(e.Params)["value"].Value = ctrl.Enabled;
+                Ip(e.Params)["value"].Value = ctrl.Disabled;
 			}
 		}
 	}

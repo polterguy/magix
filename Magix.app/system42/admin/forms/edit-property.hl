@@ -16,13 +16,13 @@ if=>more-than
       add=>[@][..][node-2-code][node]
         value=>[.]
     node-2-code
-    set=>[/][magix.forms.create-web-part][controls][text-area][text].Value
+    set=>[/][magix.forms.create-web-part][controls][text-area][value].Value
       value=>[@][node-2-code][code].Value
 
 set=>[magix.forms.create-web-part][controls][text-area][ontextchanged][_prop].Value
   value=>[$][property].Value
 
-set=>[magix.forms.create-web-part][controls][label][text].Value
+set=>[magix.forms.create-web-part][controls][label][value].Value
   value=>@"edit property {0}"
     pr0=>[$][property].Value
 
@@ -33,12 +33,12 @@ magix.forms.create-web-part
   controls
     link-button=>close
       css=>absolute top right span-1
-      text=>close
+      value=>close
       onclick
         magix.viewport.clear-controls
           container=>content5
     label
-      text=>edit property
+      value=>edit property
       tag=>label
       css=>span-22 last
     text-area=>prop

@@ -43,17 +43,17 @@ namespace Magix.forms
 			    node["rows"].Value != null)
 				ret.Rows = node["rows"].Get<int>();
 
-			if (node.Contains("text") && 
-			    !string.IsNullOrEmpty(node["text"].Get<string>()))
-				ret.Text = node["text"].Get<string>();
+			if (node.Contains("value") && 
+			    !string.IsNullOrEmpty(node["value"].Get<string>()))
+				ret.Value = node["value"].Get<string>();
 
 			if (node.Contains("key") && 
 			    !string.IsNullOrEmpty(node["key"].Get<string>()))
 				ret.AccessKey = node["key"].Get<string>();
 
-			if (node.Contains("enabled") && 
-			    node["enabled"].Value != null)
-				ret.Enabled = node["enabled"].Get<bool>();
+            if (node.Contains("disabled") &&
+                node["disabled"].Value != null)
+                ret.Disabled = node["disabled"].Get<bool>();
 
 			if (ShouldHandleEvent("ontextchanged", node))
 			{
@@ -70,7 +70,7 @@ namespace Magix.forms
 			if (ShouldHandleEvent("onescpressed", node))
 			{
 				Node codeNode = node["onescpressed"].Clone();
-				ret.EscPressed += delegate(object sender2, EventArgs e2)
+				ret.EscKey += delegate(object sender2, EventArgs e2)
 				{
                     FillOutEventInputParameters(codeNode, sender2);
                     RaiseActiveEvent(
@@ -101,7 +101,7 @@ namespace Magix.forms
 
 			if (ctrl != null)
 			{
-                ctrl.Text = Ip(e.Params)["value"].Get<string>();
+                ctrl.Value = Ip(e.Params)["value"].Get<string>();
 			}
 		}
 
@@ -121,7 +121,7 @@ namespace Magix.forms
 
 			if (ctrl != null)
 			{
-                Ip(e.Params)["value"].Value = ctrl.Text;
+                Ip(e.Params)["value"].Value = ctrl.Value;
 			}
 		}
 
@@ -160,16 +160,16 @@ can type in text, that can handle multiple lines of text</p>";
             base.Inspect(node["magix.forms.create-web-part"]["controls"]["text-area"]);
             node["magix.forms.create-web-part"]["controls"]["text-area"]["place-holder"].Value = "shadow text ...";
             node["magix.forms.create-web-part"]["controls"]["text-area"]["rows"].Value = 5;
-            node["magix.forms.create-web-part"]["controls"]["text-area"]["text"].Value = "is there anybody out there?";
+            node["magix.forms.create-web-part"]["controls"]["text-area"]["value"].Value = "is there anybody out there?";
             node["magix.forms.create-web-part"]["controls"]["text-area"]["key"].Value = "T";
-            node["magix.forms.create-web-part"]["controls"]["text-area"]["enabled"].Value = true;
+            node["magix.forms.create-web-part"]["controls"]["text-area"]["disabled"].Value = false;
             node["magix.forms.create-web-part"]["controls"]["text-area"]["ontextchanged"].Value = "hyper lisp code";
             node["inspect"].Value = node["inspect"].Value + @"
 <p><strong>properties for text area</strong></p><p>[place-holder] 
 is shadow text, only visible when input area is empty.&nbsp;&nbsp;
 use this property to display some information about your web 
 control</p><p>[rows] is how many visible rows of text there shall 
-be at the same time</p><p>[text] is what text the control shall 
+be at the same time</p><p>[value] is what text the control shall 
 have, or currently have been changed to.&nbsp;&nbsp;this is the 
 property which is changed or retrieved when you invoke the 
 [magix.forms.set-value] and the [magix.forms.get-value] for your 
@@ -179,7 +179,7 @@ to system, but on a windows system, you normally invoke the
 keyboard shortcut with alt+shift+your-key.&nbsp;&nbsp;if you 
 have for instance 's' as your keyboard shortcut, then the end 
 user will have to click shift+alt+s at the same time to invoke 
-the keyboard shortcut for your web control</p><p>[enabled] 
+the keyboard shortcut for your web control</p><p>[disabled] 
 enables or disables the web control.&nbsp;&nbsp;this can be 
 changed or retrieved after the button is created by invoking 
 the [magix.forms.set-enabled] or [magix.forms.get-enabled] 
@@ -193,7 +193,7 @@ and user moves focus out from the web control somehow</p>";
 		 */
 		protected override object GetValue(BaseControl that)
 		{
-			return ((TextArea)that).Text;
+			return ((TextArea)that).Value;
 		}
 	}
 }

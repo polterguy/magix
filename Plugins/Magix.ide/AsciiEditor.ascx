@@ -13,36 +13,36 @@
 	<mux:TextBox
 		runat="server"
 		id="path"
-		CssClass="fill-width"/>
+		Class="fill-width"/>
 	<label class="fill-width top-1">file content</label>
 	<mux:TextArea
 		runat="server"
-		CssClass="fill-width monospaced ascii-editor"
+		Class="fill-width monospaced ascii-editor"
 		id="surface" />
 	<mux:Button
 		runat="server"
 		id="Button1"
-		CssClass="btn-large span-3 right last"
-		Text="delete"
+		Class="btn-large span-3 right last"
+		Value="delete"
 		OnClick="delete_Click" />
 	<mux:Button
 		runat="server"
 		id="preview"
-		CssClass="btn-large span-3 right"
+		Class="btn-large span-3 right"
         Visible="false"
-		Text="preview"
+		Value="preview"
 		OnClick="preview_Click" />
 	<mux:Button
 		runat="server"
 		id="save"
-		CssClass="btn-large span-3 right"
-		Text="save"
+		Class="btn-large span-3 right"
+		Value="save"
 		OnClick="save_Click" />
 	<mux:Button
 		runat="server"
 		id="close"
-		CssClass="btn-large span-3 right"
-		Text="close"
+		Class="btn-large span-3 right"
+		Value="close"
 		OnClick="close_Click" />
 </mux:Panel>
 

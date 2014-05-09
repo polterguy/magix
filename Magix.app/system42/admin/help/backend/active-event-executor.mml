@@ -3,7 +3,7 @@
 
 <p>the active event executor allows you to execute any active events you wish.&nbsp;&nbsp;this includes executing any {{
 link-button=>hyperlisp
-  text=>hyper lisp
+  value=>hyper lisp
   onclick
     magix.help.open-file
       file=>system42\admin\help\hyper-lisp\index.mml

@@ -39,22 +39,22 @@ namespace Magix.admin
 		{
 			if (this.FirstLoad)
 			{
-				AjaxManager.Instance.WriterAtBack.Write(activeEvent.ClientID + ".focus();");
-				AjaxManager.Instance.WriterAtBack.Write(activeEvent.ClientID + ".select();");
+				Manager.Instance.JavaScriptWriter.Write(activeEvent.ClientID + ".focus();");
+				Manager.Instance.JavaScriptWriter.Write(activeEvent.ClientID + ".select();");
 
 				string evt = Page.Request["evt"];
 				string code = Page.Request["code"];
 
 				if (string.IsNullOrEmpty(evt))
-					activeEvent.Text = "magix.execute";
+					activeEvent.Value = "magix.execute";
 				else
-					activeEvent.Text = evt;
+					activeEvent.Value = evt;
 
 				if (string.IsNullOrEmpty(code))
-					txtIn.Text = @"magix.viewport.show-message
+					txtIn.Value = @"magix.viewport.show-message
   message=>howdy world!";
 				else
-					txtIn.Text = code;
+					txtIn.Value = code;
 
 				// Including JavaScript files ...
 				Node tmp = new Node();
@@ -114,7 +114,7 @@ namespace Magix.admin
             if (!Ip(e.Params).Contains("event"))
 				throw new ArgumentException("you must pass in an [event] to set-code-event");
 
-            activeEvent.Text = Ip(e.Params)["event"].Get<string>();
+            activeEvent.Value = Ip(e.Params)["event"].Get<string>();
 		}
 
 		[ActiveEvent(Name = "magix.admin.set-code")]
@@ -149,7 +149,7 @@ if=>[Data].Value==thomas
 			{
 				if (idx.Name.StartsWith("event:"))
 				{
-					activeEvent.Text = idx.Name.Substring(6);
+					activeEvent.Value = idx.Name.Substring(6);
                     idx.UnTie();
                     foundEvent = true;
 					break;
@@ -157,7 +157,7 @@ if=>[Data].Value==thomas
 			}
 
             if (!foundEvent)
-                activeEvent.Text = "magix.execute";
+                activeEvent.Value = "magix.execute";
 
 			tmp = new Node();
 			tmp["node"].Value = json;
@@ -166,14 +166,14 @@ if=>[Data].Value==thomas
 				"magix.execute.node-2-code",
 				tmp);
 
-			txtIn.Text = tmp["code"].Get<string>();
+			txtIn.Value = tmp["code"].Get<string>();
 		}
 
 		protected void move_Click(object sender, EventArgs e)
 		{
             // Removing "inspect" node
             Node tmp = new Node();
-            tmp["code"].Value = txtOut.Text;
+            tmp["code"].Value = txtOut.Value;
             RaiseActiveEvent(
                 "magix.execute.code-2-node",
                 tmp);
@@ -183,7 +183,7 @@ if=>[Data].Value==thomas
             {
                 if (idx.Name.StartsWith("event:"))
                 {
-                    activeEvent.Text = idx.Name.Replace("event:", "");
+                    activeEvent.Value = idx.Name.Replace("event:", "");
                     idx.UnTie();
                     break;
                 }
@@ -191,15 +191,15 @@ if=>[Data].Value==thomas
             RaiseActiveEvent(
                 "magix.execute.node-2-code",
                 tmp);
-			txtIn.Text = tmp["code"].Get<string>();
+			txtIn.Value = tmp["code"].Get<string>();
 		}
 
 		protected void run_Click(object sender, EventArgs e)
 		{
-			if (txtIn.Text != "")
+			if (txtIn.Value != "")
 			{
 				Node tmp = new Node();
-				tmp["code"].Value = txtIn.Text;
+				tmp["code"].Value = txtIn.Value;
 
 				RaiseActiveEvent(
 					"magix.execute.code-2-node",
@@ -211,7 +211,7 @@ if=>[Data].Value==thomas
 				{
 					if (idx.Name.StartsWith("event:"))
 					{
-						activeEvent.Text = idx.Name.Substring(6);
+						activeEvent.Value = idx.Name.Substring(6);
 						node.Remove(idx);
 						if (node.Contains("inspect"))
 							node.Remove(node["inspect"]);
@@ -220,7 +220,7 @@ if=>[Data].Value==thomas
 				}
 
 				RaiseActiveEvent(
-					activeEvent.Text, 
+					activeEvent.Value, 
 					node);
 
                 tmp = new Node();
@@ -230,11 +230,11 @@ if=>[Data].Value==thomas
 					"magix.execute.node-2-code", 
 					tmp);
 
-				txtOut.Text = tmp["code"].Get<string>();
+				txtOut.Value = tmp["code"].Get<string>();
 			}
 			else
 			{
-				Node node = RaiseActiveEvent(activeEvent.Text);
+				Node node = RaiseActiveEvent(activeEvent.Value);
 
 				Node tmp = new Node();
 				tmp["node"].Value = node;
@@ -243,7 +243,7 @@ if=>[Data].Value==thomas
 					"magix.execute.node-2-code", 
 					tmp);
 
-				txtOut.Text = tmp["code"].Get<string>();
+				txtOut.Value = tmp["code"].Get<string>();
 			}
 
             // showing a visual clue to end user that code is done executing
@@ -254,7 +254,7 @@ if=>[Data].Value==thomas
 		protected void indent_Click(object sender, EventArgs e)
 		{
 			string transformed = "";
-			using (StringReader reader = new StringReader(txtIn.Text))
+			using (StringReader reader = new StringReader(txtIn.Value))
 			{
 				string line = reader.ReadLine();
 				while (line != null)
@@ -263,13 +263,13 @@ if=>[Data].Value==thomas
 					line = reader.ReadLine();
 				}
 			}
-			txtIn.Text = transformed;
+			txtIn.Value = transformed;
 		}
 		
 		protected void deindent_Click(object sender, EventArgs e)
 		{
 			string transformed = "";
-			using (StringReader reader = new StringReader(txtIn.Text))
+			using (StringReader reader = new StringReader(txtIn.Value))
 			{
 				string line = reader.ReadLine();
 				while (line != null)
@@ -280,7 +280,7 @@ if=>[Data].Value==thomas
 					line = reader.ReadLine();
 				}
 			}
-			txtIn.Text = transformed;
+			txtIn.Value = transformed;
 		}
 	}
 }

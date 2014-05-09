@@ -48,7 +48,7 @@ of its own</p>";
                 e.Params["magix.forms.create-web-part"]["container"].Value = "content5";
                 e.Params["magix.forms.create-web-part"]["form-id"].Value = "sample-form";
                 e.Params["magix.forms.create-web-part"]["controls"]["lambda"].Value = "idOfLambda";
-                e.Params["magix.forms.create-web-part"]["controls"]["lambda"]["oncreatecontrols"]["set"].Value = "[$][link-button][text].Value";
+                e.Params["magix.forms.create-web-part"]["controls"]["lambda"]["oncreatecontrols"]["set"].Value = "[$][link-button][value].Value";
                 e.Params["magix.forms.create-web-part"]["controls"]["lambda"]["oncreatecontrols"]["set"]["value"].Value = "howdy world :)";
 				return;
 			}
@@ -58,7 +58,7 @@ of its own</p>";
 			if (!code.Contains("oncreatecontrols"))
 			{
 				Label lbl = new Label();
-				lbl.Text = "{{lambda control}}";
+				lbl.Value = "{{lambda control}}";
 				lbl.ID = code.Value as string;
                 Ip(e.Params)["_ctrl"].Value = lbl;
 
@@ -117,7 +117,7 @@ of its own</p>";
 					Node node = new Node();
 
 					node["_code"].Value = idxCtrl;
-                    idxCtrl["_first"].Value = code["_first"].Value;
+                    node["_first"].Value = e.Params["_first"].Value;
 
 					RaiseActiveEvent(
 						evtName,

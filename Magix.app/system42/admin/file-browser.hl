@@ -27,7 +27,7 @@ if=>exist
       value=>[$][directory].Value
     set=>[magix.file.list-directories].Value
       value=>[$][directory].Value
-    set=>[magix.forms.create-web-part][controls][label][text].Value
+    set=>[magix.forms.create-web-part][controls][label][value].Value
       value=>@"files from {0}"
         pr0=>[$][directory].Value
     add=>[/][magix.forms.create-web-part][controls]
@@ -50,7 +50,7 @@ if=>exist
       value=>[$][directory].Value
     set=>[/][_delDir][onclick][magix.viewport.confirm][code][magix.file.delete-directory].Value
       value=>[$][directory].Value
-    set=>[/][_ren][controls][text-box][text].Value
+    set=>[/][_ren][controls][text-box][value].Value
       value=>[$][directory].Value
     set=>[/][_ren][controls][text-box][ontextchanged][magix.file.move-directory].Value
       value=>[$][directory].Value
@@ -63,22 +63,22 @@ if=>exist
 else-if=>exist
   lhs=>[$][keep-stack]
   code
-    set=>[/][_delDir][enabled].Value
-      value=>false
-    set=>[/][_ren][controls][text-box][enabled].Value
-      value=>false
+    set=>[/][_delDir][disabled].Value
+      value=>true
+    set=>[/][_ren][controls][text-box][disabled].Value
+      value=>true
 else
   magix.viewport.set-viewstate=>stack-of-pages
     value
       root=>
-  set=>[/][_delDir][enabled].Value
-    value=>false
-  set=>[/][_ren][controls][text-box][enabled].Value
-    value=>false
+  set=>[/][_delDir][disabled].Value
+    value=>true
+  set=>[/][_ren][controls][text-box][disabled].Value
+    value=>true
 
 _back
   css=>span-5 directory back-directory
-  text=>..
+  value=>..
   onclick
     magix.viewport.get-viewstate=>stack-of-pages
     set=>[using][add][0].Value
@@ -130,7 +130,7 @@ _link-buttonDir
 magix.file.list-files
 
 for-each=>[magix.file.list-files][files]
-  set=>[/][_link-button][text].Value
+  set=>[/][_link-button][value].Value
     value=>[.].Name
   if=>exist
     lhs=>[$][directory]
@@ -138,7 +138,7 @@ for-each=>[magix.file.list-files][files]
       set=>[@][replace][what].Value
         value=>@"{0}\"
           pr0=>@"[$][directory].Value"
-      replace=>[/][_link-button][text].Value
+      replace=>[/][_link-button][value].Value
   if=>not-exist
     lhs=>[$][select-file]
     code
@@ -155,7 +155,7 @@ for-each=>[magix.file.list-files][files]
 magix.file.list-directories
 
 for-each=>[magix.file.list-directories][directories]
-  set=>[/][_link-buttonDir][text].Value
+  set=>[/][_link-buttonDir][value].Value
     value=>[.].Name
   set=>[/][_link-buttonDir][onclick][execute-file][directory].Value
     value=>[.].Name
@@ -165,7 +165,7 @@ for-each=>[magix.file.list-directories][directories]
       set=>[@][replace][what].Value
         value=>@"{0}\"
           pr0=>@"[$][directory].Value"
-      replace=>[/][_link-buttonDir][text].Value
+      replace=>[/][_link-buttonDir][value].Value
   add=>[/][magix.forms.create-web-part][controls]
     value=>[/][_link-buttonDir]
   set=>[/][magix.forms.create-web-part][controls][_link-buttonDir].Name
@@ -173,7 +173,7 @@ for-each=>[magix.file.list-directories][directories]
 
 _btn=>newfile
   css=>span-3 btn-large left-10 top-1 clear
-  text=>new file
+  value=>new file
   onclick
     magix.admin.edit-file
       css=>span-24 last top-1
@@ -182,14 +182,14 @@ _btn=>newfile
 
 _newDir=>newdir
   css=>span-3 btn-large top-1
-  text=>new dir
+  value=>new dir
   onclick
     magix.file.create-directory=>new-directory
     execute-file=>system42/admin/file-browser.hl
 
 _delDir=>deldir
   css=>span-3 btn-large last top-1
-  text=>del dir
+  value=>del dir
   onclick
     magix.viewport.confirm
       message=>do you really want to delete the open directory?
@@ -216,7 +216,7 @@ _ren=>renWrp
         execute-file=>system42/admin/file-browser.hl
     button=>saveDirName
       css=>span-2 last
-      text=>save
+      value=>save
 
 add=>[magix.forms.create-web-part][controls]
   value=>[_btn]
@@ -287,7 +287,7 @@ magix.forms.create-web-part
     label=>desc
       css=>span-15 last left-4
       tag=>h2
-      text=>files from /
+      value=>files from /
     uploader=>uploader
       folder=>
       onuploaded

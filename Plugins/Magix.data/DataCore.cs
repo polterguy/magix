@@ -107,7 +107,7 @@ as the criteria to load objects</p><p>thread safe</p>";
                             else if (prototype != null)
                                 return obj.Node.HasNodes(prototype);
                             else
-                                return true;
+                                return true; // defaulting to true, to allow for loading of all objects, if no id or prototype is given
 					}))
 					{
 						if (idxNo >= start && (end == -1 || idxNo < end))
@@ -235,7 +235,7 @@ your persistent data storage</p><p>both [id] and [prototype] can be both express
                             else if (prototype != null)
                                 return obj.Node.HasNodes(prototype);
                             else
-                                return true;
+                                return false; // defaulting to false, to not allow deletion of everything, if empty id and prototype is given
 					}))
 					{
 						db.Delete(idx);

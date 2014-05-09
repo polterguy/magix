@@ -8,24 +8,24 @@
 
 <mux:Panel
     runat="server"
-	CssClass="container"
+	Class="container"
     id="wrp">
     <mux:Label
 		runat="server"
 		id="messageSmall"
 		style="display:none;"
-		CssClass="info-message-small" />
+		Class="info-message-small" />
     <mux:Label
 		runat="server"
 		id="message"
 		style="display:none;"
-		CssClass="info-message" />
+		Class="info-message" />
     <mux:Panel
 		runat="server"
 		id="confirmWrp"
 		style="display:none;"
 		OnEscKey="confirmWrp_Esc"
-		CssClass="info-message">
+		Class="info-message">
 		<mux:Label
 			runat="server"
 			Tag="p"
@@ -34,14 +34,14 @@
 			<mux:Button
 				runat="server"
 				id="ok"
-				CssClass="info-message-ok btn-large span-3"
-				Text="OK"
+				Class="info-message-ok btn-large span-3"
+				Value="OK"
 				OnClick="OKClick" />
 			<mux:Button
 				runat="server"
 				id="cancel"
-				CssClass="info-message-cancel btn-large span-3 last"
-				Text="Cancel"
+				Class="info-message-cancel btn-large span-3 last"
+				Value="Cancel"
                 AccessKey="C"
 				OnClick="CancelClick" />
 		</div>

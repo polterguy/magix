@@ -26,7 +26,7 @@ event=>magix.execute.add-two-numbers
 <p>the above code actually modifies the programming language itself, and creates a new keyword, which is called [add-two-numbers].&nbsp;&nbsp;don't worry 
 too much about the {{
 link-button=>expressions
-  text=>expressions
+  value=>expressions
   onclick
     magix.help.open-file
       file=>system42\admin\help\hyper-lisp\hyper-lisp-expressions.mml

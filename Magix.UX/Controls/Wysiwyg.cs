@@ -19,30 +19,30 @@ namespace Magix.UX.Widgets
 		/**
 		 * text property of wysiwyg editor
 		 */
-		public override string Text
+		public override string Value
 		{
 			get
 			{
-				return ViewState["Text"] == null ? "" : (string)ViewState["Text"];
+				return ViewState["Value"] == null ? "" : (string)ViewState["Value"];
 			}
 			set
 			{
-				if (value != Text && HasRendered)
+				if (value != Value && Rendered)
 				{
-					AjaxManager.Instance.WriterAtBack.Write(
+					Manager.Instance.JavaScriptWriter.Write(
 						"window.actualEditor.setValue(\"" + 
 						(value.Replace("\n", "\\n").Replace("\r\n", "\\n").Replace("\"", "\\\"")) + "\");");
 				}
-				ViewState["Text"] = value;
+				ViewState["Value"] = value;
 			}
 		}
 
 		protected override void SetValue()
 		{
 			string valueOfTextBox = Page.Request.Params[ClientID + "_text"];
-			if (valueOfTextBox != Text)
+			if (valueOfTextBox != Value)
 			{
-				ViewState["Text"] = valueOfTextBox;
+				ViewState["Value"] = valueOfTextBox;
 			}
 		}
 
@@ -201,10 +201,10 @@ namespace Magix.UX.Widgets
 
 		protected override void OnPreRender(EventArgs e)
 		{
-			AjaxManager.Instance.IncludeScriptFromResource(
+			Manager.Instance.IncludeResourceScript(
 				typeof(Wysiwyg),
 				"Magix.UX.Js.advanced.js");
-			AjaxManager.Instance.IncludeScriptFromResource(
+			Manager.Instance.IncludeResourceScript(
 				typeof(Wysiwyg),
 				"Magix.UX.Js.wysihtml5-0.4.0pre.min.js");
 			base.OnPreRender(e);
@@ -495,7 +495,7 @@ parserRules: wysihtml5ParserRules});";
 					txt.AddAttribute("class", "wysiwyg-editor-textarea");
 					if (PlaceHolder != null)
 						txt.AddAttribute("placeholder", PlaceHolder);
-					txt.Write(Text);
+					txt.Write(Value);
 				}
 				RenderChildren(builder.Writer as System.Web.UI.HtmlTextWriter);
 			}

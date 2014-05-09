@@ -19,7 +19,7 @@ and so on</p>
 panel, you can change the name of a web control, the css class(es) it uses, and so on.&nbsp;&nbsp;what properties are available 
 for you, depends upon what web control you're editing.&nbsp;&nbsp;in addition, you can create event handlers, which contains {{
 link-button=>go-to-hyper-lisp
-  text=>hyper lisp
+  value=>hyper lisp
   onclick
     magix.help.open-file
       file=>system42/admin/help/hyper-lisp/index.mml

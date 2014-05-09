@@ -113,19 +113,19 @@ and value being the value of the control";
             {
                 object value = null;
                 if (idx is Button)
-                    value = (idx as Button).Text;
+                    value = (idx as Button).Value;
                 if (idx is CheckBox)
                     value = (idx as CheckBox).Checked;
                 if (idx is HiddenField)
                     value = (idx as HiddenField).Value;
                 if (idx is HyperLink)
-                    value = (idx as HyperLink).Text;
+                    value = (idx as HyperLink).Value;
                 if (idx is Image)
                     value = (idx as Image).ImageUrl;
                 if (idx is Label)
-                    value = (idx as Label).Text;
+                    value = (idx as Label).Value;
                 if (idx is LinkButton)
-                    value = (idx as LinkButton).Text;
+                    value = (idx as LinkButton).Value;
                 if (idx is LiteralControl)
                     value = (idx as LiteralControl).Text;
                 if (idx is RadioButton)
@@ -133,13 +133,13 @@ and value being the value of the control";
                 if (idx is SelectList)
                     value = (idx as SelectList).SelectedItem.Value;
                 if (idx is TextArea)
-                    value = (idx as TextArea).Text;
+                    value = (idx as TextArea).Value;
                 if (idx is TextBox)
-                    value = (idx as TextBox).Text;
+                    value = (idx as TextBox).Value;
                 if (idx is Uploader)
                     value = (idx as Uploader).GetFileName();
                 if (idx is Wysiwyg)
-                    value = (idx as Wysiwyg).Text;
+                    value = (idx as Wysiwyg).Value;
                 if (value != null)
                     Ip(e.Params)["values"][idx.ID].Value = value;
             }
@@ -164,7 +164,7 @@ the scope of the web control</p>";
             node["magix.forms.create-web-part"]["controls"]["panel"]["tag"].Value = "p|div|address|etc";
             node["magix.forms.create-web-part"]["controls"]["panel"]["default"].Value = "default-button";
             node["magix.forms.create-web-part"]["controls"]["panel"]["controls"]["button"].Value = "default-button";
-            node["magix.forms.create-web-part"]["controls"]["panel"]["controls"]["button"]["text"].Value = "don't work";
+            node["magix.forms.create-web-part"]["controls"]["panel"]["controls"]["button"]["value"].Value = "don't work";
             node["inspect"].Value = node["inspect"].Value + @"
 <p><strong>properties for panel</strong><p>[tag] sets 
 html tag to render panel as.&nbsp;&nbsp;you can change 

@@ -14,27 +14,18 @@ using Magix.UX.Helpers;
 
 namespace Magix.UX.Widgets
 {
-    /**
-     * A two-state widget type that can be grouped together with other widgets to
-     * mimick multiple selections. Like for instance; "Would you like to have coffee, 
-     * tea or water" is a perfect example of where you would want to use RadioButtons.
-     * If you want to group specific radio buttons together, you must give them the same
-     * GroupName property. If you do, then only one of these RadioButtons can at any 
-     * time be 'selected'.
+    /*
+     * radio button ajax control
      */
     public class RadioButton : BaseWebControlFormElement
     {
-        /**
-         * Event raised when the checked state of the widget changes. Use the
-         * Checked property to determine if the CheckBox is 'on' or 'off'.
+        /*
+         * raised when checked state changes
          */
         public event EventHandler CheckedChanged;
 
-        /**
-         * If multiple RadioButtons are given the same GroupName, then these RadioButtons
-         * will be grouped together, and only one of them can at any time be selected.
-         * By playing with this property, you can create multiple groups of radio buttons
-         * that will be grouped together accordingly to their GroupName property.
+        /*
+         * associated group
          */
         public string GroupName
         {
@@ -47,11 +38,8 @@ namespace Magix.UX.Widgets
             }
         }
 
-        /**
-         * Use this property to determine if the widget is checked or not. 
-         * If this property is true, then the widget is checked. The default
-         * value is 'false'. You can also set this value in your code to change 
-         * the state of the checked value.
+        /*
+         * true if control is checked
          */
         public bool Checked
         {

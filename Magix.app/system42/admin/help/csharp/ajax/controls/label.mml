@@ -2,7 +2,7 @@
 <h2>mux Label</h2>
 
 <p>a text control. the basic purpose of this widget is purely to display
-text and nothing else, though through the CssClass property and the Style
+text and nothing else, though through the Class property and the Style
 property you can easily manipulate this to do mostly anything you wish.
 if a more complex widget is needed, for instance to host other widgets,
 then the panel widget is more appropriate to use than the label. unless
@@ -34,7 +34,7 @@ the active module as an embedded resource if you want to compile this sample</p>
 &lt;mux:Label
     runat="server"
     id="lbl"
-    Text="hello world"/&gt;
+    Value="hello world"/&gt;
 </pre>
 
 <label>SampleModule.ascx.cs</label>
@@ -56,7 +56,7 @@ namespace Magix.sample
 <div class="sample-web-control">
 {{
 label=>lbl
-  text=>hello world
+  value=>hello world
 }}
 </div>
 

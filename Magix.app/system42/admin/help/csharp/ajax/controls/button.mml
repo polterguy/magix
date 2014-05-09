@@ -4,7 +4,7 @@
 <p>a clickable button. the equivalent of input type='button'. use when you 
 need a clickable thing to resemble a button. see also the {{
 link-button=>magix-ux-linkbutton
-  text=>LinkButton
+  value=>LinkButton
   onclick
     magix.help.open-file
       file=>system42\admin\help\csharp\ajax\controls\linkbutton.mml
@@ -43,8 +43,8 @@ the active module as an embedded resource if you want to compile this sample</p>
     runat="server"
     id="btn"
     OnClick="btn_Click"
-    Text="click me!"
-    CssClass="span-5 btn-large"/&gt;
+    Value="click me!"
+    Class="span-5 btn-large"/&gt;
 </pre>
 
 <label>SampleModule.ascx.cs</label>
@@ -63,7 +63,7 @@ namespace Magix.sample
 
         protected void btn_Click(object sender, EventArgs e)
         {
-            lbl.Text ="button was clicked!";
+            lbl.Value ="button was clicked!";
         }
     }
 }</pre>
@@ -72,7 +72,7 @@ namespace Magix.sample
 <div class="sample-web-control">
 {{
 button=>btn
-  text=>click me!
+  value=>click me!
   css=>span-5 btn-large
   onclick
     magix.forms.set-value

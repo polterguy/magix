@@ -135,7 +135,7 @@ not thread safe";
 				url = url.Replace("~", GetApplicationBaseUrl());
 			}
 
-			Magix.UX.AjaxManager.Instance.Redirect(url);
+			Magix.UX.Manager.Instance.Redirect(url);
 		}
 
 		/**

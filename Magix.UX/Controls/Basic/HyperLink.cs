@@ -14,11 +14,8 @@ using Magix.UX.Widgets.Core;
 
 namespace Magix.UX.Widgets
 {
-    /**
-     * A wrapper around a hyper link or anchor HTML element (anchor HTML element ...)
-     * Sometimes you will need to create links that might change or needs
-     * changes after initially created. For such scenarios, this widget
-     * is highly useful.
+    /*
+     * hyperlink ajax control
      */
     public class HyperLink : BaseWebControl
     {
@@ -31,61 +28,46 @@ namespace Magix.UX.Widgets
         private Effect _blurEffect;
         private Effect _focusedEffect;
 
-        /**
-         * Event being raised when the widget does no longer have focus. 
-         * The exact opposite of the Focused event. Will trigger whenever the
-         * widget loses focus for some reasons. Notice that the widget (obviously)
-         * needs to *have* focus before it can 'lose' it.
-         * Some ways a widget may lose focus is when the user tabs through 
-         * the widgets on the screen. Another way is clicking another widget, 
-         * and thereby loosing focus for the previously focused widget.
+        /*
+         * blur event
          */
         public event EventHandler Blur;
 
-        /**
-         * The Focus event. The exact opposite of the Blur event. This one will be
-         * raised whenever the widget gains focus. Gaining focus can happen several
-         * ways, first of all the user might click the specific widget, which will
-         * give that widget focus. Secondly the user might tab through the widgets
-         * until the specific widget is reached. When the widget gains focus, this
-         * event will be raised.
+        /*
+         * focus event
          */
         public event EventHandler Focused;
 
-        /**
-         * The anchor text for your hyperlink. This is the text that will be visible in
-         * the browser.
+        /*
+         * anchor text
          */
-        public string Text
+        public string Value
         {
-            get { return ViewState["Text"] == null ? "" : (string)ViewState["Text"]; }
+            get { return ViewState["Value"] == null ? "" : (string)ViewState["Value"]; }
             set
             {
-                if (value != Text)
-                    SetJsonValue("Text", value);
-                ViewState["Text"] = value;
+                if (value != Value)
+                    SetJsonValue("InnerHtml", value);
+                ViewState["Value"] = value;
             }
         }
 
-        /**
-         * The URL for your link. This is where the user ends up if he clicks 
-         * your anchor text.
+        /*
+         * url
          */
         public string URL
         {
             get { return ViewState["URL"] == null ? "" : (string)ViewState["URL"]; }
             set
             {
-                if (value != Text)
+                if (value != Value)
                     this.SetJsonGeneric("href", value);
                 ViewState["URL"] = value;
             }
         }
 
-        /**
-         * Which browser window the URL will be opened in. _blank will assure it'll always be a new
-         * window, while most other names will then only open a new window if there's no window 
-         * already opened with that name
+        /*
+         * target browser window
          */
         public string Target
         {
@@ -98,14 +80,8 @@ namespace Magix.UX.Widgets
             }
         }
 
-        /**
-         * What keyboard shortcut the user will have to use to mimick a 'click' on 
-         * the widget. Often the keyboard shortcut will be mixed up with other
-         * keys, depending upon your operating system or browser. For FireFox 
-         * on Windows for instance the keyboard combination is ALT+SHIFT+whatever
-         * key you choose here. So if you choose 'J' as the AccessKey, the user
-         * will have to hold down ALT+SHIFT and press 'J' to use the keyboard 
-         * shortcut.
+        /*
+         * keyboard shortcut
          */
         public string AccessKey
         {
@@ -118,8 +94,8 @@ namespace Magix.UX.Widgets
             }
         }
 
-        /**
-         * What Effect will run when user is making the widget lose focus.
+        /*
+         * effects to run on blur
          */
         public Effect BlurEffect
         {
@@ -127,8 +103,8 @@ namespace Magix.UX.Widgets
             set { _blurEffect = value; }
         }
 
-        /**
-         * What Effect will run when user is making the widget gain focus.
+        /*
+         * effects to run on focus
          */
         public Effect FocusedEffect
         {
@@ -136,7 +112,6 @@ namespace Magix.UX.Widgets
             set { _focusedEffect = value; }
         }
 
-        // Overridden to handle the special events this class implements...
         public override void RaiseEvent(string name)
         {
             switch (name)
@@ -165,8 +140,6 @@ namespace Magix.UX.Widgets
             return retVal;
         }
 
-        // Helper method for serializing events into the JS initialization script
-        // which goes to the client.
         private string GetEventsInitializationString()
         {
             string evts = string.Empty;
@@ -189,8 +162,6 @@ namespace Magix.UX.Widgets
             return evts;
         }
 
-        // Helper method for serializing client-side effects into the 
-        // JS initialization script which goes to the client.
         private string GetEffectsInitializationString()
         {
             string evts = string.Empty;
@@ -218,7 +189,7 @@ namespace Magix.UX.Widgets
             using (Element el = builder.CreateElement("a"))
             {
                 AddAttributes(el);
-                el.Write(Text);
+                el.Write(Value);
             }
         }
 

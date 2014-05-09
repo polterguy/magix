@@ -31,7 +31,7 @@ lambda=>lmb-sql-database
           label
             css=>left-4 span-18 last
             tag=>pre
-      set=>[@][_pnl][controls][label:0][text].Value
+      set=>[@][_pnl][controls][label:0][value].Value
         value=>[.].Name
       _lmb
         set=>[1].Name
@@ -50,9 +50,9 @@ lambda=>lmb-sql-database
       set=>[@][lambda][name].Value
         value=>[.].Name
       lambda=>[@][_lmb]
-      set=>[@][_pnl][controls][label:1][text].Value
+      set=>[@][_pnl][controls][label:1][value].Value
         value=>[@][lambda][description].Value
-      set=>[@][_pnl][controls][label:2][text].Value
+      set=>[@][_pnl][controls][label:2][value].Value
         value=>[@][lambda][code].Value
       add=>[$]
         value=>[@][_pnl]

@@ -9,7 +9,7 @@ large amounts of data, you should implement this yourself, by exposing active ev
 </em>.&nbsp;&nbsp;the database layer in magix does not scale for hundreds of thousands records.&nbsp;&nbsp;if you need a <em>"real 
 database"</em> for your data needs, you can use the {{
 link-button=>ms-sql-1
-  text=>microsoft sql server wrapper
+  value=>microsoft sql server wrapper
   onclick
     magix.help.open-file
       file=>system42\admin\help\hyper-lisp\microsoft-sql.mml
@@ -41,7 +41,7 @@ lambda=>lmb-database
           label
             css=>left-3 span-16 last
             tag=>pre
-      set=>[@][_pnl][controls][label:0][text].Value
+      set=>[@][_pnl][controls][label:0][value].Value
         value=>[.].Name
       _lmb
         set=>[1].Name
@@ -60,9 +60,9 @@ lambda=>lmb-database
       set=>[@][lambda][name].Value
         value=>[.].Name
       lambda=>[@][_lmb]
-      set=>[@][_pnl][controls][label:1][text].Value
+      set=>[@][_pnl][controls][label:1][value].Value
         value=>[@][lambda][description].Value
-      set=>[@][_pnl][controls][label:2][text].Value
+      set=>[@][_pnl][controls][label:2][value].Value
         value=>[@][lambda][code].Value
       add=>[$]
         value=>[@][_pnl]
@@ -143,7 +143,7 @@ it is often because you are using the magix.data database access layer for thing
 
 <p>if you wish, you can use the {{
 link-button=>ms-sql
-  text=>microsoft sql wrapper
+  value=>microsoft sql wrapper
   onclick
     magix.help.open-file
       file=>system42\admin\help\hyper-lisp\microsoft-sql.mml

@@ -11,22 +11,13 @@ using Magix.UX.Widgets.Core;
 
 namespace Magix.UX.Widgets
 {
-    /**
-     * A container widget for displaying other widgets inside of it. Will render as a
-     * div by default, but the specific tag this widget will render, can easily be
-     * overridden by changing the Tag property. You can choose to render your panels as
-     * paragraphs (p...) for instance.
-     * If you only need to display text on your page, and you need to use WebControls for
-     * this, you should use the Label control and not the Panel control.
+    /*
+     * a div ajax control for wrapping child controls
      */
     public class Panel : AttributeControl, INamingContainer
     {
-        /**
-         * The HTML tag element type used to render your widget. You can set this property
-         * to anything you wish, including 'address', 'p' or any other types of HTML tags
-         * you wish to use to render your widget. If you need an inline-element,
-         * such as a span or something, or you need to render a widget without child widgets, 
-         * you should rather use the Label widget.
+        /*
+         * html tag to render control with
          */
         virtual public string Tag
         {
@@ -34,14 +25,8 @@ namespace Magix.UX.Widgets
             set { ViewState["Tag"] = value; }
         }
 
-        /**
-         * The default widget which will be mimicked a 'click' when this widget
-         * has focus on the user clicks carriage return (Enter/Return key) on
-         * his keyboard. Useful for information typing where you don't want to
-         * force the user of clicking a specific 'save' button.
-         * If you use another widget as the default widget, you must remember to
-         * use the ClientID property of that widget as the DefaultWidget value of 
-         * this property.
+        /*
+         * widget clicked upon enter inside of panel
          */
         public string DefaultWidget
         {

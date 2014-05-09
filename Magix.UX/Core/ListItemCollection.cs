@@ -5,9 +5,9 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.Collections;
 using System.Web.UI;
+using System.Collections;
+using System.Collections.Generic;
 using Magix.UX.Widgets.Core;
 
 namespace Magix.UX.Widgets

@@ -12,35 +12,27 @@ using Magix.UX.Widgets.Core;
 
 namespace Magix.UX.Widgets
 {
-    /**
-     * A 'text widget'. The basic purpose of this widget is purely to display
-     * text and nothing else, though through the CssClass property and the Style
-     * property you can easily manipulate this to do mostly anything you wish.
-     * If a more 'complex widget' is needed, for instance to host other widgets,
-     * then the Panel widget is more appropriate to use than the Label. Unless
-     * the Tag property is changed, this widget will render as a span...
+    /*
+     * label ajax control
      */
     public class Label : AttributeControl
     {
-        /**
-         * The text property of your label. This is what the user will see of your widget.
+        /*
+         * text of label
          */
-        public string Text
+        public string Value
         {
-            get { return ViewState["Text"] == null ? "" : (string)ViewState["Text"]; }
+            get { return ViewState["Value"] == null ? "" : (string)ViewState["Value"]; }
             set
             {
-                if (value != Text)
-                    SetJsonValue("Text", value);
-                ViewState["Text"] = value;
+                if (value != Value)
+                    SetJsonValue("InnerHtml", value);
+                ViewState["Value"] = value;
             }
         }
 
-        /**
-         * The HTML tag element type used to render your widget. You can set this property
-         * to anything you wish, including 'address', 'p' or any other types of HTML tags
-         * you wish to use to render your widget. If you need a 'div' HTML element though,
-         * or you need to render a widget with child widgets, you should rather use the Panel.
+        /*
+         * html tag to render
          */
         public string Tag
         {
@@ -48,30 +40,26 @@ namespace Magix.UX.Widgets
             set { ViewState["Tag"] = value; }
         }
 
-        /**
-         * Useful for associating a label with an HTML FORM input element, such as 
-         * a CheckBox or a RadioButton etc. Notice that this property can only be
-         * legally set if the Tag property is of type "label", which is NOT the 
-         * default value.
+        /*
+         * associated checkbox or radiobutton
          */
         public string For
         {
             get { return ViewState["For"] == null ? "" : (string)ViewState["For"]; }
             set
             {
-                string toSetValue = value;
-                // Assuming 'ID' and not 'ClientID' ...
+                string associatedControl = value;
                 PreRender +=
                     delegate
                     {
                         // Cheating a little bit ... ;)
-                        Control ctrl = Selector.FindControl<Control>(Page, toSetValue);
+                        Control ctrl = Selector.FindControl<Control>(Page, associatedControl);
                         if (ctrl != null)
                             For = ctrl.ClientID;
                     };
-                if (value != toSetValue)
-                    SetJsonGeneric("for", toSetValue.ToString());
-                ViewState["For"] = toSetValue;
+                if (value != associatedControl)
+                    SetJsonGeneric("for", associatedControl.ToString());
+                ViewState["For"] = associatedControl;
             }
         }
 
@@ -85,7 +73,7 @@ namespace Magix.UX.Widgets
             using (Element el = builder.CreateElement(Tag))
             {
                 AddAttributes(el);
-                el.Write(Text);
+                el.Write(Value);
                 RenderChildren(builder.Writer as System.Web.UI.HtmlTextWriter);
             }
         }

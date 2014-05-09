@@ -3,13 +3,13 @@
 
 <p>a viewport is an {{
 link-button=>active-modules
-  text=>active module
+  value=>active module
   onclick
     magix.help.open-file
       file=>system42\admin\help\csharp\active-modules\index.mml
 }} with at least one {{
 link-button=>magix-ux-ajax-dynamic
-  text=>dynamic panel
+  value=>dynamic panel
   onclick
     magix.help.open-file
       file=>system42\admin\help\csharp\ajax\controls\dynamicpanel.mml

@@ -41,7 +41,7 @@ dynamic=>methods-for-dynamicpanel
 &lt;mux:Button
     runat="server"
     id="btn"
-    Text="click me!"
+    Value="click me!"
     OnClick="btn_Click" /&gt;
 &lt;mux:DynamicPanel
     runat="server"
@@ -66,11 +66,11 @@ namespace Magix.sample
             if (e.Key == "button")
             {
                 Button tmp = new Button();
-                tmp.Text = "click me too";
+                tmp.Value = "click me too";
                 tmp.Click +=
                     delegate
                     {
-                        tmp.Text = "i was clicked";
+                        tmp.Value = "i was clicked";
                     };
                 dyn.Controls.Add(tmp);
             }
@@ -87,7 +87,7 @@ namespace Magix.sample
 <div class="sample-web-control">
 {{
 button=>btn
-  text=>click me!
+  value=>click me!
   onclick
     set=>[magix.forms.create-mml-web-part][mml].Value
       value=>{0}{1}{2}{3}{4}
@@ -95,7 +95,7 @@ button=>btn
         v1=>{
         v2=>@"
 button=>tmp
-  text=>click me too
+  value=>click me too
   onclick
     magix.forms.set-value
       id=>tmp

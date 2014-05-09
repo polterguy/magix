@@ -28,7 +28,7 @@ namespace Magix.app
             {
                 _session = Guid.NewGuid();
             }
-            if (!AjaxManager.Instance.IsCallback)
+            if (!Manager.Instance.IsAjaxCallback)
             {
                 LiteralControl lit = new LiteralControl();
                 lit.Text = string.Format(@"

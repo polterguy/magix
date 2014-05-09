@@ -4,7 +4,7 @@
 
 <div class="span-17 last boxed air-padding">{{
 label=>frontEndCssLbl
-  text=>skin css file
+  value=>skin css file
   css=>span-3
   tag=>label
 lambda=>lmda
@@ -56,7 +56,7 @@ lambda=>lmda
     add=>[$]
       value=>[_data][select]
 label=>lblHelp
-  text=>show help in admin panel
+  value=>show help in admin panel
   css=>span-4 left-1
   tag=>label
   for=>chkHelp

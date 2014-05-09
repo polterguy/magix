@@ -31,10 +31,10 @@ the active module as an embedded resource if you want to compile this sample</p>
 &lt;mux:HyperLink
     runat="server"
     id="hpl"
-    Text="click me!"
+    Value="click me!"
     URL="http://google.com"
     Target="_blank"
-    CssClass="span-3"/&gt;
+    Class="span-3"/&gt;
 </pre>
 
 <label>SampleModule.ascx.cs</label>
@@ -56,7 +56,7 @@ namespace Magix.sample
 <div class="sample-web-control">
 {{
 hyperlink=>hpl
-  text=>click me!
+  value=>click me!
   url=>http://www.google.com
   target=>_blank
 }}

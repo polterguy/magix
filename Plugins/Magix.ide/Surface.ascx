@@ -8,7 +8,7 @@
 
 <mux:Panel
 	runat="server"
-	ToolTip="design surface for your controls"
-	CssClass="wysiwyg-design-surface"
+	Title="design surface for your controls"
+	Class="wysiwyg-design-surface"
 	OnClick="wrp_Click"
 	id="wrp" />

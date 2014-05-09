@@ -10,7 +10,7 @@ or not you have an actual http request object or not. this means that a static e
 not necessarily have access to the page object, or in other ways be able to modify the page in any ways. 
 this means that if you have a static event handler, it might not be able to load {{
 link-button=>go-to-active-modules
-  text=>active modules
+  value=>active modules
   onclick
     magix.help.open-file
       file=>system42\admin\help\csharp\active-modules\index.mml

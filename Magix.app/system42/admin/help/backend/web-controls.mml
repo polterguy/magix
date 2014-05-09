@@ -3,13 +3,13 @@
 
 <p>when you create {{
 link-button=>magix-markup-language
-  text=>magix markup language
+  value=>magix markup language
   onclick
     magix.help.open-file
       file=>system42\admin\help\backend\magix-markup-language.mml
 }} you can embed {{
 link-button=>go-to-hyper-lisp
-  text=>hyper lisp
+  value=>hyper lisp
   onclick
     magix.help.open-file
       file=>system42/admin/help/hyper-lisp/index.mml
@@ -40,9 +40,9 @@ lambda=>lmb
           label
             css=>left-2 span-17 last
             tag=>pre
-      set=>[@][_pnl][controls][label:0][text].Value
+      set=>[@][_pnl][controls][label:0][value].Value
         value=>[.].Name
-      replace=>[@][_pnl][controls][label:0][text].Value
+      replace=>[@][_pnl][controls][label:0][value].Value
         what=>magix.forms.controls.
       _lmb
         set=>[1].Name
@@ -61,9 +61,9 @@ lambda=>lmb
       set=>[@][lambda][name].Value
         value=>[.].Name
       lambda=>[@][_lmb]
-      set=>[@][_pnl][controls][label:1][text].Value
+      set=>[@][_pnl][controls][label:1][value].Value
         value=>[@][lambda][description].Value
-      set=>[@][_pnl][controls][label:2][text].Value
+      set=>[@][_pnl][controls][label:2][value].Value
         value=>[@][lambda][code].Value
       add=>[$]
         value=>[@][_pnl]
