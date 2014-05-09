@@ -10,14 +10,14 @@ using System.Collections.Generic;
 
 namespace Magix.Core
 {
-    /**
+    /*
      * Implementer of Expression logic, such that nodes can be retrieved
      * and manipulated using expressions, such as e.g. [Data][Name].Value, which will
      * traverse the Data node's Name node, and return its Value
      */
 	public class Expressions
 	{
-        /**
+        /*
          * Returns the value of the given expression, which might return a string, 
          * list of nodes, or any other object your node tree might contain
          */
@@ -53,9 +53,7 @@ namespace Magix.Core
             return retVal;
         }
 
-        // TODO: Implement "strings" parsing for complex strings, such that e.g. "[Data].Value"
-		// becomes a string literal, and not an expression
-		/**
+		/*
 		 * Sets the given exprDestination to the valuer of exprSource. If
 		 * exprSource starts with a '[', it is expected to be a reference to another
 		 * expression, else it will be assumed to be a static value
@@ -237,6 +235,36 @@ namespace Magix.Core
                             bufferNodeName = "";
                             isInside = false;
                             continue;
+                        }
+                        else if (bufferNodeName.StartsWith("?"))
+                        {
+                            // wildcard search
+                            string searchValue = null;
+                            if (bufferNodeName.Contains("=>"))
+                            {
+                                string[] tmpSearch = bufferNodeName.Split(new string[] { "=>" }, StringSplitOptions.RemoveEmptyEntries);
+                                if (tmpSearch.Length == 1)
+                                    searchValue = "";
+                                else
+                                    searchValue = tmpSearch[1];
+                            }
+                            bool found = false;
+                            foreach (Node idxNode in x)
+                            {
+                                if (searchValue == idxNode.Get<string>())
+                                {
+                                    found = true;
+                                    x = idxNode;
+                                    break;
+                                }
+                            }
+                            if (!found && forcePath)
+                            {
+                                x.Add(new Node("", searchValue));
+                                x = x[x.Count - 1];
+                            }
+                            bufferNodeName = "";
+                            isInside = false;
                         }
                         else if (bufferNodeName.Contains("=>"))
                         {

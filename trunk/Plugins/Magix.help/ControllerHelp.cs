@@ -80,26 +80,26 @@ container</p><p>not thread safe</p>";
 {{{{
 button=>back
   value=><<
-  css=>btn-large span-2
+  class=>btn-large span-2
   onclick
     magix.help.move-backwards
     magix.viewport.scroll=>help
 button=>index
   value=>index
-  css=>btn-large span-2
+  class=>btn-large span-2
   onclick
     magix.help.open-file
       file=>system42/admin/help/index.mml
     magix.viewport.scroll=>help
 button=>close
   value=>close
-  css=>btn-large span-2
+  class=>btn-large span-2
   onclick
     magix.viewport.clear-controls
       container=>help
 text-box=>search
   place-holder=>search ...
-  css=>span-13 input-large
+  class=>span-13 input-large
   complete=>false
   @data-provide=>typeahead
   @data-items=>12
@@ -115,14 +115,14 @@ text-box=>search
       value=>
 button=>next-page
   value=>next page
-  css=>btn-large span-3
+  class=>btn-large span-3
   onclick
     magix.help.move-next
       force-page=>true
     magix.viewport.scroll=>help
 button=>next
   value=>>>
-  css=>btn-large span-2 last
+  class=>btn-large span-2 last
   onclick
     magix.help.move-next
     magix.viewport.scroll=>help
@@ -130,7 +130,7 @@ button=>next
 </div>
 {{{{
 dynamic=>help-content
-  css=>span-22 last
+  class=>span-22 last
   onfirstload
     magix.help.open-help-files
 }}}}
@@ -138,13 +138,13 @@ dynamic=>help-content
 {{{{
 button=>back-2
   value=>back
-  css=>btn-large span-3
+  class=>btn-large span-3
   onclick
     magix.help.move-backwards
     magix.viewport.scroll=>help
 button=>next-page-2
   value=>next page
-  css=>btn-large span-3 last
+  class=>btn-large span-3 last
   onclick
     magix.help.move-next
       force-page=>true

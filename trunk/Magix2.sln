@@ -7,8 +7,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{95BA2698-F
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{63544738-20E9-459A-83F6-D18EF70B6157}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{B9E241B1-5F77-47FB-84D1-150A8B43F663}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{73A35696-832A-4B80-9340-5D36C6F223AA}"
 	ProjectSection(SolutionItems) = preProject
 		references\Db4objects.Db4o.dll = references\Db4objects.Db4o.dll

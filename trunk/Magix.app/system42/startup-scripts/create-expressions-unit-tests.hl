@@ -1,0 +1,56 @@
+
+
+inspect=>@"creates unit tests to 
+test some advanced expressions"
+
+
+event=>magix.test.expressions-wildcard
+  persist=>false
+  inspect=>@"asserts that expressions with 
+wildcard functions where value of node 
+is not null"
+  code
+    _data
+      v0=>x
+      v1=>y
+      v2=>z
+  if=>not-equals
+    lhs=>[_data][?=>z].Name
+    rhs=>v2
+    code
+      throw=>wildcard expression didn't return what was expected
+
+
+event=>magix.test.expressions-wildcard-null
+  persist=>false
+  inspect=>@"asserts that expressions with 
+wildcard functions where value of node 
+is null"
+  code
+    _data
+      v0=>x
+      v1=>y
+      v2
+  if=>not-equals
+    lhs=>[_data][?].Name
+    rhs=>v2
+    code
+      throw=>wildcard expression didn't return what was expected
+
+
+event=>magix.test.expressions-wildcard-empty-string
+  persist=>false
+  inspect=>@"asserts that expressions with 
+wildcard functions where value of node 
+is empty string"
+  code
+    _data
+      v0=>x
+      v1=>y
+      v2=>
+  if=>not-equals
+    lhs=>[_data][?].Name
+    rhs=>v2
+    code
+      throw=>wildcard expression didn't return what was expected
+

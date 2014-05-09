@@ -113,11 +113,34 @@ _data
   message=>msg2
     content=>hello world 2
 set=>[magix.viewport.show-message][message].Value
-  value=>[_data][message=>msg2][content].Value
+  value=>[_data][message<strong>=>msg2</strong>][content].Value
 </pre>
 
 <p>the above code, will look for the [message] node containing the value of "msg2", and use the [content] of that node 
 as the parameter to the message box, due to the <strong>"=&gt;"</strong> criteria in the [message=>msg2] parts of the expression</p>
+
+<p>you can also do a wildcard search for nodes with undefined names, but where you know the value of the node.&nbsp;&nbsp;
+this is done by using a question mark "?" as the name of the node, for then to optionally add a value beneath an => operator.
+&nbsp;&nbsp;consider the following code</p>
+
+<pre>
+_data
+  v0=>x
+  v1=>
+  v2
+  v3=>y
+set=>[magix.viewport.show-message:0][message].Value
+  value=>[_data][?=>y].Name
+set=>[magix.viewport.show-message:1][message].Value
+  value=>[_data][?=>].Name
+set=>[magix.viewport.show-message:2][message].Value
+  value=>[_data][?].Name
+</pre>
+
+<p>the above will show a message box which contains v3 first, then v1 for then to show v2.&nbsp;&nbsp;this is because the 
+first expression which is [_data][?=>y] will return the first child node of [_data] that has a value of "y".&nbsp;&nbsp;
+then it will look for the first node which has an empty string as its value, because of [_data][?=>], for then to 
+finally look for the first node which has a null value, because of the [_data][?] expression</p>
 
 {{
 lambda=>next
