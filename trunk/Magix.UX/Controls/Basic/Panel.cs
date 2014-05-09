@@ -28,10 +28,10 @@ namespace Magix.UX.Widgets
         /*
          * widget clicked upon enter inside of panel
          */
-        public string DefaultWidget
+        public string Default
         {
-            get { return ViewState["DefaultWidget"] == null ? null : (string)ViewState["DefaultWidget"]; }
-            set { ViewState["DefaultWidget"] = value; }
+            get { return ViewState["Default"] == null ? null : (string)ViewState["Default"]; }
+            set { ViewState["Default"] = value; }
         }
 
         protected override void RenderMuxControl(HtmlBuilder builder)
@@ -46,17 +46,17 @@ namespace Magix.UX.Widgets
         protected override string GetClientSideScriptOptions()
         {
             string retVal = base.GetClientSideScriptOptions();
-            if (!string.IsNullOrEmpty(DefaultWidget))
+            if (!string.IsNullOrEmpty(Default))
             {
-                Control widg = Selector.FindControl<Control>(this, DefaultWidget);
-                if (widg != null)
+                Control ctrl = Selector.FindControl<Control>(this, Default);
+                if (ctrl != null)
                 {
                     if (!string.IsNullOrEmpty(retVal))
                         retVal += ",";
                     retVal +=
                         string.Format(
-                            "defaultWidget:'{0}'",
-                            widg.ClientID);
+                            "def:'{0}'",
+                            ctrl.ClientID);
                 }
             }
             return retVal;

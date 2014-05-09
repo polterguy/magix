@@ -17,7 +17,7 @@ namespace Magix.UX.Widgets
     /*
      * radio button ajax control
      */
-    public class RadioButton : BaseWebControlFormElement
+    public class Radio : BaseWebControlFormElement
     {
         /*
          * raised when checked state changes
@@ -27,14 +27,14 @@ namespace Magix.UX.Widgets
         /*
          * associated group
          */
-        public string GroupName
+        public string Name
         {
-            get { return ViewState["GroupName"] == null ? "" : (string)ViewState["GroupName"]; }
+            get { return ViewState["Name"] == null ? "" : (string)ViewState["Name"]; }
             set
             {
-                if (value != GroupName)
+                if (value != Name)
                     SetJsonGeneric("name", value);
-                ViewState["GroupName"] = value;
+                ViewState["Name"] = value;
             }
         }
 
@@ -56,7 +56,7 @@ namespace Magix.UX.Widgets
         {
             bool valueOfChecked =
                 Page.Request.Params[
-                    string.IsNullOrEmpty(GroupName) ? ClientID : GroupName] == ClientID;
+                    string.IsNullOrEmpty(Name) ? ClientID : Name] == ClientID;
             if (valueOfChecked != Checked)
             {
                 ViewState["Checked"] = valueOfChecked;
@@ -103,8 +103,8 @@ namespace Magix.UX.Widgets
         {
             el.AddAttribute("type", "radio");
             el.AddAttribute("value", ClientID);
-            if (!string.IsNullOrEmpty(GroupName))
-                el.AddAttribute("name", GroupName);
+            if (!string.IsNullOrEmpty(Name))
+                el.AddAttribute("name", Name);
             else
                 el.AddAttribute("name", ClientID);
             if (Checked)

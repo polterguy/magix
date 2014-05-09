@@ -1,5 +1,5 @@
 ﻿
-<h2>mux HiddenField</h2>
+<h2>mux Hidden</h2>
 
 
 <p>hidden field ajax web control. useful for having state you wish to pass on to the client 
@@ -31,7 +31,7 @@ the active module as an embedded resource if you want to compile this sample</p>
     AutoEventWireup="true" 
     Inherits="Magix.sample.SampleModule" %&gt;
 
-&lt;mux:HiddenField
+&lt;mux:Hidden
     runat="server"
     Value="empty"
     id="hid" /&gt;
@@ -61,7 +61,7 @@ namespace Magix.sample
 {
     public class SampleModule : ActiveModule
     {
-        protected HiddenField hid;
+        protected Hidden hid;
         protected Button btn;
         protected Button btn2;
 
@@ -78,7 +78,7 @@ namespace Magix.sample
     }
 }</pre>
 
-<label>example of a mux HiddenField</label>
+<label>example of a mux Hidden</label>
 <div class="sample-web-control">
 {{
 hidden=>hid

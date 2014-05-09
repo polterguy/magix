@@ -31,7 +31,7 @@ namespace Magix.forms
 
             Node node = Ip(e.Params)["_code"].Value as Node;
 
-			HiddenField ret = new HiddenField();
+			Hidden ret = new Hidden();
 
             FillOutParameters(e.Params, ret);
 
@@ -56,7 +56,7 @@ namespace Magix.forms
             if (!Ip(e.Params).Contains("value"))
 				throw new ArgumentException("set-value needs [value]");
 
-            HiddenField ctrl = FindControl<HiddenField>(Ip(e.Params));
+            Hidden ctrl = FindControl<Hidden>(Ip(e.Params));
 
 			if (ctrl != null)
 			{
@@ -76,7 +76,7 @@ namespace Magix.forms
 				return;
 			}
 
-            HiddenField ctrl = FindControl<HiddenField>(Ip(e.Params));
+            Hidden ctrl = FindControl<Hidden>(Ip(e.Params));
 
 			if (ctrl != null)
 			{
@@ -107,7 +107,7 @@ your control</p>";
 		 */
 		protected override object GetValue(BaseControl that)
 		{
-			return ((HiddenField)that).Value;
+			return ((Hidden)that).Value;
 		}
 	}
 }

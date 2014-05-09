@@ -37,7 +37,6 @@ namespace Magix.UX.Widgets
             {
                 AddAttributes(el);
                 el.Write(Value);
-                RenderChildren(builder.Writer);
             }
         }
 

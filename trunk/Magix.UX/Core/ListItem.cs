@@ -17,7 +17,7 @@ namespace Magix.UX.Widgets
         private string _value;
         private string _text;
         private bool _enabled = true;
-        private BaseWebControlListFormElement _selectList;
+        private BaseWebControlListFormElement _select;
         private bool _hasSetSelectedTrue;
 
         public ListItem()
@@ -33,32 +33,32 @@ namespace Magix.UX.Widgets
         {
             get
             {
-                if (_selectList.SelectedItem == null)
+                if (_select.SelectedItem == null)
                     return false;
-                return _selectList.SelectedItem.Equals(this);
+                return _select.SelectedItem.Equals(this);
             }
             set
             {
                 if (value)
                 {
-                    if (_selectList == null)
+                    if (_select == null)
                         _hasSetSelectedTrue = true;
                     else
-                        _selectList.SelectedItem = this;
+                        _select.SelectedItem = this;
                 }
                 else if (this.Selected)
-                    _selectList.SelectedIndex = 0;
+                    _select.SelectedIndex = 0;
             }
         }
 
-        internal BaseWebControlListFormElement SelectList
+        internal BaseWebControlListFormElement Select
         {
-            get { return _selectList; }
+            get { return _select; }
             set
             {
-                _selectList = value;
+                _select = value;
                 if (_hasSetSelectedTrue)
-                    _selectList.SelectedItem = this;
+                    _select.SelectedItem = this;
             }
         }
 

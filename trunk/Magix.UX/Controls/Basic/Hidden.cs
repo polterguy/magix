@@ -16,7 +16,7 @@ namespace Magix.UX.Widgets
     /*
      * hidden field ajax control
      */
-    public class HiddenField : BaseControl
+    public class Hidden : BaseControl
     {
         /*
          * value of control
@@ -31,13 +31,6 @@ namespace Magix.UX.Widgets
                 ViewState["Value"] = value;
             }
         }
-
-		protected override void OnInit(EventArgs e)
-		{
-			if (!IsViewStateEnabled && Page.IsPostBack)
-				SetValue();
-			base.OnInit(e);
-		}
 
 		private void SetValue()
 		{

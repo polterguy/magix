@@ -144,7 +144,7 @@ panel already has.&nbsp;&nbsp;has multiple overloads"
 inside of the dynamic panel"
       Tag=>@"which html tag to use to render 
 the dynamic panel"
-      DefaultWidget=>@"id of another web control, usually a button, which will 
+      Default=>@"id of another web control, usually a button, which will 
 be 'clicked' when user clicks the carriage return 
 key inside of the dynamic panel"
     add=>[$]
@@ -175,7 +175,7 @@ the checkbox looses focus"
 the checkbox gains focus"
       Value=>@"text display to end user.&nbsp;&nbsp;
 also known as anchor text"
-      URL=>@"which url the hyperlink points to"
+      Href=>@"which url the hyperlink points to"
       Target=>@"browser window target the url points to.&nbsp;&nbsp;
 use for instance _blank to use a new browser window to 
 display the website when the url is clicked"
@@ -194,8 +194,8 @@ event=>magix.forms.dox.create-dox-for.image
 the mux image control"
   code
     _data
-      ImageUrl=>@"url for the image the web control displays"
-      AlternateText=>@"text to display if image cannopt be found, or 
+      Src=>@"url for the image the web control displays"
+      Alt=>@"text to display if image cannopt be found, or 
 while image is being loaded"
       AccessKey=>@"which keyboard shortcut 
 to use to access and change the value of 
@@ -252,7 +252,7 @@ the mux panel web control"
       Tag=>@"what html tag to render the control within, 
 the default is div.&nbsp;&nbsp;but this can be changed 
 to anything you wish, including p, span, address and so on"
-      DefaultWidget=>@"if defined, will make it such that 
+      Default=>@"if defined, will make it such that 
 if the carriage return key is pressed when something inside 
 of the panel has focus, then the web control with the ID of 
 this property will be clicked.&nbsp;&nbsp;useful if you 
@@ -274,8 +274,8 @@ the checked state of the checkbox is changed"
 the checkbox looses focus"
       OnFocused=>@"dom event raised when 
 the checkbox gains focus"
-      GroupName=>@"if defined, will group together 
-all radio buttons with the same group name, such 
+      Name=>@"if defined, will group together 
+all radio buttons with the same name, such 
 that if one is selected, any previously selected 
 radiobuttons will be de-selected"
       Checked=>@"boolean indicating if the 
@@ -373,7 +373,7 @@ the web control looses focus"
 the web control gains focus"
       Select=>@"method for selecting all text within 
 the web control, for then to give the web control focus"
-      TextMode=>@"mode of text box, this value can be any 
+      Type=>@"mode of text box, this value can be any 
 of the following values; Normal, Phone, Search, 
 Url, Email, DateTime, Date, Month, Time, DateTimeLocal, 
 Number, Range, Color or Password"

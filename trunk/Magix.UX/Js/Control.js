@@ -95,10 +95,10 @@
         evts: [],
         focus: false,
         select: false,
-        defaultWidget: null
+        def: null
       }, opt || {});
 
-      if (this.options.defaultWidget) {
+      if (this.options.def) {
         this.element.observe('keypress', this.onKeyPressCheckEnter, this);
       }
 
@@ -122,7 +122,7 @@
 
     onKeyPressCheckEnter: function(evt) {
       if (evt.keyCode == 13) {
-        var el = MUX.$(this.options.defaultWidget);
+        var el = MUX.$(this.options.def);
         el.focus();
         el.click();
         return false;

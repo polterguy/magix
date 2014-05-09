@@ -63,7 +63,7 @@ namespace Magix.forms
                 ret.Tag = node["tag"].Get<string>();
 
             if (node.Contains("default") && node["default"].Value != null)
-                ret.DefaultWidget = node["default"].Get<string>();
+                ret.Default = node["default"].Get<string>();
 
             Ip(e.Params)["_ctrl"].Value = ret;
 		}

@@ -1,5 +1,5 @@
 ﻿
-<h2>mux HyperLink</h2>
+<h2>mux Link</h2>
 
 <p>a wrapper around a hyper link, or anchor html element. 
 sometimes you will need to create links that might change or needs 
@@ -28,11 +28,11 @@ the active module as an embedded resource if you want to compile this sample</p>
     AutoEventWireup="true" 
     Inherits="Magix.sample.SampleModule" %&gt;
 
-&lt;mux:HyperLink
+&lt;mux:Link
     runat="server"
     id="hpl"
     Value="click me!"
-    URL="http://google.com"
+    Href="http://google.com"
     Target="_blank"
     Class="span-3"/&gt;
 </pre>
@@ -52,7 +52,7 @@ namespace Magix.sample
     }
 }</pre>
 
-<label>example of a mux HyperLink</label>
+<label>example of a mux Link</label>
 <div class="sample-web-control">
 {{
 hyperlink=>hpl

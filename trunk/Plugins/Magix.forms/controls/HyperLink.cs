@@ -30,7 +30,7 @@ namespace Magix.forms
 
             Node node = Ip(e.Params)["_code"].Value as Node;
 
-			HyperLink ret = new HyperLink();
+			Link ret = new Link();
 
             FillOutParameters(e.Params, ret);
 
@@ -44,7 +44,7 @@ namespace Magix.forms
 				if (url.StartsWith("~"))
 					url = url.Replace("~", GetApplicationBaseUrl());
 
-				ret.URL = url;
+				ret.Href = url;
 			}
 
 			if (node.Contains("target") && node["target"].Value != null)
@@ -71,7 +71,7 @@ namespace Magix.forms
             if (!Ip(e.Params).Contains("value"))
 				throw new ArgumentException("set-value needs [value]");
 
-            HyperLink ctrl = FindControl<HyperLink>(Ip(e.Params));
+            Link ctrl = FindControl<Link>(Ip(e.Params));
 
 			if (ctrl != null)
 			{
@@ -91,7 +91,7 @@ namespace Magix.forms
 				return;
 			}
 
-            HyperLink ctrl = FindControl<HyperLink>(Ip(e.Params));
+            Link ctrl = FindControl<Link>(Ip(e.Params));
 
 			if (ctrl != null)
 			{

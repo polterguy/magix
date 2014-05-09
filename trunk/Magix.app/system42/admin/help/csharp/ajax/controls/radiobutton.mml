@@ -1,11 +1,11 @@
 ﻿
-<h2>mux RadioButton</h2>
+<h2>mux Radio</h2>
 
 <p>a two-state control type that can be grouped together with other similar controls to
 mimick multiple selections. like for instance; "would you like to have coffee,
 tea or water" is a perfect example of where you would want to use radio buttons.
 if you want to group specific radio buttons together, you must give them the same
-GroupName property. if you do, then only one of these radio buttons can at any specific 
+Name property. if you do, then only one of these radio buttons can at any specific 
 time be selected and checked of
 </p>
 
@@ -38,9 +38,9 @@ the active module as an embedded resource if you want to compile this sample</p>
     For="rdo1"
     Class="span-2"
     id="lbl1"/&gt;
-&lt;mux:RadioButton
+&lt;mux:Radio
     runat="server"
-    GroupName="radios"
+    Name="radios"
     Class="span-1"
     id="rdo1"/&gt;
 &lt;mux:Label
@@ -50,9 +50,9 @@ the active module as an embedded resource if you want to compile this sample</p>
     For="rdo2"
     Class="span-2 clear"
     id="lbl2"/&gt;
-&lt;mux:RadioButton
+&lt;mux:Radio
     runat="server"
-    GroupName="radios"
+    Name="radios"
     Class="span-1"
     id="rdo2"/&gt;
 </pre>
@@ -72,7 +72,7 @@ namespace Magix.sample
     }
 }</pre>
 
-<label>example of a mux RadioButton</label>
+<label>example of a mux Radio</label>
 <div class="sample-web-control">
 {{
 label=>lbl1

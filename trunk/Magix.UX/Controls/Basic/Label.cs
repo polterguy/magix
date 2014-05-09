@@ -52,7 +52,6 @@ namespace Magix.UX.Widgets
                 PreRender +=
                     delegate
                     {
-                        // Cheating a little bit ... ;)
                         Control ctrl = Selector.FindControl<Control>(Page, associatedControl);
                         if (ctrl != null)
                             For = ctrl.ClientID;
@@ -63,18 +62,12 @@ namespace Magix.UX.Widgets
             }
         }
 
-        protected override void OnPreRender(EventArgs e)
-        {
-            base.OnPreRender(e);
-        }
-
         protected override void RenderMuxControl(HtmlBuilder builder)
         {
             using (Element el = builder.CreateElement(Tag))
             {
                 AddAttributes(el);
                 el.Write(Value);
-                RenderChildren(builder.Writer as System.Web.UI.HtmlTextWriter);
             }
         }
 

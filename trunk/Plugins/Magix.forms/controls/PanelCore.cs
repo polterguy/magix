@@ -39,7 +39,7 @@ namespace Magix.forms
 				ret.Tag = node["tag"].Get<string>();
 
 			if (node.Contains("default") && node["default"].Value != null)
-				ret.DefaultWidget = node["default"].Get<string>();
+				ret.Default = node["default"].Get<string>();
 
 			if (node.Contains("controls"))
 			{
@@ -116,22 +116,22 @@ and value being the value of the control";
                     value = (idx as Button).Value;
                 if (idx is CheckBox)
                     value = (idx as CheckBox).Checked;
-                if (idx is HiddenField)
-                    value = (idx as HiddenField).Value;
-                if (idx is HyperLink)
-                    value = (idx as HyperLink).Value;
-                if (idx is Image)
-                    value = (idx as Image).ImageUrl;
+                if (idx is Hidden)
+                    value = (idx as Hidden).Value;
+                if (idx is Link)
+                    value = (idx as Link).Value;
+                if (idx is Img)
+                    value = (idx as Img).Src;
                 if (idx is Label)
                     value = (idx as Label).Value;
                 if (idx is LinkButton)
                     value = (idx as LinkButton).Value;
                 if (idx is LiteralControl)
                     value = (idx as LiteralControl).Text;
-                if (idx is RadioButton)
-                    value = (idx as RadioButton).Checked;
-                if (idx is SelectList)
-                    value = (idx as SelectList).SelectedItem.Value;
+                if (idx is Radio)
+                    value = (idx as Radio).Checked;
+                if (idx is Select)
+                    value = (idx as Select).SelectedItem.Value;
                 if (idx is TextArea)
                     value = (idx as TextArea).Value;
                 if (idx is TextBox)
