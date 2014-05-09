@@ -39,9 +39,9 @@ namespace Magix.forms
 			    !string.IsNullOrEmpty(node["value"].Get<string>()))
 				ret.Value = node["value"].Get<string>();
 
-			if (node.Contains("key") && 
-			    !string.IsNullOrEmpty(node["key"].Get<string>()))
-				ret.AccessKey = node["key"].Get<string>();
+			if (node.Contains("accesskey") &&
+                !string.IsNullOrEmpty(node["accesskey"].Get<string>()))
+                ret.AccessKey = node["accesskey"].Get<string>();
 
 			if (node.Contains("disabled") && 
 			    node["disabled"].Value != null)

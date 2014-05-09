@@ -38,9 +38,9 @@ namespace Magix.forms
 			if (node.Contains("checked") && node["checked"].Value != null)
 				ret.Checked = node["checked"].Get<bool>();
 
-			if (node.Contains("key") && 
-			    !string.IsNullOrEmpty(node["key"].Get<string>()))
-				ret.AccessKey = node["key"].Get<string>();
+            if (node.Contains("accesskey") &&
+                !string.IsNullOrEmpty(node["accesskey"].Get<string>()))
+                ret.AccessKey = node["accesskey"].Get<string>();
 
 			if (node.Contains("disabled") && 
 			    node["disabled"].Value != null)
