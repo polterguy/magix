@@ -11,7 +11,7 @@ instance 'yes' or 'no' situations
 dynamic=>methods-for-checkbox
   onfirstload
     magix.forms.dox.create-dox-for-web-control
-      css=>dox-for-web-control
+      class=>dox-for-web-control
       control=>checkbox
       container=>methods-for-checkbox
 }}
@@ -74,9 +74,9 @@ label=>lbl
   value=>associated with checkbox
   tag=>label
   for=>chk
-  css=>span-5 right-text
+  class=>span-5 right-text
 check=>chk
-  css=>span-1
+  class=>span-1
   oncheckedchanged
     magix.forms.get-value
       id=>chk

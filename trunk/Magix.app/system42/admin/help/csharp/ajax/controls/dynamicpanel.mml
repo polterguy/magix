@@ -24,7 +24,7 @@ automatically</p>
 dynamic=>methods-for-dynamicpanel
   onfirstload
     magix.forms.dox.create-dox-for-web-control
-      css=>dox-for-web-control
+      class=>dox-for-web-control
       control=>dynamicpanel
       container=>methods-for-dynamicpanel
 }}

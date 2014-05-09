@@ -21,7 +21,7 @@ or water'. add up your choices by adding up ListItems inside of your Select
 dynamic=>methods-for-selectlist
   onfirstload
     magix.forms.dox.create-dox-for-web-control
-      css=>dox-for-web-control
+      class=>dox-for-web-control
       control=>selectlist
       container=>methods-for-selectlist
 }}

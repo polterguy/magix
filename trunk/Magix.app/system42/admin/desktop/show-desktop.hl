@@ -10,7 +10,7 @@ list-events
   begins-with=>magix.admin.desktop-shortcuts.
 
 _btn
-  css=>span-6 last desktop-widget-item
+  class=>span-6 last desktop-widget-item
   onclick
 
 for-each=>[list-events][events]
@@ -66,10 +66,10 @@ for-each=>[_categories]
     value=>panel
 
 _pnl
-  css=>span-6 desktop-widget bottom-1 left-1
+  class=>span-6 desktop-widget bottom-1 left-1
   controls
     label=>header
-      css=>desktop-widget-header span-4
+      class=>desktop-widget-header span-4
       tag=>label
     panel
       controls

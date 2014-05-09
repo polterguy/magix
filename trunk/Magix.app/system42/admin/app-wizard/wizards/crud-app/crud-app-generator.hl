@@ -172,12 +172,12 @@ which contains logic for crud-app-generated application"
               _text-label
               _hr
                 tag=>hr
-                css=>clear
+                class=>clear
               _link-button
-                css=>span-1 right clear
+                class=>span-1 right clear
                 value=>delete
               _link-button2
-                css=>span-1 right
+                class=>span-1 right
                 value=>edit
                 onclick
                   magix.forms.set-visible
@@ -194,19 +194,19 @@ which contains logic for crud-app-generated application"
             controls
               hidden=>editingRow
               link-button=>next
-                css=>span-1 last right
+                class=>span-1 last right
                 value=>&gt;&gt;
               link-button=>previous
-                css=>span-1 right
+                class=>span-1 right
                 value=>&lt;&lt;
               label=>pageTxt
-                css=>span-2 right clear last
+                class=>span-2 right clear last
                 value=>x-y of z
           dynamic=>dataGrid
             onfirstload
               magix.crud-app.databind-grid
           panel=>editWrapper
-            css=>clear top-1
+            class=>clear top-1
 
     set=>[_data][magix.forms.create-web-part][controls][label][value].Value
       value=>[_pars][name].Value
@@ -215,12 +215,12 @@ which contains logic for crud-app-generated application"
     _not-first
     for-each=>[_pars][fields]
       _label
-        css=>span-5 bottom-1
+        class=>span-5 bottom-1
         tag=>h3
       _text-box
-        css=>span-5
+        class=>span-5
       _text-area
-        css=>span-5
+        class=>span-5
         rows=>5
 
       set=>[@][_label][value].Value
@@ -237,10 +237,10 @@ which contains logic for crud-app-generated application"
           if=>exist
             lhs=>[/][_not-first].Value
             code
-              set=>[@][..][..][_text-box][css].Value
+              set=>[@][..][..][_text-box][class].Value
                 value=>span-5
           else
-            set=>[@][..][..][_text-box][css].Value
+            set=>[@][..][..][_text-box][class].Value
               value=>span-5 clear
           set=>[@][..][..][_text-box][place-holder].Value
             value=>{0} ...
@@ -258,10 +258,10 @@ which contains logic for crud-app-generated application"
           if=>exist
             lhs=>[/][_not-first].Value
             code
-              set=>[@][..][..][_text-area][css].Value
+              set=>[@][..][..][_text-area][class].Value
                 value=>span-5
           else
-            set=>[@][..][..][_text-area][css].Value
+            set=>[@][..][..][_text-area][class].Value
               value=>span-5 clear
           set=>[@][..][..][_text-area][place-holder].Value
             value=>{0} ...
@@ -274,7 +274,7 @@ which contains logic for crud-app-generated application"
             value=>text-area
 
       set=>[/][_data][magix.forms.create-web-part][events][magix.crud-app.databind-grid][for-each][_set].Value
-        value=>\[@][_text-label][css].Value
+        value=>\[@][_text-label][class].Value
       if=>exist
         lhs=>[/][_not-first].Value
         code
@@ -312,7 +312,7 @@ which contains logic for crud-app-generated application"
         value=>true
 
     _button=>addButton
-      css=>span-3 right clear
+      class=>span-3 right clear
       value=>update
       onclick
         magix.forms.get-values
@@ -355,7 +355,7 @@ which contains logic for crud-app-generated application"
       value=>button
 
     _button2=>cancelButton
-      css=>span-3 right
+      class=>span-3 right
       value=>cancel
       visible=>false
       onclick

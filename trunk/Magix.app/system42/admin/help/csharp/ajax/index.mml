@@ -86,7 +86,7 @@ is an exhaustive list</p>
 <li>{{
 link-button=>magix-ux-button
   value=>Button
-  css=>span-3 clear
+  class=>span-3 clear
   onclick
     magix.help.open-file
       file=>system42\admin\help\csharp\ajax\controls\button.mml
@@ -94,7 +94,7 @@ link-button=>magix-ux-button
 <li>{{
 link-button=>magix-ux-checkbox
   value=>CheckBox
-  css=>span-3 clear
+  class=>span-3 clear
   onclick
     magix.help.open-file
       file=>system42\admin\help\csharp\ajax\controls\checkbox.mml
@@ -102,7 +102,7 @@ link-button=>magix-ux-checkbox
 <li>{{
 link-button=>magix-ux-hiddenfield
   value=>Hidden
-  css=>span-3 clear
+  class=>span-3 clear
   onclick
     magix.help.open-file
       file=>system42\admin\help\csharp\ajax\controls\hiddenfield.mml
@@ -110,7 +110,7 @@ link-button=>magix-ux-hiddenfield
 <li>{{
 link-button=>magix-ux-hyperlink
   value=>Link
-  css=>span-3 clear
+  class=>span-3 clear
   onclick
     magix.help.open-file
       file=>system42\admin\help\csharp\ajax\controls\hyperlink.mml
@@ -118,7 +118,7 @@ link-button=>magix-ux-hyperlink
 <li>{{
 link-button=>magix-ux-image
   value=>Img
-  css=>span-3 clear
+  class=>span-3 clear
   onclick
     magix.help.open-file
       file=>system42\admin\help\csharp\ajax\controls\image.mml
@@ -126,7 +126,7 @@ link-button=>magix-ux-image
 <li>{{
 link-button=>magix-ux-label
   value=>Label
-  css=>span-3 clear
+  class=>span-3 clear
   onclick
     magix.help.open-file
       file=>system42\admin\help\csharp\ajax\controls\label.mml
@@ -134,7 +134,7 @@ link-button=>magix-ux-label
 <li>{{
 link-button=>magix-ux-linkbutton
   value=>LinkButton
-  css=>span-3 clear
+  class=>span-3 clear
   onclick
     magix.help.open-file
       file=>system42\admin\help\csharp\ajax\controls\linkbutton.mml
@@ -142,7 +142,7 @@ link-button=>magix-ux-linkbutton
 <li>{{
 link-button=>magix-ux-panel
   value=>Panel
-  css=>span-3 clear
+  class=>span-3 clear
   onclick
     magix.help.open-file
       file=>system42\admin\help\csharp\ajax\controls\panel.mml
@@ -150,7 +150,7 @@ link-button=>magix-ux-panel
 <li>{{
 link-button=>magix-ux-radiobutton
   value=>Radio
-  css=>span-3 clear
+  class=>span-3 clear
   onclick
     magix.help.open-file
       file=>system42\admin\help\csharp\ajax\controls\radiobutton.mml
@@ -160,7 +160,7 @@ of questions</span></li>
 <li>{{
 link-button=>magix-ux-selectlist
   value=>Select
-  css=>span-3 clear
+  class=>span-3 clear
   onclick
     magix.help.open-file
       file=>system42\admin\help\csharp\ajax\controls\selectlist.mml
@@ -169,7 +169,7 @@ its default state, is to be shown as a drop-down list of different values, where
 <li>{{
 link-button=>magix-ux-textarea
   value=>TextArea
-  css=>span-3 clear
+  class=>span-3 clear
   onclick
     magix.help.open-file
       file=>system42\admin\help\csharp\ajax\controls\textarea.mml
@@ -178,7 +178,7 @@ of text input</span></li>
 <li>{{
 link-button=>magix-ux-textbox
   value=>TextBox
-  css=>span-3 clear
+  class=>span-3 clear
   onclick
     magix.help.open-file
       file=>system42\admin\help\csharp\ajax\controls\textbox.mml
@@ -187,7 +187,7 @@ supports different modes, such as password mode, numeric mode, email mode, etc <
 <li>{{
 link-button=>magix-ux-dynamicpanel
   value=>DynamicPanel
-  css=>span-3 clear
+  class=>span-3 clear
   onclick
     magix.help.open-file
       file=>system42\admin\help\csharp\ajax\controls\dynamicpanel.mml
@@ -198,7 +198,7 @@ controls it loaded previously upon every callback and postback to page</span></l
 <li>{{
 link-button=>magix-ux-timer
   value=>Timer
-  css=>span-3 clear
+  class=>span-3 clear
   onclick
     magix.help.open-file
       file=>system42\admin\help\csharp\ajax\controls\timer.mml
@@ -207,7 +207,7 @@ periodically check for changes, every n'th millisecond</span></li>
 <li>{{
 link-button=>magix-ux-uploader
   value=>Uploader
-  css=>span-3 clear
+  class=>span-3 clear
   onclick
     magix.help.open-file
       file=>system42\admin\help\csharp\ajax\controls\uploader.mml
@@ -215,7 +215,7 @@ link-button=>magix-ux-uploader
 <li>{{
 link-button=>magix-ux-wysiwyg
   value=>Wysiwyg
-  css=>span-3 clear
+  class=>span-3 clear
   onclick
     magix.help.open-file
       file=>system42\admin\help\csharp\ajax\controls\wysiwyg.mml

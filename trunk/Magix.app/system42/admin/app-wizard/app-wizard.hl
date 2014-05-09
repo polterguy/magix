@@ -8,7 +8,7 @@ magix.file.list-files=>system42/admin/app-wizard/wizards
 
 _dt
   panel
-    css=>boxed span-5 min-height-7 air-padding bottom-1
+    class=>boxed span-5 min-height-7 air-padding bottom-1
     style=>cursor:pointer;
     onclick
       _file
@@ -27,7 +27,7 @@ for-each=>[magix.file.list-files][files]
   set=>[@][file-2-node].Value
     value=>[.].Name
   file-2-node
-  set=>[/][_dt][panel][css].Value
+  set=>[/][_dt][panel][class].Value
     value=>[@][file-2-node][node][_css].Value
   set=>[/][_dt][panel][controls][label:0][value].Value
     value=>[@][file-2-node][node][_name].Value

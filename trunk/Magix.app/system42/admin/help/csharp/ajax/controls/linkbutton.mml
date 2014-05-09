@@ -22,7 +22,7 @@ LinkButton</p>
 dynamic=>methods-for-linkbutton
   onfirstload
     magix.forms.dox.create-dox-for-web-control
-      css=>dox-for-web-control
+      class=>dox-for-web-control
       control=>linkbutton
       container=>methods-for-linkbutton
 }}
@@ -73,7 +73,7 @@ namespace Magix.sample
 {{
 link-button=>btn
   value=>click me!
-  css=>span-5 btn-large
+  class=>span-5 btn-large
   onclick
     magix.forms.set-value
       id=>btn

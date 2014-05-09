@@ -76,7 +76,7 @@ namespace Magix.sample
 {{
 text-box=>txt
   value=>text strings
-  css=>span-5
+  class=>span-5
 }}
 </div>
 

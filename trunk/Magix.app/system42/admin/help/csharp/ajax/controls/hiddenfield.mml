@@ -14,7 +14,7 @@ viewstate and cookies are neither safe against tampering</p>
 dynamic=>methods-for-hiddenfield
   onfirstload
     magix.forms.dox.create-dox-for-control
-      css=>dox-for-web-control
+      class=>dox-for-web-control
       control=>hiddenfield
       container=>methods-for-hiddenfield
 }}
@@ -85,7 +85,7 @@ hidden=>hid
   value=>empty
 button=>btn
   value=>then click me!
-  css=>span-5 btn-large
+  class=>span-5 btn-large
   onclick
     magix.forms.set-value
       id=>hid
@@ -95,7 +95,7 @@ button=>btn
       value=>then me again!
 button=>btn2
   value=>click first!
-  css=>span-5 btn-large
+  class=>span-5 btn-large
   onclick
     magix.forms.get-value
       id=>hid

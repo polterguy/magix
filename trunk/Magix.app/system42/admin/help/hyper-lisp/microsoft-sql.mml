@@ -21,15 +21,15 @@ lambda=>lmb-sql-database
     for-each=>[list-events][events]
       _pnl
         tag=>li
-        css=>bottom-1 span-22 last
+        class=>bottom-1 span-22 last
         controls
           label
-            css=>span-4
+            class=>span-4
             tag=>label
           label
-            css=>span-18 last
+            class=>span-18 last
           label
-            css=>left-4 span-18 last
+            class=>left-4 span-18 last
             tag=>pre
       set=>[@][_pnl][controls][label:0][value].Value
         value=>[.].Name

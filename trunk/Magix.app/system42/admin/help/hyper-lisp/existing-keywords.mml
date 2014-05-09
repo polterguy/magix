@@ -30,15 +30,15 @@ lambda=>lmb-keywords
     for-each=>[list-events][events]
       _pnl
         tag=>li
-        css=>bottom-1 span-19 last
+        class=>bottom-1 span-19 last
         controls
           label
-            css=>span-3
+            class=>span-3
             tag=>label
           label
-            css=>span-16 last
+            class=>span-16 last
           label
-            css=>left-3 span-16 last
+            class=>left-3 span-16 last
             tag=>pre
       set=>[@][_pnl][controls][label:0][value].Value
         value=>[.].Name

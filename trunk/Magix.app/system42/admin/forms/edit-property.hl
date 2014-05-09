@@ -32,7 +32,7 @@ magix.forms.create-web-part
   css=>span-22 air-padding boxed bottom-5 relative
   controls
     link-button=>close
-      css=>absolute top right span-1
+      class=>absolute top right span-1
       value=>close
       onclick
         magix.viewport.clear-controls
@@ -40,9 +40,9 @@ magix.forms.create-web-part
     label
       value=>edit property
       tag=>label
-      css=>span-22 last
+      class=>span-22 last
     text-area=>prop
-      css=>span-22 min-height-13 last
+      class=>span-22 min-height-13 last
       place-holder=>code ...
       ontextchanged
         magix.forms.get-value

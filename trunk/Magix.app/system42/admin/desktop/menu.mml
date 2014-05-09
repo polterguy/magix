@@ -3,7 +3,7 @@
 <div class="span-5 start-button-wrapper">
 {{
 link-button=>desktop
-  css=>start-button
+  class=>start-button
   onclick
     magix.viewport.clear-controls
       container=>content1

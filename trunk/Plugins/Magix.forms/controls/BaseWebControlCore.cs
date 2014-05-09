@@ -169,17 +169,17 @@ namespace Magix.forms
 
             BaseWebControl that = ctrl as BaseWebControl;
 
-			if (node.Contains("css") && !string.IsNullOrEmpty(node["css"].Get<string>()))
-				that.Class = node["css"].Get<string>();
+			if (node.Contains("class") && !string.IsNullOrEmpty(node["class"].Get<string>()))
+				that.Class = node["class"].Get<string>();
 
 			if (node.Contains("dir") && !string.IsNullOrEmpty(node["dir"].Get<string>()))
 				that.Dir = node["dir"].Get<string>();
 
-			if (node.Contains("tab") && !string.IsNullOrEmpty(node["tab"].Get<string>()))
-				that.TabIndex = node["tab"].Get<string>();
+            if (node.Contains("tabindex") && !string.IsNullOrEmpty(node["tabindex"].Get<string>()))
+                that.TabIndex = node["tabindex"].Get<string>();
 
-			if (node.Contains("tip") && !string.IsNullOrEmpty(node["tip"].Get<string>()))
-				that.Title = node["tip"].Get<string>();
+            if (node.Contains("title") && !string.IsNullOrEmpty(node["title"].Get<string>()))
+                that.Title = node["title"].Get<string>();
 
 			if (node.Contains("style") && !string.IsNullOrEmpty(node["style"].Get<string>()))
 			{
@@ -280,7 +280,7 @@ namespace Magix.forms
 			if (ShouldHandleEvent("onesc", node))
 			{
 				Node codeNode = node["onesc"].Clone();
-				that.EscKey += delegate(object sender, EventArgs e)
+				that.Esc += delegate(object sender, EventArgs e)
 				{
                     FillOutEventInputParameters(codeNode, sender);
                     RaiseActiveEvent(
@@ -329,11 +329,11 @@ semi-colon ';'.&nbsp;&nbsp;for example ""width:100px;height:50px;""</p>
 <p>[dir] is the reading direction of text on your web control, and can be either 'ltr', or 
 'rtl'.&nbsp;&nbsp;ltr means left-to-right, and is what is used for most languages.&nbsp;&nbsp;
 use rtl as the [dir] for languages such as arabic and hebrew, which reads from right to left</p>
-<p>[tab] is the tab index, or order in your forms tab hierarchy.&nbsp;&nbsp;the lower this number is, the earlier 
+<p>[tabindex] is the tab index, or order in your forms tab hierarchy.&nbsp;&nbsp;the lower this number is, the earlier 
 the control will gain focus in the tab order.&nbsp;&nbsp;for instance, if you have two controls, 
-one with [tab] equal to 1, and another with [tab] equal to 5, then the control with tab order 
+one with [tabindex] equal to 1, and another with [tabindex] equal to 5, then the control with tab order 
 of 1 will have focus before the one with tab order of 5, as the end user clicks tab to 
-move focus through the form's controls</p><p>[tip] 
+move focus through the form's controls</p><p>[title] 
 is an informational tool tip, shown when the mouse is hovered above control.&nbsp;&nbsp;notice that this 
 property only works for desktop system, which has a mouse, which can be hovered above your control's surface</p><p>
 [onclick] is raised when control is clicked.&nbsp;&nbsp;attach any hyper lisp code you wish here</p>
@@ -361,10 +361,10 @@ of web control, and your web control has focus somehow.&nbsp;&nbsp;attach any hy
 are added for convenience, since very often it is interesting knowing if the user clicks esc, such that 
 the application can close forms, or undo actions, and similar types of functionality.&nbsp;&nbsp;
 attach any hyper lisp code you wish here</p>";
-			node["css"].Value = "css classes";
+			node["class"].Value = "css classes";
 			node["dir"].Value = "ltr";
-			node["tab"].Value = 5;
-			node["tip"].Value = "informational tooltip";
+            node["tabindex"].Value = 5;
+            node["title"].Value = "informational tooltip";
 			node["style"].Value = "width:120px;height:120px;";
 			node["onclick"].Value = "hyper lisp code";
 			node["ondblclick"].Value = "hyper lisp code";

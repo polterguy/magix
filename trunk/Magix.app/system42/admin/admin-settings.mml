@@ -5,13 +5,13 @@
 <div class="span-17 last boxed air-padding">{{
 label=>frontEndCssLbl
   value=>skin css file
-  css=>span-3
+  class=>span-3
   tag=>label
 lambda=>lmda
   oncreatecontrols
     _data
       select=>frontEndCss
-        css=>span-3
+        class=>span-3
         onselectedindexchanged
           magix.forms.get-value
             id=>frontEndCss
@@ -57,11 +57,11 @@ lambda=>lmda
       value=>[_data][select]
 label=>lblHelp
   value=>show help in admin panel
-  css=>span-4 left-1
+  class=>span-4 left-1
   tag=>label
   for=>chkHelp
 check=>chkHelp
-  css=>span-1
+  class=>span-1
   onfirstload
     magix.data.load
       prototype

@@ -65,7 +65,7 @@ system42.travel.try-login
 lambda=>header
   oncreatecontrols
     _lbl=>headerCtrl
-      css=>span-14 top-2 bottom-3
+      class=>span-14 top-2 bottom-3
       value=>magix illuminate - phosphorus
       tag=>h1
     magix.web.get-config-setting=>Magix.Core.Portal-Name
@@ -79,10 +79,10 @@ lambda=>header
 panel=>loginWrp
   onfirstload
     system42.travel.change-login-box
-  css=>absolute top right span-6 top-1 z-1 last
+  class=>absolute top right span-6 top-1 z-1 last
   controls
     panel=>loginPnl
-      css=>span-4 left-2
+      class=>span-4 left-2
       default=>loginBtn
       controls
         label=>descr
@@ -90,16 +90,16 @@ panel=>loginWrp
           value=>please login
         text-box=>username
           place-holder=>username ...
-          css=>span-4
+          class=>span-4
         text-box=>pwd
           place-holder=>password ...
           mode=>password
-          css=>span-4
+          class=>span-4
         label=>error
-          css=>error span-2
+          class=>error span-2
         button=>loginBtn
           value=>login
-          css=>right span-2 btn-large last
+          class=>right span-2 btn-large last
           onclick
             magix.forms.get-value
               form-id=>header
@@ -115,10 +115,10 @@ panel=>loginWrp
 
 
 panel=>logoutWrp
-  css=>absolute top right span-4 top-1 z-1 last
+  class=>absolute top right span-4 top-1 z-1 last
   controls
     button=>logOut
-      css=>span-4 btn-large
+      class=>span-4 btn-large
       value=>logout
       onclick
         magix.web.set-session=>magix.core.user
@@ -130,7 +130,7 @@ panel=>logoutWrp
           lhs=>[magix.web.get-session][value][roles][admin]
           code
             _lnk=>load_dashboard
-              css=>span-4 right-text
+              class=>span-4 right-text
             magix.web.get=>dashboard
             if=>exist
               lhs=>[@][magix.web.get][value]

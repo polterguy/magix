@@ -14,7 +14,7 @@ lambda=>lmb
       rhs=>1
       code
         _label=>error
-          css=>error centered span-20 last dox-for-web-control
+          class=>error centered span-20 last dox-for-web-control
           value=>please change the password of your admin user as fast as possible
           tag=>label
         add=>[$]
