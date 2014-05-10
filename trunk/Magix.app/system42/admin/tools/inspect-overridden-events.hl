@@ -38,7 +38,16 @@ for-each=>[Data][events]
           value=>[0]
         node-2-code
           remove-root=>true
-        set=>[9][value].Value
+        replace=>[node-2-code][code].Value
+          what=>&
+          with=>&amp;
+        replace=>[node-2-code][code].Value
+          what=><
+          with=>&lt;
+        replace=>[node-2-code][code].Value
+          what=>>
+          with=>&gt;
+        set=>[magix.forms.set-value:2][value].Value
           value=>[node-2-code][code].Value
         magix.forms.set-value
           form-id=>form1
