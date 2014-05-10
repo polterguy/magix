@@ -18,7 +18,7 @@ magix.execute
   magix.viewport.include-client-file
     type=>css
 
-magix.forms.load-mml-web-part
+magix.forms.create-mml-web-part
   file=>system42/public/index-header.mml
   container=>header
   form-id=>header
@@ -40,7 +40,7 @@ else
       if=>exist
         lhs=>[magix.web.get:1][value]
         code
-          magix.forms.load-mml-web-part
+          magix.forms.create-mml-web-part
             file=>system42/admin/desktop/menu.mml
             container=>menu
             form-id=>admin-menu

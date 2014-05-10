@@ -69,7 +69,8 @@ namespace Magix.forms
 				if (ip.Contains("mml"))
 				{
 					// mml form
-					TokenizeMarkup(ip);
+                    string mml = Expressions.GetExpressionValue(ip["mml"].Get<string>(), dp, ip, false) as string;
+					TokenizeMarkup(mml);
 				}
 				else
 				{
@@ -148,9 +149,14 @@ to the value in [mml]";
 
             if (FormID == Ip(e.Params)["form-id"].Get<string>())
 			{
+                Node ip = Ip(e.Params);
+                Node dp = ip;
+                if (e.Params.Contains("_dp"))
+                    dp = e.Params["_dp"].Get<Node>();
+
 				DataSource = new Node();
 				Methods.Clear();
-                TokenizeMarkup(Ip(e.Params));
+                TokenizeMarkup(Expressions.GetExpressionValue(ip["mml"].Get<string>(), dp, ip, false) as string);
 				this.Controls.Clear();
 				isFirst = true;
 				BuildControls();
@@ -272,10 +278,8 @@ not thread safe";
 			}
 		}
 
-		private void TokenizeMarkup(Node node)
+		private void TokenizeMarkup(string mml)
 		{
-			string mml = node["mml"].Get<string>();
-
 			bool isOutside = true;
 			bool lastWasBracket = false;
 

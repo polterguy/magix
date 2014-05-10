@@ -60,7 +60,7 @@ namespace Magix.ide
             tmp["class"].Value = "span-24 last top-1";
 
             RaiseActiveEvent(
-                "magix.forms.load-mml-web-part",
+                "magix.forms.create-mml-web-part",
                 tmp);
         }
 
