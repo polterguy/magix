@@ -55,7 +55,7 @@ namespace Magix.ide
             SaveFileContent();
 
             Node tmp = new Node();
-            tmp["file"].Value = path.Value;
+            tmp["mml-file"].Value = path.Value;
             tmp["container"].Value = "content3";
             tmp["class"].Value = "span-24 last top-1";
 

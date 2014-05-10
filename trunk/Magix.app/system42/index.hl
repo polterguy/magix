@@ -19,7 +19,7 @@ magix.execute
     type=>css
 
 magix.forms.create-mml-web-part
-  file=>system42/public/index-header.mml
+  mml-file=>system42/public/index-header.mml
   container=>header
   form-id=>header
   class=>span-24
@@ -41,7 +41,7 @@ else
         lhs=>[magix.web.get:1][value]
         code
           magix.forms.create-mml-web-part
-            file=>system42/admin/desktop/menu.mml
+            mml-file=>system42/admin/desktop/menu.mml
             container=>menu
             form-id=>admin-menu
             class=>span-5

@@ -141,7 +141,7 @@ shortcuts in the system.&nbsp;&nbsp;thread safe"
           magix.viewport.clear-controls
             container=>content5
           magix.forms.create-mml-web-part
-            file=>system42/admin/admin-settings.mml
+            mml-file=>system42/admin/admin-settings.mml
             container=>content1
             form-id=>admin-settings
             class=>span-17 last
