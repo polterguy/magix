@@ -10,8 +10,8 @@ using Magix.Core;
 
 namespace Magix.forms
 {
-	/**
-	 * controller that makes it possible to create new dynamically created forms
+	/*
+	 * controller for creating web parts, either as control collections, or as ml
 	 */
 	public class FormsCore : ActiveController
 	{
@@ -109,10 +109,11 @@ link-button=>btn-hello
             if (!ip.Contains("mml"))
             {
                 string file = Expressions.GetExpressionValue(ip["file"].Get<string>(), dp, ip, false) as string;
-                using (TextReader reader = File.OpenText(Page.Server.MapPath(file)))
-                {
-                    ip["mml"].Value = reader.ReadToEnd();
-                }
+                Node loadFile = new Node("magix.file.load", file);
+                RaiseActiveEvent(
+                    "magix.file.load",
+                    loadFile);
+                ip["mml"].Value = loadFile["value"].Get<string>();
             }
 
 			LoadActiveModule(
