@@ -36,13 +36,13 @@ expressions.&nbsp;&nbsp;if you use expressions for the [events] and [controls]
 nodes, then you add the expression as the value of the [event] and/or the 
 [controls] node, and whatever node these expressions returns, will become what 
 the form uses to load its controls/events</p><p>you can optionally supply a 
-[file-controls] node, instead of a [controls] node, which will be assumed to 
+[controls-file] node, instead of a [controls] node, which will be assumed to 
 be a file containing the declaration of the web controls.&nbsp;&nbsp;in addition, 
-you can also optionally supply a [file-events] node, which will be assumed to be 
+you can also optionally supply a [events-file] node, which will be assumed to be 
 a file containing the declaration of the events associated with the web part.&nbsp;
-&nbsp;both [file-controls] and [file-events] can be either constants or expressions.
-&nbsp;&nbsp;you cannot supply both [controls] and [file-controls].&nbsp;&nbsp;neither 
-can you supply both [events] and [file-events]</p><p>both [file-events] and [file-controls] 
+&nbsp;both [controls-file] and [events-file] can be either constants or expressions.
+&nbsp;&nbsp;you cannot supply both [controls] and [controls-file].&nbsp;&nbsp;neither 
+can you supply both [events] and [events-file]</p><p>both [file-events] and [controls-file] 
 are useful for separating your code from your ui as an alternative to handcoding in the 
 controls and events together in the same piece of code.&nbsp;&nbsp;in addition, you can 
 also separate code and ui by supplying the [controls] and [events] as expressions to other 
@@ -62,18 +62,19 @@ parts of your execution node tree</p><p>not thread safe</p>";
             if (e.Params.Contains("_dp"))
                 dp = e.Params["_dp"].Get<Node>();
 
-            if (!ip.Contains("controls") && !ip.Contains("file-controls"))
-                throw new ArgumentException("create-web-part needs either a [file-controls] parameter or a [controls] parameter");
+            if (!ip.Contains("controls") && !ip.Contains("controls-file"))
+                throw new ArgumentException("create-web-part needs either a [controls-file] parameter or a [controls] parameter");
 
-            if (ip.Contains("controls") && ip.Contains("file-controls"))
-                throw new ArgumentException("either supply [file-controls] or [controls] to create-web-part, not both of them");
+            if (ip.Contains("controls") && ip.Contains("controls-file"))
+                throw new ArgumentException("either supply [controls-file] or [controls] to create-web-part, not both of them");
 
-            if (ip.Contains("events") && ip.Contains("file-events"))
-                throw new ArgumentException("either supply [file-events] or [events] to create-web-part, not both of them");
+            if (ip.Contains("events") && ip.Contains("events-file"))
+                throw new ArgumentException("either supply [events-file] or [events] to create-web-part, not both of them");
 
-            if (ip.Contains("file-controls"))
+            bool hasControlsFile = false;
+            if (ip.Contains("controls-file"))
             {
-                string file = Expressions.GetExpressionValue(ip["file-controls"].Get<string>(), dp, ip, false) as string;
+                string file = Expressions.GetExpressionValue(ip["controls-file"].Get<string>(), dp, ip, false) as string;
                 Node loadControls = new Node("magix.file.load", file);
                 RaiseActiveEvent(
                     "magix.file.load",
@@ -87,11 +88,14 @@ parts of your execution node tree</p><p>not thread safe</p>";
 
                 ip["controls"].Clear();
                 ip["controls"].AddRange(toNode["node"]);
+
+                hasControlsFile = true;
             }
 
-            if (ip.Contains("file-events"))
+            bool hasEventsFile = false;
+            if (ip.Contains("events-file"))
             {
-                string file = Expressions.GetExpressionValue(ip["file-events"].Get<string>(), dp, ip, false) as string;
+                string file = Expressions.GetExpressionValue(ip["events-file"].Get<string>(), dp, ip, false) as string;
                 Node loadControls = new Node("magix.file.load", file);
                 RaiseActiveEvent(
                     "magix.file.load",
@@ -105,6 +109,7 @@ parts of your execution node tree</p><p>not thread safe</p>";
 
                 ip["events"].Clear();
                 ip["events"].AddRange(toNode["node"]);
+                hasEventsFile = true;
             }
 
             string container = null;
@@ -115,6 +120,12 @@ parts of your execution node tree</p><p>not thread safe</p>";
 				"Magix.forms.WebPart",
                 container,
                 e.Params);
+
+            if (hasControlsFile)
+                ip["controls"].UnTie();
+
+            if (hasEventsFile)
+                ip["events"].UnTie();
 		}
 		
 		/*
@@ -126,17 +137,18 @@ parts of your execution node tree</p><p>not thread safe</p>";
 			if (ShouldInspect(e.Params))
 			{
                 e.Params["inspect"].Value = @"<p>creates a dynamic magix markup language 
-web part from a [file] or [mml] value, putting it into the [container] viewport container
+web part from an [mml-file] or [mml] value, putting it into the [container] viewport container
 </p><p>[form-id] must be a unique id.&nbsp;&nbsp;you can intermix webcontrols into your mml 
 by creating a control collection, by typing them out inside of brackets such as {{...controls, 
 using hyper lisp syntax and code in event handlers goes here...}}</p><p>internally it uses 
 LoadActiveModule, hence all the parameters that goes into your [magix.viewport.load-module] 
 active event, can also be passed into this, such as [class], and so on</p><p>the magix markup 
 language can either be hardcoded in through the [mml] node, or exist on a file, which you 
-de-reference through the [file] node.&nbsp;&nbsp;either supply [file] or [mml], do not supply 
-both.&nbsp;&nbsp;[mml] has precedence, which means that [file] will be ignored if there exist 
-an [mml] node</p><p>both [mml], [file], [container], [class] and [form-id], can be either 
-constants or expressions</p><p>not thread safe</p>";
+de-reference through the [mml-file] node</p><p>you can also optionally supply an [events-file], 
+which will be threated as a file that contains the active events for your magix markup language 
+web part</p><p>either supply [mml-file] or [mml], do not supply both</p><p>both [mml], [mml-file], 
+[events-file], [container], [class] and [form-id], can be either constants or 
+expressions</p><p>not thread safe</p>";
                 e.Params["magix.forms.create-mml-web-part"]["container"].Value = "content3";
                 e.Params["magix.forms.create-mml-web-part"]["form-id"].Value = "unique-id";
                 e.Params["magix.forms.create-mml-web-part"]["class"].Value = "span-22 clear";
@@ -161,12 +173,16 @@ link-button=>btn-hello
 			if (!ip.Contains("container"))
 				throw new ArgumentException("create-mml-web-part needs a [container] parameter");
 
-			if (!ip.Contains("file") && !ip.Contains("mml"))
-				throw new ArgumentException("create-mml-web-part needs either a [file] parameter or an [mml] parameter");
+            if (!ip.Contains("mml-file") && !ip.Contains("mml"))
+                throw new ArgumentException("create-mml-web-part requires either an [mml-file] parameter or an [mml] parameter");
 
-            if (!ip.Contains("mml"))
+            if (ip.Contains("mml-file") && ip.Contains("mml"))
+                throw new ArgumentException("create-mml-web-part requires either an [mml-file] parameter or an [mml] parameter, not both");
+
+            bool hasMmlFile = false;
+            if (ip.Contains("mml-file"))
             {
-                string file = Expressions.GetExpressionValue(ip["file"].Get<string>(), dp, ip, false) as string;
+                string file = Expressions.GetExpressionValue(ip["mml-file"].Get<string>(), dp, ip, false) as string;
 
                 Node loadFile = new Node("magix.file.load", file);
                 RaiseActiveEvent(
@@ -174,12 +190,39 @@ link-button=>btn-hello
                     loadFile);
 
                 ip["mml"].Value = loadFile["value"].Get<string>();
+                hasMmlFile = true;
             }
 
-			LoadActiveModule(
+            bool hasEventsFile = false;
+            if (ip.Contains("events-file"))
+            {
+                string file = Expressions.GetExpressionValue(ip["events-file"].Get<string>(), dp, ip, false) as string;
+
+                Node eventsNodes = new Node("magix.file.load", file);
+                RaiseActiveEvent(
+                    "magix.file.load",
+                    eventsNodes);
+
+                string mml = ip["mml"].Get<string>();
+                mml += "\r\n{{\r\n// [ dynamically added events from events-file ]\r\n";
+                mml += eventsNodes["value"].Get<string>() + "\r\n}}";
+                hasEventsFile = true;
+                ip["mml"].Value = mml;
+            }
+
+            LoadActiveModule(
 				"Magix.forms.WebPart", 
 				Expressions.GetExpressionValue(ip["container"].Get<string>(), dp, ip, false) as string, 
 				e.Params);
+
+            if (hasMmlFile)
+                ip["mml"].UnTie();
+            else if (hasEventsFile)
+            {
+                string mml = ip["mml"].Get<string>();
+                mml = mml.Substring(0, mml.IndexOf("\r\n{{\r\n// [ dynamically added events from events-file ]"));
+                ip["mml"].Value = mml;
+            }
 		}
 	}
 }
