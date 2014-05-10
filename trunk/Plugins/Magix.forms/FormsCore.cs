@@ -166,7 +166,8 @@ link-button=>btn-hello
   value=>web controls
   onclick
     magix.test.hello-world
-}} and temporary active events, that exists only as long as the web part exists</p>";
+}} and temporary active events, that 
+exists only as long as the web part exists</p>";
 				return;
 			}
 
