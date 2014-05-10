@@ -140,15 +140,20 @@ parts of your execution node tree</p><p>not thread safe</p>";
 web part from an [mml-file] or [mml] value, putting it into the [container] viewport container
 </p><p>[form-id] must be a unique id.&nbsp;&nbsp;you can intermix webcontrols into your mml 
 by creating a control collection, by typing them out inside of brackets such as {{...controls, 
-using hyper lisp syntax and code in event handlers goes here...}}</p><p>internally it uses 
+using hyper lisp syntax, code goes into event handlers here too ...}}</p><p>internally it uses 
 LoadActiveModule, hence all the parameters that goes into your [magix.viewport.load-module] 
 active event, can also be passed into this, such as [class], and so on</p><p>the magix markup 
 language can either be hardcoded in through the [mml] node, or exist on a file, which you 
 de-reference through the [mml-file] node</p><p>you can also optionally supply an [events-file], 
 which will be threated as a file that contains the active events for your magix markup language 
-web part</p><p>either supply [mml-file] or [mml], do not supply both</p><p>both [mml], [mml-file], 
-[events-file], [container], [class] and [form-id], can be either constants or 
-expressions</p><p>not thread safe</p>";
+web part.&nbsp;&nbsp;in addition, you can also supply an [event] node, which will be threated 
+as the active events for the mml web part, but active events can also be inlined directly in the 
+magix markup, as long as they have at least one period '.' in their name</p><p>either supply 
+[mml-file] or [mml], do not supply both.&nbsp;&nbsp;though you can supply both inline active 
+event, [events-file] and an [events] node, and these will be mixed together to form the active 
+events of your magix markup language web part</p><p>both [mml], [mml-file], [events-file], 
+[container], [class] and [form-id], can be either constants or expressions</p><p>not thread 
+safe</p>";
                 e.Params["magix.forms.create-mml-web-part"]["container"].Value = "content3";
                 e.Params["magix.forms.create-mml-web-part"]["form-id"].Value = "unique-id";
                 e.Params["magix.forms.create-mml-web-part"]["class"].Value = "span-22 clear";
@@ -210,6 +215,22 @@ link-button=>btn-hello
                 ip["mml"].Value = mml;
             }
 
+            bool hasEventsNode = false;
+            if (ip.Contains("events"))
+            {
+                Node eventsNodes = new Node();
+                eventsNodes["node"].AddRange(ip["events"]);
+                RaiseActiveEvent(
+                    "magix.execute.node-2-code",
+                    eventsNodes);
+
+                string mml = ip["mml"].Get<string>();
+                mml += "\r\n{{\r\n// [ dynamically added events from events node ]\r\n";
+                mml += eventsNodes["code"].Get<string>() + "\r\n}}";
+                hasEventsNode = true;
+                ip["mml"].Value = mml;
+            }
+
             LoadActiveModule(
 				"Magix.forms.WebPart", 
 				Expressions.GetExpressionValue(ip["container"].Get<string>(), dp, ip, false) as string, 
@@ -223,7 +244,13 @@ link-button=>btn-hello
                 mml = mml.Substring(0, mml.IndexOf("\r\n{{\r\n// [ dynamically added events from events-file ]"));
                 ip["mml"].Value = mml;
             }
-		}
+            else if (hasEventsNode)
+            {
+                string mml = ip["mml"].Get<string>();
+                mml = mml.Substring(0, mml.IndexOf("\r\n{{\r\n// [ dynamically added events from events node ]"));
+                ip["mml"].Value = mml;
+            }
+        }
 	}
 }
 
