@@ -142,12 +142,14 @@ constants or expressions</p><p>not thread safe</p>";
                 e.Params["magix.forms.create-mml-web-part"]["class"].Value = "span-22 clear";
                 e.Params["magix.forms.create-mml-web-part"]["mml"].Value = @"
 <p>notice how you can combine html with {{
+magix.test.hello-world
+  magix.viewport.show-message
+    message=>hello world
 link-button=>btn-hello
   value=>web controls
   onclick
-    magix.viewport.show-message
-      message=>hello world
-}}</p>";
+    magix.test.hello-world
+}} and temporary active events, that exists only as long as the web part exists</p>";
 				return;
 			}
 
