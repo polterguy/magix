@@ -61,7 +61,7 @@ link-button=>go-to-settings
       container=>content4
     magix.viewport.clear-controls
       container=>content5
-    magix.forms.load-mml-web-part
+    magix.forms.create-mml-web-part
       file=>system42/admin/admin-settings.mml
       container=>content1
       form-id=>admin-settings

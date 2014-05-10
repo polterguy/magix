@@ -64,83 +64,61 @@ the form uses to load its controls/events</p><p>not thread safe</p>";
 		/**
 		 * will create, and instantiate, a newly created dynamic web page
 		 */
-		[ActiveEvent(Name = "magix.forms.load-mml-web-part")]
-		public void magix_forms_load_web_part(object sender, ActiveEventArgs e)
-		{
-			if (ShouldInspect(e.Params))
-			{
-				e.Params["event:magix.forms.load-mml-web-part"].Value = null;
-				e.Params["container"].Value = "header";
-				e.Params["form-id"].Value = "harvester";
-				e.Params["file"].Value = "sample-scripts/email-harvester.mml";
-				e.Params["inspect"].Value = @"creates a dynamic magix markup language web page from a file,
-loading it into the [container] viewport container.&nbsp;&nbsp;[form-id]
-must be a uniquely identifiable id for later use.&nbsp;&nbsp;
-you can intermix webcontrols into your mml by creating a control 
-collection by typing them inside of brackets such as 
-{{...controls, using hyper lisp syntax and code in
-event handlers goes here...}}.&nbsp;&nbsp;internally it 
-calls LoadActiveModule, hence all the parameters that goes
-into your magix.viewport.load-module active event, 
-can also be passed into this, such as [class] and 
-so on.&nbsp;&nbsp;you can embed forms using this syntax
-{{form=>name_of_form}}.&nbsp;&nbsp;not thread safe";
-				return;
-			}
-
-            Node tmp = Ip(e.Params).Clone();
-
-			if (!tmp.Contains("container"))
-				throw new ArgumentException("load-mml-web-part needs a [container] parameter");
-
-			if (!tmp.Contains("file"))
-				throw new ArgumentException("load-mml-web-part needs a [file] parameter");
-
-			using (TextReader reader = File.OpenText(Page.Server.MapPath(tmp["file"].Get<string>())))
-			{
-				tmp["mml"].Value = reader.ReadToEnd();
-				tmp["file"].UnTie(); // removing file object, to not confuse HtmlViewer ...
-			}
-
-			LoadActiveModule(
-				"Magix.forms.WebPart", 
-				tmp["container"].Get<string>(), 
-				tmp);
-		}
-		
-		/**
-		 * will create, and instantiate, a newly created dynamic web part
-		 */
 		[ActiveEvent(Name = "magix.forms.create-mml-web-part")]
 		public void magix_forms_create_mml_web_part(object sender, ActiveEventArgs e)
 		{
 			if (ShouldInspect(e.Params))
 			{
-				e.Params.Clear();
-				e.Params["event:magix.forms.create-mml-web-part"].Value = null;
-				e.Params["inspect"].Value = @"creates a dynamic magix markup language web part.
-&nbsp;&nbsp;not thread safe";
-				e.Params["container"].Value = "header";
-				e.Params["form-id"].Value = "my-form";
-				e.Params["class"].Value = "css-classes-of-container";
-				e.Params["mml"].Value = @"<p>magix markup language goes here
-{{
-link-button=>btn
-  value=>howdy
+                e.Params["inspect"].Value = @"<p>creates a dynamic magix markup language 
+web part from a [file] or [mml] value, putting it into the [container] viewport container
+</p><p>[form-id] must be a unique id.&nbsp;&nbsp;you can intermix webcontrols into your mml 
+by creating a control collection, by typing them out inside of brackets such as {{...controls, 
+using hyper lisp syntax and code in event handlers goes here...}}</p><p>internally it uses 
+LoadActiveModule, hence all the parameters that goes into your [magix.viewport.load-module] 
+active event, can also be passed into this, such as [class], and so on</p><p>the magix markup 
+language can either be hardcoded in through the [mml] node, or exist on a file, which you 
+de-reference through the [file] node.&nbsp;&nbsp;either supply [file] or [mml], do not supply 
+both.&nbsp;&nbsp;[mml] has precedence, which means that [file] will be ignored if there exist 
+an [mml] node</p><p>both [mml], [file], [container], [class] and [form-id], can be either 
+constants or expressions</p><p>not thread safe</p>";
+                e.Params["magix.forms.create-mml-web-part"]["container"].Value = "content3";
+                e.Params["magix.forms.create-mml-web-part"]["form-id"].Value = "unique-id";
+                e.Params["magix.forms.create-mml-web-part"]["class"].Value = "span-22 clear";
+                e.Params["magix.forms.create-mml-web-part"]["mml"].Value = @"
+<p>notice how you can combine html with {{
+link-button=>btn-hello
+  value=>web controls
+  onclick
+    magix.viewport.show-message
+      message=>hello world
 }}</p>";
 				return;
 			}
 
-            if (!Ip(e.Params).Contains("container"))
-				throw new ArgumentException("create-web-part needs a [container] parameter");
+            Node ip = Ip(e.Params);
+            Node dp = ip;
+            if (e.Params.Contains("_dp"))
+                dp = e.Params["_dp"].Get<Node>();
 
-            if (!Ip(e.Params).Contains("mml"))
-				throw new ArgumentException("create-web-part needs an [mml] parameter");
+			if (!ip.Contains("container"))
+				throw new ArgumentException("create-mml-web-part needs a [container] parameter");
+
+			if (!ip.Contains("file") && !ip.Contains("mml"))
+				throw new ArgumentException("create-mml-web-part needs either a [file] parameter or a [mml] parameter");
+
+            if (!ip.Contains("mml"))
+            {
+                string file = Expressions.GetExpressionValue(ip["file"].Get<string>(), dp, ip, false) as string;
+                using (TextReader reader = File.OpenText(Page.Server.MapPath(file)))
+                {
+                    ip["mml"].Value = reader.ReadToEnd();
+                }
+            }
 
 			LoadActiveModule(
-				"Magix.forms.WebPart",
-                Ip(e.Params)["container"].Get<string>(),
-                Ip(e.Params));
+				"Magix.forms.WebPart", 
+				Expressions.GetExpressionValue(ip["container"].Get<string>(), dp, ip, false) as string, 
+				e.Params);
 		}
 	}
 }
