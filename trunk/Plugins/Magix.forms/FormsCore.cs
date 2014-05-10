@@ -23,28 +23,42 @@ namespace Magix.forms
 		{
 			if (ShouldInspect(e.Params))
 			{
-				e.Params["event:magix.forms.create-web-part"].Value = "content1";
-				e.Params["container"].Value = "content1";
-				e.Params["class"].Value = "css class(es) of your form";
-				e.Params["form-id"].Value = "unique-identification-of-your-form";
-				e.Params["events"]["magix.forms.widget-selected"]["magix.forms.show-message"]["message"].Value = "jo, something was selected";
-				e.Params["controls"]["button"].Value = "btn";
-				e.Params["controls"]["button"]["value"].Value = "Hello World!";
-				e.Params["inspect"].Value = @"creates a dynamic form
-and loading it into the [container] viewport container.&nbsp;&nbsp;[form-id]
-must be a uniquely identifiable id for later use.&nbsp;&nbsp;[controls]
-contains the controls themselves, [class] becomes the css classes of your form
-.&nbsp;&nbsp;not thread safe";
-				return;
+                e.Params["inspect"].Value = @"<p>creates a dynamic form and loads 
+it into the [container] viewport container</p><p>[form-id] must be a unique id.
+&nbsp;&nbsp;[controls] contains the controls themselves, and is a list of the 
+controls the form contains.&nbsp;&nbsp;[class] is the css class(es) you wish to 
+use for your form</p><p>you can also associate temporary active events with your 
+form, which will only exist as long as your form exists.&nbsp;&nbsp;you do this 
+by adding active events directly beneath the [events] node, where the name of the 
+active event becomes the first node, and the code to execute is directly beneath 
+the active event declaration</p><p>all parameters can be either constants or 
+expressions.&nbsp;&nbsp;if you use expressions for the [events] and [controls] 
+nodes, then you add the expression as the value of the [event] and/or the 
+[controls] node, and whatever node these expressions returns, will become what 
+the form uses to load its controls/events</p><p>not thread safe</p>";
+                e.Params["magix.forms.create-web-part"]["container"].Value = "content3";
+                e.Params["magix.forms.create-web-part"]["class"].Value = "css class(es) of your form";
+                e.Params["magix.forms.create-web-part"]["form-id"].Value = "unique-id";
+                e.Params["magix.forms.create-web-part"]["events"]["magix.forms.control-clicked"]["magix.viewport.show-message"]["message"].Value = "yo";
+                e.Params["magix.forms.create-web-part"]["controls"]["button"].Value = "btn";
+                e.Params["magix.forms.create-web-part"]["controls"]["button"]["value"].Value = "click me";
+                e.Params["magix.forms.create-web-part"]["controls"]["button"]["onclick"]["magix.forms.control-clicked"].Value = null;
+                return;
 			}
 
-            if (!Ip(e.Params).Contains("container"))
-				throw new ArgumentException("you need a [container] for your create-web-part");
+            Node ip = Ip(e.Params);
+            Node dp = ip;
+            if (e.Params.Contains("_dp"))
+                dp = e.Params["_dp"].Get<Node>();
+
+            string container = null;
+            if (ip.Contains("container"))
+                container = Expressions.GetExpressionValue(ip["container"].Get<string>(), dp, ip, false) as string;
 
 			LoadActiveModule(
 				"Magix.forms.WebPart",
-                Ip(e.Params)["container"].Get<string>(),
-                Ip(e.Params));
+                container,
+                e.Params);
 		}
 		
 		/**

@@ -395,32 +395,31 @@ the [name] node.&nbsp;&nbsp;the incoming parameters will be used.&nbsp;&nbsp;not
 				return;
 			}
 
-            string moduleName = Ip(e.Params)["name"].Get<string>();
+            Node ip = Ip(e.Params);
+            Node dp = ip;
+            if (e.Params.Contains("_dp"))
+                dp = e.Params["_dp"].Get<Node>();
 
+            string moduleName = e.Params["name"].Get<string>();
             string container = GetDefaultContainer();
-
-            if (Ip(e.Params).Contains("container"))
-                container = Ip(e.Params)["container"].Get<string>();
+            if (ip.Contains("container"))
+                container = Expressions.GetExpressionValue(ip["container"].Get<string>(), dp, ip, false) as string;
 
 			DynamicPanel dyn = Selector.FindControl<DynamicPanel>(
             	this,
                 container);
-
 			if (dyn == null)
 				return;
 
-			dyn.Style[Styles.display] = "";
-
-            Node context = Ip(e.Params);
-
-			ClearControls(dyn);
-
-            if (Ip(e.Params).Contains("class"))
-                dyn.Class = Ip(e.Params)["class"].Get<string>();
+            ClearControls(dyn);
+            
+            dyn.Style[Styles.display] = "";
+            if (ip.Contains("class"))
+                dyn.Class = Expressions.GetExpressionValue(ip["class"].Get<string>(), dp, ip, false) as string;
             else
                 dyn.Class = "";
 
-			dyn.LoadControl(moduleName, context);
+			dyn.LoadControl(moduleName, e.Params);
         }
 
 		/*
