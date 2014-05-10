@@ -90,7 +90,7 @@ cf
           tag=>label
           value=>description
         label=>desc
-          class=>span-12 last bottom-5
+          class=>span-12 last
           value=>@"description of your magix active event.&nbsp;&nbsp;
 click any of the active events to the right to inspect them"
     panel=>wrp

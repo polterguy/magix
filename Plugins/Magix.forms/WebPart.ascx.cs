@@ -18,7 +18,7 @@ using Magix.UX.Widgets.Core;
 
 namespace Magix.forms
 {
-    /**
+    /*
      * create a web part consisting of magix markup language
      */
     public class WebPart : ActiveModule
@@ -58,22 +58,40 @@ namespace Magix.forms
 			Load +=
 			delegate
 			{
-				if (node.Contains("form-id"))
-					FormID = node["form-id"].Get<string>();
+                Node ip = Ip(node);
+                Node dp = ip;
+                if (node.Contains("_dp"))
+                    dp = node["_dp"].Get<Node>();
 
-				if (node.Contains("mml"))
+				if (ip.Contains("form-id"))
+					FormID = Expressions.GetExpressionValue(ip["form-id"].Get<string>(), dp, ip, false) as string;
+
+				if (ip.Contains("mml"))
 				{
 					// mml form
-					TokenizeMarkup(node);
+					TokenizeMarkup(ip);
 				}
 				else
 				{
-					// web controls form
-					DataSource["controls"].Value = node["controls"].Clone();
+                    if (!ip.Contains("controls"))
+                        throw new ArgumentException("you must supply a [controls] segment for your web part");
+                    
+                    if (!string.IsNullOrEmpty(ip["controls"].Get<string>()))
+                    {
+                        DataSource["controls"].Value = 
+                            (Expressions.GetExpressionValue(ip["controls"].Get<string>(), dp, ip, false) as Node).Clone();
+                    }
+                    else
+                    {
+                        DataSource["controls"].Value = ip["controls"].Clone();
+                    }
 
-					if (node.Contains("events"))
+					if (ip.Contains("events"))
 					{
-						foreach (Node idxEvent in node["events"])
+                        Node evts = ip["events"];
+                        if (!string.IsNullOrEmpty(ip["events"].Get<string>()))
+                            evts = Expressions.GetExpressionValue(ip["events"].Get<string>(), dp, ip, false) as Node;
+						foreach (Node idxEvent in evts)
 						{
 							Methods[idxEvent.Name] = idxEvent.Clone();
 						}
