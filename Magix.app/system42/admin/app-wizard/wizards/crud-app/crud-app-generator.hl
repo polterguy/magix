@@ -3,22 +3,23 @@ inspect=>@"generator for crud applications.&nbsp;&nbsp;
 will create crud application according to given parameters."
 
 for-each=>[$]
-  add=>[/][session-event][code][_pars]
+  add=>[/][event][code][_pars]
     value=>[.]
 
-set=>[session-event][code][_button][onclick][magix.data.save][value][type].Value
+set=>[event][code][_button][onclick][magix.data.save][value][type].Value
   value=>[$][datasource].Value
 
-set=>[session-event][code][_data][magix.forms.create-web-part][controls][panel][controls][link-button=>next][onclick][execute-script][file].Value
+set=>[event][code][_data][magix.forms.create-web-part][controls][panel][controls][link-button=>next][onclick][execute-script][file].Value
   value=>@"system42\admin\apps\{0}.hl"
     v0=>[$][name].Value
-set=>[session-event][code][_data][magix.forms.create-web-part][controls][panel][controls][link-button=>previous][onclick][execute-script][file].Value
+set=>[event][code][_data][magix.forms.create-web-part][controls][panel][controls][link-button=>previous][onclick][execute-script][file].Value
   value=>@"system42\admin\apps\{0}.hl"
     v0=>[$][name].Value
 
-session-event=>magix.crud-app-generator.create-application
+event=>magix.crud-app-generator.create-application
+  session=>true
   code
-    session-event=>magix.crud-app-generator.create-application
+    event=>magix.crud-app-generator.create-application
     _data
       inspect=>@"automatically generated file
 which contains logic for crud-app-generated application"

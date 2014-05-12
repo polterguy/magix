@@ -80,7 +80,7 @@ can take and return parameters.&nbsp;&nbsp;if you wish to pass in or retrieve pa
 then as you invoke the function, just append your parameters underneath the function 
 invocation, and they will be passed into the function, where they will be accessible 
 underneath the [$] node, appended as the last parts of your code block, into your function 
-invocation.&nbsp;&nbsp;from outside of the function/event itself, you can access these 
+invocation.&nbsp;&nbsp;from outside of the active event itself, you can access these 
 parameters directly underneath the active event itself</p><p>any existing event with 
 the name from the [event] node's value will be deleted, if you pass in no [code] block</p>
 <p>if you set the [remotable] node to true, then the active event will be possible to 
@@ -238,12 +238,12 @@ with the hyper lisp in the [code] expression for the current session</p><p>these
 events can take and return parameters.&nbsp;&nbsp;if you wish to pass in or retrieve parameters, 
 then as you invoke the function, just append your args underneath the function invocation, and 
 they will be passed into the function, where they will be accessible underneath a [$] node, 
-appended as the last parts of your code block, into your function invocation.&nbsp;&nbsp;from
-outside of the function/event itself, you can access these parameters directly underneath the 
-active event itself</p><p>event will be deleted, if you pass in no [code] block</p><p>not thread 
+appended as the last parts of your code block, into your event invocation.&nbsp;&nbsp;from
+outside of the active event itself, you can access these parameters directly underneath the 
+active event itself</p><p>event will be deleted, if you pass in no [code] block</p><p>note that 
+a session event cannot be marked as neither open nor persisted</p><p>not thread 
 safe</p>";
                 e.Params["session-event"].Value = "foo.bar";
-                e.Params["session-event"]["remotable"].Value = false;
                 e.Params["session-event"]["code"]["_data"].Value = "thomas";
                 e.Params["session-event"]["code"]["_backup"].Value = "thomas";
                 e.Params["session-event"]["code"]["if"].Value = "equals";
@@ -256,7 +256,7 @@ safe</p>";
                 e.Params["session-event"]["code"]["magix.viewport.show-message"].Value = null;
                 e.Params["foo.bar"].Value = null;
                 e.Params["foo.bar"]["input"].Value = "hello world 2.0";
-                e.Params.Add(new Node("session-event", "foo.bar"));
+                e.Params["session-event", 1].Value = "foo.bar";
                 return;
             }
 
