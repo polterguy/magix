@@ -34,6 +34,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CodeCore.cs" />
+    <Compile Include="IterateTreeCore.cs" />
     <Compile Include="ReplaceCore.cs" />
     <Compile Include="SwitchCore.cs" />
     <Compile Include="LambdaCore.cs" />
