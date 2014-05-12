@@ -50,7 +50,7 @@ set=>[magix.forms.create-web-part:1][controls][button:1][onclick][magix.viewport
   value=>@"magix.crud-app.template.{0}"
     v0=>[$][name].Value
 
-set=>[magix.forms.create-web-part][events][magix.crud-app.generate-application][execute-file][name].Value
+set=>[magix.forms.create-web-part][events][magix.crud-app.generate-application][execute-script][params][name].Value
   value=>[$][name].Value
 
 set=>[magix.forms.create-web-part][events][magix.crud-app.generate-application][magix.data.load][id].Value
@@ -65,11 +65,13 @@ set=>[magix.forms.create-web-part][events][magix.crud-app.preview-application][s
 
 set=>[magix.forms.create-web-part][events][magix.crud-app.preview-application][magix.forms.create-web-part][controls][label:1][value].Value
   value=>@"inspect=>@""to open application, use code below""
-execute-file=>system42\admin\apps\{0}.hl
-  class=>span-22
-  container=>content3
-  start=>0
-  end=>10"
+execute-script
+  file=>system42\admin\apps\{0}.hl
+  params
+    class=>span-22
+    container=>content3
+    start=>0
+    end=>10"
     v0=>[$][name].Value
 
 magix.forms.create-web-part
@@ -81,21 +83,23 @@ magix.forms.create-web-part
 
     magix.crud-app.generate-application
       magix.data.load
-      set=>[execute-file][datasource].Value
+      set=>[execute-script][params][datasource].Value
         value=>magix.generic-apps.datasource.crud-app.{0}
-      add=>[execute-file]
+      add=>[execute-script][params]
         value=>[magix.data.load][objects][0][fields]
       for-each=>[$]
-        add=>[/][execute-file][_after-code]
+        add=>[/][execute-script][params][_after-code]
           value=>[.]
-      execute-file=>system42/admin/app-wizard/wizards/crud-app/crud-app-generator.hl
+      execute-script
+        file=>system42/admin/app-wizard/wizards/crud-app/crud-app-generator.hl
 
     magix.crud-app.preview-application
-      set=>[execute-file].Value
+      set=>[execute-script][file].Value
         value=>system42\admin\apps\{0}.hl
-      execute-file
-        container=>content5
-        class=>span-22 last top-3
+      execute-script
+        params
+          container=>content5
+          class=>span-22 last top-3
       magix.forms.create-web-part
         container=>content6
         form-id=>close-preview
@@ -304,8 +308,10 @@ magix.forms.create-web-part
       class=>span-3 left-1 top-1
       value=>&lt;&lt; back
       onclick
-        execute-file=>system42/admin/app-wizard/new-app.hl
-          file=>system42\admin\app-wizard\wizards\crud-app.hl
+        execute-script
+          file=>system42/admin/app-wizard/new-app.hl
+          params
+            file=>system42\admin\app-wizard\wizards\crud-app.hl
         magix.viewport.clear-controls
           container=>content3
         magix.viewport.clear-controls
@@ -322,8 +328,10 @@ magix.forms.create-web-part
           message=>are you sure you wish to delete this application
           code
             magix.data.remove
-            execute-file=>system42/admin/app-wizard/new-app.hl
-              file=>system42\admin\app-wizard\wizards\crud-app.hl
+            execute-script
+              file=>system42/admin/app-wizard/new-app.hl
+              params
+                file=>system42\admin\app-wizard\wizards\crud-app.hl
             magix.viewport.clear-controls
               container=>content3
             magix.viewport.clear-controls

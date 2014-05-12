@@ -17,7 +17,8 @@ shortcuts in the system.&nbsp;&nbsp;thread safe"
         text=>hyper lisp reference
         category=>learn
         code
-          execute-file=>system42/admin/tools/inspect-execute.hl
+          execute-script
+            file=>system42/admin/tools/inspect-execute.hl
           magix.help.open-file
             file=>system42\admin\help\hyper-lisp\index.mml
       _default_script18_TJOBING
@@ -32,7 +33,8 @@ shortcuts in the system.&nbsp;&nbsp;thread safe"
             container=>content4
           magix.viewport.clear-controls
             container=>content5
-          execute-file=>system42/admin/app-wizard/app-wizard.hl
+          execute-script
+            file=>system42/admin/app-wizard/app-wizard.hl
           magix.help.open-file
             file=>system42\admin\help\backend\applications.mml
       _default_script17
@@ -47,42 +49,48 @@ shortcuts in the system.&nbsp;&nbsp;thread safe"
             container=>content4
           magix.viewport.clear-controls
             container=>content5
-          execute-file=>system42/admin/edit-pages.hl
+          execute-script
+            file=>system42/admin/edit-pages.hl
           magix.help.open-file
             file=>system42\admin\help\backend\applications.mml
       _default_script2
         text=>unit tests
         category=>security
         code
-          execute-file=>system42/admin/tools/inspect-unit-tests.hl
+          execute-script
+            file=>system42/admin/tools/inspect-unit-tests.hl
           magix.help.open-file
             file=>system42\admin\help\backend\unit-tests.mml
       _default_script4
         text=>overridden active events
         category=>security
         code
-          execute-file=>system42/admin/tools/inspect-overridden-events.hl
+          execute-script
+            file=>system42/admin/tools/inspect-overridden-events.hl
           magix.help.open-file
             file=>system42\admin\help\backend\overriding-events.mml
       _default_script3
         text=>active events
         category=>tools
         code
-          execute-file=>system42/admin/tools/inspect-events.hl
+          execute-script
+            file=>system42/admin/tools/inspect-events.hl
           magix.help.open-file
             file=>system42\admin\help\backend\active-events.mml
       _default_script5
         text=>open active events
         category=>security
         code
-          execute-file=>system42/admin/tools/inspect-open-events.hl
+          execute-script
+            file=>system42/admin/tools/inspect-open-events.hl
           magix.help.open-file
             file=>system42\admin\help\backend\remoting.mml
       _default_script6
         text=>tunneled active events
         category=>security
         code
-          execute-file=>system42/admin/tools/inspect-remoted-events.hl
+          execute-script
+            file=>system42/admin/tools/inspect-remoted-events.hl
           magix.help.open-file
             file=>system42\admin\help\backend\remoting.mml
       _default_script13
@@ -97,7 +105,8 @@ shortcuts in the system.&nbsp;&nbsp;thread safe"
             container=>content4
           magix.viewport.clear-controls
             container=>content5
-          execute-file=>system42/admin/users/users-grid.hl
+          execute-script
+            file=>system42/admin/users/users-grid.hl
           magix.help.open-file
             file=>system42\admin\help\backend\user-administration.mml
       _default_script14
@@ -112,7 +121,8 @@ shortcuts in the system.&nbsp;&nbsp;thread safe"
             container=>content4
           magix.viewport.clear-controls
             container=>content5
-          execute-file=>system42/admin/roles-grid.hl
+          execute-script
+            file=>system42/admin/roles-grid.hl
           magix.help.open-file
             file=>system42\admin\help\backend\user-administration.mml
       _default_script15
@@ -127,7 +137,8 @@ shortcuts in the system.&nbsp;&nbsp;thread safe"
             container=>content4
           magix.viewport.clear-controls
             container=>content5
-          execute-file=>system42/admin/server-log-grid.hl
+          execute-script
+            file=>system42/admin/server-log-grid.hl
       _default_script16
         text=>settings
         category=>tools
@@ -149,7 +160,8 @@ shortcuts in the system.&nbsp;&nbsp;thread safe"
         text=>magix markup language editor
         category=>tools
         code
-          execute-file=>system42/admin/tools/magix-markup-editor.hl
+          execute-script
+            file=>system42/admin/tools/magix-markup-editor.hl
           magix.help.open-file
             file=>system42\admin\help\backend\magix-markup-language.mml
       _default_script10
@@ -172,7 +184,8 @@ shortcuts in the system.&nbsp;&nbsp;thread safe"
         text=>file system
         category=>tools
         code
-          execute-file=>system42/admin/file-browser.hl
+          execute-script
+            file=>system42/admin/file-browser.hl
           magix.viewport.clear-controls
             container=>content2
           magix.viewport.clear-controls
@@ -187,7 +200,8 @@ shortcuts in the system.&nbsp;&nbsp;thread safe"
         text=>web controls
         category=>learn
         code
-          execute-file=>system42/admin/tools/inspect-web-controls.hl
+          execute-script
+            file=>system42/admin/tools/inspect-web-controls.hl
           magix.help.open-file
             file=>system42\admin\help\backend\web-controls.mml
       _default_script18
@@ -202,7 +216,8 @@ shortcuts in the system.&nbsp;&nbsp;thread safe"
             container=>content4
           magix.viewport.clear-controls
             container=>content5
-          execute-file=>system42/admin/forms/edit-forms.hl
+          execute-script
+            file=>system42/admin/forms/edit-forms.hl
           magix.help.open-file
             file=>system42\admin\help\backend\forms.mml
       _default_script19
@@ -223,7 +238,8 @@ shortcuts in the system.&nbsp;&nbsp;thread safe"
             container=>content4
           magix.viewport.clear-controls
             container=>content5
-          execute-file=>system42\admin\tools\qr-code-generator.hl
+          execute-script
+            file=>system42\admin\tools\qr-code-generator.hl
           magix.help.open-file
             file=>system42\admin\help\backend\qr-codes.mml
     for-each=>[_scripts]

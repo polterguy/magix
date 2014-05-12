@@ -44,10 +44,10 @@ expects it to be a pointer to a hyper lisp file, which will be executed";
                         if (!string.IsNullOrEmpty(defaultHyperLispFile))
                         {
                             Node node = new Node();
-                            node.Value = defaultHyperLispFile;
+                            node["file"].Value = defaultHyperLispFile;
 
                             RaiseActiveEvent(
-                                "magix.execute.execute-file",
+                                "magix.execute.execute-script",
                                 node);
                         }
                         _hasRun = true;

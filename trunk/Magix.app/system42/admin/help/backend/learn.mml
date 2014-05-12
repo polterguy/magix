@@ -11,7 +11,8 @@ tools for teaching yourself magix also changes</p>
 link-button=>hyper-lisp-reference
   value=>hyper lisp reference
   onclick
-    execute-file=>system42/admin/tools/inspect-execute.hl
+    execute-script
+      file=>system42/admin/tools/inspect-execute.hl
     magix.viewport.scroll
 }} link inside the learn panel, traverses your system for all {{
 link-button=>hyperlisp
@@ -30,7 +31,8 @@ to load up example code, that illustrates the keyword, and its usage</p>
 link-button=>web-controls
   value=>web controls
   onclick
-    execute-file=>system42/admin/tools/inspect-web-controls.hl
+    execute-script
+      file=>system42/admin/tools/inspect-web-controls.hl
     magix.viewport.scroll
 }} link inside the learn panel, works similar to the hyper lisp reference link.&nbsp;&nbsp;it will traverse the system for all web controls 
 you have inside of your system, and display the such that you can click them, to inspect them.&nbsp;&nbsp;also the web controls can 

@@ -20,9 +20,11 @@ set=>[magix.forms.create-web-part][controls][panel=>qr-code-wrap][controls][butt
 
 set=>[magix.forms.create-web-part][controls][panel=>qr-code-wrap][controls][label=>lblDescriptionStartQrCode][value].Value
   value=>@"inspect=>@""to open application, use code below""
-execute-file=>system42\admin\apps\{0}.hl
-  class=>span-22
-  container=>content3"
+execute-script
+  file=>system42\admin\apps\{0}.hl
+  params
+    class=>span-22
+    container=>content3"
     v0=>[$][name].Value
 
 set=>[magix.forms.create-web-part][controls][label][onfirstload][magix.data.load][id].Value
@@ -36,9 +38,10 @@ magix.forms.create-web-part
   events
     magix.qr-code-generator.generate-application
       for-each=>[$]
-        add=>[/][execute-file]
+        add=>[/][execute-script][params]
           value=>[.]
-      execute-file=>system42\admin\app-wizard\wizards\qr-code-generator\qr-code-generator-generator.hl
+      execute-script
+        file=>system42\admin\app-wizard\wizards\qr-code-generator\qr-code-generator-generator.hl
       magix.viewport.show-message
         message=>vanity qr code generator was generated
       magix.forms.set-visible
@@ -183,20 +186,22 @@ parts of qr code. defaults to bumpy-white.png"
                 item=>media
                 item=>media\images
                 item=>media\images\textures
-            execute-file=>system42/admin/file-browser.hl
-              container=>file-browser
-              class=>span-17 last
-              mode=>select
-              directory=>media\images\textures
-              keep-stack
-              select-file
-                set=>[magix.forms.set-value][value].Value
-                  value=>[_file].Value
-                magix.forms.set-value
-                  form-id=>qr-codes
-                  id=>bg-image
-                magix.viewport.clear-controls
-                  container=>file-browser
+            execute-script
+              file=>system42/admin/file-browser.hl
+              params
+                container=>file-browser
+                class=>span-17 last
+                mode=>select
+                directory=>media\images\textures
+                keep-stack
+                select-file
+                  set=>[magix.forms.set-value][value].Value
+                    value=>[_file].Value
+                  magix.forms.set-value
+                    form-id=>qr-codes
+                    id=>bg-image
+                  magix.viewport.clear-controls
+                    container=>file-browser
         label=>fgImageDescription
           tag=>label
           class=>span-2 top-1 right-text
@@ -212,19 +217,21 @@ parts of qr code. defaults to bumby-black.png"
           class=>text-browse-btn-last top-1
           value=>...
           onclick
-            execute-file=>system42/admin/file-browser.hl
-              container=>file-browser
-              class=>span-17 last
-              mode=>select
-              directory=>media\images\textures
-              select-file
-                set=>[magix.forms.set-value][value].Value
-                  value=>[_file].Value
-                magix.forms.set-value
-                  form-id=>qr-codes
-                  id=>fg-image
-                magix.viewport.clear-controls
-                  container=>file-browser
+            execute-script
+              file=>system42/admin/file-browser.hl
+              params
+                container=>file-browser
+                class=>span-17 last
+                mode=>select
+                directory=>media\images\textures
+                select-file
+                  set=>[magix.forms.set-value][value].Value
+                    value=>[_file].Value
+                  magix.forms.set-value
+                    form-id=>qr-codes
+                    id=>fg-image
+                  magix.viewport.clear-controls
+                    container=>file-browser
         label=>fontNameDescription
           tag=>label
           class=>span-2 top-1 right-text clear
@@ -340,8 +347,10 @@ defaults to Comic Sans MS"
           class=>span-3 left-1 top-1 btn-large right
           value=>&lt;&lt; back
           onclick
-            execute-file=>system42/admin/app-wizard/new-app.hl
-              file=>system42\admin\app-wizard\wizards\qr-code-generator.hl
+            execute-script
+              file=>system42/admin/app-wizard/new-app.hl
+              params
+                file=>system42\admin\app-wizard\wizards\qr-code-generator.hl
             magix.viewport.clear-controls
               container=>content3
             magix.viewport.clear-controls

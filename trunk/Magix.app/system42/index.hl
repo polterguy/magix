@@ -31,7 +31,8 @@ magix.web.get=>dashboard
 if=>exist
   lhs=>[magix.web.get][value]
   code
-    execute-file=>system42/pages/run-page.hl
+    execute-script
+      file=>system42/pages/run-page.hl
 else
   magix.web.get-session=>magix.core.user
   if=>exist
@@ -45,7 +46,8 @@ else
             container=>menu
             form-id=>admin-menu
             class=>span-5
-          execute-file=>system42/admin/desktop/show-desktop.hl
+          execute-script
+            file=>system42/admin/desktop/show-desktop.hl
           magix.web.get-session=>magix.admin.setting.show-help
           if=>not-exist
             lhs=>[@][magix.web.get-session][0]
@@ -63,12 +65,14 @@ else
             code
               magix.help.start-help
       else
-        execute-file=>system42/pages/run-page.hl
+        execute-script
+          file=>system42/pages/run-page.hl
   else
     if=>exist
       lhs=>[magix.web.get:1][value]
       code
         magix.web.redirect=>~
     else
-      execute-file=>system42/pages/run-page.hl
+      execute-script
+        file=>system42/pages/run-page.hl
 

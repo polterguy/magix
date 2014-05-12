@@ -5,19 +5,19 @@ upload new files from"
 
 
 for-each=>[$]
-  add=>[/][_back][onclick][execute-file]
+  add=>[/][_back][onclick][execute-script][params]
     value=>[.]
-  add=>[/][_link-buttonDir][onclick][execute-file]
+  add=>[/][_link-buttonDir][onclick][execute-script][params]
     value=>[.]
-  add=>[/][_newDir][onclick][execute-file]
+  add=>[/][_newDir][onclick][execute-script][params]
     value=>[.]
-  add=>[/][_delDir][onclick][magix.viewport.confirm][code][execute-file]
+  add=>[/][_delDir][onclick][magix.viewport.confirm][code][execute-script][params]
     value=>[.]
-  add=>[/][magix.forms.create-web-part][events][magix.ide.file-saved][execute-file]
+  add=>[/][magix.forms.create-web-part][events][magix.ide.file-saved][execute-script][params]
     value=>[.]
-  add=>[/][magix.forms.create-web-part][events][magix.ide.file-deleted][execute-file]
+  add=>[/][magix.forms.create-web-part][events][magix.ide.file-deleted][execute-script][params]
     value=>[.]
-  add=>[/][_ren][controls][text-box][ontextchanged][execute-file]
+  add=>[/][_ren][controls][text-box][ontextchanged][execute-script][params]
     value=>[.]
 
 if=>exist
@@ -34,9 +34,9 @@ if=>exist
       value=>[/][_back]
     set=>[/][magix.forms.create-web-part][controls][_back].Name
       value=>link-button
-    set=>[/][magix.forms.create-web-part][events][magix.ide.file-deleted][execute-file][directory].Value
+    set=>[/][magix.forms.create-web-part][events][magix.ide.file-deleted][execute-script][params][directory].Value
       value=>[$][directory].Value
-    set=>[/][magix.forms.create-web-part][events][magix.ide.file-saved][execute-file][directory].Value
+    set=>[/][magix.forms.create-web-part][events][magix.ide.file-saved][execute-script][params][directory].Value
       value=>[$][directory].Value
     set=>[/][_btn][onclick][magix.admin.edit-file][file].Value
       value=>@"{0}/{1}"
@@ -46,7 +46,7 @@ if=>exist
       value=>@"{0}/{1}"
         pr0=>[$][directory].Value
         pr1=>new-directory
-    set=>[/][_newDir][onclick][execute-file][directory].Value
+    set=>[/][_newDir][onclick][execute-script][params][directory].Value
       value=>[$][directory].Value
     set=>[/][_delDir][onclick][magix.viewport.confirm][code][magix.file.delete-directory].Value
       value=>[$][directory].Value
@@ -56,9 +56,9 @@ if=>exist
       value=>[$][directory].Value
     set=>[/][magix.forms.create-web-part][controls][uploader][folder].Value
       value=>[$][directory].Value
-    set=>[/][magix.forms.create-web-part][controls][uploader][onuploaded][if][execute-file][directory].Value
+    set=>[/][magix.forms.create-web-part][controls][uploader][onuploaded][if][execute-script][params][directory].Value
       value=>[$][directory].Value
-    set=>[/][magix.forms.create-web-part][controls][uploader][uploaded][if][execute-file][directory].Value
+    set=>[/][magix.forms.create-web-part][controls][uploader][uploaded][if][execute-script][params][directory].Value
       value=>[$][directory].Value
 else-if=>exist
   lhs=>[$][keep-stack]
@@ -95,9 +95,10 @@ _back
       value=>[@][magix.viewport.get-viewstate][value]
     magix.viewport.set-viewstate=>stack-of-pages
     for-each=>[magix.viewport.set-viewstate][value]
-      set=>[/][execute-file][directory].Value
+      set=>[/][execute-script][params][directory].Value
         value=>[.].Value
-    execute-file=>system42/admin/file-browser.hl
+    execute-script
+      file=>system42/admin/file-browser.hl
 
 if=>exist
   lhs=>[$][select-file]
@@ -119,10 +120,11 @@ _link-button
 _link-buttonDir
   class=>span-5 directory
   onclick
-    execute-file=>system42/admin/file-browser.hl
+    execute-script
+      file=>system42/admin/file-browser.hl
     magix.viewport.get-viewstate=>stack-of-pages
     set=>[@][magix.viewport.get-viewstate][value][[@][magix.viewport.get-viewstate][value].Count].Value
-      value=>[@][execute-file][directory].Value
+      value=>[@][execute-script][params][directory].Value
     add=>[@][magix.viewport.set-viewstate]
       value=>[@][magix.viewport.get-viewstate][value]
     magix.viewport.set-viewstate=>stack-of-pages
@@ -157,7 +159,7 @@ magix.file.list-directories
 for-each=>[magix.file.list-directories][directories]
   set=>[/][_link-buttonDir][value].Value
     value=>[.].Name
-  set=>[/][_link-buttonDir][onclick][execute-file][directory].Value
+  set=>[/][_link-buttonDir][onclick][execute-script][params][directory].Value
     value=>[.].Name
   if=>exist
     lhs=>[$][directory]
@@ -185,7 +187,8 @@ _newDir=>newdir
   value=>new dir
   onclick
     magix.file.create-directory=>new-directory
-    execute-file=>system42/admin/file-browser.hl
+    execute-script
+      file=>system42/admin/file-browser.hl
 
 _delDir=>deldir
   class=>span-3 btn-large last top-1
@@ -195,7 +198,8 @@ _delDir=>deldir
       message=>do you really want to delete the open directory?
       code
         magix.file.delete-directory
-        execute-file=>system42/admin/file-browser.hl
+        execute-script
+          file=>system42/admin/file-browser.hl
 
 _ren=>renWrp
   class=>span-9 last top-1 right btn-group
@@ -211,9 +215,10 @@ _ren=>renWrp
         set=>[magix.file.move-directory][to].Value
           value=>[magix.forms.get-value][value].Value
         magix.file.move-directory
-        set=>[execute-file][directory].Value
+        set=>[execute-script][params][directory].Value
           value=>[magix.file.move-directory][to].Value
-        execute-file=>system42/admin/file-browser.hl
+        execute-script
+          file=>system42/admin/file-browser.hl
     button=>saveDirName
       class=>span-2 last
       value=>save
@@ -271,10 +276,12 @@ magix.forms.create-web-part
   events
 
     magix.ide.file-saved
-      execute-file=>system42/admin/file-browser.hl
+      execute-script
+        file=>system42/admin/file-browser.hl
 
     magix.ide.file-deleted
-      execute-file=>system42/admin/file-browser.hl
+      execute-script
+        file=>system42/admin/file-browser.hl
       magix.viewport.clear-controls
         container=>content2
       magix.viewport.clear-controls
@@ -306,5 +313,6 @@ magix.forms.create-web-part
         if=>not-exist
           lhs=>[magix.forms.has-more-data][value].Value
           code
-            execute-file=>system42/admin/file-browser.hl
+            execute-script
+              file=>system42/admin/file-browser.hl
 

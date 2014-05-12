@@ -181,7 +181,7 @@ the microsoft.sql components</p><p>thread safe</p>";
             Node ip = Ip(e.Params);
             ip["launch-microsoft-sql-server-manager"]["text"].Value = "ms sql query tool";
             ip["launch-microsoft-sql-server-manager"]["category"].Value = "tools";
-            ip["launch-microsoft-sql-server-manager"]["code"]["execute-file"].Value = "system42/admin/tools/ms-sql-query.hl";
+            ip["launch-microsoft-sql-server-manager"]["code"]["execute-script"]["file"].Value = "system42/admin/tools/ms-sql-query.hl";
         }
     }
 }

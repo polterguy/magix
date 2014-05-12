@@ -31,9 +31,9 @@ for-each=>[magix.data.load][objects]
   add=>[/][magix.forms.create-web-part][controls][panel][controls][select][items]
     value=>[@][_data][0]
 
-set=>[magix.forms.create-web-part][controls][panel][controls][button:1][onclick][execute-file].Value
+set=>[magix.forms.create-web-part][controls][panel][controls][button:1][onclick][execute-script][file].Value
   value=>[$][file].Value
-set=>[magix.forms.create-web-part][controls][panel][controls][select][onselectedindexchanged][execute-file].Value
+set=>[magix.forms.create-web-part][controls][panel][controls][select][onselectedindexchanged][execute-script][file].Value
   value=>[$][file].Value
 
 set=>[magix.forms.create-web-part][controls][panel][controls][button:1][onclick][set][value][v0].Value
@@ -63,9 +63,9 @@ magix.forms.create-web-part
             magix.forms.get-value
               form-id=>init-app
               id=>editExisting
-            set=>[execute-file][name].Value
+            set=>[execute-script][params][name].Value
               value=>[magix.forms.get-value][value].Value
-            execute-file
+            execute-script
         text-box=>name
           place-holder=>name ...
           class=>span-6
@@ -73,7 +73,8 @@ magix.forms.create-web-part
           value=>&lt;&lt; back
           class=>span-3 left-5 top-1 clear
           onclick
-            execute-file=>system42/admin/app-wizard/app-wizard.hl
+            execute-script
+              file=>system42/admin/app-wizard/app-wizard.hl
         button=>next
           value=>next &gt;&gt;
           class=>span-3 last top-1
@@ -102,9 +103,9 @@ magix.forms.create-web-part
                 magix.viewport.show-message
                   message=>application with that name already exists
                 stop
-            set=>[execute-file][name].Value
+            set=>[execute-script][params][name].Value
               value=>[magix.forms.get-value][value].Value
-            execute-file
+            execute-script
 
 magix.forms.set-focus
   form-id=>init-app

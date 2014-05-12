@@ -14,7 +14,8 @@ check out the {{
 link-button=>open-executor
   value=>hyper lisp keywords
   onclick
-    execute-file=>system42/admin/tools/inspect-execute.hl
+    execute-script
+      file=>system42/admin/tools/inspect-execute.hl
     magix.viewport.scroll
 }} and inspect them as you wish</p>
 

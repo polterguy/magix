@@ -19,7 +19,8 @@ link-button=>desktop
       container=>content6
     magix.viewport.clear-controls
       container=>content7
-    execute-file=>system42/admin/desktop/show-desktop.hl
+    execute-script
+      file=>system42/admin/desktop/show-desktop.hl
 }}
 </div>
 
