@@ -24,15 +24,16 @@ _dt
         value=>description
 
 for-each=>[magix.file.list-files][files]
-  set=>[@][file-2-node].Value
+  set=>[@][code-2-node][node]
+  set=>[@][code-2-node][file].Value
     value=>[.].Name
-  file-2-node
+  code-2-node
   set=>[/][_dt][panel][class].Value
-    value=>[@][file-2-node][node][_css].Value
+    value=>[@][code-2-node][node][_css].Value
   set=>[/][_dt][panel][controls][label:0][value].Value
-    value=>[@][file-2-node][node][_name].Value
+    value=>[@][code-2-node][node][_name].Value
   set=>[/][_dt][panel][controls][label:1][value].Value
-    value=>[@][file-2-node][node][inspect].Value
+    value=>[@][code-2-node][node][inspect].Value
   set=>[/][_dt][panel][onclick][_file].Value
     value=>[.].Name
   add=>[/][magix.forms.create-web-part][controls]

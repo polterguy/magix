@@ -18,16 +18,21 @@ namespace Magix.execute
         /**
          * iterate-tree hyper lisp keyword
          */
-        [ActiveEvent(Name = "magix.execute.iterate-tree")]
-		public static void magix_execute_iterate_tree(object sender, ActiveEventArgs e)
+        [ActiveEvent(Name = "magix.execute.iterate")]
+		public static void magix_execute_iterate(object sender, ActiveEventArgs e)
 		{
 			if (ShouldInspect(e.Params))
 			{
                 e.Params["inspect"].Value = @"<p>loops through all the nodes in the given 
 node-list expression, flattening the hierarchy, setting the data-pointer to the currently 
-processed item</p><p>your code will execute once for every single node you have in your 
-return expression.&nbsp;&nbsp;use the [.] expression to de-reference the currently iterated 
-node</p><p>thread safe</p>";
+processed item</p><p>notice how this differs in regards to the [for-each] keyword, that 
+only iterates over the children of the nodes referenced in its expression.&nbsp;&nbsp;while 
+the [iterate] keyword will iterate the entire tree hierarchy, including all children of the 
+nodes in the expression, their children, and their children's children, and so on.&nbsp;
+&nbsp;this is useful for iterating entire tree hierarchies, basically treating a tree, like 
+a list of items, flattening the hierarchy</p><p>your code will execute once for every single 
+node you have in your return expression.&nbsp;&nbsp;use the [.] expression to de-reference 
+the currently iterated node</p><p>thread safe</p>";
                 e.Params["_data"]["items"]["message1"].Value = "howdy world 1.0";
 				e.Params["_data"]["items"]["sub-1"]["message2"].Value = "howdy world 2.0";
                 e.Params["_data"]["items"]["sub-1"]["message3"].Value = "howdy world 3.0";
@@ -35,11 +40,11 @@ node</p><p>thread safe</p>";
                 e.Params["_data"]["items"]["sub-2"]["sub-3"]["message5"].Value = "howdy world 5.0";
                 e.Params["_data"]["items"]["sub-3"]["message6"].Value = "howdy world 6.0";
 				e.Params["_data"]["items"]["message7"].Value = "howdy world 7.0";
-                e.Params["iterate-tree"].Value = "[_data][items]";
-                e.Params["iterate-tree"]["if"].Value = "exist";
-                e.Params["iterate-tree"]["if"]["lhs"].Value = "[.].Value";
-                e.Params["iterate-tree"]["if"]["code"]["set"].Value = "[@][magix.viewport.show-message][message].Value";
-                e.Params["iterate-tree"]["if"]["code"]["set"]["value"].Value = "[.].Value";
+                e.Params["iterate"].Value = "[_data][items]";
+                e.Params["iterate"]["if"].Value = "exist";
+                e.Params["iterate"]["if"]["lhs"].Value = "[.].Value";
+                e.Params["iterate"]["if"]["code"]["set"].Value = "[@][magix.viewport.show-message][message].Value";
+                e.Params["iterate"]["if"]["code"]["set"]["value"].Value = "[.].Value";
 				return;
 			}
 
