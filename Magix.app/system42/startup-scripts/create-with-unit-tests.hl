@@ -1,0 +1,64 @@
+
+
+inspect=>@"creates unit tests to 
+test the [magix.execute.with] keyword"
+
+
+event=>magix.test.with
+  persist=>false
+  inspect=>@"asserts that the [with] keyword 
+functions the way it is supposed to"
+  code
+    _data
+      _item1
+        yo=>test
+    with=>[_data]
+      set=>[_item1].Value
+        value=>test
+      with=>[_item1]
+        set=>[.][yo].Value
+          value=>hello
+        if=>not-equals
+          lhs=>[yo].Value
+          rhs=>hello
+          code
+            throw=>the [with] keyword did not function as it was supposed to when nested
+    if=>not-equals
+      lhs=>[_data][_item1].Value
+      rhs=>test
+      code
+        throw=>the [with] keyword did not function as it was supposed to
+
+
+event=>magix.test.with-exceptions
+  persist=>false
+  inspect=>@"asserts that the [with] keyword 
+functions the way it is supposed to when an 
+exception is thrown"
+  code
+    _data
+      _item1
+        yo=>test
+    with=>[_data]
+      with=>[_item1]
+        try
+          code
+            throw=>catched beneath here
+          catch
+            set=>[.].Value
+              value=>item1
+      set=>[.].Value
+        value=>howdy
+    if=>not-equals
+      lhs=>[/][_data].Value
+      rhs=>howdy
+      code
+        throw=>@"the [with] keyword did not function as it was 
+supposed to when an exception was thrown"
+    if=>not-equals
+      lhs=>[/][_data][_item1].Value
+      rhs=>item1
+      code
+        throw=>@"the [with] keyword did not function as it was 
+supposed to when an exception was thrown"
+
