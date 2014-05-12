@@ -219,6 +219,14 @@ link-button=>hyperlisp-4
     magix.viewport.scroll=>help
 }}</li>
 <li>{{
+link-button=>hyperlisp-6
+  value=>all hyper lisp keywords
+  onclick
+    magix.help.open-file
+      file=>system42\admin\help\hyper-lisp\existing-keywords.mml
+    magix.viewport.scroll=>help
+}}</li>
+<li>{{
 link-button=>hyperlisp-5
   value=>common keywords explained
   onclick
@@ -227,11 +235,11 @@ link-button=>hyperlisp-5
     magix.viewport.scroll=>help
 }}</li>
 <li>{{
-link-button=>hyperlisp-6
-  value=>all hyper lisp keywords
+link-button=>hyperlisp-exceptions
+  value=>exception handling in hyper lisp
   onclick
     magix.help.open-file
-      file=>system42\admin\help\hyper-lisp\existing-keywords.mml
+      file=>system42\admin\help\hyper-lisp\exception-handling.mml
     magix.viewport.scroll=>help
 }}</li>
 <li>{{

@@ -1,0 +1,58 @@
+﻿
+<h2>exception handling in hyper lisp</h2>
+
+<p>you can easily handle exceptions in hyper lisp, almost the same way you would do in other programming languages.&nbsp;&nbsp;to 
+do this, hyper lisp has several constructs.&nbsp;&nbsp;the most important to understand of course, is the [try] and [throw] keywords.
+&nbsp;&nbsp;consider the following code</p>
+
+<pre>
+try
+  code
+    throw=>this is an exception
+  catch
+    set=>[magix.viewport.show-message][message].Value
+      value=>[@][exception].Value
+</pre>
+
+<p>the [try] keyword creates an exception block, where you can execute code from within.&nbsp;&nbsp;if an exception occurs 
+within your [code] block, then execution will be passed into your [catch] block, and the error message will be within 
+the [exception] node of the [catch] block.&nbsp;&nbsp;this allows you to trap errors, and have some fallback procedure, if 
+an exception occurs deep within your hyper lisp, or c# active events.&nbsp;&nbsp;this is useful for handling errors in your 
+code</p>
+
+<p>the [catch] block stops the unwinding of the stack, and after execution of the catch block, the execution will move to 
+the next line of code, following the [try] keyword.&nbsp;&nbsp;sometimes, you will wish to have some piece of logic that runs 
+when an exception occurs, but does not stop the exception fom further unwinding the stack.&nbsp;&nbsp;this can be accomplished 
+with a [finally] block, like below</p>
+
+<pre>
+try
+  code
+    throw=>this is an exception
+  finally
+    // do some logging here, or something, but allow the exception to
+    // continue unwinding the stack
+</pre>
+
+<p>if you execute the code above, you will have the exception completely unwind the execution stack, and penetrate as an http 500 
+internal server error back to the browser</p>
+
+<h3>logging exceptions</h3>
+
+<p>notice one beautiful construct with the [catch] keyword.&nbsp;&nbsp;the exception error message is being passed into it as 
+[exception].&nbsp;&nbsp;this means that if you create an active event which you name <em>"magix.execute.exception"</em>, then 
+you can trap all exceptions in your system that is handled by a [catch] block.&nbsp;&nbsp;this includes exceptions occuring 
+in c#, as well as hyper lisp.&nbsp;&nbsp;this can be useful for logging exceptions for instance</p>
+
+<p>by default, there exist no active event in magix which is called <em>"magix.execute.exception"</em>, which means that it 
+is up to you to supply such an active event, if you wish.&nbsp;&nbsp;notice also that this only works with exceptions which occurs that are being catched 
+in a [catch] block, and not exceptions that penetrates all the way back to the browser.&nbsp;&nbsp;if you wish to handle exceptions 
+occuring that are not catched, then you can do so, by overriding the [throw] keyword, though this only works with exceptions thrown 
+in hyper lisp, and not <em>"native exceptions"</em> occuring in c#</p>
+
+{{
+lambda=>next
+  oncreatecontrols
+    magix.help.set-next
+      next=>system42\admin\help\hyper-lisp\create-keyword.mml
+}}
