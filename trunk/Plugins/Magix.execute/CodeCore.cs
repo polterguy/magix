@@ -131,8 +131,11 @@ true, then the root node will be removed</p><p>thread safe</p>";
 				e.Params["inspect"].Value = @"<p>will transform the [code] node to a node tree</p>
 <p>the code will be returned in [node] as node structure, according to indentation.&nbsp;&nbsp;two 
 spaces open up child collection, =&gt; assings to value, and first parts are name of node.&nbsp;&nbsp;
-also supports =(int)&gt;, =(datetime)&gt;, =(decimal)&gt; and =(bool)&gt; to assign specific type to 
-value</p><p>thread safe</p>";
+[code-2-node] also supports =(int)&gt;, =(datetime)&gt;, =(decimal)&gt; and =(bool)&gt; to assign 
+specific type to value.&nbsp;&nbsp;notice that you can instead of supplying a [code] node, supply a 
+[file] node, which means the code will be loaded through the [magix.file.load] active event, instead 
+of assumed to be found inline into the active event itself.&nbsp;&nbsp;both [code] and [file] can be 
+either constants or expressions</p><p>thread safe</p>";
 				e.Params["code-2-node"]["code"].Value =  @"
 code
   goes
@@ -141,16 +144,34 @@ code
 			}
 
             Node ip = Ip(e.Params);
+            Node dp = ip;
+            if (e.Params.Contains("_dp"))
+                dp = e.Params["_dp"].Get<Node>();
 
-            if (!ip.Contains("code"))
-				throw new ArgumentException("No [code] node passed into [code-2-node]");
+            if (!ip.Contains("code") && !ip.Contains("file"))
+                throw new ArgumentException("no [code] or [file] node passed into [code-2-node]");
 
-            string txt = ip["code"].Get<string>();
-			Node ret = ip["node"];
-			using (TextReader reader = new StringReader(txt))
+            if (ip.Contains("code") && ip.Contains("file"))
+                throw new ArgumentException("you cannot supply both a [file] node and a [code] node to [code-2-node]");
+
+            string codeTextString = null;
+            if (ip.Contains("code"))
+                codeTextString = Expressions.GetExpressionValue(ip["code"].Get<string>(), dp, ip, false) as string;
+            else
+            {
+                Node fromFile = new Node("magix.file.load", 
+                    Expressions.GetExpressionValue(ip["file"].Get<string>(), dp, ip, false) as string);
+                RaiseActiveEvent(
+                    "magix.file.load",
+                    fromFile);
+                codeTextString = fromFile["value"].Get<string>();
+            }
+
+			Node returnNode = ip["node"];
+			using (TextReader reader = new StringReader(codeTextString))
 			{
 				int indents = 0;
-				Node idxNode = ret;
+				Node idxNode = returnNode;
 				while (true)
 				{
 					string line = reader.ReadLine ();
@@ -159,7 +180,8 @@ code
 
 					if (line.Trim() == "")
 						continue; // Skipping white lines
-					if (line.Trim().StartsWith("//"))
+
+                    if (line.Trim().StartsWith("//"))
 						continue;
 
 					// Skipping "white lines"
@@ -237,7 +259,10 @@ code
 							value = int.Parse (tmp.Substring (name.Length + 7).Trim());
 							break;
 						case "=(date)>":
-							value = DateTime.ParseExact(tmp.Substring (name.Length + 8).Trim(), "yyyy.MM.dd HH:mm:ss", CultureInfo.InvariantCulture);
+							value = DateTime.ParseExact(
+                                tmp.Substring (name.Length + 8).Trim(), 
+                                "yyyy.MM.dd HH:mm:ss", 
+                                CultureInfo.InvariantCulture);
 							break;
 						case "=(bool)>":
 							value = bool.Parse(tmp.Substring (name.Length + 8).Trim());
@@ -302,7 +327,7 @@ code
 					}
 
 					if (currentIndents != indents && currentIndents > indents && currentIndents - indents > 1)
-						throw new ArgumentException("Multiple indentations, without specifying child node name");
+						throw new ArgumentException("multiple indentations found in [code-2-node], without specifying child node name");
 
 					// Increasing, downwards in hierarchy...
 					if (currentIndents > indents)
@@ -313,46 +338,6 @@ code
 					}
 				}
 			}
-		}
-
-		/**
-		 * transforms from file to node
-		 */
-		[ActiveEvent(Name = "magix.execute.file-2-node")]
-		public static void magix_execute_file_2_node(object sender, ActiveEventArgs e)
-		{
-			if (ShouldInspect(e.Params))
-			{
-				e.Params["inspect"].Value = @"<p>will transform the given file as value of node to 
-node tree, and return in [node]</p><p>thread safe</p>";
-                e.Params["file-2-node"].Value = "some-path/to-some/hyper-lisp/file.hl";
-                return;
-			}
-
-            Node ip = Ip(e.Params);
-
-            if (string.IsNullOrEmpty(ip.Get<string>()))
-			{
-				throw new ArgumentException("no file passed into [file-2-code]");
-			}
-
-            string file = ip.Get<string>();
-
-			Node fn = new Node();
-			fn.Value = file;
-
-			RaiseActiveEvent(
-				"magix.file.load",
-				fn);
-
-			Node code = new Node();
-			code["code"].Value = fn["value"].Get<string>();
-
-			RaiseActiveEvent(
-				"magix.execute.code-2-node",
-				code);
-
-            ip["node"].ReplaceChildren(code["node"]);
 		}
 	}
 }
