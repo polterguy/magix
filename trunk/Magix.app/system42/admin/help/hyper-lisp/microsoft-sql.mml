@@ -86,5 +86,5 @@ from Customers"</em>
 lambda=>next
   oncreatecontrols
     magix.help.set-next
-      next=>system42\admin\help\csharp\active-events\index.mml
+      next=>system42\admin\help\hyper-lisp\forms.mml
 }}
