@@ -41,9 +41,9 @@ be a file containing the declaration of the web controls.&nbsp;&nbsp;in addition
 you can also optionally supply a [events-file] node, which will be assumed to be 
 a file containing the declaration of the events associated with the web part.&nbsp;
 &nbsp;both [controls-file] and [events-file] can be either constants or expressions.
-&nbsp;&nbsp;you cannot supply both [controls] and [controls-file].&nbsp;&nbsp;neither 
-can you supply both [events] and [events-file]</p><p>both [file-events] and [controls-file] 
-are useful for separating your code from your ui as an alternative to handcoding in the 
+&nbsp;&nbsp;you cannot supply both [controls] and [controls-file].&nbsp;&nbsp;you 
+cannot supply both [events] and [events-file]</p><p>both [events-file] and [controls-file] 
+are useful for separating your code from your ui as an alternative to hardcoding in the 
 controls and events together in the same piece of code.&nbsp;&nbsp;in addition, you can 
 also separate code and ui by supplying the [controls] and [events] as expressions to other 
 parts of your execution node tree</p><p>not thread safe</p>";

@@ -274,6 +274,14 @@ link-button=>hyperlisp-11
       file=>system42\admin\help\hyper-lisp\data-access.mml
     magix.viewport.scroll=>help
 }}</li>
+<li>{{
+link-button=>forms-hyper-link
+  value=>working with forms
+  onclick
+    magix.help.open-file
+      file=>system42\admin\help\hyper-lisp\forms.mml
+    magix.viewport.scroll=>help
+}}</li>
 </ul>
 </div>
   
