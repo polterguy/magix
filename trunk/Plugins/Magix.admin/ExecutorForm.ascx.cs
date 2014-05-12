@@ -206,6 +206,7 @@ if=>[Data].Value==thomas
 					tmp);
 
                 Node node = tmp["node"].Clone();
+                node.Name = activeEvent.Value;
 
 				foreach (Node idx in node)
 				{

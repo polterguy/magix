@@ -25,7 +25,7 @@ namespace Magix.execute
 			{
                 e.Params["inspect"].Value = @"<p>temporary changes the data pointer to the 
 expression in its value</p><p>this is useful if you're handling several keywords in a row, 
-where the expressions within them are all pointing deep into the execution tree somehow</p>
+where the expressions within them are all pointing deep into the execution tree somewhere</p>
 <p>thread safe</p>";
                 e.Params["_data"]["_somewhere"]["_over"]["items"]["message1"].Value = "howdy world 1.0";
                 e.Params["_data"]["_somewhere"]["_over"]["items"]["message2"].Value = "howdy world 2.0";
