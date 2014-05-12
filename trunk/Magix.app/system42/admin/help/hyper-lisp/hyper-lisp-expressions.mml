@@ -104,7 +104,9 @@ set=>[magix.viewport.show-message][message].Value
   value=>[0][1][0].Value
 </pre>
 
-<p>or you can de-reference nodes with a specific value, such as the code below</p>
+<h3>searching for nodes in your execution tree</h3>
+
+<p>you can de-reference nodes with a specific value, such as the code below</p>
 
 <pre>
 _data
@@ -141,6 +143,49 @@ set=>[magix.viewport.show-message:2][message].Value
 first expression which is [_data][?=>y] will return the first child node of [_data] that has a value of "y".&nbsp;&nbsp;
 then it will look for the first node which has an empty string as its value, because of [_data][?=>], for then to 
 finally look for the first node which has a null value, because of the [_data][?] expression</p>
+
+<h3>deep search through tree hierarchies</h3>
+
+<p>in addition, you can perform a <em>"deep search"</em> through your node hierarchy, which will search for a node, matching a specific 
+criteria.&nbsp;&nbsp;you can search for a node with a specific value, a specific name, or both using the "**" special operator in 
+your expression.&nbsp;&nbsp;consider the following code</p>
+
+<pre>
+_buffer-data
+  _data
+    v0
+      message=>howdy world
+    v0=>hello
+      message=>hello world
+set=>[magix.viewport.show-message][message].Value
+  value=>[_buffer-data][<strong>**v0=>hello</strong>][message].Value
+</pre>
+
+<p>the above code will traverse through your entire tree, starting from [_buffer-data], looking for any node that has the name of 
+<strong>v0</strong> and the value of <strong>hello</strong> and return its value.&nbsp;&nbsp;this is useful for searching through 
+deep tree hierarchies, where you don't know the exact position, or don't care.&nbsp;&nbsp;it is also useful for shortening 
+expressions that would otherwise become much longer.&nbsp;&nbsp;both parts of the <strong>=&gt;</strong> parts of the expression 
+is optional.&nbsp;&nbsp;if you ommit either parts of the =&gt; parts, it will match anything.&nbsp;&nbsp;consider the following</p>
+
+
+<pre>
+_buffer-data
+  _data
+    v0
+      message=>howdy world
+    v0=>hello
+      message=>hello world
+    v1=>something-else
+      message=>hello world
+set=>[magix.viewport.show-message][message].Value
+  value=>[_buffer-data][<strong>**=>hello</strong>].Value
+set=>[magix.viewport.show-message:1][message].Value
+  value=>[_buffer-data][<strong>**v1=></strong>].Value
+</pre>
+
+<p>the first message box will be made from the first match of any node having the value of <strong>hello</strong>, becoming the 
+second child of the [_data] node.&nbsp;&nbsp;while the second message box will be made from the first match of any node having 
+a name of <strong>v1</strong>, becoming the third child of [_data]</p>
 
 {{
 lambda=>next
