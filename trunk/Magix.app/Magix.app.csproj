@@ -366,6 +366,7 @@
     <Content Include="system42\admin\help\hyper-lisp\exception-handling.mml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="system42\startup-scripts\create-with-unit-tests.hl" />
     <None Include="todo.txt" />
     <None Include="system42\index.hl" />
     <None Include="system42\startup.hl" />

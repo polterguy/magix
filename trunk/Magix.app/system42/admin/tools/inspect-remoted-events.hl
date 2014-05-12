@@ -88,8 +88,17 @@ cf
             magix.forms.get-value
               form-id=>form1
               id=>code
-            set=>[.ip][..][magix.admin.load-executor-code][code].Value
-              value=>[.ip][..][magix.forms.get-value][value].Value
+            replace=>[magix.forms.get-value][value].Value
+              what=>&amp;
+              with=>&
+            replace=>[magix.forms.get-value][value].Value
+              what=>&lt;
+              with=><
+            replace=>[magix.forms.get-value][value].Value
+              what=>&gt;
+              with=>>
+            set=>[@][magix.admin.load-executor-code][code].Value
+              value=>[@][magix.forms.get-value][value].Value
             magix.admin.load-executor-code
               code
               class=>span-19 last left-5 bottom-3 top-1
