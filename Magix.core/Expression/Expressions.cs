@@ -236,6 +236,35 @@ namespace Magix.Core
                             isInside = false;
                             continue;
                         }
+                        else if (bufferNodeName.StartsWith("**"))
+                        {
+                            // deep wildcard search
+                            string searchValue = null;
+                            string searchName = null;
+                            if (bufferNodeName.Contains("=>"))
+                            {
+                                if (bufferNodeName.IndexOf("=>") > 2)
+                                    searchName = bufferNodeName.Substring(2).Split(new string[] { "=>" }, StringSplitOptions.RemoveEmptyEntries)[0];
+                                if (bufferNodeName.IndexOf("=>") < bufferNodeName.Length - 2)
+                                    searchValue = bufferNodeName.Split(new string[] { "=>" }, StringSplitOptions.RemoveEmptyEntries)[1];
+                            }
+                            else
+                                searchName = bufferNodeName.Substring(2);
+
+                            Node searchNode = FindNode(x, searchName, searchValue);
+                            if (searchNode == null && forcePath)
+                            {
+                                x.Add(new Node(searchName ?? "", searchValue));
+                                x = x[x.Count - 1];
+                            }
+                            else if (searchNode == null)
+                                throw new ArgumentException("couldn't find node in expression");
+                            else
+                                x = searchNode;
+
+                            bufferNodeName = "";
+                            isInside = false;
+                        }
                         else if (bufferNodeName.StartsWith("?"))
                         {
                             // wildcard search
@@ -263,6 +292,9 @@ namespace Magix.Core
                                 x.Add(new Node("", searchValue));
                                 x = x[x.Count - 1];
                             }
+                            else if (!found)
+                                throw new ArgumentException("couldn't find node in expression");
+
                             bufferNodeName = "";
                             isInside = false;
                         }
@@ -411,6 +443,32 @@ namespace Magix.Core
             }
 			return x;
 		}
+
+        private static Node FindNode(Node x, string searchName, string searchValue)
+        {
+            bool foundName = false;
+            if (searchName == null)
+                foundName = true;
+            else if (x.Name == searchName)
+                foundName = true;
+            
+            bool foundValue = false;
+            if (searchValue == null)
+                foundValue = true;
+            else if (searchValue == x.Get<string>())
+                foundValue = true;
+
+            if (foundValue && foundName)
+                return x;
+
+            foreach (Node idx in x)
+            {
+                Node tmp = FindNode(idx, searchName, searchValue);
+                if (tmp != null)
+                    return tmp;
+            }
+            return null;
+        }
 	}
 }
 
