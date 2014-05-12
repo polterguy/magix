@@ -120,20 +120,22 @@ parts of qr code. defaults to bumpy-white.png"
                 item=>media
                 item=>media\images
                 item=>media\images\textures
-            execute-file=>system42/admin/file-browser.hl
-              container=>file-browser
-              class=>span-17 last
-              mode=>select
-              directory=>media\images\textures
-              keep-stack
-              select-file
-                set=>[magix.forms.set-value][value].Value
-                  value=>[_file].Value
-                magix.forms.set-value
-                  form-id=>qr-codes
-                  id=>bg-image
-                magix.viewport.clear-controls
-                  container=>file-browser
+            execute-script
+              file=>system42/admin/file-browser.hl
+              params
+                container=>file-browser
+                class=>span-17 last
+                mode=>select
+                directory=>media\images\textures
+                keep-stack
+                select-file
+                  set=>[magix.forms.set-value][value].Value
+                    value=>[_file].Value
+                  magix.forms.set-value
+                    form-id=>qr-codes
+                    id=>bg-image
+                  magix.viewport.clear-controls
+                    container=>file-browser
         label=>fgImageDescription
           tag=>label
           class=>span-2 top-1 right-text
@@ -149,19 +151,21 @@ parts of qr code. defaults to bumby-black.png"
           class=>text-browse-btn-last top-1
           value=>...
           onclick
-            execute-file=>system42/admin/file-browser.hl
-              container=>file-browser
-              class=>span-17 last
-              mode=>select
-              directory=>media\images\textures
-              select-file
-                set=>[magix.forms.set-value][value].Value
-                  value=>[_file].Value
-                magix.forms.set-value
-                  form-id=>qr-codes
-                  id=>fg-image
-                magix.viewport.clear-controls
-                  container=>file-browser
+            execute-script
+              file=>system42/admin/file-browser.hl
+              params
+                container=>file-browser
+                class=>span-17 last
+                mode=>select
+                directory=>media\images\textures
+                select-file
+                  set=>[magix.forms.set-value][value].Value
+                    value=>[_file].Value
+                  magix.forms.set-value
+                    form-id=>qr-codes
+                    id=>fg-image
+                  magix.viewport.clear-controls
+                    container=>file-browser
         label=>fontNameDescription
           tag=>label
           class=>span-2 top-1 right-text clear

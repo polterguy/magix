@@ -90,7 +90,8 @@ out the entire list of {{
 link-button=>web-controls
   value=>web controls
   onclick
-    execute-file=>system42/admin/tools/inspect-web-controls.hl
+    execute-script
+      file=>system42/admin/tools/inspect-web-controls.hl
     magix.viewport.scroll
 }}, if you wish to know all the types of web controls you can add up into your magix markup language.&nbsp;&nbsp;to understand the 
 syntax of magix markup language, it is useful to understand the {{

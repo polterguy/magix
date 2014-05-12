@@ -38,9 +38,9 @@ else
     subtract
       =>[magix.data.load][end].Value
       =>10
-  set=>[magix.forms.create-web-part][controls][panel:2][controls][link-button:0][onclick][execute-file][start].Value
+  set=>[magix.forms.create-web-part][controls][panel:2][controls][link-button:0][onclick][execute-script][params][start].Value
     value=>[@][using:0][subtract].Value
-  set=>[magix.forms.create-web-part][controls][panel:2][controls][link-button:0][onclick][execute-file][end].Value
+  set=>[magix.forms.create-web-part][controls][panel:2][controls][link-button:0][onclick][execute-script][params][end].Value
     value=>[@][using:1][subtract].Value
 if=>more-than-equals
   lhs=>[magix.data.load][end].Value
@@ -57,9 +57,9 @@ else
     add
       =>[magix.data.load][end].Value
       =>10
-  set=>[magix.forms.create-web-part][controls][panel:2][controls][link-button:1][onclick][execute-file][start].Value
+  set=>[magix.forms.create-web-part][controls][panel:2][controls][link-button:1][onclick][execute-script][params][start].Value
     value=>[@][using:0][add].Value
-  set=>[magix.forms.create-web-part][controls][panel:2][controls][link-button:1][onclick][execute-file][end].Value
+  set=>[magix.forms.create-web-part][controls][panel:2][controls][link-button:1][onclick][execute-script][params][end].Value
     value=>[@][using:1][add].Value
 if=>exist
   lhs=>[magix.data.load][end].Value>[magix.data.count][count].Value
@@ -86,7 +86,8 @@ _dt
         class=>span-2
         value=>edit
         onclick
-          execute-file=>system42/admin/users/edit-single-user.hl
+          execute-script
+            file=>system42/admin/users/edit-single-user.hl
       link-button
         class=>span-1 hover-shadow last right z-1 absolute light-red centered
         value=>x
@@ -101,7 +102,8 @@ _dt
               magix.log.append
                 header=>user deleted
                 body=>user {0} deleted
-              execute-file=>system42/admin/users/users-grid.hl
+              execute-script
+                file=>system42/admin/users/users-grid.hl
               magix.viewport.clear-controls
                 container=>content3
 
@@ -112,7 +114,7 @@ for-each=>[magix.data.load][objects]
     value=>[.][username].Value
   set=>[/][_dt][panel][controls][label:2][value].Value
     value=>[.][pwd].Value
-  set=>[/][_dt][panel][controls][link-button:0][onclick][execute-file][username].Value
+  set=>[/][_dt][panel][controls][link-button:0][onclick][execute-script][params][username].Value
     value=>[.][username].Value
   set=>[/][_dt][panel][controls][link-button:1][onclick][magix.viewport.confirm][code][magix.data.remove][prototype][username].Value
     value=>[.][username].Value
@@ -167,7 +169,8 @@ magix.forms.create-web-part
           value=>&lt;&lt;
           class=>span-1 left-7
           onclick
-            execute-file=>system42/admin/users/users-grid.hl
+            execute-script
+              file=>system42/admin/users/users-grid.hl
         label=>count
           class=>span-2
           value=>54
@@ -175,7 +178,8 @@ magix.forms.create-web-part
           value=>&gt;&gt;
           class=>span-1
           onclick
-            execute-file=>system42/admin/users/users-grid.hl
+            execute-script
+              file=>system42/admin/users/users-grid.hl
     panel=>newUserWrp
       class=>span-19 top-1
       default=>addBtn
@@ -221,7 +225,7 @@ magix.forms.create-web-part
               else
                 set=>[@][else][else][magix.data.save][value][username].Value
                   value=>[@][..][magix.forms.get-value][value].Value
-                set=>[@][else][else][execute-file:1][username].Value
+                set=>[@][else][else][execute-script:1][params][username].Value
                   value=>[@][..][magix.forms.get-value][value].Value
                 magix.forms.get-value
                   form-id=>users-grid
@@ -257,6 +261,8 @@ magix.forms.create-web-part
                     magix.log.append
                       header=>new user created
                       body=>user {0} created
-                    execute-file=>system42/admin/users/users-grid.hl
-                    execute-file=>system42/admin/users/edit-single-user.hl
+                    execute-script
+                      file=>system42/admin/users/users-grid.hl
+                    execute-script
+                      file=>system42/admin/users/edit-single-user.hl
 

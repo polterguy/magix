@@ -23,9 +23,9 @@ if=>exist
         pr0=>[$][filter].Value
     set=>[magix.forms.create-web-part][controls][panel:1][controls][panel][controls][text-box][value].Value
       value=>[$][filter].Value
-    set=>[magix.forms.create-web-part][controls][panel:1][controls][link-button:0][onclick][execute-file][filter].Value
+    set=>[magix.forms.create-web-part][controls][panel:1][controls][link-button:0][onclick][execute-script][params][filter].Value
       value=>[$][filter].Value
-    set=>[magix.forms.create-web-part][controls][panel:1][controls][link-button:1][onclick][execute-file][filter].Value
+    set=>[magix.forms.create-web-part][controls][panel:1][controls][link-button:1][onclick][execute-script][params][filter].Value
       value=>[$][filter].Value
 
 magix.data.load
@@ -119,9 +119,9 @@ else
     subtract
       =>[magix.data.load][end].Value
       =>10
-  set=>[magix.forms.create-web-part][controls][panel:1][controls][link-button:0][onclick][execute-file][start].Value
+  set=>[magix.forms.create-web-part][controls][panel:1][controls][link-button:0][onclick][execute-script][params][start].Value
     value=>[@][using:0][subtract].Value
-  set=>[magix.forms.create-web-part][controls][panel:1][controls][link-button:0][onclick][execute-file][end].Value
+  set=>[magix.forms.create-web-part][controls][panel:1][controls][link-button:0][onclick][execute-script][params][end].Value
     value=>[@][using:1][subtract].Value
 if=>exist
   lhs=>[magix.data.load][end].Value>=[magix.data.count][count].Value
@@ -139,9 +139,9 @@ else
     add
       =>[magix.data.load][end].Value
       =>10
-  set=>[magix.forms.create-web-part][controls][panel:1][controls][link-button:1][onclick][execute-file][start].Value
+  set=>[magix.forms.create-web-part][controls][panel:1][controls][link-button:1][onclick][execute-script][params][start].Value
     value=>[@][using:0][add].Value
-  set=>[magix.forms.create-web-part][controls][panel:1][controls][link-button:1][onclick][execute-file][end].Value
+  set=>[magix.forms.create-web-part][controls][panel:1][controls][link-button:1][onclick][execute-script][params][end].Value
     value=>[@][using:1][add].Value
 
 magix.forms.create-web-part
@@ -163,7 +163,8 @@ magix.forms.create-web-part
           value=>&lt;&lt;
           class=>span-1 left-7
           onclick
-            execute-file=>system42/admin/server-log-grid.hl
+            execute-script
+              file=>system42/admin/server-log-grid.hl
         label=>count
           class=>span-2
           value=>54
@@ -171,7 +172,8 @@ magix.forms.create-web-part
           value=>&gt;&gt;
           class=>span-1
           onclick
-            execute-file=>system42/admin/server-log-grid.hl
+            execute-script
+              file=>system42/admin/server-log-grid.hl
         panel
           class=>span-2 right last
           default=>btnSearch
@@ -185,9 +187,10 @@ magix.forms.create-web-part
                 magix.forms.get-value
                   form-id=>server-log
                   id=>search
-                set=>[execute-file][filter].Value
+                set=>[execute-script][params][filter].Value
                   value=>[magix.forms.get-value][value].Value
-                execute-file=>system42/admin/server-log-grid.hl
+                execute-script
+                  file=>system42/admin/server-log-grid.hl
 
 if=>exist
   lhs=>[$][filter].Value

@@ -9,14 +9,16 @@ event=>magix.test.execute-script-pass-parameters
   inspect=>@"asserts that [execute-script] works the 
 way it should work"
   code
-    execute-script=>@"
+    execute-script
+      script=>@"
 set=>[$][output].Value
   value=>{0} {1}
     =>[$][input].Value
     =>worked"
-      input=>this
+      params
+        input=>this
     if=>not-equals
-      lhs=>[execute-script][output].Value
+      lhs=>[execute-script][params][output].Value
       rhs=>this worked
       code
         throw=>[execute-script] did not correctly pass parameters
@@ -27,11 +29,13 @@ event=>magix.test.execute-script-remove-parameters
   inspect=>@"asserts that [execute-script] removes
 output parameters when expected"
   code
-    execute-script=>@"
+    execute-script
+      script=>@"
 set=>[$][input]"
-      input=>this
+      params
+        input=>this
     if=>exist
-      lhs=>[execute-script][input]
+      lhs=>[execute-script][params][input]
       code
         throw=>[execute-script] did not correctly remove parameters
 

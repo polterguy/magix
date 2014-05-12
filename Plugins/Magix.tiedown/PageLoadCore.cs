@@ -33,11 +33,11 @@ expects it to be a pointer to a hyper lisp file, which will be executed";
 
 			if (!string.IsNullOrEmpty(defaultHyperLispFile))
 			{
-				Node node = new Node ();
-				node.Value = defaultHyperLispFile;
+				Node node = new Node();
+				node["file"].Value = defaultHyperLispFile;
 
 				RaiseActiveEvent(
-					"magix.execute.execute-file",
+					"magix.execute.execute-script",
 					node);
 			}
 		}

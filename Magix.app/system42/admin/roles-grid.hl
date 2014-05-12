@@ -48,7 +48,8 @@ _dt
               magix.log.append
                 header=>role deleted
                 body=>role {0} was deleted
-              execute-file=>system42/admin/roles-grid.hl
+              execute-script
+                file=>system42/admin/roles-grid.hl
 
 for-each=>[magix.data.load][objects]
   set=>[/][_dt][panel][controls][link-button][onclick][magix.viewport.confirm][code][magix.data.remove][prototype][name].Value
@@ -124,5 +125,6 @@ magix.forms.create-web-part
                 magix.log.append
                   header=>role created
                   body=>role {0} was created
-                execute-file=>system42/admin/roles-grid.hl
+                execute-script
+                  file=>system42/admin/roles-grid.hl
 

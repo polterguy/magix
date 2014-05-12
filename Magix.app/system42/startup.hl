@@ -21,7 +21,6 @@ if=>equals
       filter=>*.hl
 
     for-each=>[@][magix.file.list-files][files]
-      set=>[@][execute-file].Value
+      set=>[@][execute-script][file].Value
         value=>[.].Name
-      execute-file
 

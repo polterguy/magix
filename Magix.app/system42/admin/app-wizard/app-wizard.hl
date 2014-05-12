@@ -12,9 +12,10 @@ _dt
     style=>cursor:pointer;
     onclick
       _file
-      set=>[execute-file][file].Value
+      set=>[execute-script][params][file].Value
         value=>[_file].Value
-      execute-file=>system42/admin/app-wizard/new-app.hl
+      execute-script
+        file=>system42/admin/app-wizard/new-app.hl
     controls
       label
         tag=>label
