@@ -62,8 +62,8 @@ if=>equals
                 script = Expressions.GetExpressionValue(ip["script"].Get<string>(), dp, ip, false) as string;
             else
             {
-                Node loadFileNode = new Node("magix.file.load", 
-                    Expressions.GetExpressionValue(ip["file"].Get<string>(), dp, ip, false) as string);
+                Node loadFileNode = new Node("magix.file.load", null);
+                loadFileNode["file"].Value = Expressions.GetExpressionValue(ip["file"].Get<string>(), dp, ip, false) as string;
                 RaiseActiveEvent(
                     "magix.file.load",
                     loadFileNode);

@@ -26,11 +26,16 @@ namespace Magix.execute
 		{
 			if (ShouldInspect(e.Params))
 			{
-                e.Params["inspect"].Value = @"<p>loads the file from value of [magix.file.load] into the 
-[value] node as text</p><p>the file can be a relative path, to fetch a document beneath your web application 
-directory structure, or an http or ftp path to a document.&nbsp;&nbsp;the value in [magix.file.load] can be 
-either a constant pointing to a file locally or externally, or an expression</p><p>thread safe</p>";
-                e.Params["magix.file.load"].Value = "core-scripts/some-files.txt";
+                e.Params["inspect"].Value = @"<p>loads the file from value of [file] into the [value] node 
+as text</p><p>the file can be a relative path, to fetch a document beneath your web application directory 
+structure, or an http or ftp path to a document.&nbsp;&nbsp;the value in [file] can be either a constant 
+pointing to a file locally or externally, or an expression</p><p>in addition, you can supply a plugin 
+loader to load your files, which is done by setting the [file] parameter to the text;'plugin:' and 
+appending the name of the active event whish is to serve as the file loader after 'plugin:'.&nbsp;&nbsp;
+this will expect an active event capable of returning text as [value].&nbsp;&nbsp;if you supply a plugin 
+loader, then all parameters beneath the [file] parameter will be passed into the plugin, and used as 
+parameters to the plugin loader</p><p>thread safe</p>";
+                e.Params["magix.file.load"]["file"].Value = "core-scripts/some-files.txt";
 				return;
 			}
 
@@ -39,29 +44,55 @@ either a constant pointing to a file locally or externally, or an expression</p>
             if (e.Params.Contains("_dp"))
                 dp = e.Params["_dp"].Value as Node;
 
-            string filepath = Expressions.GetExpressionValue(ip.Get<string>(), dp, ip, false) as string;
+            if (!ip.Contains("file"))
+                throw new ArgumentException("you need to supply which file to load as the [file] parameter");
+
+            string filepath = Expressions.GetExpressionValue(ip["file"].Get<string>(), dp, ip, false) as string;
 			if (string.IsNullOrEmpty(filepath))
-				throw new ArgumentException("You need to define which file to load, as value of [magix.file.load]");
+				throw new ArgumentException("you need to define which file to load, as [file]");
 
 			if (filepath.StartsWith("http") || filepath.StartsWith("ftp"))
 			{
-				WebRequest request = WebRequest.Create(filepath) as HttpWebRequest;
-				using (WebResponse response = request.GetResponse())
-				{
-					using (TextReader reader = new StreamReader(response.GetResponseStream()))
-					{
-                        ip["value"].Value = reader.ReadToEnd();
-					}
-				}
+                DownloadFile(ip, filepath);
 			}
-			else
+			else if (filepath.StartsWith("plugin:"))
+            {
+                LoadPluginFile(ip, filepath);
+            }
+            else
 			{
-				using (TextReader reader = File.OpenText(HttpContext.Current.Server.MapPath(filepath)))
-				{
-                    ip["value"].Value = reader.ReadToEnd();
-				}
+                LoadLocalFile(ip, filepath);
 			}
 		}
+
+        private static void LoadPluginFile(Node ip, string filepath)
+        {
+            string activeEvent = filepath.Substring(7);
+            Node parsToPluginLoader = ip["file"];
+            RaiseActiveEvent(
+                activeEvent,
+                parsToPluginLoader);
+        }
+
+        private static void LoadLocalFile(Node ip, string filepath)
+        {
+            using (TextReader reader = File.OpenText(HttpContext.Current.Server.MapPath(filepath)))
+            {
+                ip["value"].Value = reader.ReadToEnd();
+            }
+        }
+
+        private static void DownloadFile(Node ip, string filepath)
+        {
+            WebRequest request = WebRequest.Create(filepath) as HttpWebRequest;
+            using (WebResponse response = request.GetResponse())
+            {
+                using (TextReader reader = new StreamReader(response.GetResponseStream()))
+                {
+                    ip["value"].Value = reader.ReadToEnd();
+                }
+            }
+        }
 
 		/**
 		 * saves a file to disc, relatively from the root of the web application
@@ -91,7 +122,7 @@ file name, and the [value] node can be both expressions or constants</p><p>threa
 
             string file = Expressions.GetExpressionValue(ip.Get<string>(), dp, ip, false) as string;
 			if (string.IsNullOrEmpty(file))
-				throw new ArgumentException("You need to define which file to save, as value of [magix.file.save]");
+				throw new ArgumentException("you need to define which file to save, as value of [magix.file.save]");
 
             if (!ip.Contains("value") || ip["value"].Get<string>() == null)
 			{

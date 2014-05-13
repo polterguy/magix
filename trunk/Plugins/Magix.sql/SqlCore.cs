@@ -6,18 +6,19 @@
 
 using System;
 using System.IO;
+using System.Text;
+using System.Configuration;
 using System.Data.SqlClient;
 using Magix.Core;
-using System.Configuration;
 
 namespace Magix.sql
 {
-    /**
+    /*
      * class wrapping microsoft sql server, and the ability to select and do updates towards it
      */
     public class SqlCore : ActiveController
     {
-        /**
+        /*
          * selects from ms sql server
          */
         [ActiveEvent(Name = "microsoft.sql.select")]
@@ -112,7 +113,71 @@ node, then the active event will return the number of records totally in the que
             }
         }
 
-        /**
+        /*
+         * selects from ms sql server
+         */
+        [ActiveEvent(Name = "microsoft.sql.load-as-file")]
+        public static void microsoft_sql_load_as_file(object sender, ActiveEventArgs e)
+        {
+            if (ShouldInspect(e.Params))
+            {
+                e.Params["inspect"].Value = @"<p>plugin for loading sql select queries as 
+files through [magix.file.load] transparently</p><p>add up parameters underneath the 
+[params] node, and make sure you have a valid connection string to an ms sql database in 
+your [connection] parameter.&nbsp;&nbsp;put the actual sql query in the [query] parameter 
+node</p><p>both [query] and [connection] can be either expressions or constant values.&nbsp;
+&nbsp;if you wish, you can de-reference a connection string from your web.config file, instead 
+of typing in the connection string in code by prefixing the [connection] value with web.config:
+NamedConnection, and such reference the connection string from your web.config called 
+""NamedConnection""</p><p>thread safe</p>";
+                e.Params["microsoft.sql.load-as-file"]["connection"].Value = "Data Source=(localdb)\\v11.0;Initial Catalog=Northwind;Integrated Security=True";
+                e.Params["microsoft.sql.load-as-file"]["query"].Value = "select * from Customers where ContactTitle=@ContactTitle";
+                e.Params["microsoft.sql.load-as-file"]["params"]["ContactTitle"].Value = "owner";
+                return;
+            }
+
+            Node ip = Ip(e.Params);
+            Node dp = ip;
+            if (e.Params.Contains("_dp"))
+                dp = e.Params["_dp"].Get<Node>();
+
+            if (!ip.Contains("connection"))
+                throw new ArgumentException("you need to supply a [connection] to connect to a database");
+            string connectionString = Expressions.GetExpressionValue(ip["connection"].Get<string>(), dp, ip, false) as string;
+            if (connectionString.IndexOf("web.config:") == 0)
+                connectionString = ConfigurationManager.ConnectionStrings[connectionString.Replace("web.config:", "")].ConnectionString;
+
+            if (!ip.Contains("query"))
+                throw new ArgumentException("you need to supply a [query] to know what query to run");
+            string query = Expressions.GetExpressionValue(ip["query"].Get<string>(), dp, ip, false) as string;
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlCommand cmd = new SqlCommand(query, connection);
+                if (ip.Contains("params"))
+                {
+                    foreach (Node idx in ip["params"])
+                    {
+                        cmd.Parameters.AddWithValue("@" + idx.Name, idx.Value);
+                    }
+                }
+                connection.Open();
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    if (reader.FieldCount > 1)
+                        throw new ArgumentException("select statement to [microsoft.sql.load-as-file] returned multiple result columns");
+
+                    StringBuilder builder = new StringBuilder();
+                    while (reader.Read())
+                    {
+                        builder.Append(reader[0] + "\r\n");
+                    }
+                    ip["value"].Value = builder.ToString();
+                }
+            }
+        }
+
+        /*
          * updates and executes sql to ms sql server
          */
         [ActiveEvent(Name = "microsoft.sql.execute")]
