@@ -198,12 +198,9 @@ set=>[magix.viewport.show-message][message].Value
 </pre>
 
 <p>the above code will only match a node who's name is "v0" and who's value is null.&nbsp;&nbsp;the above code will show the 
-message <em>"correctish!"</em>&nbsp;&nbsp;notice how this differs from the version that will match anything, that contains 
-the =&gt; operator, but the right side of the operator is empty</p>
-
-<p>in addition, you can substitute any parts of the =&gt; operator with a question mark, signaling that you want to match 
-any name/value.&nbsp;&nbsp;for instance, if you wish to search for a node who's value is "hello", and you don't care about 
-its name, you would do something like the following</p>
+message <em>"correctish!"</em>&nbsp;&nbsp;in addition, you can substitute any parts of the =&gt; operator with a question mark, 
+signaling that you want to match any name/value.&nbsp;&nbsp;for instance, if you wish to search for a node who's value is "hello", 
+and you don't care about its name, you would do something like the following</p>
 
 <pre>
 _buffer-data
@@ -218,6 +215,23 @@ _buffer-data
       message=>correctish!
 set=>[magix.viewport.show-message][message].Value
   value=>[_buffer-data][<strong>**?=&gt;hello</strong>][message].Value
+</pre>
+
+<p>or if you wish to search for a node who's name you know, but who's value you don't know, you could do something like this</p>
+
+<pre>
+_buffer-data
+  _data
+    v0=>yo
+      message-error=>error
+    v0=>
+      message-error=>error 2.0
+    v0
+      message-error=>crap
+    v0=>hello
+      message-success=>correctish!
+set=>[magix.viewport.show-message][message].Value
+  value=>[_buffer-data][<strong>**message-success=&gt;?</strong>].Value
 </pre>
 
 {{
