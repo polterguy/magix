@@ -13,10 +13,12 @@ is not null"
     _data
       v0=>x
       v1=>y
-      v2=>z
+      v2=>
+      v3
+      v4=>z
   if=>not-equals
     lhs=>[_data][?=>z].Name
-    rhs=>v2
+    rhs=>v4
     code
       throw=>wildcard expression didn't return what was expected
 
@@ -30,10 +32,11 @@ is null"
     _data
       v0=>x
       v1=>y
-      v2
+      v2=>
+      v3
   if=>not-equals
     lhs=>[_data][?].Name
-    rhs=>v2
+    rhs=>v3
     code
       throw=>wildcard expression didn't return what was expected
 
@@ -47,10 +50,114 @@ is empty string"
     _data
       v0=>x
       v1=>y
-      v2=>
+      v2
+      v3=>
   if=>not-equals
-    lhs=>[_data][?].Name
-    rhs=>v2
+    lhs=>[_data][?=>].Name
+    rhs=>v3
     code
       throw=>wildcard expression didn't return what was expected
+
+
+event=>magix.test.expressions-wildcard-null-value
+  persist=>false
+  inspect=>@"asserts that expressions with 
+wildcard functions where value of 
+node to search for is null"
+  code
+    _buffer-data
+      _data
+        v0=>
+          message=>error
+        v0=>hello
+          message=>error
+        v0
+          message=>success
+    if=>not-equals
+      lhs=>[_buffer-data][**v0][message].Value
+      rhs=>success
+      code
+        throw=>deep search expression didn't succeed
+
+
+event=>magix.test.expressions-wildcard-empty-value
+  persist=>false
+  inspect=>@"asserts that expressions with 
+wildcard functions where value of 
+node to search for is empty"
+  code
+    _buffer-data
+      _data
+        v0
+          message=>error
+        v0=>hello
+          message=>error
+        v0=>
+          message=>success
+    if=>not-equals
+      lhs=>[_buffer-data][**v0=>][message].Value
+      rhs=>success
+      code
+        throw=>deep search expression didn't succeed
+
+
+event=>magix.test.expressions-wildcard-question-name
+  persist=>false
+  inspect=>@"asserts that expressions with 
+wildcard functions where name is question mark"
+  code
+    _buffer-data
+      _data
+        v0
+          message=>error
+        v0=>hello
+          message=>error
+        v0=>correct
+          message=>success
+    if=>not-equals
+      lhs=>[_buffer-data][**?=>correct][message].Value
+      rhs=>success
+      code
+        throw=>deep search expression didn't succeed
+
+
+event=>magix.test.expressions-wildcard-question-value
+  persist=>false
+  inspect=>@"asserts that expressions with 
+wildcard functions where value is question mark"
+  code
+    _buffer-data
+      _data
+        v0
+          message=>error
+        v0=>hello
+          message=>error
+        v1=>correct
+          message=>success
+    if=>not-equals
+      lhs=>[_buffer-data][**v1=>?][message].Value
+      rhs=>success
+      code
+        throw=>deep search expression didn't succeed
+
+
+event=>magix.test.expressions-wildcard-question-value-null-value
+  persist=>false
+  inspect=>@"asserts that expressions with 
+wildcard functions where value is question mark 
+and value is null"
+  code
+    _buffer-data
+      _data
+        v0
+          message=>error
+        v0=>hello
+          message=>error
+        v1
+          message=>success
+    if=>not-equals
+      lhs=>[_buffer-data][**v1=>?][message].Value
+      rhs=>success
+      code
+        throw=>deep search expression didn't succeed
 
