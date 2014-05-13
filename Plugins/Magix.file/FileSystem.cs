@@ -7,7 +7,6 @@
 using System;
 using System.IO;
 using System.Web;
-using System.Net;
 using System.Threading;
 using Magix.Core;
 
@@ -28,13 +27,13 @@ namespace Magix.execute
 			{
                 e.Params["inspect"].Value = @"<p>loads the file from value of [file] into the [value] node 
 as text</p><p>the file can be a relative path, to fetch a document beneath your web application directory 
-structure.&nbsp;&nbsp;the value in [file] can be either a constant pointing to a file locally or externally, 
-or an expression</p><p>in addition, you can supply a plugin loader to load your files, which is done by 
-setting the [file] parameter to the text;'plugin:' and appending the name of the active event whish is to 
-serve as the file loader after 'plugin:', for instance 'plugin:microsoft.sql.load-as-file' or 'plugin:
-magix.file.load-from-web'.&nbsp;&nbsp;this will expect an active event capable of returning text as 
-[value].&nbsp;&nbsp;if you supply a plugin loader, then all parameters beneath the [file] parameter will be 
-passed into the plugin, and used as parameters to the plugin loader</p><p>thread safe</p>";
+structure.&nbsp;&nbsp;the value in [file] can be either a constant or an expression</p><p>in addition, you 
+can supply a plugin loader to load your files, which is done by setting the [file] parameter to the text;
+'plugin:' and appending the name of the active event you whish to use as the file loader after 'plugin:'.
+&nbsp;&nbsp; for instance 'plugin:microsoft.sql.select-as-text' or 'plugin:magix.web.get-file'.&nbsp;&nbsp;
+this will expect an active event capable of returning text as [value].&nbsp;&nbsp;if you supply a plugin 
+loader, then all parameters beneath the [file] parameter will be passed into the plugin, and used as 
+parameters to the plugin loader</p><p>thread safe</p>";
                 e.Params["magix.file.load"]["file"].Value = "core-scripts/some-files.txt";
 				return;
 			}
@@ -53,7 +52,8 @@ passed into the plugin, and used as parameters to the plugin loader</p><p>thread
 
 			if (filepath.StartsWith("plugin:"))
             {
-                LoadPluginFile(ip, filepath);
+                Node fileContent = LoadPluginFile(ip, filepath);
+                ip["value"].Value = fileContent.Value;
             }
             else
 			{
@@ -61,14 +61,16 @@ passed into the plugin, and used as parameters to the plugin loader</p><p>thread
 			}
 		}
 
-        private static void LoadPluginFile(Node ip, string filepath)
+        private static Node LoadPluginFile(Node ip, string filepath)
         {
             string activeEvent = filepath.Substring(7);
-            Node parsToPluginLoader = ip["file"];
+            Node parsToPluginLoader = ip["file"].Clone();
             
             RaiseActiveEvent(
                 activeEvent,
                 parsToPluginLoader);
+
+            return parsToPluginLoader["value"];
         }
 
         private static void LoadLocalFile(Node ip, string filepath)
@@ -76,49 +78,6 @@ passed into the plugin, and used as parameters to the plugin loader</p><p>thread
             using (TextReader reader = File.OpenText(HttpContext.Current.Server.MapPath(filepath)))
             {
                 ip["value"].Value = reader.ReadToEnd();
-            }
-        }
-
-        /*
-         * downloads file from web
-         */
-        [ActiveEvent(Name = "magix.file.load-from-web")]
-        public static void magix_file_load_from_web(object sender, ActiveEventArgs e)
-        {
-            if (ShouldInspect(e.Params))
-            {
-                e.Params["inspect"].Value = @"<p>plugin for loading web documents as 
-files through [magix.file.load] transparently</p><p>supported protocols are everything 
-that is supported by the WebRequest class in asp.net, and should at least be capable 
-of handling https, http and ftp</p><p>thread safe</p>";
-                e.Params["magix.file.load-from-web"]["url"].Value = "http://google.com";
-                return;
-            }
-
-            Node ip = Ip(e.Params);
-            Node dp = ip;
-            if (e.Params.Contains("_dp"))
-                dp = e.Params["_dp"].Value as Node;
-
-            if (!ip.Contains("url"))
-                throw new ArgumentException("you need to supply which file to load as the [url] parameter");
-
-            string filepath = Expressions.GetExpressionValue(ip["url"].Get<string>(), dp, ip, false) as string;
-            if (string.IsNullOrEmpty(filepath))
-                throw new ArgumentException("you need to define which file to load, as [url]");
-
-            DownloadFile(ip, filepath);
-        }
-
-        private static void DownloadFile(Node ip, string filepath)
-        {
-            WebRequest request = WebRequest.Create(filepath) as HttpWebRequest;
-            using (WebResponse response = request.GetResponse())
-            {
-                using (TextReader reader = new StreamReader(response.GetResponseStream()))
-                {
-                    ip["value"].Value = reader.ReadToEnd();
-                }
             }
         }
 
@@ -131,14 +90,13 @@ of handling https, http and ftp</p><p>thread safe</p>";
 		{
 			if (ShouldInspect(e.Params))
 			{
-                e.Params["inspect"].Value = @"<p>saves a file defined by the value of 
-[magix.file.save]</p><p>the file to save is given as the [value] node.&nbsp;&nbsp;
+                e.Params["inspect"].Value = @"<p>saves a file with the path given
+in [file]</p><p>the file to save is given as the [value] node.&nbsp;&nbsp;
 [magix.file.save] will overwrite an existing file, if any exist, otherwise it will 
 create a new file.&nbsp;&nbsp;if you pass in null as [value] Node, or no [value] node
 at all, any existing file will be deleted, and no new file created.&nbsp;&nbsp;both the 
-file name, and the [value] node can be both expressions or constants</p><p>thread safe
-</p>";
-                e.Params["magix.file.save"].Value = "tmp/sample.txt";
+[file], and [value] can be either expressions or constants</p><p>thread safe</p>";
+                e.Params["magix.file.save"]["file"].Value = "tmp/sample.txt";
 				e.Params["magix.file.save"]["value"].Value = @"contents of file";
 				return;
 			}
@@ -148,9 +106,12 @@ file name, and the [value] node can be both expressions or constants</p><p>threa
             if (e.Params.Contains("_dp"))
                 dp = e.Params["_dp"].Value as Node;
 
-            string file = Expressions.GetExpressionValue(ip.Get<string>(), dp, ip, false) as string;
+            if (!ip.Contains("file"))
+                throw new ArgumentException("you need to define which file to save, as [file]");
+
+            string file = Expressions.GetExpressionValue(ip["file"].Get<string>(), dp, ip, false) as string;
 			if (string.IsNullOrEmpty(file))
-				throw new ArgumentException("you need to define which file to save, as value of [magix.file.save]");
+				throw new ArgumentException("you need to define which file to save, as [file]");
 
             if (!ip.Contains("value") || ip["value"].Get<string>() == null)
 			{

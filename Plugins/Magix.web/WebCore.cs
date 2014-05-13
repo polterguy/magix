@@ -5,8 +5,10 @@
  */
 
 using System;
-using System.Configuration;
+using System.IO;
+using System.Net;
 using System.Web;
+using System.Configuration;
 using Magix.Core;
 using Magix.UX.Builder;
 
@@ -17,9 +19,53 @@ namespace Magix.execute
 	 */
 	public class WebCore : ActiveController
 	{
-		/**
-		 * return the given http get parameter
-		 */
+        /*
+         * downloads file from web
+         */
+        [ActiveEvent(Name = "magix.web.get-file")]
+        public static void magix_web_get_file(object sender, ActiveEventArgs e)
+        {
+            if (ShouldInspect(e.Params))
+            {
+                e.Params["inspect"].Value = @"<p>plugin for loading web documents as 
+files </p><p>this is useful for using as a plugin loader for the [magix.file.load] 
+active event</p><p>supported protocols are all protocols supported by the WebRequest 
+class in asp.net, and should at least be capable of handling https, http and ftp</p>
+<p>thread safe</p>";
+                e.Params["magix.file.load-from-web"]["url"].Value = "http://google.com";
+                return;
+            }
+
+            Node ip = Ip(e.Params);
+            Node dp = ip;
+            if (e.Params.Contains("_dp"))
+                dp = e.Params["_dp"].Value as Node;
+
+            if (!ip.Contains("url"))
+                throw new ArgumentException("you need to supply which file to load as the [url] parameter");
+
+            string filepath = Expressions.GetExpressionValue(ip["url"].Get<string>(), dp, ip, false) as string;
+            if (string.IsNullOrEmpty(filepath))
+                throw new ArgumentException("you need to define which file to load, as [url]");
+
+            DownloadFile(ip, filepath);
+        }
+
+        private static void DownloadFile(Node ip, string filepath)
+        {
+            WebRequest request = WebRequest.Create(filepath) as HttpWebRequest;
+            using (WebResponse response = request.GetResponse())
+            {
+                using (TextReader reader = new StreamReader(response.GetResponseStream()))
+                {
+                    ip["value"].Value = reader.ReadToEnd();
+                }
+            }
+        }
+
+        /**
+         * return the given http get parameter
+         */
 		[ActiveEvent(Name = "magix.web.get")]
 		public void magix_web_get(object sender, ActiveEventArgs e)
 		{
