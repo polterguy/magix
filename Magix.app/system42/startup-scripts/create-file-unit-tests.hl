@@ -10,9 +10,10 @@ event=>magix.test.file-load
 way it should work, by trying to load a file from disc,
 and verify that it is loaded"
   code
-    magix.file.load=>system42/startup-scripts/create-file-unit-tests.hl
+    magix.file.load
+      file=>system42/startup-scripts/create-file-unit-tests.hl
     if=>not-exist
-      lhs=>[magix.file.load].Value
+      lhs=>[magix.file.load][value].Value
       code
         throw=>@"[magix.file.load] didn't behave as expected 
 when invoking with a constant pointing to an existing file 
@@ -29,11 +30,12 @@ file path"
   code
     _file-path=>system42/startup-scripts/create-file-unit-tests.hl
     using=>magix.file
-      load=>[_file-path].Value
+      load
+        file=>[_file-path].Value
     if=>not-exist
-      lhs=>[using][load].Value
+      lhs=>[using][load][value].Value
       or=>equals
-        lhs=>[using][load].Value
+        lhs=>[using][load][value].Value
         rhs=>
       code
         throw=>@"[magix.file.load] didn't behave as expected 
@@ -57,7 +59,8 @@ pointing to the file's path"
       code
         throw=>@"[magix.file.save] didn't behave as expected 
 since no file exist after creation of file"
-    magix.file.load=>tmp/mumbo.txt
+    magix.file.load
+      file=>tmp/mumbo.txt
     if=>not-equals
       lhs=>[magix.file.load][value].Value
       rhs=>@"howdy world"
@@ -89,7 +92,8 @@ pointing to the file's path"
         throw=>@"[magix.file.save] didn't behave as expected 
 since no file exist after creation of file"
     using=>magix.file
-      load=>[_data].Value
+      load
+        file=>[_data].Value
     if=>not-equals
       lhs=>[using:2][load][value].Value
       rhs=>@"howdy world"

@@ -75,7 +75,8 @@ parts of your execution node tree</p><p>not thread safe</p>";
             if (ip.Contains("controls-file"))
             {
                 string file = Expressions.GetExpressionValue(ip["controls-file"].Get<string>(), dp, ip, false) as string;
-                Node loadControls = new Node("magix.file.load", file);
+                Node loadControls = new Node("magix.file.load", null);
+                loadControls["file"].Value = file;
                 RaiseActiveEvent(
                     "magix.file.load",
                     loadControls);
@@ -96,7 +97,8 @@ parts of your execution node tree</p><p>not thread safe</p>";
             if (ip.Contains("events-file"))
             {
                 string file = Expressions.GetExpressionValue(ip["events-file"].Get<string>(), dp, ip, false) as string;
-                Node loadControls = new Node("magix.file.load", file);
+                Node loadControls = new Node("magix.file.load", null);
+                loadControls["file"].Value = file;
                 RaiseActiveEvent(
                     "magix.file.load",
                     loadControls);
@@ -190,7 +192,8 @@ exists only as long as the web part exists</p>";
             {
                 string file = Expressions.GetExpressionValue(ip["mml-file"].Get<string>(), dp, ip, false) as string;
 
-                Node loadFile = new Node("magix.file.load", file);
+                Node loadFile = new Node("magix.file.load", null);
+                loadFile["file"].Value = file;
                 RaiseActiveEvent(
                     "magix.file.load",
                     loadFile);
@@ -204,7 +207,8 @@ exists only as long as the web part exists</p>";
             {
                 string file = Expressions.GetExpressionValue(ip["events-file"].Get<string>(), dp, ip, false) as string;
 
-                Node eventsNodes = new Node("magix.file.load", file);
+                Node eventsNodes = new Node("magix.file.load", null);
+                eventsNodes["file"].Value = file;
                 RaiseActiveEvent(
                     "magix.file.load",
                     eventsNodes);

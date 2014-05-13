@@ -159,8 +159,8 @@ code
                 codeTextString = Expressions.GetExpressionValue(ip["code"].Get<string>(), dp, ip, false) as string;
             else
             {
-                Node fromFile = new Node("magix.file.load", 
-                    Expressions.GetExpressionValue(ip["file"].Get<string>(), dp, ip, false) as string);
+                Node fromFile = new Node("magix.file.load", null);
+                fromFile["file"].Value = Expressions.GetExpressionValue(ip["file"].Get<string>(), dp, ip, false) as string;
                 RaiseActiveEvent(
                     "magix.file.load",
                     fromFile);
