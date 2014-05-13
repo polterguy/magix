@@ -50,7 +50,8 @@ way it should work, by trying to save a file to disc,
 and verify that it exist afterwards, using a constant 
 pointing to the file's path"
   code
-    magix.file.save=>tmp/mumbo.txt
+    magix.file.save
+      file=>tmp/mumbo.txt
       value=>@"howdy world"
     magix.file.file-exist=>tmp/mumbo.txt
     if=>not-equals
@@ -68,7 +69,8 @@ since no file exist after creation of file"
         throw=>@"[magix.file.save] didn't behave as expected 
 since file content was not what was expected after loading again 
 after creation of file"
-    magix.file.delete=>tmp/mumbo.txt
+    magix.file.delete
+      file=>tmp/mumbo.txt
 
 
 event=>magix.test.file-save-expression
@@ -81,7 +83,8 @@ pointing to the file's path"
     _data=>tmp/mumbo.txt
     _value=>@"howdy world"
     using=>magix.file
-      save=>[_data].Value
+      save
+        file=>[_data].Value
         value=>[_value].Value
     using=>magix.file
       file-exist=>[_data].Value
@@ -102,7 +105,8 @@ since no file exist after creation of file"
 since file content was not what was expected after loading again 
 after creation of file"
     using=>magix.file
-      delete=>[_data].Value
+      delete
+        file=>[_data].Value
 
 
 event=>magix.test.directory-create

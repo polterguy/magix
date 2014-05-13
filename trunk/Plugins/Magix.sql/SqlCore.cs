@@ -116,20 +116,24 @@ node, then the active event will return the number of records totally in the que
         /*
          * selects table as file
          */
-        [ActiveEvent(Name = "microsoft.sql.load-as-file")]
-        public static void microsoft_sql_load_as_file(object sender, ActiveEventArgs e)
+        [ActiveEvent(Name = "microsoft.sql.select-as-text")]
+        public static void microsoft_sql_select_as_text(object sender, ActiveEventArgs e)
         {
             if (ShouldInspect(e.Params))
             {
-                e.Params["inspect"].Value = @"<p>plugin for loading sql select queries as 
-files through [magix.file.load] transparently</p><p>add up parameters underneath the 
-[params] node, and make sure you have a valid connection string to an ms sql database in 
-your [connection] parameter.&nbsp;&nbsp;put the actual sql query in the [query] parameter 
-node</p><p>both [query] and [connection] can be either expressions or constant values.&nbsp;
-&nbsp;if you wish, you can de-reference a connection string from your web.config file, instead 
-of typing in the connection string in code by prefixing the [connection] value with web.config:
-NamedConnection, and such reference the connection string from your web.config called 
-""NamedConnection""</p><p>thread safe</p>";
+                e.Params["inspect"].Value = @"<p>selects sql select queries as plain text</p>
+<p>this is useful to supply as a plugin for [magix.file.load], since it can transparently load 
+information from a database and treat it as if it was a file object.&nbsp;&nbsp;add up parameters 
+beneath the [params] node, and make sure you have a valid connection string to an ms sql database 
+in your [connection] parameter.&nbsp;&nbsp;put the actual sql query in the [query] parameter 
+node, and make sure your query only returns one column.&nbsp;&nbsp;the result from the query, will 
+be appended into the [value] node, with a carriage return following every result, making possible 
+to treat multiple rows from a database as if it was one piece of text</p><p>both [query] and 
+[connection] can be either expressions or constant values.&nbsp;&nbsp;if you wish, you can 
+de-reference a connection string from your web.config file, instead of typing in the connection 
+string in code by prefixing the [connection] value with web.config:NamedConnection, and such 
+reference the connection string from your web.config called ""NamedConnection""</p><p>thread 
+safe</p>";
                 e.Params["microsoft.sql.load-as-file"]["connection"].Value = "Data Source=(localdb)\\v11.0;Initial Catalog=Northwind;Integrated Security=True";
                 e.Params["microsoft.sql.load-as-file"]["query"].Value = "select * from Customers where ContactTitle=@ContactTitle";
                 e.Params["microsoft.sql.load-as-file"]["params"]["ContactTitle"].Value = "owner";

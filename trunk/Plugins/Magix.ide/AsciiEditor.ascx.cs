@@ -68,7 +68,7 @@ namespace Magix.ide
         {
             Node tmp = new Node();
             tmp["value"].Value = surface.Value;
-            tmp.Value = path.Value;
+            tmp["file"].Value = path.Value;
 
             RaiseActiveEvent(
                 "magix.file.save",
@@ -94,7 +94,7 @@ namespace Magix.ide
         {
             Node c = new Node();
             c["message"].Value = "are you sure you wish to delete the file " + path.Value + "?";
-            c["code"]["magix.file.delete"].Value = path.Value;
+            c["code"]["magix.file.delete"]["file"].Value = path.Value;
             c["code"]["magix.ide.file-deleted"]["path"].Value = path.Value;
 
             RaiseActiveEvent(

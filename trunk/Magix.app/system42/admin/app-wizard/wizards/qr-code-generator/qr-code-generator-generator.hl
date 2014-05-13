@@ -58,7 +58,7 @@ set=>[node-2-code][node].Value
 node-2-code
   remove-root=>true
 
-set=>[magix.file.save].Value
+set=>[magix.file.save][file].Value
   value=>system42\admin\apps\{0}.hl
     v0=>[$][name].Value
 set=>[magix.file.save][value].Value

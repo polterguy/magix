@@ -284,7 +284,7 @@ magix.forms.create-web-part
                     form-id=>edit-pages
                     id=>imgQrCode
                     value=>false
-                  set=>[@][magix.file.delete].Value
+                  set=>[@][magix.file.delete][file].Value
                     value=>tmp/{0}.png
                       v0=>[/][magix.forms.get-value][value].Value
     select=>form
