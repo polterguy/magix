@@ -1,0 +1,104 @@
+﻿
+<h2>simplifying complex expressions</h2>
+
+<p>sometimes you end up with very complex expressions, which are very long and tedious to read.&nbsp;&nbsp;there exist many different 
+ways to simplify expressions.&nbsp;&nbsp;one way to simplify an expression, is clever use of the wildcard expression.&nbsp;&nbsp;consider 
+the following code</p>
+
+<pre>
+_data
+  somewhere
+    over
+      the
+        rainbow
+          rainman=>old value
+set=>[_data][somewhere][over][the][rainbow][rainman].Value
+  value=>new value
+</pre>
+
+<p>an easier way to change the value of the [rainman] node would be the follwing code</p>
+
+<pre>
+_data
+  somewhere
+    over
+      the
+        rainbow
+          rainman=>old value
+set=>[**rainman=>?].Value
+  value=>new value
+</pre>
+
+<p>as long as you can create a unique expression, that returns the node you wish to return, and does not return false positives, 
+you can use the wildcard operator to reduce the size of your expressions.&nbsp;&nbsp;this increases the readability of your code, 
+and makes it easier to maintain.&nbsp;&nbsp;another way to simplify your expressions is to use the [with] keyword.&nbsp;&nbsp;
+the [with] keyword is useful for scenarios where you want to change many nodes consecutively, deeply within your node 
+hierarchy.&nbsp;&nbsp;consider the follwing code</p>
+
+<pre>
+_data
+  somewhere
+    over
+      the
+        rainbow
+          v0=>old value
+          v1=>older value
+          v2=>oldest
+set=>[_data][somewhere][over][the][rainbow][v0].Value
+  value=>new value 1
+set=>[_data][somewhere][over][the][rainbow][v1].Value
+  value=>new value 2
+set=>[_data][somewhere][over][the][rainbow][v2].Value
+  value=>new value 3
+</pre>
+
+<p>instead of having to type out the entire path to your [vx] nodes, every time, you can use the [with] keyword, which changes 
+the data pointer to a node list you wish to modify.&nbsp;&nbsp;consider the following code as an alternative to the above code</p>
+
+<pre>
+_data
+  somewhere
+    over
+      the
+        rainbow
+          v0=>old value
+          v1=>older value
+          v2=>oldest
+with=>[_data][somewhere][over][the][rainbow]
+  set=>[v0].Value
+    value=>new value 1
+  set=>[v1].Value
+    value=>new value 2
+  set=>[v2].Value
+    value=>new value 3
+</pre>
+
+<p>and of course you if you wish, you can combine both of the above, to produce the following code</p>
+
+<pre>
+_data
+  somewhere
+    over
+      the
+        rainbow
+          v0=>old value
+          v1=>older value
+          v2=>oldest
+with=>[**rainbow]
+  set=>[v0].Value
+    value=>new value 1
+  set=>[v1].Value
+    value=>new value 2
+  set=>[v2].Value
+    value=>new value 3
+</pre>
+
+<p>the [with] keyword expects an expression returning a node list, and helps you simplify your expressions.&nbsp;&nbsp;combined with 
+clever use of the wildcard expression operator, you can significantly reduce the complexity of your code</p>
+
+{{
+lambda=>next
+  oncreatecontrols
+    magix.help.set-next
+      next=>system42\admin\help\hyper-lisp\set-keyword.mml
+}}

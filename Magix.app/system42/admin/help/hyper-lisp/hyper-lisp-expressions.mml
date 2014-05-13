@@ -234,6 +234,28 @@ set=>[magix.viewport.show-message][message].Value
   value=>[_buffer-data][<strong>**message-success=&gt;?</strong>].Value
 </pre>
 
+<p>notice how the wildcard operator "**" can traverse any depths of your tree, but that it starts it search from within where ever you 
+put your wildcard operator in your expression.&nbsp;&nbsp;consider the following code</p>
+
+<pre>
+_data
+  error=>search-query
+    msg=>error
+  _buffer
+    jo
+      hello
+        somewhere
+          over=>search-query
+            msg=>success
+set=>[magix.viewport.show-message][message].Value
+  value=>[_data][_buffer][<strong>**?=>search-query</strong>][msg].Value
+</pre>
+
+<p>the wildcard operator will traverse your tree, looking for the first node that matches its criteria, regardless of how deep it 
+needs to search.&nbsp;&nbsp;this feature is useful for shortening expressions that would otherwise becomes tediously long and difficult 
+to follow.&nbsp;&nbsp;try changing the above code, and remove the [_buffer] parts of the expression in the [value] node of the [set], 
+and see how it now will match the [error] node</p>
+
 {{
 lambda=>next
   oncreatecontrols
