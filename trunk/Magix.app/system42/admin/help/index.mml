@@ -219,11 +219,11 @@ link-button=>hyperlisp-4
     magix.viewport.scroll=>help
 }}</li>
 <li>{{
-link-button=>hyperlisp-6
-  value=>all hyper lisp keywords
+link-button=>hyperlisp-set-keyword
+  value=>the [set] keyword
   onclick
     magix.help.open-file
-      file=>system42\admin\help\hyper-lisp\existing-keywords.mml
+      file=>system42\admin\help\hyper-lisp\set-keyword.mml
     magix.viewport.scroll=>help
 }}</li>
 <li>{{
