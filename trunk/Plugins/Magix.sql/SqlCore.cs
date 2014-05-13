@@ -114,7 +114,7 @@ node, then the active event will return the number of records totally in the que
         }
 
         /*
-         * selects from ms sql server
+         * selects table as file
          */
         [ActiveEvent(Name = "microsoft.sql.load-as-file")]
         public static void microsoft_sql_load_as_file(object sender, ActiveEventArgs e)
