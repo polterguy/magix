@@ -245,15 +245,28 @@ namespace Magix.Core
                             {
                                 if (bufferNodeName.IndexOf("=>") > 2)
                                     searchName = bufferNodeName.Substring(2).Split(new string[] { "=>" }, StringSplitOptions.RemoveEmptyEntries)[0];
+                                else
+                                    searchName = "";
                                 if (bufferNodeName.IndexOf("=>") < bufferNodeName.Length - 2)
                                     searchValue = bufferNodeName.Split(new string[] { "=>" }, StringSplitOptions.RemoveEmptyEntries)[1];
+                                else
+                                    searchValue = "";
                             }
                             else
-                                searchName = bufferNodeName.Substring(2);
+                            {
+                                if (bufferNodeName.Length > 2)
+                                    searchName = bufferNodeName.Substring(2);
+                                else
+                                    bufferNodeName = "";
+                            }
 
                             Node searchNode = FindNode(x, searchName, searchValue);
                             if (searchNode == null && forcePath)
                             {
+                                if (searchName == "?")
+                                    searchName = "";
+                                if (searchValue == "?")
+                                    searchValue = "";
                                 x.Add(new Node(searchName ?? "", searchValue));
                                 x = x[x.Count - 1];
                             }
@@ -444,24 +457,24 @@ namespace Magix.Core
 			return x;
 		}
 
-        private static Node FindNode(Node x, string searchName, string searchValue)
+        private static Node FindNode(Node currentNode, string searchName, string searchValue)
         {
             bool foundName = false;
-            if (searchName == null)
+            if (searchName == "?")
                 foundName = true;
-            else if (x.Name == searchName)
+            else if (currentNode.Name == searchName)
                 foundName = true;
             
             bool foundValue = false;
-            if (searchValue == null)
+            if (searchValue == "?")
                 foundValue = true;
-            else if (searchValue == x.Get<string>())
+            else if (searchValue == currentNode.Get<string>())
                 foundValue = true;
 
             if (foundValue && foundName)
-                return x;
+                return currentNode;
 
-            foreach (Node idx in x)
+            foreach (Node idx in currentNode)
             {
                 Node tmp = FindNode(idx, searchName, searchValue);
                 if (tmp != null)

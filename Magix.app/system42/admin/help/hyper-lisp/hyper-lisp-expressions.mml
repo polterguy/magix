@@ -154,38 +154,71 @@ your expression.&nbsp;&nbsp;consider the following code</p>
 _buffer-data
   _data
     v0
-      message=>howdy world
+      message=>wrong one
     v0=>hello
-      message=>hello world
+      message=>success! howdy world :)
 set=>[magix.viewport.show-message][message].Value
   value=>[_buffer-data][<strong>**v0=>hello</strong>][message].Value
 </pre>
 
 <p>the above code will traverse through your entire tree, starting from [_buffer-data], looking for any node that has the name of 
-<strong>v0</strong> and the value of <strong>hello</strong> and return its value.&nbsp;&nbsp;this is useful for searching through 
+<strong>v0</strong> and the value of <strong>hello</strong> and match it for the expression.&nbsp;&nbsp;this is useful for searching through 
 deep tree hierarchies, where you don't know the exact position, or don't care.&nbsp;&nbsp;it is also useful for shortening 
 expressions that would otherwise become much longer.&nbsp;&nbsp;both parts of the <strong>=&gt;</strong> parts of the expression 
-is optional.&nbsp;&nbsp;if you ommit either parts of the =&gt; parts, it will match anything.&nbsp;&nbsp;consider the following</p>
-
+are optional.&nbsp;&nbsp;if you ommit either parts of the =&gt; parts, it will match empty name/values.
+&nbsp;&nbsp;consider the following</p>
 
 <pre>
 _buffer-data
   _data
     v0
-      message=>howdy world
+      message=>wrong dude
     v0=>hello
-      message=>hello world
-    v1=>something-else
-      message=>hello world
+      message=>too wrongs never make a wright
+    v0=>
+      message=>dude, correct!
 set=>[magix.viewport.show-message][message].Value
-  value=>[_buffer-data][<strong>**=>hello</strong>].Value
-set=>[magix.viewport.show-message:1][message].Value
-  value=>[_buffer-data][<strong>**v1=></strong>].Value
+  value=>[_buffer-data][<strong>**v0=></strong>][message].Value
 </pre>
 
-<p>the first message box will be made from the first match of any node having the value of <strong>hello</strong>, becoming the 
-second child of the [_data] node.&nbsp;&nbsp;while the second message box will be made from the first match of any node having 
-a name of <strong>v1</strong>, becoming the third child of [_data]</p>
+<p>the above code will match only the third child of [_data].&nbsp;&nbsp;if you ommit the =&gt; in its entirety, then it 
+will match only a node who's value is null.&nbsp;&nbsp;consider the following code</p>
+
+<pre>
+_buffer-data
+  _data
+    v0=>
+      message=>error
+    v0=>hello
+      message=>error 2.0
+    v0
+      message=>correctish!
+set=>[magix.viewport.show-message][message].Value
+  value=>[_buffer-data][<strong>**v0</strong>][message].Value
+</pre>
+
+<p>the above code will only match a node who's name is "v0" and who's value is null.&nbsp;&nbsp;the above code will show the 
+message <em>"correctish!"</em>&nbsp;&nbsp;notice how this differs from the version that will match anything, that contains 
+the =&gt; operator, but the right side of the operator is empty</p>
+
+<p>in addition, you can substitute any parts of the =&gt; operator with a question mark, signaling that you want to match 
+any name/value.&nbsp;&nbsp;for instance, if you wish to search for a node who's value is "hello", and you don't care about 
+its name, you would do something like the following</p>
+
+<pre>
+_buffer-data
+  _data
+    v0=>yo
+      message=>error
+    v0=>
+      message=>error 2.0
+    v0
+      message=>crap
+    v0=>hello
+      message=>correctish!
+set=>[magix.viewport.show-message][message].Value
+  value=>[_buffer-data][<strong>**?=&gt;hello</strong>][message].Value
+</pre>
 
 {{
 lambda=>next
