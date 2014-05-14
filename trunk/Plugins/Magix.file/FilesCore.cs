@@ -13,7 +13,7 @@ using Magix.Core;
 namespace Magix.execute
 {
 	/*
-	 * contains logic for loading, saving and re-organizing files
+	 * contains logic for loading, saving and loading files
 	 */
 	public class FilesCore : ActiveController
 	{

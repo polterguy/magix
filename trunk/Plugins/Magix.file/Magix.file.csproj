@@ -35,6 +35,7 @@
   <ItemGroup>
     <Compile Include="FilesCore.cs" />
     <Compile Include="DirectoriesCore.cs" />
+    <Compile Include="ResourceLoaderCore.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
