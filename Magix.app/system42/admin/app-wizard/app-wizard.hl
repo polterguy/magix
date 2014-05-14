@@ -4,7 +4,8 @@ inspect=>@"open the application wizard
 such that you can create your own application, 
 using a wizard interface"
 
-magix.file.list-files=>system42/admin/app-wizard/wizards
+magix.file.list-files
+  directory=>system42/admin/app-wizard/wizards
 
 _dt
   panel
