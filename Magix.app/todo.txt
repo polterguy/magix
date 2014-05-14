@@ -1,87 +1,25 @@
- 
-* there are no way to traverse trees, hierarchically, currently in magix. this is seen if attempting to construct a tree 
-  lamba web control of e.g. namespaces in magix, represented as a tree
 
-* make magix.data.x conform to eachother in their passing of nodes
+* make sure all references to magix.file.load correctly passes nodes through to support plugin loading
 
-* make all web form sample code snippets in inspect create working functioning code
+* create support for multiple data pointers, and de-referencing them through [.], [..], [...] and so on
 
-* create unit tests for magix.file namespace
+* clean up magix.forms namespace
 
-* implement more support for expressions in all events within the magix.execute namespace, such as tunnel, open, etc - by using the Expression class from Magix.Core
+* clean up inheritance chain for web controls in magix.forms.controls namespace
 
-* create boolean operations for comparing and "multiplying" node trees
+* clean up saving logic for web forms in forms builder
 
-* create a database management system
+* support for dynamically filling all containers in viewport through page/master-page builder, or something
 
-* replace all the "load-form"/"save-form" and so on in Magix.ide.Surface.ascx.cs with getters and setters for form, getter already exist, 
-  and refactor out the actual saving and loading of forms, since now the Surface contains "business logic" you might say
+* crud app to be removed and replaced with database based editor
 
-* create general type of clipboard module/controller for nodes
+* support for editing records in ms sql query tool
 
-* remove the deletion and saving of files out from the AsciiEditor.ascx.cs file and into controllers
+* change all [query] parameters to [sql] parameters
 
-* make Active Modules become inspectable through using [inspect]
+* clean up [inspect] for all active events, including unit tests
 
-* refactor the Expression class
+* create support for "call-base" for active events that are overridden
 
-* remove some of the unit tests written in code, such as the viewstate one, which is superflous
-
-* make magix.data.load share logic with magix.data.remove, and magix.data.count, and differentiate upon the name of the active event the implementation of what to do once hit found
-
-* make [id] become default parameter to magix.data.save
-
-* make it possible for lambda controls to take additional settings, such that they can be reused with different data-input
-
-* make RaiseActiveEvent and RaiseEvent in modules and controllers have similar names
-
-* make sure all inspect code snippets actually executes
-
-* make it possible to serialize forms created dynamically, either to c# or some other format in a file
-
-* sanitize names of web controls, such as "check" contra "link-button", etc ...
-
-* make sure Wysiwyg control handles => signs correctly, it doesn't now, and needs transformations in WebPart.ascx.cs
-
-* make it possible to sort in magix.data.load, server log is showing oldest item first
-
-* there is something fishy with magix.forms.controls.literal, in forms editor it messes up if i start pasting in after the control another widget, such as a lambda
-
-* make file system component become smarter
-
-* make spacing at bottom of body or something, see server log and scroll to bottom to understand why
-
-* make the magix.forms.form saving format become the same as the create-web-part format
-
-* implement common controller for all gui get/set methods that are shared among different controls through inheritance
-
-* remove has-more-data in uploader and change with parameter into event handler
-
-* check up ActiveEvent.cs, and see if we really need the parsing stuff, to pass in expressions, which i think only supply overhead
-
-* make ip be default expression getter in Expressions, such that code inside for-each can be the same as outside, and doesn't have to change
-
-* sanitize node-2-code etc, and among other things get rid of [code] and exchange with [value] for conformity, also minimize node passing
-
-* make boolean properties of web controls use check boxes in forms editor
-
-* remove controls from editing panel in forms editor
-
-* sanitize the grid system css for input elements, it's a mess
-
-* if there is only one button on form in forms editor, and you set it to invisible, then save the form, the engine complains about javascript bug
-
-* create btn-group(s) for pages and forms editors
-
-* create close button for editing of hyper lisp property form in forms editor
-
-* create support for // comments, use name, ignore in execute
-
-* implement sane default id's for web controls when created in forms editor, such as e.g. "btn04" and "chk01" instead of guid
-
-* rewrite help system
-
-* make magix.help.open-file use magix.file.load, such that remote files can be loaded
-
-* make all active controllers which are not inherited from "sealed" classes
+* fix saving/loading of > and < in mml editor
 

@@ -69,3 +69,36 @@ to nodes"
         throw=>@"[code-2-node] didn't behave as expected"
 
 
+event=>magix.test.code-2-node-from-file
+  persist=>false
+  inspect=>@"asserts that [code-2-node] works the 
+way it should work, by trying to load code from 
+a file"
+  code
+    _file-path=>tmp/test-file.txt
+    using=>magix.file
+      save
+        file=>[_file-path].Value
+        value=>@"
+_buffer=>jo
+  _data1=>hello
+  _data2=>howdy"
+    code-2-node
+      file=>[_file-path].Value
+    using=>magix.file
+      delete
+        file=>[_file-path].Value
+    if=>not-equals
+      lhs=>[code-2-node][node][_buffer][_data1].Value
+      rhs=>hello
+      or=>not-equals
+        lhs=>[code-2-node][node][_buffer][_data2].Value
+        rhs=>howdy
+      or=>not-equals
+        lhs=>[code-2-node][node][_buffer].Value
+        rhs=>jo
+      code
+        throw=>@"[code-2-node] didn't behave as expected 
+when given a file"
+
+

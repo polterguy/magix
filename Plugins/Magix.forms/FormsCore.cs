@@ -74,15 +74,21 @@ parts of your execution node tree</p><p>not thread safe</p>";
             bool hasControlsFile = false;
             if (ip.Contains("controls-file"))
             {
-                string file = Expressions.GetExpressionValue(ip["controls-file"].Get<string>(), dp, ip, false) as string;
-                Node loadControls = new Node("magix.file.load", null);
-                loadControls["file"].Value = file;
-                RaiseActiveEvent(
-                    "magix.file.load",
-                    loadControls);
+                ip["controls-file"].Name = "file";
+                try
+                {
+                    RaiseActiveEvent(
+                        "magix.file.load",
+                        e.Params);
+                }
+                finally
+                {
+                    ip["file"].Name = "controls-file";
+                }
 
                 Node toNode = new Node();
-                toNode["code"].Value = loadControls["value"].Get<string>();
+                toNode["code"].Value = ip["value"].Get<string>();
+                ip["value"].UnTie();
                 RaiseActiveEvent(
                     "magix.execute.code-2-node",
                     toNode);

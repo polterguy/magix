@@ -129,7 +129,7 @@ true, then the root node will be removed</p><p>thread safe</p>";
 			if (ShouldInspect(e.Params))
 			{
 				e.Params["inspect"].Value = @"<p>will transform the [code] node to a node tree</p>
-<p>the code will be returned in [node] as node structure, according to indentation.&nbsp;&nbsp;two 
+<p>the code will be returned in [node] as a node structure, according to indentation.&nbsp;&nbsp;two 
 spaces open up child collection, =&gt; assings to value, and first parts are name of node.&nbsp;&nbsp;
 [code-2-node] also supports =(int)&gt;, =(datetime)&gt;, =(decimal)&gt; and =(bool)&gt; to assign 
 specific type to value.&nbsp;&nbsp;notice that you can instead of supplying a [code] node, supply a 
@@ -159,12 +159,18 @@ code
                 codeTextString = Expressions.GetExpressionValue(ip["code"].Get<string>(), dp, ip, false) as string;
             else
             {
-                Node fromFile = new Node("magix.file.load", null);
-                fromFile["file"].Value = Expressions.GetExpressionValue(ip["file"].Get<string>(), dp, ip, false) as string;
-                RaiseActiveEvent(
-                    "magix.file.load",
-                    fromFile);
-                codeTextString = fromFile["value"].Get<string>();
+                try
+                {
+                    RaiseActiveEvent(
+                        "magix.file.load",
+                        e.Params);
+
+                    codeTextString = ip["value"].Get<string>();
+                }
+                finally
+                {
+                    ip["value"].UnTie();
+                }
             }
 
 			Node returnNode = ip["node"];
