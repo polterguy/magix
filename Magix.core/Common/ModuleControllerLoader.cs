@@ -338,7 +338,7 @@ namespace Magix.Core
         /*
          * Internally used in AssemblyResolve
          */
-        internal static List<Assembly> ModuleAssemblies
+        public static List<Assembly> ModuleAssemblies
         {
             get
             {

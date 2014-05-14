@@ -10,7 +10,6 @@ using System.Net;
 using System.Web;
 using System.Configuration;
 using Magix.Core;
-using Magix.UX.Builder;
 
 namespace Magix.execute
 {
@@ -33,7 +32,8 @@ active event</p><p>supported protocols are all protocols supported by the WebReq
 class in asp.net, and should at least be capable of handling https, http and ftp.&nbsp;
 &nbsp;put the url to the document to download into the [file]/[url] node's value.&nbsp;
 &nbsp;file will be returned as [value]</p><p>thread safe</p>";
-                e.Params["magix.file.load-from-web"]["file"]["url"].Value = "http://google.com";
+                e.Params["magix.file.load"]["file"].Value = "plugin:magix.web.get-file";
+                e.Params["magix.file.load"]["file"]["url"].Value = "http://google.com";
                 return;
             }
 

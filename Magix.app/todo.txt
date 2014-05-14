@@ -32,4 +32,6 @@
 
 * support for reading web.config settings
 
+* change all paths that contains a \ to use /
+
 

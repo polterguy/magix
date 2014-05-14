@@ -27,9 +27,7 @@ namespace Magix.tiedown
 		{
 			if (ShouldInspect(e.Params))
 			{
-				e.Params["inspect"].Value = @"raised when application is initially started, 
-checks the web.config setting named ""Magix.Core.AppStart-HyperLispFile"", and if set, 
-expects it to be a pointer to a hyper lisp file, which will be executed";
+				e.Params["inspect"].Value = @"executes the startup.hl hyper lisp file";
 				return;
 			}
 
@@ -39,17 +37,14 @@ expects it to be a pointer to a hyper lisp file, which will be executed";
                 {
                     if (!_hasRun)
                     {
-                        string defaultHyperLispFile = ConfigurationManager.AppSettings["Magix.Core.AppStart-HyperLispFile"];
+			            Node node = new Node();
+                        node["file"].Value = "plugin:magix.file.load-from-resource";
+                        node["file"]["assembly"].Value = "Magix.tiedown";
+                        node["file"]["resource-name"].Value = "Magix.tiedown.hyperlisp.startup.hl";
 
-                        if (!string.IsNullOrEmpty(defaultHyperLispFile))
-                        {
-                            Node node = new Node();
-                            node["file"].Value = defaultHyperLispFile;
-
-                            RaiseActiveEvent(
-                                "magix.execute.execute-script",
-                                node);
-                        }
+                        RaiseActiveEvent(
+                            "magix.execute.execute-script",
+                            node);
                         _hasRun = true;
                     }
                 }
