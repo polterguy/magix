@@ -39,3 +39,28 @@ set=>[$][input]"
       code
         throw=>[execute-script] did not correctly remove parameters
 
+
+event=>magix.test.execute-script-from-file-with-parameters
+  persist=>false
+  inspect=>@"asserts that [execute-script] loads a 
+script correctly, by passing in parameters to script 
+on disc"
+  code
+    _file=>tmp/test-script.txt
+    using=>magix.file
+      save
+        file=>[_file].Value
+        value=>@"
+set=>[$][output].Value
+  value=>howdy"
+    execute-script
+      file=>[_file].Value
+    using=>magix.file
+      delete
+        file=>[_file].Value
+    if=>not-equals
+      lhs=>[execute-script][params][output].Value
+      rhs=>howdy
+      code
+        throw=>[execute-script] did not correctly remove parameters
+
