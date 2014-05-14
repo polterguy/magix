@@ -14,7 +14,7 @@ link-button=>hyperlisp
   value=>hyper lisp
   onclick
     magix.help.open-file
-      file=>system42\admin\help\hyper-lisp\index.mml
+      file=>system42/admin/help/hyper-lisp/index.mml
 }} keywords, you can even inspect its code, and load 
 the code up into the active event executor</p>
 
@@ -39,5 +39,5 @@ through the [event] keyword.&nbsp;&nbsp;if you click a dynamically created activ
 lambda=>next
   oncreatecontrols
     magix.help.set-next
-      next=>system42\admin\help\backend\remoting.mml
+      next=>system42/admin/help/backend/remoting.mml
 }}

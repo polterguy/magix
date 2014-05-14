@@ -10,10 +10,10 @@ set=>[event][code][_button][onclick][magix.data.save][value][type].Value
   value=>[$][datasource].Value
 
 set=>[event][code][_data][magix.forms.create-web-part][controls][panel][controls][link-button=>next][onclick][execute-script][file].Value
-  value=>@"system42\admin\apps\{0}.hl"
+  value=>@"system42/admin/apps/{0}.hl"
     v0=>[$][name].Value
 set=>[event][code][_data][magix.forms.create-web-part][controls][panel][controls][link-button=>previous][onclick][execute-script][file].Value
-  value=>@"system42\admin\apps\{0}.hl"
+  value=>@"system42/admin/apps/{0}.hl"
     v0=>[$][name].Value
 
 event=>magix.crud-app-generator.create-application
@@ -445,7 +445,7 @@ which contains logic for crud-app-generated application"
       remove-root=>true
 
     set=>[magix.file.save][file].Value
-      value=>system42\admin\apps\{0}.hl
+      value=>system42/admin/apps/{0}.hl
         v0=>[_pars][name].Value
 
     set=>[magix.file.save][value].Value
@@ -463,10 +463,10 @@ which contains logic for crud-app-generated application"
 
 
 magix.file.list-files
-  directory=>system42\admin\apps\
+  directory=>system42/admin/apps/
 
 set=>[_file-name].Value
-  value=>system42\admin\apps\{0}.hl
+  value=>system42/admin/apps/{0}.hl
     v0=>[$][name].Value
 
 _file-name

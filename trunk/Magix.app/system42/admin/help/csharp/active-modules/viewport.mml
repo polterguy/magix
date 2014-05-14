@@ -6,13 +6,13 @@ link-button=>active-modules
   value=>active module
   onclick
     magix.help.open-file
-      file=>system42\admin\help\csharp\active-modules\index.mml
+      file=>system42/admin/help/csharp/active-modules/index.mml
 }} with at least one {{
 link-button=>magix-ux-ajax-dynamic
   value=>dynamic panel
   onclick
     magix.help.open-file
-      file=>system42\admin\help\csharp\ajax\controls\dynamicpanel.mml
+      file=>system42/admin/help/csharp/ajax/controls/dynamicpanel.mml
 }} within.&nbsp;&nbsp;normally a viewport would inherit from the Magix.core.Viewport class.&nbsp;&nbsp;this class contains 
 a lot of helper methods to ease the creation of viewports.&nbsp;&nbsp;a viewport is kind of like the skin template 
 for your project, and can contain as many dynamic panels as you wish.&nbsp;&nbsp;within a viewport, a dynamic panel which 
@@ -94,5 +94,5 @@ the class itself might be entirely empty, since everything is wired together ins
 lambda=>next
   oncreatecontrols
     magix.help.set-next
-      next=>system42\admin\help\csharp\ajax\index.mml
+      next=>system42/admin/help/csharp/ajax/index.mml
 }}

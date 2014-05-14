@@ -55,5 +55,5 @@ it is only polite to make sure the api is the same with assignment of a node to 
 lambda=>next
   oncreatecontrols
     magix.help.set-next
-      next=>system42\admin\help\hyper-lisp\simplyfying-expressions.mml
+      next=>system42/admin/help/hyper-lisp/simplyfying-expressions.mml
 }}

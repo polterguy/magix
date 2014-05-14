@@ -6,7 +6,7 @@ link-button=>active-events
   value=>active events
   onclick
     magix.help.open-file
-      file=>system42\admin\help\csharp\active-events\index.mml
+      file=>system42/admin/help/csharp/active-events/index.mml
 }} in active modules is similar to doing such in active controllers. use the 
 RaiseActiveEvent from the ActiveModule class if you wish to raise an active event, and mark your event handlers 
 with the ActiveEvent attribute if you wish to handle an event. below is an example of an active module which 
@@ -72,5 +72,5 @@ what so ever!</p>
 lambda=>next
   oncreatecontrols
     magix.help.set-next
-      next=>system42\admin\help\csharp\active-modules\viewport.mml
+      next=>system42/admin/help/csharp/active-modules/viewport.mml
 }}

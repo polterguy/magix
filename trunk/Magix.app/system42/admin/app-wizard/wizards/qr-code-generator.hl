@@ -21,7 +21,7 @@ set=>[magix.forms.create-web-part][controls][panel=>qr-code-wrap][controls][butt
 set=>[magix.forms.create-web-part][controls][panel=>qr-code-wrap][controls][label=>lblDescriptionStartQrCode][value].Value
   value=>@"inspect=>@""to open application, use code below""
 execute-script
-  file=>system42\admin\apps\{0}.hl
+  file=>system42/admin/apps/{0}.hl
   params
     class=>span-22
     container=>content3"
@@ -41,7 +41,7 @@ magix.forms.create-web-part
         add=>[/][execute-script][params]
           value=>[.]
       execute-script
-        file=>system42\admin\app-wizard\wizards\qr-code-generator\qr-code-generator-generator.hl
+        file=>system42/admin/app-wizard/wizards/qr-code-generator/qr-code-generator-generator.hl
       magix.viewport.show-message
         message=>vanity qr code generator was generated
       magix.forms.set-visible
@@ -184,15 +184,15 @@ parts of qr code. defaults to bumpy-white.png"
               value
                 root=>
                 item=>media
-                item=>media\images
-                item=>media\images\textures
+                item=>media/images
+                item=>media/images/textures
             execute-script
               file=>system42/admin/file-browser.hl
               params
                 container=>file-browser
                 class=>span-17 last
                 mode=>select
-                directory=>media\images\textures
+                directory=>media/images/textures
                 keep-stack
                 select-file
                   set=>[magix.forms.set-value][value].Value
@@ -223,7 +223,7 @@ parts of qr code. defaults to bumby-black.png"
                 container=>file-browser
                 class=>span-17 last
                 mode=>select
-                directory=>media\images\textures
+                directory=>media/images/textures
                 select-file
                   set=>[magix.forms.set-value][value].Value
                     value=>[_file].Value
@@ -350,7 +350,7 @@ defaults to Comic Sans MS"
             execute-script
               file=>system42/admin/app-wizard/new-app.hl
               params
-                file=>system42\admin\app-wizard\wizards\qr-code-generator.hl
+                file=>system42/admin/app-wizard/wizards/qr-code-generator.hl
             magix.viewport.clear-controls
               container=>content3
             magix.viewport.clear-controls

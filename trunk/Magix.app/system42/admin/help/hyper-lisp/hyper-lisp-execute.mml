@@ -29,7 +29,7 @@ link-button=>expressions
   value=>expressions
   onclick
     magix.help.open-file
-      file=>system42\admin\help\hyper-lisp\hyper-lisp-expressions.mml
+      file=>system42/admin/help/hyper-lisp/hyper-lisp-expressions.mml
 }} quite yet, the parts that starts with e.g. [$][_ip] etc.&nbsp;&nbsp;we will come back to those later.&nbsp;&nbsp;however, 
 to use the above keyword, all you have to do is to run code similar to the code below</p>
 
@@ -106,5 +106,5 @@ containing the value of "5", taken from the [_data] node's value</p>
 lambda=>next
   oncreatecontrols
     magix.help.set-next
-      next=>system42\admin\help\hyper-lisp\hyper-lisp-expressions.mml
+      next=>system42/admin/help/hyper-lisp/hyper-lisp-expressions.mml
 }}

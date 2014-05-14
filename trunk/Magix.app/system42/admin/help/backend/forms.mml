@@ -45,5 +45,5 @@ you might want to see some of the videos about magix to understand the power of 
 lambda=>next
   oncreatecontrols
     magix.help.set-next
-      next=>system42\admin\help\backend\magix-markup-language.mml
+      next=>system42/admin/help/backend/magix-markup-language.mml
 }}

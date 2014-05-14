@@ -14,5 +14,5 @@ the tracer allows you to "spy" on your system, and what it does, at any specific
 lambda=>next
   oncreatecontrols
     magix.help.set-next
-      next=>system42\admin\help\backend\active-event-executor.mml
+      next=>system42/admin/help/backend/active-event-executor.mml
 }}

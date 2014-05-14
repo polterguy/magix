@@ -79,6 +79,6 @@ label=>lbl
 lambda=>next
   oncreatecontrols
     magix.help.set-next
-      next=>system42\admin\help\csharp\ajax\controls\uploader.mml
+      next=>system42/admin/help/csharp/ajax/controls/uploader.mml
 }}
 

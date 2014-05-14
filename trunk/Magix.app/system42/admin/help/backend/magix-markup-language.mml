@@ -11,7 +11,7 @@ link-button=>hyperlisp
   value=>hyper lisp
   onclick
     magix.help.open-file
-      file=>system42\admin\help\hyper-lisp\index.mml
+      file=>system42/admin/help/hyper-lisp/index.mml
 }} code, declaring your web controls.&nbsp;&nbsp;notice, you cannot directly create hyper lisp, as you would any other place, since 
 what you're really doing in magix markup language, is to declare web controls, using hyper lisp as your medium.&nbsp;&nbsp;consider 
 the following magix markup language</p>
@@ -99,7 +99,7 @@ link-button=>hyperlisp-syntax
   value=>syntax of hyper lisp
   onclick
     magix.help.open-file
-      file=>system42\admin\help\hyper-lisp\hyper-lisp-syntax.mml
+      file=>system42/admin/help/hyper-lisp/hyper-lisp-syntax.mml
 }}</p>
 
 <p>to see a more detailed explanation of magix markup language, please refer to the documentation within the hyper lisp section 
@@ -108,7 +108,7 @@ link-button=>mml-jump
   value=>magix markup language
   onclick
     magix.help.open-file
-      file=>system42\admin\help\hyper-lisp\magix-markup-language.mml
+      file=>system42/admin/help/hyper-lisp/magix-markup-language.mml
 }}</p>
 
 <p>the parts within the braces are declarations of {{
@@ -116,7 +116,7 @@ link-button=>web-controls-jump-2
   value=>web controls
   onclick
     magix.help.open-file
-      file=>system42\admin\help\backend\web-controls.mml
+      file=>system42/admin/help/backend/web-controls.mml
     magix.viewport.scroll=>help
 }}, and you can use any web controls you have within your system, inline into the your web controls declarations</p>
 
@@ -124,5 +124,5 @@ link-button=>web-controls-jump-2
 lambda=>next
   oncreatecontrols
     magix.help.set-next
-      next=>system42\admin\help\backend\web-controls.mml
+      next=>system42/admin/help/backend/web-controls.mml
 }}

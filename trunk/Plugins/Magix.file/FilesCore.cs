@@ -68,6 +68,7 @@ or expressions</p><p>thread safe</p>";
                 string fileName = idxFile;
                 if (!absolutePath)
                     fileName = idxFile.Substring(rootDir.Length);
+                fileName = fileName.Replace("\\", "/");
 
                 ip["files"][fileName].Value = null;
             }

@@ -18,7 +18,7 @@ link-button=>go-to-node
   value=>Node
   onclick
     magix.help.open-file
-      file=>system42\admin\help\csharp\active-events\node-class.mml
+      file=>system42/admin/help/csharp/active-events/node-class.mml
 }}. you can pass around any objects you wish through your active events using the Node class</p>
 
 <pre>Node node = new Node();
@@ -43,7 +43,7 @@ link-button=>go-to-active-controllers
   value=>active controller
   onclick
     magix.help.open-file
-      file=>system42\admin\help\csharp\active-controllers\index.mml
+      file=>system42/admin/help/csharp/active-controllers/index.mml
 }}, or an active module 
 to have them registered as active events in your system.&nbsp;&nbsp;you can also have multiple active event handlers for the 
 same active event, which might sometimes provide useful.&nbsp;&nbsp;consider the following piece of code for instance</p>
@@ -94,5 +94,5 @@ for polymorphistically overriding an existing, or a non-existing active event wi
 lambda=>next
   oncreatecontrols
     magix.help.set-next
-      next=>system42\admin\help\csharp\active-events\node-class.mml
+      next=>system42/admin/help/csharp/active-events/node-class.mml
 }}

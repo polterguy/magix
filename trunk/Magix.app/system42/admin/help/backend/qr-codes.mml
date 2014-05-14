@@ -29,5 +29,5 @@ your qr codes.&nbsp;&nbsp;in addition, you can also use plain colors to render y
 lambda=>next
   oncreatecontrols
     magix.help.set-next
-      next=>system42\admin\help\hyper-lisp\index.mml
+      next=>system42/admin/help/hyper-lisp/index.mml
 }}

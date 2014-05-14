@@ -138,7 +138,7 @@ for-each=>[magix.file.list-files][files]
     lhs=>[$][directory]
     code
       set=>[@][replace][what].Value
-        value=>@"{0}\"
+        value=>@"{0}/"
           pr0=>@"[$][directory].Value"
       replace=>[/][_link-button][value].Value
   if=>not-exist
@@ -165,7 +165,7 @@ for-each=>[magix.file.list-directories][directories]
     lhs=>[$][directory]
     code
       set=>[@][replace][what].Value
-        value=>@"{0}\"
+        value=>@"{0}/"
           pr0=>@"[$][directory].Value"
       replace=>[/][_link-buttonDir][value].Value
   add=>[/][magix.forms.create-web-part][controls]

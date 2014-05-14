@@ -86,14 +86,14 @@ link-button=>go-to-active-events
   value=>active events
   onclick
     magix.help.open-file
-      file=>system42\admin\help\csharp\active-events\sample-csharp-active-event.mml
+      file=>system42/admin/help/csharp/active-events/sample-csharp-active-event.mml
 }} documentation. passing in a Node object when you're raising your active events, is not mandatory though</p>
 
 {{
 lambda=>next
   oncreatecontrols
     magix.help.set-next
-      next=>system42\admin\help\csharp\active-controllers\static-versus-instance.mml
+      next=>system42/admin/help/csharp/active-controllers/static-versus-instance.mml
 }}
 
 

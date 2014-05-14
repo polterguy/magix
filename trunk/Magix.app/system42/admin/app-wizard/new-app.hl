@@ -6,7 +6,7 @@ _data
 set=>[_data].Value
   value=>[$][file].Value
 replace=>[_data].Value
-  what=>system42\admin\app-wizard\wizards\
+  what=>system42/admin/app-wizard/wizards/
 replace=>[_data].Value
   what=>.hl
 
@@ -39,7 +39,7 @@ set=>[magix.forms.create-web-part][controls][panel][controls][select][onselected
 set=>[magix.forms.create-web-part][controls][panel][controls][button:1][onclick][set][value][v0].Value
   value=>[$][file].Value
 replace=>[magix.forms.create-web-part][controls][panel][controls][button:1][onclick][set][value][v0].Value
-  what=>system42\admin\app-wizard\wizards\
+  what=>system42/admin/app-wizard/wizards/
 replace=>[magix.forms.create-web-part][controls][panel][controls][button:1][onclick][set][value][v0].Value
   what=>.hl
 

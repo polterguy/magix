@@ -21,18 +21,18 @@ link-button=>hyperlisp-8
   value=>hyper lisp
   onclick
     magix.help.open-file
-      file=>system42\admin\help\hyper-lisp\hyper-lisp-events.mml
+      file=>system42/admin/help/hyper-lisp/hyper-lisp-events.mml
 }}, or in {{
 link-button=>active-events-2
   value=>c#
   onclick
     magix.help.open-file
-      file=>system42\admin\help\csharp\active-events\index.mml
+      file=>system42/admin/help/csharp/active-events/index.mml
 }}, you will also find those here</p>
 
 {{
 lambda=>next
   oncreatecontrols
     magix.help.set-next
-      next=>system42\admin\help\backend\tracer.mml
+      next=>system42/admin/help/backend/tracer.mml
 }}

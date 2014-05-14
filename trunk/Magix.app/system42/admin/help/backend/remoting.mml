@@ -6,7 +6,7 @@ link-button=>override
   value=>override
   onclick
     magix.help.open-file
-      file=>system42\admin\help\backend\overriding-events.mml
+      file=>system42/admin/help/backend/overriding-events.mml
 }} and active event, you can override it such that it no longer executes locally, but instead goes to another server to execute.&nbsp;&nbsp;
 this is called a <em>"tunneled"</em> active event.&nbsp;&nbsp;the server you wish to execute this active event on, needs to have 
 <em>"opened"</em> the active event for external access.&nbsp;&nbsp;imagine you have a server, from which you wish to execute all 
@@ -64,5 +64,5 @@ from the <em>"tunneled active events"</em> link, you can administrate your tunne
 lambda=>next
   oncreatecontrols
     magix.help.set-next
-      next=>system42\admin\help\backend\user-administration.mml
+      next=>system42/admin/help/backend/user-administration.mml
 }}

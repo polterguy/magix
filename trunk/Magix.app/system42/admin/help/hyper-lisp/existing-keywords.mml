@@ -7,7 +7,7 @@ link-button=>create-keywords
   value=>create your own keywords
   onclick
     magix.help.open-file
-      file=>system42\admin\help\hyper-lisp\create-keyword.mml
+      file=>system42/admin/help/hyper-lisp/create-keyword.mml
 }}, by using the [event] keyword, and create an active event which 
 is within the namespace of "magix.execute".&nbsp;&nbsp;however, to see which keywords are in this particular installation, 
 check out the {{
@@ -79,5 +79,5 @@ lambda=>lmb-keywords
 lambda=>next
   oncreatecontrols
     magix.help.set-next
-      next=>system42\admin\help\hyper-lisp\common-hyper-lisp-statements.mml
+      next=>system42/admin/help/hyper-lisp/common-hyper-lisp-statements.mml
 }}

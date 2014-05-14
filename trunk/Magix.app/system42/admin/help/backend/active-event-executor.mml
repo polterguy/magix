@@ -6,7 +6,7 @@ link-button=>hyperlisp
   value=>hyper lisp
   onclick
     magix.help.open-file
-      file=>system42\admin\help\hyper-lisp\index.mml
+      file=>system42/admin/help/hyper-lisp/index.mml
 }} code you wish</p>
 
 <p>the active event executor has three main areas.&nbsp;&nbsp;it has an input text-area at its top, which is for typing in 
@@ -41,5 +41,5 @@ command-line type of interface</p>
 lambda=>next
   oncreatecontrols
     magix.help.set-next
-      next=>system42\admin\help\backend\file-system.mml
+      next=>system42/admin/help/backend/file-system.mml
 }}

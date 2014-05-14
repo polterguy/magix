@@ -35,5 +35,5 @@ which are nested inside of other nested expressions, and so on</p>
 lambda=>next
   oncreatecontrols
     magix.help.set-next
-      next=>system42\admin\help\hyper-lisp\expressions-returning-nodes.mml
+      next=>system42/admin/help/hyper-lisp/expressions-returning-nodes.mml
 }}

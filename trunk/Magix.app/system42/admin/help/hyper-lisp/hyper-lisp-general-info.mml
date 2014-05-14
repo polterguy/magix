@@ -41,5 +41,5 @@ to create your database system in hyper lisp.&nbsp;&nbsp;hyper lisp is built for
 lambda=>next
   oncreatecontrols
     magix.help.set-next
-      next=>system42\admin\help\hyper-lisp\data-access.mml
+      next=>system42/admin/help/hyper-lisp/data-access.mml
 }}
