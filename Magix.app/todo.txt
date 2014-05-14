@@ -34,4 +34,6 @@
 
 * change all paths that contains a \ to use /
 
+* change app wizard to use unique ids to load to and from database instead of name of application as id
+
 

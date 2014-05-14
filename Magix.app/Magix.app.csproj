@@ -205,9 +205,9 @@
       <Project>{5eb411df-ed41-49c5-902f-0d0453b5b698}</Project>
       <Name>Magix.QR</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Plugins\Magix.sql\Magix.sql.csproj">
+    <ProjectReference Include="..\Plugins\Magix.sql\Microsoft.sql.csproj">
       <Project>{e438846c-9c26-48c0-82fa-c0afb9cd355e}</Project>
-      <Name>Magix.sql</Name>
+      <Name>Microsoft.sql</Name>
     </ProjectReference>
     <ProjectReference Include="..\Plugins\Magix.tests\Magix.tests.csproj">
       <Project>{40e6b621-1424-4a4c-9349-eb5c8fcd7d10}</Project>
