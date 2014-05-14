@@ -290,12 +290,28 @@ link-button=>forms-hyper-link
       file=>system42/admin/help/hyper-lisp/forms.mml
     magix.viewport.scroll=>help
 }}</li>
+<li>{{
+link-button=>files-hyper-link
+  value=>loading and saving files
+  onclick
+    magix.help.open-file
+      file=>system42/admin/help/hyper-lisp/hyper-lisp-file-system.mml
+    magix.viewport.scroll=>help
+}}</li>
 </ul>
 </div>
   
 <div class="span-5">
 <label>c#, rainman</label>
 <ul class="list-no-bullet">
+<li>{{
+link-button=>csharp-index
+  value=>c# with magix
+  onclick
+    magix.help.open-file
+      file=>system42/admin/help/csharp/index.mml
+    magix.viewport.scroll=>help
+}}</li>
 <li>{{
 link-button=>active-events-2
   value=>active events

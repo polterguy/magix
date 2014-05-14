@@ -44,5 +44,5 @@
 
 * support for expressions in magix.math.add/subtract/etc to change a value directly inside of the tree, instead of having to go "set" to change value
 
-
+* make all updates to mux become JsonGeneric updates, to reduce the size of the javascript
 
