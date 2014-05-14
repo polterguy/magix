@@ -102,6 +102,24 @@ link-button=>hyperlisp-syntax
       file=>system42\admin\help\hyper-lisp\hyper-lisp-syntax.mml
 }}</p>
 
+<p>to see a more detailed explanation of magix markup language, please refer to the documentation within the hyper lisp section 
+about {{
+link-button=>mml-jump
+  value=>magix markup language
+  onclick
+    magix.help.open-file
+      file=>system42\admin\help\hyper-lisp\magix-markup-language.mml
+}}</p>
+
+<p>the parts within the braces are declarations of {{
+link-button=>web-controls-jump-2
+  value=>web controls
+  onclick
+    magix.help.open-file
+      file=>system42\admin\help\backend\web-controls.mml
+    magix.viewport.scroll=>help
+}}, and you can use any web controls you have within your system, inline into the your web controls declarations</p>
+
 {{
 lambda=>next
   oncreatecontrols

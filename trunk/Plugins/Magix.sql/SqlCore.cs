@@ -124,8 +124,8 @@ node, then the active event will return the number of records totally in the que
                 e.Params["inspect"].Value = @"<p>selects sql select queries as plain text</p>
 <p>this is useful to supply as a plugin for [magix.file.load], since it can transparently load 
 information from a database and treat it as if it was a file object.&nbsp;&nbsp;add up parameters 
-beneath the [params] node, and make sure you have a valid connection string to an ms sql database 
-in your [connection] parameter.&nbsp;&nbsp;put the actual sql query in the [query] parameter 
+beneath the [file]/[params] node, and make sure you have a valid connection string to an ms sql database 
+in your [file]/[connection] parameter.&nbsp;&nbsp;put the actual sql query in the [file]/[query] parameter 
 node, and make sure your query only returns one column.&nbsp;&nbsp;the result from the query, will 
 be appended into the [value] node, with a carriage return following every result, making possible 
 to treat multiple rows from a database as if it was one piece of text</p><p>both [query] and 
@@ -134,9 +134,9 @@ de-reference a connection string from your web.config file, instead of typing in
 string in code by prefixing the [connection] value with web.config:NamedConnection, and such 
 reference the connection string from your web.config called ""NamedConnection""</p><p>thread 
 safe</p>";
-                e.Params["microsoft.sql.load-as-file"]["connection"].Value = "Data Source=(localdb)\\v11.0;Initial Catalog=Northwind;Integrated Security=True";
-                e.Params["microsoft.sql.load-as-file"]["query"].Value = "select * from Customers where ContactTitle=@ContactTitle";
-                e.Params["microsoft.sql.load-as-file"]["params"]["ContactTitle"].Value = "owner";
+                e.Params["microsoft.sql.load-as-file"]["file"]["connection"].Value = "Data Source=(localdb)\\v11.0;Initial Catalog=Northwind;Integrated Security=True";
+                e.Params["microsoft.sql.load-as-file"]["file"]["query"].Value = "select * from Customers where ContactTitle=@ContactTitle";
+                e.Params["microsoft.sql.load-as-file"]["file"]["params"]["ContactTitle"].Value = "owner";
                 return;
             }
 
@@ -145,22 +145,27 @@ safe</p>";
             if (e.Params.Contains("_dp"))
                 dp = e.Params["_dp"].Get<Node>();
 
-            if (!ip.Contains("connection"))
+            if (!ip.Contains("file"))
+                throw new ArgumentException("you need to supply a [file] parameter to [microsoft.sql.select-as-text]");
+
+            if (!ip["file"].Contains("connection"))
                 throw new ArgumentException("you need to supply a [connection] to connect to a database");
-            string connectionString = Expressions.GetExpressionValue(ip["connection"].Get<string>(), dp, ip, false) as string;
+
+            string connectionString = Expressions.GetExpressionValue(ip["file"]["connection"].Get<string>(), dp, ip, false) as string;
             if (connectionString.IndexOf("web.config:") == 0)
                 connectionString = ConfigurationManager.ConnectionStrings[connectionString.Replace("web.config:", "")].ConnectionString;
 
-            if (!ip.Contains("query"))
+            if (!ip["file"].Contains("query"))
                 throw new ArgumentException("you need to supply a [query] to know what query to run");
-            string query = Expressions.GetExpressionValue(ip["query"].Get<string>(), dp, ip, false) as string;
+
+            string query = Expressions.GetExpressionValue(ip["file"]["query"].Get<string>(), dp, ip, false) as string;
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 SqlCommand cmd = new SqlCommand(query, connection);
-                if (ip.Contains("params"))
+                if (ip["file"].Contains("params"))
                 {
-                    foreach (Node idx in ip["params"])
+                    foreach (Node idx in ip["file"]["params"])
                     {
                         cmd.Parameters.AddWithValue("@" + idx.Name, idx.Value);
                     }

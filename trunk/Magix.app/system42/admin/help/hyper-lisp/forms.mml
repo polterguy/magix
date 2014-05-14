@@ -234,8 +234,8 @@ logic for displaying data to the end user.&nbsp;&nbsp;this is sometimes nifty, t
 business logic</p>
 
 <p>internally the [events-file] and [controls-file] uses [magix.file.load] for loading these files.&nbsp;&nbsp;this means 
-that you can load files externally automatically by having the paths to your files starting with <em>"http://"</em>, <em>"ftp://"</em>, 
-or any other ways of loading files that [magix.file.load] supports</p>
+that you can load files using any of the plugins that [magix.file.load] supports, including externally over http, or from a 
+microsoft sql database, and so on</p>
 
 <h3>having [controls] and [events] as expressions</h3>
 
@@ -400,5 +400,5 @@ to <em>"create your own concept"</em></p>
 lambda=>next
   oncreatecontrols
     magix.help.set-next
-      next=>system42\admin\help\csharp\active-events\index.mml
+      next=>system42\admin\help\hyper-lisp\magix-markup-language.mml
 }}

@@ -43,6 +43,21 @@ when invoking with an expression pointing to an existing file
 underneath the local file system"
 
 
+event=>magix.test.file-load-web-plugin
+  persist=>false
+  inspect=>@"asserts that [magix.file.load] works the 
+way it should work, by trying to load a from http"
+  code
+    magix.file.load
+      file=>plugin:magix.web.get-file
+        url=>http://google.com
+    if=>not-exist
+      lhs=>[magix.file.load][value].Value
+      code
+        throw=>@"[magix.file.load] didn't behave as expected 
+when invoking with a the web download plugin"
+
+
 event=>magix.test.file-save
   persist=>false
   inspect=>@"asserts that [magix.file.save] works the 
