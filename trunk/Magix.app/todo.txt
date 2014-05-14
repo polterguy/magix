@@ -13,8 +13,6 @@
 
 * support for editing records in ms sql query tool
 
-* change all [query] parameters to [sql] parameters
-
 * clean up [inspect] for all active events, including unit tests
 
 * create support for "call-base" for active events that are overridden
@@ -23,8 +21,6 @@
 
 * add support for plugins in magix.file.save
 
-* support for loading files through magix.file.load from resources
-
 * support for changing state of execution engine, such that it doesn't recursively enter never ending loops, and such - aka; "IQ"
   setting max iterations, max recursiveness, etc ...
 
@@ -32,8 +28,21 @@
 
 * support for reading web.config settings
 
-* change all paths that contains a \ to use /
-
 * change app wizard to use unique ids to load to and from database instead of name of application as id
+
+* remove all /** commnents for consistency
+
+* dragging and dropping files into active event executor
+
+* rename active event executor to hyper lisp executor
+
+* "analyze code" feature in active event executor, that traverse the code for keywords, and creates a "report" of the code
+
+* "console.log" feature for logging into a visible tracer-like tool
+
+* "named execution blocks", for instance execute=>some-block to make it easier to de-reference named blocks of codes in expressions
+
+* support for expressions in magix.math.add/subtract/etc to change a value directly inside of the tree, instead of having to go "set" to change value
+
 
 

@@ -28,7 +28,7 @@ else
 [if] statement which the [lhs] node exists within.&nbsp;&nbsp;this is because the [lhs] node is a child of the [if] node, physically in the 
 structure of the node's tree hierarchical structure.&nbsp;&nbsp;for instance, in the above code, there are three root nodes; [_data], 
 [if] and [else], the rest of the nodes are children of one of the previously mentioned nodes.&nbsp;&nbsp;the [if] node, has three children;
-[lhs], [rhs] and [code].&nbsp;&nbsp;while the [else] node only has one child; [magix.viewport.show-message].&nbsp;&nbspand so on.
+[lhs], [rhs] and [code].&nbsp;&nbsp;while the [else] node only has one child; [magix.viewport.show-message].&nbsp;&nbsp;and so on.
 &nbsp;&nbsp;it might be easier to understand when you realize how this would look like in c#.&nbsp;&nbsp;below is an example 
 of how to produce the exact same tree structure with c#</p>
 

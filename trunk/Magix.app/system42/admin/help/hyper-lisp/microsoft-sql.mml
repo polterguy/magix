@@ -66,7 +66,7 @@ lambda=>lmb-sql-database
 <pre>
 microsoft.sql.select
   connection=>Data Source=(localdb)\v11.0;Initial Catalog=Northwind;Integrated Security=True
-  query=>select * from Customers
+  sql=>select * from Customers
 </pre>
 
 <p>if you wish to update the name of a customer in the customer table, you could use the following execute hyper lisp and sql</p>
@@ -74,7 +74,7 @@ microsoft.sql.select
 <pre>
 microsoft.sql.execute
   connection=>Data Source=(localdb)\v11.0;Initial Catalog=Northwind;Integrated Security=True
-  query=>update Customers set ContactName='Thomas Statsminister Hansen' where CustomerID='ALFKI'
+  sql=>update Customers set ContactName='Thomas Statsminister Hansen' where CustomerID='ALFKI'
 </pre>
 
 <p>sql syntax is beyond the scope of this help file, but can easily be found online, on for instance the microsoft.com website.&nbsp;&nbsp;

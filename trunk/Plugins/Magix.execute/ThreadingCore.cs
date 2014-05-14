@@ -124,11 +124,13 @@ the wait is dismissed as an integer value of [wait]</p><p>thread safe</p>";
 			ManualResetEvent evt = new ManualResetEvent(false);
 
             lock (stack)
-				stack.Push(evt);
+            {
+                stack.Push(evt);
+            }
 			try
 			{
 				RaiseActiveEvent(
-					"magix._execute",
+					"magix.execute",
 					e.Params);
 
 				if (milliseconds != -1)

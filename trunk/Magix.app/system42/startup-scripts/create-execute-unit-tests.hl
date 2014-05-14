@@ -103,3 +103,25 @@ with a label, works the correct way"
       code
         throw=>code inside of [execute] was not modified when expected
 
+
+event=>magix.test.execute-close-overflow-lines-of-code
+  persist=>false
+  inspect=>@"asserts executing almost 5000 lines 
+of hyper lisp code overflows the execution engine"
+  code
+    _iter=>0
+    // multiplying 16000 times three gives the number of executions in this block
+    // since [using] is one keyword, [add] another and [set] the third
+    // 16000 times 3 is 48000, which should not raise an exception
+    // although it will be a close call
+    while=>less-than-equals
+      lhs=>[_iter].Value
+      rhs=>1600
+      code
+        using=>magix.math
+          add
+            =>[/][_iter].Value
+            =>1
+        set=>[/][_iter].Value
+          value=>[@][using][add].Value
+

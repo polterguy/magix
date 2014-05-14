@@ -60,14 +60,13 @@ value and children for equality</p><p>thread safe</p>";
 			{
                 Node tmp = new Node();
 
-                tmp["_ip"].Value = ip["code"];
-                tmp["_dp"].Value = dp;
+                e.Params["_ip"].Value = ip["code"];
 
                 try
                 {
                     RaiseActiveEvent(
-                        "magix._execute",
-                        tmp);
+                        "magix.execute",
+                        e.Params);
                 }
                 catch (Exception err)
                 {
