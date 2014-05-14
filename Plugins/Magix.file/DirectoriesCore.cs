@@ -69,6 +69,7 @@ safe</p>";
                 string fileName = idxFile;
                 if (!absolutePath)
                     fileName = idxFile.Substring(rootDir.Length);
+                fileName = fileName.Replace("\\", "/");
                 ip["directories"][fileName].Value = null;
             }
         }

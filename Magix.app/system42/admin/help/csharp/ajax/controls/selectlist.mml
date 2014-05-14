@@ -8,7 +8,7 @@ link-button=>magix-ux-radiobutton
   value=>Radio
   onclick
     magix.help.open-file
-      file=>system42\admin\help\csharp\ajax\controls\radiobutton.mml
+      file=>system42/admin/help/csharp/ajax/controls/radiobutton.mml
 }} control, although the
 Select is more useful for cases where you have a massive number of choices,
 like for instance choose one out of 300 different languages, while the Radio
@@ -78,6 +78,6 @@ select=>btn
 lambda=>next
   oncreatecontrols
     magix.help.set-next
-      next=>system42\admin\help\csharp\ajax\controls\textarea.mml
+      next=>system42/admin/help/csharp/ajax/controls/textarea.mml
 }}
 

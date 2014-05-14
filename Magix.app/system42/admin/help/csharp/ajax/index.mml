@@ -89,7 +89,7 @@ link-button=>magix-ux-button
   class=>span-3 clear
   onclick
     magix.help.open-file
-      file=>system42\admin\help\csharp\ajax\controls\button.mml
+      file=>system42/admin/help/csharp/ajax/controls/button.mml
 }} <span class="span-18 last">a button type of control</span></li>
 <li>{{
 link-button=>magix-ux-checkbox
@@ -97,7 +97,7 @@ link-button=>magix-ux-checkbox
   class=>span-3 clear
   onclick
     magix.help.open-file
-      file=>system42\admin\help\csharp\ajax\controls\checkbox.mml
+      file=>system42/admin/help/csharp/ajax/controls/checkbox.mml
 }} <span class="span-18 last">a two state check box control, useful for yes or no questions</span></li>
 <li>{{
 link-button=>magix-ux-hiddenfield
@@ -105,7 +105,7 @@ link-button=>magix-ux-hiddenfield
   class=>span-3 clear
   onclick
     magix.help.open-file
-      file=>system42\admin\help\csharp\ajax\controls\hiddenfield.mml
+      file=>system42/admin/help/csharp/ajax/controls/hiddenfield.mml
 }} <span class="span-18 last">a hidden value control.&nbsp;&nbsp;not visible for the user, but can carry any text string you wish</span></li>
 <li>{{
 link-button=>magix-ux-hyperlink
@@ -113,7 +113,7 @@ link-button=>magix-ux-hyperlink
   class=>span-3 clear
   onclick
     magix.help.open-file
-      file=>system42\admin\help\csharp\ajax\controls\hyperlink.mml
+      file=>system42/admin/help/csharp/ajax/controls/hyperlink.mml
 }} <span class="span-18 last">a hyperlink, leading to another url</span></li>
 <li>{{
 link-button=>magix-ux-image
@@ -121,7 +121,7 @@ link-button=>magix-ux-image
   class=>span-3 clear
   onclick
     magix.help.open-file
-      file=>system42\admin\help\csharp\ajax\controls\image.mml
+      file=>system42/admin/help/csharp/ajax/controls/image.mml
 }} <span class="span-18 last">shows an image on the page</span></li>
 <li>{{
 link-button=>magix-ux-label
@@ -129,7 +129,7 @@ link-button=>magix-ux-label
   class=>span-3 clear
   onclick
     magix.help.open-file
-      file=>system42\admin\help\csharp\ajax\controls\label.mml
+      file=>system42/admin/help/csharp/ajax/controls/label.mml
 }} <span class="span-18 last">a control for text strings, which doesn't necessarily have any rich formatting, or doesn't require the user to interact with them</span></li>
 <li>{{
 link-button=>magix-ux-linkbutton
@@ -137,7 +137,7 @@ link-button=>magix-ux-linkbutton
   class=>span-3 clear
   onclick
     magix.help.open-file
-      file=>system42\admin\help\csharp\ajax\controls\linkbutton.mml
+      file=>system42/admin/help/csharp/ajax/controls/linkbutton.mml
 }} <span class="span-18 last">a button type of control, but rendered and recognized as a hyperlink by the browser</span></li>
 <li>{{
 link-button=>magix-ux-panel
@@ -145,7 +145,7 @@ link-button=>magix-ux-panel
   class=>span-3 clear
   onclick
     magix.help.open-file
-      file=>system42\admin\help\csharp\ajax\controls\panel.mml
+      file=>system42/admin/help/csharp/ajax/controls/panel.mml
 }} <span class="span-18 last">a web control for wrapping other controls within.&nbsp;&nbsp;a container web control for other web controls and controls</span></li>
 <li>{{
 link-button=>magix-ux-radiobutton
@@ -153,7 +153,7 @@ link-button=>magix-ux-radiobutton
   class=>span-3 clear
   onclick
     magix.help.open-file
-      file=>system42\admin\help\csharp\ajax\controls\radiobutton.mml
+      file=>system42/admin/help/csharp/ajax/controls/radiobutton.mml
 }} <span class="span-18 last">a two state button type of control, like the checkbox, except multiple radio buttons can be grouped together, allowing 
 for the end user to choose only one value.&nbsp;&nbsp;handy for choose one item, from a list of different alternatives types 
 of questions</span></li>
@@ -163,7 +163,7 @@ link-button=>magix-ux-selectlist
   class=>span-3 clear
   onclick
     magix.help.open-file
-      file=>system42\admin\help\csharp\ajax\controls\selectlist.mml
+      file=>system42/admin/help/csharp/ajax/controls/selectlist.mml
 }} <span class="span-18 last">almost the same as radio buttons, except that this one takes significantly less amount of space, since 
 its default state, is to be shown as a drop-down list of different values, where only one value can be chosen</span></li>
 <li>{{
@@ -172,7 +172,7 @@ link-button=>magix-ux-textarea
   class=>span-3 clear
   onclick
     magix.help.open-file
-      file=>system42\admin\help\csharp\ajax\controls\textarea.mml
+      file=>system42/admin/help/csharp/ajax/controls/textarea.mml
 }} <span class="span-18 last">multiple lines of text, almost like the TextBox, except that the TextArea control allows for multiple lines 
 of text input</span></li>
 <li>{{
@@ -181,7 +181,7 @@ link-button=>magix-ux-textbox
   class=>span-3 clear
   onclick
     magix.help.open-file
-      file=>system42\admin\help\csharp\ajax\controls\textbox.mml
+      file=>system42/admin/help/csharp/ajax/controls/textbox.mml
 }} <span class="span-18 last">single line text input web control.&nbsp;&nbsp;allows the end user to type in single lines of textually based input 
 supports different modes, such as password mode, numeric mode, email mode, etc </span></li>
 <li>{{
@@ -190,7 +190,7 @@ link-button=>magix-ux-dynamicpanel
   class=>span-3 clear
   onclick
     magix.help.open-file
-      file=>system42\admin\help\csharp\ajax\controls\dynamicpanel.mml
+      file=>system42/admin/help/csharp/ajax/controls/dynamicpanel.mml
 }} <span class="span-18 last">control for dynamically loading up other types of controls and active modules.&nbsp;&nbsp;
 almost like the Panel, except the DynamicPanel keeps its state, and remembers 
 which controls it has previously loaded earlier across web requests.&nbsp;&nbsp;automatically reloads the same 
@@ -201,7 +201,7 @@ link-button=>magix-ux-timer
   class=>span-3 clear
   onclick
     magix.help.open-file
-      file=>system42\admin\help\csharp\ajax\controls\timer.mml
+      file=>system42/admin/help/csharp/ajax/controls/timer.mml
 }} <span class="span-18 last">a timer control, which allows for calling back into the web server, to 
 periodically check for changes, every n'th millisecond</span></li>
 <li>{{
@@ -210,7 +210,7 @@ link-button=>magix-ux-uploader
   class=>span-3 clear
   onclick
     magix.help.open-file
-      file=>system42\admin\help\csharp\ajax\controls\uploader.mml
+      file=>system42/admin/help/csharp/ajax/controls/uploader.mml
 }} <span class="span-18 last">allows for dragging and dropping files onto the browser area, to upload files to your server</span></li>
 <li>{{
 link-button=>magix-ux-wysiwyg
@@ -218,7 +218,7 @@ link-button=>magix-ux-wysiwyg
   class=>span-3 clear
   onclick
     magix.help.open-file
-      file=>system42\admin\help\csharp\ajax\controls\wysiwyg.mml
+      file=>system42/admin/help/csharp/ajax/controls/wysiwyg.mml
 }} <span class="span-18 last">allows for rich editing html through a what-you-see-is-what-you-get interface</span></li>
 </ul>
 
@@ -226,6 +226,6 @@ link-button=>magix-ux-wysiwyg
 lambda=>next
   oncreatecontrols
     magix.help.set-next
-      next=>system42\admin\help\csharp\ajax\controls\button.mml
+      next=>system42/admin/help/csharp/ajax/controls/button.mml
 }}
 

@@ -8,7 +8,7 @@ link-button=>go-to-node
   value=>Node
   onclick
     magix.help.open-file
-      file=>system42\admin\help\csharp\active-events\node-class.mml
+      file=>system42/admin/help/csharp/active-events/node-class.mml
 }} class</p>
 
 <pre>
@@ -105,5 +105,5 @@ worry about yourself</p>
 lambda=>next
   oncreatecontrols
     magix.help.set-next
-      next=>system42\admin\help\hyper-lisp\hyper-lisp-execute.mml
+      next=>system42/admin/help/hyper-lisp/hyper-lisp-execute.mml
 }}

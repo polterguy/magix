@@ -62,7 +62,7 @@ link-button=>magix-ux-ajax-controls
   value=>magix ux ajax controls
   onclick
     magix.help.open-file
-      file=>system42\admin\help\csharp\ajax\index.mml
+      file=>system42/admin/help/csharp/ajax/index.mml
 }}, and not normal postpack controls. you could use normal asp.net web controls if you wish, but then you'd loose 
 the ajax parts, and your site would be a normal postback website</p>
 
@@ -85,7 +85,7 @@ link-button=>active-controllers
   value=>active controller
   onclick
     magix.help.open-file
-      file=>system42\admin\help\csharp\active-controllers\index.mml
+      file=>system42/admin/help/csharp/active-controllers/index.mml
 }}, you should use the LoadActiveModule shorthand, and in fact, you should try to avoid loading modules by going 
 directly to the ModuleControllerLoader, since it allows for shooting yourself in your leg, 
 but it is still important to understand how .net treats embedded resources. for instance, a resource will by default 
@@ -110,6 +110,6 @@ the build action to embedded resource</p>
 lambda=>next
   oncreatecontrols
     magix.help.set-next
-      next=>system42\admin\help\csharp\active-modules\active-modules-with-active-events.mml
+      next=>system42/admin/help/csharp/active-modules/active-modules-with-active-events.mml
 }}
 

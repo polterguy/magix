@@ -59,7 +59,7 @@ node-2-code
   remove-root=>true
 
 set=>[magix.file.save][file].Value
-  value=>system42\admin\apps\{0}.hl
+  value=>system42/admin/apps/{0}.hl
     v0=>[$][name].Value
 set=>[magix.file.save][value].Value
   value=>[node-2-code][code].Value

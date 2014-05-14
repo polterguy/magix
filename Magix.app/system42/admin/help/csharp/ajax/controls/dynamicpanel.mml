@@ -112,6 +112,6 @@ dynamic=>dyn
 lambda=>next
   oncreatecontrols
     magix.help.set-next
-      next=>system42\admin\help\csharp\ajax\controls\timer.mml
+      next=>system42/admin/help/csharp/ajax/controls/timer.mml
 }}
 

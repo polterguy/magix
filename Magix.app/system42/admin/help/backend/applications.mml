@@ -36,7 +36,7 @@ link-button=>hyperlisp
   value=>hyper lisp
   onclick
     magix.help.open-file
-      file=>system42\admin\help\hyper-lisp\index.mml
+      file=>system42/admin/help/hyper-lisp/index.mml
 }}, together with your html, seemlessly, such that it becomes one html output out of the 
 entire thing, once viewed through a browser</p>
 
@@ -52,5 +52,5 @@ which means you can embed the forms you build, directly into your web pages</p>
 lambda=>next
   oncreatecontrols
     magix.help.set-next
-      next=>system42\admin\help\backend\forms.mml
+      next=>system42/admin/help/backend/forms.mml
 }}

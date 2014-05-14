@@ -8,7 +8,7 @@ link-button=>magix-ux-textarea
   value=>TextArea
   onclick
     magix.help.open-file
-      file=>system42\admin\help\csharp\ajax\controls\textarea.mml
+      file=>system42/admin/help/csharp/ajax/controls/textarea.mml
 }} control. however
 this widget is useful for cases when you need the user to give you one line
 of text input. see also the {{
@@ -16,7 +16,7 @@ link-button=>magix-ux-wysiwyg
   value=>Wysiwyg
   onclick
     magix.help.open-file
-      file=>system42\admin\help\csharp\ajax\controls\wysiwyg.mml
+      file=>system42/admin/help/csharp/ajax/controls/wysiwyg.mml
 }} control if you need rich formatting
 of your text. this control can also be set to 'password mode', which means
 whatever is typed into the widget, will not be visible on the screen. please
@@ -84,6 +84,6 @@ text-box=>txt
 lambda=>next
   oncreatecontrols
     magix.help.set-next
-      next=>system42\admin\help\csharp\ajax\controls\dynamicpanel.mml
+      next=>system42/admin/help/csharp/ajax/controls/dynamicpanel.mml
 }}
 

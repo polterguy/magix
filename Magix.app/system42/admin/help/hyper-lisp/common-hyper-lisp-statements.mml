@@ -250,5 +250,5 @@ then the [_data] block would have changed after execution</p>
 lambda=>next
   oncreatecontrols
     magix.help.set-next
-      next=>system42\admin\help\hyper-lisp\exception-handling.mml
+      next=>system42/admin/help/hyper-lisp/exception-handling.mml
 }}

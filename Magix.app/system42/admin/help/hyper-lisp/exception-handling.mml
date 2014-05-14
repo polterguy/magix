@@ -54,5 +54,5 @@ in hyper lisp, and not <em>"native exceptions"</em> occuring in c#</p>
 lambda=>next
   oncreatecontrols
     magix.help.set-next
-      next=>system42\admin\help\hyper-lisp\create-keyword.mml
+      next=>system42/admin/help/hyper-lisp/create-keyword.mml
 }}

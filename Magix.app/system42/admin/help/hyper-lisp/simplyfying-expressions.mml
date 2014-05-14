@@ -100,5 +100,5 @@ clever use of the wildcard expression operator, you can significantly reduce the
 lambda=>next
   oncreatecontrols
     magix.help.set-next
-      next=>system42\admin\help\hyper-lisp\set-keyword.mml
+      next=>system42/admin/help/hyper-lisp/set-keyword.mml
 }}

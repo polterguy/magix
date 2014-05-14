@@ -8,7 +8,7 @@ link-button=>magix-ux-textbox
   value=>TextBox
   onclick
     magix.help.open-file
-      file=>system42\admin\help\csharp\ajax\controls\textbox.mml
+      file=>system42/admin/help/csharp/ajax/controls/textbox.mml
 }} control. however this widget is useful for cases
 when you need multiple lines of text input. see also the Wysiwyg control if
 you need rich formatting of your text
@@ -73,6 +73,6 @@ text-area=>txt
 lambda=>next
   oncreatecontrols
     magix.help.set-next
-      next=>system42\admin\help\csharp\ajax\controls\textbox.mml
+      next=>system42/admin/help/csharp/ajax/controls/textbox.mml
 }}
 

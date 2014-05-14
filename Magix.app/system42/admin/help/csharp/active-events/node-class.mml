@@ -62,5 +62,5 @@ through the use of the active event system</p>
 lambda=>next
   oncreatecontrols
     magix.help.set-next
-      next=>system42\admin\help\csharp\active-events\more-nodes.mml
+      next=>system42/admin/help/csharp/active-events/more-nodes.mml
 }}

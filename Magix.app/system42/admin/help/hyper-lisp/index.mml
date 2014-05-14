@@ -74,5 +74,5 @@ this means that if you would like to refer to the set statement above, you would
 lambda=>next
   oncreatecontrols
     magix.help.set-next
-      next=>system42\admin\help\hyper-lisp\hyper-lisp-syntax.mml
+      next=>system42/admin/help/hyper-lisp/hyper-lisp-syntax.mml
 }}

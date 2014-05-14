@@ -12,7 +12,7 @@ link-button=>ms-sql-1
   value=>microsoft sql server wrapper
   onclick
     magix.help.open-file
-      file=>system42\admin\help\hyper-lisp\microsoft-sql.mml
+      file=>system42/admin/help/hyper-lisp/microsoft-sql.mml
     magix.viewport.scroll=>help
 }} active events to gain access to a <em>"real"</em> database with magix</p>
 
@@ -146,7 +146,7 @@ link-button=>ms-sql
   value=>microsoft sql wrapper
   onclick
     magix.help.open-file
-      file=>system42\admin\help\hyper-lisp\microsoft-sql.mml
+      file=>system42/admin/help/hyper-lisp/microsoft-sql.mml
     magix.viewport.scroll=>help
 }} active events to gain access to a <em>"real"</em> database with magix</p>
 
@@ -154,5 +154,5 @@ link-button=>ms-sql
 lambda=>next
   oncreatecontrols
     magix.help.set-next
-      next=>system42\admin\help\hyper-lisp\microsoft-sql.mml
+      next=>system42/admin/help/hyper-lisp/microsoft-sql.mml
 }}

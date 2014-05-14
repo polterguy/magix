@@ -118,15 +118,15 @@ parts of qr code. defaults to bumpy-white.png"
               value
                 root=>
                 item=>media
-                item=>media\images
-                item=>media\images\textures
+                item=>media/images
+                item=>media/images/textures
             execute-script
               file=>system42/admin/file-browser.hl
               params
                 container=>file-browser
                 class=>span-17 last
                 mode=>select
-                directory=>media\images\textures
+                directory=>media/images/textures
                 keep-stack
                 select-file
                   set=>[magix.forms.set-value][value].Value
@@ -157,7 +157,7 @@ parts of qr code. defaults to bumby-black.png"
                 container=>file-browser
                 class=>span-17 last
                 mode=>select
-                directory=>media\images\textures
+                directory=>media/images/textures
                 select-file
                   set=>[magix.forms.set-value][value].Value
                     value=>[_file].Value

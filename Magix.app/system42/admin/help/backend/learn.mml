@@ -19,7 +19,7 @@ link-button=>hyperlisp
   value=>hyper lisp
   onclick
     magix.help.open-file
-      file=>system42\admin\help\hyper-lisp\index.mml
+      file=>system42/admin/help/hyper-lisp/index.mml
 }} keywords, and shows them in a list.&nbsp;&nbsp;
 from this list, you can click the keywords themselves, to view and inspect what they do and how they work.&nbsp;&nbsp;
 in addition, you can load up the active event executor by clicking the inspect button underneath the description of the keyword, 
@@ -91,5 +91,5 @@ certain about that you can trust the source of the code</p>
 lambda=>next
   oncreatecontrols
     magix.help.set-next
-      next=>system42\admin\help\backend\applications.mml
+      next=>system42/admin/help/backend/applications.mml
 }}

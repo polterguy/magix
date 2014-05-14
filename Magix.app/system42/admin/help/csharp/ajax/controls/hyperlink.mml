@@ -66,6 +66,6 @@ hyperlink=>hpl
 lambda=>next
   oncreatecontrols
     magix.help.set-next
-      next=>system42\admin\help\csharp\ajax\controls\image.mml
+      next=>system42/admin/help/csharp/ajax/controls/image.mml
 }}
 

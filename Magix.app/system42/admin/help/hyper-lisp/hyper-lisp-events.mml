@@ -161,12 +161,12 @@ link-button=>active-events-2
   value=>active events
   onclick
     magix.help.open-file
-      file=>system42\admin\help\csharp\active-events\index.mml
+      file=>system42/admin/help/csharp/active-events/index.mml
 }} in c# if you wish to see how</p>
 
 {{
 lambda=>next
   oncreatecontrols
     magix.help.set-next
-      next=>system42\admin\help\hyper-lisp\remote-active-events.mml
+      next=>system42/admin/help/hyper-lisp/remote-active-events.mml
 }}

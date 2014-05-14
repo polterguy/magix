@@ -13,7 +13,7 @@ link-button=>go-to-active-modules
   value=>active modules
   onclick
     magix.help.open-file
-      file=>system42\admin\help\csharp\active-modules\index.mml
+      file=>system42/admin/help/csharp/active-modules/index.mml
 }}, or do other things which requires access to the page object</p>
 
 <p>of course, this depends upon where you raise your active event from, but as a general rule; 
@@ -88,5 +88,5 @@ active events will simply be ignored, and never be invoked</p>
 lambda=>next
   oncreatecontrols
     magix.help.set-next
-      next=>system42\admin\help\csharp\active-controllers\methods.mml
+      next=>system42/admin/help/csharp/active-controllers/methods.mml
 }}

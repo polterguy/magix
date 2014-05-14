@@ -11,7 +11,7 @@ link-button=>magix-ux-label
   value=>Label
   onclick
     magix.help.open-file
-      file=>system42\admin\help\csharp\ajax\controls\label.mml
+      file=>system42/admin/help/csharp/ajax/controls/label.mml
 }} control and not the Panel control
 </p>
 
@@ -89,6 +89,6 @@ panel=>pnl
 lambda=>next
   oncreatecontrols
     magix.help.set-next
-      next=>system42\admin\help\csharp\ajax\controls\radiobutton.mml
+      next=>system42/admin/help/csharp/ajax/controls/radiobutton.mml
 }}
 

@@ -115,7 +115,7 @@ link-button=>csharp
   value=>c# section
   onclick
     magix.help.open-file
-      file=>system42\admin\help\csharp\active-events\index.mml
+      file=>system42/admin/help/csharp/active-events/index.mml
 }}.&nbsp;&nbsp;just make sure your active event starts with the namespace <em>"magix.execute"</em>, and make sure 
 you handle the [_ip] and [_dp] nodes corrrectly</p>
 
@@ -123,5 +123,5 @@ you handle the [_ip] and [_dp] nodes corrrectly</p>
 lambda=>next
   oncreatecontrols
     magix.help.set-next
-      next=>system42\admin\help\hyper-lisp\hyper-lisp-events.mml
+      next=>system42/admin/help/hyper-lisp/hyper-lisp-events.mml
 }}

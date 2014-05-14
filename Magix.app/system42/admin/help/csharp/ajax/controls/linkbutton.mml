@@ -7,7 +7,7 @@ link-button=>magix-ux-button
   value=>Button
   onclick
     magix.help.open-file
-      file=>system42\admin\help\csharp\ajax\controls\button.mml
+      file=>system42/admin/help/csharp/ajax/controls/button.mml
 }} for 
 an alternative. also remember that any control in mux can be made 
 clickable, so you can also use a label as your 'clickable thingie' if you wish. 
@@ -85,6 +85,6 @@ link-button=>btn
 lambda=>next
   oncreatecontrols
     magix.help.set-next
-      next=>system42\admin\help\csharp\ajax\controls\panel.mml
+      next=>system42/admin/help/csharp/ajax/controls/panel.mml
 }}
 

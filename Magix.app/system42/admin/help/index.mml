@@ -15,7 +15,7 @@ link-button=>active-events
   value=>active events
   onclick
     magix.help.open-file
-      file=>system42\admin\help\csharp\active-events\index.mml
+      file=>system42/admin/help/csharp/active-events/index.mml
 }}, which the entire 
 framework is built around. active events allows for the separation between data and logic, in an 
 entirely new way, such that your application to a large extent becomes "configurable" through 
@@ -81,7 +81,7 @@ link-button=>backend
   value=>backend
   onclick
     magix.help.open-file
-      file=>system42\admin\help\backend\index.mml
+      file=>system42/admin/help/backend/index.mml
     magix.viewport.scroll=>help
 }}</li>
 <li>{{
@@ -89,7 +89,7 @@ link-button=>learn
   value=>learn magix
   onclick
     magix.help.open-file
-      file=>system42\admin\help\backend\learn.mml
+      file=>system42/admin/help/backend/learn.mml
     magix.viewport.scroll=>help
 }}</li>
 <li>{{
@@ -97,7 +97,7 @@ link-button=>dynamic-apps
   value=>dynamic applications
   onclick
     magix.help.open-file
-      file=>system42\admin\help\backend\applications.mml
+      file=>system42/admin/help/backend/applications.mml
     magix.viewport.scroll=>help
 }}</li>
 <li>{{
@@ -105,7 +105,7 @@ link-button=>magix-markup-language
   value=>magix markup language
   onclick
     magix.help.open-file
-      file=>system42\admin\help\backend\magix-markup-language.mml
+      file=>system42/admin/help/backend/magix-markup-language.mml
     magix.viewport.scroll=>help
 }}</li>
 <li>{{
@@ -113,7 +113,7 @@ link-button=>web-controls-hl
   value=>web controls
   onclick
     magix.help.open-file
-      file=>system42\admin\help\backend\web-controls.mml
+      file=>system42/admin/help/backend/web-controls.mml
     magix.viewport.scroll=>help
 }}</li>
 <li>{{
@@ -121,7 +121,7 @@ link-button=>unit-tests
   value=>unit testing magix
   onclick
     magix.help.open-file
-      file=>system42\admin\help\backend\unit-tests.mml
+      file=>system42/admin/help/backend/unit-tests.mml
     magix.viewport.scroll=>help
 }}</li>
 <li>{{
@@ -129,7 +129,7 @@ link-button=>overridden
   value=>overridden active events
   onclick
     magix.help.open-file
-      file=>system42\admin\help\backend\overriding-events.mml
+      file=>system42/admin/help/backend/overriding-events.mml
     magix.viewport.scroll=>help
 }}</li>
 <li>{{
@@ -137,7 +137,7 @@ link-button=>remoting
   value=>tunneling and opening active events
   onclick
     magix.help.open-file
-      file=>system42\admin\help\backend\remoting.mml
+      file=>system42/admin/help/backend/remoting.mml
     magix.viewport.scroll=>help
 }}</li>
 <li>{{
@@ -145,7 +145,7 @@ link-button=>users
   value=>administrating users and roles
   onclick
     magix.help.open-file
-      file=>system42\admin\help\backend\user-administration.mml
+      file=>system42/admin/help/backend/user-administration.mml
     magix.viewport.scroll=>help
 }}</li>
 <li>{{
@@ -153,7 +153,7 @@ link-button=>active-event-list
   value=>viewing and inspecting active events
   onclick
     magix.help.open-file
-      file=>system42\admin\help\backend\active-events.mml
+      file=>system42/admin/help/backend/active-events.mml
     magix.viewport.scroll=>help
 }}</li>
 <li>{{
@@ -161,7 +161,7 @@ link-button=>active-event-executor-start
   value=>active event executor
   onclick
     magix.help.open-file
-      file=>system42\admin\help\backend\active-event-executor.mml
+      file=>system42/admin/help/backend/active-event-executor.mml
     magix.viewport.scroll=>help
 }}</li>
 <li>{{
@@ -169,7 +169,7 @@ link-button=>file-system
   value=>file system
   onclick
     magix.help.open-file
-      file=>system42\admin\help\backend\file-system.mml
+      file=>system42/admin/help/backend/file-system.mml
     magix.viewport.scroll=>help
 }}</li>
 <li>{{
@@ -177,7 +177,7 @@ link-button=>qr-codes
   value=>qr codes
   onclick
     magix.help.open-file
-      file=>system42\admin\help\backend\qr-codes.mml
+      file=>system42/admin/help/backend/qr-codes.mml
     magix.viewport.scroll=>help
 }}</li>
 </ul>
@@ -191,7 +191,7 @@ link-button=>hyperlisp
   value=>hyper lisp
   onclick
     magix.help.open-file
-      file=>system42\admin\help\hyper-lisp\index.mml
+      file=>system42/admin/help/hyper-lisp/index.mml
     magix.viewport.scroll=>help
 }}</li>
 <li>{{
@@ -199,7 +199,7 @@ link-button=>hyperlisp-2
   value=>hyper lisp syntax
   onclick
     magix.help.open-file
-      file=>system42\admin\help\hyper-lisp\hyper-lisp-syntax.mml
+      file=>system42/admin/help/hyper-lisp/hyper-lisp-syntax.mml
     magix.viewport.scroll=>help
 }}</li>
 <li>{{
@@ -207,7 +207,7 @@ link-button=>hyperlisp-3
   value=>how magix execute works
   onclick
     magix.help.open-file
-      file=>system42\admin\help\hyper-lisp\hyper-lisp-execute.mml
+      file=>system42/admin/help/hyper-lisp/hyper-lisp-execute.mml
     magix.viewport.scroll=>help
 }}</li>
 <li>{{
@@ -215,7 +215,7 @@ link-button=>hyperlisp-4
   value=>expressions
   onclick
     magix.help.open-file
-      file=>system42\admin\help\hyper-lisp\hyper-lisp-expressions.mml
+      file=>system42/admin/help/hyper-lisp/hyper-lisp-expressions.mml
     magix.viewport.scroll=>help
 }}</li>
 <li>{{
@@ -223,7 +223,7 @@ link-button=>hyperlisp-set-keyword
   value=>the [set] keyword
   onclick
     magix.help.open-file
-      file=>system42\admin\help\hyper-lisp\set-keyword.mml
+      file=>system42/admin/help/hyper-lisp/set-keyword.mml
     magix.viewport.scroll=>help
 }}</li>
 <li>{{
@@ -231,7 +231,7 @@ link-button=>hyperlisp-5
   value=>common keywords explained
   onclick
     magix.help.open-file
-      file=>system42\admin\help\hyper-lisp\common-hyper-lisp-statements.mml
+      file=>system42/admin/help/hyper-lisp/common-hyper-lisp-statements.mml
     magix.viewport.scroll=>help
 }}</li>
 <li>{{
@@ -239,7 +239,7 @@ link-button=>hyperlisp-exceptions
   value=>exception handling in hyper lisp
   onclick
     magix.help.open-file
-      file=>system42\admin\help\hyper-lisp\exception-handling.mml
+      file=>system42/admin/help/hyper-lisp/exception-handling.mml
     magix.viewport.scroll=>help
 }}</li>
 <li>{{
@@ -247,7 +247,7 @@ link-button=>hyperlisp-7
   value=>create your own hyper lisp keyword
   onclick
     magix.help.open-file
-      file=>system42\admin\help\hyper-lisp\create-keyword.mml
+      file=>system42/admin/help/hyper-lisp/create-keyword.mml
     magix.viewport.scroll=>help
 }}</li>
 <li>{{
@@ -255,7 +255,7 @@ link-button=>hyperlisp-8
   value=>creating active events and polymorphism
   onclick
     magix.help.open-file
-      file=>system42\admin\help\hyper-lisp\hyper-lisp-events.mml
+      file=>system42/admin/help/hyper-lisp/hyper-lisp-events.mml
     magix.viewport.scroll=>help
 }}</li>
 <li>{{
@@ -263,7 +263,7 @@ link-button=>hyperlisp-9
   value=>remote active events
   onclick
     magix.help.open-file
-      file=>system42\admin\help\hyper-lisp\remote-active-events.mml
+      file=>system42/admin/help/hyper-lisp/remote-active-events.mml
     magix.viewport.scroll=>help
 }}</li>
 <li>{{
@@ -271,7 +271,7 @@ link-button=>hyperlisp-10
   value=>what to use hyper lisp for
   onclick
     magix.help.open-file
-      file=>system42\admin\help\hyper-lisp\hyper-lisp-general-info.mml
+      file=>system42/admin/help/hyper-lisp/hyper-lisp-general-info.mml
     magix.viewport.scroll=>help
 }}</li>
 <li>{{
@@ -279,7 +279,7 @@ link-button=>hyperlisp-11
   value=>hyper lisp and data access
   onclick
     magix.help.open-file
-      file=>system42\admin\help\hyper-lisp\data-access.mml
+      file=>system42/admin/help/hyper-lisp/data-access.mml
     magix.viewport.scroll=>help
 }}</li>
 <li>{{
@@ -287,7 +287,7 @@ link-button=>forms-hyper-link
   value=>working with forms
   onclick
     magix.help.open-file
-      file=>system42\admin\help\hyper-lisp\forms.mml
+      file=>system42/admin/help/hyper-lisp/forms.mml
     magix.viewport.scroll=>help
 }}</li>
 </ul>
@@ -301,7 +301,7 @@ link-button=>active-events-2
   value=>active events
   onclick
     magix.help.open-file
-      file=>system42\admin\help\csharp\active-events\index.mml
+      file=>system42/admin/help/csharp/active-events/index.mml
     magix.viewport.scroll=>help
 }}</li>
 <li>{{
@@ -309,7 +309,7 @@ link-button=>active-controllers
   value=>active controllers
   onclick
     magix.help.open-file
-      file=>system42\admin\help\csharp\active-controllers\index.mml
+      file=>system42/admin/help/csharp/active-controllers/index.mml
     magix.viewport.scroll=>help
 }}</li>
 <li>{{
@@ -317,7 +317,7 @@ link-button=>active-modules
   value=>active modules
   onclick
     magix.help.open-file
-      file=>system42\admin\help\csharp\active-modules\index.mml
+      file=>system42/admin/help/csharp/active-modules/index.mml
     magix.viewport.scroll=>help
 }}</li>
 <li>{{
@@ -325,7 +325,7 @@ link-button=>ajax
   value=>managed ajax
   onclick
     magix.help.open-file
-      file=>system42\admin\help\csharp\ajax\index.mml
+      file=>system42/admin/help/csharp/ajax/index.mml
     magix.viewport.scroll=>help
 }}</li>
 </ul>
@@ -335,5 +335,5 @@ link-button=>ajax
 lambda=>next
   oncreatecontrols
     magix.help.set-next
-      next=>system42\admin\help\backend\index.mml
+      next=>system42/admin/help/backend/index.mml
 }}

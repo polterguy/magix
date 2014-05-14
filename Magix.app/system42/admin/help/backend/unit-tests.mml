@@ -13,13 +13,13 @@ link-button=>active-events-2
   value=>c#
   onclick
     magix.help.open-file
-      file=>system42\admin\help\csharp\active-events\index.mml
+      file=>system42/admin/help/csharp/active-events/index.mml
 }}.&nbsp;&nbsp;a unit test, is an {{
 link-button=>active-events
   value=>active event
   onclick
     magix.help.open-file
-      file=>system42\admin\help\hyper-lisp\hyper-lisp-events.mml
+      file=>system42/admin/help/hyper-lisp/hyper-lisp-events.mml
 }} which starts with the namespace <em>"magix.tests"</em>.&nbsp;&nbsp;any active event you create, starting out with the text 
 "magix.tests.", will automatically be registered in your system as a unit test</p>
 
@@ -54,5 +54,5 @@ are equally important, and threated the same</p>
 lambda=>next
   oncreatecontrols
     magix.help.set-next
-      next=>system42\admin\help\backend\overriding-events.mml
+      next=>system42/admin/help/backend/overriding-events.mml
 }}
