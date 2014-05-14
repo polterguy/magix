@@ -371,6 +371,13 @@
     <Content Include="system42\admin\help\hyper-lisp\magix-markup-language.mml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="system42\admin\help\hyper-lisp\hyper-lisp-file-system.mml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="system42\admin\help\csharp\index.mml" />
+    <Content Include="system42\admin\help\hyper-lisp\sandboxing-hyper-lisp.mml">
+      <SubType>Designer</SubType>
+    </Content>
     <None Include="todo.txt" />
     <None Include="system42\startup-scripts\events-create-desktop-shortcuts.hl" />
     <None Include="system42\startup-scripts\event-server-discovery.hl" />

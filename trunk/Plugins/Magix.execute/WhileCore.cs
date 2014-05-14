@@ -58,10 +58,7 @@ value and children for equality</p><p>thread safe</p>";
 
 			while (StatementHelper.CheckExpressions(ip, dp))
 			{
-                Node tmp = new Node();
-
                 e.Params["_ip"].Value = ip["code"];
-
                 try
                 {
                     RaiseActiveEvent(

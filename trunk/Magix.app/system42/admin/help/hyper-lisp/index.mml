@@ -70,35 +70,6 @@ the set statement will actually create the second two statements, since they don
 <p>with hyper lisp, it is common convention to represent a statement, or a node to be more specific with braces.&nbsp;&nbsp;
 this means that if you would like to refer to the set statement above, you would do so like this; [set]</p>
 
-<h3>hyper lisp execution engine safe guards</h3>
-
-<p>the hyper lisp execution engine, is created for as much as possible, facilitate for safe execution of code from external sources.&nbsp;&nbsp;
-this creates a lot of more stress on the execution engine of hyper lisp, than that of other programming languages, simply since it also means 
-that another server might produce code that negatively affects the state of your server.&nbsp;&nbsp;for instance, never ending loops in a 
-conventional programming language, can easily be fixed by fixing the code that produced the loop in your server's code.&nbsp;&nbsp;in hyper lisp, 
-this code may not necessarily have been produced by your server, but might be code sent from another server, to your server for execution.
-&nbsp;&nbsp;this creates an environment where another server more easily can crash your server than that of other programming languages.&nbsp;
-&nbsp;to help reduce this problem as much as possible, hyper lisp has a lot of safe-guards to prevent these kind of scenarios to occur.&nbsp;
-&nbsp;for instance, in hyper lisp, you cannot execute a piece of code block that ends up executing more than 50.000 active events, including 
-hyper lisp keywords.&nbsp;&nbsp;this number can be changed through your web.config settings</p>
-
-<p>this number might be perceived as your server's <em>"iq"</em>, which you can increase or decrease dependent upon your server's 
-requirements and purpose.&nbsp;&nbsp;however, by increasing this number, you further expose yourself to never ending loops being able to take 
-down your server, that might jeopardize your server's uptime.&nbsp;&nbsp;the lower this number is, the less possible it is to create code that 
-brings your server to its knees, by creating never ending loops and similar constructs.&nbsp;&nbsp;notice that this number only affects your 
-server's ability to execute code, and only counts number of active events executed, and not data segments.&nbsp;&nbsp;meaning, as long as 
-you prefix your data segments with an underscore '_', then your data does not count as active events or hyper lisp.&nbsp;&nbsp;notice 
-also that this doesn't necessarily mean lines of executional code, as you perceive them, as lines of code in your hyper lisp code.&nbsp;&nbsp;
-this is because an [if] statement counts as one line of code, including all of its children parameter nodes, such as [lhs] and [rhs], etc.
-&nbsp;&nbsp;in addition, an [if] statement might execute several times, inside of loops for instance, which makes a single [if] statement 
-count as many active events</p>
-
-<p>if you wish to change this number, then check out the web.config setting called <em>"magix.execute.maximum-execution-lines"</em></p>
-
-<p>please notice, that although many features exist in magix to prevent evil code to execute, you should still only allow servers 
-that you completely trust to execute code on your server.&nbsp;&nbsp;it is very easy to create evil hyper lisp code, that allows for 
-installation of malware, or making it possible to bring down your server</p>
-
 {{
 lambda=>next
   oncreatecontrols

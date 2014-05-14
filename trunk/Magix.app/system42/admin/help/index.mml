@@ -298,6 +298,14 @@ link-button=>files-hyper-link
       file=>system42/admin/help/hyper-lisp/hyper-lisp-file-system.mml
     magix.viewport.scroll=>help
 }}</li>
+<li>{{
+link-button=>sandbox-hyper-link
+  value=>sandboxing your code
+  onclick
+    magix.help.open-file
+      file=>system42/admin/help/hyper-lisp/sandboxing-hyper-lisp.mml
+    magix.viewport.scroll=>help
+}}</li>
 </ul>
 </div>
   
