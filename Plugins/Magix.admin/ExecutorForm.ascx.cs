@@ -196,7 +196,11 @@ if=>[Data].Value==thomas
 
 		protected void run_Click(object sender, EventArgs e)
 		{
-			if (txtIn.Value != "")
+            // showing a visual clue to end user that code is done executing
+            new EffectHighlight(this.Parent, 500)
+                .Render();
+            
+            if (txtIn.Value != "")
 			{
 				Node tmp = new Node();
 				tmp["code"].Value = txtIn.Value;
@@ -246,10 +250,6 @@ if=>[Data].Value==thomas
 
 				txtOut.Value = tmp["code"].Get<string>();
 			}
-
-            // showing a visual clue to end user that code is done executing
-            new EffectHighlight(txtOut, 500)
-                .Render();
 		}
 		
 		protected void indent_Click(object sender, EventArgs e)

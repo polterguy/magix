@@ -57,9 +57,45 @@ to do just that</p><p>thread safe</p>";
             }
         }
 
-		/*
-		 * hyper lisp implementation
-		 */
+        /*
+          * sanbox keyword implementation
+          */
+        [ActiveEvent(Name = "magix.execute.sandbox")]
+        public void magix_execute_sandbox(object sender, ActiveEventArgs e)
+        {
+            if (ShouldInspect(e.Params))
+            {
+                e.Params["inspect"].Value = @"<p>changes the execution engine, making 
+sure only keywords and active events within [whitelist] are legal keywords</p><p>this 
+is a useful feature to prevent external sources, or untrusted scripts, to execute 
+malicious code.&nbsp;&nbsp;all keywords and active events which are not declared in 
+the [whitelist] parameter, are not allowed to be executed as long as the instruction 
+pointer is within the scope of the [code] block, which declares the block of code that 
+is to be sandboxed</p><p>thread safe</p>";
+                e.Params["sandbox"]["whitelist"]["foo"].Value = null;
+                e.Params["sandbox"]["code"]["bar"].Value = "throws exception";
+                return;
+            }
+
+            if (!e.Params.Contains("_ip") || !(e.Params["_ip"].Value is Node))
+                throw new ArgumentException("you cannot raise [sandbox] directly, except for inspect purposes");
+
+            Node ip = Ip(e.Params);
+            if (!ip.Contains("code"))
+                throw new ArgumentException("you need to supply a [code] block to [sandbox] active event");
+            if (!ip.Contains("whitelist"))
+                throw new ArgumentException("you need to supply a [whitelist] block to [sandbox] active event");
+
+            e.Params["_whitelist"].AddRange(ip["whitelist"].Clone());
+            e.Params["_ip"].Value = ip["code"];
+            RaiseActiveEvent(
+                "magix.execute",
+                e.Params);
+        }
+
+        /*
+         * hyper lisp implementation
+         */
         [ActiveEvent(Name = "magix.execute")]
         [ActiveEvent(Name = "magix.execute.execute")]
         public static void magix_execute(object sender, ActiveEventArgs e)
@@ -110,14 +146,12 @@ event will only be able to modify the parts of the tree from underneath its own 
             {
                 if (!e.Params.Contains("_max-execution-lines"))
                 {
-                    int maxNumberOfLines = int.Parse(ConfigurationManager.AppSettings["magix.execute.maximum-execution-lines"]);
+                    int maxNumberOfLines = int.Parse(ConfigurationManager.AppSettings["magix.execute.maximum-execution-iterations"]);
                     e.Params["_max-execution-lines"].Value = maxNumberOfLines;
                 }
 
                 if (!e.Params.Contains("_current-executed-lines"))
-                {
                     e.Params["_current-executed-lines"].Value = 0;
-                }
 
                 Node ip = Ip(e.Params);
                 Node dp = e.Params;
@@ -165,14 +199,26 @@ event will only be able to modify the parts of the tree from underneath its own 
 
                 if (activeEvent.Contains("."))
 				{
+                    // verifying we're allowed to execute current active event
+                    CheckSandbox(activeEvent, pars);
+
 					// this is an active event reference, and does not have access to entire tree
-					Node parent = idx.Parent == null ? null : idx.Parent;
+					Node parent = idx.Parent;
 					idx.SetParent(null);
 					try
 					{
+                        Node executionNode = idx;
+                        if (activeEvent.StartsWith("magix.execute"))
+                        {
+                            Node tmpExe = new Node();
+                            tmpExe.AddRange(pars.Clone());
+                            tmpExe["_ip"].Value = executionNode;
+                            tmpExe["_dp"].Value = executionNode;
+                            executionNode = tmpExe;
+                        }
 						RaiseActiveEvent(
 							activeEvent,
-							idx);
+                            executionNode);
 					}
 					finally
 					{
@@ -181,7 +227,10 @@ event will only be able to modify the parts of the tree from underneath its own 
 				}
 				else
 				{
-					object oldIp = pars.Contains("_ip") ? pars["_ip"].Value : null;
+                    // verifying we're allowed to execute current active event
+                    CheckSandbox(activeEvent, pars);
+
+                    object oldIp = pars.Contains("_ip") ? pars["_ip"].Value : null;
 
 					// this is a keyword, and have access to the entire tree, and also needs to have the default namespace 
                     // prepended in front of it before being raised
@@ -190,7 +239,7 @@ event will only be able to modify the parts of the tree from underneath its own 
                     else
     					activeEvent = "magix.execute." + activeEvent;
 
-					pars["_ip"].Value = idx;
+                    pars["_ip"].Value = idx;
 
 					if (!pars.Contains("_dp"))
 						pars["_dp"].Value = ip;
@@ -209,6 +258,15 @@ event will only be able to modify the parts of the tree from underneath its own 
 				}
 			}
 		}
+
+        private static void CheckSandbox(string activeEvent, Node pars)
+        {
+            if (pars.Contains("_whitelist"))
+            {
+                if (!pars["_whitelist"].Contains(activeEvent))
+                    throw new ApplicationException("tried to execute an active event that was not in the [whitelist]");
+            }
+        }
 	}
 }
 

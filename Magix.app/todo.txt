@@ -21,9 +21,6 @@
 
 * add support for plugins in magix.file.save
 
-* support for changing state of execution engine, such that it doesn't recursively enter never ending loops, and such - aka; "IQ"
-  setting max iterations, max recursiveness, etc ...
-
 * support for sandboxed execution of specific keywords
 
 * support for reading web.config settings
@@ -40,9 +37,8 @@
 
 * "console.log" feature for logging into a visible tracer-like tool
 
-* "named execution blocks", for instance execute=>some-block to make it easier to de-reference named blocks of codes in expressions
-
-* support for expressions in magix.math.add/subtract/etc to change a value directly inside of the tree, instead of having to go "set" to change value
+* support for expressions in magix.math.add/subtract/etc to change a value directly inside of the tree, 
+  instead of having to go "set" to change value
 
 * make all updates to mux become JsonGeneric updates, to reduce the size of the javascript
 

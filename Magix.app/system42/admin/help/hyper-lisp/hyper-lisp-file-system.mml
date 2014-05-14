@@ -72,7 +72,17 @@ magix.forms.create-mml-web-part
 
 <p>the above code doesn't execute though, since you probably don't have the accurate tables as is being referenced above, but you get the point.
 &nbsp;&nbsp;regardless of which plugin you use, or don't use, the [magix.file.load] active event will return the file as text within the 
-[value] node</p>
+[value] node.&nbsp;&nbsp;below is another similar example, of how to execute hyper lisp code, embedded as a resource within one of your dlls</p>
+
+<pre>
+execute-script
+  file=>plugin:magix.file.load-from-resource
+    assembly=>Microsoft.sql
+    resource-name=>Microsoft.sql.hyperlisp.ms-sql-query.hl
+</pre>
+
+<p>the above code will execute nicely if you run it, and open up the ms sql query tool for you.&nbsp;&nbsp;all active events that takes 
+file parameters, will also optionally take plugin loaders as parameters</p>
 
 <h3>saving files</h3>
 
@@ -144,5 +154,5 @@ lambda=>lmb-file-events
 lambda=>next
   oncreatecontrols
     magix.help.set-next
-      next=>system42/admin/help/csharp/index.mml
+      next=>system42/admin/help/hyper-lisp/sandboxing-hyper-lisp.mml
 }}
