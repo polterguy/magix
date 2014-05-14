@@ -9,7 +9,7 @@ using Magix.Core;
 
 namespace Magix.execute
 {
-	/**
+	/*
 	 * exception hyper lisp logic
 	 */
 	public class ExceptionCore : ActiveController
@@ -21,7 +21,7 @@ namespace Magix.execute
 			{ }
 		}
 
-		/**
+		/*
 		 * creates a try block
 		 */
 		[ActiveEvent(Name = "magix.execute.try")]
@@ -60,45 +60,37 @@ thread safe</p>";
 			if (!ip.Contains("catch"))
 				throw new ApplicationException("you need a [catch] block inside your [try] statement");
 
-			object oldIp = e.Params["_ip"].Value;
-
 			e.Params["_ip"].Value = ip["code"];
-
 			try
 			{
 				RaiseActiveEvent(
-					"magix._execute",
+					"magix.execute",
 					e.Params);
 			}
 			catch (Exception err)
 			{
-				while (err.InnerException != null)
-					err = err.InnerException;
+                if (ip.Contains("catch"))
+                {
+                    while (err.InnerException != null)
+                        err = err.InnerException;
 
-				ip["catch"]["exception"].Value = err.Message;
-				e.Params["_ip"].Value = ip["catch"];
+                    ip["catch"]["exception"].Value = err.Message;
+                    e.Params["_ip"].Value = ip["catch"];
 
-				RaiseActiveEvent(
-					"magix._execute",
-					e.Params);
+                    RaiseActiveEvent(
+                        "magix.execute",
+                        e.Params);
+                }
 			}
 			finally
 			{
-                try
+                if (ip.Contains("finally"))
                 {
-                    if (ip.Contains("finally"))
-                    {
-                        e.Params["_ip"].Value = ip["finally"];
+                    e.Params["_ip"].Value = ip["finally"];
 
-                        RaiseActiveEvent(
-                            "magix._execute",
-                            e.Params);
-                    }
-                }
-                finally
-                {
-                    if (oldIp != null)
-                        e.Params["_ip"].Value = oldIp;
+                    RaiseActiveEvent(
+                        "magix.execute",
+                        e.Params);
                 }
 			}
 		}

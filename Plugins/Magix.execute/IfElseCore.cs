@@ -117,8 +117,6 @@ but only if no paired [if] or [else-if] statement has returned true</p><p>thread
 			if (!e.Params.Contains("_ip") || !(e.Params["_ip"].Value is Node))
 				throw new ArgumentException("you cannot raise [else] directly, except for inspect purposes");
 
-			Node ip = e.Params["_ip"].Value as Node;
-
 			// Checking to see if a previous "if" or "else-if" statement has returned true
             if (e.Params.Contains("_state_if") &&
                 e.Params["_state_if"].Get<bool>())
@@ -126,7 +124,7 @@ but only if no paired [if] or [else-if] statement has returned true</p><p>thread
 
 
 			RaiseActiveEvent(
-				"magix._execute", 
+				"magix.execute", 
 				e.Params);
 		}
 
@@ -160,18 +158,12 @@ but only if no paired [if] or [else-if] statement has returned true</p><p>thread
             {
                 // Changing state, to signal any later [else-if] and [else] expressions that expression has executed
                 pars["_state_if"].Value = true;
-
-                Node tmp = new Node();
-
-                tmp["_ip"].Value = ip["code"];
-                tmp["_dp"].Value = dp;
+                pars["_ip"].Value = ip["code"];
 
                 RaiseActiveEvent(
-                    "magix._execute",
-                    tmp);
+                    "magix.execute",
+                    pars);
             }
-            else
-                pars["_state_if"].UnTie();
         }
 	}
 }

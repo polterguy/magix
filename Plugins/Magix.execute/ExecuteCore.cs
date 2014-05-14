@@ -5,17 +5,18 @@
  */
 
 using System;
+using System.Configuration;
 using System.Collections.Generic;
 using Magix.Core;
 
 namespace Magix.execute
 {
-	/**
+	/*
 	 * hyper lisp implementation
 	 */
 	public class ExecuteCore : ActiveController
 	{
-        /**
+        /*
          * using keyword implementation
          */
         [ActiveEvent(Name = "magix.execute.using")]
@@ -37,16 +38,16 @@ to do just that</p><p>thread safe</p>";
             try
             {
 			    if (!e.Params.Contains("_ip") || !(e.Params["_ip"].Value is Node))
-				    throw new ArgumentException("you cannot raise magix._execute directly besides for inspect purposes");
+				    throw new ArgumentException("you cannot raise [magix.execute.using] directly besides for inspect purposes");
 
 			    if (!e.Params.Contains("_dp") || !(e.Params["_dp"].Value is Node))
-				    throw new ArgumentException("you cannot raise magix._execute directly besides for inspect purposes");
+				    throw new ArgumentException("you cannot raise [magix.execute.using] directly besides for inspect purposes");
 
 			    Node ip = e.Params["_ip"].Value as Node;
                 Node dp = e.Params["_dp"].Value as Node;
                 e.Params["_namespaces"].Add(new Node("item", ip.Get<string>()));
 
-                Execute(ip, dp, e.Params);
+                Execute(ip, e.Params);
             }
             finally
             {
@@ -56,11 +57,12 @@ to do just that</p><p>thread safe</p>";
             }
         }
 
-		/**
+		/*
 		 * hyper lisp implementation
 		 */
-		[ActiveEvent(Name = "magix.execute")]
-		public static void magix_execute(object sender, ActiveEventArgs e)
+        [ActiveEvent(Name = "magix.execute")]
+        [ActiveEvent(Name = "magix.execute.execute")]
+        public static void magix_execute(object sender, ActiveEventArgs e)
 		{
 			if (ShouldInspect(e.Params))
 			{
@@ -80,91 +82,88 @@ event will only be able to modify the parts of the tree from underneath its own 
 				return;
 			}
 
-			try
-			{
-                if (e.Params.Value != null)
-                    throw new ArgumentException("you cannot pass in a path to [magix.execute] when using the fully qualified namespace");
-				Execute(e.Params, e.Params, new Node(e.Params.Name, e.Params.Value));
-			}
-			catch (Exception err)
-			{
-				while (err.InnerException != null)
-					err = err.InnerException;
+            if (!e.Params.Contains("_ip"))
+            {
+                try
+                {
+                    Node tmp = new Node("magix.execute", e.Params.Value);
+                    tmp["_ip"].Value = e.Params;
+                    tmp["_dp"].Value = e.Params;
 
-				if (err is StopCore.HyperLispStopException)
-					return; // do nothing, execution stopped
+                    RaiseActiveEvent(
+                        "magix.execute",
+                        tmp);
+                }
+                catch (Exception err)
+                {
+                    while (err.InnerException != null)
+                        err = err.InnerException;
 
-				// re-throw all other exceptions ...
-				throw;
-			}
-		}
+                    if (err is StopCore.HyperLispStopException)
+                        return; // do nothing, execution stopped
 
-		/**
-		 * internally used event
-		 */
-		[ActiveEvent(Name = "magix._execute")]
-		[ActiveEvent(Name = "magix.execute.execute")]
-		public static void magix_execute_internal(object sender, ActiveEventArgs e)
-		{
-			if (ShouldInspect(e.Params))
-			{
-				e.Params["inspect"].Value = @"<p>executes the incoming parameters 
-as hyper lisp, meaning it will raise everything containing a '.' as an active event, 
-while everything not starting with a '_', or containing a period, will be assumed to 
-be a hyper lisp keyword, and appended behind 'magix.execute.', or the currently used 
-namespace, before that string is raised as an active event</p><p>a hyper lisp keyword 
-will have access to the entire data tree, while a normal active event will get a deep 
-copy of the tree underneath its own node.&nbsp;&nbsp;if the [execute] has a value, it 
-will be expected to be an expression referencing another node, which will be executed 
-instead of the incoming parameter nodes</p><p>thread safe</p>";
-				e.Params["_data"]["value"].Value = "thomas";
-				e.Params["if"].Value = "equals";
-                e.Params["if"]["lhs"].Value = "[_data][value].Value";
-                e.Params["if"]["rhs"].Value = "thomas";
-                e.Params["if"]["code"]["magix.viewport.show-message"]["message"].Value = "hi thomas";
-				e.Params["else"]["magix.viewport.show-message"].Value = null;
-				e.Params["else"]["magix.viewport.show-message"]["message"].Value = "hi stranger";
-				return;
-			}
+                    // re-throw all other exceptions ...
+                    throw;
+                }
+            }
+            else
+            {
+                if (!e.Params.Contains("_max-execution-lines"))
+                {
+                    int maxNumberOfLines = int.Parse(ConfigurationManager.AppSettings["magix.execute.maximum-execution-lines"]);
+                    e.Params["_max-execution-lines"].Value = maxNumberOfLines;
+                }
 
-			if (!e.Params.Contains("_ip") || !(e.Params["_ip"].Value is Node))
-				throw new ArgumentException("you cannot raise magix._execute directly besides for inspect purposes");
+                if (!e.Params.Contains("_current-executed-lines"))
+                {
+                    e.Params["_current-executed-lines"].Value = 0;
+                }
 
-			if (!e.Params.Contains("_dp") || !(e.Params["_dp"].Value is Node))
-				throw new ArgumentException("you cannot raise magix._execute directly besides for inspect purposes");
+                Node ip = Ip(e.Params);
+                Node dp = e.Params;
+                if (e.Params.Contains("_dp"))
+                    dp = e.Params["_dp"].Get<Node>();
 
-			Node ip = e.Params["_ip"].Value as Node;
-			Node dp = e.Params["_dp"].Value as Node;
+                if (ip.Name == "execute" && ip.Value != null && ip.Get<string>().StartsWith("["))
+                {
+                    Node newIp = Expressions.GetExpressionValue(ip.Get<string>(), dp, ip, false) as Node; // lambda execute expression
 
-			if (ip.Name == "execute" && ip.Value != null && ip.Get<string>().StartsWith("["))
-			{
-				Node newIp = Expressions.GetExpressionValue(ip.Get<string>(), dp, ip, false) as Node; // lambda execute expression
+                    if (newIp == null)
+                        throw new ArgumentException("nothing to [execute]");
 
-				if (newIp == null)
-					throw new ArgumentException("nothing to [execute]");
-
-				Execute(newIp, dp, e.Params);
-			}
-			else
-				Execute(ip, dp, e.Params);
+                    Execute(newIp, e.Params);
+                }
+                else
+                    Execute(ip, e.Params);
+            }
 		}
 
 		/*
 		 * helper method for above ...
 		 */
-		private static void Execute(Node ip, Node dp, Node state)
+		private static void Execute(Node ip, Node pars)
 		{
+            int maxExecutionLines = pars["_max-execution-lines"].Get<int>();
+
 			// looping through all keywords/active-events in the child collection
 			for (int idxNo = 0; idxNo < ip.Count; idxNo++)
 			{
 				Node idx = ip[idxNo];
 				string activeEvent = idx.Name;
 
-				// checking to see if this is just a data buffer ...
-                if (activeEvent.StartsWith("_") || activeEvent == "inspect" || activeEvent == "$")
+				// checking to see if this is just a data/comment buffer ...
+                if (activeEvent.StartsWith("_") || activeEvent.StartsWith("//") || activeEvent == "inspect" || activeEvent == "$")
 					continue;
 
-				if (activeEvent.Contains("."))
+                // checking to see if execution engine overflowed its number of execution lines
+                int noCurrentExecutedHyperLispWords = pars["_current-executed-lines"].Get<int>();
+                if (noCurrentExecutedHyperLispWords >= maxExecutionLines)
+                    throw new ApplicationException("execution engine overflowed");
+
+                noCurrentExecutedHyperLispWords += 1;
+                pars["_current-executed-lines"].Value = noCurrentExecutedHyperLispWords;
+
+                if (activeEvent.Contains("."))
 				{
 					// this is an active event reference, and does not have access to entire tree
 					Node parent = idx.Parent == null ? null : idx.Parent;
@@ -182,30 +181,30 @@ instead of the incoming parameter nodes</p><p>thread safe</p>";
 				}
 				else
 				{
-					object oldIp = state.Contains("_ip") ? state["_ip"].Value : null;
+					object oldIp = pars.Contains("_ip") ? pars["_ip"].Value : null;
 
-					// this is a keyword, and have access to the entire tree, and also needs to have magix.execute. 
+					// this is a keyword, and have access to the entire tree, and also needs to have the default namespace 
                     // prepended in front of it before being raised
-                    if (state.Contains("_namespaces") && state["_namespaces"].Count > 0)
-                        activeEvent = state["_namespaces"][state["_namespaces"].Count - 1].Get<string>() + "." + activeEvent;
+                    if (pars.Contains("_namespaces") && pars["_namespaces"].Count > 0)
+                        activeEvent = pars["_namespaces"][pars["_namespaces"].Count - 1].Get<string>() + "." + activeEvent;
                     else
     					activeEvent = "magix.execute." + activeEvent;
 
-					state["_ip"].Value = idx;
+					pars["_ip"].Value = idx;
 
-					if (!state.Contains("_dp"))
-						state["_dp"].Value = ip;
+					if (!pars.Contains("_dp"))
+						pars["_dp"].Value = ip;
 
 					try
 					{
 						RaiseActiveEvent(
 							activeEvent,
-							state);
+							pars);
 					}
 					finally
 					{
 						if (oldIp != null)
-							state["_ip"].Value = oldIp;
+							pars["_ip"].Value = oldIp;
 					}
 				}
 			}

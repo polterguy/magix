@@ -50,20 +50,17 @@ where the expressions within them are all pointing deep into the execution tree 
             if (string.IsNullOrEmpty(ip.Get<string>()))
                 throw new ArgumentException("you must supply an expression to [with]");
 
-			Node tmp = Expressions.GetExpressionValue(ip.Get<string>(), dp, ip, false) as Node;
-            if (tmp == null)
+			Node withExpression = Expressions.GetExpressionValue(ip.Get<string>(), dp, ip, false) as Node;
+            if (withExpression == null)
                 throw new ArgumentException("the expression in your [with] statement returned nothing");
 
             object oldDp = e.Params["_dp"].Value;
             try
 			{
-				for (int idxNo = 0; idxNo < tmp.Count; idxNo++)
-				{
-					e.Params["_dp"].Value = tmp;
-					RaiseActiveEvent(
-						"magix._execute", 
-						e.Params);
-				}
+                e.Params["_dp"].Value = withExpression;
+				RaiseActiveEvent(
+					"magix.execute", 
+					e.Params);
 			}
             finally
 			{

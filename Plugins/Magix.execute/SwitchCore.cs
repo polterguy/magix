@@ -63,13 +63,11 @@ safe</p>";
                     if (value == Expressions.GetExpressionValue(idx.Get<string>(), dp, ip, false).ToString())
                     {
                         foundMatch = true;
-                        Node tmp = new Node();
-                        tmp["_ip"].Value = idx;
-                        tmp["_dp"].Value = dp;
+                        e.Params["_ip"].Value = idx;
 
                         RaiseActiveEvent(
-                            "magix._execute",
-                            tmp);
+                            "magix.execute",
+                            e.Params);
                     }
                 }
                 else if (idx.Name != "default")
@@ -77,13 +75,11 @@ safe</p>";
             }
             if (!foundMatch && ip.Contains("default"))
             {
-                Node tmp = new Node();
-                tmp["_ip"].Value = ip["default"];
-                tmp["_dp"].Value = dp;
+                e.Params["_dp"].Value = dp;
 
                 RaiseActiveEvent(
-                    "magix._execute",
-                    tmp);
+                    "magix.execute",
+                    e.Params);
             }
 		}
     }

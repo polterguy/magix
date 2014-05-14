@@ -90,7 +90,7 @@ the currently iterated node</p><p>thread safe</p>";
                 Node current = currentlyIteratedNode[idxNo];
                 pars["_dp"].Value = current;
                 RaiseActiveEvent(
-                    "magix._execute",
+                    "magix.execute",
                     pars);
 
                 // child nodes

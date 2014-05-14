@@ -22,7 +22,8 @@ namespace Magix.tests
 		[ActiveEvent(Name = "magix.tests.run")]
 		public static void magix_tests_run(object sender, ActiveEventArgs e)
 		{
-			if (ShouldInspect(e.Params))
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(e.Params))
 			{
 				e.Params["inspect"].Value = @"will raise all active events that
 start with 'magix.test.', and treat them as unit tests.&nbsp;&nbsp;
@@ -45,7 +46,7 @@ that failed.&nbsp;&nbsp;thread safe";
 					if (idx.StartsWith("magix.test."))
 					{
 						tests += 1;
-                        Ip(e.Params)[idx].Value = null;
+                        ip[idx].Value = null;
 
 						Node tmp = new Node();
 						tmp["inspect"].Value = null;
@@ -53,18 +54,18 @@ that failed.&nbsp;&nbsp;thread safe";
 						RaiseActiveEvent(
 							idx, 
 							tmp);
-                        Ip(e.Params)[idx].Add(tmp["inspect"].UnTie());
+
+                        ip[idx].Add(tmp["inspect"].UnTie());
 					}
 				}
-                Ip(e.Params)["tests"].Value = tests;
-                Ip(e.Params)["active-events"].Value = av;
+                ip["tests"].Value = tests;
+                ip["active-events"].Value = av;
 				return;
 			}
 			string lastTest = "";
-			try
+            try
 			{
 				int idxNo = 0;
-
 				DateTime start = DateTime.Now;
 
 				// Loops through all active events in the system, and raises
@@ -77,16 +78,16 @@ that failed.&nbsp;&nbsp;thread safe";
 						// Assuming this is a test ...
 						idxNo += 1;
 						lastTest = idx;
-                        Ip(e.Params)["tests"][idx]["success"].Value = false;
+                        ip["tests"][idx]["success"].Value = false;
 						RaiseActiveEvent(idx);
-                        Ip(e.Params)["tests"][idx]["success"].Value = true;
+                        ip["tests"][idx]["success"].Value = true;
 					}
 				}
 
 				DateTime end = DateTime.Now;
 
-                Ip(e.Params)["summary"]["no-tests"].Value = idxNo;
-                Ip(e.Params)["summary"]["success"].Value = true;
+                ip["summary"]["no-tests"].Value = idxNo;
+                ip["summary"]["success"].Value = true;
 
 				Node node = new Node();
 
@@ -115,8 +116,8 @@ that failed.&nbsp;&nbsp;thread safe";
 				while (err.InnerException != null)
 					err = err.InnerException;
 
-                Ip(e.Params)["summary"]["success"].Value = false;
-                Ip(e.Params)["summary"]["description"].Value = err.Message;
+                ip["summary"]["success"].Value = false;
+                ip["summary"]["description"].Value = err.Message;
 
 				Node node = new Node();
 

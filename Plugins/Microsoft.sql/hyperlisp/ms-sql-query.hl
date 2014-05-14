@@ -37,7 +37,7 @@ magix.forms.create-web-part
       try
         code
           microsoft.sql.select
-            query=>@"use master"
+            sql=>@"use master"
           set=>[$][success].Value
             value=>true
         catch
@@ -84,7 +84,7 @@ magix.forms.create-web-part
       set=>[microsoft.sql.select][connection].Value
         value=>[magix.data.load][objects][0][connection].Value
       microsoft.sql.select
-        query=>select distinct * from information_schema.tables where table_type='base table'
+        sql=>select distinct * from information_schema.tables where table_type='base table'
       for-each=>[microsoft.sql.select][result]
         _lb
           onclick
@@ -95,14 +95,14 @@ magix.forms.create-web-part
               id=>txtNewConnection
             set=>[microsoft.sql.select][connection].Value
               value=>[magix.forms.get-value][value].Value
-            set=>[microsoft.sql.select][query].Value
+            set=>[microsoft.sql.select][sql].Value
               value=>@"select * from information_schema.columns where table_name = N'{0}'"
                 v0=>[$][info].Value
             microsoft.sql.select
             
             set=>[microsoft.sql.select:1][connection].Value
               value=>[magix.forms.get-value][value].Value
-            set=>[microsoft.sql.select:1][query].Value
+            set=>[microsoft.sql.select:1][sql].Value
               value=>@"select * from 
     information_schema.table_constraints tab, 
     information_schema.constraint_column_usage col 
@@ -293,7 +293,7 @@ where
         and=>exist
           lhs=>[index-of][result]
         code
-          set=>[@][try][code][microsoft.sql.select][query].Value
+          set=>[@][try][code][microsoft.sql.select][sql].Value
             value=>[magix.forms.get-value:0][value].Value
           set=>[@][try][code][microsoft.sql.select][connection].Value
             value=>[magix.forms.get-value:1][value].Value
@@ -430,7 +430,7 @@ where
                   panel
                     tag=>tr
       else
-        set=>[@][try][code][microsoft.sql.execute][query].Value
+        set=>[@][try][code][microsoft.sql.execute][sql].Value
           value=>[/][magix.forms.get-value:0][value].Value
         set=>[@][try][code][microsoft.sql.execute][connection].Value
           value=>[/][magix.forms.get-value:1][value].Value

@@ -59,7 +59,7 @@ use the [.] expression to de-reference the currently iterated node</p><p>thread 
 					{
 						e.Params["_dp"].Value = tmp[idxNo];
 						RaiseActiveEvent(
-							"magix._execute", 
+							"magix.execute", 
 							e.Params);
 					}
 				}

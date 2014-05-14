@@ -29,8 +29,8 @@ namespace Microsoft.sql
                 e.Params["inspect"].Value = @"<p>returns an sql query as a list of nodes, 
 underneath the [result] node, from a microsoft sql server</p><p>add up parameters underneath 
 the [params] node, and make sure you have a valid connection string to an ms sql database in 
-your [connection] parameter.&nbsp;&nbsp;put the actual sql query in the [query] parameter 
-node</p><p>both [query] and [connection] can be either expressions or constant values.&nbsp;
+your [connection] parameter.&nbsp;&nbsp;put the actual sql query in the [sql] parameter 
+node</p><p>both [sql] and [connection] can be either expressions or constant values.&nbsp;
 &nbsp;if you wish, you can de-reference a connection string from your web.config file, instead 
 of typing in the connection string in code by prefixing the [connection] value with web.config:
 NamedConnection, and such reference the connection string from your web.config called 
@@ -45,7 +45,7 @@ node, then the active event will return the number of records totally in the que
                 e.Params["microsoft.sql.select"]["connection"].Value = "Data Source=(localdb)\\v11.0;Initial Catalog=Northwind;Integrated Security=True";
                 e.Params["microsoft.sql.select"]["start"].Value = 0;
                 e.Params["microsoft.sql.select"]["end"].Value = 20;
-                e.Params["microsoft.sql.select"]["query"].Value = "select * from Customers where ContactTitle=@ContactTitle";
+                e.Params["microsoft.sql.select"]["sql"].Value = "select * from Customers where ContactTitle=@ContactTitle";
                 e.Params["microsoft.sql.select"]["params"]["ContactTitle"].Value = "owner";
                 return;
             }
@@ -61,9 +61,9 @@ node, then the active event will return the number of records totally in the que
             if (connectionString.IndexOf("web.config:") == 0)
                 connectionString = ConfigurationManager.ConnectionStrings[connectionString.Replace("web.config:", "")].ConnectionString;
 
-            if (!ip.Contains("query"))
-                throw new ArgumentException("you need to supply a [query] to know what query to run");
-            string query = Expressions.GetExpressionValue(ip["query"].Get<string>(), dp, ip, false) as string;
+            if (!ip.Contains("sql"))
+                throw new ArgumentException("you need to supply a [sql] to know what query to run");
+            string query = Expressions.GetExpressionValue(ip["sql"].Get<string>(), dp, ip, false) as string;
 
             int start = -1;
             if (ip.Contains("start"))
@@ -125,17 +125,17 @@ node, then the active event will return the number of records totally in the que
 <p>this is useful to supply as a plugin for [magix.file.load], since it can transparently load 
 information from a database and treat it as if it was a file object.&nbsp;&nbsp;add up parameters 
 beneath the [file]/[params] node, and make sure you have a valid connection string to an ms sql database 
-in your [file]/[connection] parameter.&nbsp;&nbsp;put the actual sql query in the [file]/[query] parameter 
+in your [file]/[connection] parameter.&nbsp;&nbsp;put the actual sql query in the [file]/[sql] parameter 
 node, and make sure your query only returns one column.&nbsp;&nbsp;the result from the query, will 
 be appended into the [value] node, with a carriage return following every result, making possible 
-to treat multiple rows from a database as if it was one piece of text</p><p>both [query] and 
+to treat multiple rows from a database as if it was one piece of text</p><p>both [sql] and 
 [connection] can be either expressions or constant values.&nbsp;&nbsp;if you wish, you can 
 de-reference a connection string from your web.config file, instead of typing in the connection 
 string in code by prefixing the [connection] value with web.config:NamedConnection, and such 
 reference the connection string from your web.config called ""NamedConnection""</p><p>thread 
 safe</p>";
                 e.Params["microsoft.sql.load-as-file"]["file"]["connection"].Value = "Data Source=(localdb)\\v11.0;Initial Catalog=Northwind;Integrated Security=True";
-                e.Params["microsoft.sql.load-as-file"]["file"]["query"].Value = "select * from Customers where ContactTitle=@ContactTitle";
+                e.Params["microsoft.sql.load-as-file"]["file"]["sql"].Value = "select * from Customers where ContactTitle=@ContactTitle";
                 e.Params["microsoft.sql.load-as-file"]["file"]["params"]["ContactTitle"].Value = "owner";
                 return;
             }
@@ -155,10 +155,10 @@ safe</p>";
             if (connectionString.IndexOf("web.config:") == 0)
                 connectionString = ConfigurationManager.ConnectionStrings[connectionString.Replace("web.config:", "")].ConnectionString;
 
-            if (!ip["file"].Contains("query"))
-                throw new ArgumentException("you need to supply a [query] to know what query to run");
+            if (!ip["file"].Contains("sql"))
+                throw new ArgumentException("you need to supply a [sql] to know what query to run");
 
-            string query = Expressions.GetExpressionValue(ip["file"]["query"].Get<string>(), dp, ip, false) as string;
+            string query = Expressions.GetExpressionValue(ip["file"]["sql"].Get<string>(), dp, ip, false) as string;
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -198,13 +198,13 @@ safe</p>";
 a microsoft sql server, and returns the number of rows affected in the [result] node</p><p>
 add up parameters underneath the [params] node, and make sure you have a valid connection 
 string to an ms sql database in your [connection] parameter.&nbsp;&nbsp;put the actual sql 
-query in the [query] parameter node</p><p>both [query] and [connection] can be either 
+query in the [sql] parameter node</p><p>both [sql] and [connection] can be either 
 expressions or constant values.&nbsp;&nbsp;if you wish, you can de-reference a connection 
 string from your web.config file, instead of typing in the connection string in code by 
 prefixing the [connection] value with web.config:NamedConnection, and such reference the 
 connection string from your web.config called ""NamedConnection""</p><p>thread safe</p>";
                 e.Params["microsoft.sql.execute"]["connection"].Value = "Data Source=(localdb)\\v11.0;Initial Catalog=Northwind;Integrated Security=True";
-                e.Params["microsoft.sql.execute"]["query"].Value = "update Customers set ContactTitle='big boss' where ContactTitle=@ContactTitle";
+                e.Params["microsoft.sql.execute"]["sql"].Value = "update Customers set ContactTitle='big boss' where ContactTitle=@ContactTitle";
                 e.Params["microsoft.sql.execute"]["params"]["ContactTitle"].Value = "Owner";
                 return;
             }
@@ -220,9 +220,9 @@ connection string from your web.config called ""NamedConnection""</p><p>thread s
             if (connectionString.IndexOf("web.config:") == 0)
                 connectionString = ConfigurationManager.ConnectionStrings[connectionString.Replace("web.config:", "")].ConnectionString;
 
-            if (!ip.Contains("query"))
-                throw new ArgumentException("you need to supply a [query] to know what query to run");
-            string query = Expressions.GetExpressionValue(ip["query"].Get<string>(), dp, ip, false) as string;
+            if (!ip.Contains("sql"))
+                throw new ArgumentException("you need to supply a [sql] to know what query to run");
+            string query = Expressions.GetExpressionValue(ip["sql"].Get<string>(), dp, ip, false) as string;
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
