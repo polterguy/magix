@@ -27,12 +27,13 @@ namespace Magix.execute
 			{
                 e.Params["inspect"].Value = @"<p>loads the file from value of [file] into the [value] node 
 as text</p><p>the file can be a relative path, to fetch a document beneath your web application directory 
-structure.&nbsp;&nbsp;the value in [file] can be either a constant or an expression</p><p>in addition, you 
-can supply a plugin loader to load your files, which is done by setting the [file] parameter to the text;
+structure, or an absolute path, to a different directory, which the iis process of course must have access 
+to.&nbsp;&nbsp;the value in [file] can be either a constant or an expression</p><p>in addition, you can 
+supply a plugin loader to load your files, which is done by setting the [file] parameter to the text;
 'plugin:' and appending the name of the active event you whish to use as the file loader after 'plugin:'.
 &nbsp;&nbsp; for instance 'plugin:microsoft.sql.select-as-text' or 'plugin:magix.web.get-file'.&nbsp;&nbsp;
 this will expect an active event capable of returning text as [value].&nbsp;&nbsp;if you supply a plugin 
-loader, then all parameters beneath the [file] parameter will be passed into the plugin, and used as 
+loader, then all parameters beneath the [magix.file.load] will be passed into the plugin, and used as 
 parameters to the plugin loader</p><p>thread safe</p>";
                 e.Params["magix.file.load"]["file"].Value = "core-scripts/some-files.txt";
 				return;
@@ -52,8 +53,7 @@ parameters to the plugin loader</p><p>thread safe</p>";
 
 			if (filepath.StartsWith("plugin:"))
             {
-                Node fileContent = LoadPluginFile(ip, filepath);
-                ip["value"].Value = fileContent.Value;
+                LoadPluginFile(e.Params, filepath);
             }
             else
 			{
@@ -61,16 +61,12 @@ parameters to the plugin loader</p><p>thread safe</p>";
 			}
 		}
 
-        private static Node LoadPluginFile(Node ip, string filepath)
+        private static void LoadPluginFile(Node pars, string filepath)
         {
             string activeEvent = filepath.Substring(7);
-            Node parsToPluginLoader = ip["file"].Clone();
-            
             RaiseActiveEvent(
                 activeEvent,
-                parsToPluginLoader);
-
-            return parsToPluginLoader["value"];
+                pars);
         }
 
         private static void LoadLocalFile(Node ip, string filepath)
@@ -81,7 +77,7 @@ parameters to the plugin loader</p><p>thread safe</p>";
             }
         }
 
-		/**
+		/*
 		 * saves a file to disc, relatively from the root of the web application
 		 */
 		[ActiveEvent(Name = "magix.file.save")]

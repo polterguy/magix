@@ -96,15 +96,21 @@ parts of your execution node tree</p><p>not thread safe</p>";
             bool hasEventsFile = false;
             if (ip.Contains("events-file"))
             {
-                string file = Expressions.GetExpressionValue(ip["events-file"].Get<string>(), dp, ip, false) as string;
-                Node loadControls = new Node("magix.file.load", null);
-                loadControls["file"].Value = file;
-                RaiseActiveEvent(
-                    "magix.file.load",
-                    loadControls);
+                ip["events-file"].Name = "file";
+                try
+                {
+                    RaiseActiveEvent(
+                        "magix.file.load",
+                        e.Params);
+                }
+                finally
+                {
+                    ip["file"].Name = "events-file";
+                }
 
                 Node toNode = new Node();
-                toNode["code"].Value = loadControls["value"].Get<string>();
+                toNode["code"].Value = ip["value"].Get<string>();
+                ip["value"].UnTie();
                 RaiseActiveEvent(
                     "magix.execute.code-2-node",
                     toNode);
@@ -160,7 +166,7 @@ safe</p>";
                 e.Params["magix.forms.create-mml-web-part"]["form-id"].Value = "unique-id";
                 e.Params["magix.forms.create-mml-web-part"]["class"].Value = "span-22 clear";
                 e.Params["magix.forms.create-mml-web-part"]["mml"].Value = @"
-<p>notice how you can combine html with {{
+&lt;p&gt;notice how you can combine html with {{
 magix.test.hello-world
   magix.viewport.show-message
     message=>hello world
@@ -169,7 +175,7 @@ link-button=>btn-hello
   onclick
     magix.test.hello-world
 }} and temporary active events, that 
-exists only as long as the web part exists</p>";
+exists only as long as the web part exists&lt;/p&gt;";
 				return;
 			}
 
@@ -190,34 +196,44 @@ exists only as long as the web part exists</p>";
             bool hasMmlFile = false;
             if (ip.Contains("mml-file"))
             {
-                string file = Expressions.GetExpressionValue(ip["mml-file"].Get<string>(), dp, ip, false) as string;
+                ip["mml-file"].Name = "file";
+                try
+                {
+                    RaiseActiveEvent(
+                        "magix.file.load",
+                        e.Params);
+                }
+                finally
+                {
+                    ip["file"].Name = "mml-file";
+                }
 
-                Node loadFile = new Node("magix.file.load", null);
-                loadFile["file"].Value = file;
-                RaiseActiveEvent(
-                    "magix.file.load",
-                    loadFile);
-
-                ip["mml"].Value = loadFile["value"].Get<string>();
+                ip["mml"].Value = ip["value"].Get<string>();
+                ip["value"].UnTie();
                 hasMmlFile = true;
             }
 
             bool hasEventsFile = false;
             if (ip.Contains("events-file"))
             {
-                string file = Expressions.GetExpressionValue(ip["events-file"].Get<string>(), dp, ip, false) as string;
-
-                Node eventsNodes = new Node("magix.file.load", null);
-                eventsNodes["file"].Value = file;
-                RaiseActiveEvent(
-                    "magix.file.load",
-                    eventsNodes);
+                ip["events-file"].Name = "file";
+                try
+                {
+                    RaiseActiveEvent(
+                        "magix.file.load",
+                        e.Params);
+                }
+                finally
+                {
+                    ip["file"].Name = "events-file";
+                }
 
                 string mml = ip["mml"].Get<string>();
                 mml += "\r\n{{\r\n// [ dynamically added events from events-file ]\r\n";
-                mml += eventsNodes["value"].Get<string>() + "\r\n}}";
+                mml += ip["value"].Get<string>() + "\r\n}}";
                 hasEventsFile = true;
                 ip["mml"].Value = mml;
+                ip["value"].UnTie();
             }
 
             bool hasEventsNode = false;

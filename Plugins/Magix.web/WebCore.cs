@@ -30,9 +30,10 @@ namespace Magix.execute
                 e.Params["inspect"].Value = @"<p>plugin for loading web documents as 
 files </p><p>this is useful for using as a plugin loader for the [magix.file.load] 
 active event</p><p>supported protocols are all protocols supported by the WebRequest 
-class in asp.net, and should at least be capable of handling https, http and ftp</p>
-<p>thread safe</p>";
-                e.Params["magix.file.load-from-web"]["url"].Value = "http://google.com";
+class in asp.net, and should at least be capable of handling https, http and ftp.&nbsp;
+&nbsp;put the url to the document to download into the [file]/[url] node's value.&nbsp;
+&nbsp;file will be returned as [value]</p><p>thread safe</p>";
+                e.Params["magix.file.load-from-web"]["file"]["url"].Value = "http://google.com";
                 return;
             }
 
@@ -41,10 +42,13 @@ class in asp.net, and should at least be capable of handling https, http and ftp
             if (e.Params.Contains("_dp"))
                 dp = e.Params["_dp"].Value as Node;
 
-            if (!ip.Contains("url"))
+            if (!ip.Contains("file"))
+                throw new ArgumentException("you need to supply a [file] parameter");
+
+            if (!ip["file"].Contains("url"))
                 throw new ArgumentException("you need to supply which file to load as the [url] parameter");
 
-            string filepath = Expressions.GetExpressionValue(ip["url"].Get<string>(), dp, ip, false) as string;
+            string filepath = Expressions.GetExpressionValue(ip["file"]["url"].Get<string>(), dp, ip, false) as string;
             if (string.IsNullOrEmpty(filepath))
                 throw new ArgumentException("you need to define which file to load, as [url]");
 
