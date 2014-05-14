@@ -462,7 +462,8 @@ which contains logic for crud-app-generated application"
       message=>application was created
 
 
-magix.file.list-files=>system42\admin\apps\
+magix.file.list-files
+  directory=>system42\admin\apps\
 
 set=>[_file-name].Value
   value=>system42\admin\apps\{0}.hl

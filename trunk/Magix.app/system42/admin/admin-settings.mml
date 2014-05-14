@@ -45,7 +45,8 @@ lambda=>lmda
           magix.forms.set-value
             form-id=>admin-settings
             id=>frontEndCss
-    magix.file.list-files=>media/front-end
+    magix.file.list-files
+      directory=>media/front-end
     for-each=>[magix.file.list-files][files]
       set=>[/][_data][select][items][[.].Name].Value
         value=>[.].Name

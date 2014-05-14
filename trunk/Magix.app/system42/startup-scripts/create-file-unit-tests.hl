@@ -68,7 +68,8 @@ pointing to the file's path"
     magix.file.save
       file=>tmp/mumbo.txt
       value=>@"howdy world"
-    magix.file.file-exist=>tmp/mumbo.txt
+    magix.file.file-exist
+      file=>tmp/mumbo.txt
     if=>not-equals
       lhs=>[magix.file.file-exist][value].Value
       rhs=>true
@@ -102,7 +103,8 @@ pointing to the file's path"
         file=>[_data].Value
         value=>[_value].Value
     using=>magix.file
-      file-exist=>[_data].Value
+      file-exist
+        file=>[_data].Value
     if=>not-equals
       lhs=>[using:1][file-exist][value].Value
       rhs=>true
@@ -132,9 +134,11 @@ delete it"
   code
     _data=>tmp/mumbo
     using=>magix.file
-      create-directory=>[_data].Value
+      create-directory
+        directory=>[_data].Value
     using=>magix.file
-      directory-exist=>[_data].Value
+      directory-exist
+        directory=>[_data].Value
     if=>not-equals
       lhs=>[using:1][directory-exist][value].Value
       rhs=>true
@@ -142,7 +146,8 @@ delete it"
         throw=>@"[magix.file.create-directory] didn't behave as expected 
 since no directory exist after creation of directory"
     using=>magix.file
-      delete-directory=>[_data].Value
+      delete-directory
+        directory=>[_data].Value
 
 
 event=>magix.test.directory-delete
@@ -152,9 +157,11 @@ way it should work, by trying to create a directory"
   code
     _data=>tmp/mumbo
     using=>magix.file
-      create-directory=>[_data].Value
+      create-directory
+        directory=>[_data].Value
     using=>magix.file
-      directory-exist=>[_data].Value
+      directory-exist
+        directory=>[_data].Value
     if=>not-equals
       lhs=>[using:1][directory-exist][value].Value
       rhs=>true
@@ -162,9 +169,11 @@ way it should work, by trying to create a directory"
         throw=>@"[magix.file.create-directory] didn't behave as expected 
 since no directory exist after creation of directory"
     using=>magix.file
-      delete-directory=>[_data].Value
+      delete-directory
+        directory=>[_data].Value
     using=>magix.file
-      directory-exist=>[_data].Value
+      directory-exist
+        directory=>[_data].Value
     if=>not-equals
       lhs=>[using:3][directory-exist][value].Value
       rhs=>false
@@ -182,12 +191,15 @@ move it"
     _data1=>tmp/mumbo1
     _data2=>tmp/mumbo2
     using=>magix.file
-      create-directory=>[_data1].Value
+      create-directory
+        directory=>[_data1].Value
     using=>magix.file
-      move-directory=>[_data1].Value
+      move-directory
+        from=>[_data1].Value
         to=>[_data2].Value
     using=>magix.file
-      directory-exist=>[_data2].Value
+      directory-exist
+        directory=>[_data2].Value
     if=>not-equals
       lhs=>[using:2][directory-exist][value].Value
       rhs=>true
@@ -195,7 +207,8 @@ move it"
         throw=>@"[magix.file.move-directory] didn't behave as expected 
 since directory didn't exist after moving it"
     using=>magix.file
-      delete-directory=>[_data2].Value
+      delete-directory
+        directory=>[_data2].Value
 
 
 event=>magix.test.list-files
@@ -213,7 +226,8 @@ move it"
       create-file=>[_data2].Value
         value=>@"mumbo2";
     using=>magix.file
-      list-files=>tmp
+      list-files
+        directory=>tmp
         filter=>[_filter].Value
     if=>not-equals
       lhs=>[using:1][files].Count

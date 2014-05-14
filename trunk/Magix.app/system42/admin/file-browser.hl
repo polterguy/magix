@@ -23,9 +23,9 @@ for-each=>[$]
 if=>exist
   lhs=>[$][directory].Value
   code
-    set=>[magix.file.list-files].Value
+    set=>[magix.file.list-files][directory].Value
       value=>[$][directory].Value
-    set=>[magix.file.list-directories].Value
+    set=>[magix.file.list-directories][directory].Value
       value=>[$][directory].Value
     set=>[magix.forms.create-web-part][controls][label][value].Value
       value=>@"files from {0}"
@@ -42,17 +42,17 @@ if=>exist
       value=>@"{0}/{1}"
         pr0=>[$][directory].Value
         pr1=>empty.txt
-    set=>[/][_newDir][onclick][magix.file.create-directory].Value
+    set=>[/][_newDir][onclick][magix.file.create-directory][directory].Value
       value=>@"{0}/{1}"
         pr0=>[$][directory].Value
         pr1=>new-directory
     set=>[/][_newDir][onclick][execute-script][params][directory].Value
       value=>[$][directory].Value
-    set=>[/][_delDir][onclick][magix.viewport.confirm][code][magix.file.delete-directory].Value
+    set=>[/][_delDir][onclick][magix.viewport.confirm][code][magix.file.delete-directory][directory].Value
       value=>[$][directory].Value
     set=>[/][_ren][controls][text-box][value].Value
       value=>[$][directory].Value
-    set=>[/][_ren][controls][text-box][ontextchanged][magix.file.move-directory].Value
+    set=>[/][_ren][controls][text-box][ontextchanged][magix.file.move-directory][from].Value
       value=>[$][directory].Value
     set=>[/][magix.forms.create-web-part][controls][uploader][folder].Value
       value=>[$][directory].Value
@@ -186,7 +186,8 @@ _newDir=>newdir
   class=>span-3 btn-large top-1
   value=>new dir
   onclick
-    magix.file.create-directory=>new-directory
+    magix.file.create-directory
+      directory=>new-directory
     execute-script
       file=>system42/admin/file-browser.hl
 
