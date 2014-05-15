@@ -23,20 +23,19 @@ namespace Magix.code
 		[ActiveEvent(Name = "magix.execute.node-2-code")]
 		public static void magix_exeute_node_2_code(object sender, ActiveEventArgs e)
 		{
-			if (ShouldInspect(e.Params))
-			{
-				e.Params["inspect"].Value = @"<p>will transform the [node] node to code syntax, 
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
+            {
+				ip["inspect"].Value = @"<p>will transform the [node] node to code syntax, 
 and return in [code]</p><p>[node] can either have its nodes as the value of the [node], or as 
 children nodes, directly underneath the [node] node.&nbsp;&nbsp;code returned will be the textual 
 representation of the original tree hierarchy, such that two spaces ' ' opens up the child collection.
 &nbsp;&nbsp;=&gt; separates name and value of node, name first.&nbsp;&nbsp;code returned might also 
 contain type information for types of int, decimal, datetime and bool.&nbsp;&nbsp;if [remove-root] is 
 true, then the root node will be removed</p><p>thread safe</p>";
-                e.Params["node-2-code"]["node"]["something"].Value = "something-else";
+                ip["node-2-code"]["node"]["something"].Value = "something-else";
 				return;
 			}
-
-            Node ip = Ip(e.Params);
 
             if (!ip.Contains("node"))
 			{
@@ -126,9 +125,10 @@ true, then the root node will be removed</p><p>thread safe</p>";
 		[ActiveEvent(Name = "magix.execute.code-2-node")]
 		public static void magix_execute_code_2_node(object sender, ActiveEventArgs e)
 		{
-			if (ShouldInspect(e.Params))
-			{
-				e.Params["inspect"].Value = @"<p>will transform the [code] node to a node tree</p>
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
+            {
+				ip["inspect"].Value = @"<p>will transform the [code] node to a node tree</p>
 <p>the code will be returned in [node] as a node structure, according to indentation.&nbsp;&nbsp;two 
 spaces open up child collection, =&gt; assings to value, and first parts are name of node.&nbsp;&nbsp;
 [code-2-node] also supports =(int)&gt;, =(datetime)&gt;, =(decimal)&gt; and =(bool)&gt; to assign 
@@ -136,14 +136,13 @@ specific type to value.&nbsp;&nbsp;notice that you can instead of supplying a [c
 [file] node, which means the code will be loaded through the [magix.file.load] active event, instead 
 of assumed to be found inline into the active event itself.&nbsp;&nbsp;both [code] and [file] can be 
 either constants or expressions</p><p>thread safe</p>";
-				e.Params["code-2-node"]["code"].Value =  @"
+				ip["code-2-node"]["code"].Value =  @"
 code
   goes
     here";
 				return;
 			}
 
-            Node ip = Ip(e.Params);
             Node dp = ip;
             if (e.Params.Contains("_dp"))
                 dp = e.Params["_dp"].Get<Node>();

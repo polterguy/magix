@@ -20,24 +20,23 @@ namespace Magix.execute
 		[ActiveEvent(Name = "magix.execute.join")]
 		public static void magix_execute_join(object sender, ActiveEventArgs e)
 		{
-			if (ShouldInspect(e.Params))
-			{
-                e.Params["inspect"].Value = @"<p>joins the given expression's nodes, 
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
+            {
+                ip["inspect"].Value = @"<p>joins the given expression's nodes, 
 and puts the result into the [result] return node as value</p><p>thread safe</p>";
-                e.Params["_data"]["", 0].Value = "some ";
-                e.Params["_data"]["", 1].Value = "text ";
-                e.Params["_data"]["", 2].Value = "that ";
-                e.Params["_data"]["", 3].Value = "will ";
-                e.Params["_data"]["", 4].Value = "be ";
-                e.Params["_data"]["", 5].Value = "joined!";
-                e.Params["join"].Value = "[_data]";
+                ip["_data"]["", 0].Value = "some ";
+                ip["_data"]["", 1].Value = "text ";
+                ip["_data"]["", 2].Value = "that ";
+                ip["_data"]["", 3].Value = "will ";
+                ip["_data"]["", 4].Value = "be ";
+                ip["_data"]["", 5].Value = "joined!";
+                ip["join"].Value = "[_data]";
 				return;
 			}
 
 			if (!e.Params.Contains("_ip") || !(e.Params["_ip"].Value is Node))
 				throw new ArgumentException("you cannot raise [join] directly, except for inspect purposes");
-
-			Node ip = e.Params["_ip"].Value as Node;
 
 			Node dp = e.Params["_dp"].Value as Node;
 

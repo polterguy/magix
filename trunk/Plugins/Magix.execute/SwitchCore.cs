@@ -20,31 +20,30 @@ namespace Magix.execute
 		[ActiveEvent(Name = "magix.execute.switch")]
 		public static void magix_execute_switch(object sender, ActiveEventArgs e)
 		{
-			if (ShouldInspect(e.Params))
-			{
-				e.Params["inspect"].Value = @"<p>[switch] creates a comparison between all the 
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
+            {
+				ip["inspect"].Value = @"<p>[switch] creates a comparison between all the 
 children [case] nodes, and executes the code within the [case] node who's value equals the content 
 of the [switch] node</p><p>the [switch] node's value can be either a constant or an expression.
 &nbsp;&nbsp;if no match is found, then [default] will be executed, if it exist.&nbsp;&nbsp;notice 
 how both the [switch] node itself, and [case] nodes can be expressions</p><p>&nbsp;&nbsp;thread 
 safe</p>";
-                e.Params["_data"].Value = "3";
-                e.Params["_success"].Value = "3";
-                e.Params["switch"].Value = "[_data].Value";
-                e.Params["switch"]["case", 0].Value = "1";
-                e.Params["switch"]["case", 0]["magix.viewport.show-message"]["message"].Value = "ERROR!!";
-                e.Params["switch"]["case", 1].Value = "2";
-                e.Params["switch"]["case", 1]["magix.viewport.show-message"]["message"].Value = "ERROR!!";
-                e.Params["switch"]["case", 2].Value = "[_success].Value";
-                e.Params["switch"]["case", 2]["magix.viewport.show-message"]["message"].Value = "success!";
-                e.Params["switch"]["default"]["magix.viewport.show-message"]["message"].Value = "ERROR!!";
+                ip["_data"].Value = "3";
+                ip["_success"].Value = "3";
+                ip["switch"].Value = "[_data].Value";
+                ip["switch"]["case", 0].Value = "1";
+                ip["switch"]["case", 0]["magix.viewport.show-message"]["message"].Value = "ERROR!!";
+                ip["switch"]["case", 1].Value = "2";
+                ip["switch"]["case", 1]["magix.viewport.show-message"]["message"].Value = "ERROR!!";
+                ip["switch"]["case", 2].Value = "[_success].Value";
+                ip["switch"]["case", 2]["magix.viewport.show-message"]["message"].Value = "success!";
+                ip["switch"]["default"]["magix.viewport.show-message"]["message"].Value = "ERROR!!";
                 return;
 			}
 
 			if (!e.Params.Contains("_ip") || !(e.Params["_ip"].Value is Node))
 				throw new ArgumentException("you cannot raise [switch] directly, except for inspect purposes");
-
-			Node ip = Ip(e.Params);
 
 			Node dp = e.Params["_dp"].Value as Node;
 

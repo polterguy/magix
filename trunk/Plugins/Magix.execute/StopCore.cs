@@ -24,22 +24,23 @@ namespace Magix.execute
 		[ActiveEvent(Name = "magix.execute.stop")]
 		public static void magix_execute_stop(object sender, ActiveEventArgs e)
 		{
-			if (ShouldInspect(e.Params))
-			{
-				e.Params["inspect"].Value = @"<p>stops the execution of the current level
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
+            {
+				ip["inspect"].Value = @"<p>stops the execution of the current level
 of code nodes in the tree</p><p>affects [while], [for-each] and other code scopes, such 
 as events and event handlers</p><p>thread safe</p>";
-				e.Params["_data"].Value = 5;
-				e.Params["while"].Value = "more-than-equals";
-                e.Params["while"]["lhs"].Value = "[_data].Value";
-                e.Params["while"]["rhs"].Value = "1";
-                e.Params["while"]["code"]["using"].Value = "magix.math";
-                e.Params["while"]["code"]["using"]["add"].Value = null;
-                e.Params["while"]["code"]["using"]["add"][""].Value = "[_data].Value";
-                e.Params["while"]["code"]["using"]["add"]["",1].Value = "-1";
-                e.Params["while"]["code"]["set"].Value = "[_data].Value";
-                e.Params["while"]["code"]["set"]["value"].Value = "[@][using][add].Value";
-                e.Params["while"]["code"]["stop"].Value = null;
+				ip["_data"].Value = 5;
+				ip["while"].Value = "more-than-equals";
+                ip["while"]["lhs"].Value = "[_data].Value";
+                ip["while"]["rhs"].Value = "1";
+                ip["while"]["code"]["using"].Value = "magix.math";
+                ip["while"]["code"]["using"]["add"].Value = null;
+                ip["while"]["code"]["using"]["add"][""].Value = "[_data].Value";
+                ip["while"]["code"]["using"]["add"]["",1].Value = "-1";
+                ip["while"]["code"]["set"].Value = "[_data].Value";
+                ip["while"]["code"]["set"]["value"].Value = "[@][using][add].Value";
+                ip["while"]["code"]["stop"].Value = null;
 				return;
 			}
 			throw new HyperLispStopException();

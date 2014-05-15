@@ -113,7 +113,7 @@ where
     and col.table_name = N'{0}'"
                 v0=>[$][info].Value
             microsoft.sql.select
-
+            _pks
             for-each=>[microsoft.sql.select][result]
               _lb
               set=>[@][_lb][value].Value
@@ -130,6 +130,9 @@ where
                   code
                     set=>[@][..][..][..][_pk].Value
                       value=>true
+                    add=>[@][..][..][..][..][_pks]
+                      value=>[.][COLUMN_NAME].Value
+                        value
                     stop
               if=>equals
                 lhs=>[@][_pk].Value
@@ -186,8 +189,15 @@ where
                   value=>[@][..][_lb]
                 set=>[/][magix.forms.create-web-part:0][controls][_lb].Name
                   value=>label
+            add=>[@][magix.viewport.set-viewstate=>microsoft.sql.current-primary-keys][value]
+              value=>[@][_pks]
+              children-only=>true
+            magix.viewport.set-viewstate=>microsoft.sql.current-primary-keys
             set=>[magix.forms.create-web-part:0][controls][label:1][value].Value
               value=>[$][info].Value
+            set=>[@][magix.viewport.set-viewstate=>microsoft.sql.current-table][value].Value
+              value=>[$][info].Value
+            magix.viewport.set-viewstate=>microsoft.sql.current-table
             magix.forms.create-web-part
               container=>column-list
               forms-id=>column-list
@@ -197,22 +207,9 @@ where
                   tag=>hr
                 label
                   tag=>h3
-            magix.forms.get-value
-              form-id=>select-query
-              id=>sqlQuery
-              value=>
-            split=>[magix.forms.get-value:1][value].Value
-              what=>
-            if=>less-than
-              lhs=>[split][result].Count
-              rhs=>40
-              code
-                set=>[@][..][..][magix.forms.create-web-part:1][controls][text-area][value].Value
-                  value=>@"select * from [{0}]"
-                    v0=>[$][info].Value
-            else
-              set=>[@][..][magix.forms.create-web-part:1][controls][text-area][value].Value
-                value=>[@][..][magix.forms.get-value:1][value].Value
+            set=>[@][**text-area=>sqlQuery][value].Value
+              value=>@"select * from [{0}]"
+                v0=>[$][info].Value
             magix.forms.create-web-part
               container=>select-query
               form-id=>select-query
@@ -319,7 +316,7 @@ where
                 code
                   set=>[@][..][..][set][value][v1].Value
                     value=>[@][..][..][microsoft.sql.select][record-count].Value
-              set=>[/][if=>less-than][code][magix.forms.create-web-part][controls][panel=>tblPaging][controls][label=>lblCount][value].Value
+              set=>[/][**panel=>tblPaging][controls][label=>lblCount][value].Value
                 value=>@"{0}/{1} of {2}"
                   v0=>[@][microsoft.sql.select][start].Value
                   v1=>[@][microsoft.sql.select][end].Value
@@ -342,14 +339,86 @@ where
               tag=>th
             set=>[@][_th][value].Value
               value=>[.].Name
-            add=>[@][..][magix.forms.create-web-part][controls][panel=>tbl][controls][panel][controls]
+            add=>[@][..][**panel=>tbl][controls][panel][controls]
               value=>[@][_th]
-            set=>[@][..][magix.forms.create-web-part][controls][panel=>tbl][controls][panel][controls][_th].Name
+            set=>[@][..][**panel=>tbl][controls][panel][controls][_th].Name
               value=>label
           for-each=>[@][try][code][microsoft.sql.select][result]
             set=>[@][_pnl][controls]
+            set=>[@][_pnl][onclick][_columns]
+            add=>[@][_pnl][onclick][_columns]
+              value=>[.]
+              children-only=>true
             _pnl
               tag=>tr
+              style=>cursor:pointer;
+              title=>click to create update sql statement
+              onclick
+                _sql=>@"update [___table] set"
+                magix.viewport.get-viewstate=>microsoft.sql.current-table
+                magix.viewport.get-viewstate=>microsoft.sql.current-primary-keys
+                replace=>[_sql].Value
+                  what=>\[___table]
+                  with=>[magix.viewport.get-viewstate=>microsoft.sql.current-table][value].Value
+                _first=>true
+                for-each=>[_columns]
+                  if=>not-exist
+                    lhs=>[/][magix.viewport.get-viewstate=>microsoft.sql.current-primary-keys][value][[.].Name]
+                    code
+                      if=>equals
+                        lhs=>[/][_first].Value
+                        rhs=>true
+                        code
+                          set=>[/][_first].Value
+                            value=>false
+                      else
+                        set=>[/][_sql].Value
+                          value=>@"{0},"
+                            =>[/][_sql].Value
+                      replace=>[.].Value
+                        what=>'
+                        with=>''
+                      set=>[/][_sql].Value
+                        value=>@"{0}
+  {1}='{2}'"
+                          =>[/][_sql].Value
+                          =>[.].Name
+                          =>[.].Value
+                set=>[/][_sql].Value
+                  value=>@"{0}
+where"
+                    =>[/][_sql].Value
+                set=>[_first].Value
+                  value=>true
+                for-each=>[_columns]
+                  if=>exist
+                    lhs=>[/][magix.viewport.get-viewstate=>microsoft.sql.current-primary-keys][value][[.].Name]
+                    code
+                      if=>exist
+                        lhs=>[.].Value
+                        code
+                          if=>equals
+                            lhs=>[/][_first].Value
+                            rhs=>true
+                            code
+                              set=>[/][_first].Value
+                                value=>false
+                          else
+                            set=>[/][_sql].Value
+                              value=>{0} and
+                                =>[/][_sql].Value
+                          set=>[/][_sql].Value
+                            value=>@"{0}
+  {1}='{2}'"
+                              =>[/][_sql].Value
+                              =>[.].Name
+                              =>[.].Value
+                set=>[magix.forms.set-value][value].Value
+                  value=>[_sql].Value
+                magix.forms.set-value
+                  form-id=>select-query
+                  id=>sqlQuery
+                magix.viewport.scroll=>sqlQuery
             for-each=>[.]
               _lbl
                 tag=>td

@@ -22,9 +22,10 @@ namespace Magix.execute
 		[ActiveEvent(Name = "magix.execute.split")]
 		public static void magix_execute_split(object sender, ActiveEventArgs e)
 		{
-			if (ShouldInspect(e.Params))
-			{
-                e.Params["inspect"].Value = @"<p>splits the given expression or constant in 
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
+            {
+                ip["inspect"].Value = @"<p>splits the given expression or constant in 
 the value of [split] according to the [what] content or [where] child nodes, and puts the 
 result into the [result] return node as children nodes</p><p>if [what] is given, but has null 
 or empty value, then string will be split for every single character in it.&nbsp;&nbsp;if 
@@ -33,16 +34,15 @@ index the string should be split, or a list of child nodes containing indexes fo
 split the string</p><p>both [what] and [where] value or nodes can be either a constant, or 
 expression(s)</p><p>if you use [what] to split your string, then the parts which matches the 
 [what] expression in your string, will be removed from the result set</p><p>thread safe</p>";
-                e.Params["_data"].Value = "some text which will be split for every space";
-				e.Params["split"].Value = "[_data].Value";
-				e.Params["split"]["what"].Value = " ";
+                ip["_data"].Value = "some text which will be split for every space";
+				ip["split"].Value = "[_data].Value";
+				ip["split"]["what"].Value = " ";
                 return;
 			}
 
 			if (!e.Params.Contains("_ip") || !(e.Params["_ip"].Value is Node))
 				throw new ArgumentException("you cannot raise [split] directly, except for inspect purposes");
 
-			Node ip = Ip(e.Params);
 			Node dp = e.Params["_dp"].Value as Node;
 
             if (!ip.Contains("what") && !ip.Contains("where"))

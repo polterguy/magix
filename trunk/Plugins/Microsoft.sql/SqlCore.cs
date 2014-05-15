@@ -41,7 +41,8 @@ they are not given, the query will return all records matching your sql.&nbsp;&n
 and [end] can be either constants or expressions.&nbsp;&nbsp;if you supply a [start] and [end] 
 node, then the active event will return the number of records totally in the query in the 
 [record-count] return node, unless you also supply a [count] node, with the value of false
-</p><p>thread safe</p>";
+</p><p>unless you supply a [blobs] parameter, having the value of true, then no blobs, or 
+byte[] result rows will be returned</p><p>thread safe</p>";
                 e.Params["microsoft.sql.select"]["connection"].Value = "Data Source=(localdb)\\v11.0;Initial Catalog=Northwind;Integrated Security=True";
                 e.Params["microsoft.sql.select"]["start"].Value = 0;
                 e.Params["microsoft.sql.select"]["end"].Value = 20;
@@ -77,6 +78,10 @@ node, then the active event will return the number of records totally in the que
             if (ip.Contains("count"))
                 count = ip["count"].Get<bool>();
 
+            bool blobs = false;
+            if (ip.Contains("blobs"))
+                blobs = ip["blobs"].Get<bool>();
+
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 SqlCommand cmd = new SqlCommand(query, connection);
@@ -99,7 +104,14 @@ node, then the active event will return the number of records totally in the que
                             {
                                 for (int idxNo = 0; idxNo < reader.VisibleFieldCount; idxNo++)
                                 {
-                                    ip["result"][idxRecordNo.ToString()][reader.GetName(idxNo)].Value = reader[idxNo];
+                                    if (reader[idxNo] == DBNull.Value)
+                                        ip["result"][idxRecordNo.ToString()][reader.GetName(idxNo)].Value = null;
+                                    else
+                                    {
+                                        if (!blobs && reader[idxNo] is byte[])
+                                            continue;
+                                        ip["result"][idxRecordNo.ToString()][reader.GetName(idxNo)].Value = reader[idxNo];
+                                    }
                                 }
                             }
                             else if (!count)

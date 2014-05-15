@@ -21,30 +21,30 @@ namespace Magix.execute
 		[ActiveEvent(Name = "magix.execute.with")]
 		public static void magix_execute_with(object sender, ActiveEventArgs e)
 		{
-			if (ShouldInspect(e.Params))
-			{
-                e.Params["inspect"].Value = @"<p>temporary changes the data pointer to the 
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
+            {
+                ip["inspect"].Value = @"<p>temporary changes the data pointer to the 
 expression in its value</p><p>this is useful if you're handling several keywords in a row, 
 where the expressions within them are all pointing deep into the execution tree somewhere</p>
 <p>thread safe</p>";
-                e.Params["_data"]["_somewhere"]["_over"]["items"]["message1"].Value = "howdy world 1.0";
-                e.Params["_data"]["_somewhere"]["_over"]["items"]["message2"].Value = "howdy world 2.0";
-                e.Params["_data"]["_somewhere"]["_over"]["items"]["message3"].Value = "howdy world 3.0";
-                e.Params["_data"]["_somewhere"]["_over"]["items"]["message4"].Value = "howdy world 4.0";
-                e.Params["_data"]["_somewhere"]["_over"]["items"]["message5"].Value = "howdy world 5.0";
-                e.Params["_data"]["_somewhere"]["_over"]["items"]["message6"].Value = "howdy world 6.0";
-                e.Params["_data"]["_somewhere"]["_over"]["items"]["message7"].Value = "howdy world 7.0";
-                e.Params["with"].Value = "[_data][_somewhere][_over]";
-                e.Params["with"]["for-each"].Value = "[items]";
-                e.Params["with"]["for-each"]["set"].Value = "[@][magix.viewport.show-message][message].Value";
-                e.Params["with"]["for-each"]["set"]["value"].Value = "[.].Value";
+                ip["_data"]["_somewhere"]["_over"]["items"]["message1"].Value = "howdy world 1.0";
+                ip["_data"]["_somewhere"]["_over"]["items"]["message2"].Value = "howdy world 2.0";
+                ip["_data"]["_somewhere"]["_over"]["items"]["message3"].Value = "howdy world 3.0";
+                ip["_data"]["_somewhere"]["_over"]["items"]["message4"].Value = "howdy world 4.0";
+                ip["_data"]["_somewhere"]["_over"]["items"]["message5"].Value = "howdy world 5.0";
+                ip["_data"]["_somewhere"]["_over"]["items"]["message6"].Value = "howdy world 6.0";
+                ip["_data"]["_somewhere"]["_over"]["items"]["message7"].Value = "howdy world 7.0";
+                ip["with"].Value = "[_data][_somewhere][_over]";
+                ip["with"]["for-each"].Value = "[items]";
+                ip["with"]["for-each"]["set"].Value = "[@][magix.viewport.show-message][message].Value";
+                ip["with"]["for-each"]["set"]["value"].Value = "[.].Value";
 				return;
 			}
 
 			if (!e.Params.Contains("_ip") || !(e.Params["_ip"].Value is Node))
 				throw new ArgumentException("you cannot raise [with] directly, except for inspect purposes");
 
-			Node ip = e.Params["_ip"].Value as Node;
 			Node dp = e.Params["_dp"].Value as Node;
 
             if (string.IsNullOrEmpty(ip.Get<string>()))

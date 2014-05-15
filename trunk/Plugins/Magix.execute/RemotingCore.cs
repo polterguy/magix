@@ -75,9 +75,10 @@ are being correctly re-mapped</p>";
 		[ActiveEvent(Name = "magix.execute.tunnel")]
 		public static void magix_execute_tunnel(object sender, ActiveEventArgs e)
 		{
-			if (ShouldInspect(e.Params))
-			{
-				e.Params["inspect"].Value = @"<p>creates an external override towards the given 
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
+            {
+				ip["inspect"].Value = @"<p>creates an external override towards the given 
 [url] for the event found in value.&nbsp;&nbsp;if you pass in a null value as a [url], or no [url] 
 node, the tunneling is removed</p><p>make sure the other side has marked the active event as 
 remotable.&nbsp;&nbsp;once a method is 'tunneled', it will no longer be raised locally, but every 
@@ -86,12 +87,10 @@ raised, on your [url] end-point server instead</p></p>if a [persist] parameter e
 a value of false, then the tunnel will not be serialized into the data layer, which is useful for 
 active events which anyway will be re-mapped when the application pool is restarted<p><p>thread 
 safe</p>";
-				e.Params["tunnel"].Value = "magix.namespace.foo";
-				e.Params["tunnel"]["url"].Value = "http://127.0.0.1:8080";
+				ip["tunnel"].Value = "magix.namespace.foo";
+				ip["tunnel"]["url"].Value = "http://127.0.0.1:8080";
 				return;
 			}
-
-            Node ip = Ip(e.Params);
 
             string activeEvent = ip.Get<string>();
 			if (string.IsNullOrEmpty(activeEvent))

@@ -20,21 +20,20 @@ namespace Magix.execute
 		[ActiveEvent(Name = "magix.execute.override")]
 		public static void magix_execute_set(object sender, ActiveEventArgs e)
 		{
-			if (ShouldInspect(e.Params))
-			{
-                e.Params["inspect"].Value = @"<p>overrides the given active event from the 
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
+            {
+                ip["inspect"].Value = @"<p>overrides the given active event from the 
 [override] node's value with the active event from the [with] node's value.&nbsp;&nbsp;if 
 no [with] is given, existing override is removed, if any exists</p><p>if you supply a 
 [persist] parameter, and sets its value to false, then the override will not be persisted, 
 and will only last until the application pool is restarted.&nbsp;&nbsp;this is useful 
 sometimes, since it will execute much faster, especially for overides you will anyway re-run 
 when application pool is restarted</p><p>thread safe</p>";
-                e.Params["override"].Value = "namespace.foo";
-				e.Params["override"]["with"].Value = "namespace.bar";
+                ip["override"].Value = "namespace.foo";
+				ip["override"]["with"].Value = "namespace.bar";
 				return;
 			}
-
-            Node ip = Ip(e.Params);
 
             string activeEvent = ip.Get<string>();
             if (string.IsNullOrEmpty(activeEvent))

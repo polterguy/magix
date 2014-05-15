@@ -20,12 +20,13 @@ namespace Magix.execute
 		[ActiveEvent(Name = "magix.execute.set")]
 		public static void magix_execute_set(object sender, ActiveEventArgs e)
 		{
-			if (ShouldInspect(e.Params))
-			{
-				e.Params["_data"]["children"].Value = "old value";
-				e.Params["set"].Value = "[_data][children].Value";
-				e.Params["set"]["value"].Value = "new value";
-				e.Params["inspect"].Value = @"<p>sets the given expression in the value
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
+            {
+				ip["_data"]["children"].Value = "old value";
+				ip["set"].Value = "[_data][children].Value";
+				ip["set"]["value"].Value = "new value";
+				ip["inspect"].Value = @"<p>sets the given expression in the value
 of [set] to the value of expression, or constant, in [value] node</p><p>if you pass in 
 no [value], the expression in value will be nullified.&nbsp;&nbsp;meaning, if it's a 
 node-list it will be emptied and the node removed.&nbsp;&nbsp;if it's a value, the value 
@@ -47,8 +48,6 @@ safe</p>";
 
 			if (!e.Params.Contains("_ip") || !(e.Params["_ip"].Value is Node))
 				throw new ArgumentException("you cannot raise [set] directly, except for inspect purposes");
-
-			Node ip = e.Params["_ip"].Value as Node;
 
 			Node dp = e.Params["_dp"].Value as Node;
 
