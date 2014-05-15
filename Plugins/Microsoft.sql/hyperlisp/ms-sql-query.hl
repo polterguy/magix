@@ -276,13 +276,42 @@ where
         container=>content2
 
     microsoft.sql.run-query
-      magix.forms.get-value
-        form-id=>select-query
-        id=>sqlQuery
+      _sql
+      if=>exist
+        lhs=>[$][keep-position]
+        code
+          magix.viewport.get-viewstate=>microsoft.sql.current-position
+          if=>exist
+            lhs=>[@][magix.viewport.get-viewstate=>microsoft.sql.current-position][value]
+            code
+              add=>[_position]
+                value=>[@][..][..][magix.viewport.get-viewstate=>microsoft.sql.current-position][value]
+                children-only=>true
+      if=>exist
+        lhs=>[$][force-select]
+        code
+          magix.viewport.get-viewstate=>microsoft.sql.current-select-sql
+          if=>exist
+            lhs=>[@][magix.viewport.get-viewstate=>microsoft.sql.current-select-sql][value]
+            code
+              set=>[_sql].Value
+                value=>[@][..][..][magix.viewport.get-viewstate=>microsoft.sql.current-select-sql][value].Value
+          else
+            magix.forms.get-value
+              form-id=>select-query
+              id=>sqlQuery
+            set=>[_sql].Value
+              value=>[@][magix.forms.get-value][value].Value
+      else
+        magix.forms.get-value
+          form-id=>select-query
+          id=>sqlQuery
+        set=>[_sql].Value
+          value=>[@][magix.forms.get-value][value].Value
       magix.forms.get-value
         form-id=>sql
         id=>txtNewConnection
-      index-of=>[magix.forms.get-value][value].Value
+      index-of=>[_sql].Value
         what=>select
       if=>less-than
         lhs=>[index-of][result][0].Value
@@ -291,12 +320,26 @@ where
           lhs=>[index-of][result]
         code
           set=>[@][try][code][microsoft.sql.select][sql].Value
-            value=>[magix.forms.get-value:0][value].Value
+            value=>[_sql].Value
           set=>[@][try][code][microsoft.sql.select][connection].Value
-            value=>[magix.forms.get-value:1][value].Value
+            value=>[magix.forms.get-value][value].Value
+          set=>[@][magix.viewport.set-viewstate=>microsoft.sql.current-select-sql][value].Value
+            value=>[_sql].Value
+          magix.viewport.set-viewstate=>microsoft.sql.current-select-sql
           try
             code
               if=>exist
+                lhs=>[_position]
+                code
+                  set=>[@][..][..][microsoft.sql.select][start].Value
+                    value=>[_position][start].Value
+                  set=>[@][..][..][microsoft.sql.select][end].Value
+                    value=>[_position][end].Value
+                  set=>[@][..][..][magix.viewport.set-viewstate][value][start].Value
+                    value=>[_position][start].Value
+                  set=>[@][..][..][magix.viewport.set-viewstate][value][end].Value
+                    value=>[_position][end].Value
+              else-if=>exist
                 lhs=>[$][start]
                 code
                   set=>[@][..][..][microsoft.sql.select][start].Value
@@ -321,9 +364,10 @@ where
                   v0=>[@][microsoft.sql.select][start].Value
                   v1=>[@][microsoft.sql.select][end].Value
                   v2=>[@][microsoft.sql.select][record-count].Value
+
               set=>[@][magix.viewport.set-viewstate][value][count].Value
                 value=>[@][microsoft.sql.select][record-count].Value
-              magix.viewport.set-viewstate=>microsoft.sql.select-sub-section
+              magix.viewport.set-viewstate=>microsoft.sql.current-position
                 value
                   start=>0
                   end=>10
@@ -445,7 +489,7 @@ where"
                     class=>span-1
                     value=>&lt;&lt;
                     onclick
-                      magix.viewport.get-viewstate=>microsoft.sql.select-sub-section
+                      magix.viewport.get-viewstate=>microsoft.sql.current-position
                       if=>equals
                         lhs=>[magix.viewport.get-viewstate][value][start].Value
                         rhs=>0
@@ -465,6 +509,7 @@ where"
                       set=>[microsoft.sql.run-query][end].Value
                         value=>[using][subtract:1].Value
                       microsoft.sql.run-query
+                        force-select=>true
                   label=>lblCount
                     class=>span-4 text-center
                     value=>count
@@ -472,7 +517,7 @@ where"
                     class=>span-1 last
                     value=>&gt;&gt;
                     onclick
-                      magix.viewport.get-viewstate=>microsoft.sql.select-sub-section
+                      magix.viewport.get-viewstate=>microsoft.sql.current-position
                       if=>more-than-equals
                         lhs=>[magix.viewport.get-viewstate][value][end].Value
                         rhs=>[magix.viewport.get-viewstate][value][count].Value
@@ -492,6 +537,7 @@ where"
                       set=>[microsoft.sql.run-query][end].Value
                         value=>[using][add:1].Value
                       microsoft.sql.run-query
+                        force-select=>true
               panel=>tbl
                 tag=>table
                 class=>sql-result-table
@@ -500,15 +546,18 @@ where"
                     tag=>tr
       else
         set=>[@][try][code][microsoft.sql.execute][sql].Value
-          value=>[/][magix.forms.get-value:0][value].Value
+          value=>[/][_sql].Value
         set=>[@][try][code][microsoft.sql.execute][connection].Value
-          value=>[/][magix.forms.get-value:1][value].Value
+          value=>[/][magix.forms.get-value][value].Value
         try
           code
             microsoft.sql.execute
             set=>[@][magix.viewport.show-message][message].Value
               value=>@"{0} records affected"
                 v0=>[@][microsoft.sql.execute][result].Value
+            microsoft.sql.run-query
+              force-select=>true
+              keep-position=>true
             magix.viewport.show-message
               time=>5000
               color=>#aaffaa
