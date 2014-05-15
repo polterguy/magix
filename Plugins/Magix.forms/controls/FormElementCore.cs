@@ -67,7 +67,7 @@ namespace Magix.forms
 
 			if (ctrl != null)
 			{
-                Ip(e.Params)["value"].Value = ctrl.Disabled;
+                Ip(e.Params)["value"].Value = !ctrl.Disabled;
 			}
 		}
 	}
