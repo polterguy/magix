@@ -55,7 +55,7 @@ magix.forms.create-web-part
           tag=>label
         text-box=>rounded-corners
           class=>span-2 top-1
-          mode=>number
+          type=>number
           tip=>radius of corners, not mandatory
           place-holder=>corners ...
         label=>scaleDescription
@@ -65,7 +65,7 @@ magix.forms.create-web-part
           tag=>label
         text-box=>scale
           class=>span-2 top-1
-          mode=>number
+          type=>number
           tip=>not mandatory, defaults to 6
           place-holder=>scale ...
         label=>errDescription
@@ -185,7 +185,7 @@ defaults to Comic Sans MS"
           class=>span-2 top-1
           tip=>@"font size to use to render descriptive text below qr code"
           place-holder=>font size ...
-          mode=>number
+          type=>number
         label=>fontColorDescription
           tag=>label
           class=>span-2 top-1 right-text
@@ -204,7 +204,7 @@ defaults to Comic Sans MS"
           class=>span-2 top-1 last
           tip=>@"angle of rotation for qr code"
           place-holder=>rotate ...
-          mode=>number
+          type=>number
         label=>filenameDescription
           tag=>label
           class=>span-2 top-1 right-text clear

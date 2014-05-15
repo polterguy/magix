@@ -13,6 +13,18 @@ magix.forms.create-web-part
 
   events
 
+    microsoft.sql.show-columns
+      magix.forms.get-value
+        id=>chkColumns
+      set=>[$][value].Value
+        value=>[magix.forms.get-value][value].Value
+
+    microsoft.sql.show-tables
+      magix.forms.get-value
+        id=>chkTables
+      set=>[$][value].Value
+        value=>[magix.forms.get-value][value].Value
+
     microsoft.sql.visible-records-count
       magix.forms.get-value
         id=>visible-records-count
@@ -64,6 +76,9 @@ magix.forms.create-web-part
 
     microsoft.sql.open-selected-connection
       magix.forms.set-enabled
+        id=>visible-records-count
+        value=>true
+      magix.forms.set-enabled
         id=>txtNewConnection
         value=>false
       magix.forms.get-value
@@ -108,150 +123,8 @@ magix.forms.create-web-part
       for-each=>[microsoft.sql.select][result]
         _lb
           onclick
-            magix.viewport.clear-controls
-              container=>content2
-            magix.forms.get-value
-              form-id=>sql
-              id=>txtNewConnection
-            set=>[microsoft.sql.select][connection].Value
-              value=>[magix.forms.get-value][value].Value
-            set=>[microsoft.sql.select][sql].Value
-              value=>@"select * from information_schema.columns where table_name = N'{0}'"
-                v0=>[$][info].Value
-            microsoft.sql.select
-            
-            set=>[microsoft.sql.select:1][connection].Value
-              value=>[magix.forms.get-value][value].Value
-            set=>[microsoft.sql.select:1][sql].Value
-              value=>@"select * from 
-    information_schema.table_constraints tab, 
-    information_schema.constraint_column_usage col 
-where 
-    col.constraint_name = tab.constraint_name
-    and col.table_name = tab.table_name
-    and constraint_type = 'primary key'
-    and col.table_name = N'{0}'"
-                v0=>[$][info].Value
-            microsoft.sql.select
-            _pks
-            for-each=>[microsoft.sql.select][result]
-              _lb
-              set=>[@][_lb][value].Value
-                value=>[.][COLUMN_NAME].Value
-              set=>[@][_lb][class].Value
-                value=>span-5 clear table-column
-              _pk
-              set=>[@][_pk].Value
-                value=>[.][COLUMN_NAME].Value
-              for-each=>[@][..][microsoft.sql.select:1][result]
-                if=>equals
-                  lhs=>[.][COLUMN_NAME].Value
-                  rhs=>[@][..][_pk].Value
-                  code
-                    set=>[@][..][..][..][_pk].Value
-                      value=>true
-                    add=>[@][..][..][..][..][_pks]
-                      value=>[.][COLUMN_NAME].Value
-                        value
-                    stop
-              if=>equals
-                lhs=>[@][_pk].Value
-                rhs=>true
-                code
-                  set=>[@][..][..][_lb][class].Value
-                    value=>{0} primary-key-column
-                      v0=>[@][..][..][_lb][class].Value
-                  set=>[@][..][..][_lb][tip].Value
-                    value=>primary key
-              else
-                set=>[@][..][_lb][tip]
-              add=>[/][magix.forms.create-web-part:0][controls]
-                value=>[@][_lb]
-              set=>[/][magix.forms.create-web-part:0][controls][_lb].Name
-                value=>label
-
-              set=>[@][_lb][value].Value
-                value=>[.][DATA_TYPE].Value
-              set=>[@][_lb][class].Value
-                value=>span-2
-              add=>[/][magix.forms.create-web-part:0][controls]
-                value=>[@][_lb]
-              set=>[/][magix.forms.create-web-part:0][controls][_lb].Name
-                value=>label
-
-              set=>[@][_lb][value].Value
-                value=>@"&nbsp;{0}"
-                  v0=>[.][CHARACTER_MAXIMUM_LENGTH].Value
-              set=>[@][_lb][class].Value
-                value=>span-3
-              add=>[/][magix.forms.create-web-part:0][controls]
-                value=>[@][_lb]
-              set=>[/][magix.forms.create-web-part:0][controls][_lb].Name
-                value=>label
-              if=>equals
-                lhs=>[.][IS_NULLABLE].Value
-                rhs=>NO
-                code
-                  set=>[@][..][..][_lb][value].Value
-                    value=>not nullable
-                  set=>[@][..][..][_lb][class].Value
-                    value=>span-2
-                  add=>[/][magix.forms.create-web-part:0][controls]
-                    value=>[@][..][..][_lb]
-                  set=>[/][magix.forms.create-web-part:0][controls][_lb].Name
-                    value=>label
-              else
-                set=>[@][..][_lb][value].Value
-                  value=>nullable
-                set=>[@][..][_lb][class].Value
-                  value=>span-2
-                add=>[/][magix.forms.create-web-part:0][controls]
-                  value=>[@][..][_lb]
-                set=>[/][magix.forms.create-web-part:0][controls][_lb].Name
-                  value=>label
-            add=>[@][magix.viewport.set-viewstate=>microsoft.sql.current-primary-keys][value]
-              value=>[@][_pks]
-              children-only=>true
-            magix.viewport.set-viewstate=>microsoft.sql.current-primary-keys
-            set=>[magix.forms.create-web-part:0][controls][label:1][value].Value
+            set=>[microsoft.sql.create-table-definition-and-sql][info].Value
               value=>[$][info].Value
-            set=>[@][magix.viewport.set-viewstate=>microsoft.sql.current-table][value].Value
-              value=>[$][info].Value
-            magix.viewport.set-viewstate=>microsoft.sql.current-table
-            magix.forms.create-web-part
-              container=>column-list
-              forms-id=>column-list
-              class=>span-17 last
-              controls
-                label
-                  tag=>hr
-                label=>tableHeader
-                  tag=>h3
-            set=>[@][**text-area=>sqlQuery][value].Value
-              value=>@"select * from [{0}]"
-                v0=>[$][info].Value
-            magix.forms.create-web-part
-              container=>select-query
-              form-id=>select-query
-              class=>span-17 last
-              controls
-                text-area=>sqlQuery
-                  class=>span-17 top-1 last
-                  rows=>10
-                  place-holder=>type your sql query here ...
-                button=>btnRunQuery
-                  class=>span-3 btn-large right last
-                  value=>run
-                  onclick
-                    microsoft.sql.run-query
-            magix.forms.effect
-              type=>fade-in
-              form-id=>select-query
-              id=>select-query
-              time=>500
-              joined
-                e0
-                  type=>roll-down
         set=>[@][_lb][value].Value
           value=>[.][TABLE_NAME].Value
         set=>[@][_lb][info].Value
@@ -263,6 +136,15 @@ where
         set=>[/][magix.forms.create-web-part][controls][_lb].Name
           value=>link-button
 
+      if=>equals
+        lhs=>[:microsoft.sql.show-tables][value].Value
+        rhs=>false
+        code
+          set=>[magix.forms.create-web-part].Name
+            value=>_not
+          set=>[magix.forms.effect].Name
+            value=>_not
+          microsoft.sql.create-table-definition-and-sql
       magix.forms.create-web-part
         class=>span-17 last
         container=>table-list
@@ -270,8 +152,8 @@ where
         controls
           label=>tblHeader
             tag=>h3
-            class=>top-1 left-6
-            value=>list of tables
+            class=>top-1
+            value=>tables
       magix.forms.effect
         type=>fade-in
         form-id=>table-list
@@ -282,6 +164,9 @@ where
             type=>roll-down
 
     microsoft.sql.close-selected-connection
+      magix.forms.set-enabled
+        id=>visible-records-count
+        value=>true
       magix.forms.set-value
         id=>lblHeader
         value=>ms sql query tool
@@ -300,6 +185,175 @@ where
         container=>select-query
       magix.viewport.clear-controls
         container=>content2
+
+    microsoft.sql.create-table-definition-and-sql
+      magix.forms.set-enabled
+        id=>visible-records-count
+        value=>true
+      magix.viewport.clear-controls
+        container=>content2
+      magix.forms.get-value
+        form-id=>sql
+        id=>txtNewConnection
+      set=>[microsoft.sql.select][connection].Value
+        value=>[magix.forms.get-value][value].Value
+      set=>[microsoft.sql.select][sql].Value
+        value=>@"select * from information_schema.columns where table_name = N'{0}'"
+          v0=>[$][info].Value
+      microsoft.sql.select
+            
+      set=>[microsoft.sql.select:1][connection].Value
+        value=>[magix.forms.get-value][value].Value
+      set=>[microsoft.sql.select:1][sql].Value
+        value=>@"select * from 
+    information_schema.table_constraints tab, 
+    information_schema.constraint_column_usage col 
+where 
+    col.constraint_name = tab.constraint_name
+    and col.table_name = tab.table_name
+    and constraint_type = 'primary key'
+    and col.table_name = N'{0}'"
+          v0=>[$][info].Value
+      microsoft.sql.select
+      _pks
+      for-each=>[microsoft.sql.select][result]
+        _lb
+        set=>[@][_lb][value].Value
+          value=>[.][COLUMN_NAME].Value
+        set=>[@][_lb][class].Value
+          value=>span-5 clear table-column
+        _pk
+        set=>[@][_pk].Value
+          value=>[.][COLUMN_NAME].Value
+        for-each=>[@][..][microsoft.sql.select:1][result]
+          if=>equals
+            lhs=>[.][COLUMN_NAME].Value
+            rhs=>[@][..][_pk].Value
+            code
+              set=>[@][..][..][..][_pk].Value
+                value=>true
+              add=>[@][..][..][..][..][_pks]
+                value=>[.][COLUMN_NAME].Value
+                  value
+              stop
+        if=>equals
+          lhs=>[@][_pk].Value
+          rhs=>true
+          code
+            set=>[@][..][..][_lb][class].Value
+              value=>{0} primary-key-column
+                v0=>[@][..][..][_lb][class].Value
+            set=>[@][..][..][_lb][tip].Value
+              value=>primary key
+        else
+          set=>[@][..][_lb][tip]
+        add=>[/][magix.forms.create-web-part:0][controls]
+          value=>[@][_lb]
+        set=>[/][magix.forms.create-web-part:0][controls][_lb].Name
+          value=>label
+
+        set=>[@][_lb][value].Value
+          value=>[.][DATA_TYPE].Value
+        set=>[@][_lb][class].Value
+          value=>span-2
+        add=>[/][magix.forms.create-web-part:0][controls]
+          value=>[@][_lb]
+        set=>[/][magix.forms.create-web-part:0][controls][_lb].Name
+          value=>label
+
+        set=>[@][_lb][value].Value
+          value=>@"&nbsp;{0}"
+            v0=>[.][CHARACTER_MAXIMUM_LENGTH].Value
+        set=>[@][_lb][class].Value
+          value=>span-3
+        add=>[/][magix.forms.create-web-part:0][controls]
+          value=>[@][_lb]
+        set=>[/][magix.forms.create-web-part:0][controls][_lb].Name
+          value=>label
+        if=>equals
+          lhs=>[.][IS_NULLABLE].Value
+          rhs=>NO
+          code
+            set=>[@][..][..][_lb][value].Value
+              value=>not nullable
+            set=>[@][..][..][_lb][class].Value
+              value=>span-2
+            add=>[/][magix.forms.create-web-part:0][controls]
+              value=>[@][..][..][_lb]
+            set=>[/][magix.forms.create-web-part:0][controls][_lb].Name
+              value=>label
+        else
+          set=>[@][..][_lb][value].Value
+            value=>nullable
+          set=>[@][..][_lb][class].Value
+            value=>span-2
+          add=>[/][magix.forms.create-web-part:0][controls]
+            value=>[@][..][_lb]
+          set=>[/][magix.forms.create-web-part:0][controls][_lb].Name
+            value=>label
+      add=>[@][magix.viewport.set-viewstate=>microsoft.sql.current-primary-keys][value]
+        value=>[@][_pks]
+        children-only=>true
+      magix.viewport.set-viewstate=>microsoft.sql.current-primary-keys
+      set=>[magix.forms.create-web-part:0][controls][label:1][value].Value
+        value=>[$][info].Value
+      set=>[@][magix.viewport.set-viewstate=>microsoft.sql.current-table][value].Value
+        value=>[$][info].Value
+      magix.viewport.set-viewstate=>microsoft.sql.current-table
+      if=>equals
+        lhs=>[:microsoft.sql.show-columns][value].Value
+        rhs=>false
+        code
+          set=>[/][magix.forms.create-web-part].Name
+            value=>_not
+          magix.viewport.clear-controls
+            container=>column-list
+      magix.forms.create-web-part
+        container=>column-list
+        forms-id=>column-list
+        class=>span-17 last
+        controls
+          label
+            tag=>hr
+          label=>tableHeader
+            tag=>h3
+      set=>[@][**text-area=>sqlQuery][value].Value
+        value=>@"select * from [{0}]"
+          v0=>[$][info].Value
+      magix.forms.create-web-part
+        container=>select-query
+        form-id=>select-query
+        class=>span-17 last
+        controls
+          text-area=>sqlQuery
+            class=>span-17 top-1 last
+            rows=>10
+            place-holder=>type your sql query here ...
+          button=>btnRunQuery
+            class=>span-2 right last
+            value=>run
+            onclick
+              microsoft.sql.run-query
+      if=>equals
+        lhs=>[:microsoft.sql.show-columns][value].Value
+        rhs=>false
+        code
+          magix.forms.effect
+            type=>timeout
+            id=>content1
+            time=>500
+            chained
+              e0
+                type=>focus-and-select
+                id=>sqlQuery
+      magix.forms.effect
+        type=>fade-in
+        form-id=>select-query
+        id=>select-query
+        time=>500
+        joined
+          e0
+            type=>roll-down
 
     microsoft.sql.run-query
       _sql
@@ -345,6 +399,9 @@ where
         and=>exist
           lhs=>[index-of][result]
         code
+          magix.forms.set-enabled
+            id=>visible-records-count
+            value=>false
           set=>[@][try][code][microsoft.sql.select][sql].Value
             value=>[_sql].Value
           set=>[@][try][code][microsoft.sql.select][connection].Value
@@ -386,7 +443,7 @@ where
                 lhs=>[@][microsoft.sql.select][end].Value
                 rhs=>[@][microsoft.sql.select][record-count].Value
                 code
-                  set=>[@][..][..][set][value][v1].Value
+                  set=>[@][..][..][**v1=>?].Value
                     value=>[@][..][..][microsoft.sql.select][record-count].Value
               set=>[/][**panel=>tblPaging][controls][label=>lblCount][value].Value
                 value=>@"{0}/{1} of {2}"
@@ -429,6 +486,17 @@ where
                 _sql=>@"update [___table] set"
                 magix.viewport.get-viewstate=>microsoft.sql.current-table
                 magix.viewport.get-viewstate=>microsoft.sql.current-primary-keys
+                if=>equals
+                  lhs=>[magix.viewport.get-viewstate=>microsoft.sql.current-primary-keys][value].Count
+                  rhs=>0
+                  code
+                    magix.viewport.show-message
+                      time=>15000
+                      message=>@"cannot automatically create update statement for table, 
+either because table has no primary keys, or because table definitions is not turned on.
+&nbsp;&nbsp;turn on table definitions by clicking the 'tables' checkbox, and make sure 
+you select the table from the list of tables, before you run your select from it"
+                    stop
                 replace=>[_sql].Value
                   what=>\[___table]
                   with=>[magix.viewport.get-viewstate=>microsoft.sql.current-table][value].Value
@@ -490,7 +558,6 @@ where"
                 magix.forms.set-value
                   form-id=>select-query
                   id=>sqlQuery
-                magix.viewport.scroll=>tableHeader
             for-each=>[.]
               _lbl
                 tag=>td
@@ -511,7 +578,7 @@ where"
             class=>span-22 last top-1
             controls
               panel=>tblPaging
-                class=>span-6 left-18 last bottom-1
+                class=>span-8 left-14 last bottom-1
                 controls
                   link-button=>previous
                     class=>span-1
@@ -542,7 +609,7 @@ where"
                     class=>span-4 text-center
                     value=>count
                   link-button=>next
-                    class=>span-1 last
+                    class=>span-1
                     value=>&gt;&gt;
                     onclick
                       magix.viewport.get-viewstate=>microsoft.sql.current-position
@@ -566,6 +633,15 @@ where"
                         value=>[using][add:1].Value
                       microsoft.sql.run-query
                         force-select=>true
+                  button=>close-select
+                    value=>done
+                    class=>span-2 last
+                    onclick
+                      magix.viewport.clear-controls
+                        container=>content2
+                      magix.forms.set-enabled
+                        id=>visible-records-count
+                        value=>true
               panel=>tbl
                 tag=>table
                 class=>sql-result-table
@@ -588,11 +664,10 @@ where"
               keep-position=>true
             magix.viewport.show-message
               time=>5000
-              color=>#aaffaa
           catch
-            set=>[magix.viewport.show-message][message].Value
+            set=>[@][magix.viewport.show-message][message].Value
               value=>[@][exception].Value
-            magix.viewporet.show-message
+            magix.viewport.show-message
               time=>10000
               color=>#ffaaaa
 
@@ -609,7 +684,7 @@ where"
           class=>span-2
           value=>connection
         select=>ddlConnection
-          class=>span-4
+          class=>span-5
           onfirstload
             microsoft.sql.populate-selector
           onselectedindexchanged
@@ -654,7 +729,7 @@ where"
           class=>span-5
         button=>btnNew
           value=>create
-          class=>span-2
+          class=>span-2 last
           onclick
             magix.forms.get-value
               form-id=>sql
@@ -685,14 +760,59 @@ where"
               id=>delete
               value=>true
             microsoft.sql.open-selected-connection
+        label=>lblVisibleRecords
+          value=>records
+          tag=>label
+          class=>span-2 top-1
         text-box=>visible-records-count
           place-holder=>10 ...
           type=>number
-          class=>span-1 last
-          title=>change number of visible records at the same time
-          ontextchanged
-            microsoft.sql.run-query
-              force-select=>true
+          class=>span-1 top-1
+        label=>lblCheckTables
+          for=>chkTables
+          tag=>label
+          value=>tables
+          class=>span-2 top-1 right-text
+        check=>chkTables
+          checked=>true
+          class=>span-1 top-1
+          oncheckedchanged
+            if=>equals
+              lhs=>[$][value].Value
+              rhs=>false
+              code
+                magix.forms.set-enabled
+                  id=>chkColumns
+                  value=>false
+                magix.forms.set-value
+                  id=>chkColumns
+                  value=>false
+            else
+              magix.forms.set-enabled
+                id=>chkColumns
+                value=>true
+            magix.forms.get-enabled
+              id=>txtNewConnection
+            if=>equals
+              lhs=>[magix.forms.get-enabled][value].Value
+              rhs=>false
+              code
+                microsoft.sql.open-selected-connection
+        label=>lblCheckColumns
+          for=>chkColumns
+          tag=>label
+          value=>columns
+          class=>span-2 top-1 right-text
+        check=>chkColumns
+          checked=>true
+          class=>span-1 top-1
+          oncheckedchanged
+            magix.viewport.get-viewstate=>microsoft.sql.current-table
+            if=>exist
+              lhs=>[magix.viewport.get-viewstate=>microsoft.sql.current-table][value].Value
+              code
+                set=>[microsoft.sql.create-table-definition-and-sql][info].Value
+                  value=>[magix.viewport.get-viewstate=>microsoft.sql.current-table][value].Value
     dynamic=>table-list
     dynamic=>column-list
     dynamic=>select-query

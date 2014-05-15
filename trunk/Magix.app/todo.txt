@@ -11,8 +11,6 @@
 
 * crud app to be removed and replaced with database based editor
 
-* support for editing records in ms sql query tool
-
 * clean up [inspect] for all active events, including unit tests
 
 * create support for "call-base" for active events that are overridden
@@ -21,7 +19,7 @@
 
 * add support for plugins in magix.file.save
 
-* support for reading web.config settings
+* support for reading web.config settings as a public active event
 
 * change app wizard to use unique ids to load to and from database instead of name of application as id
 
@@ -56,23 +54,20 @@
 
 * delete record in ms sql database manager button
 
-* check for existence of primary key in ms sql database manager, before generating update/delete sql
-
 * create comments for all hyper lisp, and refactor most hyper lisp
 
 * make sure magix.math.xxx uses e.params correctly, and document magix.math
 
 * fix css, there's more than 960 pixels in width due to old span-24 logic, now padding in container, and only 22 columns ...
 
-* make it possible to collaps table definitions in ms sql database manager
-
-* make it possible to collaps columns definitions in ms sql database manager
-
 * make it possible to save queries in the ms sql database manager
 
-* fix ms sql database manager such that it shows 90-91 of 91, and not 90-100 of 91
-
 * implement all event handlers for text-box in inspect of text-box, and other controls too
+
+* document event expressions, such as [:my.active.event][value].Value and make it possible to pass in parameters as expressions 
+  inside of active event pointing to outside node lists ...
+  And make sure they use the e.Params pointers correctly
+
 
 
 
