@@ -52,4 +52,6 @@
 
 * create unit test and documentation for [add], and slightly refactor to check [value]'s return type
 
+* refactor all places that uses Ip(e.Params) for simplicity
+
 
