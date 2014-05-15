@@ -13,6 +13,19 @@ magix.forms.create-web-part
 
   events
 
+    microsoft.sql.visible-records-count
+      magix.forms.get-value
+        id=>visible-records-count
+      if=>equals
+        lhs=>[magix.forms.get-value][value].Value
+        rhs=>
+        code
+          set=>[$][value].Value
+            value=>10
+      else
+        set=>[$][value].Value
+          value=>[magix.forms.get-value][value].Value
+
     microsoft.sql.populate-selector
       magix.data.load
         prototype
@@ -50,6 +63,9 @@ magix.forms.create-web-part
             time=>5000
 
     microsoft.sql.open-selected-connection
+      magix.forms.set-enabled
+        id=>txtNewConnection
+        value=>false
       magix.forms.get-value
         form-id=>sql
         id=>ddlConnection
@@ -77,6 +93,10 @@ magix.forms.create-web-part
             time=>5000
           stop
       set=>[magix.forms.set-value][value].Value
+        value=>[magix.data.load][objects][0][connection].Value
+      magix.forms.set-value
+        id=>lblHeader
+      set=>[magix.forms.set-value:1][value].Value
         value=>[magix.data.load][objects][0][connection].Value
       magix.forms.set-value
         form-id=>sql
@@ -205,7 +225,7 @@ where
               controls
                 label
                   tag=>hr
-                label
+                label=>tableHeader
                   tag=>h3
             set=>[@][**text-area=>sqlQuery][value].Value
               value=>@"select * from [{0}]"
@@ -262,6 +282,12 @@ where
             type=>roll-down
 
     microsoft.sql.close-selected-connection
+      magix.forms.set-value
+        id=>lblHeader
+        value=>ms sql query tool
+      magix.forms.set-enabled
+        id=>txtNewConnection
+        value=>true
       magix.forms.set-value
         form-id=>sql
         id=>txtNewConnection
@@ -328,6 +354,10 @@ where
           magix.viewport.set-viewstate=>microsoft.sql.current-select-sql
           try
             code
+              set=>[@][microsoft.sql.select][end].Value
+                value=>[:microsoft.sql.visible-records-count][value].Value
+              set=>[@][magix.viewport.set-viewstate=>microsoft.sql.current-position][value][end].Value
+                value=>[:microsoft.sql.visible-records-count][value].Value
               if=>exist
                 lhs=>[_position]
                 code
@@ -352,7 +382,6 @@ where
                     value=>[$][end].Value
               microsoft.sql.select
                 start=>0
-                end=>10
               if=>more-than
                 lhs=>[@][microsoft.sql.select][end].Value
                 rhs=>[@][microsoft.sql.select][record-count].Value
@@ -370,7 +399,6 @@ where
               magix.viewport.set-viewstate=>microsoft.sql.current-position
                 value
                   start=>0
-                  end=>10
             catch
               set=>[@][magix.viewport.show-message][message].Value
                 value=>[@][exception].Value
@@ -462,7 +490,7 @@ where"
                 magix.forms.set-value
                   form-id=>select-query
                   id=>sqlQuery
-                magix.viewport.scroll=>sqlQuery
+                magix.viewport.scroll=>tableHeader
             for-each=>[.]
               _lbl
                 tag=>td
@@ -500,10 +528,10 @@ where"
                       using=>magix.math
                         subtract
                           =>[/][magix.viewport.get-viewstate][value][start].Value
-                          =>10
+                          =>[:microsoft.sql.visible-records-count][value].Value
                         subtract
                           =>[/][magix.viewport.get-viewstate][value][end].Value
-                          =>10
+                          =>[:microsoft.sql.visible-records-count][value].Value
                       set=>[microsoft.sql.run-query][start].Value
                         value=>[using][subtract:0].Value
                       set=>[microsoft.sql.run-query][end].Value
@@ -528,10 +556,10 @@ where"
                       using=>magix.math
                         add
                           =>[/][magix.viewport.get-viewstate][value][start].Value
-                          =>10
+                          =>[:microsoft.sql.visible-records-count][value].Value
                         add
                           =>[/][magix.viewport.get-viewstate][value][end].Value
-                          =>10
+                          =>[:microsoft.sql.visible-records-count][value].Value
                       set=>[microsoft.sql.run-query][start].Value
                         value=>[using][add:0].Value
                       set=>[microsoft.sql.run-query][end].Value
@@ -570,7 +598,7 @@ where"
 
   controls
     label=>lblHeader
-      tag=>h2
+      tag=>h3
       value=>ms sql query tool
     panel=>connectionWrp
       class=>span-17 last
@@ -578,7 +606,7 @@ where"
       controls
         label=>conLbl
           tag=>label
-          class=>span-2 right-text
+          class=>span-2
           value=>connection
         select=>ddlConnection
           class=>span-4
@@ -619,14 +647,14 @@ where"
             microsoft.sql.close-selected-connection
         label=>lblNew
           tag=>label
-          class=>span-3 right-text
-          value=>or create new
+          class=>span-1 right-text
+          value=>new
         text-box=>txtNewConnection
           place-holder=>connection string ...
-          class=>span-4
+          class=>span-5
         button=>btnNew
           value=>create
-          class=>span-2 last
+          class=>span-2
           onclick
             magix.forms.get-value
               form-id=>sql
@@ -657,6 +685,14 @@ where"
               id=>delete
               value=>true
             microsoft.sql.open-selected-connection
+        text-box=>visible-records-count
+          place-holder=>10 ...
+          type=>number
+          class=>span-1 last
+          title=>change number of visible records at the same time
+          ontextchanged
+            microsoft.sql.run-query
+              force-select=>true
     dynamic=>table-list
     dynamic=>column-list
     dynamic=>select-query

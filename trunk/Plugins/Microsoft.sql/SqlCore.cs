@@ -30,11 +30,11 @@ namespace Microsoft.sql
 underneath the [result] node, from a microsoft sql server</p><p>add up parameters underneath 
 the [params] node, and make sure you have a valid connection string to an ms sql database in 
 your [connection] parameter.&nbsp;&nbsp;put the actual sql query in the [sql] parameter 
-node</p><p>both [sql] and [connection] can be either expressions or constant values.&nbsp;
-&nbsp;if you wish, you can de-reference a connection string from your web.config file, instead 
-of typing in the connection string in code by prefixing the [connection] value with web.config:
-NamedConnection, and such reference the connection string from your web.config called 
-""NamedConnection""</p><p>if you supply a [start] and [end] node, then the query will only 
+node</p><p>both [sql], [connection], [start] and [end] can be either expressions or constant 
+values.&nbsp;&nbsp;if you wish, you can de-reference a connection string from your web.config 
+file, instead of typing in the connection string in code by prefixing the [connection] value 
+with web.config:NamedConnection, and such reference the connection string from your web.config 
+called ""NamedConnection""</p><p>if you supply a [start] and [end] node, then the query will only 
 return the subsection of result inbetween the integer value from [start] and [end], which is 
 useful for queries returning huge results.&nbsp;&nbsp;[start] and [end] are optional, and if 
 they are not given, the query will return all records matching your sql.&nbsp;&nbsp;[start] 
@@ -68,11 +68,11 @@ byte[] result rows will be returned</p><p>thread safe</p>";
 
             int start = -1;
             if (ip.Contains("start"))
-                start = ip["start"].Get<int>();
+                start = int.Parse(Expressions.GetExpressionValue(ip["start"].Get<string>(), dp, ip, false) as string);
 
             int end = -1;
             if (ip.Contains("end"))
-                end = ip["end"].Get<int>();
+                end = int.Parse(Expressions.GetExpressionValue(ip["end"].Get<string>(), dp, ip, false) as string);
 
             bool count = true;
             if (ip.Contains("count"))

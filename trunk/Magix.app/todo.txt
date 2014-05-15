@@ -54,4 +54,25 @@
 
 * refactor all places that uses Ip(e.Params) for simplicity
 
+* delete record in ms sql database manager button
+
+* check for existence of primary key in ms sql database manager, before generating update/delete sql
+
+* create comments for all hyper lisp, and refactor most hyper lisp
+
+* make sure magix.math.xxx uses e.params correctly, and document magix.math
+
+* fix css, there's more than 960 pixels in width due to old span-24 logic, now padding in container, and only 22 columns ...
+
+* make it possible to collaps table definitions in ms sql database manager
+
+* make it possible to collaps columns definitions in ms sql database manager
+
+* make it possible to save queries in the ms sql database manager
+
+* fix ms sql database manager such that it shows 90-91 of 91, and not 90-100 of 91
+
+* implement all event handlers for text-box in inspect of text-box, and other controls too
+
+
 

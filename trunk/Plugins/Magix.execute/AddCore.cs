@@ -66,7 +66,7 @@ and the value of the [value] node's [value] expression</p><p>thread safe</p>";
                 {
                     string nodeNameExpression = ip["value"].Get<string>();
                     string nodeName = Expressions.GetExpressionValue(nodeNameExpression, dp, ip, false) as string;
-                    if (string.IsNullOrEmpty(nodeName))
+                    if (nodeName == null)
                         throw new ArgumentException("cannot add a node, who's name is null");
 
                     string nodeValueExpression = ip["value"]["value"].Get<string>();

@@ -249,6 +249,19 @@ namespace Magix.Core
                             isInside = false;
                             continue;
                         }
+                        else if (bufferNodeName.StartsWith(":"))
+                        {
+                            // active event reference
+                            string activeEvent = bufferNodeName.Substring(1);
+                            Node newDataNode = new Node();
+                            ActiveEvents.Instance.RaiseActiveEvent(
+                                typeof(Expressions),
+                                activeEvent,
+                                newDataNode);
+                            x = newDataNode;
+                            bufferNodeName = "";
+                            isInside = false;
+                        }
                         else if (bufferNodeName.StartsWith("**"))
                         {
                             // deep wildcard search

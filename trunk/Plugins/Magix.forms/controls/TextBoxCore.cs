@@ -63,10 +63,10 @@ namespace Magix.forms
 			    !string.IsNullOrEmpty(node["value"].Get<string>()))
 				ret.Value = node["value"].Get<string>();
 
-			if (node.Contains("mode") && 
-				node["mode"].Value != null)
+			if (node.Contains("type") && 
+				node["type"].Value != null)
 			{
-				switch(node["mode"].Get<string>())
+				switch(node["type"].Get<string>())
 				{
 				case "normal":
 					ret.Type = TextBox.TextBoxType.Text;
@@ -240,7 +240,7 @@ one line of text, without carriage return.&nbsp;&nbsp;use
             node["magix.forms.create-web-part"]["controls"]["text-box"]["disabled"].Value = false;
             node["magix.forms.create-web-part"]["controls"]["text-box"]["max"].Value = 25;
             node["magix.forms.create-web-part"]["controls"]["text-box"]["value"].Value = "hello world";
-            node["magix.forms.create-web-part"]["controls"]["text-box"]["mode"].Value = "normal|phone|search|url|email|datetime|date|month|week|time|datetimelocal|number|range|color|password";
+            node["magix.forms.create-web-part"]["controls"]["text-box"]["type"].Value = "normal|phone|search|url|email|datetime|date|month|week|time|datetimelocal|number|range|color|password";
             node["inspect"].Value = node["inspect"].Value + @"
 <p><strong>properties for text box</strong></p><p>[place-holder] 
 is shadow text, only visible when input area is empty</p><p>
@@ -263,7 +263,7 @@ correctly capitalize entities, as if you are typing text</p>
 <p>[correct] will automatically suggest corrections for typos</p>
 [complete] will suggest previously typed values for you, and 
 attempt to automatically complete the value</p><p>[max] is 
-maximum number of characters in web control</p><p>[mode] 
+maximum number of characters in web control</p><p>[type] 
 determines the mode of the text box.&nbsp;&nbsp;this depends 
 upon the type of input you wish that your text box shall be 
 taking.&nbsp;&nbsp;if you want the user to type in an email 
