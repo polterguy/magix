@@ -21,9 +21,10 @@ namespace Magix.execute
         [ActiveEvent(Name = "magix.execute.iterate")]
 		public static void magix_execute_iterate(object sender, ActiveEventArgs e)
 		{
-			if (ShouldInspect(e.Params))
-			{
-                e.Params["inspect"].Value = @"<p>loops through all the nodes in the given 
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
+            {
+                ip["inspect"].Value = @"<p>loops through all the nodes in the given 
 node-list expression, flattening the hierarchy, setting the data-pointer to the currently 
 processed item</p><p>notice how this differs in regards to the [for-each] keyword, that 
 only iterates over the children of the nodes referenced in its expression.&nbsp;&nbsp;while 
@@ -33,25 +34,24 @@ nodes in the expression, their children, and their children's children, and so o
 a list of items, flattening the hierarchy</p><p>your code will execute once for every single 
 node you have in your return expression.&nbsp;&nbsp;use the [.] expression to de-reference 
 the currently iterated node</p><p>thread safe</p>";
-                e.Params["_data"]["items"]["message1"].Value = "howdy world 1.0";
-				e.Params["_data"]["items"]["sub-1"]["message2"].Value = "howdy world 2.0";
-                e.Params["_data"]["items"]["sub-1"]["message3"].Value = "howdy world 3.0";
-                e.Params["_data"]["items"]["sub-2"]["message4"].Value = "howdy world 4.0";
-                e.Params["_data"]["items"]["sub-2"]["sub-3"]["message5"].Value = "howdy world 5.0";
-                e.Params["_data"]["items"]["sub-3"]["message6"].Value = "howdy world 6.0";
-				e.Params["_data"]["items"]["message7"].Value = "howdy world 7.0";
-                e.Params["iterate"].Value = "[_data][items]";
-                e.Params["iterate"]["if"].Value = "exist";
-                e.Params["iterate"]["if"]["lhs"].Value = "[.].Value";
-                e.Params["iterate"]["if"]["code"]["set"].Value = "[@][magix.viewport.show-message][message].Value";
-                e.Params["iterate"]["if"]["code"]["set"]["value"].Value = "[.].Value";
+                ip["_data"]["items"]["message1"].Value = "howdy world 1.0";
+				ip["_data"]["items"]["sub-1"]["message2"].Value = "howdy world 2.0";
+                ip["_data"]["items"]["sub-1"]["message3"].Value = "howdy world 3.0";
+                ip["_data"]["items"]["sub-2"]["message4"].Value = "howdy world 4.0";
+                ip["_data"]["items"]["sub-2"]["sub-3"]["message5"].Value = "howdy world 5.0";
+                ip["_data"]["items"]["sub-3"]["message6"].Value = "howdy world 6.0";
+				ip["_data"]["items"]["message7"].Value = "howdy world 7.0";
+                ip["iterate"].Value = "[_data][items]";
+                ip["iterate"]["if"].Value = "exist";
+                ip["iterate"]["if"]["lhs"].Value = "[.].Value";
+                ip["iterate"]["if"]["code"]["set"].Value = "[@][magix.viewport.show-message][message].Value";
+                ip["iterate"]["if"]["code"]["set"]["value"].Value = "[.].Value";
 				return;
 			}
 
 			if (!e.Params.Contains("_ip") || !(e.Params["_ip"].Value is Node))
 				throw new ArgumentException("you cannot raise [for-each] directly, except for inspect purposes");
 
-			Node ip = e.Params["_ip"].Value as Node;
 			Node dp = e.Params["_dp"].Value as Node;
 
             if (string.IsNullOrEmpty(ip.Get<string>()))

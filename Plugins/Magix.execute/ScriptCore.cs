@@ -22,16 +22,17 @@ namespace Magix.admin
 		[ActiveEvent(Name = "magix.execute.execute-script")]
 		public static void magix_execute_execute_script(object sender, ActiveEventArgs e)
 		{
-			if (ShouldInspect(e.Params))
-			{
-				e.Params["inspect"].Value = @"<p>runs the hyper lisp script given in value of 
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
+            {
+				ip["inspect"].Value = @"<p>runs the hyper lisp script given in value of 
 [script], putting all child nodes from underneath the [params] node into the [$] collection, 
 accessible from inside the script, which again is able to return nodes through the [$] node, 
 which will become children of the [params] node after execution</p><p>you can optionally 
 supply a [file] parameter, which will be loaded through [magix.file.load], and executed.&nbsp;
 &nbsp;if you supply a [file] parameter, you cannot supply a [script] parameter</p><p>both [file] 
 and [script], can either be expressions, or constants</p><p>thread safe</p>";
-				e.Params["execute-script"]["script"].Value = @"
+				ip["execute-script"]["script"].Value = @"
 _data=>thomas
 if=>equals
   lhs=>[_data].Value
@@ -42,11 +43,10 @@ if=>equals
     magix.viewport.show-message
     set=>[$][output].Value
       value=>dude's still thomas";
-                e.Params["execute-script"]["input"].Value = "hello world";
+                ip["execute-script"]["input"].Value = "hello world";
 				return;
 			}
 
-            Node ip = Ip(e.Params);
             Node dp = ip;
             if (e.Params.Contains("_dp"))
                 dp = e.Params["_dp"].Get<Node>();

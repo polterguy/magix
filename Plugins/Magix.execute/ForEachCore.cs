@@ -21,29 +21,29 @@ namespace Magix.execute
 		[ActiveEvent(Name = "magix.execute.for-each")]
 		public static void magix_execute_for_each(object sender, ActiveEventArgs e)
 		{
-			if (ShouldInspect(e.Params))
+            Node ip = Ip(e.Params);
+			if (ShouldInspect(ip))
 			{
-                e.Params["inspect"].Value = @"<p>loops through all the nodes in the given 
+                ip["inspect"].Value = @"<p>loops through all the nodes in the given 
 node-list expression, setting the data-pointer to the currently processed item</p><p>your 
 code will execute once for every single node you have in your return expression.&nbsp;&nbsp;
 use the [.] expression to de-reference the currently iterated node</p><p>thread safe</p>";
-                e.Params["_data"]["items"]["message1"].Value = "howdy world 1.0";
-				e.Params["_data"]["items"]["message2"].Value = "howdy world 2.0";
-				e.Params["_data"]["items"]["message3"].Value = "howdy world 3.0";
-				e.Params["_data"]["items"]["message4"].Value = "howdy world 4.0";
-				e.Params["_data"]["items"]["message5"].Value = "howdy world 5.0";
-				e.Params["_data"]["items"]["message6"].Value = "howdy world 6.0";
-				e.Params["_data"]["items"]["message7"].Value = "howdy world 7.0";
-				e.Params["for-each"].Value = "[_data][items]";
-				e.Params["for-each"]["set"].Value = "[@][magix.viewport.show-message][message].Value";
-				e.Params["for-each"]["set"]["value"].Value = "[.].Value";
+                ip["_data"]["items"]["message1"].Value = "howdy world 1.0";
+                ip["_data"]["items"]["message2"].Value = "howdy world 2.0";
+                ip["_data"]["items"]["message3"].Value = "howdy world 3.0";
+                ip["_data"]["items"]["message4"].Value = "howdy world 4.0";
+                ip["_data"]["items"]["message5"].Value = "howdy world 5.0";
+                ip["_data"]["items"]["message6"].Value = "howdy world 6.0";
+                ip["_data"]["items"]["message7"].Value = "howdy world 7.0";
+                ip["for-each"].Value = "[_data][items]";
+                ip["for-each"]["set"].Value = "[@][magix.viewport.show-message][message].Value";
+                ip["for-each"]["set"]["value"].Value = "[.].Value";
 				return;
 			}
 
 			if (!e.Params.Contains("_ip") || !(e.Params["_ip"].Value is Node))
 				throw new ArgumentException("you cannot raise [for-each] directly, except for inspect purposes");
 
-			Node ip = e.Params["_ip"].Value as Node;
 			Node dp = e.Params["_dp"].Value as Node;
 
             if (string.IsNullOrEmpty(ip.Get<string>()))

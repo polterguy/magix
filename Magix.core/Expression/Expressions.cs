@@ -53,37 +53,50 @@ namespace Magix.Core
             return retVal;
         }
 
-		/*
-		 * Sets the given exprDestination to the valuer of exprSource. If
-		 * exprSource starts with a '[', it is expected to be a reference to another
-		 * expression, else it will be assumed to be a static value
-		 */
+        private static object FormatString(Node dp, Node ip, Node contentNode, object valueToSet)
+        {
+            object[] arrs = new object[contentNode.Count];
+            int idxNo = 0;
+            foreach (Node idx in contentNode)
+            {
+                if (idx.Count > 0)
+                {
+                    arrs[idxNo++] = FormatString(dp, ip, idx, idx.Get<string>());
+                }
+                else
+                {
+                    arrs[idxNo++] = Expressions.GetExpressionValue(idx.Get<string>(), dp, ip, false);
+                }
+            }
+            valueToSet = string.Format(CultureInfo.InvariantCulture, valueToSet.ToString(), arrs);
+            return valueToSet;
+        }
+
+        /*
+         * Sets the given exprDestination to the valuer of exprSource. If
+         * exprSource starts with a '[', it is expected to be a reference to another
+         * expression, else it will be assumed to be a static value
+         */
 		public static void SetNodeValue(
 			string destinationExpression, 
 			string sourceExpression, 
-			Node source, 
+			Node dp, 
 			Node ip,
 			bool noRemove)
 		{
-			object valueToSet = GetExpressionValue(sourceExpression, source, ip, false);
+			object valueToSet = GetExpressionValue(sourceExpression, dp, ip, false);
 
 			// checking to see if this is a string.Format expression
 			if (ip.Contains("value") && ip["value"].Count > 0)
 			{
-				object[] arrs = new object[ip["value"].Count];
-				int idxNo = 0;
-				foreach (Node idx in ip["value"])
-				{
-					arrs[idxNo++] = Expressions.GetExpressionValue(idx.Get<string>(), source, ip, false);
-				}
-				valueToSet = string.Format(valueToSet.ToString(), arrs);
+                valueToSet = FormatString(dp, ip, ip["value"], valueToSet);
 			}
 
             if (valueToSet == null && !noRemove)
             {
                 // Removing node or value
                 string lastEntity = "";
-                Node destinationNode = GetNode(destinationExpression, source, ip, ref lastEntity, false);
+                Node destinationNode = GetNode(destinationExpression, dp, ip, ref lastEntity, false);
                 if (destinationNode == null)
                     return;
 
@@ -102,7 +115,7 @@ namespace Magix.Core
                 Node destinationNode = ip;
                 
                 if (destinationExpression != null)
-                    destinationNode = GetNode(destinationExpression, source, ip, ref lastEntity, true);
+                    destinationNode = GetNode(destinationExpression, dp, ip, ref lastEntity, true);
 
                 if (lastEntity.StartsWith(".Value"))
                 {

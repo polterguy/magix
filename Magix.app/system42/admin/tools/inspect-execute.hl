@@ -14,7 +14,6 @@ for-each=>[Data][events]
   _tpl
     link-button
       class=>span-3 hover-shadow
-      text
       onclick
         void.foo
           inspect

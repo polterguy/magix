@@ -10,20 +10,21 @@ using System.Globalization;
 
 namespace Magix.execute
 {
-	/**
+	/*
 	 * if/else-if/else hyper lisp active events
 	 */
 	public class IfElseCore : ActiveController
 	{
-		/**
+		/*
 		 * if implementation
 		 */
 		[ActiveEvent(Name = "magix.execute.if")]
 		public static void magix_execute_if(object sender, ActiveEventArgs e)
 		{
-			if (ShouldInspect(e.Params))
-			{
-				e.Params["inspect"].Value = @"<p>executes the [code] block of nodes as an execution
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
+            {
+				ip["inspect"].Value = @"<p>executes the [code] block of nodes as an execution
 block, but only if the [if] statement returns true</p><p>pair your [if] statements together with 
 [else-if] and [else] to create branching and control of flow of your program.&nbsp;&nbsp;if an [if]
 statement returns true, then no paired [else-if] or [else] statements will be executed</p><p>the 
@@ -34,13 +35,13 @@ automatically between int, decimal, date and bool, or resort to string if no con
 &nbsp;&nbsp;the [lhs] and [rhs] nodes can be either an expression, or a hardcoded value.&nbsp;&nbsp;
 you can compare two node trees in [lhs] and [rhs], which means that the node trees will be compared 
 deeply, comparing their name, value and children for equality</p><p>thread safe</p>";
-				e.Params["_data"]["item"].Value = "cache-object";
-				e.Params["_data"]["cache"].Value = null;
-                e.Params["if"].Value = "not-equals";
-                e.Params["if"]["lhs"].Value = "[_data][item].Value";
-                e.Params["if"]["rhs"].Value = "[_data][1].Name";
-                e.Params["if"]["code"]["magix.viewport.show-message"].Value = null;
-				e.Params["if"]["code"]["magix.viewport.show-message"]["message"].Value = "they are not the same";
+				ip["_data"]["item"].Value = "cache-object";
+				ip["_data"]["cache"].Value = null;
+                ip["if"].Value = "not-equals";
+                ip["if"]["lhs"].Value = "[_data][item].Value";
+                ip["if"]["rhs"].Value = "[_data][1].Name";
+                ip["if"]["code"]["magix.viewport.show-message"].Value = null;
+				ip["if"]["code"]["magix.viewport.show-message"]["message"].Value = "they are not the same";
 				return;
 			}
 
@@ -52,15 +53,16 @@ deeply, comparing their name, value and children for equality</p><p>thread safe<
 				"magix.execute.if");
 		}
 
-		/**
+		/*
 		 * else-if implementation
 		 */
 		[ActiveEvent(Name = "magix.execute.else-if")]
 		public static void magix_execute_else_if(object sender, ActiveEventArgs e)
 		{
-			if (ShouldInspect(e.Params))
-			{
-				e.Params["inspect"].Value = @"<p>executes the underlaying [code] node,
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
+            {
+				ip["inspect"].Value = @"<p>executes the underlaying [code] node,
 but only if no previous [if] or [else-if] statement has returned true, and the statement 
 inside the value of the [else-if] returns true</p><p>the operator used to compare the 
 [lhs] and the [rhs] nodes must be defined using the value of the [else-if] node.&nbsp;
@@ -71,24 +73,22 @@ conversion is possible.&nbsp;&nbsp;the [lhs] and [rhs] nodes can be either an ex
 or a hardcoded value.&nbsp;&nbsp;you can compare two node trees in [lhs] and [rhs], which 
 means that the node trees will be compared deeply, comparing their name, value and children 
 for equality</p><p>thread safe</p>";
-				e.Params["_data"]["node"].Value = null;
-                e.Params["if"].Value = "exist";
-                e.Params["if"]["lhs"].Value = "[_data][node].Value";
-                e.Params["if"]["code"]["magix.viewport.show-message"]["message"].Value = "darn it";
-                e.Params["else-if"].Value = "exist";
-                e.Params["else-if"]["lhs"].Value = "[_data][node]";
-                e.Params["else-if"]["code"]["magix.viewport.show-message"]["message"].Value = "puuh";
+				ip["_data"]["node"].Value = null;
+                ip["if"].Value = "exist";
+                ip["if"]["lhs"].Value = "[_data][node].Value";
+                ip["if"]["code"]["magix.viewport.show-message"]["message"].Value = "darn it";
+                ip["else-if"].Value = "exist";
+                ip["else-if"]["lhs"].Value = "[_data][node]";
+                ip["else-if"]["code"]["magix.viewport.show-message"]["message"].Value = "puuh";
 				return;
 			}
 			
 			if (!e.Params.Contains("_ip") || !(e.Params["_ip"].Value is Node))
 				throw new ArgumentException("you cannot raise [else-if] directly, except for inspect purposes");
 
-			Node ip = e.Params["_ip"].Value as Node;
-
 			// Checking to see if a previous "if" or "else-if" statement has returned true
-			if (e.Params.Contains("_state_if") &&
-			    e.Params["_state_if"].Get<bool>())
+            if (ip.Parent.Contains("_state_if") &&
+                ip.Parent["_state_if"].Get<bool>())
 				return;
 
 			IfImplementation(
@@ -102,15 +102,16 @@ for equality</p><p>thread safe</p>";
 		[ActiveEvent(Name = "magix.execute.else")]
 		public static void magix_execute_else(object sender, ActiveEventArgs e)
 		{
-			if (ShouldInspect(e.Params))
-			{
-				e.Params["inspect"].Value = @"<p>executes the underlaying code block,
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
+            {
+				ip["inspect"].Value = @"<p>executes the underlaying code block,
 but only if no paired [if] or [else-if] statement has returned true</p><p>thread safe
 </p>";
-				e.Params["if"].Value = "exist";
-                e.Params["if"]["lhs"].Value = "[_not-existing-node]";
-				e.Params["if"]["code"]["magix.viewport.show-message"]["message"].Value = "ohh crap";
-				e.Params["else"]["magix.viewport.show-message"]["message"].Value = "yup, still sane";
+				ip["if"].Value = "exist";
+                ip["if"]["lhs"].Value = "[_not-existing-node]";
+				ip["if"]["code"]["magix.viewport.show-message"]["message"].Value = "ohh crap";
+				ip["else"]["magix.viewport.show-message"]["message"].Value = "yup, still sane";
 				return;
 			}
 
@@ -118,10 +119,11 @@ but only if no paired [if] or [else-if] statement has returned true</p><p>thread
 				throw new ArgumentException("you cannot raise [else] directly, except for inspect purposes");
 
 			// Checking to see if a previous "if" or "else-if" statement has returned true
-            if (e.Params.Contains("_state_if") &&
-                e.Params["_state_if"].Get<bool>())
-				return;
-
+            if (ip.Parent.Contains("_state_if") &&
+                ip.Parent["_state_if"].Get<bool>())
+            {
+                return;
+            }
 
 			RaiseActiveEvent(
 				"magix.execute", 
@@ -157,13 +159,15 @@ but only if no paired [if] or [else-if] statement has returned true</p><p>thread
             if (expressionIsTrue)
             {
                 // Changing state, to signal any later [else-if] and [else] expressions that expression has executed
-                pars["_state_if"].Value = true;
+                ip.Parent["_state_if"].Value = true;
                 pars["_ip"].Value = ip["code"];
 
                 RaiseActiveEvent(
                     "magix.execute",
                     pars);
             }
+            else
+                ip.Parent["_state_if"].UnTie();
         }
 	}
 }

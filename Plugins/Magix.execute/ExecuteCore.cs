@@ -22,16 +22,17 @@ namespace Magix.execute
         [ActiveEvent(Name = "magix.execute.using")]
         public void magix_execute_using(object sender, ActiveEventArgs e)
         {
-            if (ShouldInspect(e.Params))
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
             {
-                e.Params["inspect"].Value = @"<p>changes the default namespace 
+                ip["inspect"].Value = @"<p>changes the default namespace 
 for the current scope.&nbsp;&nbsp;this allows you to raise active events which 
 you normally would have to raise with a period in their name, without the period, 
 which allows active events which normally cannot access the entire execution tree, 
 to do just that</p><p>thread safe</p>";
-                e.Params["using"].Value = "magix.math";
-                e.Params["using"]["add"][""].Value = 4;
-                e.Params["using"]["add"]["", 1].Value = 1;
+                ip["using"].Value = "magix.math";
+                ip["using"]["add"][""].Value = 4;
+                ip["using"]["add"]["", 1].Value = 1;
                 return;
             }
 
@@ -43,7 +44,6 @@ to do just that</p><p>thread safe</p>";
 			    if (!e.Params.Contains("_dp") || !(e.Params["_dp"].Value is Node))
 				    throw new ArgumentException("you cannot raise [magix.execute.using] directly besides for inspect purposes");
 
-			    Node ip = e.Params["_ip"].Value as Node;
                 Node dp = e.Params["_dp"].Value as Node;
                 e.Params["_namespaces"].Add(new Node("item", ip.Get<string>()));
 
@@ -63,24 +63,24 @@ to do just that</p><p>thread safe</p>";
         [ActiveEvent(Name = "magix.execute.sandbox")]
         public void magix_execute_sandbox(object sender, ActiveEventArgs e)
         {
-            if (ShouldInspect(e.Params))
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
             {
-                e.Params["inspect"].Value = @"<p>changes the execution engine, making 
+                ip["inspect"].Value = @"<p>changes the execution engine, making 
 sure only keywords and active events within [whitelist] are legal keywords</p><p>this 
 is a useful feature to prevent external sources, or untrusted scripts, to execute 
 malicious code.&nbsp;&nbsp;all keywords and active events which are not declared in 
 the [whitelist] parameter, are not allowed to be executed as long as the instruction 
 pointer is within the scope of the [code] block, which declares the block of code that 
 is to be sandboxed</p><p>thread safe</p>";
-                e.Params["sandbox"]["whitelist"]["foo"].Value = null;
-                e.Params["sandbox"]["code"]["bar"].Value = "throws exception";
+                ip["sandbox"]["whitelist"]["foo"].Value = null;
+                ip["sandbox"]["code"]["bar"].Value = "throws exception";
                 return;
             }
 
             if (!e.Params.Contains("_ip") || !(e.Params["_ip"].Value is Node))
                 throw new ArgumentException("you cannot raise [sandbox] directly, except for inspect purposes");
 
-            Node ip = Ip(e.Params);
             if (!ip.Contains("code"))
                 throw new ArgumentException("you need to supply a [code] block to [sandbox] active event");
             if (!ip.Contains("whitelist"))
@@ -100,21 +100,22 @@ is to be sandboxed</p><p>thread safe</p>";
         [ActiveEvent(Name = "magix.execute.execute")]
         public static void magix_execute(object sender, ActiveEventArgs e)
 		{
-			if (ShouldInspect(e.Params))
-			{
-				e.Params["inspect"].Value = @"<p>executes the incoming parameters 
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
+            {
+				ip["inspect"].Value = @"<p>executes the incoming parameters 
 as hyper lisp, meaning it will raise everything containing a period, while everything 
 not starting with a '_' will be assumed to be a hyper lisp keyword, and appended 
 behind 'magix.execute.', before that string is raised as an active event</p><p>a 
 hyper lisp keyword will have access to the entire data tree, while a normal active 
 event will only be able to modify the parts of the tree from underneath its own node
 </p><p>thread safe</p>";
-				e.Params["_data"]["value"].Value = "thomas";
-				e.Params["if"].Value = "[_data][value].Value==thomas";
-				e.Params["if"]["magix.viewport.show-message"].Value = null;
-				e.Params["if"]["magix.viewport.show-message"]["message"].Value = "hi thomas";
-				e.Params["else"]["magix.viewport.show-message"].Value = null;
-				e.Params["else"]["magix.viewport.show-message"]["message"].Value = "hi stranger";
+				ip["_data"]["value"].Value = "thomas";
+				ip["if"].Value = "[_data][value].Value==thomas";
+				ip["if"]["magix.viewport.show-message"].Value = null;
+				ip["if"]["magix.viewport.show-message"]["message"].Value = "hi thomas";
+				ip["else"]["magix.viewport.show-message"].Value = null;
+				ip["else"]["magix.viewport.show-message"]["message"].Value = "hi stranger";
 				return;
 			}
 
@@ -153,7 +154,6 @@ event will only be able to modify the parts of the tree from underneath its own 
                 if (!e.Params.Contains("_current-executed-lines"))
                     e.Params["_current-executed-lines"].Value = 0;
 
-                Node ip = Ip(e.Params);
                 Node dp = e.Params;
                 if (e.Params.Contains("_dp"))
                     dp = e.Params["_dp"].Get<Node>();

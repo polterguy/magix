@@ -21,8 +21,6 @@
 
 * add support for plugins in magix.file.save
 
-* support for sandboxed execution of specific keywords
-
 * support for reading web.config settings
 
 * change app wizard to use unique ids to load to and from database instead of name of application as id
@@ -41,4 +39,17 @@
   instead of having to go "set" to change value
 
 * make all updates to mux become JsonGeneric updates, to reduce the size of the javascript
+
+* unit testing for sandboxing features, and fully qualified hyper lisp keywords
+
+* timed execution, hyper lisp executing at a specific datetime, and/or interval
+
+* unit testing of [if]/[else] etc, to make sure _state_if functions the way it is supposed to 
+
+* refactor [if] such that it uses e.Params for _state_if, by creating a stack of _state_if in e.Params, with ip.Parent.Dna as getter
+
+* refactor all active events to not take value parameters, such as set-viewstate
+
+* create unit test and documentation for [add], and slightly refactor to check [value]'s return type
+
 

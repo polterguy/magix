@@ -34,9 +34,10 @@ namespace Magix.execute
 		[ActiveEvent(Name = "magix.core.application-startup")]
 		public static void magix_core_application_startup(object sender, ActiveEventArgs e)
 		{
-			if (ShouldInspect(e.Params))
-			{
-				e.Params["inspect"].Value = @"<p>called during startup of application 
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
+            {
+				ip["inspect"].Value = @"<p>called during startup of application 
 to make sure our active events, which are dynamically tied towards serialized hyper 
 lisp blocks of code, are being correctly re-mapped</p>";
 				return;
@@ -72,9 +73,10 @@ lisp blocks of code, are being correctly re-mapped</p>";
         [ActiveEvent(Name = "magix.execute.event")]
         public static void magix_execute_event(object sender, ActiveEventArgs e)
         {
-            if (ShouldInspect(e.Params))
-			{
-				e.Params["inspect"].Value = @"<p>overrides the active event in [event]
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
+            {
+				ip["inspect"].Value = @"<p>overrides the active event in [event]
 with the hyper lisp code in the [code] expression</p><p>these types of active events 
 can take and return parameters.&nbsp;&nbsp;if you wish to pass in or retrieve parameters, 
 then as you invoke the function, just append your parameters underneath the function 
@@ -90,29 +92,27 @@ last as long as the application is not restarted.&nbsp;&nbsp;this is useful for 
 events whom are created for instance during the startup of your application, since it 
 will save time, since they will anyway be overwritten the next time your application 
 restarts</p><p>thread safe</p>";
-				e.Params["event"].Value = "foo.bar";
-                e.Params["event"]["remotable"].Value = false;
-                e.Params["event"]["persist"].Value = false;
-                e.Params["event"]["code"]["_data"].Value = "thomas";
-				e.Params["event"]["code"]["_backup"].Value = "thomas";
-				e.Params["event"]["code"]["if"].Value = "equals";
-                e.Params["event"]["code"]["if"]["lhs"].Value = "[_data].Value";
-                e.Params["event"]["code"]["if"]["rhs"].Value = "[_backup].Value";
-				e.Params["event"]["code"]["if"]["code"]["set"].Value = "[$][output].Value";
-                e.Params["event"]["code"]["if"]["code"]["set"]["value"].Value = "return-value";
-                e.Params["event"]["code"]["if"]["code"].Add(new Node("set", "[/][magix.viewport.show-message][message].Value"));
-                e.Params["event"]["code"]["if"]["code"][e.Params["event"]["code"]["if"]["code"].Count - 1]["value"].Value = "[$][input].Value";
-				e.Params["event"]["code"]["magix.viewport.show-message"].Value = null;
-				e.Params["foo.bar"].Value = null;
-				e.Params["foo.bar"]["input"].Value = "hello world 2.0";
-				e.Params.Add (new Node("event", "foo.bar"));
+				ip["event"].Value = "foo.bar";
+                ip["event"]["remotable"].Value = false;
+                ip["event"]["persist"].Value = false;
+                ip["event"]["code"]["_data"].Value = "thomas";
+				ip["event"]["code"]["_backup"].Value = "thomas";
+				ip["event"]["code"]["if"].Value = "equals";
+                ip["event"]["code"]["if"]["lhs"].Value = "[_data].Value";
+                ip["event"]["code"]["if"]["rhs"].Value = "[_backup].Value";
+				ip["event"]["code"]["if"]["code"]["set"].Value = "[$][output].Value";
+                ip["event"]["code"]["if"]["code"]["set"]["value"].Value = "return-value";
+                ip["event"]["code"]["if"]["code"].Add(new Node("set", "[/][magix.viewport.show-message][message].Value"));
+                ip["event"]["code"]["if"]["code"][ip["event"]["code"]["if"]["code"].Count - 1]["value"].Value = "[$][input].Value";
+				ip["event"]["code"]["magix.viewport.show-message"].Value = null;
+				ip["foo.bar"].Value = null;
+				ip["foo.bar"]["input"].Value = "hello world 2.0";
+				ip.Add (new Node("event", "foo.bar"));
 				return;
 			}
 
 			if (!e.Params.Contains("_ip") || !(e.Params["_ip"].Value is Node))
 				throw new ArgumentException("you cannot raise [event] directly, except for inspect purposes");
-
-			Node ip = e.Params ["_ip"].Value as Node;
 
 			string activeEvent = ip.Get<string>();
 
@@ -231,9 +231,10 @@ events raised internally within event</p>";
         [ActiveEvent(Name = "magix.execute.session-event")]
         public void magix_execute_session_event(object sender, ActiveEventArgs e)
         {
-            if (ShouldInspect(e.Params))
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
             {
-                e.Params["inspect"].Value = @"<p>overrides the active event in [session-event]
+                ip["inspect"].Value = @"<p>overrides the active event in [session-event]
 with the hyper lisp in the [code] expression for the current session</p><p>these types of active 
 events can take and return parameters.&nbsp;&nbsp;if you wish to pass in or retrieve parameters, 
 then as you invoke the function, just append your args underneath the function invocation, and 
@@ -243,27 +244,25 @@ outside of the active event itself, you can access these parameters directly und
 active event itself</p><p>event will be deleted, if you pass in no [code] block</p><p>note that 
 a session event cannot be marked as neither open nor persisted</p><p>not thread 
 safe</p>";
-                e.Params["session-event"].Value = "foo.bar";
-                e.Params["session-event"]["code"]["_data"].Value = "thomas";
-                e.Params["session-event"]["code"]["_backup"].Value = "thomas";
-                e.Params["session-event"]["code"]["if"].Value = "equals";
-                e.Params["session-event"]["code"]["if"]["lhs"].Value = "[_data].Value";
-                e.Params["session-event"]["code"]["if"]["rhs"].Value = "[_backup].Value";
-                e.Params["session-event"]["code"]["if"]["code"]["set"].Value = "[$][output].Value";
-                e.Params["session-event"]["code"]["if"]["code"]["set"]["value"].Value = "return-value";
-                e.Params["session-event"]["code"]["if"]["code"].Add(new Node("set", "[/][magix.viewport.show-message][message].Value"));
-                e.Params["session-event"]["code"]["if"]["code"][e.Params["session-event"]["code"]["if"]["code"].Count - 1]["value"].Value = "[$][input].Value";
-                e.Params["session-event"]["code"]["magix.viewport.show-message"].Value = null;
-                e.Params["foo.bar"].Value = null;
-                e.Params["foo.bar"]["input"].Value = "hello world 2.0";
-                e.Params["session-event", 1].Value = "foo.bar";
+                ip["session-event"].Value = "foo.bar";
+                ip["session-event"]["code"]["_data"].Value = "thomas";
+                ip["session-event"]["code"]["_backup"].Value = "thomas";
+                ip["session-event"]["code"]["if"].Value = "equals";
+                ip["session-event"]["code"]["if"]["lhs"].Value = "[_data].Value";
+                ip["session-event"]["code"]["if"]["rhs"].Value = "[_backup].Value";
+                ip["session-event"]["code"]["if"]["code"]["set"].Value = "[$][output].Value";
+                ip["session-event"]["code"]["if"]["code"]["set"]["value"].Value = "return-value";
+                ip["session-event"]["code"]["if"]["code"].Add(new Node("set", "[/][magix.viewport.show-message][message].Value"));
+                ip["session-event"]["code"]["if"]["code"][ip["session-event"]["code"]["if"]["code"].Count - 1]["value"].Value = "[$][input].Value";
+                ip["session-event"]["code"]["magix.viewport.show-message"].Value = null;
+                ip["foo.bar"].Value = null;
+                ip["foo.bar"]["input"].Value = "hello world 2.0";
+                ip["session-event", 1].Value = "foo.bar";
                 return;
             }
 
             if (!e.Params.Contains("_ip") || !(e.Params["_ip"].Value is Node))
                 throw new ArgumentException("you cannot raise [magix.execute.session-event] directly, except for inspect purposes");
-
-            Node ip = e.Params["_ip"].Value as Node;
 
             string activeEvent = ip.Get<string>();
 
@@ -307,9 +306,10 @@ safe</p>";
         [ActiveEvent(Name = "magix.execute.list-events")]
         public static void magix_execute_list_events(object sender, ActiveEventArgs e)
         {
-            if (ShouldInspect(e.Params))
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
             {
-                e.Params["inspect"].Value = @"<p>returns all active events 
+                ip["inspect"].Value = @"<p>returns all active events 
 within the system.&nbsp;&nbsp;add [all], [open], [remoted], [overridden] or 
 [begins-with] to filter the events returned</p>active events are returned 
 in [events].&nbsp;&nbsp;will not return unit tests and active events starting 
@@ -317,15 +317,13 @@ with _ if [all] is false.&nbsp;&nbsp;if [all], [open], [remoted] or [overridden]
 is defined, it will return all events fullfilling criteria, regardless of 
 whether or not they are private events, tests or don't match the [begins-with] 
 parameter</p><p>thread safe</p>";
-                e.Params["list-events"]["all"].Value = true;
-                e.Params["list-events"]["open"].Value = false;
-                e.Params["list-events"]["remoted"].Value = false;
-                e.Params["list-events"]["overridden"].Value = false;
-                e.Params["list-events"]["begins-with"].Value = "magix.execute.";
+                ip["list-events"]["all"].Value = true;
+                ip["list-events"]["open"].Value = false;
+                ip["list-events"]["remoted"].Value = false;
+                ip["list-events"]["overridden"].Value = false;
+                ip["list-events"]["begins-with"].Value = "magix.execute.";
                 return;
             }
-
-            Node ip = Ip(e.Params);
 
             bool open = false;
             if (ip.Contains("open"))

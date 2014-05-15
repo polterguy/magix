@@ -11,32 +11,31 @@ using Magix.Core;
 
 namespace Magix.execute
 {
-	/**
+	/*
 	 * hyper lisp index-of keyword
 	 */
 	public class IndexOfCore : ActiveController
 	{
-		/**
-		 * hyepr lisp index-of keyword
+		/*
+		 * hyper lisp index-of keyword
 		 */
 		[ActiveEvent(Name = "magix.execute.index-of")]
 		public static void magix_execute_index_of(object sender, ActiveEventArgs e)
 		{
-			if (ShouldInspect(e.Params))
-			{
-                e.Params["inspect"].Value = @"<p>returns the index of all occurences of 
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
+            {
+                ip["inspect"].Value = @"<p>returns the index of all occurences of 
 the [what] constant or expression as nodes containing the integer value of where match 
 was found underneath the [result] return node</p><p>thread safe</p>";
-                e.Params["_data"].Value = "this will return the position of all 'r' characters in string";
-				e.Params["index-of"].Value = "[_data].Value";
-				e.Params["index-of"]["what"].Value = "r";
+                ip["_data"].Value = "this will return the position of all 'r' characters in string";
+				ip["index-of"].Value = "[_data].Value";
+				ip["index-of"]["what"].Value = "r";
                 return;
 			}
 
 			if (!e.Params.Contains("_ip") || !(e.Params["_ip"].Value is Node))
 				throw new ArgumentException("you cannot raise [index-of] directly, except for inspect purposes");
-
-			Node ip = e.Params["_ip"].Value as Node;
 
 			Node dp = e.Params["_dp"].Value as Node;
 

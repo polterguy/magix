@@ -1,6 +1,4 @@
 
-event:magix.execute
-
 inspect=>@"will show a screen of all the 
 web controls in the system, and allow
 the user to inspect them by clicking them.&nbsp;&nbsp;

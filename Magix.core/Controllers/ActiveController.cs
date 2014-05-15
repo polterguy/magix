@@ -24,7 +24,9 @@ namespace Magix.Core
 		 */
         protected static bool ShouldInspect(Node node)
         {
-            return node.Contains("inspect") && node["inspect"].Value == null;
+            return (node.Contains("inspect") && node["inspect"].Value == null) || 
+                (node.Contains("_ip") && 
+                    (node["_ip"].Get<Node>().Contains("inspect") && node["_ip"].Get<Node>()["inspect"].Value == null));
         }
 
         /**

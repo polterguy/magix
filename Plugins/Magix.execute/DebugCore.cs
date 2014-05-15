@@ -21,19 +21,19 @@ namespace Magix.execute
 		[ActiveEvent(Name = "magix.execute.debug")]
 		public void magix_execute_debug(object sender, ActiveEventArgs e)
 		{
-			if (ShouldInspect(e.Params))
-			{
-				e.Params["inspect"].Value = @"<p>shows the entire stack of hyper lisp code 
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
+            {
+				ip["inspect"].Value = @"<p>shows the entire stack of hyper lisp code 
 in a modal message box.&nbsp;&nbsp;alternatively, you can submit an expression, pointing 
 to a node list, to show only a subsection of the tree</p><p>not thread safe</p>";
-				e.Params["debug"].Value = null;
+				ip["debug"].Value = null;
 				return;
 			}
 
 			if (!e.Params.Contains("_ip") || !(e.Params["_ip"].Value is Node))
 				throw new ArgumentException("you cannot raise [magix.execute.add] directly, except for inspect purposes");
 
-			Node ip = e.Params ["_ip"].Value as Node;
 			Node dp = e.Params ["_dp"].Value as Node;
 
 
