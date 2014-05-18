@@ -60,7 +60,8 @@ lambda execution, after the execution is finished</p><p>thread safe</p>";
                 "magix.execute",
                 lambdaCodeBlock);
 
-            ip.ReplaceChildren(lambdaCodeBlock["$"]);
+            ip.Clear();
+            ip.AddRange(lambdaCodeBlock["$"]);
         }
 	}
 }

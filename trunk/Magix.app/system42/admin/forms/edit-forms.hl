@@ -79,7 +79,7 @@ for-each=>[magix.forms.list-widget-types][types]
 magix.forms.create-web-part
   form-id=>edit-forms
   container=>content1
-  class=>span-19 last
+  class=>span-17 last
   events
 
     magix.ide.active-control-changed

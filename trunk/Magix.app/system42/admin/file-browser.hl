@@ -272,7 +272,7 @@ if=>equals
 magix.forms.create-web-part
   container=>content1
   form-id=>file-explorer
-  class=>span-19 last
+  class=>span-17 last
 
   events
 

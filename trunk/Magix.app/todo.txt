@@ -74,3 +74,10 @@
 
 * fix yellow screen of death to show up in ajax callbacks, and create support for showing code that fissles
 
+* replace logging functionality with log4net
+
+* create event to invoke to lock screen for iPhones/tablets, etc at 950 pixels
+
+* refactor the "inspect tools" scripts to use same script file, since they're bassically the same
+
+

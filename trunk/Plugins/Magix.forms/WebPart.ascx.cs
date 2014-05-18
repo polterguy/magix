@@ -127,7 +127,8 @@ namespace Magix.forms
 
 				if (tmp.Contains("$"))
 				{
-                    Ip(e.Params).ReplaceChildren(tmp["$"]);
+                    Ip(e.Params).Clear();
+                    Ip(e.Params).AddRange(tmp["$"]);
 				}
 			}
 		}

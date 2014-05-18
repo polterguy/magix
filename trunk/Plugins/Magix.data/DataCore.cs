@@ -108,8 +108,10 @@ as the criteria to load objects</p><p>thread safe</p>";
                                 return true; // defaulting to true, to allow for loading of all objects, if no id or prototype is given
 					}))
 					{
-						if (idxNo >= start && (end == -1 || idxNo < end))
-                            ip["objects"][idx.Id].ReplaceChildren(idx.Node.Clone());
+                        if (idxNo >= start && (end == -1 || idxNo < end))
+                        {
+                            ip["objects"][idx.Id].AddRange(idx.Node.Clone());
+                        }
 						idxNo++;
 					}
 					db.Close();

@@ -1,7 +1,7 @@
 ﻿
 <h2>common hyper lisp keywords</h2>
 
-<p>although hyper is completely generic, and possible to change, even as it is running, there exist some common keywrods, which 
+<p>although hyper is completely generic, and possible to change, even as it is running, there exist some common keywords, which 
 you probably should teach yourself.&nbsp;&nbsp;here are the explanation behind some of them, together with some sample code, 
 such that you can run them for yourself, and try them out.&nbsp;&nbsp;the first keyword we will visit, is the [if] keyword.&nbsp;&nbsp;
 the [if] keyword makes it possible for you to conditionally execute code, according to whether or not one or more statements are true.
@@ -156,6 +156,34 @@ for-each=>[_data]
 
 <p>the above piece of code will show 5 message boxes.&nbsp;&nbsp;one for each of the value in the nodes inside the [_data] node.&nbsp;&nbsp;
 the [for-each] keyword can only take an expression returning a node list as its parameter</p>
+
+<h3>the [iterate] keyword</h3>
+
+<p>the [iterate] keyword is similar to the [for-each] keyword, with one major difference.&nbsp;&nbsp;the [iterate] keyword will flatten 
+the tree it iterates through, iterating through all children of the expression given to it, including their children, and their children, 
+and so on.&nbsp;&nbsp;this makes it useful for iterating through entire node trees, deeply.&nbsp;&nbsp;consider the following code</p>
+
+<pre>
+_data
+  =>5
+    =>5.1
+      =>5.1.1
+      =>5.1.2
+    =>5.2
+  =>4
+    =>4.1
+      =>4.1.1
+      =>4.1.2
+  =>3
+  =>2
+  =>1
+iterate=>[_data]
+  set=>[@][magix.viewport.show-message][message].Value
+    value=>[.].Value
+</pre>
+
+<p>if you exchange the [iterate] keyword above with a [for-each] keyword, then the output of the above code will be the same as the [for-each] 
+example.&nbsp;&nbsp;the above example however, will produce a message for every single node inside of the [_data] node instead</p>
 
 <h3>the [switch] keyword</h3>
 

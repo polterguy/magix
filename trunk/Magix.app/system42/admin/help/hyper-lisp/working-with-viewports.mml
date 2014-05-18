@@ -1,0 +1,83 @@
+﻿
+<h2>viewports in hyper lisp</h2>
+
+<p>in addition to creating {{
+link-button=>create-csharp-viewportt
+  value=>viewports in c#
+  onclick
+    magix.help.open-file
+      file=>system42/admin/help/csharp/active-modules/viewport.mml
+    magix.viewport.scroll=>help
+}}, you can also create viewports in hyper lisp.&nbsp;&nbsp;the system is dependent upon 
+having at least one c# viewport at its core, however, this viewport can be entirely empty, having nothing but one container, 
+building the rest of your viewport logic in hyper lisp.&nbsp;&nbsp;to create a viewport in hyper lisp, you will have to use the 
+[dynamic] web control.&nbsp;&nbsp;the [dynamic] web control is basically a viewport container, which means that if you create a 
+[dynamic] web control, you can specify its id when you use the [magix.forms.create-web-part] and [magix.forms.create-mml-web-part]</p>
+
+<p>to create a viewport in hyper lisp, using magix markup language, you could use something similar to the mml code below</p>
+
+<pre>
+&lt;p&gt;some surrounding html&lt;/p&gt;
+&lt;div class="viewport-class"&gt;
+{{
+lambda=>lmb1-viewport
+  oncreatecontrols
+    set=>[$][literal][text].Value
+      value=>{0}{1}
+        =>{
+        =>{
+}}
+dynamic=>my-viewport
+{{
+lambda=>lmb2-viewport
+  oncreatecontrols
+    set=>[$][literal][text].Value
+      value=>{0}{1}
+        =>}
+        =>}
+}}&lt;/div&gt;
+</pre>
+
+<p>however, all that's actually needed, is the server side control [dynamic]</p>
+
+<p>when you want to use this viewport for loading other pieces of magix markup, or server side controls using [magix.forms.create-web-control], 
+then all you have to do, is to use <em>"my-viewport"</em> as your [container] parameter.&nbsp;&nbsp;if you have the above viewport loaded into 
+your c# viewport somehow, then the code to load up a web control collection into this viewport, would be something like the code below</p>
+
+<pre>
+magix.forms.create-web-part
+  class=>css-class-for-viewport
+  container=>my-viewport
+  controls
+    link-button=>lnk-button
+      value=>click me
+      onclick
+        magix.viewport.show-message
+          message=>howdy world
+</pre>
+
+<p>this way, you can entirely build your website using nothing bu hyper lisp, while still having 100% control over the rendering of it.&nbsp;&nbsp;
+if you use an entirely empty viewport written in c#, which has only one single container, then you can load you hyper lisp viewport into this 
+container, and have all other parts of your logic reference [dynamic] controls within your hyper lisp/magix markup language viewport</p>
+
+<p>this is useful for creating sections in your web page layout, having one section for your menu, another for ads, a third for your header, 
+and a fourth section for your main content.&nbsp;&nbsp;this way, you can create your design in your viewport, using your viewport almost the 
+same way you'd use a master page in asp.net and c#.&nbsp;&nbsp;this makes it easy for you to separate your web page design, from your web parts, 
+encapsulating the main layout within your viewport, while having your web parts being generic in nature, to fit in for different designs</p>
+
+<p>just remember that the [dynamic] control will have its css class changed every time you load up a web part into it, since the 
+[create-web-part] and the [create-mml-web-part] active events takes a [class] as a parameter, which is used to change the css class of the 
+[container] being used.&nbsp;&nbsp;hence, if you wish to have your containers having some specific css class, defined in your viewport, you 
+should somehow wrap this class outside of your viewport.&nbsp;&nbsp;this way, you allow for your web parts to become 100% independent upon 
+your viewports, and you can easily change your website design, by simply changing the viewport of your site</p>
+
+<p>if you wish to entirely build your website's design in hyper lisp, you will want to use a c# viewport which only has one viewport container.
+&nbsp;&nbsp;the <em>"Magix.viewports.SingleContainer"</em> is a good match.&nbsp;&nbsp;to use this viewport in your front end parts of 
+your magix installation, change the settings of your system in the dashboard to use the <em>"single container"</em> viewport</p>
+
+{{
+lambda=>next
+  oncreatecontrols
+    magix.help.set-next
+      next=>system42/admin/help/hyper-lisp/hyper-lisp-file-system.mml
+}}

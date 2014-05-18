@@ -12,7 +12,7 @@ set=>[list-events].Name
 for-each=>[Data][events]
   _tpl
     link-button
-      class=>span-6 hover-shadow
+      class=>span-3 hover-shadow
       text
       onclick
         void.foo
@@ -71,7 +71,7 @@ magix.viewport.clear-controls
   container=>content2
 cf
   form-id=>form1
-  class=>span-19 last
+  class=>span-17 last
   container=>content1
   controls
     panel2
@@ -87,7 +87,7 @@ cf
           tag=>pre
         button=>run
           value=>inspect
-          class=>span-2
+          class=>span-2 right last
           onclick
             magix.forms.get-value
               form-id=>form1
@@ -105,7 +105,7 @@ cf
               value=>[@][magix.forms.get-value][value].Value
             magix.admin.load-executor-code
               code
-              class=>span-19 last left-5 bottom-3 top-1
+              class=>span-17 last left-5 bottom-3 top-1
         label=>lblDesc
           class=>span-13 top-2
           tag=>label
@@ -116,5 +116,5 @@ cf
 to the right are all web controls currently installed in the system, 
 click any one to inspect and play with their properties"
     panel=>wrp
-      class=>span-6 last
+      class=>span-4 last
       controls

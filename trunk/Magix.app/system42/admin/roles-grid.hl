@@ -12,7 +12,7 @@ magix.data.load
 
 _dt
   panel
-    class=>span-19 hover-shadow relative
+    class=>span-17 hover-shadow relative
     controls
       label
       link-button
@@ -62,16 +62,16 @@ for-each=>[magix.data.load][objects]
 magix.forms.create-web-part
   form-id=>roles-grid
   container=>content2
-  class=>span-19 last
+  class=>span-17 last
   controls
     label=>header
-      class=>span-13 left-6 last
+      class=>span-17 last
       value=>edit roles
       tag=>h2
     panel=>roleGrdHeader
       controls
         label=>headName
-          class=>span-18
+          class=>span-16
           value=>name
           tag=>label
           tip=>name of role
@@ -81,17 +81,17 @@ magix.forms.create-web-part
           tag=>label
           tip=>delete role
     panel=>roleGrdWrp
-      class=>span-19 light-green
+      class=>span-17 light-green
       controls
     panel=>newRoleWrp
-      class=>span-19 top-1
+      class=>span-17 top-1
       default=>addBtn
       controls
         text-box=>nName
-          class=>span-5 right-14 last
+          class=>span-5 left-9
           place-holder=>name of new role ...
         button=>addBtn
-          class=>btn-large span-3 clear
+          class=>span-3 last
           value=>add
           onclick
             magix.forms.get-value

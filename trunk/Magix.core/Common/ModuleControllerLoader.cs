@@ -175,6 +175,14 @@ namespace Magix.Core
                         }
                     }
                 }
+                // Checking to see if we've got our UnLoad event handlers event here...
+                Page page = (HttpContext.Current.Handler as Page);
+                if (page.Items["__Ra.Brix.Loader.PluginLoader.hasInstantiatedControllers"] == null)
+                {
+                    page.Items["__Ra.Brix.Loader.PluginLoader.hasInstantiatedControllers"] = true;
+                    _instance.InstantiateAllControllers();
+                }
+
                 return _instance;
             }
         }
@@ -188,15 +196,6 @@ namespace Magix.Core
          */
         public Control LoadActiveModule(string fullTypeName)
         {
-			Page page = (HttpContext.Current.Handler as Page);
-
-            // Checking to see if we've got our UnLoad event handlers event here...
-            if (page.Items["__Ra.Brix.Loader.PluginLoader.hasInstantiatedControllers"] == null)
-            {
-                page.Items["__Ra.Brix.Loader.PluginLoader.hasInstantiatedControllers"] = true;
-                InstantiateAllControllers();
-            }
-
             if (!_moduleTypes.ContainsKey(fullTypeName))
             {
                 throw new ArgumentException(
@@ -204,7 +203,8 @@ namespace Magix.Core
             }
             Tuple<string, Type> pluginType = _moduleTypes[fullTypeName];
 
-			Control retVal =
+            Page page = (HttpContext.Current.Handler as Page);
+            Control retVal =
                 page.LoadControl(
                     "~/Magix.Brix.Module/" +
                     pluginType.Item2.Assembly.ManifestModule.ScopeName +

@@ -1,0 +1,29 @@
+
+
+inspect=>@"creates the default active event that 
+gets invoked when the default index page is accessed"
+
+magix.data.load
+  prototype
+    type=>magix.execute.event
+    event=>magix.tiedown.load-index-page
+if=>not-exist
+  lhs=>[magix.data.load][objects]
+  code
+    event=>magix.tiedown.load-index-page
+      inspect=>@"the default active event for what to do when 
+user enters main website"
+      code
+        magix.data.load
+          id=>magix.admin.settings.default-back-end-css-file
+        set=>[magix.viewport.include-client-file:1][file].Value
+          value=>[magix.data.load][objects][0][file].Value
+        magix.viewport.include-client-file
+          type=>css
+          file=>media/grid/main.css
+        magix.viewport.include-client-file
+          type=>css
+        magix.forms.create-mml-web-part
+          mml-file=>system42/public/index-header.mml
+          form-id=>header
+          class=>span-22 last

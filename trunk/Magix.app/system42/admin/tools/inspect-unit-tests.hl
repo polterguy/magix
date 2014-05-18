@@ -11,7 +11,7 @@ set=>[list-events].Name
 for-each=>[Data][events]
   _tpl
     link-button
-      class=>span-6
+      class=>span-3
       text
       onclick
         void.foo
@@ -70,7 +70,7 @@ magix.viewport.clear-controls
   container=>content2
 cf
   form-id=>form1
-  class=>span-19 last
+  class=>span-17 last
   container=>content1
   controls
     panel2
@@ -78,15 +78,15 @@ cf
       controls
         label=>header
           value=>name of unit test
-          class=>span-13
+          class=>span-13 last
           tag=>h3
         label=>code
-          class=>span-13
+          class=>span-13 last
           value=>code example
           tag=>pre
         button=>run
           value=>inspect
-          class=>span-2
+          class=>span-2 left-7
           onclick
             magix.forms.get-value
               form-id=>form1
@@ -120,7 +120,7 @@ cf
               time=>250
         button=>run3
           value=>run all
-          class=>span-2
+          class=>span-2 last
           onclick
             magix.tests.run
         label=>lblDesc
@@ -136,5 +136,5 @@ all active events prefixed with the magix.test. namespace, will
 automatically be registered as unit tests in your system, and 
 become accessible from here, to run and test"
     panel=>wrp
-      class=>span-6 last
+      class=>span-4 last
       controls

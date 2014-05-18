@@ -1,6 +1,6 @@
 
 
-<div class="span-24 relative">
+<div class="span-22 last relative">
 {{
 system42.travel.change-login-box
   magix.web.get-session=>magix.core.user
@@ -37,12 +37,10 @@ system42.travel.try-login
     lhs=>[magix.data.load][objects].Count
     rhs=>0
     code
-      set=>[@][magix.web.set-session][value]
+      add=>[@][magix.web.set-session][value]
         value=>[magix.data.load][objects][0]
-      set=>[@][magix.web.set-session][0].Name
-        value=>value
+        children-only=>true
       magix.web.set-session=>magix.core.user
-        value
       if=>exist
         lhs=>[magix.data.load][objects][0][roles][admin]
         code
@@ -64,17 +62,16 @@ system42.travel.try-login
 
 lambda=>header
   oncreatecontrols
-    _lbl=>headerCtrl
-      class=>span-14 top-2 bottom-3
-      value=>magix illuminate - phosphorus
-      tag=>h1
-    magix.web.get-config-setting=>Magix.Core.Portal-Name
-    set=>[_lbl][value].Value
+    _data
+      label=>headerCtrl
+        class=>span-14 top-2 bottom-1
+        value=>magix illuminate - phosphorus
+        tag=>h1
+    magix.web.get-config-setting=>magix.core.portal-name
+    set=>[_data][label][value].Value
       value=>[magix.web.get-config-setting][value].Value
     add=>[$]
-      value=>[_lbl]
-    set=>[$][_lbl].Name
-      value=>label
+      value=>[_data][label]
 
 panel=>loginWrp
   onfirstload
@@ -112,7 +109,6 @@ panel=>loginWrp
             set=>[system42.travel.try-login][pwd].Value
               value=>[magix.forms.get-value:1][value].Value
             system42.travel.try-login
-
 
 panel=>logoutWrp
   class=>absolute top right span-4 top-1 z-1 last
