@@ -156,14 +156,14 @@ namespace Magix.Core
 		// Helper for finding nodes
 		private static Node GetNode(
 			string expr, 
-			Node source, 
+			Node dp, 
 			Node ip, 
 			ref string lastEntity, 
 			bool forcePath)
 		{
-			Node x = source;
-
+			Node idxNode = dp;
             bool isInside = false;
+            int noBraces = 0;
             string bufferNodeName = null;
             lastEntity = null;
 
@@ -188,79 +188,74 @@ namespace Magix.Core
 								break;
 							entireSubStatement += expr[idx];
 						}
-
-						object innerVal = GetExpressionValue(entireSubStatement, source, ip, false);
-
+						object innerVal = GetExpressionValue(entireSubStatement, dp, ip, false);
 						if (innerVal == null)
 							throw new ArgumentException("subexpression failed, expression was; " + entireSubStatement);
-
 						tmp = ']'; // to sucker into ending of logic
 						bufferNodeName = innerVal.ToString();
 					}
-                    if (tmp == ']')
+                    if (tmp == '[')
+                        noBraces += 1;
+                    if (tmp == ']' && --noBraces == 0)
                     {
                         if (string.IsNullOrEmpty(bufferNodeName))
-							throw new ArgumentException("Opps, empty node name/index ...");
-
+							throw new ArgumentException("opps, empty node name/index ...");
+                        isInside = false;
                         lastEntity = "";
-
                         bool allNumber = true;
                         if (bufferNodeName == "..")
                         {
 							// One up!
-                            if (x.Parent == null)
+                            if (idxNode.Parent == null)
 								return null;
-                            x = x.Parent;
-                            bufferNodeName = "";
-                            isInside = false;
-                            continue;
+                            idxNode = idxNode.Parent;
                         }
                         else if (bufferNodeName == "/")
                         {
-                            x = x.RootNode();
-                            bufferNodeName = "";
-                            isInside = false;
-                            continue;
+                            idxNode = idxNode.RootNode();
                         }
 						else if (bufferNodeName == "$")
 						{
-							x = ip.RootNode()["$"];
-							isInside = false;
-							continue;
+							idxNode = ip.RootNode()["$"];
 						}
 						else if (bufferNodeName == ".ip")
 						{
-							x = ip;
-							bufferNodeName = "";
-							isInside = false;
-							continue;
+							idxNode = ip;
 						}
 						else if (bufferNodeName == "@")
 						{
-							x = ip.Parent;
-							bufferNodeName = "";
-							isInside = false;
-							continue;
+							idxNode = ip.Parent;
 						}
                         else if (bufferNodeName == ".")
                         {
-							x = source;
-                            bufferNodeName = "";
-                            isInside = false;
-                            continue;
+							idxNode = dp;
                         }
                         else if (bufferNodeName.StartsWith(":"))
                         {
                             // active event reference
                             string activeEvent = bufferNodeName.Substring(1);
                             Node newDataNode = new Node();
+                            if (activeEvent.Contains("["))
+                            {
+                                string acNodeExpression = activeEvent.Substring(activeEvent.IndexOf('['));
+                                newDataNode = GetExpressionValue(acNodeExpression, dp, ip, false) as Node;
+                                if (newDataNode == null)
+                                    throw new ArgumentException("cannot pass a null node into an expression active event");
+
+                                newDataNode = newDataNode.Clone();
+
+                                activeEvent = activeEvent.Substring(0, activeEvent.IndexOf('['));
+                            }
+                            Node exeNode = new Node(null, null);
+                            exeNode[activeEvent].Add(newDataNode);
+                            Node invokeNode = new Node();
+                            invokeNode["_ip"].Value = exeNode;
+                            invokeNode["_dp"].Value = exeNode;
                             ActiveEvents.Instance.RaiseActiveEvent(
                                 typeof(Expressions),
-                                activeEvent,
-                                newDataNode);
-                            x = newDataNode;
-                            bufferNodeName = "";
-                            isInside = false;
+                                "magix.execute",
+                                invokeNode);
+                            idxNode = exeNode[activeEvent];
                         }
                         else if (bufferNodeName.StartsWith("**"))
                         {
@@ -282,27 +277,22 @@ namespace Magix.Core
                             {
                                 if (bufferNodeName.Length > 2)
                                     searchName = bufferNodeName.Substring(2);
-                                else
-                                    bufferNodeName = "";
                             }
 
-                            Node searchNode = FindNode(x, searchName, searchValue);
+                            Node searchNode = FindNode(idxNode, searchName, searchValue);
                             if (searchNode == null && forcePath)
                             {
                                 if (searchName == "?")
                                     searchName = "";
                                 if (searchValue == "?")
                                     searchValue = "";
-                                x.Add(new Node(searchName ?? "", searchValue));
-                                x = x[x.Count - 1];
+                                idxNode.Add(new Node(searchName ?? "", searchValue));
+                                idxNode = idxNode[idxNode.Count - 1];
                             }
                             else if (searchNode == null)
                                 throw new ArgumentException("couldn't find node in expression");
                             else
-                                x = searchNode;
-
-                            bufferNodeName = "";
-                            isInside = false;
+                                idxNode = searchNode;
                         }
                         else if (bufferNodeName.StartsWith("?"))
                         {
@@ -317,53 +307,48 @@ namespace Magix.Core
                                     searchValue = tmpSearch[1];
                             }
                             bool found = false;
-                            foreach (Node idxNode in x)
+                            foreach (Node idxInnerNode in idxNode)
                             {
-                                if (searchValue == idxNode.Get<string>())
+                                if (searchValue == idxInnerNode.Get<string>())
                                 {
                                     found = true;
-                                    x = idxNode;
+                                    idxNode = idxInnerNode;
                                     break;
                                 }
                             }
                             if (!found && forcePath)
                             {
-                                x.Add(new Node("", searchValue));
-                                x = x[x.Count - 1];
+                                idxNode.Add(new Node("", searchValue));
+                                idxNode = idxNode[idxNode.Count - 1];
                             }
                             else if (!found)
                                 throw new ArgumentException("couldn't find node in expression");
-
-                            bufferNodeName = "";
-                            isInside = false;
                         }
                         else if (bufferNodeName.Contains("=>"))
                         {
                             string[] splits = bufferNodeName.Split(new string[] { "=>" }, StringSplitOptions.None);
                             string name = splits[0];
                             string value = splits[1];
-
-                            foreach (Node idxNode in x)
+                            bool foundNode = false;
+                            foreach (Node idxInnerNode in idxNode)
                             {
-                                if (idxNode.Name == name && idxNode.Get<string>() == value)
+                                if (idxInnerNode.Name == name && idxInnerNode.Get<string>() == value)
                                 {
-                                    x = idxNode;
-                                    bufferNodeName = "";
+                                    idxNode = idxInnerNode;
+                                    foundNode = true;
                                     break;
                                 }
                             }
-                            if (!string.IsNullOrEmpty(bufferNodeName))
+                            if (!foundNode)
                             {
                                 // didn't find criteria
                                 if (!forcePath)
                                     return null;
 
                                 // creating node with given value
-                                x.Add(new Node(name, value));
-                                x = x[x.Count - 1];
+                                idxNode.Add(new Node(name, value));
+                                idxNode = idxNode[idxNode.Count - 1];
                             }
-                            isInside = false;
-                            continue;
                         }
                         else if (bufferNodeName.Contains(":"))
                         {
@@ -373,14 +358,14 @@ namespace Magix.Core
                             bool found = false;
                             bufferNodeName = bufferNodeName.Split(':')[0].TrimEnd();
 
-                            foreach (Node idxNode in x)
+                            foreach (Node idxInnerNode in idxNode)
                             {
-                                if (idxNode.Name == bufferNodeName)
+                                if (idxInnerNode.Name == bufferNodeName)
                                 {
                                     if (curNo++ == idxNo)
                                     {
                                         found = true;
-                                        x = x[totIdx];
+                                        idxNode = idxNode[totIdx];
                                         break;
                                     }
                                 }
@@ -392,16 +377,13 @@ namespace Magix.Core
                                 {
                                     while (idxNo >= curNo++)
                                     {
-                                        x.Add(new Node(bufferNodeName));
+                                        idxNode.Add(new Node(bufferNodeName));
                                     }
-                                    x = x[x.Count - 1];
+                                    idxNode = idxNode[idxNode.Count - 1];
                                 }
                                 else
                                     return null;
                             }
-                            bufferNodeName = "";
-                            isInside = false;
-                            continue;
                         }
                         else
                         {
@@ -416,48 +398,49 @@ namespace Magix.Core
                             if (allNumber)
                             {
                                 int intIdx = int.Parse(bufferNodeName);
-                                if (x.Count > intIdx)
-                                    x = x[intIdx];
+                                if (idxNode.Count > intIdx)
+                                    idxNode = idxNode[intIdx];
                                 else if (forcePath)
                                 {
-                                    while (x.Count <= intIdx)
+                                    while (idxNode.Count <= intIdx)
                                     {
-                                        x.Add(new Node("item"));
+                                        idxNode.Add(new Node("item"));
                                     }
-                                    x = x[intIdx];
+                                    idxNode = idxNode[intIdx];
                                 }
                                 else
                                     return null;
                             }
                             else
                             {
-                                if (x.Contains(bufferNodeName))
-                                    x = x[bufferNodeName];
+                                if (idxNode.Contains(bufferNodeName))
+                                    idxNode = idxNode[bufferNodeName];
                                 else if (forcePath)
                                 {
-                                    x = x[bufferNodeName];
+                                    idxNode = idxNode[bufferNodeName];
                                 }
                                 else
                                 {
                                     return null;
                                 }
                             }
-                            bufferNodeName = "";
-                            isInside = false;
-                            continue;
                         }
+                        bufferNodeName = "";
                     }
-                    bufferNodeName += tmp;
+                    else
+                        bufferNodeName += tmp;
                 }
                 else
                 {
                     if (tmp == '[' && string.IsNullOrEmpty(lastEntity))
                     {
-                        bufferNodeName = "";
-                        isInside = true;
-                        continue;
+                        if (++noBraces == 1)
+                            isInside = true;
+                        else
+                            bufferNodeName += tmp;
                     }
-                    lastEntity += tmp;
+                    else
+                        lastEntity += tmp;
                 }
             }
             if (lastEntity.StartsWith(".Value") && lastEntity.Length > 6)
@@ -465,22 +448,22 @@ namespace Magix.Core
                 // this is a concatenated expression, returning a Node list, where we wish to directly 
                 // access another node inside of the node by reference
                 string innerLastReference = "";
-                Node x2 = x.Value as Node;
+                Node x2 = idxNode.Value as Node;
                 if (x2 == null)
                 {
                     // value of node is probably a string, try to convert it to a node first
                     Node tmpNode = new Node();
-                    tmpNode["code"].Value = x.Get<string>();
+                    tmpNode["code"].Value = idxNode.Get<string>();
                     ActiveEvents.Instance.RaiseActiveEvent(
                         typeof (Expressions),
                         "magix.execute.code-2-node",
                         tmpNode);
                     x2 = tmpNode["node"].Clone();
                 }
-                x = GetNode(lastEntity.Substring(6), x2, x2, ref innerLastReference, forcePath);
+                idxNode = GetNode(lastEntity.Substring(6), x2, x2, ref innerLastReference, forcePath);
                 lastEntity = innerLastReference;
             }
-			return x;
+			return idxNode;
 		}
 
         private static Node FindNode(Node currentNode, string searchName, string searchValue)

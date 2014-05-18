@@ -78,5 +78,7 @@
 
 * create expression support for operators in if/else/while etc
 
+* remove html formatting from inspect feature, and create some sort of parser, that treats two carriage returns as new paragraph, and so on
+
 
 

@@ -164,7 +164,9 @@ restarts</p><p>thread safe</p>";
                 _events[activeEvent].AddRange(ip["code"].Clone());
 
                 _inspect[activeEvent].Clear();
-                _inspect[activeEvent].Value = ip["inspect"].Value;
+
+                if (ip.Contains("inspect"))
+                    _inspect[activeEvent].Value = ip["inspect"].Value;
 			}
 			else
 			{

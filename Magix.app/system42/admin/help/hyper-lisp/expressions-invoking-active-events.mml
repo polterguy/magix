@@ -1,0 +1,65 @@
+﻿
+<h2>expressions invoking active events</h2>
+
+<p>expressions can invoke active events.&nbsp;&nbsp;if you start your expression with '[:', then the expression engine 
+will treat the current expression node as an active event.&nbsp;&nbsp;consider the following code</p>
+
+<pre>
+event=>magix.demo.foo
+  persist=>false
+  code
+    set=>[$][output].Value
+      value=>howdy world
+set=>[magix.viewport.show-message][message].Value
+  value=><strong>[:magix.demo.foo]</strong>[output].Value
+event=>magix.demo.foo
+</pre>
+
+<p>the above code will invoke the active event called <em>"magix.demo.foo"</em> when it encounters the [value] node of the [set] keyword.
+&nbsp;&nbsp;then it will use the return value from the [magix.demo.foo] active event, in the rest of the expression.&nbsp;&nbsp;this means 
+that after the invocation of magix.demo.foo, the node tree you're using for the rest of your expression is no longer what you started with, 
+but an entirely new node tree, being the return value from [magix.demo.foo].&nbsp;&nbsp;[magix.demo.foo] returns <em>"howdy world"</em> in 
+its [output] node, hence a message box showing <em>"howdy world"</em> will be created</p>
+
+<p>notice that it is completely useless to have active event expressions anywhere else but as the first parts of your expressions.&nbsp;&nbsp;
+if you first traverse inside of your node tree, before having an active event expression, the parts where you traverse the tree will simply be 
+ignored, and be in vain.&nbsp;&nbsp;therefor you should always add event expressions as the first parts of your expressions</p>
+
+<p>notice also that the node returned from the active event expressions will also be deep copies of whatever the active event returns, and 
+are hence to be considered <em>"read only"</em> expressions, which means that there are no reasons why you would want to assign to active 
+event expressions, although the execution engine will allow this</p>
+
+<p>you can also pass in parameters into active event expressions by appending an expression returning a node list at the end of your 
+active event expression.&nbsp;&nbsp;consider the following code</p>
+
+<pre>
+_input
+  msg=>howdy
+event=>magix.foo
+  persist=>false
+  code
+    set=>[$][output].Value
+      value=>{0} world
+        =>[$][msg].Value
+set=>[magix.viewport.show-message][message].Value
+  value=>[:magix.foo<strong>[_input][msg]</strong>][output].Value
+event=>magix.foo
+</pre>
+
+<p>in the above code, we're passing in the [_input][msg] node into the invocation of our active event expression.&nbsp;&nbsp;this means that 
+inside of our active event, we will have access to [msg] in our [$] collection.&nbsp;&nbsp;above we're just concatenating the input [msg] 
+node's value with " world" and returning as [output], which we're again de-referencing after our active event expression has returned in 
+our last line of code, but obviously you can pass in whatever complexity of node trees you wish</p>
+
+<p>so to recap what exactly is going on in our last example.&nbsp;&nbsp;first the expression engine is retrieving the [_input][msg] node 
+list.&nbsp;&nbsp;then it is passing this node list into our [magix.foo] active event.&nbsp;&nbsp;when the [magix.foo] returns, we will 
+have access to the node tree that is created as a consequence of the active event executing, which should now have an [output] node.&nbsp;&nbsp;
+this [output] node's value, is being used to create a [message] to a [magix.viewport.show-message] invocation, which shows the 
+user a message box</p>
+
+{{
+lambda=>next
+  oncreatecontrols
+    magix.help.set-next
+      next=>system42/admin/help/hyper-lisp/simplifying-expressions.mml
+}}
