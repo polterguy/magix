@@ -366,7 +366,7 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="system42\startup-scripts\create-with-unit-tests.hl" />
-    <Content Include="system42\admin\help\hyper-lisp\simplyfying-expressions.mml" />
+    <Content Include="system42\admin\help\hyper-lisp\simplifying-expressions.mml" />
     <Content Include="system42\admin\help\hyper-lisp\set-keyword.mml" />
     <Content Include="system42\admin\help\hyper-lisp\magix-markup-language.mml">
       <SubType>Designer</SubType>
@@ -378,6 +378,7 @@
     <Content Include="system42\admin\help\hyper-lisp\sandboxing-hyper-lisp.mml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="system42\admin\help\hyper-lisp\expressions-invoking-active-events.mml" />
     <None Include="todo.txt" />
     <None Include="system42\startup-scripts\events-create-desktop-shortcuts.hl" />
     <None Include="system42\startup-scripts\event-server-discovery.hl" />

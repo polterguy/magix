@@ -24,25 +24,26 @@ execution node passed into it, then the sandbox is bypassed.&nbsp;&nbsp;however,
 its author, should obey relatively perfect towards the [sandbox] feature.&nbsp;&nbsp;though, you should still <strong>never execute code 
 that comes from a source you don't trust!</strong></p>
 
-<h3>fully qualifying names of keywords for safety reasons</h3>
+<h3>fully qualifying an execution scope</h3>
 
-<p>in addition to the [sandbox] feature, you can also choose to fully qualify your keywords, such that instead of typing [while] you 
-type [magix.execute.while].&nbsp;&nbsp;this will ensure that your while loop cannot in any ways access any nodes from outside of the 
-while loop itself.&nbsp;&nbsp;this ensures that your while loop is <em>"encapsulated"</em>, and does not have negative side-effects 
-for other parts of your code.&nbsp;&nbsp;consider the following code</p>
+<p>in addition to the [sandbox] feature, you can also choose to fully qualify an execution scope.&nbsp;&nbsp;this will ensure that your 
+[magix.execute] cannot in any ways access any nodes from outside of the [magix.execute] node itself.&nbsp;&nbsp;this ensures that your 
+execution scope is <em>"encapsulated"</em>, and does not have negative side-effects for other parts of your code.&nbsp;&nbsp;consider the 
+following code</p>
 
 <pre>
 _data=>false
-magix.execute.while=>equals
-  lhs=>[code][_data].Value
-  rhs=>false
-  code
-    _data=>false
-    magix.viewport.show-message
-      message=>howdy world
-    set=>[/][_data].Value
-      value=>true
-    stop
+magix.execute
+  while=>equals
+    lhs=>[/][while][code][_data].Value
+    rhs=>false
+    code
+      _data=>false
+      magix.viewport.show-message
+        message=>howdy world
+      set=>[/][_data].Value
+        value=>true
+      stop
 </pre>
 
 <p>the above code would execute indefinitely, until the execution engines overflowed, if it hadn't been for the [stop] keyword at the end 
