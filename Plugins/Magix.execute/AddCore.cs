@@ -53,49 +53,38 @@ and the value of the [value] node's [value] expression</p><p>thread safe</p>";
 
 			Node dp = Dp(e.Params);
 
-            string left = ip.Get<string>();
-            Node leftNode = Expressions.GetExpressionValue(left, dp, ip, true) as Node;
-            if (leftNode == null)
-                throw new ArgumentException("[add] must return an existing node-list, [add] value returned null, expression was; " + left);
+            string destinationExpression = ip.Get<string>();
+            Node destinationNode = Expressions.GetExpressionValue(destinationExpression, dp, ip, true) as Node;
+            if (destinationNode == null)
+                throw new ArgumentException("[add] must return an existing node-list, [add] value returned null, expression was; " + destinationExpression);
 
             if (ip.Contains("value") && ip["value"].Value != null)
             {
-                if (ip["value"].Contains("value"))
-                {
-                    string nodeNameExpression = ip["value"].Get<string>();
-                    string nodeName = Expressions.GetExpressionValue(nodeNameExpression, dp, ip, false) as string;
-                    if (nodeName == null)
-                        throw new ArgumentException("cannot add a node, who's name is null");
+                object sourceObject = Expressions.GetExpressionValue(ip["value"].Get<string>(), dp, ip, false);
 
-                    string nodeValueExpression = ip["value"]["value"].Get<string>();
-                    string nodeValue = Expressions.GetExpressionValue(nodeValueExpression, dp, ip, false) as string;
-                    leftNode.Add(new Node(nodeName, nodeValue));
+                if (sourceObject is Node)
+                {
+                    Node sourceNode = sourceObject as Node;
+                    if (!ip.Contains("children-only") || !ip["children-only"].Get<bool>())
+                        destinationNode.Add(sourceNode.Clone());
+                    else
+                        destinationNode.AddRange(sourceNode);
                 }
                 else
                 {
-                    string right = ip["value"].Get<string>();
+                    string nodeName = sourceObject.ToString();
 
-                    Node rightNode = Expressions.GetExpressionValue(right, dp, ip, false) as Node;
-
-                    if (rightNode == null)
-                        throw new ArgumentException("both [add] and [value] must return an existing node-list, [value] node returned null, expression was; " + right);
-
-                    if (!ip.Contains("children-only") || !ip["children-only"].Get<bool>())
-                        leftNode.Add(rightNode.Clone());
-                    else
-                    {
-                        foreach (Node idx in rightNode)
-                        {
-                            leftNode.Add(idx.Clone());
-                        }
-                    }
+                    object nodeValue = null;
+                    if (ip["value"].Contains("value"))
+                        nodeValue = Expressions.GetExpressionValue(ip["value"]["value"].Get<string>(), dp, ip, false);
+                    destinationNode.Add(new Node(nodeName, nodeValue));
                 }
             }
             else
             {
                 foreach (Node idx in ip)
                 {
-                    leftNode.Add(idx.Clone());
+                    destinationNode.Add(idx.Clone());
                 }
             }
 		}

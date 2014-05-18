@@ -31,6 +31,9 @@ _result=>right
 into [_data][2].Value, resulting in the text string of "right".&nbsp;&nbsp;you can nest as many expressions as you wish, having expressions 
 which are nested inside of other nested expressions, and so on</p>
 
+<p>you can of course also nest multiple expressions like this, which you should be careful with, since this obviously will 
+easily win you a gold medal in the world championship of obfuscated code</p>
+
 {{
 lambda=>next
   oncreatecontrols

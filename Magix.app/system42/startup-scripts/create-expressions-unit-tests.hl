@@ -161,3 +161,82 @@ and value is null"
       code
         throw=>deep search expression didn't succeed
 
+
+event=>magix.test.expressions-nested
+  persist=>false
+  inspect=>@"asserts that nested expressions 
+functions the way they should"
+  code
+    _buffer-data
+      _node-name=>_data
+      _data
+        message=>success
+    if=>not-equals
+      lhs=>[_buffer-data][[_buffer-data][_node-name].Value][message].Value
+      rhs=>success
+      code
+        throw=>nested expression didn't succeed
+
+
+event=>magix.test.expressions-active-event-expressions
+  persist=>false
+  inspect=>@"asserts that active event expressions 
+functions the way they should"
+  code
+    event=>magix.demo.foo
+      persist=>false
+      code
+        set=>[$][output].Value
+          value=>{0} world
+            =>[$][input].Value
+    _buffer
+      input=>hello
+    if=>not-equals
+      lhs=>[:magix.demo.foo[_buffer][input]][output].Value
+      rhs=>hello world
+      code
+        event=>magix.demo.foo
+        throw=>active event expression didn't succeed
+    else
+      event=>magix.demo.foo
+
+
+event=>magix.test.expressions-nested-active-event-expressions
+  persist=>false
+  inspect=>@"asserts that nested active event expressions 
+functions the way they should"
+  code
+    event=>magix.demo.foo
+      persist=>false
+      code
+        set=>[$][output].Value
+          value=>{0} world
+            =>[$][input].Value
+    event=>magix.demo.foo2
+      persist=>false
+      code
+        set=>[$][result].Value
+          value=>output
+    event=>magix.demo.foo3
+      persist=>false
+      code
+        set=>[$][result].Value
+          value=>[$][_buffer4].Value
+    _buffer
+      input=>hello
+    _buffer2=>input
+    _buffer3=>_buffer2
+    _buffer4=>_buffer
+    if=>not-equals
+      lhs=>[:magix.demo.foo[[[:magix.demo.foo3[_buffer4]][result].Value].Name][[[_buffer3].Value].Value]][[:magix.demo.foo2][result].Value].Value
+      rhs=>hello world
+      code
+        event=>magix.demo.foo
+        event=>magix.demo.foo2
+        event=>magix.demo.foo3
+        throw=>active event expression didn't succeed
+    else
+      event=>magix.demo.foo
+      event=>magix.demo.foo2
+      event=>magix.demo.foo3
+

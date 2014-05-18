@@ -227,6 +227,14 @@ link-button=>hyperlisp-set-keyword
     magix.viewport.scroll=>help
 }}</li>
 <li>{{
+link-button=>hyperlisp-add-keyword
+  value=>the [add] keyword
+  onclick
+    magix.help.open-file
+      file=>system42/admin/help/hyper-lisp/add-keyword.mml
+    magix.viewport.scroll=>help
+}}</li>
+<li>{{
 link-button=>hyperlisp-5
   value=>common keywords explained
   onclick

@@ -1,0 +1,99 @@
+﻿
+<h2>the [add] keyword, modifying the execution node tree</h2>
+
+<p>the add keyword is one of the two most powerful keywords in hyper lisp, besides the [set] keyword.&nbsp;&nbsp;with the add keyword, 
+you can modify the execution tree any ways you wish.&nbsp;&nbsp;the functionality of [set] and [add] slightly overlaps each other, 
+but they both have some unique parts which makes them both versatile.&nbsp;&nbsp;with the [set] keyword, you change one specific 
+part of your execution tree, while with the [add] keyword, you add a new node, either by creating a copy of an existing node, or 
+by creating new nodes.&nbsp;&nbsp;consider the following code</p>
+
+<pre>
+_data
+add=>[_data]
+  value=>howdy
+    value=>world
+</pre>
+
+<p>the above code will create a new node within the [_data] node who's name is <em>"howdy"</em> and value is <em>"world"</em>.&nbsp;&nbsp;
+this is the same as a normal [set] statement would do.&nbsp;&nbsp;however, in addition you can also copy existing nodes with the [add] 
+keyword.&nbsp;&nbsp;to create a copy of an existing node list, and append into another node list, you could use the following code</p>
+
+<pre>
+_source
+  x=>y
+  z
+    q=>w
+_destination
+add=>[_destination]
+  value=>[_source]
+</pre>
+
+<p>the above hyper lisp will create a copy of the entire [_source] node list, and append into the [_destination] node list.&nbsp;&nbsp;to 
+accomplish the same with the [set] statement is possible, but will require multiple invocation to [set], instead of a single invocation, such 
+as the above code demonstrates.&nbsp;&nbsp;if you wish to only add the children of the [_source] node into the [_destination] node, this can 
+be accomplished by adding a [children-only] parameter to the [add] invocation</p>
+
+<pre>
+_source
+  x=>y
+  z
+    q=>w
+_destination
+add=>[_destination]
+  value=>[_source]
+  children-only=>true
+</pre>
+
+<p>the above code will copy all the children of the [_source] node, and append them into the [_destination] node's list of children</p>
+
+<p>if the [value] node beneath the [add] keyword returns a node list, it will try to copy that node list to the destination node list, 
+which is the value of the [add] node.&nbsp;&nbsp;if the [value] node returns a string somehow instead though, it will instead create a 
+new node beneath the destination node, with the name of the [value] of the [add] node.&nbsp;&nbsp;if you wish, you can also assign this 
+new node's value with a secondary [value] node, beneath the first [value] node, like we did in the first example above.&nbsp;&nbsp;if you 
+ommit the second value, then the added node will have a null value, as long as the first [value] is returning anything but a node list.&nbsp;
+&nbsp;consider the following code</p>
+
+<pre>
+_destination
+_name=>new-node
+add=>[_destination]
+  value=>[_name].Value
+</pre>
+
+<p>the above code will create a new node with the name of [new-node] beneath the [_destination] node, with a null value.&nbsp;&nbsp;while the 
+following code will add the existing node from [_source] into [_destination].&nbsp;&nbsp;the difference is that the first piece of 
+code returned a string, while the second piece of code returns a node list</p>
+
+<pre>
+_destination
+_name=>new-node
+add=>[_destination]
+  value=>[_name]
+</pre>
+
+<p>notice that the only parts missing in the second example compared to the first is the <strong>.Value</strong> parts</p>
+
+<p>if you wish, you can also directly inline the nodes you wish to add to your destination beneath the [add] node.&nbsp;&nbsp;however, 
+this can only be done if you do not have a [value] node beneath your add, that has a value.&nbsp;&nbsp;consider the following code</p>
+
+<pre>
+_destination
+add=>[_destination]
+  howdy=>world
+    this=>is
+      =>really cool!
+</pre>
+
+<p>if we tried to do the same, but renaming the [howdy] node to [value], the [add] active event would be confused, and believe we 
+are trying to add a single new node to our destination node instead</p>
+
+<p>by combining the [add] and [set] keywords together, you can easily have code that creates code, or in any other ways 
+modifies the execution tree of your hyper lisp.&nbsp;&nbsp;this is one of the core features of hyper lisp, allowing for creation 
+of code that creates and maintains code</p>
+
+{{
+lambda=>next
+  oncreatecontrols
+    magix.help.set-next
+      next=>system42/admin/help/hyper-lisp/existing-keywords.mml
+}}
