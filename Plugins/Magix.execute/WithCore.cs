@@ -45,7 +45,7 @@ where the expressions within them are all pointing deep into the execution tree 
 			if (!e.Params.Contains("_ip") || !(e.Params["_ip"].Value is Node))
 				throw new ArgumentException("you cannot raise [with] directly, except for inspect purposes");
 
-			Node dp = e.Params["_dp"].Value as Node;
+            Node dp = Dp(e.Params);
 
             if (string.IsNullOrEmpty(ip.Get<string>()))
                 throw new ArgumentException("you must supply an expression to [with]");

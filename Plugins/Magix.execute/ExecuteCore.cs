@@ -44,7 +44,7 @@ to do just that</p><p>thread safe</p>";
 			    if (!e.Params.Contains("_dp") || !(e.Params["_dp"].Value is Node))
 				    throw new ArgumentException("you cannot raise [magix.execute.using] directly besides for inspect purposes");
 
-                Node dp = e.Params["_dp"].Value as Node;
+                Node dp = Dp(e.Params);
                 e.Params["_namespaces"].Add(new Node("item", ip.Get<string>()));
 
                 Execute(ip, e.Params);
@@ -123,7 +123,7 @@ event will only be able to modify the parts of the tree from underneath its own 
             {
                 try
                 {
-                    Node tmp = new Node("magix.execute", e.Params.Value);
+                    Node tmp = new Node(e.Params.Name, e.Params.Value);
                     tmp["_ip"].Value = e.Params;
                     tmp["_dp"].Value = e.Params;
 
@@ -154,9 +154,7 @@ event will only be able to modify the parts of the tree from underneath its own 
                 if (!e.Params.Contains("_current-executed-lines"))
                     e.Params["_current-executed-lines"].Value = 0;
 
-                Node dp = e.Params;
-                if (e.Params.Contains("_dp"))
-                    dp = e.Params["_dp"].Get<Node>();
+                Node dp = Dp(e.Params);
 
                 if (ip.Name == "execute" && ip.Value != null && ip.Get<string>().StartsWith("["))
                 {

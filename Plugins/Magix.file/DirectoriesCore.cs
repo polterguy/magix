@@ -37,9 +37,7 @@ safe</p>";
             }
 
             Node ip = Ip(e.Params);
-            Node dp = ip;
-            if (e.Params.Contains("_dp"))
-                dp = e.Params["_dp"].Value as Node;
+            Node dp = Dp(e.Params);
 
             string directory = ip.Contains("directory") ?
                 Expressions.GetExpressionValue(ip["directory"].Get<string>().TrimStart('/'), dp, ip, false) as string :
@@ -91,9 +89,7 @@ folder, or an absolute path</p><p>thread safe</p>";
 			}
 
             Node ip = Ip(e.Params);
-            Node dp = ip;
-            if (e.Params.Contains("_dp"))
-                dp = e.Params["_dp"].Value as Node;
+            Node dp = Dp(e.Params);
 
             if (!ip.Contains("directory"))
                 throw new ArgumentException("[create-directory] needs a [directory] argument to know where to create the directory");
@@ -125,9 +121,7 @@ or an absolute path on disc</p><p>thread safe</p>";
 			}
 
             Node ip = Ip(e.Params);
-            Node dp = ip;
-            if (e.Params.Contains("_dp"))
-                dp = e.Params["_dp"].Value as Node;
+            Node dp = Dp(e.Params);
 
             if (!ip.Contains("directory"))
                 throw new ArgumentException("you must supply a [directory] to [delete-directory]");
@@ -160,9 +154,7 @@ application folder, or an absolute path on disc</p><p>thread safe</p>";
             }
 
             Node ip = Ip(e.Params);
-            Node dp = ip;
-            if (e.Params.Contains("_dp"))
-                dp = e.Params["_dp"].Value as Node;
+            Node dp = Dp(e.Params);
 
             if (!ip.Contains("from"))
                 throw new ArgumentException("you need to supply a [from] node to [move-directory]");
@@ -206,9 +198,7 @@ main folder, or an absolute path on disc</p><p>thread safe</p>";
             }
 
             Node ip = Ip(e.Params);
-            Node dp = ip;
-            if (e.Params.Contains("_dp"))
-                dp = e.Params["_dp"].Value as Node;
+            Node dp = Dp(e.Params);
 
             if (!ip.Contains("directory") || string.IsNullOrEmpty(ip["directory"].Get<string>()))
                 throw new ArgumentException("you didn't supply a [directory] to search for to [magix.file.directory-exist]");

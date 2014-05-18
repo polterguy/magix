@@ -68,6 +68,15 @@
   inside of active event pointing to outside node lists ...
   And make sure they use the e.Params pointers correctly
 
+* create IValueControl interface in mux, to use in magix.forms.controls. active events in magix.forms.get.value event, to extract value, 
+  to make extracting values from controls generic
+
+* make Ip method take boolean declaring whether or not "_ip" is mandatory, and if so, throw exception, to clean up all
+  checks for "_ip" in magix.execute namespace for instance
+
+* make all return statements in "inspect" logic become else statements instead
+
+* create expression support for operators in if/else/while etc
 
 
 

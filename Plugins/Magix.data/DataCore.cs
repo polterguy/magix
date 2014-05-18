@@ -49,9 +49,7 @@ as the criteria to load objects</p><p>thread safe</p>";
 			}
 
             Node ip = Ip(e.Params);
-            Node dp = ip;
-            if (e.Params.Contains("_dp"))
-                dp = e.Params["_dp"].Get<Node>();
+            Node dp = Dp(e.Params);
 
 			Node prototype = null;
             if (ip.Contains("prototype"))
@@ -139,9 +137,7 @@ updated.&nbsp;&nbsp;both the [value] and [id] can either be expressions or const
 			}
 
             Node ip = Ip(e.Params);
-            Node dp = ip;
-            if (e.Params.Contains("_dp"))
-                dp = e.Params["_dp"].Get<Node>();
+            Node dp = Dp(e.Params);
 
             if (!ip.Contains("value"))
 				throw new ArgumentException("[value] must be defined for magix.data.save to actually save anything");
@@ -202,9 +198,7 @@ your persistent data storage</p><p>both [id] and [prototype] can be both express
 			}
 
             Node ip = Ip(e.Params);
-            Node dp = ip;
-            if (e.Params.Contains("_dp"))
-                dp = e.Params["_dp"].Get<Node>();
+            Node dp = Dp(e.Params);
 
             Node prototype = null;
             if (ip.Contains("prototype"))
@@ -262,10 +256,7 @@ if given, can be either an expression or a constant</p><p>thread safe</p>";
 			}
 
             Node ip = Ip(e.Params);
-
-            Node dp = ip;
-            if (e.Params.Contains("_dp"))
-                dp = e.Params["_dp"].Get<Node>();
+            Node dp = Dp(e.Params);
 
             Node prototype = null;
             if (ip.Contains("prototype"))

@@ -59,9 +59,7 @@ namespace Magix.forms
 			delegate
 			{
                 Node ip = Ip(node);
-                Node dp = ip;
-                if (node.Contains("_dp"))
-                    dp = node["_dp"].Get<Node>();
+                Node dp = Dp(node);
 
 				if (ip.Contains("form-id"))
 					FormID = Expressions.GetExpressionValue(ip["form-id"].Get<string>(), dp, ip, false) as string;
@@ -150,9 +148,7 @@ to the value in [mml]";
             if (FormID == Ip(e.Params)["form-id"].Get<string>())
 			{
                 Node ip = Ip(e.Params);
-                Node dp = ip;
-                if (e.Params.Contains("_dp"))
-                    dp = e.Params["_dp"].Get<Node>();
+                Node dp = Dp(e.Params);
 
 				DataSource = new Node();
 				Methods.Clear();

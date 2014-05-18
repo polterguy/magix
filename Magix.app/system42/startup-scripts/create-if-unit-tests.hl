@@ -320,3 +320,314 @@ evaluated true returned false when comparing two
 node trees"
 
 
+event=>magix.test.if-consecutive-and-inner-if-statements
+  persist=>false
+  inspect=>@"asserts that [if] works the 
+way it should work, and doesn't intermingle 
+with each others when multiple if 
+statements are added after each other"
+  code
+    _data
+      _v0=>error1
+      _v1=>error2
+      _v2=>error3
+    if=>not-equals
+      lhs=>[_data][_v0].Value
+      rhs=>error1
+      code
+        throw=>@"[if] expression that should have 
+evaluated false returned true"
+    else
+      set=>[_data][_v0].Value
+        value=>success
+    if=>not-equals
+      lhs=>[_data][_v1].Value
+      rhs=>error2
+      code
+        throw=>@"[if] expression that should have 
+evaluated false returned true"
+    else
+      set=>[_data][_v1].Value
+        value=>success
+      if=>equals
+        lhs=>[_data][_v2].Value
+        rhs=>success
+        code
+          throw=>@"[if] expression that should have 
+evaluated true returned false"
+      else-if=>not-equals
+        lhs=>[_data][_v2].Value
+        rhs=>error3
+        code
+          throw=>@"[if] expression that should have 
+evaluated true returned false"
+      else
+        set=>[_data][_v2].Value
+          value=>success
+        stop
+    throw=>@"if expressions that should have 
+entered [else], didn't function as expected"
+
+
+event=>magix.test.if-with-if-if-else
+  persist=>false
+  inspect=>@"asserts that [if] works the 
+way it should work, and doesn't intermingle 
+with each others when multiple if 
+statements are added after each other"
+  code
+    _data
+      _v0=>error1
+    if=>not-equals
+      lhs=>[_data][_v0].Value
+      rhs=>error1
+      code
+        throw=>@"[if] expression that should have 
+evaluated false returned true"
+    if=>equals
+      lhs=>[_data][_v0].Value
+      rhs=>error1
+      code
+        set=>[_data][_v1].Value
+          value=>success
+    else
+      throw=>@"[if] expression that should have 
+evaluated false returned true"
+
+
+event=>magix.test.if-with-if-else-if
+  persist=>false
+  inspect=>@"asserts that [if] works the 
+way it should work, and doesn't intermingle 
+with each others when multiple if 
+statements are added after each other"
+  code
+    _data
+      _v0=>error1
+    if=>not-equals
+      lhs=>[_data][_v0].Value
+      rhs=>error1
+      code
+        throw=>@"[if] expression that should have 
+evaluated false returned true"
+    else
+      set=>[_data][_v0].Value
+        value=>success
+    if=>not-equals
+      lhs=>[_data][_v0].Value
+      rhs=>success
+      code
+        throw=>@"[if] expression that should have 
+evaluated false returned true"
+
+
+event=>magix.test.if-with-if-elseif-if
+  persist=>false
+  inspect=>@"asserts that [if] works the 
+way it should work, and doesn't intermingle 
+with each others when multiple if 
+statements are added after each other"
+  code
+    _data
+      _v0=>error1
+    if=>not-equals
+      lhs=>[_data][_v0].Value
+      rhs=>error1
+      code
+        throw=>@"[if] expression that should have 
+evaluated false returned true"
+    else-if=>not-exist
+      lhs=>[_data][_v0].Value
+      code
+        throw=>@"[if] expression that should have 
+evaluated false returned true"
+    if=>not-equals
+      lhs=>[_data][_v0].Value
+      rhs=>error1
+      code
+        throw=>@"[if] expression that should have 
+evaluated false returned true"
+
+
+event=>magix.test.if-with-if-elseif-else-if-else-if
+  persist=>false
+  inspect=>@"asserts that [if] works the 
+way it should work, and doesn't intermingle 
+with each others when multiple if 
+statements are added after each other"
+  code
+    _data
+      _v0=>error1
+    if=>not-equals
+      lhs=>[_data][_v0].Value
+      rhs=>error1
+      code
+        throw=>@"[if] expression that should have 
+evaluated false returned true"
+    else-if=>not-exist
+      lhs=>[_data][_v0].Value
+      code
+        throw=>@"[if] expression that should have 
+evaluated false returned true"
+    else=>not-equals
+      lhs=>[_data][_v0].Value
+      rhs=>error1
+      code
+        throw=>@"[if] expression that should have 
+evaluated false returned true"
+    if=>equals
+      lhs=>[_data][_v0].Value
+      rhs=>success
+      code
+        throw=>@"[if] expression that should have 
+evaluated false returned true"
+    else
+      set=>[_data][_v0].Value
+        value=>success
+    if=>not-equals
+      lhs=>[_data][_v0].Value
+      rhs=>success
+      code
+        throw=>@"[if] expression that should have 
+evaluated false returned true"
+
+
+event=>magix.test.if-multiple-ifs-elseifs-else-in-same-block
+  persist=>false
+  inspect=>@"asserts that [if] works the 
+way it should work, and doesn't intermingle 
+with each others when multiple if 
+statements are added after each other"
+  code
+    _data
+    if=>exist
+      lhs=>[_data1]
+      code
+        throw=>error in if 1
+    if=>not-exist
+      lhs=>[_data]
+      code
+        throw=>error in if 2
+    if=>exist
+      lhs=>[_data1]
+      code
+        throw=>error in if 3
+    else-if=>not-exist
+      lhs=>[_data]
+      code
+        throw=>error in if 4
+    else
+      set=>[_data][v0].Value
+        value=>success
+    if=>not-exist
+      lhs=>[_data]
+      code
+        throw=>error in if 5
+    else
+      set=>[_data][v1].Value
+        value=>success
+    if=>not-exist
+      lhs=>[_data]
+      code
+        throw=>error in if 6
+    else-if=>not-exist
+      lhs=>[_data1]
+      code
+        set=>[_data][v2].Value
+          value=>success
+    else
+      throw=>error in if 7
+    if=>not-equals
+      lhs=>[_data][v0].Value
+      rhs=>success
+      code
+        throw=>error in if 8
+    if=>not-equals
+      lhs=>[_data][v1].Value
+      rhs=>success
+      code
+        throw=>error in if 9
+    if=>not-equals
+      lhs=>[_data][v2].Value
+      rhs=>success
+      code
+        throw=>error in if 10
+
+
+event=>magix.test.if-deep-hierarchy
+  persist=>false
+  inspect=>@"asserts that [if] works the 
+way it should work, and doesn't intermingle 
+with each others when multiple if 
+statements are added after each other"
+  code
+    _data
+    if=>exist
+      lhs=>[_data]
+      code
+        if=>not-exist
+          lhs=>[_data1]
+          code
+            if=>not-exist
+              lhs=>[_data]
+              code
+            else-if=>exist
+              lhs=>[_data]
+              code
+                if=>exist
+                  lhs=>[_data1]
+                  code
+                else-if=>not-exist
+                  lhs=>[_data]
+                  code
+                else
+                  if=>exist
+                    lhs=>[_data]
+                    code
+                      set=>[_data].Value
+                        value=>success
+    if=>not-equals
+      lhs=>[_data].Value
+      rhs=>success
+      code
+        throw=>deep if didn't work
+
+
+event=>magix.test.if-error-no-if-only-elseif
+  persist=>false
+  inspect=>@"asserts that [if] works the 
+way it should work"
+  code
+    _data
+    try
+      code
+        else-if=>exist
+          lhs=>[_data]
+          code
+      catch
+        set=>[_data].Value
+          value=>success
+    if=>not-equals
+      lhs=>[_data].Value
+      rhs=>success
+      code
+        throw=>no if, only else-if didn't throw
+
+
+event=>magix.test.if-error-no-if-only-else
+  persist=>false
+  inspect=>@"asserts that [if] works the 
+way it should work"
+  code
+    _data
+    try
+      code
+        else
+      catch
+        set=>[_data].Value
+          value=>success
+    if=>not-equals
+      lhs=>[_data].Value
+      rhs=>success
+      code
+        throw=>no if, only else-if didn't throw

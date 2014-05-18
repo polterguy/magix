@@ -80,13 +80,13 @@ the entire tree"
         throw=>code outside of [execute] was not modified when expected
 
 
-event=>magix.test.execute-named-execution
+event=>magix.test.execute-labeled-execution
   persist=>false
   inspect=>@"asserts executing an [execute] block of code, 
 with a label, works the correct way"
   code
     _outside
-    execute=>testing execution
+    execute=>labeled-execution
       set=>[_outside].Value
         value=>executed
       set=>[@][_inside].Value
@@ -98,7 +98,7 @@ with a label, works the correct way"
       code
         throw=>code outside of [execute] was not modified when expected
     if=>not-equals
-      lhs=>[execute=>testing execution][_inside].Value
+      lhs=>[execute=>labeled-execution][_inside].Value
       rhs=>executed
       code
         throw=>code inside of [execute] was not modified when expected

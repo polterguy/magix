@@ -37,9 +37,7 @@ or expressions</p><p>thread safe</p>";
             }
 
             Node ip = Ip(e.Params);
-            Node dp = ip;
-            if (e.Params.Contains("_dp"))
-                dp = e.Params["_dp"].Value as Node;
+            Node dp = Dp(e.Params);
 
             string dir = ip.Contains("directory") && ip["directory"].Value != null ?
                 Expressions.GetExpressionValue(ip["directory"].Get<string>().TrimStart('/'), dp, ip, false) as string :
@@ -97,9 +95,7 @@ parameters to the plugin loader</p><p>thread safe</p>";
 			}
 
             Node ip = Ip(e.Params);
-            Node dp = ip;
-            if (e.Params.Contains("_dp"))
-                dp = e.Params["_dp"].Value as Node;
+            Node dp = Dp(e.Params);
 
             if (!ip.Contains("file"))
                 throw new ArgumentException("you need to supply which file to load as the [file] parameter");
@@ -148,9 +144,7 @@ be either a relative path beneath the web application's folder, or an absolute p
 			}
 
             Node ip = Ip(e.Params);
-            Node dp = ip;
-            if (e.Params.Contains("_dp"))
-                dp = e.Params["_dp"].Value as Node;
+            Node dp = Dp(e.Params);
 
             if (!ip.Contains("file"))
                 throw new ArgumentException("you need to define which file to save, as [file]");
@@ -193,9 +187,7 @@ absolute paths</p><p>thread safe</p>";
             }
 
             Node ip = Ip(e.Params);
-            Node dp = ip;
-            if (e.Params.Contains("_dp"))
-                dp = e.Params["_dp"].Value as Node;
+            Node dp = Dp(e.Params);
 
             if (!ip.Contains("from") || string.IsNullOrEmpty(ip["from"].Get<string>()))
                 throw new ArgumentException("you need to tell the engine which file to move as the value of the [from]");
@@ -234,9 +226,7 @@ absolute path on disc</p><p>thread safe</p>";
             }
 
             Node ip = Ip(e.Params);
-            Node dp = ip;
-            if (e.Params.Contains("_dp"))
-                dp = e.Params["_dp"].Value as Node;
+            Node dp = Dp(e.Params);
 
             if (!ip.Contains("file") || string.IsNullOrEmpty(ip["file"].Get<string>()))
                 throw new ArgumentException("you didn't supply a [file] for [file-exist]");

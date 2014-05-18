@@ -49,7 +49,7 @@ safe</p>";
 			if (!e.Params.Contains("_ip") || !(e.Params["_ip"].Value is Node))
 				throw new ArgumentException("you cannot raise [set] directly, except for inspect purposes");
 
-			Node dp = e.Params["_dp"].Value as Node;
+            Node dp = Dp(e.Params);
 
 			string destinationExpression = ip.Get<string>();
 			string sourceExpression = null;
