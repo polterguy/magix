@@ -159,13 +159,8 @@ returns the remainer in value of [magix.math.add] node.&nbsp;&nbsp;
          */
         private static void RunMathExpression(Node pars, ExecuteFirstExpression first, ExecuteSecondExpression second)
         {
-            Node ip = pars;
-            if (pars.Contains("_ip"))
-                ip = pars["_ip"].Value as Node;
-
-            Node dp = pars;
-            if (pars.Contains("_dp"))
-                dp = pars["_dp"].Value as Node;
+            Node ip = Ip(pars);
+            Node dp = Dp(pars);
 
             decimal result = 0M;
             bool isFirst = true;

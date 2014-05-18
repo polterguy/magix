@@ -58,9 +58,7 @@ parts of your execution node tree</p><p>not thread safe</p>";
 			}
 
             Node ip = Ip(e.Params);
-            Node dp = ip;
-            if (e.Params.Contains("_dp"))
-                dp = e.Params["_dp"].Get<Node>();
+            Node dp = Dp(e.Params);
 
             if (!ip.Contains("controls") && !ip.Contains("controls-file"))
                 throw new ArgumentException("create-web-part needs either a [controls-file] parameter or a [controls] parameter");
@@ -186,9 +184,7 @@ exists only as long as the web part exists&lt;/p&gt;";
 			}
 
             Node ip = Ip(e.Params);
-            Node dp = ip;
-            if (e.Params.Contains("_dp"))
-                dp = e.Params["_dp"].Get<Node>();
+            Node dp = Dp(e.Params);
 
 			if (!ip.Contains("container"))
 				throw new ArgumentException("create-mml-web-part needs a [container] parameter");

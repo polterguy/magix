@@ -38,9 +38,7 @@ class in asp.net, and should at least be capable of handling https, http and ftp
             }
 
             Node ip = Ip(e.Params);
-            Node dp = ip;
-            if (e.Params.Contains("_dp"))
-                dp = e.Params["_dp"].Value as Node;
+            Node dp = Dp(e.Params);
 
             if (!ip.Contains("file"))
                 throw new ArgumentException("you need to supply a [file] parameter");

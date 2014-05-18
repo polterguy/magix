@@ -37,9 +37,7 @@ active event</p><p>thread safe</p>";
             }
 
             Node ip = Ip(e.Params);
-            Node dp = ip;
-            if (e.Params.Contains("_dp"))
-                dp = e.Params["_dp"].Value as Node;
+            Node dp = Dp(e.Params);
 
             if (!ip.Contains("file"))
                 throw new ArgumentException("you need to supply a [file] parameter");

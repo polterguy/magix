@@ -48,9 +48,9 @@ deeply, comparing their name, value and children for equality</p><p>thread safe<
             if (!e.Params.Contains("_ip") || !(e.Params["_ip"].Value is Node))
                 throw new ArgumentException("you cannot raise [if] directly, except for inspect purposes");
 
-            IfImplementation(
-				e.Params, 
-				"magix.execute.if");
+            IfElseIfImplementation(
+                e.Params,
+                "magix.execute.if");
 		}
 
 		/*
@@ -86,17 +86,29 @@ for equality</p><p>thread safe</p>";
 			if (!e.Params.Contains("_ip") || !(e.Params["_ip"].Value is Node))
 				throw new ArgumentException("you cannot raise [else-if] directly, except for inspect purposes");
 
-			// Checking to see if a previous "if" or "else-if" statement has returned true
-            if (ip.Parent.Contains("_state_if") &&
-                ip.Parent["_state_if"].Get<bool>())
-				return;
+            Node previous = ip.Previous();
+            if (previous == null || (previous.Name != "if" && previous.Name != "magix.execute.if" &&
+                previous.Name != "else-if" && previous.Name != "magix.execute.else-if"))
+                throw new ArgumentException("you cannot have an [else-if] statement without a matching if");
 
-			IfImplementation(
-				e.Params, 
-				"magix.execute.else-if");
+            if (!CheckState(e.Params))
+            {
+                IfElseIfImplementation(
+                    e.Params,
+                    "magix.execute.else-if");
+            }
+            else
+            {
+                Node next = ip.Next();
+                if (next == null || (next.Name != "else-if" && next.Name != "magix.execute.else-if"
+                    && next.Name != "else" && next.Name != "magix.execute.else"))
+                {
+                    PopState(e.Params, ip);
+                }
+            }
 		}
 		
-		/**
+		/*
 		 * else implementation
 		 */
 		[ActiveEvent(Name = "magix.execute.else")]
@@ -118,26 +130,28 @@ but only if no paired [if] or [else-if] statement has returned true</p><p>thread
 			if (!e.Params.Contains("_ip") || !(e.Params["_ip"].Value is Node))
 				throw new ArgumentException("you cannot raise [else] directly, except for inspect purposes");
 
+            Node previous = ip.Previous();
+            if (previous == null || (previous.Name != "if" && previous.Name != "magix.execute.if" &&
+                previous.Name != "else-if" && previous.Name != "magix.execute.else-if"))
+                throw new ArgumentException("you cannot have an [else] statement without a matching if");
+
 			// Checking to see if a previous "if" or "else-if" statement has returned true
-            if (ip.Parent.Contains("_state_if") &&
-                ip.Parent["_state_if"].Get<bool>())
-            {
-                return;
-            }
+            bool state = CheckState(e.Params);
+            PopState(e.Params, ip);
 
-			RaiseActiveEvent(
-				"magix.execute", 
-				e.Params);
-		}
+            if (!state)
+                RaiseActiveEvent(
+                    "magix.execute",
+                    e.Params);
+        }
 
-		// Private helper, implementation for both "if" and "else-if" ...
-		private static void IfImplementation(Node pars, string evt)
+        /*
+         * helper for executing [if]/[else-if]
+         */
+		private static void IfElseIfImplementation(Node pars, string evt)
 		{
-			Node ip = pars["_ip"].Value as Node;
-
-            Node dp = ip;
-            if (pars.Contains("_dp"))
-                dp = pars["_dp"].Value as Node;
+            Node ip = Ip(pars);
+            Node dp = Dp(pars);
 
             if (!ip.Contains("code"))
                 throw new ArgumentException("you must supply a [code] node for your [" + evt + "] expressions");
@@ -145,29 +159,52 @@ but only if no paired [if] or [else-if] statement has returned true</p><p>thread
             if (!ip.Contains("lhs"))
                 throw new ArgumentException("you must supply an [lhs] node for your [" + evt + "] expressions");
 
-			string oper = ip.Value as string;
+			string oper = ip.Get<string>();
 
 			if (string.IsNullOrEmpty(oper))
                 throw new ArgumentException("you must supply an operator for your [" + evt + "] expressions as Value of [" + evt + "]");
 
             bool shouldExecuteCode = StatementHelper.CheckExpressions(ip, dp);
-            ExecuteCode(pars, ip, dp, shouldExecuteCode);
-		}
-
-        private static void ExecuteCode(Node pars, Node ip, Node dp, bool expressionIsTrue)
-        {
-            if (expressionIsTrue)
+            if (shouldExecuteCode)
             {
-                // Changing state, to signal any later [else-if] and [else] expressions that expression has executed
-                ip.Parent["_state_if"].Value = true;
                 pars["_ip"].Value = ip["code"];
-
                 RaiseActiveEvent(
                     "magix.execute",
                     pars);
+
+                Node next = ip.Next();
+                if (next != null && (next.Name == "else-if" || next.Name == "magix.execute.else-if"
+                    || next.Name == "else" || next.Name == "magix.execute.else"))
+                {
+                    PushState(pars, ip);
+                }
             }
-            else
-                ip.Parent["_state_if"].UnTie();
         }
-	}
+
+        /*
+         * checks to see if a previous [if]/[else-if] has evaluated to true
+         */
+        private static bool CheckState(Node pars)
+        {
+            Node ip = Ip(pars);
+            string currentScopeDna = ip.Parent.Dna;
+            if (pars.Contains("_state_if") && pars["_state_if"].Contains(currentScopeDna))
+                return true;
+            return false;
+        }
+
+        private static void PushState(Node pars, Node ip)
+        {
+            string currentScopeDna = ip.Parent.Dna;
+            pars["_state_if"][currentScopeDna].Value = null;
+        }
+
+        private static void PopState(Node pars, Node ip)
+        {
+            string currentScopeDna = ip.Parent.Dna;
+            pars["_state_if"][currentScopeDna].UnTie();
+            if (pars["_state_if"].Count == 0)
+                pars["_state_if"].UnTie();
+        }
+    }
 }

@@ -396,9 +396,7 @@ the [name] node.&nbsp;&nbsp;the incoming parameters will be used.&nbsp;&nbsp;not
 			}
 
             Node ip = Ip(e.Params);
-            Node dp = ip;
-            if (e.Params.Contains("_dp"))
-                dp = e.Params["_dp"].Get<Node>();
+            Node dp = Dp(e.Params);
 
             string moduleName = e.Params["name"].Get<string>();
             string container = GetDefaultContainer();

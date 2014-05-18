@@ -13,7 +13,7 @@ using System.Diagnostics;
 
 namespace Magix.Core
 {
-    /**
+    /*
      * Helper class to pass around data in a "JSON kind of way" without having
      * to convert to JSON strings. Create a new instance, and just start appending
      * items to it like this;
@@ -39,21 +39,21 @@ namespace Magix.Core
         private string _name;
         private object _value;
 
-        /**
+        /*
          * Default CTOR, creates a new node with no name and no value and no children
          */
         public Node()
             : this(null)
         { }
 
-        /**
+        /*
          * Creates a new node with the given name
          */
         public Node(string name)
             : this(name, null)
         { }
 
-        /**
+        /*
          * Creates a new node with the given name and the given value
          */
         public Node(string name, object value)
@@ -76,7 +76,7 @@ namespace Magix.Core
 			}
 		}
 
-		/**
+		/*
 		 * Contains a genetically unique code you might say, according to the 
 		 * node's position in the tree
 		 */
@@ -105,7 +105,7 @@ namespace Magix.Core
 			}
 		}
 
-		/**
+		/*
 		 * returns the node with the given dna
 		 */
 		public Node FindDna(string dna)
@@ -123,7 +123,7 @@ namespace Magix.Core
 			return tmp;
 		}
 
-		/**
+		/*
 		 * adds a node before the this node in its parent collection, if possible
 		 */
 		public void AddBefore(Node node)
@@ -137,7 +137,7 @@ namespace Magix.Core
 			Parent.Insert(dnaNo, node);
 		}
 
-		/**
+		/*
 		 * adds a node before the this node in its parent collection, if possible
 		 */
 		public void AddAfter(Node node)
@@ -151,7 +151,7 @@ namespace Magix.Core
 			Parent.Insert(dnaNo + 1, node);
 		}
 
-		/**
+		/*
 		 * Compares the nodes in the "this" pointer to 
 		 * see if they contain all the nodex that exists in our "prototype"
 		 * Node. If so, it will return true, else false
@@ -195,7 +195,7 @@ namespace Magix.Core
 		}
 
 		// TODO: WTF ...?
-		/**
+		/*
 		 * Removes all the existing children Nodes and replaces them
 		 * with the "node" paramater Node's children
 		 */
@@ -210,7 +210,7 @@ namespace Magix.Core
 			node._children.Clear();
 		}
 
-        /**
+        /*
          * Will de-serialize the given JSON string into a Node structure. PS!
          * Even though Nodes can be serialized to JSON, the type information is lost,
          * meaning you can not go back again 100% correctly, since you're 'loosing
@@ -347,7 +347,7 @@ namespace Magix.Core
             return tokens;
         }
 
-        /**
+        /*
          * Returns the Parent node of the current node in the hierarchy. Normally
          * you'd never need to know the 'Parent' of a node, due to the intrinsic
          * logic of Magix, so be careful. If you're using this method, you're probably
@@ -358,7 +358,7 @@ namespace Magix.Core
             get { return _parent; }
         }
 
-        /**
+        /*
          * Assigns a Parent to the current node. Useful for 
          * moving nodes around
          */
@@ -367,7 +367,7 @@ namespace Magix.Core
             _parent = n;
         }
 
-        /**
+        /*
          * Returns the name of the node
          */
         public string Name
@@ -376,7 +376,7 @@ namespace Magix.Core
             set { _name = value; }
         }
 
-        /**
+        /*
          * Returns the value of the object. Use the Get method
          * to retrieve typed objects
          */
@@ -386,7 +386,7 @@ namespace Magix.Core
             set { _value = value; }
         }
 
-        /**
+        /*
          * Returns the value of the object to type of T. Will try to 
          * convert the value, if it is another type then asked for
          */
@@ -434,7 +434,7 @@ namespace Magix.Core
             }
         }
 
-        /**
+        /*
          * Returns the value of the object to type of T, and if
          * object is null it will return 
          * the "default" value. Be careful, might throw if type is wrong
@@ -447,7 +447,7 @@ namespace Magix.Core
             return Get<T>();
         }
 
-        /**
+        /*
          * Returns the first node that matches the given Predicate. Will
          * search recursively. Be careful here, if you're dereferencing nodes that
          * don't exist inside your function, you might very well never return
@@ -467,7 +467,7 @@ namespace Magix.Core
             return null;
         }
 
-        /**
+        /*
          * Returns true if node exists as a direct child only, and not search
          * recursive
          */
@@ -482,7 +482,7 @@ namespace Magix.Core
             return false;
         }
 
-        /**
+        /*
          * Will "disconnect" the node from its parent node. Useful
          * for removing nodes and trees out of Node structures
          */
@@ -494,7 +494,7 @@ namespace Magix.Core
             return this;
         }
 
-        /**
+        /*
          * Returns the node with the given Name. If that node doesn't exist
          * a new node will be created with the given name and appended into the
          * Children collection and then be returned. Please notice that this
@@ -518,7 +518,7 @@ namespace Magix.Core
             }
         }
 
-        /**
+        /*
          * Returns the n'th node, with the given Name. If that node doesn't exist
          * a new node will be created with the given name and appended into the
          * Children collection and then be returned. Please notice that this
@@ -549,7 +549,7 @@ namespace Magix.Core
             }
         }
 
-        /**
+        /*
          * Returns the index of the given item, if it exists within the children
          * collection. Otherwise it returns -1
          */
@@ -558,7 +558,7 @@ namespace Magix.Core
             return _children.IndexOf(item);
         }
 
-        /**
+        /*
          * Inserts a new item into the children collection
          */
         public void Insert(int index, Node item)
@@ -569,7 +569,7 @@ namespace Magix.Core
             item._parent = this;
         }
 
-        /**
+        /*
          * Removes node at given index
          */
         public void RemoveAt(int index)
@@ -578,7 +578,7 @@ namespace Magix.Core
             _children.RemoveAt(index);
         }
 
-        /**
+        /*
          * Returns the n'th node
          */
         public Node this[int index]
@@ -596,7 +596,7 @@ namespace Magix.Core
             }
         }
 
-        /**
+        /*
          * Adds a new node to the collection
          */
         public void Add(Node item)
@@ -607,7 +607,7 @@ namespace Magix.Core
             item._parent = this;
         }
 
-        /**
+        /*
          * Adds a new node to the collection
          */
         public Node Add(string name)
@@ -615,7 +615,7 @@ namespace Magix.Core
 			return Add(name, null);
         }
 
-        /**
+        /*
          * Adds a new node to the collection
          */
         public Node Add(string name, object val)
@@ -624,7 +624,7 @@ namespace Magix.Core
 			return _children[_children.Count - 1];
         }
 
-        /**
+        /*
          * Adds a range of nodes to collection
          */
         public void AddRange(IEnumerable<Node> items)
@@ -639,7 +639,7 @@ namespace Magix.Core
             }
         }
 
-        /**
+        /*
          * Entirely empties the collection
          */
         public void Clear()
@@ -651,7 +651,7 @@ namespace Magix.Core
             _children.Clear();
         }
 
-        /**
+        /*
          * Returns true if node exists within child collection [flat]
          */
         public bool Contains(Node item)
@@ -659,7 +659,7 @@ namespace Magix.Core
             return _children.Contains(item);
         }
 
-        /**
+        /*
          * Returns true if node exists within child collection [flat]
          */
         public bool Contains(string itemName)
@@ -680,7 +680,7 @@ namespace Magix.Core
             _children.CopyTo(array, arrayIndex);
         }
 
-        /**
+        /*
          * Returns the number of items in the children collection
          */
         public int Count
@@ -693,7 +693,7 @@ namespace Magix.Core
             get { return false; }
         }
 
-        /**
+        /*
          * Removes the given node from the child collection
          */
         public bool Remove(Node item)
@@ -706,7 +706,7 @@ namespace Magix.Core
             return retVal;
         }
 
-        /**
+        /*
          * Supports enumerating items
          */
         public IEnumerator<Node> GetEnumerator()
@@ -719,7 +719,7 @@ namespace Magix.Core
             return _children.GetEnumerator();
         }
 
-        /**
+        /*
          * Will return name/value and number of children as a string
          */
         public override string ToString()
@@ -746,7 +746,7 @@ namespace Magix.Core
 			return tmp.GetHashCode ();
 		}
 
-        /**
+        /*
          * Will translate the Node structure to a JSON string. Useful
          * for passing stuff around to other systems, and integrating with client-side
          * etc. Be warned! No TYPE information is being passed, so you cannot build
@@ -816,7 +816,7 @@ namespace Magix.Core
             return builder.ToString();
         }
 
-        /**
+        /*
          * Will sort the nodes according to your given comparison delegate
          */
         public void Sort(Comparison<Node> del)
@@ -824,7 +824,7 @@ namespace Magix.Core
             _children.Sort(del);
         }
 
-        /**
+        /*
          * Level3 Returns the outer most parent node, the top node of the hierarchy
          */
         public Node RootNode()
@@ -835,7 +835,7 @@ namespace Magix.Core
             return tmp;
         }
 
-        /**
+        /*
          * Clones the given node. Deep copy of all nodes
          */
         public Node Clone()
@@ -867,7 +867,7 @@ namespace Magix.Core
 			return true;
 		}
 
-		/**
+		/*
 		 * Returns true if the given object is equal of
 		 * the this object. Equality is determined to true 
 		 * if the Name, Value and all Children nodes are equal to
@@ -884,5 +884,39 @@ namespace Magix.Core
 				   (Value != null && Value.Equals(rhs.Value))) && 
 				 CompareChildren(rhs);
 		}
+
+        /*
+         * returns the next node in the children collection of its parent
+         */
+        public Node Next()
+        {
+            if (Parent == null)
+                throw new ArgumentException("cannot return next node of root node");
+
+            string[] dnas = Dna.Split('-');
+            int dnaNo = int.Parse(dnas[dnas.Length - 1]);
+
+            if (Parent.Count <= dnaNo + 1)
+                return null;
+
+            return Parent[dnaNo + 1];
+        }
+
+        /*
+         * returns the previous node in the children collection of its parent
+         */
+        public Node Previous()
+        {
+            if (Parent == null)
+                throw new ArgumentException("cannot return previous node of root node");
+
+            string[] dnas = Dna.Split('-');
+            int dnaNo = int.Parse(dnas[dnas.Length - 1]);
+
+            if (dnaNo == 0)
+                return null;
+
+            return Parent[dnaNo - 1];
+        }
     }
 }

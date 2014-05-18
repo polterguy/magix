@@ -44,7 +44,7 @@ use the [.] expression to de-reference the currently iterated node</p><p>thread 
 			if (!e.Params.Contains("_ip") || !(e.Params["_ip"].Value is Node))
 				throw new ArgumentException("you cannot raise [for-each] directly, except for inspect purposes");
 
-			Node dp = e.Params["_dp"].Value as Node;
+            Node dp = Dp(e.Params);
 
             if (string.IsNullOrEmpty(ip.Get<string>()))
                 throw new ArgumentException("you must supply an expression to [for-each]");

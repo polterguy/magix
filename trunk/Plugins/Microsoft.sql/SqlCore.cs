@@ -52,9 +52,7 @@ byte[] result rows will be returned</p><p>thread safe</p>";
             }
 
             Node ip = Ip(e.Params);
-            Node dp = ip;
-            if (e.Params.Contains("_dp"))
-                dp = e.Params["_dp"].Get<Node>();
+            Node dp = Dp(e.Params);
 
             if (!ip.Contains("connection"))
                 throw new ArgumentException("you need to supply a [connection] to connect to a database");
@@ -153,9 +151,7 @@ safe</p>";
             }
 
             Node ip = Ip(e.Params);
-            Node dp = ip;
-            if (e.Params.Contains("_dp"))
-                dp = e.Params["_dp"].Get<Node>();
+            Node dp = Dp(e.Params);
 
             if (!ip.Contains("file"))
                 throw new ArgumentException("you need to supply a [file] parameter to [microsoft.sql.select-as-text]");
@@ -222,9 +218,7 @@ connection string from your web.config called ""NamedConnection""</p><p>thread s
             }
 
             Node ip = Ip(e.Params);
-            Node dp = ip;
-            if (e.Params.Contains("_dp"))
-                dp = e.Params["_dp"].Get<Node>();
+            Node dp = Dp(e.Params);
 
             if (!ip.Contains("connection"))
                 throw new ArgumentException("you need to supply a [connection] to connect to a database");

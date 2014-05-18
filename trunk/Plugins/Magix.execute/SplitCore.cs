@@ -43,7 +43,7 @@ expression(s)</p><p>if you use [what] to split your string, then the parts which
 			if (!e.Params.Contains("_ip") || !(e.Params["_ip"].Value is Node))
 				throw new ArgumentException("you cannot raise [split] directly, except for inspect purposes");
 
-			Node dp = e.Params["_dp"].Value as Node;
+            Node dp = Dp(e.Params);
 
             if (!ip.Contains("what") && !ip.Contains("where"))
                 throw new ArgumentException("[split] needs a [what] or a [where] child to understand how to split the expression");

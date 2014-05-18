@@ -143,9 +143,7 @@ code
 				return;
 			}
 
-            Node dp = ip;
-            if (e.Params.Contains("_dp"))
-                dp = e.Params["_dp"].Get<Node>();
+            Node dp = Dp(e.Params);
 
             if (!ip.Contains("code") && !ip.Contains("file"))
                 throw new ArgumentException("no [code] or [file] node passed into [code-2-node]");

@@ -51,9 +51,7 @@ and the value of the [value] node's [value] expression</p><p>thread safe</p>";
 			if (!e.Params.Contains("_ip") || !(e.Params["_ip"].Value is Node))
 				throw new ArgumentException("you cannot raise [magix.execute.add] directly, except for inspect purposes");
 
-			Node dp = ip;
-			if (e.Params.Contains("_dp"))
-				dp = e.Params["_dp"].Value as Node;
+			Node dp = Dp(e.Params);
 
             string left = ip.Get<string>();
             Node leftNode = Expressions.GetExpressionValue(left, dp, ip, true) as Node;

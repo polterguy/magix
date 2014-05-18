@@ -88,9 +88,7 @@ to use, and so on</p><p>not thread safe</p>";
 			}
 
             Node ip = Ip(e.Params);
-            Node dp = ip;
-            if (e.Params.Contains("_dp"))
-                dp = e.Params["_dp"].Get<Node>();
+            Node dp = Dp(e.Params);
 
             if (!ip.Contains("message") || string.IsNullOrEmpty(ip["message"].Get<string>()))
 				throw new ArgumentException("cannot show a message box without a [message] argument");

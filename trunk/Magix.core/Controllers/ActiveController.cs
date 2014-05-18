@@ -141,13 +141,23 @@ namespace Magix.Core
             }
         }
 
-        /**
-         * returns the instruction pointer. will by default return the given Node if no IP is found in node
+        /*
+         * returns the instruction pointer. will by default return the given Node if no _ip is found in node
          */
         protected static Node Ip(Node pars)
         {
             if (pars.Contains("_ip"))
-                return pars["_ip"].Value as Node;
+                return pars["_ip"].Get<Node>();
+            return pars;
+        }
+
+        /*
+         * returns the data pointer. will by default return the given Node if no _dp is found in node
+         */
+        protected static Node Dp(Node pars)
+        {
+            if (pars.Contains("_dp"))
+                return pars["_dp"].Get<Node>();
             return pars;
         }
     }

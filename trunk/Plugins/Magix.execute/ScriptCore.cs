@@ -47,9 +47,7 @@ if=>equals
 				return;
 			}
 
-            Node dp = ip;
-            if (e.Params.Contains("_dp"))
-                dp = e.Params["_dp"].Get<Node>();
+            Node dp = Dp(e.Params);
 
             if (!ip.Contains("file") && !ip.Contains("script"))
                 throw new ArgumentException("[execute-script] needs either a [file] or a [script] parameter");
