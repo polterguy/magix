@@ -38,17 +38,11 @@
 
 * make all updates to mux become JsonGeneric updates, to reduce the size of the javascript
 
-* unit testing for sandboxing features, and fully qualified hyper lisp keywords
+* unit testing for sandboxing features
 
 * timed execution, hyper lisp executing at a specific datetime, and/or interval
 
-* unit testing of [if]/[else] etc, to make sure _state_if functions the way it is supposed to 
-
-* refactor [if] such that it uses e.Params for _state_if, by creating a stack of _state_if in e.Params, with ip.Parent.Dna as getter
-
 * refactor all active events to not take value parameters, such as set-viewstate
-
-* create unit test and documentation for [add], and slightly refactor to check [value]'s return type
 
 * refactor all places that uses Ip(e.Params) for simplicity
 
@@ -64,10 +58,6 @@
 
 * implement all event handlers for text-box in inspect of text-box, and other controls too
 
-* document event expressions, such as [:my.active.event][value].Value and make it possible to pass in parameters as expressions 
-  inside of active event pointing to outside node lists ...
-  And make sure they use the e.Params pointers correctly
-
 * create IValueControl interface in mux, to use in magix.forms.controls. active events in magix.forms.get.value event, to extract value, 
   to make extracting values from controls generic
 
@@ -80,5 +70,7 @@
 
 * remove html formatting from inspect feature, and create some sort of parser, that treats two carriage returns as new paragraph, and so on
 
+* create zip package manager for installing packages
 
+* fix yellow screen of death to show up in ajax callbacks, and create support for showing code that fissles
 

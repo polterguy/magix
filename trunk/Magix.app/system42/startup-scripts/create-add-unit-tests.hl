@@ -60,7 +60,37 @@ node, with the [children-only] set to true"
       lhs=>[_buffer][tmp].Value
       rhs=>testing
       code
-        throw=>@"[add] didn't behave as expected 
-when invoking with a list of child nodes, with 
-children-only set to true"
+        throw=>@"[add] didn't behave as expected"
+
+
+event=>magix.test.add-named-node-with-value
+  persist=>false
+  inspect=>@"asserts that [add] works the 
+way it should work"
+  code
+    _buffer
+    add=>[_buffer]
+      value=>tmp
+        value=>testing
+    if=>not-equals
+      lhs=>[_buffer][tmp].Value
+      rhs=>testing
+      code
+        throw=>@"[add] didn't behave as expected"
+
+
+event=>magix.test.add-named-node-without-value
+  persist=>false
+  inspect=>@"asserts that [add] works the 
+way it should work"
+  code
+    _buffer
+    add=>[_buffer]
+      value=>tmp
+    if=>exist
+      lhs=>[_buffer][tmp].Value
+      or=>not-exist
+        lhs=>[_buffer][tmp]
+      code
+        throw=>@"[add] didn't behave as expected"
 

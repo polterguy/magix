@@ -123,5 +123,5 @@ rather in fact a part of how nodes themselves are being created.&nbsp;&nbsp;it's
 lambda=>next
   oncreatecontrols
     magix.help.set-next
-      next=>system42/admin/help/hyper-lisp/existing-keywords.mml
+      next=>system42/admin/help/hyper-lisp/add-keyword.mml
 }}

@@ -57,6 +57,9 @@ have access to the node tree that is created as a consequence of the active even
 this [output] node's value, is being used to create a [message] to a [magix.viewport.show-message] invocation, which shows the 
 user a message box</p>
 
+<p>you can of course also nest active event expressions, which you should be careful with, since this obviously will 
+easily win you a gold medal in the world championship of obfuscated code</p>
+
 {{
 lambda=>next
   oncreatecontrols
