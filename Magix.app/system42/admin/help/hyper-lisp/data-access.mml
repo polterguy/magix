@@ -31,15 +31,15 @@ lambda=>lmb-database
     for-each=>[list-events][events]
       _pnl
         tag=>li
-        class=>bottom-1 span-19 last
+        class=>bottom-1 span-17 last
         controls
           label
             class=>span-3
             tag=>label
           label
-            class=>span-16 last
+            class=>span-14 last
           label
-            class=>left-3 span-16 last
+            class=>left-3 span-14 last
             tag=>pre
       set=>[@][_pnl][controls][label:0][value].Value
         value=>[.].Name

@@ -15,7 +15,7 @@ set=>[list-events].Name
 for-each=>[Data][events]
   _tpl
     link-button
-      class=>span-6
+      class=>span-3
       text
       onclick
         void.foo
@@ -67,7 +67,7 @@ magix.viewport.clear-controls
   container=>content2
 cf
   form-id=>form1
-  class=>span-19 last
+  class=>span-17 last
   container=>content1
   controls
     panel2
@@ -114,5 +114,5 @@ to other serv end-points.&nbsp;&nbsp;please take care when
 overriding active events to go to a different server, since it
 involves a security risk"
     panel=>wrp
-      class=>span-6 last
+      class=>span-4 last
       controls

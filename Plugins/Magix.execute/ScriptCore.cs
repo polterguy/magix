@@ -103,7 +103,8 @@ if=>equals
 
             if (exe.Contains("$"))
             {
-                ip["params"].ReplaceChildren(exe["$"]);
+                ip["params"].Clear();
+                ip["params"].AddRange(exe["$"]);
             }
 		}
 	}

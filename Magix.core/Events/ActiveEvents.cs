@@ -398,7 +398,8 @@ namespace Magix.Core
                         if (val.Length > 7)
 						{
 							Node tmp = Node.FromJSONString(val.Substring(7));
-                            pars.ReplaceChildren (tmp);
+                            pars.Clear();
+                            pars.AddRange(tmp);
 							pars.Name = tmp.Name;
 							pars.Value = tmp.Value;
 						}

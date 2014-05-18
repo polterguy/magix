@@ -61,8 +61,10 @@ lisp blocks of code, are being correctly re-mapped</p>";
 					if (idx.Contains("remotable") && idx["remotable"].Get<bool>())
 						ActiveEvents.Instance.MakeRemotable(idx["event"].Get<string>());
 
-					_events[idx["event"].Get<string>()].ReplaceChildren(idx["code"]);
-                    _inspect[idx["event"].Get<string>()].ReplaceChildren(idx["inspect"]);
+                    _events[idx["event"].Get<string>()].Clear();
+					_events[idx["event"].Get<string>()].AddRange(idx["code"]);
+                    _inspect[idx["event"].Get<string>()].Clear();
+                    _inspect[idx["event"].Get<string>()].AddRange(idx["inspect"]);
 				}
 			}
 		}
@@ -141,7 +143,7 @@ restarts</p><p>thread safe</p>";
                     saveNode["value"]["event"].Value = activeEvent;
                     saveNode["value"]["type"].Value = "magix.execute.event";
                     saveNode["value"]["remotable"].Value = remotable;
-                    saveNode["value"]["code"].ReplaceChildren(ip["code"].Clone());
+                    saveNode["value"]["code"].AddRange(ip["code"].Clone());
 
                     if (ip.Contains("inspect"))
                         saveNode["value"]["inspect"].Value = ip["inspect"].Value;
@@ -223,7 +225,8 @@ events raised internally within event</p>";
                     "magix.execute",
                     code);
 
-                e.Params.ReplaceChildren(code["$"]);
+                e.Params.Clear();
+                e.Params.AddRange(code["$"]);
             }
         }
 
@@ -274,7 +277,7 @@ safe</p>";
             if (ip.Contains("code"))
             {
                 Node n = new Node();
-                n.ReplaceChildren(ip["code"].Clone());
+                n.AddRange(ip["code"].Clone());
                 SessionEvents[activeEvent] = n;
             }
             else
@@ -298,7 +301,8 @@ safe</p>";
                     "magix.execute",
                     code);
 
-                e.Params.ReplaceChildren(code["$"]);
+                e.Params.Clear();
+                e.Params.AddRange(code["$"]);
             }
         }
 

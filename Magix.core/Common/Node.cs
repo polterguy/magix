@@ -194,22 +194,6 @@ namespace Magix.Core
 			return true;
 		}
 
-		// TODO: WTF ...?
-		/*
-		 * Removes all the existing children Nodes and replaces them
-		 * with the "node" paramater Node's children
-		 */
-		public void ReplaceChildren (Node node)
-		{
-			Clear();
-			foreach (Node idx in node._children)
-			{
-				idx._parent = this;
-				this._children.Add(idx);
-			}
-			node._children.Clear();
-		}
-
         /*
          * Will de-serialize the given JSON string into a Node structure. PS!
          * Even though Nodes can be serialized to JSON, the type information is lost,

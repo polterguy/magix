@@ -36,7 +36,7 @@ for-each=>[magix.data.load:1][objects]
 magix.forms.create-web-part
   form-id=>edit-pages
   container=>content1
-  class=>span-19 last
+  class=>span-17 last
   controls
     label=>header
       tag=>h2

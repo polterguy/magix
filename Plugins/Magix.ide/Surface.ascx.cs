@@ -534,7 +534,8 @@ not thread safe";
 
 			if (!string.IsNullOrEmpty(SelectedWidgetDna))
 			{
-				ip["value"]["widget"].ReplaceChildren(DataSource.FindDna(SelectedWidgetDna).Clone());
+                ip["value"]["widget"].Clear();
+				ip["value"]["widget"].AddRange(DataSource.FindDna(SelectedWidgetDna).Clone());
 				ip["value"]["dna"].Value = DataSource.FindDna(SelectedWidgetDna).Dna;
 			}
 		}
@@ -822,7 +823,8 @@ back to caller as [form]";
 				BuildControl(retVal["_tmp"], idx);
 			}
 
-			ip["controls"].ReplaceChildren(retVal);
+            ip["controls"].Clear();
+			ip["controls"].AddRange(retVal);
 		}
 
 		private void BuildControl(Node retVal, Node ctrlNode)
@@ -834,7 +836,8 @@ back to caller as [form]";
 			foreach (Node idx in ctrlNode["properties"])
 			{
 				retVal[idx.Name].Value = idx.Value;
-				retVal[idx.Name].ReplaceChildren(idx.Clone());
+                retVal[idx.Name].Clear();
+                retVal[idx.Name].AddRange(idx.Clone());
 			}
 
 			foreach (Node idx in ctrlNode["controls"])

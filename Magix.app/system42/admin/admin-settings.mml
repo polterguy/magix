@@ -1,11 +1,11 @@
 
 
-<h2 class="span-13 last left-6">admin settings</h2>
+<h2 class="span-17 last">admin settings</h2>
 
-<div class="span-17 last boxed air-padding">{{
+<div class="span-15 last boxed air-padding">{{
 label=>frontEndCssLbl
   value=>skin css file
-  class=>span-3
+  class=>span-2 right-text
   tag=>label
 lambda=>lmda
   oncreatecontrols
@@ -18,7 +18,7 @@ lambda=>lmda
           set=>[magix.data.save][value][file].Value
             value=>[magix.forms.get-value][value].Value
           magix.data.save
-            id=>magix.admin.settings.default-front-end-css-file
+            id=>magix.admin.settings.default-back-end-css-file
           magix.web.redirect=>?dashboard=
           magix.web.postpone-execution
             code
@@ -39,7 +39,7 @@ lambda=>lmda
                 message=>theme was changed and portal was reloaded
         onfirstload
           magix.data.load
-            id=>magix.admin.settings.default-front-end-css-file
+            id=>magix.admin.settings.default-back-end-css-file
           set=>[magix.forms.set-value][value].Value
             value=>[magix.data.load][objects][0][file].Value
           magix.forms.set-value
@@ -57,8 +57,8 @@ lambda=>lmda
     add=>[$]
       value=>[_data][select]
 label=>lblHelp
-  value=>show help in admin panel
-  class=>span-4 left-1
+  value=>show help
+  class=>span-2 right-text
   tag=>label
   for=>chkHelp
 check=>chkHelp
@@ -104,5 +104,39 @@ check=>chkHelp
         value=>false
       magix.viewport.clear-controls
         container=>help
+label=>frontEndViewportLabel
+  value=>front end viewport
+  class=>span-3 right-text
+  tag=>label
+lambda=>lmdaViewport
+  oncreatecontrols
+    _data
+      select=>frontEndViewport
+        class=>span-4 last
+        onselectedindexchanged
+          magix.forms.get-value
+            id=>frontEndViewport
+          set=>[magix.data.save][value][viewport].Value
+            value=>[magix.forms.get-value][value].Value
+          magix.data.save
+            id=>magix.admin.settings.default-front-end-viewport
+          magix.viewport.show-message
+            message=>front end viewport was changed
+        onfirstload
+          magix.data.load
+            id=>magix.admin.settings.default-front-end-viewport
+          set=>[magix.forms.set-value][value].Value
+            value=>[magix.data.load][objects][0][viewport].Value
+          magix.forms.set-value
+            form-id=>admin-settings
+            id=>frontEndViewport
+    _viewports
+      Magix.viewports.Gutenberg=>gutenberg
+      Magix.viewports.SingleContainer=>single container
+    for-each=>[_viewports]
+      set=>[/][_data][select][items][[.].Name].Value
+        value=>[.].Value
+    add=>[$]
+      value=>[_data][select]
 }}</div>
 

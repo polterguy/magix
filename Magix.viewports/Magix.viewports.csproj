@@ -33,6 +33,9 @@
     <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="SingleContainer.ascx.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="Gutenberg.ascx.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
@@ -53,6 +56,11 @@
       <Project>{11376D5F-13BD-4529-BA92-DDE415B96220}</Project>
       <Name>Magix.Core</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="SingleContainer.ascx">
+      <SubType>ASPXCodeBehind</SubType>
+    </EmbeddedResource>
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>

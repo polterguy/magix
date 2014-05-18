@@ -77,23 +77,23 @@ if=>exist
       value=>[$][container].Value
 cf
   form-id=>form1
-  class=>span-19 last
+  class=>span-17 last
   container=>content1
   controls
     panel2
-      class=>span-15
+      class=>span-13
       controls
         label=>header
           value=>keyword name
-          class=>span-15
+          class=>span-13
           tag=>h3
         label=>code
-          class=>span-15
+          class=>span-13
           value=>code example
           tag=>pre
         button=>run
           value=>inspect
-          class=>span-2
+          class=>span-2 right last
           onclick
             magix.forms.get-value
               form-id=>form1
@@ -111,13 +111,13 @@ cf
               value=>[@][magix.forms.get-value][value].Value
             magix.admin.load-executor-code
               code
-              class=>span-19 last left-5 bottom-3 top-1
+              class=>span-17 last left-5 bottom-3 top-1
         label=>lblDesc
-          class=>span-15 top-2
+          class=>span-13 top-2
           tag=>label
           value=>description
         label=>desc
-          class=>span-15
+          class=>span-13
           value=>@"description of your magix.execute keyword.&nbsp;&nbsp;
 click any of the keyword active events to the right to inspect them"
     panel=>wrp

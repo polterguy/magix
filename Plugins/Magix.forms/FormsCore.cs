@@ -186,9 +186,6 @@ exists only as long as the web part exists&lt;/p&gt;";
             Node ip = Ip(e.Params);
             Node dp = Dp(e.Params);
 
-			if (!ip.Contains("container"))
-				throw new ArgumentException("create-mml-web-part needs a [container] parameter");
-
             if (!ip.Contains("mml-file") && !ip.Contains("mml"))
                 throw new ArgumentException("create-mml-web-part requires either an [mml-file] parameter or an [mml] parameter");
 
@@ -254,9 +251,13 @@ exists only as long as the web part exists&lt;/p&gt;";
                 ip["mml"].Value = mml;
             }
 
+            string container = null;
+            if (ip.Contains("container"))
+                container = Expressions.GetExpressionValue(ip["container"].Get<string>(), dp, ip, false) as string;
+
             LoadActiveModule(
 				"Magix.forms.WebPart", 
-				Expressions.GetExpressionValue(ip["container"].Get<string>(), dp, ip, false) as string, 
+				container, 
 				e.Params);
 
             if (hasMmlFile)

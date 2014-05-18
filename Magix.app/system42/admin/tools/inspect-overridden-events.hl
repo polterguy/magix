@@ -16,7 +16,7 @@ set=>[list-events].Name
 for-each=>[Data][events]
   _tpl
     link-button
-      class=>span-6 hover-shadow
+      class=>span-3 hover-shadow
       text
       onclick
         void.foo
@@ -69,7 +69,7 @@ magix.viewport.clear-controls
   container=>content2
 cf
   form-id=>form1
-  class=>span-19 last
+  class=>span-17 last
   container=>content1
   controls
     panel2
@@ -118,5 +118,5 @@ will automatically also become overrides, and end up on this list.&nbsp;&nbsp;
 so the number of active events on this list, can to some extend be used to monitor the complexity of
 your system as a total"
     panel=>wrp
-      class=>span-6 last
+      class=>span-4 last
       controls

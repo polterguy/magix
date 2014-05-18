@@ -1,5 +1,5 @@
 ﻿
-<h2>viewports</h2>
+<h2>viewports in c#</h2>
 
 <p>a viewport is an {{
 link-button=>active-modules
@@ -79,7 +79,7 @@ namespace Magix.samples
 
 <p>the dynamic_LoadControls method is a method that exists in the Viewport base class, and doesn't normally 
 need tampering with.&nbsp;&nbsp;to use the viewport given above, you'll have to modify your web.config file, 
-and change the "magix.core.viewport" setting to point to the fully qualified name of your viewport.&nbsp;&nbsp;
+and change the "magix.core.dashboard-viewport" setting to point to the fully qualified name of your viewport.&nbsp;&nbsp;
 for the above sample, this string would be "Magix.samples.MyViewport"</p>
 
 <p>the GetDefaultContainer method, should return the container in your viewport which is the default container.&nbsp;&nbsp;

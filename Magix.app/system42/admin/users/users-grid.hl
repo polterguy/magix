@@ -79,11 +79,11 @@ _dt
       label
         class=>span-5
       label
-        class=>span-5
+        class=>span-4
       label
         class=>span-4
       link-button
-        class=>span-2
+        class=>span-1
         value=>edit
         onclick
           execute-script
@@ -129,7 +129,7 @@ magix.forms.create-web-part
   class=>span-17 last
   controls
     label=>header
-      class=>span-13 last left-6
+      class=>span-17 last
       value=>edit users
       tag=>h2
     panel=>userGrdHeader
@@ -140,7 +140,7 @@ magix.forms.create-web-part
           tag=>label
           tip=>name of user
         label=>headUsername
-          class=>span-5
+          class=>span-4
           value=>username
           tag=>label
           tip=>username of user
@@ -150,13 +150,13 @@ magix.forms.create-web-part
           tag=>label
           tip=>password of user
         label=>headEdit
-          class=>span-2
+          class=>span-1
           value=>edit
           tag=>label
           tip=>edit user
         label=>headDelete
-          class=>span-1 last
-          value=>del
+          class=>span-3 last right-text
+          value=>delete
           tag=>label
           tip=>delete user
     panel=>userGrdWrp
@@ -167,7 +167,7 @@ magix.forms.create-web-part
       controls
         link-button=>previous
           value=>&lt;&lt;
-          class=>span-1 left-7
+          class=>span-1 left-13 last
           onclick
             execute-script
               file=>system42/admin/users/users-grid.hl
@@ -176,25 +176,25 @@ magix.forms.create-web-part
           value=>54
         link-button=>next
           value=>&gt;&gt;
-          class=>span-1
+          class=>span-1 last
           onclick
             execute-script
               file=>system42/admin/users/users-grid.hl
     panel=>newUserWrp
-      class=>span-19 top-1
+      class=>span-17 top-1
       default=>addBtn
       controls
         text-box=>nName
           class=>span-5
           place-holder=>name of new user ...
         text-box=>nUsername
-          class=>span-5
+          class=>span-4
           place-holder=>username ...
         text-box=>nPwd
-          class=>span-5 right-4 last
+          class=>span-4
           place-holder=>password ...
         button=>addBtn
-          class=>btn-large span-3 clear
+          class=>span-4 last
           value=>add
           onclick
             magix.forms.get-value

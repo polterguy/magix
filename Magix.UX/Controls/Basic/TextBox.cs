@@ -157,6 +157,8 @@ namespace Magix.UX.Widgets
                 el.AddAttribute("autocapitalize", "on");
             if (AutoComplete)
                 el.AddAttribute("autocomplete", "on");
+            else
+                el.AddAttribute("autocomplete", "off");
             if (AutoCorrect)
                 el.AddAttribute("autocorrect", "on");
             if (!string.IsNullOrEmpty(PlaceHolder))

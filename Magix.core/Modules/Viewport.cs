@@ -374,7 +374,8 @@ it into [value] node.&nbsp;&nbsp;not thread safe";
 			if (ViewState[id] != null && ViewState[id] is Node)
 			{
                 Ip(e.Params)["value"].Value = (ViewState[id] as Node).Value;
-                Ip(e.Params)["value"].ReplaceChildren((ViewState[id] as Node).Clone());
+                Ip(e.Params)["value"].Clear();
+                Ip(e.Params)["value"].AddRange((ViewState[id] as Node).Clone());
 			}
 		}
 
@@ -400,7 +401,7 @@ the [name] node.&nbsp;&nbsp;the incoming parameters will be used.&nbsp;&nbsp;not
 
             string moduleName = e.Params["name"].Get<string>();
             string container = GetDefaultContainer();
-            if (ip.Contains("container"))
+            if (ip.Contains("container") && !string.IsNullOrEmpty(ip["container"].Get<string>()))
                 container = Expressions.GetExpressionValue(ip["container"].Get<string>(), dp, ip, false) as string;
 
 			DynamicPanel dyn = Selector.FindControl<DynamicPanel>(

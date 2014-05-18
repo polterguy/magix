@@ -68,18 +68,18 @@ magix.viewport.clear-controls
   container=>content2
 cf
   form-id=>form1
-  class=>span-19 last
+  class=>span-17 last
   container=>content1
   controls
     panel2
-      class=>span-12
+      class=>span-10
       controls
         label=>header
           value=>name of active event
-          class=>span-12 last
+          class=>span-10 last
           tag=>h3
         label=>code
-          class=>span-12 last
+          class=>span-10 last
           value=>code example
           tag=>pre
         button=>run
@@ -102,13 +102,13 @@ cf
               value=>[@][magix.forms.get-value][value].Value
             magix.admin.load-executor-code
               code
-              class=>span-19 last left-5 bottom-3 top-1
+              class=>span-17 last left-5 bottom-3 top-1
         label=>lblDesc
-          class=>span-12 last top-2
+          class=>span-10 last top-2
           tag=>label
           value=>description
         label=>desc
-          class=>span-12 last
+          class=>span-10 last
           value=>@"description of your magix active event.&nbsp;&nbsp;
 click any of the active events to the right to inspect them"
     panel=>wrp

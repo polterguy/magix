@@ -380,6 +380,10 @@
     </Content>
     <Content Include="system42\admin\help\hyper-lisp\expressions-invoking-active-events.mml" />
     <Content Include="system42\admin\help\hyper-lisp\add-keyword.mml" />
+    <Content Include="system42\admin\help\hyper-lisp\working-with-viewports.mml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="system42\startup-scripts\create-magix-tiedown-load-index-page.hl" />
     <None Include="todo.txt" />
     <None Include="system42\startup-scripts\events-create-desktop-shortcuts.hl" />
     <None Include="system42\startup-scripts\event-server-discovery.hl" />
@@ -403,7 +407,6 @@
     <None Include="system42\admin\forms\edit-property.hl" />
     <None Include="system42\admin\desktop\menu.mml" />
     <None Include="system42\admin\desktop\show-desktop.hl" />
-    <None Include="system42\admin\test-files\test-input-pars.hl" />
     <None Include="system42\startup-scripts\magix-admin.hl" />
     <None Include="system42\startup-scripts\create-default-web-page.hl" />
     <None Include="system42\startup-scripts\create-default-user.hl" />

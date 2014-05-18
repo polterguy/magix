@@ -149,9 +149,10 @@ safe</p>";
 		[ActiveEvent(Name = "magix.execute.open")]
 		public static void magix_execute_open(object sender, ActiveEventArgs e)
 		{
-			if (ShouldInspect(e.Params))
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
 			{
-				e.Params["inspect"].Value = @"<p>allows the given value active event
+				ip["inspect"].Value = @"<p>allows the given value active event
 to be remotely invoked.&nbsp;&nbsp;this means that other servers, can call your active 
 event, on your server</p><p>you can create a server-api for web-services, by opening 
 active events for being remotely invoked, and such connect servers together, either 
@@ -161,11 +162,9 @@ the data storage, meaning it will only last as long as the application is not re
 &nbsp;&nbsp;this is useful for active events whom are created for instance during the 
 startup of your application, since it will save time, since they will anyway be overwritten 
 the next time your application restarts</p><p>thread safe</p>";
-				e.Params["open"].Value = "magix.namespace.foo";
+				ip["open"].Value = "magix.namespace.foo";
 				return;
 			}
-
-            Node ip = Ip(e.Params);
 
             string activeEvent = ip.Get<string>();
             if (string.IsNullOrEmpty(activeEvent))
@@ -201,9 +200,10 @@ the next time your application restarts</p><p>thread safe</p>";
 		[ActiveEvent(Name = "magix.execute.close")]
 		public static void magix_execute_close(object sender, ActiveEventArgs e)
 		{
-			if (ShouldInspect(e.Params))
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
 			{
-				e.Params["inspect"].Value = @"<p>closes the active event found in
+				ip["inspect"].Value = @"<p>closes the active event found in
 the value of [clode], such that it no longer can be remotely invoked from other 
 servers</p><p>if you set [persist] to false, then the active event will not be 
 serialized into the data storage, meaning it will only last as long as the application 
@@ -211,11 +211,9 @@ is not restarted.&nbsp;&nbsp;this is useful for active events whom are created f
 instance during the startup of your application, since it will save time, since they 
 will anyway be overwritten the next time your application restarts</p><p>thread safe
 </p>";
-				e.Params["close"].Value = "magix.namespace.foo";
+				ip["close"].Value = "magix.namespace.foo";
 				return;
 			}
-
-            Node ip = Ip(e.Params);
 
             string activeEvent = ip.Get<string>();
 
@@ -243,21 +241,20 @@ will anyway be overwritten the next time your application restarts</p><p>thread 
 		[ActiveEvent(Name = "magix.execute.remote")]
 		public static void magix_execute_remote(object sender, ActiveEventArgs e)
 		{
-			if (ShouldInspect(e.Params))
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
 			{
-				e.Params["inspect"].Value = @"<p>remotely invokes the active event from
+				ip["inspect"].Value = @"<p>remotely invokes the active event from
 value on [remote] on the given [url], passing in all nodes in [pars] as parameters to 
 your active event, returning any return values from event beneath [params]</p><p>this 
 effectively raises an active event, except the event will be serialized over http, and 
 invoked on another server, returning transparently back to the caller, as if it was 
 invoked locally</p><p>thread safe</p>";
-				e.Params["remote"].Value = "magix.namespace.foo";
-                e.Params["remote"]["url"].Value = "http://127.0.0.1:8080";
-                e.Params["remote"]["params"]["your-parameters-goes-here"].Value = "value of parameter";
+				ip["remote"].Value = "magix.namespace.foo";
+                ip["remote"]["url"].Value = "http://127.0.0.1:8080";
+                ip["remote"]["params"]["your-parameters-goes-here"].Value = "value of parameter";
                 return;
 			}
-
-            Node ip = Ip(e.Params);
 
             string activeEvent = ip.Get<string>();
             if (string.IsNullOrEmpty(activeEvent))
@@ -285,7 +282,7 @@ invoked locally</p><p>thread safe</p>";
                 if (ip.Contains("params"))
                 {
                     Node tmp = new Node(ip.Name, ip.Value);
-                    tmp.ReplaceChildren(ip["params"]);
+                    tmp.AddRange(ip["params"]);
                     writer.Write("&params=" + System.Web.HttpUtility.UrlEncode(tmp.ToJSONString()));
                 }
             }
@@ -306,7 +303,8 @@ invoked locally</p><p>thread safe</p>";
                         if (val.Length > 7)
                         {
                             Node tmp = Node.FromJSONString(val.Substring(7));
-                            ip["params"].ReplaceChildren(tmp);
+                            ip["params"].Clear();
+                            ip["params"].AddRange(tmp);
                         }
                     }
                     else

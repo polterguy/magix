@@ -144,7 +144,8 @@ namespace Magix.Core
                         throw new ArgumentException("you can only set a node-list to another node-list, and not a string or some other constant value");
 
                     Node clone = (valueToSet as Node).Clone();
-                    destinationNode.ReplaceChildren(clone);
+                    destinationNode.Clear();
+                    destinationNode.AddRange(clone);
                     destinationNode.Name = clone.Name;
                     destinationNode.Value = clone.Value;
                 }

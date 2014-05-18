@@ -66,7 +66,7 @@ for-each=>[_categories]
     value=>panel
 
 _pnl
-  class=>span-6 desktop-widget bottom-1 left-1
+  class=>span-5 desktop-widget top-1 left-1
   controls
     label=>header
       class=>desktop-widget-header span-4
@@ -77,6 +77,6 @@ _pnl
 magix.forms.create-web-part
   form-id=>desktop-surface
   container=>content2
-  class=>span-19 last bottom-1 desktop-surface
+  class=>span-17 last desktop-surface
 
 

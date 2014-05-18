@@ -47,9 +47,9 @@ namespace Magix.forms
 			    node["correct"].Value != null)
 				ret.AutoCorrect = node["correct"].Get<bool>();
 
-			if (node.Contains("complete") && 
-			    node["complete"].Value != null)
-				ret.AutoComplete = node["complete"].Get<bool>();
+			if (node.Contains("autocomplete") &&
+                node["autocomplete"].Value != null)
+                ret.AutoComplete = node["autocomplete"].Get<bool>();
 
 			if (node.Contains("disabled") &&
                 node["disabled"].Value != null)
@@ -261,7 +261,7 @@ or [magix.forms.get-enabled] active events.&nbsp;&nbsp;legal
 values are true and false</p><p>[capitalize] will automatically 
 correctly capitalize entities, as if you are typing text</p>
 <p>[correct] will automatically suggest corrections for typos</p>
-[complete] will suggest previously typed values for you, and 
+[autocomplete] will suggest previously typed values for you, and 
 attempt to automatically complete the value</p><p>[max] is 
 maximum number of characters in web control</p><p>[type] 
 determines the mode of the text box.&nbsp;&nbsp;this depends 

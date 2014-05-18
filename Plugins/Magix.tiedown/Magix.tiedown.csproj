@@ -32,8 +32,10 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
+    <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ViewportCore.cs" />
     <Compile Include="PageLoadCore.cs" />
     <Compile Include="StartupCore.cs" />
   </ItemGroup>
@@ -49,6 +51,9 @@
   <ItemGroup>
     <EmbeddedResource Include="hyperlisp\index.hl" />
     <EmbeddedResource Include="hyperlisp\startup.hl" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="hyperlisp\load-viewport.hl" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

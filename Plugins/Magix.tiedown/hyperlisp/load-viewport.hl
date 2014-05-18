@@ -1,0 +1,17 @@
+
+
+inspect=>@"file will run on first page load of page, 
+to load up the default viewport"
+
+
+magix.web.get=>dashboard
+if=>exist
+  lhs=>[magix.web.get][value]
+  code
+    set=>[$][viewport].Value
+      value=>Magix.viewports.Gutenberg
+else
+  magix.data.load
+    id=>magix.admin.settings.default-front-end-viewport
+  set=>[$][viewport].Value
+    value=>[@][magix.data.load][objects][0][viewport].Value

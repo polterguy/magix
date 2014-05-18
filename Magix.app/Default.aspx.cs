@@ -22,14 +22,24 @@ namespace Magix.app
     {
         protected void Page_Init(object sender, EventArgs e)
         {
+            if (!IsPostBack)
+            {
+                Page.Title = ConfigurationManager.AppSettings["magix.core.portal-name"];
+            }
             InitializeViewport();
         }
 
         private void InitializeViewport()
         {
-			string defaultControl = ConfigurationManager.AppSettings["magix.core.viewport"];
-            Control ctrl = ModuleControllerLoader.Instance.LoadActiveModule(defaultControl);
-            Form.Controls.Add(ctrl);
+            // must de-reference this class before raising active events, to make sure active events are wired
+            ModuleControllerLoader tmp = ModuleControllerLoader.Instance;
+
+            Node viewport = new Node();
+            Magix.Core.ActiveEvents.Instance.RaiseActiveEvent(
+                this,
+                "magix.viewport.load-viewport",
+                viewport);
+            Form.Controls.Add(viewport["viewport"].Value as Control);
         }
 
 		private PageStatePersister _pageStatePersister;

@@ -83,7 +83,8 @@ parameters added beneath [body] and/or [header] will be formatted into string.&n
 
             if (Ip(e.Params).Contains("code"))
 			{
-                node["value"]["code"].ReplaceChildren(Ip(e.Params)["code"].Clone());
+                node["value"]["code"].Clear();
+                node["value"]["code"].AddRange(Ip(e.Params)["code"].Clone());
 			}
 
 			RaiseActiveEvent(

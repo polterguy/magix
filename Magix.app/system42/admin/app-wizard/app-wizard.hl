@@ -44,5 +44,5 @@ for-each=>[magix.file.list-files][files]
 magix.forms.create-web-part
   container=>content2
   form-id=>app-wiz
-  class=>span-19 last top-1
+  class=>span-17 last top-1
 
