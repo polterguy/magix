@@ -76,9 +76,9 @@ execute any piece of logic you can imagine in their event handlers</p>
 
 <ul>
   <li><strong>button</strong> - creates a button web control</li>
-  <li><strong>check</strong> - creates a check box web control, for checking off or on a value</li>
+  <li><strong>check-box</strong> - creates a check box web control, for checking off or on a value</li>
   <li><strong>dynamic</strong> - creates a dynamic web control, which you can load other web controls, or modules into</li>
-  <li><strong>image</strong> - creates a dynamic image web control for you</li>
+  <li><strong>img</strong> - creates a dynamic image web control for you</li>
   <li><strong>select</strong> - creates a drop down list type of web control for you, from where you can select on item from multiple choices</li>
   <li><strong>text-box</strong> - creates a text input box for you, from where the user can type in text</li>
   <li><strong>timer</strong> - creates a time control, which will periodically tick towards the server according to some interval</li>

@@ -8,17 +8,19 @@ using System;
 using System.Web.UI;
 using System.ComponentModel;
 using Magix.UX.Builder;
+using Magix.UX.Helpers;
+using Magix.UX.Effects;
 using Magix.UX.Widgets.Core;
 
 namespace Magix.UX.Widgets
 {
     /*
-     * label ajax control
+     * hyperlink ajax control
      */
-    public class Label : AttributeControl, IValueControl
+    public class HyperLink : BaseWebControlFormElement, IValueControl
     {
         /*
-         * text of label
+         * anchor text
          */
         public string Value
         {
@@ -32,39 +34,36 @@ namespace Magix.UX.Widgets
         }
 
         /*
-         * html tag to render
+         * url
          */
-        public string Tag
+        public string Href
         {
-            get { return ViewState["Tag"] == null ? "span" : (string)ViewState["Tag"]; }
-            set { ViewState["Tag"] = value; }
-        }
-
-        /*
-         * associated checkbox or radiobutton
-         */
-        public string For
-        {
-            get { return ViewState["For"] == null ? "" : (string)ViewState["For"]; }
+            get { return ViewState["Href"] == null ? "" : (string)ViewState["Href"]; }
             set
             {
-                string associatedControl = value;
-                PreRender +=
-                    delegate
-                    {
-                        Control ctrl = Selector.FindControl<Control>(Page, associatedControl);
-                        if (ctrl != null)
-                            For = ctrl.ClientID;
-                    };
-                if (value != associatedControl)
-                    SetJsonGeneric("for", associatedControl.ToString());
-                ViewState["For"] = associatedControl;
+                if (value != Value)
+                    SetJsonGeneric("href", value);
+                ViewState["Href"] = value;
             }
         }
 
-        protected override void RenderMuxControl(HtmlBuilder builder)
+        /*
+         * target browser window
+         */
+        public string Target
         {
-            using (Element el = builder.CreateElement(Tag))
+            get { return ViewState["Target"] == null ? "" : (string)ViewState["Target"]; }
+            set
+            {
+                if (value != Target)
+                    SetJsonGeneric("target", value);
+                ViewState["Target"] = value;
+            }
+        }
+
+		protected override void RenderMuxControl(HtmlBuilder builder)
+        {
+            using (Element el = builder.CreateElement("a"))
             {
                 AddAttributes(el);
                 el.Write(Value);
@@ -73,10 +72,16 @@ namespace Magix.UX.Widgets
 
         protected override void AddAttributes(Element el)
         {
-            if (!string.IsNullOrEmpty(For))
-                el.AddAttribute("for", For);
+            el.AddAttribute("href", Href);
+            if (!string.IsNullOrEmpty(Target))
+                el.AddAttribute("target", Target);
+            if (!string.IsNullOrEmpty(AccessKey))
+                el.AddAttribute("accesskey", AccessKey);
             base.AddAttributes(el);
         }
+
+        protected override void SetValue()
+        { }
 
         object IValueControl.ControlValue
         {

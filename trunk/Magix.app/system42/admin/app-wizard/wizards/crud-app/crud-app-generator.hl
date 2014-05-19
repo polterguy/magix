@@ -244,7 +244,7 @@ which contains logic for crud-app-generated application"
           else
             set=>[@][..][..][_text-box][class].Value
               value=>span-5 clear
-          set=>[@][..][..][_text-box][place-holder].Value
+          set=>[@][..][..][_text-box][placeholder].Value
             value=>{0} ...
               v0=>[.][field-name].Value
           set=>[@][..][..][_text-box].Value
@@ -265,7 +265,7 @@ which contains logic for crud-app-generated application"
           else
             set=>[@][..][..][_text-area][class].Value
               value=>span-5 clear
-          set=>[@][..][..][_text-area][place-holder].Value
+          set=>[@][..][..][_text-area][placeholder].Value
             value=>{0} ...
               v0=>[.][field-name].Value
           set=>[@][..][..][_text-area].Value
@@ -317,12 +317,12 @@ which contains logic for crud-app-generated application"
       class=>span-3 right clear
       value=>update
       onclick
-        magix.forms.get-values
+        magix.forms.get-children-values
           form-id=>crud-app-main-form
           id=>editWrapper
-        set=>[magix.forms.get-values][values][addButton]
-        set=>[magix.forms.get-values][values][cancelButton]
-        for-each=>[magix.forms.get-values][values]
+        set=>[magix.forms.get-children-values][values][addButton]
+        set=>[magix.forms.get-children-values][values][cancelButton]
+        for-each=>[magix.forms.get-children-values][values]
           set=>[/][magix.data.save][value][[.].Name].Value
             value=>[.].Value
           set=>[@][magix.forms.set-value][id].Value
@@ -361,12 +361,12 @@ which contains logic for crud-app-generated application"
       value=>cancel
       visible=>false
       onclick
-        magix.forms.get-values
+        magix.forms.get-children-values
           form-id=>crud-app-main-form
           id=>editWrapper
-        set=>[magix.forms.get-values][values][cancelButton]
-        set=>[magix.forms.get-values][values][addButton]
-        for-each=>[magix.forms.get-values][values]
+        set=>[magix.forms.get-children-values][values][cancelButton]
+        set=>[magix.forms.get-children-values][values][addButton]
+        for-each=>[magix.forms.get-children-values][values]
           set=>[@][magix.forms.set-value][id].Value
             value=>[.].Name
           magix.forms.set-value

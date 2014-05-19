@@ -182,7 +182,7 @@ event will only be able to modify the parts of the tree from underneath its own 
 			{
 				Node idx = ip[idxNo];
 				string activeEvent = idx.Name;
-
+                
 				// checking to see if this is just a data/comment buffer ...
                 if (activeEvent.StartsWith("_") || activeEvent.StartsWith("//") || activeEvent == "inspect" || activeEvent == "$")
 					continue;

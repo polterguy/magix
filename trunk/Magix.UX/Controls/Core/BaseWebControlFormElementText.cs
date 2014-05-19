@@ -13,7 +13,7 @@ namespace Magix.UX.Widgets.Core
     /*
      * classs for for elements with text
      */
-    public abstract class BaseWebControlFormElementText : BaseWebControlFormElement
+    public abstract class BaseWebControlFormElementText : BaseWebControlFormElement, IValueControl
     {
         /*
          * text of control
@@ -24,9 +24,15 @@ namespace Magix.UX.Widgets.Core
             set
             {
                 if (value != Value)
-                    SetJsonValue("Value", value);
+                    SetJsonGeneric("value", value);
                 ViewState["Value"] = value;
             }
+        }
+
+        object IValueControl.ControlValue
+        {
+            get { return Value; }
+            set { Value = Convert.ToString(value); }
         }
     }
 }

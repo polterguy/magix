@@ -15,7 +15,7 @@ magix.forms.create-mml-web-part
 {{
 text-area=>markup
   class=>span-17 min-height-13
-  place-holder=>type in magix markup language here ...
+  placeholder=>type in magix markup language here ...
 button=>preview
   class=>span-3 left-14 last
   value=>preview

@@ -12,30 +12,30 @@ using Magix.UX.Widgets;
 
 namespace Magix.forms
 {
-	/**
+	/*
 	 * literal control
 	 */
-	public class LiteralCore : ActiveController
+	public class LiteralController : ActiveController
 	{
-		/**
+		/*
 		 * creates the literal control
 		 */
 		[ActiveEvent(Name = "magix.forms.controls.literal")]
 		public void magix_forms_controls_panel(object sender, ActiveEventArgs e)
 		{
-			if (ShouldInspect(e.Params))
+            Node ip = Ip(e.Params);
+			if (ShouldInspect(ip))
 			{
-				Inspect(e.Params);
+				Inspect(ip);
 				return;
 			}
 
-            Node node = Ip(e.Params)["_code"].Value as Node;
-
 			LiteralControl ret = new LiteralControl();
-			if (node.Contains("text"))
+            Node node = ip["_code"].Get<Node>();
+            if (node.Contains("text"))
 				ret.Text = node["text"].Get<string>();
 
-            Ip(e.Params)["_ctrl"].Value = ret;
+            ip["_ctrl"].Value = ret;
 		}
 
 		protected void Inspect(Node node)

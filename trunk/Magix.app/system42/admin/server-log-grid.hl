@@ -179,7 +179,7 @@ magix.forms.create-web-part
           default=>btnSearch
           controls
             text-box=>search
-              place-holder=>filter ...
+              placeholder=>filter ...
               class=>span-2
             button=>btnSearch
               class=>hide

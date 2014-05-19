@@ -25,7 +25,7 @@ which contains logic for qr-code-generator application"
       text-area=>url
         class=>span-8 clear
         rows=>4
-        place-holder=>text or url goes here ...
+        placeholder=>text or url goes here ...
       button=>create
         class=>span-4 left-4 btn-large clear
         value=>create
@@ -45,7 +45,7 @@ which contains logic for qr-code-generator application"
             form-id=>qr-code-generator-main-form
             id=>qrCodeImage
             value=>true
-      image=>qrCodeImage
+      img=>qrCodeImage
         alt=>qr code rendered for you
         class=>clear blocked top-1
         visible=>false

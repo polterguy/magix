@@ -188,10 +188,10 @@ the checkbox"
       value=>[_data]
       children-only=>true
 
-event=>magix.forms.dox.create-dox-for.image
+event=>magix.forms.dox.create-dox-for.img
   persist=>false
   inspect=>@"creates the documentation for 
-the mux image control"
+the mux img control"
   code
     _data
       Src=>@"url for the image the web control displays"

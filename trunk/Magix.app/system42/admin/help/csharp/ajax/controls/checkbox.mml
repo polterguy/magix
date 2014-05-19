@@ -75,7 +75,7 @@ label=>lbl
   tag=>label
   for=>chk
   class=>span-5 right-text
-check=>chk
+check-box=>chk
   class=>span-1
   oncheckedchanged
     magix.forms.get-value

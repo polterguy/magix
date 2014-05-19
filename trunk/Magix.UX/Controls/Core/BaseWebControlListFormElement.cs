@@ -16,7 +16,7 @@ namespace Magix.UX.Widgets.Core
     /**
      * Abstract base class for widgets which are HTML FORM or multi-choice type of elements
      */
-    public abstract class BaseWebControlListFormElement : BaseWebControlFormElement
+    public abstract class BaseWebControlListFormElement : BaseWebControlFormElement, IValueControl
     {
         private ListItemCollection _listItems;
         private string _selectedItemValue;
@@ -73,7 +73,7 @@ namespace Magix.UX.Widgets.Core
                 _selectedItemValue = value.Value;
                 if (IsTrackingViewState)
                 {
-                    this.SetJsonValue("Value", value.Value);
+                    SetJsonGeneric("value", value.Value);
                 }
                 SelectedIndex = Items.IndexOf(value);
             }
@@ -158,6 +158,12 @@ namespace Magix.UX.Widgets.Core
                     break;
                 }
             }
+        }
+
+        object IValueControl.ControlValue
+        {
+            get { return SelectedItem.Value; }
+            set { SetSelectedItemAccordingToValue(Convert.ToString(value)); }
         }
     }
 }

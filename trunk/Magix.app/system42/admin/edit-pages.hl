@@ -105,7 +105,7 @@ magix.forms.create-web-part
       default=>save
       controls
         text-box=>name
-          place-holder=>name ...
+          placeholder=>name ...
           class=>span-3
         button=>save
           class=>span-3
@@ -323,7 +323,7 @@ magix.forms.create-web-part
           value=>[magix.forms.get-value][value].Value
         magix.viewport.execute-javascript
           script=>@"window.open('?page={0}', '_blank').focus();"
-    image=>imgQrCode
+    img=>imgQrCode
       visible=>false
       alt=>qr code
       tip=>@"qr code for accessing page through qr code scanner. 
@@ -340,5 +340,5 @@ magix.forms.create-web-part
   controls
     wysiwyg=>wysiwyg
       class=>wysiwyg span-22 last
-      place-holder=>your text ...
+      placeholder=>your text ...
 

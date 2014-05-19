@@ -67,7 +67,7 @@ magix.forms.create-web-part
               value=>[magix.forms.get-value][value].Value
             execute-script
         text-box=>name
-          place-holder=>name ...
+          placeholder=>name ...
           class=>span-6
         button=>wizard
           value=>&lt;&lt; back

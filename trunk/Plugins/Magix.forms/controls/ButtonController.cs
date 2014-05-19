@@ -12,85 +12,27 @@ using Magix.UX.Widgets.Core;
 
 namespace Magix.forms
 {
-	/**
+	/*
 	 * contains the button control
 	 */
-	public class ButtonCore : FormElementCore
+    public class ButtonController : BaseWebControlFormElementTextController
 	{
-		/**
+		/*
 		 * creates button widget
 		 */
 		[ActiveEvent(Name = "magix.forms.controls.button")]
 		public void magix_forms_controls_button(object sender, ActiveEventArgs e)
 		{
-			if (ShouldInspect(e.Params))
+            Node ip = Ip(e.Params);
+			if (ShouldInspect(ip))
 			{
-				Inspect(e.Params);
+				Inspect(ip);
 				return;
 			}
-
-            Node node = Ip(e.Params)["_code"].Value as Node;
 
 			Button ret = new Button();
-
             FillOutParameters(e.Params, ret);
-
-			if (node.Contains("value") && 
-			    !string.IsNullOrEmpty(node["value"].Get<string>()))
-				ret.Value = node["value"].Get<string>();
-
-			if (node.Contains("accesskey") &&
-                !string.IsNullOrEmpty(node["accesskey"].Get<string>()))
-                ret.AccessKey = node["accesskey"].Get<string>();
-
-			if (node.Contains("disabled") && 
-			    node["disabled"].Value != null)
-				ret.Disabled = node["disabled"].Get<bool>();
-
-            Ip(e.Params)["_ctrl"].Value = ret;
-		}
-
-		/**
-		 * sets text value
-		 */
-		[ActiveEvent(Name = "magix.forms.set-value")]
-		public void magix_forms_set_value(object sender, ActiveEventArgs e)
-		{
-            if (ShouldInspectOrHasInspected(e.Params))
-			{
-				e.Params["inspect"].Value = "sets the value property of the control";
-				return;
-			}
-
-            if (!Ip(e.Params).Contains("value"))
-				throw new ArgumentException("set-value needs [value]");
-
-            Button ctrl = FindControl<Button>(Ip(e.Params));
-
-			if (ctrl != null)
-			{
-                ctrl.Value = Ip(e.Params)["value"].Get<string>();
-			}
-		}
-
-		/**
-		 * returns value
-		 */
-		[ActiveEvent(Name = "magix.forms.get-value")]
-		public void magix_forms_get_value(object sender, ActiveEventArgs e)
-		{
-            if (ShouldInspectOrHasInspected(e.Params))
-			{
-				e.Params["inspect"].Value = "returns the value property of the control";
-				return;
-			}
-
-            Button ctrl = FindControl<Button>(Ip(e.Params));
-
-			if (ctrl != null)
-			{
-                Ip(e.Params)["value"].Value = ctrl.Value;
-			}
+            ip["_ctrl"].Value = ret;
 		}
 
 		protected override void Inspect(Node node)

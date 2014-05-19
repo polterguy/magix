@@ -17,7 +17,7 @@ namespace Magix.UX.Widgets
     /*
      * checkbox ajax control
      */
-    public class CheckBox : BaseWebControlFormElement
+    public class CheckBox : BaseWebControlFormElement, IValueControl
     {
         /*
          * raised when checked state is changed
@@ -90,6 +90,12 @@ namespace Magix.UX.Widgets
             if (Checked)
                 el.AddAttribute("checked", "checked");
             base.AddAttributes(el);
+        }
+
+        object IValueControl.ControlValue
+        {
+            get { return Checked; }
+            set { Checked = Convert.ToBoolean(value); }
         }
     }
 }

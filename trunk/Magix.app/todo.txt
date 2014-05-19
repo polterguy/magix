@@ -19,11 +19,9 @@
 
 * add support for plugins in magix.file.save
 
-* support for reading web.config settings as a public active event
-
 * change app wizard to use unique ids to load to and from database instead of name of application as id
 
-* remove all /** commnents for consistency
+* remove all /** comments for consistency
 
 * dragging and dropping files into active event executor
 
@@ -35,8 +33,6 @@
 
 * support for expressions in magix.math.add/subtract/etc to change a value directly inside of the tree, 
   instead of having to go "set" to change value
-
-* make all updates to mux become JsonGeneric updates, to reduce the size of the javascript
 
 * unit testing for sandboxing features
 
@@ -51,8 +47,6 @@
 * create comments for all hyper lisp, and refactor most hyper lisp
 
 * make sure magix.math.xxx uses e.params correctly, and document magix.math
-
-* fix css, there's more than 960 pixels in width due to old span-24 logic, now padding in container, and only 22 columns ...
 
 * make it possible to save queries in the ms sql database manager
 

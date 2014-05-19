@@ -11,83 +11,36 @@ using Magix.UX.Widgets;
 
 namespace Magix.forms
 {
-	/**
+	/*
 	 * image control
 	 */
-	public class ImageCore : BaseWebControlCore
+    public class ImgController : BaseWebControlFormElementController
 	{
-		/**
+		/*
 		 * creates image control
 		 */
-		[ActiveEvent(Name = "magix.forms.controls.image")]
+		[ActiveEvent(Name = "magix.forms.controls.img")]
 		public void magix_forms_controls_image(object sender, ActiveEventArgs e)
 		{
-			if (ShouldInspect(e.Params))
+            Node ip = Ip(e.Params);
+			if (ShouldInspect(ip))
 			{
-				Inspect(e.Params);
+				Inspect(ip);
 				return;
 			}
 
-            Node node = Ip(e.Params)["_code"].Value as Node;
-
 			Img ret = new Img();
-
             FillOutParameters(e.Params, ret);
 
-			if (node.Contains("src") && node["src"].Value != null)
+            Node node = ip["_code"].Value as Node;
+            if (node.Contains("src") && node["src"].Value != null)
 				ret.Src = node["src"].Get<string>();
 
 			if (node.Contains("alt") && node["alt"].Value != null)
 				ret.Alt = node["alt"].Get<string>();
 
-			if (node.Contains("key") && node["key"].Value != null)
-				ret.AccessKey = node["key"].Get<string>();
-
-            Ip(e.Params)["_ctrl"].Value = ret;
+            ip["_ctrl"].Value = ret;
 		}
-
-        /**
-         * sets value
-         */
-        [ActiveEvent(Name = "magix.forms.set-value")]
-        public void magix_forms_set_value(object sender, ActiveEventArgs e)
-        {
-            if (ShouldInspectOrHasInspected(e.Params))
-            {
-                e.Params["inspect"].Value = "sets the value property of the control";
-                return;
-            }
-
-            if (!Ip(e.Params).Contains("value"))
-                throw new ArgumentException("set-value needs [value]");
-
-            Img ctrl = FindControl<Img>(Ip(e.Params));
-
-            if (ctrl != null)
-            {
-                ctrl.Src = Ip(e.Params)["value"].Get<string>();
-            }
-        }
-
-        /**
-         * returns value
-         */
-        [ActiveEvent(Name = "magix.forms.get-value")]
-        public void magix_forms_get_value(object sender, ActiveEventArgs e)
-        {
-            if (ShouldInspectOrHasInspected(e.Params))
-            {
-                e.Params["inspect"].Value = "returns the value property of the control";
-                return;
-            }
-
-            Img ctrl = FindControl<Img>(Ip(e.Params));
-
-            if (ctrl != null)
-            {
-                Ip(e.Params)["value"].Value = ctrl.Src;
-            }
-        }
 
         protected override void Inspect(Node node)
 		{
@@ -99,10 +52,10 @@ event handlers, or the ability to change the image
 shown during execution</p>";
             node["magix.forms.create-web-part"]["container"].Value = "content5";
             node["magix.forms.create-web-part"]["form-id"].Value = "sample-form";
-            base.Inspect(node["magix.forms.create-web-part"]["controls"]["image"]);
-            node["magix.forms.create-web-part"]["controls"]["image"]["src"].Value = "media/images/magix-logo.png";
-            node["magix.forms.create-web-part"]["controls"]["image"]["alt"].Value = "alternative text";
-            node["magix.forms.create-web-part"]["controls"]["image"]["key"].Value = "C";
+            base.Inspect(node["magix.forms.create-web-part"]["controls"]["img"]);
+            node["magix.forms.create-web-part"]["controls"]["img"]["src"].Value = "media/images/magix-logo.png";
+            node["magix.forms.create-web-part"]["controls"]["img"]["alt"].Value = "alternative text";
+            node["magix.forms.create-web-part"]["controls"]["img"]["key"].Value = "C";
             node["inspect"].Value = node["inspect"].Value + @"
 <p><strong>properties for hyperlink</strong></p><p>
 [src] sets the image url.&nbsp;&nbsp;this is the property 

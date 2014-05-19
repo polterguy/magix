@@ -15,7 +15,7 @@ namespace Magix.forms
 	/**
 	 * timer control
 	 */
-    public class TimerCore : BaseControlCore
+    public class TimerController : BaseControlController
 	{
 		/**
 		 * creates timer control

@@ -1013,11 +1013,11 @@ textarea.ascii-editor
 }
 
 input[type=button].toolbox-button,
-input[type=button].toolbox-check,
+input[type=button].toolbox-check-box,
 input[type=button].toolbox-dynamic,
 input[type=button].toolbox-hidden,
 input[type=button].toolbox-hyperlink,
-input[type=button].toolbox-image,
+input[type=button].toolbox-img,
 input[type=button].toolbox-label,
 input[type=button].toolbox-lambda,
 input[type=button].toolbox-link-button,
@@ -1045,7 +1045,7 @@ input[type=button].toolbox-button
     background-position:0px 0px;
 }
 
-input[type=button].toolbox-check
+input[type=button].toolbox-check-box
 {
     background-position:0px -16px;
 }
@@ -1065,7 +1065,7 @@ input[type=button].toolbox-hyperlink
     background-position:0px -65px;
 }
 
-input[type=button].toolbox-image
+input[type=button].toolbox-img
 {
     background-position:0px -82px;
 }

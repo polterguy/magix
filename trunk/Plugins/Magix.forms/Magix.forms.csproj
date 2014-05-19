@@ -33,33 +33,36 @@
     <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="controls\TimerCore.cs" />
-    <Compile Include="controls\DynamicCore.cs" />
+    <Compile Include="controls\advanced\TimerController.cs" />
+    <Compile Include="controls\base\BaseWebControlFormElementInputTextController.cs" />
+    <Compile Include="controls\base\BaseWebControlFormElementTextController.cs" />
+    <Compile Include="controls\base\BaseWebControlListFormElementController.cs" />
+    <Compile Include="controls\base\AttributeControlController.cs" />
+    <Compile Include="controls\DynamicController.cs" />
     <Compile Include="FormsCore.cs" />
-    <Compile Include="controls\LabelCore.cs" />
-    <Compile Include="controls\BaseWebControlCore.cs" />
-    <Compile Include="controls\LinkButtonCore.cs" />
-    <Compile Include="controls\BaseControlCore.cs" />
-    <Compile Include="controls\ButtonCore.cs" />
-    <Compile Include="controls\CheckBoxCore.cs" />
-    <Compile Include="controls\HiddenField.cs" />
-    <Compile Include="controls\HyperLink.cs" />
-    <Compile Include="controls\ImageCore.cs" />
-    <Compile Include="controls\PanelCore.cs" />
-    <Compile Include="controls\RadioButtonCore.cs" />
-    <Compile Include="controls\SelectListCore.cs" />
-    <Compile Include="controls\TextAreaCore.cs" />
-    <Compile Include="controls\TextBoxCore.cs" />
-    <Compile Include="controls\LiteralCore.cs" />
-    <Compile Include="controls\FormCore.cs" />
-    <Compile Include="controls\WysiwygCore.cs" />
-    <Compile Include="controls\UploaderCore.cs" />
-    <Compile Include="controls\LambdaBaseCore.cs" />
+    <Compile Include="controls\LabelController.cs" />
+    <Compile Include="controls\base\BaseWebControlController.cs" />
+    <Compile Include="controls\LinkButtonController.cs" />
+    <Compile Include="controls\base\BaseControlController.cs" />
+    <Compile Include="controls\ButtonController.cs" />
+    <Compile Include="controls\CheckBoxController.cs" />
+    <Compile Include="controls\HiddenController.cs" />
+    <Compile Include="controls\HyperLinkController.cs" />
+    <Compile Include="controls\ImgController.cs" />
+    <Compile Include="controls\PanelController.cs" />
+    <Compile Include="controls\RadioController.cs" />
+    <Compile Include="controls\SelectController.cs" />
+    <Compile Include="controls\TextAreaController.cs" />
+    <Compile Include="controls\TextBoxController.cs" />
+    <Compile Include="controls\LiteralController.cs" />
+    <Compile Include="controls\advanced\WysiwygController.cs" />
+    <Compile Include="controls\advanced\UploaderController.cs" />
+    <Compile Include="controls\LambdaController.cs" />
     <Compile Include="WebPart.ascx.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="controls\EffectCore.cs" />
-    <Compile Include="controls\FormElementCore.cs" />
+    <Compile Include="EffectController.cs" />
+    <Compile Include="controls\base\BaseWebControlFormElementController.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

@@ -27,7 +27,7 @@ magix.forms.create-web-part
         text-area=>url
           class=>span-7
           tip=>url for qr code, can also be a text string. only mandatory parameter
-          place-holder=>url or text ...
+          placeholder=>url or text ...
           rows=>3
         label=>textDescription
           class=>span-2 right-text
@@ -37,14 +37,14 @@ magix.forms.create-web-part
         text-box=>text
           class=>span-2
           tip=>friendly text displayed below qr code
-          place-holder=>text ...
+          placeholder=>text ...
         label=>antiDescription
           tag=>label
           class=>span-1 right-text
           for=>anti-pixelated
           value=>burn
           tip=>will anti-pixelate code and make it less squary if checked
-        check=>anti-pixelated
+        check-box=>anti-pixelated
           class=>span-1
           checked=>true
           tip=>anti-pixelate code
@@ -57,7 +57,7 @@ magix.forms.create-web-part
           class=>span-2 top-1
           type=>number
           tip=>radius of corners, not mandatory
-          place-holder=>corners ...
+          placeholder=>corners ...
         label=>scaleDescription
           class=>span-2 right-text clear top-1
           tip=>numbers of pixels pr pixel in qr code
@@ -67,7 +67,7 @@ magix.forms.create-web-part
           class=>span-2 top-1
           type=>number
           tip=>not mandatory, defaults to 6
-          place-holder=>scale ...
+          placeholder=>scale ...
         label=>errDescription
           class=>span-3 right-text top-1
           tip=>error correction of qr code
@@ -89,7 +89,7 @@ magix.forms.create-web-part
         text-box=>bg-color
           class=>span-2 top-1
           tip=>background color of qr code. overrides the background image if given
-          place-holder=>bg-color ...
+          placeholder=>bg-color ...
         label=>fgColorDescription
           tag=>label
           value=>fg-color
@@ -98,7 +98,7 @@ magix.forms.create-web-part
         text-box=>fg-color
           class=>span-2 last top-1
           tip=>foreground color of qr code. overrides the foreground image if given
-          place-holder=>fg-color ...
+          placeholder=>fg-color ...
         label=>bgImageDescription
           tag=>label
           class=>span-2 top-1 right-text clear
@@ -108,7 +108,7 @@ magix.forms.create-web-part
           class=>span-7 top-1
           tip=>@"background image used to render background 
 parts of qr code. defaults to bumpy-white.png"
-          place-holder=>background image ...
+          placeholder=>background image ...
           value=>media/images/textures/bumpy-white.png
         button=>bg-image-browse
           class=>text-browse-btn top-1
@@ -145,7 +145,7 @@ parts of qr code. defaults to bumpy-white.png"
           class=>span-6 top-1 last
           tip=>@"foreground image used to render background
 parts of qr code. defaults to bumby-black.png"
-          place-holder=>foreground image ...
+          placeholder=>foreground image ...
           value=>media/images/textures/bumpy-black.png
         button=>fg-image-browse
           class=>text-browse-btn-last top-1
@@ -175,7 +175,7 @@ parts of qr code. defaults to bumby-black.png"
           class=>span-3 top-1
           tip=>@"font to use to render descriptive text below qr code. 
 defaults to Comic Sans MS"
-          place-holder=>font name ...
+          placeholder=>font name ...
         label=>fontSizeDescription
           tag=>label
           class=>span-2 top-1 right-text
@@ -184,7 +184,7 @@ defaults to Comic Sans MS"
         text-box=>font-size
           class=>span-2 top-1
           tip=>@"font size to use to render descriptive text below qr code"
-          place-holder=>font size ...
+          placeholder=>font size ...
           type=>number
         label=>fontColorDescription
           tag=>label
@@ -194,7 +194,7 @@ defaults to Comic Sans MS"
         text-box=>font-color
           class=>span-2 top-1
           tip=>@"color to use to render descriptive text below qr code"
-          place-holder=>font color ...
+          placeholder=>font color ...
         label=>rotateDescription
           tag=>label
           class=>span-2 top-1 right-text
@@ -203,7 +203,7 @@ defaults to Comic Sans MS"
         text-box=>rotate
           class=>span-2 top-1 last
           tip=>@"angle of rotation for qr code"
-          place-holder=>rotate ...
+          placeholder=>rotate ...
           type=>number
         label=>filenameDescription
           tag=>label
@@ -215,44 +215,44 @@ defaults to Comic Sans MS"
           tip=>@"filename to save qr code as. 
 by default, a unique file name will be created within
 the tmp folder"
-          place-holder=>filename ...
+          placeholder=>filename ...
         button=>generate
           class=>span-4 btn-large right clear top-1 last
           value=>generate
           onclick
             magix.viewport.clear-controls
               container=>file-browser
-            magix.forms.get-values
+            magix.forms.get-children-values
               form-id=>qr-codes
               id=>qr-code-wrap
             if=>equals
-              lhs=>[magix.forms.get-values][values][url].Value
+              lhs=>[magix.forms.get-children-values][values][url].Value
               rhs=>
               code
                 magix.viewport.show-message
                   message=>@"you need to supply a url parameter to the generator.&nbsp;&nbsp;
 this is the only mandatory parameter in fact"
                 stop
-            set=>[magix.forms.get-values][values][scaleDescription]
-            set=>[magix.forms.get-values][values][errDescription]
-            set=>[magix.forms.get-values][values][bgColorDescription]
-            set=>[magix.forms.get-values][values][fgColorDescription]
-            set=>[magix.forms.get-values][values][urlDescription]
-            set=>[magix.forms.get-values][values][textDescription]
-            set=>[magix.forms.get-values][values][antiDescription]
-            set=>[magix.forms.get-values][values][roundedDescription]
-            set=>[magix.forms.get-values][values][bgImageDescription]
-            set=>[magix.forms.get-values][values][fgImageDescription]
-            set=>[magix.forms.get-values][values][generate]
-            set=>[magix.forms.get-values][values][fontNameDescription]
-            set=>[magix.forms.get-values][values][fontSizeDescription]
-            set=>[magix.forms.get-values][values][fontColorDescription]
-            set=>[magix.forms.get-values][values][rotateDescription]
-            set=>[magix.forms.get-values][values][filenameDescription]
-            set=>[magix.forms.get-values][values][bg-image-browse]
-            set=>[magix.forms.get-values][values][fg-image-browse]
+            set=>[magix.forms.get-children-values][values][scaleDescription]
+            set=>[magix.forms.get-children-values][values][errDescription]
+            set=>[magix.forms.get-children-values][values][bgColorDescription]
+            set=>[magix.forms.get-children-values][values][fgColorDescription]
+            set=>[magix.forms.get-children-values][values][urlDescription]
+            set=>[magix.forms.get-children-values][values][textDescription]
+            set=>[magix.forms.get-children-values][values][antiDescription]
+            set=>[magix.forms.get-children-values][values][roundedDescription]
+            set=>[magix.forms.get-children-values][values][bgImageDescription]
+            set=>[magix.forms.get-children-values][values][fgImageDescription]
+            set=>[magix.forms.get-children-values][values][generate]
+            set=>[magix.forms.get-children-values][values][fontNameDescription]
+            set=>[magix.forms.get-children-values][values][fontSizeDescription]
+            set=>[magix.forms.get-children-values][values][fontColorDescription]
+            set=>[magix.forms.get-children-values][values][rotateDescription]
+            set=>[magix.forms.get-children-values][values][filenameDescription]
+            set=>[magix.forms.get-children-values][values][bg-image-browse]
+            set=>[magix.forms.get-children-values][values][fg-image-browse]
             _execute-remove-empty
-              for-each=>[/][magix.forms.get-values][values]
+              for-each=>[/][magix.forms.get-children-values][values]
                 if=>equals
                   lhs=>[.].Value
                   rhs=>
@@ -268,13 +268,13 @@ this is the only mandatory parameter in fact"
                     else
                       set=>[.]
             while=>not-equals
-              rhs=>[/][magix.forms.get-values][values].Count
+              rhs=>[/][magix.forms.get-children-values][values].Count
               lhs=>0
               code
                 set=>[/][while][lhs].Value
-                  value=>[/][magix.forms.get-values][values].Count
+                  value=>[/][magix.forms.get-children-values][values].Count
                 execute=>[/][_execute-remove-empty]
-            for-each=>[magix.forms.get-values][values]
+            for-each=>[magix.forms.get-children-values][values]
               add=>[/][magix.qr.create]
                 value=>[.]
             magix.qr.create
@@ -292,7 +292,7 @@ this is the only mandatory parameter in fact"
               id=>url
         dynamic=>file-browser
           class=>span-17 last
-        image=>qrImage
+        img=>qrImage
           alt=>qr code rendered for you
           class=>clear blocked top-1
           visible=>false

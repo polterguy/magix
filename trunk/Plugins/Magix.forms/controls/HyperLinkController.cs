@@ -11,35 +11,34 @@ using Magix.UX.Widgets;
 
 namespace Magix.forms
 {
-	/**
+	/*
 	 * hyper link
 	 */
-	public class HyperLinkCore : BaseWebControlCore
+    public class HyperLinkController : BaseWebControlFormElementController
 	{
-		/**
-		 * create hyper link
+		/*
+		 * creates a hyper link
 		 */
 		[ActiveEvent(Name = "magix.forms.controls.hyperlink")]
 		public void magix_forms_controls_hyperlink(object sender, ActiveEventArgs e)
 		{
-			if (ShouldInspect(e.Params))
+            Node ip = Ip(e.Params);
+			if (ShouldInspect(ip))
 			{
-				Inspect(e.Params);
+				Inspect(ip);
 				return;
 			}
 
-            Node node = Ip(e.Params)["_code"].Value as Node;
-
-			Link ret = new Link();
-
+			HyperLink ret = new HyperLink();
             FillOutParameters(e.Params, ret);
 
-			if (node.Contains("value") && node["value"].Value != null)
+            Node node = ip["_code"].Get<Node>();
+            if (node.Contains("value") && node["value"].Value != null)
 				ret.Value = node["value"].Get<string>();
 
-			if (node.Contains("url") && node["url"].Value != null)
+			if (node.Contains("href") && node["href"].Value != null)
 			{
-				string url = node["url"].Get<string>();
+				string url = node["href"].Get<string>();
 
 				if (url.StartsWith("~"))
 					url = url.Replace("~", GetApplicationBaseUrl());
@@ -50,53 +49,7 @@ namespace Magix.forms
 			if (node.Contains("target") && node["target"].Value != null)
 				ret.Target = node["target"].Get<string>();
 
-			if (node.Contains("key") && node["key"].Value != null)
-				ret.AccessKey = node["key"].Get<string>();
-
-            Ip(e.Params)["_ctrl"].Value = ret;
-		}
-
-		/**
-		 * sets value
-		 */
-		[ActiveEvent(Name = "magix.forms.set-value")]
-		public void magix_forms_set_value(object sender, ActiveEventArgs e)
-		{
-            if (ShouldInspectOrHasInspected(e.Params))
-			{
-				e.Params["inspect"].Value = "sets the value property of the control";
-				return;
-			}
-
-            if (!Ip(e.Params).Contains("value"))
-				throw new ArgumentException("set-value needs [value]");
-
-            Link ctrl = FindControl<Link>(Ip(e.Params));
-
-			if (ctrl != null)
-			{
-                ctrl.Value = Ip(e.Params)["value"].Get<string>();
-			}
-		}
-
-		/**
-		 * returns value
-		 */
-		[ActiveEvent(Name = "magix.forms.get-value")]
-		public void magix_forms_get_value(object sender, ActiveEventArgs e)
-		{
-            if (ShouldInspectOrHasInspected(e.Params))
-			{
-				e.Params["inspect"].Value = "returns the value property of the control";
-				return;
-			}
-
-            Link ctrl = FindControl<Link>(Ip(e.Params));
-
-			if (ctrl != null)
-			{
-                Ip(e.Params)["value"].Value = ctrl.Value;
-			}
+            ip["_ctrl"].Value = ret;
 		}
 
 		protected override void Inspect (Node node)
@@ -110,7 +63,7 @@ in the same window, or another browser window</p>";
             node["magix.forms.create-web-part"]["form-id"].Value = "sample-form";
             base.Inspect(node["magix.forms.create-web-part"]["controls"]["hyperlink"]);
             node["magix.forms.create-web-part"]["controls"]["hyperlink"]["value"].Value = "anchor text of hyperlink";
-            node["magix.forms.create-web-part"]["controls"]["hyperlink"]["url"].Value = "http://google.com";
+            node["magix.forms.create-web-part"]["controls"]["hyperlink"]["href"].Value = "http://google.com";
             node["magix.forms.create-web-part"]["controls"]["hyperlink"]["target"].Value = "_blank";
             node["magix.forms.create-web-part"]["controls"]["hyperlink"]["key"].Value = "C";
             node["inspect"].Value = node["inspect"].Value + @"
@@ -118,7 +71,7 @@ in the same window, or another browser window</p>";
 the readable text, displayed to the end user of the web 
 control.&nbsp;&nbsp;this is the property which is changed or 
 retrieved when you invoke the [magix.forms.set-value] and 
-the [magix.forms.get-value] for your control</p><p>[url] sets 
+the [magix.forms.get-value] for your control</p><p>[href] sets 
 the url of the document to link to.&nbsp;&nbsp;this can be any 
 url, locally or externally</p><p>[target] can _blank, _new, or 
 any id you wish to use, and informs the browser of what browser 

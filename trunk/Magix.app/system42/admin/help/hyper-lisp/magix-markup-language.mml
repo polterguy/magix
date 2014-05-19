@@ -297,7 +297,7 @@ lambda=>lmb-file-11
 }}
 
 text-box=>txt-name
-  place-holder=>name please ...
+  placeholder=>name please ...
   class=>span-4
 
 {{

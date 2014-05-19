@@ -169,13 +169,13 @@ magix.forms.create-web-part
                 rhs=>true
                 code
                   set=>[@][..][..][..][_type].Value
-                    value=>check
+                    value=>check-box
               else-if=>equals
                 lhs=>false
                 rhs=>[.].Value
                 code
                   set=>[@][..][..][..][_type].Value
-                    value=>check
+                    value=>check-box
               else
                 set=>[@][..][..][_type].Value
                   value=>text-box
@@ -220,7 +220,7 @@ magix.forms.create-web-part
                   value=>[.].Name
                 set=>[/][_text-box][ontextchanged][magix.forms.get-value][id].Value
                   value=>[.].Name
-                set=>[/][_text-box][place-holder].Value
+                set=>[/][_text-box][placeholder].Value
                   value=>[@][..][..][..][_data][0][properties][[/][_text-box].Value].Value
                 set=>[/][_text-box][value].Value
                   value=>
@@ -234,7 +234,7 @@ magix.forms.create-web-part
                 set=>[@][..][..][..][magix.forms.create-web-part][controls][panel][controls][_text-box].Name
                   value=>text-box
             else-if=>equals
-              lhs=>check
+              lhs=>check-box
               rhs=>[@][_type].Value
               code
                 set=>[/][_check].Value
@@ -259,7 +259,7 @@ magix.forms.create-web-part
                 add=>[@][..][..][..][magix.forms.create-web-part][controls][panel][controls]
                   value=>[/][_check]
                 set=>[@][..][..][..][magix.forms.create-web-part][controls][panel][controls][_check].Name
-                  value=>check
+                  value=>check-box
 
           _data
           magix.forms.create-web-part
@@ -390,7 +390,7 @@ magix.forms.create-web-part
           controls
 
             text-box=>name
-              place-holder=>name ...
+              placeholder=>name ...
               class=>span-3
               ontextchanged
                 magix.forms.get-value

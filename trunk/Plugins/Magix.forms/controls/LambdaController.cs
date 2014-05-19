@@ -11,20 +11,21 @@ using Magix.UX.Widgets;
 
 namespace Magix.forms
 {
-	/**
+	/*
 	 * contains the button control
 	 */
-	public class LambdaBaseCore : ActiveController
+	public class LambdaController : ActiveController
 	{
-		/**
-		 * will create, and instantiate a new pambda controls
+		/*
+		 * will create, and instantiate a new lambda controls
 		 */
 		[ActiveEvent(Name = "magix.forms.controls.lambda")]
 		public void magix_forms_controls_lambda(object sender, ActiveEventArgs e)
 		{
-			if (ShouldInspect(e.Params))
+            Node ip = Ip(e.Params);
+			if (ShouldInspect(ip))
 			{
-				e.Params["inspect"].Value = @"
+				ip["inspect"].Value = @"
 <p>creates a lambda type of web control.&nbsp;&nbsp;
 the lambda control is a control which have late creation 
 of its child controls.&nbsp;&nbsp;this means that when 
@@ -45,22 +46,21 @@ to return control(s), or nothing, in the [$] return node.
 lambda control doesn't render any outher html, but only 
 serves as a container of other controls, without any markup 
 of its own</p>";
-                e.Params["magix.forms.create-web-part"]["container"].Value = "content5";
-                e.Params["magix.forms.create-web-part"]["form-id"].Value = "sample-form";
-                e.Params["magix.forms.create-web-part"]["controls"]["lambda"].Value = "idOfLambda";
-                e.Params["magix.forms.create-web-part"]["controls"]["lambda"]["oncreatecontrols"]["set"].Value = "[$][link-button][value].Value";
-                e.Params["magix.forms.create-web-part"]["controls"]["lambda"]["oncreatecontrols"]["set"]["value"].Value = "howdy world :)";
+                ip["magix.forms.create-web-part"]["container"].Value = "content5";
+                ip["magix.forms.create-web-part"]["form-id"].Value = "sample-form";
+                ip["magix.forms.create-web-part"]["controls"]["lambda"].Value = "idOfLambda";
+                ip["magix.forms.create-web-part"]["controls"]["lambda"]["oncreatecontrols"]["set"].Value = "[$][link-button][value].Value";
+                ip["magix.forms.create-web-part"]["controls"]["lambda"]["oncreatecontrols"]["set"]["value"].Value = "howdy world :)";
 				return;
 			}
 
-            Node code = (Ip(e.Params)["_code"].Value as Node);
-
+            Node code = ip["_code"].Get<Node>();
 			if (!code.Contains("oncreatecontrols"))
 			{
 				Label lbl = new Label();
 				lbl.Value = "{{lambda control}}";
 				lbl.ID = code.Value as string;
-                Ip(e.Params)["_ctrl"].Value = lbl;
+                ip["_ctrl"].Value = lbl;
 
 				if (code.Contains("onclick"))
 				{
@@ -77,19 +77,16 @@ of its own</p>";
 				return; // nothing to render unless event handler is defined ...
 			}
 
-			string id = code.Value as string;
-
+			string id = code.Get<string>();
 			if (id == null && !code.Contains("id"))
 				throw new ArgumentException("a [lambda] control must have a unique [id]");
 
 			if (id == null)
 				id = code["id"].Get<string>();
-
 			if (id == null)
 				throw new ArgumentException("a [lambda] control must have a unique [id]");
 
 			Node exe = new Node();
-
 			if (code.Contains("_buffer"))
 			{
 				exe["$"].UnTie();
@@ -102,14 +99,13 @@ of its own</p>";
 				RaiseActiveEvent(
 					"magix.execute",
 					exe);
-
 				code["_buffer"].UnTie();
 				code["_buffer"].AddRange(exe["$"]); 
 			}
 
-			if (!exe.Contains("_stop") && exe.Contains("$"))
+			if (exe.Contains("$"))
 			{
-                Ip(e.Params)["_ctrl"].Value = null;
+                ip["_ctrl"].Value = null;
 				foreach (Node idxCtrl in exe["$"])
 				{
 					string evtName = "magix.forms.controls." + idxCtrl.Name;
@@ -128,13 +124,13 @@ of its own</p>";
 					if (node.Contains("_ctrl"))
 					{
 						if (node["_ctrl"].Value != null)
-                            Ip(e.Params)["_ctrl"].Add(new Node("_x", node["_ctrl"].Value));
+                            ip["_ctrl"].Add(new Node("_x", node["_ctrl"].Value));
 						else
 						{
 							// multiple controls returned ...
 							foreach (Node idxCtrl2 in node["_ctrl"])
 							{
-                                Ip(e.Params)["_ctrl"].Add(new Node("_x", idxCtrl2.Value));
+                                ip["_ctrl"].Add(new Node("_x", idxCtrl2.Value));
 							}
 						}
 					}
@@ -143,7 +139,7 @@ of its own</p>";
 				}
 			}
 			else
-                Ip(e.Params)["_ctrl"].Value = null;
+                ip["_ctrl"].Value = null;
 		}
 	}
 }

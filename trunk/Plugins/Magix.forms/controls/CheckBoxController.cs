@@ -12,39 +12,30 @@ using Magix.UX.Widgets.Core;
 
 namespace Magix.forms
 {
-	/**
+	/*
 	 * check box
 	 */
-	public class CheckBoxCore : FormElementCore
+    public class CheckBoxController : BaseWebControlFormElementController
 	{
-		/**
+		/*
 		 * creates check-box
 		 */
-		[ActiveEvent(Name = "magix.forms.controls.check")]
-		public void magix_forms_controls_check(object sender, ActiveEventArgs e)
+		[ActiveEvent(Name = "magix.forms.controls.check-box")]
+		public void magix_forms_controls_check_box(object sender, ActiveEventArgs e)
 		{
-			if (ShouldInspect(e.Params))
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
 			{
-				Inspect(e.Params);
+				Inspect(ip);
 				return;
 			}
 
-            Node node = Ip(e.Params)["_code"].Value as Node;
-
 			CheckBox ret = new CheckBox();
-
             FillOutParameters(e.Params, ret);
 
+            Node node = ip["_code"].Value as Node;
 			if (node.Contains("checked") && node["checked"].Value != null)
 				ret.Checked = node["checked"].Get<bool>();
-
-            if (node.Contains("accesskey") &&
-                !string.IsNullOrEmpty(node["accesskey"].Get<string>()))
-                ret.AccessKey = node["accesskey"].Get<string>();
-
-			if (node.Contains("disabled") && 
-			    node["disabled"].Value != null)
-				ret.Disabled = node["disabled"].Get<bool>();
 
 			if (ShouldHandleEvent("oncheckedchanged", node))
 			{
@@ -58,50 +49,7 @@ namespace Magix.forms
 				};
 			}
 
-            Ip(e.Params)["_ctrl"].Value = ret;
-		}
-
-		/**
-		 * sets checked value
-		 */
-		[ActiveEvent(Name = "magix.forms.set-value")]
-		public void magix_forms_set_value(object sender, ActiveEventArgs e)
-		{
-            if (ShouldInspectOrHasInspected(e.Params))
-			{
-				e.Params["inspect"].Value = "sets the value property of the control";
-				return;
-			}
-
-            if (!Ip(e.Params).Contains("value"))
-				throw new ArgumentException("set-value needs [value]");
-
-            CheckBox ctrl = FindControl<CheckBox>(Ip(e.Params));
-
-			if (ctrl != null)
-			{
-                ctrl.Checked = Ip(e.Params)["value"].Get<bool>();
-			}
-		}
-
-		/**
-		 * returns value
-		 */
-		[ActiveEvent(Name = "magix.forms.get-value")]
-		public void magix_forms_get_value(object sender, ActiveEventArgs e)
-		{
-            if (ShouldInspectOrHasInspected(e.Params))
-			{
-				e.Params["inspect"].Value = "returns the value property of the control";
-				return;
-			}
-
-            CheckBox ctrl = FindControl<CheckBox>(Ip(e.Params));
-
-			if (ctrl != null)
-			{
-                Ip(e.Params)["value"].Value = ctrl.Checked;
-			}
+            ip["_ctrl"].Value = ret;
 		}
 
 		protected override void Inspect (Node node)
@@ -110,16 +58,16 @@ namespace Magix.forms
 <p>creates a checkbox input type of web control.&nbsp;&nbsp;
 the checkbox web control is useful for representing choices 
 like yes or no.&nbsp;&nbsp;the checkbox web control renders 
-like &lt;input type='check' .../&gt;.&nbsp;&nbsp;if you wish 
+like &lt;input type='checkbox' .../&gt;.&nbsp;&nbsp;if you wish 
 to execute hyper lisp code when the checked state is changed, 
 then handle the [oncheckedchanged] active event</p>";
             node["magix.forms.create-web-part"]["container"].Value = "content5";
             node["magix.forms.create-web-part"]["form-id"].Value = "sample-form";
-            base.Inspect(node["magix.forms.create-web-part"]["controls"]["check"]);
-            node["magix.forms.create-web-part"]["controls"]["check"]["checked"].Value = true;
-            node["magix.forms.create-web-part"]["controls"]["check"]["key"].Value = "C";
-            node["magix.forms.create-web-part"]["controls"]["check"]["disabled"].Value = false;
-            node["magix.forms.create-web-part"]["controls"]["check"]["oncheckedchanged"].Value = "hyper lisp code";
+            base.Inspect(node["magix.forms.create-web-part"]["controls"]["check-box"]);
+            node["magix.forms.create-web-part"]["controls"]["check-box"]["checked"].Value = true;
+            node["magix.forms.create-web-part"]["controls"]["check-box"]["key"].Value = "C";
+            node["magix.forms.create-web-part"]["controls"]["check-box"]["disabled"].Value = false;
+            node["magix.forms.create-web-part"]["controls"]["check-box"]["oncheckedchanged"].Value = "hyper lisp code";
             node["inspect"].Value = node["inspect"].Value + @"
 <p><strong>properties for checkbox</strong></p><p>[checked] 
 determines its state.&nbsp;&nbsp; if [checked] is true, then 

@@ -98,7 +98,7 @@ button=>close
     magix.viewport.clear-controls
       container=>help
 text-box=>search
-  place-holder=>search ...
+  placeholder=>search ...
   class=>span-13 input-large
   autocomplete=>false
   @data-provide=>typeahead

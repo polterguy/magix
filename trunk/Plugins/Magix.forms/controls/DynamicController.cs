@@ -12,26 +12,33 @@ using Magix.UX.Widgets;
 
 namespace Magix.forms
 {
-	/**
+	/*
 	 * dynamic control
 	 */
-	public class DynamicCore : BaseWebControlCore
+    public class DynamicController : AttributeControlController
 	{
-		/**
+		/*
 		 * creates a dynamic control
 		 */
 		[ActiveEvent(Name = "magix.forms.controls.dynamic")]
 		public void magix_forms_controls_dynamic(object sender, ActiveEventArgs e)
 		{
-			if (ShouldInspect(e.Params))
+            Node ip = Ip(e.Params);
+			if (ShouldInspect(ip))
 			{
-				Inspect(e.Params);
+				Inspect(ip);
 				return;
 			}
 
-            Node node = Ip(e.Params)["_code"].Value as Node;
-
 			DynamicPanel ret = new DynamicPanel();
+            FillOutParameters(e.Params, ret);
+
+            Node node = ip["_code"].Get<Node>();
+            if (node.Contains("tag") && node["tag"].Value != null)
+                ret.Tag = node["tag"].Get<string>();
+
+            if (node.Contains("default") && node["default"].Value != null)
+                ret.Default = node["default"].Get<string>();
 
             ret.Reload +=
                 delegate(object sender2, DynamicPanel.ReloadEventArgs e2)
@@ -57,15 +64,7 @@ namespace Magix.forms
                     dynamic.Controls.Add(ctrl);
                 };
 
-            FillOutParameters(e.Params, ret);
-
-            if (node.Contains("tag") && node["tag"].Value != null)
-                ret.Tag = node["tag"].Get<string>();
-
-            if (node.Contains("default") && node["default"].Value != null)
-                ret.Default = node["default"].Get<string>();
-
-            Ip(e.Params)["_ctrl"].Value = ret;
+            ip["_ctrl"].Value = ret;
 		}
 
 		protected override void Inspect (Node node)

@@ -14,7 +14,7 @@ namespace Magix.forms
 	/**
 	 * uploader control
 	 */
-	public class UploaderCore : BaseControlCore
+    public class UploaderController : BaseWebControlController
 	{
 		/**
 		 * creates uploader control
