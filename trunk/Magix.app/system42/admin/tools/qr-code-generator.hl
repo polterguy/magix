@@ -294,7 +294,7 @@ this is the only mandatory parameter in fact"
           class=>span-17 last
         image=>qrImage
           alt=>qr code rendered for you
-          class=>clear blocked top-1 left-5
+          class=>clear blocked top-1
           visible=>false
           tip=>@"will show the resulting qr code once generated.
 drag'n'drop, or righ-click and choose 'save as',

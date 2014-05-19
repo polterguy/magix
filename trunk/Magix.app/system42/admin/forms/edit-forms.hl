@@ -21,7 +21,7 @@ for-each=>[magix.data.load][objects]
 
 magix.viewport.load-module
   container=>content2
-  class=>span-24 showgrid top-1 bottom-1 min-height-5
+  class=>span-22 showgrid top-1 bottom-1 min-height-5
   name=>Magix.ide.Surface
 
 magix.forms.list-widget-types
@@ -86,7 +86,7 @@ magix.forms.create-web-part
       _label
         class=>span-3 top-1 right-text
       _text-box
-        class=>span-4 top-1
+        class=>span-3 top-1
         ontextchanged
           magix.forms.get-value
             form-id=>edit-properties
@@ -99,12 +99,12 @@ magix.forms.create-web-part
             dna
             change
       _link-button
-        class=>span-4 top-1
+        class=>span-3 top-1
         onclick
           execute-script
             file=>system42/admin/forms/edit-property.hl
       _check
-        class=>span-4 top-1
+        class=>span-3 top-1
         oncheckedchanged
           magix.forms.get-value
             form-id=>edit-properties
@@ -198,10 +198,10 @@ magix.forms.create-web-part
                   rhs=>0
                   code
                     set=>[/][_link-button][class].Value
-                      value=>span-4 top-1 bold
+                      value=>span-3 top-1 bold
                 else
                   set=>[/][_link-button][class].Value
-                    value=>span-4 top-1
+                    value=>span-3 top-1
                 set=>[/][_link-button].Value
                   value=>[.].Name
                 set=>[/][_link-button][value].Value
@@ -265,13 +265,13 @@ magix.forms.create-web-part
           magix.forms.create-web-part
             form-id=>edit-properties
             container=>content3
-            class=>span-24 bottom-1
+            class=>span-22 bottom-1
             controls
               panel=>propWrp
-                class=>span-22 boxed air-padding
+                class=>span-20 boxed air-padding
                 controls
                   label=>desc2
-                    class=>span-22 last
+                    class=>span-20 last
                     value=>properties
                     tag=>label
           magix.forms.set-enabled
@@ -346,7 +346,7 @@ magix.forms.create-web-part
     label=>header
       value=>edit forms
       tag=>h2
-      class=>span-13 last left-6
+      class=>span-17 last
 
     panel=>menuWrp
       controls
@@ -385,7 +385,7 @@ magix.forms.create-web-part
             default=>choose form ...
 
         panel=>saveWrp
-          class=>span-12
+          class=>span-11
           default=>save
           controls
 
@@ -547,7 +547,7 @@ magix.forms.create-web-part
                         container=>content7
 
             select=>widget
-              class=>span-5 last
+              class=>span-3 last
               onselectedindexchanged
                 magix.forms.get-value
                   form-id=>edit-forms
@@ -563,7 +563,7 @@ magix.forms.create-web-part
                 default=>select widget ...
 
         button=>deleteWidg
-          class=>span-4 last
+          class=>span-3 last
           value=>delete widget
           disabled=>true
           onclick
@@ -656,10 +656,10 @@ magix.forms.create-web-part
               container=>content7
             magix.forms.create-mml-web-part
               container=>content2
-              class=>span-24
+              class=>span-22
               form-id=>myPage
               mml=>@"
-<h2 class=""span-24 top-1"">preview of form</h2>
+<h2 class=""span-22 top-1"">preview of form</h2>
 <p>below is your form in executable style, meaning
 all events and everything is hooked up and ready to be tested<br/>
 {{
@@ -683,7 +683,7 @@ link-button=>closepreview
       container=>content7
     magix.viewport.load-module
       container=>content2
-      class=>span-24 showgrid top-1 bottom-1 min-height-5
+      class=>span-22 showgrid top-1 bottom-1 min-height-5
       name=>Magix.ide.Surface
     magix.forms.get-value
       form-id=>edit-forms
@@ -709,18 +709,18 @@ link-button=>closepreview
               value=>[@][magix.forms.get-value][value].Value
             magix.forms.create-web-part
               container=>content7
-              class=>span-24 bottom-2
+              class=>span-22 bottom-2
               form-id
 
         panel=>ctrlWrp
-          class=>span-17 last top-1 boxed air-padding
+          class=>span-15 last top-1 boxed air-padding
           controls
 
             label=>desc
               value=>web controls
               tip=>click to add up a web control to your design surface
               tag=>label
-              class=>span-17 bottom-1 last
+              class=>span-15 bottom-1 last
 
 
 

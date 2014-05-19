@@ -38,13 +38,13 @@ _dt
   panel
     controls
       label
-        class=>span-13
+        class=>span-11
         tag=>label
         text
       label
         class=>right
       label
-        class=>span-17 last
+        class=>span-15 last
         text
 
 for-each=>[magix.data.load][objects]
@@ -59,10 +59,10 @@ for-each=>[magix.data.load][objects]
     rhs=>true
     code
       set=>[/][_dt][panel][class].Value
-        value=>span-17 boxed-light-red air-padding bottom-1 relative
+        value=>span-15 boxed-light-red air-padding bottom-1 relative
   else
     set=>[/][_dt][panel][class].Value
-      value=>span-17 boxed-light-green air-padding bottom-1 relative
+      value=>span-15 boxed-light-green air-padding bottom-1 relative
   if=>exist
     lhs=>[.][code]
     code
@@ -150,14 +150,14 @@ magix.forms.create-web-part
   class=>span-17 last
   controls
     label=>header
-      class=>span-13 left-6 last
+      class=>span-17 last
       value=>server log
       tag=>h2
     panel=>items
       class=>span-17 last
       controls
     panel=>pagerWrp
-      class=>span-19
+      class=>span-17
       controls
         link-button=>previous
           value=>&lt;&lt;
