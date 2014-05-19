@@ -12,56 +12,43 @@ using Magix.UX.Widgets.Core;
 
 namespace Magix.forms
 {
-	/**
+	/*
 	 * contains the textbox control
 	 */
-	public class TextBoxCore : FormElementCore
+    public class TextBoxController : BaseWebControlFormElementInputTextController
 	{
-		/**
+		/*
 		 * creates a text-box
 		 */
 		[ActiveEvent(Name = "magix.forms.controls.text-box")]
 		public void magix_forms_controls_text_box(object sender, ActiveEventArgs e)
 		{
-			if (ShouldInspect(e.Params))
+            Node ip = Ip(e.Params);
+			if (ShouldInspect(ip))
 			{
-				Inspect(e.Params);
+				Inspect(ip);
 				return;
 			}
 
-            Node node = Ip(e.Params)["_code"].Value as Node;
-
 			TextBox ret = new TextBox();
-
             FillOutParameters(e.Params, ret);
 
-			if (node.Contains("place-holder") && 
-			    !string.IsNullOrEmpty(node["place-holder"].Get<string>()))
-				ret.PlaceHolder = node["place-holder"].Get<string>();
+            Node node = ip["_code"].Value as Node;
+			if (node.Contains("autocapitalize") && 
+			    node["autocapitalize"].Value != null)
+				ret.AutoCapitalize = node["autocapitalize"].Get<bool>();
 
-			if (node.Contains("capitalize") && 
-			    node["capitalize"].Value != null)
-				ret.AutoCapitalize = node["capitalize"].Get<bool>();
-
-			if (node.Contains("correct") && 
-			    node["correct"].Value != null)
-				ret.AutoCorrect = node["correct"].Get<bool>();
+			if (node.Contains("autocorrect") && 
+			    node["autocorrect"].Value != null)
+				ret.AutoCorrect = node["autocorrect"].Get<bool>();
 
 			if (node.Contains("autocomplete") &&
                 node["autocomplete"].Value != null)
                 ret.AutoComplete = node["autocomplete"].Get<bool>();
 
-			if (node.Contains("disabled") &&
-                node["disabled"].Value != null)
-                ret.Disabled = node["disabled"].Get<bool>();
-
-			if (node.Contains("max") && 
-			    node["max"].Value != null)
-				ret.MaxLength = node["max"].Get<int>();
-
-			if (node.Contains("value") && 
-			    !string.IsNullOrEmpty(node["value"].Get<string>()))
-				ret.Value = node["value"].Get<string>();
+			if (node.Contains("maxlength") &&
+                node["maxlength"].Value != null)
+                ret.MaxLength = node["maxlength"].Get<int>();
 
 			if (node.Contains("type") && 
 				node["type"].Value != null)
@@ -116,30 +103,6 @@ namespace Magix.forms
 				}
 			}
 			
-			if (ShouldHandleEvent("ontextchanged", node))
-			{
-				Node codeNode = node["ontextchanged"].Clone();
-				ret.TextChanged += delegate(object sender2, EventArgs e2)
-				{
-                    FillOutEventInputParameters(codeNode, sender2);
-                    RaiseActiveEvent(
-						"magix.execute",
-						codeNode);
-				};
-			}
-
-			if (ShouldHandleEvent("onescpressed", node))
-			{
-				Node codeNode = node["onescpressed"].Clone();
-				ret.Esc += delegate(object sender2, EventArgs e2)
-				{
-                    FillOutEventInputParameters(codeNode, sender2);
-                    RaiseActiveEvent(
-						"magix.execute",
-						codeNode);
-				};
-			}
-
             if (ShouldHandleEvent("onenterpressed", node))
             {
                 Node codeNode = node["onenterpressed"].Clone();
@@ -152,74 +115,7 @@ namespace Magix.forms
                 };
             }
 
-            Ip(e.Params)["_ctrl"].Value = ret;
-		}
-
-		/**
-		 * sets text value
-		 */
-		[ActiveEvent(Name = "magix.forms.set-value")]
-		public void magix_forms_set_value(object sender, ActiveEventArgs e)
-		{
-            if (ShouldInspectOrHasInspected(e.Params))
-			{
-				e.Params["inspect"].Value = "sets the value property of the control";
-				return;
-			}
-
-            if (!Ip(e.Params).Contains("value"))
-				throw new ArgumentException("set-value needs [value]");
-
-            TextBox ctrl = FindControl<TextBox>(Ip(e.Params));
-
-			if (ctrl != null)
-			{
-                ctrl.Value = Ip(e.Params)["value"].Get<string>();
-			}
-		}
-
-		/**
-		 * returns value
-		 */
-		[ActiveEvent(Name = "magix.forms.get-value")]
-		public void magix_forms_get_value(object sender, ActiveEventArgs e)
-		{
-            if (ShouldInspectOrHasInspected(e.Params))
-			{
-				e.Params["inspect"].Value = "returns the value property of the control";
-				return;
-			}
-
-            TextBox ctrl = FindControl<TextBox>(Ip(e.Params));
-
-			if (ctrl != null)
-			{
-                Ip(e.Params)["value"].Value = ctrl.Value;
-			}
-		}
-
-		/**
-		 * selects all text
-		 */
-		[ActiveEvent(Name = "magix.forms.select-all")]
-		protected void magix_forms_select_all(object sender, ActiveEventArgs e)
-		{
-			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
-			{
-				e.Params["event:magix.forms.select-all"].Value = null;
-				e.Params["id"].Value = "control";
-				e.Params["form-id"].Value = "webpages";
-				e.Params["inspect"].Value = @"selects all text in the specific 
-[id] textbox or textarea, in the [form-id] form.&nbsp;&nbsp;not thread safe";
-				return;
-			}
-
-            TextBox ctrl = FindControl<TextBox>(Ip(e.Params));
-
-			if (ctrl != null)
-			{
-				ctrl.Select();
-			}
+            ip["_ctrl"].Value = ret;
 		}
 
 		protected override void Inspect (Node node)
@@ -233,16 +129,16 @@ one line of text, without carriage return.&nbsp;&nbsp;use
             node["magix.forms.create-web-part"]["container"].Value = "content5";
             node["magix.forms.create-web-part"]["form-id"].Value = "sample-form";
             base.Inspect(node["magix.forms.create-web-part"]["controls"]["text-box"]);
-            node["magix.forms.create-web-part"]["controls"]["text-box"]["place-holder"].Value = "shadow text ...";
-            node["magix.forms.create-web-part"]["controls"]["text-box"]["capitalize"].Value = false;
-            node["magix.forms.create-web-part"]["controls"]["text-box"]["correct"].Value = true;
+            node["magix.forms.create-web-part"]["controls"]["text-box"]["placeholder"].Value = "shadow text ...";
+            node["magix.forms.create-web-part"]["controls"]["text-box"]["autocapitalize"].Value = false;
+            node["magix.forms.create-web-part"]["controls"]["text-box"]["autocorrect"].Value = true;
             node["magix.forms.create-web-part"]["controls"]["text-box"]["complete"].Value = false;
             node["magix.forms.create-web-part"]["controls"]["text-box"]["disabled"].Value = false;
-            node["magix.forms.create-web-part"]["controls"]["text-box"]["max"].Value = 25;
+            node["magix.forms.create-web-part"]["controls"]["text-box"]["maxlength"].Value = 25;
             node["magix.forms.create-web-part"]["controls"]["text-box"]["value"].Value = "hello world";
             node["magix.forms.create-web-part"]["controls"]["text-box"]["type"].Value = "normal|phone|search|url|email|datetime|date|month|week|time|datetimelocal|number|range|color|password";
             node["inspect"].Value = node["inspect"].Value + @"
-<p><strong>properties for text box</strong></p><p>[place-holder] 
+<p><strong>properties for text box</strong></p><p>[placeholder] 
 is shadow text, only visible when input area is empty</p><p>
 [value] is what text the control shall have, or currently have 
 been changed to.&nbsp;&nbsp;this is the property which is changed 
@@ -258,11 +154,11 @@ for your web control</p><p>[disabled] enables or disables the
 web control.&nbsp;&nbsp;this can be changed or retrieved after 
 the button is created by invoking the [magix.forms.set-enabled] 
 or [magix.forms.get-enabled] active events.&nbsp;&nbsp;legal 
-values are true and false</p><p>[capitalize] will automatically 
+values are true and false</p><p>[autocapitalize] will automatically 
 correctly capitalize entities, as if you are typing text</p>
-<p>[correct] will automatically suggest corrections for typos</p>
+<p>[autocorrect] will automatically suggest corrections for typos</p>
 [autocomplete] will suggest previously typed values for you, and 
-attempt to automatically complete the value</p><p>[max] is 
+attempt to automatically complete the value</p><p>[maxlength] is 
 maximum number of characters in web control</p><p>[type] 
 determines the mode of the text box.&nbsp;&nbsp;this depends 
 upon the type of input you wish that your text box shall be 

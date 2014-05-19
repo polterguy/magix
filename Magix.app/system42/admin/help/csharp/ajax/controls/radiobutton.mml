@@ -81,7 +81,7 @@ label=>lbl1
   tag=>label
   for=>rdo1
 radio=>rdo1
-  group=>radios
+  name=>radios
   class=>span-1
 label=>lbl2
   class=>span-2 clear
@@ -89,7 +89,7 @@ label=>lbl2
   tag=>label
   for=>rdo2
 radio=>rdo2
-  group=>radios
+  name=>radios
   class=>span-1
 }}
 </div>

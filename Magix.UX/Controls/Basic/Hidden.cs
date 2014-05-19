@@ -16,7 +16,7 @@ namespace Magix.UX.Widgets
     /*
      * hidden field ajax control
      */
-    public class Hidden : BaseControl
+    public class Hidden : BaseControl, IValueControl
     {
         /*
          * value of control
@@ -27,7 +27,7 @@ namespace Magix.UX.Widgets
             set
             {
                 if (value != Value)
-                    SetJsonValue("Value", value);
+                    SetJsonGeneric("value", value);
                 ViewState["Value"] = value;
             }
         }
@@ -55,6 +55,12 @@ namespace Magix.UX.Widgets
             el.AddAttribute("name", ClientID);
             el.AddAttribute("value", Value);
             base.AddAttributes(el);
+        }
+
+        object IValueControl.ControlValue
+        {
+            get { return Value; }
+            set { Value = Convert.ToString(value); }
         }
     }
 }

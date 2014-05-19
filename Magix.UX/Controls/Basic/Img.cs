@@ -15,7 +15,7 @@ namespace Magix.UX.Widgets
     /*
      * image ajax control
      */
-    public class Img : BaseWebControlFormElement
+    public class Img : BaseWebControlFormElement, IValueControl
     {
         /*
          * url of image
@@ -64,6 +64,12 @@ namespace Magix.UX.Widgets
 
         protected override void SetValue()
         {
+        }
+
+        object IValueControl.ControlValue
+        {
+            get { return Src; }
+            set { Src = Convert.ToString(value); }
         }
     }
 }

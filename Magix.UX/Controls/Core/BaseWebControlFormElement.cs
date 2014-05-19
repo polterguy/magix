@@ -45,7 +45,7 @@ namespace Magix.UX.Widgets.Core
             set
             {
                 if (value != AccessKey)
-                    SetJsonValue("AccessKey", value);
+                    SetJsonGeneric("AccessKey", value);
                 ViewState["AccessKey"] = value;
             }
         }

@@ -288,16 +288,6 @@ namespace Magix.UX.Widgets.Core
                         // TODO: Create some sort of "EscapeMethod" in StringHelper or something...
                         value.ToString().Replace("\\", "\\\\").Replace("\"", "\\\"").Replace("\n", "\\n").Replace("\r", "\\r"));
                     break;
-                case "System.Drawing.Color":
-                    if (builder.Length > 0)
-                        builder.Append(",");
-                    Color color = (Color)value;
-                    string tmp = ColorTranslator.ToHtml(color);
-                    builder.AppendFormat(
-                        "\"{0}\":\"{1}\"",
-                        key,
-                        tmp);
-                    break;
                 case "System.Boolean":
                     if (builder.Length > 0)
                         builder.Append(",");
@@ -306,12 +296,6 @@ namespace Magix.UX.Widgets.Core
                         value.ToString().ToLower());
                     break;
                 case "System.Int32":
-                    if (builder.Length > 0)
-                        builder.Append(",");
-                    builder.AppendFormat("\"{0}\":{1}",
-                        key,
-                        value);
-                    break;
                 case "System.Decimal":
                     if (builder.Length > 0)
                         builder.Append(",");
@@ -319,39 +303,12 @@ namespace Magix.UX.Widgets.Core
                         key,
                         value);
                     break;
-                case "System.Drawing.Rectangle":
-                    if (builder.Length > 0)
-                        builder.Append(",");
-                    Rectangle rect = (Rectangle)value;
-                    builder.AppendFormat(
-                        "{0}:{{left:{1},top:{2},width:{3},height:{4}}}",
-                        key,
-                        rect.Left, rect.Top, rect.Width, rect.Height);
-                    break;
-                case "System.Drawing.Point":
-                    if (builder.Length > 0)
-                        builder.Append(",");
-                    Point pt = (Point)value;
-                    builder.AppendFormat(
-                        "{0}:{{x:{1},y:{2}}}",
-                        key,
-                        pt.X, pt.Y);
-                    break;
-                case "System.DateTime":
-                    if (builder.Length > 0)
-                        builder.Append(",");
-                    DateTime dt = (DateTime)value;
-                    builder.AppendFormat(
-                        "{0}:{1}",
-                        key,
-                        dt.ToString("yyyy:MM:dd HH:mm", CultureInfo.InvariantCulture));
-                    break;
                 default:
                     Dictionary<string, string> dictValues = value as Dictionary<string, string>;
                     if (dictValues != null)
                         SerializeGenericValues(key, dictValues, builder);
                     else
-                        throw new ArgumentException("unknown type serialized as json in BaseControl");
+                        throw new ArgumentException("unknown type serialized as json");
                     break;
             }
 		}
@@ -374,12 +331,11 @@ namespace Magix.UX.Widgets.Core
                     else
                         builder.Append(",");
 
-                    string val = values[idxKey];
-                    string key2 = idxKey;
+                    string val = values[idxKey].ToString().Replace("\\", "\\\\").Replace("\"", "\\\"").Replace("\n", "\\n").Replace("\r", "\\r");
 
                     builder.AppendFormat("[\"{0}\",\"{1}\"]",
-                        key2,
-                        val.Replace("\\", "\\\\").Replace("\"", "\\\""));
+                        idxKey,
+                        val);
                 }
                 builder.Append("]");
             }

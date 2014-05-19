@@ -14,7 +14,7 @@ namespace Magix.UX.Widgets
     /**
      * wysiwyg editor type of control
      */
-	public class Wysiwyg : BaseWebControlFormElementInputText
+	public class Wysiwyg : BaseWebControlFormElementInputText, IValueControl
     {
 		/**
 		 * text property of wysiwyg editor
@@ -500,5 +500,11 @@ parserRules: wysihtml5ParserRules});";
 				RenderChildren(builder.Writer as System.Web.UI.HtmlTextWriter);
 			}
 		}
+
+        object IValueControl.ControlValue
+        {
+            get { return Value; }
+            set { Value = Convert.ToString(value); }
+        }
     }
 }

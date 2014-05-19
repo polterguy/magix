@@ -53,7 +53,7 @@ namespace Magix.UX.Widgets
             set
             {
                 if (value != Type)
-                    SetJsonValue("Type", value.ToString().ToLower());
+                    SetJsonGeneric("type", value.ToString().ToLower());
                 ViewState["Type"] = value;
             }
         }

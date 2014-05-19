@@ -95,7 +95,7 @@ namespace Magix.UX.Widgets.Core
             set
             {
                 if (value != Class)
-                    SetJsonValue("Class", value);
+                    SetJsonGeneric("className", value);
                 ViewState["Class"] = value;
             }
         }
@@ -111,7 +111,7 @@ namespace Magix.UX.Widgets.Core
                 if (value != "rtl" && value != "ltr" && !string.IsNullOrEmpty(value))
                     throw new ArgumentException("only ltr and rtl are legal values");
                 if (value != Dir)
-                    SetJsonValue("Dir", value);
+                    SetJsonGeneric("dir", value);
                 ViewState["Dir"] = value;
             }
         }

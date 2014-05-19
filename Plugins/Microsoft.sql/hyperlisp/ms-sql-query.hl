@@ -328,7 +328,7 @@ where
           text-area=>sqlQuery
             class=>span-17 top-1 last
             rows=>10
-            place-holder=>type your sql query here ...
+            placeholder=>type your sql query here ...
           button=>btnRunQuery
             class=>span-2 right last
             value=>run
@@ -725,7 +725,7 @@ where"
           class=>span-1 right-text
           value=>new
         text-box=>txtNewConnection
-          place-holder=>connection string ...
+          placeholder=>connection string ...
           class=>span-5
         button=>btnNew
           value=>create
@@ -765,7 +765,7 @@ where"
           tag=>label
           class=>span-2 top-1
         text-box=>visible-records-count
-          place-holder=>10 ...
+          placeholder=>10 ...
           type=>number
           class=>span-1 top-1
         label=>lblCheckTables
@@ -773,7 +773,7 @@ where"
           tag=>label
           value=>tables
           class=>span-2 top-1 right-text
-        check=>chkTables
+        check-box=>chkTables
           checked=>true
           class=>span-1 top-1
           oncheckedchanged
@@ -803,7 +803,7 @@ where"
           tag=>label
           value=>columns
           class=>span-2 top-1 right-text
-        check=>chkColumns
+        check-box=>chkColumns
           checked=>true
           class=>span-1 top-1
           oncheckedchanged

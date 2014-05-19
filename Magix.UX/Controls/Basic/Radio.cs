@@ -17,7 +17,7 @@ namespace Magix.UX.Widgets
     /*
      * radio button ajax control
      */
-    public class Radio : BaseWebControlFormElement
+    public class Radio : BaseWebControlFormElement, IValueControl
     {
         /*
          * raised when checked state changes
@@ -110,6 +110,12 @@ namespace Magix.UX.Widgets
             if (Checked)
                 el.AddAttribute("checked", "checked");
             base.AddAttributes(el);
+        }
+
+        object IValueControl.ControlValue
+        {
+            get { return Checked; }
+            set { Checked = Convert.ToBoolean(value); }
         }
     }
 }

@@ -57,7 +57,7 @@ namespace Magix.sample
 {{
 hyperlink=>hpl
   value=>click me!
-  url=>http://www.google.com
+  href=>http://www.google.com
   target=>_blank
 }}
 </div>

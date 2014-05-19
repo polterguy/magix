@@ -12,12 +12,12 @@ using Magix.UX.Widgets.Core;
 
 namespace Magix.forms
 {
-	/**
+	/*
 	 * contains the form control
 	 */
-	public class FormElementCore : BaseWebControlCore
+    public abstract class BaseWebControlFormElementController : BaseWebControlController
 	{
-		/**
+		/*
 		 * set-enabled
 		 */
 		[ActiveEvent(Name = "magix.forms.set-enabled")]
@@ -46,7 +46,7 @@ namespace Magix.forms
 			}
 		}
 
-		/**
+		/*
 		 * get-enabled
 		 */
 		[ActiveEvent(Name = "magix.forms.get-enabled")]
@@ -70,5 +70,22 @@ namespace Magix.forms
                 Ip(e.Params)["value"].Value = !ctrl.Disabled;
 			}
 		}
-	}
+
+        protected override void FillOutParameters(Node pars, BaseControl ctrl)
+        {
+            base.FillOutParameters(pars, ctrl);
+
+            Node ip = Ip(pars);
+            Node codeNode = ip["_code"].Value as Node;
+            BaseWebControlFormElement that = ctrl as BaseWebControlFormElement;
+
+            if (codeNode.Contains("accesskey") &&
+                !string.IsNullOrEmpty(codeNode["accesskey"].Get<string>()))
+                that.AccessKey = codeNode["accesskey"].Get<string>();
+
+            if (codeNode.Contains("disabled") &&
+                codeNode["disabled"].Value != null)
+                that.Disabled = codeNode["disabled"].Get<bool>();
+        }
+    }
 }

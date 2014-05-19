@@ -17,7 +17,7 @@ namespace Magix.forms
 	/**
 	 * contains the basewebcontrol control
 	 */
-	public abstract class BaseWebControlCore : BaseControlCore
+    public abstract class BaseWebControlController : BaseControlController
 	{
 		/**
 		 * sets css classes

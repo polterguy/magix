@@ -12,76 +12,32 @@ using Magix.UX.Widgets.Core;
 
 namespace Magix.forms
 {
-	/**
+	/*
 	 * hidden field
 	 */
-	public class HiddenFieldCore : BaseControlCore
+    public class HiddenController : BaseControlController
 	{
-		/**
+		/*
 		 * creates hidden field
 		 */
 		[ActiveEvent(Name = "magix.forms.controls.hidden")]
 		public void magix_forms_controls_hidden(object sender, ActiveEventArgs e)
 		{
-			if (ShouldInspect(e.Params))
+            Node ip = Ip(e.Params);
+			if (ShouldInspect(ip))
 			{
-				Inspect(e.Params);
+				Inspect(ip);
 				return;
 			}
-
-            Node node = Ip(e.Params)["_code"].Value as Node;
 
 			Hidden ret = new Hidden();
-
             FillOutParameters(e.Params, ret);
 
-			if (node.Contains("value") && node["value"].Value != null)
+            Node node = ip["_code"].Get<Node>();
+            if (node.Contains("value") && node["value"].Value != null)
 				ret.Value = node["value"].Get<string>();
 
-            Ip(e.Params)["_ctrl"].Value = ret;
-		}
-
-		/**
-		 * sets value
-		 */
-		[ActiveEvent(Name = "magix.forms.set-value")]
-		public void magix_forms_set_value(object sender, ActiveEventArgs e)
-		{
-            if (ShouldInspectOrHasInspected(e.Params))
-			{
-				e.Params["inspect"].Value = "sets the value property of the control";
-				return;
-			}
-
-            if (!Ip(e.Params).Contains("value"))
-				throw new ArgumentException("set-value needs [value]");
-
-            Hidden ctrl = FindControl<Hidden>(Ip(e.Params));
-
-			if (ctrl != null)
-			{
-                ctrl.Value = Ip(e.Params)["value"].Get<string>();
-			}
-		}
-
-		/**
-		 * returns value
-		 */
-		[ActiveEvent(Name = "magix.forms.get-value")]
-		public void magix_forms_get_value(object sender, ActiveEventArgs e)
-		{
-            if (ShouldInspectOrHasInspected(e.Params))
-			{
-				e.Params["inspect"].Value = "returns the value property of the control";
-				return;
-			}
-
-            Hidden ctrl = FindControl<Hidden>(Ip(e.Params));
-
-			if (ctrl != null)
-			{
-                Ip(e.Params)["value"].Value = ctrl.Value;
-			}
+            ip["_ctrl"].Value = ret;
 		}
 
 		protected override void Inspect (Node node)

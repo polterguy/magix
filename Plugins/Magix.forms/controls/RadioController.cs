@@ -12,42 +12,33 @@ using Magix.UX.Widgets.Core;
 
 namespace Magix.forms
 {
-	/**
+	/*
 	 * radio button
 	 */
-	public class RadioButtonCore : FormElementCore
+    public class RadioController : BaseWebControlFormElementController
 	{
-		/**
+		/*
 		 * creates radio button control
 		 */
 		[ActiveEvent(Name = "magix.forms.controls.radio")]
 		public void magix_forms_controls_radio(object sender, ActiveEventArgs e)
 		{
-			if (ShouldInspect(e.Params))
+            Node ip = Ip(e.Params);
+			if (ShouldInspect(ip))
 			{
-				Inspect(e.Params);
+				Inspect(ip);
 				return;
 			}
 
-            Node node = Ip(e.Params)["_code"].Value as Node;
-
 			Radio ret = new Radio();
-
             FillOutParameters(e.Params, ret);
 
-			if (node.Contains("group") && node["group"].Value != null)
-				ret.Name = node["group"].Get<string>();
+            Node node = ip["_code"].Get<Node>();
+            if (node.Contains("name") && node["name"].Value != null)
+				ret.Name = node["name"].Get<string>();
 
 			if (node.Contains("checked") && node["checked"].Value != null)
 				ret.Checked = node["checked"].Get<bool>();
-
-			if (node.Contains("key") && 
-			    !string.IsNullOrEmpty(node["key"].Get<string>()))
-				ret.AccessKey = node["key"].Get<string>();
-
-            if (node.Contains("disabled") &&
-                node["disabled"].Value != null)
-                ret.Disabled = node["disabled"].Get<bool>();
 
 			if (ShouldHandleEvent("oncheckedchanged", node))
 			{
@@ -61,50 +52,7 @@ namespace Magix.forms
 				};
 			}
 
-            Ip(e.Params)["_ctrl"].Value = ret;
-		}
-
-		/**
-		 * sets checked value
-		 */
-		[ActiveEvent(Name = "magix.forms.set-value")]
-		public void magix_forms_set_value(object sender, ActiveEventArgs e)
-		{
-            if (ShouldInspectOrHasInspected(e.Params))
-			{
-				e.Params["inspect"].Value = "sets the value property of the control";
-				return;
-			}
-
-            if (!Ip(e.Params).Contains("value"))
-				throw new ArgumentException("set-value needs [value]");
-
-            Radio ctrl = FindControl<Radio>(Ip(e.Params));
-
-			if (ctrl != null)
-			{
-                ctrl.Checked = Ip(e.Params)["value"].Get<bool>();
-			}
-		}
-
-		/**
-		 * returns value
-		 */
-		[ActiveEvent(Name = "magix.forms.get-value")]
-		public void magix_forms_get_value(object sender, ActiveEventArgs e)
-		{
-            if (ShouldInspectOrHasInspected(e.Params))
-			{
-				e.Params["inspect"].Value = "returns the value property of the control";
-				return;
-			}
-
-            Radio ctrl = FindControl<Radio>(Ip(e.Params));
-
-			if (ctrl != null)
-			{
-                Ip(e.Params)["value"].Value = ctrl.Checked;
-			}
+            ip["_ctrl"].Value = ret;
 		}
 
 		protected override void Inspect (Node node)

@@ -14,7 +14,7 @@ namespace Magix.forms
 	/**
 	 * wysiwyg control
 	 */
-	public class WysiwygCore : BaseWebControlCore
+    public class WysiwygController : BaseWebControlFormElementInputTextController
 	{
 		/**
 		 * creates wysiwyg control
@@ -98,58 +98,15 @@ namespace Magix.forms
 			    !string.IsNullOrEmpty(node["has-showhtml"].Get<string>()))
 				ret.HasChangeView = node["has-showhtml"].Get<bool>();
 
-			if (node.Contains("place-holder") && 
-			    !string.IsNullOrEmpty(node["place-holder"].Get<string>()))
-				ret.PlaceHolder = node["place-holder"].Get<string>();
+			if (node.Contains("placeholder") && 
+			    !string.IsNullOrEmpty(node["placeholder"].Get<string>()))
+				ret.PlaceHolder = node["placeholder"].Get<string>();
 
 			if (node.Contains ("editor-css-file") && 
 			    !string.IsNullOrEmpty (node["editor-css-file"].Get<string>()))
 				ret.EditorCssFile = node["editor-css-file"].Get<string>();
 
             Ip(e.Params)["_ctrl"].Value = ret;
-		}
-
-		/**
-		 * sets text value
-		 */
-		[ActiveEvent(Name = "magix.forms.set-value")]
-		public void magix_forms_set_value(object sender, ActiveEventArgs e)
-		{
-            if (ShouldInspectOrHasInspected(e.Params))
-			{
-				e.Params["inspect"].Value = "sets the value property of the control";
-				return;
-			}
-
-            if (!Ip(e.Params).Contains("value"))
-				throw new ArgumentException("set-value needs [value]");
-
-            Wysiwyg ctrl = FindControl<Wysiwyg>(Ip(e.Params));
-
-			if (ctrl != null)
-			{
-                ctrl.Value = Ip(e.Params)["value"].Get<string>();
-			}
-		}
-
-		/**
-		 * returns value
-		 */
-		[ActiveEvent(Name = "magix.forms.get-value")]
-		public void magix_forms_get_value(object sender, ActiveEventArgs e)
-		{
-            if (ShouldInspectOrHasInspected(e.Params))
-			{
-				e.Params["inspect"].Value = "returns the value property of the control";
-				return;
-			}
-
-            Wysiwyg ctrl = FindControl<Wysiwyg>(Ip(e.Params));
-
-			if (ctrl != null)
-			{
-                Ip(e.Params)["value"].Value = ctrl.Value;
-			}
 		}
 
 		protected override void Inspect (Node node)
@@ -163,7 +120,7 @@ server</p>";
             node["magix.forms.create-web-part"]["form-id"].Value = "sample-form";
             base.Inspect(node["magix.forms.create-web-part"]["controls"]["wysiwyg"]);
             node["magix.forms.create-web-part"]["controls"]["wysiwyg"]["value"].Value = "html markup of wysiwyg control goes here";
-            node["magix.forms.create-web-part"]["controls"]["wysiwyg"]["place-holder"].Value = "place holder ...";
+            node["magix.forms.create-web-part"]["controls"]["wysiwyg"]["placeholder"].Value = "place holder ...";
             node["magix.forms.create-web-part"]["controls"]["wysiwyg"]["has-bold"].Value = true;
             node["magix.forms.create-web-part"]["controls"]["wysiwyg"]["has-italic"].Value = true;
             node["magix.forms.create-web-part"]["controls"]["wysiwyg"]["has-unorderedlist"].Value = true;
@@ -185,7 +142,7 @@ server</p>";
 sets the visible text of your web control.&nbsp;&nbsp;this 
 is the property which is changed or retrieved when you invoke 
 the [magix.forms.set-value] and the [magix.forms.get-value] 
-for your web control</p><p>[place-holder] is shadow text, only 
+for your web control</p><p>[placeholder] is shadow text, only 
 visible when input area is empty.&nbsp;&nbsp;use this property 
 to display some information about your web control</p>
 <p>[editor-css-file] is a url to a css file which will be 

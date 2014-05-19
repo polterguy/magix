@@ -152,11 +152,6 @@
     // letter (by convention) and they all take ONE parameter.
 
 
-    // Expects only a string
-    Class: function (val) {
-      this.element.className = val;
-    },
-
     // Expects and array of arrays where each array-item is a key/value object
     // and the key (first sub-item in array) is the name of the style property 
     // and the value (second sub-item array) its value
@@ -174,37 +169,14 @@
       this.element.setContent(val);
     },
 
-    // Expects a single character - Sets the access key (ALT + value) for giving focus to control
-    AccessKey: function(val) {
-      this.element.accesskey = val;
-    },
-
-    // Expects a text value, sets the "value" of the control to the given value
-    // Useful for TextBoxes (input type="text") and so on...
-    Value: function(val) {
-      this.element.value = val;
-    },
-
-    // Expects a text value, sets the "value" of the control to the given value
-    // Useful for TextBoxes (input type="text") and so on...
-    Dir: function(val) {
-      this.element.dir = val;
-    },
-
     // Sets focus to control
     Focus: function() {
-      // Silently catching since Focus fails in IE (and throws) if DOM node (or ancestor node) is "display:none"...
       try { this.element.focus(); } catch (e) { }
     },
 
     // Selects a range from e.g. a TextBox
     Select: function() {
       this.element.select();
-    },
-
-    // Expects a type - defines type of control (text, password etc...)
-    Type: function(val) {
-      this.element.type = val;
     },
 
     // Expects any value, will set that property of the element
@@ -214,7 +186,6 @@
         this.element[val[idx][0]] = val[idx][1];
       }
     },
-
 
 
     // Initializes all events on control

@@ -12,30 +12,29 @@ using Magix.UX.Widgets;
 
 namespace Magix.forms
 {
-	/**
+	/*
 	 * panel control
 	 */
-	public class PanelCore : BaseWebControlCore
+    public class PanelController : AttributeControlController
 	{
-		/**
+		/*
 		 * creates a panel control
 		 */
 		[ActiveEvent(Name = "magix.forms.controls.panel")]
 		public void magix_forms_controls_panel(object sender, ActiveEventArgs e)
 		{
-			if (ShouldInspect(e.Params))
+            Node ip = Ip(e.Params);
+			if (ShouldInspect(ip))
 			{
-				Inspect(e.Params);
+				Inspect(ip);
 				return;
 			}
 
-            Node node = Ip(e.Params)["_code"].Value as Node;
-
 			Panel ret = new Panel();
-
             FillOutParameters(e.Params, ret);
 
-			if (node.Contains("tag") && node["tag"].Value != null)
+            Node node = ip["_code"].Get<Node>();
+            if (node.Contains("tag") && node["tag"].Value != null)
 				ret.Tag = node["tag"].Get<string>();
 
 			if (node.Contains("default") && node["default"].Value != null)
@@ -43,14 +42,14 @@ namespace Magix.forms
 
 			if (node.Contains("controls"))
 			{
-				foreach (Node idx in node["controls"])
+				foreach (Node idxCtrlNode in node["controls"])
 				{
-					string typeName = idx.Name;
+					string ctrlTypeName = idxCtrlNode.Name;
 
 					bool isControlName = true;
-					foreach (char idxC in typeName)
+					foreach (char idxChar in ctrlTypeName)
 					{
-						if ("abcdefghijklmnopqrstuvwxyz-".IndexOf(idxC) == -1)
+						if ("abcdefghijklmnopqrstuvwxyz-".IndexOf(idxChar) == -1)
 						{
 							isControlName = false;
 							break;
@@ -58,46 +57,46 @@ namespace Magix.forms
 					}
 
 					if (!isControlName)
-						throw new ArgumentException("control '" + typeName + "' is not understood while trying to create web controls");
+						throw new ArgumentException("control '" + ctrlTypeName + "' is not understood while trying to create web controls");
 
-					string evtName = "magix.forms.controls." + typeName;
+					string ctrlEventName = "magix.forms.controls." + ctrlTypeName;
 
-					Node nc = new Node();
-					nc["_code"].Value = idx;
+					Node createChildCtrlNode = new Node();
+					createChildCtrlNode["_code"].Value = idxCtrlNode;
 
                     if (e.Params.Contains("_first"))
-                        nc["_first"].Value = e.Params["_first"].Value;
+                        createChildCtrlNode["_first"].Value = e.Params["_first"].Value;
 
 					RaiseActiveEvent(
-						evtName,
-						nc);
+						ctrlEventName,
+						createChildCtrlNode);
 
-					if (nc.Contains("_ctrl"))
+					if (createChildCtrlNode.Contains("_ctrl"))
 					{
-						if (nc["_ctrl"].Value != null)
-							ret.Controls.Add(nc["_ctrl"].Value as Control);
+						if (createChildCtrlNode["_ctrl"].Value != null)
+							ret.Controls.Add(createChildCtrlNode["_ctrl"].Value as Control);
 						else
 						{
 							// multiple controls returned ...
-							foreach (Node idxCtrl in nc["_ctrl"])
+							foreach (Node idxCtrl in createChildCtrlNode["_ctrl"])
 							{
 								ret.Controls.Add(idxCtrl.Value as Control);
 							}
 						}
 					}
 					else
-						throw new ArgumentException("unknown control type in your template control '" + typeName + "'");
+						throw new ArgumentException("unknown control type in your template control '" + ctrlTypeName + "'");
 				}
 			}
 
-            Ip(e.Params)["_ctrl"].Value = ret;
+            ip["_ctrl"].Value = ret;
 		}
 
-		/**
+		/*
 		 * returns values
 		 */
-        [ActiveEvent(Name = "magix.forms.get-values")]
-        public void magix_forms_get_values(object sender, ActiveEventArgs e)
+        [ActiveEvent(Name = "magix.forms.get-children-values")]
+        public void magix_forms_get_children_values(object sender, ActiveEventArgs e)
         {
             if (ShouldInspectOrHasInspected(e.Params))
             {
@@ -118,8 +117,8 @@ and value being the value of the control";
                     value = (idx as CheckBox).Checked;
                 if (idx is Hidden)
                     value = (idx as Hidden).Value;
-                if (idx is Link)
-                    value = (idx as Link).Value;
+                if (idx is HyperLink)
+                    value = (idx as HyperLink).Value;
                 if (idx is Img)
                     value = (idx as Img).Src;
                 if (idx is Label)

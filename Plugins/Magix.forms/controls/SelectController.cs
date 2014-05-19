@@ -12,57 +12,30 @@ using Magix.UX.Widgets.Core;
 
 namespace Magix.forms
 {
-	/**
+	/*
 	 * select list
 	 */
-	public class SelectListCore : FormElementCore
+    public class SelectController : BaseWebControlListFormElementController
 	{
-		/**
+		/*
 		 * creates the select list control
 		 */
 		[ActiveEvent(Name = "magix.forms.controls.select")]
 		public void magix_forms_controls_select(object sender, ActiveEventArgs e)
 		{
-			if (ShouldInspect(e.Params))
+            Node ip = Ip(e.Params);
+			if (ShouldInspect(ip))
 			{
-				Inspect(e.Params);
+				Inspect(ip);
 				return;
 			}
 
-            Node node = Ip(e.Params)["_code"].Value as Node;
-
 			Select ret = new Select();
-
 			FillOutParameters(e.Params, ret);
 
-			if (node.Contains("size") && node["size"].Value != null)
+            Node node = ip["_code"].Get<Node>();
+            if (node.Contains("size") && node["size"].Value != null)
 				ret.Size = node["size"].Get<int>();
-
-			if (node.Contains("key") && 
-			    !string.IsNullOrEmpty(node["key"].Get<string>()))
-				ret.AccessKey = node["key"].Get<string>();
-
-            if (node.Contains("disabled") &&
-                node["disabled"].Value != null)
-                ret.Disabled = node["disabled"].Get<bool>();
-
-			if (node.Contains("items"))
-			{
-				foreach (Node idxI in node["items"])
-				{
-					if (idxI.Name == null)
-						throw new ArgumentException("list item for select needs unique name of node to be used as value");
-					if (idxI.Value == null)
-						throw new ArgumentException("list item for select needs value of node to be used as text to show user in item");
-					ret.Items.Add(new ListItem(idxI.Get<string>(), idxI.Name));
-				}
-			}
-
-			if (node.Contains("selected") && 
-			    node["selected"].Value != null)
-			{
-				ret.SetSelectedItemAccordingToValue(node["selected"].Get<string>());
-			}
 
 			if (ShouldHandleEvent("onselectedindexchanged", node))
 			{
@@ -76,53 +49,10 @@ namespace Magix.forms
 				};
 			}
 
-            Ip(e.Params)["_ctrl"].Value = ret;
+            ip["_ctrl"].Value = ret;
 		}
 
-		/**
-		 * sets selected value
-		 */
-		[ActiveEvent(Name = "magix.forms.set-value")]
-		public void magix_forms_set_value(object sender, ActiveEventArgs e)
-		{
-            if (ShouldInspectOrHasInspected(e.Params))
-			{
-				e.Params["inspect"].Value = "sets the value property of the control";
-				return;
-			}
-
-            if (!Ip(e.Params).Contains("value"))
-				throw new ArgumentException("set-value needs [value]");
-
-            Select ctrl = FindControl<Select>(Ip(e.Params));
-
-			if (ctrl != null)
-			{
-                ctrl.SetSelectedItemAccordingToValue(Ip(e.Params)["value"].Get<string>());
-			}
-		}
-
-		/**
-		 * returns value
-		 */
-		[ActiveEvent(Name = "magix.forms.get-value")]
-		public void magix_forms_get_value(object sender, ActiveEventArgs e)
-		{
-            if (ShouldInspectOrHasInspected(e.Params))
-			{
-				e.Params["inspect"].Value = "returns the value property of the control";
-				return;
-			}
-
-            Select ctrl = FindControl<Select>(Ip(e.Params));
-
-			if (ctrl != null)
-			{
-                Ip(e.Params)["value"].Value = ctrl.SelectedItem.Value;
-			}
-		}
-
-		/**
+		/*
 		 * set-values
 		 */
 		[ActiveEvent(Name = "magix.forms.set-values")]

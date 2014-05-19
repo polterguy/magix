@@ -17,7 +17,7 @@ namespace Magix.forms
 	/**
 	 * effect controller
 	 */
-	public class EffectCore : BaseControlCore
+	public class EffectController : BaseControlController
 	{
 		/**
 		 * creates a new effect

@@ -210,7 +210,7 @@ magix.forms.create-web-part
       controls
         text-box=>name
           class=>clear span-5
-          place-holder=>name of field ...
+          placeholder=>name of field ...
         select=>fieldType
           class=>span-5
           items

@@ -13,7 +13,7 @@ dynamic=>methods-for-image
   onfirstload
     magix.forms.dox.create-dox-for-web-control
       class=>dox-for-web-control
-      control=>image
+      control=>img
       container=>methods-for-image
 }}
 
@@ -54,7 +54,7 @@ namespace Magix.sample
 <label>example of a mux Img</label>
 <div class="sample-web-control">
 {{
-image=>img
+img=>img
   src=>media/images/marvin-headshot.png
   alt=>marvin
 }}

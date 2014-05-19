@@ -86,10 +86,10 @@ panel=>loginWrp
           tag=>label
           value=>please login
         text-box=>username
-          place-holder=>username ...
+          placeholder=>username ...
           class=>span-4
         text-box=>pwd
-          place-holder=>password ...
+          placeholder=>password ...
           type=>password
           class=>span-4
         label=>error
@@ -131,12 +131,12 @@ panel=>logoutWrp
             if=>exist
               lhs=>[@][magix.web.get][value]
               code
-                set=>[if][code][_lnk][url].Value
+                set=>[if][code][_lnk][href].Value
                   value=>~
                 set=>[if][code][_lnk][value].Value
                   value=>website
             else
-              set=>[if][code][_lnk][url].Value
+              set=>[if][code][_lnk][href].Value
                 value=>~?dashboard=
               set=>[if][code][_lnk][value].Value
                 value=>dashboard

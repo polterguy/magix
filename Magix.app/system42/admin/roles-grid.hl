@@ -89,7 +89,7 @@ magix.forms.create-web-part
       controls
         text-box=>nName
           class=>span-5 left-9
-          place-holder=>name of new role ...
+          placeholder=>name of new role ...
         button=>addBtn
           class=>span-3 last
           value=>add
