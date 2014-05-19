@@ -74,4 +74,7 @@
 
 * refactor the "inspect tools" scripts to use same script file, since they're bassically the same
 
+* make all controllers with non static event handlers sealed!
+
+
 

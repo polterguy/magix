@@ -53,7 +53,7 @@ shown during execution</p>";
             node["magix.forms.create-web-part"]["container"].Value = "content5";
             node["magix.forms.create-web-part"]["form-id"].Value = "sample-form";
             base.Inspect(node["magix.forms.create-web-part"]["controls"]["img"]);
-            node["magix.forms.create-web-part"]["controls"]["img"]["src"].Value = "media/images/magix-logo.png";
+            node["magix.forms.create-web-part"]["controls"]["img"]["src"].Value = "media/grid/start-button.png";
             node["magix.forms.create-web-part"]["controls"]["img"]["alt"].Value = "alternative text";
             node["magix.forms.create-web-part"]["controls"]["img"]["key"].Value = "C";
             node["inspect"].Value = node["inspect"].Value + @"
