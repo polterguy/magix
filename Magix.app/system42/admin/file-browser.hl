@@ -113,7 +113,7 @@ _link-button
   onclick
     magix.admin.edit-file
       container=>content2
-      class=>span-24 min-height-16 top-1
+      class=>span-22 min-height-16 top-1
     magix.viewport.clear-controls
       container=>content3
 
@@ -174,11 +174,11 @@ for-each=>[magix.file.list-directories][directories]
     value=>link-button
 
 _btn=>newfile
-  class=>span-3 btn-large left-10 top-1 clear
+  class=>span-3 btn-large left-8 top-1 clear
   value=>new file
   onclick
     magix.admin.edit-file
-      class=>span-24 last top-1
+      class=>span-22 last top-1
       container=>content2
       file=>empty.txt
 
@@ -294,7 +294,7 @@ magix.forms.create-web-part
 
   controls
     label=>desc
-      class=>span-15 last left-4
+      class=>span-17 last
       tag=>h2
       value=>files from /
     uploader=>uploader

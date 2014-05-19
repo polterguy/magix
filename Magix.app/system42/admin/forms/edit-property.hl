@@ -29,7 +29,7 @@ set=>[magix.forms.create-web-part][controls][label][value].Value
 magix.forms.create-web-part
   form-id=>edit-property
   container=>content5
-  class=>span-22 air-padding boxed bottom-5 relative
+  class=>span-20 air-padding boxed relative
   controls
     link-button=>close
       class=>absolute top right span-1
@@ -40,9 +40,9 @@ magix.forms.create-web-part
     label
       value=>edit property
       tag=>label
-      class=>span-22 last
+      class=>span-20 last
     text-area=>prop
-      class=>span-22 min-height-13 last
+      class=>span-20 min-height-13 last
       place-holder=>code ...
       ontextchanged
         magix.forms.get-value
