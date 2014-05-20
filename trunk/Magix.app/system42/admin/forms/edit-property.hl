@@ -1,7 +1,7 @@
 
 
 inspect=>@"creates the edit-property web form, used
-to edit a hyper lisp property in the edit-forms web form"
+to edit a hyperlisp property in the edit-forms web form"
 
 get-selected-widget
 

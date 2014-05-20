@@ -1,14 +1,14 @@
 ﻿
-<h2>hyper lisp active events and polymorphism</h2>
+<h2>hyperlisp active events and polymorphism</h2>
 
-<p>there is actually no real difference between an active event, and a hyper lisp keyword.&nbsp;&nbsp;the difference is in how to invoke 
-it.&nbsp;&nbsp;a hyper lisp keyword is recognized by its lack of a "." in its name from where it is invoked, while an active event is 
+<p>there is actually no real difference between an active event, and a hyperlisp keyword.&nbsp;&nbsp;the difference is in how to invoke 
+it.&nbsp;&nbsp;a hyperlisp keyword is recognized by its lack of a "." in its name from where it is invoked, while an active event is 
 recognized by the fact of that it contains at least one "." in its invocation.&nbsp;&nbsp;you can actually threat an active event 
-as a hyper lisp keyword, and vice versa, by intelligent use of the using keyword, making your active event a hyper lisp keyword, 
-or by typing out the fully qualified namespace to your hyper lisp keyword to make your hyper lisp keyword be threated as 
+as a hyperlisp keyword, and vice versa, by intelligent use of the using keyword, making your active event a hyperlisp keyword, 
+or by typing out the fully qualified namespace to your hyperlisp keyword to make your hyperlisp keyword be threated as 
 a normal active event</p>
 
-<p>however, to create an active event in hyper lisp, you would use the following syntax</p>
+<p>however, to create an active event in hyperlisp, you would use the following syntax</p>
 
 <pre>
 event=>magix.sample.foo
@@ -18,7 +18,7 @@ event=>magix.sample.foo
       message=>howdy world
 </pre>
 
-<p>to invoke the above active event, all you'll have to do, is to execute the following hyper lisp code</p>
+<p>to invoke the above active event, all you'll have to do, is to execute the following hyperlisp code</p>
 
 <pre>
 magix.sample.foo
@@ -39,11 +39,11 @@ event=>magix.sample.foo
 <p>please notice that this opens up your server for allowing other servers to execute code directly within your server, and that this has 
 security concerns you will have to face once you do</p>
 
-<p>an active event may contain any piece of hyper lisp code, and/or references to other active events</p>
+<p>an active event may contain any piece of hyperlisp code, and/or references to other active events</p>
 
-<h3>active events as hyper lisp keywords</h3>
+<h3>active events as hyperlisp keywords</h3>
 
-<p>if you wish to invoke the above active event as if it was a hyper lisp keyword, you could do so by changing the engine's 
+<p>if you wish to invoke the above active event as if it was a hyperlisp keyword, you could do so by changing the engine's 
 default namespace, such that it no longer is <em>"magix.execute"</em> but instead <em>"magix.sample"</em>.&nbsp;&nbsp;consider 
 the below code</p>
 
@@ -52,9 +52,9 @@ using=>magix.sample
   foo
 </pre>
 
-<p>now you are in fact executing the magix.sample.foo active event as if it was a hyper lisp keyword.&nbsp;&nbsp;the reason is that you 
+<p>now you are in fact executing the magix.sample.foo active event as if it was a hyperlisp keyword.&nbsp;&nbsp;the reason is that you 
 no longer have any "." in your invocation, but have changed the default namespace of the execution engine, such that it is no longer 
-needed.&nbsp;&nbsp;hence the event you are invoking now, will be threated as a hyper lisp keyword, carrying with it the entire 
+needed.&nbsp;&nbsp;hence the event you are invoking now, will be threated as a hyperlisp keyword, carrying with it the entire 
 execution tree as the [_ip] and [_dp] parameters.&nbsp;&nbsp;to understand the difference between these two distinctly 
 different invocations, change the event to show the debug window with the following code</p>
 
@@ -72,7 +72,7 @@ magix.sample.foo
 </pre>
 
 <p>and compare the result of that invocation with the result you get when you instead of invoking it like an active event, invoke it 
-as a hyper lisp keyword, as below</p>
+as a hyperlisp keyword, as below</p>
 
 <pre>
 using=>magix.sample
@@ -104,7 +104,7 @@ magix.sample.bar
 </pre>
 
 <p>as you can see, the result from the execution is the same as the input, now compare the result of that execution with the 
-execution below, where we have turned the active event into a hyper lisp keyword, by using the [using] statement, such that 
+execution below, where we have turned the active event into a hyperlisp keyword, by using the [using] statement, such that 
 it no longer needs a "." in the invocation to the method itself</p>
 
 <pre>
@@ -154,7 +154,7 @@ extremely scalable and flexible for change.&nbsp;&nbsp;in magix, the very idea o
 <h3>multiple event handlers for the same event</h3>
 
 <p>in c#, you can create multiple event handlers that handles the same active event.&nbsp;&nbsp;this is currently not possible in 
-hyper lisp, but might be useful for you even though, therefor we mention it briefly here.&nbsp;&nbsp;for instance, if you have 
+hyperlisp, but might be useful for you even though, therefor we mention it briefly here.&nbsp;&nbsp;for instance, if you have 
 a search piece of logic, where you want to search through several different data sources, this feature might come in handy, 
 to be able to search through different components of your application.&nbsp;&nbsp;check out the documentation for {{
 link-button=>active-events-2

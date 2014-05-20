@@ -107,7 +107,7 @@ with a label, works the correct way"
 event=>magix.test.execute-close-overflow-lines-of-code
   persist=>false
   inspect=>@"asserts executing almost 5000 lines 
-of hyper lisp code overflows the execution engine"
+of hyperlisp code overflows the execution engine"
   code
     _iter=>0
     // multiplying 16000 times three gives the number of executions in this block

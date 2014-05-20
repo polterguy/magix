@@ -9,7 +9,7 @@ link-button=>magix-markup-language
       file=>system42/admin/help/backend/magix-markup-language.mml
 }} you can embed {{
 link-button=>go-to-hyper-lisp
-  value=>hyper lisp
+  value=>hyperlisp
   onclick
     magix.help.open-file
       file=>system42/admin/help/hyper-lisp/index.mml
@@ -19,7 +19,7 @@ html, mixed together seemlessly.&nbsp;&nbsp;these web controls, are really nothi
 the namespace <em>"magix.forms.controls"</em></p>
 
 <p>to understand web controls, and how to use them, in for instance magix markup language, you will need to have some knowledge 
-about hyper lisp.&nbsp;&nbsp;below is an extensive list of all the web controls within your system</p>
+about hyperlisp.&nbsp;&nbsp;below is an extensive list of all the web controls within your system</p>
 
 <ul class="list-no-bullet">
 {{

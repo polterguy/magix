@@ -11,12 +11,12 @@ using Magix.Core;
 namespace Magix.execute
 {
 	/**
-	 * iterate-tree hyper lisp keyword
+	 * iterate-tree hyperlisp keyword
 	 */
 	public class IterateTreeCore : ActiveController
 	{
         /**
-         * iterate-tree hyper lisp keyword
+         * iterate-tree hyperlisp keyword
          */
         [ActiveEvent(Name = "magix.execute.iterate")]
 		public static void magix_execute_iterate(object sender, ActiveEventArgs e)

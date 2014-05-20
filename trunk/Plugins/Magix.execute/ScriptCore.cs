@@ -12,12 +12,12 @@ using Magix.Core;
 namespace Magix.admin
 {
 	/**
-	 * script hyper lisp logic
+	 * script hyperlisp logic
 	 */
 	public class ScriptCore : ActiveController
 	{
 		/**
-		 * executes hyper lisp script
+		 * executes hyperlisp script
 		 */
 		[ActiveEvent(Name = "magix.execute.execute-script")]
 		public static void magix_execute_execute_script(object sender, ActiveEventArgs e)
@@ -25,7 +25,7 @@ namespace Magix.admin
             Node ip = Ip(e.Params);
             if (ShouldInspect(ip))
             {
-				ip["inspect"].Value = @"<p>runs the hyper lisp script given in value of 
+				ip["inspect"].Value = @"<p>runs the hyperlisp script given in value of 
 [script], putting all child nodes from underneath the [params] node into the [$] collection, 
 accessible from inside the script, which again is able to return nodes through the [$] node, 
 which will become children of the [params] node after execution</p><p>you can optionally 

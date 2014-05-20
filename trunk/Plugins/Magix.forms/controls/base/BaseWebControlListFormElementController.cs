@@ -41,5 +41,23 @@ namespace Magix.forms
                 ret.SetSelectedItemAccordingToValue(node["selected"].Get<string>());
             }
         }
+
+        protected override void Inspect(Node node)
+        {
+            Node tmp = node;
+            while (!tmp.Contains("inspect"))
+                tmp = tmp.Parent;
+            base.Inspect(node);
+            AppendInspect(tmp["inspect"], @"[items] is a list of key/value nodes, 
+that are the items of the list form element
+
+[selected] is the id of the item in the [items] collection that should be initially 
+selected.  this is the name of the node who's value is supposed to be initially 
+selected during creation.  this is also the value that is changed or retrieved when 
+the [magix.forms.set-value] or [magix.forms.get-value] active events are invoked on 
+the web control", true);
+            node["items"]["item1"].Value = "this is item 1";
+            node["items"]["item2"].Value = "this is item 2";
+        }
     }
 }

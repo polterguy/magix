@@ -1,5 +1,5 @@
 ﻿
-<h2>loading and saving files in hyper lisp</h2>
+<h2>loading and saving files in hyperlisp</h2>
 
 <p>there exist many useful active events in magix for reading and writing to files.&nbsp;&nbsp;the most important ones are [magix.file.save] 
 and [magix.file.load] active events.&nbsp;&nbsp;[magix.file.load] loads a file, either from disc, or through a plugin somehow.&nbsp;&nbsp;
@@ -50,7 +50,7 @@ magix.file.load
 
 <p>the above will select all companyname values from the customers table in the northwind database, and append them all, separating them 
 with carriage returns, into the [value] return node.&nbsp;&nbsp;which means you can transparently use this as a file loading operation.&nbsp;
-&nbsp;this is useful for scenarios where you for instance have active events or hyper lisp code in your database, and wish to load it 
+&nbsp;this is useful for scenarios where you for instance have active events or hyperlisp code in your database, and wish to load it 
 to execute it somehow</p>
 
 <p>all file file loading operations in magix internally use [magix.file.load].&nbsp;&nbsp;this means that you can transparently use these 
@@ -72,7 +72,7 @@ magix.forms.create-mml-web-part
 
 <p>the above code doesn't execute though, since you probably don't have the accurate tables as is being referenced above, but you get the point.
 &nbsp;&nbsp;regardless of which plugin you use, or don't use, the [magix.file.load] active event will return the file as text within the 
-[value] node.&nbsp;&nbsp;below is another similar example, of how to execute hyper lisp code, embedded as a resource within one of your dlls</p>
+[value] node.&nbsp;&nbsp;below is another similar example, of how to execute hyperlisp code, embedded as a resource within one of your dlls</p>
 
 <pre>
 execute-script

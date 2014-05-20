@@ -3,7 +3,7 @@
 inspect=>@"this file will run during the magix.core.application-startup
 event, and its responsibility is to run through all the scripts in 
 the startup-scripts folder with the .hl extension, and execute
-them as hyper lisp files.&nbsp;&nbsp;
+them as hyperlisp files.&nbsp;&nbsp;
 this is useful for initialization of your magix installation, 
 and can be utilized for creating new global events, initializing
 settings, etc.&nbsp;&nbsp;no session, user or response is valid 

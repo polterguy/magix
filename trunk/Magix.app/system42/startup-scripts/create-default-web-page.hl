@@ -16,7 +16,7 @@ if=>equals
       value
         type=>magix.pages.page
         name=>default
-        value=>@"<img src='media/grid/start-button.png' style='float:left;' /><p style='margin-top:54px;'>
+        value=>@"<img src='media/images/icons/start-button.png' style='float:left;' /><p style='margin-top:54px;'>
 magix is an open source web framework, 
 which means you can create your own applications with magix.&nbsp;&nbsp;
 if this is your first visit then please login at the top of this screen with 

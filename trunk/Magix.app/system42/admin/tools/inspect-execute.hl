@@ -1,7 +1,7 @@
 
 
 inspect=>@"will show a screen of all the 
-magix.execute active events in the system, aka; hyper lisp keywords - and allow
+magix.execute active events in the system, aka; hyperlisp keywords - and allow
 the user to inspect them by clicking them"
 
 

@@ -1,5 +1,5 @@
 ﻿
-<h2>hyper lisp and microsoft sql server</h2>
+<h2>hyperlisp and microsoft sql server</h2>
 
 <p>magix comes with active events that wraps microsoft sql server for easy access to a relational database.&nbsp;&nbsp;this gives you 
 access to a much more powerful database for storing data in, than the magix.data data access layer can give you.&nbsp;&nbsp;magix will 
@@ -61,7 +61,7 @@ lambda=>lmb-sql-database
 }}
 </ul>
 
-<p style="clear:both;">to select all rows from the northwind customer database tabel for instance, consider the following hyper lisp and sql</p>
+<p style="clear:both;">to select all rows from the northwind customer database tabel for instance, consider the following hyperlisp and sql</p>
 
 <pre>
 microsoft.sql.select
@@ -69,7 +69,7 @@ microsoft.sql.select
   sql=>select * from Customers
 </pre>
 
-<p>if you wish to update the name of a customer in the customer table, you could use the following execute hyper lisp and sql</p>
+<p>if you wish to update the name of a customer in the customer table, you could use the following execute hyperlisp and sql</p>
 
 <pre>
 microsoft.sql.execute

@@ -10,12 +10,12 @@ using Magix.Core;
 namespace Magix.execute
 {
 	/**
-	 * override hyper lisp keyword
+	 * override hyperlisp keyword
 	 */
 	public class OverrideCore : ActiveController
 	{
 		/**
-		 * override hyper lisp keyword
+		 * override hyperlisp keyword
 		 */
 		[ActiveEvent(Name = "magix.execute.override")]
 		public static void magix_execute_set(object sender, ActiveEventArgs e)

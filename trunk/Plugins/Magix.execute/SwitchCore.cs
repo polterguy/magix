@@ -10,12 +10,12 @@ using Magix.Core;
 namespace Magix.execute
 {
 	/**
-	 * hyper lisp switch logic
+	 * hyperlisp switch logic
 	 */
 	public class SwitchCore : ActiveController
 	{
 		/**
-		 * switch hyper lisp keyword
+		 * switch hyperlisp keyword
 		 */
 		[ActiveEvent(Name = "magix.execute.switch")]
 		public static void magix_execute_switch(object sender, ActiveEventArgs e)

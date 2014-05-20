@@ -29,5 +29,17 @@ namespace Magix.forms
                 !string.IsNullOrEmpty(codeNode["value"].Get<string>()))
                 that.Value = codeNode["value"].Get<string>();
         }
+
+        protected override void Inspect(Node node)
+        {
+            Node tmp = node;
+            while (!tmp.Contains("inspect"))
+                tmp = tmp.Parent;
+            base.Inspect(node);
+            AppendInspect(tmp["inspect"], @"[value] is the visible text of your button.  
+this is the property which is changed or retrieved when you invoke the [magix.forms.set-
+value] and the [magix.forms.get-value] for your web control", true);
+            node["value"].Value = "text value";
+        }
     }
 }

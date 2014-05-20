@@ -11,7 +11,7 @@ using System.Globalization;
 namespace Magix.execute
 {
 	/*
-	 * if/else-if/else hyper lisp active events
+	 * if/else-if/else hyperlisp active events
 	 */
 	public class IfElseCore : ActiveController
 	{

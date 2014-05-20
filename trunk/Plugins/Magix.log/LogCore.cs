@@ -29,7 +29,7 @@ you need to submit both a [header] and a [body].&nbsp;&nbsp;
 parameters added beneath [body] and/or [header] will be formatted into string.&nbsp;&nbsp;thread safe";
 				e.Params["header"].Value = "descriptive header of log item";
 				e.Params["body"].Value = "detailed description of log item";
-				e.Params["code"].Value = "hyper lisp code";
+				e.Params["code"].Value = "hyperlisp code";
 				e.Params["error"].Value = false;
 				return;
 			}

@@ -1,7 +1,7 @@
 ﻿
-<h2>hyper lisp syntax</h2>
+<h2>hyperlisp syntax</h2>
 
-<p>hyper lisp doesn't really have any syntax, and its dialect might change from server-installation to server-installation.&nbsp;&nbsp;
+<p>hyperlisp doesn't really have any syntax, and its dialect might change from server-installation to server-installation.&nbsp;&nbsp;
 instead of syntax, you are actually directly modifying the execution tree itself.&nbsp;&nbsp;to understand what this mean, 
 consider that the code below is really nothing but a tree structure representation of the {{
 link-button=>go-to-node
@@ -41,9 +41,9 @@ node["if"]["code"]["magix.viewport.show-message"]["message"].Value = "if stateme
 node["else"]["magix.viewport.show-message"]["message"].Value = "if statement evaluated to false";
 </pre>
 
-<p>hyper lisp is really nothing but a tree structure, and doesn't actually have any syntax, the way 
+<p>hyperlisp is really nothing but a tree structure, and doesn't actually have any syntax, the way 
 a traditional programming language would have.&nbsp;&nbsp;watch the image below, where the spaces in the above code is visible to 
-understand how the indentation in hyper lisp works</p>
+understand how the indentation in hyperlisp works</p>
 
 <img src="media/images/help-files/screenshots/hyper-lisp-spaces.png" alt="spaces shown" style="float:left;display:block;margin-right:10px;margin-bottom:18px;"/>
 

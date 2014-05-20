@@ -1,7 +1,7 @@
 ﻿
 <h2>the [add] keyword, modifying the execution node tree</h2>
 
-<p>the add keyword is one of the two most powerful keywords in hyper lisp, besides the [set] keyword.&nbsp;&nbsp;with the add keyword, 
+<p>the add keyword is one of the two most powerful keywords in hyperlisp, besides the [set] keyword.&nbsp;&nbsp;with the add keyword, 
 you can modify the execution tree any ways you wish.&nbsp;&nbsp;the functionality of [set] and [add] slightly overlaps each other, 
 but they both have some unique parts which makes them both versatile.&nbsp;&nbsp;with the [set] keyword, you change one specific 
 part of your execution tree, while with the [add] keyword, you add a new node, either by creating a copy of an existing node, or 
@@ -28,7 +28,7 @@ add=>[_destination]
   value=>[_source]
 </pre>
 
-<p>the above hyper lisp will create a copy of the entire [_source] node list, and append into the [_destination] node list.&nbsp;&nbsp;to 
+<p>the above hyperlisp will create a copy of the entire [_source] node list, and append into the [_destination] node list.&nbsp;&nbsp;to 
 accomplish the same with the [set] statement is possible, but will require multiple invocation to [set], instead of a single invocation, such 
 as the above code demonstrates.&nbsp;&nbsp;if you wish to only add the children of the [_source] node into the [_destination] node, this can 
 be accomplished by adding a [children-only] parameter to the [add] invocation</p>
@@ -88,7 +88,7 @@ add=>[_destination]
 are trying to add a single new node to our destination node instead</p>
 
 <p>by combining the [add] and [set] keywords together, you can easily have code that creates code, or in any other ways 
-modifies the execution tree of your hyper lisp.&nbsp;&nbsp;this is one of the core features of hyper lisp, allowing for creation 
+modifies the execution tree of your hyperlisp.&nbsp;&nbsp;this is one of the core features of hyperlisp, allowing for creation 
 of code that creates and maintains code</p>
 
 {{

@@ -36,8 +36,8 @@ create the documentation for magix, and is at the core of the literate parts of 
 to invoke any active event with the "inspect" parameter, to have its documentation. you can only inspect methods 
 locally, and not over a remote connection. meaning, you cannot by default inspect active events remotely</p>
 
-<p>the Ip method is for creating hyper lisp extensions within the magix.execute namespace. don't bother with 
-this method, unless you're creating your own hyper lisp keywords within the magix.execute namespace</p>
+<p>the Ip method is for creating hyperlisp extensions within the magix.execute namespace. don't bother with 
+this method, unless you're creating your own hyperlisp keywords within the magix.execute namespace</p>
 
 <p>below is an example of an active controller that loads up a module, and then raises an active event</p>
 

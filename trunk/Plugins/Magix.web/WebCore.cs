@@ -126,7 +126,7 @@ not thread safe";
 		}
 
         /**
-         * postpones execution of hyper lisp til next page load of site
+         * postpones execution of hyperlisp til next page load of site
          */
         /**
          * returns an existing session object
@@ -287,7 +287,7 @@ web.config setting as [value] node.&nbsp;&nbsp;thread safe";
             {
                 e.Params["event:magix.execute"].Value = null;
                 e.Params["inspect"].Value = @"will store a block 
-of hyper lisp from the [core] parameter, which it will execute upon the next page 
+of hyperlisp from the [core] parameter, which it will execute upon the next page 
 load of the site for the given session.&nbsp;&nbsp;not thread safe";
                 e.Params["magix.web.postpone-execution"]["code"]["magix.viewport.show-message"].Value = 
                     "will not be shown before page is loaded initially over again";
@@ -302,12 +302,12 @@ load of the site for the given session.&nbsp;&nbsp;not thread safe";
         }
 
         /**
-         * executes the postponed hyper lisp, if any
+         * executes the postponed hyperlisp, if any
          */
         [ActiveEvent(Name = "magix.viewport.page-load")]
         public void magix_viewport_page_load(object sender, ActiveEventArgs e)
         {
-            if (ShouldInspectOrHasInspected(e.Params))
+            if (ShouldInspect(e.Params))
             {
                 return;
             }

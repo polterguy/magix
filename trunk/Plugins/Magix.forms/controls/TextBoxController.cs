@@ -120,51 +120,35 @@ namespace Magix.forms
 
 		protected override void Inspect (Node node)
 		{
-            node["inspect"].Value = @"
-<p>creates a text box input type of web control.&nbsp;&nbsp;
-a text box is a web control where the end user can type in 
-text to submit in a form.&nbsp;&nbsp;text-box only supports 
-one line of text, without carriage return.&nbsp;&nbsp;use 
-[text-area] if you need multiple lines of text</p>";
+            AppendInspect(node["inspect"], @"creates a text-box type of web control
+
+a text-box is a web control where the end user can type in text to submit in a form.  
+text-box only supports single lines of input text, without carriage return.  use 
+text-area if you need multiple lines of text");
             node["magix.forms.create-web-part"]["container"].Value = "content5";
             node["magix.forms.create-web-part"]["form-id"].Value = "sample-form";
             base.Inspect(node["magix.forms.create-web-part"]["controls"]["text-box"]);
-            node["magix.forms.create-web-part"]["controls"]["text-box"]["placeholder"].Value = "shadow text ...";
             node["magix.forms.create-web-part"]["controls"]["text-box"]["autocapitalize"].Value = false;
             node["magix.forms.create-web-part"]["controls"]["text-box"]["autocorrect"].Value = true;
-            node["magix.forms.create-web-part"]["controls"]["text-box"]["complete"].Value = false;
-            node["magix.forms.create-web-part"]["controls"]["text-box"]["disabled"].Value = false;
+            node["magix.forms.create-web-part"]["controls"]["text-box"]["autocomplete"].Value = false;
             node["magix.forms.create-web-part"]["controls"]["text-box"]["maxlength"].Value = 25;
-            node["magix.forms.create-web-part"]["controls"]["text-box"]["value"].Value = "hello world";
-            node["magix.forms.create-web-part"]["controls"]["text-box"]["type"].Value = "normal|phone|search|url|email|datetime|date|month|week|time|datetimelocal|number|range|color|password";
-            node["inspect"].Value = node["inspect"].Value + @"
-<p><strong>properties for text box</strong></p><p>[placeholder] 
-is shadow text, only visible when input area is empty</p><p>
-[value] is what text the control shall have, or currently have 
-been changed to.&nbsp;&nbsp;this is the property which is changed 
-or retrieved when you invoke the [magix.forms.set-value] and 
-the [magix.forms.get-value] for your web control</p><p>[key] 
-is the keyboard shortcut.&nbsp;&nbsp;how to invoke the keyboard 
-shortcut is different from system to system, but on a windows 
-system, you normally invoke the keyboard shortcut with 
-alt+shift+your-key.&nbsp;&nbsp;if you have for instance 's' as 
-your keyboard shortcut, then the end user will have to click 
-shift+alt+s at the same time to invoke the keyboard shortcut 
-for your web control</p><p>[disabled] enables or disables the 
-web control.&nbsp;&nbsp;this can be changed or retrieved after 
-the button is created by invoking the [magix.forms.set-enabled] 
-or [magix.forms.get-enabled] active events.&nbsp;&nbsp;legal 
-values are true and false</p><p>[autocapitalize] will automatically 
-correctly capitalize entities, as if you are typing text</p>
-<p>[autocorrect] will automatically suggest corrections for typos</p>
-[autocomplete] will suggest previously typed values for you, and 
-attempt to automatically complete the value</p><p>[maxlength] is 
-maximum number of characters in web control</p><p>[type] 
-determines the mode of the text box.&nbsp;&nbsp;this depends 
-upon the type of input you wish that your text box shall be 
-taking.&nbsp;&nbsp;if you want the user to type in an email 
-address for instance, then use 'email' as the value of this 
-property</p>";
+            node["magix.forms.create-web-part"]["controls"]["text-box"]["type"].Value = "normal";
+            AppendInspect(node["inspect"], @"[autocapitalize] will automatically 
+capitalize the first letter, as you are typing into the tex-box
+
+[autocorrect] will automatically suggest corrections for typing errors, as you are 
+typing into the text-box
+
+[autocomplete] will suggest previously typed values for you, and attempt to 
+automatically complete the value on the end user's behalf
+
+[maxlength] is the maximum number of characters in the text-box
+
+[type] determines the mode of the text-box.  this depends upon the type of 
+input you wish that your text box shall be accepting.  if you want the user 
+to type in an email address for instance, then use 'email' as the value of this 
+property.  legal values for type is normal, phone, search, url, email, datetime, 
+date, month, week, time, datetimelocal, number, range, color and password", true);
 		}
 		
 		/*

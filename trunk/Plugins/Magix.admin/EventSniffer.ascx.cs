@@ -78,7 +78,7 @@ toggling the tracer tool</p><p>thread safe</p>";
             if (e.Params.Contains("inspect"))
             {
                 e.Params["inspect"].Value = @"<p>toggles the tracer tool, on and off</p>
-<p>the tracer is a tool that allows you to see all hyper lisp code that is executed within 
+<p>the tracer is a tool that allows you to see all hyperlisp code that is executed within 
 the system in a tracer output on a per-session basis.&nbsp;&nbsp;takes no parameters</p>
 <p>not thread safe</p>";
                 return;

@@ -978,7 +978,7 @@ textarea.ascii-editor
 	right:5px;
 	width:36px;
 	height:36px;
-	background:transparent url(arrows.png) no-repeat -36px 0;
+	background:transparent url(../images/icons/arrows.png) no-repeat -36px 0;
 	transition-property:opacity;
 	transition-duration:.5s;
 	opacity:.2;
@@ -992,7 +992,7 @@ textarea.ascii-editor
 	right:41px;
 	width:36px;
 	height:36px;
-	background:transparent url(arrows.png) no-repeat 0 0;
+	background:transparent url(../images/icons/arrows.png) no-repeat 0 0;
 	transition-property:opacity;
 	transition-duration:.5s;
 	opacity:.2;
@@ -1031,7 +1031,7 @@ input[type=button].toolbox-timer,
 input[type=button].toolbox-uploader,
 input[type=button].toolbox-wysiwyg
 {
-    background:url(../images/toolbox-icons.png);
+    background:url(../images/icons/toolbox-icons.png);
     background-repeat:no-repeat;
     padding-left:20px;
     text-align:left;

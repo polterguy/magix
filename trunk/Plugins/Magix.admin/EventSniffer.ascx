@@ -7,7 +7,7 @@
     AutoEventWireup="true" 
     Inherits="Magix.admin.EventSniffer" %>
 
-<h3 class="span-22 last bottom-1 center-text">stack trace of all hyper lisp code</h3>
+<h3 class="span-22 last bottom-1 center-text">stack trace of all hyperlisp code</h3>
 
 <mux:Label
 	runat="server"

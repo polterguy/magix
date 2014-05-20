@@ -2,7 +2,7 @@
 
 body
 {
-    background-image:url(../images/background-white.png);
+    background-image:url(../images/backgrounds/background-white.png);
 }
 
 .container
@@ -196,13 +196,13 @@ input[type=button]:disabled
 
 .start-button
 {
-	height:160px;
-    width:160px;
-    margin-left:19px;
-    margin-top:19px;
+	height:154px;
+    width:154px;
+    margin-left:25px;
+    margin-top:25px;
 	display:block;
-	background:transparent url(../grid/start-button.png) no-repeat -15px -15px;
-	border-radius:84px;
+	background:transparent url(../images/icons/start-button.png) no-repeat -2px -2px;
+	border-radius:80px;
 	box-shadow: 4px 4px 5px rgba(0, 0, 0, 1);
 }
 

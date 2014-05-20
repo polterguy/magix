@@ -17,42 +17,6 @@ namespace Magix.forms
 	 */
     public abstract class BaseWebControlFormElementInputTextController : BaseWebControlFormElementTextController
 	{
-        protected override void FillOutParameters(Node pars, BaseControl ctrl)
-        {
-            base.FillOutParameters(pars, ctrl);
-            Node ip = Ip(pars);
-            BaseWebControlFormElementInputText ret = ctrl as BaseWebControlFormElementInputText;
-
-            Node node = ip["_code"].Get<Node>();
-            if (node.Contains("placeholder") &&
-                !string.IsNullOrEmpty(node["placeholder"].Get<string>()))
-                ret.PlaceHolder = node["placeholder"].Get<string>();
-
-            if (ShouldHandleEvent("ontextchanged", node))
-            {
-                Node codeNode = node["ontextchanged"].Clone();
-                ret.TextChanged += delegate(object sender2, EventArgs e2)
-                {
-                    FillOutEventInputParameters(codeNode, sender2);
-                    RaiseActiveEvent(
-                        "magix.execute",
-                        codeNode);
-                };
-            }
-
-            if (ShouldHandleEvent("onescpressed", node))
-            {
-                Node codeNode = node["onescpressed"].Clone();
-                ret.Esc += delegate(object sender2, EventArgs e2)
-                {
-                    FillOutEventInputParameters(codeNode, sender2);
-                    RaiseActiveEvent(
-                        "magix.execute",
-                        codeNode);
-                };
-            }
-        }
-
         /*
          * selects all text
          */
@@ -71,6 +35,47 @@ namespace Magix.forms
 
             BaseWebControlFormElementInputText ctrl = FindControl<BaseWebControlFormElementInputText>(ip);
             ctrl.Select();
+        }
+
+        protected override void FillOutParameters(Node pars, BaseControl ctrl)
+        {
+            base.FillOutParameters(pars, ctrl);
+            BaseWebControlFormElementInputText ret = ctrl as BaseWebControlFormElementInputText;
+
+            Node ip = Ip(pars);
+            Node node = ip["_code"].Get<Node>();
+            if (node.Contains("placeholder") &&
+                !string.IsNullOrEmpty(node["placeholder"].Get<string>()))
+                ret.PlaceHolder = node["placeholder"].Get<string>();
+
+            if (ShouldHandleEvent("ontextchanged", node))
+            {
+                Node codeNode = node["ontextchanged"].Clone();
+                ret.TextChanged += delegate(object sender2, EventArgs e2)
+                {
+                    FillOutEventInputParameters(codeNode, sender2);
+                    RaiseActiveEvent(
+                        "magix.execute",
+                        codeNode);
+                };
+            }
+        }
+
+        protected override void Inspect(Node node)
+        {
+            Node tmp = node;
+            while (!tmp.Contains("inspect"))
+                tmp = tmp.Parent;
+            base.Inspect(node);
+            AppendInspect(tmp["inspect"], @"[placeholder] is a piece of shadow text, that will 
+only display if the web control has no text value.  this is useful for displaying additional 
+information back to the user, explaining what the text-box/text-area is taking as input.  this 
+can be used as an alternative to a descriptive label
+
+[ontextchanged] is raised when the text of the web control has changed, but not before focus 
+is lost somehow", true);
+            node["placeholder"].Value = "shadow text ...";
+            node["ontextchanged"].Value = "hyperlisp code";
         }
     }
 }

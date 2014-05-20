@@ -46,7 +46,7 @@ Magix.Core.ActiveEvents.Instance.RaiseActiveEvent(
 
 string description = node["inspect"].Get&lt;string&gt;();</pre>
 
-<p>the entire node tree, as returned from the above active event, would in hyper lisp look like the below</p>
+<p>the entire node tree, as returned from the above active event, would in hyperlisp look like the below</p>
 
 <pre>event:magix.execute
 inspect=>@"description of what your active event actually does"
@@ -54,7 +54,7 @@ magix.sample.self-documenting
   parameter=>some parameter
 </pre>
 
-<p>if you put the above hyper lisp into for instance the active event executor, you would be able to raise the 
+<p>if you put the above hyperlisp into for instance the hyperlisp executor, you would be able to raise the 
 active event directly, through the magix.execute keyword</p>
 
 {{

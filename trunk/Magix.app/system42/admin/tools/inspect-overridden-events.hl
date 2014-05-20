@@ -4,7 +4,7 @@ inspect=>@"will show a screen of all the
 overridden active events in the system, and allow
 the user to inspect them by clicking
 them.&nbsp;&nbsp;an overridden active event, is either a dynamically 
-created active event, through using the [event] hyper lisp 
+created active event, through using the [event] hyperlisp 
 keyword, or an event which is overridden with another"
 
 

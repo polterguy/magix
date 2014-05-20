@@ -12,26 +12,26 @@ using Magix.UX.Widgets.Core;
 
 namespace Magix.forms
 {
-	/**
+	/*
 	 * timer control
 	 */
     public class TimerController : BaseControlController
 	{
-		/**
+		/*
 		 * creates timer control
 		 */
 		[ActiveEvent(Name = "magix.forms.controls.timer")]
 		public void magix_forms_controls_timer(object sender, ActiveEventArgs e)
 		{
-			if (ShouldInspect(e.Params))
+            Node ip = Ip(e.Params);
+			if (ShouldInspect(ip))
 			{
-				Inspect(e.Params);
+				Inspect(ip);
 				return;
 			}
 
-            Node node = Ip(e.Params)["_code"].Value as Node;
-
-			Timer ret = new Timer();
+            Timer ret = new Timer();
+            Node node = ip["_code"].Get<Node>();
 
             if (node.Contains("interval") &&
                 node["interval"].Value != null)
@@ -51,31 +51,30 @@ namespace Magix.forms
 				};
 			}
 
-            Ip(e.Params)["_ctrl"].Value = ret;
+            ip["_ctrl"].Value = ret;
 		}
 
 		protected override void Inspect (Node node)
 		{
-            node["inspect"].Value = @"
-<p>creates a timer type of control.&nbsp;&nbsp;
-a timer is a control which will periodically run 
-to the server in intervalls of [interval] 
-milliseconds where it will raise the [tick] 
-event handler.&nbsp;&nbsp;this control is 
-useful for periodically checking for updates on 
-the server, if you're waiting for something to 
-occur, such as a chat client, or something similar</p>";
+            AppendInspect(node["inspect"], @"creates a timer type of control
+
+a timer is a control which will periodically run to the server in intervalls 
+of [interval] milliseconds where it will raise the [tick] event handler.  this 
+control is useful for periodically checking for updates on the server, if 
+you're waiting for something to occur, such as a chat client, or something 
+similar");
             node["magix.forms.create-web-part"]["container"].Value = "content5";
             node["magix.forms.create-web-part"]["form-id"].Value = "sample-form";
             base.Inspect(node["magix.forms.create-web-part"]["controls"]["timer"]);
             node["magix.forms.create-web-part"]["controls"]["timer"]["interval"].Value = "1000";
-            node["magix.forms.create-web-part"]["controls"]["timer"]["ontick"].Value = "hyper lisp code";
-            node["inspect"].Value = node["inspect"].Value + @"
-<p><strong>properties for timer</strong></p><p>[interval] 
-is the number of milliseconds between each time the timer 
-should go to the server, and raise the [ontick] event</p>
-<p>[ontick] is the active event for that will be raised 
-each time the [interval] time hass passed</p>";
+            node["magix.forms.create-web-part"]["controls"]["timer"]["visible"].UnTie(); // makes no sense
+            node["magix.forms.create-web-part"]["controls"]["timer"]["ontick"].Value = "hyperlisp code";
+            AppendInspect(node["inspect"], @"[interval] is the number of 
+milliseconds between each time the timer should go to the server, and raise 
+the ontick event
+
+[ontick] is the active event for that will be raised each time the [interval] 
+time has passed", true);
 		}
 	}
 }

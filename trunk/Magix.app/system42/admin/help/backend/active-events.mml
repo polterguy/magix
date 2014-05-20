@@ -8,7 +8,7 @@ parts will be self-documenting, using the [inspect] feature of magix</p>
 <p>if you click one of the active events in your list of active events, you can see the description of what it does, in addition 
 to some sample code.&nbsp;&nbsp;if the active event is a dynamically created active event, created with the [event] {{
 link-button=>go-to-hyper-lisp
-  value=>hyper lisp
+  value=>hyperlisp
   onclick
     magix.help.open-file
       file=>system42/admin/help/hyper-lisp/index.mml
@@ -18,7 +18,7 @@ you can see its implementation</p>
 <p>all active events that exist within your system, will be listed here.&nbsp;&nbsp;if you create your own active events, either in 
 {{
 link-button=>hyperlisp-8
-  value=>hyper lisp
+  value=>hyperlisp
   onclick
     magix.help.open-file
       file=>system42/admin/help/hyper-lisp/hyper-lisp-events.mml

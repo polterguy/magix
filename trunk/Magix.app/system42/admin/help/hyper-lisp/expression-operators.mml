@@ -58,7 +58,7 @@ this is not true, and the node you start out from is the currently iterated node
 state that you want to access the <em>currently iterated node</em> though, by using the [.].&nbsp;&nbsp;for instance, in the above 
 code, it would have been nice if we had modified the expression [..].Name to [.][..].Name for clarity</p>
 
-<p>the output of the above code, if you run it through the active event executor for instance, will become</p>
+<p>the output of the above code, if you run it through the hyperlisp executor for instance, will become</p>
 
 <pre>
 _data=>jo

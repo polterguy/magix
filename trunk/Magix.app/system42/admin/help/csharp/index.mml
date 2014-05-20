@@ -12,15 +12,15 @@ due to the active event system, something which can be seen by the way magix can
 database active events for instance.&nbsp;&nbsp;a view from traditional mvc is called an active module in magix, and a controller is 
 called an active controller</p>
 
-<p>and from c#, you can easily access hyper lisp, or vice versa.&nbsp;&nbsp;to create functionality in c# that you wish to access 
-in hyper lisp, is as simple as creating an active event, and voila!&nbsp;&nbsp;the c# parts of magix goes hand in hand with hyper lisp, 
+<p>and from c#, you can easily access hyperlisp, or vice versa.&nbsp;&nbsp;to create functionality in c# that you wish to access 
+in hyperlisp, is as simple as creating an active event, and voila!&nbsp;&nbsp;the c# parts of magix goes hand in hand with hyperlisp, 
 due to the active event system of magix</p>
 
 <p>if you dive into the c# parts of magix, you will find it to have very clean and understandable code.&nbsp;&nbsp;in addition, to encapsulate 
 your code, and create completely independent components, that seemlessly interact, is virtually implicit in magix.&nbsp;&nbsp;the active event 
 design pattern, literally replace all other existing design patterns on the planet</p>
 
-<p>to create c# code with magix, is almost as easy as to create hyper lisp, which means you can easily encapsulate your existing 
+<p>to create c# code with magix, is almost as easy as to create hyperlisp, which means you can easily encapsulate your existing 
 business logic, and have it play well together with magix.&nbsp;&nbsp;below are the main documentation parts behind the c# parts of magix</p>
 
 <ul>

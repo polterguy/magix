@@ -44,15 +44,15 @@ can also of course remote and open your own dynamically created active events</p
 
 <p>be careful when you open up and remotely access active events.&nbsp;&nbsp;this has security concerns, since you will need to 
 know that you can trust both sides of the party.&nbsp;&nbsp;if you for instance open up magix.execute, then every single server 
-in the world, with http access to your server, can send hyper lisp code to your server for execution, which obviously is a 
+in the world, with http access to your server, can send hyperlisp code to your server for execution, which obviously is a 
 <strong>very bad thing!</strong></p>
 
 <p>by opening an active event, you effectively turn it into a web service, accessible for all other objects in the world, with 
 access to your server, such that they can access your active event as a web service.&nbsp;&nbsp;obviously, this has huge 
 security concerns, unless you do it on your lan exclusively.&nbsp;&nbsp;it is therefor important to be careful about which 
 events you open up on your server.&nbsp;&nbsp;also tunneled active events might pose a security threat, unless you're certain about 
-that you thrust the other party.&nbsp;&nbsp;dependent upon an active event is invoked, it might change the hyper lisp code that's 
-running in front of it.&nbsp;&nbsp;if an active event is invoked without any "." in its name, by means of the [using] hyper lisp 
+that you thrust the other party.&nbsp;&nbsp;dependent upon an active event is invoked, it might change the hyperlisp code that's 
+running in front of it.&nbsp;&nbsp;if an active event is invoked without any "." in its name, by means of the [using] hyperlisp 
 keyword for instance, then the implementation of that active event actually have the possibility of creating code that will be 
 executed after the active event is done executing its code.&nbsp;&nbsp;be careful with who you trust in regards to both tunneled and 
 opened active events</p>

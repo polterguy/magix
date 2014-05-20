@@ -4,7 +4,7 @@
 <p>a unit test, is a small piece of code, created with the purpose of validating that your system is functioning corrdectly.&nbsp;&nbsp;
 magix comes with lots of pre-built unit tests, in addition to that you can create your own tests, either in {{
 link-button=>go-to-hyper-lisp
-  value=>hyper lisp
+  value=>hyperlisp
   onclick
     magix.help.open-file
       file=>system42/admin/help/hyper-lisp/index.mml
@@ -47,7 +47,7 @@ that it functions, also in the future.&nbsp;&nbsp;this way, you have assurance o
 you for instance install updates to the magix core, or in other ways modifies the state of magix.&nbsp;&nbsp;you should also 
 periodically run through all unit tests within magix, to verify that your system is functioning correctly</p>
 
-<p>the system doesn't really discriminate between unit tests created in hyper lisp, and unit tests created with c#.&nbsp;&nbsp;both 
+<p>the system doesn't really discriminate between unit tests created in hyperlisp, and unit tests created with c#.&nbsp;&nbsp;both 
 are equally important, and threated the same</p>
 
 {{

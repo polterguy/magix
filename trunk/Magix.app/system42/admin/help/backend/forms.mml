@@ -2,7 +2,7 @@
 <h2>dynamic forms</h2>
 
 <p>the forms builder is one of the more important places for you in magix if you wish to dynamically create your own web applications.
-&nbsp;&nbsp;from the forms builder, you can create new web forms, containing web controls, based upon hyper lisp, which you can inject 
+&nbsp;&nbsp;from the forms builder, you can create new web forms, containing web controls, based upon hyperlisp, which you can inject 
 other places in your system</p>
 
 <p>when you open up the forms builder, you will see three main rows.&nbsp;&nbsp;you will see the top row, from where you can 
@@ -19,7 +19,7 @@ and so on</p>
 panel, you can change the name of a web control, the css class(es) it uses, and so on.&nbsp;&nbsp;what properties are available 
 for you, depends upon what web control you're editing.&nbsp;&nbsp;in addition, you can create event handlers, which contains {{
 link-button=>go-to-hyper-lisp
-  value=>hyper lisp
+  value=>hyperlisp
   onclick
     magix.help.open-file
       file=>system42/admin/help/hyper-lisp/index.mml
@@ -34,10 +34,10 @@ magix.viewport.show-message
   message=>howdy world
 </pre>
 
-<p>an event handler for your web control, that has some sort of hyper lisp code attached to it, will be shown in <strong>bold</strong> 
+<p>an event handler for your web control, that has some sort of hyperlisp code attached to it, will be shown in <strong>bold</strong> 
 text.&nbsp;&nbsp;what event handlers are possible for you to handle, vary from web control to web control</p>
 
-<p>you can build virtually any type of web form you wish from the forms module of magix&nbsp;&nbsp;and due to hyper lisp, 
+<p>you can build virtually any type of web form you wish from the forms module of magix&nbsp;&nbsp;and due to hyperlisp, 
 you can map together almost eny type of business logic you wish with your forms.&nbsp;&nbsp;entirely through the browser.&nbsp;&nbsp;
 you might want to see some of the videos about magix to understand the power of the forms builder</p>
 

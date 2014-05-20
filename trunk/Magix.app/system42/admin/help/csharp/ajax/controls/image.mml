@@ -31,7 +31,7 @@ the active module as an embedded resource if you want to compile this sample</p>
 
 &lt;mux:Img
     runat="server"
-    Src="media/images/marvin-headshot.png"
+    Src="media/images/help-files/marvin-headshot.png"
     Alt="marvin"
     id="img" /&gt;
 </pre>
@@ -55,7 +55,7 @@ namespace Magix.sample
 <div class="sample-web-control">
 {{
 img=>img
-  src=>media/images/marvin-headshot.png
+  src=>media/images/help-files/marvin-headshot.png
   alt=>marvin
 }}
 </div>

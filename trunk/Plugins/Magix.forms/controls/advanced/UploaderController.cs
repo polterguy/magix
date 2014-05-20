@@ -11,28 +11,28 @@ using Magix.UX.Widgets;
 
 namespace Magix.forms
 {
-	/**
+	/*
 	 * uploader control
 	 */
     public class UploaderController : BaseWebControlController
 	{
-		/**
+		/*
 		 * creates uploader control
 		 */
 		[ActiveEvent(Name = "magix.forms.controls.uploader")]
 		public void magix_forms_controls_button(object sender, ActiveEventArgs e)
 		{
-			if (ShouldInspect(e.Params))
+            Node ip = Ip(e.Params);
+			if (ShouldInspect(ip))
 			{
-				Inspect(e.Params);
+				Inspect(ip);
 				return;
 			}
 
-            Node node = Ip(e.Params)["_code"].Value as Node;
-
 			Uploader ret = new Uploader();
-
-			if (node.Contains("class") && !string.IsNullOrEmpty(node["class"].Get<string>()))
+            Node node = ip["_code"].Get<Node>();
+            
+            if (node.Contains("class") && !string.IsNullOrEmpty(node["class"].Get<string>()))
 				ret.Class = node["class"].Get<string>();
 
 			string folder = "";
@@ -80,10 +80,10 @@ namespace Magix.forms
 					}
 				};
 			}
-            Ip(e.Params)["_ctrl"].Value = ret;
+            ip["_ctrl"].Value = ret;
 		}
 
-		/**
+		/*
 		 * has more data
 		 */
 		[ActiveEvent(Name = "magix.forms.has-more-data")]
@@ -109,11 +109,10 @@ namespace Magix.forms
 		}
 		protected override void Inspect(Node node)
 		{
-            node["inspect"].Value = @"
-<p>creates an uploader input type of web control.&nbsp;&nbsp;
-uploaders are useful for allowing the end user to drag and 
-drop files onto the browser surface, such that he can upload 
-files to the server</p>";
+            AppendInspect(node["inspect"], @"creates an uploader type of web control
+
+uploaders are useful for allowing the end user to drag and drop files onto the browser 
+surface, such that he can upload files to the server");
             node["magix.forms.create-web-part"]["container"].Value = "content5";
             node["magix.forms.create-web-part"]["form-id"].Value = "sample-form";
             base.Inspect(node["magix.forms.create-web-part"]["controls"]["uploader"]);
@@ -121,16 +120,16 @@ files to the server</p>";
             node["magix.forms.create-web-part"]["controls"]["uploader"]["class"].Value = "mux-file-uploader";
             node["magix.forms.create-web-part"]["controls"]["uploader"]["visible"].UnTie(); // makes no sense
             node["magix.forms.create-web-part"]["controls"]["uploader"]["info"].UnTie(); // makes no sense
-            node["magix.forms.create-web-part"]["controls"]["uploader"]["onuploaded"].Value = "hyper lisp code";
-            node["inspect"].Value = node["inspect"].Value + @"
-<p><strong>properties for uploader</strong></p><p>[folder] 
-is the folder where the files will be uploaded.&nbsp;&nbsp;
-the filename of the file from the client, will be the same 
-when the file is uploaded to the server</p><p>[class] is the 
-css class asssociated with your uploader, and what determines 
-the looks of the 'wait for files to upload' parts of your 
-uploader</p><p>[onuploaded] is the active event which will 
-be fired once the uploader is finished uploading a file</p>";
+            node["magix.forms.create-web-part"]["controls"]["uploader"]["onuploaded"].Value = "hyperlisp code";
+            AppendInspect(node["inspect"], @"[folder] is the folder where the files 
+will be uploaded.  the filename of the file from the client-side, will be the same 
+when the file is uploaded to the server
+
+[class] is the css class asssociated with your uploader, and what determines the 
+looks of the 'wait for files to upload' parts of your uploader
+
+[onuploaded] is the active event which will be fired once the uploader is finished 
+uploading a file", true);
 		}
 	}
 }

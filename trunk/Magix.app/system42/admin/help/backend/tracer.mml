@@ -1,7 +1,7 @@
 ﻿
 <h2>the tracer</h2>
 
-<p>magix has a <em>"tracer"</em>, which will trace everything that occurs within the core hyper lisp engine of magix.&nbsp;&nbsp;
+<p>magix has a <em>"tracer"</em>, which will trace everything that occurs within the core hyperlisp engine of magix.&nbsp;&nbsp;
 this can be a useful feature to listen in on what magix does, either to track down bugs, or to teach yourself some specific parts 
 of magix</p>
 

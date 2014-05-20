@@ -5,40 +5,30 @@
  */
 
 using System;
-using System.Web.UI;
 using System.Web;
+using System.Text;
+using System.Web.UI;
 using System.Diagnostics;
 using System.Collections.Generic;
 
 namespace Magix.Core
 {
-    /**
-     * Inherit your Active Controllers from this class. Contains helper
-     * methods for you, for your own controllers
+    /*
+     * abstract active controller base class
      */
     [ActiveController]
 	public abstract class ActiveController
     {
-		/**
+		/*
 		 * return true if we are supposed to inspect the active event, and not execute it
 		 */
         protected static bool ShouldInspect(Node node)
         {
-            return (node.Contains("inspect") && node["inspect"].Value == null) || 
-                (node.Contains("_ip") && 
-                    (node["_ip"].Get<Node>().Contains("inspect") && node["_ip"].Get<Node>()["inspect"].Value == null));
+            return (node.Contains("inspect") && node["inspect"].Value == null);
         }
 
-        /**
-         * return true if we are supposed to inspect the active event, and not execute it, or if we have previously inspected it
-         */
-        protected static bool ShouldInspectOrHasInspected(Node node)
-        {
-            return node.Contains("inspect");
-        }
-
-        /**
-         * Loads the given module and puts it into your default container
+        /*
+         * loads an active module into the default container
          */
         protected Node LoadActiveModule(string name)
         {
@@ -47,9 +37,8 @@ namespace Magix.Core
             return node;
         }
 
-        /**
-         * Loads the given module and puts it into the given container. 
-         * Will return the node created and passed into creation
+        /*
+         * loads an active module into the given container
          */
         protected Node LoadActiveModule(string name, string container)
         {
@@ -58,9 +47,8 @@ namespace Magix.Core
             return node;
         }
 
-        /**
-         * Shorthand method for Loading a specific Module and putting it into
-         * the given container, with the given Node structure.
+        /*
+         * loads an active module into the given container with the given nodes as initializing paramaters
          */
         protected void LoadActiveModule(string name, string container, Node node)
         {
@@ -77,9 +65,8 @@ namespace Magix.Core
 				node);
         }
 
-        /**
-         * Shorthand for raising events. Will return a node, initially created empty, 
-         * but passed onto the Event Handler(s)
+        /*
+         * raises an active event
          */
         protected static Node RaiseActiveEvent(string eventName)
         {
@@ -93,31 +80,20 @@ namespace Magix.Core
 			return node;
         }
 
-        /**
-         * Shorthand for raising events.
+        /*
+         * raises an active event with the given node as parameters
          */
         protected static void RaiseActiveEvent(string eventName, Node node)
-        {
-			RaiseActiveEvent(
-				eventName, 
-				node, 
-				false);;
-        }
-
-        /**
-         * Shorthand for raising events.
-         */
-        protected static void RaiseActiveEvent(string eventName, Node node, bool forceNoOverride)
         {
             ActiveEvents.Instance.RaiseActiveEvent(
                 typeof(ActiveController),
                 eventName,
                 node,
-				forceNoOverride);
+                false);
         }
 
-        /**
-         * Will return the 'base' URL of your application
+        /*
+         * returns the base url of your web application
          */
         protected string GetApplicationBaseUrl()
         {
@@ -130,8 +106,8 @@ namespace Magix.Core
                     HttpContext.Current.Request.ApplicationPath + "/").ToLowerInvariant();
         }
 
-        /**
-         * Shorthand for getting access to our "Page" object.
+        /*
+         * returns the page object
          */
         protected Page Page
         {
@@ -142,7 +118,7 @@ namespace Magix.Core
         }
 
         /*
-         * returns the instruction pointer. will by default return the given Node if no _ip is found in node
+         * returns the instruction pointer
          */
         protected static Node Ip(Node pars)
         {
@@ -152,13 +128,79 @@ namespace Magix.Core
         }
 
         /*
-         * returns the data pointer. will by default return the given Node if no _dp is found in node
+         * returns the data pointer
          */
         protected static Node Dp(Node pars)
         {
             if (pars.Contains("_dp"))
                 return pars["_dp"].Get<Node>();
             return pars;
+        }
+
+        /*
+         * html formats and appends the given value to the given node's value
+         */
+        protected void AppendInspect(Node node, string value)
+        {
+            AppendInspect(node, value, false);
+        }
+
+        /*
+         * html formats and appends the given value to the given node's value
+         */
+        protected void AppendInspect(Node node, string value, bool dropInitialHeader)
+        {
+            StringBuilder builder = new StringBuilder(node.Get<string>());
+            if (!dropInitialHeader)
+                builder.Append("<p><h3>");
+            bool hasClosedH3 = false;
+
+            char lastChar = char.MinValue, secondLastChar = char.MinValue;
+            foreach (char idxChar in value)
+            {
+                switch (idxChar)
+                {
+                    case '\r':
+                    case '\t':
+                        continue;
+                    case '\n':
+                        if (lastChar == '\n')
+                        {
+                            builder.Remove(builder.Length - 1, 1);
+                            if (!hasClosedH3 && !dropInitialHeader)
+                            {
+                                hasClosedH3 = true;
+                                builder.Append("</h3>");
+                            }
+                            builder.Append("</p><p>");
+                        }
+                        else
+                            builder.Append(' ');
+                        break;
+                    case '[':
+                        builder.Append("<strong>[");
+                        break;
+                    case ']':
+                        builder.Append("</strong>]");
+                        break;
+                    case ' ':
+                        if (lastChar == ' ' && secondLastChar == '.')
+                        {
+                            builder.Remove(builder.Length - 1, 1);
+                            builder.Append("&nbsp;&nbsp;");
+                        }
+                        else
+                            builder.Append(" ");
+                        break;
+                    default:
+                        builder.Append(idxChar);
+                        break;
+                }
+                secondLastChar = lastChar;
+                lastChar = idxChar;
+            }
+            builder.Append("</p>");
+            node.Value = builder.ToString();
         }
     }
 }

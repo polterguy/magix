@@ -8,12 +8,12 @@ html, you can also create web controls declaratively inside your html</p>
 
 <p>the way you do this, is to create {{
 link-button=>hyperlisp
-  value=>hyper lisp
+  value=>hyperlisp
   onclick
     magix.help.open-file
       file=>system42/admin/help/hyper-lisp/index.mml
-}} code, declaring your web controls.&nbsp;&nbsp;notice, you cannot directly create hyper lisp, as you would any other place, since 
-what you're really doing in magix markup language, is to declare web controls, using hyper lisp as your medium.&nbsp;&nbsp;consider 
+}} code, declaring your web controls.&nbsp;&nbsp;notice, you cannot directly create hyperlisp, as you would any other place, since 
+what you're really doing in magix markup language, is to declare web controls, using hyperlisp as your medium.&nbsp;&nbsp;consider 
 the following magix markup language</p>
 
 <pre>
@@ -61,12 +61,12 @@ button=>my-button
 <p class="clear top-1 span-5">then another paragraph</p>
 </div>
 
-<p>please notice that you cannot just simply add up any type of hyper lisp code inside of your magix markup language, since what you're 
-doing is actually declaring web controls, and not creating any arbitrary hyper lisp for execution.&nbsp;&nbsp;to see which 
+<p>please notice that you cannot just simply add up any type of hyperlisp code inside of your magix markup language, since what you're 
+doing is actually declaring web controls, and not creating any arbitrary hyperlisp for execution.&nbsp;&nbsp;to see which 
 web controls are available for you in your installation, click the <em>"web controls"</em> link, underneath the learn panel from 
 your desktop</p>
 
-<p>for the record, within the event handlers of your web controls, you can type in any hyper lisp you wish.&nbsp;&nbsp;this allows 
+<p>for the record, within the event handlers of your web controls, you can type in any hyperlisp you wish.&nbsp;&nbsp;this allows 
 you to build virtually any web form you can think of, by combining html and web controls together, where your web controls 
 execute any piece of logic you can imagine in their event handlers</p>
 
@@ -96,13 +96,13 @@ link-button=>web-controls
 }}, if you wish to know all the types of web controls you can add up into your magix markup language.&nbsp;&nbsp;to understand the 
 syntax of magix markup language, it is useful to understand the {{
 link-button=>hyperlisp-syntax
-  value=>syntax of hyper lisp
+  value=>syntax of hyperlisp
   onclick
     magix.help.open-file
       file=>system42/admin/help/hyper-lisp/hyper-lisp-syntax.mml
 }}</p>
 
-<p>to see a more detailed explanation of magix markup language, please refer to the documentation within the hyper lisp section 
+<p>to see a more detailed explanation of magix markup language, please refer to the documentation within the hyperlisp section 
 about {{
 link-button=>mml-jump
   value=>magix markup language
