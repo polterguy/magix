@@ -1,5 +1,5 @@
 ﻿
-<h2>hyper lisp and magix markup language</h2>
+<h2>hyperlisp and magix markup language</h2>
 
 <p>magix markup language is a superset of html, with support for embedding server-side web controls inline into your html markup.&nbsp;&nbsp;
 this means that you can combine traditional html with web forms running server-side logic.&nbsp;&nbsp;to embed web controls into your markup, 
@@ -50,9 +50,9 @@ link-button=>btn
 }} that is a server-side web control</p>
 </div>
 
-<p>please notice that you cannot put any arbitrary hyper lisp code into your web control collections, only web controls.&nbsp;&nbsp;
+<p>please notice that you cannot put any arbitrary hyperlisp code into your web control collections, only web controls.&nbsp;&nbsp;
 this is because the code is not executed, but in fact a collection of web controls, that are substituted into your markup, at whatever 
-position you declare them at.&nbsp;&nbsp;however, within active events of your web controls, you can use any hyper lisp you wish</p>
+position you declare them at.&nbsp;&nbsp;however, within active events of your web controls, you can use any hyperlisp you wish</p>
 
 <p>you can declare as many web control collections as you wish in your magix markup.&nbsp;&nbsp;consider the following code, which 
 has several web control collections</p>

@@ -11,17 +11,17 @@ have to bring your applications down</p>
 from your main magix administrative desktop.&nbsp;&nbsp;if you click an overridden active event, you will get to inspect its documentation, 
 and if the active event is a dynamic active event, created with the [event] {{
 link-button=>hyperlisp
-  value=>hyper lisp
+  value=>hyperlisp
   onclick
     magix.help.open-file
       file=>system42/admin/help/hyper-lisp/index.mml
 }} keywords, you can even inspect its code, and load 
-the code up into the active event executor</p>
+the code up into the hyperlisp executor</p>
 
 <p>when you override an active event, you are changing the pointer to what piece of code is being executed when the active event is raised.
 &nbsp;&nbsp;this is highly useful for changing your system, and allows old pieces of code to run new code, without breaking backwards 
 compatibility.&nbsp;&nbsp;if you wish to override an existing active event called <em>"magix.sample.old-event"</em>, then in 
-hyper lisp you would accomplish that with the code below</p>
+hyperlisp you would accomplish that with the code below</p>
 
 <pre>
 override=>magix.sample.old-event

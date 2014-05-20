@@ -12,7 +12,7 @@ using Magix.Core;
 namespace Magix.execute
 {
 	/**
-	 * hyper lisp split keyword
+	 * hyperlisp split keyword
 	 */
 	public class SplitCore : ActiveController
 	{

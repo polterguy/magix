@@ -98,7 +98,7 @@ namespace Magix.forms
         [ActiveEvent(Name = "magix.forms.get-children-values")]
         public void magix_forms_get_children_values(object sender, ActiveEventArgs e)
         {
-            if (ShouldInspectOrHasInspected(e.Params))
+            if (ShouldInspect(e.Params))
             {
                 e.Params["inspect"].Value = @"returns the values property of all child controls
 which are direct children of the panel in the [values] node, with name being id of control, 
@@ -146,17 +146,14 @@ and value being the value of the control";
 
 		protected override void Inspect (Node node)
 		{
-            node["inspect"].Value = @"
-<p>creates a panel type of web control.&nbsp;&nbsp;
-a panel is a container control for other web controls.
-&nbsp;&nbsp;add up other web controls and controls 
-into its [control] collection, such that your panel 
-serves as a wrapper for your other controls.&nbsp;&nbsp;
-you can also set the [default] to the id of a specific 
-control, such as a button, which will automatically 
-raise [onclick] on that control if carriage return is 
-entered into a [text-box], or something similar, within 
-the scope of the web control</p>";
+            AppendInspect(node["inspect"], @"creates a panel type of web control
+
+a panel is a container control for other web controls.  add up other web controls 
+and controls into its [control] collection, such that your panel serves as a wrapper 
+for your other controls.  you can also set the [default] to the id of a specific 
+control, such as a button, which will automatically raise [onclick] on that control 
+if carriage return is pressed into a text-box, or something similar, within the scope 
+of the panel");
             node["magix.forms.create-web-part"]["container"].Value = "content5";
             node["magix.forms.create-web-part"]["form-id"].Value = "sample-form";
             base.Inspect(node["magix.forms.create-web-part"]["controls"]["panel"]);
@@ -164,15 +161,17 @@ the scope of the web control</p>";
             node["magix.forms.create-web-part"]["controls"]["panel"]["default"].Value = "default-button";
             node["magix.forms.create-web-part"]["controls"]["panel"]["controls"]["button"].Value = "default-button";
             node["magix.forms.create-web-part"]["controls"]["panel"]["controls"]["button"]["value"].Value = "don't work";
-            node["inspect"].Value = node["inspect"].Value + @"
-<p><strong>properties for panel</strong><p>[tag] sets 
-html tag to render panel as.&nbsp;&nbsp;you can change 
-this to any html tag you wish for the control to be 
-rendered within, such as p, div, label, span or address, 
-etc</p><p>[default] sets the default control within your 
-web control.&nbsp;&nbsp;this is the control which will 
-be automatically clicked if carriage return is pressed 
-while a child control of the dynamic hass focus</p>";
+            AppendInspect(node["inspect"], @"[tag] sets the html tag to render panel 
+as.  you can change this to any html tag you wish for the control to be rendered with, 
+such as p, div, label, span or address, etc
+
+[default] sets the default control within your panel.  this is the control which will 
+be automatically clicked if carriage return is pressed while a child control of the 
+panel has focus
+
+[controls] is a collection of child controls, and can contain any web controls or 
+controls you have within your system.  this makes the panel simply become a container 
+for other controls, and do little on its own by itself", true);
 		}
 	}
 }

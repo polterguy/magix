@@ -1,12 +1,12 @@
 ﻿
-<h2>hyper lisp magix.execute</h2>
+<h2>hyperlisp magix.execute</h2>
 
-<p>the [magix.execute] active event, is where all the magic happens.&nbsp;&nbsp;this is the core active event of hyper lisp as a 
-programming language, and everything that happens, starts out here.&nbsp;&nbsp;like everything else in hyper lisp, the language in 
+<p>the [magix.execute] active event, is where all the magic happens.&nbsp;&nbsp;this is the core active event of hyperlisp as a 
+programming language, and everything that happens, starts out here.&nbsp;&nbsp;like everything else in hyperlisp, the language in 
 itself is actually nothing but an active event.&nbsp;&nbsp;if you'd like to see what this active event actually does, you'll find 
 it in the Magix.execute project, in the ExecuteCore.cs file</p>
 
-<p>as previously mentioned, the hyper lisp syntax changes from server installation to server installation.&nbsp;&nbsp;this is because 
+<p>as previously mentioned, the hyperlisp syntax changes from server installation to server installation.&nbsp;&nbsp;this is because 
 every single keyword, as actually just a wrapper around all active events that starts with the namespace <em>"magix.execute"</em>,&nbsp;&nbsp;
 this means that every single active event that starts with the string "magix.execute" will automatically become an extension of the 
 programming language itself.&nbsp;&nbsp;consider the following code</p>
@@ -51,12 +51,12 @@ add-two-numbers
 
 <p>using constructs like these, you can actually modify the programming language itself, and add keywords that makes sense for your specific domain logic</p>
 
-<p>all the native keywords of hyper lisp, are actually created with similar constructs.&nbsp;&nbsp;though, for the most parts they're 
+<p>all the native keywords of hyperlisp, are actually created with similar constructs.&nbsp;&nbsp;though, for the most parts they're 
 all made in c# to make them speedy.&nbsp;&nbsp;if you look inside of the Magix.execute project, you will find that every single 
 "keyword" is actually an active event.&nbsp;&nbsp;for instance, the [if] keyword is actually the active event [magix.execute.if], and 
 [while] is the active event [magix.execute.while], etc</p>
 
-<p>important!&nbsp;&nbsp;no keyword in hyper lisp can start with an underscore "_".&nbsp;&nbsp;this is because the execution engine 
+<p>important!&nbsp;&nbsp;no keyword in hyperlisp can start with an underscore "_".&nbsp;&nbsp;this is because the execution engine 
 will not recognize anything that starts with an underscore as a keyword, but believe it is just a data buffer node.&nbsp;&nbsp;
 consider the below code</p>
 

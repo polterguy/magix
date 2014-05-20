@@ -10,7 +10,7 @@ using Magix.Core;
 namespace Magix.execute
 {
 	/**
-	 * hyper lisp set keyword
+	 * hyperlisp set keyword
 	 */
 	public class SetCore : ActiveController
 	{

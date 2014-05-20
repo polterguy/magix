@@ -173,9 +173,9 @@ for the url/text to his qr code"
         text-box=>bg-image
           class=>span-7 top-1
           tip=>@"background image used to render background 
-parts of qr code. defaults to bumpy-white.png"
+parts of qr code. defaults to bumpy-light.png"
           placeholder=>background image ...
-          value=>media/images/textures/bumpy-white.png
+          value=>media/images/textures/bumpy-light.png
         button=>bg-image-browse
           class=>text-browse-btn top-1
           value=>...
@@ -212,7 +212,7 @@ parts of qr code. defaults to bumpy-white.png"
           tip=>@"foreground image used to render background
 parts of qr code. defaults to bumby-black.png"
           placeholder=>foreground image ...
-          value=>media/images/textures/bumpy-black.png
+          value=>media/images/textures/bumpy-dark.png
         button=>fg-image-browse
           class=>text-browse-btn-last top-1
           value=>...

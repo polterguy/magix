@@ -1,8 +1,8 @@
 ﻿
-<h2>remotely raising active events in hyper lisp</h2>
+<h2>remotely raising active events in hyperlisp</h2>
 
-<p>in hyper lisp, and in c#, you can raise active events which are not on your server.&nbsp;&nbsp;in traditional c# code, this is 
-called web services.&nbsp;&nbsp;in hyper lisp, and magix, this is an implicit feature of the underlaying active event system, 
+<p>in hyperlisp, and in c#, you can raise active events which are not on your server.&nbsp;&nbsp;in traditional c# code, this is 
+called web services.&nbsp;&nbsp;in hyperlisp, and magix, this is an implicit feature of the underlaying active event system, 
 and can be done 100% transparently and polymorphistically.&nbsp;&nbsp;in magix, there is no real difference between a local 
 active event, and a remote active event.&nbsp;&nbsp;this allows for you to connect servers together, and create your own cloud 
 system, based upon scalability needs, and can largely be done as an after though, as your application needs more hardware to 

@@ -1,41 +1,41 @@
 ﻿
-<h2>to hyper lisp or not to lisp</h2>
+<h2>to hyperlisp or not to lisp</h2>
 
-<p>hyper lisp serves a very specific purpose.&nbsp;&nbsp;first of all, it is a great foundation for creating your own domain 
+<p>hyperlisp serves a very specific purpose.&nbsp;&nbsp;first of all, it is a great foundation for creating your own domain 
 programming languages.&nbsp;&nbsp;these types of programming languages are great for solving your specific domain problem.&nbsp;&nbsp;
 if you for instance do a lot of calculations, you'd probably want to add your own keywords for complex mathematical operations.&nbsp;&nbsp;
-in such a regards, hyper lisp changes according to what you do with it</p>
+in such a regards, hyperlisp changes according to what you do with it</p>
 
 <p>secondly, it is at its core scalable.&nbsp;&nbsp;you can overload specific keywords and active events, such that they no longer 
-execute locally on your server, but rather on other servers within your cloud.&nbsp;&nbsp;in such a regard, hyper lisp is a cloud 
+execute locally on your server, but rather on other servers within your cloud.&nbsp;&nbsp;in such a regard, hyperlisp is a cloud 
 implementation, and features scaling out as an implicit feature of the language</p>
 
-<p>however, there are places where you probably do not want to use hyper lisp.&nbsp;&nbsp;if you have places where you need every 
+<p>however, there are places where you probably do not want to use hyperlisp.&nbsp;&nbsp;if you have places where you need every 
 single cpu cycle, such as for instance in 3d rendering engines, or complex graphic algorithms, where speed is everything, then you'd 
-probably want to choose to implement these in c#, and hook into them using hyper lisp.&nbsp;&nbsp;hyper lisp is not as fast as c#, 
-and requires some overhead compared to other languages, which are closer to the iron of your server.&nbsp;&nbsp;hyper lisp is about 
+probably want to choose to implement these in c#, and hook into them using hyperlisp.&nbsp;&nbsp;hyperlisp is not as fast as c#, 
+and requires some overhead compared to other languages, which are closer to the iron of your server.&nbsp;&nbsp;hyperlisp is about 
 scalability.&nbsp;&nbsp;both in code, architecture and server farms.&nbsp;&nbsp;not about speed within one single server installation</p>
 
-<p>hyper lisp is glue in your business logic, to tie together your ui and business logic.&nbsp;&nbsp;not for in its entirety 
+<p>hyperlisp is glue in your business logic, to tie together your ui and business logic.&nbsp;&nbsp;not for in its entirety 
 creating your business logic.&nbsp;&nbsp;you will probably still every now and then have to resort to c# or pre-built components, 
-created in c#.&nbsp;&nbsp;however, hyper lisp is perfect to glue together these different pieces of components, to facilitate 
+created in c#.&nbsp;&nbsp;however, hyperlisp is perfect to glue together these different pieces of components, to facilitate 
 for a separation between your business logic and your user interface</p>
 
-<p>hyper lisp is also consciously created in such a way, that it is perfectly understandable for both humans and computers.&nbsp;&nbsp;
+<p>hyperlisp is also consciously created in such a way, that it is perfectly understandable for both humans and computers.&nbsp;&nbsp;
 one of its goals, is to not separeate between humans and computers in any ways.&nbsp;&nbsp;in such a regard, it can be perceived as a 
 human readable assembly programming language, since the exact same code as a human is writing in it, is what becomes executed.&nbsp;&nbsp;
-there is no parsing, compilation or interpretation process happening in hyper lisp.&nbsp;&nbsp;this is why some things that in traditional 
-programming languages requires only one line of code, might require 5-10 lines of code in hyper lisp.&nbsp;&nbsp;hyper lisp doesn't 
+there is no parsing, compilation or interpretation process happening in hyperlisp.&nbsp;&nbsp;this is why some things that in traditional 
+programming languages requires only one line of code, might require 5-10 lines of code in hyperlisp.&nbsp;&nbsp;hyperlisp doesn't 
 have compound statements, hence the computer can just as easily create the code it is executing itself, as a human being.&nbsp;&nbsp;
-this is what enables the extreme meta capabilities of hyper lisp.&nbsp;&nbsp;hence, with hyper lisp, you will often create code who's 
+this is what enables the extreme meta capabilities of hyperlisp.&nbsp;&nbsp;hence, with hyperlisp, you will often create code who's 
 output is code in itself.&nbsp;&nbsp;in javascript, and other interpreted languages, this can also be done, through means of for instance 
-the eval function, but in hyper lisp, this concept is taken to a completely new level.&nbsp;&nbsp;the forms editor, and the wizards in 
+the eval function, but in hyperlisp, this concept is taken to a completely new level.&nbsp;&nbsp;the forms editor, and the wizards in 
 magix, are for instance in their entirety created as code that produces code as its output</p>
 
-<p>to put things in context; you'd want to create facebook in hyper lisp, but you'd not want to create a 3d racing game in hyper 
-lisp.&nbsp;&nbsp;or, you'd want to create the server infrastructure of your 3d racing game in hyper lisp, but you'd not want to create the 
-3d rendering engine in it.&nbsp;&nbsp;or, you'd want to create a front end for your search engine in hyper lisp, but you'd not want 
-to create your database system in hyper lisp.&nbsp;&nbsp;hyper lisp is built for scalability, not for speed</p>
+<p>to put things in context; you'd want to create facebook in hyperlisp, but you'd not want to create a 3d racing game in hyper 
+lisp.&nbsp;&nbsp;or, you'd want to create the server infrastructure of your 3d racing game in hyperlisp, but you'd not want to create the 
+3d rendering engine in it.&nbsp;&nbsp;or, you'd want to create a front end for your search engine in hyperlisp, but you'd not want 
+to create your database system in hyperlisp.&nbsp;&nbsp;hyperlisp is built for scalability, not for speed</p>
 
 {{
 lambda=>next

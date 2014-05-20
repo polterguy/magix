@@ -1,28 +1,28 @@
 ﻿
-<h2>the active event executor</h2>
+<h2>the hyperlisp executor</h2>
 
-<p>the active event executor allows you to execute any active events you wish.&nbsp;&nbsp;this includes executing any {{
+<p>the hyperlisp executor allows you to execute any active events you wish.&nbsp;&nbsp;this includes executing any {{
 link-button=>hyperlisp
-  value=>hyper lisp
+  value=>hyperlisp
   onclick
     magix.help.open-file
       file=>system42/admin/help/hyper-lisp/index.mml
 }} code you wish</p>
 
-<p>the active event executor has three main areas.&nbsp;&nbsp;it has an input text-area at its top, which is for typing in 
-hyper lisp, or passing in parameters to your active event.&nbsp;&nbsp;in addition, it has a place where you can type in what 
+<p>the hyperlisp executor has three main areas.&nbsp;&nbsp;it has an input text-area at its top, which is for typing in 
+hyperlisp, or passing in parameters to your active event.&nbsp;&nbsp;in addition, it has a place where you can type in what 
 active event you wish to execute.&nbsp;&nbsp;when you type in an active event, you will have an autocompleter which helps 
 you to track down and find the right active event.&nbsp;&nbsp;if you type in for instance <em>".exe"</em>, you will get 
 a list of all active events that contains that particular string.&nbsp;&nbsp;the third part, below the active event selector, 
 is the output.&nbsp;&nbsp;this place will light up, and show the result of whatever active event you chose to execute, 
 after you have executed it</p>
 
-<p>the active event executor is highly useful, and probably one of the places where you will want to spend the most of your time when 
+<p>the hyperlisp executor is highly useful, and probably one of the places where you will want to spend the most of your time when 
 you have taught yourself magix.&nbsp;&nbsp;you can actually do anything you wish from the executor.&nbsp;&nbsp;you can develop entire 
 applications through the executor if you wish.&nbsp;&nbsp;when you start the active event executor, it starts out by default in 
 <em>"hello world"</em> mode, and you can instantly click execute to see a message box</p>
 
-<p>the two arrows at the top/right corner of the input area, are there to help you to indent and de-indent hyper lisp code.&nbsp;&nbsp;
+<p>the two arrows at the top/right corner of the input area, are there to help you to indent and de-indent hyperlisp code.&nbsp;&nbsp;
 if you click the right arrow, then all the code in your input area will have two spaces prepended in front of them.&nbsp;&nbsp;the 
 opposite effect will occur if you click the left arrow</p>
 
@@ -31,10 +31,10 @@ hence become the input to another execution of your executor.&nbsp;&nbsp;some pa
 code up from the output to the input area.&nbsp;&nbsp;for instance, all occurrences of [inspect] will be removed, to make sure 
 your code is executable, since the [inspect] keyword makes your code for the most parts non-executable</p>
 
-<p>the active event executor is your "goto" area, if you wish to configure or change the state of your system somehow.&nbsp;&nbsp;
+<p>the hyperlisp executor is your "goto" area, if you wish to configure or change the state of your system somehow.&nbsp;&nbsp;
 from here, you can create new dynamically created active events, override existing active events, tunnel existing active event 
 invocations, and open up specific active events such that they're invokable by external servers.&nbsp;&nbsp;in addition to literally 
-a gazillion other things.&nbsp;&nbsp;from the active event executor, you basically have access to your entire system, through a 
+a gazillion other things.&nbsp;&nbsp;from the hyperlisp executor, you basically have access to your entire system, through a 
 command-line type of interface</p>
 
 {{

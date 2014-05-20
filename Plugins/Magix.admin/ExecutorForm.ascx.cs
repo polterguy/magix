@@ -125,7 +125,7 @@ namespace Magix.admin
 				e.Params.Clear();
 				e.Params["event:magix.admin.set-code"].Value = null;
 				e.Params["inspect"].Value = @"sets the code to what is given in [code]
-in the active event executor.&nbsp;&nbsp;not thread safe";
+in the hyperlisp executor.&nbsp;&nbsp;not thread safe";
 				e.Params["code"].Value =  @"
 event:magix.execute
 Data=>thomas

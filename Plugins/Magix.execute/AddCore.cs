@@ -10,12 +10,12 @@ using Magix.Core;
 namespace Magix.execute
 {
 	/**
-	 * hyper lisp add logic
+	 * hyperlisp add logic
 	 */
 	public class AddCore : ActiveController
 	{
 		/**
-		 * add hyper lisp keyword
+		 * add hyperlisp keyword
 		 */
 		[ActiveEvent(Name = "magix.execute.add")]
 		public static void magix_execute_add(object sender, ActiveEventArgs e)

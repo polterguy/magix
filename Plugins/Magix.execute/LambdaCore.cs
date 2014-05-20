@@ -10,7 +10,7 @@ using Magix.Core;
 namespace Magix.execute
 {
 	/**
-	 * hyper lisp lambda keyword
+	 * hyperlisp lambda keyword
 	 */
 	public class LambdaCore : ActiveController
 	{

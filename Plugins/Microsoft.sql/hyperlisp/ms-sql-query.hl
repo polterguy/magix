@@ -243,10 +243,10 @@ where
             set=>[@][..][..][_lb][class].Value
               value=>{0} primary-key-column
                 v0=>[@][..][..][_lb][class].Value
-            set=>[@][..][..][_lb][tip].Value
+            set=>[@][..][..][_lb][title].Value
               value=>primary key
         else
-          set=>[@][..][_lb][tip]
+          set=>[@][..][_lb][title]
         add=>[/][magix.forms.create-web-part:0][controls]
           value=>[@][_lb]
         set=>[/][magix.forms.create-web-part:0][controls][_lb].Name

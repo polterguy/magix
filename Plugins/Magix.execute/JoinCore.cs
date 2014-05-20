@@ -10,7 +10,7 @@ using Magix.Core;
 namespace Magix.execute
 {
 	/**
-	 * hyper lisp join keyword
+	 * hyperlisp join keyword
 	 */
 	public class JoinCore : ActiveController
 	{

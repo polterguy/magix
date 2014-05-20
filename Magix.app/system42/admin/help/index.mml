@@ -1,6 +1,6 @@
 ﻿<h2>welcome to magix</h2>
 
-<img src="media/images/marvin-headshot.png" 
+<img src="media/images/help-files/marvin-headshot.png" 
   style="margin-right:10px;float:left;" 
   class="blockable" 
   alt="marvin, your friendly neighborhood super-intelligent robot!" />
@@ -28,7 +28,7 @@ link-button=>go-to-ide
 }}. once your domain logic is implemented, your non-technical staff 
 can wire together the domain logic, through the use of {{
 link-button=>go-to-hyper-lisp
-  value=>hyper lisp
+  value=>hyperlisp
   onclick
     magix.help.open-file
       file=>system42/admin/help/hyper-lisp/index.mml
@@ -158,7 +158,7 @@ link-button=>active-event-list
 }}</li>
 <li>{{
 link-button=>active-event-executor-start
-  value=>active event executor
+  value=>hyperlisp executor
   onclick
     magix.help.open-file
       file=>system42/admin/help/backend/active-event-executor.mml
@@ -184,11 +184,11 @@ link-button=>qr-codes
 </div>
 
 <div class="span-7">
-<label>hyper lisp, aspies</label>
+<label>hyperlisp, aspies</label>
 <ul class="list-no-bullet">
 <li>{{
 link-button=>hyperlisp
-  value=>hyper lisp
+  value=>hyperlisp
   onclick
     magix.help.open-file
       file=>system42/admin/help/hyper-lisp/index.mml
@@ -196,7 +196,7 @@ link-button=>hyperlisp
 }}</li>
 <li>{{
 link-button=>hyperlisp-2
-  value=>hyper lisp syntax
+  value=>hyperlisp syntax
   onclick
     magix.help.open-file
       file=>system42/admin/help/hyper-lisp/hyper-lisp-syntax.mml
@@ -244,7 +244,7 @@ link-button=>hyperlisp-5
 }}</li>
 <li>{{
 link-button=>hyperlisp-exceptions
-  value=>exception handling in hyper lisp
+  value=>exception handling in hyperlisp
   onclick
     magix.help.open-file
       file=>system42/admin/help/hyper-lisp/exception-handling.mml
@@ -252,7 +252,7 @@ link-button=>hyperlisp-exceptions
 }}</li>
 <li>{{
 link-button=>hyperlisp-7
-  value=>create your own hyper lisp keyword
+  value=>create your own hyperlisp keyword
   onclick
     magix.help.open-file
       file=>system42/admin/help/hyper-lisp/create-keyword.mml
@@ -276,7 +276,7 @@ link-button=>hyperlisp-9
 }}</li>
 <li>{{
 link-button=>hyperlisp-10
-  value=>what to use hyper lisp for
+  value=>what to use hyperlisp for
   onclick
     magix.help.open-file
       file=>system42/admin/help/hyper-lisp/hyper-lisp-general-info.mml
@@ -284,7 +284,7 @@ link-button=>hyperlisp-10
 }}</li>
 <li>{{
 link-button=>hyperlisp-11
-  value=>hyper lisp and data access
+  value=>hyperlisp and data access
   onclick
     magix.help.open-file
       file=>system42/admin/help/hyper-lisp/data-access.mml

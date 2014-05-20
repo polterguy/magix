@@ -1,5 +1,5 @@
 ﻿
-<h2>common hyper lisp keywords</h2>
+<h2>common hyperlisp keywords</h2>
 
 <p>although hyper is completely generic, and possible to change, even as it is running, there exist some common keywords, which 
 you probably should teach yourself.&nbsp;&nbsp;here are the explanation behind some of them, together with some sample code, 
@@ -232,7 +232,7 @@ node to a [magix.viewport.show-message].&nbsp;&nbsp;notice hos we're using the [
 [magix.viewport.show-message] node is constructed inside of the [_data] node.&nbsp;&nbsp;this is because the [lambda] keyword will create 
 a copy of the [_data] node, and execute that copy, without giving the code access to anything else from the execution tree, besides 
 this copy, in addition to any parameters we pass into the lambda execution block.&nbsp;&nbsp;also notice how the original code is not modified 
-after execution, and the input code and output code are the same, if you compare them in the active event executor</p>
+after execution, and the input code and output code are the same, if you compare them in the hyperlisp executor</p>
 
 <p>if we want to, we can also return values from [lambda] code block, such as below</p>
 

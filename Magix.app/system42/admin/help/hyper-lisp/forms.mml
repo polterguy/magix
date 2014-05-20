@@ -1,5 +1,5 @@
 ﻿
-<h2>working with forms or web parts in hyper lisp</h2>
+<h2>working with forms or web parts in hyperlisp</h2>
 
 <p>magix has several active events that you can use to work with forms, or web parts.&nbsp;&nbsp;a web part, is a way for you to 
 collect input from the end user, and can contain any {{
@@ -54,7 +54,7 @@ your web part through the [class] parameter.&nbsp;&nbsp;you declare which contai
 [container] parameter.&nbsp;&nbsp;the [container] parameter can point to any container within your viewport, or a [dynamic] web control 
 you have created yourself, in another web part.&nbsp;&nbsp;the [form-id] is a unique identifier, which you will need later to de-reference 
 the form.&nbsp;&nbsp;however, the most important parameters are the [controls] and the [events] nodes.&nbsp;&nbsp;the [controls] 
-parameter is your list of hyper lisp {{
+parameter is your list of hyperlisp {{
 link-button=>web-controls-jump-2
   value=>web controls
   onclick
@@ -372,12 +372,12 @@ dynamic=>dyn-help-sample-2-web-controls
 
 <p>the above code basically iterates through the list of [_data] nodes, and use it to dynamically create web controls.&nbsp;&nbsp;
 this makes it easy to produce web parts, depending upon your data, and have it dynamically created, according to what ever 
-data you are accessing.&nbsp;&nbsp;this is one of the core features in magix and hyper lisp, that sets it aparts from other 
+data you are accessing.&nbsp;&nbsp;this is one of the core features in magix and hyperlisp, that sets it aparts from other 
 frameworks, by enabling the developer to create code that creates code.&nbsp;&nbsp;at first sight, this might not seem such a big 
 idea, and some will say that other dynamically interpreted programming languages have the same capability, through for instance 
 constructs such as javascript's eval function, but this is simply not true.&nbsp;&nbsp;in magix, you keep the semantics, and the art of creating 
 code that creates code does not mean you'll have to resort to string manipulation, or other constructs, such as javascript dictates.
-&nbsp;&nbsp;in magix and hyper lisp, when you have code that creates code, you keep the semantics, which allows for meta-accessing 
+&nbsp;&nbsp;in magix and hyperlisp, when you have code that creates code, you keep the semantics, which allows for meta-accessing 
 your output code, to analyse it, modify it, and so on.&nbsp;&nbsp;it might take some time before you go <em>"aha"</em>, but when 
 you do, it will be a revelation for your understanding of code and the art of computer programming</p>
 

@@ -11,12 +11,12 @@ using Magix.Core;
 namespace Magix.execute
 {
 	/**
-	 * for-each hyper lisp keyword
+	 * for-each hyperlisp keyword
 	 */
 	public class ForEachCore : ActiveController
 	{
 		/**
-		 * for-each hyper lisp keyword
+		 * for-each hyperlisp keyword
 		 */
 		[ActiveEvent(Name = "magix.execute.for-each")]
 		public static void magix_execute_for_each(object sender, ActiveEventArgs e)

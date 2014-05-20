@@ -11,7 +11,7 @@ using Magix.Core;
 namespace Magix.execute
 {
 	/**
-	 * hyper lisp event support
+	 * hyperlisp event support
 	 */
 	public class EventCore : ActiveController
 	{
@@ -70,7 +70,7 @@ lisp blocks of code, are being correctly re-mapped</p>";
 		}
 
         /**
-         * event hyper lisp keyword
+         * event hyperlisp keyword
          */
         [ActiveEvent(Name = "magix.execute.event")]
         public static void magix_execute_event(object sender, ActiveEventArgs e)
@@ -79,7 +79,7 @@ lisp blocks of code, are being correctly re-mapped</p>";
             if (ShouldInspect(ip))
             {
 				ip["inspect"].Value = @"<p>overrides the active event in [event]
-with the hyper lisp code in the [code] expression</p><p>these types of active events 
+with the hyperlisp code in the [code] expression</p><p>these types of active events 
 can take and return parameters.&nbsp;&nbsp;if you wish to pass in or retrieve parameters, 
 then as you invoke the function, just append your parameters underneath the function 
 invocation, and they will be passed into the function, where they will be accessible 
@@ -193,7 +193,7 @@ restarts</p><p>thread safe</p>";
 		}
 
         /**
-         * entry point for hyper lisp created active event overrides
+         * entry point for hyperlisp created active event overrides
          */
         [ActiveEvent(Name = "magix.execute._active-event-2-code-callback")]
         public static void magix_data__active_event_2_code_callback(object sender, ActiveEventArgs e)
@@ -231,7 +231,7 @@ events raised internally within event</p>";
         }
 
         /**
-         * session-event hyper lisp keyword
+         * session-event hyperlisp keyword
          */
         [ActiveEvent(Name = "magix.execute.session-event")]
         public void magix_execute_session_event(object sender, ActiveEventArgs e)
@@ -240,7 +240,7 @@ events raised internally within event</p>";
             if (ShouldInspect(ip))
             {
                 ip["inspect"].Value = @"<p>overrides the active event in [session-event]
-with the hyper lisp in the [code] expression for the current session</p><p>these types of active 
+with the hyperlisp in the [code] expression for the current session</p><p>these types of active 
 events can take and return parameters.&nbsp;&nbsp;if you wish to pass in or retrieve parameters, 
 then as you invoke the function, just append your args underneath the function invocation, and 
 they will be passed into the function, where they will be accessible underneath a [$] node, 
@@ -287,7 +287,7 @@ safe</p>";
         }
 
         /**
-         * entry point for hyper lisp created active session-event overrides
+         * entry point for hyperlisp created active session-event overrides
          */
         [ActiveEvent(Name = "")]
         public void magix_data__active_event_2_code_callback_session_events(object sender, ActiveEventArgs e)

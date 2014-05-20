@@ -1,5 +1,5 @@
 ﻿
-<h2>hyper lisp keywords</h2>
+<h2>hyperlisp keywords</h2>
 
 <p>as previously mentioned, what keywords you have in your installation of magix, might vary from installation to installation.&nbsp;&nbsp;
 and in fact, you can easily {{
@@ -12,14 +12,14 @@ link-button=>create-keywords
 is within the namespace of "magix.execute".&nbsp;&nbsp;however, to see which keywords are in this particular installation, 
 check out the {{
 link-button=>open-executor
-  value=>hyper lisp keywords
+  value=>hyperlisp keywords
   onclick
     execute-script
       file=>system42/admin/tools/inspect-execute.hl
     magix.viewport.scroll
 }} and inspect them as you wish</p>
 
-<p>below are all the hyper lisp keywords of your installation, with their documentation</p>
+<p>below are all the hyperlisp keywords of your installation, with their documentation</p>
 
 <ul class="list-no-bullet">
 {{

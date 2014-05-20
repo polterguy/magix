@@ -12,7 +12,7 @@ using Magix.Core;
 namespace Magix.execute
 {
 	/*
-	 * hyper lisp implementation
+	 * hyperlisp implementation
 	 */
 	public class ExecuteCore : ActiveController
 	{
@@ -94,7 +94,7 @@ is to be sandboxed</p><p>thread safe</p>";
         }
 
         /*
-         * hyper lisp implementation
+         * hyperlisp implementation
          */
         [ActiveEvent(Name = "magix.execute")]
         [ActiveEvent(Name = "magix.execute.execute")]
@@ -104,16 +104,18 @@ is to be sandboxed</p><p>thread safe</p>";
             if (ShouldInspect(ip))
             {
 				ip["inspect"].Value = @"<p>executes the incoming parameters 
-as hyper lisp, meaning it will raise everything containing a period, while everything 
-not starting with a '_' will be assumed to be a hyper lisp keyword, and appended 
+as hyperlisp, meaning it will raise everything containing a period, while everything 
+not starting with a '_' will be assumed to be a hyperlisp keyword, and appended 
 behind 'magix.execute.', before that string is raised as an active event</p><p>a 
-hyper lisp keyword will have access to the entire data tree, while a normal active 
+hyperlisp keyword will have access to the entire data tree, while a normal active 
 event will only be able to modify the parts of the tree from underneath its own node
 </p><p>thread safe</p>";
 				ip["_data"]["value"].Value = "thomas";
-				ip["if"].Value = "[_data][value].Value==thomas";
-				ip["if"]["magix.viewport.show-message"].Value = null;
-				ip["if"]["magix.viewport.show-message"]["message"].Value = "hi thomas";
+				ip["if"].Value = "equals";
+                ip["if"]["lhs"].Value = "[_data][value].Value";
+                ip["if"]["rhs"].Value = "thomas";
+                ip["if"]["code"]["magix.viewport.show-message"].Value = null;
+                ip["if"]["code"]["magix.viewport.show-message"]["message"].Value = "hi thomas";
 				ip["else"]["magix.viewport.show-message"].Value = null;
 				ip["else"]["magix.viewport.show-message"]["message"].Value = "hi stranger";
 				return;

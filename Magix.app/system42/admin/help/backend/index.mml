@@ -3,13 +3,13 @@
 
 <p>the backend of magix is a place from where you can do almost anything you wish.&nbsp;&nbsp;
 from the back-end administrative interface of magix, you can do almost everything described in these help files, 
-including create applications in hyper lisp.&nbsp;&nbsp;
+including create applications in hyperlisp.&nbsp;&nbsp;
 from the backend parts of magix, you can</p>
 
 <ul>
 <li>create {{
 link-button=>go-to-hyper-lisp
-  value=>hyper lisp
+  value=>hyperlisp
   onclick
     magix.help.open-file
       file=>system42/admin/help/hyper-lisp/index.mml
@@ -26,7 +26,7 @@ link-button=>go-to-apps
 <li>edit, create and manage files through the file browser</li>
 <li>created qr codes, for easy access to your system from smart phones, and similar technologies</li>
 <li>change security settings of your system</li>
-<li>play around with hyper lisp code to teach yourself the system through the built-in active event executor</li>
+<li>play around with hyperlisp code to teach yourself the system through the built-in hyperlisp executor</li>
 </ul>
 
 <p>when you open up magix, you will see 4 different main panels; learn, applications, security and tools.&nbsp;&nbsp;

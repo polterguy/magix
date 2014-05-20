@@ -1,10 +1,6 @@
 
 * create support for multiple data pointers, and de-referencing them through [.], [..], [...] and so on
 
-* clean up magix.forms namespace
-
-* clean up inheritance chain for web controls in magix.forms.controls namespace
-
 * clean up saving logic for web forms in forms builder
 
 * support for dynamically filling all containers in viewport through page/master-page builder, or something
@@ -23,9 +19,7 @@
 
 * remove all /** comments for consistency
 
-* dragging and dropping files into active event executor
-
-* rename active event executor to hyper lisp executor
+* dragging and dropping files into hyperlisp executor
 
 * "analyze code" feature in active event executor, that traverse the code for keywords, and creates a "report" of the code
 
@@ -36,7 +30,7 @@
 
 * unit testing for sandboxing features
 
-* timed execution, hyper lisp executing at a specific datetime, and/or interval
+* timed execution, hyperlisp executing at a specific datetime, and/or interval
 
 * refactor all active events to not take value parameters, such as set-viewstate
 
@@ -44,7 +38,7 @@
 
 * delete record in ms sql database manager button
 
-* create comments for all hyper lisp, and refactor most hyper lisp
+* create comments for all hyperlisp, and refactor most hyperlisp
 
 * make sure magix.math.xxx uses e.params correctly, and document magix.math
 

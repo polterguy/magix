@@ -11,19 +11,19 @@ using Magix.Core;
 namespace Magix.tiedown
 {
 	/**
-	 * runs the page load hyper lisp file
+	 * runs the page load hyperlisp file
 	 */
 	public class PageLoadCore : ActiveController
 	{
 		/**
-		 * runs the page load hyper lisp file
+		 * runs the page load hyperlisp file
 		 */
 		[ActiveEvent(Name = "magix.viewport.page-load")]
 		public void magix_viewport_page_load(object sender, ActiveEventArgs e)
 		{
 			if (ShouldInspect(e.Params))
 			{
-				e.Params["inspect"].Value = @"executes the index.hl hyper lisp file";
+				e.Params["inspect"].Value = @"executes the index.hl hyperlisp file";
 				return;
 			}
 

@@ -24,7 +24,7 @@ namespace Magix.tiedown
 		{
 			if (ShouldInspect(e.Params))
 			{
-				e.Params["inspect"].Value = @"executes the load-viewport.hl hyper lisp file";
+				e.Params["inspect"].Value = @"executes the load-viewport.hl hyperlisp file";
 				return;
 			}
 

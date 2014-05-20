@@ -12,12 +12,12 @@ using Magix.Core;
 namespace Magix.execute
 {
 	/*
-	 * hyper lisp index-of keyword
+	 * hyperlisp index-of keyword
 	 */
 	public class IndexOfCore : ActiveController
 	{
 		/*
-		 * hyper lisp index-of keyword
+		 * hyperlisp index-of keyword
 		 */
 		[ActiveEvent(Name = "magix.execute.index-of")]
 		public static void magix_execute_index_of(object sender, ActiveEventArgs e)

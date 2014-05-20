@@ -12,12 +12,12 @@ using Magix.Core;
 namespace Magix.execute
 {
 	/**
-	 * remoting hyper lisp support
+	 * remoting hyperlisp support
 	 */
 	public class RemotingCore : ActiveController
 	{
 		/**
-		 * remoted hyper lisp support
+		 * remoted hyperlisp support
 		 */
 		[ActiveEvent(Name = "magix.core.application-startup")]
 		public static void magix_core_application_startup(object sender, ActiveEventArgs e)
@@ -70,7 +70,7 @@ are being correctly re-mapped</p>";
         }
 
 		/**
-		 * tunnel hyper lisp keyword
+		 * tunnel hyperlisp keyword
 		 */
 		[ActiveEvent(Name = "magix.execute.tunnel")]
 		public static void magix_execute_tunnel(object sender, ActiveEventArgs e)
@@ -144,7 +144,7 @@ safe</p>";
 		}
 
 		/**
-		 * open hyper lisp keyword
+		 * open hyperlisp keyword
 		 */
 		[ActiveEvent(Name = "magix.execute.open")]
 		public static void magix_execute_open(object sender, ActiveEventArgs e)
@@ -195,7 +195,7 @@ the next time your application restarts</p><p>thread safe</p>";
 		}
 
 		/**
-		 * close hyper lisp support
+		 * close hyperlisp support
 		 */
 		[ActiveEvent(Name = "magix.execute.close")]
 		public static void magix_execute_close(object sender, ActiveEventArgs e)

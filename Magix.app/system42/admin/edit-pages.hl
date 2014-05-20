@@ -101,14 +101,14 @@ magix.forms.create-web-part
       items
         default=>web page ...
     panel=>saveWrp
-      class=>span-10
+      class=>span-8
       default=>save
       controls
         text-box=>name
           placeholder=>name ...
           class=>span-3
         button=>save
-          class=>span-3
+          class=>span-2
           value=>save
           onclick
             magix.forms.get-value
@@ -209,7 +209,7 @@ magix.forms.create-web-part
                 id=>imgQrCode
                 value=>true
         button=>delete
-          class=>span-3 last
+          class=>span-2 last
           value=>delete
           disabled=>true
           onclick
@@ -288,7 +288,7 @@ magix.forms.create-web-part
                     value=>tmp/{0}.png
                       v0=>[/][magix.forms.get-value][value].Value
     select=>form
-      class=>span-3 last
+      class=>span-3
       onselectedindexchanged
         magix.forms.get-value
           form-id=>edit-pages

@@ -37,7 +37,7 @@ namespace Magix.QR
 [rounded-corners] is an integer telling the generator the size of the rounded borders, if any.&nbsp;&nbsp;
 [anti-pixelated] is a boolean telling the generator if it is supposed to anti pixelate the pixels, to create smoothing effect, defaults to true.&nbsp;&nbsp;
 [bg-image] tells generator what background image to use to fill the background of the code with, defaults to bumby-white.png.&nbsp;&nbsp;
-[fg-image] tells generator what background image to use to fill the foreground of the code with, defaults to bumpy-black.png.&nbsp;&nbsp;
+[fg-image] tells generator what background image to use to fill the foreground of the code with, defaults to bumpy-dark.png.&nbsp;&nbsp;
 [bg-color] tells generator what color to use as background color.&nbsp;&nbsp;
 [font-name] is the name of the font used to render the [value] property, defaults to 'Comic Sans MS'.&nbsp;&nbsp;
 [font-size] is the size in pixels used to render the [value].&nbsp;&nbsp;
@@ -52,8 +52,8 @@ thread safe";
                 e.Params["magix.qr.create"]["text"].Value = "magix";
                 e.Params["magix.qr.create"]["rounded-corners"].Value = 20;
                 e.Params["magix.qr.create"]["anti-pixelated"].Value = true;
-                e.Params["magix.qr.create"]["bg-image"].Value = "media/images/textures/bumpy-white.png";
-                e.Params["magix.qr.create"]["fg-image"].Value = "media/images/textures/bumpy-black.png";
+                e.Params["magix.qr.create"]["bg-image"].Value = "media/images/textures/bumpy-light.png";
+                e.Params["magix.qr.create"]["fg-image"].Value = "media/images/textures/bumpy-dark.png";
                 e.Params["magix.qr.create"]["bg-color"].Value = "";
                 e.Params["magix.qr.create"]["fg-color"].Value = "";
                 e.Params["magix.qr.create"]["font-name"].Value = "Comic Sans MS";
@@ -75,8 +75,8 @@ thread safe";
             string explanation = e.Params["text"].Get<string>();
             int cornerRadius = e.Params["rounded-corners"].Get<int>(20);
             bool animate = e.Params["anti-pixelated"].Get<bool>(true);
-            string backgroundImage = e.Params["bg-image"].Get<string>("media/images/textures/bumpy-white.png");
-            string foregroundImage = e.Params["fg-image"].Get<string>("media/images/textures/bumpy-black.png");
+            string backgroundImage = e.Params["bg-image"].Get<string>("media/images/textures/bumpy-light.png");
+            string foregroundImage = e.Params["fg-image"].Get<string>("media/images/textures/bumpy-dark.png");
 
             // Image has presedence ...
             string backgroundColor =

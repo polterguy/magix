@@ -19,7 +19,7 @@ employee. inside the employee object, you will find a name object. you will also
 which contains the street address and the zip code of your employee. this results in a 
 tree structure object, which would look like the below, if transformed to {{
 link-button=>go-to-hyper-lisp
-  value=>hyper lisp
+  value=>hyperlisp
   onclick
     magix.help.open-file
       file=>system42/admin/help/hyper-lisp/index.mml

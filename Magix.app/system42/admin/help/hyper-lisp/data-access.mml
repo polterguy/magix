@@ -1,5 +1,5 @@
 ﻿
-<h2>hyper lisp data access</h2>
+<h2>hyperlisp data access</h2>
 
 <p>magix comes with a data layer, which allows you to save and load data to an object oriented database.&nbsp;&nbsp;this is not meant 
 to be a solution for all of your data needs, but rather for internal use for the system.&nbsp;&nbsp;with magix though, you can hook up 

@@ -1,12 +1,12 @@
 ﻿
-<h2>hyper lisp expressions</h2>
+<h2>hyperlisp expressions</h2>
 
-<p>in hyper lisp, there doesn't exist the variables.&nbsp;&nbsp;this is because you're executing the execution tree 
-directly, and hence everything is modifiable in hyper lisp.&nbsp;&nbsp;instead of having variables, you can just modify whatever 
-node in the tree you wish.&nbsp;&nbsp;in hyper lisp, all nodes in the tree are potential data nodes, and hence everything 
+<p>in hyperlisp, there doesn't exist the variables.&nbsp;&nbsp;this is because you're executing the execution tree 
+directly, and hence everything is modifiable in hyperlisp.&nbsp;&nbsp;instead of having variables, you can just modify whatever 
+node in the tree you wish.&nbsp;&nbsp;in hyperlisp, all nodes in the tree are potential data nodes, and hence everything 
 is a variable</p>
 
-<p>to de-reference a node, you must use expressions though.&nbsp;&nbsp;some hyper lisp keywords, allows for the use of 
+<p>to de-reference a node, you must use expressions though.&nbsp;&nbsp;some hyperlisp keywords, allows for the use of 
 expressions.&nbsp;&nbsp;an expression looks like the following</p>
 
 <pre>

@@ -18,7 +18,7 @@ int myInteger = node["myInteger"].Get&lt;int&gt;();</pre>
 
 <p>the Node class has three basic properties; Value, Name and Children. Value is the underlaying assigned 
 value of your node, if any. Name is the name of the Node, and helps you reference a specific Node in 
-both c# and hyper lisp. Children are its child Nodes</p>
+both c# and hyperlisp. Children are its child Nodes</p>
 
 <p>in the above code, the Name of the Node which is assigned the integer value of 5 is "myInteger", its Value 
 is 5, "5" in the latter sample, and it has no Children. that Node is however a child node in the root Node, 

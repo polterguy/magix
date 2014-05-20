@@ -10,7 +10,7 @@ using Magix.Core;
 namespace Magix.execute
 {
 	/*
-	 * exception hyper lisp logic
+	 * exception hyperlisp logic
 	 */
 	public class ExceptionCore : ActiveController
 	{

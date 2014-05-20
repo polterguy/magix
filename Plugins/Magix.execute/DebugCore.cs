@@ -16,7 +16,7 @@ namespace Magix.execute
 	public class DebugCore : ActiveController
 	{
 		/**
-		 * debug hyper lisp keyword
+		 * debug hyperlisp keyword
 		 */
 		[ActiveEvent(Name = "magix.execute.debug")]
 		public void magix_execute_debug(object sender, ActiveEventArgs e)
@@ -24,7 +24,7 @@ namespace Magix.execute
             Node ip = Ip(e.Params);
             if (ShouldInspect(ip))
             {
-				ip["inspect"].Value = @"<p>shows the entire stack of hyper lisp code 
+				ip["inspect"].Value = @"<p>shows the entire stack of hyperlisp code 
 in a modal message box.&nbsp;&nbsp;alternatively, you can submit an expression, pointing 
 to a node list, to show only a subsection of the tree</p><p>not thread safe</p>";
 				ip["debug"].Value = null;

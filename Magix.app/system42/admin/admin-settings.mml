@@ -61,7 +61,7 @@ label=>lblHelp
   class=>span-2 right-text
   tag=>label
   for=>chkHelp
-check=>chkHelp
+check-box=>chkHelp
   class=>span-1
   onfirstload
     magix.data.load

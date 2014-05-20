@@ -1,10 +1,10 @@
 ﻿
 <h2>the [set] keyword, modifying the execution node tree</h2>
 
-<p>hyper lisp doesn't really have the concept of variables.&nbsp;&nbsp;this is because everything is a potential variable in hyper lisp, 
-and the only actual difference between a variable and a hyper lisp keyword, is by convention.&nbsp;&nbsp;if you start a node's name with 
+<p>hyperlisp doesn't really have the concept of variables.&nbsp;&nbsp;this is because everything is a potential variable in hyperlisp, 
+and the only actual difference between a variable and a hyperlisp keyword, is by convention.&nbsp;&nbsp;if you start a node's name with 
 an underscore, then the execution engine will ignore it as a keyword, otherwise it will try to raise an active event with your node's name.&nbsp;&nbsp;
-therefor the [set] keyword can change anything within the execution tree, including creating hyper lisp code</p>
+therefor the [set] keyword can change anything within the execution tree, including creating hyperlisp code</p>
 
 <p>the [set] keyword has many features to help you modify node lists, names and values.&nbsp;&nbsp;let's first take a look at its simplest form</p>
 
@@ -41,7 +41,7 @@ set=>[magix.viewport.show-message][message].Value
   value=>hello world
 </pre>
 
-<p>if you run the above code through the active event executor, you will see that it produces a message box, even though there apparently exists 
+<p>if you run the above code through the hyperlisp executor, you will see that it produces a message box, even though there apparently exists 
 no invocation in the code to show a message box.&nbsp;&nbsp;by using this feature, you can dynamically create code for instance</p>
 
 <p>if you ommit the [value] parameter to your [set] keyword, then whatever you're referencing in your [set] expression will be <em>"nullified"</em>.
@@ -90,7 +90,7 @@ your [value] node's value by index, using braces {}.&nbsp;&nbsp;to de-reference 
 above example, you would use {0}, to de-reference the second child, you would use {1}, and so on.&nbsp;&nbsp;you can add as many children 
 to the [value] node as you wish, and de-reference them in your [value] node's value</p>
 
-<p>in addition, all values in hyper lisp can span multiple lines.&nbsp;&nbsp;imagine you're having a long text string, which contains 
+<p>in addition, all values in hyperlisp can span multiple lines.&nbsp;&nbsp;imagine you're having a long text string, which contains 
 carriage returns, in addition to other characters.&nbsp;&nbsp;the way you would do this, is by putting your text inside of ", and starting 
 the text string with the @ operator, like we've done below</p>
 

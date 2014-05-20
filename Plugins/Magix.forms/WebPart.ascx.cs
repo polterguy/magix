@@ -173,7 +173,7 @@ to the value in [mml]";
 if [form-id] matches and control with given [id] is found.&nbsp;&nbsp;
 [form-id] is conditional, and if not given, will return first control that matches [id], 
 which might be dangerous if you have multiple forms on page.&nbsp;&nbsp;
-no sample code, since not invokable through hyper lisp in a sane way.&nbsp;&nbsp;
+no sample code, since not invokable through hyperlisp in a sane way.&nbsp;&nbsp;
 not thread safe";
 				return;
 			}

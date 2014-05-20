@@ -33,7 +33,7 @@ is from the pages link, underneath the applications panel on your desktop</p>
 this markup language is just like html, except you can also embed server-side web controls into your markup.&nbsp;&nbsp;this allows for 
 mixing in web controls containing {{
 link-button=>hyperlisp
-  value=>hyper lisp
+  value=>hyperlisp
   onclick
     magix.help.open-file
       file=>system42/admin/help/hyper-lisp/index.mml

@@ -3,8 +3,8 @@
 
 <p>nodes can contain nodes.&nbsp;&nbsp;this means that the value of a node, might actually be another node tree.&nbsp;&nbsp;
 this might be useful sometimes, for passing around a node tree, for then to pass in additional parameters, without needing to 
-affect the original node tree.&nbsp;&nbsp;in fact, that's exactly how the execution engine works for hyper lisp, and why 
-we had to do that <em>"funny expression"</em> when we started out with hyper lisp, and created our own hyper lisp extension.&nbsp;&nbsp;
+affect the original node tree.&nbsp;&nbsp;in fact, that's exactly how the execution engine works for hyperlisp, and why 
+we had to do that <em>"funny expression"</em> when we started out with hyperlisp, and created our own hyperlisp extension.&nbsp;&nbsp;
 then consider the following code</p>
 
 <pre>

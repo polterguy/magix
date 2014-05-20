@@ -152,7 +152,7 @@ parts of your execution node tree</p><p>not thread safe</p>";
 web part from an [mml-file] or [mml] value, putting it into the [container] viewport container
 </p><p>[form-id] must be a unique id.&nbsp;&nbsp;you can intermix webcontrols into your mml 
 by creating a control collection, by typing them out inside of brackets such as {{...controls, 
-using hyper lisp syntax, code goes into event handlers here too ...}}</p><p>internally it uses 
+using hyperlisp syntax, code goes into event handlers here too ...}}</p><p>internally it uses 
 LoadActiveModule, hence all the parameters that goes into your [magix.viewport.load-module] 
 active event, can also be passed into this, such as [class], and so on</p><p>the magix markup 
 language can either be hardcoded in through the [mml] node, or exist on a file, which you 

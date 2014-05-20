@@ -14,7 +14,7 @@ shortcuts in the system.&nbsp;&nbsp;thread safe"
   code
     _scripts
       _default_script1
-        text=>hyper lisp reference
+        text=>hyperlisp reference
         category=>learn
         code
           execute-script
@@ -165,7 +165,7 @@ shortcuts in the system.&nbsp;&nbsp;thread safe"
           magix.help.open-file
             file=>system42/admin/help/backend/magix-markup-language.mml
       _default_script10
-        text=>active event executor
+        text=>hyperlisp executor
         category=>tools
         code
           magix.admin.open-event-executor

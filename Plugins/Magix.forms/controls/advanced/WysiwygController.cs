@@ -11,30 +11,30 @@ using Magix.UX.Widgets;
 
 namespace Magix.forms
 {
-	/**
+	/*
 	 * wysiwyg control
 	 */
     public class WysiwygController : BaseWebControlFormElementInputTextController
 	{
-		/**
+		/*
 		 * creates wysiwyg control
 		 */
 		[ActiveEvent(Name = "magix.forms.controls.wysiwyg")]
 		public void magix_forms_controls_wysiwyg(object sender, ActiveEventArgs e)
 		{
-			if (ShouldInspect(e.Params))
+            Node ip = Ip(e.Params);
+			if (ShouldInspect(ip))
 			{
-				Inspect(e.Params);
+				Inspect(ip);
 				return;
 			}
 
-            Node node = Ip(e.Params)["_code"].Value as Node;
-
-			Wysiwyg ret = new Wysiwyg();
-
+            Wysiwyg ret = new Wysiwyg();
             FillOutParameters(e.Params, ret);
 
-			if (node.Contains("value") && 
+            Node node = ip["_code"].Value as Node;
+            
+            if (node.Contains("value") && 
 			    !string.IsNullOrEmpty(node["value"].Get<string>()))
 				ret.Value = node["value"].Get<string>();
 
@@ -106,20 +106,19 @@ namespace Magix.forms
 			    !string.IsNullOrEmpty (node["editor-css-file"].Get<string>()))
 				ret.EditorCssFile = node["editor-css-file"].Get<string>();
 
-            Ip(e.Params)["_ctrl"].Value = ret;
+            ip["_ctrl"].Value = ret;
 		}
 
 		protected override void Inspect (Node node)
 		{
-            node["inspect"].Value = @"
-<p>creates a wysiwyg input type of web control.&nbsp;&nbsp;
-a wysiwyg web control ise useful for allowing the end user 
-to type in html or magix markup language to submit to the 
-server</p>";
+            AppendInspect(node["inspect"], @"creates a wysiwyg type of web control
+
+a wysiwyg web control is useful for allowing the end user to type in html or magix 
+markup language to submit to the server");
             node["magix.forms.create-web-part"]["container"].Value = "content5";
             node["magix.forms.create-web-part"]["form-id"].Value = "sample-form";
             base.Inspect(node["magix.forms.create-web-part"]["controls"]["wysiwyg"]);
-            node["magix.forms.create-web-part"]["controls"]["wysiwyg"]["value"].Value = "html markup of wysiwyg control goes here";
+            node["magix.forms.create-web-part"]["controls"]["wysiwyg"]["value"].Value = "some html markup ...";
             node["magix.forms.create-web-part"]["controls"]["wysiwyg"]["placeholder"].Value = "place holder ...";
             node["magix.forms.create-web-part"]["controls"]["wysiwyg"]["has-bold"].Value = true;
             node["magix.forms.create-web-part"]["controls"]["wysiwyg"]["has-italic"].Value = true;
@@ -137,28 +136,25 @@ server</p>";
             node["magix.forms.create-web-part"]["controls"]["wysiwyg"]["has-insertspeech"].Value = true;
             node["magix.forms.create-web-part"]["controls"]["wysiwyg"]["has-showhtml"].Value = true;
             node["magix.forms.create-web-part"]["controls"]["wysiwyg"]["editor-css-file"].Value = "media/grid/main.css";
-            node["inspect"].Value = node["inspect"].Value + @"
-<p><strong>properties for wysiwyg</strong></p><p>[value] 
-sets the visible text of your web control.&nbsp;&nbsp;this 
-is the property which is changed or retrieved when you invoke 
-the [magix.forms.set-value] and the [magix.forms.get-value] 
-for your web control</p><p>[placeholder] is shadow text, only 
-visible when input area is empty.&nbsp;&nbsp;use this property 
-to display some information about your web control</p>
-<p>[editor-css-file] is a url to a css file which will be 
-injected into the wysiwyg control, to style the contents 
-of the html within it</p><p>all the properties that starts 
-with 'has', are booleans that determines whether or not the 
-wysiwyg control has a specific feature or not.&nbsp;&nbsp;
-if these properties are set to true, then the toolbar of the 
-web control will have a button which allows for formatting 
-of text, or insertion of elements, according to whatever the 
-property turns on or off</p><p>legal properties for turning 
-on and off features are; [has-bold], [has-italic], 
-[has-unorderedlist], [has-orderedlist], [has-createlink], 
-[has-insertimage], [has-h1], [has-h2], [has-h3], [has-h4], 
-[has-h5], [has-h6], [has-forecolor], [has-insertspeech] and 
-[has-showhtml]</p>";
+            AppendInspect(node["inspect"], @"[value] sets the visible text of your web 
+control.  this is the property which is changed or retrieved when you invoke the [magix.
+forms.set-value] and the [magix.forms.get-value] for your web control
+
+[placeholder] is shadow text, only visible when input area is empty.use this property 
+to display some information about your web control
+
+[editor-css-file] is a url to a css file which will be injected into the wysiwyg control, 
+to style the contents of the html within it
+
+all the properties that starts with 'has', are booleans that determines whether or not the 
+wysiwyg control has a specific feature or not.  if these properties are set to true, then 
+the toolbar of the web control will have a button which allows for formatting of text, or 
+insertion of elements, according to whatever the property turns on or off
+
+legal properties for turning on and off features are; [has-bold], [has-italic], 
+[has-unorderedlist], [has-orderedlist], [has-createlink], [has-insertimage], [has-h1], 
+[has-h2], [has-h3], [has-h4], [has-h5], [has-h6], [has-forecolor], [has-insertspeech] and 
+[has-showhtml]", true);
 		}
 	}
 }

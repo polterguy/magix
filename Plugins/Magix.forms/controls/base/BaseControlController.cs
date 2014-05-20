@@ -139,7 +139,7 @@ the [id] in any form</p><p>not thread safe</p>";
         public static void magix_forms_set_value(object sender, ActiveEventArgs e)
         {
             Node ip = Ip(e.Params);
-            if (ShouldInspectOrHasInspected(ip))
+            if (ShouldInspect(ip))
             {
                 ip["inspect"].Value = @"<p>sets the value property of the control</p>
 <p>changes the current value of the control to whatever you give it as input in [value].
@@ -170,7 +170,7 @@ and if not given, the logic will change the value of the first control that matc
         public void magix_forms_get_value(object sender, ActiveEventArgs e)
         {
             Node ip = Ip(e.Params);
-            if (ShouldInspectOrHasInspected(ip))
+            if (ShouldInspect(ip))
             {
                 ip["inspect"].Value = @"<p>returns the value of the control</p>
 <p>the value will be returned as [value].&nbsp;&nbsp;the [id] is the id of the 
@@ -237,34 +237,39 @@ any form</p><p>not thread safe</p>";
 			Node tmp = node;
 			while (!tmp.Contains("inspect"))
 				tmp = tmp.Parent;
-            tmp["inspect"].Value = tmp["inspect"].Get<string>() + @"<p>all active event handlers, will have 
-the [info] value, and whatever value the control 
-has, automatically added to the [$] collection when any active events are raised.&nbsp;&nbsp;to retreieve 
-these values, use either [$][info] or [$][value] in your expressions, from within your active event 
-handlers.&nbsp;&nbsp;active event handlers are recognized by the fact of that they start with the 
-text 'on' as their property name</p>
-<p><strong>properties inherited from control</strong></p>
-<p>'control_id', or the value 
-of the node, must be a unique id within your 
-form, and will become the control's unique identification within your form.&nbsp;&nbsp;this is the 
-id you use to change or retrieve a control's state after it has been created, in for example the 
-[magix.forms.get-value] active event</p><p>
-[visible] can be true or false, and determines if the control is visible or not.&nbsp;&nbsp;
-you can change or retrieve a controls's visibility with the [magix.forms.set-visible] or [magix.forms.get-visible] active events</p>
-<p>[info] is any additional textually represented 
-piece of information you'd like to attach with your control.&nbsp;&nbsp;[info] is useful for attaching
-meta data with your control, which shouldn't be visible, but still coupled with your 
-control somehow.&nbsp;&nbsp;[info] will be passed in automatically into your control's 
-event handlers for you, together with your control's value through the [$] collection</p>
-<p>[onfirstload] can be used as the means to run initialization code
-during the initial creation of your control in your form.&nbsp;&nbsp;[onfirstload] will only 
-be raised the first time the control is created.&nbsp;&nbsp;this active event is useful for initializing 
-properties for your control, or run code which is only supposed to run once, during the initial initialization 
-of your control</p>";
+            AppendInspect(tmp["inspect"], @"all active event handlers, will have the [info] 
+value, and whatever value the control has, if any, automatically added to the [$] collection 
+when any active events are raised.  to retreieve these values, use either [$][info] or [$]
+[value] in your expressions, from within your active event handlers.  the info parameter is 
+useful for attaching some arbitrary data with your control, that is not supposed to be visible 
+for the end user, but determines some state of your web control
+
+active event handlers are recognized by the fact of that they start with the text 'on' as 
+their property name
+
+'control_id', or the value of the node, must be a unique id within your form, and will become 
+the control's unique identification within your form.  this is the id you use to change or 
+retrieve a control's state after it has been created, in for example the [magix.forms.get-value] 
+active event.  you can also create an [id] node, which contains the control_id of your control, 
+instead of having it as the value of your control node
+
+[visible] can be true or false, and determines if the control is visible or not.  you can change 
+or retrieve a controls's visibility with the [magix.forms.set-visible] or [magix.forms.get-visible] 
+active events
+
+[info] is any additional textually represented piece of information you'd like to attach with your 
+control.  info is useful for attaching meta data with your control, which shouldn't be visible, but 
+still coupled with your control somehow.  info will be passed in automatically into your control's 
+event handlers for you, together with your control's value through the [$] collection
+
+[onfirstload] can be used as the means to run initialization code during the initial creation of 
+your control in your form.  onfirstload will only be raised the first time the control is created.  
+this active event is useful for initializing properties for your control, or run code which is 
+only supposed to run once, during the initial initialization of your control", true);
 			node.Value = "control_id";
 			node["visible"].Value = true;
 			node["info"].Value = "any arbitrary additional info";
-			node["onfirstload"].Value = "hyper lisp code";
+			node["onfirstload"].Value = "hyperlisp code";
 		}
 
 		protected static T FindControl<T>(Node pars) where T : Control

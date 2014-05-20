@@ -11,12 +11,12 @@ using Magix.Core;
 namespace Magix.execute
 {
 	/**
-	 * with hyper lisp keyword
+	 * with hyperlisp keyword
 	 */
 	public class WithCore : ActiveController
 	{
 		/**
-		 * for-each hyper lisp keyword
+		 * for-each hyperlisp keyword
 		 */
 		[ActiveEvent(Name = "magix.execute.with")]
 		public static void magix_execute_with(object sender, ActiveEventArgs e)

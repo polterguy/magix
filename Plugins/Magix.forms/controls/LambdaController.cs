@@ -25,27 +25,21 @@ namespace Magix.forms
             Node ip = Ip(e.Params);
 			if (ShouldInspect(ip))
 			{
-				ip["inspect"].Value = @"
-<p>creates a lambda type of web control.&nbsp;&nbsp;
-the lambda control is a control which have late creation 
-of its child controls.&nbsp;&nbsp;this means that when 
-the lambda is declared, it is not obvious which controls 
-it will contain, but rather due to hyper lisp logic within 
-your [oncreatecontrols] hyper lisp active event, the 
-lambda control will dynamically create its child control 
-collection, only once rendered.&nbsp;&nbsp;the lambda 
-might appear similar to the dynamic control, but has some 
-unique features which makes it useful in places where the 
-dynamic web control doesn't quite do the trick</p><p>
-<strong>properties for label</strong></p><p>[oncreatecontrols] 
-is the hyper lisp code executing when the control is lately 
-bound.&nbsp;&nbsp;the [oncreatecontrols] event is expected 
-to return control(s), or nothing, in the [$] return node.
-&nbsp;&nbsp;return for instance [link-button] inside the 
-[$] collection to create a link-button.&nbsp;&nbsp;the 
-lambda control doesn't render any outher html, but only 
-serves as a container of other controls, without any markup 
-of its own</p>";
+				AppendInspect(ip["inspect"], @"creates a lambda type of web control
+
+the lambda control is a control which have late creation of its child controls.  this 
+means that when the lambda is declared, it is not obvious which controls it will 
+contain, but rather due to hyperlisp logic within your [oncreatecontrols] hyperlisp 
+active event, the lambda control will dynamically create its child control collection, 
+only once rendered.  the lambda might appear similar to the dynamic control, but has 
+some unique features which makes it useful in places where the dynamic web control 
+doesn't quite do the trick
+
+[oncreatecontrols] is the hyperlisp code executing when the control is lately bound.  
+the oncreatecontrols event is expected to return control(s), or nothing, in the [$] 
+return node.  return any web controls or controls within the [$] collection to create 
+a dynamically created control collection.  the lambda control doesn't render any outher 
+html, but only serves as a container of other controls, without any markup of its own");
                 ip["magix.forms.create-web-part"]["container"].Value = "content5";
                 ip["magix.forms.create-web-part"]["form-id"].Value = "sample-form";
                 ip["magix.forms.create-web-part"]["controls"]["lambda"].Value = "idOfLambda";

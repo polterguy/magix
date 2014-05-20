@@ -6,7 +6,7 @@ in the magix.admin namespace"
 
 event=>magix.admin.open-event-executor
   persist=>false
-  inspect=>@"opens up the active event executor"
+  inspect=>@"opens up the hyperlisp executor"
 
   code
     if=>exist
@@ -46,7 +46,7 @@ event sniffer, or tracer"
 
 event=>magix.admin.load-executor-code
   persist=>false
-  inspect=>@"opens up the active event 
+  inspect=>@"opens up the hyperlisp 
 executor, and pust the [code] node into its input code
 surface"
   code

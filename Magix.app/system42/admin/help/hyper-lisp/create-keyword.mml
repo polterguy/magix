@@ -1,8 +1,8 @@
 ﻿
-<h2>create your own hyper lisp keywords</h2>
+<h2>create your own hyperlisp keywords</h2>
 
-<p>in hyper lisp, you can create your own keyword, either by using c#, or by using hyper lisp in itself.&nbsp;&nbsp;to create a keyword 
-in hyper lisp, you would need to do something such as the code below</p>
+<p>in hyperlisp, you can create your own keyword, either by using c#, or by using hyperlisp in itself.&nbsp;&nbsp;to create a keyword 
+in hyperlisp, you would need to do something such as the code below</p>
 
 <pre>
 event=>magix.execute.add-numbers
@@ -20,7 +20,7 @@ event=>magix.execute.add-numbers
 keyword.&nbsp;&nbsp;then the [using] statement will calculate the sum of these numbers, before finally the [set] statement will 
 set the value of the [add-numbers] as the result of this add operation.&nbsp;&nbsp;the [serialize] node, tells the engine whether 
 or not it should actually persist the active event to the data storage or not.&nbsp;&nbsp;to use the above event, consider the 
-following hyper lisp code</p>
+following hyperlisp code</p>
 
 <pre>
 add-numbers
@@ -29,7 +29,7 @@ add-numbers
   =>7
 </pre>
 
-<p>the above hyper lisp code, will produce the folowing result</p>
+<p>the above hyperlisp code, will produce the folowing result</p>
 
 <pre>
 add-numbers<strong>=(dec)>16</strong>
@@ -38,11 +38,11 @@ add-numbers<strong>=(dec)>16</strong>
   =>7
 </pre>
 
-<p>every active event you put into the <em>"magix.execute"</em> namespace, will automatically be threated as a hyper lisp keyword, and have access 
+<p>every active event you put into the <em>"magix.execute"</em> namespace, will automatically be threated as a hyperlisp keyword, and have access 
 to the [_ip] and [_dp] nodes, as long as you invoke it without using the <em>"magix.execute"</em> namespace.&nbsp;&nbsp;this is because 
 as previously mentioned, when an active event is raised without any "." in its invocation name, then the active event will have access 
 to the entire tree of execution.&nbsp;&nbsp;when it in addition is existing within the magix.execute namespace, it will be 
-threated as a hyper lisp keyword</p>
+threated as a hyperlisp keyword</p>
 
 <p>to understand what actually goes on inside of the [add-numbers] active event, it might be useful to add a [debug] instruction 
 to the event itself, and then execute it.&nbsp;&nbsp;modify the active event with the code below</p>
@@ -98,7 +98,7 @@ expect it to behave
 
 <p>in a normal active event, created with the [event] keyword, the [/] expression accessor, 
 would return the root node of the active event [code] node.&nbsp;&nbsp;however, since this is an active event raised without any "." in 
-its name, the <em>"root node"</em> of the hyper lisp code executed, will become the [add-numbers] node 
+its name, the <em>"root node"</em> of the hyperlisp code executed, will become the [add-numbers] node 
 itself.&nbsp;&nbsp;therefor the [/] expression accessor cannot be used inside the event itself, the way it would have been possible 
 to use in an active event raised with a "." in its invocation name.&nbsp;&nbsp;this is why we have to use
 </p>
@@ -109,7 +109,7 @@ to use in an active event raised with a "." in its invocation name.&nbsp;&nbsp;t
 
 <pre>add=>[/][using][add]</pre>
 
-<p>you can also of course create your hyper lisp keywords as active events in c#.&nbsp;&nbsp;for how to do this, 
+<p>you can also of course create your hyperlisp keywords as active events in c#.&nbsp;&nbsp;for how to do this, 
 check out the {{
 link-button=>csharp
   value=>c# section

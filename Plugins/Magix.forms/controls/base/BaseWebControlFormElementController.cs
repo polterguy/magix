@@ -87,5 +87,25 @@ namespace Magix.forms
                 codeNode["disabled"].Value != null)
                 that.Disabled = codeNode["disabled"].Get<bool>();
         }
+
+        protected override void Inspect(Node node)
+        {
+            Node tmp = node;
+            while (!tmp.Contains("inspect"))
+                tmp = tmp.Parent;
+            base.Inspect(node);
+            AppendInspect(tmp["inspect"], @"[accesskey] is the keyboard shortcut.  
+how to invoke the keyboard shortcut is different from system to system, but on a 
+windows system, you normally invoke the keyboard shortcut with alt+shift+your-key.  
+if you have for instance 's' as your keyboard shortcut, then the end user will 
+have to hold down shift+alt+s at the same time to invoke the keyboard shortcut for 
+your web control
+
+[disabled] enables or disables the web control.  this can be changed or retrieved 
+after the button is created, by invoking the [magix.forms.set-enabled] or [magix.
+forms.get-enabled] active events.  legal values are true and false", true);
+            node["accesskey"].Value = "q";
+            node["disabled"].Value = "false";
+        }
     }
 }
