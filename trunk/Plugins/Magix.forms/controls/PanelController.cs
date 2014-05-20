@@ -15,13 +15,13 @@ namespace Magix.forms
 	/*
 	 * panel control
 	 */
-    public class PanelController : AttributeControlController
+    internal sealed class PanelController : AttributeControlController
 	{
 		/*
 		 * creates a panel control
 		 */
 		[ActiveEvent(Name = "magix.forms.controls.panel")]
-		public void magix_forms_controls_panel(object sender, ActiveEventArgs e)
+		private void magix_forms_controls_panel(object sender, ActiveEventArgs e)
 		{
             Node ip = Ip(e.Params);
 			if (ShouldInspect(ip))
@@ -96,7 +96,7 @@ namespace Magix.forms
 		 * returns values
 		 */
         [ActiveEvent(Name = "magix.forms.get-children-values")]
-        public void magix_forms_get_children_values(object sender, ActiveEventArgs e)
+        private void magix_forms_get_children_values(object sender, ActiveEventArgs e)
         {
             if (ShouldInspect(e.Params))
             {
@@ -146,32 +146,28 @@ and value being the value of the control";
 
 		protected override void Inspect (Node node)
 		{
-            AppendInspect(node["inspect"], @"creates a panel type of web control
-
-a panel is a container control for other web controls.  add up other web controls 
-and controls into its [control] collection, such that your panel serves as a wrapper 
-for your other controls.  you can also set the [default] to the id of a specific 
-control, such as a button, which will automatically raise [onclick] on that control 
-if carriage return is pressed into a text-box, or something similar, within the scope 
-of the panel");
-            node["magix.forms.create-web-part"]["container"].Value = "content5";
-            node["magix.forms.create-web-part"]["form-id"].Value = "sample-form";
+            AppendInspectFromResource(
+                node["inspect"],
+                "Magix.forms",
+                "Magix.forms.hyperlisp.inspect.hl",
+                "[magix.forms.panel-dox-start].Value");
+            AppendCodeFromResource(
+                node,
+                "Magix.forms",
+                "Magix.forms.hyperlisp.inspect.hl",
+                "[magix.forms.panel-sample-start]");
             base.Inspect(node["magix.forms.create-web-part"]["controls"]["panel"]);
-            node["magix.forms.create-web-part"]["controls"]["panel"]["tag"].Value = "p|div|address|etc";
-            node["magix.forms.create-web-part"]["controls"]["panel"]["default"].Value = "default-button";
-            node["magix.forms.create-web-part"]["controls"]["panel"]["controls"]["button"].Value = "default-button";
-            node["magix.forms.create-web-part"]["controls"]["panel"]["controls"]["button"]["value"].Value = "don't work";
-            AppendInspect(node["inspect"], @"[tag] sets the html tag to render panel 
-as.  you can change this to any html tag you wish for the control to be rendered with, 
-such as p, div, label, span or address, etc
-
-[default] sets the default control within your panel.  this is the control which will 
-be automatically clicked if carriage return is pressed while a child control of the 
-panel has focus
-
-[controls] is a collection of child controls, and can contain any web controls or 
-controls you have within your system.  this makes the panel simply become a container 
-for other controls, and do little on its own by itself", true);
+            AppendInspectFromResource(
+                node["inspect"],
+                "Magix.forms",
+                "Magix.forms.hyperlisp.inspect.hl",
+                "[magix.forms.panel-dox-end].Value",
+                true);
+            AppendCodeFromResource(
+                node["magix.forms.create-web-part"]["controls"]["panel"],
+                "Magix.forms",
+                "Magix.forms.hyperlisp.inspect.hl",
+                "[magix.forms.panel-sample-end]");
 		}
 	}
 }

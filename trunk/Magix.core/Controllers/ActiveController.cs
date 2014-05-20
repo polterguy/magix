@@ -202,5 +202,65 @@ namespace Magix.Core
             builder.Append("</p>");
             node.Value = builder.ToString();
         }
+
+        /*
+         * loads string from resource, html formats string and appends it into the given node
+         */
+        protected void AppendInspectFromResource(
+            Node destinationNode,
+            string assemblyName,
+            string resourceName,
+            string expression)
+        {
+            AppendInspectFromResource(
+                destinationNode,
+                assemblyName,
+                resourceName,
+                expression,
+                false);
+        }
+
+        /*
+         * loads string from resource, html formats string and appends it into the given node
+         */
+        protected void AppendInspectFromResource(
+            Node destinationNode,
+            string assemblyName,
+            string resourceName,
+            string expression,
+            bool dropInitialHeader)
+        {
+            Node loadFile = new Node();
+            loadFile["file"].Value = "plugin:magix.file.load-from-resource";
+            loadFile["file"]["assembly"].Value = assemblyName;
+            loadFile["file"]["resource-name"].Value = resourceName;
+            RaiseActiveEvent(
+                "magix.execute.code-2-node",
+                loadFile);
+
+            string value = Expressions.GetExpressionValue(expression, loadFile["node"], loadFile["node"], false).ToString();
+            AppendInspect(destinationNode, value, dropInitialHeader);
+        }
+
+        /*
+         * loads node from resource, and appends into given node
+         */
+        protected void AppendCodeFromResource(
+            Node destinationNode,
+            string assemblyName,
+            string resourceName,
+            string expression)
+        {
+            Node loadFile = new Node();
+            loadFile["file"].Value = "plugin:magix.file.load-from-resource";
+            loadFile["file"]["assembly"].Value = assemblyName;
+            loadFile["file"]["resource-name"].Value = resourceName;
+            RaiseActiveEvent(
+                "magix.execute.code-2-node",
+                loadFile);
+
+            Node value = Expressions.GetExpressionValue(expression, loadFile["node"], loadFile["node"], false) as Node;
+            destinationNode.AddRange(value);
+        }
     }
 }

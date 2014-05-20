@@ -14,46 +14,38 @@ using Magix.UX.Widgets.Core;
 
 namespace Magix.forms
 {
-	/**
+	/*
 	 * effect controller
 	 */
-	public class EffectController : BaseControlController
+    internal sealed class EffectController : BaseControlController
 	{
-		/**
+		/*
 		 * creates a new effect
          */
 		[ActiveEvent(Name = "magix.forms.effect")]
-		protected void magix_forms_effect(object sender, ActiveEventArgs e)
+		private void magix_forms_effect(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+            Node ip = Ip(e.Params);
+			if (ShouldInspect(ip))
 			{
-				e.Params["inspect"].Value = @"creates an effect on the 
-[id] element in the viewport lasting for [time] milliseconds [joined] with and chaining
-executing [chained] afterwards.&nbsp;&nbsp;
-different effects have different properties.&nbsp;&nbsp;not thread safe";
-				e.Params["type"].Value = "fade-in|fade-out|focus-and-select|highlight|move|roll-up|roll-down|size|slide|timeout";
-				e.Params["id"].Value = "idOfMyWidget";
-				e.Params["form-id"].Value = "form-id";
-				e.Params["time"].Value = 500M;
-				e.Params["joined"]["e0"]["type"].Value = "fade-in";
-				e.Params["chained"]["e0"]["type"].Value = "fade-in";
-				e.Params["chained"]["e0"]["time"].Value = 500M;
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.forms",
+                    "Magix.forms.hyperlisp.inspect.hl",
+                    "[magix.forms.effect-dox].Value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.forms",
+                    "Magix.forms.hyperlisp.inspect.hl",
+                    "[magix.forms.effect-sample]");
 				return;
 			}
 
-            Control ctrl = FindControl<Control>(Ip(e.Params));
-
-			if (ctrl == null)
-				throw new ArgumentException("couldn't find control to run effect for");
-
-            Effect tmp = CreateEffect(Ip(e.Params), ctrl);
-			tmp.Render();
+            CreateEffect(ip, FindControl<Control>(ip)).Render();
 		}
 
 		private Effect CreateEffect(Node pars, Control ctrl)
 		{
-			string id = null;
-
 			Effect tmp = null;
 			switch (pars["type"].Get<string>())
 			{
@@ -151,6 +143,8 @@ different effects have different properties.&nbsp;&nbsp;not thread safe";
 					    milliseconds = pars["time"].Get<int>();
 				    tmp = new EffectTimeout(milliseconds);
 			    } break;
+                default:
+                    throw new ArgumentException("[type] of effect unrecognized");
 			}
 
 			if (pars.Contains("joined"))
@@ -170,7 +164,6 @@ different effects have different properties.&nbsp;&nbsp;not thread safe";
 					tmp.Chained.Add(tp);
 				}
 			}
-
 			return tmp;
 		}
 	}

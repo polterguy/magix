@@ -50,7 +50,7 @@ where the expressions within them are all pointing deep into the execution tree 
             if (string.IsNullOrEmpty(ip.Get<string>()))
                 throw new ArgumentException("you must supply an expression to [with]");
 
-			Node withExpression = Expressions.GetExpressionValue(ip.Get<string>(), dp, ip, false) as Node;
+			Node withExpression = Expressions.GetExpressionValue(ip.Get<string>(), dp, ip, true) as Node;
             if (withExpression == null)
                 throw new ArgumentException("the expression in your [with] statement returned nothing");
 

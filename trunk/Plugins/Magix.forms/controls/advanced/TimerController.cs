@@ -15,13 +15,13 @@ namespace Magix.forms
 	/*
 	 * timer control
 	 */
-    public class TimerController : BaseControlController
+    internal sealed class TimerController : BaseControlController
 	{
 		/*
 		 * creates timer control
 		 */
 		[ActiveEvent(Name = "magix.forms.controls.timer")]
-		public void magix_forms_controls_timer(object sender, ActiveEventArgs e)
+		private void magix_forms_controls_timer(object sender, ActiveEventArgs e)
 		{
             Node ip = Ip(e.Params);
 			if (ShouldInspect(ip))

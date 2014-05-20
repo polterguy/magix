@@ -70,5 +70,11 @@
 
 * make all controllers with non static event handlers sealed!
 
+* make magix.forms.get-children-values serialize also children of children, all controls within the panel
+
+* make inspect information become loaded from resource file, to clean up code
+
+* verify that active event expressions don't bypass sandbox and max-execution-iterations
+
 
 

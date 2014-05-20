@@ -15,13 +15,13 @@ namespace Magix.forms
 	/*
 	 * select list
 	 */
-    public class SelectController : BaseWebControlListFormElementController
+    internal sealed class SelectController : BaseWebControlListFormElementController
 	{
 		/*
 		 * creates the select list control
 		 */
 		[ActiveEvent(Name = "magix.forms.controls.select")]
-		public void magix_forms_controls_select(object sender, ActiveEventArgs e)
+		private void magix_forms_controls_select(object sender, ActiveEventArgs e)
 		{
             Node ip = Ip(e.Params);
 			if (ShouldInspect(ip))
@@ -56,7 +56,7 @@ namespace Magix.forms
 		 * set-values
 		 */
 		[ActiveEvent(Name = "magix.forms.set-values")]
-		protected void magix_forms_set_values(object sender, ActiveEventArgs e)
+		private void magix_forms_set_values(object sender, ActiveEventArgs e)
 		{
 			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
@@ -88,27 +88,31 @@ not thread safe";
 				lst.ReRender();
 			}
 		}
+
 		protected override void Inspect (Node node)
 		{
-            AppendInspect(node["inspect"], @"creates a select type of web control
-
-select web controls are useful since they can be used much the same way a radio 
-web control can be used, but they take less space.  a select list can have several 
-items, where the name of your node underneath items becomes its value, and value 
-becomes its text to show to end user.  user can then choose only one of these items 
-to be set as active");
-            node["magix.forms.create-web-part"]["container"].Value = "content5";
-            node["magix.forms.create-web-part"]["form-id"].Value = "sample-form";
+            AppendInspectFromResource(
+                node["inspect"],
+                "Magix.forms",
+                "Magix.forms.hyperlisp.inspect.hl",
+                "[magix.forms.select-dox-start].Value");
+            AppendCodeFromResource(
+                node,
+                "Magix.forms",
+                "Magix.forms.hyperlisp.inspect.hl",
+                "[magix.forms.select-sample-start]");
             base.Inspect(node["magix.forms.create-web-part"]["controls"]["select"]);
-            node["magix.forms.create-web-part"]["controls"]["select"]["size"].Value = 5;
-            node["magix.forms.create-web-part"]["controls"]["select"]["onselectedindexchanged"].Value = "hyperlisp code";
-            AppendInspect(node["inspect"], @"[size] changes how many visible 
-choices there shall be at the same time.  if you set this value to anything 
-larger than 1, then the select will not render as a drop-down-list type of 
-control, but show multiple items at the same time
-
-[onselectedindexchanged] is raised when the selected item of the web control 
-is being changed by the user", true);
+            AppendInspectFromResource(
+                node["inspect"],
+                "Magix.forms",
+                "Magix.forms.hyperlisp.inspect.hl",
+                "[magix.forms.select-dox-end].Value",
+                true);
+            AppendCodeFromResource(
+                node["magix.forms.create-web-part"]["controls"]["select"],
+                "Magix.forms",
+                "Magix.forms.hyperlisp.inspect.hl",
+                "[magix.forms.select-sample-end]");
 		}
 		
 		/*

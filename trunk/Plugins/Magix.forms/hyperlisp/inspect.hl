@@ -1,0 +1,762 @@
+﻿
+inspect=>@"contains documentation for 
+the Magix.forms project"
+
+magix.forms.create-web-part-dox=>@"creates a web part
+
+creates a web-part from either a collection of controls, from the 
+magix.forms.controls. namespace, a file containing the control 
+declarations, or a combination of both, and loads it into a viewport 
+container.  in addition, you can attach temporary active events with 
+your web-part, that only exist as long as the web-part is loaded
+
+[form-id] must be a unique id.  form-id is used later for referencing 
+specific web parts, when you wish to retrieve or set a value in one 
+of its containing web controls.  form-id might be either an expression, 
+or a constant
+
+[class] is the css class(es) you wish to use for your web-part.  
+this property will be set to empty if not given, and will become 
+the css classes on the viewport container.  class might be either 
+an expression, or a constant
+
+[controls] contains the controls themselves, and is a list of the 
+controls the form contains.  this is a list of controls, and can 
+be anything existing in the magix.forms.controls. namespace.  if 
+you add a controls node, you cannot add a [controls-file] node.  
+controls might be either an expression, or a constant.  if you 
+supply it as an expression, the expression is expected to return 
+a list of nodes, containing the controls themselves, directly 
+beneath the node returned from the expression
+
+[controls-file] is an alternative way to declare your controls, 
+from the contents of a file.  if you supply controls-file, then 
+the loader requires the controls themselves to be existing as root 
+nodes, directly within the file itself.  you can use any existing 
+plugin that works together with [magix.file.load] to load your 
+controls.  if you supply a controls-file node, you cannot supply 
+a [controls] node.  controls-file might be either an expression, 
+or a constant
+
+[events] is a list of active events, that will only exist as long 
+as the web part is loaded into the container.  these are temporary 
+active events, used in the ui layer of your application, to tie 
+together your ui logic with your business logic for instance.  the 
+name of the active events are the children nodes of the events node 
+itself, and the code to execute is directly beneath the name node 
+of the active event name declaration.  events might be either an 
+expression, or a constant.  if you supply it as an expression, the 
+expression is expected to return a node list, containing the active 
+event themselves, directly beneath the node returned from the 
+expression
+
+[events-file] is an alternative way to declare your temporary, 
+active events from the contents of a file.  if you supply 
+events-file, then the loader requires the active events themselves 
+to be existing as root nodes, directly within the file itself.  you 
+can use any existing plugin that works together with [magix.file.load] 
+to load your temporary active events.  if you supply a events-file node, 
+you cannot supply a [events] node.  events-file might be either an 
+expression, or a constant"
+
+magix.forms.create-web-part-sample
+  magix.forms.create-web-part
+    container=>content3
+    class=>css class(es) of your form
+    form-id=>unique-id
+    events
+      magix.forms.control-clicked
+        magix.viewport.show-message
+          message=>yo
+    controls
+      button=>btn
+        value=>click me
+        onclick
+          magix.forms.control-clicked
+
+
+magix.forms.create-mml-web-part-dox=>@"creates a magix markup web part
+
+creates a web-part from magix markup language, and loads it into a given 
+viewport container.  you can load the magix markup from either a text 
+string, a file, or a combination of both.  in addition, you can associate 
+temporary active events with your web-part, to tie together your ui logic, 
+with your business logic.  magix markup language is a superset of html, 
+with support for intermixing web controls directly into the markup, by 
+putting your web controls and active events inside of double braces 
+{{ ... your web controls collection goes here ... }}
+
+[form-id] must be a unique id.  form-id is used later for referencing 
+specific web parts, when you wish to retrieve or set a value in one 
+of its containing web controls.  form-id might be either an expression, 
+or a constant
+
+[class] is the css class(es) you wish to use for your web-part.  
+this property will be set to empty if not given, and will become 
+the css classes on the viewport container.  class might be either 
+an expression, or a constant
+
+[mml] is a node containing magix markup language directly within 
+the value of the node itself.  if you supply an mml node, you cannot 
+supply an [mml-file] node
+
+[mml-file] is an alternative way to declare your magix markup, 
+from the contents of a file.  if you supply mml-file, then the 
+loader requires the markup to exist directly within the file 
+itself.  you can use any existing plugin that works together 
+with [magix.file.load] to load your controls.  if you supply 
+an mml-file node, you cannot supply a [mml] node.  mml-file 
+might be either an expression, or a constant
+
+[events] is a list of active events, that will only exist as long 
+as the web part is loaded into the container.  these are temporary 
+active events, used in the ui layer of your application, to tie 
+together your ui logic with your business logic for instance.  the 
+name of the active events are the children nodes of the events node 
+itself, and the code to execute is directly beneath the name node 
+of the active event name declaration.  events might be either an 
+expression, or a constant.  if you supply it as an expression, the 
+expression is expected to return a node list, containing the active 
+event themselves, directly beneath the node returned from the 
+expression
+
+[events-file] is an alternative way to declare your temporary, 
+active events from the contents of a file.  if you supply 
+events-file, then the loader requires the active events themselves 
+to be existing as root nodes, directly within the file itself.  you 
+can use any existing plugin that works together with [magix.file.load] 
+to load your temporary active events.  if you supply a events-file node, 
+you cannot supply a [events] node.  events-file might be either an 
+expression, or a constant"
+
+magix.forms.create-mml-web-part-sample
+  magix.forms.create-mml-web-part
+    container=>content3
+    form-id=>unique-id
+    class=>span-22 clear
+    mml=>@"
+<p>notice how you can combine html with {{
+magix.test.hello-world
+  magix.viewport.show-message
+    message=>hello world
+link-button=>btn-hello
+  value=>web controls
+  onclick
+    magix.test.hello-world
+  }} and temporary active events, that 
+exists only as long as the web part exists</p>"
+
+
+magix.forms.effect-dox=>@"creates an effect on a web control
+
+effects are visual clues that can execute on any visible web control, to 
+move the attention of the end user to some specific area of the web browser 
+surface.  often they are being used when some specific web control has updated 
+its content, and the developer wants to inform the end user about this change
+
+[id] is the id of the web control to execute the effect for.  this is the 
+same id as you supplied when you created your web control
+
+[time] is the number of milliseconds the effect will spend to execute.  to
+run the effect for one second for instance, supply 1.000 as its time parameter
+
+[joined] is a list of additional effects, underneath the given effect, that 
+will be joined together, and executed as one with the parent effect
+
+[type] is the type of effect to run, and can be fade-in, fade-out, 
+focus-and-select, highlight, move, roll-up, roll-down, size, slide or timeout.  
+
+fade-in and fade-out takes optionally [to] and [from] which defines what amount 
+of transparency the shall start from, and end at
+
+focus-and-select does not take any parameters besides [id].  even [time] is 
+ignored on focus-and-select.  focus-and-select can only be executed on 
+the text-box and text-area web controls
+
+highlight takes no additional parameters besides [id] and [time]
+
+move takes two mandatory parameters, [left] and [top] which defines at what 
+position you wish to move the web control to
+
+roll-up and roll-down takes no additional parameters besides [id] and [time]
+
+size takes two mandatory parameters, [width] and [height], which becomes the 
+new width and height of the web control after execution
+
+slide takes an additional mandatory parameter, [offset] which becomes the 
+amount of pixels the effect is supposed to slide the web control to"
+
+magix.forms.effect-sample
+  magix.forms.create-web-part
+    container=>content2
+    class=>span-22 last
+    form-id=>form-id-effect-sample
+    controls
+      panel=>panel-effect-sample
+        style=>@"background-color:#ffffff;
+width:200px;height:200px;"
+        controls
+          literal=>literalTxt
+            text=>@"try to click this area"
+        onclick
+          magix.forms.effect
+            type=>fade-out
+            id=>panel-effect-sample
+            form-id=>form-id-effect-sample
+            time=(dec)>500
+            chained
+              e0
+                id=>panel-effect-sample
+                form-id=>form-id-effect-sample
+                type=>fade-in
+                time=(dec)>500
+
+
+magix.forms.button-dox=>@"creates a button input type of web control
+
+the button is probably one of the most commonly used web control, both in magix, and on 
+the web in general.  it renders as &lt;input type='button' ... /&gt;
+
+buttons are clickable objects, and logically similar to [link-button], though rendered 
+differently.  although virtually anything can be a clickable object in magix, it is 
+considered more polite to use buttons and link-buttons as your clickable objects.  first 
+of all, since these web controls are recognized by screen readers and such.  secondly, 
+because it keeeps the semantic parts of your website more correct according to the html 
+standard"
+
+magix.forms.button-sample
+  magix.forms.create-web-part
+    container=>content5
+    form-id=>sample-form
+
+magix.forms.button-sample-end
+  onclick
+    magix.viewport.show-message
+      message=>button was clicked
+
+magix.forms.check-box-dox-start=>@"creates a check-box input type of web control
+
+the check-box web control is useful for representing to the user that he needs 
+to choose one from two options.  the check-box web control renders like &lt;input 
+type='checkbox' .../&gt;"
+
+magix.forms.check-box-sample-start
+  magix.forms.create-web-part
+    container=>content5
+    form-id=>sample-form
+
+magix.forms.check-box-dox-end=>@"[checked] determines the state 
+of the check-box.  if checked is true, then the check-box is checked, and 
+has a visual clue that informs the user of that is is selected.  if checked 
+is false, then is is not selected.  checked is the property which is changed 
+or retrieved when you invoke the [magix.forms.set-value] and the [magix.
+forms.get-value] for your check-box
+
+[oncheckedchanged] is raised when the checked state of your check-box has 
+been changed by the user"
+
+magix.forms.check-box-sample-end
+  checked=>true
+  oncheckedchanged
+    magix.viewport.show-message
+      message=>check-box had its value changed
+
+
+magix.forms.dynamic-dox-start=>@"creates a dynamic panel type of web control
+
+a dynamic panel is a viewport container, which you can load with controls the 
+same way you can load controls into a regular viewport, using for instance 
+[magix.forms.create-web-part]
+
+a dynamic web control, is basically a panel, with the additional feature that 
+it can dynamically load controls into itself"
+
+magix.forms.dynamic-sample-start
+  magix.forms.create-web-part
+    container=>content5
+    form-id=>sample-form
+
+magix.forms.dynamic-dox-end=>@"[tag] sets html tag to render panel 
+as.  you can change this to any html tag you wish the control to be rendered with, 
+such as p, div, label, span or address, etc
+
+[default] sets the default web control within your dynamic.  this is the control 
+which will be automatically clicked if carriage return is pressed while a child 
+control of the dynamic has focus"
+
+magix.forms.dynamic-sample-end
+  tag=>p
+  default=>default-button
+  onfirstload
+    magix.forms.create-web-part
+      container=>control_id
+      form-id=>inner-dynamic
+      class=>span-22 last
+      controls
+        label=>lbl-inner-dynamic
+          value=>this label was dynamically loaded
+
+
+magix.forms.hidden-dox-start=>@"creates a hidden field type of control
+
+hidden fields are invisible to the user, but can store any data as text strings 
+that can be retrieved both on the server, and on the client using javascript"
+
+magix.forms.hidden-sample-start
+  magix.forms.create-web-part
+    container=>content5
+    form-id=>sample-form
+
+magix.forms.hidden-dox-end=>@"[value] is the actual value of the 
+hidden field.  this is the property which is changed or retrieved when you invoke 
+the [magix.forms.set-value] or the [magix.forms.get-value] for your hidden web 
+control"
+
+magix.forms.hidden-sample-end
+  value=>some string value
+  onfirstload
+    magix.forms.get-value
+      form-id=>sample-form
+      id=>control_id
+    set=>[magix.viewport.show-message][message].Value
+      value=>value of hidden field; '{0}'
+        =>[magix.forms.get-value][value].Value
+
+
+magix.forms.hyperlink-dox-start=>@"creates a hyperlink input type of web control
+
+hyperlinks points to other urls, either locally, or externally.  you can choose if the 
+hyperlink should open up in the same window, or another browser window"
+
+magix.forms.hyperlink-sample-start
+  magix.forms.create-web-part
+    container=>content5
+    form-id=>sample-form
+
+magix.forms.hyperlink-dox-end=>@"[value] is the readable text, displayed to 
+the end user of the web control.  this is the property which is changed or retrieved when 
+you invoke the [magix.forms.set-value] and the [magix.forms.get-value] for your control
+
+[href] sets the url of the document to link to.  this can be any url, locally or externally
+
+[target] can _blank, _new, or any id you wish to use, and informs the browser of what browser 
+window to open up the url within once clicked"
+
+magix.forms.hyperlink-sample-end
+  value=>anchor text of hyperlink
+  href=>http://google.com
+  target=>_blank
+
+
+magix.forms.img-dox-start=>@"creates an image type of web control
+
+the image web control is useful for showing images, where you need dynamic behavior, 
+such as onclick event handlers, or the ability to change the image during execution"
+
+magix.forms.img-sample-start
+  magix.forms.create-web-part
+    container=>content5
+    form-id=>sample-form
+
+magix.forms.img-dox-end=>@"[src] sets the image url.  this is the 
+property which is changed or retrieved when you invoke the [magix.forms.set-value] 
+and the [magix.forms.get-value] for your image
+
+[alt] sets alternating text.  the alternating text will be displayed while the image 
+is loading, or if the image cannot be found.  in addition, the alt text will also be 
+the descriptive text that screen readers will read up loud to the end user"
+
+magix.forms.img-sample-end
+  src=>media/images/icons/start-button.png
+  alt=>alternative text
+
+
+magix.forms.label-dox-start=>@"creates a label type of web control
+
+labels are useful for displaying text, but can also be attached to a check-box 
+or a radio web control.  do this by setting the [tag] property to 'label', and 
+the [for] property to the id if your check-box or radio web control"
+
+magix.forms.label-sample-start
+  magix.forms.create-web-part
+    container=>content5
+    form-id=>sample-form
+
+magix.forms.label-dox-end=>@"[value] sets the visible text of 
+label.  this is the property which is changed or retrieved when you invoke the 
+[magix.forms.set-value] and the [magix.forms.get-value] for your web control
+
+[tag] sets html tag to render panel as.  you can change this to any html tag 
+you wish for the control to be rendered with, such as p, div, label, span or 
+address, etc
+
+[for] changes the associated radio or check-box web control the label is 
+pointing to.  if the label is associated with a check-box or a radio, then 
+the checked state of that radio or check-box web control will change if the 
+user clicks the label.  remember to also set the [tag] to 'label' if you use 
+this feature, since only html labels actually will be associated with radio 
+or checkboxes by the browser"
+
+magix.forms.label-sample-end
+  value=>hello world
+  tag=>p
+  for=>another-control-id
+
+
+magix.forms.lambda-dox-start=>@"creates a lambda type of web control
+
+the lambda control is a control which have late creation of its child controls.  this 
+means that when the lambda is declared, it is not obvious which controls it will 
+contain, but rather due to hyperlisp logic within your [oncreatecontrols] hyperlisp 
+active event, the lambda control will dynamically create its child control collection, 
+only once rendered.  the lambda might appear similar to the dynamic control, but has 
+some unique features which makes it useful in places where the dynamic web control 
+doesn't quite do the trick
+
+[oncreatecontrols] is the hyperlisp code executing when the control is lately bound.  
+the oncreatecontrols event is expected to return control(s), or nothing, in the [$] 
+return node.  return any web controls or controls within the [$] collection to create 
+a dynamically created control collection.  the lambda control doesn't render any outher 
+html, but only serves as a container of other controls, without any markup of its own"
+
+magix.forms.lambda-sample-start
+  magix.forms.create-web-part
+    container=>content5
+    form-id=>sample-form
+    controls
+      lambda=>idOfLambda
+        oncreatecontrols
+          set=>[$][link-button][value].Value
+            value=>click me
+          with=>[$][link-button][onclick]
+            set=>[magix.viewport.show-message][message].Value
+              value=>howdy world :)
+
+
+magix.forms.link-button-dox-start=>@"creates a link-button type of web control
+
+a link-button looks, and renders, like a [hyperlink], but acts like a [button]. the 
+link-button is probably one of the most commonly used web control, both in magix, and 
+on the web in general.  it renders as &lt;a href='...'&gt;anchor text&lt;/a&gt;.  the 
+link-button is a clickable object, and logically similar to [button], though rendered 
+differently.  although virtually anything can be a clickable object in magix, it is 
+often more polite to use buttons and link-buttons as your clickable objects.  first of 
+all, since these web controls are recognized by screen readers and such.  secondly, 
+because it keeps the semantic parts of your website more correct"
+
+magix.forms.link-button-sample-start
+  magix.forms.create-web-part
+    container=>content5
+    form-id=>sample-form
+
+magix.forms.link-button-dox-end=>@"[value] is the visible text, or anchor text.  
+this is the property which is changed or retrieved when you invoke the [magix.forms.set-
+value] and the [magix.forms.get-value] for your link-button"
+
+magix.forms.link-button-sample-end
+  value=>hello world
+  onclick
+    magix.viewport.show-message
+      message=>howdy world
+
+
+magix.forms.literal-dox-start=>@"creates a literal type of web control
+
+a literal web control is a container for html, or any text you wish to 
+display as static text.  this is a very lightweight control, and doesn't 
+have support for any active events, and is there only to serve as a 
+wrapper around static html you wish to display.  put any html into the 
+[text] node, to render exactly the html you wish"
+
+magix.forms.literal-sample-start
+  magix.forms.create-web-part
+    container=>content5
+    form-id=>sample-form
+    controls
+      literal
+        text=><h1>hello</h1>
+
+
+magix.forms.panel-dox-start=>@"creates a panel type of web control
+
+a panel is a container control for other web controls.  add up other web controls 
+and controls into its [control] collection, such that your panel serves as a wrapper 
+for your other controls.  you can also set the [default] to the id of a specific 
+control, such as a button, which will automatically raise [onclick] on that control 
+if carriage return is pressed into a text-box, or something similar, within the scope 
+of the panel"
+
+magix.forms.panel-sample-start
+  magix.forms.create-web-part
+    container=>content5
+    form-id=>sample-form
+
+magix.forms.panel-dox-end=>@"[tag] sets the html tag to render panel 
+as.  you can change this to any html tag you wish for the control to be rendered with, 
+such as p, div, label, span or address, etc
+
+[default] sets the default control within your panel.  this is the control which will 
+be automatically clicked if carriage return is pressed while a child control of the 
+panel has focus
+
+[controls] is a collection of child controls, and can contain any web controls or 
+controls you have within your system.  this makes the panel simply become a container 
+for other controls, and do little on its own by itself"
+
+magix.forms.panel-sample-end
+  tag=>p
+  default=>default-button
+  controls
+    text-box=>txt
+      placeholder=>hit enter ...
+    button=>default-button
+      value=>click me
+      onclick
+        magix.viewport.show-message
+          message=>howdy world
+
+
+magix.forms.radio-dox-start=>@"creates a radio type of web control
+
+several radio buttons can be combined together to form a multiple choice type of 
+input value in combination.  to create a group of related radio web controls, make 
+sure all grouped radio controls have the same [name] value.  then only one of your 
+radios can be selected at any time.  meaning you can ask questions such as, 
+'chicken, fish or veggies?', and have one radio web control for each of these choices"
+
+magix.forms.radio-sample-start
+  magix.forms.create-web-part
+    container=>content5
+    form-id=>sample-form
+
+magix.forms.radio-dox-end=>@"[name] sets group association of 
+control.  only one radio belonging to the same group can at any one particular 
+time be checked
+
+[checked] sets its state to true or false.  this is the value which you set or 
+retrieve with the [magix.forms.get-value] or [magix.forms.set-value]
+
+[oncheckedchanged] is the active event raised when the checked state of your 
+radio changes by the user"
+
+magix.forms.radio-sample-end
+  name=>id_of_group
+  checked=(bool)>True
+  oncheckedchanged=>hyperlisp code
+
+magix.forms.select-dox-start=>@"creates a select type of web control
+
+select web controls are useful since they can be used much the same way a radio 
+web control can be used, but they take less space.  a select list can have several 
+items, where the name of your node underneath items becomes its value, and value 
+becomes its text to show to end user.  user can then choose only one of these items 
+to be set as active"
+
+magix.forms.select-sample-start
+  magix.forms.create-web-part
+    container=>content5
+    form-id=>sample-form
+
+magix.forms.select-dox-end=>@"[size] changes how many visible 
+choices there shall be at the same time.  if you set this value to anything 
+larger than 1, then the select will not render as a drop-down-list type of 
+control, but show multiple items at the same time
+
+[onselectedindexchanged] is raised when the selected item of the web control 
+is being changed by the user"
+
+magix.forms.select-sample-end
+  size=(int)>5
+  onselectedindexchanged
+    magix.viewport.show-message
+      message=>selected item was changed
+
+
+magix.forms.text-area-dox-start=>@"creates a text-area type of web control
+
+a text-area is an input control for text, where the end user can type in text.  the 
+text-area can handle multiple lines of input in its text portions"
+
+magix.forms.text-area-sample-start
+  magix.forms.create-web-part
+    container=>content5
+    form-id=>sample-form
+
+magix.forms.text-area-dox-end=>@"[rows] is how many visible rows of 
+text there shall be at the same time.  this property defines the default height 
+of the text-area, though some browsers have the possibility of letting the user 
+increase or decrease the size of text-areas"
+
+magix.forms.text-area-sample-end
+  rows=(int)>5
+
+
+magix.forms.text-box-dox-start=>@"creates a text-box type of web control
+
+a text-box is a web control where the end user can type in text to submit in a form.  
+text-box only supports single lines of input text, without carriage return.  use 
+text-area if you need multiple lines of text"
+
+magix.forms.text-box-sample-start
+  magix.forms.create-web-part
+    container=>content5
+    form-id=>sample-form
+
+magix.forms.text-box-dox-end=>@"[autocapitalize] will automatically 
+capitalize the first letter, as you are typing into the tex-box
+
+[autocorrect] will automatically suggest corrections for typing errors, as you are 
+typing into the text-box
+
+[autocomplete] will suggest previously typed values for you, and attempt to 
+automatically complete the value on the end user's behalf
+
+[maxlength] is the maximum number of characters in the text-box
+
+[type] determines the mode of the text-box.  this depends upon the type of 
+input you wish that your text box shall be accepting.  if you want the user 
+to type in an email address for instance, then use 'email' as the value of this 
+property.  legal values for type is normal, phone, search, url, email, datetime, 
+date, month, week, time, datetimelocal, number, range, color and password"
+
+magix.forms.text-box-sample-end
+  autocapitalize=(bool)>False
+  autocorrect=(bool)>True
+  autocomplete=(bool)>False
+  maxlength=(int)>25
+  type=>normal
+
+
+magix.forms.attribute-dox=>@"an attribute control, is a web control that 
+can have generic attributes attached to it.  you can associate new attributes with your 
+control by prefixing your attribute with an '@' character.  if you do, then an additional 
+html attribute will be rendered back to the browser, with the name of your attribute, 
+minus the first '@' character, and the value of that node.  if you wish for your attribute 
+to actually start with a @ as its attribute name, then add up two consecutive @ signs after 
+each other"
+
+
+magix.forms.base-dox=>@"all active event handlers, will have the [info] 
+value, and whatever value the control has, if any, automatically added to the [$] collection 
+when any active events are raised.  to retreieve these values, use either [$][info] or [$]
+[value] in your expressions, from within your active event handlers.  the info parameter is 
+useful for attaching some arbitrary data with your control, that is not supposed to be visible 
+for the end user, but determines some state of your web control
+
+active event handlers are recognized by the fact of that they start with the text 'on' as 
+their property name
+
+'control_id', or the value of the node, must be a unique id within your form, and will become 
+the control's unique identification within your form.  this is the id you use to change or 
+retrieve a control's state after it has been created, in for example the [magix.forms.get-value] 
+active event.  you can also create an [id] node, which contains the control_id of your control, 
+instead of having it as the value of your control node
+
+[visible] can be true or false, and determines if the control is visible or not.  you can change 
+or retrieve a controls's visibility with the [magix.forms.set-visible] or [magix.forms.get-visible] 
+active events
+
+[info] is any additional textually represented piece of information you'd like to attach with your 
+control.  info is useful for attaching meta data with your control, which shouldn't be visible, but 
+still coupled with your control somehow.  info will be passed in automatically into your control's 
+event handlers for you, together with your control's value through the [$] collection
+
+[onfirstload] can be used as the means to run initialization code during the initial creation of 
+your control in your form.  onfirstload will only be raised the first time the control is created.  
+this active event is useful for initializing properties for your control, or run code which is 
+only supposed to run once, during the initial initialization of your control"
+
+
+magix.forms.base-web-dox=>@"[class] is the css class(es) for your 
+control.  these can be modified or retrieved after you have created your control, 
+with for instance [magix.forms.set-class] and [magix.forms.get-class]
+
+[style] is a collection of inline css styles.  create these the same way you would 
+within a css class in a css file.  name of styles and values of styles are separated 
+by colon ':', while a style setting must end with a semi-colon ';'.  for example 
+""width:100px;height:50px;""
+
+[dir] is the reading direction of text on your web control, and can be either 'ltr', 
+or 'rtl'.  ltr means left-to-right, and is what is used for most languages.  use rtl 
+as the [dir] for languages such as arabic and hebrew, which reads from right to left
+
+[tabindex] is the tab index, or order in your forms tab hierarchy.  the lower this 
+number is, the earlier the control will gain focus as the user clicks tab to cycle 
+focus through the web controls on the form.  for instance, if you have two controls, 
+one with tabindex equal to 1, and another with tabindex equal to 5, then the control 
+with tabindex of 1 will have focus before the one with tabindex of 5, as the end user 
+clicks tab to move focus through the form's controls
+
+[title] is an informational tool tip, shown when the mouse is hovered above control.  
+notice that this property only works for desktop system, which has a mouse, which can 
+be hovered above your control's surface
+
+[onclick] is raised when the web control is clicked.  attach any hyperlisp code you 
+wish here
+
+[ondblclick] is raised when web control is double clicked with the left mouse button, 
+or somehow.  attach any hyperlisp code you wish here
+
+[onmousedown] is raised when the left mouse button is pressed down on control, but 
+before it is released.  attach any hyperlisp code you wish here
+
+[onmouseup] is raised when mouse is released again.  attach any hyperlisp code you 
+wish here
+
+[onmouseover] is raised when mouse is hovered over control.  with magix, the 
+onmouseover and onmouseout is logically fixed in regards to the html standard, such 
+that if you have a panel, which has child controls, then as long as you move the 
+mouse over the panel, it will raise onmouseover.  and not before you move the mouse 
+outside of the panel and its child controls, the onmouseout will be raised.  please 
+notice that this is different from the default brower logic, though more sensible in 
+regards to your web application development.  attach any hyperlisp code you wish here
+
+[onmouseout] is raised when mouse is moved out of control surface.  attach any hyper 
+lisp code you wish here
+
+[onkeypress] is raised when a key is pressed inside of web control, and your web 
+control has focus somehow.  attach any hyperlisp code you wish here
+
+[onesc] is raised when escape key is pressed inside of control.  this is an active 
+event which is added for convenience, since very often it is interesting knowing if 
+the user clicks esc, such that the application can close forms, or undo actions, and 
+similar types of functionality.  attach any hyperlisp code you wish here"
+
+
+magix.forms.base-web-form-element-dox=>@"[accesskey] is the keyboard shortcut.  
+how to invoke the keyboard shortcut is different from system to system, but on a 
+windows system, you normally invoke the keyboard shortcut with alt+shift+your-key.  
+if you have for instance 's' as your keyboard shortcut, then the end user will 
+have to hold down shift+alt+s at the same time to invoke the keyboard shortcut for 
+your web control
+
+[disabled] enables or disables the web control.  this can be changed or retrieved 
+after the button is created, by invoking the [magix.forms.set-enabled] or [magix.
+forms.get-enabled] active events.  legal values are true and false"
+
+
+magix.forms.base-web-form-element-text-input-dox=>@"[placeholder] is a piece of shadow text, that will 
+only display if the web control has no text value.  this is useful for displaying additional 
+information back to the user, explaining what the text-box/text-area is taking as input.  this 
+can be used as an alternative to a descriptive label
+
+[ontextchanged] is raised when the text of the web control has changed, but not before focus 
+is lost somehow"
+
+
+magix.forms.base-web-form-element-text-dox=>@"[value] is the visible text of your button.  
+this is the property which is changed or retrieved when you invoke the [magix.forms.set-
+value] and the [magix.forms.get-value] for your web control"
+
+
+magix.forms.base-web-list-form-element-dox=>@"[items] is a list of key/value nodes, 
+that are the items of the list form element
+
+[selected] is the id of the item in the [items] collection that should be initially 
+selected.  this is the name of the node who's value is supposed to be initially 
+selected during creation.  this is also the value that is changed or retrieved when 
+the [magix.forms.set-value] or [magix.forms.get-value] active events are invoked on 
+the web control"
+
+
+

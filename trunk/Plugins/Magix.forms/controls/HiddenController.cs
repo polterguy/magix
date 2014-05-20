@@ -15,13 +15,13 @@ namespace Magix.forms
 	/*
 	 * hidden field
 	 */
-    public class HiddenController : BaseControlController
+    internal sealed class HiddenController : BaseControlController
 	{
 		/*
 		 * creates hidden field
 		 */
 		[ActiveEvent(Name = "magix.forms.controls.hidden")]
-		public void magix_forms_controls_hidden(object sender, ActiveEventArgs e)
+		private void magix_forms_controls_hidden(object sender, ActiveEventArgs e)
 		{
             Node ip = Ip(e.Params);
 			if (ShouldInspect(ip))
@@ -42,16 +42,29 @@ namespace Magix.forms
 
 		protected override void Inspect (Node node)
 		{
-            AppendInspect(node["inspect"], @"creates a hidden field type of control
-
-hidden fields are invisible to the user, but can store any data as text strings");
-            node["magix.forms.create-web-part"]["container"].Value = "content5";
-            node["magix.forms.create-web-part"]["form-id"].Value = "sample-form";
+            AppendInspectFromResource(
+                node["inspect"],
+                "Magix.forms",
+                "Magix.forms.hyperlisp.inspect.hl",
+                "[magix.forms.hidden-dox-start].Value");
+            AppendCodeFromResource(
+                node,
+                "Magix.forms",
+                "Magix.forms.hyperlisp.inspect.hl",
+                "[magix.forms.hidden-sample-start]");
             base.Inspect(node["magix.forms.create-web-part"]["controls"]["hidden"]);
-            node["magix.forms.create-web-part"]["controls"]["hidden"]["value"].Value = "some string value";
-            AppendInspect(node["inspect"], @"[value] is the actual value of the 
-hidden field.  this is the property which is changed or retrieved when you invoke 
-the [magix.forms.set-value] or the [magix.forms.get-value] for your control", true);
+            node["magix.forms.create-web-part"]["controls"]["hidden"]["onfirstload"].UnTie();
+            AppendInspectFromResource(
+                node["inspect"],
+                "Magix.forms",
+                "Magix.forms.hyperlisp.inspect.hl",
+                "[magix.forms.hidden-dox-end].Value",
+                true);
+            AppendCodeFromResource(
+                node["magix.forms.create-web-part"]["controls"]["hidden"],
+                "Magix.forms",
+                "Magix.forms.hyperlisp.inspect.hl",
+                "[magix.forms.hidden-sample-end]");
 		}
 		
 		/*

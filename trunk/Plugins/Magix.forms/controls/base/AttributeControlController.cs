@@ -39,18 +39,17 @@ namespace Magix.forms
 
         protected override void Inspect(Node node)
         {
+            base.Inspect(node);
             Node tmp = node;
             while (!tmp.Contains("inspect"))
                 tmp = tmp.Parent;
             base.Inspect(node);
-            AppendInspect(tmp["inspect"], @"an attribute control, is a web control that 
-can have generic attributes attacched to it.  you can associate new attributes with your 
-control by prefixing your attribute with an '@' character.  if you do, then an additional 
-html attribute will be rendered back to the browser, with the name of your attribute, 
-minus the first '@' character, and the value of that node.  if you wish for your attribute 
-to actually start with a @ as its attribute name, then add up two consecutive @ signs after 
-each other", true);
-            node["@someattribute"].Value = "whatever value";
+            AppendInspectFromResource(
+                tmp["inspect"],
+                "Magix.forms",
+                "Magix.forms.hyperlisp.inspect.hl",
+                "[magix.forms.attribute-dox].Value",
+                true);
         }
     }
 }

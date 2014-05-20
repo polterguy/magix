@@ -32,13 +32,16 @@ namespace Magix.forms
 
         protected override void Inspect(Node node)
         {
+            base.Inspect(node);
             Node tmp = node;
             while (!tmp.Contains("inspect"))
                 tmp = tmp.Parent;
-            base.Inspect(node);
-            AppendInspect(tmp["inspect"], @"[value] is the visible text of your button.  
-this is the property which is changed or retrieved when you invoke the [magix.forms.set-
-value] and the [magix.forms.get-value] for your web control", true);
+            AppendInspectFromResource(
+                tmp["inspect"],
+                "Magix.forms",
+                "Magix.forms.hyperlisp.inspect.hl",
+                "[magix.forms.base-web-form-element-text-dox].Value",
+                true);
             node["value"].Value = "text value";
         }
     }

@@ -21,7 +21,7 @@ namespace Magix.forms
          * selects all text
          */
         [ActiveEvent(Name = "magix.forms.select-all")]
-        protected void magix_forms_select_all(object sender, ActiveEventArgs e)
+        private static void magix_forms_select_all(object sender, ActiveEventArgs e)
         {
             Node ip = Ip(e.Params);
             if (ShouldInspect(ip))
@@ -63,17 +63,16 @@ namespace Magix.forms
 
         protected override void Inspect(Node node)
         {
+            base.Inspect(node);
             Node tmp = node;
             while (!tmp.Contains("inspect"))
                 tmp = tmp.Parent;
-            base.Inspect(node);
-            AppendInspect(tmp["inspect"], @"[placeholder] is a piece of shadow text, that will 
-only display if the web control has no text value.  this is useful for displaying additional 
-information back to the user, explaining what the text-box/text-area is taking as input.  this 
-can be used as an alternative to a descriptive label
-
-[ontextchanged] is raised when the text of the web control has changed, but not before focus 
-is lost somehow", true);
+            AppendInspectFromResource(
+                tmp["inspect"],
+                "Magix.forms",
+                "Magix.forms.hyperlisp.inspect.hl",
+                "[magix.forms.base-web-form-element-text-input-dox].Value",
+                true);
             node["placeholder"].Value = "shadow text ...";
             node["ontextchanged"].Value = "hyperlisp code";
         }

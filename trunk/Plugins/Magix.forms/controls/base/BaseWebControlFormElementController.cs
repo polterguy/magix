@@ -15,13 +15,13 @@ namespace Magix.forms
 	/*
 	 * contains the form control
 	 */
-    public abstract class BaseWebControlFormElementController : BaseWebControlController
+    public abstract class BaseWebControlFormElementController : AttributeControlController
 	{
 		/*
 		 * set-enabled
 		 */
 		[ActiveEvent(Name = "magix.forms.set-enabled")]
-		protected static void magix_forms_set_enabled(object sender, ActiveEventArgs e)
+		private static void magix_forms_set_enabled(object sender, ActiveEventArgs e)
 		{
 			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
@@ -50,7 +50,7 @@ namespace Magix.forms
 		 * get-enabled
 		 */
 		[ActiveEvent(Name = "magix.forms.get-enabled")]
-		protected static void magix_forms_get_enabled(object sender, ActiveEventArgs e)
+		private static void magix_forms_get_enabled(object sender, ActiveEventArgs e)
 		{
 			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
 			{
@@ -90,20 +90,16 @@ namespace Magix.forms
 
         protected override void Inspect(Node node)
         {
+            base.Inspect(node);
             Node tmp = node;
             while (!tmp.Contains("inspect"))
                 tmp = tmp.Parent;
-            base.Inspect(node);
-            AppendInspect(tmp["inspect"], @"[accesskey] is the keyboard shortcut.  
-how to invoke the keyboard shortcut is different from system to system, but on a 
-windows system, you normally invoke the keyboard shortcut with alt+shift+your-key.  
-if you have for instance 's' as your keyboard shortcut, then the end user will 
-have to hold down shift+alt+s at the same time to invoke the keyboard shortcut for 
-your web control
-
-[disabled] enables or disables the web control.  this can be changed or retrieved 
-after the button is created, by invoking the [magix.forms.set-enabled] or [magix.
-forms.get-enabled] active events.  legal values are true and false", true);
+            AppendInspectFromResource(
+                tmp["inspect"],
+                "Magix.forms",
+                "Magix.forms.hyperlisp.inspect.hl",
+                "[magix.forms.base-web-form-element-dox].Value",
+                true);
             node["accesskey"].Value = "q";
             node["disabled"].Value = "false";
         }

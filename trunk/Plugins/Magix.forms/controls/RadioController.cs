@@ -15,13 +15,13 @@ namespace Magix.forms
 	/*
 	 * radio button
 	 */
-    public class RadioController : BaseWebControlFormElementController
+    internal sealed class RadioController : BaseWebControlFormElementController
 	{
 		/*
 		 * creates radio button control
 		 */
 		[ActiveEvent(Name = "magix.forms.controls.radio")]
-		public void magix_forms_controls_radio(object sender, ActiveEventArgs e)
+		private void magix_forms_controls_radio(object sender, ActiveEventArgs e)
 		{
             Node ip = Ip(e.Params);
 			if (ShouldInspect(ip))
@@ -57,28 +57,28 @@ namespace Magix.forms
 
 		protected override void Inspect (Node node)
 		{
-            AppendInspect(node["inspect"], @"creates a radio type of web control
-
-several radio buttons can be combined together to form a multiple choice type of 
-input value in combination.  to create a group of related radio web controls, make 
-sure all grouped radio controls have the same [name] value.  then only one of your 
-radios can be selected at any time.  meaning you can ask questions such as, 
-'chicken, fish or veggies?', and have one radio web control for each of these choices");
-            node["magix.forms.create-web-part"]["container"].Value = "content5";
-            node["magix.forms.create-web-part"]["form-id"].Value = "sample-form";
+            AppendInspectFromResource(
+                node["inspect"],
+                "Magix.forms",
+                "Magix.forms.hyperlisp.inspect.hl",
+                "[magix.forms.radio-dox-start].Value");
+            AppendCodeFromResource(
+                node,
+                "Magix.forms",
+                "Magix.forms.hyperlisp.inspect.hl",
+                "[magix.forms.radio-sample-start]");
             base.Inspect(node["magix.forms.create-web-part"]["controls"]["radio"]);
-            node["magix.forms.create-web-part"]["controls"]["radio"]["name"].Value = "id_of_group";
-            node["magix.forms.create-web-part"]["controls"]["radio"]["checked"].Value = true;
-            node["magix.forms.create-web-part"]["controls"]["radio"]["oncheckedchanged"].Value = "hyperlisp code";
-            AppendInspect(node["inspect"], @"[name] sets group association of 
-control.  only one radio belonging to the same group can at any one particular 
-time be checked
-
-[checked] sets its state to true or false.  this is the value which you set or 
-retrieve with the [magix.forms.get-value] or [magix.forms.set-value]
-
-[oncheckedchanged] is the active event raised when the checked state of your 
-radio changes by the user", true);
+            AppendInspectFromResource(
+                node["inspect"],
+                "Magix.forms",
+                "Magix.forms.hyperlisp.inspect.hl",
+                "[magix.forms.radio-dox-end].Value",
+                true);
+            AppendCodeFromResource(
+                node["magix.forms.create-web-part"]["controls"]["radio"],
+                "Magix.forms",
+                "Magix.forms.hyperlisp.inspect.hl",
+                "[magix.forms.radio-sample-end]");
 		}
 		
 		/*

@@ -15,13 +15,13 @@ namespace Magix.forms
 	/*
 	 * check box
 	 */
-    public class CheckBoxController : BaseWebControlFormElementController
+    internal sealed class CheckBoxController : BaseWebControlFormElementController
 	{
 		/*
 		 * creates check-box
 		 */
 		[ActiveEvent(Name = "magix.forms.controls.check-box")]
-		public void magix_forms_controls_check_box(object sender, ActiveEventArgs e)
+		private void magix_forms_controls_check_box(object sender, ActiveEventArgs e)
 		{
             Node ip = Ip(e.Params);
             if (ShouldInspect(ip))
@@ -52,29 +52,30 @@ namespace Magix.forms
             ip["_ctrl"].Value = ret;
 		}
 
-		protected override void Inspect (Node node)
+		protected override void Inspect(Node node)
 		{
-            AppendInspect(node["inspect"], @"creates a check-box input type of web control
-
-the check-box web control is useful for representing to the user that he needs 
-to choose one from two options.  the check-box web control renders like &lt;input 
-type='checkbox' .../&gt;");
-            node["magix.forms.create-web-part"]["container"].Value = "content5";
-            node["magix.forms.create-web-part"]["form-id"].Value = "sample-form";
+            AppendInspectFromResource(
+                node["inspect"],
+                "Magix.forms",
+                "Magix.forms.hyperlisp.inspect.hl",
+                "[magix.forms.check-box-dox-start].Value");
+            AppendCodeFromResource(
+                node,
+                "Magix.forms",
+                "Magix.forms.hyperlisp.inspect.hl",
+                "[magix.forms.check-box-sample-start]");
             base.Inspect(node["magix.forms.create-web-part"]["controls"]["check-box"]);
-            node["magix.forms.create-web-part"]["controls"]["check-box"]["checked"].Value = true;
-            node["magix.forms.create-web-part"]["controls"]["check-box"]["key"].Value = "C";
-            node["magix.forms.create-web-part"]["controls"]["check-box"]["disabled"].Value = false;
-            node["magix.forms.create-web-part"]["controls"]["check-box"]["oncheckedchanged"].Value = "hyperlisp code";
-            AppendInspect(node["inspect"], @"[checked] determines the state 
-of the check-box.  if checked is true, then the check-box is checked, and 
-has a visual clue that informs the user of that is is selected.  if checked 
-is false, then is is not selected.  checked is the property which is changed 
-or retrieved when you invoke the [magix.forms.set-value] and the [magix.
-forms.get-value] for your check-box
-
-[oncheckedchanged] is raised when the checked state of your check-box has 
-been changed by the user", true);
+            AppendInspectFromResource(
+                node["inspect"],
+                "Magix.forms",
+                "Magix.forms.hyperlisp.inspect.hl",
+                "[magix.forms.check-box-dox-end].Value",
+                true);
+            AppendCodeFromResource(
+                node["magix.forms.create-web-part"]["controls"]["check-box"],
+                "Magix.forms",
+                "Magix.forms.hyperlisp.inspect.hl",
+                "[magix.forms.check-box-sample-end]");
 		}
 		
 		/*

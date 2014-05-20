@@ -15,13 +15,13 @@ namespace Magix.forms
 	/*
 	 * contains the link button control
 	 */
-    public class LinkButtonController : BaseWebControlFormElementTextController
+    internal sealed class LinkButtonController : BaseWebControlFormElementTextController
 	{
 		/*
 		 * creates link button
 		 */
 		[ActiveEvent(Name = "magix.forms.controls.link-button")]
-		public void magix_forms_controls_link_button(object sender, ActiveEventArgs e)
+		private void magix_forms_controls_link_button(object sender, ActiveEventArgs e)
 		{
             Node ip = Ip(e.Params);
 			if (ShouldInspect(ip))
@@ -43,23 +43,29 @@ namespace Magix.forms
 
 		protected override void Inspect (Node node)
 		{
-            AppendInspect(node["inspect"], @"creates a link-button type of web control
-
-a link-button looks, and renders, like a [hyperlink], but acts like a [button]. the 
-link-button is probably one of the most commonly used web control, both in magix, and 
-on the web in general.  it renders as &lt;a href='...'&gt;anchor text&lt;/a&gt;.  the 
-link-button is a clickable object, and logically similar to [button], though rendered 
-differently.  although virtually anything can be a clickable object in magix, it is 
-often more polite to use buttons and link-buttons as your clickable objects.  first of 
-all, since these web controls are recognized by screen readers and such.  secondly, 
-because it keeps the semantic parts of your website more correct");
-            node["magix.forms.create-web-part"]["container"].Value = "content5";
-            node["magix.forms.create-web-part"]["form-id"].Value = "sample-form";
+            AppendInspectFromResource(
+                node["inspect"],
+                "Magix.forms",
+                "Magix.forms.hyperlisp.inspect.hl",
+                "[magix.forms.link-button-dox-start].Value");
+            AppendCodeFromResource(
+                node,
+                "Magix.forms",
+                "Magix.forms.hyperlisp.inspect.hl",
+                "[magix.forms.link-button-sample-start]");
             base.Inspect(node["magix.forms.create-web-part"]["controls"]["link-button"]);
-            node["magix.forms.create-web-part"]["controls"]["link-button"]["value"].Value = "hello world";
-            AppendInspect(node["inspect"], @"[value] is the visible text, or anchor text.  
-this is the property which is changed or retrieved when you invoke the [magix.forms.set-
-value] and the [magix.forms.get-value] for your link-button", true);
+            AppendInspectFromResource(
+                node["inspect"],
+                "Magix.forms",
+                "Magix.forms.hyperlisp.inspect.hl",
+                "[magix.forms.link-button-dox-end].Value",
+                true);
+            node["magix.forms.create-web-part"]["controls"]["link-button"]["onclick"].UnTie();
+            AppendCodeFromResource(
+                node["magix.forms.create-web-part"]["controls"]["link-button"],
+                "Magix.forms",
+                "Magix.forms.hyperlisp.inspect.hl",
+                "[magix.forms.link-button-sample-end]");
 		}
 	}
 }
