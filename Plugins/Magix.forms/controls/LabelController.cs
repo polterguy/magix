@@ -14,13 +14,13 @@ namespace Magix.forms
 	/*
 	 * contains the label control
 	 */
-    public class LabelController : AttributeControlController
+    internal sealed class LabelController : AttributeControlController
 	{
 		/*
 		 * creates label control
 		 */
 		[ActiveEvent(Name = "magix.forms.controls.label")]
-		public void magix_forms_controls_label(object sender, ActiveEventArgs e)
+		private void magix_forms_controls_label(object sender, ActiveEventArgs e)
 		{
             Node ip = Ip(e.Params);
 			if (ShouldInspect(ip))
@@ -50,31 +50,28 @@ namespace Magix.forms
 
 		protected override void Inspect (Node node)
 		{
-            AppendInspect(node["inspect"], @"creates a label type of web control
-
-labels are useful for displaying text, but can also be attached to a check-box 
-or a radio web control.  do this by setting the [tag] property to 'label', and 
-the [for] property to the id if your check-box or radio web control");
-            node["magix.forms.create-web-part"]["container"].Value = "content5";
-            node["magix.forms.create-web-part"]["form-id"].Value = "sample-form";
+            AppendInspectFromResource(
+                node["inspect"],
+                "Magix.forms",
+                "Magix.forms.hyperlisp.inspect.hl",
+                "[magix.forms.label-dox-start].Value");
+            AppendCodeFromResource(
+                node,
+                "Magix.forms",
+                "Magix.forms.hyperlisp.inspect.hl",
+                "[magix.forms.label-sample-start]");
             base.Inspect(node["magix.forms.create-web-part"]["controls"]["label"]);
-            node["magix.forms.create-web-part"]["controls"]["label"]["value"].Value = "hello world";
-            node["magix.forms.create-web-part"]["controls"]["label"]["tag"].Value = "p|div|span|etc";
-            node["magix.forms.create-web-part"]["controls"]["label"]["for"].Value = "another-control-id";
-            AppendInspect(node["inspect"], @"[value] sets the visible text of 
-label.  this is the property which is changed or retrieved when you invoke the 
-[magix.forms.set-value] and the [magix.forms.get-value] for your web control
-
-[tag] sets html tag to render panel as.  you can change this to any html tag 
-you wish for the control to be rendered with, such as p, div, label, span or 
-address, etc
-
-[for] changes the associated radio or check-box web control the label is 
-pointing to.  if the label is associated with a check-box or a radio, then 
-the checked state of that radio or check-box web control will change if the 
-user clicks the label.  remember to also set the [tag] to 'label' if you use 
-this feature, since only html labels actually will be associated with radio 
-or checkboxes by the browser", true);
+            AppendInspectFromResource(
+                node["inspect"],
+                "Magix.forms",
+                "Magix.forms.hyperlisp.inspect.hl",
+                "[magix.forms.label-dox-end].Value",
+                true);
+            AppendCodeFromResource(
+                node["magix.forms.create-web-part"]["controls"]["label"],
+                "Magix.forms",
+                "Magix.forms.hyperlisp.inspect.hl",
+                "[magix.forms.label-sample-end]");
 		}
 	}
 }

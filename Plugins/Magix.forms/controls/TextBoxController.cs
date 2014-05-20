@@ -15,13 +15,13 @@ namespace Magix.forms
 	/*
 	 * contains the textbox control
 	 */
-    public class TextBoxController : BaseWebControlFormElementInputTextController
+    internal sealed class TextBoxController : BaseWebControlFormElementInputTextController
 	{
 		/*
 		 * creates a text-box
 		 */
 		[ActiveEvent(Name = "magix.forms.controls.text-box")]
-		public void magix_forms_controls_text_box(object sender, ActiveEventArgs e)
+		private void magix_forms_controls_text_box(object sender, ActiveEventArgs e)
 		{
             Node ip = Ip(e.Params);
 			if (ShouldInspect(ip))
@@ -120,35 +120,28 @@ namespace Magix.forms
 
 		protected override void Inspect (Node node)
 		{
-            AppendInspect(node["inspect"], @"creates a text-box type of web control
-
-a text-box is a web control where the end user can type in text to submit in a form.  
-text-box only supports single lines of input text, without carriage return.  use 
-text-area if you need multiple lines of text");
-            node["magix.forms.create-web-part"]["container"].Value = "content5";
-            node["magix.forms.create-web-part"]["form-id"].Value = "sample-form";
+            AppendInspectFromResource(
+                node["inspect"],
+                "Magix.forms",
+                "Magix.forms.hyperlisp.inspect.hl",
+                "[magix.forms.text-box-dox-start].Value");
+            AppendCodeFromResource(
+                node,
+                "Magix.forms",
+                "Magix.forms.hyperlisp.inspect.hl",
+                "[magix.forms.text-box-sample-start]");
             base.Inspect(node["magix.forms.create-web-part"]["controls"]["text-box"]);
-            node["magix.forms.create-web-part"]["controls"]["text-box"]["autocapitalize"].Value = false;
-            node["magix.forms.create-web-part"]["controls"]["text-box"]["autocorrect"].Value = true;
-            node["magix.forms.create-web-part"]["controls"]["text-box"]["autocomplete"].Value = false;
-            node["magix.forms.create-web-part"]["controls"]["text-box"]["maxlength"].Value = 25;
-            node["magix.forms.create-web-part"]["controls"]["text-box"]["type"].Value = "normal";
-            AppendInspect(node["inspect"], @"[autocapitalize] will automatically 
-capitalize the first letter, as you are typing into the tex-box
-
-[autocorrect] will automatically suggest corrections for typing errors, as you are 
-typing into the text-box
-
-[autocomplete] will suggest previously typed values for you, and attempt to 
-automatically complete the value on the end user's behalf
-
-[maxlength] is the maximum number of characters in the text-box
-
-[type] determines the mode of the text-box.  this depends upon the type of 
-input you wish that your text box shall be accepting.  if you want the user 
-to type in an email address for instance, then use 'email' as the value of this 
-property.  legal values for type is normal, phone, search, url, email, datetime, 
-date, month, week, time, datetimelocal, number, range, color and password", true);
+            AppendInspectFromResource(
+                node["inspect"],
+                "Magix.forms",
+                "Magix.forms.hyperlisp.inspect.hl",
+                "[magix.forms.text-box-dox-end].Value",
+                true);
+            AppendCodeFromResource(
+                node["magix.forms.create-web-part"]["controls"]["text-box"],
+                "Magix.forms",
+                "Magix.forms.hyperlisp.inspect.hl",
+                "[magix.forms.text-box-sample-end]");
 		}
 		
 		/*

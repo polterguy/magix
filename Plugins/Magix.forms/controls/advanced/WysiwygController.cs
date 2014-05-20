@@ -14,13 +14,13 @@ namespace Magix.forms
 	/*
 	 * wysiwyg control
 	 */
-    public class WysiwygController : BaseWebControlFormElementInputTextController
+    internal sealed class WysiwygController : BaseWebControlFormElementInputTextController
 	{
 		/*
 		 * creates wysiwyg control
 		 */
 		[ActiveEvent(Name = "magix.forms.controls.wysiwyg")]
-		public void magix_forms_controls_wysiwyg(object sender, ActiveEventArgs e)
+		private void magix_forms_controls_wysiwyg(object sender, ActiveEventArgs e)
 		{
             Node ip = Ip(e.Params);
 			if (ShouldInspect(ip))
@@ -158,21 +158,4 @@ legal properties for turning on and off features are; [has-bold], [has-italic],
 		}
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

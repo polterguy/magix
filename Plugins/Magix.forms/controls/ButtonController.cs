@@ -15,13 +15,13 @@ namespace Magix.forms
 	/*
 	 * contains the button control
 	 */
-    public class ButtonController : BaseWebControlFormElementTextController
+    internal sealed class ButtonController : BaseWebControlFormElementTextController
 	{
 		/*
 		 * creates button widget
 		 */
 		[ActiveEvent(Name = "magix.forms.controls.button")]
-		public void magix_forms_controls_button(object sender, ActiveEventArgs e)
+		private void magix_forms_controls_button(object sender, ActiveEventArgs e)
 		{
             Node ip = Ip(e.Params);
 			if (ShouldInspect(ip))
@@ -37,21 +37,24 @@ namespace Magix.forms
 
 		protected override void Inspect(Node node)
 		{
-            AppendInspect(node["inspect"], @"creates a button input type of web control
-
-the button is probably one of the most commonly used web control, both in magix, and on 
-the web in general.  it renders as &lt;input type='button' ... /&gt;
-
-buttons are clickable objects, and logically similar to [link-button], though rendered 
-differently.  although virtually anything can be a clickable object in magix, it is 
-considered more polite to use buttons and link-buttons as your clickable objects.  first 
-of all, since these web controls are recognized by screen readers and such.  secondly, 
-because it keeeps the semantic parts of your website more correct according to the html 
-standard");
-            node["magix.forms.create-web-part"]["container"].Value = "content5";
-            node["magix.forms.create-web-part"]["form-id"].Value = "sample-form";
+            AppendInspectFromResource(
+                node["inspect"],
+                "Magix.forms",
+                "Magix.forms.hyperlisp.inspect.hl",
+                "[magix.forms.button-dox].Value");
+            AppendCodeFromResource(
+                node,
+                "Magix.forms",
+                "Magix.forms.hyperlisp.inspect.hl",
+                "[magix.forms.button-sample]");
             base.Inspect(node["magix.forms.create-web-part"]["controls"]["button"]);
-		}
+            node["magix.forms.create-web-part"]["controls"]["button"]["onclick"].UnTie();
+            AppendCodeFromResource(
+                node["magix.forms.create-web-part"]["controls"]["button"],
+                "Magix.forms",
+                "Magix.forms.hyperlisp.inspect.hl",
+                "[magix.forms.button-sample-end]");
+        }
 	}
 }
 

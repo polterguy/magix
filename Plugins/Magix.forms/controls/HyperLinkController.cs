@@ -14,13 +14,13 @@ namespace Magix.forms
 	/*
 	 * hyper link
 	 */
-    public class HyperLinkController : BaseWebControlFormElementController
+    internal sealed class HyperLinkController : BaseWebControlFormElementController
 	{
 		/*
 		 * creates a hyper link
 		 */
 		[ActiveEvent(Name = "magix.forms.controls.hyperlink")]
-		public void magix_forms_controls_hyperlink(object sender, ActiveEventArgs e)
+		private void magix_forms_controls_hyperlink(object sender, ActiveEventArgs e)
 		{
             Node ip = Ip(e.Params);
 			if (ShouldInspect(ip))
@@ -54,25 +54,28 @@ namespace Magix.forms
 
 		protected override void Inspect (Node node)
 		{
-			AppendInspect(node["inspect"], @"creates a hyperlink input type of web control
-
-hyperlinks points to other urls, either locally, or externally.  you can choose if the 
-hyperlink should open up in the same window, or another browser window");
-            node["magix.forms.create-web-part"]["container"].Value = "content5";
-            node["magix.forms.create-web-part"]["form-id"].Value = "sample-form";
+            AppendInspectFromResource(
+                node["inspect"],
+                "Magix.forms",
+                "Magix.forms.hyperlisp.inspect.hl",
+                "[magix.forms.hyperlink-dox-start].Value");
+            AppendCodeFromResource(
+                node,
+                "Magix.forms",
+                "Magix.forms.hyperlisp.inspect.hl",
+                "[magix.forms.hyperlink-sample-start]");
             base.Inspect(node["magix.forms.create-web-part"]["controls"]["hyperlink"]);
-            node["magix.forms.create-web-part"]["controls"]["hyperlink"]["value"].Value = "anchor text of hyperlink";
-            node["magix.forms.create-web-part"]["controls"]["hyperlink"]["href"].Value = "http://google.com";
-            node["magix.forms.create-web-part"]["controls"]["hyperlink"]["target"].Value = "_blank";
-            node["magix.forms.create-web-part"]["controls"]["hyperlink"]["key"].Value = "C";
-            AppendInspect(node["inspect"], @"[value] is the readable text, displayed to 
-the end user of the web control.  this is the property which is changed or retrieved when 
-you invoke the [magix.forms.set-value] and the [magix.forms.get-value] for your control
-
-[href] sets the url of the document to link to.  this can be any url, locally or externally
-
-[target] can _blank, _new, or any id you wish to use, and informs the browser of what browser 
-window to open up the url within once clicked", true);
+            AppendInspectFromResource(
+                node["inspect"],
+                "Magix.forms",
+                "Magix.forms.hyperlisp.inspect.hl",
+                "[magix.forms.hyperlink-dox-end].Value",
+                true);
+            AppendCodeFromResource(
+                node["magix.forms.create-web-part"]["controls"]["hyperlink"],
+                "Magix.forms",
+                "Magix.forms.hyperlisp.inspect.hl",
+                "[magix.forms.hyperlink-sample-end]");
 		}
 	}
 }

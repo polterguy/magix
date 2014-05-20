@@ -15,13 +15,13 @@ namespace Magix.forms
 	/*
 	 * literal control
 	 */
-	public class LiteralController : ActiveController
+    internal sealed class LiteralController : ActiveController
 	{
 		/*
 		 * creates the literal control
 		 */
 		[ActiveEvent(Name = "magix.forms.controls.literal")]
-		public void magix_forms_controls_panel(object sender, ActiveEventArgs e)
+		private void magix_forms_controls_panel(object sender, ActiveEventArgs e)
 		{
             Node ip = Ip(e.Params);
 			if (ShouldInspect(ip))
@@ -38,15 +38,18 @@ namespace Magix.forms
             ip["_ctrl"].Value = ret;
 		}
 
-		protected void Inspect(Node node)
+		private void Inspect(Node node)
 		{
-			AppendInspect(node["inspect"], @"creates a literal type of web control
-
-put any html into [text] node, to render exactly the html you wish");
-            node["magix.forms.create-web-part"]["container"].Value = "content5";
-            node["magix.forms.create-web-part"]["form-id"].Value = "sample-form";
-            node["magix.forms.create-web-part"]["controls"]["literal"].Value = null;
-            node["magix.forms.create-web-part"]["controls"]["literal"]["text"].Value = "&lt;h1&gt;hello&lt;/h1&gt;";
+            AppendInspectFromResource(
+                node["inspect"],
+                "Magix.forms",
+                "Magix.forms.hyperlisp.inspect.hl",
+                "[magix.forms.literal-dox-start].Value");
+            AppendCodeFromResource(
+                node,
+                "Magix.forms",
+                "Magix.forms.hyperlisp.inspect.hl",
+                "[magix.forms.literal-sample-start]");
 		}
 	}
 }

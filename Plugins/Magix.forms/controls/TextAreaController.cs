@@ -15,13 +15,13 @@ namespace Magix.forms
 	/*
 	 * textarea control
 	 */
-    public class TextAreaController : BaseWebControlFormElementInputTextController
+    internal sealed class TextAreaController : BaseWebControlFormElementInputTextController
 	{
 		/*
 		 * creates text area control
 		 */
 		[ActiveEvent(Name = "magix.forms.controls.text-area")]
-		public void magix_forms_controls_text_area(object sender, ActiveEventArgs e)
+		private void magix_forms_controls_text_area(object sender, ActiveEventArgs e)
 		{
             Node ip = Ip(e.Params);
 			if (ShouldInspect(ip))
@@ -43,23 +43,28 @@ namespace Magix.forms
 
 		protected override void Inspect (Node node)
 		{
-            AppendInspect(node["inspect"], @"creates a text-area type of web control
-
-a text-area is an input control for text, where the end user can type in text.  the 
-text-area can handle multiple lines of input in its text portions");
-            node["magix.forms.create-web-part"]["container"].Value = "content5";
-            node["magix.forms.create-web-part"]["form-id"].Value = "sample-form";
+            AppendInspectFromResource(
+                node["inspect"],
+                "Magix.forms",
+                "Magix.forms.hyperlisp.inspect.hl",
+                "[magix.forms.text-area-dox-start].Value");
+            AppendCodeFromResource(
+                node,
+                "Magix.forms",
+                "Magix.forms.hyperlisp.inspect.hl",
+                "[magix.forms.text-area-sample-start]");
             base.Inspect(node["magix.forms.create-web-part"]["controls"]["text-area"]);
-            node["magix.forms.create-web-part"]["controls"]["text-area"]["placeholder"].Value = "shadow text ...";
-            node["magix.forms.create-web-part"]["controls"]["text-area"]["rows"].Value = 5;
-            node["magix.forms.create-web-part"]["controls"]["text-area"]["value"].Value = "is there anybody out there?";
-            node["magix.forms.create-web-part"]["controls"]["text-area"]["key"].Value = "T";
-            node["magix.forms.create-web-part"]["controls"]["text-area"]["disabled"].Value = false;
-            node["magix.forms.create-web-part"]["controls"]["text-area"]["ontextchanged"].Value = "hyperlisp code";
-            AppendInspect(node["inspect"], @"[rows] is how many visible rows of 
-text there shall be at the same time.  this property defines the default height 
-of the text-area, though some browsers have the possibility of letting the user 
-increase or decrease the size of text-areas", true);
+            AppendInspectFromResource(
+                node["inspect"],
+                "Magix.forms",
+                "Magix.forms.hyperlisp.inspect.hl",
+                "[magix.forms.text-area-dox-end].Value",
+                true);
+            AppendCodeFromResource(
+                node["magix.forms.create-web-part"]["controls"]["text-area"],
+                "Magix.forms",
+                "Magix.forms.hyperlisp.inspect.hl",
+                "[magix.forms.text-area-sample-end]");
 		}
 		
 		/*

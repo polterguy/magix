@@ -14,13 +14,13 @@ namespace Magix.forms
 	/*
 	 * image control
 	 */
-    public class ImgController : BaseWebControlFormElementController
+    internal sealed class ImgController : BaseWebControlFormElementController
 	{
 		/*
 		 * creates image control
 		 */
 		[ActiveEvent(Name = "magix.forms.controls.img")]
-		public void magix_forms_controls_image(object sender, ActiveEventArgs e)
+		private void magix_forms_controls_image(object sender, ActiveEventArgs e)
 		{
             Node ip = Ip(e.Params);
 			if (ShouldInspect(ip))
@@ -44,23 +44,28 @@ namespace Magix.forms
 
         protected override void Inspect(Node node)
 		{
-            AppendInspect(node["inspect"], @"creates an image type of web control
-
-the image web control is useful for showing images, where you need dynamic behavior, 
-such as onclick event handlers, or the ability to change the image during execution");
-            node["magix.forms.create-web-part"]["container"].Value = "content5";
-            node["magix.forms.create-web-part"]["form-id"].Value = "sample-form";
+            AppendInspectFromResource(
+                node["inspect"],
+                "Magix.forms",
+                "Magix.forms.hyperlisp.inspect.hl",
+                "[magix.forms.img-dox-start].Value");
+            AppendCodeFromResource(
+                node,
+                "Magix.forms",
+                "Magix.forms.hyperlisp.inspect.hl",
+                "[magix.forms.img-sample-start]");
             base.Inspect(node["magix.forms.create-web-part"]["controls"]["img"]);
-            node["magix.forms.create-web-part"]["controls"]["img"]["src"].Value = "media/images/icons/start-button.png";
-            node["magix.forms.create-web-part"]["controls"]["img"]["alt"].Value = "alternative text";
-            node["magix.forms.create-web-part"]["controls"]["img"]["key"].Value = "C";
-            AppendInspect(node["inspect"], @"[src] sets the image url.  this is the 
-property which is changed or retrieved when you invoke the [magix.forms.set-value] 
-and the [magix.forms.get-value] for your image
-
-[alt] sets alternating text.  the alternating text will be displayed while the image 
-is loading, or if the image cannot be found.  in addition, the alt text will also be 
-the descriptive text that screen readers will read up loud to the end user", true);
+            AppendInspectFromResource(
+                node["inspect"],
+                "Magix.forms",
+                "Magix.forms.hyperlisp.inspect.hl",
+                "[magix.forms.img-dox-end].Value",
+                true);
+            AppendCodeFromResource(
+                node["magix.forms.create-web-part"]["controls"]["img"],
+                "Magix.forms",
+                "Magix.forms.hyperlisp.inspect.hl",
+                "[magix.forms.img-sample-end]");
 		}
 	}
 }

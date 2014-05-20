@@ -15,13 +15,13 @@ namespace Magix.forms
 	/*
 	 * dynamic control
 	 */
-    public class DynamicController : AttributeControlController
+    internal sealed class DynamicController : AttributeControlController
 	{
 		/*
 		 * creates a dynamic control
 		 */
 		[ActiveEvent(Name = "magix.forms.controls.dynamic")]
-		public void magix_forms_controls_dynamic(object sender, ActiveEventArgs e)
+		private void magix_forms_controls_dynamic(object sender, ActiveEventArgs e)
 		{
             Node ip = Ip(e.Params);
 			if (ShouldInspect(ip))
@@ -69,26 +69,29 @@ namespace Magix.forms
 
 		protected override void Inspect (Node node)
 		{
-            AppendInspect(node["inspect"], @"creates a dynamic panel type of web control
-
-a dynamic panel is a viewport container, which you can load with controls the 
-same way you can load controls into a regular viewport, using for instance 
-[magix.forms.create-web-part]
-
-a dynamic web control, is basically a panel, with the additional feature that 
-it can dynamically load controls into itself");
-            node["magix.forms.create-web-part"]["container"].Value = "content5";
-            node["magix.forms.create-web-part"]["form-id"].Value = "sample-form";
+            AppendInspectFromResource(
+                node["inspect"],
+                "Magix.forms",
+                "Magix.forms.hyperlisp.inspect.hl",
+                "[magix.forms.dynamic-dox-start].Value");
+            AppendCodeFromResource(
+                node,
+                "Magix.forms",
+                "Magix.forms.hyperlisp.inspect.hl",
+                "[magix.forms.dynamic-sample-start]");
             base.Inspect(node["magix.forms.create-web-part"]["controls"]["dynamic"]);
-            node["magix.forms.create-web-part"]["controls"]["dynamic"]["tag"].Value = "p|div|address|etc";
-            node["magix.forms.create-web-part"]["controls"]["dynamic"]["default"].Value = "default-button";
-            AppendInspect(node["inspect"], @"[tag] sets html tag to render panel 
-as.  you can change this to any html tag you wish the control to be rendered with, 
-such as p, div, label, span or address, etc
-
-[default] sets the default web control within your dynamic.  this is the control 
-which will be automatically clicked if carriage return is pressed while a child 
-control of the dynamic has focus", true);
+            AppendInspectFromResource(
+                node["inspect"],
+                "Magix.forms",
+                "Magix.forms.hyperlisp.inspect.hl",
+                "[magix.forms.dynamic-dox-end].Value",
+                true);
+            node["magix.forms.create-web-part"]["controls"]["dynamic"]["onfirstload"].UnTie();
+            AppendCodeFromResource(
+                node["magix.forms.create-web-part"]["controls"]["dynamic"],
+                "Magix.forms",
+                "Magix.forms.hyperlisp.inspect.hl",
+                "[magix.forms.dynamic-sample-end]");
 		}
 	}
 }

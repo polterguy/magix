@@ -336,7 +336,7 @@ code
 					if (currentIndents > indents)
 					{
 						idxNode = idxNode[idxNode.Count - 1];
-						idxNode.Add (new Node(name, value));
+						idxNode.Add(new Node(name, value));
 						indents += 1;
 					}
 				}
