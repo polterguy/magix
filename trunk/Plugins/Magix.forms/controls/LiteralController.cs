@@ -31,8 +31,10 @@ namespace Magix.forms
 			}
 
 			LiteralControl ret = new LiteralControl();
+
             Node node = ip["_code"].Get<Node>();
-            if (node.Contains("text"))
+
+            if (node.ContainsValue("text"))
 				ret.Text = node["text"].Get<string>();
 
             ip["_ctrl"].Value = ret;

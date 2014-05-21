@@ -35,11 +35,8 @@ namespace Magix.forms
                 }
             }
 
-            if (node.Contains("selected") &&
-                node["selected"].Value != null)
-            {
+            if (node.ContainsValue("selected"))
                 ret.SetSelectedItemAccordingToValue(node["selected"].Get<string>());
-            }
         }
 
         protected override void Inspect(Node node)

@@ -44,8 +44,7 @@ namespace Magix.forms
 
             Node ip = Ip(pars);
             Node node = ip["_code"].Get<Node>();
-            if (node.Contains("placeholder") &&
-                !string.IsNullOrEmpty(node["placeholder"].Get<string>()))
+            if (node.ContainsValue("placeholder"))
                 ret.PlaceHolder = node["placeholder"].Get<string>();
 
             if (ShouldHandleEvent("ontextchanged", node))

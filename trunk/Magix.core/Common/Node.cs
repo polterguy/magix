@@ -394,7 +394,9 @@ namespace Magix.Core
                     case "System.String":
                         return (T)(object)GetString(_value);
 					default:
-					throw new ArgumentException("Cannot convert node to given type; " + typeof(T).Name);
+                        if (_value is T)
+                            return (T)_value;
+					    throw new ArgumentException("cannot convert node to given type; " + typeof(T).Name);
                 }
             }
 
@@ -652,6 +654,18 @@ namespace Magix.Core
                 delegate(Node idx)
                 {
                     return idx.Name == itemName;
+                });
+        }
+
+        /*
+         * Returns true if node exists within child collection and node has value
+         */
+        public bool ContainsValue(string itemName)
+        {
+            return _children.Exists(
+                delegate(Node idx)
+                {
+                    return idx.Name == itemName && idx.Value != null;
                 });
         }
 

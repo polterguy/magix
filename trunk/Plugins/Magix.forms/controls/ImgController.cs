@@ -33,10 +33,11 @@ namespace Magix.forms
             FillOutParameters(e.Params, ret);
 
             Node node = ip["_code"].Value as Node;
-            if (node.Contains("src") && node["src"].Value != null)
+
+            if (node.ContainsValue("src"))
 				ret.Src = node["src"].Get<string>();
 
-			if (node.Contains("alt") && node["alt"].Value != null)
+            if (node.ContainsValue("alt"))
 				ret.Alt = node["alt"].Get<string>();
 
             ip["_ctrl"].Value = ret;

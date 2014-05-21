@@ -35,15 +35,10 @@ namespace Magix.forms
 			}
 
             BaseWebControlFormElement ctrl = FindControl<BaseWebControlFormElement>(Ip(e.Params));
-
-			if (ctrl != null)
-			{
-				bool disabled = false;
-                if (Ip(e.Params).Contains("value"))
-                    disabled = Ip(e.Params)["value"].Get<bool>();
-
-				ctrl.Disabled = !disabled;
-			}
+			bool enabled = false;
+            if (Ip(e.Params).Contains("value"))
+                enabled = Ip(e.Params)["value"].Get<bool>();
+			ctrl.Disabled = !enabled;
 		}
 
 		/*
@@ -64,11 +59,7 @@ namespace Magix.forms
 			}
 
             BaseWebControlFormElement ctrl = FindControl<BaseWebControlFormElement>(Ip(e.Params));
-
-			if (ctrl != null)
-			{
-                Ip(e.Params)["value"].Value = !ctrl.Disabled;
-			}
+            Ip(e.Params)["value"].Value = !ctrl.Disabled;
 		}
 
         protected override void FillOutParameters(Node pars, BaseControl ctrl)
@@ -79,12 +70,10 @@ namespace Magix.forms
             Node codeNode = ip["_code"].Value as Node;
             BaseWebControlFormElement that = ctrl as BaseWebControlFormElement;
 
-            if (codeNode.Contains("accesskey") &&
-                !string.IsNullOrEmpty(codeNode["accesskey"].Get<string>()))
+            if (codeNode.ContainsValue("accesskey"))
                 that.AccessKey = codeNode["accesskey"].Get<string>();
 
-            if (codeNode.Contains("disabled") &&
-                codeNode["disabled"].Value != null)
+            if (codeNode.ContainsValue("disabled"))
                 that.Disabled = codeNode["disabled"].Get<bool>();
         }
 

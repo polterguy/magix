@@ -759,4 +759,274 @@ the [magix.forms.set-value] or [magix.forms.get-value] active events are invoked
 the web control"
 
 
+magix.forms.timer-dox-start=>@"creates a timer type of control
+
+a timer is a control which will periodically run to the server in intervalls 
+of [interval] milliseconds where it will raise the [tick] event handler.  this 
+control is useful for periodically checking for updates on the server, if 
+you're waiting for something to occur, such as a chat client, or something 
+similar"
+
+magix.forms.timer-sample-start
+  magix.forms.create-web-part
+    container=>content5
+    form-id=>sample-form
+
+magix.forms.timer-dox-end=>@"[interval] is the number of 
+milliseconds between each time the timer should go to the server, and raise 
+the ontick event
+
+[ontick] is the active event for that will be raised each time the [interval] 
+time has passed"
+
+magix.forms.timer-sample-end
+  interval=>2000
+  ontick
+    magix.viewport.show-message
+      message=>tick
+      time=>500
+
+
+magix.forms.uploader-dox-start=>@"creates an uploader type of web control
+
+uploaders are useful for allowing the end user to drag and drop files onto the browser 
+surface, such that he can upload files to the server"
+
+magix.forms.uploader-sample-start
+  magix.forms.create-web-part
+    container=>content5
+    form-id=>sample-form
+
+magix.forms.uploader-dox-end=>@"[folder] is the folder where the files 
+will be uploaded.  the filename of the file from the client-side, will be the same 
+when the file is uploaded to the server
+
+[class] is the css class asssociated with your uploader, and what determines the 
+looks of the 'wait for files to upload' parts of your uploader
+
+[onuploaded] is the active event which will be fired once the uploader is finished 
+uploading a file.  use the [magix.forms.uploader-has-more-data] active event within the 
+onuploaded active event handler to find out if this is the last file to be uploaded, 
+or if there are more files waiting in the que to be uploaded, before the uploader is 
+finished"
+
+magix.forms.uploader-sample-end
+  folder=>tmp
+  onuploaded
+    magix.viewport.show-message
+      message=>file was uploaded
+
+
+magix.forms.wysiwyg-dox-start=>@"creates a wysiwyg type of web control
+
+a wysiwyg web control is useful for allowing the end user to type in html or magix 
+markup language to submit to the server"
+
+magix.forms.wysiwyg-sample-start
+  magix.forms.create-web-part
+    container=>content5
+    form-id=>sample-form
+
+magix.forms.wysiwyg-dox-end=>@"[value] sets the visible text of your web 
+control.  this is the property which is changed or retrieved when you invoke the [magix.
+forms.set-value] and the [magix.forms.get-value] for your web control
+
+[placeholder] is shadow text, only visible when input area is empty.use this property 
+to display some information about your web control
+
+[editor-css-file] is a url to a css file which will be injected into the wysiwyg control, 
+to style the contents of the html within it
+
+all the properties that starts with 'has', are booleans that determines whether or not the 
+wysiwyg control has a specific feature or not.  if these properties are set to true, then 
+the toolbar of the web control will have a button which allows for formatting of text, or 
+insertion of elements, according to whatever the property turns on or off
+
+legal properties for turning on and off features are; [has-bold], [has-italic], 
+[has-unorderedlist], [has-orderedlist], [has-createlink], [has-insertimage], [has-h1], 
+[has-h2], [has-h3], [has-h4], [has-h5], [has-h6], [has-forecolor], [has-insertspeech] and 
+[has-showhtml]"
+
+magix.forms.wysiwyg-sample-end
+  value=>some html markup ...
+  placeholder=>place holder ...
+  ontextchanged=>hyperlisp code
+  has-bold=(bool)>True
+  has-italic=(bool)>True
+  has-unorderedlist=(bool)>True
+  has-orderedlist=(bool)>True
+  has-createlink=(bool)>True
+  has-insertimage=(bool)>True
+  has-h1=(bool)>True
+  has-h2=(bool)>True
+  has-h3=(bool)>False
+  has-h4=(bool)>False
+  has-h5=(bool)>False
+  has-h6=(bool)>False
+  has-forecolor=(bool)>True
+  has-insertspeech=(bool)>True
+  has-showhtml=(bool)>True
+  editor-css-file=>media/grid/main.css
+
+
+magix.forms.uploader-has-more-data-dox=>@"checks to see if uploader has more data
+
+an uploader control has support for dragging and dropping multiple files 
+at the same time into the surface of the browser window.  you can use this 
+active event to figure out if there are more files waiting to be uploaded 
+in the [onuploaded] active event for your [uploader] web control, or if 
+this was the last file"
+
+magix.forms.uploader-has-more-data-sample
+  magix.forms.create-web-part
+    container=>content5
+    form-id=>sample-form
+    controls
+      uploader=>uploader-id
+        onfirstload=>hyperlisp code
+        class=>mux-file-uploader
+        folder=>tmp
+        onuploaded
+          magix.forms.uploader-has-more-data
+            form-id=>sample-form
+            id=>uploader-id
+          if=>not-equals
+            lhs=>[magix.forms.uploader-has-more-data][value].Value
+            rhs=>true
+            code
+              magix.viewport.show-message
+                message=>this was the last file
+
+
+magix.forms.list-control-types-dox=>@"list all control types in the system
+
+will retrieve and return all active events within the magix.forms.controls 
+namespace back to the caller.  all controls will be listed underneath [types] 
+after invocation of active event.  controls will be returned with all their 
+properties and events, but not inspect documentation"
+
+
+magix.forms.set-visible-dox=>@"sets the visibility of a web control
+
+changes the visibility to the given web control to whatever value 
+is in the [value] node.  legal values are true and false.  the 
+web control to change the visibility of, must be given as the [id] 
+parameter.  optionally you can supply a [form-id] parameter, to 
+inform the active event of which web part the web control you wish 
+to change the visibility of exist within.  if no form-id parameter 
+is given, the active event will search through all web parts, and 
+change the visibility of the first web control found that matches 
+the id parameter"
+
+magix.forms.set-visible-sample
+  magix.forms.create-web-part
+    container=>content5
+    form-id=>sample-form
+    class=>span-22 last
+    controls
+      button=>btn
+        value=>click me
+        onclick
+          magix.forms.set-visible
+            form-id=>sample-form
+            id=>btn
+            value=>false
+
+
+magix.forms.get-visible-dox=>@"retrieves the visibility of a web control
+
+returns the visibility of a web control in the [value] node.  if the 
+control is visible, the return value will be true, otherwise it will be 
+false.  the web control to return the visibility of, must be given as the 
+[id] parameter.  optionally you can supply a [form-id] parameter to inform 
+the active event which form the web control you're looking for exists within.  
+if you do not supply a form-id parameter, the active event will retrieve the 
+visibility of the first web control that matches the id parameter given, in 
+any web parts"
+
+magix.forms.get-visible-sample
+  magix.forms.create-web-part
+    container=>content5
+    form-id=>sample-form
+    class=>span-22 last
+    controls
+      button=>btn
+        value=>click me
+        onclick
+          magix.forms.get-visible
+            form-id=>sample-form
+            id=>btn
+          if=>equals
+            lhs=>[magix.forms.get-visible][value].Value
+            rhs=>true
+            code
+              magix.viewport.show-message
+                message=>web control is visible
+          else
+            magix.viewport.show-message
+              message=>web control is in-visible
+
+
+magix.forms.set-value-dox=>@"sets the value of a control
+
+changes the current value of the given control to whatever 
+value you have in the [value] parameter.  the [id] you supply, 
+is the id of the control you wish to change the value of.  
+the [form-id] parameter, informs the active event of which web 
+part the control you wish to change the value of exists within.  
+if no form-id is given, the first control that matches the given 
+id will have its value changed, in any web parts you may have 
+currently loaded"
+
+magix.forms.set-value-sample
+  magix.forms.create-web-part
+    container=>content5
+    form-id=>sample-form
+    class=>span-22 last
+    controls
+      button=>btn
+        value=>click me
+        onclick
+          magix.forms.set-value
+            form-id=>sample-form
+            id=>btn
+            value=>i was clicked
+
+
+magix.forms.get-value-dox=>@"retrieves the value of a control
+
+returns the value of a control in the [value] return parameter.  
+the control to retrieve the value of, is given through the [id] 
+node.  [form-id] is the form-id of the web part the control 
+you wish to retrieve the value of exists within.  if no form-id 
+is given, then the first control that matches the id parameter, 
+in any web parts, will be returned"
+
+magix.forms.get-value-sample
+  magix.forms.create-web-part
+    container=>content5
+    form-id=>sample-form
+    class=>span-22 last
+    controls
+      button=>btn
+        value=>click me
+        onclick
+          magix.forms.get-value
+            form-id=>sample-form
+            id=>btn
+          set=>[2][message].Value
+            value=>[0][value].Value
+          magix.viewport.show-message
+
+
+
+
+
+
+
+
+
+
+
+
 

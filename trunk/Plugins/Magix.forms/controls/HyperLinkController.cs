@@ -33,20 +33,14 @@ namespace Magix.forms
             FillOutParameters(e.Params, ret);
 
             Node node = ip["_code"].Get<Node>();
-            if (node.Contains("value") && node["value"].Value != null)
+
+            if (node.ContainsValue("value"))
 				ret.Value = node["value"].Get<string>();
 
-			if (node.Contains("href") && node["href"].Value != null)
-			{
-				string url = node["href"].Get<string>();
+            if (node.ContainsValue("href"))
+				ret.Href = node["href"].Get<string>().Replace("~", GetApplicationBaseUrl());
 
-				if (url.StartsWith("~"))
-					url = url.Replace("~", GetApplicationBaseUrl());
-
-				ret.Href = url;
-			}
-
-			if (node.Contains("target") && node["target"].Value != null)
+            if (node.ContainsValue("target"))
 				ret.Target = node["target"].Get<string>();
 
             ip["_ctrl"].Value = ret;

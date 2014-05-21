@@ -30,34 +30,22 @@ namespace Magix.forms
 			}
 
 			Uploader ret = new Uploader();
+
             Node node = ip["_code"].Get<Node>();
-            
-            if (node.Contains("class") && !string.IsNullOrEmpty(node["class"].Get<string>()))
+
+            if (node.ContainsValue("class"))
 				ret.Class = node["class"].Get<string>();
 
-			string folder = "";
-
-			if (node.Contains("folder") && !string.IsNullOrEmpty(node["folder"].Get<string>()))
-				folder = node["folder"].Get<string>();
+			string folder = node["folder"].Get<string>("tmp");
 
 			if (ShouldHandleEvent("onuploaded", node))
 			{
 				Node codeNode = node["onuploaded"].Clone();
 				ret.Uploaded += delegate(object sender2, EventArgs e2)
 				{
+                    SaveFile(folder, sender2);
                     FillOutEventInputParameters(codeNode, sender2);
-                    Uploader that = sender2 as Uploader;
-
-					string fileName = Page.Server.MapPath(folder.Trim('/') + "/" + that.GetFileName());
-					if (File.Exists(fileName))
-						File.Delete(fileName);
-
-					byte[] content = Convert.FromBase64String(that.GetFileRawBASE64());
-					using(FileStream stream = File.Create(fileName))
-					{
-						stream.Write(content, 0, content.Length);
-					}
-					RaiseActiveEvent(
+                    RaiseActiveEvent(
 						"magix.execute",
 						codeNode);
 				};
@@ -66,68 +54,95 @@ namespace Magix.forms
 			{
 				ret.Uploaded += delegate(object sender2, EventArgs e2)
 				{
-					Uploader that = sender2 as Uploader;
-
-					string fileName = Page.Server.MapPath(folder.Trim('/') + "/" + that.GetFileName());
-
-					if (File.Exists(fileName))
-						File.Delete(fileName);
-
-					byte[] content = Convert.FromBase64String(that.GetFileRawBASE64());
-					using(FileStream stream = File.Create(fileName))
-					{
-						stream.Write(content, 0, content.Length);
-					}
-				};
+                    SaveFile(folder, sender2);
+                };
 			}
             ip["_ctrl"].Value = ret;
 		}
 
+        /*
+         * helper for above
+         */
+        private void SaveFile(string folder, object sender2)
+        {
+            Uploader that = sender2 as Uploader;
+
+            string fileName = Page.Server.MapPath(folder.Trim('/') + "/" + that.GetFileName());
+            if (File.Exists(fileName))
+                File.Delete(fileName);
+
+            byte[] content = Convert.FromBase64String(that.GetFileRawBASE64());
+            using (FileStream stream = File.Create(fileName))
+            {
+                stream.Write(content, 0, content.Length);
+            }
+        }
+
 		/*
 		 * has more data
 		 */
-		[ActiveEvent(Name = "magix.forms.has-more-data")]
-		private void magix_forms_has_more_data(object sender, ActiveEventArgs e)
+		[ActiveEvent(Name = "magix.forms.uploader-has-more-data")]
+		private void magix_forms_uploader_has_more_data(object sender, ActiveEventArgs e)
 		{
             Node ip = Ip(e.Params);
 			if (ShouldInspect(ip))
 			{
-                ip["inspect"].Value = @"returns true in [value] if there is more data in the given 
-[id] web control, in the [form-id] form, from [value].&nbsp;&nbsp;not thread safe";
-                ip["magix.forms.has-more-data"]["id"].Value = "control";
-                ip["magix.forms.has-more-data"]["form-id"].Value = "webpages";
-                ip["magix.forms.has-more-data"]["value"].Value = true;
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.forms",
+                    "Magix.forms.hyperlisp.inspect.hl",
+                    "[magix.forms.uploader-has-more-data-dox].Value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.forms",
+                    "Magix.forms.hyperlisp.inspect.hl",
+                    "[magix.forms.uploader-has-more-data-sample]");
 				return;
 			}
 
             Uploader ctrl = FindControl<Uploader>(ip);
-
             ip["value"].Value = ctrl.SizeOfBatch > ctrl.CurrentNo + 1;
 		}
 
 		protected override void Inspect(Node node)
 		{
-            AppendInspect(node["inspect"], @"creates an uploader type of web control
-
-uploaders are useful for allowing the end user to drag and drop files onto the browser 
-surface, such that he can upload files to the server");
-            node["magix.forms.create-web-part"]["container"].Value = "content5";
-            node["magix.forms.create-web-part"]["form-id"].Value = "sample-form";
+            AppendInspectFromResource(
+                node["inspect"],
+                "Magix.forms",
+                "Magix.forms.hyperlisp.inspect.hl",
+                "[magix.forms.uploader-dox-start].Value");
+            AppendCodeFromResource(
+                node,
+                "Magix.forms",
+                "Magix.forms.hyperlisp.inspect.hl",
+                "[magix.forms.uploader-sample-start]");
             base.Inspect(node["magix.forms.create-web-part"]["controls"]["uploader"]);
-            node["magix.forms.create-web-part"]["controls"]["uploader"]["folder"].Value = "system42";
             node["magix.forms.create-web-part"]["controls"]["uploader"]["class"].Value = "mux-file-uploader";
             node["magix.forms.create-web-part"]["controls"]["uploader"]["visible"].UnTie(); // makes no sense
             node["magix.forms.create-web-part"]["controls"]["uploader"]["info"].UnTie(); // makes no sense
-            node["magix.forms.create-web-part"]["controls"]["uploader"]["onuploaded"].Value = "hyperlisp code";
-            AppendInspect(node["inspect"], @"[folder] is the folder where the files 
-will be uploaded.  the filename of the file from the client-side, will be the same 
-when the file is uploaded to the server
-
-[class] is the css class asssociated with your uploader, and what determines the 
-looks of the 'wait for files to upload' parts of your uploader
-
-[onuploaded] is the active event which will be fired once the uploader is finished 
-uploading a file", true);
+            node["magix.forms.create-web-part"]["controls"]["uploader"]["dir"].UnTie(); // makes no sense
+            node["magix.forms.create-web-part"]["controls"]["uploader"]["tabindex"].UnTie(); // makes no sense
+            node["magix.forms.create-web-part"]["controls"]["uploader"]["title"].UnTie(); // makes no sense
+            node["magix.forms.create-web-part"]["controls"]["uploader"]["style"].UnTie(); // makes no sense
+            node["magix.forms.create-web-part"]["controls"]["uploader"]["onclick"].UnTie(); // makes no sense
+            node["magix.forms.create-web-part"]["controls"]["uploader"]["ondblclick"].UnTie(); // makes no sense
+            node["magix.forms.create-web-part"]["controls"]["uploader"]["onmousedown"].UnTie(); // makes no sense
+            node["magix.forms.create-web-part"]["controls"]["uploader"]["onmouseup"].UnTie(); // makes no sense
+            node["magix.forms.create-web-part"]["controls"]["uploader"]["onmouseover"].UnTie(); // makes no sense
+            node["magix.forms.create-web-part"]["controls"]["uploader"]["onmouseout"].UnTie(); // makes no sense
+            node["magix.forms.create-web-part"]["controls"]["uploader"]["onkeypress"].UnTie(); // makes no sense
+            node["magix.forms.create-web-part"]["controls"]["uploader"]["onesc"].UnTie(); // makes no sense
+            AppendInspectFromResource(
+                node["inspect"],
+                "Magix.forms",
+                "Magix.forms.hyperlisp.inspect.hl",
+                "[magix.forms.uploader-dox-end].Value",
+                true);
+            AppendCodeFromResource(
+                node["magix.forms.create-web-part"]["controls"]["uploader"],
+                "Magix.forms",
+                "Magix.forms.hyperlisp.inspect.hl",
+                "[magix.forms.uploader-sample-end]");
 		}
 	}
 }

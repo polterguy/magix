@@ -34,10 +34,11 @@ namespace Magix.forms
             FillOutParameters(e.Params, ret);
 
             Node node = ip["_code"].Get<Node>();
-            if (node.Contains("tag") && node["tag"].Value != null)
+
+            if (node.ContainsValue("tag"))
 				ret.Tag = node["tag"].Get<string>();
 
-			if (node.Contains("default") && node["default"].Value != null)
+            if (node.ContainsValue("default"))
 				ret.Default = node["default"].Get<string>();
 
 			if (node.Contains("controls"))

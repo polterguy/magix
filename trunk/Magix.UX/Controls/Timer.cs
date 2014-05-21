@@ -78,7 +78,7 @@ namespace Magix.UX.Widgets
 		protected override string GetClientSideScriptOptions()
 		{
 			string retVal = base.GetClientSideScriptOptions();
-            if (!Disabled && Tick != null)
+            if (Disabled || Tick == null)
             {
                 if (!string.IsNullOrEmpty(retVal))
                     retVal += ",";

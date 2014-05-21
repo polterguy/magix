@@ -24,7 +24,7 @@ magix.viewport.load-module
   class=>span-22 showgrid top-1 bottom-1 min-height-5
   name=>Magix.ide.Surface
 
-magix.forms.list-widget-types
+magix.forms.list-control-types
 
 _buffer
 
@@ -49,7 +49,7 @@ _onclick
 choose either before or after as the position of the node"
         time=>1000
 
-for-each=>[magix.forms.list-widget-types][types]
+for-each=>[magix.forms.list-control-types][types]
   if=>not-exist
     lhs=>[.][_no-embed]
     code
@@ -134,8 +134,8 @@ magix.forms.create-web-part
             form-id=>edit-forms
             id=>cut
             value=>true
-          magix.forms.list-widget-types
-          for-each=>[@][magix.forms.list-widget-types][types]
+          magix.forms.list-control-types
+          for-each=>[@][magix.forms.list-control-types][types]
             if=>equals
               lhs=>[.][type].Value
               rhs=>[/][get-selected-widget][value][widget][type].Value
