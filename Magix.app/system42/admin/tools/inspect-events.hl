@@ -18,13 +18,13 @@ for-each=>[Data][events]
       onclick
         void.foo
           inspect
-        set=>[magix.forms.set-value][value].Value
+        set=>[2][value].Value
           value=>[0][inspect].Value
         magix.forms.set-value
           form-id=>form1
           id=>desc
           value
-        set=>[magix.forms.set-value:1][value].Value
+        set=>[4][value].Value
           value=>[0].Name
         magix.forms.set-value
           form-id=>form1
@@ -44,7 +44,7 @@ for-each=>[Data][events]
         replace=>[node-2-code][code].Value
           what=>>
           with=>&gt;
-        set=>[magix.forms.set-value:2][value].Value
+        set=>[12][value].Value
           value=>[node-2-code][code].Value
         magix.forms.set-value
           form-id=>form1

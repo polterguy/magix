@@ -65,11 +65,7 @@ namespace Magix.forms
 			}
 
             BaseWebControl ctrl = FindControl<BaseWebControl>(Ip(e.Params));
-
-			if (ctrl != null)
-			{
-                Ip(e.Params)["value"].Value = ctrl.Class;
-			}
+            Ip(e.Params)["value"].Value = ctrl.Class;
 		}
 
 		/*
@@ -89,11 +85,7 @@ namespace Magix.forms
 			}
 
             BaseWebControl ctrl = FindControl<BaseWebControl>(Ip(e.Params));
-
-			if (ctrl != null)
-			{
-				new EffectFocusAndSelect(ctrl).Render();
-			}
+			new EffectFocusAndSelect(ctrl).Render();
 		}
 
 		/*
@@ -107,19 +99,19 @@ namespace Magix.forms
             Node ip = Ip(pars);
             Node node = ip["_code"].Value as Node;
 
-			if (node.Contains("class") && !string.IsNullOrEmpty(node["class"].Get<string>()))
+            if (node.ContainsValue("class"))
 				that.Class = node["class"].Get<string>();
 
-			if (node.Contains("dir") && !string.IsNullOrEmpty(node["dir"].Get<string>()))
+            if (node.ContainsValue("dir"))
 				that.Dir = node["dir"].Get<string>();
 
-            if (node.Contains("tabindex") && !string.IsNullOrEmpty(node["tabindex"].Get<string>()))
+            if (node.ContainsValue("tabindex"))
                 that.TabIndex = node["tabindex"].Get<string>();
 
-            if (node.Contains("title") && !string.IsNullOrEmpty(node["title"].Get<string>()))
+            if (node.ContainsValue("title"))
                 that.Title = node["title"].Get<string>();
 
-			if (node.Contains("style") && !string.IsNullOrEmpty(node["style"].Get<string>()))
+            if (node.ContainsValue("style"))
 			{
 				string[] styles = 
 					node["style"].Get<string>().Replace("\n", "").Replace("\r", "").Split(

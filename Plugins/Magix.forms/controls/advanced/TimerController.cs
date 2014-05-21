@@ -31,13 +31,12 @@ namespace Magix.forms
 			}
 
             Timer ret = new Timer();
+            FillOutParameters(e.Params, ret);
+
             Node node = ip["_code"].Get<Node>();
 
-            if (node.Contains("interval") &&
-                node["interval"].Value != null)
+            if (node.ContainsValue("interval"))
                 ret.Interval = node["interval"].Get<int>();
-
-            FillOutParameters(e.Params, ret);
 
 			if (ShouldHandleEvent("ontick", node))
 			{
@@ -56,25 +55,29 @@ namespace Magix.forms
 
 		protected override void Inspect (Node node)
 		{
-            AppendInspect(node["inspect"], @"creates a timer type of control
-
-a timer is a control which will periodically run to the server in intervalls 
-of [interval] milliseconds where it will raise the [tick] event handler.  this 
-control is useful for periodically checking for updates on the server, if 
-you're waiting for something to occur, such as a chat client, or something 
-similar");
-            node["magix.forms.create-web-part"]["container"].Value = "content5";
-            node["magix.forms.create-web-part"]["form-id"].Value = "sample-form";
+            AppendInspectFromResource(
+                node["inspect"],
+                "Magix.forms",
+                "Magix.forms.hyperlisp.inspect.hl",
+                "[magix.forms.timer-dox-start].Value");
+            AppendCodeFromResource(
+                node,
+                "Magix.forms",
+                "Magix.forms.hyperlisp.inspect.hl",
+                "[magix.forms.timer-sample-start]");
             base.Inspect(node["magix.forms.create-web-part"]["controls"]["timer"]);
-            node["magix.forms.create-web-part"]["controls"]["timer"]["interval"].Value = "1000";
             node["magix.forms.create-web-part"]["controls"]["timer"]["visible"].UnTie(); // makes no sense
-            node["magix.forms.create-web-part"]["controls"]["timer"]["ontick"].Value = "hyperlisp code";
-            AppendInspect(node["inspect"], @"[interval] is the number of 
-milliseconds between each time the timer should go to the server, and raise 
-the ontick event
-
-[ontick] is the active event for that will be raised each time the [interval] 
-time has passed", true);
+            AppendInspectFromResource(
+                node["inspect"],
+                "Magix.forms",
+                "Magix.forms.hyperlisp.inspect.hl",
+                "[magix.forms.timer-dox-end].Value",
+                true);
+            AppendCodeFromResource(
+                node["magix.forms.create-web-part"]["controls"]["timer"],
+                "Magix.forms",
+                "Magix.forms.hyperlisp.inspect.hl",
+                "[magix.forms.timer-sample-end]");
 		}
 	}
 }

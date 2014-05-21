@@ -76,5 +76,25 @@
 
 * verify that active event expressions don't bypass sandbox and max-execution-iterations
 
+* implement ContainsValue on node, and use it in magix.forms.controls. namespace
+
+* check up all active events in magix.forms.controls. and that they're supposed to be there
+
+* remove all ".Value as Node" and exchange with Get<Node>()
+
+* active event handler for OnLoad for all magix.forms.controls
+
+* fix magix.forms.list-control-types such that it doesn't return any "widget" nodes, but rather the 
+  name of the control directly beneath the types node
+
+* make all mandatory arguments in all active events be declarable through some sort of helper method, such 
+  that we don't have to explicitly check for existence of all parameters that are mandatory
+
+* implement exception hierarchy
+
+* create support for expressions in all properties of magix.forms.controls controls and web controls
+
+* change _VIEWSTATE_KEY to be transmitted as cookie and not as hidden input value
+
 
 

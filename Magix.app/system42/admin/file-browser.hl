@@ -308,11 +308,11 @@ magix.forms.create-web-part
             pr0=>[/][magix.forms.get-value][value].Value
         magix.viewport.show-message
           time=>1250
-        magix.forms.has-more-data
+        magix.forms.uploader-has-more-data
           form-id=>file-explorer
           id=>uploader
         if=>not-exist
-          lhs=>[magix.forms.has-more-data][value].Value
+          lhs=>[magix.forms.uploader-has-more-data][value].Value
           code
             execute-script
               file=>system42/admin/file-browser.hl

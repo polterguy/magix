@@ -25,7 +25,7 @@ namespace Magix.forms
             base.FillOutParameters(pars, ctrl);
 
             Node ip = Ip(pars);
-            Node node = ip["_code"].Value as Node;
+            Node node = ip["_code"].Get<Node>();
 
             AttributeControl atrCtrl = ctrl as AttributeControl;
             foreach (Node idx in node)
@@ -43,7 +43,6 @@ namespace Magix.forms
             Node tmp = node;
             while (!tmp.Contains("inspect"))
                 tmp = tmp.Parent;
-            base.Inspect(node);
             AppendInspectFromResource(
                 tmp["inspect"],
                 "Magix.forms",

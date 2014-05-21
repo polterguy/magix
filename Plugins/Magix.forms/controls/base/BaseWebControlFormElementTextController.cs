@@ -25,8 +25,7 @@ namespace Magix.forms
             Node codeNode = ip["_code"].Value as Node;
             BaseWebControlFormElementText that = ctrl as BaseWebControlFormElementText;
 
-            if (codeNode.Contains("value") &&
-                !string.IsNullOrEmpty(codeNode["value"].Get<string>()))
+            if (codeNode.ContainsValue("value"))
                 that.Value = codeNode["value"].Get<string>();
         }
 

@@ -34,24 +34,20 @@ namespace Magix.forms
             FillOutParameters(e.Params, ret);
 
             Node node = ip["_code"].Value as Node;
-			if (node.Contains("autocapitalize") && 
-			    node["autocapitalize"].Value != null)
+
+            if (node.ContainsValue("autocapitalize"))
 				ret.AutoCapitalize = node["autocapitalize"].Get<bool>();
 
-			if (node.Contains("autocorrect") && 
-			    node["autocorrect"].Value != null)
+            if (node.ContainsValue("autocorrect"))
 				ret.AutoCorrect = node["autocorrect"].Get<bool>();
 
-			if (node.Contains("autocomplete") &&
-                node["autocomplete"].Value != null)
+            if (node.ContainsValue("autocomplete"))
                 ret.AutoComplete = node["autocomplete"].Get<bool>();
 
-			if (node.Contains("maxlength") &&
-                node["maxlength"].Value != null)
+            if (node.ContainsValue("maxlength"))
                 ret.MaxLength = node["maxlength"].Get<int>();
 
-			if (node.Contains("type") && 
-				node["type"].Value != null)
+            if (node.ContainsValue("type"))
 			{
 				switch(node["type"].Get<string>())
 				{
@@ -142,14 +138,6 @@ namespace Magix.forms
                 "Magix.forms",
                 "Magix.forms.hyperlisp.inspect.hl",
                 "[magix.forms.text-box-sample-end]");
-		}
-		
-		/*
-		 * helper for events such that value can be passed into event handlers
-		 */
-		protected override object GetValue(BaseControl that)
-		{
-			return ((TextBox)that).Value;
 		}
 	}
 }

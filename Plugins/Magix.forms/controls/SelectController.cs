@@ -34,7 +34,8 @@ namespace Magix.forms
 			FillOutParameters(e.Params, ret);
 
             Node node = ip["_code"].Get<Node>();
-            if (node.Contains("size") && node["size"].Value != null)
+
+            if (node.ContainsValue("size"))
 				ret.Size = node["size"].Get<int>();
 
 			if (ShouldHandleEvent("onselectedindexchanged", node))
@@ -71,22 +72,17 @@ not thread safe";
 				return;
 			}
 
-            Select ctrl = FindControl<Select>(Ip(e.Params));
-
-			if (ctrl != null)
+            Select lst = FindControl<Select>(Ip(e.Params));
+			lst.Items.Clear();
+            if (Ip(e.Params).Contains("values"))
 			{
-				Select lst = ctrl as Select;
-				lst.Items.Clear();
-                if (Ip(e.Params).Contains("values"))
+                foreach (Node idx in Ip(e.Params)["values"])
 				{
-                    foreach (Node idx in Ip(e.Params)["values"])
-					{
-						ListItem it = new ListItem(idx.Get<string>(), idx.Name);
-						lst.Items.Add(it);
-					}
+					ListItem it = new ListItem(idx.Get<string>(), idx.Name);
+					lst.Items.Add(it);
 				}
-				lst.ReRender();
 			}
+			lst.ReRender();
 		}
 
 		protected override void Inspect (Node node)
@@ -113,16 +109,6 @@ not thread safe";
                 "Magix.forms",
                 "Magix.forms.hyperlisp.inspect.hl",
                 "[magix.forms.select-sample-end]");
-		}
-		
-		/*
-		 * helper for events such that value can be passed into event handlers
-		 */
-		protected override object GetValue(BaseControl that)
-		{
-            if (((Select)that).SelectedItem == null)
-                return null;
-			return ((Select)that).SelectedItem.Value;
 		}
 	}
 }

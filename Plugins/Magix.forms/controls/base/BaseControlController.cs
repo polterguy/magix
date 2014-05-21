@@ -21,25 +21,28 @@ namespace Magix.forms
 		/*
 		 * lists all widget types that exists in system
 		 */
-		[ActiveEvent(Name="magix.forms.list-widget-types")]
-		private static void magix_forms_list_widget_types(object sender, ActiveEventArgs e)
+		[ActiveEvent(Name="magix.forms.list-control-types")]
+		private static void magix_forms_list_control_types(object sender, ActiveEventArgs e)
 		{
             Node ip = Ip(e.Params);
 			if (ShouldInspect(ip))
 			{
-				ip["inspect"].Value = @"<p>lists all widget types as [types] 
-available in system</p><p>thread safe</p>";
-				ip["magix.forms.list-widget-types"].Value = null;
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.forms",
+                    "Magix.forms.hyperlisp.inspect.hl",
+                    "[magix.forms.list-control-types-dox].Value");
+				ip["magix.forms.list-control-types"].Value = null;
 				return;
 			}
 
-			Node controlActiveEvents = new Node();
-			controlActiveEvents["begins-with"].Value = "magix.forms.controls.";
+			Node ctrlActiveEvents = new Node();
+			ctrlActiveEvents["begins-with"].Value = "magix.forms.controls.";
 			RaiseActiveEvent(
                 "magix.execute.list-events",
-				controlActiveEvents);
+				ctrlActiveEvents);
 
-			foreach (Node idx in controlActiveEvents["events"])
+			foreach (Node idx in ctrlActiveEvents["events"])
 			{
 				Node controlNode = new Node("widget");
 				controlNode["type"].Value = idx.Name;
@@ -87,24 +90,21 @@ available in system</p><p>thread safe</p>";
             Node ip = Ip(e.Params);
             if (ShouldInspect(ip))
             {
-                e.Params["inspect"].Value = @"<p>sets the visibility of the given 
-[id] web control, in the [form-id] form</p><p>if the [value] node's value is true, 
-then the control is shown, otherwise it will be hidden.&nbsp;&nbsp;the [id] is the 
-id of the control you wish to retrieve the value from, and the [form-id] is the 
-form id you created the form with.&nbsp;&nbsp;[form-id] is optional, and if not 
-given, the logic will change the value of the first control that matches the [id] 
-in any form</p><p>not thread safe</p>";
-                e.Params["magix.forms.set-visible"]["id"].Value = "control";
-                e.Params["magix.forms.set-visible"]["form-id"].Value = "webpages";
-                e.Params["magix.forms.set-visible"]["value"].Value = true;
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.forms",
+                    "Magix.forms.hyperlisp.inspect.hl",
+                    "[magix.forms.set-visible-dox].Value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.forms",
+                    "Magix.forms.hyperlisp.inspect.hl",
+                    "[magix.forms.set-visible-sample]");
 				return;
 			}
 
-            if (!ip.Contains("value"))
-                throw new ArgumentException("you must supply a [value] to [magix.forms.set-visible]");
-
             Control ctrl = FindControl<Control>(ip);
-            ctrl.Visible = ip["value"].Get<bool>();
+            ctrl.Visible = ip["value"].Get<bool>(false);
 		}
 
 		/*
@@ -116,15 +116,16 @@ in any form</p><p>not thread safe</p>";
             Node ip = Ip(e.Params);
             if (ShouldInspect(ip))
             {
-                ip["inspect"].Value = @"<p>returns the visibility of the given 
-[id] web control, in the [form-id] form</p><p>if the control is visible, the 
-active event will return true in [value], otherwise false.&nbsp;&nbsp;the [id] 
-is the id of the control you wish to retrieve the value from, and the [form-id] 
-is the form id you created the form with.&nbsp;&nbsp;[form-id] is optional, and 
-if not given, the logic will change the value of the first control that matches 
-the [id] in any form</p><p>not thread safe</p>";
-                ip["magix.forms.get-visible"]["id"].Value = "control";
-                ip["magix.forms.get-visible"]["form-id"].Value = "webpages";
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.forms",
+                    "Magix.forms.hyperlisp.inspect.hl",
+                    "[magix.forms.get-visible-dox].Value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.forms",
+                    "Magix.forms.hyperlisp.inspect.hl",
+                    "[magix.forms.get-visible-sample]");
 				return;
 			}
 
@@ -141,26 +142,21 @@ the [id] in any form</p><p>not thread safe</p>";
             Node ip = Ip(e.Params);
             if (ShouldInspect(ip))
             {
-                ip["inspect"].Value = @"<p>sets the value property of the control</p>
-<p>changes the current value of the control to whatever you give it as input in [value].
-&nbsp;&nbsp;the [id] is the id of the control you wish to retrieve the value from, and 
-the [form-id] is the form id you created the form with.&nbsp;&nbsp;[form-id] is optional,
-and if not given, the logic will change the value of the first control that matches the 
-[id] in any form</p><p>not thread safe</p>";
-                ip["magix.forms.set-value"]["id"].Value = "control";
-                ip["magix.forms.set-value"]["form-id"].Value = "webpages";
-                ip["magix.forms.set-value"]["value"].Value = "some new value";
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.forms",
+                    "Magix.forms.hyperlisp.inspect.hl",
+                    "[magix.forms.set-value-dox].Value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.forms",
+                    "Magix.forms.hyperlisp.inspect.hl",
+                    "[magix.forms.set-value-sample]");
                 return;
             }
 
-            if (!ip.Contains("value"))
-                throw new ArgumentException("[magix.forms.set-value] needs [value]");
-
-            Control ctrl = FindControl<Control>(ip);
-            IValueControl iCtrl = ctrl as IValueControl;
-            if (iCtrl == null)
-                throw new ArgumentException("that control doesn't support having its value changed");
-            iCtrl.ControlValue = ip["value"].Get<string>();
+            IValueControl ctrl = FindControl<IValueControl>(ip);
+            ctrl.ControlValue = ip["value"].Get<string>("");
         }
 
         /*
@@ -172,31 +168,22 @@ and if not given, the logic will change the value of the first control that matc
             Node ip = Ip(e.Params);
             if (ShouldInspect(ip))
             {
-                ip["inspect"].Value = @"<p>returns the value of the control</p>
-<p>the value will be returned as [value].&nbsp;&nbsp;the [id] is the id of the 
-control you wish to retrieve the value from, and the [form-id] is the form id 
-you created the form with.&nbsp;&nbsp;[form-id] is optional, and if not given, 
-the logic will change the value of the first control that matches the [id] in 
-any form</p><p>not thread safe</p>";
-                ip["magix.forms.get-value"]["id"].Value = "control";
-                ip["magix.forms.get-value"]["form-id"].Value = "webpages";
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.forms",
+                    "Magix.forms.hyperlisp.inspect.hl",
+                    "[magix.forms.get-value-dox].Value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.forms",
+                    "Magix.forms.hyperlisp.inspect.hl",
+                    "[magix.forms.get-value-sample]");
                 return;
             }
 
-            Control ctrl = FindControl<Control>(ip);
-            IValueControl iCtrl = ctrl as IValueControl;
-            if (iCtrl == null)
-                throw new ArgumentException("that control doesn't support retrieving its value");
-            ip["value"].Value = iCtrl.ControlValue;
+            IValueControl ctrl = FindControl<IValueControl>(ip);
+            ip["value"].Value = ctrl.ControlValue;
         }
-
-		/*
-		 * helper for events such that value can be passed into event handlers
-		 */
-		protected virtual object GetValue(BaseControl that)
-		{
-			return null;
-		}
 
 		/*
 		 * fills out the stuff from basecontrol
@@ -204,24 +191,22 @@ any form</p><p>not thread safe</p>";
 		protected virtual void FillOutParameters(Node pars, BaseControl ctrl)
 		{
             Node ip = Ip(pars);
-            Node controlDeclarationNode = ip["_code"].Get<Node>();
+            Node node = ip["_code"].Get<Node>();
 
-            if (controlDeclarationNode.Contains("id") && !string.IsNullOrEmpty(controlDeclarationNode["id"].Get<string>()))
-				ctrl.ID = controlDeclarationNode["id"].Get<string>();
-			else if (controlDeclarationNode.Value != null)
-				ctrl.ID = controlDeclarationNode.Get<string>();
+            if (node.ContainsValue("id"))
+				ctrl.ID = node["id"].Get<string>();
+			else if (node.Value != null)
+				ctrl.ID = node.Get<string>();
 
-			if (controlDeclarationNode.Contains("visible") && controlDeclarationNode["visible"].Value != null)
-				ctrl.Visible = controlDeclarationNode["visible"].Get<bool>();
+            if (node.ContainsValue("visible"))
+				ctrl.Visible = node["visible"].Get<bool>();
 
-			if (controlDeclarationNode.Contains("info") && !string.IsNullOrEmpty(controlDeclarationNode["info"].Get<string>()))
-				ctrl.Info = controlDeclarationNode["info"].Get<string>();
+            if (node.ContainsValue("info"))
+				ctrl.Info = node["info"].Get<string>();
 
-			if (ShouldHandleEvent("onfirstload", controlDeclarationNode) && 
-                pars.Contains("_first") && 
-                pars["_first"].Get<bool>())
+			if (ShouldHandleEvent("onfirstload", node) && pars["_first"].Get<bool>(false))
 			{
-                Node codeNode = controlDeclarationNode["onfirstload"].Clone();
+                Node codeNode = node["onfirstload"].Clone();
 				ctrl.Load += delegate(object sender, EventArgs e)
 				{
                     FillOutEventInputParameters(codeNode, sender);
@@ -232,15 +217,13 @@ any form</p><p>not thread safe</p>";
 			}
 		}
 
-		protected static T FindControl<T>(Node pars) where T : Control
+		protected static T FindControl<T>(Node pars)
 		{
 			if (!pars.Contains("id"))
-				throw new ArgumentException("set-value(s)/get-value(s) needs [id] parameter");
+				throw new ArgumentException("this active event needs an [id] parameter");
 
 			Node ctrlNode = new Node();
-
 			ctrlNode["id"].Value = pars["id"].Value;
-
 			if (pars.Contains("form-id"))
 				ctrlNode["form-id"].Value = pars["form-id"].Value;
 
@@ -249,11 +232,9 @@ any form</p><p>not thread safe</p>";
 				ctrlNode);
 
 			if (ctrlNode.Contains("_ctrl"))
-			{
-				Control ctrl = ctrlNode["_ctrl"].Value as Control;
-				return ctrl as T;
-			}
-            throw new ArgumentException("couldn't find that control");
+                return ctrlNode["_ctrl"].Get<T>();
+            else
+                throw new ArgumentException("couldn't find that control");
 		}
 
         protected bool ShouldHandleEvent(string evt, Node node)
@@ -265,13 +246,12 @@ any form</p><p>not thread safe</p>";
 
         protected void FillOutEventInputParameters(Node node, object sender)
         {
-            BaseControl that2 = sender as BaseControl;
-            if (!string.IsNullOrEmpty(that2.Info))
-                node["$"]["info"].Value = that2.Info;
+            BaseControl that = sender as BaseControl;
+            if (!string.IsNullOrEmpty(that.Info))
+                node["$"]["info"].Value = that.Info;
 
-            object val = GetValue(that2);
-            if (val != null)
-                node["$"]["value"].Value = val;
+            if (that is IValueControl)
+                node["$"]["value"].Value = (that as IValueControl).ControlValue;
         }
 
         protected virtual void Inspect(Node node)

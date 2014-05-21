@@ -34,8 +34,8 @@ namespace Magix.forms
             FillOutParameters(e.Params, ret);
 
             Node node = ip["_code"].Get<Node>();
-            if (node.Contains("value") && 
-			    !string.IsNullOrEmpty(node["value"].Get<string>()))
+
+            if (node.ContainsValue("value"))
 				ret.Value = node["value"].Get<string>();
 
             ip["_ctrl"].Value = ret;

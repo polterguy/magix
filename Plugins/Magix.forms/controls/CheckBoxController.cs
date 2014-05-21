@@ -34,7 +34,8 @@ namespace Magix.forms
             FillOutParameters(e.Params, ret);
 
             Node node = ip["_code"].Value as Node;
-			if (node.Contains("checked") && node["checked"].Value != null)
+
+            if (node.ContainsValue("checked"))
 				ret.Checked = node["checked"].Get<bool>();
 
 			if (ShouldHandleEvent("oncheckedchanged", node))
@@ -76,14 +77,6 @@ namespace Magix.forms
                 "Magix.forms",
                 "Magix.forms.hyperlisp.inspect.hl",
                 "[magix.forms.check-box-sample-end]");
-		}
-		
-		/*
-		 * helper for events such that value can be passed into event handlers
-		 */
-		protected override object GetValue(BaseControl that)
-		{
-			return ((CheckBox)that).Checked;
 		}
 	}
 }

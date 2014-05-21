@@ -148,7 +148,7 @@ namespace Magix.Core
         /*
          * html formats and appends the given value to the given node's value
          */
-        protected void AppendInspect(Node node, string value, bool dropInitialHeader)
+        protected static void AppendInspect(Node node, string value, bool dropInitialHeader)
         {
             StringBuilder builder = new StringBuilder(node.Get<string>());
             if (!dropInitialHeader)
@@ -181,7 +181,7 @@ namespace Magix.Core
                         builder.Append("<strong>[");
                         break;
                     case ']':
-                        builder.Append("</strong>]");
+                        builder.Append("]</strong>");
                         break;
                     case ' ':
                         if (lastChar == ' ' && secondLastChar == '.')
@@ -206,7 +206,7 @@ namespace Magix.Core
         /*
          * loads string from resource, html formats string and appends it into the given node
          */
-        protected void AppendInspectFromResource(
+        protected static void AppendInspectFromResource(
             Node destinationNode,
             string assemblyName,
             string resourceName,
@@ -223,7 +223,7 @@ namespace Magix.Core
         /*
          * loads string from resource, html formats string and appends it into the given node
          */
-        protected void AppendInspectFromResource(
+        protected static void AppendInspectFromResource(
             Node destinationNode,
             string assemblyName,
             string resourceName,
@@ -245,7 +245,7 @@ namespace Magix.Core
         /*
          * loads node from resource, and appends into given node
          */
-        protected void AppendCodeFromResource(
+        protected static void AppendCodeFromResource(
             Node destinationNode,
             string assemblyName,
             string resourceName,

@@ -39,34 +39,8 @@ namespace Magix.forms
 			}
 
             Node code = ip["_code"].Get<Node>();
-			if (!code.Contains("oncreatecontrols"))
-			{
-				Label lbl = new Label();
-				lbl.Value = "{{lambda control}}";
-				lbl.ID = code.Value as string;
-                ip["_ctrl"].Value = lbl;
 
-				if (code.Contains("onclick"))
-				{
-					// design select support
-					Node codeNode = code["onclick"].Clone();
-
-					lbl.Click += delegate(object sender2, EventArgs e2)
-					{
-						RaiseActiveEvent(
-							"magix.execute",
-							codeNode);
-					};
-				}
-				return; // nothing to render unless event handler is defined ...
-			}
-
-			string id = code.Get<string>();
-			if (id == null && !code.Contains("id"))
-				throw new ArgumentException("a [lambda] control must have a unique [id]");
-
-			if (id == null)
-				id = code["id"].Get<string>();
+			string id = code.Get<string>() ?? code["id"].Get<string>(null);
 			if (id == null)
 				throw new ArgumentException("a [lambda] control must have a unique [id]");
 

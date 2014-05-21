@@ -34,7 +34,8 @@ namespace Magix.forms
             FillOutParameters(e.Params, ret);
 
             Node node = ip["_code"].Get<Node>();
-            if (node.Contains("value") && node["value"].Value != null)
+
+            if (node.ContainsValue("value"))
 				ret.Value = node["value"].Get<string>();
 
             ip["_ctrl"].Value = ret;
@@ -65,14 +66,6 @@ namespace Magix.forms
                 "Magix.forms",
                 "Magix.forms.hyperlisp.inspect.hl",
                 "[magix.forms.hidden-sample-end]");
-		}
-		
-		/*
-		 * helper for events such that value can be passed into event handlers
-		 */
-		protected override object GetValue(BaseControl that)
-		{
-			return ((Hidden)that).Value;
 		}
 	}
 }
