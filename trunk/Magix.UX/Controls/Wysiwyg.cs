@@ -56,15 +56,6 @@ namespace Magix.UX.Widgets
 		}
 
 		/**
-         * place holder
-         */
-		public string PlaceHolder
-		{
-			get { return ViewState["PlaceHolder"] == null ? null : (string)ViewState["PlaceHolder"]; }
-			set { ViewState["PlaceHolder"] = value; }
-		}
-
-		/**
          * has bold
          */
 		public bool HasBold

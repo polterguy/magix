@@ -30,11 +30,6 @@ namespace Magix.UX.Widgets.Core
         protected bool _hasFocus;
 
         /*
-         * raised when control is initially rendered
-         */
-        public event EventHandler InitiallyLoaded;
-
-        /*
          * extra information
          */
         public string Info

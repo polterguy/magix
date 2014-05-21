@@ -9,6 +9,7 @@ using System.IO;
 using System.Web.UI;
 using Magix.Core;
 using Magix.UX.Widgets;
+using Magix.UX.Widgets.Core;
 
 namespace Magix.forms
 {
@@ -92,58 +93,6 @@ namespace Magix.forms
 
             ip["_ctrl"].Value = ret;
 		}
-
-		/*
-		 * returns values
-		 */
-        [ActiveEvent(Name = "magix.forms.get-children-values")]
-        private void magix_forms_get_children_values(object sender, ActiveEventArgs e)
-        {
-            if (ShouldInspect(e.Params))
-            {
-                e.Params["inspect"].Value = @"returns the values property of all child controls
-which are direct children of the panel in the [values] node, with name being id of control, 
-and value being the value of the control";
-                return;
-            }
-
-            Panel ctrl = FindControl<Panel>(Ip(e.Params));
-
-            foreach (Control idx in ctrl.Controls)
-            {
-                object value = null;
-                if (idx is Button)
-                    value = (idx as Button).Value;
-                if (idx is CheckBox)
-                    value = (idx as CheckBox).Checked;
-                if (idx is Hidden)
-                    value = (idx as Hidden).Value;
-                if (idx is HyperLink)
-                    value = (idx as HyperLink).Value;
-                if (idx is Img)
-                    value = (idx as Img).Src;
-                if (idx is Label)
-                    value = (idx as Label).Value;
-                if (idx is LinkButton)
-                    value = (idx as LinkButton).Value;
-                if (idx is LiteralControl)
-                    value = (idx as LiteralControl).Text;
-                if (idx is Radio)
-                    value = (idx as Radio).Checked;
-                if (idx is Select)
-                    value = (idx as Select).SelectedItem.Value;
-                if (idx is TextArea)
-                    value = (idx as TextArea).Value;
-                if (idx is TextBox)
-                    value = (idx as TextBox).Value;
-                if (idx is Uploader)
-                    value = (idx as Uploader).GetFileName();
-                if (idx is Wysiwyg)
-                    value = (idx as Wysiwyg).Value;
-                if (value != null)
-                    Ip(e.Params)["values"][idx.ID].Value = value;
-            }
-        }
 
 		protected override void Inspect (Node node)
 		{

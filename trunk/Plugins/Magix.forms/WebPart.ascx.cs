@@ -5,26 +5,29 @@
  */
 
 using System;
+using System.Web;
 using System.Web.UI;
+using System.Diagnostics;
+using System.Configuration;
+using System.Collections.Generic;
+using Magix.Core;
 using Magix.UX;
 using Magix.UX.Widgets;
 using Magix.UX.Effects;
-using Magix.Core;
-using System.Web;
-using System.Configuration;
-using System.Collections.Generic;
-using System.Diagnostics;
 using Magix.UX.Widgets.Core;
 
 namespace Magix.forms
 {
     /*
-     * create a web part consisting of magix markup language
+     * creates a web part consisting of magix markup language or a control collection
      */
     public class WebPart : ActiveModule
     {
 		private bool isFirst;
 
+        /*
+         * node data source for web part
+         */
 		private Node DataSource
 		{
 			get
@@ -37,13 +40,19 @@ namespace Magix.forms
 			set { ViewState["DataSource"] = value; }
 		}
 
-		protected string FormID
+        /*
+         * unique form-id of web part
+         */
+		private string FormID
 		{
 			get { return ViewState["FormID"] as string; }
 			set { ViewState["FormID"] = value; }
 		}
 
-		protected Dictionary<string, Node> Methods
+        /*
+         * list of all active events associated with web part
+         */
+		private Dictionary<string, Node> Methods
 		{
 			get
 			{
@@ -52,7 +61,10 @@ namespace Magix.forms
 				return ViewState["Methods"] as Dictionary<string, Node>; }
 		}
 
-		public override void InitialLoading(Node node)
+        /*
+         * sets up the web part
+         */
+        public override void InitialLoading(Node node)
 		{
 			isFirst = true;
 			Load +=
@@ -76,14 +88,10 @@ namespace Magix.forms
                         throw new ArgumentException("you must supply a [controls] segment for your web part");
                     
                     if (!string.IsNullOrEmpty(ip["controls"].Get<string>()))
-                    {
                         DataSource["controls"].Value = 
                             (Expressions.GetExpressionValue(ip["controls"].Get<string>(), dp, ip, false) as Node).Clone();
-                    }
                     else
-                    {
                         DataSource["controls"].Value = ip["controls"].Clone();
-                    }
 
 					if (ip.Contains("events"))
 					{
@@ -100,26 +108,31 @@ namespace Magix.forms
 			base.InitialLoading(node);
 		}
 
-		/**
-		 * raises form events, if match
+		/*
+		 * raises web part dynamic active events
 		 */
 		[ActiveEvent(Name = "")]
-		protected void magix_null_event_handler(object sender, ActiveEventArgs e)
+		private void magix_null_event_handler(object sender, ActiveEventArgs e)
 		{
+            Node ip = Ip(e.Params);
 			if (Methods.ContainsKey(e.Name))
 			{
-				if (e.Params.Contains("inspect"))
+				if (ShouldInspect(ip))
 				{
-					e.Params["inspect"].Value = "dynamically created active event attached to form object " + FormID;
-					e.Params.AddRange(Methods[e.Name].Clone());
+                    AppendInspectFromResource(
+                        ip["inspect"],
+                        "Magix.forms",
+                        "Magix.forms.hyperlisp.inspect.hl",
+                        "[magix.forms.web-part-null-event-handler-dox].Value");
+                    ip.AddRange(Methods[e.Name].Clone());
 					return;
 				}
 
 				Node tmp = Methods[e.Name].Clone();
 
 				// cloning in the incoming parameters
-                if (Ip(e.Params).Count > 0)
-                    tmp["$"].AddRange(Ip(e.Params).Clone());
+                if (ip.Count > 0)
+                    tmp["$"].AddRange(ip.Clone());
 
 				RaiseActiveEvent(
 					"magix.execute",
@@ -127,17 +140,17 @@ namespace Magix.forms
 
 				if (tmp.Contains("$"))
 				{
-                    Ip(e.Params).Clear();
-                    Ip(e.Params).AddRange(tmp["$"]);
+                    ip.Clear();
+                    ip.AddRange(tmp["$"]);
 				}
 			}
 		}
 		
-		/**
+		/*
 		 * raises form events, if match
 		 */
 		[ActiveEvent(Name = "magix.forms.change-mml")]
-		protected void magix_forms_change_mml(object sender, ActiveEventArgs e)
+		private void magix_forms_change_mml(object sender, ActiveEventArgs e)
 		{
 			if (e.Params.Contains("inspect"))
 			{
@@ -161,31 +174,34 @@ to the value in [mml]";
 			}
 		}
 
-		/**
-		 * raises form events, if match
+		/*
+		 * returns the given [id] control
 		 */
 		[ActiveEvent(Name = "magix.forms._get-control")]
-		protected void magix_forms__get_control(object sender, ActiveEventArgs e)
+		private void magix_forms__get_control(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains("inspect"))
+            Node ip = Ip(e.Params);
+			if (ShouldInspect(ip))
 			{
-				e.Params["inspect"].Value = @"returns the given control as [_ctrl] to caller 
-if [form-id] matches and control with given [id] is found.&nbsp;&nbsp;
-[form-id] is conditional, and if not given, will return first control that matches [id], 
-which might be dangerous if you have multiple forms on page.&nbsp;&nbsp;
-no sample code, since not invokable through hyperlisp in a sane way.&nbsp;&nbsp;
-not thread safe";
+                if (ip["inspect"].Value == null)
+                    AppendInspectFromResource(
+                        ip["inspect"],
+                        "Magix.forms",
+                        "Magix.forms.hyperlisp.inspect.hl",
+                        "[magix.forms._get-control-dox].Value");
 				return;
 			}
 
-            if (!Ip(e.Params).Contains("id"))
-				throw new ArgumentException("need [id] to know which control to find");
+            if (!ip.ContainsValue("id"))
+				throw new ArgumentException("you need to supply an [id] to know which control to find");
 
-            if (!Ip(e.Params).Contains("form-id") || FormID == Ip(e.Params)["form-id"].Get<string>())
+            if (ip["form-id"].Get("") == FormID)
 			{
-                Control ctrl = Selector.FindControl<Control>(this.Parent /* to include viewport */, Ip(e.Params)["id"].Get<string>());
+                Control ctrl = Selector.FindControl<Control>(
+                    this.Parent /* to include viewport itself */, 
+                    ip["id"].Get<string>());
                 if (ctrl != null)
-                    Ip(e.Params)["_ctrl"].Value = ctrl;
+                    ip["_ctrl"].Value = ctrl;
 			}
 		}
 
@@ -221,7 +237,7 @@ not thread safe";
 			}
 		}
 
-		protected void BuildControl(Node ctrlNode, Control parent)
+		private void BuildControl(Node ctrlNode, Control parent)
 		{
 			string typeName = ctrlNode.Name;
 
@@ -326,7 +342,7 @@ not thread safe";
 							// adding up to datasource as web control tree
 							Node tmp = new Node();
 
-							tmp["code"].Value = buffer.Replace("&gt;", ">"); // TODO: refactor such that this is done during saving of form
+							tmp["code"].Value = buffer;
 
 							RaiseActiveEvent(
 								"magix.execute.code-2-node",

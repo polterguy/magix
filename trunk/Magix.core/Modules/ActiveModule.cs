@@ -5,10 +5,11 @@
  */
 
 using System;
-using System.Web.UI;
 using System.Web;
-using System.Diagnostics;
+using System.Text;
+using System.Web.UI;
 using System.Threading;
+using System.Diagnostics;
 
 namespace Magix.Core
 {
@@ -40,11 +41,11 @@ namespace Magix.Core
          * Shorthand for raising events. Will return a node, initially created empty, 
          * but passed onto the Event Handler(s)
          */
-        protected Node RaiseActiveEvent(string eventName)
+        protected static Node RaiseActiveEvent(string eventName)
         {
             Node node = new Node();
             ActiveEvents.Instance.RaiseActiveEvent(
-                this,
+                typeof(ActiveModule),
                 eventName,
                 node);
             return node;
@@ -53,10 +54,10 @@ namespace Magix.Core
         /**
          * Shorthand for raising events
          */
-        protected void RaiseActiveEvent(string eventName, Node node)
+        protected static void RaiseActiveEvent(string eventName, Node node)
         {
             ActiveEvents.Instance.RaiseActiveEvent(
-                this,
+                typeof(ActiveModule),
                 eventName,
                 node);
         }
@@ -96,6 +97,140 @@ namespace Magix.Core
             if (pars.Contains("_dp"))
                 return pars["_dp"].Get<Node>();
             return pars;
+        }
+
+        /*
+         * return true if we are supposed to inspect the active event, and not execute it
+         */
+        protected static bool ShouldInspect(Node node)
+        {
+            return node.Contains("inspect");
+        }
+
+        /*
+         * html formats and appends the given value to the given node's value
+         */
+        protected void AppendInspect(Node node, string value)
+        {
+            AppendInspect(node, value, false);
+        }
+
+        /*
+         * html formats and appends the given value to the given node's value
+         */
+        protected static void AppendInspect(Node node, string value, bool dropInitialHeader)
+        {
+            StringBuilder builder = new StringBuilder(node.Get<string>());
+            if (!dropInitialHeader)
+                builder.Append("<p><h3>");
+            bool hasClosedH3 = false;
+
+            char lastChar = char.MinValue, secondLastChar = char.MinValue;
+            foreach (char idxChar in value)
+            {
+                switch (idxChar)
+                {
+                    case '\r':
+                    case '\t':
+                        continue;
+                    case '\n':
+                        if (lastChar == '\n')
+                        {
+                            builder.Remove(builder.Length - 1, 1);
+                            if (!hasClosedH3 && !dropInitialHeader)
+                            {
+                                hasClosedH3 = true;
+                                builder.Append("</h3>");
+                            }
+                            builder.Append("</p><p>");
+                        }
+                        else
+                            builder.Append(' ');
+                        break;
+                    case '[':
+                        builder.Append("<strong>[");
+                        break;
+                    case ']':
+                        builder.Append("]</strong>");
+                        break;
+                    case ' ':
+                        if (lastChar == ' ' && secondLastChar == '.')
+                        {
+                            builder.Remove(builder.Length - 1, 1);
+                            builder.Append("&nbsp;&nbsp;");
+                        }
+                        else
+                            builder.Append(" ");
+                        break;
+                    default:
+                        builder.Append(idxChar);
+                        break;
+                }
+                secondLastChar = lastChar;
+                lastChar = idxChar;
+            }
+            builder.Append("</p>");
+            node.Value = builder.ToString();
+        }
+
+        /*
+         * loads string from resource, html formats string and appends it into the given node
+         */
+        protected static void AppendInspectFromResource(
+            Node destinationNode,
+            string assemblyName,
+            string resourceName,
+            string expression)
+        {
+            AppendInspectFromResource(
+                destinationNode,
+                assemblyName,
+                resourceName,
+                expression,
+                false);
+        }
+
+        /*
+         * loads string from resource, html formats string and appends it into the given node
+         */
+        protected static void AppendInspectFromResource(
+            Node destinationNode,
+            string assemblyName,
+            string resourceName,
+            string expression,
+            bool dropInitialHeader)
+        {
+            Node loadFile = new Node();
+            loadFile["file"].Value = "plugin:magix.file.load-from-resource";
+            loadFile["file"]["assembly"].Value = assemblyName;
+            loadFile["file"]["resource-name"].Value = resourceName;
+            RaiseActiveEvent(
+                "magix.execute.code-2-node",
+                loadFile);
+
+            string value = Expressions.GetExpressionValue(expression, loadFile["node"], loadFile["node"], false).ToString();
+            AppendInspect(destinationNode, value, dropInitialHeader);
+        }
+
+        /*
+         * loads node from resource, and appends into given node
+         */
+        protected static void AppendCodeFromResource(
+            Node destinationNode,
+            string assemblyName,
+            string resourceName,
+            string expression)
+        {
+            Node loadFile = new Node();
+            loadFile["file"].Value = "plugin:magix.file.load-from-resource";
+            loadFile["file"]["assembly"].Value = assemblyName;
+            loadFile["file"]["resource-name"].Value = resourceName;
+            RaiseActiveEvent(
+                "magix.execute.code-2-node",
+                loadFile);
+
+            Node value = Expressions.GetExpressionValue(expression, loadFile["node"], loadFile["node"], false) as Node;
+            destinationNode.AddRange(value);
         }
     }
 }

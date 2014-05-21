@@ -59,24 +59,27 @@ namespace Magix.forms
 		[ActiveEvent(Name = "magix.forms.set-values")]
 		private void magix_forms_set_values(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+            Node ip = Ip(e.Params);
+			if (ShouldInspect(ip))
 			{
-				e.Params["event:magix.forms.set-values"].Value = null;
-				e.Params["id"].Value = "control";
-				e.Params["form-id"].Value = "webpages";
-				e.Params["values"]["item1"].Value = "new value 1";
-				e.Params["values"]["item2"].Value = "new value 2";
-				e.Params["inspect"].Value = @"sets the values of the given 
-[id] web control, in the [form-id] form, from [values] for select widgets.&nbsp;&nbsp;
-not thread safe";
-				return;
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.forms",
+                    "Magix.forms.hyperlisp.inspect.hl",
+                    "[magix.forms.set-values-dox].Value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.forms",
+                    "Magix.forms.hyperlisp.inspect.hl",
+                    "[magix.forms.set-values-sample]");
+                return;
 			}
 
-            Select lst = FindControl<Select>(Ip(e.Params));
+            Select lst = FindControl<Select>(ip);
 			lst.Items.Clear();
-            if (Ip(e.Params).Contains("values"))
+            if (ip.Contains("values"))
 			{
-                foreach (Node idx in Ip(e.Params)["values"])
+                foreach (Node idx in ip["values"])
 				{
 					ListItem it = new ListItem(idx.Get<string>(), idx.Name);
 					lst.Items.Add(it);

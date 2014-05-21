@@ -1019,14 +1019,254 @@ magix.forms.get-value-sample
           magix.viewport.show-message
 
 
+magix.forms.set-class-dox=>@"sets the css class of a web control
+
+the control to set the class of, is given through the [id] 
+node.  [form-id] is the form-id of the web part the control 
+you wish to change the class of.  if no form-id is given, 
+then the first control that matches the id parameter, in any 
+web parts, will be returned"
+
+magix.forms.set-class-sample
+  magix.forms.create-web-part
+    container=>content5
+    form-id=>sample-form
+    class=>span-22 last
+    controls
+      button=>btn
+        value=>click me
+        onclick
+          magix.forms.set-class
+            form-id=>sample-form
+            id=>btn
+            value=>span-5 btn-large
 
 
+magix.forms.get-class-dox=>@"retrieves the css class of a web control
+
+the control to get the class of, is given through the [id] 
+node.  [form-id] is the form-id of the web part the control 
+you wish to retrieve the class of.  if no form-id is given, 
+then the first control that matches the id parameter, in any 
+web parts, will be returned"
+
+magix.forms.get-class-sample
+  magix.forms.create-web-part
+    container=>content5
+    form-id=>sample-form
+    class=>span-22 last
+    controls
+      button=>btn
+        class=>span-5 btn-large
+        value=>click me
+        onclick
+          magix.forms.get-class
+            form-id=>sample-form
+            id=>btn
+          set=>[2][message].Value
+            value=>[0][value].Value
+          magix.viewport.show-message
 
 
+magix.forms.set-focus-dox=>@"sets focus to web control
+
+changes the focus to the control given through [id] in 
+the [form-id] web part.  if no form-id is given, the 
+first web control that matches the id parameter will be 
+given focus.  notice that this only works with controls 
+that can logically gain focus"
+
+magix.forms.set-focus-sample
+  magix.forms.create-web-part
+    container=>content5
+    form-id=>sample-form
+    class=>span-22 last
+    controls
+      text-box=>txt-box-focus
+        value=>howdy world
+      button=>btn
+        value=>click me
+        onclick
+          magix.forms.set-focus
+            id=>txt-box-focus
+            form-id=>sample-form
 
 
+magix.forms.set-enabled-dox=>@"enables or disables a web control
+
+will enable or disable a given web control.  if value is true, 
+then the web control will be enabled.  otherwise the web control 
+will be disabled.  the web control to change is given through 
+the [id] parameter.  [form-id] is the web part where the web 
+control exists.  if no form-id is given, the first web control, 
+in any web parts, that matches the id parameter, will be changed"
+
+magix.forms.set-enabled-sample
+  magix.forms.create-web-part
+    container=>content5
+    form-id=>sample-form
+    class=>span-22 last
+    controls
+      text-box=>txt-box-focus
+        value=>howdy world
+        disabled=>true
+      button=>btn
+        value=>click me
+        onclick
+          magix.forms.set-enabled
+            id=>txt-box-focus
+            form-id=>sample-form
+            value=>true
 
 
+magix.forms.get-enabled-dox=>@"retrieves if the web control is enabled
+
+will return true if a web control is enabled, or false if it is 
+disabled.  the web control to retrieve the value for, is given 
+through the [id] parameter.  [form-id] is the web part where the 
+web control exists.  if no form-id is given, the first web control, 
+in any web parts, that matches the id parameter, will be retrieved"
+
+magix.forms.get-enabled-sample
+  magix.forms.create-web-part
+    container=>content5
+    form-id=>sample-form
+    class=>span-22 last
+    controls
+      text-box=>txt-box-enabled
+        value=>howdy world
+        disabled=>true
+      button=>btn
+        value=>click me
+        onclick
+          magix.forms.get-enabled
+            id=>txt-box-enabled
+            form-id=>sample-form
+          set=>[2][message].Value
+            value=>[0][value].Value
+          magix.viewport.show-message
+
+
+magix.forms.select-all-dox=>@"sets focus and selects all text
+
+changes the focus to the control given through [id] in 
+the [form-id] web part, and selects all text in the same 
+web control.  web control must be of a type that allows 
+for selection of text, such as a text-box, text-area or 
+wysiwyg web control.  if no form-id is given, the first 
+web control that matches the id parameter will be given 
+focus and have its text selected"
+
+magix.forms.select-all-sample
+  magix.forms.create-web-part
+    container=>content5
+    form-id=>sample-form
+    class=>span-22 last
+    controls
+      text-box=>txt-box-focus
+        value=>howdy world
+      button=>btn
+        value=>click me
+        onclick
+          magix.forms.select-all
+            id=>txt-box-focus
+            form-id=>sample-form
+
+
+magix.forms.get-children-values-dox=>@"retrieves the values of all children
+
+will recursively traverse all children controls of a panel, or any other 
+container controls, and return the value of all of them in [value], as 
+key/value pair.  the panel to traverse is given through the [id] parameter, 
+and the web part is given through [form-id].  form-id is optional, and if 
+omitted, the active event will return the values of the first web control 
+that matches the id given"
+
+magix.forms.get-children-values-sample
+  magix.forms.create-web-part
+    container=>content5
+    form-id=>sample-form
+    class=>span-22 last
+    controls
+      panel=>pnl-wrapper
+        controls
+          text-box=>txt-box-ctrl
+            value=>this is text-box
+          hidden=>hidden-ctrl
+            value=>this is hidden
+          panel=>pnl-inner
+            controls
+              text-area=>txt-area-inner
+                value=>this is inner text
+      button=>btn
+        value=>click me
+        onclick
+          magix.forms.get-children-values
+            id=>pnl-wrapper
+            form-id=>sample-form
+          for-each=>[0][values]
+            set=>[@][**message=>?].Value
+              value=>[.].Value
+            magix.viewport.show-message
+              message
+
+
+magix.forms.set-values-dox=>@"sets values of given select web control
+
+changes the items collection of a select list box during runtime to 
+the given values in the [values] parameter.  the select web control 
+to change the values for, is given through the [id] parameter.  
+[form-id] is the web part where the web control exists.  if no form-id 
+is given, the first web control, in any web parts, that matches the id 
+parameter, will have its values changed"
+
+magix.forms.set-values-sample
+  magix.forms.create-web-part
+    container=>content5
+    form-id=>sample-form
+    class=>span-22 last
+    controls
+      select=>sel-list
+        items
+          val1=>value 1
+          val2=>value 2
+      button=>btn
+        value=>click me
+        onclick
+          magix.forms.set-values
+            form-id=>sample-form
+            id=>sel-list
+            values
+              val1=>new value 1
+              val2=>new value 2
+              val3=>value 3
+
+
+magix.forms.web-part-null-event-handler-dox=>@"dynamically created active event
+
+this is a dynamic active event, that's only active for as long as the web part 
+is loaded into a viewport container.  these types of active events are normally 
+declared on the web-part themselves, or associated with the magix markup 
+language directly.  what the active event does, is different from active event 
+to active event, therefor the code that the active event contains, is embedded 
+below, to show you what it does"
+
+
+magix.forms._get-control-dox=>@"retrieves a specific control
+
+returns the requested control from the web part as a control object.  
+this is an internal active event, exclusively for internal use by the 
+system itself, and control developers.  do not invoke this active event 
+from hyperlisp, or client code, unless you are developing a web control 
+for use in hyperlisp yourself
+
+[form-id] if given, will have to coincide with the web part form-id 
+parameters it was given during creation to traverse the web part for 
+a control to match
+
+[id] is the id of the control you wish to retrieve
+
+the control will be returned as [_ctrl]"
 
 
 

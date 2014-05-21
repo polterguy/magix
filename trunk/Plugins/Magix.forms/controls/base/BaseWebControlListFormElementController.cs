@@ -34,9 +34,6 @@ namespace Magix.forms
                     ret.Items.Add(new ListItem(idxItemNode.Get<string>(), idxItemNode.Name));
                 }
             }
-
-            if (node.ContainsValue("selected"))
-                ret.SetSelectedItemAccordingToValue(node["selected"].Get<string>());
         }
 
         protected override void Inspect(Node node)
