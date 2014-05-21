@@ -96,5 +96,33 @@
 
 * change _VIEWSTATE_KEY to be transmitted as cookie and not as hidden input value
 
+* rename BaseWebControlFormElementController, etc, and associated mux classes to something more intuitive in 
+  regards to what the classes actually does ...
+
+* change the select web control, such that the selected item is set initially through its items collection
+
+* find an intelligent name for magix.forms.get-children-values
+
+* check up magix.forms.set-values, i think it is creating list items wrong, in that it is using 
+  the name of node for value and the value of node as id...?
+
+* make all magix.forms active events take expressions, such as magix.forms.set-values
+
+* create common class to wrap methods commond between active controllers and active events, such as Ip, Dp, 
+  AppendCodeFromResource, etc
+
+* create active event on webpart.ascx.cs to rerender wepb part with new controls, the same way we have change-mml
+
+* create support for escaping {{ in magix markup language, in addition to inner {{ values, as text values of controls for instance
+
+* create support for recursive expressions, using for instance => as an "operator" prependding the first [ brace, which 
+  means that the expression class will recursively traverse the expression inwards, instead of returning an expression
+  as a value
+
+
+
+
+
+
 
 

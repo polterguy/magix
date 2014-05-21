@@ -26,10 +26,16 @@ namespace Magix.forms
             Node ip = Ip(e.Params);
             if (ShouldInspect(ip))
             {
-                ip["inspect"].Value = @"<p>selects all text in the specified 
-[id] textbox or textarea, in the [form-id] form</p><p>not thread safe</p>";
-                ip["magix.forms.select-all"]["id"].Value = "control";
-                ip["magix.forms.select-all"]["form-id"].Value = "webpages";
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.forms",
+                    "Magix.forms.hyperlisp.inspect.hl",
+                    "[magix.forms.select-all-dox].Value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.forms",
+                    "Magix.forms.hyperlisp.inspect.hl",
+                    "[magix.forms.select-all-sample]");
                 return;
             }
 

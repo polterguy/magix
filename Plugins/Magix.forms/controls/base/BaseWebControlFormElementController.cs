@@ -23,22 +23,24 @@ namespace Magix.forms
 		[ActiveEvent(Name = "magix.forms.set-enabled")]
 		private static void magix_forms_set_enabled(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+            Node ip = Ip(e.Params);
+			if (ShouldInspect(ip))
 			{
-				e.Params["event:magix.forms.set-enabled"].Value = null;
-				e.Params["id"].Value = "control";
-				e.Params["form-id"].Value = "webpages";
-				e.Params["value"].Value = true;
-				e.Params["inspect"].Value = @"sets the enabled property of the given 
-[id] web control, in the [form-id] form, from [value].&nbsp;&nbsp;not thread safe";
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.forms",
+                    "Magix.forms.hyperlisp.inspect.hl",
+                    "[magix.forms.set-enabled-dox].Value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.forms",
+                    "Magix.forms.hyperlisp.inspect.hl",
+                    "[magix.forms.set-enabled-sample]");
 				return;
 			}
 
-            BaseWebControlFormElement ctrl = FindControl<BaseWebControlFormElement>(Ip(e.Params));
-			bool enabled = false;
-            if (Ip(e.Params).Contains("value"))
-                enabled = Ip(e.Params)["value"].Get<bool>();
-			ctrl.Disabled = !enabled;
+            BaseWebControlFormElement ctrl = FindControl<BaseWebControlFormElement>(ip);
+            ctrl.Disabled = !ip["value"].Get<bool>(true);
 		}
 
 		/*
@@ -47,19 +49,24 @@ namespace Magix.forms
 		[ActiveEvent(Name = "magix.forms.get-enabled")]
 		private static void magix_forms_get_enabled(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
-			{
-				e.Params["event:magix.forms.get-enabled"].Value = null;
-				e.Params["id"].Value = "control";
-				e.Params["form-id"].Value = "webpages";
-				e.Params["value"].Value = true;
-				e.Params["inspect"].Value = @"retrieves the enabled property of the given 
-[id] web control, in the [form-id] form, into [value].&nbsp;&nbsp;not thread safe";
-				return;
-			}
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
+            {
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.forms",
+                    "Magix.forms.hyperlisp.inspect.hl",
+                    "[magix.forms.get-enabled-dox].Value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.forms",
+                    "Magix.forms.hyperlisp.inspect.hl",
+                    "[magix.forms.get-enabled-sample]");
+                return;
+            }
 
-            BaseWebControlFormElement ctrl = FindControl<BaseWebControlFormElement>(Ip(e.Params));
-            Ip(e.Params)["value"].Value = !ctrl.Disabled;
+            BaseWebControlFormElement ctrl = FindControl<BaseWebControlFormElement>(ip);
+            ip["value"].Value = !ctrl.Disabled;
 		}
 
         protected override void FillOutParameters(Node pars, BaseControl ctrl)

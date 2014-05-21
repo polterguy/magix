@@ -25,27 +25,24 @@ namespace Magix.forms
 		[ActiveEvent(Name = "magix.forms.set-class")]
 		private static void magix_forms_set_class(object sender, ActiveEventArgs e)
 		{
-            if (ShouldInspect(e.Params))
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
             {
-				e.Params["event:magix.forms.set-class"].Value = null;
-				e.Params["id"].Value = "control";
-				e.Params["form-id"].Value = "webpages";
-				e.Params["value"].Value = "some-css-class";
-				e.Params["inspect"].Value = @"sets the css class of the given 
-[id] web control, in the [form-id] form, from [value].&nbsp;&nbsp;not thread safe";
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.forms",
+                    "Magix.forms.hyperlisp.inspect.hl",
+                    "[magix.forms.set-class-dox].Value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.forms",
+                    "Magix.forms.hyperlisp.inspect.hl",
+                    "[magix.forms.set-class-sample]");
 				return;
 			}
 
-            BaseWebControl ctrl = FindControl<BaseWebControl>(Ip(e.Params));
-
-			if (ctrl != null)
-			{
-				string className = "";
-                if (Ip(e.Params).Contains("value"))
-                    className = Ip(e.Params)["value"].Get<string>();
-
-				ctrl.Class = className;
-			}
+            BaseWebControl ctrl = FindControl<BaseWebControl>(ip);
+			ctrl.Class = ip["value"].Get("");
 		}
 
 		/*
@@ -54,18 +51,24 @@ namespace Magix.forms
 		[ActiveEvent(Name = "magix.forms.get-class")]
 		private static void magix_forms_get_class(object sender, ActiveEventArgs e)
 		{
-            if (ShouldInspect(e.Params))
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
             {
-				e.Params["event:magix.forms.get-class"].Value = null;
-				e.Params["id"].Value = "control";
-				e.Params["form-id"].Value = "webpages";
-				e.Params["inspect"].Value = @"retrieves the css class of the given 
-[id] web control, in the [form-id] form, into [value].&nbsp;&nbsp;not thread safe";
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.forms",
+                    "Magix.forms.hyperlisp.inspect.hl",
+                    "[magix.forms.get-class-dox].Value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.forms",
+                    "Magix.forms.hyperlisp.inspect.hl",
+                    "[magix.forms.get-class-sample]");
 				return;
 			}
 
-            BaseWebControl ctrl = FindControl<BaseWebControl>(Ip(e.Params));
-            Ip(e.Params)["value"].Value = ctrl.Class;
+            BaseWebControl ctrl = FindControl<BaseWebControl>(ip);
+            ip["value"].Value = ctrl.Class;
 		}
 
 		/*
@@ -74,18 +77,23 @@ namespace Magix.forms
 		[ActiveEvent(Name = "magix.forms.set-focus")]
 		private static void magix_forms_set_focus(object sender, ActiveEventArgs e)
 		{
-            if (ShouldInspect(e.Params))
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
             {
-				e.Params["event:magix.forms.set-focus"].Value = null;
-				e.Params["id"].Value = "control";
-				e.Params["form-id"].Value = "webpages";
-				e.Params["inspect"].Value = @"sets focus to the specific 
-[id] web control, in the [form-id] form.&nbsp;&nbsp;not thread safe";
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.forms",
+                    "Magix.forms.hyperlisp.inspect.hl",
+                    "[magix.forms.set-focus-dox].Value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.forms",
+                    "Magix.forms.hyperlisp.inspect.hl",
+                    "[magix.forms.set-focus-sample]");
 				return;
 			}
 
-            BaseWebControl ctrl = FindControl<BaseWebControl>(Ip(e.Params));
-			new EffectFocusAndSelect(ctrl).Render();
+            FindControl<BaseWebControl>(ip).Focus();
 		}
 
 		/*
@@ -97,7 +105,7 @@ namespace Magix.forms
             BaseWebControl that = ctrl as BaseWebControl;
 
             Node ip = Ip(pars);
-            Node node = ip["_code"].Value as Node;
+            Node node = ip["_code"].Get<Node>();
 
             if (node.ContainsValue("class"))
 				that.Class = node["class"].Get<string>();

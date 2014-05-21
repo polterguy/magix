@@ -185,9 +185,45 @@ namespace Magix.forms
             ip["value"].Value = ctrl.ControlValue;
         }
 
-		/*
-		 * fills out the stuff from basecontrol
-		 */
+        /*
+         * returns values
+         */
+        [ActiveEvent(Name = "magix.forms.get-children-values")]
+        private static void magix_forms_get_children_values(object sender, ActiveEventArgs e)
+        {
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
+            {
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.forms",
+                    "Magix.forms.hyperlisp.inspect.hl",
+                    "[magix.forms.get-children-values-dox].Value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.forms",
+                    "Magix.forms.hyperlisp.inspect.hl",
+                    "[magix.forms.get-children-values-sample]");
+                return;
+            }
+
+            BaseControl ctrl = FindControl<BaseControl>(ip);
+            TraverseControlForValues(ip, ctrl);
+        }
+
+        private static void TraverseControlForValues(Node ip, Control ctrl)
+        {
+            foreach (Control idx in ctrl.Controls)
+            {
+                if (idx is IValueControl)
+                    ip["values"][idx.ID].Value = (idx as IValueControl).ControlValue;
+                TraverseControlForValues(ip, idx);
+            }
+        }
+
+        /*
+         * fills out the stuff from basecontrol
+         */
 		protected virtual void FillOutParameters(Node pars, BaseControl ctrl)
 		{
             Node ip = Ip(pars);
