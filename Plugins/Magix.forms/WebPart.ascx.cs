@@ -195,7 +195,7 @@ to the value in [mml]";
             if (!ip.ContainsValue("id"))
 				throw new ArgumentException("you need to supply an [id] to know which control to find");
 
-            if (ip["form-id"].Get("") == FormID)
+            if (!ip.Contains("form-id") || ip["form-id"].Get("") == FormID)
 			{
                 Control ctrl = Selector.FindControl<Control>(
                     this.Parent /* to include viewport itself */, 

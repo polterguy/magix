@@ -1,6 +1,9 @@
 ﻿
-inspect=>@"contains documentation for 
-the Magix.forms project"
+inspect=>@"documentation for Magix.forms
+
+contains the documentation for all active events in the 
+Magix.forms assembly"
+
 
 magix.forms.create-web-part-dox=>@"creates a web part
 
@@ -1267,6 +1270,3 @@ a control to match
 [id] is the id of the control you wish to retrieve
 
 the control will be returned as [_ctrl]"
-
-
-

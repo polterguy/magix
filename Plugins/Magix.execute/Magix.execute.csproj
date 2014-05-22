@@ -66,4 +66,7 @@
       <Name>Magix.Core</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="hyperlisp\inspect.hl" />
+  </ItemGroup>
 </Project>

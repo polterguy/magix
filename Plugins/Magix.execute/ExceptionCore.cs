@@ -30,24 +30,17 @@ namespace Magix.execute
             Node ip = Ip(e.Params);
             if (ShouldInspect(ip))
             {
-				ip["inspect"].Value = @"<p>use the [try] keyword to create
-a block of [code], which will execute your [catch] execution block of code, if an 
-exception is thrown, inside your [code] execution block</p><p>this exception handler
-will be invoked, even if an exception occurs any place underneath your try code 
-block, deep within your logic.&nbsp;&nbsp;you can handle exceptions being raised 
-in sub-functions, or even recursively invoked active events, or natively thrown
-exceptions this way</p><p>if an exception is thrown, you can access the description 
-of the exception in the [exception] node underneath your catch statement.&nbsp;&nbsp;
-you can also add a [finally] piece of code block underneath the [try], which will 
-always be executed, regardless of whether or not an exception was thrown</p><p>
-thread safe</p>";
-				ip["try"].Value = null;
-				ip["try"]["code"]["throw"].Value = "to try or not to try";
-				ip["try"]["code"]["magix.viewport.show-message"]["message"].Value = "crap, didn't work";
-				ip["try"]["catch"]["set"].Value = "[@][magix.viewport.show-message][message].Value";
-				ip["try"]["catch"]["set"]["value"].Value = "[@][exception].Value";
-				ip["try"]["catch"]["magix.viewport.show-message"].Value = null;
-				return;
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.execute",
+                    "Magix.execute.hyperlisp.inspect.hl",
+                    "[magix.execute.try-dox].Value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.execute",
+                    "Magix.execute.hyperlisp.inspect.hl",
+                    "[magix.execute.try-sample]");
+                return;
 			}
 
 			if (!e.Params.Contains("_ip") || !(e.Params["_ip"].Value is Node))
@@ -103,15 +96,17 @@ thread safe</p>";
             Node ip = Ip(e.Params);
             if (ShouldInspect(ip))
             {
-				ip["inspect"].Value = @"<p>throws an exception, which will stop 
-the entire current execution, and halt back to the previous catch, in the stack of 
-active events.&nbsp;&nbsp;[exception] in [catch] becomes the value of the [throw] 
-node</p><p>use together with [try] to handle errors</p><p>thread safe</p>";
-				ip["try"]["code"]["throw"].Value = "some exception error message";
-				ip["try"]["catch"]["set"].Value = "[@][magix.viewport.show-message][message].Value";
-				ip["try"]["catch"]["set"]["value"].Value = "[@][exception].Value";
-				ip["try"]["catch"]["magix.viewport.show-message"].Value = null;
-				return;
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.execute",
+                    "Magix.execute.hyperlisp.inspect.hl",
+                    "[magix.execute.throw-dox].Value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.execute",
+                    "Magix.execute.hyperlisp.inspect.hl",
+                    "[magix.execute.throw-sample]");
+                return;
 			}
 
 			if (!e.Params.Contains("_ip") || !(e.Params["_ip"].Value is Node))

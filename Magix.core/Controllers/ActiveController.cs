@@ -150,9 +150,13 @@ namespace Magix.Core
          */
         protected static void AppendInspect(Node node, string value, bool dropInitialHeader)
         {
-            StringBuilder builder = new StringBuilder(node.Get<string>());
             if (!dropInitialHeader)
-                builder.Append("<p><h3>");
+                dropInitialHeader = node["type"].Get("") == "drop-header";
+            bool dropHtml = node["type"].Get("") == "no-html";
+
+            StringBuilder builder = new StringBuilder(node.Get<string>());
+            if (!dropInitialHeader || dropHtml)
+                builder.Append("<h3>");
             bool hasClosedH3 = false;
 
             char lastChar = char.MinValue, secondLastChar = char.MinValue;
@@ -164,30 +168,40 @@ namespace Magix.Core
                     case '\t':
                         continue;
                     case '\n':
-                        if (lastChar == '\n')
+                        if (!dropHtml && lastChar == '\n')
                         {
                             builder.Remove(builder.Length - 1, 1);
                             if (!hasClosedH3 && !dropInitialHeader)
                             {
                                 hasClosedH3 = true;
-                                builder.Append("</h3>");
+                                builder.Append("</h3><p>");
                             }
-                            builder.Append("</p><p>");
+                            else
+                                builder.Append("</p><p>");
                         }
                         else
                             builder.Append(' ');
                         break;
                     case '[':
-                        builder.Append("<strong>[");
+                        if (!dropHtml)
+                            builder.Append("<strong>[");
+                        else
+                            builder.Append("[");
                         break;
                     case ']':
-                        builder.Append("]</strong>");
+                        if (!dropHtml)
+                            builder.Append("]</strong>");
+                        else
+                            builder.Append("]");
                         break;
                     case ' ':
                         if (lastChar == ' ' && secondLastChar == '.')
                         {
                             builder.Remove(builder.Length - 1, 1);
-                            builder.Append("&nbsp;&nbsp;");
+                            if (!dropHtml)
+                                builder.Append("&nbsp;&nbsp;");
+                            else
+                                builder.Append("  ");
                         }
                         else
                             builder.Append(" ");
@@ -199,8 +213,9 @@ namespace Magix.Core
                 secondLastChar = lastChar;
                 lastChar = idxChar;
             }
-            builder.Append("</p>");
-            node.Value = builder.ToString();
+            if (!dropHtml)
+                builder.Append("</p>");
+            node.Value = builder.ToString().Replace("<p></p>", "");
         }
 
         /*

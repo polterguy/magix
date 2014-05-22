@@ -24,11 +24,17 @@ namespace Magix.execute
             Node ip = Ip(e.Params);
             if (ShouldInspect(ip))
             {
-				ip["inspect"].Value = @"<p>shows the entire stack of hyperlisp code 
-in a modal message box.&nbsp;&nbsp;alternatively, you can submit an expression, pointing 
-to a node list, to show only a subsection of the tree</p><p>not thread safe</p>";
-				ip["debug"].Value = null;
-				return;
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.execute",
+                    "Magix.execute.hyperlisp.inspect.hl",
+                    "[magix.execute.debug-dox].Value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.execute",
+                    "Magix.execute.hyperlisp.inspect.hl",
+                    "[magix.execute.debug-sample]");
+                return;
 			}
 
 			if (!e.Params.Contains("_ip") || !(e.Params["_ip"].Value is Node))
@@ -36,9 +42,7 @@ to a node list, to show only a subsection of the tree</p><p>not thread safe</p>"
 
             Node dp = Dp(e.Params);
 
-
             Node stack = null;
-
             if (!string.IsNullOrEmpty(ip.Get<string>()))
             {
                 stack = Expressions.GetExpressionValue(ip.Get<string>(), dp, ip, false) as Node;
@@ -49,7 +53,6 @@ to a node list, to show only a subsection of the tree</p><p>not thread safe</p>"
                 stack = ip.RootNode();
 
 			Node tmp = new Node();
-
 			tmp["code"].AddRange(stack.Clone());
 			tmp["code"]["_state"].UnTie();
 			tmp["message"].Value = "stackdump of tree from debug instruction";

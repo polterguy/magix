@@ -25,6 +25,7 @@ to code, where [node] contains the nodes as value"
       code
         throw=>@"[node-2-code] didn't behave as expected"
 
+
 event=>magix.test.node-2-code-as-children
   persist=>false
   inspect=>@"asserts that [node-2-code] works the 
@@ -45,6 +46,29 @@ to code, where [node] contains nodes as children nodes"
 "
       code
         throw=>@"[node-2-code] didn't behave as expected"
+
+
+event=>magix.test.node-2-code-expression
+  persist=>false
+  inspect=>@"asserts that [node-2-code] works the 
+way it should work, by trying to convert from node 
+to code, where [node] contains an expression pointing 
+to another node"
+  code
+    _data=>jo
+      buffer=>5
+      buffer=>4
+    node-2-code
+      node=>[_data]
+    if=>not-equals
+      lhs=>[node-2-code][code].Value
+      rhs=>@"_data=>jo
+  buffer=>5
+  buffer=>4
+"
+      code
+        throw=>@"[node-2-code] didn't behave as expected"
+
 
 event=>magix.test.code-2-node
   persist=>false

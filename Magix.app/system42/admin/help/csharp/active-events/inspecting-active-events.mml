@@ -54,8 +54,15 @@ magix.sample.self-documenting
   parameter=>some parameter
 </pre>
 
-<p>if you put the above hyperlisp into for instance the hyperlisp executor, you would be able to raise the 
-active event directly, through the magix.execute keyword</p>
+<p>if you put the above hyperlisp into for instance the hyperlisp executor, removing the inspect node, 
+you would be able to raise the active event directly, through the magix.execute keyword</p>
+
+<p>if you wish, you can also pass parameters to the inspect node to inform it about formatting options.&nbsp;&nbsp;
+by default, the inspect feature will format the value returned as html, with the first paragraph being its header.&nbsp;&nbsp;
+if you wish, you can override this formatting by adding an addition [type] parameter underneath the inspect node.&nbsp;&nbsp;
+the [type] parameter can have two values; 'drop-header' and 'no-html'.&nbsp;&nbsp;drop-header makes it not render the 
+first paragraph as an h3 html header, while the no-html option, returns the inspect value as raw text, without any 
+formatting done to it at all</p>
 
 {{
 lambda=>next

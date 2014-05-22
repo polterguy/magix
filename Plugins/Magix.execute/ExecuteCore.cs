@@ -25,14 +25,16 @@ namespace Magix.execute
             Node ip = Ip(e.Params);
             if (ShouldInspect(ip))
             {
-                ip["inspect"].Value = @"<p>changes the default namespace 
-for the current scope.&nbsp;&nbsp;this allows you to raise active events which 
-you normally would have to raise with a period in their name, without the period, 
-which allows active events which normally cannot access the entire execution tree, 
-to do just that</p><p>thread safe</p>";
-                ip["using"].Value = "magix.math";
-                ip["using"]["add"][""].Value = 4;
-                ip["using"]["add"]["", 1].Value = 1;
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.execute",
+                    "Magix.execute.hyperlisp.inspect.hl",
+                    "[magix.execute.using-dox].Value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.execute",
+                    "Magix.execute.hyperlisp.inspect.hl",
+                    "[magix.execute.using-sample]");
                 return;
             }
 
@@ -66,15 +68,16 @@ to do just that</p><p>thread safe</p>";
             Node ip = Ip(e.Params);
             if (ShouldInspect(ip))
             {
-                ip["inspect"].Value = @"<p>changes the execution engine, making 
-sure only keywords and active events within [whitelist] are legal keywords</p><p>this 
-is a useful feature to prevent external sources, or untrusted scripts, to execute 
-malicious code.&nbsp;&nbsp;all keywords and active events which are not declared in 
-the [whitelist] parameter, are not allowed to be executed as long as the instruction 
-pointer is within the scope of the [code] block, which declares the block of code that 
-is to be sandboxed</p><p>thread safe</p>";
-                ip["sandbox"]["whitelist"]["foo"].Value = null;
-                ip["sandbox"]["code"]["bar"].Value = "throws exception";
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.execute",
+                    "Magix.execute.hyperlisp.inspect.hl",
+                    "[magix.execute.sandbox-dox].Value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.execute",
+                    "Magix.execute.hyperlisp.inspect.hl",
+                    "[magix.execute.sandbox-sample]");
                 return;
             }
 
@@ -103,22 +106,17 @@ is to be sandboxed</p><p>thread safe</p>";
             Node ip = Ip(e.Params);
             if (ShouldInspect(ip))
             {
-				ip["inspect"].Value = @"<p>executes the incoming parameters 
-as hyperlisp, meaning it will raise everything containing a period, while everything 
-not starting with a '_' will be assumed to be a hyperlisp keyword, and appended 
-behind 'magix.execute.', before that string is raised as an active event</p><p>a 
-hyperlisp keyword will have access to the entire data tree, while a normal active 
-event will only be able to modify the parts of the tree from underneath its own node
-</p><p>thread safe</p>";
-				ip["_data"]["value"].Value = "thomas";
-				ip["if"].Value = "equals";
-                ip["if"]["lhs"].Value = "[_data][value].Value";
-                ip["if"]["rhs"].Value = "thomas";
-                ip["if"]["code"]["magix.viewport.show-message"].Value = null;
-                ip["if"]["code"]["magix.viewport.show-message"]["message"].Value = "hi thomas";
-				ip["else"]["magix.viewport.show-message"].Value = null;
-				ip["else"]["magix.viewport.show-message"]["message"].Value = "hi stranger";
-				return;
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.execute",
+                    "Magix.execute.hyperlisp.inspect.hl",
+                    "[magix.execute.execute-dox].Value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.execute",
+                    "Magix.execute.hyperlisp.inspect.hl",
+                    "[magix.execute.execute-sample]");
+                return;
 			}
 
             if (!e.Params.Contains("_ip"))

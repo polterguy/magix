@@ -1,0 +1,310 @@
+﻿
+inspect=>@"documentation for Magix.execute
+
+contains the documentation for all active events in the 
+Magix.execute assembly"
+
+
+magix.execute.add-dox=>@"adds a node to another node
+
+creates a deep copy of the node returned by the expression in the [value] node, and appends 
+it into the expression found in [add].  if no [value] node is given, then all children of 
+[add] will be added.  the [add] node must have en expression returning a node lists
+
+if a [value] node is given, its value is an expression, and a [children-only] node exists, and 
+its value is true, then only the children of the node returned by the expression in [value] 
+will be added to the nodes found in the expression of [add].  if no [children-only] node exists, 
+or its value is false, but a [value] node exists, with an expression returning a node list, then 
+the entire node tree will be copied, with its children, including the node returned from [value] 
+itself
+
+if a [value] node exists, and it is a contant, or an expression returning anything but a node list, 
+then a node with the name returned from the constant or expression of the [value] node will be 
+added to the node list of the expression returned by [add].  in this case, one node will be added 
+to the node list in the [add] expression, with the name of the [value] node's value.   if you supply 
+a [value] node, who's value is not a node list, you can optionally also supply an additional [value] 
+node as a child of the first [value] node, who's expression or constant value will become the value 
+of the node added to the [add] node's collection
+
+thread safe"
+
+magix.execute.add-sample
+  _copy
+  _data
+    children=>original
+    children1=>will be copied
+      item1=>will be copied too
+      item2=>will also be copied
+  add=>[_copy]
+    value=>[_data]
+    children-only=>true
+
+
+magix.execute.node-2-code-dox=>@"transforms a node to text
+
+will transform the [node] node to code syntax, and return it in [code].  [node] can either have 
+its nodes as the value of the [node], as children nodes directly underneath the [node] node, or 
+as an expression returned from the node node's value.  the code returned will be the textual 
+representation of the original tree hierarchy with hyperlisp syntax.  two spaces ' ' opens up 
+a child collection.  => separates name and value of node, name first
+
+code returned might also contain type information for types of int, decimal, datetime and bool.  
+if [remove-root] is true, then the root node will be removed, and not be a part of the code 
+returned
+
+thread safe"
+
+magix.execute.node-2-code-sample
+  node-2-code
+    node
+      some-node
+        a-child=>howdy
+        another-child=>hello
+      another-node=>yo!
+
+
+magix.execute.debug-dox=>@"shows a debug dialog of the node stack
+
+shows the entire stack of hyperlisp code in a modal message box.  
+alternatively, you can submit an expression, pointing to a node list, 
+to show only a subsection of the tree
+
+not thread safe"
+
+magix.execute.debug-sample
+  magix.execute
+    set=>[@][foo.bar].Value
+      value=>true
+  debug=>[magix.execute]
+
+
+magix.execute.application-startup-dox=>@"execute startup
+
+called during startup of application 
+to make sure our active events, which are dynamically tied towards serialized hyper 
+lisp blocks of code, are being correctly re-mapped"
+
+
+magix.execute.event-dox=>@"creates a new active event
+
+overrides the active event in [event] with the hyperlisp code in the [code] expression.  
+these types of active events can take and return parameters.  if you wish to pass in or 
+retrieve parameters, then as you invoke the function, just append your parameters 
+underneath the function invocation, and they will be passed into the function, where 
+they will be accessible underneath the [$] node, appended as the last parts of your code 
+block, into your function invocation.  from outside of the active event itself, you can 
+access these parameters directly underneath the active event itself
+
+any existing event with the name from the [event] node's value will be deleted, if you 
+pass in no [code] block.  if you set the [remotable] node to true, then the active event 
+will be possible to invoke by remote servers, and marked as open.  if you set [persist] 
+to false, then the active event will not be serialized into the data storage, meaning it 
+will only last as long as the application is not restarted.  this is useful for active 
+events whom are created for instance during the startup of your application, since it 
+will save time, since they will anyway be overwritten the next time your application 
+restarts
+
+thread safe"
+
+magix.execute.event-sample
+  event=>foo.bar
+    remotable=(bool)>False
+    persist=(bool)>False
+    code
+      _data=>thomas
+      _backup=>thomas
+      if=>equals
+        lhs=>[_data].Value
+        rhs=>[_backup].Value
+        code
+          set=>[$][output].Value
+            value=>return-value
+          set=>[/][magix.viewport.show-message][message].Value
+            value=>[$][input].Value
+      magix.viewport.show-message
+  foo.bar
+    input=>hello world 2.0
+  event=>foo.bar
+
+
+magix.execute._active-event-2-code-callback-dox=>@"dynamically created active event
+
+dynamically created active event, created with the [event] keyword.  
+thread safety is dependent upon the active events raised internally 
+within the active event"
+
+
+magix.execute.session-event-dox=>@"creates a new active event for the current session
+
+overrides the active event in [session-event] with the hyperlisp in the [code] expression 
+for the current session
+
+these types of active events can take and return parameters.  if you wish to pass in or 
+retrieve parameters, then as you invoke the function, just append your parameters 
+underneath the function invocation, and they will be passed into the function, where they 
+will be accessible underneath the [$] node, appended as the last parts of your code block, 
+into your event invocation.  from outside of the active event itself, you can access these 
+parameters directly underneath the active event itself
+
+event will be deleted, if you pass in no [code] block.  note that a session event cannot 
+be marked as neither open nor persisted
+
+not thread safe"
+
+magix.execute.session-event-sample
+  session-event=>foo.bar
+    code
+      _data=>thomas
+      _backup=>thomas
+      if=>equals
+        lhs=>[_data].Value
+        rhs=>[_backup].Value
+        code
+          set=>[$][output].Value
+            value=>return-value
+          set=>[/][magix.viewport.show-message][message].Value
+            value=>[$][input].Value
+      magix.viewport.show-message
+  foo.bar
+    input=>hello world 2.0
+  session-event=>foo.bar
+
+
+magix.execute.list-events-dox=>@"lists all active events in the system
+
+returns all active events within the system.  add [all], [open], [remoted], 
+[overridden] or [begins-with] to filter the events returned
+
+active events are returned in [events].  list-events will not return unit 
+tests and active events starting with '_' if [all] is false.  if [all], 
+[open], [remoted] or [overridden] is defined, it will return all events 
+fullfilling criteria, regardless of whether or not they are private events, 
+tests or don't match the [begins-with] parameter
+
+thread safe"
+
+magix.execute.list-events-sample
+  list-events
+    begins-with=>magix.execute
+
+
+magix.execute.try-dox=>@"creates a try block to handle exceptions
+
+use the [try] keyword to create a block of [code], which will execute 
+your [catch] execution block of code, if an exception is thrown, inside 
+your [code] execution block
+
+this exception handler will be invoked, even if an exception occurs any 
+place underneath your try code block, deep within your logic.  you can 
+handle exceptions being raised in sub-functions, recursively invoked 
+active events, or natively thrown exceptions this way
+
+if an exception is thrown, you can access the description of the 
+exception in the [exception] node underneath your catch statement.  you 
+can also add a [finally] piece of code block underneath the [try], which will 
+always be executed, regardless of whether or not an exception was thrown
+
+thread safe"
+
+magix.execute.try-sample
+  try
+    code
+      throw=>to try or not to try
+      magix.viewport.show-message
+        message=>crap, didn't work
+    catch
+      set=>[@][magix.viewport.show-message][message].Value
+        value=>[@][exception].Value
+      magix.viewport.show-message
+
+
+magix.execute.throw-dox=>@"throws an exception
+
+throws an exception, which will stop the entire current execution, and 
+halt back to the previous catch, in the stack of active events.  [exception] 
+in [catch] becomes the value of the [throw] node, or the exception message.  
+use throw together with [try] to handle errors
+
+thread safe"
+
+magix.execute.throw-sample
+  try
+    code
+      throw=>some exception error message
+    catch
+      set=>[@][magix.viewport.show-message][message].Value
+        value=>[@][exception].Value
+      magix.viewport.show-message
+
+
+magix.execute.using-dox=>@"changes the default namespace
+
+changes the default namespace for the current scope.  this allows you to raise 
+active events which you normally would have to raise with a period in their 
+name, without the period, which allows active events which normally cannot 
+access the entire execution tree, to do just that
+
+thread safe"
+
+magix.execute.using-sample
+  using=>magix.math
+    add
+      =(int)>4
+      =(int)>1
+  using=>magix.viewport
+    show-message
+      message=>[using][add].Value
+
+
+magix.execute.sandbox-dox=>@"restricts the active events possible to raise
+
+changes the execution engine, making sure only keywords and active events within 
+[whitelist] are legal keywords
+
+this is a useful feature to prevent external sources, or untrusted scripts, to 
+execute malicious code.  all keywords and active events which are not declared in 
+the [whitelist] parameter, are illegal to executed as long as the instruction 
+pointer is within the scope of the [code] block, which declares the block of code that 
+is to be sandboxed
+
+thread safe"
+
+magix.execute.sandbox-sample
+  sandbox
+    whitelist
+      foo
+    code
+      bar=>throws exception
+
+
+magix.execute.execute-dox=>@"main hyperlisp execution entry point
+
+executes the incoming parameters as hyperlisp, meaning it will raise everything 
+containing a period, while everything not starting with a '_' will be assumed to 
+be a hyperlisp keyword, and appended behind 'magix.execute.', before that string 
+is raised as an active event
+
+a hyperlisp keyword will have access to the entire data tree, while a normal active 
+event will only be able to modify the parts of the tree from underneath its own node
+
+active events are raised the way the appear sequentially beneath the magix.execute 
+node
+
+thread safe"
+
+magix.execute.execute-sample
+  _data
+    value=>thomas
+  execute
+    if=>equals
+      lhs=>[_data][value].Value
+      rhs=>thomas
+      code
+        magix.execute
+          _data=>hi thomas
+          using=>magix.viewport
+            show-message
+              message=>[_data].Value
+    else
+      magix.viewport.show-message
+        message=>hi stranger

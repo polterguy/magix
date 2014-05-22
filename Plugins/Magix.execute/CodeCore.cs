@@ -26,31 +26,36 @@ namespace Magix.code
             Node ip = Ip(e.Params);
             if (ShouldInspect(ip))
             {
-				ip["inspect"].Value = @"<p>will transform the [node] node to code syntax, 
-and return in [code]</p><p>[node] can either have its nodes as the value of the [node], or as 
-children nodes, directly underneath the [node] node.&nbsp;&nbsp;code returned will be the textual 
-representation of the original tree hierarchy, such that two spaces ' ' opens up the child collection.
-&nbsp;&nbsp;=&gt; separates name and value of node, name first.&nbsp;&nbsp;code returned might also 
-contain type information for types of int, decimal, datetime and bool.&nbsp;&nbsp;if [remove-root] is 
-true, then the root node will be removed</p><p>thread safe</p>";
-                ip["node-2-code"]["node"]["something"].Value = "something-else";
-				return;
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.execute",
+                    "Magix.execute.hyperlisp.inspect.hl",
+                    "[magix.execute.node-2-code-dox].Value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.execute",
+                    "Magix.execute.hyperlisp.inspect.hl",
+                    "[magix.execute.node-2-code-sample]");
+                return;
 			}
 
             if (!ip.Contains("node"))
-			{
 				throw new ArgumentException("no [node] node passed into node-2-code");
-			}
 
-			Node node = null;
-            if (ip["node"].Value != null)
+            Node dp = Dp(e.Params);
+            Node node = null;
+            if (ip["node"].Value != null && ip["node"].Value is Node)
                 node = ip["node"].Value as Node;
-			else
-                node = ip["node"].Clone();
-            if (ip.Contains("remove-root") && ip["remove-root"].Get<bool>())
+            else if (ip["node"].Value != null && ip["node"].Value is string)
             {
-                node = node[0];
+                node = new Node();
+                node.Add(Expressions.GetExpressionValue(ip["node"].Get<string>(), dp, ip, false) as Node);
             }
+            else
+                node = ip["node"].Clone();
+
+            if (ip.Contains("remove-root") && ip["remove-root"].Get<bool>())
+                node = node[0];
 
 			string txt = ParseNodes(0, node);
             ip["code"].Value = txt;
