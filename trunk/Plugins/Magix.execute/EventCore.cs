@@ -37,9 +37,11 @@ namespace Magix.execute
             Node ip = Ip(e.Params);
             if (ShouldInspect(ip))
             {
-				ip["inspect"].Value = @"<p>called during startup of application 
-to make sure our active events, which are dynamically tied towards serialized hyper 
-lisp blocks of code, are being correctly re-mapped</p>";
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.execute",
+                    "Magix.execute.hyperlisp.inspect.hl",
+                    "[magix.execute.application-startup-dox].Value");
 				return;
 			}
 
@@ -78,39 +80,17 @@ lisp blocks of code, are being correctly re-mapped</p>";
             Node ip = Ip(e.Params);
             if (ShouldInspect(ip))
             {
-				ip["inspect"].Value = @"<p>overrides the active event in [event]
-with the hyperlisp code in the [code] expression</p><p>these types of active events 
-can take and return parameters.&nbsp;&nbsp;if you wish to pass in or retrieve parameters, 
-then as you invoke the function, just append your parameters underneath the function 
-invocation, and they will be passed into the function, where they will be accessible 
-underneath the [$] node, appended as the last parts of your code block, into your function 
-invocation.&nbsp;&nbsp;from outside of the active event itself, you can access these 
-parameters directly underneath the active event itself</p><p>any existing event with 
-the name from the [event] node's value will be deleted, if you pass in no [code] block</p>
-<p>if you set the [remotable] node to true, then the active event will be possible to 
-invoke by remote servers, and marked as open.&nbsp;&nbsp;if you set [persist] to false, 
-then the active event will not be serialized into the data storage, meaning it will only 
-last as long as the application is not restarted.&nbsp;&nbsp;this is useful for active 
-events whom are created for instance during the startup of your application, since it 
-will save time, since they will anyway be overwritten the next time your application 
-restarts</p><p>thread safe</p>";
-				ip["event"].Value = "foo.bar";
-                ip["event"]["remotable"].Value = false;
-                ip["event"]["persist"].Value = false;
-                ip["event"]["code"]["_data"].Value = "thomas";
-				ip["event"]["code"]["_backup"].Value = "thomas";
-				ip["event"]["code"]["if"].Value = "equals";
-                ip["event"]["code"]["if"]["lhs"].Value = "[_data].Value";
-                ip["event"]["code"]["if"]["rhs"].Value = "[_backup].Value";
-				ip["event"]["code"]["if"]["code"]["set"].Value = "[$][output].Value";
-                ip["event"]["code"]["if"]["code"]["set"]["value"].Value = "return-value";
-                ip["event"]["code"]["if"]["code"].Add(new Node("set", "[/][magix.viewport.show-message][message].Value"));
-                ip["event"]["code"]["if"]["code"][ip["event"]["code"]["if"]["code"].Count - 1]["value"].Value = "[$][input].Value";
-				ip["event"]["code"]["magix.viewport.show-message"].Value = null;
-				ip["foo.bar"].Value = null;
-				ip["foo.bar"]["input"].Value = "hello world 2.0";
-				ip.Add (new Node("event", "foo.bar"));
-				return;
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.execute",
+                    "Magix.execute.hyperlisp.inspect.hl",
+                    "[magix.execute.event-dox].Value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.execute",
+                    "Magix.execute.hyperlisp.inspect.hl",
+                    "[magix.execute.event-sample]");
+                return;
 			}
 
 			if (!e.Params.Contains("_ip") || !(e.Params["_ip"].Value is Node))
@@ -198,16 +178,19 @@ restarts</p><p>thread safe</p>";
         [ActiveEvent(Name = "magix.execute._active-event-2-code-callback")]
         public static void magix_data__active_event_2_code_callback(object sender, ActiveEventArgs e)
         {
-            if (ShouldInspect(e.Params))
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
             {
-                e.Params["inspect"].Value = @"<p>dynamically created active event, 
-created with the [event] keyword.&nbsp;&nbsp;thread safety is dependent upon the 
-events raised internally within event</p>";
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.execute",
+                    "Magix.execute.hyperlisp.inspect.hl",
+                    "[magix.execute._active-event-2-code-callback-dox].Value");
 
                 if (_events.Contains(e.Name))
                 {
                     if (_inspect.Contains(e.Name))
-                        e.Params["inspect"].Value = _inspect[e.Name].Value;
+                        AppendInspect(ip["inspect"], _inspect[e.Name].Get<string>(), true);
                     foreach (Node idx in _events[e.Name])
                     {
                         e.Params.Add(idx.Clone().UnTie());
@@ -239,30 +222,16 @@ events raised internally within event</p>";
             Node ip = Ip(e.Params);
             if (ShouldInspect(ip))
             {
-                ip["inspect"].Value = @"<p>overrides the active event in [session-event]
-with the hyperlisp in the [code] expression for the current session</p><p>these types of active 
-events can take and return parameters.&nbsp;&nbsp;if you wish to pass in or retrieve parameters, 
-then as you invoke the function, just append your args underneath the function invocation, and 
-they will be passed into the function, where they will be accessible underneath a [$] node, 
-appended as the last parts of your code block, into your event invocation.&nbsp;&nbsp;from
-outside of the active event itself, you can access these parameters directly underneath the 
-active event itself</p><p>event will be deleted, if you pass in no [code] block</p><p>note that 
-a session event cannot be marked as neither open nor persisted</p><p>not thread 
-safe</p>";
-                ip["session-event"].Value = "foo.bar";
-                ip["session-event"]["code"]["_data"].Value = "thomas";
-                ip["session-event"]["code"]["_backup"].Value = "thomas";
-                ip["session-event"]["code"]["if"].Value = "equals";
-                ip["session-event"]["code"]["if"]["lhs"].Value = "[_data].Value";
-                ip["session-event"]["code"]["if"]["rhs"].Value = "[_backup].Value";
-                ip["session-event"]["code"]["if"]["code"]["set"].Value = "[$][output].Value";
-                ip["session-event"]["code"]["if"]["code"]["set"]["value"].Value = "return-value";
-                ip["session-event"]["code"]["if"]["code"].Add(new Node("set", "[/][magix.viewport.show-message][message].Value"));
-                ip["session-event"]["code"]["if"]["code"][ip["session-event"]["code"]["if"]["code"].Count - 1]["value"].Value = "[$][input].Value";
-                ip["session-event"]["code"]["magix.viewport.show-message"].Value = null;
-                ip["foo.bar"].Value = null;
-                ip["foo.bar"]["input"].Value = "hello world 2.0";
-                ip["session-event", 1].Value = "foo.bar";
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.execute",
+                    "Magix.execute.hyperlisp.inspect.hl",
+                    "[magix.execute.session-event-dox].Value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.execute",
+                    "Magix.execute.hyperlisp.inspect.hl",
+                    "[magix.execute.session-event-sample]");
                 return;
             }
 
@@ -315,19 +284,16 @@ safe</p>";
             Node ip = Ip(e.Params);
             if (ShouldInspect(ip))
             {
-                ip["inspect"].Value = @"<p>returns all active events 
-within the system.&nbsp;&nbsp;add [all], [open], [remoted], [overridden] or 
-[begins-with] to filter the events returned</p>active events are returned 
-in [events].&nbsp;&nbsp;will not return unit tests and active events starting 
-with _ if [all] is false.&nbsp;&nbsp;if [all], [open], [remoted] or [overridden] 
-is defined, it will return all events fullfilling criteria, regardless of 
-whether or not they are private events, tests or don't match the [begins-with] 
-parameter</p><p>thread safe</p>";
-                ip["list-events"]["all"].Value = true;
-                ip["list-events"]["open"].Value = false;
-                ip["list-events"]["remoted"].Value = false;
-                ip["list-events"]["overridden"].Value = false;
-                ip["list-events"]["begins-with"].Value = "magix.execute.";
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.execute",
+                    "Magix.execute.hyperlisp.inspect.hl",
+                    "[magix.execute.list-events-dox].Value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.execute",
+                    "Magix.execute.hyperlisp.inspect.hl",
+                    "[magix.execute.list-events-sample]");
                 return;
             }
 

@@ -93,7 +93,7 @@ to use, and so on</p><p>not thread safe</p>";
             if (!ip.Contains("message") || string.IsNullOrEmpty(ip["message"].Get<string>()))
 				throw new ArgumentException("cannot show a message box without a [message] argument");
 
-            string msgTxt = Expressions.GetExpressionValue(ip["message"].Get<string>(), dp, ip, false) as string;
+            string msgTxt = Expressions.GetExpressionValue(ip["message"].Get<string>(), dp, ip, false).ToString();
             if (string.IsNullOrEmpty(msgTxt))
                 throw new ArgumentException("you must supply a [message] for your message box");
 

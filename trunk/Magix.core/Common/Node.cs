@@ -446,7 +446,7 @@ namespace Magix.Core
 				bool found = functor(idx);
 				if (found)
 					return idx;
-				Node tmp = idx.FindDescendent (functor);
+				Node tmp = idx.FindDescendent(functor);
 				if (tmp != null)
 					return tmp;
             }

@@ -46,17 +46,12 @@
 
 * implement all event handlers for text-box in inspect of text-box, and other controls too
 
-* create IValueControl interface in mux, to use in magix.forms.controls. active events in magix.forms.get.value event, to extract value, 
-  to make extracting values from controls generic
-
 * make Ip method take boolean declaring whether or not "_ip" is mandatory, and if so, throw exception, to clean up all
   checks for "_ip" in magix.execute namespace for instance
 
 * make all return statements in "inspect" logic become else statements instead
 
 * create expression support for operators in if/else/while etc
-
-* remove html formatting from inspect feature, and create some sort of parser, that treats two carriage returns as new paragraph, and so on
 
 * create zip package manager for installing packages
 
@@ -70,15 +65,7 @@
 
 * make all controllers with non static event handlers sealed!
 
-* make magix.forms.get-children-values serialize also children of children, all controls within the panel
-
-* make inspect information become loaded from resource file, to clean up code
-
 * verify that active event expressions don't bypass sandbox and max-execution-iterations
-
-* implement ContainsValue on node, and use it in magix.forms.controls. namespace
-
-* check up all active events in magix.forms.controls. and that they're supposed to be there
 
 * remove all ".Value as Node" and exchange with Get<Node>()
 
@@ -108,8 +95,8 @@
 
 * make all magix.forms active events take expressions, such as magix.forms.set-values
 
-* create common class to wrap methods commond between active controllers and active events, such as Ip, Dp, 
-  AppendCodeFromResource, etc
+* create common class to wrap methods commond between active controllers and active modules, such as Ip, Dp, 
+  AppendCodeFromResource, etc. composition and interfaces ...?
 
 * create active event on webpart.ascx.cs to rerender wepb part with new controls, the same way we have change-mml
 
@@ -119,10 +106,11 @@
   means that the expression class will recursively traverse the expression inwards, instead of returning an expression
   as a value
 
+* clean up inspect logic, such that it doesn't need to check for null value
 
+* add support for automatic conversion in Expressions.GetExpressionValue
 
-
-
+* add support for {0} string.formatting in message in magix.viewport.show-message
 
 
 
