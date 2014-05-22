@@ -4,7 +4,8 @@ inspect=>@"creates unit tests to
 test the [node-2-code] and [code-2-node] keywords"
 
 
-event=>magix.test.node-2-code
+event
+  name=>magix.test.node-2-code
   persist=>false
   inspect=>@"asserts that [node-2-code] works the 
 way it should work, by trying to convert from node 
@@ -26,7 +27,8 @@ to code, where [node] contains the nodes as value"
         throw=>@"[node-2-code] didn't behave as expected"
 
 
-event=>magix.test.node-2-code-as-children
+event
+  name=>magix.test.node-2-code-as-children
   persist=>false
   inspect=>@"asserts that [node-2-code] works the 
 way it should work, by trying to convert from node 
@@ -48,7 +50,8 @@ to code, where [node] contains nodes as children nodes"
         throw=>@"[node-2-code] didn't behave as expected"
 
 
-event=>magix.test.node-2-code-expression
+event
+  name=>magix.test.node-2-code-expression
   persist=>false
   inspect=>@"asserts that [node-2-code] works the 
 way it should work, by trying to convert from node 
@@ -70,7 +73,8 @@ to another node"
         throw=>@"[node-2-code] didn't behave as expected"
 
 
-event=>magix.test.code-2-node
+event
+  name=>magix.test.code-2-node
   persist=>false
   inspect=>@"asserts that [code-2-node] works the 
 way it should work, by trying to convert from code 
@@ -93,7 +97,8 @@ to nodes"
         throw=>@"[code-2-node] didn't behave as expected"
 
 
-event=>magix.test.code-2-node-from-file
+event
+  name=>magix.test.code-2-node-from-file
   persist=>false
   inspect=>@"asserts that [code-2-node] works the 
 way it should work, by trying to load code from 

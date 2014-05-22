@@ -12,13 +12,13 @@ using Magix.Core;
 
 namespace Magix.code
 {
-	/**
+	/*
      * transforms from node to code and vice versa
 	 */
 	public class CodeCore : ActiveController
 	{
-		/**
-		 * transforms from code to node
+		/*
+		 * transforms from node to code
 		 */
 		[ActiveEvent(Name = "magix.execute.node-2-code")]
 		public static void magix_exeute_node_2_code(object sender, ActiveEventArgs e)
@@ -45,7 +45,7 @@ namespace Magix.code
             Node dp = Dp(e.Params);
             Node node = null;
             if (ip["node"].Value != null && ip["node"].Value is Node)
-                node = ip["node"].Value as Node;
+                node = ip["node"].Get<Node>();
             else if (ip["node"].Value != null && ip["node"].Value is string)
             {
                 node = new Node();
@@ -124,7 +124,7 @@ namespace Magix.code
 			return retVal;
 		}
 
-		/**
+		/*
 		 * transforms from code to node
 		 */
 		[ActiveEvent(Name = "magix.execute.code-2-node")]
@@ -146,14 +146,13 @@ namespace Magix.code
                 return;
 			}
 
-            Node dp = Dp(e.Params);
-
             if (!ip.Contains("code") && !ip.Contains("file"))
                 throw new ArgumentException("no [code] or [file] node passed into [code-2-node]");
 
             if (ip.Contains("code") && ip.Contains("file"))
                 throw new ArgumentException("you cannot supply both a [file] node and a [code] node to [code-2-node]");
 
+            Node dp = Dp(e.Params);
             string codeTextString = null;
             if (ip.Contains("code"))
                 codeTextString = Expressions.GetExpressionValue(ip["code"].Get<string>(), dp, ip, false) as string;

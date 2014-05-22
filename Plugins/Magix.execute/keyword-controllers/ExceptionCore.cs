@@ -43,9 +43,6 @@ namespace Magix.execute
                 return;
 			}
 
-			if (!e.Params.Contains("_ip") || !(e.Params["_ip"].Value is Node))
-				throw new ArgumentException("you cannot raise [magix.execute.try] directly, except for inspect purposes");
-
 			if (!ip.Contains("code"))
 				throw new ApplicationException("you need a [code] block inside your [try] statement, which is supposed to contain the tried code");
 
@@ -87,13 +84,13 @@ namespace Magix.execute
 			}
 		}
 
-		/**
+		/*
 		 * throw support
 		 */
 		[ActiveEvent(Name = "magix.execute.throw")]
 		public static void magix_execute_throw(object sender, ActiveEventArgs e)
 		{
-            Node ip = Ip(e.Params);
+            Node ip = Ip(e.Params, true);
             if (ShouldInspect(ip))
             {
                 AppendInspectFromResource(
@@ -108,9 +105,6 @@ namespace Magix.execute
                     "[magix.execute.throw-sample]");
                 return;
 			}
-
-			if (!e.Params.Contains("_ip") || !(e.Params["_ip"].Value is Node))
-				throw new ArgumentException("you cannot raise [magix.execute.throw] directly, except for inspect purposes");
 
 			throw new ExceptionCore.ManagedHyperLispException(ip.Get<string>());
 		}

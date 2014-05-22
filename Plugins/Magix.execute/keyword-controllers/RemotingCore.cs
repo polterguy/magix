@@ -11,13 +11,13 @@ using Magix.Core;
 
 namespace Magix.execute
 {
-	/**
+	/*
 	 * remoting hyperlisp support
 	 */
 	public class RemotingCore : ActiveController
 	{
-		/**
-		 * remoted hyperlisp support
+		/*
+		 * remote hyperlisp support
 		 */
 		[ActiveEvent(Name = "magix.core.application-startup")]
 		public static void magix_core_application_startup(object sender, ActiveEventArgs e)
@@ -72,7 +72,7 @@ namespace Magix.execute
             }
         }
 
-		/**
+		/*
 		 * tunnel hyperlisp keyword
 		 */
 		[ActiveEvent(Name = "magix.execute.tunnel")]
@@ -94,26 +94,17 @@ namespace Magix.execute
                 return;
 			}
 
-            string activeEvent = ip.Get<string>();
-			if (string.IsNullOrEmpty(activeEvent))
-				throw new ArgumentException(
-					@"[tunnel] needs value, being active event name, to know which event to override to go externally");
+            if (!ip.ContainsValue("name"))
+                throw new ArgumentException(
+                    @"[tunnel] needs [name], being active event name, to know which event to override to go externally");
+            string activeEvent = ip["name"].Get<string>();
 
 			string url = ip.Contains("url") ? ip["url"].Get<string>() : null;
 
 			if (string.IsNullOrEmpty(url))
 			{
                 if (!ip.Contains("persist") || ip["persist"].Get<bool>())
-                {
-                    Node removeNode = new Node();
-
-                    removeNode["prototype"]["event"].Value = activeEvent;
-                    removeNode["prototype"]["type"].Value = "magix.execute.tunnel";
-
-                    RaiseActiveEvent(
-                        "magix.data.remove",
-                        removeNode);
-                }
+                    DataBaseRemoval.Remove(activeEvent, "magix.execute.tunnel");
 
 				ActiveEvents.Instance.RemoveRemoteOverride(activeEvent);
 			}
@@ -121,17 +112,9 @@ namespace Magix.execute
 			{
                 if (!ip.Contains("persist") || ip["persist"].Get<bool>())
                 {
-                    Node removeNode = new Node();
-
-                    removeNode["prototype"]["event"].Value = activeEvent;
-                    removeNode["prototype"]["type"].Value = "magix.execute.tunnel";
-
-                    RaiseActiveEvent(
-                        "magix.data.remove",
-                        removeNode);
+                    DataBaseRemoval.Remove(activeEvent, "magix.execute.tunnel");
 
                     Node saveNode = new Node();
-
                     saveNode["id"].Value = Guid.NewGuid();
                     saveNode["value"]["event"].Value = activeEvent;
                     saveNode["value"]["type"].Value = "magix.execute.tunnel";
@@ -145,7 +128,7 @@ namespace Magix.execute
 			}
 		}
 
-		/**
+		/*
 		 * open hyperlisp keyword
 		 */
 		[ActiveEvent(Name = "magix.execute.open")]
@@ -167,23 +150,15 @@ namespace Magix.execute
                 return;
 			}
 
-            string activeEvent = ip.Get<string>();
-            if (string.IsNullOrEmpty(activeEvent))
-				throw new ArgumentException("[open] needs event parameter to know which event to raise externally");
+            if (!ip.ContainsValue("name"))
+                throw new ArgumentException("[open] needs a [name] parameter");
+            string activeEvent = ip["name"].Get<string>();
 
             if (!ip.Contains("persist") || ip["persist"].Get<bool>())
             {
-                Node removeNode = new Node();
-
-                removeNode["prototype"]["event"].Value = activeEvent;
-                removeNode["prototype"]["type"].Value = "magix.execute.open";
-
-                RaiseActiveEvent(
-                    "magix.data.remove",
-                    removeNode);
+                DataBaseRemoval.Remove(activeEvent, "magix.execute.open");
 
                 Node saveNode = new Node();
-
                 saveNode["id"].Value = Guid.NewGuid();
                 saveNode["value"]["event"].Value = activeEvent;
                 saveNode["value"]["type"].Value = "magix.execute.open";
@@ -195,7 +170,7 @@ namespace Magix.execute
 			ActiveEvents.Instance.MakeRemotable(activeEvent);
 		}
 
-		/**
+		/*
 		 * close hyperlisp support
 		 */
 		[ActiveEvent(Name = "magix.execute.close")]
@@ -217,27 +192,17 @@ namespace Magix.execute
                 return;
 			}
 
-            string activeEvent = ip.Get<string>();
-
-            if (string.IsNullOrEmpty(activeEvent))
-				throw new ArgumentException("[close] needs a value, pointing to an active event, to know which event to raise externally");
+            if (!ip.ContainsValue("name"))
+                throw new ArgumentException("[close] needs a [name]");
+            string activeEvent = ip["name"].Get<string>();
 
             if (!ip.Contains("persist") || ip["persist"].Get<bool>())
-            {
-                Node removeNode = new Node();
-
-                removeNode["prototype"]["event"].Value = activeEvent;
-                removeNode["prototype"]["type"].Value = "magix.execute.open";
-
-                RaiseActiveEvent(
-                    "magix.data.remove",
-                    removeNode);
-            }
+                DataBaseRemoval.Remove(activeEvent, "magix.execute.open");
 
 			ActiveEvents.Instance.RemoveRemotable(activeEvent);
 		}
 
-		/**
+		/*
 		 * remotely invokes an event
 		 */
 		[ActiveEvent(Name = "magix.execute.remote")]
@@ -259,12 +224,12 @@ namespace Magix.execute
                 return;
 			}
 
-            string activeEvent = ip.Get<string>();
-            if (string.IsNullOrEmpty(activeEvent))
-                throw new ArgumentException("[remote] needs an event parameter to know which event to raise externally");
+            if (!ip.ContainsValue("name"))
+                throw new ArgumentException("[remote] needs a [name]");
+            string activeEvent = ip["name"].Get<string>();
 
             if (!ip.Contains("url") || string.IsNullOrEmpty(ip["url"].Get<string>()))
-				throw new ArgumentException("[remote] needs a url parameter to know which endpoint to go towards");
+				throw new ArgumentException("[remote] needs a [url]");
             string url = ip["url"].Get<string>();
 
             RemotelyInvokeActiveEvent(ip, activeEvent, url);

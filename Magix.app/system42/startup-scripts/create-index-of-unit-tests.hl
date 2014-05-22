@@ -4,7 +4,8 @@ inspect=>@"creates unit tests to
 test the [magix.execute.index-of] keyword"
 
 
-event=>magix.test.index-of
+event
+  name=>magix.test.index-of
   persist=>false
   inspect=>@"asserts that [index-of] works the 
 way it should work"

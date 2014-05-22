@@ -4,7 +4,8 @@ inspect=>@"creates unit tests to
 test the [magix.execute.add] keyword"
 
 
-event=>magix.test.add-with-value
+event
+  name=>magix.test.add-with-value
   persist=>false
   inspect=>@"asserts that [add] works the 
 way it should work, by trying to add a list
@@ -24,7 +25,8 @@ node"
 when invoking with an expression in the [value] node"
 
 
-event=>magix.test.add-with-children
+event
+  name=>magix.test.add-with-children
   persist=>false
   inspect=>@"asserts that [add] works the 
 way it should work, by trying to add a list
@@ -43,7 +45,8 @@ of nodes, whom are children nodes of the
 when invoking with a list of child nodes"
 
 
-event=>magix.test.add-no-children
+event
+  name=>magix.test.add-no-children
   persist=>false
   inspect=>@"asserts that [add] works the 
 way it should work, by trying to add a list
@@ -63,7 +66,8 @@ node, with the [children-only] set to true"
         throw=>@"[add] didn't behave as expected"
 
 
-event=>magix.test.add-named-node-with-value
+event
+  name=>magix.test.add-named-node-with-value
   persist=>false
   inspect=>@"asserts that [add] works the 
 way it should work"
@@ -79,7 +83,8 @@ way it should work"
         throw=>@"[add] didn't behave as expected"
 
 
-event=>magix.test.add-named-node-without-value
+event
+  name=>magix.test.add-named-node-without-value
   persist=>false
   inspect=>@"asserts that [add] works the 
 way it should work"

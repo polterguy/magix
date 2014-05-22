@@ -9,18 +9,18 @@ using Magix.Core;
 
 namespace Magix.execute
 {
-	/**
+	/*
 	 * hyperlisp add logic
 	 */
 	public class AddCore : ActiveController
 	{
-		/**
+		/*
 		 * add hyperlisp keyword
 		 */
 		[ActiveEvent(Name = "magix.execute.add")]
 		public static void magix_execute_add(object sender, ActiveEventArgs e)
 		{
-            Node ip = Ip(e.Params);
+            Node ip = Ip(e.Params, true);
             if (ShouldInspect(ip))
             {
                 AppendInspectFromResource(
@@ -35,9 +35,6 @@ namespace Magix.execute
                     "[magix.execute.add-sample]");
                 return;
 			}
-
-			if (!e.Params.Contains("_ip") || !(e.Params["_ip"].Value is Node))
-				throw new ArgumentException("you cannot raise [magix.execute.add] directly, except for inspect purposes");
 
 			Node dp = Dp(e.Params);
 

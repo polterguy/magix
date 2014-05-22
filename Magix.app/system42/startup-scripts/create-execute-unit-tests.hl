@@ -4,7 +4,8 @@ inspect=>@"creates unit tests to
 test the [magix.execute] keyword"
 
 
-event=>magix.test.execute-allow-access-outside
+event
+  name=>magix.test.execute-allow-access-outside
   persist=>false
   inspect=>@"asserts that modifying nodes outside
 of the [execute] scope works, when [execute] is 
@@ -25,7 +26,8 @@ the entire tree"
         throw=>code outside of [execute] was not modified when expected
 
 
-event=>magix.test.execute-do-not-allow-access-outside
+event
+  name=>magix.test.execute-do-not-allow-access-outside
   persist=>false
   inspect=>@"asserts that modifying nodes outside
 of the [magix.execute] scope does not work, when [magix.execute] is 
@@ -59,7 +61,8 @@ not expected to be modified"
 not expected to be modified"
 
 
-event=>magix.test.execute-children-allow-access-outside
+event
+  name=>magix.test.execute-children-allow-access-outside
   persist=>false
   inspect=>@"asserts that modifying nodes outside
 of the [execute] scope works, when [execute] is 
@@ -80,7 +83,8 @@ the entire tree"
         throw=>code outside of [execute] was not modified when expected
 
 
-event=>magix.test.execute-labeled-execution
+event
+  name=>magix.test.execute-labeled-execution
   persist=>false
   inspect=>@"asserts executing an [execute] block of code, 
 with a label, works the correct way"
@@ -104,7 +108,8 @@ with a label, works the correct way"
         throw=>code inside of [execute] was not modified when expected
 
 
-event=>magix.test.execute-close-overflow-lines-of-code
+event
+  name=>magix.test.execute-close-overflow-lines-of-code
   persist=>false
   inspect=>@"asserts executing almost 5000 lines 
 of hyperlisp code overflows the execution engine"

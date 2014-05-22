@@ -122,6 +122,16 @@ namespace Magix.Core
          */
         protected static Node Ip(Node pars)
         {
+            return Ip(pars, false);
+        }
+
+        /*
+         * returns the instruction pointer
+         */
+        protected static Node Ip(Node pars, bool mandatoryIp)
+        {
+            if (mandatoryIp && !pars.Contains("inspect") && (!pars.Contains("_ip") || !(pars["_ip"].Value is Node)))
+                throw new ApplicationException("tried to access an active event where the instruction pointer was mandatory, with no ip, and no inspect");
             if (pars.Contains("_ip"))
                 return pars["_ip"].Get<Node>();
             return pars;

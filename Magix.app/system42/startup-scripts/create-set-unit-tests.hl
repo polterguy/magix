@@ -4,7 +4,8 @@ inspect=>@"creates unit tests to
 test the [magix.execute.set] keyword"
 
 
-event=>magix.test.set-complex-expression
+event
+  name=>magix.test.set-complex-expression
   persist=>false
   inspect=>@"asserts that [set] works the 
 way it should work, and assigns 
@@ -33,7 +34,8 @@ expression is given to [set]"
 correctly set the node it was supposed to set"
 
 
-event=>magix.test.set-multiple-statements
+event
+  name=>magix.test.set-multiple-statements
   persist=>false
   inspect=>@"asserts that [set] works the 
 way it should work, and assigns 

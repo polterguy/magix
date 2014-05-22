@@ -4,7 +4,8 @@ inspect=>@"creates the event needed to
 retrieve all the public properties 
 for controls and web controls in magix"
 
-event=>magix.forms.dox.get-control-methods
+event
+  name=>magix.forms.dox.get-control-methods
   persist=>false
   inspect=>@"returns all the public c# methods and 
 properties for all controls in magix"
@@ -24,7 +25,8 @@ for the developer"
       value=>[_data]
       children-only=>true
 
-event=>magix.forms.dox.get-web-control-methods
+event
+  name=>magix.forms.dox.get-web-control-methods
   persist=>false
   inspect=>@"returns all the public c# methods and 
 properties for all web controls in magix"
@@ -77,7 +79,8 @@ his keyboard, and the control has focus"
       children-only=>true
 
 
-event=>magix.forms.dox.create-dox-for.button
+event
+  name=>magix.forms.dox.create-dox-for.button
   persist=>false
   inspect=>@"creates the documentation for 
 the mux button control"
@@ -98,7 +101,8 @@ and can not be interacted with"
       value=>[_data]
       children-only=>true
 
-event=>magix.forms.dox.create-dox-for.checkbox
+event
+  name=>magix.forms.dox.create-dox-for.checkbox
   persist=>false
   inspect=>@"creates the documentation for 
 the mux checkbox control"
@@ -123,7 +127,8 @@ and can not be interacted with"
       value=>[_data]
       children-only=>true
 
-event=>magix.forms.dox.create-dox-for.dynamicpanel
+event
+  name=>magix.forms.dox.create-dox-for.dynamicpanel
   persist=>false
   inspect=>@"creates the documentation for 
 the mux dynamic panel control"
@@ -151,7 +156,8 @@ key inside of the dynamic panel"
       value=>[_data]
       children-only=>true
 
-event=>magix.forms.dox.create-dox-for.hiddenfield
+event
+  name=>magix.forms.dox.create-dox-for.hiddenfield
   persist=>false
   inspect=>@"creates the documentation for 
 the mux hiddenfield control"
@@ -163,7 +169,8 @@ you can put any text information here"
       value=>[_data]
       children-only=>true
 
-event=>magix.forms.dox.create-dox-for.hyperlink
+event
+  name=>magix.forms.dox.create-dox-for.hyperlink
   persist=>false
   inspect=>@"creates the documentation for 
 the mux hyperlink control"
@@ -188,7 +195,8 @@ the checkbox"
       value=>[_data]
       children-only=>true
 
-event=>magix.forms.dox.create-dox-for.img
+event
+  name=>magix.forms.dox.create-dox-for.img
   persist=>false
   inspect=>@"creates the documentation for 
 the mux img control"
@@ -204,7 +212,8 @@ the checkbox"
       value=>[_data]
       children-only=>true
 
-event=>magix.forms.dox.create-dox-for.label
+event
+  name=>magix.forms.dox.create-dox-for.label
   persist=>false
   inspect=>@"creates the documentation for 
 the mux label control"
@@ -222,7 +231,8 @@ will toggle the checkbox or radiobutton"
       value=>[_data]
       children-only=>true
 
-event=>magix.forms.dox.create-dox-for.linkbutton
+event
+  name=>magix.forms.dox.create-dox-for.linkbutton
   persist=>false
   inspect=>@"creates the documentation for 
 the mux linkbutton control"
@@ -243,7 +253,8 @@ and can not be interacted with"
       value=>[_data]
       children-only=>true
 
-event=>magix.forms.dox.create-dox-for.panel
+event
+  name=>magix.forms.dox.create-dox-for.panel
   persist=>false
   inspect=>@"creates the documentation for 
 the mux panel web control"
@@ -262,7 +273,8 @@ the panel"
       value=>[_data]
       children-only=>true
 
-event=>magix.forms.dox.create-dox-for.radiobutton
+event
+  name=>magix.forms.dox.create-dox-for.radiobutton
   persist=>false
   inspect=>@"creates the documentation for 
 the mux radiobutton control"
@@ -291,7 +303,8 @@ and can not be interacted with"
       value=>[_data]
       children-only=>true
 
-event=>magix.forms.dox.create-dox-for.selectlist
+event
+  name=>magix.forms.dox.create-dox-for.selectlist
   persist=>false
   inspect=>@"creates the documentation for 
 the mux select list control"
@@ -325,7 +338,8 @@ and can not be interacted with"
       value=>[_data]
       children-only=>true
 
-event=>magix.forms.dox.create-dox-for.textarea
+event
+  name=>magix.forms.dox.create-dox-for.textarea
   persist=>false
   inspect=>@"creates the documentation for 
 the mux text area control"
@@ -357,7 +371,8 @@ and can not be interacted with"
       value=>[_data]
       children-only=>true
 
-event=>magix.forms.dox.create-dox-for.textbox
+event
+  name=>magix.forms.dox.create-dox-for.textbox
   persist=>false
   inspect=>@"creates the documentation for 
 the mux text box control"
@@ -402,7 +417,8 @@ and can not be interacted with"
       value=>[_data]
       children-only=>true
 
-event=>magix.forms.dox.create-dox-for.timer
+event
+  name=>magix.forms.dox.create-dox-for.timer
   persist=>false
   inspect=>@"creates the documentation for 
 the mux timer control"
@@ -421,7 +437,8 @@ event is raised"
       value=>[_data]
       children-only=>true
 
-event=>magix.forms.dox.create-dox-for.uploader
+event
+  name=>magix.forms.dox.create-dox-for.uploader
   persist=>false
   inspect=>@"creates the documentation for 
 the mux uploader control"
@@ -449,7 +466,8 @@ for the files being transfered"
       value=>[_data]
       children-only=>true
 
-event=>magix.forms.dox.create-dox-for.wysiwyg
+event
+  name=>magix.forms.dox.create-dox-for.wysiwyg
   persist=>false
   inspect=>@"creates the documentation for 
 the mux wysiwyg web control"
@@ -515,7 +533,8 @@ and can not be interacted with"
       value=>[_data]
       children-only=>true
 
-event=>magix.forms.dox.create-dox-for-web-control
+event
+  name=>magix.forms.dox.create-dox-for-web-control
   persist=>false
   inspect=>@"creates the documentation for 
 a mux web control"
@@ -561,7 +580,8 @@ a mux web control"
           value=>@"<ul>"
     _data
 
-event=>magix.forms.dox.create-dox-for-control
+event
+  name=>magix.forms.dox.create-dox-for-control
   persist=>false
   inspect=>@"creates the documentation for 
 a mux control"

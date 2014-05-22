@@ -12,20 +12,19 @@ using Magix.Core;
 
 namespace Magix.execute
 {
-	/**
+	/*
 	 * multi threading
 	 */
 	public class ThreadingCore : ActiveController
 	{
-		private Stack<object> stack = new Stack<object>();
+		private Stack<object> _stack = new Stack<object>();
 
-		/**
+		/*
 		 * spawns new thread
 		 */
 		[ActiveEvent(Name = "magix.execute.fork")]
 		public void magix_execute_fork(object sender, ActiveEventArgs e)
 		{
-			// TODO: Make thread safe, somehow ...
             Node ip = Ip(e.Params);
             if (ShouldInspect(ip))
             {
@@ -42,29 +41,19 @@ namespace Magix.execute
                 return;
 			}
 
-			if (!e.Params.Contains("_ip") || !(e.Params["_ip"].Value is Node))
-				throw new ArgumentException("you cannot raise [fork] directly, except for inspect purposes");
-
 			Node node = ip.Clone();
-
 			if (node.Get<bool>(false))
-			{
-				Thread thread = new Thread(ExecuteThreadForget);
-				thread.Start(node);
-			}
+				new Thread(ExecuteThreadForget).Start(node);
 			else
-			{
-				Thread thread = new Thread(ExecuteThread);
-				thread.Start(node);
-			}
+				new Thread(ExecuteThread).Start(node);
 		}
 
 		private void ExecuteThread(object input)
 		{
 			Node node = input as Node;
 
-			lock (stack)
-				stack.Push(typeof(Thread));
+			lock (_stack)
+				_stack.Push(typeof(Thread));
 			try
 			{
 				RaiseActiveEvent(
@@ -73,14 +62,13 @@ namespace Magix.execute
 			}
 			finally
 			{
-				lock (stack)
+				lock (_stack)
 				{
-					stack.Pop();
-
-					if (stack.Count > 0 && stack.Peek() is ManualResetEvent)
+					_stack.Pop();
+					if (_stack.Count > 0 && _stack.Peek() is ManualResetEvent)
 					{
 						// signaling to release wait object
-						ManualResetEvent evt = stack.Peek() as ManualResetEvent;
+						ManualResetEvent evt = _stack.Peek() as ManualResetEvent;
 						evt.Set();
 					}
 				}
@@ -96,7 +84,7 @@ namespace Magix.execute
 				node);
 		}
 
-		/**
+		/*
 		 * sleeps the current thread
 		 */
 		[ActiveEvent(Name = "magix.execute.wait")]
@@ -118,16 +106,11 @@ namespace Magix.execute
                 return;
 			}
 
-			if (!e.Params.Contains("_ip") || !(e.Params["_ip"].Value is Node))
-				throw new ArgumentException("you cannot raise [wait] directly, except for inspect purposes");
-
 			int milliseconds = ip.Get<int>(-1);
 			ManualResetEvent evt = new ManualResetEvent(false);
 
-            lock (stack)
-            {
-                stack.Push(evt);
-            }
+            lock (_stack)
+                _stack.Push(evt);
 			try
 			{
 				RaiseActiveEvent(
@@ -141,8 +124,8 @@ namespace Magix.execute
 			}
 			finally
 			{
-				lock (stack)
-					stack.Pop();
+				lock (_stack)
+					_stack.Pop();
 			}
 		}
 	}

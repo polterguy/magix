@@ -12,7 +12,8 @@ this means that every single active event that starts with the string "magix.exe
 programming language itself.&nbsp;&nbsp;consider the following code</p>
 
 <pre>
-event=>magix.execute.add-two-numbers
+event
+  name=>magix.execute.add-two-numbers
   persist=>false
   code
     using=>magix.math

@@ -22,7 +22,7 @@ namespace Magix.execute
 		[ActiveEvent(Name = "magix.execute.index-of")]
 		public static void magix_execute_index_of(object sender, ActiveEventArgs e)
 		{
-            Node ip = Ip(e.Params);
+            Node ip = Ip(e.Params, true);
             if (ShouldInspect(ip))
             {
                 AppendInspectFromResource(
@@ -38,14 +38,10 @@ namespace Magix.execute
                 return;
 			}
 
-			if (!e.Params.Contains("_ip") || !(e.Params["_ip"].Value is Node))
-				throw new ArgumentException("you cannot raise [index-of] directly, except for inspect purposes");
-
-            Node dp = Dp(e.Params);
-
             if (!ip.Contains("what"))
                 throw new ArgumentException("[index-of] needs a [what] child to understand what to search for");
 
+            Node dp = Dp(e.Params);
             string whatToSearch = Expressions.GetExpressionValue(ip.Get<string>(), dp, ip, false) as string;
             if (whatToSearch == null)
                 throw new ArgumentException("couldn't make '" + ip.Get<string>() + "' into a string in [index-of]");

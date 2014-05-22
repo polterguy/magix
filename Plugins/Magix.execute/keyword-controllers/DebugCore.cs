@@ -10,18 +10,18 @@ using Magix.Core;
 
 namespace Magix.execute
 {
-	/**
+	/*
 	 * debug logic
 	 */
 	public class DebugCore : ActiveController
 	{
-		/**
+		/*
 		 * debug hyperlisp keyword
 		 */
 		[ActiveEvent(Name = "magix.execute.debug")]
 		public void magix_execute_debug(object sender, ActiveEventArgs e)
 		{
-            Node ip = Ip(e.Params);
+            Node ip = Ip(e.Params, true);
             if (ShouldInspect(ip))
             {
                 AppendInspectFromResource(
@@ -37,14 +37,10 @@ namespace Magix.execute
                 return;
 			}
 
-			if (!e.Params.Contains("_ip") || !(e.Params["_ip"].Value is Node))
-				throw new ArgumentException("you cannot raise [magix.execute.add] directly, except for inspect purposes");
-
-            Node dp = Dp(e.Params);
-
             Node stack = null;
             if (!string.IsNullOrEmpty(ip.Get<string>()))
             {
+                Node dp = Dp(e.Params);
                 stack = Expressions.GetExpressionValue(ip.Get<string>(), dp, ip, false) as Node;
                 if (stack == null)
                     throw new ArgumentException("tried to debug a non-existing node tree in [debug]");

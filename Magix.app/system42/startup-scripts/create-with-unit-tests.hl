@@ -4,7 +4,8 @@ inspect=>@"creates unit tests to
 test the [magix.execute.with] keyword"
 
 
-event=>magix.test.with
+event
+  name=>magix.test.with
   persist=>false
   inspect=>@"asserts that the [with] keyword 
 functions the way it is supposed to"
@@ -30,7 +31,8 @@ functions the way it is supposed to"
         throw=>the [with] keyword did not function as it was supposed to
 
 
-event=>magix.test.with-exceptions
+event
+  name=>magix.test.with-exceptions
   persist=>false
   inspect=>@"asserts that the [with] keyword 
 functions the way it is supposed to when an 

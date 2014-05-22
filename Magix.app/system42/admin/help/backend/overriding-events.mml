@@ -24,7 +24,8 @@ compatibility.&nbsp;&nbsp;if you wish to override an existing active event calle
 hyperlisp you would accomplish that with the code below</p>
 
 <pre>
-override=>magix.sample.old-event
+override
+  name=>magix.sample.old-event
   with=>magix.sample.new-event
 </pre>
 

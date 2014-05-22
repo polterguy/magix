@@ -6,7 +6,8 @@ desktop shortcuts, create any event you wish within the
 magix.admin.desktop-shortcuts. namespace"
 
 
-event=>magix.admin.desktop-shortcuts.defaults
+event
+  name=>magix.admin.desktop-shortcuts.defaults
   persist=>false
   inspect=>@"returns all the default desktop 
 shortcuts in the system.&nbsp;&nbsp;thread safe"

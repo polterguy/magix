@@ -34,29 +34,30 @@
     <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CodeCore.cs" />
-    <Compile Include="WithCore.cs" />
-    <Compile Include="IterateTreeCore.cs" />
-    <Compile Include="ReplaceCore.cs" />
-    <Compile Include="SwitchCore.cs" />
-    <Compile Include="LambdaCore.cs" />
-    <Compile Include="IndexOfCore.cs" />
-    <Compile Include="SplitCore.cs" />
-    <Compile Include="StatementHelper.cs" />
-    <Compile Include="ExecuteCore.cs" />
-    <Compile Include="ExceptionCore.cs" />
-    <Compile Include="WhileCore.cs" />
-    <Compile Include="IfElseCore.cs" />
-    <Compile Include="ForEachCore.cs" />
-    <Compile Include="SetCore.cs" />
-    <Compile Include="AddCore.cs" />
-    <Compile Include="OverrideCore.cs" />
-    <Compile Include="StopCore.cs" />
-    <Compile Include="DebugCore.cs" />
-    <Compile Include="EventCore.cs" />
-    <Compile Include="ThreadingCore.cs" />
-    <Compile Include="RemotingCore.cs" />
-    <Compile Include="ScriptCore.cs" />
+    <Compile Include="helpers\DatabaseRemoval.cs" />
+    <Compile Include="keyword-controllers\CodeCore.cs" />
+    <Compile Include="keyword-controllers\WithCore.cs" />
+    <Compile Include="keyword-controllers\IterateTreeCore.cs" />
+    <Compile Include="keyword-controllers\ReplaceCore.cs" />
+    <Compile Include="keyword-controllers\SwitchCore.cs" />
+    <Compile Include="keyword-controllers\LambdaCore.cs" />
+    <Compile Include="keyword-controllers\IndexOfCore.cs" />
+    <Compile Include="keyword-controllers\SplitCore.cs" />
+    <Compile Include="helpers\StatementHelper.cs" />
+    <Compile Include="keyword-controllers\ExecuteCore.cs" />
+    <Compile Include="keyword-controllers\ExceptionCore.cs" />
+    <Compile Include="keyword-controllers\WhileCore.cs" />
+    <Compile Include="keyword-controllers\IfElseCore.cs" />
+    <Compile Include="keyword-controllers\ForEachCore.cs" />
+    <Compile Include="keyword-controllers\SetCore.cs" />
+    <Compile Include="keyword-controllers\AddCore.cs" />
+    <Compile Include="keyword-controllers\OverrideCore.cs" />
+    <Compile Include="keyword-controllers\StopCore.cs" />
+    <Compile Include="keyword-controllers\DebugCore.cs" />
+    <Compile Include="keyword-controllers\EventCore.cs" />
+    <Compile Include="keyword-controllers\ThreadingCore.cs" />
+    <Compile Include="keyword-controllers\RemotingCore.cs" />
+    <Compile Include="keyword-controllers\ScriptCore.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

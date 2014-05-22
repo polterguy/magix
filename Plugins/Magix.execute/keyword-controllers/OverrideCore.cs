@@ -9,16 +9,16 @@ using Magix.Core;
 
 namespace Magix.execute
 {
-	/**
+	/*
 	 * override hyperlisp keyword
 	 */
 	public class OverrideCore : ActiveController
 	{
-		/**
+		/*
 		 * override hyperlisp keyword
 		 */
 		[ActiveEvent(Name = "magix.execute.override")]
-		public static void magix_execute_set(object sender, ActiveEventArgs e)
+		public static void magix_execute_override(object sender, ActiveEventArgs e)
 		{
             Node ip = Ip(e.Params);
             if (ShouldInspect(ip))
@@ -36,9 +36,9 @@ namespace Magix.execute
                 return;
 			}
 
-            string activeEvent = ip.Get<string>();
-            if (string.IsNullOrEmpty(activeEvent))
-                throw new ArgumentException("you need to specify which active event you wish to override in [override]");
+            if (!ip.ContainsValue("name"))
+                throw new ArgumentException("missing [name] parameter in [override]");
+            string activeEvent = ip["name"].Get<string>();
 
             if (ip.Contains("with"))
             {
@@ -48,18 +48,9 @@ namespace Magix.execute
 
                 if (!ip.Contains("persist") || ip["persist"].Get<bool>())
                 {
-                    // removing any previous similar events
-                    Node removeNode = new Node();
-
-                    removeNode["prototype"]["event"].Value = activeEvent;
-                    removeNode["prototype"]["type"].Value = "magix.execute.override";
-
-                    RaiseActiveEvent(
-                        "magix.data.remove",
-                        removeNode);
+                    DataBaseRemoval.Remove(activeEvent, "magix.execute.override");
 
                     Node saveNode = new Node();
-
                     saveNode["id"].Value = Guid.NewGuid().ToString();
                     saveNode["value"]["event"].Value = activeEvent;
                     saveNode["value"]["type"].Value = "magix.execute.override";
@@ -74,16 +65,7 @@ namespace Magix.execute
             else
             {
                 if (!ip.Contains("persist") || ip["persist"].Get<bool>())
-                {
-                    Node removeNode = new Node();
-
-                    removeNode["prototype"]["event"].Value = activeEvent;
-                    removeNode["prototype"]["type"].Value = "magix.execute.override";
-
-                    RaiseActiveEvent(
-                        "magix.data.remove",
-                        removeNode);
-                }
+                    DataBaseRemoval.Remove(activeEvent, "magix.execute.override");
 
                 ActiveEvents.Instance.RemoveMapping(activeEvent);
             }

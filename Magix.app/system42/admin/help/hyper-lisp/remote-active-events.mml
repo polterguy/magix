@@ -20,11 +20,13 @@ scale</p>
 if you wish.&nbsp;&nbsp;consider the following code</p>
 
 <pre>
-event=>magix.sample.remotely-accessible
+event
+  name=>magix.sample.remotely-accessible
   persist=>false
   code
     _do_some_piece_of_logic_here
-open=>magix.sample.remotely-accessible
+open
+  name=>magix.sample.remotely-accessible
 </pre>
 
 <p>you have now created an active event, which other servers can raise over the http protocol.&nbsp;&nbsp;
@@ -36,7 +38,8 @@ an existing active event to go to another server instead, you can use the [tunne
 piece of code</p>
 
 <pre>
-tunnel=>magix.sample.remoted-active-event
+tunnel
+  name=>magix.sample.remoted-active-event
   url=>http://somewhere-over-the-rainbow.com
 </pre>
 
@@ -54,7 +57,8 @@ to think about scaling, before scaling is necessary</p>
 code below</p>
 
 <pre>
-remote=>magix.sample.foo
+remote
+  name=>magix.sample.foo
   url=>somewhere.com
   params
     par1=>x

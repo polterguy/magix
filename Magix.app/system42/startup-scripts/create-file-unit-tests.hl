@@ -4,7 +4,8 @@ inspect=>@"creates unit tests to
 test the the magix.file namespace"
 
 
-event=>magix.test.file-load
+event
+  name=>magix.test.file-load
   persist=>false
   inspect=>@"asserts that [magix.file.load] works the 
 way it should work, by trying to load a file from disc,
@@ -20,7 +21,8 @@ when invoking with a constant pointing to an existing file
 underneath the local file system"
 
 
-event=>magix.test.file-load-expression-path
+event
+  name=>magix.test.file-load-expression-path
   persist=>false
   inspect=>@"asserts that [magix.file.load] works the 
 way it should work, by trying to load a file from disc,
@@ -43,7 +45,8 @@ when invoking with an expression pointing to an existing file
 underneath the local file system"
 
 
-event=>magix.test.file-load-web-plugin
+event
+  name=>magix.test.file-load-web-plugin
   persist=>false
   inspect=>@"asserts that [magix.file.load] works the 
 way it should work, by trying to load a from http"
@@ -58,7 +61,8 @@ way it should work, by trying to load a from http"
 when invoking with a the web download plugin"
 
 
-event=>magix.test.file-save
+event
+  name=>magix.test.file-save
   persist=>false
   inspect=>@"asserts that [magix.file.save] works the 
 way it should work, by trying to save a file to disc,
@@ -89,7 +93,8 @@ after creation of file"
       file=>tmp/mumbo.txt
 
 
-event=>magix.test.file-save-expression
+event
+  name=>magix.test.file-save-expression
   persist=>false
   inspect=>@"asserts that [magix.file.save] works the 
 way it should work, by trying to save a file to disc,
@@ -126,7 +131,8 @@ after creation of file"
         file=>[_data].Value
 
 
-event=>magix.test.directory-create
+event
+  name=>magix.test.directory-create
   persist=>false
   inspect=>@"asserts that [magix.file.create-directory] works the 
 way it should work, by trying to create a directory, for then to 
@@ -150,7 +156,8 @@ since no directory exist after creation of directory"
         directory=>[_data].Value
 
 
-event=>magix.test.directory-delete
+event
+  name=>magix.test.directory-delete
   persist=>false
   inspect=>@"asserts that [magix.file.delete-directory] works the 
 way it should work, by trying to create a directory"
@@ -182,7 +189,8 @@ since no directory exist after creation of directory"
 since directory existed after deletion of directory"
 
 
-event=>magix.test.directory-move
+event
+  name=>magix.test.directory-move
   persist=>false
   inspect=>@"asserts that [magix.file.move-directory] works the 
 way it should work, by trying to create a directory, for then to 
@@ -211,7 +219,8 @@ since directory didn't exist after moving it"
         directory=>[_data2].Value
 
 
-event=>magix.test.list-files
+event
+  name=>magix.test.list-files
   persist=>false
   inspect=>@"asserts that [magix.file.list-files] works the 
 way it should work, by trying to create a directory, for then to 

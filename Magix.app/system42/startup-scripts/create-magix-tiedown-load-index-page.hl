@@ -6,11 +6,13 @@ gets invoked when the default index page is accessed"
 magix.data.load
   prototype
     type=>magix.execute.event
-    event=>magix.tiedown.load-index-page
+    event
+      name=>magix.tiedown.load-index-page
 if=>not-exist
   lhs=>[magix.data.load][objects]
   code
-    event=>magix.tiedown.load-index-page
+    event
+      name=>magix.tiedown.load-index-page
       inspect=>@"the default active event for what to do when 
 user enters main website"
       code

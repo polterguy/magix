@@ -4,7 +4,8 @@ inspect=>@"creates unit tests to
 test the [magix.execute.lambda] keyword"
 
 
-event=>magix.test.lambda
+event
+  name=>magix.test.lambda
   persist=>false
   inspect=>@"asserts that [lambda] works the 
 way it should work, and that it allows for 

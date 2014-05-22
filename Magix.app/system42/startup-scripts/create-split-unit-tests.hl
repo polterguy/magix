@@ -4,7 +4,8 @@ inspect=>@"creates unit tests to
 test the [magix.execute.split] keyword"
 
 
-event=>magix.test.split
+event
+  name=>magix.test.split
   persist=>false
   inspect=>@"asserts that [split] works the 
 way it should work"
