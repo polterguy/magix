@@ -5,7 +5,8 @@
 in hyperlisp, you would need to do something such as the code below</p>
 
 <pre>
-event=>magix.execute.add-numbers
+event
+  name=>magix.execute.add-numbers
   persist=>false
   code
     for-each=>[$][_ip].Value
@@ -48,7 +49,8 @@ threated as a hyperlisp keyword</p>
 to the event itself, and then execute it.&nbsp;&nbsp;modify the active event with the code below</p>
 
 <pre>
-event=>magix.execute.add-numbers
+event
+  name=>magix.execute.add-numbers
   persist=>false
   code
     for-each=>[$][_ip].Value

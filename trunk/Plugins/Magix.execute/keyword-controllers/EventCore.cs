@@ -10,7 +10,7 @@ using Magix.Core;
 
 namespace Magix.execute
 {
-	/**
+	/*
 	 * hyperlisp event support
 	 */
 	public class EventCore : ActiveController
@@ -28,7 +28,7 @@ namespace Magix.execute
             }
         }
 
-        /**
+        /*
          * creates the associations between existing events in the database, and active event references
          */
 		[ActiveEvent(Name = "magix.core.application-startup")]
@@ -64,14 +64,14 @@ namespace Magix.execute
 						ActiveEvents.Instance.MakeRemotable(idx["event"].Get<string>());
 
                     _events[idx["event"].Get<string>()].Clear();
-					_events[idx["event"].Get<string>()].AddRange(idx["code"]);
+                    _events[idx["event"].Get<string>()].AddRange(idx["code"]);
                     _inspect[idx["event"].Get<string>()].Clear();
                     _inspect[idx["event"].Get<string>()].AddRange(idx["inspect"]);
 				}
 			}
 		}
 
-        /**
+        /*
          * event hyperlisp keyword
          */
         [ActiveEvent(Name = "magix.execute.event")]
@@ -93,13 +93,9 @@ namespace Magix.execute
                 return;
 			}
 
-			if (!e.Params.Contains("_ip") || !(e.Params["_ip"].Value is Node))
-				throw new ArgumentException("you cannot raise [event] directly, except for inspect purposes");
-
-			string activeEvent = ip.Get<string>();
-
-			if (string.IsNullOrEmpty(activeEvent))
-				throw new ArgumentException("you cannot create an event without a name in the value of the [event] keyword");
+            if (!ip.ContainsValue("name"))
+                throw new ArgumentException("you cannot create an event without a [name]");
+            string activeEvent = ip["name"].Get<string>();
 
 			bool remotable = ip.Contains("remotable") && ip["remotable"].Get<bool>();
 
@@ -108,17 +104,9 @@ namespace Magix.execute
                 if (!ip.Contains("persist") || ip["persist"].Get<bool>())
                 {
                     // removing any previous similar events
-                    Node removeNode = new Node();
-
-                    removeNode["prototype"]["event"].Value = activeEvent;
-                    removeNode["prototype"]["type"].Value = "magix.execute.event";
-
-                    RaiseActiveEvent(
-                        "magix.data.remove",
-                        removeNode);
+                    DataBaseRemoval.Remove(activeEvent, "magix.execute.event");
 
                     Node saveNode = new Node();
-
                     saveNode["id"].Value = Guid.NewGuid().ToString();
                     saveNode["value"]["event"].Value = activeEvent;
                     saveNode["value"]["type"].Value = "magix.execute.event";
@@ -146,23 +134,13 @@ namespace Magix.execute
                 _events[activeEvent].AddRange(ip["code"].Clone());
 
                 _inspect[activeEvent].Clear();
-
                 if (ip.Contains("inspect"))
                     _inspect[activeEvent].Value = ip["inspect"].Value;
 			}
 			else
 			{
                 if (!ip.Contains("persist") || ip["persist"].Get<bool>())
-                {
-                    Node removeNode = new Node();
-
-                    removeNode["prototype"]["event"].Value = activeEvent;
-                    removeNode["prototype"]["type"].Value = "magix.execute.event";
-
-                    RaiseActiveEvent(
-                        "magix.data.remove",
-                        removeNode);
-                }
+                    DataBaseRemoval.Remove(activeEvent, "magix.execute.event");
 
 				ActiveEvents.Instance.RemoveMapping(activeEvent);
 				ActiveEvents.Instance.RemoveRemotable(activeEvent);
@@ -172,7 +150,7 @@ namespace Magix.execute
 			}
 		}
 
-        /**
+        /*
          * entry point for hyperlisp created active event overrides
          */
         [ActiveEvent(Name = "magix.execute._active-event-2-code-callback")]
@@ -213,7 +191,7 @@ namespace Magix.execute
             }
         }
 
-        /**
+        /*
          * session-event hyperlisp keyword
          */
         [ActiveEvent(Name = "magix.execute.session-event")]
@@ -235,13 +213,9 @@ namespace Magix.execute
                 return;
             }
 
-            if (!e.Params.Contains("_ip") || !(e.Params["_ip"].Value is Node))
-                throw new ArgumentException("you cannot raise [magix.execute.session-event] directly, except for inspect purposes");
-
-            string activeEvent = ip.Get<string>();
-
-            if (string.IsNullOrEmpty(activeEvent))
+            if (!ip.ContainsValue("name"))
                 throw new ArgumentException("you cannot create an event without a name in the value of the [session-event] keyword");
+            string activeEvent = ip["name"].Get<string>();
 
             if (ip.Contains("code"))
             {
@@ -250,12 +224,10 @@ namespace Magix.execute
                 SessionEvents[activeEvent] = n;
             }
             else
-            {
                 SessionEvents.Remove(activeEvent);
-            }
         }
 
-        /**
+        /*
          * entry point for hyperlisp created active session-event overrides
          */
         [ActiveEvent(Name = "")]

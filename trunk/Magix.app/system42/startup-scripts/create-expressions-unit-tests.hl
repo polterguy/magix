@@ -4,7 +4,8 @@ inspect=>@"creates unit tests to
 test some advanced expressions"
 
 
-event=>magix.test.expressions-wildcard
+event
+  name=>magix.test.expressions-wildcard
   persist=>false
   inspect=>@"asserts that expressions with 
 wildcard functions where value of node 
@@ -23,7 +24,8 @@ is not null"
       throw=>wildcard expression didn't return what was expected
 
 
-event=>magix.test.expressions-wildcard-null
+event
+  name=>magix.test.expressions-wildcard-null
   persist=>false
   inspect=>@"asserts that expressions with 
 wildcard functions where value of node 
@@ -41,7 +43,8 @@ is null"
       throw=>wildcard expression didn't return what was expected
 
 
-event=>magix.test.expressions-wildcard-empty-string
+event
+  name=>magix.test.expressions-wildcard-empty-string
   persist=>false
   inspect=>@"asserts that expressions with 
 wildcard functions where value of node 
@@ -59,7 +62,8 @@ is empty string"
       throw=>wildcard expression didn't return what was expected
 
 
-event=>magix.test.expressions-wildcard-null-value
+event
+  name=>magix.test.expressions-wildcard-null-value
   persist=>false
   inspect=>@"asserts that expressions with 
 wildcard functions where value of 
@@ -80,7 +84,8 @@ node to search for is null"
         throw=>deep search expression didn't succeed
 
 
-event=>magix.test.expressions-wildcard-empty-value
+event
+  name=>magix.test.expressions-wildcard-empty-value
   persist=>false
   inspect=>@"asserts that expressions with 
 wildcard functions where value of 
@@ -101,7 +106,8 @@ node to search for is empty"
         throw=>deep search expression didn't succeed
 
 
-event=>magix.test.expressions-wildcard-question-name
+event
+  name=>magix.test.expressions-wildcard-question-name
   persist=>false
   inspect=>@"asserts that expressions with 
 wildcard functions where name is question mark"
@@ -121,7 +127,8 @@ wildcard functions where name is question mark"
         throw=>deep search expression didn't succeed
 
 
-event=>magix.test.expressions-wildcard-question-value
+event
+  name=>magix.test.expressions-wildcard-question-value
   persist=>false
   inspect=>@"asserts that expressions with 
 wildcard functions where value is question mark"
@@ -141,7 +148,8 @@ wildcard functions where value is question mark"
         throw=>deep search expression didn't succeed
 
 
-event=>magix.test.expressions-wildcard-question-value-null-value
+event
+  name=>magix.test.expressions-wildcard-question-value-null-value
   persist=>false
   inspect=>@"asserts that expressions with 
 wildcard functions where value is question mark 
@@ -162,7 +170,8 @@ and value is null"
         throw=>deep search expression didn't succeed
 
 
-event=>magix.test.expressions-nested
+event
+  name=>magix.test.expressions-nested
   persist=>false
   inspect=>@"asserts that nested expressions 
 functions the way they should"
@@ -178,12 +187,14 @@ functions the way they should"
         throw=>nested expression didn't succeed
 
 
-event=>magix.test.expressions-active-event-expressions
+event
+  name=>magix.test.expressions-active-event-expressions
   persist=>false
   inspect=>@"asserts that active event expressions 
 functions the way they should"
   code
-    event=>magix.demo.foo
+    event
+      name=>magix.demo.foo
       persist=>false
       code
         set=>[$][output].Value
@@ -195,29 +206,35 @@ functions the way they should"
       lhs=>[:magix.demo.foo[_buffer][input]][output].Value
       rhs=>hello world
       code
-        event=>magix.demo.foo
+        event
+          name=>magix.demo.foo
         throw=>active event expression didn't succeed
     else
-      event=>magix.demo.foo
+      event
+        name=>magix.demo.foo
 
 
-event=>magix.test.expressions-nested-active-event-expressions
+event
+  name=>magix.test.expressions-nested-active-event-expressions
   persist=>false
   inspect=>@"asserts that nested active event expressions 
 functions the way they should"
   code
-    event=>magix.demo.foo
+    event
+      name=>magix.demo.foo
       persist=>false
       code
         set=>[$][output].Value
           value=>{0} world
             =>[$][input].Value
-    event=>magix.demo.foo2
+    event
+      name=>magix.demo.foo2
       persist=>false
       code
         set=>[$][result].Value
           value=>output
-    event=>magix.demo.foo3
+    event
+      name=>magix.demo.foo3
       persist=>false
       code
         set=>[$][result].Value
@@ -231,12 +248,18 @@ functions the way they should"
       lhs=>[:magix.demo.foo[[[:magix.demo.foo3[_buffer4]][result].Value].Name][[[_buffer3].Value].Value]][[:magix.demo.foo2][result].Value].Value
       rhs=>hello world
       code
-        event=>magix.demo.foo
-        event=>magix.demo.foo2
-        event=>magix.demo.foo3
+        event
+          name=>magix.demo.foo
+        event
+          name=>magix.demo.foo2
+        event
+          name=>magix.demo.foo3
         throw=>active event expression didn't succeed
     else
-      event=>magix.demo.foo
-      event=>magix.demo.foo2
-      event=>magix.demo.foo3
+      event
+        name=>magix.demo.foo
+      event
+        name=>magix.demo.foo2
+      event
+        name=>magix.demo.foo3
 

@@ -4,7 +4,8 @@ inspect=>@"file creates some active events
 in the magix.admin namespace"
 
 
-event=>magix.admin.open-event-executor
+event
+  name=>magix.admin.open-event-executor
   persist=>false
   inspect=>@"opens up the hyperlisp executor"
 
@@ -24,7 +25,8 @@ event=>magix.admin.open-event-executor
       container=>content1
       name=>Magix.admin.ExecutorForm
 
-event=>magix.admin.open-event-sniffer
+event
+  name=>magix.admin.open-event-sniffer
   persist=>false
   inspect=>@"opens up the active 
 event sniffer, or tracer"
@@ -44,7 +46,8 @@ event sniffer, or tracer"
       container=>content1
       name=>Magix.admin.EventSniffer
 
-event=>magix.admin.load-executor-code
+event
+  name=>magix.admin.load-executor-code
   persist=>false
   inspect=>@"opens up the hyperlisp 
 executor, and pust the [code] node into its input code

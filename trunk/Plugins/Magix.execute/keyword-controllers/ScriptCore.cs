@@ -11,12 +11,12 @@ using Magix.Core;
 
 namespace Magix.admin
 {
-	/**
+	/*
 	 * script hyperlisp logic
 	 */
 	public class ScriptCore : ActiveController
 	{
-		/**
+		/*
 		 * executes hyperlisp script
 		 */
 		[ActiveEvent(Name = "magix.execute.execute-script")]

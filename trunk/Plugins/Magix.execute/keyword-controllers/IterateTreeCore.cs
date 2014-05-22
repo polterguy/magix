@@ -10,18 +10,18 @@ using Magix.Core;
 
 namespace Magix.execute
 {
-	/**
+	/*
 	 * iterate-tree hyperlisp keyword
 	 */
 	public class IterateTreeCore : ActiveController
 	{
-        /**
+        /*
          * iterate-tree hyperlisp keyword
          */
         [ActiveEvent(Name = "magix.execute.iterate")]
 		public static void magix_execute_iterate(object sender, ActiveEventArgs e)
 		{
-            Node ip = Ip(e.Params);
+            Node ip = Ip(e.Params, true);
             if (ShouldInspect(ip))
             {
                 AppendInspectFromResource(
@@ -36,9 +36,6 @@ namespace Magix.execute
                     "[magix.execute.iterate-sample]");
                 return;
 			}
-
-			if (!e.Params.Contains("_ip") || !(e.Params["_ip"].Value is Node))
-				throw new ArgumentException("you cannot raise [for-each] directly, except for inspect purposes");
 
             Node dp = Dp(e.Params);
 

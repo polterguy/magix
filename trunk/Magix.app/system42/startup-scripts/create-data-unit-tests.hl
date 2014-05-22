@@ -4,7 +4,8 @@ inspect=>@"creates unit tests to
 test the magix.data namespace"
 
 
-event=>magix.test.save-load-object-expressions
+event
+  name=>magix.test.save-load-object-expressions
   persist=>false
   inspect=>@"asserts that [magix.data.save/load] works the 
 way it should work, by trying to create an object, save it, 
@@ -28,7 +29,8 @@ for then to reload it again"
 when invoking with an expression in the [value] node"
 
 
-event=>magix.test.save-load-object-constants
+event
+  name=>magix.test.save-load-object-constants
   persist=>false
   inspect=>@"asserts that [magix.data.save/load] works the 
 way it should work, by trying to create an object, save it, 
@@ -51,7 +53,8 @@ when invoking with a constant node in the [value] node"
       id=>magix.tests.data-test1
 
 
-event=>magix.test.save-load-object-expression-ids
+event
+  name=>magix.test.save-load-object-expression-ids
   persist=>false
   inspect=>@"asserts that [magix.data.save/load] works the 
 way it should work, by trying to create an object, save it, 

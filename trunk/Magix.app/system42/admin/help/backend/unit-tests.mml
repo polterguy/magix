@@ -27,7 +27,8 @@ link-button=>active-events
 security panel, in the desktop of your administrative interface.&nbsp;&nbsp;below is an example of how to create a unit test</p>
 
 <pre>
-event=>magix.tests.sample-test
+event
+  name=>magix.tests.sample-test
   persist=>false
   code
     _data=>5

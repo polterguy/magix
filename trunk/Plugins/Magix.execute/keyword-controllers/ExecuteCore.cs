@@ -22,7 +22,7 @@ namespace Magix.execute
         [ActiveEvent(Name = "magix.execute.using")]
         public void magix_execute_using(object sender, ActiveEventArgs e)
         {
-            Node ip = Ip(e.Params);
+            Node ip = Ip(e.Params, true);
             if (ShouldInspect(ip))
             {
                 AppendInspectFromResource(
@@ -40,15 +40,8 @@ namespace Magix.execute
 
             try
             {
-			    if (!e.Params.Contains("_ip") || !(e.Params["_ip"].Value is Node))
-				    throw new ArgumentException("you cannot raise [magix.execute.using] directly besides for inspect purposes");
-
-			    if (!e.Params.Contains("_dp") || !(e.Params["_dp"].Value is Node))
-				    throw new ArgumentException("you cannot raise [magix.execute.using] directly besides for inspect purposes");
-
                 Node dp = Dp(e.Params);
                 e.Params["_namespaces"].Add(new Node("item", ip.Get<string>()));
-
                 Execute(ip, e.Params);
             }
             finally
@@ -80,9 +73,6 @@ namespace Magix.execute
                     "[magix.execute.sandbox-sample]");
                 return;
             }
-
-            if (!e.Params.Contains("_ip") || !(e.Params["_ip"].Value is Node))
-                throw new ArgumentException("you cannot raise [sandbox] directly, except for inspect purposes");
 
             if (!ip.Contains("code"))
                 throw new ArgumentException("you need to supply a [code] block to [sandbox] active event");

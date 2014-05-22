@@ -9,18 +9,18 @@ using Magix.Core;
 
 namespace Magix.execute
 {
-	/**
+	/*
 	 * hyperlisp lambda keyword
 	 */
 	public class LambdaCore : ActiveController
 	{
-		/**
-		 * hyepr lisp lambda keyword
+		/*
+		 * hyper lisp lambda keyword
 		 */
 		[ActiveEvent(Name = "magix.execute.lambda")]
 		public static void magix_execute_lambda(object sender, ActiveEventArgs e)
 		{
-            Node ip = Ip(e.Params);
+            Node ip = Ip(e.Params, true);
             if (ShouldInspect(ip))
             {
                 AppendInspectFromResource(
@@ -35,9 +35,6 @@ namespace Magix.execute
                     "[magix.execute.lambda-sample]");
                 return;
 			}
-
-			if (!e.Params.Contains("_ip") || !(e.Params["_ip"].Value is Node))
-				throw new ArgumentException("you cannot raise [magix.execute.lambda] directly, except for inspect purposes");
 
             Node dp = Dp(e.Params);
 

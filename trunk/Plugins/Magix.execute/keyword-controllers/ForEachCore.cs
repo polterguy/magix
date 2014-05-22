@@ -21,8 +21,8 @@ namespace Magix.execute
 		[ActiveEvent(Name = "magix.execute.for-each")]
 		public static void magix_execute_for_each(object sender, ActiveEventArgs e)
 		{
-            Node ip = Ip(e.Params);
-			if (ShouldInspect(ip))
+            Node ip = Ip(e.Params, true);
+            if (ShouldInspect(ip))
 			{
                 AppendInspectFromResource(
                     ip["inspect"],
@@ -36,9 +36,6 @@ namespace Magix.execute
                     "[magix.execute.for-each-sample]");
                 return;
 			}
-
-			if (!e.Params.Contains("_ip") || !(e.Params["_ip"].Value is Node))
-				throw new ArgumentException("you cannot raise [for-each] directly, except for inspect purposes");
 
             Node dp = Dp(e.Params);
 

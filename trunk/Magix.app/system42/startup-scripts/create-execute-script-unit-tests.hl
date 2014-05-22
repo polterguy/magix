@@ -4,7 +4,8 @@ inspect=>@"creates unit tests to
 test the [magix.execute.execute-script] keyword"
 
 
-event=>magix.test.execute-script-pass-parameters
+event
+  name=>magix.test.execute-script-pass-parameters
   persist=>false
   inspect=>@"asserts that [execute-script] works the 
 way it should work"
@@ -24,7 +25,8 @@ set=>[$][output].Value
         throw=>[execute-script] did not correctly pass parameters
 
 
-event=>magix.test.execute-script-remove-parameters
+event
+  name=>magix.test.execute-script-remove-parameters
   persist=>false
   inspect=>@"asserts that [execute-script] removes
 output parameters when expected"
@@ -40,7 +42,8 @@ set=>[$][input]"
         throw=>[execute-script] did not correctly remove parameters
 
 
-event=>magix.test.execute-script-from-file-with-parameters
+event
+  name=>magix.test.execute-script-from-file-with-parameters
   persist=>false
   inspect=>@"asserts that [execute-script] loads a 
 script correctly, by passing in parameters to script 

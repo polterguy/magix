@@ -16,10 +16,14 @@ in the example below, we are doing just this</p>
 
 <label>to be executed on your database server</label>
 <pre>
-open=>magix.data.load
-open=>magix.data.count
-open=>magix.data.remove
-open=>magix.data.save
+open
+  name=>magix.data.load
+open
+  name=>magix.data.count
+open
+  name=>magix.data.remove
+open
+  name=>magix.data.save
 </pre>
 
 <p>when you have opened all the data-access active events on your database server, you will have to tunnel all usage of these 
@@ -27,13 +31,17 @@ active events on your main web server</p>
 
 <label>to be executed on your main web server</label>
 <pre>
-tunnel=>magix.data.load
+tunnel
+  name=>magix.data.load
   url=>168.192.0.5
-tunnel=>magix.data.count
+tunnel
+  name=>magix.data.count
   url=>168.192.0.5
-tunnel=>magix.data.remove
+tunnel
+  name=>magix.data.remove
   url=>168.192.0.5
-tunnel=>magix.data.save
+tunnel
+  name=>magix.data.save
   url=>168.192.0.5
 </pre>
 

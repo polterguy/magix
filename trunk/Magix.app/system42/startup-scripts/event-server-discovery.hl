@@ -6,7 +6,8 @@ events are opened for public access by other servers and
 machines by this server"
 
 
-event=>magix.public.get-public-events
+event
+  name=>magix.public.get-public-events
   persist=>false
   inspect=>@"returns all active events which are remotely accessible
 by other servers, and can be invoked over http from other sources.&nbsp;&nbsp;
@@ -23,5 +24,6 @@ active event open is crucial"
       set=>[$][events][[.].Name].Name
         value=>[.].Name
 
-open=>magix.public.get-public-events
+open
+  name=>magix.public.get-public-events
 

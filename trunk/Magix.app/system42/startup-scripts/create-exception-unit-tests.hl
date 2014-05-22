@@ -5,7 +5,8 @@ test the [magix.execute.throw],
 [magix.execute.catch] and [magix.execute.try] keyword"
 
 
-event=>magix.test.exception
+event
+  name=>magix.test.exception
   persist=>false
   inspect=>@"asserts that exceptions works the 
 way it should work"

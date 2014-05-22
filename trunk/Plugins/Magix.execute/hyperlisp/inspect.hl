@@ -108,7 +108,7 @@ lisp blocks of code, are being correctly re-mapped"
 
 magix.execute.event-dox=>@"creates a new active event
 
-overrides the active event in [event] with the hyperlisp code in the [code] expression.  
+overrides the active event in [name] with the hyperlisp code in the [code] expression.  
 these types of active events can take and return parameters.  if you wish to pass in or 
 retrieve parameters, then as you invoke the function, just append your parameters 
 underneath the function invocation, and they will be passed into the function, where 
@@ -128,7 +128,8 @@ restarts
 thread safe"
 
 magix.execute.event-sample
-  event=>foo.bar
+  event
+    name=>foo.bar
     remotable=(bool)>False
     persist=(bool)>False
     code
@@ -145,7 +146,8 @@ magix.execute.event-sample
       magix.viewport.show-message
   foo.bar
     input=>hello world 2.0
-  event=>foo.bar
+  event
+    name=>foo.bar
 
 
 magix.execute._active-event-2-code-callback-dox=>@"dynamically created active event
@@ -158,7 +160,7 @@ within the active event"
 magix.execute.session-event-dox=>@"creates a new active event for the current session
 
 overrides the active event in [session-event] with the hyperlisp in the [code] expression 
-for the current session
+for the current session.  name of active event is found as [name] node
 
 these types of active events can take and return parameters.  if you wish to pass in or 
 retrieve parameters, then as you invoke the function, just append your parameters 
@@ -173,7 +175,8 @@ be marked as neither open nor persisted
 not thread safe"
 
 magix.execute.session-event-sample
-  session-event=>foo.bar
+  session-event
+    name=>foo.bar
     code
       _data=>thomas
       _backup=>thomas
@@ -188,7 +191,8 @@ magix.execute.session-event-sample
       magix.viewport.show-message
   foo.bar
     input=>hello world 2.0
-  session-event=>foo.bar
+  session-event
+    name=>foo.bar
 
 
 magix.execute.list-events-dox=>@"lists all active events in the system
@@ -568,7 +572,7 @@ magix.execute.lambda-sample
 
 magix.execute.override-dox=>@"overrides an active event with another
 
-overrides the given active event from the [override] node's value with 
+overrides the given active event from the [name] node's value with 
 the active event from the [with] node's value.  if no [with] is given, 
 existing override is removed
 
@@ -581,7 +585,8 @@ when application pool is restarted
 thread safe"
 
 magix.execute.override-sample
-  override=>namespace.foo
+  override
+    name=>namespace.foo
     with=>namespace.bar
 
 
@@ -595,8 +600,8 @@ do not invoke this active event.  it is only for internal usage"
 
 magix.execute.tunnel-dox=>@"overrides an active event to be invoked on another server
 
-creates an external override towards the given [url] for the event found in value.  if 
-you pass in a null value as a [url], or no [url] node, the tunneling is removed
+creates an external override towards the given [url] for the event found in [name].  
+if you pass in a null value as a [url], or no [url] node, the tunneling is removed
 
 make sure the other side has marked the active event as remotable.  once a method is 
 'tunneled', it will no longer be raised locally, but every time the active event is 
@@ -610,14 +615,15 @@ be re-mapped when the application pool is restarted
 thread safe"
 
 magix.execute.tunnel-sample
-  tunnel=>magix.namespace.foo
+  tunnel
+    name=>magix.namespace.foo
     url=>http://127.0.0.1:8080
 
 
 magix.execute.open-dox=>@"opens up an active event for remote invocation
 
-allows the given active event to be remotely invoked.  this means that other 
-servers, can call your active event, on your server
+allows the given [name] active event to be remotely invoked.  this means 
+that other servers, can call your active event, on your server
 
 you can create a server-api for web-services, by opening active events for 
 being remotely invoked, and such connect servers together, either internally 
@@ -632,13 +638,14 @@ be overwritten the next time your application restarts
 thread safe"
 
 magix.execute.open-sample
-  open=>magix.namespace.foo
+  open
+    name=>magix.namespace.foo
 
 
 magix.execute.close-dox=>@"closes an existing open active event
 
-closes the active event found in the value of [close], such that it 
-no longer can be remotely invoked from other servers
+closes the active event found in [name], such that it no longer 
+can be remotely invoked from other servers
 
 if you set [persist] to false, then the active event will not be 
 serialized into the data storage, meaning it will only last as long 
@@ -650,7 +657,8 @@ overwritten the next time your application restarts
 thread safe"
 
 magix.execute.close-sample
-  close=>magix.namespace.foo
+  close
+    name=>magix.namespace.foo
 
 
 magix.execute.remote-dox=>@"remotely invokes an active event
@@ -666,7 +674,8 @@ transparently back to the caller, as if it was invoked locally
 thread safe"
 
 magix.execute.remote-sample
-  remote=>magix.namespace.foo
+  remote
+    name=>magix.namespace.foo
     url=>http://127.0.0.1:8080
     params
       your-parameters-goes-here=>value of parameter
@@ -877,7 +886,7 @@ is dismissed as an integer value of [wait]
 thread safe"
 
 magix.execute.wait-sample
-  wait
+  wait=>10000
     fork
       _do-lenghty-job-1
     fork

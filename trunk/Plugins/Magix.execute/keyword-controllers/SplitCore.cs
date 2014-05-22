@@ -11,18 +11,18 @@ using Magix.Core;
 
 namespace Magix.execute
 {
-	/**
+	/*
 	 * hyperlisp split keyword
 	 */
 	public class SplitCore : ActiveController
 	{
-		/**
-		 * hyepr lisp split keyword
+		/*
+		 * hyper lisp split keyword
 		 */
 		[ActiveEvent(Name = "magix.execute.split")]
 		public static void magix_execute_split(object sender, ActiveEventArgs e)
 		{
-            Node ip = Ip(e.Params);
+            Node ip = Ip(e.Params, true);
             if (ShouldInspect(ip))
             {
                 AppendInspectFromResource(
@@ -38,17 +38,13 @@ namespace Magix.execute
                 return;
 			}
 
-			if (!e.Params.Contains("_ip") || !(e.Params["_ip"].Value is Node))
-				throw new ArgumentException("you cannot raise [split] directly, except for inspect purposes");
-
-            Node dp = Dp(e.Params);
-
             if (!ip.Contains("what") && !ip.Contains("where"))
                 throw new ArgumentException("[split] needs a [what] or a [where] child to understand how to split the expression");
 
             if (ip.Contains("what") && ip.Contains("where"))
                 throw new ArgumentException("only either [what] or [where] can be submitted to [split]");
 
+            Node dp = Dp(e.Params);
             string whatToSplit = Expressions.GetExpressionValue(ip.Get<string>(), dp, ip, false) as string;
             if (whatToSplit == null)
                 throw new ArgumentException("couldn't make '" + ip.Get<string>() + "' into a string in [split]");
@@ -57,9 +53,7 @@ namespace Magix.execute
             {
                 string what = null;
                 if (ip.Contains("what"))
-                {
                     what = Expressions.GetExpressionValue(ip["what"].Get<string>(), dp, ip, false) as string;
-                }
 
                 if (string.IsNullOrEmpty(what))
                 {
@@ -90,8 +84,7 @@ namespace Magix.execute
                         int.Parse(Expressions.GetExpressionValue(ip["where"].Get<string>(), dp, ip, false) as string));
                 foreach (Node idx in ip["where"])
                 {
-                    ints.Add(
-                        int.Parse(Expressions.GetExpressionValue(idx.Get<string>(), dp, ip, false) as string));
+                    ints.Add(int.Parse(Expressions.GetExpressionValue(idx.Get<string>(), dp, ip, false) as string));
                 }
 
                 int idxNo = 0;

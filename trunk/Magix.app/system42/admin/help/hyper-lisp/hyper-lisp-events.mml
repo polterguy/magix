@@ -11,7 +11,8 @@ a normal active event</p>
 <p>however, to create an active event in hyperlisp, you would use the following syntax</p>
 
 <pre>
-event=>magix.sample.foo
+event
+  name=>magix.sample.foo
   persist=>false
   code
     magix.viewport.show-message
@@ -29,7 +30,8 @@ tell magix that you'd like to allow for the event to be remotely invokable.&nbsp
 the [remotable] node, and set its value to true, as below</p>
 
 <pre>
-event=>magix.sample.foo
+event
+  name=>magix.sample.foo
   persist=>false
   <strong>remotable=>true</strong>
   code
@@ -59,7 +61,8 @@ execution tree as the [_ip] and [_dp] parameters.&nbsp;&nbsp;to understand the d
 different invocations, change the event to show the debug window with the following code</p>
 
 <pre>
-event=>magix.sample.foo
+event
+  name=>magix.sample.foo
   persist=>false
   code
     debug
@@ -86,7 +89,8 @@ second invocation will show the entire [_ip] and [_dp] nodes for the entire code
 and can actually modify parts of the tree, which are outside of itself.&nbsp;&nbsp;consider the following code</p>
 
 <pre>
-event=>magix.sample.bar
+event
+  name=>magix.sample.bar
   persist=>false
   code
     if=>exist
@@ -129,7 +133,8 @@ will go the active event you have chosen for it to execute instead of the old on
 keyword.&nbsp;&nbsp;consider the following</p>
 
 <pre>
-event=>magix.sample.foo-2
+event
+  name=>magix.sample.foo-2
   persist=>false
   code
     magix.viewport.show-message

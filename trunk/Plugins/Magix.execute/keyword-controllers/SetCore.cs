@@ -9,18 +9,18 @@ using Magix.Core;
 
 namespace Magix.execute
 {
-	/**
+	/*
 	 * hyperlisp set keyword
 	 */
 	public class SetCore : ActiveController
 	{
-		/**
+		/*
 		 * hyepr lisp set keyword
 		 */
 		[ActiveEvent(Name = "magix.execute.set")]
 		public static void magix_execute_set(object sender, ActiveEventArgs e)
 		{
-            Node ip = Ip(e.Params);
+            Node ip = Ip(e.Params, true);
             if (ShouldInspect(ip))
             {
                 AppendInspectFromResource(
@@ -36,18 +36,13 @@ namespace Magix.execute
                 return;
 			}
 
-			if (!e.Params.Contains("_ip") || !(e.Params["_ip"].Value is Node))
-				throw new ArgumentException("you cannot raise [set] directly, except for inspect purposes");
-
-            Node dp = Dp(e.Params);
-
 			string destinationExpression = ip.Get<string>();
 			string sourceExpression = null;
 
             if (ip.Contains("value"))
-            {
                 sourceExpression = ip["value"].Get<string>();
-            }
+
+            Node dp = Dp(e.Params);
 			Expressions.SetNodeValue(destinationExpression, sourceExpression, dp, ip, ip.Contains("value"));
 		}
 	}

@@ -4,7 +4,8 @@ inspect=>@"creates unit tests to
 test the [magix.execute.stop] keyword"
 
 
-event=>magix.test.stop
+event
+  name=>magix.test.stop
   persist=>false
   inspect=>@"asserts that [stop] works the 
 way it should work, by trying to stop, for then 

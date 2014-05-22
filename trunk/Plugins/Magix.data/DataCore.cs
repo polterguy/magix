@@ -19,74 +19,61 @@ using System.Web;
 
 namespace Magix.execute
 {
-	/**
+	/*
 	 * data storage
 	 */
 	public class DataCore : ActiveController
 	{
 		private static string _dbFile = "database/data-storage.db4o";
 
-		/**
+		/*
 		 * loads an object from database
 		 */
 		[ActiveEvent(Name = "magix.data.load")]
 		public static void magix_data_load(object sender, ActiveEventArgs e)
 		{
-			if (ShouldInspect(e.Params))
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
 			{
-				e.Params["inspect"].Value = @"<p>loads the first object matching the given [id], 
-or if you supply a [prototype], it will return all objects matching your prototype</p><p>returns 
-objects found as [objects], with child nodes of [objects] being the matching objects</p><p>use 
-[start] and [end] to fetch a specific slice of objects, [start] defaults to 0 and [end] defaults 
-to -1, which means all objects matching criteria.&nbsp;&nbsp;[start], [end] and [prototype] cannot 
-be defined if [id] is given, since [id] is supposed to be unique, and will make sure only one 
-object is loaded</p><p>if a [prototype] node is given, it can contain node values with % to signify 
-wildcards for a match operation.&nbsp;&nbsp;both [id], [prototype], [start] and [end] can be both 
-constant values, nodes or expressions pointing to an id or a prototype object, which will be used 
-as the criteria to load objects</p><p>thread safe</p>";
-                e.Params["magix.data.load"]["id"].Value = "object-id";
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.data",
+                    "Magix.data.hyperlisp.inspect.hl",
+                    "[magix.data.load-dox].Value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.data",
+                    "Magix.data.hyperlisp.inspect.hl",
+                    "[magix.data.load-sample]");
                 return;
 			}
 
-            Node ip = Ip(e.Params);
             Node dp = Dp(e.Params);
 
 			Node prototype = null;
+            string id = null;
             if (ip.Contains("prototype"))
             {
-                if (!string.IsNullOrEmpty(ip["prototype"].Get<string>()) && ip["prototype"].Get<string>().StartsWith("["))
-                {
+                if (ip.ContainsValue("prototype"))
                     prototype = Expressions.GetExpressionValue(ip["prototype"].Get<string>(), dp, ip, false) as Node;
-                }
                 else
-                {
                     prototype = ip["prototype"];
-                }
             }
-
-			string id = null;
-            if (ip.Contains("id") && ip["id"].Value != null)
+            else if (ip.ContainsValue("id"))
                 id = Expressions.GetExpressionValue(ip["id"].Get<string>(), dp, ip, false) as string;
+            else
+                throw new ArgumentException("either [prototype] or [id] is needed for [magix.data.load]");
+
 
 			int start = 0;
-            if (ip.Contains("start") && ip["start"].Value != null)
-            {
-                if (ip["start"].Get<string>().StartsWith("["))
-                    start = int.Parse(Expressions.GetExpressionValue(ip["start"].Get<string>(), dp, ip, false) as string);
-                else
-                    start = ip["start"].Get<int>();
-            }
+            if (ip.ContainsValue("start"))
+                start = int.Parse(Expressions.GetExpressionValue(ip["start"].Get<string>(), dp, ip, false) as string);
 
 			int end = -1;
-            if (ip.Contains("end") && ip["end"].Value != null)
-            {
-                if (ip["end"].Get<string>().StartsWith("["))
-                    end = int.Parse(Expressions.GetExpressionValue(ip["end"].Get<string>(), dp, ip, false) as string);
-                else
-                    end = ip["end"].Get<int>();
-            }
+            if (ip.ContainsValue("end"))
+                end = int.Parse(Expressions.GetExpressionValue(ip["end"].Get<string>(), dp, ip, false) as string);
 
-			if (id != null && start != 0 && end != -1 && prototype != null)
+			if (id != null && (start != 0 || end != -1 || prototype != null))
 				throw new ArgumentException("if you supply an [id], then [start], [end] and [prototype] cannot be defined");
 
 			lock (typeof(DataCore))
@@ -119,37 +106,36 @@ as the criteria to load objects</p><p>thread safe</p>";
 			}
 		}
 
-		/**
+		/*
 		 * saves an object to database
 		 */
 		[ActiveEvent(Name = "magix.data.save")]
 		public static void magix_data_save(object sender, ActiveEventArgs e)
 		{
-			if (ShouldInspect(e.Params))
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
 			{
-                e.Params["inspect"].Value = @"<p>will serialize the given [value] node with 
-the given [id] in the persistent data storage</p><p>if no [id] is given, a global unique 
-identifier will be automatically assigned to the object, and returned as [id].&nbsp;&nbsp;
-if an [id] is given, and an object with that same id exists, object will be overwritten or 
-updated.&nbsp;&nbsp;both the [value] and [id] can either be expressions or constant strings
-/nodes</p><p>thread safe</p>";
-                e.Params["magix.data.save"]["id"].Value = "object-id";
-                e.Params["magix.data.save"]["value"]["some-value"].Value = "value of object";
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.data",
+                    "Magix.data.hyperlisp.inspect.hl",
+                    "[magix.data.save-dox].Value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.data",
+                    "Magix.data.hyperlisp.inspect.hl",
+                    "[magix.data.save-sample]");
 				return;
 			}
 
-            Node ip = Ip(e.Params);
-            Node dp = Dp(e.Params);
-
             if (!ip.Contains("value"))
-				throw new ArgumentException("[value] must be defined for magix.data.save to actually save anything");
+				throw new ArgumentException("[value] must be given to [magix.data.save]");
 
             Node value = null;
 
-            if (!string.IsNullOrEmpty(ip["value"].Get<string>()) && ip["value"].Get<string>().StartsWith("["))
-            {
+            Node dp = Dp(e.Params);
+            if (ip.ContainsValue("value"))
                 value = (Expressions.GetExpressionValue(ip["value"].Get<string>(), dp, ip, false) as Node).Clone();
-            }
             else
                 value = ip["value"].Clone();
 
@@ -184,38 +170,40 @@ updated.&nbsp;&nbsp;both the [value] and [id] can either be expressions or const
 			}
 		}
 
-		/**
+		/*
 		 * removes an object from database
 		 */
 		[ActiveEvent(Name = "magix.data.remove")]
 		public static void magix_data_remove(object sender, ActiveEventArgs e)
 		{
-			if (ShouldInspect(e.Params))
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
 			{
-				e.Params["inspect"].Value = @"<p>removes the given [id] or [prototype] object(s) from 
-your persistent data storage</p><p>both [id] and [prototype] can be both expressions or constant values
-</p><p>thread safe</p>";
-                e.Params["magix.data.remove"]["id"].Value = "object-id";
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.data",
+                    "Magix.data.hyperlisp.inspect.hl",
+                    "[magix.data.remove-dox].Value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.data",
+                    "Magix.data.hyperlisp.inspect.hl",
+                    "[magix.data.remove-sample]");
                 return;
 			}
 
-            Node ip = Ip(e.Params);
             Node dp = Dp(e.Params);
 
             Node prototype = null;
             if (ip.Contains("prototype"))
             {
-                if (!string.IsNullOrEmpty(ip["prototype"].Get<string>()) && ip["prototype"].Get<string>().StartsWith("["))
-                {
+                if (ip.ContainsValue("prototype"))
                     prototype = Expressions.GetExpressionValue(ip["prototype"].Get<string>(), dp, ip, false) as Node;
-                }
                 else
-                {
                     prototype = ip["prototype"];
-                }
             }
 
-            if ((!ip.Contains("id") || string.IsNullOrEmpty(ip["id"].Get<string>())) && prototype == null)
+            if (!ip.ContainsValue("id") && prototype == null)
 				throw new ArgumentException("missing [id] or [prototype] while trying to remove object");
 
 			lock (typeof(DataCore))
@@ -242,35 +230,40 @@ your persistent data storage</p><p>both [id] and [prototype] can be both express
 			}
 		}
 
-		/**
+		/*
 		 * counts objects in database
 		 */
 		[ActiveEvent(Name = "magix.data.count")]
 		public static void magix_data_count(object sender, ActiveEventArgs e)
 		{
-			if (ShouldInspect(e.Params))
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(e.Params))
 			{
-				e.Params["inspect"].Value = @"<p>returns the total number of objects in 
-data storage as [count]&nbsp;&nbsp;add [prototype] to filter results</p><p>[prototype], 
-if given, can be either an expression or a constant</p><p>thread safe</p>";
-                e.Params["magix.data.count"].Value = null;
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.data",
+                    "Magix.data.hyperlisp.inspect.hl",
+                    "[magix.data.count-dox].Value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.data",
+                    "Magix.data.hyperlisp.inspect.hl",
+                    "[magix.data.count-sample]");
+                return;
+                e.Params["inspect"].Value = @"";
+                e.Params["magix.data.count-sample"].Value = null;
 				return;
 			}
 
-            Node ip = Ip(e.Params);
             Node dp = Dp(e.Params);
 
             Node prototype = null;
             if (ip.Contains("prototype"))
             {
-                if (!string.IsNullOrEmpty(ip["prototype"].Get<string>()) && ip["prototype"].Get<string>().StartsWith("["))
-                {
+                if (ip.ContainsValue("prototype"))
                     prototype = Expressions.GetExpressionValue(ip["prototype"].Get<string>(), dp, ip, false) as Node;
-                }
                 else
-                {
                     prototype = ip["prototype"];
-                }
             }
 
 			lock (typeof(DataCore))

@@ -4,7 +4,8 @@ inspect=>@"creates unit tests to
 test the [magix.execute.replace] keyword"
 
 
-event=>magix.test.replace
+event
+  name=>magix.test.replace
   persist=>false
   inspect=>@"asserts that [replace] works the 
 way it should work"

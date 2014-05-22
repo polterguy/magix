@@ -4,7 +4,8 @@ inspect=>@"creates unit tests to
 test the [magix.execute.if] keyword"
 
 
-event=>magix.test.if-complex-true
+event
+  name=>magix.test.if-complex-true
   persist=>false
   inspect=>@"asserts that [if] works the 
 way it should work, and returns 
@@ -30,7 +31,8 @@ and it is true"
       throw=>@"[if] expression that should have 
 evaluated true returned false"
 
-event=>magix.test.if-complex-false
+event
+  name=>magix.test.if-complex-false
   persist=>false
   inspect=>@"asserts that [if] works the 
 way it should work, and returns 
@@ -56,7 +58,8 @@ and it is false"
 evaluated false returned true"
 
 
-event=>magix.test.if-complex-multiple-and-true
+event
+  name=>magix.test.if-complex-multiple-and-true
   persist=>false
   inspect=>@"asserts that [if] works the 
 way it should work, and returns 
@@ -86,7 +89,8 @@ nodes"
 evaluated true returned false"
 
 
-event=>magix.test.if-complex-multiple-and-false
+event
+  name=>magix.test.if-complex-multiple-and-false
   persist=>false
   inspect=>@"asserts that [if] works the 
 way it should work, and returns 
@@ -115,7 +119,8 @@ nodes"
 evaluated false returned true"
 
 
-event=>magix.test.if-complex-multiple-or-true
+event
+  name=>magix.test.if-complex-multiple-or-true
   persist=>false
   inspect=>@"asserts that [if] works the 
 way it should work, and returns 
@@ -145,7 +150,8 @@ nodes"
 evaluated true returned false"
 
 
-event=>magix.test.if-complex-multiple-or-false
+event
+  name=>magix.test.if-complex-multiple-or-false
   persist=>false
   inspect=>@"asserts that [if] works the 
 way it should work, and returns 
@@ -174,7 +180,8 @@ nodes"
 evaluated false returned true"
 
 
-event=>magix.test.if-complex-tree-and-true
+event
+  name=>magix.test.if-complex-tree-and-true
   persist=>false
   inspect=>@"asserts that [if] works the 
 way it should work, and returns 
@@ -205,7 +212,8 @@ deep tree"
 evaluated true returned false"
 
 
-event=>magix.test.if-complex-tree-or-true
+event
+  name=>magix.test.if-complex-tree-or-true
   persist=>false
   inspect=>@"asserts that [if] works the 
 way it should work, and returns 
@@ -236,7 +244,8 @@ deep tree"
 evaluated true returned false"
 
 
-event=>magix.test.if-complex-tree-or-false
+event
+  name=>magix.test.if-complex-tree-or-false
   persist=>false
   inspect=>@"asserts that [if] works the 
 way it should work, and returns 
@@ -266,7 +275,8 @@ deep tree"
 evaluated true returned false"
 
 
-event=>magix.test.if-comparing-nodes-false
+event
+  name=>magix.test.if-comparing-nodes-false
   persist=>false
   inspect=>@"asserts that [if] works the 
 way it should work, and returns 
@@ -293,7 +303,8 @@ evaluated false returned true when comparing two
 node trees"
 
 
-event=>magix.test.if-comparing-nodes-true
+event
+  name=>magix.test.if-comparing-nodes-true
   persist=>false
   inspect=>@"asserts that [if] works the 
 way it should work, and returns 
@@ -320,7 +331,8 @@ evaluated true returned false when comparing two
 node trees"
 
 
-event=>magix.test.if-consecutive-and-inner-if-statements
+event
+  name=>magix.test.if-consecutive-and-inner-if-statements
   persist=>false
   inspect=>@"asserts that [if] works the 
 way it should work, and doesn't intermingle 
@@ -369,7 +381,8 @@ evaluated true returned false"
 entered [else], didn't function as expected"
 
 
-event=>magix.test.if-with-if-if-else
+event
+  name=>magix.test.if-with-if-if-else
   persist=>false
   inspect=>@"asserts that [if] works the 
 way it should work, and doesn't intermingle 
@@ -395,7 +408,8 @@ evaluated false returned true"
 evaluated false returned true"
 
 
-event=>magix.test.if-with-if-else-if
+event
+  name=>magix.test.if-with-if-else-if
   persist=>false
   inspect=>@"asserts that [if] works the 
 way it should work, and doesn't intermingle 
@@ -421,7 +435,8 @@ evaluated false returned true"
 evaluated false returned true"
 
 
-event=>magix.test.if-with-if-elseif-if
+event
+  name=>magix.test.if-with-if-elseif-if
   persist=>false
   inspect=>@"asserts that [if] works the 
 way it should work, and doesn't intermingle 
@@ -449,7 +464,8 @@ evaluated false returned true"
 evaluated false returned true"
 
 
-event=>magix.test.if-with-if-elseif-else-if-else-if
+event
+  name=>magix.test.if-with-if-elseif-else-if-else-if
   persist=>false
   inspect=>@"asserts that [if] works the 
 way it should work, and doesn't intermingle 
@@ -492,7 +508,8 @@ evaluated false returned true"
 evaluated false returned true"
 
 
-event=>magix.test.if-multiple-ifs-elseifs-else-in-same-block
+event
+  name=>magix.test.if-multiple-ifs-elseifs-else-in-same-block
   persist=>false
   inspect=>@"asserts that [if] works the 
 way it should work, and doesn't intermingle 
@@ -554,7 +571,8 @@ statements are added after each other"
         throw=>error in if 10
 
 
-event=>magix.test.if-deep-hierarchy
+event
+  name=>magix.test.if-deep-hierarchy
   persist=>false
   inspect=>@"asserts that [if] works the 
 way it should work, and doesn't intermingle 
@@ -593,7 +611,8 @@ statements are added after each other"
         throw=>deep if didn't work
 
 
-event=>magix.test.if-error-no-if-only-elseif
+event
+  name=>magix.test.if-error-no-if-only-elseif
   persist=>false
   inspect=>@"asserts that [if] works the 
 way it should work"
@@ -614,7 +633,8 @@ way it should work"
         throw=>no if, only else-if didn't throw
 
 
-event=>magix.test.if-error-no-if-only-else
+event
+  name=>magix.test.if-error-no-if-only-else
   persist=>false
   inspect=>@"asserts that [if] works the 
 way it should work"

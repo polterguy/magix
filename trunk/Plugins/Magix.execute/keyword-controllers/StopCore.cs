@@ -9,7 +9,7 @@ using Magix.Core;
 
 namespace Magix.execute
 {
-	/**
+	/*
 	 * stop hyperlisp keyword
 	 */
 	public class StopCore : ActiveController
@@ -18,13 +18,13 @@ namespace Magix.execute
 		{
 		}
 
-		/**
+		/*
 		 * stop hyperlisp keyword
 		 */
 		[ActiveEvent(Name = "magix.execute.stop")]
 		public static void magix_execute_stop(object sender, ActiveEventArgs e)
 		{
-            Node ip = Ip(e.Params);
+            Node ip = Ip(e.Params, true);
             if (ShouldInspect(ip))
             {
                 AppendInspectFromResource(

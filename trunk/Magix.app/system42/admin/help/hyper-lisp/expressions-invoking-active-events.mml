@@ -5,14 +5,16 @@
 will treat the current expression node as an active event.&nbsp;&nbsp;consider the following code</p>
 
 <pre>
-event=>magix.demo.foo
+event
+  name=>magix.demo.foo
   persist=>false
   code
     set=>[$][output].Value
       value=>howdy world
 set=>[magix.viewport.show-message][message].Value
   value=><strong>[:magix.demo.foo]</strong>[output].Value
-event=>magix.demo.foo
+event
+  name=>magix.demo.foo
 </pre>
 
 <p>the above code will invoke the active event called <em>"magix.demo.foo"</em> when it encounters the [value] node of the [set] keyword.
@@ -35,7 +37,8 @@ active event expression.&nbsp;&nbsp;consider the following code</p>
 <pre>
 _input
   msg=>howdy
-event=>magix.foo
+event
+  name=>magix.foo
   persist=>false
   code
     set=>[$][output].Value
@@ -43,7 +46,8 @@ event=>magix.foo
         =>[$][msg].Value
 set=>[magix.viewport.show-message][message].Value
   value=>[:magix.foo<strong>[_input][msg]</strong>][output].Value
-event=>magix.foo
+event
+  name=>magix.foo
 </pre>
 
 <p>in the above code, we're passing in the [_input][msg] node into the invocation of our active event expression.&nbsp;&nbsp;this means that 
