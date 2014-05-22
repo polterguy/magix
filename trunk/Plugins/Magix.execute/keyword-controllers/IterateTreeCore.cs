@@ -24,29 +24,17 @@ namespace Magix.execute
             Node ip = Ip(e.Params);
             if (ShouldInspect(ip))
             {
-                ip["inspect"].Value = @"<p>loops through all the nodes in the given 
-node-list expression, flattening the hierarchy, setting the data-pointer to the currently 
-processed item</p><p>notice how this differs in regards to the [for-each] keyword, that 
-only iterates over the children of the nodes referenced in its expression.&nbsp;&nbsp;while 
-the [iterate] keyword will iterate the entire tree hierarchy, including all children of the 
-nodes in the expression, their children, and their children's children, and so on.&nbsp;
-&nbsp;this is useful for iterating entire tree hierarchies, basically treating a tree, like 
-a list of items, flattening the hierarchy</p><p>your code will execute once for every single 
-node you have in your return expression.&nbsp;&nbsp;use the [.] expression to de-reference 
-the currently iterated node</p><p>thread safe</p>";
-                ip["_data"]["items"]["message1"].Value = "howdy world 1.0";
-				ip["_data"]["items"]["sub-1"]["message2"].Value = "howdy world 2.0";
-                ip["_data"]["items"]["sub-1"]["message3"].Value = "howdy world 3.0";
-                ip["_data"]["items"]["sub-2"]["message4"].Value = "howdy world 4.0";
-                ip["_data"]["items"]["sub-2"]["sub-3"]["message5"].Value = "howdy world 5.0";
-                ip["_data"]["items"]["sub-3"]["message6"].Value = "howdy world 6.0";
-				ip["_data"]["items"]["message7"].Value = "howdy world 7.0";
-                ip["iterate"].Value = "[_data][items]";
-                ip["iterate"]["if"].Value = "exist";
-                ip["iterate"]["if"]["lhs"].Value = "[.].Value";
-                ip["iterate"]["if"]["code"]["set"].Value = "[@][magix.viewport.show-message][message].Value";
-                ip["iterate"]["if"]["code"]["set"]["value"].Value = "[.].Value";
-				return;
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.execute",
+                    "Magix.execute.hyperlisp.inspect.hl",
+                    "[magix.execute.iterate-dox].Value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.execute",
+                    "Magix.execute.hyperlisp.inspect.hl",
+                    "[magix.execute.iterate-sample]");
+                return;
 			}
 
 			if (!e.Params.Contains("_ip") || !(e.Params["_ip"].Value is Node))

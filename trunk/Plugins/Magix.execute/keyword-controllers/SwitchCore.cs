@@ -23,22 +23,16 @@ namespace Magix.execute
             Node ip = Ip(e.Params);
             if (ShouldInspect(ip))
             {
-				ip["inspect"].Value = @"<p>[switch] creates a comparison between all the 
-children [case] nodes, and executes the code within the [case] node who's value equals the content 
-of the [switch] node</p><p>the [switch] node's value can be either a constant or an expression.
-&nbsp;&nbsp;if no match is found, then [default] will be executed, if it exist.&nbsp;&nbsp;notice 
-how both the [switch] node itself, and [case] nodes can be expressions</p><p>&nbsp;&nbsp;thread 
-safe</p>";
-                ip["_data"].Value = "3";
-                ip["_success"].Value = "3";
-                ip["switch"].Value = "[_data].Value";
-                ip["switch"]["case", 0].Value = "1";
-                ip["switch"]["case", 0]["magix.viewport.show-message"]["message"].Value = "ERROR!!";
-                ip["switch"]["case", 1].Value = "2";
-                ip["switch"]["case", 1]["magix.viewport.show-message"]["message"].Value = "ERROR!!";
-                ip["switch"]["case", 2].Value = "[_success].Value";
-                ip["switch"]["case", 2]["magix.viewport.show-message"]["message"].Value = "success!";
-                ip["switch"]["default"]["magix.viewport.show-message"]["message"].Value = "ERROR!!";
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.execute",
+                    "Magix.execute.hyperlisp.inspect.hl",
+                    "[magix.execute.switch-dox].Value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.execute",
+                    "Magix.execute.hyperlisp.inspect.hl",
+                    "[magix.execute.switch-sample]");
                 return;
 			}
 

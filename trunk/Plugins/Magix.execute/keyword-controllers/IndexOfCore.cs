@@ -25,12 +25,16 @@ namespace Magix.execute
             Node ip = Ip(e.Params);
             if (ShouldInspect(ip))
             {
-                ip["inspect"].Value = @"<p>returns the index of all occurences of 
-the [what] constant or expression as nodes containing the integer value of where match 
-was found underneath the [result] return node</p><p>thread safe</p>";
-                ip["_data"].Value = "this will return the position of all 'r' characters in string";
-				ip["index-of"].Value = "[_data].Value";
-				ip["index-of"]["what"].Value = "r";
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.execute",
+                    "Magix.execute.hyperlisp.inspect.hl",
+                    "[magix.execute.index-of-dox].Value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.execute",
+                    "Magix.execute.hyperlisp.inspect.hl",
+                    "[magix.execute.index-of-sample]");
                 return;
 			}
 

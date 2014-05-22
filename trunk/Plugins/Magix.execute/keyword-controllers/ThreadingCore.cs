@@ -29,19 +29,17 @@ namespace Magix.execute
             Node ip = Ip(e.Params);
             if (ShouldInspect(ip))
             {
-                ip["inspect"].Value = @"<p>spawns a new thread, which the given code block 
-will be executed within</p><p>[fork] is useful for long operations, where you'd like to return to 
-caller, before the operation is finished.&nbsp;&nbsp;the entire node-list underneath the [fork]
-keyword, will be cloned, and passed into the magix.execute active event, for execution on a different 
-thread</p><p>the forked thread will not be able to change any data on the original node set.&nbsp;&nbsp;
-if the value of [fork] is true, the new thread will be executed as a fire-and-forget thread, bypassing 
-any [wait] statements you might have</p><p>not thread safe</p>";
-                ip["fork"]["_data"]["value"].Value = "thomas";
-				ip["fork"]["if"].Value = "equals";
-                ip["fork"]["if"]["lhs"].Value = "[_data][value].Value";
-                ip["fork"]["if"]["rhs"].Value = "thomas";
-			    ip["fork"]["if"]["code"]["magix.viewport.show-message"]["message"].Value = @"won't show up";
-				return;
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.execute",
+                    "Magix.execute.hyperlisp.inspect.hl",
+                    "[magix.execute.fork-dox].Value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.execute",
+                    "Magix.execute.hyperlisp.inspect.hl",
+                    "[magix.execute.fork-sample]");
+                return;
 			}
 
 			if (!e.Params.Contains("_ip") || !(e.Params["_ip"].Value is Node))
@@ -107,13 +105,17 @@ any [wait] statements you might have</p><p>not thread safe</p>";
             Node ip = Ip(e.Params);
             if (ShouldInspect(ip))
             {
-                ip["inspect"].Value = @"<p>will wait for multiple treads to finish</p><p>
-all [fork] blocks created underneath [wait], will have to be finished, before the execution will 
-leave the [wait] block.&nbsp;&nbsp;you can optionally set a maximum number of milliseconds, before 
-the wait is dismissed as an integer value of [wait]</p><p>thread safe</p>";
-                ip["wait"].Value = null;
-				ip["wait"]["fork"].Value = null;
-				return;
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.execute",
+                    "Magix.execute.hyperlisp.inspect.hl",
+                    "[magix.execute.wait-dox].Value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.execute",
+                    "Magix.execute.hyperlisp.inspect.hl",
+                    "[magix.execute.wait-sample]");
+                return;
 			}
 
 			if (!e.Params.Contains("_ip") || !(e.Params["_ip"].Value is Node))

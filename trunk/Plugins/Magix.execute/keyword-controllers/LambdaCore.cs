@@ -23,19 +23,17 @@ namespace Magix.execute
             Node ip = Ip(e.Params);
             if (ShouldInspect(ip))
             {
-                ip["inspect"].Value = @"<p>executes the expression in the 
-[lambda] node creating a deep copy of the expression's nodes</p><p>[lambda] can 
-be given parameters, which will be accessible in the lambda code through the [$] 
-collection.&nbsp;&nbsp;anything you return as [$] from inside the code being 
-executed, will become directly accessible as children nodes from outside of the 
-lambda execution, after the execution is finished</p><p>thread safe</p>";
-                ip["_data"]["set"].Value = "[$][output].Value";
-                ip["_data"]["set"]["value"].Value = "{0} {1}";
-                ip["_data"]["set"]["value"]["v0"].Value = "[$][input].Value";
-                ip["_data"]["set"]["value"]["v1"].Value = "hansen";
-                ip["lambda"].Value = "[_data]";
-                ip["lambda"]["input"].Value = "thomas";
-				return;
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.execute",
+                    "Magix.execute.hyperlisp.inspect.hl",
+                    "[magix.execute.lambda-dox].Value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.execute",
+                    "Magix.execute.hyperlisp.inspect.hl",
+                    "[magix.execute.lambda-sample]");
+                return;
 			}
 
 			if (!e.Params.Contains("_ip") || !(e.Params["_ip"].Value is Node))

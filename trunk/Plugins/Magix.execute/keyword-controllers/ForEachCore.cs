@@ -24,21 +24,17 @@ namespace Magix.execute
             Node ip = Ip(e.Params);
 			if (ShouldInspect(ip))
 			{
-                ip["inspect"].Value = @"<p>loops through all the nodes in the given 
-node-list expression, setting the data-pointer to the currently processed item</p><p>your 
-code will execute once for every single node you have in your return expression.&nbsp;&nbsp;
-use the [.] expression to de-reference the currently iterated node</p><p>thread safe</p>";
-                ip["_data"]["items"]["message1"].Value = "howdy world 1.0";
-                ip["_data"]["items"]["message2"].Value = "howdy world 2.0";
-                ip["_data"]["items"]["message3"].Value = "howdy world 3.0";
-                ip["_data"]["items"]["message4"].Value = "howdy world 4.0";
-                ip["_data"]["items"]["message5"].Value = "howdy world 5.0";
-                ip["_data"]["items"]["message6"].Value = "howdy world 6.0";
-                ip["_data"]["items"]["message7"].Value = "howdy world 7.0";
-                ip["for-each"].Value = "[_data][items]";
-                ip["for-each"]["set"].Value = "[@][magix.viewport.show-message][message].Value";
-                ip["for-each"]["set"]["value"].Value = "[.].Value";
-				return;
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.execute",
+                    "Magix.execute.hyperlisp.inspect.hl",
+                    "[magix.execute.for-each-dox].Value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.execute",
+                    "Magix.execute.hyperlisp.inspect.hl",
+                    "[magix.execute.for-each-sample]");
+                return;
 			}
 
 			if (!e.Params.Contains("_ip") || !(e.Params["_ip"].Value is Node))

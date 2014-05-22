@@ -63,6 +63,27 @@ magix.execute.node-2-code-sample
       another-node=>yo!
 
 
+magix.execute.code-2-node-dox=>@"transforms hyperlisp text code to nodes
+
+will transform the [code] node to a node tree
+
+the code will be returned in [node] as a node structure, according to indentation.  two spaces 
+opens up child collection, => assings to value, and first parts are name of node.  [code-2-node] 
+also supports =(int)>, =(datetime)>, =(decimal)>> and =(bool)> to assign specific type to value.  
+notice that you can instead of supplying a [code] node, supply a [file] node, which means the 
+code will be loaded through the [magix.file.load] active event, instead of assumed to be found 
+inline into the active event itself.  both [code] and [file] can be either constants or expressions
+
+thread safe"
+
+magix.execute.code-2-node-sample
+  code-2-node
+    code=>@"
+code
+  goes
+    here"
+
+
 magix.execute.debug-dox=>@"shows a debug dialog of the node stack
 
 shows the entire stack of hyperlisp code in a modal message box.  
@@ -308,3 +329,629 @@ magix.execute.execute-sample
     else
       magix.viewport.show-message
         message=>hi stranger
+
+
+magix.execute.for-each-dox=>@"iterates through a node list
+
+loops through all the nodes in the given node-list expression, 
+setting the data-pointer to the currently processed item
+
+your code will execute once for every single node you have in 
+your return expression.  use the [.] expression to de-reference 
+the currently iterated node
+
+thread safe"
+
+magix.execute.for-each-sample
+  _data
+    items
+      message1=>howdy world 1.0
+      message2=>howdy world 2.0
+      message3=>howdy world 3.0
+      message4=>howdy world 4.0
+      message5=>howdy world 5.0
+      message6=>howdy world 6.0
+      message7=>howdy world 7.0
+  for-each=>[_data][items]
+    set=>[@][magix.viewport.show-message][message].Value
+      value=>[.].Value
+
+
+magix.execute.if-dox=>@"checks statement and executes code if true
+
+executes the [code] block of nodes as an execution block, but only if 
+the [if] statement returns true
+
+pair your [if] statements together with [else-if] and [else] to create 
+branching logic and control of flow within your program.  if an [if]
+statement returns true, then no paired [else-if] or [else] statements 
+will be executed
+
+[lhs] means 'left-hand-side', and if you think of the operator, the 
+lhs node is to the left of the operator.  [rhs] means 'right-hand-side', 
+and is conceptually to the right of the operator.  this means that if you 
+have an lhs value of 'x' and an rhs value of 'y' and your operator is 
+'equals', then the full comparison statement becomes 'if x equals y'
+
+the operator used to compare the [lhs] and the [rhs] nodes must be 
+defined using the value of the [if] node.  legal values for the 
+operator type is 'exist', 'not-exist', 'equals', 'not-equals', 
+'less-than', 'more-than', 'less-than-equals' and 'more-than-equals'
+
+depending upon the comparison operator you use, the rhs node is not 
+necessary.  for instance, exist does not need a right-hand-side, or 
+an rhs node, simply since it only checks for the existence of one 
+specific node, value or name
+
+you can optionally also supply as many [or] and/or [and] nodes beneath 
+your [if] node.  if you do, then these are additional statements that 
+needs to return true to make the if statement become true as a whole.  
+if you supply an or and/or an and statement beneath your if, then you 
+add up a comparison operator as the value of your and and if statement, 
+and another pair of lhs and rhs nodes beneath your and and or statements
+
+the engine will convert automatically between int, decimal, date and 
+bool, or resort to string if no conversion is possible.  the [lhs] and 
+[rhs] nodes can be either an expression, or a hardcoded value.  you can 
+compare two node trees in [lhs] and [rhs], which means that the node trees will be compared 
+deeply, comparing their name, value and children for equality
+
+thread safe"
+
+magix.execute.if-sample
+  _data
+    item=>cache-object
+    cache
+  if=>not-equals
+    lhs=>[_data][item].Value
+    rhs=>[_data][1].Name
+    and=>not-exist
+      lhs=>[_data].Value
+    code
+      magix.viewport.show-message
+        message=>not equal, and no _data value
+
+
+magix.execute.else-if-dox=>@"checks statement and executes code if true
+
+executes the [code] block of nodes as an execution block, but only if 
+the [else-if] statement returns true, and any previous [if] or [else-if] 
+have returned false
+
+pair your [else-if] statements together with [if] and [else] to create 
+branching logic and control of flow within your program.  if an [if]
+statement returns true, then no paired [else-if] or [else] statements 
+will be executed.  the else-if statement can only follow directly after 
+an [if] statement, or another [else-if] statement
+
+[lhs] means 'left-hand-side', and if you think of the operator, the 
+lhs node is to the left of the operator.  [rhs] means 'right-hand-side', 
+and is conceptually to the right of the operator.  this means that if you 
+have an lhs value of 'x' and an rhs value of 'y' and your operator is 
+'equals', then the full comparison statement becomes 'if x equals y'
+
+the operator used to compare the [lhs] and the [rhs] nodes must be 
+defined using the value of the [if] node.  legal values for the 
+operator type is 'exist', 'not-exist', 'equals', 'not-equals', 
+'less-than', 'more-than', 'less-than-equals' and 'more-than-equals'
+
+depending upon the comparison operator you use, the rhs node is not 
+necessary.  for instance, exist does not need a right-hand-side, or 
+an rhs node, simply since it only checks for the existence of one 
+specific node, value or name
+
+you can optionally also supply as many [or] and/or [and] nodes beneath 
+your [if] node.  if you do, then these are additional statements that 
+needs to return true to make the if statement become true as a whole.  
+if you supply an or and/or an and statement beneath your if, then you 
+add up a comparison operator as the value of your and and if statement, 
+and another pair of lhs and rhs nodes beneath your and and or statements
+
+the engine will convert automatically between int, decimal, date and 
+bool, or resort to string if no conversion is possible.  the [lhs] and 
+[rhs] nodes can be either an expression, or a hardcoded value.  you can 
+compare two node trees in [lhs] and [rhs], which means that the node trees will be compared 
+deeply, comparing their name, value and children for equality
+
+thread safe"
+
+magix.execute.else-if-sample
+  _data
+    node
+  if=>exist
+    lhs=>[_data][node].Value
+    code
+      magix.viewport.show-message
+        message=>darn it
+  else-if=>exist
+    lhs=>[_data][node]
+    code
+      magix.viewport.show-message
+        message=>puuh
+
+
+magix.execute.else-dox=>@"default execution of if and else-if
+
+executes the underlaying code block, but only if no paired [if] 
+or [else-if] statement has returned true
+
+thread safe"
+
+magix.execute.else-sample
+  if=>exist
+    lhs=>[_not-existing-node]
+    code
+      magix.viewport.show-message
+        message=>ohh crap
+  else
+    magix.viewport.show-message
+      message=>yup, still sane
+
+
+magix.execute.index-of-dox=>@"returns index of a string
+
+returns the index of all occurences of the [what] constant 
+or expression as nodes containing the integer value of where match 
+was found underneath the [result] return node
+
+thread safe"
+
+magix.execute.index-of-sample
+  _data=>this will return the position of all 'r' characters in string
+  index-of=>[_data].Value
+    what=>r
+
+
+magix.execute.iterate-dox=>@"iterates a node tree
+
+loops through all the nodes in the given node-list expression, flattening 
+the hierarchy, setting the data-pointer to the currently processed item
+
+notice how this differs in regards to the [for-each] keyword.  the for-each 
+only iterates over the children of the nodes referenced in its expression.  
+while the [iterate] keyword will iterate the entire tree hierarchy, including 
+all children of the nodes in the expression, their children, and their 
+children's children, and so on.  this is useful for iterating entire tree 
+hierarchies, basically treating a tree, like a list of items, flattening the 
+hierarchy
+
+your code will execute once for every single node you have in your return 
+expression.  use the [.] expression to de-reference the currently iterated 
+node
+
+thread safe"
+
+magix.execute.iterate-sample
+  _data
+    items
+      message1=>howdy world 1.0
+      sub-1
+        message2=>howdy world 2.0
+        message3=>howdy world 3.0
+      sub-2
+        message4=>howdy world 4.0
+        sub-3
+          message5=>howdy world 5.0
+      sub-3
+        message6=>howdy world 6.0
+      message7=>howdy world 7.0
+  iterate=>[_data][items]
+    if=>exist
+      lhs=>[.].Value
+      code
+        set=>[@][magix.viewport.show-message][message].Value
+          value=>[.].Value
+
+
+magix.execute.lambda-dox=>@"executes a piece of code
+
+executes the expression in the [lambda] node creating a deep copy 
+of the expression's nodes
+
+[lambda] can be given parameters, which will be accessible in the 
+lambda code through the [$] collection.  anything you return as [$] 
+from inside the code being executed, will become directly accessible 
+as children nodes, from outside of the lambda execution, after the 
+execution is finished
+
+thread safe"
+
+magix.execute.lambda-sample
+  _data
+    set=>[$][output].Value
+      value=>{0} {1}
+        v0=>[$][input].Value
+        v1=>hansen
+  lambda=>[_data]
+    input=>thomas
+
+
+magix.execute.override-dox=>@"overrides an active event with another
+
+overrides the given active event from the [override] node's value with 
+the active event from the [with] node's value.  if no [with] is given, 
+existing override is removed
+
+if you supply a [persist] parameter, and sets its value to false, then 
+the override will not be persisted, and will only last until the 
+application pool is restarted.  this is useful sometimes, since it will 
+execute much faster, especially for overides you will anyway re-run 
+when application pool is restarted
+
+thread safe"
+
+magix.execute.override-sample
+  override=>namespace.foo
+    with=>namespace.bar
+
+
+magix.execute.app-startup-dox=>@"initialization of tunneled events
+
+called during startup of application to make sure our active events, 
+which are remotely overridden are being correctly re-mapped
+
+do not invoke this active event.  it is only for internal usage"
+
+
+magix.execute.tunnel-dox=>@"overrides an active event to be invoked on another server
+
+creates an external override towards the given [url] for the event found in value.  if 
+you pass in a null value as a [url], or no [url] node, the tunneling is removed
+
+make sure the other side has marked the active event as remotable.  once a method is 
+'tunneled', it will no longer be raised locally, but every time the active event is 
+raised internally within your server, it will be polymorphistically raised, on your 
+[url] end-point server instead
+
+if a [persist] parameter exists, and it has a value of false, then the tunnel will not 
+be serialized into the data layer, which is useful for active events which anyway will 
+be re-mapped when the application pool is restarted
+
+thread safe"
+
+magix.execute.tunnel-sample
+  tunnel=>magix.namespace.foo
+    url=>http://127.0.0.1:8080
+
+
+magix.execute.open-dox=>@"opens up an active event for remote invocation
+
+allows the given active event to be remotely invoked.  this means that other 
+servers, can call your active event, on your server
+
+you can create a server-api for web-services, by opening active events for 
+being remotely invoked, and such connect servers together, either internally 
+as a part of your server park, or by exposing functionality to other networks
+
+if you set [persist] to false, then the active event will not be serialized into 
+the data storage, meaning it will only last as long as the application is not 
+restarted.  this is useful for active events whom are created for instance during 
+the startup of your application, since it will save time, since they will anyway 
+be overwritten the next time your application restarts
+
+thread safe"
+
+magix.execute.open-sample
+  open=>magix.namespace.foo
+
+
+magix.execute.close-dox=>@"closes an existing open active event
+
+closes the active event found in the value of [close], such that it 
+no longer can be remotely invoked from other servers
+
+if you set [persist] to false, then the active event will not be 
+serialized into the data storage, meaning it will only last as long 
+as the application is not restarted.  this is useful for active 
+events whom are created for instance during the startup of your 
+application, since it will save time, since they will anyway be 
+overwritten the next time your application restarts
+
+thread safe"
+
+magix.execute.close-sample
+  close=>magix.namespace.foo
+
+
+magix.execute.remote-dox=>@"remotely invokes an active event
+
+remotely invokes the active event from value on [remote] on the 
+given [url], passing in all nodes in [pars] as parameters to your 
+active event, returning any return values from event beneath [params]
+
+this effectively raises an active event, except the event will be 
+serialized over http, and invoked on another server, returning 
+transparently back to the caller, as if it was invoked locally
+
+thread safe"
+
+magix.execute.remote-sample
+  remote=>magix.namespace.foo
+    url=>http://127.0.0.1:8080
+    params
+      your-parameters-goes-here=>value of parameter
+
+
+magix.execute.replace-dox=>@"replaces a string with another string
+
+replaces the [what] value/expression with the [with] value/expression 
+in the value of the [replace] node's expression
+
+both [what] and [with] can be either constants or expressions.  [with] 
+is optional, and if not given, the [what] parts of the value of 
+[replace] will simply be removed.  the value of [replace] can be either 
+a constant,or an expression
+
+thread safe"
+
+magix.execute.replace-sample
+  _expression=>some value to be replaced
+  replace=>[_expression].Value
+    what=>some
+    with=>some other
+
+
+magix.execute.execute-script-dox=>@"executes a piece of hyper lisp script
+
+runs the hyperlisp script given in value of [script], putting all child 
+nodes from underneath the [params] node into the [$] collection, accessible 
+from inside the script, which again is able to return nodes through the [$] 
+node, which will become children of the [params] node after execution
+
+you can optionally supply a [file] parameter, which will be loaded through 
+[magix.file.load], and executed.  if you supply a [file] parameter, you 
+cannot supply a [script] parameter
+
+both [file] and [script], can either be expressions, or constants
+
+thread safe"
+
+magix.execute.execute-script-sample
+  execute-script
+    input=>hello world
+    script=>@"
+_data=>thomas
+if=>equals
+  lhs=>[_data].Value
+  rhs=>thomas
+  code
+    set=>[@][magix.viewport.show-message][message].Value
+      value=>[$][input].Value
+    magix.viewport.show-message
+    set=>[$][output].Value
+      value=>dude's still thomas"
+
+
+magix.execute.set-dox=>@"sets some node value, name or content
+
+sets the given expression in the value of [set] to the value of 
+expression, or constant, in [value] node
+
+if you pass in no [value], the expression in value will be 
+nullified.  meaning, if it's a node-list it will be emptied 
+and the node removed.  if it's a value, the value will become 
+null.  if it's a name, the name will be set to the empty string
+
+the [value]'s value can be either a constant or an expression
+
+the value of [set] must be an expression, unless it's a null 
+value, at which point the result of the set will be put into 
+the value of the [set] itself
+
+you can set a value of a node to either a name, value of 
+another node or a node-list.  you can set a node-list to 
+another node-list, at which case the entire node will be 
+exchanged with a deep copy of the node list return from 
+[value].  you can set the name of a node to a string, 
+either through a constant or an expression
+
+you can also add up child nodes of the [value] node, 
+which can be de-referenced as a string.format statement, 
+such that {0} will be replaced with the value of the 
+first child node from beneath [value], and {2} will be 
+replaced with the value of the third child node from 
+beneath the [value], and so on
+
+if you try to set a node that does not exist, the node 
+will be created, and added to the execution tree
+
+thread safe"
+
+magix.execute.set-sample
+  _data
+    children=>old value
+  set=>[_data][children].Value
+    value=>new value
+
+
+magix.execute.split-dox=>@"splits a string
+
+splits the given expression or constant in the value of [split] according to the [what] 
+content or [where] child nodes, and puts the result into the [result] return node as 
+children nodes
+
+if [what] is given, but has null or empty value, then string will be split for every single 
+character in it.  if [where] is used, then either value of [where] is expected to be one 
+integer telling at which index the string should be split, or a list of children nodes 
+underneath the [where] containing indexes for where to split the string is expected
+
+both [what] and [where] value or nodes can be either a constant, or expression(s)
+
+if you use [what] to split your string, then the parts which matches the [what] expression 
+in your string, will be removed from the result set
+
+thread safe"
+
+magix.execute.split-sample
+  _data=>some text which will be split for every space
+  split=>[_data].Value
+    what=>@" "
+
+
+magix.execute.stop-dox=>@"stops the execution of the current scope
+
+stops the execution of the current scope in the tree
+
+affects [while], [for-each] and other code scopes, such as events and event handlers
+
+thread safe"
+
+magix.execute.stop-sample
+  _data=(int)>5
+  while=>more-than-equals
+    lhs=>[_data].Value
+    rhs=>1
+    code
+      using=>magix.math
+        add
+          =>[_data].Value
+          =>-1
+      set=>[_data].Value
+        value=>[@][using][add].Value
+      stop
+
+
+magix.execute.switch-dox=>@"executes logic according to value of string
+
+[switch] creates a comparison between all the children [case] nodes, and executes the code 
+within the [case] node who's value equals the content of the [switch] node
+
+the [switch] node's value can be either a constant or an expression.  if no match is found, 
+then [default] will be executed, if it exist.  notice how both the [switch] node itself, 
+and [case] nodes can be expressions
+
+thread safe"
+
+magix.execute.switch-sample
+  _data=>3
+  _success=>3
+  switch=>[_data].Value
+    case=>1
+      magix.viewport.show-message
+        message=>ERROR!!
+    case=>2
+      magix.viewport.show-message
+        message=>ERROR!!
+    case=>[_success].Value
+      magix.viewport.show-message
+        message=>success!
+    default
+      magix.viewport.show-message
+        message=>ERROR!!
+
+
+magix.execute.fork-dox=>@"spawns a new execution thread
+
+spawns a new thread, which the given code block will be executed within
+
+[fork] is useful for long operations, where you'd like to return to caller, before the operation is 
+finished.  the entire node-list underneath the [fork] keyword, will be cloned, and passed into the 
+magix.execute active event, for execution on a different thread
+
+the forked thread will not be able to change any data on the original node set.  if the value of 
+[fork] is true, the new thread will be executed as a fire-and-forget thread, bypassing any [wait] 
+statements you might have
+
+not thread safe"
+
+magix.execute.fork-sample
+  fork
+    _data
+      value=>thomas
+    if=>equals
+      lhs=>[_data][value].Value
+      rhs=>thomas
+      code
+        _do-some-legthy
+          _operation
+
+
+magix.execute.wait-dox=>@"waits for multiple threads to finish
+
+will wait for multiple treads to finish
+
+all [fork] blocks created underneath [wait], will have to be finished, before the execution will 
+leave the [wait] block.  you can optionally set a maximum number of milliseconds, before the wait 
+is dismissed as an integer value of [wait]
+
+thread safe"
+
+magix.execute.wait-sample
+  wait
+    fork
+      _do-lenghty-job-1
+    fork
+      _do-lenghty-job-2
+
+
+magix.execute.while-dox=>@"loops as long as condition is true
+
+creates a loop that executes the underlaying code block repeatedly, as long as the 
+comparison statement(s) in the value of [while] is true
+
+the [while] is taking arguments similarly as both the [if] and [else-if].  see any of 
+these active events to understand how to create a comparison statement(s) to check for 
+in the while loop
+
+thread safe"
+
+magix.execute.while-sample
+  _data
+    txt1=>hello world 1.0
+    txt2=>hello world 2.0
+    txt3=>hello world 3.0
+  while=>not-equals
+    lhs=>[_data].Count
+    rhs=>0
+    code
+      set=>[@][magix.viewport.show-message][message].Value
+        value=>[_data][0].Value
+      set=>[_data][0]
+      magix.viewport.show-message
+        message=>to be changed
+
+
+magix.execute.with-dox=>@"temporary changes the data pointer
+
+temporary changes the data pointer to the expression in its value
+
+this is useful if you're handling several keywords in a row, where 
+the expressions within them are all pointing deep into the execution 
+tree somewhere
+
+thread safe"
+
+magix.execute.with-sample
+  _data
+    _somewhere
+      _over
+        items
+          message1=>howdy world 1.0
+          message2=>howdy world 2.0
+          message3=>howdy world 3.0
+          message4=>howdy world 4.0
+          message5=>howdy world 5.0
+          message6=>howdy world 6.0
+          message7=>howdy world 7.0
+  with=>[_data][_somewhere][_over]
+    for-each=>[items]
+      set=>[@][magix.viewport.show-message][message].Value
+        value=>[.].Value
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -24,16 +24,17 @@ namespace Magix.execute
             Node ip = Ip(e.Params);
             if (ShouldInspect(ip))
             {
-                ip["inspect"].Value = @"<p>replaces the [what] value/expression with the [with] 
-value/expression in the value of the [replace] node's expression</p><p>both [what] and [with] can be 
-either constants or expressions.&nbsp;&nbsp;[with] is optional, and if not given, the [what] parts of 
-the value of [replace] will simply be removed.&nbsp;&nbsp;the value of [replace] can be either a constant,
-or an expression</p><p>thread safe</p>";
-                ip["_expression"].Value = "some value to be replaced";
-				ip["replace"].Value = "[_expression].Value";
-				ip["replace"]["what"].Value = "some";
-				ip["replace"]["with"].Value = "some other";
-				return;
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.execute",
+                    "Magix.execute.hyperlisp.inspect.hl",
+                    "[magix.execute.replace-dox].Value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.execute",
+                    "Magix.execute.hyperlisp.inspect.hl",
+                    "[magix.execute.replace-sample]");
+                return;
 			}
 
             if (!e.Params.Contains("_ip") || !(e.Params["_ip"].Value is Node))

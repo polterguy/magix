@@ -41,7 +41,6 @@
     <Compile Include="SwitchCore.cs" />
     <Compile Include="LambdaCore.cs" />
     <Compile Include="IndexOfCore.cs" />
-    <Compile Include="JoinCore.cs" />
     <Compile Include="SplitCore.cs" />
     <Compile Include="StatementHelper.cs" />
     <Compile Include="ExecuteCore.cs" />
