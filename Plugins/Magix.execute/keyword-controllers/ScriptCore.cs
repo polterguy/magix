@@ -25,26 +25,17 @@ namespace Magix.admin
             Node ip = Ip(e.Params);
             if (ShouldInspect(ip))
             {
-				ip["inspect"].Value = @"<p>runs the hyperlisp script given in value of 
-[script], putting all child nodes from underneath the [params] node into the [$] collection, 
-accessible from inside the script, which again is able to return nodes through the [$] node, 
-which will become children of the [params] node after execution</p><p>you can optionally 
-supply a [file] parameter, which will be loaded through [magix.file.load], and executed.&nbsp;
-&nbsp;if you supply a [file] parameter, you cannot supply a [script] parameter</p><p>both [file] 
-and [script], can either be expressions, or constants</p><p>thread safe</p>";
-				ip["execute-script"]["script"].Value = @"
-_data=>thomas
-if=>equals
-  lhs=>[_data].Value
-  rhs=>thomas
-  code
-    set=>[@][magix.viewport.show-message][message].Value
-      value=>[$][input].Value
-    magix.viewport.show-message
-    set=>[$][output].Value
-      value=>dude's still thomas";
-                ip["execute-script"]["input"].Value = "hello world";
-				return;
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.execute",
+                    "Magix.execute.hyperlisp.inspect.hl",
+                    "[magix.execute.execute-script-dox].Value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.execute",
+                    "Magix.execute.hyperlisp.inspect.hl",
+                    "[magix.execute.execute-script-sample]");
+                return;
 			}
 
             Node dp = Dp(e.Params);

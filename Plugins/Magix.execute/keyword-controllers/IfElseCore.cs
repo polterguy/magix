@@ -24,25 +24,17 @@ namespace Magix.execute
             Node ip = Ip(e.Params);
             if (ShouldInspect(ip))
             {
-				ip["inspect"].Value = @"<p>executes the [code] block of nodes as an execution
-block, but only if the [if] statement returns true</p><p>pair your [if] statements together with 
-[else-if] and [else] to create branching and control of flow of your program.&nbsp;&nbsp;if an [if]
-statement returns true, then no paired [else-if] or [else] statements will be executed</p><p>the 
-operator used to compare the [lhs] and the [rhs] nodes must be defined using the value of the [if] 
-node.&nbsp;&nbsp;legal values for the operator type is 'exist', 'not-exist', 'equals', 'not-equals', 
-'less-than', 'more-than', 'less-than-equals' and 'more-than-equals'</p><p>the engine will convert 
-automatically between int, decimal, date and bool, or resort to string if no conversion is possible.
-&nbsp;&nbsp;the [lhs] and [rhs] nodes can be either an expression, or a hardcoded value.&nbsp;&nbsp;
-you can compare two node trees in [lhs] and [rhs], which means that the node trees will be compared 
-deeply, comparing their name, value and children for equality</p><p>thread safe</p>";
-				ip["_data"]["item"].Value = "cache-object";
-				ip["_data"]["cache"].Value = null;
-                ip["if"].Value = "not-equals";
-                ip["if"]["lhs"].Value = "[_data][item].Value";
-                ip["if"]["rhs"].Value = "[_data][1].Name";
-                ip["if"]["code"]["magix.viewport.show-message"].Value = null;
-				ip["if"]["code"]["magix.viewport.show-message"]["message"].Value = "they are not the same";
-				return;
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.execute",
+                    "Magix.execute.hyperlisp.inspect.hl",
+                    "[magix.execute.if-dox].Value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.execute",
+                    "Magix.execute.hyperlisp.inspect.hl",
+                    "[magix.execute.if-sample]");
+                return;
 			}
 
             if (!e.Params.Contains("_ip") || !(e.Params["_ip"].Value is Node))
@@ -62,25 +54,17 @@ deeply, comparing their name, value and children for equality</p><p>thread safe<
             Node ip = Ip(e.Params);
             if (ShouldInspect(ip))
             {
-				ip["inspect"].Value = @"<p>executes the underlaying [code] node,
-but only if no previous [if] or [else-if] statement has returned true, and the statement 
-inside the value of the [else-if] returns true</p><p>the operator used to compare the 
-[lhs] and the [rhs] nodes must be defined using the value of the [else-if] node.&nbsp;
-&nbsp;legal values for the operator type is 'exist', 'not-exist', 'equals', 'not-equals', 
-'less-than', 'more-than', 'less-than-equals' and 'more-than-equals'</p><p>the engine will 
-convert automatically between int, decimal, date and bool, or resort to string if no 
-conversion is possible.&nbsp;&nbsp;the [lhs] and [rhs] nodes can be either an expression, 
-or a hardcoded value.&nbsp;&nbsp;you can compare two node trees in [lhs] and [rhs], which 
-means that the node trees will be compared deeply, comparing their name, value and children 
-for equality</p><p>thread safe</p>";
-				ip["_data"]["node"].Value = null;
-                ip["if"].Value = "exist";
-                ip["if"]["lhs"].Value = "[_data][node].Value";
-                ip["if"]["code"]["magix.viewport.show-message"]["message"].Value = "darn it";
-                ip["else-if"].Value = "exist";
-                ip["else-if"]["lhs"].Value = "[_data][node]";
-                ip["else-if"]["code"]["magix.viewport.show-message"]["message"].Value = "puuh";
-				return;
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.execute",
+                    "Magix.execute.hyperlisp.inspect.hl",
+                    "[magix.execute.else-if-dox].Value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.execute",
+                    "Magix.execute.hyperlisp.inspect.hl",
+                    "[magix.execute.else-if-sample]");
+                return;
 			}
 			
 			if (!e.Params.Contains("_ip") || !(e.Params["_ip"].Value is Node))
@@ -117,14 +101,17 @@ for equality</p><p>thread safe</p>";
             Node ip = Ip(e.Params);
             if (ShouldInspect(ip))
             {
-				ip["inspect"].Value = @"<p>executes the underlaying code block,
-but only if no paired [if] or [else-if] statement has returned true</p><p>thread safe
-</p>";
-				ip["if"].Value = "exist";
-                ip["if"]["lhs"].Value = "[_not-existing-node]";
-				ip["if"]["code"]["magix.viewport.show-message"]["message"].Value = "ohh crap";
-				ip["else"]["magix.viewport.show-message"]["message"].Value = "yup, still sane";
-				return;
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.execute",
+                    "Magix.execute.hyperlisp.inspect.hl",
+                    "[magix.execute.else-dox].Value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.execute",
+                    "Magix.execute.hyperlisp.inspect.hl",
+                    "[magix.execute.else-sample]");
+                return;
 			}
 
 			if (!e.Params.Contains("_ip") || !(e.Params["_ip"].Value is Node))

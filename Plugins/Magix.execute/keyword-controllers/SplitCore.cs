@@ -25,18 +25,16 @@ namespace Magix.execute
             Node ip = Ip(e.Params);
             if (ShouldInspect(ip))
             {
-                ip["inspect"].Value = @"<p>splits the given expression or constant in 
-the value of [split] according to the [what] content or [where] child nodes, and puts the 
-result into the [result] return node as children nodes</p><p>if [what] is given, but has null 
-or empty value, then string will be split for every single character in it.&nbsp;&nbsp;if 
-[where] is used, then either value of [where] is expected to be an integer telling at which 
-index the string should be split, or a list of child nodes containing indexes for where to 
-split the string</p><p>both [what] and [where] value or nodes can be either a constant, or 
-expression(s)</p><p>if you use [what] to split your string, then the parts which matches the 
-[what] expression in your string, will be removed from the result set</p><p>thread safe</p>";
-                ip["_data"].Value = "some text which will be split for every space";
-				ip["split"].Value = "[_data].Value";
-				ip["split"]["what"].Value = " ";
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.execute",
+                    "Magix.execute.hyperlisp.inspect.hl",
+                    "[magix.execute.split-dox].Value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.execute",
+                    "Magix.execute.hyperlisp.inspect.hl",
+                    "[magix.execute.split-sample]");
                 return;
 			}
 

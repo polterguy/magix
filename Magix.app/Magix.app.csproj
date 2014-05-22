@@ -241,7 +241,6 @@
     <Content Include="system42\startup-scripts\create-lambda-unit-tests.hl" />
     <Content Include="system42\startup-scripts\create-index-of-unit-tests.hl" />
     <Content Include="system42\startup-scripts\create-split-unit-tests.hl" />
-    <Content Include="system42\startup-scripts\create-join-unit-tests.hl" />
     <Content Include="system42\startup-scripts\create-execute-script-unit-tests.hl" />
     <Content Include="system42\startup-scripts\create-replace-unit-tests.hl" />
     <Content Include="system42\startup-scripts\create-exception-unit-tests.hl" />

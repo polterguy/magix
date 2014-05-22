@@ -133,19 +133,17 @@ namespace Magix.code
             Node ip = Ip(e.Params);
             if (ShouldInspect(ip))
             {
-				ip["inspect"].Value = @"<p>will transform the [code] node to a node tree</p>
-<p>the code will be returned in [node] as a node structure, according to indentation.&nbsp;&nbsp;two 
-spaces open up child collection, =&gt; assings to value, and first parts are name of node.&nbsp;&nbsp;
-[code-2-node] also supports =(int)&gt;, =(datetime)&gt;, =(decimal)&gt; and =(bool)&gt; to assign 
-specific type to value.&nbsp;&nbsp;notice that you can instead of supplying a [code] node, supply a 
-[file] node, which means the code will be loaded through the [magix.file.load] active event, instead 
-of assumed to be found inline into the active event itself.&nbsp;&nbsp;both [code] and [file] can be 
-either constants or expressions</p><p>thread safe</p>";
-				ip["code-2-node"]["code"].Value =  @"
-code
-  goes
-    here";
-				return;
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.execute",
+                    "Magix.execute.hyperlisp.inspect.hl",
+                    "[magix.execute.code-2-node-dox].Value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.execute",
+                    "Magix.execute.hyperlisp.inspect.hl",
+                    "[magix.execute.code-2-node-sample]");
+                return;
 			}
 
             Node dp = Dp(e.Params);

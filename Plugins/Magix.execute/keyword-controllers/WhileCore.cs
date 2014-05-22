@@ -23,29 +23,17 @@ namespace Magix.execute
             Node ip = Ip(e.Params);
             if (ShouldInspect(ip))
             {
-				ip["inspect"].Value = @"<p>creates a loop that executes the
-underlaying code block repeatedly, as long as the statement in the value of [while] 
-is true</p><p>the operator used to compare the [lhs] and the [rhs] nodes must be 
-defined using the value of the [while] node.&nbsp;&nbsp;legal values for the operator 
-type is 'exist', 'not-exist', 'equals', 'not-equals', 'less-than', 'more-than', 
-'less-than-equals' and 'more-than-equals'</p><p>the engine will convert automatically 
-between int, decimal, date and bool, or resort to string if no conversion is possible, 
-to compare values of [lhs] and [rhs].&nbsp;&nbsp;the [lhs] and [rhs] nodes can be either 
-an expression, or a hardcoded value.&nbsp;&nbsp;you can compare two node trees in [lhs] 
-and [rhs], which means that the node trees will be compared deeply, comparing their name, 
-value and children for equality</p><p>thread safe</p>";
-				ip["_data"]["txt1"].Value = "hello world 1.0";
-				ip["_data"]["txt2"].Value = "hello world 2.0";
-				ip["_data"]["txt3"].Value = "hello world 3.0";
-				ip["while"].Value = "not-equals";
-                ip["while"]["lhs"].Value = "[_data].Count";
-                ip["while"]["rhs"].Value = "0";
-				ip["while"]["code"]["set"].Value = "[@][magix.viewport.show-message][message].Value";
-                ip["while"]["code"]["set"]["value"].Value = "[_data][0].Value";
-                ip["while"]["code"].Add(new Node("set", "[_data][0]"));
-                ip["while"]["code"]["magix.viewport.show-message"].Value = null;
-                ip["while"]["code"]["magix.viewport.show-message"]["message"].Value = "to be changed";
-				return;
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.execute",
+                    "Magix.execute.hyperlisp.inspect.hl",
+                    "[magix.execute.while-dox].Value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.execute",
+                    "Magix.execute.hyperlisp.inspect.hl",
+                    "[magix.execute.while-sample]");
+                return;
 			}
 
 			if (!e.Params.Contains("_ip") || !(e.Params["_ip"].Value is Node))

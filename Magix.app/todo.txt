@@ -112,5 +112,7 @@
 
 * add support for {0} string.formatting in message in magix.viewport.show-message
 
+* support for multiple stacked sandboxes
+
 
 

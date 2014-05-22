@@ -22,12 +22,15 @@ namespace Magix.execute
 		[ActiveEvent(Name = "magix.core.application-startup")]
 		public static void magix_core_application_startup(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
+            Node ip = Ip(e.Params);
+			if (ShouldInspect(ip))
 			{
-				e.Params["inspect"].Value = @"<p>called during startup
-of application to make sure our active events, which are dynamically remotely overridden
-are being correctly re-mapped</p>";
-				return;
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.execute",
+                    "Magix.execute.hyperlisp.inspect.hl",
+                    "[magix.execute.app-startup-dox].Value");
+                return;
 			}
             RemapTunneledEvents();
             RemapOpenEvents();
@@ -78,18 +81,17 @@ are being correctly re-mapped</p>";
             Node ip = Ip(e.Params);
             if (ShouldInspect(ip))
             {
-				ip["inspect"].Value = @"<p>creates an external override towards the given 
-[url] for the event found in value.&nbsp;&nbsp;if you pass in a null value as a [url], or no [url] 
-node, the tunneling is removed</p><p>make sure the other side has marked the active event as 
-remotable.&nbsp;&nbsp;once a method is 'tunneled', it will no longer be raised locally, but every 
-time the active event is raised internally within your server, it will be polymorphistically 
-raised, on your [url] end-point server instead</p></p>if a [persist] parameter exists, and it has 
-a value of false, then the tunnel will not be serialized into the data layer, which is useful for 
-active events which anyway will be re-mapped when the application pool is restarted<p><p>thread 
-safe</p>";
-				ip["tunnel"].Value = "magix.namespace.foo";
-				ip["tunnel"]["url"].Value = "http://127.0.0.1:8080";
-				return;
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.execute",
+                    "Magix.execute.hyperlisp.inspect.hl",
+                    "[magix.execute.tunnel-dox].Value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.execute",
+                    "Magix.execute.hyperlisp.inspect.hl",
+                    "[magix.execute.tunnel-sample]");
+                return;
 			}
 
             string activeEvent = ip.Get<string>();
@@ -152,18 +154,17 @@ safe</p>";
             Node ip = Ip(e.Params);
             if (ShouldInspect(ip))
 			{
-				ip["inspect"].Value = @"<p>allows the given value active event
-to be remotely invoked.&nbsp;&nbsp;this means that other servers, can call your active 
-event, on your server</p><p>you can create a server-api for web-services, by opening 
-active events for being remotely invoked, and such connect servers together, either 
-internally as a part of your server park, or by exposing functionality to other networks
-</p><p>if you set [persist] to false, then the active event will not be serialized into 
-the data storage, meaning it will only last as long as the application is not restarted.
-&nbsp;&nbsp;this is useful for active events whom are created for instance during the 
-startup of your application, since it will save time, since they will anyway be overwritten 
-the next time your application restarts</p><p>thread safe</p>";
-				ip["open"].Value = "magix.namespace.foo";
-				return;
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.execute",
+                    "Magix.execute.hyperlisp.inspect.hl",
+                    "[magix.execute.open-dox].Value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.execute",
+                    "Magix.execute.hyperlisp.inspect.hl",
+                    "[magix.execute.open-sample]");
+                return;
 			}
 
             string activeEvent = ip.Get<string>();
@@ -203,16 +204,17 @@ the next time your application restarts</p><p>thread safe</p>";
             Node ip = Ip(e.Params);
             if (ShouldInspect(ip))
 			{
-				ip["inspect"].Value = @"<p>closes the active event found in
-the value of [clode], such that it no longer can be remotely invoked from other 
-servers</p><p>if you set [persist] to false, then the active event will not be 
-serialized into the data storage, meaning it will only last as long as the application 
-is not restarted.&nbsp;&nbsp;this is useful for active events whom are created for 
-instance during the startup of your application, since it will save time, since they 
-will anyway be overwritten the next time your application restarts</p><p>thread safe
-</p>";
-				ip["close"].Value = "magix.namespace.foo";
-				return;
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.execute",
+                    "Magix.execute.hyperlisp.inspect.hl",
+                    "[magix.execute.close-dox].Value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.execute",
+                    "Magix.execute.hyperlisp.inspect.hl",
+                    "[magix.execute.close-sample]");
+                return;
 			}
 
             string activeEvent = ip.Get<string>();
@@ -244,15 +246,16 @@ will anyway be overwritten the next time your application restarts</p><p>thread 
             Node ip = Ip(e.Params);
             if (ShouldInspect(ip))
 			{
-				ip["inspect"].Value = @"<p>remotely invokes the active event from
-value on [remote] on the given [url], passing in all nodes in [pars] as parameters to 
-your active event, returning any return values from event beneath [params]</p><p>this 
-effectively raises an active event, except the event will be serialized over http, and 
-invoked on another server, returning transparently back to the caller, as if it was 
-invoked locally</p><p>thread safe</p>";
-				ip["remote"].Value = "magix.namespace.foo";
-                ip["remote"]["url"].Value = "http://127.0.0.1:8080";
-                ip["remote"]["params"]["your-parameters-goes-here"].Value = "value of parameter";
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.execute",
+                    "Magix.execute.hyperlisp.inspect.hl",
+                    "[magix.execute.remote-dox].Value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.execute",
+                    "Magix.execute.hyperlisp.inspect.hl",
+                    "[magix.execute.remote-sample]");
                 return;
 			}
 
