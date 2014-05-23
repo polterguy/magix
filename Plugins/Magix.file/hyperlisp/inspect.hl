@@ -1,0 +1,181 @@
+﻿
+
+inspect=>@"contains documentation for magix.file assembly"
+
+
+magix.file.list-directories-dox=>@"list directories within another directory
+
+lists the directories in [directories] from the given [directory], which can 
+be either a relative path to the app's main path, or an absolute path
+
+use [filter] as a search pattern.  both [filter] and [directory] node can be 
+both expressions or constants.  if you don't supply a [directory] node, the 
+event will list all directories on the root folder of your web application
+
+thread safe"
+
+magix.file.list-directories-sample
+  magix.file.list-directories
+    directory=>system42
+    filter=>*s*
+
+
+magix.file.create-directory-dox=>@"creates a new directory
+
+creates the directory from value of [directory].  the directory path can be either 
+an expression, or a constant.  the [directory] can also be either a relative path, 
+underneath your web application folder, or an absolute path
+
+thread safe"
+
+magix.file.create-directory-sample
+  magix.file.create-directory
+    directory=>media/tmp
+
+
+magix.file.delete-directory-dox=>@"deletes a directory
+
+deletes the directory from value of [directory].  the directory path can be either an 
+expression, or a constant.  also the directory can be either a relative path, beneath 
+your web application folder, or an absolute path on disc
+
+thread safe"
+
+magix.file.delete-directory-sample
+  magix.file.delete-directory
+    directory=>media/tmp
+
+
+magix.file.move-directory-dox=>@"moves a directory
+
+moves the given directory in [from] to [to].  both the value of the [from] and the [to] node 
+can be either expressions or constants.  both the [from] and [to] nodes can either point to 
+a relative directory beneath the web application folder, or an absolute path on disc
+
+thread safe"
+
+magix.file.move-directory-sample
+  magix.file.move-directory
+    from=>media/tmp
+    to=>media/some-new-directory
+
+
+magix.file.directory-exist-dox=>@"checks for existence of a specific directory
+
+returns true as [value] if the directory in the valueof [directory] node exist.  
+the value of [directory] can be both an expression or a constant.  in adition, 
+the [directory] can either be a relative path, beneath the web application's 
+main folder, or an absolute path on disc
+
+thread safe"
+
+magix.file.directory-exist-sample
+  magix.file.directory-exist
+    directory=>system42
+
+
+magix.file.list-files-dox=>@"lists all files from a specific directory
+
+lists the files in the given [directory], which can be either relative to the app's main path, or 
+an absolute path.  use [filter] as a search pattern.  the directory to list the files from is given 
+through the [directory] node's value, and can be both an expression, or a constant.  if no path is 
+given, it will list all the files from the root directory of your web application.  both the path, 
+and the filter, can be both constants or expressions
+
+thread safe"
+
+magix.file.list-files-sample
+  magix.file.list-files
+    directory=>system42
+    filter=>*.hl
+
+
+magix.file.load-dox=>@"loads a file
+
+loads the file from value of [file] into the [value] node as text.  the file can be a relative path, to 
+fetch a document beneath your web application directory structure, or an absolute path, to a different 
+directory, which the iis process of course must have access to.  the value in [file] can be either a 
+constant or an expression
+
+in addition, you can supply a plugin loader to load your files, which is done by setting the [file] 
+parameter to the text;'plugin:' and appending the name of the active event you whish to use as the file 
+loader after 'plugin:'.  for instance 'plugin:microsoft.sql.select-as-text' or 'plugin:magix.web.get-file'.  
+this will expect an active event capable of returning text as [value].  if you supply a plugin loader, 
+then all parameters beneath the [magix.file.load] will be passed into the plugin, and used as parameters 
+to the plugin loader
+
+thread safe"
+
+magix.file.load-sample
+  magix.file.load
+    file=>core-scripts/some-files.txt
+
+
+magix.file.save-dox=>@"saves or deletes a file from disc
+
+saves a file with the path givenin [file].  the file to save is given as the [value] 
+node.  [magix.file.save] will overwrite an existing file, if any exist, otherwise it will 
+create a new file.  if you pass in null as [value] Node, or no [value] node at all, any 
+existing file will be deleted, and no new file created.  both the [file], and [value] can 
+be either expressions or constants.  the [file] can be either a relative path beneath the 
+web application's folder, or an absolute path
+
+thread safe"
+
+magix.file.save-sample
+  magix.file.save
+    file=>tmp/sample.txt
+    value=>contents of file
+
+
+magix.file.move-file-dox=>@"moves a file on disc
+
+moves the given [from] file to the [to] directory.  both the file to move, and the where to 
+move it, can be either expressions, or constants.  both the [from] and [to] can be either 
+relative path's beneath the web application's folder, or absolute paths
+
+thread safe"
+
+magix.file.move-file-sample
+  magix.file.move-file
+    from=>media/tmp
+    to=>media/some-new-directory
+
+
+magix.file.file-exist-dox=>@"checks if a file exist
+
+returns true as [value] if the file in the value of [file] exist.  the value of 
+[magix.file.file-exist] can be both an expression, or a constant.  the [file] can 
+be either a relative path beneath the web application's folder, or an absolute 
+path on disc
+
+thread safe"
+
+magix.file.file-exist-sample
+  magix.file.file-exist
+    file=>system42/help/index.mml
+
+
+magix.file.load-from-resource-dox=>@"loads a file from a resource
+
+plugin for loading embedded resources as files.  this is useful for 
+using as a plugin loader for the [magix.file.load] active event
+
+thread safe"
+
+magix.file.load-from-resource-sample
+  magix.file.load
+    file=>plugin:magix.file.load-from-resource
+      assembly=>assembly.name
+      resource-name=>assembly.name.resource.hl
+
+
+
+
+
+
+
+
+
+
+

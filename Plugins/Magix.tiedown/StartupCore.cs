@@ -1,6 +1,6 @@
 /*
  * Magix - A Web Application Framework for Humans
- * Copyright 2010 - 2014 - isa.lightbringer@gmail.com
+ * Copyright 2010 - 2014 - thomas@magixilluminate.com
  * Magix is licensed as MITx11, see enclosed License.txt File for Details.
  */
 
@@ -10,7 +10,7 @@ using Magix.Core;
 
 namespace Magix.tiedown
 {
-	/**
+	/*
 	 * runs the startup hyperlisp file
 	 */
 	public class StartupCore : ActiveController
@@ -19,16 +19,21 @@ namespace Magix.tiedown
 
         private static bool _hasRun = false;
 
-		/**
+		/*
 		 * runs the startup hyperlisp file
 		 */
 		[ActiveEvent(Name = "magix.core.application-startup")]
 		public static void magix_core_application_startup(object sender, ActiveEventArgs e)
 		{
-			if (ShouldInspect(e.Params))
-			{
-				e.Params["inspect"].Value = @"executes the startup.hl hyperlisp file";
-				return;
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
+            {
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.tiedown",
+                    "Magix.tiedown.hyperlisp.inspect.hl",
+                    "[magix.core.application-startup-dox].Value");
+                return;
 			}
 
             if (!_hasRun)

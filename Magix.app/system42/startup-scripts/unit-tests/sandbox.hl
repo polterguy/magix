@@ -1,0 +1,68 @@
+
+
+inspect=>@"creates unit tests to 
+test the [magix.execute.sandbox] keyword"
+
+
+event
+  name=>magix.test.sandbox-illegal-word
+  persist=>false
+  inspect=>@"asserts that [sandbox] works the 
+way it should work, by trying to execute a keyword 
+not in whitelist"
+  code
+    _exception=>false
+    try
+      code
+        sandbox
+          whitelist
+            foo
+          code
+            bar
+      catch
+        set=>[_exception].Value
+          value=>true
+    if=>not-equals
+      lhs=>[_exception].Value
+      rhs=>true
+      code
+        throw=>sandbox allowed execution of illegal keyword
+
+
+event
+  name=>magix.test.sandbox-whitelist-blacklist
+  persist=>false
+  inspect=>@"asserts that [sandbox] works the 
+way it should work, by trying to execute a keyword 
+not in whitelist"
+  code
+    _exception=>false
+    try
+      code
+        sandbox
+          whitelist
+            foo
+            sandbox
+          code
+            sandbox
+              whitelist
+                bar
+      catch
+        set=>[_exception].Value
+          value=>true
+    if=>not-equals
+      lhs=>[_exception].Value
+      rhs=>true
+      code
+        throw=>sandbox allowed changing whitelist
+
+
+
+
+
+
+
+
+
+
+

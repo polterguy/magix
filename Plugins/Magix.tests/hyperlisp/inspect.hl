@@ -1,0 +1,73 @@
+﻿
+
+inspect=>@"file containing documentation for unit tests"
+
+
+magix.tests.run-dox=>@"runs all unit tests within system
+
+will raise all active events that starts with 'magix.test.', and treat them as 
+unit tests.  if some parts of the active event throws an exception, then the 
+test will be considered failing, and a red message box will show.  if no test 
+fails, the message box will be green, and it will show the number of tests 
+which have been running.  to create a new unit test, create an active event 
+handler, that is within the magix.test namespace, and it will automatically 
+register as a part of the test-suite, which is to be executed, as this active 
+event is raised.  if one unit test fails, it will abort all other tests, and 
+show you the name of the active event that failed
+
+thread safe"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

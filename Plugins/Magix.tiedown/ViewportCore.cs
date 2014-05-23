@@ -1,6 +1,6 @@
 /*
  * Magix - A Web Application Framework for Humans
- * Copyright 2010 - 2014 - isa.lightbringer@gmail.com
+ * Copyright 2010 - 2014 - thomas@magixilluminate.com
  * Magix is licensed as MITx11, see enclosed License.txt File for Details.
  */
 
@@ -22,10 +22,15 @@ namespace Magix.tiedown
 		[ActiveEvent(Name = "magix.viewport.load-viewport")]
 		public void magix_viewport_load_viewport(object sender, ActiveEventArgs e)
 		{
-			if (ShouldInspect(e.Params))
-			{
-				e.Params["inspect"].Value = @"executes the load-viewport.hl hyperlisp file";
-				return;
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
+            {
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.tiedown",
+                    "Magix.tiedown.hyperlisp.inspect.hl",
+                    "[magix.viewport.load-viewport-dox].Value");
+                return;
 			}
 
 			Node node = new Node();

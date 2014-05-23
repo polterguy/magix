@@ -1,0 +1,124 @@
+﻿
+
+inspect=>@"contains documentation for magix.math"
+
+
+magix.math.add-dox=>@"adds two or more numbers
+
+adds the underlaying values together and puts the result in value 
+of [magix.math.add] node.  [add] nodes can be nested with other 
+magix.math nodes
+
+thread safe"
+
+magix.math.add-sample
+  magix.math.add
+    =>5
+    =>6
+    =>8
+
+
+magix.math.subtract-dox=>@"subtracts two or more numbers
+
+subtracts the underlaying values together and puts the result in value 
+of [magix.math.subtract] node.  [subtract] nodes can be nested with other 
+magix.math nodes
+
+thread safe"
+
+magix.math.subtract-sample
+  magix.math.subtract
+    =>19
+    =>8
+    =>10
+
+
+magix.math.multiply-dox=>@"multiplies two or more numbers
+
+multiplies the underlaying values together and puts the result in value 
+of [magix.math.multiply] node.  [multiply] nodes can be nested with other 
+magix.math nodes
+
+thread safe"
+
+magix.math.multiply-sample
+  magix.math.multiply
+    =>5
+    =>5
+    =>10
+
+
+magix.math.divide-dox=>@"divides two or more numbers
+
+divides the underlaying values together and puts the result in value 
+of [magix.math.divide] node.  [divide] nodes can be nested with other 
+magix.math nodes
+
+thread safe"
+
+magix.math.divide-sample
+  magix.math.divide
+    =>250
+    =>10
+    =>5
+
+
+magix.math.modulo-dox=>@"modulos two or more numbers
+
+modulos the underlaying values together and puts the result in value 
+of [magix.math.modulo] node.  [modulo] nodes can be nested with other 
+magix.math nodes
+
+thread safe"
+
+magix.math.modulo-sample
+  magix.math.modulo
+    =>24
+    =>5
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

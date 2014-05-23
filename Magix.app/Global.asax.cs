@@ -1,6 +1,6 @@
 /*
  * Magix-BRIX - A Web Application Framework for ASP.NET
- * Copyright 2010 - 2014 - isa.lightbringer@gmail.com
+ * Copyright 2010 - 2014 - thomas@magixilluminate.com
  * Magix-BRIX is licensed as GPLv3.
  */
 

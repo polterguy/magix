@@ -1,6 +1,6 @@
 ﻿/*
  * Magix - A Web Application Framework for Humans
- * Copyright 2010 - 2014 - isa.lightbringer@gmail.com
+ * Copyright 2010 - 2014 - thomas@magixilluminate.com
  * Magix is licensed as MITx11, see enclosed License.txt File for Details.
  */
 
@@ -59,6 +59,16 @@ namespace Magix.Core
         public Node(string name, object value)
             : this(name, value, null)
         { }
+
+        /*
+         * Creates a new node with the given name and the given value and given children
+         */
+        public static Node Create(string name, object value, IEnumerable<Node> nodes)
+        {
+            Node ret = new Node(name, value);
+            ret.AddRange(nodes);
+            return ret;
+        }
 
         private Node(string name, object value, Node parent)
         {

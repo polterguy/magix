@@ -1,6 +1,6 @@
 /*
  * Magix - A Web Application Framework for Humans
- * Copyright 2010 - 2014 - isa.lightbringer@gmail.com
+ * Copyright 2010 - 2014 - thomas@magixilluminate.com
  * Magix is licensed as MITx11, see enclosed License.txt File for Details.
  */
 
@@ -11,7 +11,7 @@ using System.Globalization;
 
 namespace Magix.math
 {
-	/**
+	/*
 	 * contains the magix.math main active events
 	 */
 	public class MathCore : ActiveController
@@ -19,19 +19,25 @@ namespace Magix.math
         private delegate decimal ExecuteFirstExpression(decimal input);
         private delegate decimal ExecuteSecondExpression(decimal input, decimal result);
 
-        /**
+        /*
          * adds the values of all underlaying nodes
          */
         [ActiveEvent(Name = "magix.math.add")]
         public static void magix_math_add(object sender, ActiveEventArgs e)
         {
-            if (ShouldInspect(e.Params))
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
             {
-                e.Params["event:magix.math.add"].Value = null;
-                e.Params["inspect"].Value = @"adds the underlaying values together and 
-puts the result in value of [magix.math.add] node.&nbsp;&nbsp;
-[add] nodes can be nested with other magix.math nodes.
-&nbsp;&nbsp;thread safe";
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.math",
+                    "Magix.math.hyperlisp.inspect.hl",
+                    "[magix.math.add-dox].Value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.math",
+                    "Magix.math.hyperlisp.inspect.hl",
+                    "[magix.math.add-sample]");
                 return;
             }
 
@@ -46,19 +52,25 @@ puts the result in value of [magix.math.add] node.&nbsp;&nbsp;
                 });
         }
 
-        /**
+        /*
          * subtracts the values of all underlaying nodes
          */
         [ActiveEvent(Name = "magix.math.subtract")]
         public static void magix_math_subtract(object sender, ActiveEventArgs e)
         {
-            if (ShouldInspect(e.Params))
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
             {
-                e.Params["event:magix.math.add"].Value = null;
-                e.Params["inspect"].Value = @"subtracts the underlaying values together and 
-puts the result in value of [magix.math.add] node.&nbsp;&nbsp;
-[add] nodes can be nested with other magix.math nodes.
-&nbsp;&nbsp;thread safe";
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.math",
+                    "Magix.math.hyperlisp.inspect.hl",
+                    "[magix.math.subtract-dox].Value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.math",
+                    "Magix.math.hyperlisp.inspect.hl",
+                    "[magix.math.subtract-sample]");
                 return;
             }
 
@@ -73,19 +85,25 @@ puts the result in value of [magix.math.add] node.&nbsp;&nbsp;
                 });
         }
 
-        /**
+        /*
          * multiplies the values of all underlaying nodes
          */
         [ActiveEvent(Name = "magix.math.multiply")]
         public static void magix_math_multiply(object sender, ActiveEventArgs e)
         {
-            if (ShouldInspect(e.Params))
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
             {
-                e.Params["event:magix.math.add"].Value = null;
-                e.Params["inspect"].Value = @"multiplies the underlaying values together and 
-puts the result in value of [magix.math.add] node.&nbsp;&nbsp;
-[add] nodes can be nested with other magix.math nodes.
-&nbsp;&nbsp;thread safe";
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.math",
+                    "Magix.math.hyperlisp.inspect.hl",
+                    "[magix.math.multiply-dox].Value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.math",
+                    "Magix.math.hyperlisp.inspect.hl",
+                    "[magix.math.multiply-sample]");
                 return;
             }
 
@@ -100,19 +118,25 @@ puts the result in value of [magix.math.add] node.&nbsp;&nbsp;
                 });
         }
 
-        /**
-         * multiplies the values of all underlaying nodes
+        /*
+         * divides the values of all underlaying nodes
          */
         [ActiveEvent(Name = "magix.math.divide")]
         public static void magix_math_divide(object sender, ActiveEventArgs e)
         {
-            if (ShouldInspect(e.Params))
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
             {
-                e.Params["event:magix.math.add"].Value = null;
-                e.Params["inspect"].Value = @"divides the underlaying values together and 
-puts the result in value of [magix.math.add] node.&nbsp;&nbsp;
-[add] nodes can be nested with other magix.math nodes.
-&nbsp;&nbsp;thread safe";
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.math",
+                    "Magix.math.hyperlisp.inspect.hl",
+                    "[magix.math.divide-dox].Value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.math",
+                    "Magix.math.hyperlisp.inspect.hl",
+                    "[magix.math.divide-sample]");
                 return;
             }
 
@@ -127,19 +151,25 @@ puts the result in value of [magix.math.add] node.&nbsp;&nbsp;
                 });
         }
 
-        /**
+        /*
          * modulo the values of all underlaying nodes
          */
         [ActiveEvent(Name = "magix.math.modulo")]
         public static void magix_math_modulo(object sender, ActiveEventArgs e)
         {
-            if (ShouldInspect(e.Params))
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
             {
-                e.Params["event:magix.math.add"].Value = null;
-                e.Params["inspect"].Value = @"divides the underlaying values together and 
-returns the remainer in value of [magix.math.add] node.&nbsp;&nbsp;
-[add] nodes can be nested with other magix.math nodes.
-&nbsp;&nbsp;thread safe";
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.math",
+                    "Magix.math.hyperlisp.inspect.hl",
+                    "[magix.math.modulo-dox].Value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.math",
+                    "Magix.math.hyperlisp.inspect.hl",
+                    "[magix.math.modulo-sample]");
                 return;
             }
 
@@ -166,56 +196,38 @@ returns the remainer in value of [magix.math.add] node.&nbsp;&nbsp;
             bool isFirst = true;
             foreach (Node idx in ip)
             {
-                // Checking to see if value is null
+                // Checking to see if name is not null
                 if (!string.IsNullOrEmpty(idx.Name))
                 {
-                    // sub-math expression or active event
-                    string activeEvent = idx.Name;
-                    if (activeEvent.IndexOf(".") == -1)
-                        activeEvent = "magix.math." + activeEvent;
-
-                    Node parsInner = new Node();
-                    parsInner["_ip"].Value = idx;
-                    parsInner["_dp"].Value = dp;
-
-                    RaiseActiveEvent(
-                        activeEvent,
-                        parsInner);
-
-                    // Adding up sub-expression result
-                    if (isFirst)
+                    pars["_ip"].Value = idx;
+                    pars["_root-only-execution"].Value = true;
+                    try
                     {
-                        isFirst = false;
-                        result = first(
-                            Convert.ToDecimal(
-                                Expressions.GetExpressionValue(idx.Get<string>(), dp, ip, false), 
-                                CultureInfo.InvariantCulture));
+                        RaiseActiveEvent(
+                            "magix.execute",
+                            pars);
                     }
-                    else
-                        result = second(
-                            Convert.ToDecimal(
-                                Expressions.GetExpressionValue(idx.Get<string>(), dp, ip, false), 
-                                CultureInfo.InvariantCulture), 
-                            result);
+                    finally
+                    {
+                        pars["_root-only-execution"].UnTie();
+                    }
+                }
+
+                // number
+                if (isFirst)
+                {
+                    isFirst = false;
+                    result = first(
+                        Convert.ToDecimal(
+                            Expressions.GetExpressionValue(idx.Get<string>(), dp, ip, false), 
+                            CultureInfo.InvariantCulture));
                 }
                 else
-                {
-                    // number
-                    if (isFirst)
-                    {
-                        isFirst = false;
-                        result = first(
-                            Convert.ToDecimal(
-                                Expressions.GetExpressionValue(idx.Get<string>(), dp, ip, false), 
-                                CultureInfo.InvariantCulture));
-                    }
-                    else
-                        result = second(
-                            Convert.ToDecimal(
-                                Expressions.GetExpressionValue(idx.Get<string>(), dp, ip, false), 
-                                CultureInfo.InvariantCulture), 
-                            result);
-                }
+                    result = second(
+                        Convert.ToDecimal(
+                            Expressions.GetExpressionValue(idx.Get<string>(), dp, ip, false), 
+                            CultureInfo.InvariantCulture), 
+                        result);
             }
             ip.Value = result;
         }

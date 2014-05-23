@@ -1,6 +1,6 @@
 /*
  * Magix - A Web Application Framework for Humans
- * Copyright 2010 - 2014 - isa.lightbringer@gmail.com
+ * Copyright 2010 - 2014 - thomas@magixilluminate.com
  * Magix is licensed as MITx11, see enclosed License.txt File for Details.
  */
 
@@ -11,31 +11,34 @@ using Magix.Core;
 
 namespace Magix.execute
 {
-	/**
+	/*
 	 * xml core logic
 	 */
 	public class XmlCore : ActiveController
 	{
-		/**
+		/*
 		 * returns [xml] as [dom]
 		 */
 		[ActiveEvent(Name = "magix.xml.xml-2-node")]
 		public static void magix_web_get(object sender, ActiveEventArgs e)
 		{
-			if (ShouldInspect(e.Params))
-			{
-				e.Params["event:magix.execute"].Value = null;
-				e.Params["inspect"].Value = @"will return 
-[dom] node structure, parsed from xml in value.&nbsp;&nbsp;thread safe";
-				e.Params["magix.xml.xml-2-node"].Value = @"
-<xml>
-  <value1>howdy</value1>
-  <value2>hello</value2>
-</xml>";
-				return;
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
+            {
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.xml",
+                    "Magix.xml.hyperlisp.inspect.hl",
+                    "[magix.xml.xml-2-node-dox].Value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.xml",
+                    "Magix.xml.hyperlisp.inspect.hl",
+                    "[magix.xml.xml-2-node-sample]");
+                return;
 			}
 
-            string xml = Ip(e.Params).Get<string>();
+            string xml = ip.Get<string>();
 
 			if (string.IsNullOrEmpty(xml))
 				throw new ArgumentException("need xml value to [magix.xml.xml-2-node]");
@@ -43,7 +46,7 @@ namespace Magix.execute
 			XmlDocument doc = new XmlDocument();
 			doc.LoadXml(xml);
 
-            ParseNode(doc.DocumentElement, Ip(e.Params)["dom"]["_tmp"]);
+            ParseNode(doc.DocumentElement, ip["dom"]["_tmp"]);
 		}
 
 		private static void ParseNode(XmlNode xml, Node node)

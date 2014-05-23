@@ -1,0 +1,97 @@
+﻿
+
+inspect=>@"documentation for ms sql data adapter"
+
+
+microsoft.sql.select-dox=>@"selects from ms sql database
+
+returns an sql query as a list of nodes, underneath the [result] node, from a microsoft sql 
+server
+
+add up parameters beneath the [params] node, and make sure you have a valid connection string 
+to an ms sql database in your [connection] parameter.  put the actual sql query in the [sql] 
+parameter node
+
+both [sql], [connection], [start] and [end] can be either expressions or constant values.  if 
+you wish, you can de-reference a connection string from your web.config file, instead of typing 
+in the connection string in code by prefixing the [connection] value with web.config:NamedConnection, 
+and such reference the connection string from your web.config called ""NamedConnection""
+
+if you supply a [start] and [end] node, then the query will only return the subsection of result 
+inbetween the integer value from [start] and [end], which is useful for queries returning huge 
+results.  [start] and [end] are optional, and if they are not given, the query will return all 
+records matching your sql.  [start] and [end] can be either constants or expressions.  if you 
+supply a [start] and [end] node, then the active event will return the number of records totally 
+in the query in the [record-count] return node, unless you also supply a [count] node, with the 
+value of false
+
+unless you supply a [blobs] parameter, having the value of true, then no blobs, or byte[] result 
+rows will be returned
+
+thread safe"
+
+microsoft.sql.select-sample
+  microsoft.sql.select
+    connection=>Data Source=(localdb)\v11.0;Initial Catalog=Northwind;Integrated Security=True
+    start=(int)>0
+    end=(int)>20
+    sql=>select * from Customers where ContactTitle=@ContactTitle
+    params
+      ContactTitle=>owner
+
+
+microsoft.sql.select-as-text-dox=>@"selects sql as single-node text
+
+selects sql select queries as plain text.  this is useful to supply as a plugin for [magix.file.load], 
+since it can transparently load information from a database and treat it as if it was a file object.  
+add up parameters beneath the [file]/[params] node, and make sure you have a valid connection string 
+to an ms sql database in your [file]/[connection] parameter.  put the actual sql query in the [file]/[sql] 
+parameter node, and make sure your query only returns one column.  the result from the query, will be 
+appended into the [value] node, with a carriage return following every result, making possible to treat 
+multiple rows from a database as if it was one piece of text
+
+both [sql] and [connection] can be either expressions or constant values.  if you wish, you can 
+de-reference a connection string from your web.config file, instead of typing in the connection string in 
+code by prefixing the [connection] value with web.config:NamedConnection, and such reference the connection 
+string from your web.config called ""NamedConnection""
+
+thread safe"
+
+microsoft.sql.select-as-text-sample
+  microsoft.sql.load-as-file
+    file
+      connection=>Data Source=(localdb)\v11.0;Initial Catalog=Northwind;Integrated Security=True
+      sql=>select * from Customers where ContactTitle=@ContactTitle
+      params
+        ContactTitle=>owner
+
+
+microsoft.sql.execute-dox=>@"executes a non-query sql statement
+
+executes a non-query sql statement towards a microsoft sql server, and returns the number 
+of rows affected in the [result] node
+
+add up parameters underneath the [params] node, and make sure you have a valid connection 
+string to an ms sql database in your [connection] parameter.  put the actual sql query in 
+the [sql] parameter node
+
+both [sql] and [connection] can be either expressions or constant values.  if you wish, 
+you can de-reference a connection string from your web.config file, instead of typing in 
+the connection string in code by prefixing the [connection] value with web.config:NamedConnection, 
+and such reference the connection string from your web.config called ""NamedConnection""
+
+thread safe"
+
+microsoft.sql.execute-sample
+  microsoft.sql.execute
+    connection=>Data Source=(localdb)\v11.0;Initial Catalog=Northwind;Integrated Security=True
+    sql=>update Customers set ContactTitle='big boss' where ContactTitle=@ContactTitle
+    params
+      ContactTitle=>Owner
+
+
+magix.admin.desktop-shortcuts.microsoft.sql-dox=>@"returns the desktop shortcuts for ms sql
+
+returns the desktop shortcuts for the microsoft.sql components
+
+thread safe"
