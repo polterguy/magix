@@ -1,6 +1,6 @@
 /*
  * Magix - A Web Application Framework for Humans
- * Copyright 2010 - 2014 - isa.lightbringer@gmail.com
+ * Copyright 2010 - 2014 - thomas@magixilluminate.com
  * Magix is licensed as MITx11, see enclosed License.txt File for Details.
  */
 
@@ -16,76 +16,6 @@ namespace Magix.execute
 	 */
 	public class ExecuteCore : ActiveController
 	{
-        /*
-         * using keyword implementation
-         */
-        [ActiveEvent(Name = "magix.execute.using")]
-        public void magix_execute_using(object sender, ActiveEventArgs e)
-        {
-            Node ip = Ip(e.Params, true);
-            if (ShouldInspect(ip))
-            {
-                AppendInspectFromResource(
-                    ip["inspect"],
-                    "Magix.execute",
-                    "Magix.execute.hyperlisp.inspect.hl",
-                    "[magix.execute.using-dox].Value");
-                AppendCodeFromResource(
-                    ip,
-                    "Magix.execute",
-                    "Magix.execute.hyperlisp.inspect.hl",
-                    "[magix.execute.using-sample]");
-                return;
-            }
-
-            try
-            {
-                Node dp = Dp(e.Params);
-                e.Params["_namespaces"].Add(new Node("item", ip.Get<string>()));
-                Execute(ip, e.Params);
-            }
-            finally
-            {
-                e.Params["_namespaces"][e.Params["_namespaces"].Count - 1].UnTie();
-                if (e.Params["_namespaces"].Count == 0)
-                    e.Params["_namespaces"].UnTie();
-            }
-        }
-
-        /*
-          * sanbox keyword implementation
-          */
-        [ActiveEvent(Name = "magix.execute.sandbox")]
-        public void magix_execute_sandbox(object sender, ActiveEventArgs e)
-        {
-            Node ip = Ip(e.Params);
-            if (ShouldInspect(ip))
-            {
-                AppendInspectFromResource(
-                    ip["inspect"],
-                    "Magix.execute",
-                    "Magix.execute.hyperlisp.inspect.hl",
-                    "[magix.execute.sandbox-dox].Value");
-                AppendCodeFromResource(
-                    ip,
-                    "Magix.execute",
-                    "Magix.execute.hyperlisp.inspect.hl",
-                    "[magix.execute.sandbox-sample]");
-                return;
-            }
-
-            if (!ip.Contains("code"))
-                throw new ArgumentException("you need to supply a [code] block to [sandbox] active event");
-            if (!ip.Contains("whitelist"))
-                throw new ArgumentException("you need to supply a [whitelist] block to [sandbox] active event");
-
-            e.Params["_whitelist"].AddRange(ip["whitelist"].Clone());
-            e.Params["_ip"].Value = ip["code"];
-            RaiseActiveEvent(
-                "magix.execute",
-                e.Params);
-        }
-
         /*
          * hyperlisp implementation
          */
@@ -135,14 +65,14 @@ namespace Magix.execute
             }
             else
             {
-                if (!e.Params.Contains("_max-execution-lines"))
+                if (!e.Params.Contains("_max-execution-iterations"))
                 {
                     int maxNumberOfLines = int.Parse(ConfigurationManager.AppSettings["magix.execute.maximum-execution-iterations"]);
-                    e.Params["_max-execution-lines"].Value = maxNumberOfLines;
+                    e.Params["_max-execution-iterations"].Value = maxNumberOfLines;
                 }
 
-                if (!e.Params.Contains("_current-executed-lines"))
-                    e.Params["_current-executed-lines"].Value = 0;
+                if (!e.Params.Contains("_current-executed-iterations"))
+                    e.Params["_current-executed-iterations"].Value = 0;
 
                 Node dp = Dp(e.Params);
 
@@ -165,36 +95,51 @@ namespace Magix.execute
 		 */
 		private static void Execute(Node ip, Node pars)
 		{
-            int maxExecutionLines = pars["_max-execution-lines"].Get<int>();
+            if (pars.ContainsValue("_root-only-execution") && pars["_root-only-execution"].Get<bool>())
+            {
+                Node idxKeyword = ip;
+                ExecuteSingleNode(ip, pars, idxKeyword);
+            }
+            else
+            {
+                // looping through all keywords/active-events in the child collection
+                for (int idxNo = 0; idxNo < ip.Count; idxNo++)
+                {
+                    Node idx = ip[idxNo];
+                    ExecuteSingleNode(ip, pars, idx);
+                }
+            }
+		}
 
-			// looping through all keywords/active-events in the child collection
-			for (int idxNo = 0; idxNo < ip.Count; idxNo++)
-			{
-				Node idx = ip[idxNo];
-				string activeEvent = idx.Name;
-                
-				// checking to see if this is just a data/comment buffer ...
-                if (activeEvent.StartsWith("_") || activeEvent.StartsWith("//") || activeEvent == "inspect" || activeEvent == "$")
-					continue;
+        private static void ExecuteSingleNode(Node ip, Node pars, Node idx)
+        {
+            string activeEvent = idx.Name;
 
+            // checking to see if this is just a data/comment buffer ...
+            if (!activeEvent.StartsWith("_") &&
+                !activeEvent.StartsWith("//") &&
+                activeEvent != "inspect" &&
+                activeEvent != "$")
+            {
                 // checking to see if execution engine overflowed its number of execution lines
-                int noCurrentExecutedHyperLispWords = pars["_current-executed-lines"].Get<int>();
+                int noCurrentExecutedHyperLispWords = pars["_current-executed-iterations"].Get<int>();
+                int maxExecutionLines = pars["_max-execution-iterations"].Get<int>();
                 if (noCurrentExecutedHyperLispWords >= maxExecutionLines)
                     throw new ApplicationException("execution engine overflowed");
 
                 noCurrentExecutedHyperLispWords += 1;
-                pars["_current-executed-lines"].Value = noCurrentExecutedHyperLispWords;
+                pars["_current-executed-iterations"].Value = noCurrentExecutedHyperLispWords;
 
                 if (activeEvent.Contains("."))
-				{
+                {
                     // verifying we're allowed to execute current active event
                     CheckSandbox(activeEvent, pars);
 
-					// this is an active event reference, and does not have access to entire tree
-					Node parent = idx.Parent;
-					idx.SetParent(null);
-					try
-					{
+                    // this is an active event reference, and does not have access to entire tree
+                    Node parent = idx.Parent;
+                    idx.SetParent(null);
+                    try
+                    {
                         Node executionNode = idx;
                         if (activeEvent.StartsWith("magix.execute"))
                         {
@@ -204,48 +149,48 @@ namespace Magix.execute
                             tmpExe["_dp"].Value = executionNode;
                             executionNode = tmpExe;
                         }
-						RaiseActiveEvent(
-							activeEvent,
+                        RaiseActiveEvent(
+                            activeEvent,
                             executionNode);
-					}
-					finally
-					{
-						idx.SetParent(parent);
-					}
-				}
-				else
-				{
+                    }
+                    finally
+                    {
+                        idx.SetParent(parent);
+                    }
+                }
+                else
+                {
                     // verifying we're allowed to execute current active event
                     CheckSandbox(activeEvent, pars);
 
                     object oldIp = pars.Contains("_ip") ? pars["_ip"].Value : null;
 
-					// this is a keyword, and have access to the entire tree, and also needs to have the default namespace 
+                    // this is a keyword, and have access to the entire tree, and also needs to have the default namespace 
                     // prepended in front of it before being raised
                     if (pars.Contains("_namespaces") && pars["_namespaces"].Count > 0)
                         activeEvent = pars["_namespaces"][pars["_namespaces"].Count - 1].Get<string>() + "." + activeEvent;
                     else
-    					activeEvent = "magix.execute." + activeEvent;
+                        activeEvent = "magix.execute." + activeEvent;
 
                     pars["_ip"].Value = idx;
 
-					if (!pars.Contains("_dp"))
-						pars["_dp"].Value = ip;
+                    if (!pars.Contains("_dp"))
+                        pars["_dp"].Value = ip;
 
-					try
-					{
-						RaiseActiveEvent(
-							activeEvent,
-							pars);
-					}
-					finally
-					{
-						if (oldIp != null)
-							pars["_ip"].Value = oldIp;
-					}
-				}
-			}
-		}
+                    try
+                    {
+                        RaiseActiveEvent(
+                            activeEvent,
+                            pars);
+                    }
+                    finally
+                    {
+                        if (oldIp != null)
+                            pars["_ip"].Value = oldIp;
+                    }
+                }
+            }
+        }
 
         private static void CheckSandbox(string activeEvent, Node pars)
         {

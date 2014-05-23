@@ -1,0 +1,21 @@
+﻿
+
+inspect=>@"creates the dynamic unit tests"
+
+
+magix.file.directory-exist
+  directory=>system42/startup-scripts/unit-tests
+
+if=>equals
+  lhs=>[magix.file.directory-exist][value].Value
+  rhs=>true
+  code
+    magix.file.list-files
+      directory=>system42/startup-scripts/unit-tests
+      filter=>*.hl
+
+    for-each=>[@][magix.file.list-files][files]
+      set=>[@][execute-script][file].Value
+        value=>[.].Name
+
+

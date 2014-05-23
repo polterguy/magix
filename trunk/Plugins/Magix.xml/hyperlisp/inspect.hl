@@ -1,0 +1,17 @@
+﻿
+
+inspect=>@"documentation for magix.xml"
+
+
+magix.xml.xml-2-node-dox=>@"creates a node tree from xml
+
+will return [dom] node structure, parsed from xml in value
+
+thread safe"
+
+magix.xml.xml-2-node-sample
+  magix.xml.xml-2-node=>@"
+<xml>
+  <value1>howdy</value1>
+  <value2>hello</value2>
+</xml>"

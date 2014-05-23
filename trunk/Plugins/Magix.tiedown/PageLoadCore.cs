@@ -1,6 +1,6 @@
 /*
  * Magix - A Web Application Framework for Humans
- * Copyright 2010 - 2014 - isa.lightbringer@gmail.com
+ * Copyright 2010 - 2014 - thomas@magixilluminate.com
  * Magix is licensed as MITx11, see enclosed License.txt File for Details.
  */
 
@@ -10,21 +10,26 @@ using Magix.Core;
 
 namespace Magix.tiedown
 {
-	/**
+	/*
 	 * runs the page load hyperlisp file
 	 */
 	public class PageLoadCore : ActiveController
 	{
-		/**
+		/*
 		 * runs the page load hyperlisp file
 		 */
 		[ActiveEvent(Name = "magix.viewport.page-load")]
 		public void magix_viewport_page_load(object sender, ActiveEventArgs e)
 		{
-			if (ShouldInspect(e.Params))
-			{
-				e.Params["inspect"].Value = @"executes the index.hl hyperlisp file";
-				return;
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
+            {
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.tiedown",
+                    "Magix.tiedown.hyperlisp.inspect.hl",
+                    "[magix.viewport.page-load-dox].Value");
+                return;
 			}
 
 			Node node = new Node();

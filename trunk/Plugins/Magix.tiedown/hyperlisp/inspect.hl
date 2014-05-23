@@ -1,0 +1,56 @@
+﻿
+
+inspect=>@"documentation for magix.tiedown"
+
+
+magix.viewport.page-load-dox=>@"executes the index.hl hyperlisp file"
+
+
+magix.core.application-startup-dox=>@"executes the startup.hl hyperlisp file"
+
+
+magix.viewport.load-viewport-dox=>@"executes the load-viewport.hl hyperlisp file"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

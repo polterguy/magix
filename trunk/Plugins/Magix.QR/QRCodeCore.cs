@@ -1,6 +1,6 @@
 ﻿/*
  * Magix - A Web Application Framework for Humans
- * Copyright 2010 - 2014 - isa.lightbringer@gmail.com
+ * Copyright 2010 - 2014 - thomas@magixilluminate.com
  * Magix is licensed as MITx11, see enclosed License.txt File for Details.
  */
 
@@ -15,57 +15,34 @@ using Magix.Core;
 
 namespace Magix.QR
 {
-    /**
+    /*
      * QR codes controller
      */
-    public class QRCodeCore : ActiveController
+    internal sealed class QRCodeCore : ActiveController
     {
-        /**
+        /*
          * creates a QR code according to the given input
          */
         [ActiveEvent(Name = "magix.qr.create")]
-        protected void magix_qr_create(object sender, ActiveEventArgs e)
+        private void magix_qr_create(object sender, ActiveEventArgs e)
         {
-            if (ShouldInspect(e.Params))
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
             {
-                e.Params.Clear();
-                e.Params["inspect"].Value = @"creates a qr code as png file according to the given input.
-&nbsp;&nbsp;[scale] means size of code, or number of pixels to create each pixel in code, defaults to 6.&nbsp;&nbsp;
-[err] means error correction, defaults to Q, legal values are H, L, M and Q.&nbsp;&nbsp;
-[url] is url code points to, can also be a piece of text if you only wish to display text.&nbsp;&nbsp;
-[value] means friendly description text shown beneath code.&nbsp;&nbsp;
-[rounded-corners] is an integer telling the generator the size of the rounded borders, if any.&nbsp;&nbsp;
-[anti-pixelated] is a boolean telling the generator if it is supposed to anti pixelate the pixels, to create smoothing effect, defaults to true.&nbsp;&nbsp;
-[bg-image] tells generator what background image to use to fill the background of the code with, defaults to bumby-white.png.&nbsp;&nbsp;
-[fg-image] tells generator what background image to use to fill the foreground of the code with, defaults to bumpy-dark.png.&nbsp;&nbsp;
-[bg-color] tells generator what color to use as background color.&nbsp;&nbsp;
-[font-name] is the name of the font used to render the [value] property, defaults to 'Comic Sans MS'.&nbsp;&nbsp;
-[font-size] is the size in pixels used to render the [value].&nbsp;&nbsp;
-[font-color] is the color used to render the [value], defaults to .&nbsp;&nbsp;
-[rotate] is an integer telling the generator how many degrees it should rotate the code anti-clockwise.&nbsp;&nbsp;
-[file-name] tells the generator what file name to save the code as, defaults to tmp directory + a unique filename ending with .png.&nbsp;&nbsp;
-thread safe";
-                e.Params["event:magix.execute"].Value = null;
-                e.Params["magix.qr.create"]["scale"].Value = 6;
-                e.Params["magix.qr.create"]["err"].Value = "Q";
-                e.Params["magix.qr.create"]["url"].Value = "http://code.google.com/p/magix-illuminate-2";
-                e.Params["magix.qr.create"]["text"].Value = "magix";
-                e.Params["magix.qr.create"]["rounded-corners"].Value = 20;
-                e.Params["magix.qr.create"]["anti-pixelated"].Value = true;
-                e.Params["magix.qr.create"]["bg-image"].Value = "media/images/textures/bumpy-light.png";
-                e.Params["magix.qr.create"]["fg-image"].Value = "media/images/textures/bumpy-dark.png";
-                e.Params["magix.qr.create"]["bg-color"].Value = "";
-                e.Params["magix.qr.create"]["fg-color"].Value = "";
-                e.Params["magix.qr.create"]["font-name"].Value = "Comic Sans MS";
-                e.Params["magix.qr.create"]["font-size"].Value = -1;
-                e.Params["magix.qr.create"]["font-color"].Value = "#999999";
-                e.Params["magix.qr.create"]["rotate"].Value = 12;
-                e.Params["magix.qr.create"]["file-name"].Value = "tmp/file-name.png";
-                e.Params["magix.viewport.execute-javascript"]["script"].Value = "window.open('" + GetApplicationBaseUrl() + "tmp/file-name.png', '_blank');";
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.QR",
+                    "Magix.QR.hyperlisp.inspect.hl",
+                    "[magix.qr.create-dox].Value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.QR",
+                    "Magix.QR.hyperlisp.inspect.hl",
+                    "[magix.qr.create-sample]");
                 return;
             }
 
-            if (!e.Params.Contains("url"))
+            if (!e.Params.ContainsValue("url"))
                 throw new ArgumentException("[magix.qr.create] requires a [url] property");
 
             // Retreiving attributes for QR Code...
@@ -492,7 +469,7 @@ thread safe";
             }
         }
 
-        public static void AdjustAlpha(
+        private static void AdjustAlpha(
             Bitmap image,
             byte alpha,
             Color destColor,
@@ -532,7 +509,7 @@ thread safe";
             image.UnlockBits(bmData);
         }
 
-        public static Image DrawRoundedRectangle(
+        private static Image DrawRoundedRectangle(
             Graphics g,
             Brush b,
             Rectangle rec,
@@ -573,7 +550,7 @@ thread safe";
             return blur.Apply((Bitmap)img);
         }
 
-        public enum RoundedCorners
+        internal enum RoundedCorners
         {
             None = 0x00,
             TopLeft = 0x02,

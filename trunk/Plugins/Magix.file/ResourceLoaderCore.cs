@@ -1,6 +1,6 @@
 /*
  * Magix - A Web Application Framework for Humans
- * Copyright 2010 - 2014 - isa.lightbringer@gmail.com
+ * Copyright 2010 - 2014 - thomas@magixilluminate.com
  * Magix is licensed as MITx11, see enclosed License.txt File for Details.
  */
 
@@ -14,7 +14,7 @@ using Magix.Core;
 
 namespace Magix.execute
 {
-	/**
+	/*
 	 * helper for loading files from resources
 	 */
     public class ResourceLoaderCore : ActiveController
@@ -25,33 +25,34 @@ namespace Magix.execute
         [ActiveEvent(Name = "magix.file.load-from-resource")]
         public static void magix_file_load_from_resource(object sender, ActiveEventArgs e)
         {
-            if (ShouldInspect(e.Params))
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
             {
-                e.Params["inspect"].Value = @"<p>plugin for loading embedded resources 
-as files</p><p>this is useful for using as a plugin loader for the [magix.file.load] 
-active event</p><p>thread safe</p>";
-                e.Params["magix.file.load"]["file"].Value = "plugin:magix.file.load-from-resource";
-                e.Params["magix.file.load"]["file"]["assembly"].Value = "name.of.your.assembly";
-                e.Params["magix.file.load"]["file"]["resource-name"].Value = "resource.name.of.your.file.inside.your.assembly.txt";
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.file",
+                    "Magix.file.hyperlisp.inspect.hl",
+                    "[magix.file.load-from-resource-dox].Value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.file",
+                    "Magix.file.hyperlisp.inspect.hl",
+                    "[magix.file.load-from-resource-sample]");
                 return;
             }
 
-            Node ip = Ip(e.Params);
             Node dp = Dp(e.Params);
 
-            if (!ip.Contains("file"))
+            if (!ip.ContainsValue("file"))
                 throw new ArgumentException("you need to supply a [file] parameter");
 
-            if (!ip["file"].Contains("assembly"))
+            if (!ip["file"].ContainsValue("assembly"))
                 throw new ArgumentException("you need to supply which assembly to load the file from as the [file]/[assembly] parameter");
-
             string assembly = Expressions.GetExpressionValue(ip["file"]["assembly"].Get<string>(), dp, ip, false) as string;
-            if (string.IsNullOrEmpty(assembly))
-                throw new ArgumentException("you need to define which assembly to load file from as [file]/[assembly]");
 
-            string resourceName = Expressions.GetExpressionValue(ip["file"]["resource-name"].Get<string>(), dp, ip, false) as string;
-            if (string.IsNullOrEmpty(resourceName))
+            if (!ip["file"].ContainsValue("resource-name"))
                 throw new ArgumentException("you need to define which resource to load as [file]/[resource-name]");
+            string resourceName = Expressions.GetExpressionValue(ip["file"]["resource-name"].Get<string>(), dp, ip, false) as string;
 
             Assembly asm = null;
             foreach (Assembly idxAsm in ModuleControllerLoader.ModuleAssemblies)

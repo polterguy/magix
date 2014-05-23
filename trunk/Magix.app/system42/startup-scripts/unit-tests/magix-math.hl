@@ -1,0 +1,34 @@
+
+
+inspect=>@"creates unit tests to 
+test the [magix.math] namespace"
+
+
+event
+  name=>magix.test.multiple-math-value
+  persist=>false
+  inspect=>@"asserts that magix.math functions 
+with multiple recursive math expressions"
+  code
+    using=>magix.math
+      add
+        =>5
+        subtract
+          =>10
+          =>5
+          =>3
+        multiply
+          =>3
+          =>3
+          modulo
+            =>15
+            =>6
+    if=>not-equals
+      lhs=>[using=>magix.math][add].Value
+      rhs=>34
+      code
+        throw=>magix.math didn't produce the correct result
+
+
+
+

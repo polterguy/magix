@@ -1,6 +1,6 @@
 ﻿/*
  * Magix - A Web Application Framework for Humans
- * Copyright 2010 - 2014 - isa.lightbringer@gmail.com
+ * Copyright 2010 - 2014 - thomas@magixilluminate.com
  * Magix is licensed as MITx11, see enclosed License.txt File for Details.
  */
 
@@ -24,7 +24,7 @@ namespace Magix.Core
 		 */
         protected static bool ShouldInspect(Node node)
         {
-            return (node.Contains("inspect") && node["inspect"].Value == null);
+            return node.Contains("inspect");
         }
 
         /*
@@ -150,7 +150,7 @@ namespace Magix.Core
         /*
          * html formats and appends the given value to the given node's value
          */
-        protected void AppendInspect(Node node, string value)
+        protected static void AppendInspect(Node node, string value)
         {
             AppendInspect(node, value, false);
         }
@@ -161,17 +161,27 @@ namespace Magix.Core
         protected static void AppendInspect(Node node, string value, bool dropInitialHeader)
         {
             if (!dropInitialHeader)
-                dropInitialHeader = node["type"].Get("") == "drop-header";
-            bool dropHtml = node["type"].Get("") == "no-html";
+                dropInitialHeader = node.ContainsValue("type") && node["type"].Get("") == "drop-header";
+            bool dropHtml = node.ContainsValue("type") && node["type"].Get("") == "no-html";
 
+            int noCharsSinceCR = 0;
             StringBuilder builder = new StringBuilder(node.Get<string>());
             if (!dropInitialHeader || dropHtml)
+            {
+                noCharsSinceCR += 4;
                 builder.Append("<h3>");
+            }
+            else if (!dropHtml)
+            {
+                noCharsSinceCR += 3;
+                builder.Append("<p>");
+            }
             bool hasClosedH3 = false;
 
             char lastChar = char.MinValue, secondLastChar = char.MinValue;
             foreach (char idxChar in value)
             {
+                noCharsSinceCR += 1;
                 switch (idxChar)
                 {
                     case '\r':
@@ -184,32 +194,58 @@ namespace Magix.Core
                             if (!hasClosedH3 && !dropInitialHeader)
                             {
                                 hasClosedH3 = true;
-                                builder.Append("</h3><p>");
+                                builder.Append("</h3>\r\n<p>");
+                                noCharsSinceCR = 3;
                             }
                             else
-                                builder.Append("</p><p>");
+                            {
+                                noCharsSinceCR = 3;
+                                builder.Append("</p>\r\n<p>");
+                            }
                         }
                         else
-                            builder.Append(' ');
+                        {
+                            if (noCharsSinceCR >= 33)
+                            {
+                                builder.Append("\n");
+                                noCharsSinceCR = 0;
+                            }
+                            else
+                                builder.Append(' ');
+                        }
                         break;
                     case '[':
                         if (!dropHtml)
+                        {
+                            noCharsSinceCR += 8;
                             builder.Append("<strong>[");
+                        }
                         else
                             builder.Append("[");
                         break;
                     case ']':
                         if (!dropHtml)
+                        {
+                            noCharsSinceCR += 9;
                             builder.Append("]</strong>");
+                        }
                         else
                             builder.Append("]");
                         break;
                     case ' ':
-                        if (lastChar == ' ' && secondLastChar == '.')
+                        if (noCharsSinceCR >= 33)
+                        {
+                            builder.Append("\n");
+                            noCharsSinceCR = 0;
+                        }
+                        else if (lastChar == ' ' && secondLastChar == '.')
                         {
                             builder.Remove(builder.Length - 1, 1);
                             if (!dropHtml)
+                            {
+                                noCharsSinceCR += 12;
                                 builder.Append("&nbsp;&nbsp;");
+                            }
                             else
                                 builder.Append("  ");
                         }

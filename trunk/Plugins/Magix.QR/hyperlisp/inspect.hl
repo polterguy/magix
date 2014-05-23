@@ -1,0 +1,85 @@
+﻿
+
+inspect=>@"documentation for qr code generator"
+
+
+magix.qr.create-dox=>@"creates a qr code
+
+creates a qr code as png file according to the given input.  [scale] means size of code, or number of pixels 
+to create each pixel in code, defaults to 6.  [err] means error correction, defaults to Q, legal values are 
+H, L, M and Q.  [url] is url code points to, can also be a piece of text if you only wish to display text.  
+[value] means friendly description text shown beneath code.  [rounded-corners] is an integer telling the 
+generator the size of the rounded borders, if any.  [anti-pixelated] is a boolean telling the generator if 
+it is supposed to anti pixelate the pixels, to create smoothing effect, defaults to true.  [bg-image] tells 
+generator what background image to use to fill the background of the code with, defaults to bumby-white.png.  
+[fg-image] tells generator what background image to use to fill the foreground of the code with, defaults to 
+bumpy-dark.png.  [bg-color] tells generator what color to use as background color.  [font-name] is the name 
+of the font used to render the [value] property, defaults to 'Comic Sans MS'.  [font-size] is the size in 
+pixels used to render the [value].  [font-color] is the color used to render the [value].  [rotate] is an 
+integer telling the generator how many degrees it should rotate the code anti-clockwise.  [file-name] tells 
+the generator what file name to save the code as, defaults to tmp directory + a unique filename ending with 
+.png
+
+thread safe"
+
+magix.qr.create-sample
+  magix.qr.create
+    scale=(int)>6
+    err=>Q
+    url=>http://magixilluminate.com
+    text=>magix
+    rounded-corners=(int)>20
+    anti-pixelated=(bool)>True
+    bg-image=>media/images/textures/bumpy-light.png
+    fg-image=>media/images/textures/bumpy-dark.png
+    bg-color=>
+    fg-color=>
+    font-name=>Comic Sans MS
+    font-size=(int)>-1
+    font-color=>#999999
+    rotate=(int)>-12
+    file-name=>tmp/file-name.png
+  magix.viewport.execute-javascript
+    script=>window.open('tmp/file-name.png', '_blank');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

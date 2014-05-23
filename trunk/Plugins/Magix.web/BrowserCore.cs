@@ -1,6 +1,6 @@
 /*
  * Magix - A Web Application Framework for Humans
- * Copyright 2010 - 2014 - isa.lightbringer@gmail.com
+ * Copyright 2010 - 2014 - thomas@magixilluminate.com
  * Magix is licensed as MITx11, see enclosed License.txt File for Details.
  */
 
@@ -10,33 +10,38 @@ using System.Web;
 using Magix.Core;
 using Magix.UX.Builder;
 
-namespace Magix.execute
+namespace Magix.web
 {
-	/**
+	/*
 	 * browser core
 	 */
 	public class BrowserCore : ActiveController
 	{
-		/**
+		/*
 		 * scrolls the browser window
 		 */
 		[ActiveEvent(Name = "magix.viewport.scroll")]
 		public void magix_browser_scroll(object sender, ActiveEventArgs e)
 		{
-			if (ShouldInspect(e.Params))
-			{
-				e.Params["event:magix.execute"].Value = null;
-				e.Params["inspect"].Value = @"will scroll the browser window 
-such that is shows a specific element.&nbsp;&nbsp;if no element 
-is given, it will scroll the browser window to the top.
-&nbsp;&nbsp;not thread safe";
-				e.Params["magix.viewport.scroll"].Value = "id-of-some-element";
-				return;
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
+            {
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.web",
+                    "Magix.web.hyperlisp.inspect.hl",
+                    "[magix.viewport.scroll-dox].Value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.web",
+                    "Magix.web.hyperlisp.inspect.hl",
+                    "[magix.viewport.scroll-sample]");
+                return;
 			}
 
-            if (!string.IsNullOrEmpty(Ip(e.Params).Get<string>()))
+            if (!string.IsNullOrEmpty(ip.Get<string>()))
             {
-                string id = Ip(e.Params).Get<string>();
+                string id = ip.Get<string>();
                 string clientId = Magix.UX.Selector.FindControl<System.Web.UI.Control>(Page, id).ClientID;
 
                 Node js = new Node();

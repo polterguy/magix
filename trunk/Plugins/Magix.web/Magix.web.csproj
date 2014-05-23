@@ -48,4 +48,7 @@
       <Name>Magix.UX</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="hyperlisp\inspect.hl" />
+  </ItemGroup>
 </Project>

@@ -35,29 +35,31 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="helpers\DatabaseRemoval.cs" />
-    <Compile Include="keyword-controllers\CodeCore.cs" />
-    <Compile Include="keyword-controllers\WithCore.cs" />
-    <Compile Include="keyword-controllers\IterateTreeCore.cs" />
-    <Compile Include="keyword-controllers\ReplaceCore.cs" />
-    <Compile Include="keyword-controllers\SwitchCore.cs" />
-    <Compile Include="keyword-controllers\LambdaCore.cs" />
-    <Compile Include="keyword-controllers\IndexOfCore.cs" />
-    <Compile Include="keyword-controllers\SplitCore.cs" />
+    <Compile Include="keyword-controllers\core-keywords\SandboxCore.cs" />
+    <Compile Include="keyword-controllers\core-keywords\UsingCore.cs" />
+    <Compile Include="keyword-controllers\extension-keywords\CodeCore.cs" />
+    <Compile Include="keyword-controllers\core-keywords\WithCore.cs" />
+    <Compile Include="keyword-controllers\core-keywords\IterateTreeCore.cs" />
+    <Compile Include="keyword-controllers\core-keywords\ReplaceCore.cs" />
+    <Compile Include="keyword-controllers\core-keywords\SwitchCore.cs" />
+    <Compile Include="keyword-controllers\core-keywords\LambdaCore.cs" />
+    <Compile Include="keyword-controllers\core-keywords\IndexOfCore.cs" />
+    <Compile Include="keyword-controllers\core-keywords\SplitCore.cs" />
     <Compile Include="helpers\StatementHelper.cs" />
     <Compile Include="keyword-controllers\ExecuteCore.cs" />
-    <Compile Include="keyword-controllers\ExceptionCore.cs" />
-    <Compile Include="keyword-controllers\WhileCore.cs" />
-    <Compile Include="keyword-controllers\IfElseCore.cs" />
-    <Compile Include="keyword-controllers\ForEachCore.cs" />
-    <Compile Include="keyword-controllers\SetCore.cs" />
-    <Compile Include="keyword-controllers\AddCore.cs" />
-    <Compile Include="keyword-controllers\OverrideCore.cs" />
-    <Compile Include="keyword-controllers\StopCore.cs" />
-    <Compile Include="keyword-controllers\DebugCore.cs" />
-    <Compile Include="keyword-controllers\EventCore.cs" />
-    <Compile Include="keyword-controllers\ThreadingCore.cs" />
-    <Compile Include="keyword-controllers\RemotingCore.cs" />
-    <Compile Include="keyword-controllers\ScriptCore.cs" />
+    <Compile Include="keyword-controllers\core-keywords\ExceptionCore.cs" />
+    <Compile Include="keyword-controllers\core-keywords\WhileCore.cs" />
+    <Compile Include="keyword-controllers\core-keywords\IfElseCore.cs" />
+    <Compile Include="keyword-controllers\core-keywords\ForEachCore.cs" />
+    <Compile Include="keyword-controllers\core-keywords\SetCore.cs" />
+    <Compile Include="keyword-controllers\core-keywords\AddCore.cs" />
+    <Compile Include="keyword-controllers\extension-keywords\OverrideCore.cs" />
+    <Compile Include="keyword-controllers\core-keywords\StopCore.cs" />
+    <Compile Include="keyword-controllers\core-keywords\DebugCore.cs" />
+    <Compile Include="keyword-controllers\extension-keywords\EventCore.cs" />
+    <Compile Include="keyword-controllers\core-keywords\ThreadingCore.cs" />
+    <Compile Include="keyword-controllers\extension-keywords\RemotingCore.cs" />
+    <Compile Include="keyword-controllers\extension-keywords\ScriptCore.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

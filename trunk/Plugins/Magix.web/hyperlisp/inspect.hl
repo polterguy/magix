@@ -1,0 +1,185 @@
+﻿
+
+inspect=>@"documentation for magix.web"
+
+
+magix.viewport.scroll-dox=>@"scrolls the browser window
+
+will scroll the browser window such that is shows a specific 
+element.  if no element is given, it will scroll the browser 
+window to the top
+
+not thread safe"
+
+magix.viewport.scroll-sample
+  magix.viewport.scroll=>some-web-control-id
+
+
+magix.web.get-file-dox=>@"downloads a file over http
+
+plugin for loading web documents as files.  this is useful for 
+using as a plugin loader for the [magix.file.load] active event
+
+supported protocols are all protocols supported by the WebRequest 
+class in asp.net, and should at least be capable of handling https, 
+http and ftp.  put the url to the document to download into the 
+[file]/[url] node's value.  file will be returned as [value]
+
+thread safe"
+
+magix.web.get-file-sample
+  magix.file.load
+    file=>plugin:magix.web.get-file
+      url=>http://google.com
+
+
+magix.web.get-dox=>@"retrieves an http get parameter
+
+will return the given get http parameter as [value], 
+if existing
+
+not thread safe"
+
+magix.web.get-sample
+  magix.web.get=>some-get-parameter
+
+
+magix.web.set-session-dox=>@"sets a session value
+
+will create or overwrite an existing session variable with 
+name of value of [magix.web.set-session] with node hierarchy 
+from [value].  if you pass in no [value], any existing 
+session object with given key will be removed
+
+not thread safe"
+
+magix.web.set-session-sample
+  magix.web.set-session=>some_key
+    value=>something to store into session
+      inner-value=>howdy
+      x=>y
+        z=>q
+
+
+magix.web.get-session-dox=>@"retrieves an existing session object
+
+will return an existing session variable named through the value 
+of [magix.web.get-session] as node hierarchy as child nodes
+
+not thread safe"
+
+magix.web.get-session-sample
+  magix.web.get-session=>some_key
+
+
+magix.web.redirect-dox=>@"redirects the browser
+
+will redirect the browser to the value of in the [magix.web.redirect] 
+node.  you can use the ~ to reference the base url of the website, and 
+in such a way create relative redirecting urls
+
+not thread safe"
+
+magix.web.redirect-sample
+  magix.web.redirect=>http://google.com
+
+
+magix.web.set-cookie-dox=>@"creates or modifies a brower cookie
+
+will create or overwrite and existing http cookie.  if no expiration 
+date is used, a default of three years from now will be used.  if no 
+[value] is passed in, any existing cookies with given name will be 
+removed
+
+not thread safe"
+
+magix.web.set-cookie-sample
+  magix.web.set-cookie=>some-cookie-name
+    value=>something to store into cookie
+    expires=(date)>2017.05.23 10:48:39
+
+
+magix.web.get-cookie-dox=>@"retrieves an http cookie
+
+returns the given http cookie parameter as [value] node
+
+not thread safe"
+
+magix.web.get-cookie-sample
+  magix.web.get-cookie=>some-cookie-name
+
+
+magix.web.get-config-setting-dox=>@"retrieves a configuration setting
+
+returns the given web.config setting as [value] node
+
+thread safe"
+
+magix.web.get-config-setting-sample
+  magix.web.get-config-setting=>some-setting-name
+
+
+magix.web.postpone-execution-dox=>@"postpones execution of hyper lisp
+
+will store a block of hyperlisp from the [code] parameter, which it will 
+execute upon the next http request of the site for the given session.  
+but only for a page-load request
+
+not thread safe"
+
+magix.web.postpone-execution-sample
+  magix.web.postpone-execution
+    code
+      magix.viewport.show-message
+        message=>some message
+
+
+magix.viewport.page-load-dox=>@"shows the postponed execution
+
+if magix.web.postpone-execution has been invoked, this active 
+event will execute that postponed hyperlisp code"
+
+
+magix.get-base-directory-dox=>@"retrieves base url for application
+
+returns the base directory of the web application
+
+not thread safe"
+
+magix.get-base-directory-sample
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
