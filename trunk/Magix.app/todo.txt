@@ -116,6 +116,10 @@
 
 * create support for multiple dynamic events with same name
 
+* create support for expressions in [throw], and change unit tests to add \[ when they do throw
+
+* implement a custom database instead of db4o in magix.data namespace
+
 
 
 

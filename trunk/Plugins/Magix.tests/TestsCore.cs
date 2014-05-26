@@ -42,14 +42,14 @@ namespace Magix.tests
 						tests += 1;
                         ip["tests"][idx].Value = null;
 
-						Node tmp = new Node();
-						tmp["inspect"].Value = null;
+						Node inspectTest = new Node();
+						inspectTest["inspect"].Value = null;
 
 						RaiseActiveEvent(
 							idx, 
-							tmp);
+							inspectTest);
 
-                        ip["tests"][idx].Add(tmp["inspect"].UnTie());
+                        ip["tests"][idx].Add(inspectTest["inspect"]);
 					}
 				}
                 ip["tests"].Value = tests;
@@ -71,7 +71,37 @@ namespace Magix.tests
 						idxNo += 1;
 						lastTest = idxTest;
                         ip["tests"][idxTest]["success"].Value = false;
-						RaiseActiveEvent(idxTest);
+
+                        Node inspectTest = new Node();
+                        inspectTest["inspect"].Value = null;
+                        RaiseActiveEvent(
+                            idxTest,
+                            inspectTest);
+
+                        bool expectsException = inspectTest.Contains("_expected-exception");
+                        string expectedExceptionString = null;
+                        if (expectsException)
+                            expectedExceptionString = inspectTest["_expected-exception"].Get<string>();
+
+                        try
+                        {
+                            RaiseActiveEvent(idxTest);
+                            if (expectsException)
+                                throw new ApplicationException("unit test expected an exception, which didn't occur");
+                        }
+                        catch(Exception err)
+                        {
+                            if (expectsException)
+                            {
+                                while (err.InnerException != null)
+                                    err = err.InnerException;
+                                if (!string.IsNullOrEmpty(expectedExceptionString))
+                                    if (expectedExceptionString != err.Message)
+                                        throw;
+                            }
+                            else
+                                throw;
+                        }
                         ip["tests"][idxTest]["success"].Value = true;
 					}
 				}

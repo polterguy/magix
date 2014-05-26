@@ -1,6 +1,12 @@
 ﻿
 inspect=>@"contains the documentation for magix.data"
 
+
+magix.data.application-startup-dox=>@"loads entire database from disc
+
+reloads serialized ram-based database into memory of web-server"
+
+
 magix.data.load-dox=>@"loads a node from database
 
 loads the first object matching the given [id] or the given [prototype].  it will return all 
@@ -33,7 +39,7 @@ will serialize the given [value] node with the given [id] in the persistent data
 
 if no [id] is given, a unique identifier will be automatically assigned to the object, 
 and returned as [id].  if an [id] is given, and an object with that same id exists, the 
-existing object will be overwritten or updated.  both the [value] and [id] can either be 
+existing object will be overwritten and updated.  both the [value] and [id] can either be 
 expressions or constant strings or nodes
 
 thread safe"

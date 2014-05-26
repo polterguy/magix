@@ -1,15 +1,18 @@
 
 
-inspect=>@"creates unit tests to 
-test the [node-2-code] and [code-2-node] keywords"
+inspect=>@"tests for [code-2-node] and [node-2-code]
+
+creates unit tests to test the [node-2-code] and 
+[code-2-node] hyperlisp keywords"
 
 
 event
-  name=>magix.test.node-2-code
+  name=>magix.test.2-code-value
   persist=>false
-  inspect=>@"asserts that [node-2-code] works the 
-way it should work, by trying to convert from node 
-to code, where [node] contains the nodes as value"
+  inspect=>@"verifies [node-2-code] works with nodes in value
+
+tries to convert from a node to code, where the node being 
+converted is the value of the [node] parameter to node-2-code"
   code
     _data=>jo
       buffer=>5
@@ -24,22 +27,23 @@ to code, where [node] contains the nodes as value"
   buffer=>4
 "
       code
-        throw=>@"[node-2-code] didn't behave as expected"
+        throw=>[node-2-code] misbehaved
 
 
 event
-  name=>magix.test.node-2-code-as-children
+  name=>magix.test.2-code-children
   persist=>false
-  inspect=>@"asserts that [node-2-code] works the 
-way it should work, by trying to convert from node 
-to code, where [node] contains nodes as children nodes"
+  inspect=>@"verifies [node-2-code] works with children
+
+tries to convert from a node to code, where the nodes being 
+converted are children of the [node] parameter being passed into 
+node-2-code"
   code
-    _data=>jo
-      buffer=>5
-      buffer=>4
-    add=>[node-2-code][node]
-      value=>[_data]
     node-2-code
+      node
+        _data=>jo
+          buffer=>5
+          buffer=>4
     if=>not-equals
       lhs=>[node-2-code][code].Value
       rhs=>@"_data=>jo
@@ -47,16 +51,17 @@ to code, where [node] contains nodes as children nodes"
   buffer=>4
 "
       code
-        throw=>@"[node-2-code] didn't behave as expected"
+        throw=>[node-2-code] misbehaved
 
 
 event
-  name=>magix.test.node-2-code-expression
+  name=>magix.test.2-code-expression
   persist=>false
-  inspect=>@"asserts that [node-2-code] works the 
-way it should work, by trying to convert from node 
-to code, where [node] contains an expression pointing 
-to another node"
+  inspect=>@"verifies [node-2-code] works with expressions
+
+tries to convert from a node to code, where the [node] beneath 
+node-2-code is an expression pointing to another node in the 
+execution tree"
   code
     _data=>jo
       buffer=>5
@@ -70,15 +75,16 @@ to another node"
   buffer=>4
 "
       code
-        throw=>@"[node-2-code] didn't behave as expected"
+        throw=>[node-2-code] misbehaved
 
 
 event
-  name=>magix.test.code-2-node
+  name=>magix.test.2-node
   persist=>false
-  inspect=>@"asserts that [code-2-node] works the 
-way it should work, by trying to convert from code 
-to nodes"
+  inspect=>@"verifies [code-2-node] works [code] being text
+
+tries to convert from code to node, where the [code] parameter 
+is a text string, containing the code to be converted"
   code
     code-2-node
       code=>@"_data=>jo
@@ -94,15 +100,16 @@ to nodes"
         lhs=>[code-2-node][node][_data].Value
         rhs=>jo
       code
-        throw=>@"[code-2-node] didn't behave as expected"
+        throw=>[code-2-node] misbehaved
 
 
 event
-  name=>magix.test.code-2-node-from-file
+  name=>magix.test.2-node-file
   persist=>false
-  inspect=>@"asserts that [code-2-node] works the 
-way it should work, by trying to load code from 
-a file"
+  inspect=>@"verifies [code-2-node] works with files
+
+tries to convert from code to node, where the code 
+being converted is found in a hyper lisp file on disc"
   code
     _file-path=>tmp/test-file.txt
     using=>magix.file
@@ -127,7 +134,6 @@ _buffer=>jo
         lhs=>[code-2-node][node][_buffer].Value
         rhs=>jo
       code
-        throw=>@"[code-2-node] didn't behave as expected 
-when given a file"
+        throw=>[code-2-node] misbehaved
 
 

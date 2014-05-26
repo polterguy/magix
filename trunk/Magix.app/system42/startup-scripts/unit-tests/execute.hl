@@ -1,18 +1,20 @@
 
 
-inspect=>@"creates unit tests to 
-test the [magix.execute] keyword"
+inspect=>@"tests for the [execute] keyword
+
+creates unit tests to to test that the [execute] keyword 
+works the way it should"
 
 
 event
-  name=>magix.test.execute-allow-access-outside
+  name=>magix.test.execute-path
   persist=>false
-  inspect=>@"asserts that modifying nodes outside
-of the [execute] scope works, when [execute] is 
-invoked without the magix. prefix.&nbsp;&nbsp;
-when [execute] is invoked without the magix. 
-prefix, then it is supposed to have access to
-the entire tree"
+  inspect=>@"verifies [execute] works with full tree access
+
+tries to modify the tree outside of the [execute] keyword's 
+scope, to make sure [execute] without the magix prefix has 
+access to the entire execution tree, also when invoked with 
+an expression pointing to an execution node list"
   code
     _outside
     _data
@@ -23,54 +25,43 @@ the entire tree"
       lhs=>[_outside].Value
       rhs=>executed
       code
-        throw=>code outside of [execute] was not modified when expected
+        throw=>[execute] misbehaved
 
 
 event
-  name=>magix.test.execute-do-not-allow-access-outside
+  name=>magix.test.execute-fully-qualified
   persist=>false
-  inspect=>@"asserts that modifying nodes outside
-of the [magix.execute] scope does not work, when [magix.execute] is 
-invoked with the magix. prefix.&nbsp;&nbsp;
-when [magix.execute] is invoked with the magix. prefix,
-then the execute branch is not supposed to have 
-access to the entire tree, but only the parts
-underneath the node being executed, and only as a deep copy
-of the original nodes.&nbsp;&nbsp;
-in this case, only the nodes underneath the [magix.execute]
-is supposed to be accessible"
+  inspect=>@"verifies [execute] works without full tree access
+
+tries to execute an execution block, fully qualified, with 
+[magix.execute], making sure the execution cannot access or 
+modify any parts of the execution tree outside of its own 
+scope.  also verifies that accessing to root node, give 
+correct access to the [magix.exxecute] node, and not anything 
+outside of the execution tree scope"
   code
     _outside
     magix.execute
-      _tmp
       set=>[/][_outside].Value
         value=>executed
-      set=>[/][_tmp].Value
-        value=>changed
     if=>equals
       lhs=>[_outside].Value
       rhs=>executed
+      or=>not-equals
+        lhs=>[magix.execute][_outside].Value
+        rhs=>executed
       code
-        throw=>@"code outside of [execute] was modified when 
-not expected to be modified"
-    if=>not-equals
-      lhs=>[magix.execute][_tmp].Value
-      rhs=>changed
-      code
-        throw=>@"code outside of [execute] was modified when 
-not expected to be modified"
+        throw=>[execute] misbehaved
 
 
 event
-  name=>magix.test.execute-children-allow-access-outside
+  name=>magix.test.execute-no-path
   persist=>false
-  inspect=>@"asserts that modifying nodes outside
-of the [execute] scope works, when [execute] is 
-invoked without the magix. prefix and children, 
-instead of a path pointing to another executing node.&nbsp;&nbsp;
-when [execute] is invoked without the magix. 
-prefix, then it is supposed to have access to
-the entire tree"
+  inspect=>@"verifies [execute] works without expressions
+
+invokes an [execute] block of code, with the execution block 
+being the children of the execute ndoe itself, making sure the 
+execution of the code is correctly done"
   code
     _outside
     execute
@@ -80,39 +71,66 @@ the entire tree"
       lhs=>[_outside].Value
       rhs=>executed
       code
-        throw=>code outside of [execute] was not modified when expected
+        throw=>[execute] misbehaved
 
 
 event
-  name=>magix.test.execute-labeled-execution
+  name=>magix.test.execute-named
   persist=>false
-  inspect=>@"asserts executing an [execute] block of code, 
-with a label, works the correct way"
+  inspect=>@"verifies [execute] works with a name
+
+invoked a named execution scope, making sure it 
+executes normally, without any problems"
   code
     _outside
     execute=>labeled-execution
+      _inside
       set=>[_outside].Value
         value=>executed
       set=>[@][_inside].Value
         value=>executed
-      _inside
     if=>not-equals
       lhs=>[_outside].Value
       rhs=>executed
+      or=>not-equals
+        lhs=>[execute=>labeled-execution][_inside].Value
+        rhs=>executed
       code
-        throw=>code outside of [execute] was not modified when expected
-    if=>not-equals
-      lhs=>[execute=>labeled-execution][_inside].Value
-      rhs=>executed
-      code
-        throw=>code inside of [execute] was not modified when expected
+        throw=>[execute] misbehaved
 
 
 event
-  name=>magix.test.execute-close-overflow-lines-of-code
+  name=>magix.test.execute-overflow
   persist=>false
-  inspect=>@"asserts executing almost 5000 lines 
-of hyperlisp code overflows the execution engine"
+  inspect=>@"verifies [execute] overflows
+
+executes more than 50.000 lines of code, making sure 
+the execution overflows the execution engine"
+  code
+    _expected-exception=>execution engine overflowed
+    _iter=>0
+    // multiplying 17000 times three gives the number of executions in this block
+    // since [using] is one keyword, [add] another and [set] the third
+    // 17000 times 3 is 51000, which should raise an exception
+    while=>less-than-equals
+      lhs=>[_iter].Value
+      rhs=>17000
+      code
+        using=>magix.math
+          add
+            =>[/][_iter].Value
+            =>1
+        set=>[/][_iter].Value
+          value=>[@][using][add].Value
+
+
+event
+  name=>magix.test.execute-no-overflow
+  persist=>false
+  inspect=>@"verifies [execute] doesn't overflow
+
+executes close to 50.000 lines of code, making sure 
+the execution doesn't overflow the execution engine"
   code
     _iter=>0
     // multiplying 16000 times three gives the number of executions in this block
@@ -121,7 +139,7 @@ of hyperlisp code overflows the execution engine"
     // although it will be a close call
     while=>less-than-equals
       lhs=>[_iter].Value
-      rhs=>1600
+      rhs=>16000
       code
         using=>magix.math
           add

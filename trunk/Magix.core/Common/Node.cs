@@ -168,40 +168,72 @@ namespace Magix.Core
 		 */
 		public bool HasNodes(Node prototype)
 		{
-			foreach (Node idx in prototype)
-			{
-				if (!Exists(
-					delegate(Node idxThis)
-					{
-						if (idx.Name != idxThis.Name)
-							return false;
-						if (idx.Value != null && idxThis.Value == null)
-							return false;
-						if (idx.Value == null) // null returns true always
-							return idxThis.HasNodes(idx);
-						if (idxThis.Value == null)
-							return false;
-						if (idx.Value is string && idx.Get<string>().Contains("%"))
-						{
-							string[] parts = idx.Get<string>().Split(new char[] {'%'}, StringSplitOptions.RemoveEmptyEntries);
-							int idxNo = 0;
-							foreach (string idxQuery in parts)
-							{
-								idxNo = idxThis.Get<string>().IndexOf(idxQuery, idxNo);
-								if (idxNo == -1)
-									return false;
-								idxNo++;
-							}
-						}
-						else if (!idx.Value.Equals(idxThis.Value))
-							return false;
-						if (!idxThis.HasNodes(idx))
-							return false;
-						return true;
-					}))
-					return false;
-			}
-			return true;
+            bool found = true;
+            foreach (Node idxProto in prototype)
+            {
+                found = false;
+                foreach (Node idxThis in this)
+                {
+                    if (idxProto.Name == idxThis.Name)
+                    {
+                        string query = idxProto.Get<string>() ?? "";
+                        if (query.Contains("%"))
+                        {
+                            List<string> strings = new List<string>();
+                            string bufferQuery = "";
+                            for (int idxNoChar = 0; idxNoChar < query.Length; idxNoChar++)
+                            {
+                                if (query[idxNoChar] == '%')
+                                {
+                                    if (idxNoChar + 1 < query.Length && query[idxNoChar + 1] == '%')
+                                    {
+                                        idxNoChar += 1;
+                                        bufferQuery += '%';
+                                    }
+                                    else
+                                    {
+                                        strings.Add(bufferQuery);
+                                        bufferQuery = "";
+                                    }
+                                }
+                                else
+                                    bufferQuery += query[idxNoChar];
+                            }
+                            if (!string.IsNullOrEmpty(bufferQuery))
+                                strings.Add(bufferQuery);
+                            string content = idxThis.Get<string>();
+                            int idxNoSearch = 0;
+                            found = true;
+                            foreach (string idxQuery in strings)
+                            {
+                                int noFound = content.IndexOf(idxQuery, idxNoSearch);
+                                if (noFound == -1)
+                                {
+                                    found = false;
+                                    break;
+                                }
+                            }
+                            if (found)
+                            {
+                                found = idxThis.HasNodes(idxProto);
+                            }
+                        }
+                        else
+                        {
+                            if ((idxThis.Get<string>() ?? "") == query)
+                            {
+                                found = idxThis.HasNodes(idxProto);
+                                break;
+                            }
+                        }
+                    }
+                    if (found)
+                        break;
+                }
+                if (!found)
+                    break;
+            }
+            return found;
 		}
 
         /*

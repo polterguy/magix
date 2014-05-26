@@ -1,17 +1,21 @@
 
 
-inspect=>@"creates unit tests to 
-test the [magix.execute.add] keyword"
+inspect=>@"tests for the [add] keyword
+
+creates unit tests for testing the [add] 
+hyperlisp keyword"
 
 
 event
-  name=>magix.test.add-with-value
+  name=>magix.test.add-expressions
   persist=>false
-  inspect=>@"asserts that [add] works the 
-way it should work, by trying to add a list
-of nodes, pointed to by the [value] child
-node"
+  inspect=>@"verifies [add] works with expressions
+
+tries to add a node, pointed to by an expression, 
+to another node list.  verifying that the operation 
+added all nodes as expected"
   code
+    _buffer
     _data1
       tmp=>testing
     _buffer
@@ -21,17 +25,17 @@ node"
       lhs=>[_buffer][_data1][tmp].Value
       rhs=>testing
       code
-        throw=>@"[add] didn't behave as expected 
-when invoking with an expression in the [value] node"
+        throw=>[add] misbehaved
 
 
 event
-  name=>magix.test.add-with-children
+  name=>magix.test.add-no-expressions
   persist=>false
-  inspect=>@"asserts that [add] works the 
-way it should work, by trying to add a list
-of nodes, whom are children nodes of the 
-[add] node"
+  inspect=>@"verifies [add] works with a node tree
+
+tries to add a list of nodes, being children of 
+the [add] node, and verifies that the add operation 
+added all nodes as expected"
   code
     _buffer
     add=>[_buffer]
@@ -41,17 +45,18 @@ of nodes, whom are children nodes of the
       lhs=>[_buffer][_data1][tmp].Value
       rhs=>testing
       code
-        throw=>@"[add] didn't behave as expected 
-when invoking with a list of child nodes"
+        throw=>[add] misbehaved
 
 
 event
-  name=>magix.test.add-no-children
+  name=>magix.test.add-children-only
   persist=>false
-  inspect=>@"asserts that [add] works the 
-way it should work, by trying to add a list
-of nodes, whom are pointed to by the [value] 
-node, with the [children-only] set to true"
+  inspect=>@"verifies [add] works with [children-only]
+
+tries to add a node to another, pointed to by an 
+expression, where the add node has [children-only] 
+being set to true, to make sure only the children 
+of the value node are being added"
   code
     _data1
       tmp=>testing
@@ -63,14 +68,17 @@ node, with the [children-only] set to true"
       lhs=>[_buffer][tmp].Value
       rhs=>testing
       code
-        throw=>@"[add] didn't behave as expected"
+        throw=>[add] misbehaved
 
 
 event
-  name=>magix.test.add-named-node-with-value
+  name=>magix.test.add-single-node
   persist=>false
-  inspect=>@"asserts that [add] works the 
-way it should work"
+  inspect=>@"verifies [add] works with single nodes
+
+tries to add a single node to another node, by using 
+the [add] keyword, making sure the name and value of 
+the newly added node is accurate"
   code
     _buffer
     add=>[_buffer]
@@ -80,22 +88,25 @@ way it should work"
       lhs=>[_buffer][tmp].Value
       rhs=>testing
       code
-        throw=>@"[add] didn't behave as expected"
+        throw=>[add] misbehaved
 
 
 event
-  name=>magix.test.add-named-node-without-value
+  name=>magix.test.add-single-null-node
   persist=>false
-  inspect=>@"asserts that [add] works the 
-way it should work"
+  inspect=>@"verifies [add] works with single nodes
+
+tries to add a single node, where the value is not 
+given, making sure the newly added node has the 
+correct name, and a null value"
   code
     _buffer
     add=>[_buffer]
       value=>tmp
-    if=>exist
-      lhs=>[_buffer][tmp].Value
-      or=>not-exist
-        lhs=>[_buffer][tmp]
+    if=>not-exist
+      lhs=>[_buffer][tmp]
+      or=>exist
+        lhs=>[_buffer][tmp].Value
       code
-        throw=>@"[add] didn't behave as expected"
+        throw=>[add] misbehaved
 

@@ -46,9 +46,6 @@ namespace Magix.execute
 			if (!ip.Contains("code"))
 				throw new ApplicationException("you need a [code] block inside your [try] statement, which is supposed to contain the tried code");
 
-			if (!ip.Contains("catch"))
-				throw new ApplicationException("you need a [catch] block inside your [try] statement");
-
 			e.Params["_ip"].Value = ip["code"];
 			try
 			{
