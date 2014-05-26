@@ -1,53 +1,62 @@
 
 
-inspect=>@"creates unit tests to 
-test the [magix.execute.execute-script] keyword"
+inspect=>@"tests for the [execute-script] keyword
+
+creates unit tests to test that the [execute-script] 
+keyword works the way it should"
 
 
 event
-  name=>magix.test.execute-script-pass-parameters
+  name=>magix.test.execute-script-parameters
   persist=>false
-  inspect=>@"asserts that [execute-script] works the 
-way it should work"
+  inspect=>@"verifies [execute-script] works with parameters
+
+tries to pass parameters into the [execute-script] keyword, 
+making sure parameters are passed both into the execute-script, 
+and out from"
   code
     execute-script
+      params
+        input=>this
       script=>@"
 set=>[$][output].Value
   value=>{0} {1}
     =>[$][input].Value
     =>worked"
-      params
-        input=>this
     if=>not-equals
       lhs=>[execute-script][params][output].Value
       rhs=>this worked
       code
-        throw=>[execute-script] did not correctly pass parameters
+        throw=>[execute-script] misbehaved
 
 
 event
   name=>magix.test.execute-script-remove-parameters
   persist=>false
-  inspect=>@"asserts that [execute-script] removes
-output parameters when expected"
+  inspect=>@"verifies [execute-script] can remove parameters
+
+tries to pass parameters into [execute-script] which it 
+removes from inside of the script, making sure the parameters 
+are actually removed also from the outside"
   code
     execute-script
-      script=>@"
-set=>[$][input]"
       params
         input=>this
+      script=>@"
+set=>[$][input]"
     if=>exist
       lhs=>[execute-script][params][input]
       code
-        throw=>[execute-script] did not correctly remove parameters
+        throw=>[execute-script] misbehaved
 
 
 event
-  name=>magix.test.execute-script-from-file-with-parameters
+  name=>magix.test.execute-script-file
   persist=>false
-  inspect=>@"asserts that [execute-script] loads a 
-script correctly, by passing in parameters to script 
-on disc"
+  inspect=>@"verifies [execute-script] works with a script file
+
+executes a script from a file, passing in parameters, making 
+sure the parameters and the script is correctly executed"
   code
     _file=>tmp/test-script.txt
     using=>magix.file
@@ -55,15 +64,53 @@ on disc"
         file=>[_file].Value
         value=>@"
 set=>[$][output].Value
-  value=>howdy"
+  value=>{0} world
+    =>[$][input].Value"
     execute-script
+      params
+        input=>howdy
       file=>[_file].Value
     using=>magix.file
       delete
         file=>[_file].Value
     if=>not-equals
       lhs=>[execute-script][params][output].Value
-      rhs=>howdy
+      rhs=>howdy world
       code
-        throw=>[execute-script] did not correctly remove parameters
+        throw=>[execute-script] misbehaved
+
+
+event
+  name=>magix.test.execute-script-file-exception
+  persist=>false
+  inspect=>@"verifies [execute-script] works with exceptions
+
+executes a script from a file, where the script in the file 
+is throwing an exception, making sure the exception is correctly 
+catched from the outside of the file"
+  code
+    _file=>tmp/test-script.txt
+    _exception
+    using=>magix.file
+      save
+        file=>[_file].Value
+        value=>@"
+throw=>success"
+    try
+      code
+        execute-script
+          params
+            input=>howdy
+          file=>[_file].Value
+      catch
+        set=>[_exception].Value
+          value=>[@][exception].Value
+    using=>magix.file
+      delete
+        file=>[_file].Value
+    if=>not-equals
+      lhs=>[_exception].Value
+      rhs=>success
+      code
+        throw=>[execute-script] misbehaved
 

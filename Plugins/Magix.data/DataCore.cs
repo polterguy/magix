@@ -8,23 +8,65 @@
  */
 
 using System;
+using System.IO;
 using System.Collections;
+using System.Configuration;
 using System.Collections.Generic;
 using Magix.Core;
-using Magix.UX.Builder;
-using Db4objects.Db4o;
-using Db4objects.Db4o.Ext;
-using Db4objects.Db4o.Config;
 using System.Web;
 
-namespace Magix.execute
+namespace Magix.data
 {
 	/*
 	 * data storage
 	 */
-	public class DataCore : ActiveController
+	internal sealed class DataCore : ActiveController
 	{
-		private static string _dbFile = "database/data-storage.db4o";
+        private static string _dbPath;
+        private static string _appPath;
+        private static Node _database;
+
+        /*
+         * slurps up everything from database
+         */
+        [ActiveEvent(Name = "magix.core.application-startup")]
+        public static void magix_core_application_startup(object sender, ActiveEventArgs e)
+        {
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
+            {
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.data",
+                    "Magix.data.hyperlisp.inspect.hl",
+                    "[magix.data.application-startup-dox].Value");
+                return;
+            }
+
+            lock (typeof(DataCore))
+            {
+                _appPath = HttpContext.Current.Server.MapPath("/");
+                _appPath = _appPath.Replace("\\", "/");
+                _dbPath = ConfigurationManager.AppSettings["magix.core.database-path"];
+                _database = new Node();
+
+                // retrieving data files
+                string[] files = Directory.GetFiles(_appPath + _dbPath, "db*.hl");
+                foreach (string idxFile in files)
+                {
+                    Node loadFile = new Node();
+                    loadFile["file"].Value = idxFile.Replace(_appPath, "");
+                    RaiseActiveEvent(
+                        "magix.execute.code-2-node",
+                        loadFile);
+
+                    string fileName = idxFile.Replace(_appPath + _dbPath, "");
+
+                    _database[fileName.ToLower()].Clear();
+                    _database[fileName.ToLower()].AddRange(loadFile["node"]);
+                }
+            }
+        }
 
 		/*
 		 * loads an object from database
@@ -47,6 +89,9 @@ namespace Magix.execute
                     "[magix.data.load-sample]");
                 return;
 			}
+
+            if (ip.Contains("id") && ip.Contains("prototype"))
+                throw new ArgumentException("cannot use both [id] and [prototype] in [magix.data.load]");
 
             Node dp = Dp(e.Params);
 
@@ -76,34 +121,33 @@ namespace Magix.execute
 			if (id != null && (start != 0 || end != -1 || prototype != null))
 				throw new ArgumentException("if you supply an [id], then [start], [end] and [prototype] cannot be defined");
 
-			lock (typeof(DataCore))
-			{
-				using (IObjectContainer db = Db4oEmbedded.OpenFile(HttpContext.Current.Request.MapPath("~/" + _dbFile)))
-				{
-					db.Ext().Configure().UpdateDepth(1000);
-					db.Ext().Configure().ActivationDepth(1000);
-
-					int idxNo = 0;
-					foreach (Storage idx in db.Ext().Query<Storage>(
-						delegate(Storage obj)
-						{
-                            if (id != null)
-                                return obj.Id == id;
-                            else if (prototype != null)
-                                return obj.Node.HasNodes(prototype);
-                            else
-                                return true; // defaulting to true, to allow for loading of all objects, if no id or prototype is given
-					}))
-					{
-                        if (idxNo >= start && (end == -1 || idxNo < end))
+            int curMatchingItem = 0;
+            foreach (Node idxFileNode in _database)
+            {
+                foreach (Node idxObjectNode in idxFileNode)
+                {
+                    if (id != null && id == idxObjectNode.Get<string>())
+                    {
+                        // loading by id
+                        Node curNode = idxObjectNode.Clone();
+                        ip["objects"][idxObjectNode.Get<string>()].AddRange(curNode);
+                        return;
+                    }
+                    else if (id == null)
+                    {
+                        // loading by prototype
+                        if (idxObjectNode.HasNodes(prototype))
                         {
-                            ip["objects"][idx.Id].AddRange(idx.Node.Clone());
+                            if ((start == 0 || curMatchingItem >= start) && (end == -1 || curMatchingItem < end))
+                            {
+                                Node curNode = idxObjectNode.Clone();
+                                ip["objects"][idxObjectNode.Get<string>()].AddRange(curNode);
+                            }
+                            curMatchingItem += 1;
                         }
-						idxNo++;
-					}
-					db.Close();
-				}
-			}
+                    }
+                }
+            }
 		}
 
 		/*
@@ -139,36 +183,129 @@ namespace Magix.execute
             else
                 value = ip["value"].Clone();
 
-			lock (typeof(DataCore))
-			{
-                using (IObjectContainer db = Db4oEmbedded.OpenFile(HttpContext.Current.Request.MapPath("~/" + _dbFile)))
-				{
-					db.Ext().Configure().UpdateDepth(1000);
-					db.Ext().Configure().ActivationDepth(1000);
-
-                    string id = ip.Contains("id") ?
-                        Expressions.GetExpressionValue(ip["id"].Get<string>(), dp, ip, false) as string : 
-						Guid.NewGuid().ToString();
-					bool found = false;
-                    ip["id"].Value = id;
-
-					// checking to see if we should update existing object
-					foreach (Storage idx in db.QueryByExample(new Storage(null, id)))
-					{
-						idx.Node = value;
-						db.Store(idx);
-						found = true;
-						break;
-					}
-					if (!found)
-					{
-						db.Store(new Storage(value, id));
-					}
-					db.Commit();
-					db.Close();
-				}
-			}
+            if (ip.Contains("id"))
+            {
+                string id = Expressions.GetExpressionValue(ip["id"].Get<string>(), dp, ip, false) as string;
+                SaveById(value, id);
+            }
+            else
+                ip["id"].Value = SaveNewObject(value, null);
 		}
+
+        private static void SaveById(Node value, string id)
+        {
+            Node fileNode = null;
+            value.Value = id;
+            value.Name = "id";
+            foreach (Node idxFileNode in _database)
+            {
+                bool found = false;
+                foreach (Node idxObjectNode in idxFileNode)
+                {
+                    if (idxObjectNode.Get<string>() == id)
+                    {
+                        idxObjectNode.Clear();
+                        idxObjectNode.AddRange(value);
+                        fileNode = idxFileNode;
+                        found = true;
+                        break;
+                    }
+                }
+                if (found)
+                    break;
+            }
+            if (fileNode != null)
+            {
+                // updating existing object
+                Node codeNode = new Node();
+                codeNode["node"].Value = fileNode;
+                RaiseActiveEvent(
+                    "magix.execute.node-2-code",
+                    codeNode);
+
+                Node fileSaveNode = new Node();
+                fileSaveNode["file"].Value = _appPath + _dbPath + fileNode.Name;
+                fileSaveNode["value"].Value = codeNode["code"].Get<string>();
+                RaiseActiveEvent(
+                    "magix.file.save",
+                    fileSaveNode);
+            }
+            else
+                SaveNewObject(value, id);
+        }
+
+        private static string SaveNewObject(Node value, string id)
+        {
+            if (string.IsNullOrEmpty(id))
+                id = Guid.NewGuid().ToString().Replace("-", "");
+            value.Name = "id";
+            value.Value = id;
+            Node availableFileNode = FindAvailableNode();
+            if (availableFileNode == null)
+            {
+                availableFileNode = new Node(FindAvailableNewFileName());
+                _database.Add(availableFileNode);
+            }
+            availableFileNode.Add(value);
+
+            Node toCodeNode = new Node();
+            toCodeNode["node"].Value = availableFileNode;
+            RaiseActiveEvent(
+                "magix.execute.node-2-code",
+                toCodeNode);
+
+            Node saveFileNode = new Node();
+            saveFileNode["file"].Value = _dbPath + availableFileNode.Name;
+            saveFileNode["value"].Value = toCodeNode["code"].Get<string>();
+            RaiseActiveEvent(
+                "magix.file.save",
+                saveFileNode);
+
+            return id;
+        }
+
+        private static string FindAvailableNewFileName()
+        {
+            List<string> files = new List<string>(Directory.GetFiles(_appPath + _dbPath, "db*.hl"));
+            List<string> nFiles = new List<string>();
+            foreach (string idxFile in files)
+            {
+                nFiles.Add(idxFile.Replace(_appPath + _dbPath, ""));
+            }
+            files = nFiles;
+            files.Sort(
+                delegate(string left, string right)
+                {
+                    left = left.Substring(2).Replace(".hl", "");
+                    right = right.Substring(2).Replace(".hl", "");
+                    int leftInt = int.Parse(left);
+                    int rightInt = int.Parse(right);
+                    return leftInt.CompareTo(rightInt);
+                });
+            for (int idxNo = 0; idxNo < files.Count; idxNo++)
+            {
+                if (!files.Exists(
+                    delegate(string file)
+                    {
+                        return file == "db" + idxNo + ".hl";
+                    }))
+                {
+                    return "db" + idxNo + ".hl";
+                }
+            }
+            return "db" + files.Count + ".hl";
+        }
+
+        private static Node FindAvailableNode()
+        {
+            int objectsPerFile = int.Parse(ConfigurationManager.AppSettings["magix.core.database-objects-per-file"]);
+            foreach (Node idxFileNode in _database)
+            {
+                if (idxFileNode.Count < objectsPerFile)
+                    return idxFileNode;
+            }
+            return null;
+        }
 
 		/*
 		 * removes an object from database
@@ -192,6 +329,9 @@ namespace Magix.execute
                 return;
 			}
 
+            if (ip.Contains("id") && ip.Contains("prototype"))
+                throw new ArgumentException("cannot use both [id] and [prototype] in [magix.data.load]");
+
             Node dp = Dp(e.Params);
 
             Node prototype = null;
@@ -206,29 +346,100 @@ namespace Magix.execute
             if (!ip.ContainsValue("id") && prototype == null)
 				throw new ArgumentException("missing [id] or [prototype] while trying to remove object");
 
-			lock (typeof(DataCore))
-			{
-                using (IObjectContainer db = Db4oEmbedded.OpenFile(HttpContext.Current.Request.MapPath("~/" + _dbFile)))
-				{
-                    string id = ip.Contains("id") ? Expressions.GetExpressionValue(ip["id"].Get<string>(), dp, ip, false) as string : null;
-					foreach (Storage idx in db.Ext().Query<Storage>(
-						delegate(Storage obj)
-						{
-						    if (id != null)
-							    return obj.Id == id;
-                            else if (prototype != null)
-                                return obj.Node.HasNodes(prototype);
-                            else
-                                return false; // defaulting to false, to not allow deletion of everything, if empty id and prototype is given
-					}))
-					{
-						db.Delete(idx);
-					}
-					db.Commit();
-					db.Close();
-				}
-			}
-		}
+            if (ip.Contains("id"))
+            {
+                string id = Expressions.GetExpressionValue(ip["id"].Get<string>(), dp, ip, false) as string;
+                RemoveById(id);
+            }
+            else
+                RemoveByPrototype(prototype);
+        }
+
+        private static void RemoveByPrototype(Node prototype)
+        {
+            List<Node> toRemove = new List<Node>();
+            List<string> filesToUpdate = new List<string>();
+            foreach (Node idxFileNode in _database)
+            {
+                foreach (Node idxObjectNode in idxFileNode)
+                {
+                    if (idxObjectNode.HasNodes(prototype))
+                    {
+                        toRemove.Add(idxObjectNode);
+                        if (!filesToUpdate.Exists(
+                            delegate(string idxFileName)
+                            {
+                                return idxFileName == idxFileNode.Name;
+                            }))
+                            filesToUpdate.Add(idxFileNode.Name);
+                    }
+                }
+            }
+            foreach (Node idx in toRemove)
+            {
+                idx.UnTie();
+            }
+            foreach (string idx in filesToUpdate)
+            {
+                if (_database[idx].Count == 0)
+                {
+                    File.Delete(_appPath + _dbPath + _database[idx].Name);
+                }
+                else
+                {
+                    Node toCodeNode = new Node();
+                    toCodeNode["node"].Value = _database[idx];
+                    RaiseActiveEvent(
+                        "magix.execute.node-2-code",
+                        toCodeNode);
+
+                    Node fileSaveNode = new Node();
+                    fileSaveNode["file"].Value = _dbPath + _database[idx].Name;
+                    fileSaveNode["value"].Value = toCodeNode["code"].Get<string>();
+                    RaiseActiveEvent(
+                        "magix.file.save",
+                        fileSaveNode);
+                }
+            }
+        }
+
+        private static void RemoveById(string id)
+        {
+            Node objectToRemove = null;
+            foreach (Node idxFileNode in _database)
+            {
+                bool found = false;
+                foreach (Node idxObjectNode in idxFileNode)
+                {
+                    if (idxObjectNode.Get<string>() == id)
+                    {
+                        objectToRemove = idxObjectNode;
+                        found = true;
+                        break;
+                    }
+                }
+                if (found)
+                    break;
+            }
+            if (objectToRemove != null)
+            {
+                Node fileObject = objectToRemove.Parent;
+                objectToRemove.UnTie();
+
+                Node toCodeNode = new Node();
+                toCodeNode["node"].Value = fileObject;
+                RaiseActiveEvent(
+                    "magix.execute.node-2-code",
+                    toCodeNode);
+
+                Node fileSaveNode = new Node();
+                fileSaveNode["file"].Value = _appPath + _dbPath + fileObject.Name;
+                fileSaveNode["value"].Value = toCodeNode["code"].Get<string>();
+                RaiseActiveEvent(
+                    "magix.file.save",
+                    fileSaveNode);
+            }
+        }
 
 		/*
 		 * counts objects in database
@@ -250,9 +461,6 @@ namespace Magix.execute
                     "Magix.data.hyperlisp.inspect.hl",
                     "[magix.data.count-sample]");
                 return;
-                e.Params["inspect"].Value = @"";
-                e.Params["magix.data.count-sample"].Value = null;
-				return;
 			}
 
             Node dp = Dp(e.Params);
@@ -266,25 +474,21 @@ namespace Magix.execute
                     prototype = ip["prototype"];
             }
 
-			lock (typeof(DataCore))
-			{
-				using (IObjectContainer db = Db4oEmbedded.OpenFile(HttpContext.Current.Request.MapPath("~/" + _dbFile)))
-				{
-					db.Ext().Configure().UpdateDepth(1000);
-					db.Ext().Configure().ActivationDepth(1000);
-
-                    ip["count"].Value = db.Ext().Query<Storage>(
-						delegate(Storage obj)
-						{
-							if (prototype != null)
-								return obj.Node.HasNodes(prototype);
-							return true;
-						}
-					).Count;
-
-					db.Close();
-				}
-			}
+            int count = 0;
+            foreach (Node idxFileNode in _database)
+            {
+                foreach (Node idxObjectNode in idxFileNode)
+                {
+                    if (prototype == null)
+                        count += 1;
+                    else
+                    {
+                        if (idxObjectNode.HasNodes(prototype))
+                            count += 1;
+                    }
+                }
+            }
+            ip["count"].Value = count;
 		}
 	}
 }

@@ -1,15 +1,18 @@
 
 
-inspect=>@"creates unit tests to 
-test some advanced expressions"
+inspect=>@"tests for expressions
+
+creates unit tests to verify that expressions 
+works the way they should work"
 
 
 event
   name=>magix.test.expressions-wildcard
   persist=>false
-  inspect=>@"asserts that expressions with 
-wildcard functions where value of node 
-is not null"
+  inspect=>@"verifies expressions works with wildcards
+
+tries to retrieve an expression where the name of node is a 
+wildcard, and the value of the node is given"
   code
     _data
       v0=>x
@@ -17,57 +20,60 @@ is not null"
       v2=>
       v3
       v4=>z
-  if=>not-equals
-    lhs=>[_data][?=>z].Name
-    rhs=>v4
-    code
-      throw=>wildcard expression didn't return what was expected
+    if=>not-equals
+      lhs=>[_data][?=>z].Name
+      rhs=>v4
+      code
+        throw=>wildcard expressions misbehaved
 
 
 event
   name=>magix.test.expressions-wildcard-null
   persist=>false
-  inspect=>@"asserts that expressions with 
-wildcard functions where value of node 
-is null"
+  inspect=>@"verifies expressions works with wildcards
+
+tries to retrieve an expression where the name of node is a 
+wildcard, and the value of the node must be null"
   code
     _data
       v0=>x
       v1=>y
       v2=>
       v3
-  if=>not-equals
-    lhs=>[_data][?].Name
-    rhs=>v3
-    code
-      throw=>wildcard expression didn't return what was expected
+    if=>not-equals
+      lhs=>[_data][?].Name
+      rhs=>v3
+      code
+        throw=>wildcard expressions misbehaved
 
 
 event
-  name=>magix.test.expressions-wildcard-empty-string
+  name=>magix.test.expressions-wildcard-empty-value
   persist=>false
-  inspect=>@"asserts that expressions with 
-wildcard functions where value of node 
-is empty string"
+  inspect=>@"verifies expressions works with wildcards
+
+tries to retrieve an expression where the name of node is a 
+wildcard, and the value of the node must be an empty string"
   code
     _data
       v0=>x
       v1=>y
       v2
       v3=>
-  if=>not-equals
-    lhs=>[_data][?=>].Name
-    rhs=>v3
-    code
-      throw=>wildcard expression didn't return what was expected
+    if=>not-equals
+      lhs=>[_data][?=>].Name
+      rhs=>v3
+      code
+        throw=>wildcard expressions misbehaved
 
 
 event
-  name=>magix.test.expressions-wildcard-null-value
+  name=>magix.test.expressions-deep-wildcard-null-value
   persist=>false
-  inspect=>@"asserts that expressions with 
-wildcard functions where value of 
-node to search for is null"
+  inspect=>@"verifies expressions works with wildcards
+
+tries to retrieve a deep expression where the value of the 
+node must be null"
   code
     _buffer-data
       _data
@@ -81,15 +87,16 @@ node to search for is null"
       lhs=>[_buffer-data][**v0][message].Value
       rhs=>success
       code
-        throw=>deep search expression didn't succeed
+        throw=>wildcard expressions misbehaved
 
 
 event
-  name=>magix.test.expressions-wildcard-empty-value
+  name=>magix.test.expressions-deep-wildcard-empty-value
   persist=>false
-  inspect=>@"asserts that expressions with 
-wildcard functions where value of 
-node to search for is empty"
+  inspect=>@"verifies expressions works with wildcards
+
+tries to retrieve a deep expression where the value of the 
+node must be an empty string"
   code
     _buffer-data
       _data
@@ -103,14 +110,16 @@ node to search for is empty"
       lhs=>[_buffer-data][**v0=>][message].Value
       rhs=>success
       code
-        throw=>deep search expression didn't succeed
+        throw=>wildcard expressions misbehaved
 
 
 event
-  name=>magix.test.expressions-wildcard-question-name
+  name=>magix.test.expressions-deep-wildcard-name
   persist=>false
-  inspect=>@"asserts that expressions with 
-wildcard functions where name is question mark"
+  inspect=>@"verifies expressions works with wildcards
+
+tries to retrieve a deep expression where the value of the 
+node is given, and the name of the node is a wildcard"
   code
     _buffer-data
       _data
@@ -124,14 +133,16 @@ wildcard functions where name is question mark"
       lhs=>[_buffer-data][**?=>correct][message].Value
       rhs=>success
       code
-        throw=>deep search expression didn't succeed
+        throw=>wildcard expressions misbehaved
 
 
 event
-  name=>magix.test.expressions-wildcard-question-value
+  name=>magix.test.expressions-deep-wildcard-value
   persist=>false
-  inspect=>@"asserts that expressions with 
-wildcard functions where value is question mark"
+  inspect=>@"verifies expressions works with wildcards
+
+tries to retrieve a deep expression where the value of the 
+node is a wildcard, and the name of the node is given"
   code
     _buffer-data
       _data
@@ -145,15 +156,17 @@ wildcard functions where value is question mark"
       lhs=>[_buffer-data][**v1=>?][message].Value
       rhs=>success
       code
-        throw=>deep search expression didn't succeed
+        throw=>wildcard expressions misbehaved
 
 
 event
-  name=>magix.test.expressions-wildcard-question-value-null-value
+  name=>magix.test.expressions-deep-wildcard-value-null
   persist=>false
-  inspect=>@"asserts that expressions with 
-wildcard functions where value is question mark 
-and value is null"
+  inspect=>@"verifies expressions works with wildcards
+
+tries to retrieve a deep expression where the value of the 
+node is a wildcard, and the name of the node is given, where 
+the first match has a null value"
   code
     _buffer-data
       _data
@@ -163,18 +176,22 @@ and value is null"
           message=>error
         v1
           message=>success
+        v1=>xxx
+          message=>error
     if=>not-equals
       lhs=>[_buffer-data][**v1=>?][message].Value
       rhs=>success
       code
-        throw=>deep search expression didn't succeed
+        throw=>wildcard expressions misbehaved
 
 
 event
   name=>magix.test.expressions-nested
   persist=>false
-  inspect=>@"asserts that nested expressions 
-functions the way they should"
+  inspect=>@"verifies nested expressions works
+
+uses a nested expression to retrieve a value, making sure 
+the expression behaves as expected"
   code
     _buffer-data
       _node-name=>_data
@@ -184,14 +201,16 @@ functions the way they should"
       lhs=>[_buffer-data][[_buffer-data][_node-name].Value][message].Value
       rhs=>success
       code
-        throw=>nested expression didn't succeed
+        throw=>nested expressions misbehaved
 
 
 event
-  name=>magix.test.expressions-active-event-expressions
+  name=>magix.test.expressions-active-events
   persist=>false
-  inspect=>@"asserts that active event expressions 
-functions the way they should"
+  inspect=>@"verifies active event expressions works
+
+uses an active event expression to retrieve a value, 
+making sure the expression behaves as expected"
   code
     event
       name=>magix.demo.foo
@@ -208,17 +227,19 @@ functions the way they should"
       code
         event
           name=>magix.demo.foo
-        throw=>active event expression didn't succeed
+        throw=>active event expression misbehaved
     else
       event
         name=>magix.demo.foo
 
 
 event
-  name=>magix.test.expressions-nested-active-event-expressions
+  name=>magix.test.expressions-nested-active-event
   persist=>false
-  inspect=>@"asserts that nested active event expressions 
-functions the way they should"
+  inspect=>@"verifies nested active event expressions works
+
+uses a nested active event expression to retrieve a value, 
+making sure the expression behaves as expected"
   code
     event
       name=>magix.demo.foo
@@ -254,7 +275,7 @@ functions the way they should"
           name=>magix.demo.foo2
         event
           name=>magix.demo.foo3
-        throw=>active event expression didn't succeed
+        throw=>nested active event expression misbehaved
     else
       event
         name=>magix.demo.foo

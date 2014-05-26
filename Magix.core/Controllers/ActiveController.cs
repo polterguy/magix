@@ -95,13 +95,13 @@ namespace Magix.Core
         /*
          * returns the base url of your web application
          */
-        protected string GetApplicationBaseUrl()
+        protected static string GetApplicationBaseUrl()
         {
             return string.Format(
                 "{0}://{1}{2}",
                 HttpContext.Current.Request.Url.Scheme,
                 HttpContext.Current.Request.ServerVariables["HTTP_HOST"],
-                (Page.Request.ApplicationPath.Equals("/")) ? 
+                (HttpContext.Current.Request.ApplicationPath.Equals("/")) ? 
                     "/" : 
                     HttpContext.Current.Request.ApplicationPath + "/").ToLowerInvariant();
         }

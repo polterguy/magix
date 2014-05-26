@@ -1,15 +1,19 @@
 
 
-inspect=>@"creates unit tests to 
-test the [magix.execute.throw], 
-[magix.execute.catch] and [magix.execute.try] keyword"
+inspect=>@"tests for [try], [catch] and [throw]
+
+creates unit tests to test verify that the exception logic and 
+keywords works the way they should"
 
 
 event
   name=>magix.test.exception
   persist=>false
-  inspect=>@"asserts that exceptions works the 
-way it should work"
+  inspect=>@"verifies [try], [catch] and [throw] works
+
+tries to throw an exception that is being catched to 
+make sure the exception keywords functions the way they 
+should work"
   code
     _thrown
     try
@@ -26,4 +30,74 @@ way it should work"
       lhs=>[_thrown].Value
       rhs=>yes
       code
-        throw=>exceptions didn't work as expected
+        throw=>[catch]/[try] misbehaved
+
+
+event
+  name=>magix.test.exception-finally
+  persist=>false
+  inspect=>@"verifies [finally] works
+
+tries to throw an exception to verify that the 
+[finally] keyword works the way it should"
+  code
+    _finally
+    try
+      code
+        throw=>exception thrown
+      catch
+      finally
+        set=>[_finally].Value
+          value=>yes
+    if=>not-equals
+      lhs=>[_finally].Value
+      rhs=>yes
+      code
+        throw=>[finally] misbehaved
+
+
+event
+  name=>magix.test.exception-finally-no-catch
+  persist=>false
+  inspect=>@"verifies [finally] works without a catch
+
+tries to throw an exception to verify that the 
+[finally] keyword works the way it should, 
+also without a [catch] block"
+  code
+    _finally
+    try
+      code
+        try
+          code
+            throw=>exception thrown
+          finally
+            set=>[_finally].Value
+              value=>yes
+      catch
+    if=>not-equals
+      lhs=>[_finally].Value
+      rhs=>yes
+      code
+        throw=>[finally] misbehaved
+
+
+event
+  name=>magix.test.exception-finally-no-throw
+  persist=>false
+  inspect=>@"verifies [finally] works without a catch
+
+verifies that the [finally] keyword is executed, also 
+when no exception is thrown"
+  code
+    _finally
+    try
+      code
+      finally
+        set=>[_finally].Value
+          value=>yes
+    if=>not-equals
+      lhs=>[_finally].Value
+      rhs=>yes
+      code
+        throw=>[finally] misbehaved

@@ -6,8 +6,7 @@ gets invoked when the default index page is accessed"
 magix.data.load
   prototype
     type=>magix.execute.event
-    event
-      name=>magix.tiedown.load-index-page
+    event=>magix.tiedown.load-index-page
 if=>not-exist
   lhs=>[magix.data.load][objects]
   code

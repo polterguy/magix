@@ -48,7 +48,7 @@ namespace Magix.execute
 
             string whatToSearchFor = Expressions.GetExpressionValue(ip["what"].Get<string>(), dp, ip, false) as string;
             if (string.IsNullOrEmpty(whatToSearchFor))
-                throw new ArgumentException("no value in [what] expression in [magix.execute.index-of]");
+                throw new ArgumentException("no value in [what] expression in [index-of]");
 
             int idxNo = 0;
             while (true)

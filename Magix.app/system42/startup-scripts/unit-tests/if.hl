@@ -1,16 +1,19 @@
 
 
-inspect=>@"creates unit tests to 
-test the [magix.execute.if] keyword"
+inspect=>@"tests for the [if], [else-if] and [else] keywords
+
+creates unit tests to verify that if, else-if and else 
+works the way they should work"
 
 
 event
   name=>magix.test.if-complex-true
   persist=>false
-  inspect=>@"asserts that [if] works the 
-way it should work, and returns 
-true if a complex expresssion is given, 
-and it is true"
+  inspect=>@"verifies complex [if] statements works
+
+creates a complex [if] statement, that is supposed 
+to yield true, making sure its associated [else] is 
+not executing"
   code
     _data1=>x1
     _data2=>y1
@@ -28,16 +31,16 @@ and it is true"
           rhs=>y1
       code
     else
-      throw=>@"[if] expression that should have 
-evaluated true returned false"
+      throw=>[if] misbehaved
 
 event
   name=>magix.test.if-complex-false
   persist=>false
-  inspect=>@"asserts that [if] works the 
-way it should work, and returns 
-false if a complex expresssion is given, 
-and it is false"
+  inspect=>@"verifies complex [if] statements works
+
+creates a complex [if] statement, that is supposed 
+to yield false, making sure the if statement's [code] 
+block is not executing"
   code
     _data1=>x1
     _data2=>y
@@ -54,18 +57,17 @@ and it is false"
           lhs=>[@][_data2].Value
           rhs=>y1
       code
-        throw=>@"[if] expression that should have 
-evaluated false returned true"
+        throw=>[if] misbehaved
 
 
 event
-  name=>magix.test.if-complex-multiple-and-true
+  name=>magix.test.if-multiple-and-true
   persist=>false
-  inspect=>@"asserts that [if] works the 
-way it should work, and returns 
-true if a complex expresssion is given, 
-and it is true, and it has multiple [and]
-nodes"
+  inspect=>@"verifies complex [if] statements works
+
+creates a complex [if] statement, with multiple [and] statements, 
+that is supposed to yield true, making sure its associated [else] 
+is not executing"
   code
     _data1=>x
     _data2=>y
@@ -85,18 +87,17 @@ nodes"
         rhs=>q
       code
     else
-      throw=>@"[if] expression that should have 
-evaluated true returned false"
+      throw=>[if] misbehaved
 
 
 event
-  name=>magix.test.if-complex-multiple-and-false
+  name=>magix.test.if-multiple-and-false
   persist=>false
-  inspect=>@"asserts that [if] works the 
-way it should work, and returns 
-false if a complex expresssion is given, 
-and it is false, and it has multiple [and]
-nodes"
+  inspect=>@"verifies complex [if] statements works
+
+creates a complex [if] statement, with multiple [and] statements, 
+that is supposed to yield false, making sure the if statement's 
+[code] block is not executing"
   code
     _data1=>x
     _data2=>y
@@ -115,18 +116,17 @@ nodes"
         lhs=>[_data4].Value
         rhs=>q
       code
-        throw=>@"[if] expression that should have 
-evaluated false returned true"
+        throw=>[if] misbehaved
 
 
 event
-  name=>magix.test.if-complex-multiple-or-true
+  name=>magix.test.if-multiple-or-true
   persist=>false
-  inspect=>@"asserts that [if] works the 
-way it should work, and returns 
-true if a complex expresssion is given, 
-and it is true, and it has multiple [or]
-nodes"
+  inspect=>@"verifies complex [if] statements works
+
+creates a complex [if] statement, with multiple [or] statements, 
+that is supposed to yield true, making sure its associated [else] 
+is not executing"
   code
     _data1=>x1
     _data2=>y1
@@ -146,18 +146,17 @@ nodes"
         rhs=>q
       code
     else
-      throw=>@"[if] expression that should have 
-evaluated true returned false"
+      throw=>[if] misbehaved
 
 
 event
-  name=>magix.test.if-complex-multiple-or-false
+  name=>magix.test.if-multiple-or-false
   persist=>false
-  inspect=>@"asserts that [if] works the 
-way it should work, and returns 
-false if a complex expresssion is given, 
-and it is false, and it has multiple [or]
-nodes"
+  inspect=>@"verifies complex [if] statements works
+
+creates a complex [if] statement, with multiple [or] statements, 
+that is supposed to yield false, making sure the if statement's 
+[code] block is not executing"
   code
     _data1=>x1
     _data2=>y1
@@ -176,19 +175,17 @@ nodes"
         lhs=>[_data4].Value
         rhs=>q
       code
-        throw=>@"[if] expression that should have 
-evaluated false returned true"
+        throw=>[if] misbehaved
 
 
 event
-  name=>magix.test.if-complex-tree-and-true
+  name=>magix.test.if-recursive-and-true
   persist=>false
-  inspect=>@"asserts that [if] works the 
-way it should work, and returns 
-true if a complex expresssion is given, 
-and it is true, and it has multiple [and]
-nodes, inside of each other, like a 
-deep tree"
+  inspect=>@"verifies complex [if] statements works
+
+creates a complex [if] statement, with multiple [and] statements, 
+recursively inside of each other, that is supposed to yield true, 
+making sure its associated [else] is not executing"
   code
     _data1=>x
     _data2=>y
@@ -208,19 +205,46 @@ deep tree"
             rhs=>q
       code
     else
-      throw=>@"[if] expression that should have 
-evaluated true returned false"
+      throw=>[if] misbehaved
 
 
 event
-  name=>magix.test.if-complex-tree-or-true
+  name=>magix.test.if-recursive-and-false
   persist=>false
-  inspect=>@"asserts that [if] works the 
-way it should work, and returns 
-true if a complex expresssion is given, 
-and it is true, and it has multiple [or]
-nodes, inside of each other, like a 
-deep tree"
+  inspect=>@"verifies complex [if] statements works
+
+creates a complex [if] statement, with multiple [and] statements, 
+recursively inside of each other, that is supposed to yield true, 
+making sure its associated [else] is not executing"
+  code
+    _data1=>x
+    _data2=>y
+    _data3=>z
+    _data4=>q1
+    if=>equals
+      lhs=>[_data1].Value
+      rhs=>x
+      and=>equals
+        lhs=>[_data2].Value
+        rhs=>y
+        and=>equals
+          lhs=>[_data3].Value
+          rhs=>z
+          and=>equals
+            lhs=>[@][_data4].Value
+            rhs=>q
+      code
+        throw=>[if] misbehaved
+
+
+event
+  name=>magix.test.if-recursive-or-true
+  persist=>false
+  inspect=>@"verifies complex [if] statements works
+
+creates a complex [if] statement, with multiple [or] statements, 
+recursively inside of each other, that is supposed to yield true, 
+making sure its associated [else] is not executing"
   code
     _data1=>x1
     _data2=>y1
@@ -240,19 +264,17 @@ deep tree"
             rhs=>q
       code
     else
-      throw=>@"[if] expression that should have 
-evaluated true returned false"
+      throw=>[if] misbehaved
 
 
 event
-  name=>magix.test.if-complex-tree-or-false
+  name=>magix.test.if-recursive-or-false
   persist=>false
-  inspect=>@"asserts that [if] works the 
-way it should work, and returns 
-false if a complex expresssion is given, 
-and it is false, and it has multiple [or]
-nodes, inside of each other, like a 
-deep tree"
+  inspect=>@"verifies complex [if] statements works
+
+creates a complex [if] statement, with multiple [or] statements, 
+recursively inside of each other, that is supposed to yield false, 
+making sure its [code] block is not executing"
   code
     _data1=>x1
     _data2=>y1
@@ -271,17 +293,17 @@ deep tree"
             lhs=>[@][_data4].Value
             rhs=>q
       code
-        throw=>@"[if] expression that should have 
-evaluated true returned false"
+        throw=>[if] misbehaved
 
 
 event
   name=>magix.test.if-comparing-nodes-false
   persist=>false
-  inspect=>@"asserts that [if] works the 
-way it should work, and returns 
-false if two node trees are compared, and 
-they are not similar"
+  inspect=>@"verifies [if] statements works, comparing nodes
+
+creates an [if] statement, that is comparing node trees with 
+each other, that is supposed to return false, making sure the 
+[code] block of the if statement is not executing"
   code
     _data
       v1
@@ -298,18 +320,18 @@ they are not similar"
       lhs=>[_data][0]
       rhs=>[_data][1]
       code
-        throw=>@"[if] expression that should have 
-evaluated false returned true when comparing two
-node trees"
+        throw=>[if] misbehaved
 
 
 event
   name=>magix.test.if-comparing-nodes-true
   persist=>false
-  inspect=>@"asserts that [if] works the 
-way it should work, and returns 
-true if two node trees are compared, and 
-they are similar"
+  inspect=>@"verifies [if] statements works, comparing nodes
+
+creates an [if] statement, that is comparing node trees with 
+each other, that is supposed to return false, making sure the 
+[code] block of the if statement is not executing, where the 
+nodes actually are similar when compared to each other"
   code
     _data
       v1
@@ -326,18 +348,17 @@ they are similar"
       lhs=>[_data][0]
       rhs=>[_data][1]
       code
-        throw=>@"[if] expression that should have 
-evaluated true returned false when comparing two
-node trees"
+        throw=>[if] misbehaved
 
 
 event
-  name=>magix.test.if-consecutive-and-inner-if-statements
+  name=>magix.test.if-multiple-statements
   persist=>false
-  inspect=>@"asserts that [if] works the 
-way it should work, and doesn't intermingle 
-with each others when multiple if 
-statements are added after each other"
+  inspect=>@"verifies multiple [if] statements works
+
+creates multiple [if] statements, with inner if statements, 
+and consecutive if statements, making sure one if statement 
+does not affect the result of another"
   code
     _data
       _v0=>error1
@@ -347,8 +368,7 @@ statements are added after each other"
       lhs=>[_data][_v0].Value
       rhs=>error1
       code
-        throw=>@"[if] expression that should have 
-evaluated false returned true"
+        throw=>[if] misbehaved
     else
       set=>[_data][_v0].Value
         value=>success
@@ -356,8 +376,7 @@ evaluated false returned true"
       lhs=>[_data][_v1].Value
       rhs=>error2
       code
-        throw=>@"[if] expression that should have 
-evaluated false returned true"
+        throw=>[if] misbehaved
     else
       set=>[_data][_v1].Value
         value=>success
@@ -365,29 +384,27 @@ evaluated false returned true"
         lhs=>[_data][_v2].Value
         rhs=>success
         code
-          throw=>@"[if] expression that should have 
-evaluated true returned false"
+          throw=>[if] misbehaved
       else-if=>not-equals
         lhs=>[_data][_v2].Value
         rhs=>error3
         code
-          throw=>@"[if] expression that should have 
-evaluated true returned false"
+          throw=>[if] misbehaved
       else
         set=>[_data][_v2].Value
           value=>success
         stop
-    throw=>@"if expressions that should have 
-entered [else], didn't function as expected"
+    throw=>[if] misbehaved
 
 
 event
-  name=>magix.test.if-with-if-if-else
+  name=>magix.test.if-consecutive-statements
   persist=>false
-  inspect=>@"asserts that [if] works the 
-way it should work, and doesn't intermingle 
-with each others when multiple if 
-statements are added after each other"
+  inspect=>@"verifies multiple [if] statements works
+
+creates multiple [if] statements, with consecutive if 
+statements, making sure one if statement does not affect 
+the result of another"
   code
     _data
       _v0=>error1
@@ -395,8 +412,7 @@ statements are added after each other"
       lhs=>[_data][_v0].Value
       rhs=>error1
       code
-        throw=>@"[if] expression that should have 
-evaluated false returned true"
+        throw=>[if] misbehaved
     if=>equals
       lhs=>[_data][_v0].Value
       rhs=>error1
@@ -404,17 +420,16 @@ evaluated false returned true"
         set=>[_data][_v1].Value
           value=>success
     else
-      throw=>@"[if] expression that should have 
-evaluated false returned true"
+      throw=>[if] misbehaved
 
 
 event
-  name=>magix.test.if-with-if-else-if
+  name=>magix.test.if-else-executes
   persist=>false
-  inspect=>@"asserts that [if] works the 
-way it should work, and doesn't intermingle 
-with each others when multiple if 
-statements are added after each other"
+  inspect=>@"verifies [else] is being executed
+
+creates an [if] statement, with an associated [else], making 
+sure the else statement is executed, and not its associated if"
   code
     _data
       _v0=>error1
@@ -422,8 +437,7 @@ statements are added after each other"
       lhs=>[_data][_v0].Value
       rhs=>error1
       code
-        throw=>@"[if] expression that should have 
-evaluated false returned true"
+        throw=>[if] misbehaved
     else
       set=>[_data][_v0].Value
         value=>success
@@ -431,17 +445,16 @@ evaluated false returned true"
       lhs=>[_data][_v0].Value
       rhs=>success
       code
-        throw=>@"[if] expression that should have 
-evaluated false returned true"
+        throw=>[if] misbehaved
 
 
 event
-  name=>magix.test.if-with-if-elseif-if
+  name=>magix.test.if-elseif
   persist=>false
-  inspect=>@"asserts that [if] works the 
-way it should work, and doesn't intermingle 
-with each others when multiple if 
-statements are added after each other"
+  inspect=>@"verifies [else-if] is not executing
+
+creates an [else-if] statement, that is not supposed to 
+execute, making sure it doesn't"
   code
     _data
       _v0=>error1
@@ -449,135 +462,83 @@ statements are added after each other"
       lhs=>[_data][_v0].Value
       rhs=>error1
       code
-        throw=>@"[if] expression that should have 
-evaluated false returned true"
+        throw=>[if] misbehaved
     else-if=>not-exist
       lhs=>[_data][_v0].Value
       code
-        throw=>@"[if] expression that should have 
-evaluated false returned true"
-    if=>not-equals
-      lhs=>[_data][_v0].Value
-      rhs=>error1
-      code
-        throw=>@"[if] expression that should have 
-evaluated false returned true"
+        throw=>[else-if] misbehaved
 
 
 event
-  name=>magix.test.if-with-if-elseif-else-if-else-if
+  name=>magix.test.if-many-consecutive
   persist=>false
-  inspect=>@"asserts that [if] works the 
-way it should work, and doesn't intermingle 
-with each others when multiple if 
-statements are added after each other"
-  code
-    _data
-      _v0=>error1
-    if=>not-equals
-      lhs=>[_data][_v0].Value
-      rhs=>error1
-      code
-        throw=>@"[if] expression that should have 
-evaluated false returned true"
-    else-if=>not-exist
-      lhs=>[_data][_v0].Value
-      code
-        throw=>@"[if] expression that should have 
-evaluated false returned true"
-    else=>not-equals
-      lhs=>[_data][_v0].Value
-      rhs=>error1
-      code
-        throw=>@"[if] expression that should have 
-evaluated false returned true"
-    if=>equals
-      lhs=>[_data][_v0].Value
-      rhs=>success
-      code
-        throw=>@"[if] expression that should have 
-evaluated false returned true"
-    else
-      set=>[_data][_v0].Value
-        value=>success
-    if=>not-equals
-      lhs=>[_data][_v0].Value
-      rhs=>success
-      code
-        throw=>@"[if] expression that should have 
-evaluated false returned true"
+  inspect=>@"verifies multiple consecutive [if] statements works
 
-
-event
-  name=>magix.test.if-multiple-ifs-elseifs-else-in-same-block
-  persist=>false
-  inspect=>@"asserts that [if] works the 
-way it should work, and doesn't intermingle 
-with each others when multiple if 
-statements are added after each other"
+creates multiple consecutive [if] statements, making sure the results 
+of one of them, does not affect the comparison of the others"
   code
     _data
     if=>exist
       lhs=>[_data1]
       code
-        throw=>error in if 1
+        throw=>[if] misbehaved
     if=>not-exist
       lhs=>[_data]
       code
-        throw=>error in if 2
+        throw=>[if] misbehaved
     if=>exist
       lhs=>[_data1]
       code
-        throw=>error in if 3
+        throw=>[if] misbehaved
     else-if=>not-exist
       lhs=>[_data]
       code
-        throw=>error in if 4
+        throw=>[if] misbehaved
     else
       set=>[_data][v0].Value
         value=>success
     if=>not-exist
       lhs=>[_data]
       code
-        throw=>error in if 5
+        throw=>[if] misbehaved
     else
       set=>[_data][v1].Value
         value=>success
     if=>not-exist
       lhs=>[_data]
       code
-        throw=>error in if 6
+        throw=>[if] misbehaved
     else-if=>not-exist
       lhs=>[_data1]
       code
         set=>[_data][v2].Value
           value=>success
     else
-      throw=>error in if 7
+      throw=>[if] misbehaved
     if=>not-equals
       lhs=>[_data][v0].Value
       rhs=>success
       code
-        throw=>error in if 8
+        throw=>[if] misbehaved
     if=>not-equals
       lhs=>[_data][v1].Value
       rhs=>success
       code
-        throw=>error in if 9
+        throw=>[if] misbehaved
     if=>not-equals
       lhs=>[_data][v2].Value
       rhs=>success
       code
-        throw=>error in if 10
+        throw=>[if] misbehaved
 
 
 event
-  name=>magix.test.if-deep-hierarchy
+  name=>magix.test.if-deep
   persist=>false
-  inspect=>@"asserts that [if] works the 
-way it should work, and doesn't intermingle 
-with each others when multiple if 
-statements are added after each other"
+  inspect=>@"verifies multiple inner [if] statements works
+
+creates multiple inner [if] statements, making sure they all 
+function, without affecting each other in any ways"
   code
     _data
     if=>exist
@@ -608,14 +569,16 @@ statements are added after each other"
       lhs=>[_data].Value
       rhs=>success
       code
-        throw=>deep if didn't work
+        throw=>[if] misbehaved
 
 
 event
-  name=>magix.test.if-error-no-if-only-elseif
+  name=>magix.test.if-elseif-no-if
   persist=>false
-  inspect=>@"asserts that [if] works the 
-way it should work"
+  inspect=>@"verifies [else-if] throws, if no [if] exist
+
+creates an [else-if] statement, without an associated [if] 
+statement, making sure the execution engine throws an exception"
   code
     _data
     try
@@ -630,14 +593,16 @@ way it should work"
       lhs=>[_data].Value
       rhs=>success
       code
-        throw=>no if, only else-if didn't throw
+        throw=>[else-if] misbehaved
 
 
 event
-  name=>magix.test.if-error-no-if-only-else
+  name=>magix.test.if-else-no-if
   persist=>false
-  inspect=>@"asserts that [if] works the 
-way it should work"
+  inspect=>@"verifies [else] throws, if no [if] exist
+
+creates an [else] statement, without an associated [if] 
+statement, making sure the execution engine throws an exception"
   code
     _data
     try
@@ -650,4 +615,4 @@ way it should work"
       lhs=>[_data].Value
       rhs=>success
       code
-        throw=>no if, only else-if didn't throw
+        throw=>[else] misbehaved

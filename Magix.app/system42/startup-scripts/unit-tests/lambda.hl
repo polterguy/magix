@@ -1,18 +1,19 @@
 
 
-inspect=>@"creates unit tests to 
-test the [magix.execute.lambda] keyword"
+inspect=>@"creates unit tests for the [lambda] keyword
+
+creates unit tests to verify that the [lambda] keyword works 
+as expected"
 
 
 event
   name=>magix.test.lambda
   persist=>false
-  inspect=>@"asserts that [lambda] works the 
-way it should work, and that it allows for 
-passing parameters in and out of the expression.&nbsp;&nbsp;
-it also asserts that the code executed is copied, 
-and that not the original code is changed from 
-within the [lambda] object"
+  inspect=>@"verifies [lambda] works with parameters
+
+creates a [lambda] block of code, that is being executed 
+with parameters, making sure the passing of the parameters 
+is done correctly"
   code
     _data
       set=>[/][_output].Value
@@ -27,15 +28,13 @@ within the [lambda] object"
       lhs=>[lambda][output].Value
       rhs=>howdy world
       code
-        throw=>[lambda] did not return values as expected
+        throw=>[lambda] misbehaved
     if=>exist
       lhs=>[_data][_output]
       code
-        throw=>@"[lambda] modified expression's node, 
-which it should not"
+        throw=>[lambda] misbehaved
     if=>exist
       lhs=>[_output]
       code
-        throw=>@"[lambda] modified outside expression's node, 
-which it should not"
+        throw=>[lambda] misbehaved
 

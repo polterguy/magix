@@ -1,81 +1,357 @@
 
 
-inspect=>@"creates unit tests to 
-test the magix.data namespace"
+inspect=>@"creates unit tests for the magix.data active events
+
+creates unit tests to verify that the magix.data keywords works 
+as expected"
 
 
 event
-  name=>magix.test.save-load-object-expressions
+  name=>magix.test.data-save-load-expressions
   persist=>false
-  inspect=>@"asserts that [magix.data.save/load] works the 
-way it should work, by trying to create an object, save it, 
-for then to reload it again"
+  inspect=>@"verifies [save] and [load] works
+
+saves an object, for then to load it, and verify the object 
+loaded is the same as the object saved, using expressions 
+pointing to the object being saved"
   code
     _data1
       tmp=>testing
     using=>magix.data
+      remove
+        id=>magix.tests.data-test1
       save
         id=>magix.tests.data-test1
         value=>[_data1]
       load
         id=>magix.tests.data-test1
+      remove
+        id=>magix.tests.data-test1
     if=>not-equals
       lhs=>[using][load][objects][0][tmp].Value
       rhs=>testing
       code
-        throw=>@"[magix.data.load/save] didn't behave as expected '
-    magix.data.remove
-      id=>magix.tests.data-test1
-when invoking with an expression in the [value] node"
+        throw=>[magix.data.save] misbehaved
 
 
 event
-  name=>magix.test.save-load-object-constants
+  name=>magix.test.data-save-load-constants
   persist=>false
-  inspect=>@"asserts that [magix.data.save/load] works the 
-way it should work, by trying to create an object, save it, 
-for then to reload it again"
+  inspect=>@"verifies [save] and [load] works
+
+saves an object, for then to load it, and verify the object 
+loaded is the same as the object saved, using constants"
   code
     using=>magix.data
+      remove
+        id=>magix.tests.data-test1
       save
         id=>magix.tests.data-test1
         value
           tmp=>testing
       load
         id=>magix.tests.data-test1
+      remove
+        id=>magix.tests.data-test1
     if=>not-equals
       lhs=>[using][load][objects][0][tmp].Value
       rhs=>testing
       code
-        throw=>@"[magix.data.load/save] didn't behave as expected 
-when invoking with a constant node in the [value] node"
-    magix.data.remove
-      id=>magix.tests.data-test1
+        throw=>[magix.data.save] misbehaved
 
 
 event
-  name=>magix.test.save-load-object-expression-ids
+  name=>magix.test.data-save-load-expression-ids
   persist=>false
-  inspect=>@"asserts that [magix.data.save/load] works the 
-way it should work, by trying to create an object, save it, 
-for then to reload it again"
+  inspect=>@"verifies [save] and [load] works
+
+saves an object, for then to load it, and verify the object 
+loaded is the same as the object saved, using expressions, 
+pointing to the object id of the object being saved and loaded"
   code
     _id=>magix.tests.data-test2
     using=>magix.data
+      remove
+        id=>[_id].Value
       save
         id=>[_id].Value
         value
           tmp=>testing
       load
         id=>[_id].Value
+      remove
+        id=>[_id].Value
     if=>not-equals
       lhs=>[using][load][objects][0][tmp].Value
       rhs=>testing
       code
-        throw=>@"[magix.data.load/save] didn't behave as expected 
-when invoking with an expression in the [id] node"
+        throw=>[magix.data.save] misbehaved
+
+
+event
+  name=>magix.test.data-remove
+  persist=>false
+  inspect=>@"verifies [remove] works
+
+saves an object, for then to remove it, and then verify the 
+object does not exist"
+  code
+    _id=>magix.tests.data-test3
     using=>magix.data
       remove
         id=>[_id].Value
+      save
+        id=>[_id].Value
+        value
+          tmp=>testing
+      remove
+        id=>[_id].Value
+      load
+        id=>[_id].Value
+    if=>exist
+      lhs=>[using][load][objects]
+      code
+        throw=>[magix.data.remove] misbehaved
+
+
+event
+  name=>magix.test.data-load-remove-prototype
+  persist=>false
+  inspect=>@"verifies [load] works with prototype
+
+saves two objects, for then to load them with a [prototype], making 
+sure the objects are being reloaded, for then to remove the objects, 
+using a prototype, making sure they are removed"
+  code
+    using=>magix.data
+      remove
+        prototype
+          type=>magix.tests.test-object-type-1
+      save
+        value
+          type=>magix.tests.test-object-type-1
+          tmp=>testing-1
+      save
+        value
+          type=>magix.tests.test-object-type-1
+          tmp=>testing-2
+      load
+        prototype
+          type=>magix.tests.test-object-type-1
+    if=>not-equals
+      lhs=>[using][load][objects][0][tmp].Value
+      rhs=>testing-1
+      or=>not-equals
+        lhs=>[using][load][objects][1][tmp].Value
+        rhs=>testing-2
+      code
+        throw=>[magix.data.load] misbehaved
+    using=>magix.data
+      remove
+        prototype
+          type=>magix.tests.test-object-type-1
+      load
+        prototype
+          type=>magix.tests.test-object-type-1
+    if=>exist
+      lhs=>[using:1][load][objects]
+      code
+        throw=>[magix.data.remove] misbehaved
+
+
+event
+  name=>magix.test.data-load-remove-expression-prototype
+  persist=>false
+  inspect=>@"verifies [load] works with prototype
+
+saves two objects, for then to load them with a [prototype], making 
+sure the objects are being reloaded, for then to remove the objects, 
+using a prototype, making sure they are removed, having the prototype 
+being an expression"
+  code
+    _prototype
+      type=>magix.tests.test-object-type-2
+    using=>magix.data
+      remove
+        prototype=>[_prototype]
+      save
+        value
+          type=>magix.tests.test-object-type-2
+          tmp=>testing-1
+      save
+        value
+          type=>magix.tests.test-object-type-2
+          tmp=>testing-2
+      load
+        prototype=>[_prototype]
+    if=>not-equals
+      lhs=>[using][load][objects][0][tmp].Value
+      rhs=>testing-1
+      or=>not-equals
+        lhs=>[using][load][objects][1][tmp].Value
+        rhs=>testing-2
+      code
+        throw=>[magix.data.load] misbehaved
+    using=>magix.data
+      remove
+        prototype=>[_prototype]
+      load
+        prototype=>[_prototype]
+    if=>exist
+      lhs=>[using:1][load][objects]
+      code
+        throw=>[magix.data.remove] misbehaved
+
+
+event
+  name=>magix.test.data-load-remove-prototype-wildcard
+  persist=>false
+  inspect=>@"verifies [load] works with wildcard prototype
+
+saves two objects, for then to load them with a [prototype], making 
+sure the objects are being reloaded, for then to remove the objects, 
+using a prototype, making sure they are removed, having the prototype 
+being an expression, and having the prototype contain wildcards"
+  code
+    _prototype
+      type=>magix.tests.test-object-%-3
+    using=>magix.data
+      remove
+        prototype=>[_prototype]
+      save
+        value
+          type=>magix.tests.test-object-type-3
+          tmp=>testing-1
+      save
+        value
+          type=>magix.tests.test-object-type-3
+          tmp=>testing-2
+      load
+        prototype=>[_prototype]
+    if=>not-equals
+      lhs=>[using][load][objects][0][tmp].Value
+      rhs=>testing-1
+      or=>not-equals
+        lhs=>[using][load][objects][1][tmp].Value
+        rhs=>testing-2
+      code
+        throw=>[magix.data.load] misbehaved
+    using=>magix.data
+      remove
+        prototype=>[_prototype]
+      load
+        prototype=>[_prototype]
+    if=>exist
+      lhs=>[using:1][load][objects]
+      code
+        throw=>[magix.data.remove] misbehaved
+
+
+event
+  name=>magix.test.data-load-remove-complex-prototype
+  persist=>false
+  inspect=>@"verifies [load] works with complex prototype
+
+saves two objects, for then to load them with a [prototype], containing 
+multiple match nodes, making sure the objects are being reloaded, for 
+then to remove the objects, using a prototype, making sure they are 
+removed, having the prototype being an expression, and having the prototype 
+contain wildcards"
+  code
+    _prototype
+      type=>magix.tests.test-object-%-4
+      val=>test1
+        val=>test%
+          inner=>howdy %% sign
+      tmp=>testing-%%% object
+    using=>magix.data
+      remove
+        prototype=>[_prototype]
+      save
+        value
+          type=>magix.tests.test-object-type-4
+          tmp=>testing-%1 object
+          val=>test1
+            val=>test3
+              inner=>howdy % sign
+      save
+        value
+          type=>magix.tests.test-object-type-4
+          tmp=>testing-%2 object
+          val=>test1
+            val=>test is something cool
+              inner=>howdy % sign
+      load
+        prototype=>[_prototype]
+    if=>not-equals
+      lhs=>[using][load][objects][0][tmp].Value
+      rhs=>testing-%1 object
+      or=>not-equals
+        lhs=>[using][load][objects][1][tmp].Value
+        rhs=>testing-%2 object
+      code
+        throw=>[magix.data.load] misbehaved
+    using=>magix.data
+      remove
+        prototype=>[_prototype]
+      load
+        prototype=>[_prototype]
+    if=>exist
+      lhs=>[using:1][load][objects]
+      code
+        throw=>[magix.data.remove] misbehaved
+
+
+event
+  name=>magix.test.data-count-complex-prototype
+  persist=>false
+  inspect=>@"verifies [count] works with complex prototype
+
+saves two objects, for then to count them with a [prototype], containing 
+multiple match nodes, making sure the objects are being correctly counted, 
+for then to remove the objects, using a prototype, making sure they are 
+removed, having the prototype being an expression, and having the prototype 
+contain wildcards, and for then to count them again"
+  code
+    _prototype
+      type=>magix.tests.test-object-%-4
+      val=>test1
+        val=>test%
+          inner=>howdy %% sign
+      tmp=>testing-%%% object
+    using=>magix.data
+      remove
+        prototype=>[_prototype]
+      save
+        value
+          type=>magix.tests.test-object-type-4
+          tmp=>testing-%1 object
+          val=>test1
+            val=>test3
+              inner=>howdy % sign
+      save
+        value
+          type=>magix.tests.test-object-type-4
+          tmp=>testing-%2 object
+          val=>test1
+            val=>test is something cool
+              inner=>howdy % sign
+      count
+        prototype=>[_prototype]
+    if=>not-equals
+      lhs=>[using][count][count].Value
+      rhs=>2
+      code
+        throw=>[magix.data.count] misbehaved
+    using=>magix.data
+      remove
+        prototype=>[_prototype]
+      count
+        prototype=>[_prototype]
+    if=>not-equals
+      lhs=>[using:1][count][count].Value
+      rhs=>0
+      code
+        throw=>[magix.data.count] misbehaved
 
 
