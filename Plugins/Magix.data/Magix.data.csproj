@@ -40,9 +40,7 @@
     <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataCoreBackup.cs" />
     <Compile Include="DataCore.cs" />
-    <Compile Include="Storage.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
