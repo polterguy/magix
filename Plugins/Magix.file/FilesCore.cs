@@ -152,17 +152,22 @@ namespace Magix.execute
             if (!file.Contains(":"))
                 file = HttpContext.Current.Server.MapPath(file);
 
-            // Deletes an existing file
-            File.Delete(file);
-
             if (ip.ContainsValue("value"))
-			{
+            {
                 string fileContent = Expressions.GetExpressionValue(ip["value"].Get<string>(), dp, ip, false) as string;
-				using (TextWriter writer = new StreamWriter(File.OpenWrite(file)))
-				{
-					writer.Write(fileContent);
-				}
-			}
+                using (Stream fileStream = File.Open(file, FileMode.Create))
+                {
+                    using (TextWriter writer = new StreamWriter(fileStream))
+                    {
+                        writer.Write(fileContent);
+                    }
+                }
+            }
+            else
+            {
+                // Deletes an existing file
+                File.Delete(file);
+            }
 		}
 
         /*

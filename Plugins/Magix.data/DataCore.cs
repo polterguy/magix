@@ -51,19 +51,22 @@ namespace Magix.data
                 _database = new Node();
 
                 // retrieving data files
-                string[] files = Directory.GetFiles(_appPath + _dbPath, "db*.hl");
-                foreach (string idxFile in files)
+                Node listFilesNode = new Node();
+                listFilesNode["filter"].Value = "db*.hl";
+                listFilesNode["directory"].Value = _dbPath;
+                RaiseActiveEvent(
+                    "magix.file.list-files",
+                    listFilesNode);
+                foreach (Node idxFileNode in listFilesNode["files"])
                 {
                     Node loadFile = new Node();
-                    loadFile["file"].Value = idxFile.Replace(_appPath, "");
+                    loadFile["file"].Value = idxFileNode.Name;
                     RaiseActiveEvent(
                         "magix.execute.code-2-node",
                         loadFile);
 
-                    string fileName = idxFile.Replace(_appPath + _dbPath, "");
-
-                    _database[fileName.ToLower()].Clear();
-                    _database[fileName.ToLower()].AddRange(loadFile["node"]);
+                    _database[idxFileNode.Name].Clear();
+                    _database[idxFileNode.Name].AddRange(loadFile["node"]);
                 }
             }
         }
@@ -224,7 +227,7 @@ namespace Magix.data
                     codeNode);
 
                 Node fileSaveNode = new Node();
-                fileSaveNode["file"].Value = _appPath + _dbPath + fileNode.Name;
+                fileSaveNode["file"].Value = fileNode.Name;
                 fileSaveNode["value"].Value = codeNode["code"].Get<string>();
                 RaiseActiveEvent(
                     "magix.file.save",
@@ -255,7 +258,7 @@ namespace Magix.data
                 toCodeNode);
 
             Node saveFileNode = new Node();
-            saveFileNode["file"].Value = _dbPath + availableFileNode.Name;
+            saveFileNode["file"].Value = availableFileNode.Name;
             saveFileNode["value"].Value = toCodeNode["code"].Get<string>();
             RaiseActiveEvent(
                 "magix.file.save",
@@ -266,34 +269,31 @@ namespace Magix.data
 
         private static string FindAvailableNewFileName()
         {
-            List<string> files = new List<string>(Directory.GetFiles(_appPath + _dbPath, "db*.hl"));
-            List<string> nFiles = new List<string>();
-            foreach (string idxFile in files)
-            {
-                nFiles.Add(idxFile.Replace(_appPath + _dbPath, ""));
-            }
-            files = nFiles;
-            files.Sort(
-                delegate(string left, string right)
+            Node listFilesNode = new Node();
+            listFilesNode["filter"].Value = "db*.hl";
+            listFilesNode["directory"].Value = _dbPath;
+            RaiseActiveEvent(
+                "magix.file.list-files",
+                listFilesNode);
+            listFilesNode["files"].Sort(
+                delegate(Node left, Node right)
                 {
-                    left = left.Substring(2).Replace(".hl", "");
-                    right = right.Substring(2).Replace(".hl", "");
-                    int leftInt = int.Parse(left);
-                    int rightInt = int.Parse(right);
+                    int leftInt = int.Parse(left.Name.Replace(_dbPath, "").Substring(2).Replace(".hl", ""));
+                    int rightInt = int.Parse(right.Name.Replace(_dbPath, "").Substring(2).Replace(".hl", ""));
                     return leftInt.CompareTo(rightInt);
                 });
-            for (int idxNo = 0; idxNo < files.Count; idxNo++)
+            for (int idxNo = 0; idxNo < listFilesNode["files"].Count; idxNo++)
             {
-                if (!files.Exists(
-                    delegate(string file)
+                if (!listFilesNode["files"].Exists(
+                    delegate(Node file)
                     {
-                        return file == "db" + idxNo + ".hl";
+                        return file.Name == _dbPath + "db" + idxNo + ".hl";
                     }))
                 {
-                    return "db" + idxNo + ".hl";
+                    return _dbPath + "db" + idxNo + ".hl";
                 }
             }
-            return "db" + files.Count + ".hl";
+            return _dbPath + "db" + listFilesNode["files"].Count + ".hl";
         }
 
         private static Node FindAvailableNode()
@@ -357,7 +357,7 @@ namespace Magix.data
 
         private static void RemoveByPrototype(Node prototype)
         {
-            List<Node> toRemove = new List<Node>();
+            List<Node> nodesToRemove = new List<Node>();
             List<string> filesToUpdate = new List<string>();
             foreach (Node idxFileNode in _database)
             {
@@ -365,7 +365,7 @@ namespace Magix.data
                 {
                     if (idxObjectNode.HasNodes(prototype))
                     {
-                        toRemove.Add(idxObjectNode);
+                        nodesToRemove.Add(idxObjectNode);
                         if (!filesToUpdate.Exists(
                             delegate(string idxFileName)
                             {
@@ -375,7 +375,7 @@ namespace Magix.data
                     }
                 }
             }
-            foreach (Node idx in toRemove)
+            foreach (Node idx in nodesToRemove)
             {
                 idx.UnTie();
             }
@@ -383,7 +383,11 @@ namespace Magix.data
             {
                 if (_database[idx].Count == 0)
                 {
-                    File.Delete(_appPath + _dbPath + _database[idx].Name);
+                    Node deleteFileNode = new Node();
+                    deleteFileNode["file"].Value = _database[idx].Name;
+                    RaiseActiveEvent(
+                        "magix.file.delete",
+                        deleteFileNode);
                 }
                 else
                 {
@@ -394,7 +398,7 @@ namespace Magix.data
                         toCodeNode);
 
                     Node fileSaveNode = new Node();
-                    fileSaveNode["file"].Value = _dbPath + _database[idx].Name;
+                    fileSaveNode["file"].Value = _database[idx].Name;
                     fileSaveNode["value"].Value = toCodeNode["code"].Get<string>();
                     RaiseActiveEvent(
                         "magix.file.save",
@@ -426,18 +430,30 @@ namespace Magix.data
                 Node fileObject = objectToRemove.Parent;
                 objectToRemove.UnTie();
 
-                Node toCodeNode = new Node();
-                toCodeNode["node"].Value = fileObject;
-                RaiseActiveEvent(
-                    "magix.execute.node-2-code",
-                    toCodeNode);
+                if (fileObject.Count > 0)
+                {
+                    Node toCodeNode = new Node();
+                    toCodeNode["node"].Value = fileObject;
+                    RaiseActiveEvent(
+                        "magix.execute.node-2-code",
+                        toCodeNode);
 
-                Node fileSaveNode = new Node();
-                fileSaveNode["file"].Value = _appPath + _dbPath + fileObject.Name;
-                fileSaveNode["value"].Value = toCodeNode["code"].Get<string>();
-                RaiseActiveEvent(
-                    "magix.file.save",
-                    fileSaveNode);
+                    Node fileSaveNode = new Node();
+                    fileSaveNode["file"].Value = fileObject.Name;
+                    fileSaveNode["value"].Value = toCodeNode["code"].Get<string>();
+                    RaiseActiveEvent(
+                        "magix.file.save",
+                        fileSaveNode);
+                }
+                else
+                {
+                    Node deleteFileNode = new Node();
+                    deleteFileNode["file"].Value = fileObject.Name;
+                    RaiseActiveEvent(
+                        "magix.file.delete",
+                        deleteFileNode);
+                    fileObject.UnTie();
+                }
             }
         }
 
