@@ -1,14 +1,17 @@
 
 
-inspect=>@"creates unit tests to 
-test the [magix.execute.replace] keyword"
+inspect=>@"creates unit tests for the [replace] keyword
+
+creates unit tests to test the [replace] keyword of magix"
 
 
 event
   name=>magix.test.replace
   persist=>false
-  inspect=>@"asserts that [replace] works the 
-way it should work"
+  inspect=>@"verifies [replace] works
+
+replaces occurencies of ' ' with |, for then to 
+verify the replacement operation was successful"
   code
     _data=>howdy this is   a test of replace
     replace=>[_data].Value
@@ -18,4 +21,5 @@ way it should work"
       lhs=>[_data].Value
       rhs=>howdy|this|is|||a|test|of|replace
       code
-        throw=>[replace] didn't function as expected
+        throw=>[replace] misbehaved
+

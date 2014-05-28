@@ -1,15 +1,48 @@
 
 
-inspect=>@"creates unit tests to 
-test the [magix.execute.sandbox] keyword"
+inspect=>@"creates unit tests for the [sandbox] keyword
+
+creates unit tests to test the [sandbox] and [whitelist] features 
+of magix"
 
 
 event
-  name=>magix.test.sandbox-illegal-word
+  name=>magix.test.sandbox
   persist=>false
-  inspect=>@"asserts that [sandbox] works the 
-way it should work, by trying to execute a keyword 
-not in whitelist"
+  inspect=>@"verifies [sandbox] doesn't throw on legal keywords
+
+creates a sandbox, with a whitelist, then tries to execute only keywords which 
+are in the whitelist of words, for then to verify the engine doesn't throw an 
+exception"
+  code
+    _exception=>false
+    try
+      code
+        sandbox
+          whitelist
+            foo
+            bar
+          code
+            bar
+            foo
+      catch
+        set=>[_exception].Value
+          value=>true
+    if=>equals
+      lhs=>[_exception].Value
+      rhs=>true
+      code
+        throw=>[sandbox] misbehaved
+
+
+event
+  name=>magix.test.sandbox-throws
+  persist=>false
+  inspect=>@"verifies [sandbox] throws when given an illegal keyword
+
+creates a sandbox, with a whitelist, then tries to execute a keyword not 
+in the [whitelist] of keywords, for then to verify the engine chokes and 
+throws an exception"
   code
     _exception=>false
     try
@@ -26,15 +59,16 @@ not in whitelist"
       lhs=>[_exception].Value
       rhs=>true
       code
-        throw=>sandbox allowed execution of illegal keyword
+        throw=>[sandbox] misbehaved
 
 
 event
-  name=>magix.test.sandbox-whitelist-blacklist
+  name=>magix.test.sandbox-change-whitelist
   persist=>false
-  inspect=>@"asserts that [sandbox] works the 
-way it should work, by trying to execute a keyword 
-not in whitelist"
+  inspect=>@"verifies [sandbox] doesn't allow adding keywords
+
+creates a sandbox, then creates an inner sandbox, adding new keywords, 
+for then to verify the engine chokes, and throws an exception"
   code
     _exception=>false
     try
@@ -54,5 +88,5 @@ not in whitelist"
       lhs=>[_exception].Value
       rhs=>true
       code
-        throw=>sandbox allowed changing whitelist
+        throw=>[sandbox] misbehaved
 

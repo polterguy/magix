@@ -120,6 +120,10 @@
 
 * implement a custom database instead of db4o in magix.data namespace
 
+* implement multi threading support in magix.file namespace
+
+* remove the magix-admin.hl file, and create files instead of having the magix.admin active events
+
 
 
 

@@ -211,29 +211,6 @@ thrown on the main thread"
         wait
           fork
             throw=>this has to work
-      catch
-    index-of=>[try][catch][exception].Value
-      what=>this has to work
-    if=>not-exist
-      lhs=>[index-of][result][0].Value
-      code
-        throw=>[wait] malfunctioned
-
-
-event
-  name=>magix.test.fork-wait-throw-twice
-  persist=>false
-  inspect=>@"verifies exceptions works with [wait]
-
-creates a new thread, beneath a [wait] statement, where the 
-thread throws an exception, verifying that an exception is 
-thrown on the main thread"
-  code
-    try
-      code
-        wait
-          fork
-            throw=>this has to work
           fork
             throw=>and this too
       catch
@@ -248,3 +225,38 @@ thrown on the main thread"
       code
         throw=>[wait] malfunctioned
 
+
+event
+  name=>magix.test.fork-overflow
+  persist=>false
+  inspect=>@"verifies [wait] will overflow execution engine
+
+creates a new thread underneath a [wait] statement, that executes 
+63.000 iterations, for then to execute 3.000 iterations the wait, 
+verifying that the execution engine overflows as a result"
+  code
+    _expected-exception
+    wait
+      fork
+        _iter=>0
+        while=>less-than
+          lhs=>[_iter].Value
+          rhs=>21000
+          code
+            using=>magix.math
+              add
+                =>[_iter].Value
+                =>1
+            set=>[_iter].Value
+              value=>[@][using][add].Value
+    _iter=>0
+    while=>less-than
+      lhs=>[_iter].Value
+      rhs=>3000
+      code
+        using=>magix.math
+          add
+            =>[_iter].Value
+            =>1
+        set=>[_iter].Value
+          value=>[@][using][add].Value

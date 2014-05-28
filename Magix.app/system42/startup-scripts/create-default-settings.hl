@@ -1,7 +1,11 @@
 ﻿
 
 
-inspect=>@"creates the default settings for your portal"
+inspect=>@"creates default settings
+
+creates the initial default settings in magix"
+
+
 magix.data.load
   id=>magix.admin.settings.default-back-end-css-file
 if=>not-exist

@@ -21,12 +21,12 @@ automatically</p>
 
 <label>methods and properties of control</label>
 {{
-dynamic=>methods-for-dynamicpanel
+dynamic=>methods-for-dynamic-panel
   onfirstload
     magix.forms.dox.create-dox-for-web-control
       class=>dox-for-web-control
-      control=>dynamicpanel
-      container=>methods-for-dynamicpanel
+      control=>dynamic-panel
+      container=>methods-for-dynamic-panel
 }}
 
 <label>SampleModule.ascx</label>

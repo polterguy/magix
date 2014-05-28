@@ -354,4 +354,3 @@ contain wildcards, and for then to count them again"
       code
         throw=>[magix.data.count] misbehaved
 
-

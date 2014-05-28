@@ -1,7 +1,8 @@
 
 
-inspect=>@"creates the default roles 
-in the system"
+inspect=>@"creates default roles
+
+creates the initial default roles in magix"
 
 
 magix.data.count

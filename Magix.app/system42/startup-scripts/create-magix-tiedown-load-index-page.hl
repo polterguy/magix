@@ -1,7 +1,14 @@
 
 
-inspect=>@"creates the default active event that 
-gets invoked when the default index page is accessed"
+inspect=>@"creates default front-end logic
+
+creates the default active event, if not already existing, 
+of what occurs during a page load of the front-end parts of 
+the website.  if you override the [magix.tiedown.load-index-page] 
+somehow, then your event will take over control of what occurs 
+during initial page load of front-end, instead of this active 
+event"
+
 
 magix.data.load
   prototype
@@ -12,8 +19,17 @@ if=>not-exist
   code
     event
       name=>magix.tiedown.load-index-page
-      inspect=>@"the default active event for what to do when 
-user enters main website"
+      inspect=>@"page load default active event
+
+the default logic for what to do during page load of the 
+front-end parts of the website.  if you wish to create your 
+own website, then exchanging this active event, should 
+normally be one of your priorities
+
+this active event, simply loads up a couple of css files, 
+and a login box, to allow the user to log in, using the 
+[magix.core.user] type of authentication and authorization 
+logic"
       code
         magix.data.load
           id=>magix.admin.settings.default-back-end-css-file

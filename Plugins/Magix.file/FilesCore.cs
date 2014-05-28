@@ -204,7 +204,7 @@ namespace Magix.execute
             if (!ip.ContainsValue("from"))
                 throw new ArgumentException("you need to tell the engine which file to move as the value of the [from]");
 
-            string from = Expressions.GetExpressionValue(ip.Get<string>(), dp, ip, false) as string;
+            string from = Expressions.GetExpressionValue(ip["from"].Get<string>(), dp, ip, false) as string;
             if (!from.Contains(":"))
                 from = _basePath + from;
 

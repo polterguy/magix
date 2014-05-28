@@ -1,14 +1,18 @@
 ﻿
 
-inspect=>@"creates the event needed to 
-retrieve all the public properties 
-for controls and web controls in magix"
+inspect=>@"creates the documentation for magix ux
+
+creates the active events needed to retrieve all the public 
+properties for controls and web controls in magix"
+
 
 event
-  name=>magix.forms.dox.get-control-methods
+  name=>magix.forms.dox._get-control-methods
   persist=>false
-  inspect=>@"returns all the public c# methods and 
-properties for all controls in magix"
+  inspect=>@"public properties for mux controls
+
+returns all the public properties and methods for all 
+mux controls"
   code
     _data
       ID=>@"id for control. 
@@ -25,11 +29,14 @@ for the developer"
       value=>[_data]
       children-only=>true
 
+
 event
-  name=>magix.forms.dox.get-web-control-methods
+  name=>magix.forms.dox._get-web-control-methods
   persist=>false
-  inspect=>@"returns all the public c# methods and 
-properties for all web controls in magix"
+  inspect=>@"public properties for mux web controls
+
+returns all the public properties and methods for all 
+mux web controls"
   code
     _data
       Class=>@"sets the css class(es) for the 
@@ -82,8 +89,9 @@ his keyboard, and the control has focus"
 event
   name=>magix.forms.dox.create-dox-for.button
   persist=>false
-  inspect=>@"creates the documentation for 
-the mux button control"
+  inspect=>@"public properties for mux button
+
+returns all the public properties and methods for mux button"
   code
     _data
       OnBlur=>@"dom event for when the 
@@ -101,11 +109,13 @@ and can not be interacted with"
       value=>[_data]
       children-only=>true
 
+
 event
-  name=>magix.forms.dox.create-dox-for.checkbox
+  name=>magix.forms.dox.create-dox-for.check-box
   persist=>false
-  inspect=>@"creates the documentation for 
-the mux checkbox control"
+  inspect=>@"public properties for mux checkbox
+
+returns all the public properties and methods for mux checkbox"
   code
     _data
       OnCheckedChanged=>@"dom event raised when 
@@ -127,11 +137,13 @@ and can not be interacted with"
       value=>[_data]
       children-only=>true
 
+
 event
-  name=>magix.forms.dox.create-dox-for.dynamicpanel
+  name=>magix.forms.dox.create-dox-for.dynamic-panel
   persist=>false
-  inspect=>@"creates the documentation for 
-the mux dynamic panel control"
+  inspect=>@"public properties for mux dynamic
+
+returns all the public properties and methods for mux dynamic"
   code
     _data
       OnReload=>@"server side event raised when 
@@ -156,11 +168,13 @@ key inside of the dynamic panel"
       value=>[_data]
       children-only=>true
 
+
 event
   name=>magix.forms.dox.create-dox-for.hiddenfield
   persist=>false
-  inspect=>@"creates the documentation for 
-the mux hiddenfield control"
+  inspect=>@"public properties for mux hidden
+
+returns all the public properties and methods for mux hidden"
   code
     _data
       Value=>@"actual value of hidden field, 
@@ -169,11 +183,13 @@ you can put any text information here"
       value=>[_data]
       children-only=>true
 
+
 event
   name=>magix.forms.dox.create-dox-for.hyperlink
   persist=>false
-  inspect=>@"creates the documentation for 
-the mux hyperlink control"
+  inspect=>@"public properties for mux hyperlink
+
+returns all the public properties and methods for mux hyperlink"
   code
     _data
       OnBlur=>@"dom event raised when 
@@ -195,11 +211,13 @@ the checkbox"
       value=>[_data]
       children-only=>true
 
+
 event
   name=>magix.forms.dox.create-dox-for.img
   persist=>false
-  inspect=>@"creates the documentation for 
-the mux img control"
+  inspect=>@"public properties for mux image
+
+returns all the public properties and methods for mux image"
   code
     _data
       Src=>@"url for the image the web control displays"
@@ -212,11 +230,13 @@ the checkbox"
       value=>[_data]
       children-only=>true
 
+
 event
   name=>magix.forms.dox.create-dox-for.label
   persist=>false
-  inspect=>@"creates the documentation for 
-the mux label control"
+  inspect=>@"public properties for mux label
+
+returns all the public properties and methods for mux label"
   code
     _data
       Value=>@"the visible text of the web control"
@@ -231,11 +251,13 @@ will toggle the checkbox or radiobutton"
       value=>[_data]
       children-only=>true
 
+
 event
   name=>magix.forms.dox.create-dox-for.linkbutton
   persist=>false
-  inspect=>@"creates the documentation for 
-the mux linkbutton control"
+  inspect=>@"public properties for mux link-button
+
+returns all the public properties and methods for mux link-button"
   code
     _data
       OnBlur=>@"dom event for when the 
@@ -253,11 +275,13 @@ and can not be interacted with"
       value=>[_data]
       children-only=>true
 
+
 event
   name=>magix.forms.dox.create-dox-for.panel
   persist=>false
-  inspect=>@"creates the documentation for 
-the mux panel web control"
+  inspect=>@"public properties for mux panel
+
+returns all the public properties and methods for mux panel"
   code
     _data
       Tag=>@"what html tag to render the control within, 
@@ -273,11 +297,13 @@ the panel"
       value=>[_data]
       children-only=>true
 
+
 event
   name=>magix.forms.dox.create-dox-for.radiobutton
   persist=>false
-  inspect=>@"creates the documentation for 
-the mux radiobutton control"
+  inspect=>@"public properties for mux radio
+
+returns all the public properties and methods for mux radio"
   code
     _data
       OnCheckedChanged=>@"dom event raised when 
@@ -303,11 +329,13 @@ and can not be interacted with"
       value=>[_data]
       children-only=>true
 
+
 event
   name=>magix.forms.dox.create-dox-for.selectlist
   persist=>false
-  inspect=>@"creates the documentation for 
-the mux select list control"
+  inspect=>@"public properties for mux select
+
+returns all the public properties and methods for mux select"
   code
     _data
       OnSelectedIndexChanged=>@"dom event raised when 
@@ -338,11 +366,13 @@ and can not be interacted with"
       value=>[_data]
       children-only=>true
 
+
 event
   name=>magix.forms.dox.create-dox-for.textarea
   persist=>false
-  inspect=>@"creates the documentation for 
-the mux text area control"
+  inspect=>@"public properties for mux text-area
+
+returns all the public properties and methods for mux text-area"
   code
     _data
       OnTextChanged=>@"dom event triggered when the 
@@ -371,11 +401,13 @@ and can not be interacted with"
       value=>[_data]
       children-only=>true
 
+
 event
   name=>magix.forms.dox.create-dox-for.textbox
   persist=>false
-  inspect=>@"creates the documentation for 
-the mux text box control"
+  inspect=>@"public properties for mux text-box
+
+returns all the public properties and methods for mux text-box"
   code
     _data
       OnEnterPressed=>@"dom event triggered when the 
@@ -417,11 +449,13 @@ and can not be interacted with"
       value=>[_data]
       children-only=>true
 
+
 event
   name=>magix.forms.dox.create-dox-for.timer
   persist=>false
-  inspect=>@"creates the documentation for 
-the mux timer control"
+  inspect=>@"public properties for mux timer
+
+returns all the public properties and methods for mux timer"
   code
     _data
       OnTick=>@"server side event raised every n'th millisecond, where 
@@ -437,11 +471,13 @@ event is raised"
       value=>[_data]
       children-only=>true
 
+
 event
   name=>magix.forms.dox.create-dox-for.uploader
   persist=>false
-  inspect=>@"creates the documentation for 
-the mux uploader control"
+  inspect=>@"public properties for mux uploader
+
+returns all the public properties and methods for mux uploader"
   code
     _data
       OnUploaded=>@"server side event raised when a file is finished 
@@ -466,11 +502,13 @@ for the files being transfered"
       value=>[_data]
       children-only=>true
 
+
 event
   name=>magix.forms.dox.create-dox-for.wysiwyg
   persist=>false
-  inspect=>@"creates the documentation for 
-the mux wysiwyg web control"
+  inspect=>@"public properties for mux wysiwyg
+
+returns all the public properties and methods for mux wysiwyg"
   code
     _data
       OnTextChanged=>@"dom event triggered when the 
@@ -533,24 +571,29 @@ and can not be interacted with"
       value=>[_data]
       children-only=>true
 
+
 event
   name=>magix.forms.dox.create-dox-for-web-control
   persist=>false
-  inspect=>@"creates the documentation for 
-a mux web control"
+  inspect=>@"public properties for mux web control
+
+returns all the public properties and methods for a specific mux 
+web control.  pass in [control] as type of control to retrieve 
+documentation for.  control parameter can be any of the installed 
+mux web controls in your system"
   code
-    magix.forms.dox.get-control-methods
-    magix.forms.dox.get-web-control-methods
+    magix.forms.dox._get-control-methods
+    magix.forms.dox._get-web-control-methods
     set=>[_evt].Name
       value=>{0}.{1}
         v0=>magix.forms.dox.create-dox-for
         v1=>[$][control].Value
     _evt
     add=>[_data]
-      value=>[magix.forms.dox.get-control-methods]
+      value=>[magix.forms.dox._get-control-methods]
       children-only=>true
     add=>[_data]
-      value=>[magix.forms.dox.get-web-control-methods]
+      value=>[magix.forms.dox._get-web-control-methods]
       children-only=>true
     add=>[_data]
       value=>[3]
@@ -580,20 +623,25 @@ a mux web control"
           value=>@"<ul>"
     _data
 
+
 event
   name=>magix.forms.dox.create-dox-for-control
   persist=>false
-  inspect=>@"creates the documentation for 
-a mux control"
+  inspect=>@"public properties for mux control
+
+returns all the public properties and methods for a specific mux 
+control.  pass in [control] as parameter to inform what type of 
+control you wish to retrieve documentation for.  control parameter 
+can be any of the installed mux controls in your system"
   code
-    magix.forms.dox.get-control-methods
+    magix.forms.dox._get-control-methods
     set=>[_evt].Name
       value=>{0}.{1}
         v0=>magix.forms.dox.create-dox-for
         v1=>[$][control].Value
     _evt
     add=>[_data]
-      value=>[magix.forms.dox.get-control-methods]
+      value=>[magix.forms.dox._get-control-methods]
       children-only=>true
     add=>[_data]
       value=>[2]
@@ -622,8 +670,4 @@ a mux control"
         literal
           value=>@"<ul>"
     _data
-
-
-
-
 
