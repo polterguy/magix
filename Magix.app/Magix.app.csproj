@@ -386,6 +386,7 @@
     <Content Include="system42\startup-scripts\unit-tests\magix-math.hl" />
     <Content Include="system42\startup-scripts\unit-tests\sandbox.hl" />
     <Content Include="system42\startup-scripts\create-unit-tests.hl" />
+    <Content Include="system42\startup-scripts\unit-tests\fork.hl" />
     <None Include="todo.txt" />
     <None Include="system42\startup-scripts\events-create-desktop-shortcuts.hl" />
     <None Include="system42\startup-scripts\event-server-discovery.hl" />

@@ -104,7 +104,7 @@ event
   persist=>false
   inspect=>@"verifies [execute] overflows
 
-executes more than 50.000 lines of code, making sure 
+executes more than 65.536 lines of code, making sure 
 the execution overflows the execution engine"
   code
     _expected-exception=>execution engine overflowed
@@ -114,7 +114,7 @@ the execution overflows the execution engine"
     // 17000 times 3 is 51000, which should raise an exception
     while=>less-than-equals
       lhs=>[_iter].Value
-      rhs=>17000
+      rhs=>22000
       code
         using=>magix.math
           add
@@ -129,7 +129,7 @@ event
   persist=>false
   inspect=>@"verifies [execute] doesn't overflow
 
-executes close to 50.000 lines of code, making sure 
+executes close to 65.536 lines of code, making sure 
 the execution doesn't overflow the execution engine"
   code
     _iter=>0
@@ -139,7 +139,7 @@ the execution doesn't overflow the execution engine"
     // although it will be a close call
     while=>less-than-equals
       lhs=>[_iter].Value
-      rhs=>16000
+      rhs=>21000
       code
         using=>magix.math
           add

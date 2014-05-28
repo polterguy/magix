@@ -71,7 +71,7 @@ for-each=>[magix.data.load][objects]
         lhs=>[.][code].Count
         rhs=>0
         code
-          add=>[@][..][node-2-code][node]
+          add=>[@][..][..][node-2-code][node]
             value=>[.][code][0]
           set=>[.][code][0]
       node-2-code

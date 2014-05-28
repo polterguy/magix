@@ -66,7 +66,7 @@ conventional programming language, can easily be fixed by fixing the code that p
 this code may not necessarily have been produced by your server, but might be code sent from another server, to your server for execution.
 &nbsp;&nbsp;this creates an environment where another server more easily can crash your server than that of other programming languages.&nbsp;
 &nbsp;to help reduce this problem as much as possible, hyperlisp has a lot of safe-guards to prevent these kind of scenarios to occur.&nbsp;
-&nbsp;for instance, in hyperlisp, you cannot execute a piece of code block that ends up executing more than 50.000 active events, including 
+&nbsp;for instance, in hyperlisp, you cannot execute a piece of code block that ends up executing more than 65.536 active events, including 
 hyperlisp keywords</p>
 
 <p>this number might be perceived as your server's <em>"iq"</em>, which you can increase or decrease dependent upon your server's 

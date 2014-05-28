@@ -7,6 +7,7 @@
 using System;
 using System.IO;
 using System.Web;
+using System.Threading;
 using System.Configuration;
 using System.Collections.Generic;
 using Magix.Core;
@@ -21,57 +22,46 @@ namespace Magix.data
         private static string _dbPath;
         private static string _appPath;
         private static Node _database;
-        private static bool _hasInitialized;
+        private static AutoResetEvent _resetEvent = new AutoResetEvent(true);
+        private static int _resetEventLoadCount = 0;
 
         #region [ -- publicly available methods -- ]
 
         internal static void Initialize()
         {
-            if (_hasInitialized)
-                return;
-            else
+            _appPath = HttpContext.Current.Server.MapPath("/");
+            _appPath = _appPath.Replace("\\", "/");
+            _dbPath = ConfigurationManager.AppSettings["magix.core.database-path"];
+            _database = new Node();
+
+            Node listDirectoriesNode = new Node();
+            listDirectoriesNode["directory"].Value = _dbPath;
+            ActiveEvents.Instance.RaiseActiveEvent(
+                typeof(Database),
+                "magix.file.list-directories",
+                listDirectoriesNode);
+
+            foreach (Node idxDir in listDirectoriesNode["directories"])
             {
-                lock (typeof(Database))
+                // retrieving data files
+                Node listFilesNode = new Node();
+                listFilesNode["filter"].Value = "db*.hl";
+                listFilesNode["directory"].Value = idxDir.Name;
+                ActiveEvents.Instance.RaiseActiveEvent(
+                    typeof(Database),
+                    "magix.file.list-files",
+                    listFilesNode);
+
+                foreach (Node idxFileNode in listFilesNode["files"])
                 {
-                    if (!_hasInitialized)
-                    {
-                        _appPath = HttpContext.Current.Server.MapPath("/");
-                        _appPath = _appPath.Replace("\\", "/");
-                        _dbPath = ConfigurationManager.AppSettings["magix.core.database-path"];
-                        _database = new Node();
+                    Node loadFile = new Node();
+                    loadFile["file"].Value = idxFileNode.Name;
+                    ActiveEvents.Instance.RaiseActiveEvent(
+                        typeof(Database),
+                        "magix.execute.code-2-node",
+                        loadFile);
 
-                        Node listDirectoriesNode = new Node();
-                        listDirectoriesNode["directory"].Value = _dbPath;
-                        ActiveEvents.Instance.RaiseActiveEvent(
-                            typeof(Database),
-                            "magix.file.list-directories",
-                            listDirectoriesNode);
-
-                        foreach (Node idxDir in listDirectoriesNode["directories"])
-                        {
-                            // retrieving data files
-                            Node listFilesNode = new Node();
-                            listFilesNode["filter"].Value = "db*.hl";
-                            listFilesNode["directory"].Value = idxDir.Name;
-                            ActiveEvents.Instance.RaiseActiveEvent(
-                                typeof(Database),
-                                "magix.file.list-files",
-                                listFilesNode);
-
-                            foreach (Node idxFileNode in listFilesNode["files"])
-                            {
-                                Node loadFile = new Node();
-                                loadFile["file"].Value = idxFileNode.Name;
-                                ActiveEvents.Instance.RaiseActiveEvent(
-                                    typeof(Database),
-                                    "magix.execute.code-2-node",
-                                    loadFile);
-
-                                _database[idxFileNode.Name].AddRange(loadFile["node"]);
-                            }
-                        }
-                        _hasInitialized = true;
-                    }
+                    _database[idxFileNode.Name].AddRange(loadFile["node"]);
                 }
             }
         }
@@ -81,32 +71,70 @@ namespace Magix.data
          */
         internal static void LoadItems(Node ip, Node prototype, string id, int start, int end)
         {
-            int curMatchingItem = 0;
-            foreach (Node idxFileNode in _database)
+            _resetEvent.WaitOne();
+            try
             {
-                foreach (Node idxObjectNode in idxFileNode)
+                int curMatchingItem = 0;
+                foreach (Node idxFileNode in _database)
                 {
-                    if (id != null && id == idxObjectNode.Get<string>())
+                    foreach (Node idxObjectNode in idxFileNode)
                     {
-                        // loading by id
-                        Node curNode = idxObjectNode.Clone();
-                        ip["objects"][idxObjectNode.Get<string>()].AddRange(curNode);
-                        return;
-                    }
-                    else if (id == null)
-                    {
-                        // loading by prototype
-                        if (idxObjectNode.HasNodes(prototype))
+                        if (id != null && id == idxObjectNode.Get<string>())
                         {
-                            if ((start == 0 || curMatchingItem >= start) && (end == -1 || curMatchingItem < end))
+                            // loading by id
+                            Node curNode = idxObjectNode.Clone();
+                            ip["objects"][idxObjectNode.Get<string>()].AddRange(curNode);
+                            return;
+                        }
+                        else if (id == null)
+                        {
+                            // loading by prototype
+                            if (idxObjectNode.HasNodes(prototype))
                             {
-                                Node curNode = idxObjectNode.Clone();
-                                ip["objects"][idxObjectNode.Get<string>()].AddRange(curNode);
+                                if ((start == 0 || curMatchingItem >= start) && (end == -1 || curMatchingItem < end))
+                                {
+                                    Node curNode = idxObjectNode.Clone();
+                                    ip["objects"][idxObjectNode.Get<string>()].AddRange(curNode);
+                                }
+                                curMatchingItem += 1;
                             }
-                            curMatchingItem += 1;
                         }
                     }
                 }
+            }
+            finally
+            {
+                _resetEvent.Set();
+            }
+        }
+
+        /*
+         * counts records in database
+         */
+        internal static void CountRecords(Node ip, Node prototype)
+        {
+            _resetEvent.WaitOne();
+            try
+            {
+                int count = 0;
+                foreach (Node idxFileNode in _database)
+                {
+                    foreach (Node idxObjectNode in idxFileNode)
+                    {
+                        if (prototype == null)
+                            count += 1;
+                        else
+                        {
+                            if (idxObjectNode.HasNodes(prototype))
+                                count += 1;
+                        }
+                    }
+                }
+                ip["count"].Value = count;
+            }
+            finally
+            {
+                _resetEvent.Set();
             }
         }
 
@@ -115,38 +143,151 @@ namespace Magix.data
          */
         internal static void SaveById(Node value, string id)
         {
-            Node fileNode = null;
-            value.Value = id;
-            value.Name = "id";
-            foreach (Node idxFileNode in _database)
+            _resetEvent.WaitOne();
+            try
             {
-                bool found = false;
-                foreach (Node idxObjectNode in idxFileNode)
+                Node fileNode = null;
+                value.Value = id;
+                value.Name = "id";
+                foreach (Node idxFileNode in _database)
                 {
-                    if (idxObjectNode.Get<string>() == id)
+                    bool found = false;
+                    foreach (Node idxObjectNode in idxFileNode)
                     {
-                        idxObjectNode.Clear();
-                        idxObjectNode.AddRange(value);
-                        fileNode = idxFileNode;
-                        found = true;
-                        break;
+                        if (idxObjectNode.Get<string>() == id)
+                        {
+                            idxObjectNode.Clear();
+                            idxObjectNode.AddRange(value);
+                            fileNode = idxFileNode;
+                            found = true;
+                            break;
+                        }
                     }
+                    if (found)
+                        break;
                 }
-                if (found)
-                    break;
+                if (fileNode != null)
+                {
+                    SaveFileNodeToDisc(fileNode);
+                }
+                else
+                    SaveNewObject(value, id);
             }
-            if (fileNode != null)
+            finally
             {
-                SaveFileNodeToDisc(fileNode);
+                _resetEvent.Set();
             }
-            else
-                SaveNewObject(value, id);
         }
 
         /*
          * saves a new object
          */
-        internal static string SaveNewObject(Node value, string id)
+        internal static string SaveNewObject(Node value)
+        {
+            _resetEvent.WaitOne();
+            try
+            {
+                return SaveNewObject(value, null);
+            }
+            finally
+            {
+                _resetEvent.Set();
+            }
+        }
+
+        /*
+         * removes items from database according to prototype
+         */
+        internal static void RemoveByPrototype(Node prototype)
+        {
+            _resetEvent.WaitOne();
+            try
+            {
+                List<Node> nodesToRemove = new List<Node>();
+                List<string> filesToUpdate = new List<string>();
+                foreach (Node idxFileNode in _database)
+                {
+                    foreach (Node idxObjectNode in idxFileNode)
+                    {
+                        if (idxObjectNode.HasNodes(prototype))
+                        {
+                            nodesToRemove.Add(idxObjectNode);
+                            if (!filesToUpdate.Exists(
+                                delegate(string idxFileName)
+                                {
+                                    return idxFileName == idxFileNode.Name;
+                                }))
+                                filesToUpdate.Add(idxFileNode.Name);
+                        }
+                    }
+                }
+                foreach (Node idx in nodesToRemove)
+                {
+                    idx.UnTie();
+                }
+                foreach (string idx in filesToUpdate)
+                {
+                    if (_database[idx].Count == 0)
+                        RemoveNodeFromDatabase(_database[idx]);
+                    else
+                        SaveFileNodeToDisc(_database[idx]);
+                }
+            }
+            finally
+            {
+                _resetEvent.Set();
+            }
+        }
+
+        /*
+         * removes a node by its id
+         */
+        internal static void RemoveById(string id)
+        {
+            _resetEvent.WaitOne();
+            try
+            {
+                Node objectToRemove = null;
+                foreach (Node idxFileNode in _database)
+                {
+                    bool found = false;
+                    foreach (Node idxObjectNode in idxFileNode)
+                    {
+                        if (idxObjectNode.Get<string>() == id)
+                        {
+                            objectToRemove = idxObjectNode;
+                            found = true;
+                            break;
+                        }
+                    }
+                    if (found)
+                        break;
+                }
+                if (objectToRemove != null)
+                {
+                    Node fileObject = objectToRemove.Parent;
+                    objectToRemove.UnTie();
+
+                    if (fileObject.Count > 0)
+                        SaveFileNodeToDisc(fileObject);
+                    else
+                        RemoveNodeFromDatabase(fileObject);
+                }
+            }
+            finally
+            {
+                _resetEvent.Set();
+            }
+        }
+
+        #endregion
+
+        #region [ -- private methods -- ]
+
+        /*
+         * saves a new object
+         */
+        private static string SaveNewObject(Node value, string id)
         {
             if (string.IsNullOrEmpty(id))
                 id = Guid.NewGuid().ToString().Replace("-", "");
@@ -159,101 +300,6 @@ namespace Magix.data
 
             return id;
         }
-
-        /*
-         * removes items from database according to prototype
-         */
-        internal static void RemoveByPrototype(Node prototype)
-        {
-            List<Node> nodesToRemove = new List<Node>();
-            List<string> filesToUpdate = new List<string>();
-            foreach (Node idxFileNode in _database)
-            {
-                foreach (Node idxObjectNode in idxFileNode)
-                {
-                    if (idxObjectNode.HasNodes(prototype))
-                    {
-                        nodesToRemove.Add(idxObjectNode);
-                        if (!filesToUpdate.Exists(
-                            delegate(string idxFileName)
-                            {
-                                return idxFileName == idxFileNode.Name;
-                            }))
-                            filesToUpdate.Add(idxFileNode.Name);
-                    }
-                }
-            }
-            foreach (Node idx in nodesToRemove)
-            {
-                idx.UnTie();
-            }
-            foreach (string idx in filesToUpdate)
-            {
-                if (_database[idx].Count == 0)
-                    RemoveNodeFromDatabase(_database[idx]);
-                else
-                    SaveFileNodeToDisc(_database[idx]);
-            }
-        }
-
-        /*
-         * removes a node by its id
-         */
-        internal static void RemoveById(string id)
-        {
-            Node objectToRemove = null;
-            foreach (Node idxFileNode in _database)
-            {
-                bool found = false;
-                foreach (Node idxObjectNode in idxFileNode)
-                {
-                    if (idxObjectNode.Get<string>() == id)
-                    {
-                        objectToRemove = idxObjectNode;
-                        found = true;
-                        break;
-                    }
-                }
-                if (found)
-                    break;
-            }
-            if (objectToRemove != null)
-            {
-                Node fileObject = objectToRemove.Parent;
-                objectToRemove.UnTie();
-
-                if (fileObject.Count > 0)
-                    SaveFileNodeToDisc(fileObject);
-                else
-                    RemoveNodeFromDatabase(fileObject);
-            }
-        }
-
-        /*
-         * counts records in database
-         */
-        internal static void CountRecords(Node ip, Node prototype)
-        {
-            int count = 0;
-            foreach (Node idxFileNode in _database)
-            {
-                foreach (Node idxObjectNode in idxFileNode)
-                {
-                    if (prototype == null)
-                        count += 1;
-                    else
-                    {
-                        if (idxObjectNode.HasNodes(prototype))
-                            count += 1;
-                    }
-                }
-            }
-            ip["count"].Value = count;
-        }
-
-        #endregion
-
-        #region [ -- private methods -- ]
 
         /*
          * saves a file node to disc

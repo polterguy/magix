@@ -17,6 +17,13 @@ namespace Magix.execute
 	 */
 	public class DirectoriesCore : ActiveController
 	{
+        private static string _basePath;
+
+        static DirectoriesCore()
+        {
+            _basePath = HttpContext.Current.Server.MapPath("~");
+        }
+
         /*
          * lists all child directories
          */
@@ -54,7 +61,7 @@ namespace Magix.execute
             bool absolutePath = true;
             if (!directory.Contains(":"))
             {
-                directory = HttpContext.Current.Server.MapPath(directory);
+                directory = _basePath + directory;
                 absolutePath = false;
             }
 
@@ -63,7 +70,7 @@ namespace Magix.execute
             else
                 files = Directory.GetDirectories(directory, filter);
 
-            string rootDir = HttpContext.Current.Server.MapPath("~");
+            string rootDir = _basePath;
             foreach (string idxFile in files)
             {
                 string fileName = idxFile;
@@ -103,7 +110,7 @@ namespace Magix.execute
             string path = Expressions.GetExpressionValue(ip["directory"].Get<string>(), dp, ip, false) as string;
 
             if (!path.Contains(":"))
-                path = HttpContext.Current.Server.MapPath(path);
+                path = _basePath + path;
 
 			Directory.CreateDirectory(path);
 		}
@@ -138,7 +145,7 @@ namespace Magix.execute
             string path = Expressions.GetExpressionValue(ip["directory"].Get<string>(), dp, ip, false) as string;
 
             if (!path.Contains(":"))
-                path = HttpContext.Current.Server.MapPath(path);
+                path = _basePath + path;
 
             Directory.Delete(path);
 		}
@@ -172,14 +179,14 @@ namespace Magix.execute
             string from = Expressions.GetExpressionValue(ip["from"].Get<string>(), dp, ip, false) as string;
 
             if (!from.Contains(":"))
-                from = HttpContext.Current.Server.MapPath(from);
+                from = _basePath + from;
 
             if (!ip.ContainsValue("to"))
                 throw new ArgumentException("you need to define which directory to copy to, as [to] node");
             string to = Expressions.GetExpressionValue(ip["to"].Get<string>(), dp, ip, false) as string;
 
             if (!to.Contains(":"))
-                to = HttpContext.Current.Server.MapPath(to);
+                to = _basePath+ to;
 
             Directory.Move(from, to);
         }
@@ -214,7 +221,7 @@ namespace Magix.execute
             string dir = Expressions.GetExpressionValue(ip["directory"].Get<string>().TrimStart('/'), dp, ip, false) as string;
 
             if (!dir.Contains(":"))
-                dir = HttpContext.Current.Server.MapPath(dir);
+                dir = _basePath + dir;
 
             ip["value"].Value = Directory.Exists(dir);
         }

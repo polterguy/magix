@@ -82,7 +82,6 @@ namespace Magix.tests
                         string expectedExceptionString = null;
                         if (expectsException)
                             expectedExceptionString = inspectTest["_expected-exception"].Get<string>();
-
                         try
                         {
                             RaiseActiveEvent(idxTest);
