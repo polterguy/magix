@@ -11,12 +11,12 @@ viewstate and cookies are neither safe against tampering</p>
 
 <label>methods and properties of control</label>
 {{
-dynamic=>methods-for-hiddenfield
+dynamic=>methods-for-hidden
   onfirstload
     magix.forms.dox.create-dox-for-control
       class=>dox-for-web-control
-      control=>hiddenfield
-      container=>methods-for-hiddenfield
+      control=>hidden
+      container=>methods-for-hidden
 }}
 
 <p>below is an example of an active module, using a mux hidden field instead of conventional web controls. remember to embed 

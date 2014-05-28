@@ -1,6 +1,30 @@
 ﻿
 
-inspect=>@"creates the dynamic unit tests"
+inspect=>@"creates unit tests for magix
+
+creates the dynamic unit tests for testing hyperlisp 
+in magix.  basically loops through all files in 
+system42/startup-scripts/unit-tests and executes them 
+as hyperlisp
+
+to create your own unit test, create a new hyperlisp 
+file, have it create an active event in the magix.test 
+namespace, and stuff your file into the unit-tests 
+folder.  then during startup of application, your unit 
+test will register as a part of the unit test suite
+
+make sure you restart your application pool, by either 
+restarting apache or iis, to register your unit test, 
+unless you wish to also in addition create your unit 
+test active event by force, using for instance the 
+hyperlisp executor
+
+to unregister all unit tests, which might make magix 
+go slightly faster, just rename the unit-tests folder 
+to anything, or delete it in entirely.  though, having 
+the unit tests around, and occassionally run them, to 
+verify the integrity of your system, is probably more 
+secure, than deleting them entirely"
 
 
 magix.file.directory-exist
@@ -17,5 +41,4 @@ if=>equals
     for-each=>[@][magix.file.list-files][files]
       set=>[@][execute-script][file].Value
         value=>[.].Name
-
 

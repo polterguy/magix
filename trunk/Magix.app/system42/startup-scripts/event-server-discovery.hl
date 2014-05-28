@@ -1,21 +1,22 @@
 
 
-inspect=>@"creates and opens up the [magix.public.get-public-events] event, 
+inspect=>@"creates the server discovery active event
+
+creates and opens up the [magix.public.get-public-events] event, 
 which allows other servers to call this server, to see which 
-events are opened for public access by other servers and 
-machines by this server"
+events are opened for public access for other servers"
 
 
 event
   name=>magix.public.get-public-events
   persist=>false
-  inspect=>@"returns all active events which are remotely accessible
-by other servers, and can be invoked over http from other sources.&nbsp;&nbsp;
-by default, this is the only active event which is open from your 
-installation, and becomes a discovery service by your server, 
-such that you can automatically handshake other servers.&nbsp;&nbsp;
-if you want to create an api for your server and services, then having this 
-active event open is crucial"
+  inspect=>@"returns all open active events
+
+returns all active events which have been marked as remotely 
+accessible by this server.  this active event is open for 
+remote execution, and is one of the ways servers can handshake 
+eachother to realize which active events they can invoke on 
+each other"
 
   code
     list-events

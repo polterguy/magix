@@ -1,16 +1,18 @@
 
 
-inspect=>@"creates unit tests to 
-test the [magix.execute.set] keyword"
+inspect=>@"creates unit tests for the [set] keyword
+
+creates unit tests to test the [set] keyword of magix"
 
 
 event
-  name=>magix.test.set-complex-expression
+  name=>magix.test.set-complex
   persist=>false
-  inspect=>@"asserts that [set] works the 
-way it should work, and assigns 
-the correct node, when a complex
-expression is given to [set]"
+  inspect=>@"verifies [set] works with complex expressions
+
+creates a complex [set] expression, using both indexed retrievers, value 
+retrievers, and indexed name retrievers, verifying the expression returns 
+the correct value"
   code
     _data=>y1
       buffer=>howdy
@@ -30,17 +32,17 @@ expression is given to [set]"
       lhs=>[_value].Value
       rhs=>success
       code
-        throw=>@"[set] expression didn't
-correctly set the node it was supposed to set"
+        throw=>[set] misbehaved
 
 
 event
-  name=>magix.test.set-multiple-statements
+  name=>magix.test.set-multiple
   persist=>false
-  inspect=>@"asserts that [set] works the 
-way it should work, and assigns 
-the correct value, in several
-consecutive calls to [set]"
+  inspect=>@"verifies [set] works
+
+creates several consecutive [set] statements, some setting values, 
+others names, and others again nodes themselves, for then to verify 
+the set statements behaved correctly"
   code
     _data1
       value1=>howdy
@@ -52,38 +54,32 @@ consecutive calls to [set]"
     if=>not-equals
       lhs=>[_buffer][0].Name
       rhs=>_data1
+      or=>exist
+        lhs=>[_buffer][_data1].Value
       code
-        throw=>@"[set] expression didn't
-correctly set the node it was supposed to set"
-    if=>equals
-      lhs=>[_buffer][0].Value
-      rhs=>old value
-      code
-        throw=>@"[set] expression didn't
-correctly set the node it was supposed to set"
+        throw=>[set] misbehaved
     if=>not-equals
-      lhs=>[_buffer][0][0].Value
+      lhs=>[_buffer][_data1][value1].Value
       rhs=>howdy
+      or=>not-equals
+        lhs=>[_buffer][_data1][value2].Value
+        rhs=>world
       code
-        throw=>@"[set] expression didn't
-correctly set the node it was supposed to set"
-    set=>[_data1]
+        throw=>[set] misbehaved
+    set=>[_data1][value1]
     if=>exist
-      lhs=>[_data1]
+      lhs=>[_data1][value1]
       code
-        throw=>@"[set] expression didn't
-correctly set the node it was supposed to set"
+        throw=>[set] misbehaved
     set=>[_buffer].Value
     if=>exist
       lhs=>[_buffer].Value
       code
-        throw=>@"[set] expression didn't
-correctly set the node it was supposed to set"
+        throw=>[set] misbehaved
     set=>[_buffer].Name
     if=>not-equals
-      lhs=>[0].Name
+      lhs=>[1].Name
       rhs=>
       code
-        throw=>@"[set] expression didn't
-correctly set the node it was supposed to set"
+        throw=>[set] misbehaved
 

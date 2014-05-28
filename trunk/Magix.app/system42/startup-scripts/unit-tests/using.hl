@@ -1,14 +1,17 @@
 
 
-inspect=>@"creates unit tests to 
-test the [magix.execute.using] keyword"
+inspect=>@"creates unit tests for the [using] keyword
+
+creates unit tests to test the [using] keyword of magix"
 
 
 event
-  name=>magix.test.using
+  name=>magix.test.using-system-event
   persist=>false
-  inspect=>@"asserts that using works the 
-way it should work"
+  inspect=>@"verifies [using] works with system events
+
+creates a [using] statement, wrapping a magix.math block of 
+code, verifying the code block behaves correctly"
   code
     using=>magix.math
       add
@@ -19,4 +22,30 @@ way it should work"
       lhs=>[using][add].Value
       rhs=>12
       code
-        throw=>[using] did not work as expected
+        throw=>[using] misbehaved
+
+
+event
+  name=>magix.test.using-dynamic-event
+  persist=>false
+  inspect=>@"verifies [using] works with dynamically created events
+
+creates an event in the magix.test namespace, then tries to invoke 
+the event using a [using] statement, for then to verify it behaves 
+correctly"
+  code
+    event
+      name=>magix.test.temp-using
+      code
+        set=>[$][_ip].Value[output].Value
+          value=>success
+    using=>magix.test
+      temp-using
+    event
+      name=>magix.test.temp-using
+    if=>not-equals
+      lhs=>[using][temp-using][output].Value
+      rhs=>success
+      code
+        throw=>[using] misbehaved
+

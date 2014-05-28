@@ -1,14 +1,17 @@
 
 
-inspect=>@"creates unit tests to 
-test the [magix.execute.with] keyword"
+inspect=>@"creates unit tests for the [with] keyword
+
+creates unit tests to test the [with] keyword of magix"
 
 
 event
   name=>magix.test.with
   persist=>false
-  inspect=>@"asserts that the [with] keyword 
-functions the way it is supposed to"
+  inspect=>@"verifies [with] works
+
+creates several [with] statements, one inside the other, verifying 
+they all behave as expected"
   code
     _data
       _item1
@@ -19,48 +22,57 @@ functions the way it is supposed to"
       with=>[_item1]
         set=>[.][yo].Value
           value=>hello
-        if=>not-equals
-          lhs=>[yo].Value
-          rhs=>hello
-          code
-            throw=>the [with] keyword did not function as it was supposed to when nested
+      set=>[.].Value
+        value=>success
     if=>not-equals
       lhs=>[_data][_item1].Value
       rhs=>test
+      or=>not-equals
+        lhs=>[_data][_item1][yo].Value
+        rhs=>hello
+      or=>not-equals
+        lhs=>[_data].Value
+        rhs=>success
       code
-        throw=>the [with] keyword did not function as it was supposed to
+        throw=>[with] misbehaved
 
 
 event
   name=>magix.test.with-exceptions
   persist=>false
-  inspect=>@"asserts that the [with] keyword 
-functions the way it is supposed to when an 
-exception is thrown"
+  inspect=>@"verifies [with] works with exceptions
+
+creates a [with] statement, throws an exceptions from inside of it, 
+for then to verify it behaves correctly"
   code
     _data
       _item1
         yo=>test
     with=>[_data]
-      with=>[_item1]
-        try
-          code
-            throw=>catched beneath here
-          catch
-            set=>[.].Value
-              value=>item1
+      try
+        code
+          with=>[_item1]
+            try
+              code
+                throw=>catched beneath here
+              catch
+                set=>[.].Value
+                  value=>item1
+            throw=>eek
+        catch
+          set=>[_item1][yo].Value
+            value=>tested
       set=>[.].Value
         value=>howdy
     if=>not-equals
-      lhs=>[/][_data].Value
+      lhs=>[_data].Value
       rhs=>howdy
+      or=>not-equals
+        lhs=>[_data][_item1].Value
+        rhs=>item1
+      or=>not-equals
+        lhs=>[_data][_item1][yo].Value
+        rhs=>tested
       code
-        throw=>@"the [with] keyword did not function as it was 
-supposed to when an exception was thrown"
-    if=>not-equals
-      lhs=>[/][_data][_item1].Value
-      rhs=>item1
-      code
-        throw=>@"the [with] keyword did not function as it was 
-supposed to when an exception was thrown"
+        throw=>[with] misbehaved
 

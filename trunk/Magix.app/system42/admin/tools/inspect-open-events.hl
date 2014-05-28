@@ -102,7 +102,7 @@ cf
               value=>[@][magix.forms.get-value][value].Value
             magix.admin.load-executor-code
               code
-              class=>span-19 last left-5 bottom-3 top-1
+              class=>span-17 last left-5 bottom-3 top-1
         label=>lblDesc
           class=>span-13 top-2
           tag=>label

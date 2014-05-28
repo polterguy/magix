@@ -8,12 +8,12 @@ instance 'yes' or 'no' situations
 
 <label>methods and properties of control</label>
 {{
-dynamic=>methods-for-checkbox
+dynamic=>methods-for-check-box
   onfirstload
     magix.forms.dox.create-dox-for-web-control
       class=>dox-for-web-control
-      control=>checkbox
-      container=>methods-for-checkbox
+      control=>check-box
+      container=>methods-for-check-box
 }}
 
 <p>below is an example of an active module, using a mux checkbox instead of conventional web controls. remember to embed 

@@ -1,14 +1,20 @@
 
 
-inspect=>@"creates unit tests to 
-test the [magix.math] namespace"
+inspect=>@"creates unit tests for the magix.file namespace
+
+creates unit tests to test that [magix.math.add], [magix.math.subtract], 
+[magix.math.multiply], [magix.math.divide] and [magix.math.modulo] 
+work the way they should"
 
 
 event
-  name=>magix.test.multiple-math-value
+  name=>magix.test.math-complex
   persist=>false
-  inspect=>@"asserts that magix.math functions 
-with multiple recursive math expressions"
+  inspect=>@"verifies the magix.math namespace works
+
+creates a complex math expression, with several 
+sub-expressions, verifying the result becomes 
+what was expected"
   code
     using=>magix.math
       add
@@ -27,8 +33,5 @@ with multiple recursive math expressions"
       lhs=>[using=>magix.math][add].Value
       rhs=>34
       code
-        throw=>magix.math didn't produce the correct result
-
-
-
+        throw=>magix.math misbehaved
 

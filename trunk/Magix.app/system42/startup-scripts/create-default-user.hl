@@ -1,7 +1,10 @@
 
 
-inspect=>@"creates the default user 
-in the system"
+inspect=>@"creates default user 
+
+creates the initial default user in magix, with 
+the username and password of 'admin'"
+
 
 magix.data.count
   prototype

@@ -1,19 +1,19 @@
 
 
-inspect=>@"creates unit tests to 
-test the [magix.execute.remote],
-[magix.execute.open],
-[magix.execute.close] and
-[magix.execute.event] keywords"
+inspect=>@"creates unit tests for the remoting features of magix
+
+creates unit tests to test the [magix.execute.remote], [magix.execute.open], 
+[magix.execute.close] and to some extent the [magix.execute.event] keywords"
 
 
 event
-  name=>magix.test.open-remote
+  name=>magix.test.remote-open
   persist=>false
-  inspect=>@"asserts that [open] and [remote] works the 
-way it should work, by passing parameters in through 
-the [remote] keyword, and checking to 
-see if they become correctly serialized"
+  inspect=>@"verifies [open], [close] and [remote] works
+
+creates an event, opens it up for external sources to invoke, 
+for then to verify the active event could successfully be invoked 
+over http"
   code
     event
       name=>magix.test.temp-test-event
@@ -43,25 +43,23 @@ see if they become correctly serialized"
       lhs=>[try][code][remote][params][output].Value
       rhs=>hello world
       code
-        throw=>@"opened active event didn't
-return value as expected when it was remotely invoked"
+        throw=>[open] and/or [remote] misbehaved
     list-events
       open=>true
     if=>exist
       lhs=>[list-events][events][magix.test.temp-test-event]
       code
-        throw=>@"opened active event was not correctly 
-closed after being supposed to be closed"
+        throw=>[close] misbehaved
 
 
 event
-  name=>magix.test.open-remote-throw-inspect
+  name=>magix.test.remote-throw-inspect
   persist=>false
-  inspect=>@"asserts that [open] and [remote] works the 
-way it should work, and that it throws an exception, 
-if an event is attempted to be inspected by 
-appending the [inspect] parameter to the invocation 
-through the [remote] keyword"
+  inspect=>@"verifies inspect fails on remote events
+
+creates an open active event, then tries to inspect it 
+remotely over http, for then to verify the invocation 
+throws an exception"
   code
     _success=>false
     event
@@ -90,6 +88,5 @@ through the [remote] keyword"
       lhs=>[_success].Value
       rhs=>true
       code
-        throw=>@"opened active event didn't
-throw an exception as expected when inspected 
-externally"
+        throw=>[remote] misbehaved with inspect
+

@@ -1,16 +1,17 @@
 
 
-inspect=>@"creates unit tests to 
-test the [magix.execute.while] keyword"
+inspect=>@"creates unit tests for the [while] keyword
+
+creates unit tests to test the [while] keyword of magix"
 
 
 event
   name=>magix.test.while-complex
   persist=>false
-  inspect=>@"asserts that [while] works the 
-way it should work, and returns 
-true if a complex expresssion is given, 
-and it is true"
+  inspect=>@"verifies [while] works with multiple conditions
+
+creates a [while] statement, with multiple conditions, verifying 
+it behaves as expected"
   code
     _data1=>x1
     _data2=>y1
@@ -27,12 +28,26 @@ and it is true"
           lhs=>[@][_data2].Value
           rhs=>y1
       code
-        set=>[_data1].Value
-          value=>x
+        if=>equals
+          lhs=>[_data1].Value
+          rhs=>x1
+          and=>equals
+            lhs=>[_data2].Value
+            rhs=>y1
+          code
+            set=>[_data1].Value
+              value=>x
+            set=>[_data2].Value
+              value=>y
+        else
+          set=>[_data2].Value
+            value=>y2
     if=>not-equals
       lhs=>[_data1].Value
       rhs=>x
+      or=>not-equals
+        lhs=>[_data2].Value
+        rhs=>y2
       code
-        throw=>@"[while] expression didn't
-execute correctly"
+        throw=>[while] misbehaved
 
