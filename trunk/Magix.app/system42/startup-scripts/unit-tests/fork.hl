@@ -1,0 +1,250 @@
+
+
+inspect=>@"tests for the [fork] and [wait] keywords
+
+creates unit tests for testing the [fork] and 
+the [wait] hyperlisp keyword"
+
+
+event
+  name=>magix.test.fork-wait
+  persist=>false
+  inspect=>@"verifies [fork] works with [wait]
+
+creates 64 different threads, underneath a [wait] statement, 
+where every thread loads, saves, counts and deletes from the 
+database, through the magix.data namespace, making sure that 
+the wait statement correctly allows for changes to the 
+instruction pointer beneath the fork statements.  after the 
+wait statement, it verifies that all threads are done executing, 
+by counting the numbers of serialized objects in the database
+
+notice that if there is something wrong with the threading 
+support of [magix.data.load], [magix.data.save], [magix.data.count] 
+or [magix.data.remove], then this unit test might fail"
+  code
+    _data
+      iter=>0
+      fork
+        magix.data.save
+          value
+            type=>magix.tests.thread-object
+            name=>john doe
+            born=>true
+              where=>narvik
+        magix.data.count
+          prototype
+            type=>magix.tests.thread-object
+        magix.data.load
+          prototype
+            type=>magix.tests.thread-object
+        magix.data.save
+          value
+            type=>magix.tests.thread-object
+            name=>jane doe
+            born=>true
+              where=>harstad
+        magix.data.save
+          value
+            type=>magix.tests.thread-object
+            name=>ola nordmann
+            born=>false
+              where=>no(r)way
+        magix.data.count
+          prototype
+            type=>magix.tests.thread-object
+        magix.data.remove
+          prototype
+            type=>magix.tests.thread-object
+        magix.data.save
+          value
+            type=>magix.tests.thread-object-stored
+            name=>john doe
+            born=>true
+              where=>narvik
+    while=>less-than
+      lhs=>[_data][iter].Value
+      rhs=>64
+      code
+        using=>magix.math
+          add
+            =>[_data][iter].Value
+            =>1
+        set=>[_data][iter].Value
+          value=>[@][using][add].Value
+        add=>[magix.execute][wait]
+          value=>[_data][fork]
+    magix.execute
+    iterate=>[@][magix.execute]
+      if=>equals
+        lhs=>[.].Name
+        rhs=>magix.data.save
+        code
+          if=>not-exist
+            lhs=>[.][id].Value
+            code
+              throw=>[wait] malfunctioned
+      if=>equals
+        lhs=>[.].Name
+        rhs=>magix.data.count
+        code
+          if=>not-exist
+            lhs=>[.][count].Value
+            code
+              throw=>[wait] malfunctioned
+    magix.data.count
+      prototype
+        type=>magix.tests.thread-object-stored
+    magix.data.remove
+      prototype
+        type=>magix.tests.thread-object-stored
+    if=>not-equals
+      lhs=>[magix.data.count][count].Value
+      rhs=>64
+      code
+        throw=>[fork] malfunctioned
+
+
+event
+  name=>magix.test.fork-forget
+  persist=>false
+  inspect=>@"verifies fire-and-forget [fork] works
+
+creates 64 different threads, where every thread loads, saves, 
+counts and deletes from the database, through the magix.data 
+namespace, making sure that fire-and-forget threading functions 
+correctly
+
+notice that if there is something wrong with the threading 
+support of [magix.data.load], [magix.data.save], [magix.data.count] 
+or [magix.data.remove], then this unit test might fail"
+  code
+    _data
+      iter=>0
+      fork
+        magix.data.save
+          value
+            type=>magix.tests.thread-object
+            name=>john doe
+            born=>true
+              where=>narvik
+        magix.data.count
+          prototype
+            type=>magix.tests.thread-object
+        magix.data.load
+          prototype
+            type=>magix.tests.thread-object
+        magix.data.save
+          value
+            type=>magix.tests.thread-object
+            name=>jane doe
+            born=>true
+              where=>harstad
+        magix.data.save
+          value
+            type=>magix.tests.thread-object
+            name=>ola nordmann
+            born=>false
+              where=>no(r)way
+        magix.data.count
+          prototype
+            type=>magix.tests.thread-object
+        magix.data.remove
+          prototype
+            type=>magix.tests.thread-object
+    while=>less-than
+      lhs=>[_data][iter].Value
+      rhs=>64
+      code
+        using=>magix.math
+          add
+            =>[_data][iter].Value
+            =>1
+        set=>[_data][iter].Value
+          value=>[@][using][add].Value
+        add=>[magix.execute]
+          value=>[_data][fork]
+    magix.execute
+    iterate=>[@][magix.execute]
+      if=>equals
+        lhs=>[.].Name
+        rhs=>magix.data.save
+        code
+          if=>exist
+            lhs=>[.][id].Value
+            code
+              throw=>[fork] malfunctioned
+      if=>equals
+        lhs=>[.].Name
+        rhs=>magix.data.count
+        code
+          if=>exist
+            lhs=>[.][count].Value
+            code
+              throw=>[fork] malfunctioned
+
+
+event
+  name=>magix.test.fork-throw
+  persist=>false
+  inspect=>@"verifies exceptions works with [fork]
+
+creates a new thread, with no [wait] statement, where 
+the thread throws an exception, verifying that this 
+doesn't crash the web server"
+  code
+    fork
+      throw=>this has to work
+
+
+event
+  name=>magix.test.fork-wait-throw
+  persist=>false
+  inspect=>@"verifies exceptions works with [wait]
+
+creates a new thread, beneath a [wait] statement, where the 
+thread throws an exception, verifying that an exception is 
+thrown on the main thread"
+  code
+    try
+      code
+        wait
+          fork
+            throw=>this has to work
+      catch
+    index-of=>[try][catch][exception].Value
+      what=>this has to work
+    if=>not-exist
+      lhs=>[index-of][result][0].Value
+      code
+        throw=>[wait] malfunctioned
+
+
+event
+  name=>magix.test.fork-wait-throw-twice
+  persist=>false
+  inspect=>@"verifies exceptions works with [wait]
+
+creates a new thread, beneath a [wait] statement, where the 
+thread throws an exception, verifying that an exception is 
+thrown on the main thread"
+  code
+    try
+      code
+        wait
+          fork
+            throw=>this has to work
+          fork
+            throw=>and this too
+      catch
+    index-of=>[try][catch][exception].Value
+      what=>this has to work
+    index-of=>[try][catch][exception].Value
+      what=>and this too
+    if=>not-exist
+      lhs=>[index-of:0][result][0].Value
+      or=>not-exist
+        lhs=>[index-of:1][result][0].Value
+      code
+        throw=>[wait] malfunctioned
+

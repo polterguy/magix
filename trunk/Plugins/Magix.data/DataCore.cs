@@ -128,7 +128,7 @@ namespace Magix.data
                 Database.SaveById(value, id);
             }
             else
-                ip["id"].Value = Database.SaveNewObject(value, null);
+                ip["id"].Value = Database.SaveNewObject(value);
 		}
 
 		/*

@@ -56,13 +56,3 @@ not in whitelist"
       code
         throw=>sandbox allowed changing whitelist
 
-
-
-
-
-
-
-
-
-
-
