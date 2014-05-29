@@ -236,7 +236,7 @@ returns the default dashboard shortcuts in your system"
         category=>learn
         code
           magix.help.start-help
-          magix.viewport.scroll=>help
+          magix.browser.scroll=>help
       qr-codes
         text=>qr codes
         category=>tools

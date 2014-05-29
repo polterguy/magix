@@ -13,7 +13,7 @@ link-button=>hyper-lisp-reference
   onclick
     execute-script
       file=>system42/admin/tools/inspect-execute.hl
-    magix.viewport.scroll
+    magix.browser.scroll
 }} link inside the learn panel, traverses your system for all {{
 link-button=>hyperlisp
   value=>hyperlisp
@@ -33,7 +33,7 @@ link-button=>web-controls
   onclick
     execute-script
       file=>system42/admin/tools/inspect-web-controls.hl
-    magix.viewport.scroll
+    magix.browser.scroll
 }} link inside the learn panel, works similar to the hyperlisp reference link.&nbsp;&nbsp;it will traverse the system for all web controls 
 you have inside of your system, and display the such that you can click them, to inspect them.&nbsp;&nbsp;also the web controls can 
 be viewed and inspected, which will load up the hyperlisp executor, such that you can play around with sample code, illustrating 

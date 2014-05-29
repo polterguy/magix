@@ -43,7 +43,7 @@ system42.travel.try-login
       if=>exist
         lhs=>[magix.data.load][objects][0][roles][admin]
         code
-          magix.web.redirect=>~?dashboard=
+          magix.browser.redirect=>~?dashboard=
       else
         magix.viewport.execute-javascript
           script=>@"location.reload();"
@@ -66,9 +66,9 @@ lambda=>header
         class=>span-14 top-2 bottom-1
         value=>magix illuminate - phosphorus
         tag=>h1
-    magix.web.get-config-setting=>magix.core.portal-name
+    magix.configuration.get-setting=>magix.core.portal-name
     set=>[_data][label][value].Value
-      value=>[magix.web.get-config-setting][value].Value
+      value=>[magix.configuration.get-setting][value].Value
     add=>[$]
       value=>[_data][label]
 
@@ -117,7 +117,7 @@ panel=>logoutWrp
       value=>logout
       onclick
         magix.web.set-session=>magix.core.user
-        magix.web.redirect=>~
+        magix.browser.redirect=>~
     lambda=>createLoadDashboard
       oncreatecontrols
         magix.web.get-session=>magix.core.user
@@ -126,9 +126,9 @@ panel=>logoutWrp
           code
             _lnk=>load_dashboard
               class=>span-4 right-text
-            magix.web.get=>dashboard
+            magix.web.get-parameter=>dashboard
             if=>exist
-              lhs=>[@][magix.web.get][value]
+              lhs=>[@][magix.web.get-parameter][value]
               code
                 set=>[if][code][_lnk][href].Value
                   value=>~

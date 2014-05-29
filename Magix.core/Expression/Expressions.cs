@@ -53,23 +53,21 @@ namespace Magix.Core
             return retVal;
         }
 
-        private static object FormatString(Node dp, Node ip, Node contentNode, object valueToSet)
+        /*
+         * formats a string with its children nodes
+         */
+        public static string FormatString(Node dp, Node ip, Node contentNode, string valueToSet)
         {
             object[] arrs = new object[contentNode.Count];
             int idxNo = 0;
             foreach (Node idx in contentNode)
             {
                 if (idx.Count > 0)
-                {
                     arrs[idxNo++] = FormatString(dp, ip, idx, idx.Get<string>());
-                }
                 else
-                {
                     arrs[idxNo++] = Expressions.GetExpressionValue(idx.Get<string>(), dp, ip, false);
-                }
             }
-            valueToSet = string.Format(CultureInfo.InvariantCulture, valueToSet.ToString(), arrs);
-            return valueToSet;
+            return string.Format(CultureInfo.InvariantCulture, valueToSet.ToString(), arrs);
         }
 
         /*
@@ -89,7 +87,7 @@ namespace Magix.Core
 			// checking to see if this is a string.Format expression
 			if (ip.Contains("value") && ip["value"].Count > 0)
 			{
-                valueToSet = FormatString(dp, ip, ip["value"], valueToSet);
+                valueToSet = FormatString(dp, ip, ip["value"], valueToSet.ToString());
 			}
 
             if (valueToSet == null && !noRemove)

@@ -92,7 +92,7 @@ link-button=>web-controls
   onclick
     execute-script
       file=>system42/admin/tools/inspect-web-controls.hl
-    magix.viewport.scroll
+    magix.browser.scroll
 }}, if you wish to know all the types of web controls you can add up into your magix markup language.&nbsp;&nbsp;to understand the 
 syntax of magix markup language, it is useful to understand the {{
 link-button=>hyperlisp-syntax
@@ -117,7 +117,7 @@ link-button=>web-controls-jump-2
   onclick
     magix.help.open-file
       file=>system42/admin/help/backend/web-controls.mml
-    magix.viewport.scroll=>help
+    magix.browser.scroll=>help
 }}, and you can use any web controls you have within your system, inline into the your web controls declarations</p>
 
 {{

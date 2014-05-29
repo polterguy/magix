@@ -187,10 +187,10 @@ magix.forms.create-web-part
                 form-id=>edit-pages
                 id=>preview
                 value=>true
-              magix.web.get-base-directory
+              magix.configuration.get-base-directory
               set=>[@][magix.qr.create][url].Value
                 value=>{0}?page={1}
-                  v0=>[@][magix.web.get-base-directory][value].Value
+                  v0=>[@][magix.configuration.get-base-directory][value].Value
                   v1=>[/][magix.forms.get-value][value].Value
               set=>[@][magix.qr.create][file-name].Value
                 value=>tmp/{0}.png

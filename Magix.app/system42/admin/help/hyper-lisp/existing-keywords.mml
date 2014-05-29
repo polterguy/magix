@@ -16,7 +16,7 @@ link-button=>open-executor
   onclick
     execute-script
       file=>system42/admin/tools/inspect-execute.hl
-    magix.viewport.scroll
+    magix.browser.scroll
 }} and inspect them as you wish</p>
 
 <p>below are all the hyperlisp keywords of your installation, with their documentation</p>

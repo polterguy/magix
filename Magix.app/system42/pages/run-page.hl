@@ -6,12 +6,12 @@ be the name of a page created through the edit-pages
 web form"
 
 _page=>default
-magix.web.get=>page
+magix.web.get-parameter=>page
 if=>exist
-  lhs=>[magix.web.get][value].Value
+  lhs=>[magix.web.get-parameter][value].Value
   code
     set=>[_page].Value
-      value=>[magix.web.get][value].Value
+      value=>[magix.web.get-parameter][value].Value
 set=>[magix.data.load][prototype][name].Value
   value=>[_page].Value
 magix.data.load

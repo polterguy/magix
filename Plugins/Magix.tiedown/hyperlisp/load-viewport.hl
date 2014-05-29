@@ -4,9 +4,9 @@ inspect=>@"file will run on first page load of page,
 to load up the default viewport"
 
 
-magix.web.get=>dashboard
+magix.web.get-parameter=>dashboard
 if=>exist
-  lhs=>[magix.web.get][value]
+  lhs=>[magix.web.get-parameter][value]
   code
     set=>[$][viewport].Value
       value=>Magix.viewports.Gutenberg
@@ -15,3 +15,4 @@ else
     id=>magix.admin.settings.default-front-end-viewport
   set=>[$][viewport].Value
     value=>[@][magix.data.load][objects][0][viewport].Value
+

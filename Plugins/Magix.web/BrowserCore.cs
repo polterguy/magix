@@ -20,7 +20,7 @@ namespace Magix.web
 		/*
 		 * scrolls the browser window
 		 */
-		[ActiveEvent(Name = "magix.viewport.scroll")]
+		[ActiveEvent(Name = "magix.browser.scroll")]
 		public void magix_browser_scroll(object sender, ActiveEventArgs e)
 		{
             Node ip = Ip(e.Params);
@@ -30,12 +30,12 @@ namespace Magix.web
                     ip["inspect"],
                     "Magix.web",
                     "Magix.web.hyperlisp.inspect.hl",
-                    "[magix.viewport.scroll-dox].Value");
+                    "[magix.browser.scroll-dox].Value");
                 AppendCodeFromResource(
                     ip,
                     "Magix.web",
                     "Magix.web.hyperlisp.inspect.hl",
-                    "[magix.viewport.scroll-sample]");
+                    "[magix.browser.scroll-sample]");
                 return;
 			}
 
@@ -62,6 +62,39 @@ namespace Magix.web
                     js);
             }
 		}
+
+        /*
+         * redirects the client/browser
+         */
+        [ActiveEvent(Name = "magix.browser.redirect")]
+        public void magix_browser_redirect(object sender, ActiveEventArgs e)
+        {
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
+            {
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.web",
+                    "Magix.web.hyperlisp.inspect.hl",
+                    "[magix.browser.redirect-dox].Value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.web",
+                    "Magix.web.hyperlisp.inspect.hl",
+                    "[magix.browser.redirect-sample]");
+                return;
+            }
+
+            string url = ip.Get<string>();
+
+            if (string.IsNullOrEmpty(url))
+                throw new ArgumentException("need url as value for [magix.browser.redirect] to function");
+
+            if (url.Contains("~"))
+                url = url.Replace("~", GetApplicationBaseUrl());
+
+            Magix.UX.Manager.Instance.Redirect(url);
+        }
     }
 }
 

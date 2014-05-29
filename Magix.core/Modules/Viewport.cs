@@ -241,7 +241,7 @@ not thread safe";
         /**
          * scrolls the browser window
          */
-        [ActiveEvent(Name = "magix.viewport.scroll")]
+        [ActiveEvent(Name = "magix.browser.scroll")]
         public void magix_viewport_scroll(object sender, ActiveEventArgs e)
         {
             if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
@@ -251,7 +251,7 @@ not thread safe";
 such that is shows a specific element.&nbsp;&nbsp;if no element 
 is given, it will scroll the browser window to the top.
 &nbsp;&nbsp;not thread safe";
-                e.Params["magix.viewport.scroll"].Value = "id-of-some-element";
+                e.Params["magix.browser.scroll"].Value = "id-of-some-element";
                 return;
             }
 
