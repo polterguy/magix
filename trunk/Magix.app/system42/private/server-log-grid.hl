@@ -1,0 +1,204 @@
+
+
+inspect=>@"creates the server log grid form, from 
+where you can view the system log from"
+
+
+if=>exist
+  lhs=>[$][start]
+  code
+    set=>[magix.data.load][start].Value
+      value=>[$][start].Value
+    set=>[magix.data.load][end].Value
+      value=>[$][end].Value
+
+if=>exist
+  lhs=>[$][filter].Value
+  code
+    set=>[magix.data.load][prototype][body].Value
+      value=>@"%{0}%"
+        pr0=>[$][filter].Value
+    set=>[magix.data.count][prototype][body].Value
+      value=>@"%{0}%"
+        pr0=>[$][filter].Value
+    set=>[magix.forms.create-web-part][controls][panel:1][controls][panel][controls][text-box][value].Value
+      value=>[$][filter].Value
+    set=>[magix.forms.create-web-part][controls][panel:1][controls][link-button:0][onclick][execute-script][params][filter].Value
+      value=>[$][filter].Value
+    set=>[magix.forms.create-web-part][controls][panel:1][controls][link-button:1][onclick][execute-script][params][filter].Value
+      value=>[$][filter].Value
+
+magix.data.load
+  start=(int)>0
+  end=(int)>10
+  prototype
+    type=>magix.log.item
+
+_dt
+  panel
+    controls
+      label
+        class=>span-11
+        tag=>label
+        text
+      label
+        class=>right
+      label
+        class=>span-15 last
+        text
+
+for-each=>[magix.data.load][objects]
+  set=>[/][_dt][panel][controls][label:0][value].Value
+    value=>[.][header].Value
+  set=>[/][_dt][panel][controls][label:1][value].Value
+    value=>[.][date].Value
+  set=>[/][_dt][panel][controls][label:2][value].Value
+    value=>[.][body].Value
+  if=>equals
+    lhs=>[.][error].Value
+    rhs=>true
+    code
+      set=>[/][_dt][panel][class].Value
+        value=>span-15 boxed-light-red air-padding bottom-1 relative
+  else
+    set=>[/][_dt][panel][class].Value
+      value=>span-15 boxed-light-green air-padding bottom-1 relative
+  if=>exist
+    lhs=>[.][code]
+    code
+      set=>[@][node-2-code][node]
+      while=>more-than
+        lhs=>[.][code].Count
+        rhs=>0
+        code
+          add=>[@][..][..][node-2-code][node]
+            value=>[.][code][0]
+          set=>[.][code][0]
+      node-2-code
+      set=>[/][_dt][panel][controls][label:2][value].Value
+        value=>@"{0} <pre>{1}</pre>"
+          pr0=>[/][_dt][panel][controls][label:2][value].Value
+          pr1=>[@][node-2-code][code].Value
+  add=>[/][magix.forms.create-web-part][controls][panel][controls]
+    value=>[/][_dt][panel]
+
+magix.data.count
+  prototype
+    type=>magix.log.item
+
+if=>more-than
+  lhs=>[magix.data.count][count].Value
+  rhs=>[magix.data.load][end].Value
+  code
+    set=>[magix.forms.create-web-part][controls][panel:1][controls][label][value].Value
+      value=>@"{0}/{1} of {2}"
+        pr0=>[magix.data.load][start].Value
+        pr1=>[magix.data.load][end].Value
+        pr2=>[magix.data.count][count].Value
+else
+  set=>[magix.forms.create-web-part][controls][panel:1][controls][label][value].Value
+    value=>@"{0}/{1} of {2}"
+      pr0=>[magix.data.load][start].Value
+      pr1=>[magix.data.count][count].Value
+      pr2=>[magix.data.count][count].Value
+
+if=>equals
+  lhs=>[magix.data.load][start].Value
+  rhs=>0
+  code
+    set=>[magix.forms.create-web-part][controls][panel:1][controls][link-button:0][disabled].Value
+      value=>true
+else
+  set=>[magix.forms.create-web-part][controls][panel:1][controls][link-button:0][disabled].Value
+    value=>false
+  using=>magix.math
+    subtract
+      =>[magix.data.load][start].Value
+      =>10
+  using=>magix.math
+    subtract
+      =>[magix.data.load][end].Value
+      =>10
+  set=>[magix.forms.create-web-part][controls][panel:1][controls][link-button:0][onclick][execute-script][params][start].Value
+    value=>[@][using:0][subtract].Value
+  set=>[magix.forms.create-web-part][controls][panel:1][controls][link-button:0][onclick][execute-script][params][end].Value
+    value=>[@][using:1][subtract].Value
+if=>exist
+  lhs=>[magix.data.load][end].Value>=[magix.data.count][count].Value
+  code
+    set=>[magix.forms.create-web-part][controls][panel:1][controls][link-button:1][disabled].Value
+      value=>true
+else
+  set=>[magix.forms.create-web-part][controls][panel:1][controls][link-button:1][disabled].Value
+    value=>false
+  using=>magix.math
+    add
+      =>[magix.data.load][start].Value
+      =>10
+  using=>magix.math
+    add
+      =>[magix.data.load][end].Value
+      =>10
+  set=>[magix.forms.create-web-part][controls][panel:1][controls][link-button:1][onclick][execute-script][params][start].Value
+    value=>[@][using:0][add].Value
+  set=>[magix.forms.create-web-part][controls][panel:1][controls][link-button:1][onclick][execute-script][params][end].Value
+    value=>[@][using:1][add].Value
+
+magix.forms.create-web-part
+  form-id=>server-log
+  container=>content2
+  class=>span-17 last
+  controls
+    label=>header
+      class=>span-17 last
+      value=>server log
+      tag=>h2
+    panel=>items
+      class=>span-17 last
+      controls
+    panel=>pagerWrp
+      class=>span-17
+      controls
+        link-button=>previous
+          value=>&lt;&lt;
+          class=>span-1 left-7
+          onclick
+            execute-script
+              file=>system42/private/server-log-grid.hl
+        label=>count
+          class=>span-2
+          value=>54
+        link-button=>next
+          value=>&gt;&gt;
+          class=>span-1
+          onclick
+            execute-script
+              file=>system42/private/server-log-grid.hl
+        panel
+          class=>span-2 right last
+          default=>btnSearch
+          controls
+            text-box=>search
+              placeholder=>filter ...
+              class=>span-2
+            button=>btnSearch
+              class=>hide
+              onclick
+                magix.forms.get-value
+                  form-id=>server-log
+                  id=>search
+                set=>[execute-script][params][filter].Value
+                  value=>[magix.forms.get-value][value].Value
+                execute-script
+                  file=>system42/private/server-log-grid.hl
+
+if=>exist
+  lhs=>[$][filter].Value
+  code
+    magix.forms.select-all
+      form-id=>server-log
+      id=>search
+    magix.forms.set-focus
+      form-id=>server-log
+      id=>search
+

@@ -66,7 +66,7 @@ toggling the tracer tool</p><p>thread safe</p>";
             ip["load-tracer"]["text"].Value = "toggle tracer";
             ip["load-tracer"]["category"].Value = "tools";
             ip["load-tracer"]["code"]["magix.admin.toggle-tracer"].Value = null;
-            ip["load-tracer"]["code"]["magix.help.open-file"]["file"].Value = "system42/admin/help/backend/tracer.mml";
+            ip["load-tracer"]["code"]["magix.help.open-file"]["file"].Value = "system42/private/help/backend/tracer.mml";
         }
 
 		/**

@@ -1,0 +1,80 @@
+﻿
+<h2>web controls</h2>
+
+<p>when you create {{
+link-button=>magix-markup-language
+  value=>magix markup language
+  onclick
+    magix.help.open-file
+      file=>system42/private/help/backend/magix-markup-language.mml
+}} you can embed {{
+link-button=>go-to-hyper-lisp
+  value=>hyperlisp
+  onclick
+    magix.help.open-file
+      file=>system42/private/help/hyper-lisp/index.mml
+}} web controls, directly into your html.&nbsp;&nbsp;this way you can create web controls, running on your server, 
+directly inline into your html.&nbsp;&nbsp;this allows you to create rich web forms, as an intrinsic part of your 
+html, mixed together seemlessly.&nbsp;&nbsp;these web controls, are really nothing but active events, within 
+the namespace <em>"magix.forms.controls"</em></p>
+
+<p>to understand web controls, and how to use them, in for instance magix markup language, you will need to have some knowledge 
+about hyperlisp.&nbsp;&nbsp;below is an extensive list of all the web controls within your system</p>
+
+<ul class="list-no-bullet">
+{{
+lambda=>lmb
+  oncreatecontrols
+    list-events
+      begins-with=>magix.forms.controls.
+    for-each=>[list-events][events]
+      _pnl
+        tag=>li
+        class=>bottom-1 span-17 last
+        controls
+          label
+            class=>span-2
+            tag=>label
+          label
+            class=>span-15 last
+          label
+            class=>left-2 span-15 last
+            tag=>pre
+      set=>[@][_pnl][controls][label:0][value].Value
+        value=>[.].Name
+      replace=>[@][_pnl][controls][label:0][value].Value
+        what=>magix.forms.controls.
+      _lmb
+        set=>[1].Name
+          value=>[$][name].Value
+        _1
+          inspect
+        set=>[$][description].Value
+          value=>[1][inspect].Value
+        set=>[1][inspect]
+        set=>[node-2-code][node].Value
+          value=>[1]
+        node-2-code
+          remove-root=>true
+        set=>[$][code].Value
+          value=>[node-2-code][code].Value
+      set=>[@][lambda][name].Value
+        value=>[.].Name
+      lambda=>[@][_lmb]
+      set=>[@][_pnl][controls][label:1][value].Value
+        value=>[@][lambda][description].Value
+      set=>[@][_pnl][controls][label:2][value].Value
+        value=>[@][lambda][code].Value
+      add=>[$]
+        value=>[@][_pnl]
+      set=>[$][_pnl].Name
+        value=>panel
+}}
+</ul>
+
+{{
+lambda=>next
+  oncreatecontrols
+    magix.help.set-next
+      next=>system42/private/help/backend/unit-tests.mml
+}}

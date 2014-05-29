@@ -1,0 +1,97 @@
+﻿
+<h2>sandboxing hyperlisp, for safer execution</h2>
+
+<p>when you execute hyperlisp code, you can choose to [sandbox] the code, such that you supply a [whitelist] of active events and keywords 
+that are legal to execute, while all keywords and active events that's not in your [whitelist], will raise an exception.&nbsp;&nbsp;
+the following code will raise an exception, since the reference to the [bar] keyword/active event is not in its [whitelist]</p>
+
+<pre>
+sandbox
+  whitelist
+    foo
+  code
+    bar
+</pre>
+
+<p>the reason why the above code throw an exception, is because the [foo] active event/keyword is not referenced in the [whitelist] 
+list of legal active events/keywords within the [sandbox] node.&nbsp;&nbsp;if you add [bar] as a child to the [whitelist] node, then 
+the above code will perfectly execute, although not do anything obviously.&nbsp;&nbsp;by cleverly using the [sandbox] feature, you can 
+make sure that code does not execute anything it is not allowed to execute, and in such a way compromises your system</p>
+
+<p>notice that this is not 100% perfect, since you might have active events that creates a new [magix.execute] scopes, which bypasses the 
+[sandbox] you create.&nbsp;&nbsp;if you for instance have created your own active event, which invokes [magix.execute] directly, with a new 
+execution node passed into it, then the sandbox is bypassed.&nbsp;&nbsp;however, all the native active events, supplied with magix from 
+its author, should obey relatively perfect towards the [sandbox] feature.&nbsp;&nbsp;though, you should still <strong>never execute code 
+that comes from a source you don't trust!</strong></p>
+
+<h3>fully qualifying an execution scope</h3>
+
+<p>in addition to the [sandbox] feature, you can also choose to fully qualify an execution scope.&nbsp;&nbsp;this will ensure that your 
+[magix.execute] cannot in any ways access any nodes from outside of the [magix.execute] node itself.&nbsp;&nbsp;this ensures that your 
+execution scope is <em>"encapsulated"</em>, and does not have negative side-effects for other parts of your code.&nbsp;&nbsp;consider the 
+following code</p>
+
+<pre>
+_data=>false
+magix.execute
+  while=>equals
+    lhs=>[/][while][code][_data].Value
+    rhs=>false
+    code
+      _data=>false
+      magix.viewport.show-message
+        message=>howdy world
+      set=>[/][_data].Value
+        value=>true
+      stop
+</pre>
+
+<p>the above code would execute indefinitely, until the execution engines overflowed, if it hadn't been for the [stop] keyword at the end 
+of the [code] scope of our while.&nbsp;&nbsp;however, more importantly, if it hadn't been for the fact of that we fully qualified the 
+[while] keyword as [magix.execute.while], then the first [_data] node's value would have changed, which was not its intention.&nbsp;&nbsp;
+all of this because instead of supplying a [@][_data].Value expression, the author typed one tiny bug, and made the [@] become a [/].
+&nbsp;&nbsp;and in fact, if you run the code through the hyperlisp executor, you will see a new [_data] node appended beneath the 
+[magix.execute.while] node, which obviously seems to be in a very wrong place</p>
+
+<p>by fully qualifying your keywords, you can create safer code, since every time you fully qualify a keyword, the execution 
+tree that the code beneath the keyword is allowed to change, is only the code that is beneath the keword itself.&nbsp;&nbsp;you might 
+perceive this as the <em>"hyperlisp closure"</em> feature.&nbsp;&nbsp;or <em>"encapsulating keywords"</em></p>
+
+<h3>hyperlisp execution engine safe guards</h3>
+
+<p>the hyperlisp execution engine, is created for as much as possible, facilitate for safe execution of code from external sources.&nbsp;&nbsp;
+this creates a lot of more stress on the execution engine of hyperlisp, than that of other programming languages, simply since it also means 
+that another server might produce code that negatively affects the state of your server.&nbsp;&nbsp;for instance, never ending loops in a 
+conventional programming language, can easily be fixed by fixing the code that produced the loop in your server's code.&nbsp;&nbsp;in hyperlisp, 
+this code may not necessarily have been produced by your server, but might be code sent from another server, to your server for execution.
+&nbsp;&nbsp;this creates an environment where another server more easily can crash your server than that of other programming languages.&nbsp;
+&nbsp;to help reduce this problem as much as possible, hyperlisp has a lot of safe-guards to prevent these kind of scenarios to occur.&nbsp;
+&nbsp;for instance, in hyperlisp, you cannot execute a piece of code block that ends up executing more than 65.536 active events, including 
+hyperlisp keywords</p>
+
+<p>this number might be perceived as your server's <em>"iq"</em>, which you can increase or decrease dependent upon your server's 
+requirements and purpose.&nbsp;&nbsp;however, by increasing this number, you further expose yourself to never ending loops being able to take 
+down your server, that might jeopardize your server's uptime.&nbsp;&nbsp;the lower this number is, the less possible it is to create code that 
+brings your server to its knees, by creating never ending loops and similar constructs.&nbsp;&nbsp;notice that this number only affects your 
+server's ability to execute code, and only counts number of active events executed, and not data segments.&nbsp;&nbsp;meaning, as long as 
+you prefix your data segments with an underscore '_', then your data does not count as active events or hyperlisp.&nbsp;&nbsp;notice 
+also that this doesn't necessarily mean lines of executable code, as you perceive them, as lines of code in hyperlisp.&nbsp;&nbsp;
+this is because an [if] statement counts as one line of code, including all of its children parameter nodes, such as [lhs] and [rhs], etc.
+&nbsp;&nbsp;in addition, an [if] statement might execute several times, inside of loops for instance, which makes a single [if] statement 
+count as many active events</p>
+
+<p>please notice that this feature is not 100% bulletproof, since you may have active events within your system that opens up a new 
+[magix.execute] execution scope, which will reset the counter, and start counting from zero again.&nbsp;&nbsp;however, all the default 
+active events within magix, should obey by this rule perfectly.&nbsp;&nbsp;if you wish to change this number, then check out the 
+web.config setting called <em>"magix.execute.maximum-execution-iterations"</em></p>
+
+<p>please notice, that although many features exist in magix to prevent evil code to execute, you should still only allow servers 
+that you completely trust to execute code on your server.&nbsp;&nbsp;it is very easy to create evil hyperlisp code, that allows for 
+installation of malware, or making it possible to bring down your server</p>
+
+{{
+lambda=>next
+  oncreatecontrols
+    magix.help.set-next
+      next=>system42/private/help/csharp/index.mml
+}}

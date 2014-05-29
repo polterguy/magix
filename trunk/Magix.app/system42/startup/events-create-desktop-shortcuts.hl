@@ -29,9 +29,9 @@ returns the default dashboard shortcuts in your system"
         category=>learn
         code
           execute-script
-            file=>system42/admin/tools/inspect-execute.hl
+            file=>system42/private/tools/inspect-execute.hl
           magix.help.open-file
-            file=>system42/admin/help/hyper-lisp/index.mml
+            file=>system42/private/help/hyper-lisp/index.mml
       app-wizard
         text=>app wizard
         category=>applications
@@ -45,9 +45,9 @@ returns the default dashboard shortcuts in your system"
           magix.viewport.clear-controls
             container=>content5
           execute-script
-            file=>system42/admin/app-wizard/app-wizard.hl
+            file=>system42/private/app-wizard/app-wizard.hl
           magix.help.open-file
-            file=>system42/admin/help/backend/applications.mml
+            file=>system42/private/help/backend/applications.mml
       pages
         text=>pages
         category=>applications
@@ -61,49 +61,49 @@ returns the default dashboard shortcuts in your system"
           magix.viewport.clear-controls
             container=>content5
           execute-script
-            file=>system42/admin/edit-pages.hl
+            file=>system42/private/edit-pages.hl
           magix.help.open-file
-            file=>system42/admin/help/backend/applications.mml
+            file=>system42/private/help/backend/applications.mml
       unit-tests
         text=>unit tests
         category=>security
         code
           execute-script
-            file=>system42/admin/tools/inspect-unit-tests.hl
+            file=>system42/private/tools/inspect-unit-tests.hl
           magix.help.open-file
-            file=>system42/admin/help/backend/unit-tests.mml
+            file=>system42/private/help/backend/unit-tests.mml
       overridden-active-events
         text=>overridden active events
         category=>security
         code
           execute-script
-            file=>system42/admin/tools/inspect-overridden-events.hl
+            file=>system42/private/tools/inspect-overridden-events.hl
           magix.help.open-file
-            file=>system42/admin/help/backend/overriding-events.mml
+            file=>system42/private/help/backend/overriding-events.mml
       active-events
         text=>active events
         category=>tools
         code
           execute-script
-            file=>system42/admin/tools/inspect-events.hl
+            file=>system42/private/tools/inspect-events.hl
           magix.help.open-file
-            file=>system42/admin/help/backend/active-events.mml
+            file=>system42/private/help/backend/active-events.mml
       open-active-events
         text=>open active events
         category=>security
         code
           execute-script
-            file=>system42/admin/tools/inspect-open-events.hl
+            file=>system42/private/tools/inspect-open-events.hl
           magix.help.open-file
-            file=>system42/admin/help/backend/remoting.mml
+            file=>system42/private/help/backend/remoting.mml
       tunneled-active-events
         text=>tunneled active events
         category=>security
         code
           execute-script
-            file=>system42/admin/tools/inspect-remoted-events.hl
+            file=>system42/private/tools/inspect-remoted-events.hl
           magix.help.open-file
-            file=>system42/admin/help/backend/remoting.mml
+            file=>system42/private/help/backend/remoting.mml
       edit-users
         text=>edit users
         category=>security
@@ -117,9 +117,9 @@ returns the default dashboard shortcuts in your system"
           magix.viewport.clear-controls
             container=>content5
           execute-script
-            file=>system42/admin/users/users-grid.hl
+            file=>system42/private/users/users-grid.hl
           magix.help.open-file
-            file=>system42/admin/help/backend/user-administration.mml
+            file=>system42/private/help/backend/user-administration.mml
       edit-roles
         text=>edit roles
         category=>security
@@ -133,9 +133,9 @@ returns the default dashboard shortcuts in your system"
           magix.viewport.clear-controls
             container=>content5
           execute-script
-            file=>system42/admin/users/roles-grid.hl
+            file=>system42/private/users/roles-grid.hl
           magix.help.open-file
-            file=>system42/admin/help/backend/user-administration.mml
+            file=>system42/private/help/backend/user-administration.mml
       server-log
         text=>server log
         category=>security
@@ -149,7 +149,7 @@ returns the default dashboard shortcuts in your system"
           magix.viewport.clear-controls
             container=>content5
           execute-script
-            file=>system42/admin/server-log-grid.hl
+            file=>system42/private/server-log-grid.hl
       settings
         text=>settings
         category=>tools
@@ -163,7 +163,7 @@ returns the default dashboard shortcuts in your system"
           magix.viewport.clear-controls
             container=>content5
           magix.forms.create-mml-web-part
-            mml-file=>system42/admin/settings/admin-settings.mml
+            mml-file=>system42/private/settings/admin-settings.mml
             container=>content1
             form-id=>admin-settings
             class=>span-17 last
@@ -172,9 +172,9 @@ returns the default dashboard shortcuts in your system"
         category=>tools
         code
           execute-script
-            file=>system42/admin/tools/magix-markup-editor.hl
+            file=>system42/private/tools/magix-markup-editor.hl
           magix.help.open-file
-            file=>system42/admin/help/backend/magix-markup-language.mml
+            file=>system42/private/help/backend/magix-markup-language.mml
       hyperlisp-executor
         text=>hyperlisp executor
         category=>tools
@@ -190,13 +190,13 @@ returns the default dashboard shortcuts in your system"
           magix.viewport.clear-controls
             container=>content5
           magix.help.open-file
-            file=>system42/admin/help/backend/active-event-executor.mml
+            file=>system42/private/help/backend/active-event-executor.mml
       file-system
         text=>file system
         category=>tools
         code
           execute-script
-            file=>system42/admin/file-browser.hl
+            file=>system42/private/file-browser.hl
           magix.viewport.clear-controls
             container=>content2
           magix.viewport.clear-controls
@@ -206,15 +206,15 @@ returns the default dashboard shortcuts in your system"
           magix.viewport.clear-controls
             container=>content5
           magix.help.open-file
-            file=>system42/admin/help/backend/file-system.mml
+            file=>system42/private/help/backend/file-system.mml
       web-controls
         text=>web controls
         category=>learn
         code
           execute-script
-            file=>system42/admin/tools/inspect-web-controls.hl
+            file=>system42/private/tools/inspect-web-controls.hl
           magix.help.open-file
-            file=>system42/admin/help/backend/web-controls.mml
+            file=>system42/private/help/backend/web-controls.mml
       forms
         text=>forms
         category=>applications
@@ -228,9 +228,9 @@ returns the default dashboard shortcuts in your system"
           magix.viewport.clear-controls
             container=>content5
           execute-script
-            file=>system42/admin/forms/edit-forms.hl
+            file=>system42/private/forms/edit-forms.hl
           magix.help.open-file
-            file=>system42/admin/help/backend/forms.mml
+            file=>system42/private/help/backend/forms.mml
       help
         text=>help
         category=>learn
@@ -251,9 +251,9 @@ returns the default dashboard shortcuts in your system"
           magix.viewport.clear-controls
             container=>content5
           execute-script
-            file=>system42/admin/tools/qr-code-generator.hl
+            file=>system42/private/tools/qr-code-generator.hl
           magix.help.open-file
-            file=>system42/admin/help/backend/qr-codes.mml
+            file=>system42/private/help/backend/qr-codes.mml
     for-each=>[_scripts]
       add=>[$]
         value=>[.]

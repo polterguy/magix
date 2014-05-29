@@ -1,0 +1,214 @@
+
+
+inspect=>@"creates an editing form, for 
+editing an existing user"
+
+
+set=>[magix.data.load][prototype][username].Value
+  value=>[$][username].Value
+
+magix.data.load
+  prototype
+    type=>magix.core.user
+
+set=>[magix.forms.create-web-part][controls][label][value].Value
+  value=>[magix.data.load][objects][0][username].Value
+
+set=>[magix.forms.create-web-part][controls][panel][controls][text-box:0][value].Value
+  value=>[magix.data.load][objects][0][name].Value
+set=>[magix.forms.create-web-part][controls][panel][controls][text-box:1][value].Value
+  value=>[magix.data.load][objects][0][pwd].Value
+set=>[magix.forms.create-web-part][controls][panel][controls][text-box:0][ontextchanged][magix.data.load][prototype][username].Value
+  value=>[magix.data.load][objects][0][username].Value
+set=>[magix.forms.create-web-part][controls][panel][controls][text-box:1][ontextchanged][magix.data.load][prototype][username].Value
+  value=>[magix.data.load][objects][0][username].Value
+set=>[_dt2][panel][controls][link-button][onclick][magix.data.load][prototype][username].Value
+  value=>[magix.data.load][objects][0][username].Value
+set=>[_dt2][panel][controls][link-button][onclick][execute-script][params][username].Value
+  value=>[magix.data.load][objects][0][username].Value
+
+magix.data.load
+  prototype
+    type=>magix.core.role
+
+_dt
+  value=>name
+
+for-each=>[magix.data.load:1][objects]
+  set=>[/][_dt][0].Name
+    value=>[.][name].Value
+  set=>[/][_dt][0].Value
+    value=>[.][name].Value
+  add=>[/][magix.forms.create-web-part][controls][panel:1][controls][select][items]
+    value=>[/][_dt][0]
+
+_dt2
+  panel
+    class=>span-5 hover-shadow
+    controls
+      label
+        class=>span-4 hover-shadow light-green
+      link-button
+        class=>span-1 hover-shadow light-red last
+        value=>x
+        onclick
+          _role=>will contain name of role
+          magix.data.load
+            prototype
+              type=>magix.core.user
+              username
+          set=>[magix.data.load][objects][0][roles][[_role].Value]
+          set=>[magix.data.save][id].Value
+            value=>[magix.data.load][objects][0].Name
+          set=>[magix.data.load][objects][0].Name
+            value=>value
+          add=>[magix.data.save]
+            value=>[magix.data.load][objects][value]
+          magix.data.save
+          set=>[magix.log.append][body][username].Value
+            value=>[magix.data.load][prototype][username].Value
+          set=>[magix.log.append][body][role].Value
+            value=>[_role].Value
+          magix.log.append
+            header=>user removed from role
+            body=>user {0} removed from role {1}
+          execute-script
+            file=>system42/private/users/edit-single-user.hl
+
+for-each=>[magix.data.load:0][objects][0][roles]
+  set=>[/][_dt2][panel][controls][label][value].Value
+    value=>[.].Name
+  set=>[/][_dt2][panel][controls][link-button][onclick][_role].Value
+    value=>[.].Name
+  add=>[/][magix.forms.create-web-part][controls][panel:1][controls]
+    value=>[/][_dt2][panel]
+
+set=>[/][magix.forms.create-web-part][controls][panel:1][controls][select][onselectedindexchanged][magix.data.load][prototype][username].Value
+  value=>[$][username].Value
+set=>[/][magix.forms.create-web-part][controls][panel:1][controls][select][onselectedindexchanged][else][execute-script][params][username].Value
+  value=>[$][username].Value
+
+magix.forms.create-web-part
+  form-id=>edit-user
+  container=>content3
+  class=>span-20 top-1 boxed air-padding bottom-2
+  controls
+    label=>username
+      class=>span-22
+      tag=>h3
+    panel=>inpWrp
+      class=>span-10
+      default=>save
+      controls
+        label
+          value=>name
+          class=>span-5
+          tag=>label
+        label
+          value=>password
+          class=>span-5 last
+          tag=>label
+        text-box=>name
+          class=>span-5 clear
+          ontextchanged
+            magix.forms.get-value
+              form-id=>edit-user
+              id=>name
+            magix.data.load
+              prototype
+                type=>magix.core.user
+            set=>[magix.data.load][objects][0][name].Value
+              value=>[magix.forms.get-value][value].Value
+            set=>[magix.data.save][id].Value
+              value=>[magix.data.load][objects][0].Name
+            set=>[magix.data.load][objects][0].Name
+              value=>value
+            add=>[magix.data.save]
+              value=>[magix.data.load][objects][value]
+            magix.data.save
+            set=>[magix.log.append][body][username].Value
+              value=>[magix.data.load][prototype][username].Value
+            magix.log.append
+              header=>user changed name
+              body=>user {0} changed name
+            execute-script
+              file=>system42/private/users/users-grid.hl
+        text-box=>pwd
+          class=>span-5 last
+          ontextchanged
+            magix.forms.get-value
+              form-id=>edit-user
+              id=>pwd
+            magix.data.load
+              prototype
+                type=>magix.core.user
+            set=>[magix.data.load][objects][0][pwd].Value
+              value=>[magix.forms.get-value][value].Value
+            set=>[magix.data.save][id].Value
+              value=>[magix.data.load][objects][0].Name
+            set=>[magix.data.load][objects][0].Name
+              value=>value
+            add=>[magix.data.save]
+              value=>[magix.data.load][objects][value]
+            magix.data.save
+            set=>[magix.log.append][body][pwd].Value
+              value=>[magix.data.load][prototype][username].Value
+            magix.log.append
+              header=>user changed password
+              body=>user {0} changed password
+            execute-script
+              file=>system42/private/users/users-grid.hl
+    panel=>rolesWrap
+      class=>span-5 last
+      controls
+        label
+          value=>roles
+          tag=>label
+          class=>span-5
+        select=>ddlRoles
+          class=>span-5 clear
+          onselectedindexchanged
+            magix.forms.get-value
+              form-id=>edit-user
+              id=>ddlRoles
+            magix.data.load
+              prototype=>magix.core.user
+            if=>exist
+              lhs=>[magix.data.load][objects][0][roles][[magix.forms.get-value][value].Value]
+              code
+                magix.viewport.show-message
+                  message=>user belongs to role already ...
+                magix.forms.set-value
+                  form-id=>edit-user
+                  id=>ddlRoles
+                  value=>_default
+            else
+              set=>[@][magix.data.save][id].Value
+                value=>[magix.data.load][objects][0].Name
+              set=>[magix.data.load][objects][0].Name
+                value=>value
+              add=>[@][magix.data.save]
+                value=>[magix.data.load][objects][0]
+              set=>[@][magix.data.save][value][roles][[magix.forms.get-value][value].Value].Value
+                value=>true
+              magix.data.save
+              set=>[@][magix.log.append][body][username].Value
+                value=>[magix.data.load][prototype][username].Value
+              set=>[@][magix.log.append][body][role].Value
+                value=>[magix.forms.get-value][value].Value
+              magix.log.append
+                header=>user added to role
+                body=>user {0} added to role {1}
+              execute-script
+                file=>system42/private/users/edit-single-user.hl
+          items
+            _default=>add role to user ...
+
+magix.forms.set-focus
+  form-id=>edit-user
+  id=>name
+
+magix.forms.select-all
+  form-id=>edit-user
+  id=>name
+

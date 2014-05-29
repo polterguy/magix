@@ -1,0 +1,319 @@
+
+inspect=>@"creates the file browser web form, 
+from where you can edit existing, delete and 
+upload new files from"
+
+
+for-each=>[$]
+  add=>[/][_back][onclick][execute-script][params]
+    value=>[.]
+  add=>[/][_link-buttonDir][onclick][execute-script][params]
+    value=>[.]
+  add=>[/][_newDir][onclick][execute-script][params]
+    value=>[.]
+  add=>[/][_delDir][onclick][magix.viewport.confirm][code][execute-script][params]
+    value=>[.]
+  add=>[/][magix.forms.create-web-part][events][magix.ide.file-saved][execute-script][params]
+    value=>[.]
+  add=>[/][magix.forms.create-web-part][events][magix.ide.file-deleted][execute-script][params]
+    value=>[.]
+  add=>[/][_ren][controls][text-box][ontextchanged][execute-script][params]
+    value=>[.]
+
+if=>exist
+  lhs=>[$][directory].Value
+  code
+    set=>[magix.file.list-files][directory].Value
+      value=>[$][directory].Value
+    set=>[magix.file.list-directories][directory].Value
+      value=>[$][directory].Value
+    set=>[magix.forms.create-web-part][controls][label][value].Value
+      value=>@"files from {0}"
+        pr0=>[$][directory].Value
+    add=>[/][magix.forms.create-web-part][controls]
+      value=>[/][_back]
+    set=>[/][magix.forms.create-web-part][controls][_back].Name
+      value=>link-button
+    set=>[/][magix.forms.create-web-part][events][magix.ide.file-deleted][execute-script][params][directory].Value
+      value=>[$][directory].Value
+    set=>[/][magix.forms.create-web-part][events][magix.ide.file-saved][execute-script][params][directory].Value
+      value=>[$][directory].Value
+    set=>[/][_btn][onclick][magix.admin.edit-file][file].Value
+      value=>@"{0}/{1}"
+        pr0=>[$][directory].Value
+        pr1=>empty.txt
+    set=>[/][_newDir][onclick][magix.file.create-directory][directory].Value
+      value=>@"{0}/{1}"
+        pr0=>[$][directory].Value
+        pr1=>new-directory
+    set=>[/][_newDir][onclick][execute-script][params][directory].Value
+      value=>[$][directory].Value
+    set=>[/][_delDir][onclick][magix.viewport.confirm][code][magix.file.delete-directory][directory].Value
+      value=>[$][directory].Value
+    set=>[/][_ren][controls][text-box][value].Value
+      value=>[$][directory].Value
+    set=>[/][_ren][controls][text-box][ontextchanged][magix.file.move-directory][from].Value
+      value=>[$][directory].Value
+    set=>[/][magix.forms.create-web-part][controls][uploader][folder].Value
+      value=>[$][directory].Value
+    set=>[/][magix.forms.create-web-part][controls][uploader][onuploaded][if][execute-script][params][directory].Value
+      value=>[$][directory].Value
+    set=>[/][magix.forms.create-web-part][controls][uploader][uploaded][if][execute-script][params][directory].Value
+      value=>[$][directory].Value
+else-if=>exist
+  lhs=>[$][keep-stack]
+  code
+    set=>[/][_delDir][disabled].Value
+      value=>true
+    set=>[/][_ren][controls][text-box][disabled].Value
+      value=>true
+else
+  magix.viewport.set-viewstate=>stack-of-pages
+    value
+      root=>
+  set=>[/][_delDir][disabled].Value
+    value=>true
+  set=>[/][_ren][controls][text-box][disabled].Value
+    value=>true
+
+_back
+  class=>span-5 directory back-directory
+  value=>..
+  onclick
+    magix.viewport.get-viewstate=>stack-of-pages
+    set=>[using][add][0].Value
+      value=>[@][magix.viewport.get-viewstate][value].Count
+    using=>magix.math
+      add
+        =>
+        =>-1
+    set=>[set:2].Value
+      value=>\[@][magix.viewport.get-viewstate][value][{0}]
+        v0=>[using][add].Value
+    set=>
+    add=>[@][magix.viewport.set-viewstate]
+      value=>[@][magix.viewport.get-viewstate][value]
+    magix.viewport.set-viewstate=>stack-of-pages
+    for-each=>[magix.viewport.set-viewstate][value]
+      set=>[/][execute-script][params][directory].Value
+        value=>[.].Value
+    execute-script
+      file=>system42/private/file-browser.hl
+
+if=>exist
+  lhs=>[$][select-file]
+  code
+    set=>[_link-button][onclick]
+    for-each=>[$][select-file]
+      add=>[/][_link-button][onclick]
+        value=>[.]
+
+_link-button
+  class=>span-5 file
+  onclick
+    magix.admin.edit-file
+      container=>content2
+      class=>span-22 min-height-16 top-1
+    magix.viewport.clear-controls
+      container=>content3
+
+_link-buttonDir
+  class=>span-5 directory
+  onclick
+    execute-script
+      file=>system42/private/file-browser.hl
+    magix.viewport.get-viewstate=>stack-of-pages
+    set=>[@][magix.viewport.get-viewstate][value][[@][magix.viewport.get-viewstate][value].Count].Value
+      value=>[@][execute-script][params][directory].Value
+    add=>[@][magix.viewport.set-viewstate]
+      value=>[@][magix.viewport.get-viewstate][value]
+    magix.viewport.set-viewstate=>stack-of-pages
+
+magix.file.list-files
+
+for-each=>[magix.file.list-files][files]
+  set=>[/][_link-button][value].Value
+    value=>[.].Name
+  if=>exist
+    lhs=>[$][directory]
+    code
+      set=>[@][replace][what].Value
+        value=>@"{0}/"
+          pr0=>@"[$][directory].Value"
+      replace=>[/][_link-button][value].Value
+  if=>not-exist
+    lhs=>[$][select-file]
+    code
+      set=>[/][_link-button][onclick][magix.admin.edit-file][file].Value
+        value=>[.].Name
+  else
+    set=>[/][_link-button][onclick][_file].Value
+      value=>[.].Name
+  add=>[/][magix.forms.create-web-part][controls]
+    value=>[/][_link-button]
+  set=>[/][magix.forms.create-web-part][controls][_link-button].Name
+    value=>link-button
+
+magix.file.list-directories
+
+for-each=>[magix.file.list-directories][directories]
+  set=>[/][_link-buttonDir][value].Value
+    value=>[.].Name
+  set=>[/][_link-buttonDir][onclick][execute-script][params][directory].Value
+    value=>[.].Name
+  if=>exist
+    lhs=>[$][directory]
+    code
+      set=>[@][replace][what].Value
+        value=>@"{0}/"
+          pr0=>@"[$][directory].Value"
+      replace=>[/][_link-buttonDir][value].Value
+  add=>[/][magix.forms.create-web-part][controls]
+    value=>[/][_link-buttonDir]
+  set=>[/][magix.forms.create-web-part][controls][_link-buttonDir].Name
+    value=>link-button
+
+_btn=>newfile
+  class=>span-3 btn-large left-8 top-1 clear
+  value=>new file
+  onclick
+    magix.admin.edit-file
+      class=>span-22 last top-1
+      container=>content2
+      file=>empty.txt
+
+_newDir=>newdir
+  class=>span-3 btn-large top-1
+  value=>new dir
+  onclick
+    magix.file.create-directory
+      directory=>new-directory
+    execute-script
+      file=>system42/private/file-browser.hl
+
+_delDir=>deldir
+  class=>span-3 btn-large last top-1
+  value=>del dir
+  onclick
+    magix.viewport.confirm
+      message=>do you really want to delete the open directory?
+      code
+        magix.file.delete-directory
+        execute-script
+          file=>system42/private/file-browser.hl
+
+_ren=>renWrp
+  class=>span-9 last top-1 right btn-group
+  placeholder=>name of directory ...
+  default=>saveDirName
+  controls
+    text-box=>dirName
+      class=>span-7
+      ontextchanged
+        magix.forms.get-value
+          form-id=>file-explorer
+          id=>dirName
+        set=>[magix.file.move-directory][to].Value
+          value=>[magix.forms.get-value][value].Value
+        magix.file.move-directory
+        set=>[execute-script][params][directory].Value
+          value=>[magix.file.move-directory][to].Value
+        execute-script
+          file=>system42/private/file-browser.hl
+    button=>saveDirName
+      class=>span-2 last
+      value=>save
+
+add=>[magix.forms.create-web-part][controls]
+  value=>[_btn]
+set=>[magix.forms.create-web-part][controls][_btn].Name
+  value=>button
+
+add=>[magix.forms.create-web-part][controls]
+  value=>[_newDir]
+set=>[magix.forms.create-web-part][controls][_newDir].Name
+  value=>button
+
+add=>[magix.forms.create-web-part][controls]
+  value=>[_delDir]
+set=>[magix.forms.create-web-part][controls][_delDir].Name
+  value=>button
+
+add=>[magix.forms.create-web-part][controls]
+  value=>[_ren]
+set=>[magix.forms.create-web-part][controls][_ren].Name
+  value=>panel
+
+if=>exist
+  lhs=>[$][container]
+  code
+    set=>[magix.forms.create-web-part][container].Value
+      value=>[$][container].Value
+
+if=>exist
+  lhs=>[$][class]
+  code
+    set=>[magix.forms.create-web-part][class].Value
+      value=>[$][class].Value
+
+if=>equals
+  lhs=>[$][mode].Value
+  rhs=>select
+  code
+    set=>[magix.forms.create-web-part][controls][button=>newfile][visible].Value
+      value=>false
+    set=>[magix.forms.create-web-part][controls][button=>newdir][visible].Value
+      value=>false
+    set=>[magix.forms.create-web-part][controls][button=>deldir][visible].Value
+      value=>false
+    set=>[magix.forms.create-web-part][controls][panel=>renWrp][visible].Value
+      value=>false
+
+magix.forms.create-web-part
+  container=>content1
+  form-id=>file-explorer
+  class=>span-17 last
+
+  events
+
+    magix.ide.file-saved
+      execute-script
+        file=>system42/private/file-browser.hl
+
+    magix.ide.file-deleted
+      execute-script
+        file=>system42/private/file-browser.hl
+      magix.viewport.clear-controls
+        container=>content2
+      magix.viewport.clear-controls
+        container=>content3
+      magix.viewport.clear-controls
+        container=>content4
+      magix.viewport.clear-controls
+        container=>content5
+
+  controls
+    label=>desc
+      class=>span-17 last
+      tag=>h2
+      value=>files from /
+    uploader=>uploader
+      folder=>
+      onuploaded
+        magix.forms.get-value
+          form-id=>file-explorer
+          id=>uploader
+        set=>[magix.viewport.show-message][message].Value
+          value=>@"file {0} successfully uploaded"
+            pr0=>[/][magix.forms.get-value][value].Value
+        magix.viewport.show-message
+          time=>1250
+        magix.forms.uploader-has-more-data
+          form-id=>file-explorer
+          id=>uploader
+        if=>not-exist
+          lhs=>[magix.forms.uploader-has-more-data][value].Value
+          code
+            execute-script
+              file=>system42/private/file-browser.hl
+

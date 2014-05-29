@@ -1,0 +1,144 @@
+
+
+<h2 class="span-17 last">admin settings</h2>
+
+<div class="span-15 last boxed air-padding">{{
+label=>frontEndCssLbl
+  value=>skin css file
+  class=>span-2 right-text
+  tag=>label
+lambda=>lmda
+  oncreatecontrols
+    _data
+      select=>frontEndCss
+        class=>span-3
+        onselectedindexchanged
+          magix.forms.get-value
+            id=>frontEndCss
+          set=>[magix.data.save][value][file].Value
+            value=>[magix.forms.get-value][value].Value
+          magix.data.save
+            id=>magix.admin.settings.default-back-end-css-file
+          magix.browser.redirect=>?dashboard=
+          magix.web.postpone-execution
+            code
+              magix.viewport.clear-controls
+                container=>content2
+              magix.viewport.clear-controls
+                container=>content3
+              magix.viewport.clear-controls
+                container=>content4
+              magix.viewport.clear-controls
+                container=>content5
+              magix.forms.create-mml-web-part
+                mml-file=>system42/private/admin-settings.mml
+                container=>content1
+                form-id=>admin-settings
+                class=>span-17 last
+              magix.viewport.show-message
+                message=>theme was changed and portal was reloaded
+        onfirstload
+          magix.data.load
+            id=>magix.admin.settings.default-back-end-css-file
+          set=>[magix.forms.set-value][value].Value
+            value=>[magix.data.load][objects][0][file].Value
+          magix.forms.set-value
+            form-id=>admin-settings
+            id=>frontEndCss
+    magix.file.list-files
+      directory=>media/front-end
+    for-each=>[magix.file.list-files][files]
+      set=>[/][_data][select][items][[.].Name].Value
+        value=>[.].Name
+      replace=>[/][_data][select][items][[.].Name].Value
+        what=>media/front-end/
+      replace=>[/][_data][select][items][[.].Name].Value
+        what=>.css
+    add=>[$]
+      value=>[_data][select]
+label=>lblHelp
+  value=>show help
+  class=>span-2 right-text
+  tag=>label
+  for=>chkHelp
+check-box=>chkHelp
+  class=>span-1
+  onfirstload
+    magix.data.load
+      prototype
+        type=>magix.admin.setting.show-help
+    if=>equals
+      lhs=>[magix.data.load][objects][0][value].Value
+      rhs=>true
+      code
+        magix.forms.set-value
+          id=>chkHelp
+          value=>true
+    else
+      magix.forms.set-value
+        id=>chkHelp
+        value=>false
+  oncheckedchanged
+    magix.data.remove
+      prototype
+        type=>magix.admin.setting.show-help
+    magix.forms.get-value
+      id=>chkHelp
+    if=>equals
+      lhs=>[magix.forms.get-value][value].Value
+      rhs=>true
+      code
+        magix.data.save
+          value
+            type=>magix.admin.setting.show-help
+            value=>true
+        magix.web.set-session
+          name=>magix.admin.setting.show-help
+          value=>true
+        magix.help.start-help
+    else
+      magix.data.save
+        value
+          type=>magix.admin.setting.show-help
+          value=>false
+      magix.web.set-session
+        name=>magix.admin.setting.show-help
+        value=>false
+      magix.viewport.clear-controls
+        container=>help
+label=>frontEndViewportLabel
+  value=>front end viewport
+  class=>span-3 right-text
+  tag=>label
+lambda=>lmdaViewport
+  oncreatecontrols
+    _data
+      select=>frontEndViewport
+        class=>span-4 last
+        onselectedindexchanged
+          magix.forms.get-value
+            id=>frontEndViewport
+          set=>[magix.data.save][value][viewport].Value
+            value=>[magix.forms.get-value][value].Value
+          magix.data.save
+            id=>magix.admin.settings.default-front-end-viewport
+          magix.viewport.show-message
+            message=>front end viewport was changed
+        onfirstload
+          magix.data.load
+            id=>magix.admin.settings.default-front-end-viewport
+          set=>[magix.forms.set-value][value].Value
+            value=>[magix.data.load][objects][0][viewport].Value
+          magix.forms.set-value
+            form-id=>admin-settings
+            id=>frontEndViewport
+    _viewports
+      Magix.viewports.Gutenberg=>gutenberg
+      Magix.viewports.SingleContainer=>single container
+    for-each=>[_viewports]
+      set=>[/][_data][select][items][[.].Name].Value
+        value=>[.].Value
+    add=>[$]
+      value=>[_data][select]
+}}</div>
+

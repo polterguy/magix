@@ -1,0 +1,130 @@
+
+
+inspect=>@"creates the edit-roles data grid, 
+from where you can edit existing, delete and 
+add new roles from.&nbsp;&nbsp;the roles defines 
+which access rights to the system a user has"
+
+
+magix.data.load
+  prototype
+    type=>magix.core.role
+
+_dt
+  panel
+    class=>span-17 hover-shadow relative
+    controls
+      label
+      link-button
+        class=>span-1 hover-shadow last right z-1 absolute light-red centered
+        value=>x
+        onclick
+          magix.viewport.confirm
+            message=>are you sure you wish to delete this role?
+            code
+              magix.data.remove
+                prototype
+                  type=>magix.core.role
+                  name=>
+              set=>[magix.data.load][prototype][roles][[magix.data.remove][prototype][name].Value].Name
+                value=>[magix.data.remove][prototype][name].Value
+              magix.data.load
+                prototype
+                  type=>magix.core.user
+                  roles
+              for-each=>[magix.data.load][objects]
+                set=>[.][roles][[/][magix.data.remove][prototype][name].Value]
+                set=>[.ip][..][magix.data.save][value]
+                  value=>[.]
+                set=>[.ip][..][magix.data.save][1].Name
+                  value=>value
+                set=>[.ip][..][magix.data.save][value].Value
+                set=>[.ip][..][magix.data.save][id].Value
+                  value=>[.].Name
+                magix.data.save
+                  id
+              set=>[magix.log.append][body][role].Value
+                value=>[magix.data.remove][prototype][name].Value
+              magix.log.append
+                header=>role deleted
+                body=>role {0} was deleted
+              execute-script
+                file=>system42/private/users/roles-grid.hl
+
+for-each=>[magix.data.load][objects]
+  set=>[/][_dt][panel][controls][link-button][onclick][magix.viewport.confirm][code][magix.data.remove][prototype][name].Value
+    value=>[.][name].Value
+  set=>[/][_dt][panel][controls][label][value].Value
+    value=>[.][name].Value
+  add=>[/][magix.forms.create-web-part][controls][panel:1][controls]
+    value=>[/][_dt][0]
+
+magix.forms.create-web-part
+  form-id=>roles-grid
+  container=>content2
+  class=>span-17 last
+  controls
+    label=>header
+      class=>span-17 last
+      value=>edit roles
+      tag=>h2
+    panel=>roleGrdHeader
+      controls
+        label=>headName
+          class=>span-16
+          value=>name
+          tag=>label
+          tip=>name of role
+        label=>headDelete
+          class=>span-1 last
+          value=>del
+          tag=>label
+          tip=>delete role
+    panel=>roleGrdWrp
+      class=>span-17 light-green
+      controls
+    panel=>newRoleWrp
+      class=>span-17 top-1
+      default=>addBtn
+      controls
+        text-box=>nName
+          class=>span-5 left-9
+          placeholder=>name of new role ...
+        button=>addBtn
+          class=>span-3 last
+          value=>add
+          onclick
+            magix.forms.get-value
+              form-id=>roles-grid
+              id=>nName
+            if=>not-exist
+              lhs=>[magix.forms.get-value][value].Value
+              code
+                magix.viewport.show-message
+                  message=>you must give your role a name
+            else
+              set=>[@][magix.data.load][prototype][name].Value
+                value=>[magix.forms.get-value][value].Value
+              magix.data.load
+                prototype
+                  type=>magix.core.role
+              if=>more-than
+                lhs=>[@][magix.data.load][objects].Count
+                rhs=>0
+                code
+                  magix.viewport.show-message
+                    message=>role exists from before
+              else
+                set=>[@][magix.data.save][value][name].Value
+                  value=>[magix.forms.get-value][value].Value
+                magix.data.save
+                  value
+                    type=>magix.core.role
+                set=>[@][magix.log.append][body][role].Value
+                  value=>[magix.forms.get-value][value].Value
+                magix.log.append
+                  header=>role created
+                  body=>role {0} was created
+                execute-script
+                  file=>system42/private/users/roles-grid.hl
+

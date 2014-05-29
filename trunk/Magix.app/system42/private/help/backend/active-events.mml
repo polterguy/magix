@@ -1,0 +1,38 @@
+﻿
+<h2>active events list</h2>
+
+<p>from the <em>"active events"</em> link, on your dashboard, you can view and inspect all the active events within your system.&nbsp;&nbsp;
+this is a useful feature for teaching yourself a specific server installation of magix, since all active events for the most 
+parts will be self-documenting, using the [inspect] feature of magix</p>
+
+<p>if you click one of the active events in your list of active events, you can see the description of what it does, in addition 
+to some sample code.&nbsp;&nbsp;if the active event is a dynamically created active event, created with the [event] {{
+link-button=>go-to-hyper-lisp
+  value=>hyperlisp
+  onclick
+    magix.help.open-file
+      file=>system42/private/help/hyper-lisp/index.mml
+}} keyword, 
+you can see its implementation</p>
+
+<p>all active events that exist within your system, will be listed here.&nbsp;&nbsp;if you create your own active events, either in 
+{{
+link-button=>hyperlisp-8
+  value=>hyperlisp
+  onclick
+    magix.help.open-file
+      file=>system42/private/help/hyper-lisp/hyper-lisp-events.mml
+}}, or in {{
+link-button=>active-events-2
+  value=>c#
+  onclick
+    magix.help.open-file
+      file=>system42/private/help/csharp/active-events/index.mml
+}}, you will also find those here</p>
+
+{{
+lambda=>next
+  oncreatecontrols
+    magix.help.set-next
+      next=>system42/private/help/backend/tracer.mml
+}}

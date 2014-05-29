@@ -233,10 +233,6 @@
   <ItemGroup>
     <None Include="media\xing-wysihtml5\LICENSE" />
     <Content Include="system42\startup\create-default-settings.hl" />
-    <Content Include="system42\admin\app-wizard\wizards\crud-app\crud-app-generator.hl" />
-    <Content Include="system42\admin\tools\qr-code-generator.hl" />
-    <Content Include="system42\admin\app-wizard\wizards\qr-code-generator.hl" />
-    <Content Include="system42\admin\app-wizard\wizards\qr-code-generator\qr-code-generator-generator.hl" />
     <Content Include="system42\startup\unit-tests\execute.hl" />
     <Content Include="system42\startup\unit-tests\lambda.hl" />
     <Content Include="system42\startup\unit-tests\index-of.hl" />
@@ -249,175 +245,125 @@
     <Content Include="system42\startup\unit-tests\while.hl" />
     <Content Include="system42\startup\unit-tests\set.hl" />
     <Content Include="system42\startup\unit-tests\remoting.hl" />
-    <Content Include="system42\admin\help\csharp\active-events\index.mml" />
-    <Content Include="system42\admin\help\csharp\active-events\node-class.mml" />
-    <Content Include="system42\admin\help\csharp\active-events\sample-csharp-active-event.mml" />
-    <Content Include="system42\admin\help\index.mml">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="system42\admin\help\hyper-lisp\index.mml" />
-    <Content Include="system42\admin\help\csharp\active-controllers\index.mml" />
-    <Content Include="system42\admin\help\backend\index.mml">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="system42\admin\help\csharp\active-modules\index.mml" />
-    <Content Include="system42\admin\help\csharp\active-events\more-nodes.mml" />
-    <Content Include="system42\admin\help\csharp\active-controllers\static-versus-instance.mml" />
-    <Content Include="system42\admin\help\csharp\active-controllers\methods.mml" />
-    <Content Include="system42\admin\help\csharp\ajax\index.mml" />
-    <Content Include="system42\admin\help\csharp\active-modules\active-modules-with-active-events.mml" />
-    <Content Include="system42\admin\help\csharp\ajax\controls\button.mml" />
-    <Content Include="system42\admin\help\csharp\ajax\controls\checkbox.mml" />
-    <Content Include="system42\admin\help\csharp\ajax\controls\hiddenfield.mml" />
-    <Content Include="system42\admin\help\csharp\ajax\controls\hyperlink.mml" />
-    <Content Include="system42\admin\help\csharp\ajax\controls\image.mml" />
-    <Content Include="system42\admin\help\csharp\ajax\controls\label.mml" />
-    <Content Include="system42\admin\help\csharp\ajax\controls\linkbutton.mml" />
-    <Content Include="system42\admin\help\csharp\ajax\controls\panel.mml" />
-    <Content Include="system42\admin\help\csharp\ajax\controls\radiobutton.mml" />
-    <Content Include="system42\admin\help\csharp\ajax\controls\selectlist.mml" />
-    <Content Include="system42\admin\help\csharp\ajax\controls\textarea.mml" />
-    <Content Include="system42\admin\help\csharp\ajax\controls\textbox.mml" />
-    <Content Include="system42\admin\help\csharp\ajax\controls\dynamicpanel.mml" />
-    <Content Include="system42\admin\help\csharp\ajax\controls\timer.mml" />
-    <Content Include="system42\admin\help\csharp\ajax\controls\uploader.mml" />
-    <Content Include="system42\admin\help\csharp\ajax\controls\wysiwyg.mml" />
     <Content Include="system42\startup\create-controls-dox-event.hl" />
-    <Content Include="system42\admin\help\csharp\active-events\inspecting-active-events.mml" />
-    <Content Include="system42\admin\help\csharp\active-modules\viewport.mml" />
-    <Content Include="system42\admin\help\csharp\ajax\effects.mml" />
-    <Content Include="system42\admin\help\hyper-lisp\hyper-lisp-syntax.mml" />
-    <Content Include="system42\admin\help\hyper-lisp\hyper-lisp-execute.mml" />
-    <Content Include="system42\admin\help\hyper-lisp\hyper-lisp-expressions.mml" />
-    <Content Include="system42\admin\help\hyper-lisp\expression-operators.mml" />
-    <Content Include="system42\admin\help\hyper-lisp\nested-expressions.mml" />
-    <Content Include="system42\admin\help\hyper-lisp\expressions-returning-nodes.mml" />
-    <Content Include="system42\admin\help\hyper-lisp\existing-keywords.mml">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="system42\admin\help\hyper-lisp\create-keyword.mml">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="system42\admin\help\hyper-lisp\common-hyper-lisp-statements.mml">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="system42\admin\help\hyper-lisp\hyper-lisp-events.mml">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="system42\admin\help\hyper-lisp\remote-active-events.mml">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="system42\admin\help\backend\learn.mml" />
-    <Content Include="system42\admin\help\backend\applications.mml" />
-    <Content Include="system42\admin\help\backend\forms.mml" />
-    <Content Include="system42\admin\help\backend\magix-markup-language.mml">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="system42\admin\help\backend\unit-tests.mml">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="system42\admin\help\backend\overriding-events.mml">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="system42\admin\help\backend\remoting.mml">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="system42\admin\help\backend\user-administration.mml">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="system42\admin\help\backend\active-events.mml">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="system42\admin\help\backend\tracer.mml">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="system42\admin\help\backend\active-event-executor.mml">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="system42\admin\help\backend\file-system.mml">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="system42\admin\help\backend\qr-codes.mml">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="system42\admin\help\backend\web-controls.mml">
-      <SubType>Designer</SubType>
-    </Content>
     <Content Include="system42\startup\unit-tests\add.hl" />
     <Content Include="system42\startup\unit-tests\stop.hl" />
     <Content Include="system42\startup\unit-tests\code-and-nodes.hl" />
     <Content Include="system42\startup\unit-tests\magix-file.hl" />
     <Content Include="system42\startup\unit-tests\magix-data.hl" />
-    <Content Include="system42\admin\help\hyper-lisp\hyper-lisp-general-info.mml">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="system42\admin\help\hyper-lisp\data-access.mml">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="system42\admin\help\hyper-lisp\microsoft-sql.mml">
-      <SubType>Designer</SubType>
-    </Content>
     <Content Include="system42\startup\unit-tests\expressions.hl" />
-    <Content Include="system42\admin\help\hyper-lisp\forms.mml">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="system42\admin\help\hyper-lisp\exception-handling.mml">
-      <SubType>Designer</SubType>
-    </Content>
     <Content Include="system42\startup\unit-tests\with.hl" />
-    <Content Include="system42\admin\help\hyper-lisp\simplifying-expressions.mml" />
-    <Content Include="system42\admin\help\hyper-lisp\set-keyword.mml" />
-    <Content Include="system42\admin\help\hyper-lisp\magix-markup-language.mml">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="system42\admin\help\hyper-lisp\hyper-lisp-file-system.mml">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="system42\admin\help\csharp\index.mml" />
-    <Content Include="system42\admin\help\hyper-lisp\sandboxing-hyper-lisp.mml">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="system42\admin\help\hyper-lisp\expressions-invoking-active-events.mml" />
-    <Content Include="system42\admin\help\hyper-lisp\add-keyword.mml" />
-    <Content Include="system42\admin\help\hyper-lisp\working-with-viewports.mml">
-      <SubType>Designer</SubType>
-    </Content>
     <Content Include="system42\startup\create-magix-tiedown-load-index-page.hl" />
     <Content Include="system42\startup\unit-tests\magix-math.hl" />
     <Content Include="system42\startup\unit-tests\sandbox.hl" />
     <Content Include="system42\startup\create-unit-tests.hl" />
     <Content Include="system42\startup\unit-tests\fork.hl" />
+    <Content Include="system42\private\edit-pages.hl" />
+    <Content Include="system42\private\file-browser.hl" />
+    <Content Include="system42\private\server-log-grid.hl" />
+    <Content Include="system42\private\app-wizard\app-wizard.hl" />
+    <Content Include="system42\private\app-wizard\new-app.hl" />
+    <Content Include="system42\private\app-wizard\wizards\crud-app.hl" />
+    <Content Include="system42\private\app-wizard\wizards\crud-app\crud-app-generator.hl" />
+    <Content Include="system42\private\app-wizard\wizards\qr-code-generator.hl" />
+    <Content Include="system42\private\app-wizard\wizards\qr-code-generator\qr-code-generator-generator.hl" />
+    <Content Include="system42\private\apps\qr-generator.hl" />
+    <Content Include="system42\private\dashboard\menu.mml" />
+    <Content Include="system42\private\dashboard\show-desktop.hl" />
+    <Content Include="system42\private\forms\edit-forms.hl" />
+    <Content Include="system42\private\forms\edit-property.hl" />
+    <Content Include="system42\private\help\backend\active-event-executor.mml" />
+    <Content Include="system42\private\help\backend\active-events.mml" />
+    <Content Include="system42\private\help\backend\applications.mml" />
+    <Content Include="system42\private\help\backend\file-system.mml" />
+    <Content Include="system42\private\help\backend\forms.mml" />
+    <Content Include="system42\private\help\backend\index.mml" />
+    <Content Include="system42\private\help\backend\learn.mml" />
+    <Content Include="system42\private\help\backend\magix-markup-language.mml" />
+    <Content Include="system42\private\help\backend\overriding-events.mml" />
+    <Content Include="system42\private\help\backend\qr-codes.mml" />
+    <Content Include="system42\private\help\backend\remoting.mml" />
+    <Content Include="system42\private\help\backend\tracer.mml" />
+    <Content Include="system42\private\help\backend\unit-tests.mml" />
+    <Content Include="system42\private\help\backend\user-administration.mml" />
+    <Content Include="system42\private\help\backend\web-controls.mml" />
+    <Content Include="system42\private\help\csharp\active-controllers\index.mml" />
+    <Content Include="system42\private\help\csharp\active-controllers\methods.mml" />
+    <Content Include="system42\private\help\csharp\active-controllers\static-versus-instance.mml" />
+    <Content Include="system42\private\help\csharp\active-events\index.mml" />
+    <Content Include="system42\private\help\csharp\active-events\inspecting-active-events.mml" />
+    <Content Include="system42\private\help\csharp\active-events\more-nodes.mml" />
+    <Content Include="system42\private\help\csharp\active-events\node-class.mml" />
+    <Content Include="system42\private\help\csharp\active-events\sample-csharp-active-event.mml" />
+    <Content Include="system42\private\help\csharp\active-modules\active-modules-with-active-events.mml" />
+    <Content Include="system42\private\help\csharp\active-modules\index.mml" />
+    <Content Include="system42\private\help\csharp\active-modules\viewport.mml" />
+    <Content Include="system42\private\help\csharp\ajax\controls\button.mml" />
+    <Content Include="system42\private\help\csharp\ajax\controls\checkbox.mml" />
+    <Content Include="system42\private\help\csharp\ajax\controls\dynamicpanel.mml" />
+    <Content Include="system42\private\help\csharp\ajax\controls\hiddenfield.mml" />
+    <Content Include="system42\private\help\csharp\ajax\controls\hyperlink.mml" />
+    <Content Include="system42\private\help\csharp\ajax\controls\image.mml" />
+    <Content Include="system42\private\help\csharp\ajax\controls\label.mml" />
+    <Content Include="system42\private\help\csharp\ajax\controls\linkbutton.mml" />
+    <Content Include="system42\private\help\csharp\ajax\controls\panel.mml" />
+    <Content Include="system42\private\help\csharp\ajax\controls\radiobutton.mml" />
+    <Content Include="system42\private\help\csharp\ajax\controls\selectlist.mml" />
+    <Content Include="system42\private\help\csharp\ajax\controls\textarea.mml" />
+    <Content Include="system42\private\help\csharp\ajax\controls\textbox.mml" />
+    <Content Include="system42\private\help\csharp\ajax\controls\timer.mml" />
+    <Content Include="system42\private\help\csharp\ajax\controls\uploader.mml" />
+    <Content Include="system42\private\help\csharp\ajax\controls\wysiwyg.mml" />
+    <Content Include="system42\private\help\csharp\ajax\effects.mml" />
+    <Content Include="system42\private\help\csharp\ajax\index.mml" />
+    <Content Include="system42\private\help\csharp\index.mml" />
+    <Content Include="system42\private\help\hyper-lisp\add-keyword.mml" />
+    <Content Include="system42\private\help\hyper-lisp\common-hyper-lisp-statements.mml" />
+    <Content Include="system42\private\help\hyper-lisp\create-keyword.mml" />
+    <Content Include="system42\private\help\hyper-lisp\data-access.mml" />
+    <Content Include="system42\private\help\hyper-lisp\exception-handling.mml" />
+    <Content Include="system42\private\help\hyper-lisp\existing-keywords.mml" />
+    <Content Include="system42\private\help\hyper-lisp\expression-operators.mml" />
+    <Content Include="system42\private\help\hyper-lisp\expressions-invoking-active-events.mml" />
+    <Content Include="system42\private\help\hyper-lisp\expressions-returning-nodes.mml" />
+    <Content Include="system42\private\help\hyper-lisp\forms.mml" />
+    <Content Include="system42\private\help\hyper-lisp\hyper-lisp-events.mml" />
+    <Content Include="system42\private\help\hyper-lisp\hyper-lisp-execute.mml" />
+    <Content Include="system42\private\help\hyper-lisp\hyper-lisp-expressions.mml" />
+    <Content Include="system42\private\help\hyper-lisp\hyper-lisp-file-system.mml" />
+    <Content Include="system42\private\help\hyper-lisp\hyper-lisp-general-info.mml" />
+    <Content Include="system42\private\help\hyper-lisp\hyper-lisp-syntax.mml" />
+    <Content Include="system42\private\help\hyper-lisp\index.mml" />
+    <Content Include="system42\private\help\hyper-lisp\magix-markup-language.mml" />
+    <Content Include="system42\private\help\hyper-lisp\microsoft-sql.mml" />
+    <Content Include="system42\private\help\hyper-lisp\nested-expressions.mml" />
+    <Content Include="system42\private\help\hyper-lisp\remote-active-events.mml" />
+    <Content Include="system42\private\help\hyper-lisp\sandboxing-hyper-lisp.mml" />
+    <Content Include="system42\private\help\hyper-lisp\set-keyword.mml" />
+    <Content Include="system42\private\help\hyper-lisp\simplifying-expressions.mml" />
+    <Content Include="system42\private\help\hyper-lisp\working-with-viewports.mml" />
+    <Content Include="system42\private\help\index.mml" />
+    <Content Include="system42\private\settings\admin-settings.mml" />
+    <Content Include="system42\private\tools\inspect-events.hl" />
+    <Content Include="system42\private\tools\inspect-execute.hl" />
+    <Content Include="system42\private\tools\inspect-open-events.hl" />
+    <Content Include="system42\private\tools\inspect-overridden-events.hl" />
+    <Content Include="system42\private\tools\inspect-remoted-events.hl" />
+    <Content Include="system42\private\tools\inspect-unit-tests.hl" />
+    <Content Include="system42\private\tools\inspect-web-controls.hl" />
+    <Content Include="system42\private\tools\magix-markup-editor.hl" />
+    <Content Include="system42\private\tools\qr-code-generator.hl" />
+    <Content Include="system42\private\users\edit-single-user.hl" />
+    <Content Include="system42\private\users\roles-grid.hl" />
+    <Content Include="system42\private\users\users-grid.hl" />
     <None Include="todo.txt" />
     <None Include="system42\startup\events-create-desktop-shortcuts.hl" />
     <None Include="system42\startup\event-server-discovery.hl" />
-    <None Include="system42\admin\settings\admin-settings.mml" />
-    <None Include="system42\admin\edit-pages.hl" />
-    <None Include="system42\admin\file-browser.hl" />
-    <None Include="system42\admin\users\roles-grid.hl" />
-    <None Include="system42\admin\server-log-grid.hl" />
-    <None Include="system42\admin\users\edit-single-user.hl" />
-    <None Include="system42\admin\users\users-grid.hl" />
-    <None Include="system42\admin\tools\inspect-events.hl" />
-    <None Include="system42\admin\tools\inspect-execute.hl" />
-    <None Include="system42\admin\tools\inspect-open-events.hl" />
-    <None Include="system42\admin\tools\inspect-overridden-events.hl" />
-    <None Include="system42\admin\tools\inspect-remoted-events.hl" />
-    <None Include="system42\admin\tools\inspect-unit-tests.hl" />
-    <None Include="system42\admin\tools\inspect-web-controls.hl" />
-    <None Include="system42\admin\tools\magix-markup-editor.hl" />
-    <None Include="system42\admin\forms\edit-forms.hl" />
-    <None Include="system42\admin\forms\edit-property.hl" />
-    <None Include="system42\admin\dashboard\menu.mml" />
-    <None Include="system42\admin\dashboard\show-desktop.hl" />
     <None Include="system42\startup\magix-admin.hl" />
     <None Include="system42\startup\create-default-user.hl" />
     <None Include="system42\startup\create-default-roles.hl" />
-    <None Include="system42\admin\app-wizard\app-wizard.hl" />
-    <None Include="system42\admin\app-wizard\wizards\crud-app.hl" />
-    <None Include="system42\admin\app-wizard\new-app.hl" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="database\" />
-    <Folder Include="system42\admin\apps\" />
   </ItemGroup>
 </Project>
