@@ -1,0 +1,78 @@
+﻿
+<h2>mux TextArea</h2>
+
+<p>a multiple line type of 'give me some text input' type of widget. it wraps the
+textarea html element. if you only need single lines of input, you should
+probably rather use the {{
+link-button=>magix-ux-textbox
+  value=>TextBox
+  onclick
+    magix.help.open-file
+      file=>system42/private/help/csharp/ajax/controls/textbox.mml
+}} control. however this widget is useful for cases
+when you need multiple lines of text input. see also the Wysiwyg control if
+you need rich formatting of your text
+</p>
+
+<label>methods and properties of control</label>
+{{
+dynamic=>methods-for-textarea
+  onfirstload
+    magix.forms.dox.create-dox-for-web-control
+      class=>dox-for-web-control
+      control=>textarea
+      container=>methods-for-textarea
+}}
+
+<p>below is an example of an active module, using a mux text area instead of conventional web controls. remember to embed 
+the active module as an embedded resource if you want to compile this sample</p>
+
+<label>SampleModule.ascx</label>
+<pre>
+&lt;%@ Assembly 
+    Name="Magix.sample" %&gt;
+&lt;%@ Control 
+    Language="C#" 
+    AutoEventWireup="true" 
+    Inherits="Magix.sample.SampleModule" %&gt;
+
+&lt;mux:TextArea
+    runat="server"
+    id="txt"
+    Rows="5"
+    Value="multiple lines of text"
+    Class="span-5"/&gt;
+</pre>
+
+<label>SampleModule.ascx.cs</label>
+<pre>
+using System;
+using System.Web;
+using System.Web.UI;
+using Magix.Core;
+using Magix.UX.Widgets;
+
+namespace Magix.sample
+{
+    public class SampleModule : ActiveModule
+    {
+    }
+}</pre>
+
+<label>example of a mux TextArea</label>
+<div class="sample-web-control">
+{{
+text-area=>txt
+  value=>multiple lines of text
+  rows=>5
+  class=>span-5
+}}
+</div>
+
+{{
+lambda=>next
+  oncreatecontrols
+    magix.help.set-next
+      next=>system42/private/help/csharp/ajax/controls/textbox.mml
+}}
+

@@ -1,0 +1,177 @@
+﻿
+<h2>hyperlisp active events and polymorphism</h2>
+
+<p>there is actually no real difference between an active event, and a hyperlisp keyword.&nbsp;&nbsp;the difference is in how to invoke 
+it.&nbsp;&nbsp;a hyperlisp keyword is recognized by its lack of a "." in its name from where it is invoked, while an active event is 
+recognized by the fact of that it contains at least one "." in its invocation.&nbsp;&nbsp;you can actually threat an active event 
+as a hyperlisp keyword, and vice versa, by intelligent use of the using keyword, making your active event a hyperlisp keyword, 
+or by typing out the fully qualified namespace to your hyperlisp keyword to make your hyperlisp keyword be threated as 
+a normal active event</p>
+
+<p>however, to create an active event in hyperlisp, you would use the following syntax</p>
+
+<pre>
+event
+  name=>magix.sample.foo
+  persist=>false
+  code
+    magix.viewport.show-message
+      message=>howdy world
+</pre>
+
+<p>to invoke the above active event, all you'll have to do, is to execute the following hyperlisp code</p>
+
+<pre>
+magix.sample.foo
+</pre>
+
+<p>this will execute the code inside of the [code] block of the previously created active event.&nbsp;&nbsp;in addition, you can 
+tell magix that you'd like to allow for the event to be remotely invokable.&nbsp;&nbsp;to do this, add up 
+the [remotable] node, and set its value to true, as below</p>
+
+<pre>
+event
+  name=>magix.sample.foo
+  persist=>false
+  <strong>remotable=>true</strong>
+  code
+    _do_mumbo_jumbo_code
+</pre>
+
+<p>please notice that this opens up your server for allowing other servers to execute code directly within your server, and that this has 
+security concerns you will have to face once you do</p>
+
+<p>an active event may contain any piece of hyperlisp code, and/or references to other active events</p>
+
+<h3>active events as hyperlisp keywords</h3>
+
+<p>if you wish to invoke the above active event as if it was a hyperlisp keyword, you could do so by changing the engine's 
+default namespace, such that it no longer is <em>"magix.execute"</em> but instead <em>"magix.sample"</em>.&nbsp;&nbsp;consider 
+the below code</p>
+
+<pre>
+using=>magix.sample
+  foo
+</pre>
+
+<p>now you are in fact executing the magix.sample.foo active event as if it was a hyperlisp keyword.&nbsp;&nbsp;the reason is that you 
+no longer have any "." in your invocation, but have changed the default namespace of the execution engine, such that it is no longer 
+needed.&nbsp;&nbsp;hence the event you are invoking now, will be threated as a hyperlisp keyword, carrying with it the entire 
+execution tree as the [_ip] and [_dp] parameters.&nbsp;&nbsp;to understand the difference between these two distinctly 
+different invocations, change the event to show the debug window with the following code</p>
+
+<pre>
+event
+  name=>magix.sample.foo
+  persist=>false
+  code
+    debug
+</pre>
+
+<p>then invoke it like below</p>
+
+<pre>
+magix.sample.foo
+</pre>
+
+<p>and compare the result of that invocation with the result you get when you instead of invoking it like an active event, invoke it 
+as a hyperlisp keyword, as below</p>
+
+<pre>
+using=>magix.sample
+  foo
+</pre>
+
+<p>as you can see, the first execution shows only a small code tree, containing the debug instruction itself.&nbsp;&nbsp;while the 
+second invocation will show the entire [_ip] and [_dp] nodes for the entire code tree</p>
+
+<p>there are some security issues related to invoking active events like keywords, since now they have access to the entire tree of execution, 
+and can actually modify parts of the tree, which are outside of itself.&nbsp;&nbsp;consider the following code</p>
+
+<pre>
+event
+  name=>magix.sample.bar
+  persist=>false
+  code
+    if=>exist
+      lhs=>[$][_dp]
+      code
+        set=>[$][_dp].Value[_data].Value
+          value=>howdy
+</pre>
+
+<p>then execute it like below</p>
+
+<pre>
+_data
+magix.sample.bar
+</pre>
+
+<p>as you can see, the result from the execution is the same as the input, now compare the result of that execution with the 
+execution below, where we have turned the active event into a hyperlisp keyword, by using the [using] statement, such that 
+it no longer needs a "." in the invocation to the method itself</p>
+
+<pre>
+_data
+using=>magix.sample
+  bar
+</pre>
+
+<p>in the second invocation, you will see the [_data] node's value have changed from null to "howdy", since the event modified the 
+[_dp], or the data-pointer from inside the active event itself, producing the following result</p>
+
+<pre>
+<strong>_data=>howdy</strong>
+using=>magix.sample
+  bar
+</pre>
+
+<h3>overriding active events - polymorphism</h3>
+
+<p>you can override any existing active event, with any other active event, such that all invocations to the old active event, 
+will go the active event you have chosen for it to execute instead of the old one.&nbsp;&nbsp;to do this, use the [override] 
+keyword.&nbsp;&nbsp;consider the following</p>
+
+<pre>
+event
+  name=>magix.sample.foo-2
+  persist=>false
+  code
+    magix.viewport.show-message
+      message=>howdy world
+
+override=>magix.sample.doesnt-exist
+  with=>magix.sample.foo-2
+magix.sample.doesnt-exist
+</pre>
+
+<p>the above code, will actually show a message box, since the [magix.sample.doesnt-exist] active event reference will point 
+to the [magix.sample.foo-2] active event, which again will show a message box.&nbsp;&nbsp;you can override both existing, and 
+non-existing active events.&nbsp;&nbsp;above for example, there is no existing active event called magix.sample.doesnt-exist, 
+still we get that active event to point to magix.sample.foo2.&nbsp;&nbsp;you can also override any existing active event you wish, 
+such that the old implementation of the active event is not executed, but only the new implementation</p>
+
+<p>by combining this with checking to see if parameters exist, you can create new pieces of logic, that exchanges old pieces of 
+logic, which has additional features, which are not mandatory, but checked for the existence of, according to whether or not 
+a specific parameter is being passed into your active events or not.&nbsp;&nbsp;this makes magix, and the active event system, 
+extremely scalable and flexible for change.&nbsp;&nbsp;in magix, the very idea of an interface is completely obsolete</p>
+
+<h3>multiple event handlers for the same event</h3>
+
+<p>in c#, you can create multiple event handlers that handles the same active event.&nbsp;&nbsp;this is currently not possible in 
+hyperlisp, but might be useful for you even though, therefor we mention it briefly here.&nbsp;&nbsp;for instance, if you have 
+a search piece of logic, where you want to search through several different data sources, this feature might come in handy, 
+to be able to search through different components of your application.&nbsp;&nbsp;check out the documentation for {{
+link-button=>active-events-2
+  value=>active events
+  onclick
+    magix.help.open-file
+      file=>system42/private/help/csharp/active-events/index.mml
+}} in c# if you wish to see how</p>
+
+{{
+lambda=>next
+  oncreatecontrols
+    magix.help.set-next
+      next=>system42/private/help/hyper-lisp/remote-active-events.mml
+}}

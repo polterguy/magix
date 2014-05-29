@@ -1,0 +1,115 @@
+﻿
+<h2>mux Hidden</h2>
+
+
+<p>hidden field ajax web control. useful for having state you wish to pass on to the client 
+but don't want it to be visible for the end user. notice that this is not a 
+safe place to put things that the user is not supposed to see, like passwords 
+and such. do not trust the value of this element to not be tampered with. 
+alternatives for using this widget is viewstate, cookies and the session object. 
+viewstate and cookies are neither safe against tampering</p>
+
+<label>methods and properties of control</label>
+{{
+dynamic=>methods-for-hidden
+  onfirstload
+    magix.forms.dox.create-dox-for-control
+      class=>dox-for-web-control
+      control=>hidden
+      container=>methods-for-hidden
+}}
+
+<p>below is an example of an active module, using a mux hidden field instead of conventional web controls. remember to embed 
+the active module as an embedded resource if you want to compile this sample</p>
+
+<label>SampleModule.ascx</label>
+<pre>
+&lt;%@ Assembly 
+    Name="Magix.sample" %&gt;
+&lt;%@ Control 
+    Language="C#" 
+    AutoEventWireup="true" 
+    Inherits="Magix.sample.SampleModule" %&gt;
+
+&lt;mux:Hidden
+    runat="server"
+    Value="empty"
+    id="hid" /&gt;
+&lt;mux:Button
+    runat="server"
+    id="btn"
+    OnClick="btn_Click"
+    Value="then click me!"
+    Class="span-5 btn-large"/&gt;
+&lt;mux:Button
+    runat="server"
+    id="btn2"
+    OnClick="btn2_Click"
+    Value="click first!"
+    Class="span-5 btn-large"/&gt;
+</pre>
+
+<label>SampleModule.ascx.cs</label>
+<pre>
+using System;
+using System.Web;
+using System.Web.UI;
+using Magix.Core;
+using Magix.UX.Widgets;
+
+namespace Magix.sample
+{
+    public class SampleModule : ActiveModule
+    {
+        protected Hidden hid;
+        protected Button btn;
+        protected Button btn2;
+
+        protected void btn_Click(object sender, EventArgs e)
+        {
+            hid.Value ="new value";
+            btn2.Value = "then me again!";
+        }
+
+        protected void btn2_Click(object sender, EventArgs e)
+        {
+            btn2.Value = hid.Value;
+        }
+    }
+}</pre>
+
+<label>example of a mux Hidden</label>
+<div class="sample-web-control">
+{{
+hidden=>hid
+  value=>empty
+button=>btn
+  value=>then click me!
+  class=>span-5 btn-large
+  onclick
+    magix.forms.set-value
+      id=>hid
+      value=>new value
+    magix.forms.set-value
+      id=>btn2
+      value=>then me again!
+button=>btn2
+  value=>click first!
+  class=>span-5 btn-large
+  onclick
+    magix.forms.get-value
+      id=>hid
+    set=>[magix.forms.set-value][value].Value
+      value=>[magix.forms.get-value][value].Value
+    magix.forms.set-value
+      id=>btn2
+}}
+</div>
+
+{{
+lambda=>next
+  oncreatecontrols
+    magix.help.set-next
+      next=>system42/private/help/csharp/ajax/controls/hyperlink.mml
+}}
+

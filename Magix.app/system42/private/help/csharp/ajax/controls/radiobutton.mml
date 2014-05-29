@@ -1,0 +1,103 @@
+﻿
+<h2>mux Radio</h2>
+
+<p>a two-state control type that can be grouped together with other similar controls to
+mimick multiple selections. like for instance; "would you like to have coffee,
+tea or water" is a perfect example of where you would want to use radio buttons.
+if you want to group specific radio buttons together, you must give them the same
+Name property. if you do, then only one of these radio buttons can at any specific 
+time be selected and checked of
+</p>
+
+<label>methods and properties of control</label>
+{{
+dynamic=>methods-for-radiobutton
+  onfirstload
+    magix.forms.dox.create-dox-for-web-control
+      class=>dox-for-web-control
+      control=>radiobutton
+      container=>methods-for-radiobutton
+}}
+
+<p>below is an example of an active module, using a mux radio button instead of conventional web controls. remember to embed 
+the active module as an embedded resource if you want to compile this sample</p>
+
+<label>SampleModule.ascx</label>
+<pre>
+&lt;%@ Assembly 
+    Name="Magix.sample" %&gt;
+&lt;%@ Control 
+    Language="C#" 
+    AutoEventWireup="true" 
+    Inherits="Magix.sample.SampleModule" %&gt;
+
+&lt;mux:Label
+    runat="server"
+    Value="coffee?"
+    Tag="label"
+    For="rdo1"
+    Class="span-2"
+    id="lbl1"/&gt;
+&lt;mux:Radio
+    runat="server"
+    Name="radios"
+    Class="span-1"
+    id="rdo1"/&gt;
+&lt;mux:Label
+    runat="server"
+    Value="tea?"
+    Tag="label"
+    For="rdo2"
+    Class="span-2 clear"
+    id="lbl2"/&gt;
+&lt;mux:Radio
+    runat="server"
+    Name="radios"
+    Class="span-1"
+    id="rdo2"/&gt;
+</pre>
+
+<label>SampleModule.ascx.cs</label>
+<pre>
+using System;
+using System.Web;
+using System.Web.UI;
+using Magix.Core;
+using Magix.UX.Widgets;
+
+namespace Magix.sample
+{
+    public class SampleModule : ActiveModule
+    {
+    }
+}</pre>
+
+<label>example of a mux Radio</label>
+<div class="sample-web-control">
+{{
+label=>lbl1
+  class=>span-2
+  value=>coffee?
+  tag=>label
+  for=>rdo1
+radio=>rdo1
+  name=>radios
+  class=>span-1
+label=>lbl2
+  class=>span-2 clear
+  value=>tea?
+  tag=>label
+  for=>rdo2
+radio=>rdo2
+  name=>radios
+  class=>span-1
+}}
+</div>
+
+{{
+lambda=>next
+  oncreatecontrols
+    magix.help.set-next
+      next=>system42/private/help/csharp/ajax/controls/selectlist.mml
+}}
+

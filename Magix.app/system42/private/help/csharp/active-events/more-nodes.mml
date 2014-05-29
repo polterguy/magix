@@ -1,0 +1,60 @@
+﻿
+<h2>the Node class - methods</h2>
+
+<p>the Node class has many useful functions. one of its most important feature, is its ability to automatically 
+convert to strong types in c#. if you pass an integer around between an active event, then to convert the underlaying 
+value of the Node instance, all you have to do is to use the Get method</p>
+
+<pre>Node node = new Node();
+node["myInteger"].Value = 5;
+
+// then when you want to use the "myInteger" value in an active event handler for instance
+int myInteger = node["myInteger"].Get&lt;int&gt;();
+
+// to convert a value which actually is of type string to an integer also works
+// if there exists valid conversion
+node["myInteger"].Value = "5"; // notice that this is a string!
+int myInteger = node["myInteger"].Get&lt;int&gt;();</pre>
+
+<p>the Node class has three basic properties; Value, Name and Children. Value is the underlaying assigned 
+value of your node, if any. Name is the name of the Node, and helps you reference a specific Node in 
+both c# and hyperlisp. Children are its child Nodes</p>
+
+<p>in the above code, the Name of the Node which is assigned the integer value of 5 is "myInteger", its Value 
+is 5, "5" in the latter sample, and it has no Children. that Node is however a child node in the root Node, 
+which is the instance of the Node object with the variable name of "node" in the above sample. the root node 
+has no Name and no Value in the above sample</p>
+
+<p>when accessing Children of a specific Node, as we're doing above, you can either use a string to 
+address one named child Node, or an integer value defining where the Node you're trying to access 
+is located in the child collection of Nodes</p>
+
+<pre>// these two accessors will return the same Node
+Node node = new Node();
+node["someValue"].Value = "testing";
+
+string someValue = node["someValue"].Get&lt;string&gt;();
+// or ...
+someValue = node[0].Get&lt;string&gt;(); // fetches the zeroth Node from the root node object
+</pre>
+
+<p>if you have multiple child nodes, with the same name, you can also fetch, and set, the n'th Node, with a given name in 
+the child collection. consider this</p>
+
+<pre>
+Node node = new Node();
+node["someValue", 0].Value = "testing-1";
+node["someValue", 1].Value = "testing-2";
+
+string someValue1 = node["someValue", 0].Get&lt;string&gt;();
+string someValue2 = node["someValue", 1].Get&lt;string&gt;();
+</pre>
+
+<p>the above code, the someValue1 will contain "testing-1", while the someValue2 will contain "testing-2"</p>
+
+{{
+lambda=>next
+  oncreatecontrols
+    magix.help.set-next
+      next=>system42/private/help/csharp/active-events/inspecting-active-events.mml
+}}

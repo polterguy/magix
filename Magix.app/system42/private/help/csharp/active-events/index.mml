@@ -1,0 +1,57 @@
+<h2>c# active events</h2>
+
+<p>an active event is an alternative way to invoke functionality. instead of using functions or methods when 
+you have functionality you wish to invoke, you can use active events. in conventional oo programming, you would 
+create your methods inside of classes, such that your methods will be only accessible in combination with your classes. this 
+ties together your logic with your objects. this is a good idea in traditional oo, and we're taught how 
+this creates strong encapsulation for us, while the exact opposite is the actual result</p>
+
+<p>traditional oo thinking tends to forget one crucial thing, which is that its entire goal is 
+the separation between data and logic. in such a regard, traditional oo does a 180 degree u-turn on 
+the problem it is originally attempting to solve. by tying your logic together with your data, through 
+the use of classes, interfaces and virtual methods in oo, you end up mixing your data with your logic in 
+a nightmare architecture, where everything is tied together as one, creating a gigantic mess out of your 
+solution. this is called <em>"big ball of mud"</em>. consider the below problems</p>
+
+<ul>
+<li>in traditional oo, you cannot easily exchange one piece of logic with another, without having 
+access to the original code, and create your own classes, in a programming language, which is difficult to 
+learn, and requires several years of training to master</li>
+<li>in traditional oo, you cannot easily intersect a piece of logic, to add up your own piece of logic, running either in front of the original logic, or after the original logic. aop, or aspect oriented programming, is a nightmare with oo</li>
+<li>in traditional oo, you cannot easily add up a new parameter to an existing method, once it has been consumed by other parts of your system, without breaking backwards compatibility, such that your existing logic is no longer functioning</li>
+<li>in traditional oo, you often have to know about the internals of classes and methods to consume logic, 
+which is bad encapsulation</li>
+<li>in traditional oo, you often have to physically link your own logic together with other pieces of 
+logic, creating a hard-linked dependency between your logic, and other pieces of logic</li>
+<li>in traditional oo, you cannot easily create a pluggable architecture, without having to wade through 
+tons of difficult to understand design patterns, resulting in that your boiler-plate code, exceeds 
+the number of lines of code in your original piece of logic</li>
+<li>list goes on ...</li>
+</ul>
+
+<p>all of the above problems are implicitly solved in magix, if you use active events. with active events you can</p>
+
+<ul>
+<li>easily exchange one piece of logic with another piece of logic, without even knowing anything 
+about the original piece of logic</li>
+<li>easily intersect a piece of logic, facilitating for aspect oriented programming</li>
+<li>easily add up a new parameter to an old piece of logic, without breaking backwards compatibility</li>
+<li>easily consume other pieces of logic, which you don't know anything about</li>
+<li>easily consume pieces of logic, which are not in any ways hard-linked to your own piece of logic. your projects is not 
+dependent upon being linked to dlls. neither does any other types of hard-link exist between your projects and other projects</li>
+<li>easily create a plugin architecture. in fact, active events are pluggable by default, and you need to explicitly 
+fuck-up yourself, to make them non-pluggable</li>
+<li>list goes on ...</li>
+</ul>
+
+<p>and here's the really good parts, you still get to keep all your traditional oo stuff! the only new thing you'll 
+have to learn is one simple design pattern! magix is in its entirety built on things you know from before, like c# and 
+asp.net through oo constructs! active events is basically the last design pattern you will ever have to consume!
+active events, replaces all other existing design patterns!</p>
+
+{{
+lambda=>next
+  oncreatecontrols
+    magix.help.set-next
+      next=>system42/private/help/csharp/active-events/sample-csharp-active-event.mml
+}}

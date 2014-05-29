@@ -1,0 +1,26 @@
+
+
+<div class="span-5 start-button-wrapper">
+{{
+link-button=>desktop
+  class=>start-button
+  onclick
+    magix.viewport.clear-controls
+      container=>content1
+    magix.viewport.clear-controls
+      container=>content2
+    magix.viewport.clear-controls
+      container=>content3
+    magix.viewport.clear-controls
+      container=>content4
+    magix.viewport.clear-controls
+      container=>content5
+    magix.viewport.clear-controls
+      container=>content6
+    magix.viewport.clear-controls
+      container=>content7
+    execute-script
+      file=>system42/private/dashboard/show-desktop.hl
+}}
+</div>
+

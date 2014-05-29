@@ -1,0 +1,109 @@
+﻿
+<h2>hyperlisp syntax</h2>
+
+<p>hyperlisp doesn't really have any syntax, and its dialect might change from server-installation to server-installation.&nbsp;&nbsp;
+instead of syntax, you are actually directly modifying the execution tree itself.&nbsp;&nbsp;to understand what this mean, 
+consider that the code below is really nothing but a tree structure representation of the {{
+link-button=>go-to-node
+  value=>Node
+  onclick
+    magix.help.open-file
+      file=>system42/private/help/csharp/active-events/node-class.mml
+}} class</p>
+
+<pre>
+_data=>hello world
+if=>equals
+  lhs=>[_data].Value
+  rhs=>hello world
+  code
+    magix.viewport.show-message
+      message=>if statement evaluated to true
+else
+  magix.viewport.show-message
+    message=>if statement evaluated to false
+</pre>
+
+<p>if you take a close look at the above code, you will see that there are two spaces indentation for the [lhs] from the 
+[if] statement which the [lhs] node exists within.&nbsp;&nbsp;this is because the [lhs] node is a child of the [if] node, physically in the 
+structure of the node's tree hierarchical structure.&nbsp;&nbsp;for instance, in the above code, there are three root nodes; [_data], 
+[if] and [else], the rest of the nodes are children of one of the previously mentioned nodes.&nbsp;&nbsp;the [if] node, has three children;
+[lhs], [rhs] and [code].&nbsp;&nbsp;while the [else] node only has one child; [magix.viewport.show-message].&nbsp;&nbsp;and so on.
+&nbsp;&nbsp;it might be easier to understand when you realize how this would look like in c#.&nbsp;&nbsp;below is an example 
+of how to produce the exact same tree structure with c#</p>
+
+<pre>
+Node node = new Node();
+node["_data"].Value = "hello world";
+node["if"]["lhs"].Value = "[_data].Value";
+node["if"]["rhs"].Value = "hello world";
+node["if"]["code"]["magix.viewport.show-message"]["message"].Value = "if statement evaluated to true";
+node["else"]["magix.viewport.show-message"]["message"].Value = "if statement evaluated to false";
+</pre>
+
+<p>hyperlisp is really nothing but a tree structure, and doesn't actually have any syntax, the way 
+a traditional programming language would have.&nbsp;&nbsp;watch the image below, where the spaces in the above code is visible to 
+understand how the indentation in hyperlisp works</p>
+
+<img src="media/images/help-files/screenshots/hyper-lisp-spaces.png" alt="spaces shown" style="float:left;display:block;margin-right:10px;margin-bottom:18px;"/>
+
+<p>so to recap, all nodes that are indented at the same level, are sibling nodes.&nbsp;&nbsp;all nodes that have two spaces 
+more indentation than the node above them, are children of the node above them.&nbsp;&nbsp;if you look at the image to the left for instance, 
+you will see that the [if] node and the [else] node are siblings, while the [lhs], [rhs] and [code] nodes are children of the 
+[if] node.&nbsp;&nbsp;while the first [magix.viewport.show-message] node is a child of the [code] node, and so on</p>
+
+<p>please notice, you can never have more than two additional spaces between a node and its children.&nbsp;&nbsp;
+also notice, that the node's name is the first piece of text on any line of text, the parts before the =&gt; parts, while 
+the value parts of a node, are the parts that comes after the =&gt; assignment operator</p>
+
+<p style="clear:both;">also notice that if you have long pieces of text, containing carriage returns for instance, then you 
+can assign this text between two quotes, initiated with an @ sign.&nbsp;&nbsp;such as is done below</p>
+
+<pre>
+node=>@"some very long piece of text, 
+which runs over multiple lines"
+</pre>
+
+<p>if you wish to have a piece of text containing quotes in themselves, these quotes must be double quoted, such as below</p>
+
+<pre>
+node=>@"some very long piece of text, 
+    which runs over multiple lines, this text
+contains a couple of quotes "" which must be 
+ repeated twice, to create one quote and here are 
+some more quotes """""" for fun"
+</pre>
+
+<p>the above assignment, will actually become the text below</p>
+<pre>
+some very long piece of text, 
+    which runs over multiple lines, this text
+contains a couple of quotes " which must be 
+ repeated twice, to create one quote and here are 
+some more quotes """ for fun
+</pre>
+
+<p>to assign a specific type to your node's value, use any of the built-in type assignments</p>
+
+<pre>
+_data
+  some-date=(date)>2014.01.14 23:55:42
+  some-integer=(int)>56
+  some-decimal=(dec)>56.72
+  some-boolean=(bool)>true
+  some-node=(node)>@"root=>howdy
+  _data
+    v0=>54
+    v1=(int)>63"
+</pre>
+
+<p>though most of the time, the conversion between types are implicit, and you don't have to worry about types.&nbsp;&nbsp;type conversion, 
+is for the most parts done transparently inside the active events themselves, and not something you'll have to 
+worry about yourself</p>
+
+{{
+lambda=>next
+  oncreatecontrols
+    magix.help.set-next
+      next=>system42/private/help/hyper-lisp/hyper-lisp-execute.mml
+}}

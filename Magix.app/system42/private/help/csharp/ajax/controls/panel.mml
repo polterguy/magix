@@ -1,0 +1,94 @@
+﻿
+<h2>mux Panel</h2>
+
+<p>a container control for displaying other controls inside of it. will render as a
+div by default, but the specific tag this widget will render, can easily be
+overridden by changing the Tag property. you can choose to render your panels as
+paragraphs (p...) for instance.
+if you only need to display text on your page, and you need to use web controls for
+this, you should use the {{
+link-button=>magix-ux-label
+  value=>Label
+  onclick
+    magix.help.open-file
+      file=>system42/private/help/csharp/ajax/controls/label.mml
+}} control and not the Panel control
+</p>
+
+<label>methods and properties of control</label>
+{{
+dynamic=>methods-for-panel
+  onfirstload
+    magix.forms.dox.create-dox-for-web-control
+      class=>dox-for-web-control
+      control=>panel
+      container=>methods-for-panel
+}}
+
+<p>below is an example of an active module, using a mux panel instead of conventional web controls. remember to embed 
+the active module as an embedded resource if you want to compile this sample</p>
+
+<label>SampleModule.ascx</label>
+<pre>
+&lt;%@ Assembly 
+    Name="Magix.sample" %&gt;
+&lt;%@ Control 
+    Language="C#" 
+    AutoEventWireup="true" 
+    Inherits="Magix.sample.SampleModule" %&gt;
+
+&lt;mux:Panel
+    runat="server"
+    id="pnl"
+    OnMouseOver="pnl_MouseOver"
+    Class="span-5 boxed"&gt;
+    &lt;mux:Label
+        runat="server"
+        id="lbl"
+        Value="changes when mouse moves over panel"/&gt;
+&lt;/mux:Panel&gt;
+</pre>
+
+<label>SampleModule.ascx.cs</label>
+<pre>
+using System;
+using System.Web;
+using System.Web.UI;
+using Magix.Core;
+using Magix.UX.Widgets;
+
+namespace Magix.sample
+{
+    public class SampleModule : ActiveModule
+    {
+        protected Label lbl;
+
+        protected void pnl_MouseOver(object sender, EventArgs e)
+        {
+            lbl.Value ="don't touch me! ouch!";
+        }
+    }
+}</pre>
+
+<label>example of a mux Panel</label>
+<div class="sample-web-control">
+{{
+panel=>pnl
+  class=>span-10 desktop-widget
+  onmouseover
+    magix.forms.set-value
+      id=>lbl
+      value=>don't touch me! ouch!
+  controls
+    label=>lbl
+      value=>changes when mouse moves over panel
+}}
+</div>
+
+{{
+lambda=>next
+  oncreatecontrols
+    magix.help.set-next
+      next=>system42/private/help/csharp/ajax/controls/radiobutton.mml
+}}
+

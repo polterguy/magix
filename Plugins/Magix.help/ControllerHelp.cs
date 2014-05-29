@@ -90,7 +90,7 @@ button=>index
   class=>btn-large span-2
   onclick
     magix.help.open-file
-      file=>system42/admin/help/index.mml
+      file=>system42/private/help/index.mml
     magix.browser.scroll
       id=>help
 button=>close
@@ -172,7 +172,7 @@ button=>next-page-2
             tmp["container"].Value = "help-content";
 			tmp["class"].Value = "span-22 last help-system";
 
-			using (TextReader reader = File.OpenText(Page.Server.MapPath("system42/admin/help/index.mml")))
+			using (TextReader reader = File.OpenText(Page.Server.MapPath("system42/private/help/index.mml")))
 			{
 				tmp["mml"].Value = reader.ReadToEnd();
 			}
@@ -197,7 +197,7 @@ button=>next-page-2
 			{
 				tmp = new Node();
 				tmp["reset"].Value = true;
-				tmp["page"].Value = "system42/admin/help/index.mml";
+				tmp["page"].Value = "system42/private/help/index.mml";
 
 				RaiseActiveEvent(
 					"magix.help.add-page",
@@ -216,7 +216,7 @@ button=>next-page-2
                     if (string.IsNullOrEmpty(_helpHeaders))
                     {
                         _helpHeaders += "[";
-                        GetHelpFilesForDirectory(Page.MapPath("~/system42/admin/help"));
+                        GetHelpFilesForDirectory(Page.MapPath("~/system42/private/help"));
                         _helpHeaders = _helpHeaders.Trim(',');
                         _helpHeaders += "]";
                     }
@@ -293,7 +293,7 @@ button=>next-page-2
 				e.Params["event:magix.help.set-next"].Value = null;
 				e.Params["inspect"].Value = @"set the next page for the help system.
 &nbsp;&nbsp;not thread safe";
-				e.Params["next"].Value = "system42/admin/help/index.mml";
+				e.Params["next"].Value = "system42/private/help/index.mml";
 				return;
 			}
 
@@ -357,7 +357,7 @@ button=>next-page-2
 				e.Params["event:magix.help.open-file"].Value = null;
 				e.Params["inspect"].Value = @"opens the given [file] file as html.
 &nbsp;&nbsp;thread safe";
-				e.Params["file"].Value = "system42/admin/help/index.mml";
+				e.Params["file"].Value = "system42/private/help/index.mml";
 				return;
 			}
 

@@ -1,0 +1,111 @@
+﻿
+<h2>hyperlisp magix.execute</h2>
+
+<p>the [magix.execute] active event, is where all the magic happens.&nbsp;&nbsp;this is the core active event of hyperlisp as a 
+programming language, and everything that happens, starts out here.&nbsp;&nbsp;like everything else in hyperlisp, the language in 
+itself is actually nothing but an active event.&nbsp;&nbsp;if you'd like to see what this active event actually does, you'll find 
+it in the Magix.execute project, in the ExecuteCore.cs file</p>
+
+<p>as previously mentioned, the hyperlisp syntax changes from server installation to server installation.&nbsp;&nbsp;this is because 
+every single keyword, as actually just a wrapper around all active events that starts with the namespace <em>"magix.execute"</em>,&nbsp;&nbsp;
+this means that every single active event that starts with the string "magix.execute" will automatically become an extension of the 
+programming language itself.&nbsp;&nbsp;consider the following code</p>
+
+<pre>
+event
+  name=>magix.execute.add-two-numbers
+  persist=>false
+  code
+    using=>magix.math
+      add
+        =>[$][_ip].Value[0].Value
+        =>[$][_ip].Value[1].Value
+    set=>[$][_ip].Value[result].Value
+      value=>[using][add].Value
+</pre>
+
+<p>the above code actually modifies the programming language itself, and creates a new keyword, which is called [add-two-numbers].&nbsp;&nbsp;don't worry 
+too much about the {{
+link-button=>expressions
+  value=>expressions
+  onclick
+    magix.help.open-file
+      file=>system42/private/help/hyper-lisp/hyper-lisp-expressions.mml
+}} quite yet, the parts that starts with e.g. [$][_ip] etc.&nbsp;&nbsp;we will come back to those later.&nbsp;&nbsp;however, 
+to use the above keyword, all you have to do is to run code similar to the code below</p>
+
+<pre>
+add-two-numbers
+  =>5
+  =>3
+</pre>
+
+<p>when finished executing, there will exist a [result] node on the above code, which will be the result of the 5+3 addition.&nbsp;&nbsp;after execution, 
+the execution tree will look like this</p>
+
+<pre>
+add-two-numbers
+  =>5
+  =>3
+  result=(dec)>8
+</pre>
+
+<p>using constructs like these, you can actually modify the programming language itself, and add keywords that makes sense for your specific domain logic</p>
+
+<p>all the native keywords of hyperlisp, are actually created with similar constructs.&nbsp;&nbsp;though, for the most parts they're 
+all made in c# to make them speedy.&nbsp;&nbsp;if you look inside of the Magix.execute project, you will find that every single 
+"keyword" is actually an active event.&nbsp;&nbsp;for instance, the [if] keyword is actually the active event [magix.execute.if], and 
+[while] is the active event [magix.execute.while], etc</p>
+
+<p>important!&nbsp;&nbsp;no keyword in hyperlisp can start with an underscore "_".&nbsp;&nbsp;this is because the execution engine 
+will not recognize anything that starts with an underscore as a keyword, but believe it is just a data buffer node.&nbsp;&nbsp;
+consider the below code</p>
+
+<pre>
+_data=>will never be executed
+data=>will be believed to be a keyword, and an active event called "magix.execute.data" will be created and raised
+</pre>
+
+<p>also notice, that if a keyword contains the period character ".", then the engine will handle that line of code differently.&nbsp;&nbsp;
+all active events containing the "." character, will only have access to the nodes directly underneath the invocation itself.&nbsp;&nbsp;
+while all keywords that does not have the "." in their name, will have access to the entire node tree hierarchy.&nbsp;&nbsp;</p>
+
+<pre>
+_data
+some-event-name=>will have access to the _data node
+some.event.name=>will only have access to child-node
+  child-node=>some value
+</pre>
+
+<p>everytime the execution engine encounters a ".", it will create a clone of all of that specific node's children nodes, 
+and send in the cloned version of those nodes as parameters to the active event.&nbsp;&nbsp;try to run the code below to understand 
+how this affects you</p>
+
+<pre>
+_data=>5
+magix.execute
+  set=>[_x].Value
+    value=>[_data].Value
+</pre>
+
+<p>then compare the result from that execution to the almost identical example below here</p>
+
+<pre>
+_data=>5
+execute
+  set=>[_x].Value
+    value=>[_data].Value
+</pre>
+
+<p>in the first sample, the [magix.execute] statement does not have access to anything outside of the [magix.execute] statement.&nbsp;&nbsp;
+this means that it won't be abel to access the [_data] node, and it will create an empty [_x] node inside of the [magix.execute] statement, 
+which has a null value.&nbsp;&nbsp;while in the second sample, the [_data] node will be accessible for the [execute] keyword, and 
+the [execute] statement will create a new node called [_x], which will become a sibbling of the [_data] and [execute] statement, 
+containing the value of "5", taken from the [_data] node's value</p>
+
+{{
+lambda=>next
+  oncreatecontrols
+    magix.help.set-next
+      next=>system42/private/help/hyper-lisp/hyper-lisp-expressions.mml
+}}

@@ -1,0 +1,73 @@
+﻿
+<h2>mux Uploader</h2>
+
+<p>control which allows for uploading files to server by dragging and dropping them onto the browwser surface</p>
+
+<label>methods and properties of control</label>
+{{
+dynamic=>methods-for-uploader
+  onfirstload
+    magix.forms.dox.create-dox-for-control
+      class=>dox-for-web-control
+      control=>uploader
+      container=>methods-for-uploader
+}}
+
+<p>below is an example of an active module, using a mux uploader. remember to embed 
+the active module as an embedded resource if you want to compile this sample</p>
+
+<label>SampleModule.ascx</label>
+<pre>
+&lt;%@ Assembly 
+    Name="Magix.sample" %&gt;
+&lt;%@ Control 
+    Language="C#" 
+    AutoEventWireup="true" 
+    Inherits="Magix.sample.SampleModule" %&gt;
+
+&lt;mux:Uploader
+    id="upl"
+    OnUploaded="upl_Uploaded" /&gt;
+</pre>
+
+<label>SampleModule.ascx.cs</label>
+<pre>
+using System;
+using System.Web;
+using System.Web.UI;
+using Magix.Core;
+using Magix.UX.Widgets;
+
+namespace Magix.sample
+{
+    public class SampleModule : ActiveModule
+    {
+        protected void upl_Uploaded(object sender, EventArgs e)
+        {
+            Node node = new Node();
+            node["message"].Value = "file uploaded to tmp folder";
+            RaiseActiveEvent(
+                "magix.viewport.show-message",
+                node);
+        }
+    }
+}</pre>
+
+<label>example of a mux Uploader</label>
+<div class="sample-web-control">
+{{
+uploader=>upl
+  folder=>tmp
+  onuploaded
+    magix.viewport.show-message
+      message=>file uploaded to tmp folder
+}} try to drag and drop files onto the surface of the browser
+</div>
+
+{{
+lambda=>next
+  oncreatecontrols
+    magix.help.set-next
+      next=>system42/private/help/csharp/ajax/controls/wysiwyg.mml
+}}
+

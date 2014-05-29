@@ -1,0 +1,84 @@
+﻿
+<h2>mux Timer</h2>
+
+<p>a timer that will periodically call the server according ot its Interval, where it will 
+raise the Tick event handler</p>
+
+<label>methods and properties of control</label>
+{{
+dynamic=>methods-for-timer
+  onfirstload
+    magix.forms.dox.create-dox-for-control
+      class=>dox-for-web-control
+      control=>timer
+      container=>methods-for-timer
+}}
+
+<p>below is an example of an active module, using a mux timer. remember to embed 
+the active module as an embedded resource if you want to compile this sample</p>
+
+<label>SampleModule.ascx</label>
+<pre>
+&lt;%@ Assembly 
+    Name="Magix.sample" %&gt;
+&lt;%@ Control 
+    Language="C#" 
+    AutoEventWireup="true" 
+    Inherits="Magix.sample.SampleModule" %&gt;
+
+&lt;mux:Timer
+    runat="server"
+    id="timer"
+    OnTick="timer_Tick" /&gt;
+&lt;mux:Label
+    runat="server"
+    Value="tick"
+    id="lbl" /&gt;
+</pre>
+
+<label>SampleModule.ascx.cs</label>
+<pre>
+using System;
+using System.Web;
+using System.Web.UI;
+using Magix.Core;
+using Magix.UX.Widgets;
+
+namespace Magix.sample
+{
+    public class SampleModule : ActiveModule
+    {
+        protected Label lbl;
+
+        protected void timer_Tick(object sender, EventArgs e)
+        {
+            lbl.Value += "-tick";
+        }
+    }
+}</pre>
+
+<label>example of a mux Timer</label>
+<div class="sample-web-control">
+{{
+timer=>timer
+  ontick
+    magix.forms.get-value
+      id=>lbl
+    set=>[magix.forms.set-value][value].Value
+      value=>{0}{1}
+        v0=>[magix.forms.get-value][value].Value
+        v1=>-tick
+    magix.forms.set-value
+      id=>lbl
+label=>lbl
+  value=>tick
+}}
+</div>
+
+{{
+lambda=>next
+  oncreatecontrols
+    magix.help.set-next
+      next=>system42/private/help/csharp/ajax/controls/uploader.mml
+}}
+

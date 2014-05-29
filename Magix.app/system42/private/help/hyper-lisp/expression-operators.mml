@@ -1,0 +1,90 @@
+﻿
+<h2>expression special accessors</h2>
+
+<p>there exist many special operators which you can use in your expressions to access specific parts of the node tree.&nbsp;&nbsp;
+below is a list of these operators, together with example code, to illustrate how these work</p>
+
+<ul>
+  <li>[..] - moves the current pointer one upwards from where ever it currently is</li>
+  <li>[/] - moves the current pointer to the root node of the current execution tree</li>
+  <li>[$] - moves the current pointer to the parameters collection, only valid within dynamic events, lambda expressions, and similar places</li>
+  <li>[.ip] - moves the current pointer to the currently executed node in the tree</li>
+  <li>[@] - moves the current pointer to the currently executed block, or scope of nodes</li>
+  <li>[.] - moves the current pointer to the data-pointer node.&nbsp;&nbsp;only useful with some few keywords, such as [for-each], [iterate] and [with]</li>
+</ul>
+
+<p>all of the above expressions, will return some specific node within the tree.&nbsp;&nbsp;check out the code below, for examples 
+of how these work</p>
+
+<pre>
+_data=>jo
+  mumbo
+for-each=>[_data]
+  set=>[/][_res][v0].Value
+    value=>[..].Name
+  set=>[/][_res][v1].Value
+    value=>[/][_data].Value
+  set=>[/][_res][v2].Value
+    value=>[.ip].Value
+  set=>[/][_res][v3].Value
+    value=>[@].Name
+  set=>[/][_res][v4].Value
+    value=>[.].Name
+_res
+</pre>
+
+<p>the [..] will start out from where ever the current node being traversed currently is, and move <em>"one step up"</em>.&nbsp;&nbsp;for the 
+example above, the currently iterated node is the [mumbo] node, since the [for-each] statement is iterating over all the child nodes 
+of the [_data] node, and there is only one child, being the [mumbo] node</p>
+
+<p>the [/] will move the iterating pointer to the root of the entire tree it currently has access to.&nbsp;&nbsp;for active events which 
+are hyper lispo keywords, and hence does not contain the "." character as a part of their name, this means the entire tree, and 
+hence for the above code, it will move to the root node</p>
+
+<p>the [$] node only makes sense in events, lambda expressions, while executing files, or executing scripts directly.&nbsp;&nbsp;
+if you for instance have a dynamic event, created with the [event] keyword, then whatever child nodes you put underneath the invocation 
+to your active event, will become available within the event itself underneath the [$] node, sent in as parameters to your event</p>
+
+<p>[.ip] will access the currently executed node.&nbsp;&nbsp;for the above code, this means the 3rd [set] statement.&nbsp;&nbsp;
+hence, the output result of tha value of that statement is put into the [v2] result node</p>
+
+<p>[@] will access the currently executed block.&nbsp;&nbsp;for the above code, this means the [for-each] node</p>
+
+<p>the [.] node only makes sense in some very seldom circumstances.&nbsp;&nbsp;one of these, is when you iterate over a list of nodes 
+with the [for-each] keyword.&nbsp;&nbsp;normally, the root node of the entire tree you have available for you is the current node 
+when you start creating an expression.&nbsp;&nbsp;this means that regardless of how deep into a hierarchy of executing nodes you 
+are, you will still start from the root node when you create an expression.&nbsp;&nbsp;while iterating with the [for-each] keyword however, 
+this is not true, and the node you start out from is the currently iterated node.&nbsp;&nbsp;it is common curtesy to explicitly 
+state that you want to access the <em>currently iterated node</em> though, by using the [.].&nbsp;&nbsp;for instance, in the above 
+code, it would have been nice if we had modified the expression [..].Name to [.][..].Name for clarity</p>
+
+<p>the output of the above code, if you run it through the hyperlisp executor for instance, will become</p>
+
+<pre>
+_data=>jo
+  mumbo
+for-each=>[_data]
+  set=>[/][_res][v0].Value
+    value=>[..].Name
+  set=>[/][_res][v1].Value
+    value=>[/][_data].Value
+  set=>[/][_res][v2].Value
+    value=>[.ip].Value
+  set=>[/][_res][v3].Value
+    value=>[@].Name
+  set=>[/][_res][v4].Value
+    value=>[.].Name
+_res
+  v0=>_data
+  v1=>jo
+  v2=>[/][_res][v2].Value
+  v3=>for-each
+  v4=>mumbo
+</pre>
+
+{{
+lambda=>next
+  oncreatecontrols
+    magix.help.set-next
+      next=>system42/private/help/hyper-lisp/nested-expressions.mml
+}}
