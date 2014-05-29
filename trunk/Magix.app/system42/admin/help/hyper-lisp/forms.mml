@@ -8,7 +8,7 @@ link-button=>web-controls-jump
   onclick
     magix.help.open-file
       file=>system42/admin/help/backend/web-controls.mml
-    magix.viewport.scroll=>help
+    magix.browser.scroll=>help
 }} you have installed in your system.&nbsp;&nbsp;the most important active events to create web parts, are the
 <strong>[magix.forms.create-web-part]</strong> and the <strong>[magix.forms.create-mml-web-part]</strong> active events</p>
 
@@ -60,7 +60,7 @@ link-button=>web-controls-jump-2
   onclick
     magix.help.open-file
       file=>system42/admin/help/backend/web-controls.mml
-    magix.viewport.scroll=>help
+    magix.browser.scroll=>help
 }}, and the [events] parameter is a list of your active events, associated with your web part</p>
 
 <h3>the [controls] collection</h3>

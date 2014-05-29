@@ -19,7 +19,7 @@ lambda=>lmda
             value=>[magix.forms.get-value][value].Value
           magix.data.save
             id=>magix.admin.settings.default-back-end-css-file
-          magix.web.redirect=>?dashboard=
+          magix.browser.redirect=>?dashboard=
           magix.web.postpone-execution
             code
               magix.viewport.clear-controls

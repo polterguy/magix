@@ -30,7 +30,7 @@ link-button=>csharp-active-events
   onclick
     magix.help.open-file
       file=>system42/admin/help/csharp/active-events/index.mml
-    magix.viewport.scroll=>help
+    magix.browser.scroll=>help
 }}</li>
 <li>{{
 link-button=>csharp-active-controllers
@@ -38,7 +38,7 @@ link-button=>csharp-active-controllers
   onclick
     magix.help.open-file
       file=>system42/admin/help/csharp/active-controllers/index.mml
-    magix.viewport.scroll=>help
+    magix.browser.scroll=>help
 }}</li>
 <li>{{
 link-button=>csharp-active-modules
@@ -46,7 +46,7 @@ link-button=>csharp-active-modules
   onclick
     magix.help.open-file
       file=>system42/admin/help/csharp/active-modules/index.mml
-    magix.viewport.scroll=>help
+    magix.browser.scroll=>help
 }}</li>
 <li>{{
 link-button=>csharp-ajax
@@ -54,7 +54,7 @@ link-button=>csharp-ajax
   onclick
     magix.help.open-file
       file=>system42/admin/help/csharp/ajax/index.mml
-    magix.viewport.scroll=>help
+    magix.browser.scroll=>help
 }}</li>
 </ul>
 

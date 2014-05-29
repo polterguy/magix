@@ -1,0 +1,42 @@
+﻿
+
+inspect=>@"contains documentation for magix.log"
+
+
+magix.log.append-dox=>@"appends an items to the log
+
+appends an item to the log.  [header] is the header of your log item.  
+[body] is a larger more thorough description of your log item.  [code] is 
+a piece of code that is associated with your log item.  [error] is a boolean 
+indicating if your log item is describing an error
+
+only [header] and [body] are mandatory, all other parameters are optional.  
+in addition, the log item will automatically store the date and time for when 
+the item was logged
+
+both [header] and [body] can contain string formatting parameters.  this means 
+that if you supply children nodes to either header or body, then these will be 
+possible to reference inside your header or body value by using {0} to reference 
+the first item, {1} to reference the second.  with this, you can combine your text 
+to header or body with parameters that will be substituded inside of the value 
+of header or body
+
+all parameters can be either constants or expressions"
+
+
+magix.log.append-sample
+  magix.log.append
+    header=>some header
+    body=>longer description of log item
+    error=>false
+    code
+      _here=>you
+        can
+          supply=>some piece
+        of=>code
+        that
+          becomes
+        associeted=>with
+          your
+        log
+          item

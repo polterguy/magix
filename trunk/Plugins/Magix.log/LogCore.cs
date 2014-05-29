@@ -10,82 +10,63 @@ using Magix.Core;
 
 namespace Magix.log
 {
-	/**
+	/*
 	 * contains the logging functionality of magix
 	 */
 	public class LogCore : ActiveController
 	{
-		/**
+		/*
 		 * will log the given header and body
 		 */
 		[ActiveEvent(Name = "magix.log.append")]
 		public static void magix_log_append(object sender, ActiveEventArgs e)
 		{
-			if (ShouldInspect(e.Params))
-			{
-				e.Params["event:magix.log.append"].Value = null;
-				e.Params["inspect"].Value = @"creates a new item in your log.&nbsp;&nbsp;
-you need to submit both a [header] and a [body].&nbsp;&nbsp;
-parameters added beneath [body] and/or [header] will be formatted into string.&nbsp;&nbsp;thread safe";
-				e.Params["header"].Value = "descriptive header of log item";
-				e.Params["body"].Value = "detailed description of log item";
-				e.Params["code"].Value = "hyperlisp code";
-				e.Params["error"].Value = false;
-				return;
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
+            {
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.log",
+                    "Magix.log.hyperlisp.inspect.hl",
+                    "[magix.log.append-dox].Value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.log",
+                    "Magix.log.hyperlisp.inspect.hl",
+                    "[magix.log.append-sample]");
+                return;
 			}
 
-            if (!Ip(e.Params).Contains("header") || Ip(e.Params)["header"].Get<string>("") == "")
-				throw new ArgumentException("no [header] given to log.append");
+            if (!ip.ContainsValue("header"))
+				throw new ArgumentException("no [header] given to [magix.log.append]");
 
-            if (!Ip(e.Params).Contains("body") || Ip(e.Params)["body"].Get<string>("") == "")
-				throw new ArgumentException("no [body] given to log.append");
+            if (!ip.ContainsValue("body"))
+				throw new ArgumentException("no [body] given to [magix.log.append]");
 
-            string header = Ip(e.Params)["header"].Get<string>();
-            string body = Ip(e.Params)["body"].Get<string>();
-
+            Node dp = Dp(e.Params);
+            string header = Expressions.GetExpressionValue(ip["header"].Get<string>(), dp, ip, false) as string;
+            string body = Expressions.GetExpressionValue(ip["body"].Get<string>(), dp, ip, false) as string;
 			DateTime date = DateTime.Now;
 
-            if (Ip(e.Params)["body"].Count > 0)
-			{
-				// contains parameters
-                object[] arrs = new object[Ip(e.Params)["body"].Count];
+            if (ip["body"].Count > 0)
+                body = Expressions.FormatString(dp, ip, ip["body"], body);
 
-				int idxNo = 0;
-                foreach (Node idx in Ip(e.Params)["body"])
-				{
-					arrs[idxNo++] = idx.Value;
-				}
-				body = string.Format(body, arrs);
-			}
-
-            if (Ip(e.Params)["header"].Count > 0)
-			{
-				// contains parameters
-                object[] arrs = new object[Ip(e.Params)["header"].Count];
-
-				int idxNo = 0;
-                foreach (Node idx in Ip(e.Params)["header"])
-				{
-					arrs[idxNo++] = idx.Value;
-				}
-				header = string.Format(header, arrs);
-			}
+            if (ip["header"].Count > 0)
+                header = Expressions.FormatString(dp, ip, ip["header"], header);
 
 			Node node = new Node();
-
 			node["value"]["type"].Value = "magix.log.item";
 			node["value"]["header"].Value = header;
 			node["value"]["body"].Value   = body;
 			node["value"]["date"].Value   = date;
 
-            if (Ip(e.Params).Contains("error"))
-                node["value"]["error"].Value = Ip(e.Params)["error"].Value;
+            if (ip.Contains("error"))
+                node["value"]["error"].Value = bool.Parse(Expressions.GetExpressionValue(ip["error"].Get<string>(), dp, ip, false) as string);
 
-            if (Ip(e.Params).Contains("code"))
-			{
-                node["value"]["code"].Clear();
-                node["value"]["code"].AddRange(Ip(e.Params)["code"].Clone());
-			}
+            if (ip.ContainsValue("code"))
+                node["value"]["code"].AddRange(Expressions.GetExpressionValue(ip["code"].Get<string>(), dp, ip, false) as Node);
+            else if (ip.Contains("code"))
+                node["value"]["code"].AddRange(ip["code"].Clone());
 
 			RaiseActiveEvent(
 				"magix.data.save",

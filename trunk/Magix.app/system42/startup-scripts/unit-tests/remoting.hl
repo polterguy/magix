@@ -27,9 +27,9 @@ over http"
       name=>magix.test.temp-test-event
     try
       code
-        magix.web.get-base-directory
+        magix.configuration.get-base-directory
         set=>[@][remote][url].Value
-          value=>[@][magix.web.get-base-directory][value].Value
+          value=>[@][magix.configuration.get-base-directory][value].Value
         remote
           name=>magix.test.temp-test-event
           params
@@ -70,9 +70,9 @@ throws an exception"
       name=>magix.test.temp-test-event
     try
       code
-        magix.web.get-base-directory
+        magix.configuration.get-base-directory
         set=>[@][remote][url].Value
-          value=>[@][magix.web.get-base-directory][value].Value
+          value=>[@][magix.configuration.get-base-directory][value].Value
         remote
           name=>magix.test.temp-test-event
           params

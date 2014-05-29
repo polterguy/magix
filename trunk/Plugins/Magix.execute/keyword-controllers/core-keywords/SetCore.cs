@@ -15,7 +15,7 @@ namespace Magix.execute
 	public class SetCore : ActiveController
 	{
 		/*
-		 * hyepr lisp set keyword
+		 * hyper lisp set keyword
 		 */
 		[ActiveEvent(Name = "magix.execute.set")]
 		public static void magix_execute_set(object sender, ActiveEventArgs e)
