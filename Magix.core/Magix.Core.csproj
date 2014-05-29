@@ -60,7 +60,9 @@
       </Properties>
     </MonoDevelop>
   </ProjectExtensions>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="hyperlisp\inspect.hl" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Magix.UX\Magix.UX.csproj">
       <Project>{FDD15C94-7DC2-4D19-9AF4-0E9FD8CCC443}</Project>

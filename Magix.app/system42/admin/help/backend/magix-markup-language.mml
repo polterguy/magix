@@ -117,7 +117,8 @@ link-button=>web-controls-jump-2
   onclick
     magix.help.open-file
       file=>system42/admin/help/backend/web-controls.mml
-    magix.browser.scroll=>help
+    magix.browser.scroll
+      id=>help
 }}, and you can use any web controls you have within your system, inline into the your web controls declarations</p>
 
 {{

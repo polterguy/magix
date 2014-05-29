@@ -7,12 +7,15 @@ magix.browser.scroll-dox=>@"scrolls the browser window
 
 will scroll the browser window such that is shows a specific 
 element.  if no element is given, it will scroll the browser 
-window to the top
+window to the top.  pass in the element you wish to have the 
+browser scrolled such that it is at the top of your browser 
+viewport through the [id] parameter
 
 not thread safe"
 
 magix.browser.scroll-sample
-  magix.browser.scroll=>some-web-control-id
+  magix.browser.scroll
+    id=>some-web-control-id
 
 
 magix.web.get-file-dox=>@"downloads a file over http
@@ -35,26 +38,29 @@ magix.web.get-file-sample
 
 magix.web.get-parameter-dox=>@"retrieves an http get parameter
 
-will return the given get http parameter as [value], 
-if existing
+will return the given get http parameter as [value], if existing.  [name] 
+is the name of the get parameter to retrieve, and can be either a constant 
+or an expression
 
 not thread safe"
 
 magix.web.get-parameter-sample
-  magix.web.get-parameter=>some-get-parameter
+  magix.web.get-parameter
+    name=>some-get-parameter
 
 
 magix.web.set-session-dox=>@"sets a session value
 
-will create or overwrite an existing session variable with 
-name of value of [magix.web.set-session] with node hierarchy 
-from [value].  if you pass in no [value], any existing 
-session object with given key will be removed
+will create or overwrite the [name] session variable with node hierarchy 
+from [value].  if you pass in no [value], any existing session object with 
+given name will be removed.  both [name] and [value] can be either constants 
+or expressions
 
 not thread safe"
 
 magix.web.set-session-sample
-  magix.web.set-session=>some_key
+  magix.web.set-session
+    name=>some_key
     value=>something to store into session
       inner-value=>howdy
       x=>y
@@ -63,13 +69,14 @@ magix.web.set-session-sample
 
 magix.web.get-session-dox=>@"retrieves an existing session object
 
-will return an existing session variable named through the value 
-of [magix.web.get-session] as node hierarchy as child nodes
+will retrieve the [name] session variable as [value].  [name] can be either 
+a constant, or an expression
 
 not thread safe"
 
 magix.web.get-session-sample
-  magix.web.get-session=>some_key
+  magix.web.get-session
+    name=>some_key
 
 
 magix.browser.redirect-dox=>@"redirects the browser
@@ -88,15 +95,19 @@ magix.web.set-cookie-dox=>@"creates or modifies a brower cookie
 
 will create or overwrite and existing http cookie.  if no expiration 
 date is used, a default of three years from now will be used.  if no 
-[value] is passed in, any existing cookies with given name will be 
-removed
+[value] is passed in, any existing cookies with the given name will be 
+removed.  the name of the cookie to set, is passed in as [name].  this 
+active event will only create http-only cookies, unless [http-only] is 
+explicitly set to false.  all parameters can be either constants or 
+expressions
 
 not thread safe"
 
 magix.web.set-cookie-sample
-  magix.web.set-cookie=>some-cookie-name
+  magix.web.set-cookie
+    name=>some-cookie-name
     value=>something to store into cookie
-    expires=(date)>2017.05.23 10:48:39
+    expires=(date)>2018.12.23 22:22:22
 
 
 magix.web.get-cookie-dox=>@"retrieves an http cookie
@@ -111,19 +122,22 @@ magix.web.get-cookie-sample
 
 magix.configuration.get-setting-dox=>@"retrieves a configuration setting
 
-returns the given web.config setting as [value] node
+returns the given web.config setting as [value] node.  supply the setting you 
+wish to retrieve as [name] parameter.  [name] can be either a constant or an 
+expression
 
 thread safe"
 
 magix.configuration.get-setting-sample
-  magix.configuration.get-setting=>some-setting-name
+  magix.configuration.get-setting
+    name=>some-setting-name
 
 
 magix.web.postpone-execution-dox=>@"postpones execution of hyper lisp
 
 will store a block of hyperlisp from the [code] parameter, which it will 
-execute upon the next http request of the site for the given session.  
-but only for a page-load request
+execute upon the next http request of the site for the given session, but 
+only for an initial page load request
 
 not thread safe"
 

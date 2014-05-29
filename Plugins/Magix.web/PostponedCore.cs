@@ -42,7 +42,10 @@ namespace Magix.web
 
             if (!ip.Contains("code"))
                 throw new ArgumentException("[magix.web.postpone-execution] needs a [code] block to execute");
-            Page.Session["magix.web.postpone-execution"] = ip["code"].Clone();
+
+            if (Page.Session["magix.web.postpone-execution"] == null)
+                Page.Session["magix.web.postpone-execution"] = new Node();
+            ((Node)Page.Session["magix.web.postpone-execution"]).Add(ip["code"].Clone());
         }
 
         /*
@@ -65,9 +68,12 @@ namespace Magix.web
             if (Page.Session["magix.web.postpone-execution"] != null)
             {
                 Node code = Page.Session["magix.web.postpone-execution"] as Node;
-                RaiseActiveEvent(
-                    "magix.execute",
-                    code);
+                foreach (Node idxNode in code)
+                {
+                    RaiseActiveEvent(
+                        "magix.execute",
+                        idxNode);
+                }
                 Page.Session.Remove("magix.web.postpone-execution");
             }
         }

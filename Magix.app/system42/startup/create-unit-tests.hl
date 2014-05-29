@@ -4,7 +4,7 @@ inspect=>@"creates unit tests for magix
 
 creates the dynamic unit tests for testing hyperlisp 
 in magix.  basically loops through all files in 
-system42/startup-scripts/unit-tests and executes them 
+system42/startup/unit-tests and executes them 
 as hyperlisp
 
 to create your own unit test, create a new hyperlisp 
@@ -28,14 +28,14 @@ secure, than deleting them entirely"
 
 
 magix.file.directory-exist
-  directory=>system42/startup-scripts/unit-tests
+  directory=>system42/startup/unit-tests
 
 if=>equals
   lhs=>[magix.file.directory-exist][value].Value
   rhs=>true
   code
     magix.file.list-files
-      directory=>system42/startup-scripts/unit-tests
+      directory=>system42/startup/unit-tests
       filter=>*.hl
 
     for-each=>[@][magix.file.list-files][files]

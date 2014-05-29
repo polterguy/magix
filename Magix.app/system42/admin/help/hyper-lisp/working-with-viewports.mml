@@ -7,7 +7,8 @@ link-button=>create-csharp-viewportt
   onclick
     magix.help.open-file
       file=>system42/admin/help/csharp/active-modules/viewport.mml
-    magix.browser.scroll=>help
+    magix.browser.scroll
+      id=>help
 }}, you can also create viewports in hyperlisp.&nbsp;&nbsp;the system is dependent upon 
 having at least one c# viewport at its core, however, this viewport can be entirely empty, having nothing but one container, 
 building the rest of your viewport logic in hyperlisp.&nbsp;&nbsp;to create a viewport in hyperlisp, you will have to use the 

@@ -14,7 +14,7 @@ using Magix.Core;
 namespace Magix.web
 {
 	/*
-	 * web helper core
+	 * configuration core
 	 */
 	internal sealed class ConfigurationCore : ActiveController
 	{
@@ -40,12 +40,12 @@ namespace Magix.web
                 return;
 			}
 
-            string par = ip.Get<string>();
-			if (string.IsNullOrEmpty(par))
-				throw new ArgumentException("you must tell me which web.config setting you wish to retrieve as value to [magix.configuration.get-setting]");
+			if (!ip.ContainsValue("name"))
+				throw new ArgumentException("missing [name] in [magix.configuration.get-setting]");
 
-			string val = ConfigurationManager.AppSettings[par];
+            Node dp = Dp(e.Params);
 
+            string val = ConfigurationManager.AppSettings[Expressions.GetExpressionValue(ip["name"].Get<string>(), dp, ip, false) as string];
 			if (!string.IsNullOrEmpty(val))
                 ip["value"].Value = val;
 		}

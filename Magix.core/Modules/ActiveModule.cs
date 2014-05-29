@@ -13,33 +13,32 @@ using System.Diagnostics;
 
 namespace Magix.Core
 {
-    /**
-     * Inherit your Active Modules from this class
+    /*
+     * base class for active modules
      */
 	[ActiveModule]
     public abstract class ActiveModule : UserControl
     {
         private bool _firstLoad;
 
-        /**
-         * Called internally by Viewports, if wired correctly
+        /*
+         * called upon first load of module to initialize
          */
         public virtual void InitialLoading(Node node)
         {
             _firstLoad = true;
         }
 
-        /**
-         * Is true if this was the request when the Module was loaded initially, somehow
+        /*
+         * true if this was initial loading of module
          */
         protected bool FirstLoad
         {
             get { return _firstLoad; }
         }
 
-        /**
-         * Shorthand for raising events. Will return a node, initially created empty, 
-         * but passed onto the Event Handler(s)
+        /*
+         * helper for raising active events
          */
         protected static Node RaiseActiveEvent(string eventName)
         {
@@ -51,8 +50,8 @@ namespace Magix.Core
             return node;
         }
 
-        /**
-         * Shorthand for raising events
+        /*
+         * helper for raising active events
          */
         protected static void RaiseActiveEvent(string eventName, Node node)
         {
@@ -62,10 +61,8 @@ namespace Magix.Core
                 node);
         }
 
-        /**
-         * Will return the 'base' URL of your application. Meaning if your application
-         * is installed on x.com/f then x.com/f will always be returned from this method.
-         * Useful for using as foundation for finding specific files and so on
+        /*
+         * returns the base url of your website
          */
         protected string GetApplicationBaseUrl()
         {
@@ -174,7 +171,7 @@ namespace Magix.Core
         }
 
         /*
-         * loads string from resource, html formats string and appends it into the given node
+         * loads string from resource, html formats string, and appends it into the given node
          */
         protected static void AppendInspectFromResource(
             Node destinationNode,
@@ -191,7 +188,7 @@ namespace Magix.Core
         }
 
         /*
-         * loads string from resource, html formats string and appends it into the given node
+         * loads string from resource, html formats string, and appends it into the given node
          */
         protected static void AppendInspectFromResource(
             Node destinationNode,

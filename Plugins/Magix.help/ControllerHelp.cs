@@ -83,14 +83,16 @@ button=>back
   class=>btn-large span-2
   onclick
     magix.help.move-backwards
-    magix.browser.scroll=>help
+    magix.browser.scroll
+      id=>help
 button=>index
   value=>index
   class=>btn-large span-2
   onclick
     magix.help.open-file
       file=>system42/admin/help/index.mml
-    magix.browser.scroll=>help
+    magix.browser.scroll
+      id=>help
 button=>close
   value=>close
   class=>btn-large span-2
@@ -119,13 +121,15 @@ button=>next-page
   onclick
     magix.help.move-next
       force-page=>true
-    magix.browser.scroll=>help
+    magix.browser.scroll
+      id=>help
 button=>next
   value=>>>
   class=>btn-large span-2 last
   onclick
     magix.help.move-next
-    magix.browser.scroll=>help
+    magix.browser.scroll
+      id=>help
 }}}}
 </div>
 {{{{
@@ -141,14 +145,16 @@ button=>back-2
   class=>btn-large span-3
   onclick
     magix.help.move-backwards
-    magix.browser.scroll=>help
+    magix.browser.scroll
+      id=>help
 button=>next-page-2
   value=>next page
   class=>btn-large span-3 last
   onclick
     magix.help.move-next
       force-page=>true
-    magix.browser.scroll=>help
+    magix.browser.scroll
+      id=>help
 }}}}
 </div>
 ", GetAllHelpHeaders());

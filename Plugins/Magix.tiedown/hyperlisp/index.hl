@@ -7,7 +7,8 @@ then depending upon if it is a user logged in, belinging to
 an admin role, the desktop will be loaded, or the if the user is 
 not an admin, then the run-page.hl script will be executed"
 
-magix.web.get-parameter=>dashboard
+magix.web.get-parameter
+  name=>dashboard
 
 if=>exist
   lhs=>[magix.web.get-parameter][value]
@@ -24,28 +25,32 @@ if=>exist
       container=>header
       form-id=>header
       class=>span-22 last
-    magix.web.get-session=>magix.core.user
+    magix.web.get-session
+      name=>magix.core.user
     if=>exist
       lhs=>[@][magix.web.get-session][value][roles][admin]
       code
         magix.forms.create-mml-web-part
-          mml-file=>system42/admin/desktop/menu.mml
+          mml-file=>system42/admin/dashboard/menu.mml
           container=>menu
           form-id=>admin-menu
           class=>span-5
         execute-script
-          file=>system42/admin/desktop/show-desktop.hl
-        magix.web.get-session=>magix.admin.setting.show-help
+          file=>system42/admin/dashboard/show-desktop.hl
+        magix.web.get-session
+          name=>magix.admin.setting.show-help
         if=>not-exist
-          lhs=>[@][magix.web.get-session][0]
+          lhs=>[@][magix.web.get-session][value]
           code
             magix.data.load
               prototype
                 type=>magix.admin.setting.show-help
             set=>[@][magix.web.set-session][value].Value
               value=>[@][magix.data.load][objects][0][value].Value
-            magix.web.set-session=>magix.admin.setting.show-help
-        magix.web.get-session=>magix.admin.setting.show-help
+            magix.web.set-session
+              name=>magix.admin.setting.show-help
+        magix.web.get-session
+          name=>magix.admin.setting.show-help
         if=>equals
           lhs=>[@][magix.web.get-session:1][value].Value
           rhs=>true

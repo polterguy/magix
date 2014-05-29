@@ -2,7 +2,8 @@
 <div class="span-22 last relative">
 {{
 system42.travel.change-login-box
-  magix.web.get-session=>magix.core.user
+  magix.web.get-session
+    name=>magix.core.user
   if=>not-exist
     lhs=>[magix.web.get-session][value]
     code
@@ -39,7 +40,8 @@ system42.travel.try-login
       add=>[@][magix.web.set-session][value]
         value=>[magix.data.load][objects][0]
         children-only=>true
-      magix.web.set-session=>magix.core.user
+      magix.web.set-session
+        name=>magix.core.user
       if=>exist
         lhs=>[magix.data.load][objects][0][roles][admin]
         code
@@ -66,7 +68,8 @@ lambda=>header
         class=>span-14 top-2 bottom-1
         value=>magix illuminate - phosphorus
         tag=>h1
-    magix.configuration.get-setting=>magix.core.portal-name
+    magix.configuration.get-setting
+      name=>magix.core.portal-name
     set=>[_data][label][value].Value
       value=>[magix.configuration.get-setting][value].Value
     add=>[$]
@@ -116,17 +119,20 @@ panel=>logoutWrp
       class=>span-4 btn-large
       value=>logout
       onclick
-        magix.web.set-session=>magix.core.user
+        magix.web.set-session
+          name=>magix.core.user
         magix.browser.redirect=>~
     lambda=>createLoadDashboard
       oncreatecontrols
-        magix.web.get-session=>magix.core.user
+        magix.web.get-session
+          name=>magix.core.user
         if=>exist
           lhs=>[magix.web.get-session][value][roles][admin]
           code
             _lnk=>load_dashboard
               class=>span-4 right-text
-            magix.web.get-parameter=>dashboard
+            magix.web.get-parameter
+              name=>dashboard
             if=>exist
               lhs=>[@][magix.web.get-parameter][value]
               code

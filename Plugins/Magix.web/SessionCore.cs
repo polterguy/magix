@@ -40,21 +40,26 @@ namespace Magix.web
                 return;
 			}
 
-            string id = ip.Get<string>();
+            Node dp = Dp(e.Params);
 
-			if (string.IsNullOrEmpty(id))
-				throw new ArgumentException("[magix.web.set-session] needs a value to know which session object to fetch");
+            if (!ip.ContainsValue("name"))
+                throw new ArgumentException("no [name] given to [magix.web.set-session]");
+            string name = Expressions.GetExpressionValue(ip["name"].Get<string>(), dp, ip, false) as string;
 
             if (!ip.Contains("value"))
 			{
 				// removal of existing session object
-				Page.Session.Remove(id);
+				Page.Session.Remove(name);
 			}
 			else
 			{
 				// adding or overwiting existing value
-                Node value = ip["value"].Clone();
-				Page.Session[id] = value;
+                Node value = null;
+                if (ip.ContainsValue("value") && ip["value"].Get<string>().StartsWith("["))
+                    value = (Expressions.GetExpressionValue(ip["value"].Get<string>(), dp, ip, false) as Node).Clone();
+                else
+                    value = ip["value"].Clone();
+				Page.Session[name] = value;
 			}
 		}
 
@@ -80,14 +85,14 @@ namespace Magix.web
                 return;
 			}
 
-            string id = ip.Get<string>();
+            Node dp = Dp(e.Params);
 
-			if (string.IsNullOrEmpty(id))
-				throw new ArgumentException("need a value for [magix.web.get-session]");
+            if (!ip.ContainsValue("name"))
+                throw new ArgumentException("no [name] given to [magix.web.get-session]");
+            string name = Expressions.GetExpressionValue(ip["name"].Get<string>(), dp, ip, false) as string;
 
-			if (Page.Session[id] != null &&
-			    Page.Session[id] is Node)
-                ip.Add(Page.Session[id] as Node);
+			if (Page.Session[name] != null && Page.Session[name] is Node)
+                ip.Add((Page.Session[name] as Node).Clone());
 		}
     }
 }

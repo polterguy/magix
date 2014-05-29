@@ -39,9 +39,9 @@ namespace Magix.web
                 return;
 			}
 
-            if (!string.IsNullOrEmpty(ip.Get<string>()))
+            if (ip.ContainsValue("id"))
             {
-                string id = ip.Get<string>();
+                string id = ip["id"].Get<string>();
                 string clientId = Magix.UX.Selector.FindControl<System.Web.UI.Control>(Page, id).ClientID;
 
                 Node js = new Node();

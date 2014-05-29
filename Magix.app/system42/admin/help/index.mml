@@ -82,7 +82,8 @@ link-button=>backend
   onclick
     magix.help.open-file
       file=>system42/admin/help/backend/index.mml
-    magix.browser.scroll=>help
+    magix.browser.scroll
+      id=>help
 }}</li>
 <li>{{
 link-button=>learn
@@ -90,7 +91,8 @@ link-button=>learn
   onclick
     magix.help.open-file
       file=>system42/admin/help/backend/learn.mml
-    magix.browser.scroll=>help
+    magix.browser.scroll
+      id=>help
 }}</li>
 <li>{{
 link-button=>dynamic-apps
@@ -98,7 +100,8 @@ link-button=>dynamic-apps
   onclick
     magix.help.open-file
       file=>system42/admin/help/backend/applications.mml
-    magix.browser.scroll=>help
+    magix.browser.scroll
+      id=>help
 }}</li>
 <li>{{
 link-button=>magix-markup-language
@@ -106,7 +109,8 @@ link-button=>magix-markup-language
   onclick
     magix.help.open-file
       file=>system42/admin/help/backend/magix-markup-language.mml
-    magix.browser.scroll=>help
+    magix.browser.scroll
+      id=>help
 }}</li>
 <li>{{
 link-button=>web-controls-hl
@@ -114,7 +118,8 @@ link-button=>web-controls-hl
   onclick
     magix.help.open-file
       file=>system42/admin/help/backend/web-controls.mml
-    magix.browser.scroll=>help
+    magix.browser.scroll
+      id=>help
 }}</li>
 <li>{{
 link-button=>unit-tests
@@ -122,7 +127,8 @@ link-button=>unit-tests
   onclick
     magix.help.open-file
       file=>system42/admin/help/backend/unit-tests.mml
-    magix.browser.scroll=>help
+    magix.browser.scroll
+      id=>help
 }}</li>
 <li>{{
 link-button=>overridden
@@ -130,7 +136,8 @@ link-button=>overridden
   onclick
     magix.help.open-file
       file=>system42/admin/help/backend/overriding-events.mml
-    magix.browser.scroll=>help
+    magix.browser.scroll
+      id=>help
 }}</li>
 <li>{{
 link-button=>remoting
@@ -138,7 +145,8 @@ link-button=>remoting
   onclick
     magix.help.open-file
       file=>system42/admin/help/backend/remoting.mml
-    magix.browser.scroll=>help
+    magix.browser.scroll
+      id=>help
 }}</li>
 <li>{{
 link-button=>users
@@ -146,7 +154,8 @@ link-button=>users
   onclick
     magix.help.open-file
       file=>system42/admin/help/backend/user-administration.mml
-    magix.browser.scroll=>help
+    magix.browser.scroll
+      id=>help
 }}</li>
 <li>{{
 link-button=>active-event-list
@@ -154,7 +163,8 @@ link-button=>active-event-list
   onclick
     magix.help.open-file
       file=>system42/admin/help/backend/active-events.mml
-    magix.browser.scroll=>help
+    magix.browser.scroll
+      id=>help
 }}</li>
 <li>{{
 link-button=>active-event-executor-start
@@ -162,7 +172,8 @@ link-button=>active-event-executor-start
   onclick
     magix.help.open-file
       file=>system42/admin/help/backend/active-event-executor.mml
-    magix.browser.scroll=>help
+    magix.browser.scroll
+      id=>help
 }}</li>
 <li>{{
 link-button=>file-system
@@ -170,7 +181,8 @@ link-button=>file-system
   onclick
     magix.help.open-file
       file=>system42/admin/help/backend/file-system.mml
-    magix.browser.scroll=>help
+    magix.browser.scroll
+      id=>help
 }}</li>
 <li>{{
 link-button=>qr-codes
@@ -178,7 +190,8 @@ link-button=>qr-codes
   onclick
     magix.help.open-file
       file=>system42/admin/help/backend/qr-codes.mml
-    magix.browser.scroll=>help
+    magix.browser.scroll
+      id=>help
 }}</li>
 </ul>
 </div>
@@ -192,7 +205,8 @@ link-button=>hyperlisp
   onclick
     magix.help.open-file
       file=>system42/admin/help/hyper-lisp/index.mml
-    magix.browser.scroll=>help
+    magix.browser.scroll
+      id=>help
 }}</li>
 <li>{{
 link-button=>hyperlisp-2
@@ -200,7 +214,8 @@ link-button=>hyperlisp-2
   onclick
     magix.help.open-file
       file=>system42/admin/help/hyper-lisp/hyper-lisp-syntax.mml
-    magix.browser.scroll=>help
+    magix.browser.scroll
+      id=>help
 }}</li>
 <li>{{
 link-button=>hyperlisp-3
@@ -208,7 +223,8 @@ link-button=>hyperlisp-3
   onclick
     magix.help.open-file
       file=>system42/admin/help/hyper-lisp/hyper-lisp-execute.mml
-    magix.browser.scroll=>help
+    magix.browser.scroll
+      id=>help
 }}</li>
 <li>{{
 link-button=>hyperlisp-4
@@ -216,7 +232,8 @@ link-button=>hyperlisp-4
   onclick
     magix.help.open-file
       file=>system42/admin/help/hyper-lisp/hyper-lisp-expressions.mml
-    magix.browser.scroll=>help
+    magix.browser.scroll
+      id=>help
 }}</li>
 <li>{{
 link-button=>hyperlisp-set-keyword
@@ -224,7 +241,8 @@ link-button=>hyperlisp-set-keyword
   onclick
     magix.help.open-file
       file=>system42/admin/help/hyper-lisp/set-keyword.mml
-    magix.browser.scroll=>help
+    magix.browser.scroll
+      id=>help
 }}</li>
 <li>{{
 link-button=>hyperlisp-add-keyword
@@ -232,7 +250,8 @@ link-button=>hyperlisp-add-keyword
   onclick
     magix.help.open-file
       file=>system42/admin/help/hyper-lisp/add-keyword.mml
-    magix.browser.scroll=>help
+    magix.browser.scroll
+      id=>help
 }}</li>
 <li>{{
 link-button=>hyperlisp-5
@@ -240,7 +259,8 @@ link-button=>hyperlisp-5
   onclick
     magix.help.open-file
       file=>system42/admin/help/hyper-lisp/common-hyper-lisp-statements.mml
-    magix.browser.scroll=>help
+    magix.browser.scroll
+      id=>help
 }}</li>
 <li>{{
 link-button=>hyperlisp-exceptions
@@ -248,7 +268,8 @@ link-button=>hyperlisp-exceptions
   onclick
     magix.help.open-file
       file=>system42/admin/help/hyper-lisp/exception-handling.mml
-    magix.browser.scroll=>help
+    magix.browser.scroll
+      id=>help
 }}</li>
 <li>{{
 link-button=>hyperlisp-7
@@ -256,7 +277,8 @@ link-button=>hyperlisp-7
   onclick
     magix.help.open-file
       file=>system42/admin/help/hyper-lisp/create-keyword.mml
-    magix.browser.scroll=>help
+    magix.browser.scroll
+      id=>help
 }}</li>
 <li>{{
 link-button=>hyperlisp-8
@@ -264,7 +286,8 @@ link-button=>hyperlisp-8
   onclick
     magix.help.open-file
       file=>system42/admin/help/hyper-lisp/hyper-lisp-events.mml
-    magix.browser.scroll=>help
+    magix.browser.scroll
+      id=>help
 }}</li>
 <li>{{
 link-button=>hyperlisp-9
@@ -272,7 +295,8 @@ link-button=>hyperlisp-9
   onclick
     magix.help.open-file
       file=>system42/admin/help/hyper-lisp/remote-active-events.mml
-    magix.browser.scroll=>help
+    magix.browser.scroll
+      id=>help
 }}</li>
 <li>{{
 link-button=>hyperlisp-10
@@ -280,7 +304,8 @@ link-button=>hyperlisp-10
   onclick
     magix.help.open-file
       file=>system42/admin/help/hyper-lisp/hyper-lisp-general-info.mml
-    magix.browser.scroll=>help
+    magix.browser.scroll
+      id=>help
 }}</li>
 <li>{{
 link-button=>hyperlisp-11
@@ -288,7 +313,8 @@ link-button=>hyperlisp-11
   onclick
     magix.help.open-file
       file=>system42/admin/help/hyper-lisp/data-access.mml
-    magix.browser.scroll=>help
+    magix.browser.scroll
+      id=>help
 }}</li>
 <li>{{
 link-button=>forms-hyper-link
@@ -296,7 +322,8 @@ link-button=>forms-hyper-link
   onclick
     magix.help.open-file
       file=>system42/admin/help/hyper-lisp/forms.mml
-    magix.browser.scroll=>help
+    magix.browser.scroll
+      id=>help
 }}</li>
 <li>{{
 link-button=>files-hyper-link
@@ -304,7 +331,8 @@ link-button=>files-hyper-link
   onclick
     magix.help.open-file
       file=>system42/admin/help/hyper-lisp/hyper-lisp-file-system.mml
-    magix.browser.scroll=>help
+    magix.browser.scroll
+      id=>help
 }}</li>
 <li>{{
 link-button=>sandbox-hyper-link
@@ -312,7 +340,8 @@ link-button=>sandbox-hyper-link
   onclick
     magix.help.open-file
       file=>system42/admin/help/hyper-lisp/sandboxing-hyper-lisp.mml
-    magix.browser.scroll=>help
+    magix.browser.scroll
+      id=>help
 }}</li>
 </ul>
 </div>
@@ -326,7 +355,8 @@ link-button=>csharp-index
   onclick
     magix.help.open-file
       file=>system42/admin/help/csharp/index.mml
-    magix.browser.scroll=>help
+    magix.browser.scroll
+      id=>help
 }}</li>
 <li>{{
 link-button=>active-events-2
@@ -334,7 +364,8 @@ link-button=>active-events-2
   onclick
     magix.help.open-file
       file=>system42/admin/help/csharp/active-events/index.mml
-    magix.browser.scroll=>help
+    magix.browser.scroll
+      id=>help
 }}</li>
 <li>{{
 link-button=>active-controllers
@@ -342,7 +373,8 @@ link-button=>active-controllers
   onclick
     magix.help.open-file
       file=>system42/admin/help/csharp/active-controllers/index.mml
-    magix.browser.scroll=>help
+    magix.browser.scroll
+      id=>help
 }}</li>
 <li>{{
 link-button=>active-modules
@@ -350,7 +382,8 @@ link-button=>active-modules
   onclick
     magix.help.open-file
       file=>system42/admin/help/csharp/active-modules/index.mml
-    magix.browser.scroll=>help
+    magix.browser.scroll
+      id=>help
 }}</li>
 <li>{{
 link-button=>ajax
@@ -358,7 +391,8 @@ link-button=>ajax
   onclick
     magix.help.open-file
       file=>system42/admin/help/csharp/ajax/index.mml
-    magix.browser.scroll=>help
+    magix.browser.scroll
+      id=>help
 }}</li>
 </ul>
 </div>
