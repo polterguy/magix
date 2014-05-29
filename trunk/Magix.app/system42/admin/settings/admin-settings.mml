@@ -92,7 +92,8 @@ check-box=>chkHelp
           value
             type=>magix.admin.setting.show-help
             value=>true
-        magix.web.set-session=>magix.admin.setting.show-help
+        magix.web.set-session
+          name=>magix.admin.setting.show-help
           value=>true
         magix.help.start-help
     else
@@ -100,7 +101,8 @@ check-box=>chkHelp
         value
           type=>magix.admin.setting.show-help
           value=>false
-      magix.web.set-session=>magix.admin.setting.show-help
+      magix.web.set-session
+        name=>magix.admin.setting.show-help
         value=>false
       magix.viewport.clear-controls
         container=>help

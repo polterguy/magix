@@ -40,12 +40,14 @@ namespace Magix.web
                 return;
 			}
 
-            string par = ip.Get<string>();
-			if (string.IsNullOrEmpty(par))
-                throw new ArgumentException("[magix.web.get-parameter] needs a value defining which get parameter to fetch");
+            Node dp = Dp(e.Params);
 
-			if (HttpContext.Current.Request.Params[par] != null)
-                ip["value"].Value = HttpContext.Current.Request.Params[par];
+            if (!ip.ContainsValue("name"))
+                throw new ArgumentException("no [name] given to [magix.web.get-parameter]");
+            string name = Expressions.GetExpressionValue(ip["name"].Get<string>(), dp, ip, false) as string;
+
+			if (HttpContext.Current.Request.Params[name] != null)
+                ip["value"].Value = HttpContext.Current.Request.Params[name];
 		}
     }
 }

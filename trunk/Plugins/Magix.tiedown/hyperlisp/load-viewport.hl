@@ -4,7 +4,8 @@ inspect=>@"file will run on first page load of page,
 to load up the default viewport"
 
 
-magix.web.get-parameter=>dashboard
+magix.web.get-parameter
+  name=>dashboard
 if=>exist
   lhs=>[magix.web.get-parameter][value]
   code

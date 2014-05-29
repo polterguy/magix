@@ -8,12 +8,8 @@ using System;
 
 namespace Magix.Core
 {
-    /**
-     * Mark your Active Modules with this attribute, unless you inherit your UserControl
-     * from the ActiveModule class. If you mark your Modules with this attribute
-     * you can load them using the PluginLoader.LoadControl method. This is the main
-     * attribute for being able to create Active Modules. If you inherit your class from ActiveModule,
-     * it will automatically embed this attribute to it
+    /*
+     * attribute for active modules
      */
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = true)]
     public class ActiveModuleAttribute : Attribute

@@ -133,7 +133,7 @@ returns the default dashboard shortcuts in your system"
           magix.viewport.clear-controls
             container=>content5
           execute-script
-            file=>system42/admin/roles-grid.hl
+            file=>system42/admin/users/roles-grid.hl
           magix.help.open-file
             file=>system42/admin/help/backend/user-administration.mml
       server-log
@@ -163,7 +163,7 @@ returns the default dashboard shortcuts in your system"
           magix.viewport.clear-controls
             container=>content5
           magix.forms.create-mml-web-part
-            mml-file=>system42/admin/admin-settings.mml
+            mml-file=>system42/admin/settings/admin-settings.mml
             container=>content1
             form-id=>admin-settings
             class=>span-17 last
@@ -236,7 +236,8 @@ returns the default dashboard shortcuts in your system"
         category=>learn
         code
           magix.help.start-help
-          magix.browser.scroll=>help
+          magix.browser.scroll
+            id=>help
       qr-codes
         text=>qr codes
         category=>tools

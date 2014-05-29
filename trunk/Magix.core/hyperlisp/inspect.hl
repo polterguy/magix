@@ -1,0 +1,88 @@
+﻿
+
+inspect=>@"contains the documentation for magix.core"
+
+
+magix.viewport.clear-controls-dox=>@"clears viewport container
+
+clears out all controls and web-parts from the [container] viewport 
+container.  [container] can be either a constant, or an expression"
+
+magix.viewport.clear-controls-sample
+  magix.viewport.clear-controls
+    container=>content1
+
+
+magix.viewport.execute-javascript-dox=>@"executes some piece of javascript
+
+executes the given [script] as javascript on the client.  you can string format 
+your javascript, by using {0}, {1} and so on, to de-reference children nodes 
+of the [script] node, to create string substitutions inside of your javascript
+
+[script] can be either a constant or an expression"
+
+
+magix.viewport.execute-javascript-sample
+  magix.viewport.execute-javascript
+    script=>alert('{0}');
+      =>howdy world
+
+
+magix.viewport.include-client-file-dox=>@"includes a file on the client
+
+includes a file on the client's browser, such as a css or a javascript file.  
+the [file] parameter contains the path to the file to include, and the [type] 
+contains the type of file to include.  legal types are 'css' or 'javascript'
+
+both [file] and [type] can be either constants or expressions"
+
+
+magix.viewport.include-client-file-sample
+  magix.viewport.include-client-file
+    file=>media/some-css-file.css
+    type=>css
+
+
+magix.viewport.set-viewstate-dox=>@"sets a viewstate value
+
+sets the given [name] viewstate value for the current page.  
+pass in [value] as the value to set into the viewstate.  both 
+[name] and [value] can be either constants or expressions"
+
+magix.viewport.set-viewstate-sample
+  magix.viewport.set-viewstate
+    name=>some-id
+    value
+      some=>node
+        hierarchy
+      that=>will be
+        serialized-into
+          =>the viewstate
+
+
+magix.viewport.get-viewstate-dox=>@"retrieves a viewstate value
+
+retrieves the [name] viewstate value into [value] if existing.  [name] can 
+be either a constant, or an expression"
+
+magix.viewport.get-viewstate-sample
+  magix.viewport.get-viewstate
+    name=>some-id
+
+
+magix.viewport.load-module-dox=>@"loads an active module
+
+loads up the [name] active module, and puts it into the [container] viewport 
+container, giving the container the given [class] css class(es)
+
+all parameters passed into active event, will be passed onto the active module 
+into its initializing method
+
+[name], [container] and [class] can be either constants or expressions"
+
+magix.viewport.load-module-sample
+  magix.viewport.load-module
+    container=>content1
+    class=>span-22 last boxed
+    name=>myapp.mynamespace.mymodule
+

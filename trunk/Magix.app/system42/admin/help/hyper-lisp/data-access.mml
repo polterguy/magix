@@ -13,7 +13,8 @@ link-button=>ms-sql-1
   onclick
     magix.help.open-file
       file=>system42/admin/help/hyper-lisp/microsoft-sql.mml
-    magix.browser.scroll=>help
+    magix.browser.scroll
+      id=>help
 }} active events to gain access to a <em>"real"</em> database with magix</p>
 
 <p>however, if you wish to use the database access layer in magix, this can be found in the <em>"magix.data"</em> namespace.&nbsp;&nbsp;
@@ -147,7 +148,8 @@ link-button=>ms-sql
   onclick
     magix.help.open-file
       file=>system42/admin/help/hyper-lisp/microsoft-sql.mml
-    magix.browser.scroll=>help
+    magix.browser.scroll
+      id=>help
 }} active events to gain access to a <em>"real"</em> database with magix</p>
 
 {{

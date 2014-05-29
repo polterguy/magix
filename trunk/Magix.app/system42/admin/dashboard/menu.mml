@@ -20,7 +20,7 @@ link-button=>desktop
     magix.viewport.clear-controls
       container=>content7
     execute-script
-      file=>system42/admin/desktop/show-desktop.hl
+      file=>system42/admin/dashboard/show-desktop.hl
 }}
 </div>
 

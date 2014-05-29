@@ -18,13 +18,43 @@ using Magix.UX.Widgets.Core;
 
 namespace Magix.Core
 {
-    /**
-     * Inherit your Viewports from this class to get most of the functionality 
-     * you need in your viewports for free
+    /*
+     * base class for viewports
      */
     public abstract class Viewport : ActiveModule
     {
-		protected override void OnInit (EventArgs e)
+        /*
+         * override to return default container
+         */
+        protected abstract string GetDefaultContainer();
+
+        /*
+         * contains all css files
+         */
+        private List<string> CssFiles
+        {
+            get
+            {
+                if (ViewState["CssFiles"] == null)
+                    ViewState["CssFiles"] = new List<string>();
+                return ViewState["CssFiles"] as List<string>;
+            }
+        }
+
+        /*
+         * contains all javascript files
+         */
+        private List<string> JavaScriptFiles
+        {
+            get
+            {
+                if (ViewState["JavaScriptFiles"] == null)
+                    ViewState["JavaScriptFiles"] = new List<string>();
+                return ViewState["JavaScriptFiles"] as List<string>;
+            }
+        }
+
+        protected override void OnInit(EventArgs e)
 		{
 			Load +=
 				delegate
@@ -50,8 +80,6 @@ namespace Magix.Core
                 "magix.viewport.page-init",
                 node);
         }
-
-        protected abstract string GetDefaultContainer();
 
 		private void Page_Load_Initializing()
 		{
@@ -92,17 +120,14 @@ namespace Magix.Core
 				}
 				else
 				{
-					Node node = new Node();
-					node["initial-load"].Value = null;
-
-					ActiveEvents.Instance.RaiseActiveEvent(
-	                    this,
-	                    "magix.viewport.page-load",
-						node);
+					RaiseActiveEvent("magix.viewport.page-load");
 				}
 			}
 		}
 
+        /*
+         * helper, re-includes all css files
+         */
         private void IncludeAllCssFiles()
         {
             foreach (string idx in CssFiles)
@@ -111,14 +136,20 @@ namespace Magix.Core
             }
         }
 
+        /*
+         * helper, re-includes all javascript files
+         */
         private void IncludeAllJsFiles()
         {
-            foreach (string idx in JsFiles)
+            foreach (string idx in JavaScriptFiles)
             {
-                IncludeJsFile(idx);
+                IncludeJavaScriptFile(idx);
             }
         }
 
+        /*
+         * helper for clearing controls from container, such that it gets un-registered
+         */
 		private void ClearControls(DynamicPanel dynamic)
         {
             foreach (Control idx in dynamic.Controls)
@@ -128,24 +159,34 @@ namespace Magix.Core
             dynamic.ClearControls();
         }
 
-		/**
-		 * Will clear the controls of the given "container" Viewport container
+		/*
+		 * clears the given container
          */
         [ActiveEvent(Name = "magix.viewport.clear-controls")]
 		protected virtual void magix_viewport_clear_controls(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
-			{
-				e.Params["container"].Value = "content1";
-				e.Params["inspect"].Value = @"will empty the given [container]
-viewport container for all of its controls.&nbsp;&nbsp;
-unloads a container for controls";
-				return;
-			}
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
+            {
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.Core",
+                    "Magix.Core.hyperlisp.inspect.hl",
+                    "[magix.viewport.clear-controls-dox].Value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.Core",
+                    "Magix.Core.hyperlisp.inspect.hl",
+                    "[magix.viewport.clear-controls-sample]");
+                return;
+            }
+
+            Node dp = Dp(e.Params);
+            string container = Expressions.GetExpressionValue(ip["container"].Get<string>(), dp, ip, false) as string;
 
 			DynamicPanel dyn = Selector.FindControl<DynamicPanel> (
                 this,
-                Ip(e.Params)["container"].Get<string>());
+                container);
 
 			if (dyn == null)
 				return;
@@ -153,58 +194,43 @@ unloads a container for controls";
 			ClearControls(dyn);
 		}
 
-		/**
+		/*
 		 * executes the given javascript
 		 */
 		[ActiveEvent(Name = "magix.viewport.execute-javascript")]
 		protected void magix_viewport_execute_javascript(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
-			{
-				e.Params["execute:magix.viewport.execute-javascript"]["script"].Value = "alert('{0}');";
-				e.Params["execute:magix.viewport.execute-javascript"]["script"]["x"].Value = "thomas";
-				e.Params["inspect"].Value = @"executes the javascript given in [script] using the values
-of its children as string.format values.&nbsp;&nbsp;
-not thread safe";
-				return;
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
+            {
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.Core",
+                    "Magix.Core.hyperlisp.inspect.hl",
+                    "[magix.viewport.execute-javascript-dox].Value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.Core",
+                    "Magix.Core.hyperlisp.inspect.hl",
+                    "[magix.viewport.execute-javascript-sample]");
+                return;
 			}
 
-            if (!Ip(e.Params).Contains("script"))
-				throw new ArgumentException("you need a [script] value to execute javascript");
+            if (!ip.ContainsValue("script"))
+				throw new ArgumentException("no [script] given to [magix.viewport.execute-script]");
 
-            string script = Ip(e.Params)["script"].Get<string>();
+            Node dp = Dp(e.Params);
 
-            if (Ip(e.Params)["script"].Count > 0)
-			{
-                for (int idx = 0; idx < Ip(e.Params)["script"].Count; idx++)
-				{
-                    script = script.Replace("{" + idx + "}", Ip(e.Params)["script"][idx].Get<string>());
-				}
-			}
+            string script = Expressions.GetExpressionValue(ip["script"].Get<string>(), dp, ip, false) as string;
+            if (ip["script"].Count > 0)
+                script = Expressions.FormatString(dp, ip, ip["script"], script);
 
 			Manager.Instance.JavaScriptWriter.Write(script);
 		}
 
-        private List<string> CssFiles
-        {
-            get
-            {
-                if (ViewState["CssFiles"] == null)
-                    ViewState["CssFiles"] = new List<string>();
-                return ViewState["CssFiles"] as List<string>;
-            }
-        }
-
-        private List<string> JsFiles
-        {
-            get
-            {
-                if (ViewState["CssFiles"] == null)
-                    ViewState["CssFiles"] = new List<string>();
-                return ViewState["CssFiles"] as List<string>;
-            }
-        }
-
+        /*
+         * helper for re-including css files
+         */
         private void IncludeCssFile (string cssFile)
 		{
 			if (!string.IsNullOrEmpty (cssFile))
@@ -232,188 +258,183 @@ not thread safe";
 			}
 		}
 
-        private void IncludeJsFile(string jsFile)
-        {
-            jsFile = jsFile.Replace("~/", GetApplicationBaseUrl());
-            Manager.Instance.IncludeFileScript(jsFile);
-        }
-
-        /**
-         * scrolls the browser window
+        /*
+         * helper for including javascript file
          */
-        [ActiveEvent(Name = "magix.browser.scroll")]
-        public void magix_viewport_scroll(object sender, ActiveEventArgs e)
+        private void IncludeJavaScriptFile(string javaScriptFile)
         {
-            if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
-            {
-                e.Params["event:magix.execute"].Value = null;
-                e.Params["inspect"].Value = @"will scroll the browser window 
-such that is shows a specific element.&nbsp;&nbsp;if no element 
-is given, it will scroll the browser window to the top.
-&nbsp;&nbsp;not thread safe";
-                e.Params["magix.browser.scroll"].Value = "id-of-some-element";
-                return;
-            }
-
-            if (!string.IsNullOrEmpty(Ip(e.Params).Get<string>()))
-            {
-                string id = Ip(e.Params).Get<string>();
-                string clientId = Magix.UX.Selector.FindControl<System.Web.UI.Control>(Page, id).ClientID;
-
-                Node js = new Node();
-                js["script"].Value = string.Format("setTimeout(function(){{MUX.$('{0}').scrollIntoView();}}, 1);",
-                    clientId);
-
-                RaiseActiveEvent(
-                    "magix.viewport.execute-javascript",
-                    js);
-            }
-            else
-            {
-                Node js = new Node();
-                js["script"].Value = "setTimeout(function(){parent.scrollTo(0,0)}, 1);";
-
-                RaiseActiveEvent(
-                    "magix.viewport.execute-javascript",
-                    js);
-            }
+            javaScriptFile = javaScriptFile.Replace("~/", GetApplicationBaseUrl());
+            Manager.Instance.IncludeFileScript(javaScriptFile);
         }
 
-        /**
-         * Will include a file on the client side of the given "type", which can
-         * be "JavaScript" or "CSS"
+        /*
+         * includes a file on the client
          */
         [ActiveEvent(Name = "magix.viewport.include-client-file")]
 		protected void magix_viewport_include_client_file(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
-			{
-				e.Params["inspect"].Value = @"includes either a css file or a 
-javascript file on the client side.&nbsp;&nbsp;not thread safe";
-				e.Params["type"].Value = "css";
-				e.Params["file"].Value = "media/main-debug.css";
-				return;
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
+            {
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.Core",
+                    "Magix.Core.hyperlisp.inspect.hl",
+                    "[magix.viewport.include-client-file-dox].Value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.Core",
+                    "Magix.Core.hyperlisp.inspect.hl",
+                    "[magix.viewport.include-client-file-sample]");
+                return;
 			}
-            if (!Ip(e.Params).Contains("type"))
-				throw new ArgumentException("You need to submit a type of file to load, legal values are 'css' and 'javascript'");
-            if (Ip(e.Params)["type"].Get<string>() == "css")
+
+            Node dp = Dp(e.Params);
+
+            if (!ip.ContainsValue("type"))
+                throw new ArgumentException("no [type] given to [magix.viewport.include-client-file]");
+            string type = Expressions.GetExpressionValue(ip["type"].Get<string>(), dp, ip, false) as string;
+
+            if (!ip.ContainsValue("file"))
+                throw new ArgumentException("no [file] given to [magix.viewport.include-client-file]");
+            string file = Expressions.GetExpressionValue(ip["file"].Get<string>(), dp, ip, false) as string;
+
+            if (type == "css")
 			{
-                string cssFile = Ip(e.Params)["file"].Get<String>();
-                if (!CssFiles.Contains(cssFile))
+                if (!CssFiles.Contains(file))
                 {
-                    CssFiles.Add(cssFile);
-                    IncludeCssFile(cssFile);
+                    CssFiles.Add(file);
+                    IncludeCssFile(file);
                 }
 			}
-            else if (Ip(e.Params)["type"].Get<string>() == "javascript")
+            else if (type == "javascript")
 			{
-                string js = Ip(e.Params)["file"].Get<String>();
-                if (!JsFiles.Contains(js))
+                if (!JavaScriptFiles.Contains(file))
                 {
-                    JsFiles.Add(js);
-                    IncludeJsFile(js);
+                    JavaScriptFiles.Add(file);
+                    IncludeJavaScriptFile(file);
                 }
 			}
 			else
-                throw new ArgumentException("Only type of javascript and css are legal inclusion files, you tried to include a file of type; " + Ip(e.Params)["type"].Get<string>());
+                throw new ArgumentException("only 'css' and 'javascript' are legal types in [magix.viewport.include-client-file]");
 		}
 
-		/**
+		/*
 		 * sets a viewstate object
 		 */
 		[ActiveEvent(Name = "magix.viewport.set-viewstate")]
 		protected virtual void magix_viewport_set_viewstate(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
-			{
-				e.Params["event:magix.execute"].Value = null;
-				e.Params["inspect"].Value = @"stores [value] node hierarchy into viewstate
-with value as key for later retrieval.
-&nbsp;&nbsp;not thread safe";
-				e.Params["magix.viewport.set-viewstate"].Value = "some-id";
-				e.Params["magix.viewport.set-viewstate"]["value"]["some-node"]["hierarchy"].Value = "some node hierarchy to store into viewstate";
-				return;
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
+            {
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.Core",
+                    "Magix.Core.hyperlisp.inspect.hl",
+                    "[magix.viewport.set-viewstate-dox].Value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.Core",
+                    "Magix.Core.hyperlisp.inspect.hl",
+                    "[magix.viewport.set-viewstate-sample]");
+                return;
 			}
 
-            string id = Ip(e.Params).Get<string>();
+            Node dp = Dp(e.Params);
 
-			if (string.IsNullOrEmpty(id))
-				throw new ArgumentException("need an id as a value to [magix.viewport.set-viewstate]");
+            if (!ip.ContainsValue("name"))
+                throw new ArgumentException("no [name] given to [magix.viewport.set-viewstate]");
+            string name = Expressions.GetExpressionValue(ip["name"].Get<string>(), dp, ip, false) as string;
 
-            if (!Ip(e.Params).Contains("value"))
+            if (!ip.Contains("value"))
 			{
-				if (ViewState[id] != null)
-					ViewState.Remove(id);
+				if (ViewState[name] != null)
+					ViewState.Remove(name);
 			}
 			else
 			{
-                Node value = Ip(e.Params)["value"].Clone();
-				ViewState[id] = value;
+                Node value = null;
+                if (ip.ContainsValue("value") && ip["value"].Get<string>().StartsWith("["))
+                    value = (Expressions.GetExpressionValue(ip["value"].Get<string>(), dp, ip, false) as Node).Clone();
+                else
+                    value = ip["value"].Clone();
+				ViewState[name] = value;
 			}
 		}
 
-		/**
+		/*
 		 * retrieves a viewstate object
 		 */
 		[ActiveEvent(Name = "magix.viewport.get-viewstate")]
 		protected virtual void magix_viewport_get_viewstate(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
-			{
-				e.Params["inspect"].Value = @"retrieves [id] viewstate value, and puts
-it into [value] node.&nbsp;&nbsp;not thread safe";
-				e.Params["id"].Value = "some-id";
-				return;
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
+            {
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.Core",
+                    "Magix.Core.hyperlisp.inspect.hl",
+                    "[magix.viewport.get-viewstate-dox].Value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.Core",
+                    "Magix.Core.hyperlisp.inspect.hl",
+                    "[magix.viewport.get-viewstate-sample]");
+                return;
 			}
 
-            string id = Ip(e.Params).Get<string>();
+            Node dp = Dp(e.Params);
 
-			if (string.IsNullOrEmpty(id))
-				throw new ArgumentException("need an id as a value to [magix.viewport.get-viewstate]");
+            if (!ip.ContainsValue("name"))
+                throw new ArgumentException("no [name] given to [magix.viewport.get-viewstate]");
+            string name = Expressions.GetExpressionValue(ip["name"].Get<string>(), dp, ip, false) as string;
 
-			if (ViewState[id] != null && ViewState[id] is Node)
-			{
-                Ip(e.Params)["value"].Value = (ViewState[id] as Node).Value;
-                Ip(e.Params)["value"].Clear();
-                Ip(e.Params)["value"].AddRange((ViewState[id] as Node).Clone());
-			}
+			if (ViewState[name] != null && ViewState[name] is Node)
+                ip.Add((ViewState[name] as Node).Clone());
 		}
 
-		/**
-		 * Will load an Active Module and put it into the "container" viewport container
+		/*
+         * loads an active module
          */
         [ActiveEvent(Name = "magix.viewport.load-module")]
 		protected virtual void magix_viewport_load_module(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
-			{
-				e.Params["name"].Value = "namespace.module_name";
-				e.Params["container"].Value = "content1";
-				e.Params["class"].Value = "span-24";
-				e.Params["inspect"].Value = @"loads an active module into the 
-given [container] viewport container.&nbsp;&nbsp;the module name must be defined in 
-the [name] node.&nbsp;&nbsp;the incoming parameters will be used.&nbsp;&nbsp;not thread safe";
-				return;
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
+            {
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.Core",
+                    "Magix.Core.hyperlisp.inspect.hl",
+                    "[magix.viewport.load-module-dox].Value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.Core",
+                    "Magix.Core.hyperlisp.inspect.hl",
+                    "[magix.viewport.load-module-sample]");
+                return;
 			}
 
-            Node ip = Ip(e.Params);
             Node dp = Dp(e.Params);
 
-            string moduleName = e.Params["name"].Get<string>();
             string container = GetDefaultContainer();
-            if (ip.Contains("container") && !string.IsNullOrEmpty(ip["container"].Get<string>()))
+            if (ip.ContainsValue("container"))
                 container = Expressions.GetExpressionValue(ip["container"].Get<string>(), dp, ip, false) as string;
 
 			DynamicPanel dyn = Selector.FindControl<DynamicPanel>(
             	this,
                 container);
-			if (dyn == null)
+
+            if (dyn == null && ip.ContainsValue("container"))
 				return;
+
+            string moduleName = Expressions.GetExpressionValue(e.Params["name"].Get<string>(), dp, ip, false) as string;
 
             ClearControls(dyn);
             
-            dyn.Style[Styles.display] = "";
-            if (ip.Contains("class"))
+            if (ip.ContainsValue("class"))
                 dyn.Class = Expressions.GetExpressionValue(ip["class"].Get<string>(), dp, ip, false) as string;
             else
                 dyn.Class = "";
@@ -422,7 +443,7 @@ the [name] node.&nbsp;&nbsp;the incoming parameters will be used.&nbsp;&nbsp;not
         }
 
 		/*
-		 * Event handler for reloading controls back into Dynamic Panel
+         * reloading controls upon postbacks
 		 */
         protected void dynamic_LoadControls(object sender, DynamicPanel.ReloadEventArgs e)
         {
@@ -430,19 +451,16 @@ the [name] node.&nbsp;&nbsp;the incoming parameters will be used.&nbsp;&nbsp;not
             Control ctrl = ModuleControllerLoader.Instance.LoadActiveModule(e.Key);
             if (e.FirstReload)
             {
-				// Since this is the Initial Loading of our module
-				// We'll need to make sure our Initial Loading procedure is being
-				// called, if Module is of type ActiveModule
-                Node nn = e.Extra as Node;
-                ctrl.Init +=
-                    delegate
-                    {
-                        ActiveModule module = ctrl as ActiveModule;
-                        if (module != null)
+                ActiveModule module = ctrl as ActiveModule;
+                if (module != null)
+                {
+                    Node nn = e.Extra as Node;
+                    ctrl.Init +=
+                        delegate
                         {
                             module.InitialLoading(nn);
-                        }
-                    };
+                        };
+                }
             }
             dynamic.Controls.Add(ctrl);
         }

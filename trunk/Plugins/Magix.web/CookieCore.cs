@@ -8,13 +8,14 @@ using System;
 using System.IO;
 using System.Net;
 using System.Web;
+using System.Globalization;
 using System.Configuration;
 using Magix.Core;
 
 namespace Magix.web
 {
 	/*
-	 * web helper core
+	 * cookie core
 	 */
 	internal sealed class CookieCore : ActiveController
 	{
@@ -40,26 +41,34 @@ namespace Magix.web
                 return;
 			}
 
-            string par = ip.Get<string>();
-			if (string.IsNullOrEmpty(par))
-				throw new ArgumentException("[magix.web.set-cookie] needs a value to know which cookie to set");
+            Node dp = Dp(e.Params);
+
+            if (!ip.ContainsValue("name"))
+                throw new ArgumentException("no [name] given to [magix.web.set-cookie]");
+            string name = Expressions.GetExpressionValue(ip["name"].Get<string>(), dp, ip, false) as string;
 
 			string value = null;
+            if (ip.ContainsValue("value"))
+                value = Expressions.GetExpressionValue(ip["value"].Get<string>(), dp, ip, false) as string;
 
-            if (ip.Contains("value"))
-                value = ip["value"].Get<string>();
+            bool httpOnly = true;
+            if (ip.ContainsValue("http-only"))
+                httpOnly = bool.Parse(Expressions.GetExpressionValue(ip["http-only"].Get<string>(), dp, ip, false) as string);
 
-			if (value == null)
-				HttpContext.Current.Response.Cookies.Remove(par);
+            DateTime expires = DateTime.Now.AddYears(3);
+            if (ip.Contains("expires"))
+                expires = DateTime.ParseExact(
+                        Expressions.GetExpressionValue(ip["expires"].Get<string>(), dp, ip, false) as string,
+                        "yyyy.MM.dd HH:mm:ss",
+                        CultureInfo.InvariantCulture);
+            
+            if (value == null)
+				HttpContext.Current.Response.Cookies.Remove(name);
 			else
 			{
-				HttpCookie cookie = new HttpCookie(par, value);
-				cookie.HttpOnly = true;
-				DateTime expires = DateTime.Now.AddYears(3);
-                if (ip.Contains("expires"))
-                    expires = ip["expires"].Get<DateTime>();
+				HttpCookie cookie = new HttpCookie(name, value);
+				cookie.HttpOnly = httpOnly;
 				cookie.Expires = expires;
-
 				HttpContext.Current.Response.SetCookie(cookie);
 			}
 		}

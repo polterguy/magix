@@ -35,7 +35,8 @@ link-button=>web-controls-jump-2
   onclick
     magix.help.open-file
       file=>system42/admin/help/backend/web-controls.mml
-    magix.browser.scroll=>help
+    magix.browser.scroll
+      id=>help
 }}, and you can use any web controls you have within your system, inline in your magix markup.&nbsp;&nbsp;the above code will produce the 
 following ouput
 </p>
@@ -261,7 +262,8 @@ link-button=>jump-forms
   onclick
     magix.help.open-file
       file=>system42/admin/help/backend/web-controls.mml
-    magix.browser.scroll=>help
+    magix.browser.scroll
+      id=>help
 }}, you can also separate logic with magix markup language.&nbsp;&nbsp;this is useful for separating logic and ui.&nbsp;&nbsp;by intelligent 
 use of this feature, you can reuse either your business logic, your ui, or both.&nbsp;&nbsp;all parameters to [magix.forms.create-mml-web-part] 
 can also of course also be both expressions and constants</p>
