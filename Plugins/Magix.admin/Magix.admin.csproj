@@ -60,4 +60,7 @@
       <SubType>ASPXCodeBehind</SubType>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="hyperlisp\inspect.hl" />
+  </ItemGroup>
 </Project>

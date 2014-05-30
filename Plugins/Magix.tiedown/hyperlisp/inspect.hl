@@ -3,54 +3,41 @@
 inspect=>@"documentation for magix.tiedown"
 
 
-magix.viewport.page-load-dox=>@"executes the index.hl hyperlisp file"
+magix.viewport.page-load-dox=>@"executes the index.hl hyperlisp file
+
+loads and executes the index.hl hyperlisp file.  index.hl is an embedded resource 
+within the magix.tiedown project, and contains the logic for what to do when a 
+page is initially loaded in magix.  this active event, loads that file, and 
+executes it
+
+the default initial loading logic of magix, simply checks for the existence of 
+a dashboard http get parameter, and if existing, and user is logged in as admin, 
+it loads the dashboard.  if this get parameter is not existing, the index.hl file 
+will raise the [magix.tiedown.load-index-page] active event
+
+to create your own front-end logic in magix, override the [magix.tiedown.load-index-page] 
+active event"
 
 
-magix.core.application-startup-dox=>@"executes the startup.hl hyperlisp file"
+magix.core.application-startup-dox=>@"executes the startup.hl hyperlisp file
+
+loads and executes the startup.hl hyperlisp file.  startup.hl is an embedded 
+resource within the magix.tiedown project, and contains the logic for what to 
+do when the application is starting or re-starting.  this active event handler 
+loads that file, and executes it
+
+the default startup logic just iterates through all hyperlisp files in the system42/
+private/startup folder, and executes them"
 
 
-magix.viewport.load-viewport-dox=>@"executes the load-viewport.hl hyperlisp file"
+magix.viewport.load-viewport-dox=>@"executes the load-viewport.hl hyperlisp file
 
+loads and executes the load-viewport.hl hyperlisp file.  load-viewport.hl is an 
+embedded resource within the magix.tiedown project, and contains the logic for 
+what to do when the application needs to load a viewport
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+the load-viewport.hl file will simply check to see if there exist a dashboard 
+get parameter, and if so, it will load the gutenberg viewport.  if dashboard 
+doesn't exist, it will load whatever viewport is referenced in the database 
+with the [id] of magix.admin.settings.default-front-end-viewport"
 

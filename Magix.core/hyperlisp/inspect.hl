@@ -6,7 +6,11 @@ inspect=>@"contains the documentation for magix.core"
 magix.viewport.clear-controls-dox=>@"clears viewport container
 
 clears out all controls and web-parts from the [container] viewport 
-container.  [container] can be either a constant, or an expression"
+container.  [container] can be either a constant, or an expression
+
+if you do not supply a [container] parameter, but instead supply an 
+[all] parameter, then all containers in viewport will be cleared, 
+except the system containers, such as trace and help"
 
 magix.viewport.clear-controls-sample
   magix.viewport.clear-controls

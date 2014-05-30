@@ -50,7 +50,7 @@ namespace Magix.execute
 
             string directory = ip.Contains("directory") ?
                 Expressions.GetExpressionValue(ip["directory"].Get<string>().TrimStart('/'), dp, ip, false) as string :
-                "~/";
+                "";
 
             string filter = ip.Contains("filter") ?
                 Expressions.GetExpressionValue(ip["filter"].Get<string>(), dp, ip, false) as string :

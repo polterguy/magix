@@ -37,7 +37,7 @@ namespace Magix.execute
                 return;
 			}
 
-			if (!ip.Contains("what") || string.IsNullOrEmpty(ip["what"].Get<string>()))
+			if (!ip.ContainsValue("what"))
 				throw new ArgumentException("[replace] needs a [what] parameter");
 
 			string destinationExpression = ip.Get<string>();
@@ -50,10 +50,17 @@ namespace Magix.execute
                 return; // the string user wanted to replace was null
 
 			string what = Expressions.GetExpressionValue(ip["what"].Get<string>(), dp, ip, false) as string;
+            if (ip["what"].Count > 0)
+                what = Expressions.FormatString(dp, ip, ip["what"], what);
 
 			string with = ip.Contains("with") ? 
                 Expressions.GetExpressionValue(ip["with"].Get<string>(""), dp, ip, false) as string : 
                 "";
+            if (!string.IsNullOrEmpty(with))
+            {
+                if (ip["with"].Count > 0)
+                    what = Expressions.FormatString(dp, ip, ip["what"], what);
+            }
 
             if (ip.Get<string>().IndexOf('[') == 0)
             {

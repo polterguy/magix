@@ -36,7 +36,7 @@ if=>exist
           form-id=>admin-menu
           class=>span-5
         execute-script
-          file=>system42/private/dashboard/show-desktop.hl
+          file=>system42/private/dashboard/desktop.hl
         magix.web.get-session
           name=>magix.admin.setting.show-help
         if=>not-exist

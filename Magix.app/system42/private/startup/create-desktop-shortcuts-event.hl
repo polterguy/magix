@@ -24,14 +24,6 @@ returns the default dashboard shortcuts in your system"
 
   code
     _scripts
-      hyperlisp-reference
-        text=>hyperlisp reference
-        category=>learn
-        code
-          execute-script
-            file=>system42/private/tools/inspect-execute.hl
-          magix.help.open-file
-            file=>system42/private/help/hyper-lisp/index.mml
       app-wizard
         text=>app wizard
         category=>applications
@@ -48,28 +40,35 @@ returns the default dashboard shortcuts in your system"
             file=>system42/private/app-wizard/app-wizard.hl
           magix.help.open-file
             file=>system42/private/help/backend/applications.mml
-      pages
-        text=>pages
-        category=>applications
+      hyperlisp-reference
+        text=>hyperlisp reference
+        category=>learn
         code
-          magix.viewport.clear-controls
-            container=>content2
-          magix.viewport.clear-controls
-            container=>content3
-          magix.viewport.clear-controls
-            container=>content4
-          magix.viewport.clear-controls
-            container=>content5
           execute-script
-            file=>system42/private/edit-pages.hl
+            file=>system42/private/tools/inspect.hl
+            params
+              namespace=>magix.execute
+              header=>hyperlisp reference
+              exclude
+                magix.execute._active-event-2-code-callback
+                magix.execute
           magix.help.open-file
-            file=>system42/private/help/backend/applications.mml
+            file=>system42/private/help/hyper-lisp/index.mml
       unit-tests
         text=>unit tests
         category=>security
         code
           execute-script
-            file=>system42/private/tools/inspect-unit-tests.hl
+            file=>system42/private/tools/inspect.hl
+            params
+              namespace=>magix.test
+              header=>unit tests
+              extra-buttons
+                button=>run-all
+                  value=>run all
+                  class=>span-2 right
+                  onclick
+                    magix.tests.run
           magix.help.open-file
             file=>system42/private/help/backend/unit-tests.mml
       overridden-active-events
@@ -77,7 +76,11 @@ returns the default dashboard shortcuts in your system"
         category=>security
         code
           execute-script
-            file=>system42/private/tools/inspect-overridden-events.hl
+            file=>system42/private/tools/inspect.hl
+            params
+              overridden=>true
+              header=>overridden active events
+              exclude
           magix.help.open-file
             file=>system42/private/help/backend/overriding-events.mml
       active-events
@@ -85,7 +88,9 @@ returns the default dashboard shortcuts in your system"
         category=>tools
         code
           execute-script
-            file=>system42/private/tools/inspect-events.hl
+            file=>system42/private/tools/inspect.hl
+            params
+              header=>active events
           magix.help.open-file
             file=>system42/private/help/backend/active-events.mml
       open-active-events
@@ -93,7 +98,10 @@ returns the default dashboard shortcuts in your system"
         category=>security
         code
           execute-script
-            file=>system42/private/tools/inspect-open-events.hl
+            file=>system42/private/tools/inspect.hl
+            params
+              open=>true
+              header=>open active events
           magix.help.open-file
             file=>system42/private/help/backend/remoting.mml
       tunneled-active-events
@@ -101,7 +109,10 @@ returns the default dashboard shortcuts in your system"
         category=>security
         code
           execute-script
-            file=>system42/private/tools/inspect-remoted-events.hl
+            file=>system42/private/tools/inspect.hl
+            params
+              remoted=>true
+              header=>tunneled active events
           magix.help.open-file
             file=>system42/private/help/backend/remoting.mml
       edit-users
@@ -117,7 +128,7 @@ returns the default dashboard shortcuts in your system"
           magix.viewport.clear-controls
             container=>content5
           execute-script
-            file=>system42/private/users/users-grid.hl
+            file=>system42/private/users/users.hl
           magix.help.open-file
             file=>system42/private/help/backend/user-administration.mml
       edit-roles
@@ -133,7 +144,7 @@ returns the default dashboard shortcuts in your system"
           magix.viewport.clear-controls
             container=>content5
           execute-script
-            file=>system42/private/users/roles-grid.hl
+            file=>system42/private/users/roles.hl
           magix.help.open-file
             file=>system42/private/help/backend/user-administration.mml
       server-log
@@ -149,7 +160,7 @@ returns the default dashboard shortcuts in your system"
           magix.viewport.clear-controls
             container=>content5
           execute-script
-            file=>system42/private/server-log-grid.hl
+            file=>system42/private/server-log/log.hl
       settings
         text=>settings
         category=>tools
@@ -163,7 +174,7 @@ returns the default dashboard shortcuts in your system"
           magix.viewport.clear-controls
             container=>content5
           magix.forms.create-mml-web-part
-            mml-file=>system42/private/settings/admin-settings.mml
+            mml-file=>system42/private/settings/settings.mml
             container=>content1
             form-id=>admin-settings
             class=>span-17 last
@@ -179,8 +190,10 @@ returns the default dashboard shortcuts in your system"
         text=>hyperlisp executor
         category=>tools
         code
-          magix.admin.open-event-executor
+          magix.viewport.load-module
             class=>span-17 last
+            container=>content1
+            name=>Magix.admin.ExecutorForm
           magix.viewport.clear-controls
             container=>content2
           magix.viewport.clear-controls
@@ -196,7 +209,7 @@ returns the default dashboard shortcuts in your system"
         category=>tools
         code
           execute-script
-            file=>system42/private/file-browser.hl
+            file=>system42/private/file-manager/file-manager.hl
           magix.viewport.clear-controls
             container=>content2
           magix.viewport.clear-controls
@@ -212,7 +225,10 @@ returns the default dashboard shortcuts in your system"
         category=>learn
         code
           execute-script
-            file=>system42/private/tools/inspect-web-controls.hl
+            file=>system42/private/tools/inspect.hl
+            params
+              namespace=>magix.forms.controls
+              header=>web controls
           magix.help.open-file
             file=>system42/private/help/backend/web-controls.mml
       forms

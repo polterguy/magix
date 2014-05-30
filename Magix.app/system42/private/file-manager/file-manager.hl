@@ -68,7 +68,8 @@ else-if=>exist
     set=>[/][_ren][controls][text-box][disabled].Value
       value=>true
 else
-  magix.viewport.set-viewstate=>stack-of-pages
+  magix.viewport.set-viewstate
+    name=>stack-of-pages
     value
       root=>
   set=>[/][_delDir][disabled].Value
@@ -80,7 +81,8 @@ _back
   class=>span-5 directory back-directory
   value=>..
   onclick
-    magix.viewport.get-viewstate=>stack-of-pages
+    magix.viewport.get-viewstate
+      name=>stack-of-pages
     set=>[using][add][0].Value
       value=>[@][magix.viewport.get-viewstate][value].Count
     using=>magix.math
@@ -93,12 +95,13 @@ _back
     set=>
     add=>[@][magix.viewport.set-viewstate]
       value=>[@][magix.viewport.get-viewstate][value]
-    magix.viewport.set-viewstate=>stack-of-pages
+    magix.viewport.set-viewstate
+      name=>stack-of-pages
     for-each=>[magix.viewport.set-viewstate][value]
       set=>[/][execute-script][params][directory].Value
         value=>[.].Value
     execute-script
-      file=>system42/private/file-browser.hl
+      file=>system42/private/file-manager/file-manager.hl
 
 if=>exist
   lhs=>[$][select-file]
@@ -121,13 +124,15 @@ _link-buttonDir
   class=>span-5 directory
   onclick
     execute-script
-      file=>system42/private/file-browser.hl
-    magix.viewport.get-viewstate=>stack-of-pages
+      file=>system42/private/file-manager/file-manager.hl
+    magix.viewport.get-viewstate
+      name=>stack-of-pages
     set=>[@][magix.viewport.get-viewstate][value][[@][magix.viewport.get-viewstate][value].Count].Value
       value=>[@][execute-script][params][directory].Value
     add=>[@][magix.viewport.set-viewstate]
       value=>[@][magix.viewport.get-viewstate][value]
-    magix.viewport.set-viewstate=>stack-of-pages
+    magix.viewport.set-viewstate
+      name=>stack-of-pages
 
 magix.file.list-files
 
@@ -189,7 +194,7 @@ _newDir=>newdir
     magix.file.create-directory
       directory=>new-directory
     execute-script
-      file=>system42/private/file-browser.hl
+      file=>system42/private/file-manager/file-manager.hl
 
 _delDir=>deldir
   class=>span-3 btn-large last top-1
@@ -200,7 +205,7 @@ _delDir=>deldir
       code
         magix.file.delete-directory
         execute-script
-          file=>system42/private/file-browser.hl
+          file=>system42/private/file-manager/file-manager.hl
 
 _ren=>renWrp
   class=>span-9 last top-1 right btn-group
@@ -219,7 +224,7 @@ _ren=>renWrp
         set=>[execute-script][params][directory].Value
           value=>[magix.file.move-directory][to].Value
         execute-script
-          file=>system42/private/file-browser.hl
+          file=>system42/private/file-manager/file-manager.hl
     button=>saveDirName
       class=>span-2 last
       value=>save
@@ -278,11 +283,11 @@ magix.forms.create-web-part
 
     magix.ide.file-saved
       execute-script
-        file=>system42/private/file-browser.hl
+        file=>system42/private/file-manager/file-manager.hl
 
     magix.ide.file-deleted
       execute-script
-        file=>system42/private/file-browser.hl
+        file=>system42/private/file-manager/file-manager.hl
       magix.viewport.clear-controls
         container=>content2
       magix.viewport.clear-controls
@@ -315,5 +320,5 @@ magix.forms.create-web-part
           lhs=>[magix.forms.uploader-has-more-data][value].Value
           code
             execute-script
-              file=>system42/private/file-browser.hl
+              file=>system42/private/file-manager/file-manager.hl
 

@@ -18,7 +18,7 @@ event
 tries to load a file from disc, verifying it is correctly loaded"
   code
     magix.file.load
-      file=>system42/startup/create-unit-tests.hl
+      file=>system42/private/startup/create-unit-tests.hl
     if=>not-exist
       lhs=>[magix.file.load][value].Value
       code
@@ -33,7 +33,7 @@ event
 loads a file from disc, using an expression pointing to its location, 
 verifying that the file is correctly loaded"
   code
-    _file-path=>system42/startup/create-unit-tests.hl
+    _file-path=>system42/private/startup/create-unit-tests.hl
     using=>magix.file
       load
         file=>[_file-path].Value

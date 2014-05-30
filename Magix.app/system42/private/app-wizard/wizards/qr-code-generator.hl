@@ -180,14 +180,15 @@ parts of qr code. defaults to bumpy-light.png"
           class=>text-browse-btn top-1
           value=>...
           onclick
-            magix.viewport.set-viewstate=>stack-of-pages
+            magix.viewport.set-viewstate
+              name=>stack-of-pages
               value
                 root=>
                 item=>media
                 item=>media/images
                 item=>media/images/textures
             execute-script
-              file=>system42/private/file-browser.hl
+              file=>system42/private/file-manager/file-manager.hl
               params
                 container=>file-browser
                 class=>span-17 last
@@ -218,7 +219,7 @@ parts of qr code. defaults to bumby-black.png"
           value=>...
           onclick
             execute-script
-              file=>system42/private/file-browser.hl
+              file=>system42/private/file-manager/file-manager.hl
               params
                 container=>file-browser
                 class=>span-17 last

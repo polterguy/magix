@@ -164,7 +164,7 @@ magix.forms.create-web-part
           class=>span-1 left-7
           onclick
             execute-script
-              file=>system42/private/server-log-grid.hl
+              file=>system42/private/server-log/log.hl
         label=>count
           class=>span-2
           value=>54
@@ -173,7 +173,7 @@ magix.forms.create-web-part
           class=>span-1
           onclick
             execute-script
-              file=>system42/private/server-log-grid.hl
+              file=>system42/private/server-log/log.hl
         panel
           class=>span-2 right last
           default=>btnSearch
@@ -190,7 +190,7 @@ magix.forms.create-web-part
                 set=>[execute-script][params][filter].Value
                   value=>[magix.forms.get-value][value].Value
                 execute-script
-                  file=>system42/private/server-log-grid.hl
+                  file=>system42/private/server-log/log.hl
 
 if=>exist
   lhs=>[$][filter].Value

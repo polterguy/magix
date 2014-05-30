@@ -18,8 +18,8 @@ using Magix.UX.Widgets.Core;
 
 namespace Magix.viewports
 {
-    /**
-     * Sample Viewport, nothing fancy, three empty containers
+    /*
+     * sample viewport
      */
     public class Gutenberg : Viewport
     {
@@ -63,59 +63,42 @@ namespace Magix.viewports
             return "content1";
         }
 
-		/**
-         * Shows a Message Box to the end user, which can be configured
+		/*
+         * shows a message box
          */
 		[ActiveEvent(Name = "magix.viewport.show-message")]
 		protected void magix_viewport_show_message(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
-			{
-				e.Params["inspect"].Value = @"<p>shows a message box to the 
-end user for some seconds.&nbsp;&nbsp;all arguments can either be a constant 
-or an expression.&nbsp;&nbsp[code] is optional code to show to end user.&nbsp;
-&nbsp;[time] is optional number of milliseconds to display the message box.
-&nbsp;&nbsp;[color] is optional background-color to use for the message box</p>
-<p>if you create multiple message boxes within the same request, then all 
-messages will show, but only the first invocation will decide the other 
-parameters, such as how long time to show the message box, what background-color 
-to use, and so on</p><p>not thread safe</p>";
-                e.Params["message"].Value = "message to show to end user";
-                e.Params["code"].Value = "code goes underneath here";
-				e.Params["time"].Value = 3000;
-				e.Params["color"].Value = "LightGreen";
-				return;
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
+            {
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.viewports",
+                    "Magix.viewports.hyperlisp.inspect.hl",
+                    "[magix.viewports.show-message-dox].Value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.viewports",
+                    "Magix.viewports.hyperlisp.inspect.hl",
+                    "[magix.viewports.show-message-sample]");
+                return;
 			}
 
-            Node ip = Ip(e.Params);
             Node dp = Dp(e.Params);
 
-            if (!ip.Contains("message") || string.IsNullOrEmpty(ip["message"].Get<string>()))
-				throw new ArgumentException("cannot show a message box without a [message] argument");
-
-            string msgTxt = Expressions.GetExpressionValue(ip["message"].Get<string>(), dp, ip, false).ToString();
-            if (string.IsNullOrEmpty(msgTxt))
-                throw new ArgumentException("you must supply a [message] for your message box");
+            if (!ip.ContainsValue("message"))
+				throw new ArgumentException("no [message] parameter given to [magix.viewport.show-message]");
+            string msgTxt = Expressions.GetExpressionValue(ip["message"].Get<string>(), dp, ip, false) as string;
 
             Label whichMsg = message;
             if (!ip.Contains("code"))
-            {
                 whichMsg = messageSmall;
-            }
 
 			if (_isFirst)
-			{
                 whichMsg.Value = "<p>" + msgTxt + "</p>";
-			}
 			else
-			{
                 whichMsg.Value += "<p>" + msgTxt + "</p>";
-			}
-
-            if (ip.Contains("color"))
-                whichMsg.Style[Styles.backgroundColor] = Expressions.GetExpressionValue(ip["color"].Get<string>(), dp, ip, false) as string;
-            else
-                whichMsg.Style[Styles.backgroundColor] = "";
 
             if (ip.Contains("code"))
 			{
@@ -134,67 +117,76 @@ to use, and so on</p><p>not thread safe</p>";
 					tmp);
 
                 whichMsg.Value += "<pre style='text-align:left;margin-left:120px;overflow:auto;max-height:300px;'>" + 
-                    tmp["code"].Get<string>().Replace("<", "&lt;").Replace(">", "&gt;") + "</pre>";
+                    tmp["code"].Get<string>().Replace("&", "&amp;").Replace("<", "&lt;").Replace(">", "&gt;") + "</pre>";
 			}
 
 			if (_isFirst)
 			{
 				_isFirst = false;
+
+                if (ip.Contains("color"))
+                    whichMsg.Style[Styles.backgroundColor] = Expressions.GetExpressionValue(ip["color"].Get<string>(), dp, ip, false) as string;
+                else
+                    whichMsg.Style[Styles.backgroundColor] = "";
+
                 int time = 3000;
                 if (ip.Contains("time"))
                     time = int.Parse(Expressions.GetExpressionValue(ip["time"].Get<string>(), dp, ip, false) as string);
                 if (time == -1)
-				{
                     new EffectFadeIn(whichMsg, 250)
 						.Render();
-				}
 				else
-				{
                     new EffectFadeIn(whichMsg, 250)
 						.ChainThese(
                             new EffectTimeout(time),
                             new EffectFadeOut(whichMsg, 250))
 							.Render();
-				}
 			}
 		}
 
+        /*
+         * contains code to execute upon confirmation
+         */
 		private Node ConfirmCode
 		{
 			get { return ViewState["Magix.Viewport.Gutenberg.ConfirmCode"] as Node; }
 			set { ViewState ["Magix.Viewport.Gutenberg.ConfirmCode"] = value; }
 		}
 
-		/**
-         * asks the user for confirmation of action
+		/*
+         * asks the user for confirming action
          */
 		[ActiveEvent(Name = "magix.viewport.confirm")]
 		protected void magix_viewport_confirm(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
-			{
-				e.Params["message"].Value = "message to show to end user";
-				e.Params["inspect"].Value = @"shows a message box to the 
-end user for some seconds.&nbsp;&nbsp;not thread safe";
-				e.Params["code"].Value = "code to execute if user clicks ok goes here";
-				e.Params["closable-only"].Value = false;
-				return;
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
+            {
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.viewports",
+                    "Magix.viewports.hyperlisp.inspect.hl",
+                    "[magix.viewports.confirm-dox].Value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.viewports",
+                    "Magix.viewports.hyperlisp.inspect.hl",
+                    "[magix.viewports.confirm-sample]");
+                return;
 			}
 
 
-            if (!Ip(e.Params).Contains("message") || Ip(e.Params)["message"].Get<string>("") == "")
-				throw new ArgumentException("cannot show a confirm message box without a [message] argument");
+            if (!ip.ContainsValue("message"))
+				throw new ArgumentException("no [message] given to [magix.viewport.confirm]");
+            confirmLbl.Value = ip["message"].Get<string>();
 
-            confirmLbl.Value = Ip(e.Params)["message"].Get<string>();
-
-            if (Ip(e.Params).Contains("code"))
-                ConfirmCode = Ip(e.Params)["code"].Clone();
+            if (ip.Contains("code"))
+                ConfirmCode = ip["code"].Clone();
 			else
 				ConfirmCode = null;
-
 			confirmWrp.Visible = true;
 
-            if (!Ip(e.Params).Contains("closable-only") || Ip(e.Params)["closable-only"].Get<bool>() == false)
+            if (!ip.Contains("closable-only") || ip["closable-only"].Get<bool>() == false)
 			{
 				ok.Visible = true;
 				cancel.Value = "cancel";
@@ -206,7 +198,7 @@ end user for some seconds.&nbsp;&nbsp;not thread safe";
 
 				if (ConfirmCode != null)
 				{
-                    Node code = Ip(e.Params)["code"].Clone();
+                    Node code = ip["code"].Clone();
 					code.Name = "";
 					tmp["node"].Value = code;
 
@@ -225,65 +217,50 @@ end user for some seconds.&nbsp;&nbsp;not thread safe";
 				.Render();
 		}
 
+        /*
+         * closes confirm message box
+         */
 		protected void CancelClick(object sender, EventArgs e)
 		{
-			ConfirmCode = null;
-			confirmWrp.Visible = false;
-			confirmWrp.Style["display"] = "none";
+            CloseMessageBox();
+        }
+
+        /*
+         * closes confirm message box
+         */
+        protected void confirmWrp_Esc(object sender, EventArgs e)
+		{
+            CloseMessageBox();
 		}
 
-		protected void confirmWrp_Esc(object sender, EventArgs e)
-		{
-			ConfirmCode = null;
-			confirmWrp.Visible = false;
-			confirmWrp.Style["display"] = "none";
-		}
-
-		protected void OKClick(object sender, EventArgs e)
-		{
+        /*
+         * closes confirm message box
+         */
+        private void CloseMessageBox()
+        {
+            ConfirmCode = null;
             confirmWrp.Visible = false;
             confirmWrp.Style["display"] = "none";
-            
+        }
+
+        /*
+         * closes confirm message box and executes hyperlisp given
+         */
+        protected void OKClick(object sender, EventArgs e)
+		{
             RaiseActiveEvent(
-				"magix.execute",
-				ConfirmCode);
-
-			ConfirmCode = null;
+                "magix.execute",
+                ConfirmCode);
+            CloseMessageBox();
 		}
 
-		protected override void OnPreRender(EventArgs e)
-		{
-			if (Session["magix.viewport.show-grid"] != null && ((Node)Session["magix.viewport.show-grid"]).Get<bool>() && !wrp.Class.Contains("showgrid"))
-			{
-				wrp.Class = wrp.Class + " showgrid";
-				wrp.Class = wrp.Class.Trim();
-			}
-			else if (wrp.Class.Contains("showgrid") && (Session["magix.viewport.show-grid"] == null || !((Node)Session["magix.viewport.show-grid"]).Get<bool>()))
-			{
-				wrp.Class = wrp.Class.Replace("showgrid", "").Trim().Replace("  ", " ");
-			}
-
-			base.OnPreRender (e);
-		}
-
-		protected override void magix_viewport_clear_controls(object sender, ActiveEventArgs e)
-		{
-            if (Ip(e.Params).Contains("inspect") && Ip(e.Params)["inspect"].Value == null)
-			{
-				base.magix_viewport_clear_controls(sender, e);
-				return;
-			}
-
-			base.magix_viewport_clear_controls(sender, e);
-			DynamicPanel dyn = Selector.FindControl<DynamicPanel> (
-				this,
-                Ip(e.Params)["container"].Get<string>());
-
-			if (dyn == null)
-				return;
-
-			dyn.Class = "";
-		}
-	}
+        /*
+         * returns all the default content containers
+         */
+        protected override string[] GetAllDefaultContainers()
+        {
+            return new string[] { "content1", "content2", "content3", "content4", "content5", "content6", "content7" };
+        }
+    }
 }
 
