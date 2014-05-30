@@ -22,7 +22,7 @@ for-each=>[magix.data.load][objects]
 magix.viewport.load-module
   container=>content2
   class=>span-22 showgrid top-1 bottom-1 min-height-5
-  name=>Magix.ide.Surface
+  name=>Magix.ide.modules.Surface
 
 magix.forms.list-control-types
 
@@ -684,7 +684,7 @@ link-button=>closepreview
     magix.viewport.load-module
       container=>content2
       class=>span-22 showgrid top-1 bottom-1 min-height-5
-      name=>Magix.ide.Surface
+      name=>Magix.ide.modules.Surface
     magix.forms.get-value
       form-id=>edit-forms
       id=>form

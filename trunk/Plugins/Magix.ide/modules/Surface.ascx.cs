@@ -17,7 +17,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using Magix.UX.Widgets.Core;
 
-namespace Magix.ide
+namespace Magix.ide.modules
 {
     /**
      * ide surface module for visually building magix markup language forms

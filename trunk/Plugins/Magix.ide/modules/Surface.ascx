@@ -4,7 +4,7 @@
 <%@ Control 
     Language="C#" 
     AutoEventWireup="true" 
-    Inherits="Magix.ide.Surface" %>
+    Inherits="Magix.ide.modules.Surface" %>
 
 <mux:Panel
 	runat="server"

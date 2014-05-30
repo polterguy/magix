@@ -1,10 +1,10 @@
 ﻿<%@ Assembly 
-    Name="Magix.admin" %>
+    Name="Magix.ide" %>
 
 <%@ Control 
     Language="C#" 
     AutoEventWireup="true" 
-    Inherits="Magix.admin.ExecutorForm" %>
+    Inherits="Magix.ide.modules.ExecutorForm" %>
 
 <div class="fill-width relative">
     <mux:LinkButton

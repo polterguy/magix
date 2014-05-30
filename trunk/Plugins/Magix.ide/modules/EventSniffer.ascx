@@ -1,11 +1,11 @@
 ﻿<%@ Assembly 
-    Name="Magix.admin" %>
+    Name="Magix.ide" %>
 
 <%@ Control 
     Language="C#" 
     EnableViewState="false"
     AutoEventWireup="true" 
-    Inherits="Magix.admin.EventSniffer" %>
+    Inherits="Magix.ide.modules.EventSniffer" %>
 
 <h3 class="span-22 last bottom-1 center-text">stack trace of all hyperlisp code</h3>
 

@@ -16,7 +16,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using Magix.UX.Widgets.Core;
 
-namespace Magix.admin
+namespace Magix.ide.modules
 {
     /*
      * tracer tool
@@ -48,7 +48,7 @@ namespace Magix.admin
                 {
                     Node tracerNode = new Node();
                     tracerNode["container"].Value = "trace";
-                    tracerNode["name"].Value = "Magix.admin.EventSniffer";
+                    tracerNode["name"].Value = "Magix.ide.modules.EventSniffer";
 
                     RaiseActiveEvent(
                         "magix.viewport.load-module",
@@ -73,8 +73,8 @@ namespace Magix.admin
                     "[magix.admin.toggle-tracer-dox].Value");
                 AppendCodeFromResource(
                     ip,
-                    "Magix.data",
-                    "Magix.data.hyperlisp.inspect.hl",
+                    "Magix.admin",
+                    "Magix.admin.hyperlisp.inspect.hl",
                     "[magix.admin.toggle-tracer-sample]");
                 return;
             }
@@ -83,7 +83,7 @@ namespace Magix.admin
             {
                 Node tracerNode = new Node();
                 tracerNode["container"].Value = "trace";
-                tracerNode["name"].Value = "Magix.admin.EventSniffer";
+                tracerNode["name"].Value = "Magix.ide.modules.EventSniffer";
 
                 RaiseActiveEvent(
                     "magix.viewport.load-module",

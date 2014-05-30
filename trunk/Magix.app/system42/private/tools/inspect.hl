@@ -195,7 +195,7 @@ _controls
               magix.viewport.load-module
                 class=>span-17 last left-5
                 container=>content2
-                name=>Magix.admin.ExecutorForm
+                name=>Magix.ide.modules.ExecutorForm
               set=>[magix.admin.set-code][code].Value
                 value=>[magix.forms.get-value][value].Value
               magix.admin.set-code

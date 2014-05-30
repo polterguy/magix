@@ -48,7 +48,7 @@ link-button=>executor
     magix.viewport.load-module
       class=>span-17 last
       container=>content1
-      name=>Magix.admin.ExecutorForm
+      name=>Magix.ide.modules.ExecutorForm
     magix.viewport.clear-controls
       container=>content2
     magix.viewport.clear-controls
