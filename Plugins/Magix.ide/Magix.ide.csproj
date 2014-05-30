@@ -30,16 +30,22 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Surface.ascx.cs">
+    <Compile Include="modules\EventSniffer.ascx.cs">
+      <DependentUpon>EventSniffer.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="AsciiEditor.ascx.cs">
+    <Compile Include="modules\ExecutorForm.ascx.cs">
+      <DependentUpon>ExecutorForm.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="IdeCore.cs" />
+    <Compile Include="modules\Surface.ascx.cs">
+      <DependentUpon>Surface.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -53,10 +59,20 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Surface.ascx">
+    <EmbeddedResource Include="modules\Surface.ascx">
       <SubType>ASPXCodeBehind</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="AsciiEditor.ascx">
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="hyperlisp\inspect.hl" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="modules\EventSniffer.ascx">
+      <SubType>ASPXCodeBehind</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="modules\ExecutorForm.ascx">
       <SubType>ASPXCodeBehind</SubType>
     </EmbeddedResource>
   </ItemGroup>

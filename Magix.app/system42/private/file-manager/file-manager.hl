@@ -38,10 +38,6 @@ if=>exist
       value=>[$][directory].Value
     set=>[/][magix.forms.create-web-part][events][magix.ide.file-saved][execute-script][params][directory].Value
       value=>[$][directory].Value
-    set=>[/][_btn][onclick][magix.admin.edit-file][file].Value
-      value=>@"{0}/{1}"
-        pr0=>[$][directory].Value
-        pr1=>empty.txt
     set=>[/][_newDir][onclick][magix.file.create-directory][directory].Value
       value=>@"{0}/{1}"
         pr0=>[$][directory].Value
@@ -114,11 +110,8 @@ if=>exist
 _link-button
   class=>span-5 file
   onclick
-    magix.admin.edit-file
-      container=>content2
-      class=>span-22 min-height-16 top-1
-    magix.viewport.clear-controls
-      container=>content3
+    magix.viewport.show-message
+      message=>implement editing
 
 _link-buttonDir
   class=>span-5 directory
@@ -182,10 +175,8 @@ _btn=>newfile
   class=>span-3 btn-large left-8 top-1 clear
   value=>new file
   onclick
-    magix.admin.edit-file
-      class=>span-22 last top-1
-      container=>content2
-      file=>empty.txt
+    magix.viewport.show-message
+      message=>implement editing of new file
 
 _newDir=>newdir
   class=>span-3 btn-large top-1

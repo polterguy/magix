@@ -165,10 +165,6 @@
       <Project>{47afbbbe-cdf6-4b3a-8bd8-478406735c99}</Project>
       <Name>Magix.viewports</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Plugins\Magix.admin\Magix.admin.csproj">
-      <Project>{381e2551-3305-4757-b652-afc9adcb9d3e}</Project>
-      <Name>Magix.admin</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Plugins\Magix.data\Magix.data.csproj">
       <Project>{4fc8426a-ed89-4100-887e-c571e3dc9c8c}</Project>
       <Name>Magix.data</Name>

@@ -27,3 +27,19 @@ magix.execute-dox=>@"puts all magix.execute code into the tracer
 spies on all [magix.execute] invocations, and will put all code executed 
 into the tracer to show"
 
+
+magix.admin.set-code-dox=>@"sets code for hyperlisp executor
+
+changes the code in the input area of the hyperlisp executor to whatever 
+value is in [code]"
+
+magix.admin.set-code-sample
+  magix.admin.set-code
+    code=>@"
+_data=>thomas
+if=>equals
+  lhs=>[_data].Value==thomas
+  rhs=>thomas
+  code
+    magix.viewport.show-message
+      message=>hello world"

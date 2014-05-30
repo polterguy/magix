@@ -18,15 +18,10 @@ using Magix.UX.Effects;
 using Magix.Core;
 using Magix.UX.Widgets.Core;
 
-namespace Magix.admin
+namespace Magix.ide.modules
 {
-    /**
-     * Active Module for Active Event Executor. Allows you to execute and traverse all
-     * the Active Events you have registered in your system, and also contains a 'shell'
-     * for creating parameters to said Active Events, such that you can configure your
-     * system, through something almost resembling a Linux Shell. You can configure
-     * it to set the system into a specific state, by supplying an "evt" and "code"
-     * HTTP parameters
+    /*
+     * hyperlisp executor
      */
     public class ExecutorForm : ActiveModule
     {
@@ -80,6 +75,9 @@ namespace Magix.admin
 			}
 		}
 
+        /*
+         * datasource for active event autocompleter
+         */
 		protected string GetDataSource()
 		{
 			Node node = new Node();
@@ -98,100 +96,50 @@ namespace Magix.admin
 			return "[" + data.TrimEnd (',') + "]";
 		}
 
-		[ActiveEvent(Name = "magix.admin.set-code-event")]
-		public void magix_admin_set_code_event(object sender, ActiveEventArgs e)
-		{
-			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
-			{
-				e.Params.Clear();
-				e.Params["event:magix.admin.set-code-event"].Value = null;
-				e.Params["inspect"].Value = @"sets the active event to what is given in [event].
-&nbsp;&nbsp;not thread safe";
-				e.Params["event"].Value = "magix.execute";
-				return;
-			}
-
-            if (!Ip(e.Params).Contains("event"))
-				throw new ArgumentException("you must pass in an [event] to set-code-event");
-
-            activeEvent.Value = Ip(e.Params)["event"].Get<string>();
-		}
-
+        /*
+         * sets code for executor
+         */
 		[ActiveEvent(Name = "magix.admin.set-code")]
 		public void magix_admin_set_code(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
-			{
-				e.Params.Clear();
-				e.Params["event:magix.admin.set-code"].Value = null;
-				e.Params["inspect"].Value = @"sets the code to what is given in [code]
-in the hyperlisp executor.&nbsp;&nbsp;not thread safe";
-				e.Params["code"].Value =  @"
-event:magix.execute
-Data=>thomas
-if=>[Data].Value==thomas
-  magix.viewport.show-message
-    message=>hello world";
-				return;
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
+            {
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.admin",
+                    "Magix.admin.hyperlisp.inspect.hl",
+                    "[magix.admin.set-code-dox].Value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.data",
+                    "Magix.data.hyperlisp.inspect.hl",
+                    "[magix.admin.set-code-sample]");
+                return;
 			}
-
-			Node tmp = new Node();
-            tmp["code"].Value = Ip(e.Params)["code"].Get<string>();
-
-			RaiseActiveEvent (
-				"magix.execute.code-2-node",
-				tmp);
-
-			Node json = tmp["node"].Clone();
-
-            bool foundEvent = false;
-			foreach (Node idx in json)
-			{
-				if (idx.Name.StartsWith("event:"))
-				{
-					activeEvent.Value = idx.Name.Substring(6);
-                    idx.UnTie();
-                    foundEvent = true;
-					break;
-				}
-			}
-
-            if (!foundEvent)
-                activeEvent.Value = "magix.execute";
-
-			tmp = new Node();
-			tmp["node"].Value = json;
-
-			RaiseActiveEvent (
-				"magix.execute.node-2-code",
-				tmp);
-
-			txtIn.Value = tmp["code"].Get<string>();
+            if (!ip.ContainsValue("code"))
+                throw new ArgumentException("no [code] given to [magix.admin.set-code]");
+            txtIn.Value = ip["code"].Get<string>();
 		}
 
 		protected void move_Click(object sender, EventArgs e)
 		{
             // Removing "inspect" node
-            Node tmp = new Node();
-            tmp["code"].Value = txtOut.Value;
+            Node toNode = new Node();
+            toNode["code"].Value = txtOut.Value;
             RaiseActiveEvent(
                 "magix.execute.code-2-node",
-                tmp);
-            Node node = tmp["node"].Clone();
-            node["inspect"].UnTie();
-            foreach (Node idx in node)
-            {
-                if (idx.Name.StartsWith("event:"))
-                {
-                    activeEvent.Value = idx.Name.Replace("event:", "");
-                    idx.UnTie();
-                    break;
-                }
-            }
+                toNode);
+
+            toNode["node"]["inspect"].UnTie();
+
+            Node toCode = new Node();
+            toCode["node"].Value = toNode["node"];
             RaiseActiveEvent(
                 "magix.execute.node-2-code",
-                tmp);
-			txtIn.Value = tmp["code"].Get<string>();
+                toCode);
+
+			txtIn.Value = toCode["code"].Get<string>();
 		}
 
 		protected void run_Click(object sender, EventArgs e)
@@ -202,53 +150,37 @@ if=>[Data].Value==thomas
             
             if (txtIn.Value != "")
 			{
-				Node tmp = new Node();
-				tmp["code"].Value = txtIn.Value;
-
+				Node toNode = new Node();
+				toNode["code"].Value = txtIn.Value;
 				RaiseActiveEvent(
 					"magix.execute.code-2-node",
-					tmp);
+					toNode);
 
-                Node node = tmp["node"].Clone();
-                node.Name = activeEvent.Value;
-
-				foreach (Node idx in node)
-				{
-					if (idx.Name.StartsWith("event:"))
-					{
-						activeEvent.Value = idx.Name.Substring(6);
-						node.Remove(idx);
-						if (node.Contains("inspect"))
-							node.Remove(node["inspect"]);
-						break;
-					}
-				}
-
+                Node codeNode = toNode["node"].Clone();
+                codeNode.Name = activeEvent.Value;
 				RaiseActiveEvent(
 					activeEvent.Value, 
-					node);
+					codeNode);
 
-                tmp = new Node();
-                tmp["node"].AddRange(node);
-
+                Node toCode = new Node();
+                toCode["node"].AddRange(codeNode);
 				RaiseActiveEvent(
-					"magix.execute.node-2-code", 
-					tmp);
+					"magix.execute.node-2-code",
+                    toCode);
 
-				txtOut.Value = tmp["code"].Get<string>();
+                txtOut.Value = toCode["code"].Get<string>();
 			}
 			else
 			{
 				Node node = RaiseActiveEvent(activeEvent.Value);
 
-				Node tmp = new Node();
-				tmp["node"].Value = node;
-
+				Node toCode = new Node();
+				toCode["node"].Value = node;
 				RaiseActiveEvent(
 					"magix.execute.node-2-code", 
-					tmp);
+					toCode);
 
-				txtOut.Value = tmp["code"].Get<string>();
+				txtOut.Value = toCode["code"].Get<string>();
 			}
 		}
 		

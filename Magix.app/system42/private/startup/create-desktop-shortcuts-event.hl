@@ -193,7 +193,7 @@ returns the default dashboard shortcuts in your system"
           magix.viewport.load-module
             class=>span-17 last
             container=>content1
-            name=>Magix.admin.ExecutorForm
+            name=>Magix.ide.modules.ExecutorForm
           magix.viewport.clear-controls
             container=>content2
           magix.viewport.clear-controls
@@ -204,6 +204,11 @@ returns the default dashboard shortcuts in your system"
             container=>content5
           magix.help.open-file
             file=>system42/private/help/backend/active-event-executor.mml
+      toggle-tracer
+        text=>toggle tracer
+        category=>tools
+        code
+          magix.admin.toggle-tracer
       file-system
         text=>file system
         category=>tools
