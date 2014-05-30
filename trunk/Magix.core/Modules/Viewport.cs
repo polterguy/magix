@@ -29,6 +29,11 @@ namespace Magix.Core
         protected abstract string GetDefaultContainer();
 
         /*
+         * override to return all containers, except the system containers
+         */
+        protected abstract string[] GetAllDefaultContainers();
+
+        /*
          * contains all css files
          */
         private List<string> CssFiles
@@ -184,14 +189,28 @@ namespace Magix.Core
             Node dp = Dp(e.Params);
             string container = Expressions.GetExpressionValue(ip["container"].Get<string>(), dp, ip, false) as string;
 
-			DynamicPanel dyn = Selector.FindControl<DynamicPanel> (
-                this,
-                container);
+            if (ip.ContainsValue("all") && ip["all"].Get<bool>())
+            {
+                foreach (string idx in GetAllDefaultContainers())
+                {
+                    DynamicPanel dyn = Selector.FindControl<DynamicPanel>(
+                        this,
+                        idx);
+                    dyn.Class = "";
+                    ClearControls(dyn);
+                }
+            }
+            else
+            {
+                DynamicPanel dyn = Selector.FindControl<DynamicPanel>(
+                    this,
+                    container);
 
-			if (dyn == null)
-				return;
-
-			ClearControls(dyn);
+                if (dyn == null)
+                    return;
+                dyn.Class = "";
+                ClearControls(dyn);
+            }
 		}
 
 		/*

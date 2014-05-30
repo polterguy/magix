@@ -4,7 +4,7 @@ inspect=>@"creates unit tests for magix
 
 creates the dynamic unit tests for testing hyperlisp 
 in magix.  basically loops through all files in 
-system42/startup/unit-tests and executes them 
+system42/private/startup/unit-tests and executes them 
 as hyperlisp
 
 to create your own unit test, create a new hyperlisp 
@@ -21,21 +21,21 @@ hyperlisp executor
 
 to unregister all unit tests, which might make magix 
 go slightly faster, just rename the unit-tests folder 
-to anything, or delete it in entirely.  though, having 
+to anything, or delete it entirely.  though, having 
 the unit tests around, and occassionally run them, to 
 verify the integrity of your system, is probably more 
-secure, than deleting them entirely"
+secure, than deleting them"
 
 
 magix.file.directory-exist
-  directory=>system42/startup/unit-tests
+  directory=>system42/private/startup/unit-tests
 
 if=>equals
   lhs=>[magix.file.directory-exist][value].Value
   rhs=>true
   code
     magix.file.list-files
-      directory=>system42/startup/unit-tests
+      directory=>system42/private/startup/unit-tests
       filter=>*.hl
 
     for-each=>[@][magix.file.list-files][files]

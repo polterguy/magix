@@ -1,0 +1,56 @@
+﻿
+
+inspect=>@"contains the documentation for magix.viewports
+
+file contains the documentation for all active events in the magix.viewports 
+project"
+
+
+magix.viewports.show-message-dox=>@"shows a message box to the end user
+
+will show a message box to the end user, with the given [message], lasting for 
+[time] milliseconds, with the [color] background color and [code] piece of code.  
+
+all parameters are optional, except the [message] parameter, which is mandatory.  
+if you create multiple message boxes, in the same request, then only one message box 
+will actually appear, but it will contain the messages from all invocations to this 
+active event, appended after each other.  if you show multiple message boxes, then 
+only the first invocation to this active event will be capable of setting the [color] 
+and the [time] parameters.  all consecutive invocations to this active event, will 
+simply ignore the color and time parameters
+
+if you supply a [code] parameter, then a much larger message box will appear, with 
+support for having the user click a button to close the message box
+
+all parameters can be either constants or expressions"
+
+magix.viewports.show-message-sample
+  magix.viewport.show-message
+    message=>howdy world
+    color=>LightGreen
+    time=>5000
+
+
+magix.viewports.confirm-dox=>@"asks user to confirm action before execution
+
+takes a piece of hyperlisp code as [code], and asks the user for confirming action, 
+explained in [message], before executing hyperlisp given.  if [closable-only] is 
+supplied, then the code cannot be executed, but is only displayed to the end user 
+instead"
+
+magix.viewports.confirm-sample
+  magix.viewport.confirm
+    message=>do you want to show a message box?
+    code
+      magix.viewport.show-message
+        message=>i guess you answered yes
+
+
+
+
+
+
+
+
+
+

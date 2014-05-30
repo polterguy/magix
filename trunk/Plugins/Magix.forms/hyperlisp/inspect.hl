@@ -1214,7 +1214,7 @@ magix.forms.get-children-values-sample
               message
 
 
-magix.forms.set-values-dox=>@"sets values of given select web control
+magix.forms.set-values-dox=>@"changes the list item values of a select control
 
 changes the items collection of a select list box during runtime to 
 the given values in the [values] parameter.  the select web control 

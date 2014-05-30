@@ -45,8 +45,10 @@ how to use the web controls</p>
 link-button=>executor
   value=>hyperlisp executor
   onclick
-    magix.admin.open-event-executor
+    magix.viewport.load-module
       class=>span-17 last
+      container=>content1
+      name=>Magix.admin.ExecutorForm
     magix.viewport.clear-controls
       container=>content2
     magix.viewport.clear-controls

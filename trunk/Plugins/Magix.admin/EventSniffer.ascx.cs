@@ -18,20 +18,30 @@ using Magix.UX.Widgets.Core;
 
 namespace Magix.admin
 {
-    /**
-     * event sniffer
+    /*
+     * tracer tool
      */
     public class EventSniffer : ActiveModule
     {
 		protected Label lbl;
 
-		/**
-		 * reloads the tracer when page is postback
+		/*
+		 * reloads the tracer when page is posting back
 		 */
         [ActiveEvent(Name = "magix.viewport.page-init")]
         public static void magix_viewport_page_init(object sender, ActiveEventArgs e)
         {
-            if (!e.Params["is-postback"].Get<bool>())
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
+            {
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.admin",
+                    "Magix.admin.hyperlisp.inspect.hl",
+                    "[magix.viewport.page-init-dox].Value");
+                return;
+            }
+            if (!ip["is-postback"].Get<bool>())
             {
                 // reloading tracer if we should
                 if (HttpContext.Current.Session["magix.admin.toggle-tracer"] != null)
@@ -40,47 +50,32 @@ namespace Magix.admin
                     tracerNode["container"].Value = "trace";
                     tracerNode["name"].Value = "Magix.admin.EventSniffer";
 
-                    ActiveEvents.Instance.RaiseActiveEvent(
-                        typeof(EventSniffer),
+                    RaiseActiveEvent(
                         "magix.viewport.load-module",
                         tracerNode);
                 }
             }
         }
 
-        /**
-         * loads desktop shortcuts
-         */
-        [ActiveEvent(Name = "magix.admin.desktop-shortcuts.get-tracer")]
-        public static void magix_admin_desktop_shortcuts_get_tracer(object sender, ActiveEventArgs e)
-        {
-            if (e.Params.Contains("inspect"))
-            {
-                e.Params["inspect"].Value = @"<p>loads the desktop shortcuts for 
-toggling the tracer tool</p><p>thread safe</p>";
-                return;
-            }
-
-            Node ip = Ip(e.Params);
-
-            ip["load-tracer"]["text"].Value = "toggle tracer";
-            ip["load-tracer"]["category"].Value = "tools";
-            ip["load-tracer"]["code"]["magix.admin.toggle-tracer"].Value = null;
-            ip["load-tracer"]["code"]["magix.help.open-file"]["file"].Value = "system42/private/help/backend/tracer.mml";
-        }
-
-		/**
+		/*
          * toggles tracer
 		 */
         [ActiveEvent(Name = "magix.admin.toggle-tracer")]
         public static void magix_admin_toggle_tracer(object sender, ActiveEventArgs e)
         {
-            if (e.Params.Contains("inspect"))
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
             {
-                e.Params["inspect"].Value = @"<p>toggles the tracer tool, on and off</p>
-<p>the tracer is a tool that allows you to see all hyperlisp code that is executed within 
-the system in a tracer output on a per-session basis.&nbsp;&nbsp;takes no parameters</p>
-<p>not thread safe</p>";
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.admin",
+                    "Magix.admin.hyperlisp.inspect.hl",
+                    "[magix.admin.toggle-tracer-dox].Value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.data",
+                    "Magix.data.hyperlisp.inspect.hl",
+                    "[magix.admin.toggle-tracer-sample]");
                 return;
             }
 
@@ -90,8 +85,7 @@ the system in a tracer output on a per-session basis.&nbsp;&nbsp;takes no parame
                 tracerNode["container"].Value = "trace";
                 tracerNode["name"].Value = "Magix.admin.EventSniffer";
 
-                ActiveEvents.Instance.RaiseActiveEvent(
-                    typeof(EventSniffer),
+                RaiseActiveEvent(
                     "magix.viewport.load-module",
                     tracerNode);
 
@@ -102,8 +96,7 @@ the system in a tracer output on a per-session basis.&nbsp;&nbsp;takes no parame
                 Node clearNode = new Node();
                 clearNode["container"].Value = "trace";
 
-                ActiveEvents.Instance.RaiseActiveEvent(
-                    typeof(EventSniffer),
+                RaiseActiveEvent(
                     "magix.viewport.clear-controls",
                     clearNode);
 
@@ -111,29 +104,36 @@ the system in a tracer output on a per-session basis.&nbsp;&nbsp;takes no parame
             }
         }
 
-		/**
+		/*
          * handles magix.execute
 		 */
 		[ActiveEvent(Name = "magix.execute")]
 		public void magix_execute(object sender, ActiveEventArgs e)
 		{
-			if (e.Params != null)
-			{
-                Node tmp = new Node();
-                tmp["node"].Value = Ip(e.Params);
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
+            {
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.admin",
+                    "Magix.admin.hyperlisp.inspect.hl",
+                    "[magix.execute-dox].Value");
+                return;
+            }
+            Node toCodeNode = new Node();
+            toCodeNode["node"].Value = ip;
 
-				RaiseActiveEvent(
-					"magix.execute.node-2-code",
-					tmp);
+			RaiseActiveEvent(
+				"magix.execute.node-2-code",
+				toCodeNode);
 
-                if (tmp.Contains("code") && !string.IsNullOrEmpty(tmp["code"].Get<string>()))
-                {
-                    string code = tmp["code"].Get<string>();
-                    code = code.Replace("&", "&amp;").Replace("<", "&lt;").Replace(">", "&gt;");
-                    string origin = "origin: " + e.Params.Name;
-                    code = "<label class=\"span-22 last\">" + origin + "</label><pre class=\"span-22 last bottom-1\">" + code + "</pre>";
-                    lbl.Value += code;
-                }
+            if (toCodeNode.ContainsValue("code"))
+            {
+                string code = toCodeNode["code"].Get<string>();
+                code = code.Replace("&", "&amp;").Replace("<", "&lt;").Replace(">", "&gt;");
+                string origin = "origin: " + e.Params.Name;
+                code = "<label class=\"span-22 last\">" + origin + "</label><pre class=\"span-22 last bottom-1\">" + code + "</pre>";
+                lbl.Value += code;
             }
 		}
 	}

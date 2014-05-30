@@ -65,8 +65,10 @@ namespace Magix.execute
 
                     _events[idx["event"].Get<string>()].Clear();
                     _events[idx["event"].Get<string>()].AddRange(idx["code"]);
-                    _inspect[idx["event"].Get<string>()].Clear();
-                    _inspect[idx["event"].Get<string>()].AddRange(idx["inspect"]);
+                    if (idx.ContainsValue("inspect"))
+                        AppendInspect(
+                            _inspect[idx["event"].Get<string>()],
+                            idx["inspect"].Get<string>());
 				}
 			}
 		}
@@ -159,14 +161,22 @@ namespace Magix.execute
             Node ip = Ip(e.Params);
             if (ShouldInspect(ip))
             {
-                AppendInspectFromResource(
-                    ip["inspect"],
-                    "Magix.execute",
-                    "Magix.execute.hyperlisp.inspect.hl",
-                    "[magix.execute._active-event-2-code-callback-dox].Value");
-
-                if (_events.Contains(e.Name))
+                if (e.Name == "magix.execute._active-event-2-code-callback")
                 {
+                    AppendInspectFromResource(
+                        ip["inspect"],
+                        "Magix.execute",
+                        "Magix.execute.hyperlisp.inspect.hl",
+                        "[magix.execute._active-event-2-code-callback-dox].Value");
+                }
+                else if (_events.Contains(e.Name))
+                {
+                    AppendInspectFromResource(
+                        ip["inspect"],
+                        "Magix.execute",
+                        "Magix.execute.hyperlisp.inspect.hl",
+                        "[magix.execute._active-event-2-code-callback-dynamic-dox].Value");
+
                     if (_inspect.ContainsValue(e.Name))
                     {
                         ip["inspect"].Value = null; // dropping the default documentation
@@ -174,7 +184,7 @@ namespace Magix.execute
                     }
                     foreach (Node idx in _events[e.Name])
                     {
-                        e.Params.Add(idx.Clone().UnTie());
+                        ip.Add(idx.Clone().UnTie());
                     }
                 }
                 return;
@@ -310,6 +320,9 @@ namespace Magix.execute
                 if (!string.IsNullOrEmpty(beginsWith) && !idx.StartsWith(beginsWith))
                     continue;
 
+                if (string.IsNullOrEmpty(idx))
+                    continue;
+
                 ip["events"][idx].Value = null;
             }
 
@@ -347,7 +360,6 @@ namespace Magix.execute
 					if (evtNode.Contains("objects"))
 					{
                         _events[name].AddRange(evtNode["objects"][0]["code"].UnTie());
-                        _inspect[name].AddRange(evtNode["objects"][0]["inspect"].UnTie());
                         return _events[name].Clone();
 					}
 					_events[name].Value = null;

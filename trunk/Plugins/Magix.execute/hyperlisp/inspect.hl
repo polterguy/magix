@@ -99,7 +99,7 @@ magix.execute.debug-sample
   debug=>[magix.execute]
 
 
-magix.execute.application-startup-dox=>@"execute startup
+magix.execute.application-startup-dox=>@"maps serialized active events
 
 called during startup of application 
 to make sure our active events, which are dynamically tied towards serialized hyper 
@@ -150,7 +150,14 @@ magix.execute.event-sample
     name=>foo.bar
 
 
-magix.execute._active-event-2-code-callback-dox=>@"dynamically created active event
+magix.execute._active-event-2-code-callback-dox=>@"maps dynamic active events
+
+maps dynamic active events towards their stored code.  is the main entry point for 
+dynamically created active events, and will map the active event towards the actual 
+code intended to be executed"
+
+
+magix.execute._active-event-2-code-callback-dynamic-dox=>@"dynamically created active event
 
 dynamically created active event, created with the [event] keyword.  
 thread safety is dependent upon the active events raised internally 
@@ -593,9 +600,7 @@ magix.execute.override-sample
 magix.execute.app-startup-dox=>@"initialization of tunneled events
 
 called during startup of application to make sure our active events, 
-which are remotely overridden are being correctly re-mapped
-
-do not invoke this active event.  it is only for internal usage"
+which are remotely overridden are being correctly re-mapped"
 
 
 magix.execute.tunnel-dox=>@"overrides an active event to be invoked on another server
@@ -689,7 +694,9 @@ in the value of the [replace] node's expression
 both [what] and [with] can be either constants or expressions.  [with] 
 is optional, and if not given, the [what] parts of the value of 
 [replace] will simply be removed.  the value of [replace] can be either 
-a constant,or an expression
+a constant, or an expression.  both [what] and [with] can contain children 
+nodes, which will serve as formatting expressions, possible to de-reference 
+as {0}, {1} and so on
 
 thread safe"
 

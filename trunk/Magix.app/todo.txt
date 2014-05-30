@@ -124,6 +124,8 @@
 
 * remove the magix-admin.hl file, and create files instead of having the magix.admin active events
 
+* remove magix.forms.change-mml and refactor help system
+
 
 
 

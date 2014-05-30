@@ -161,6 +161,7 @@ returns the base directory of the web application
 not thread safe"
 
 magix.get-base-directory-sample
+  magix.get-base-directory
 
 
 

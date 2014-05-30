@@ -1,0 +1,29 @@
+﻿
+
+inspect=>@"contains documentation for magix.admin
+
+contains documentation for active events within the magix.admin project"
+
+
+magix.admin.toggle-tracer-dox=>@"toggles tracer tool
+
+turns on and off the tracer tool such that you can spy on active events.  the tracer 
+is a tool that allows you to see all hyperlisp code that's executed within the system.  
+this active event, turns the tracer on if it is turned off, and off if it is turned on"
+
+
+magix.admin.toggle-tracer-sample
+  magix.admin.toggle-tracer
+
+
+magix.viewport.page-init-dox=>@"reloads tracer if toggled on
+
+will check to see if the tracer is turned on, and if so, it will load the tracer module 
+in the trace container"
+
+
+magix.execute-dox=>@"puts all magix.execute code into the tracer
+
+spies on all [magix.execute] invocations, and will put all code executed 
+into the tracer to show"
+

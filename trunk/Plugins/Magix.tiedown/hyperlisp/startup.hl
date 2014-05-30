@@ -1,28 +1,17 @@
 
 
-inspect=>@"this file will run during the magix.core.application-startup
-event, and its responsibility is to run through all the scripts in 
-the startup folder with the .hl extension, and execute
-them as hyperlisp files.&nbsp;&nbsp;
-this is useful for initialization of your magix installation, 
-and can be utilized for creating new global events, initializing
-settings, etc.&nbsp;&nbsp;no session, user or response is valid 
-int this event, since it is the equivalent of the starting of application 
-pool process"
+inspect=>@"initializes system during startup
+
+executes during start and restart of application pool in apache or iis 
+and executes all files that exists within the system42/private/startup 
+folder"
 
 
-magix.file.directory-exist
-  directory=>system42/startup
+magix.file.list-files
+  directory=>system42/private/startup
+  filter=>*.hl
 
-if=>equals
-  lhs=>[magix.file.directory-exist][value].Value
-  rhs=>true
-  code
-    magix.file.list-files
-      directory=>system42/startup
-      filter=>*.hl
-
-    for-each=>[@][magix.file.list-files][files]
-      set=>[@][execute-script][file].Value
-        value=>[.].Name
+for-each=>[@][magix.file.list-files][files]
+  set=>[@][execute-script][file].Value
+    value=>[.].Name
 
