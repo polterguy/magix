@@ -46,11 +46,13 @@ magix.viewports.confirm-sample
         message=>i guess you answered yes
 
 
+magix.viewports.pin-container-dox=>@"pins a specific container
 
+pins the given [container] such that it won't be affected by an invocation to 
+clear-controls that is supposed to clear all viewport containers.  [container] 
+can be either a constant or an expression"
 
-
-
-
-
-
+magix.viewports.pin-container-sample
+  magix.viewports.pin-container
+    container=>content1
 

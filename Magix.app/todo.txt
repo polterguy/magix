@@ -126,6 +126,8 @@
 
 * remove magix.forms.change-mml and refactor help system
 
+* implement support for locking containers on viewport
+
 
 
 

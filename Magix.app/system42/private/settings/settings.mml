@@ -23,13 +23,7 @@ lambda=>lmda
           magix.web.postpone-execution
             code
               magix.viewport.clear-controls
-                container=>content2
-              magix.viewport.clear-controls
-                container=>content3
-              magix.viewport.clear-controls
-                container=>content4
-              magix.viewport.clear-controls
-                container=>content5
+                all=>true
               magix.forms.create-mml-web-part
                 mml-file=>system42/private/settings/settings.mml
                 container=>content1

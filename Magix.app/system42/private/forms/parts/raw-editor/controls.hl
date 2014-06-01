@@ -1,0 +1,50 @@
+﻿
+
+inspect=>@"contains raw-editor controls parts of form builder
+
+used to create the form builder.  contains the controls necessary 
+to create the raw-editor controls parts of the form builder"
+
+// raw edit contents text-area
+text-area=>txt-raw-code
+  class=>span-22 last
+  rows=>19
+  placeholder=>raw control data ...
+  ontextchanged
+    set=>[code-2-node][code].Value
+      value=>[$][value].Value
+    code-2-node
+    add=>[magix.ide.set-form][value]
+      value=>[code-2-node][node]
+      children-only=>true
+
+// toggle visibility link-button
+link-button=>lnk-toggle-raw-edit
+  class=>span-1 right
+  style=>position:absolute;top:0;right:0;z-index:1;
+  value=>hide
+  onclick
+    if=>equals
+      lhs=>[$][value].Value
+      rhs=>hide
+      code
+        magix.forms.effect
+          type=>roll-up
+          form-id=>raw-editor
+          id=>txt-raw-code
+          time=>250
+        magix.forms.set-value
+          form-id=>raw-editor
+          id=>lnk-toggle-raw-edit
+          value=>show
+    else
+      magix.forms.effect
+        type=>roll-down
+        form-id=>raw-editor
+        id=>txt-raw-code
+        time=>250
+      magix.forms.set-value
+        form-id=>raw-editor
+        id=>lnk-toggle-raw-edit
+        value=>hide
+

@@ -255,11 +255,64 @@ namespace Magix.viewports
 		}
 
         /*
+         * locks given container
+         */
+        [ActiveEvent(Name = "magix.viewport.pin-container")]
+        protected void magix_viewport_pin_container(object sender, ActiveEventArgs e)
+        {
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
+            {
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.viewports",
+                    "Magix.viewports.hyperlisp.inspect.hl",
+                    "[magix.viewports.pin-container-dox].Value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.viewports",
+                    "Magix.viewports.hyperlisp.inspect.hl",
+                    "[magix.viewports.pin-container-sample]");
+                return;
+            }
+
+            Node dp = Dp(e.Params);
+
+            if (!ip.ContainsValue("container"))
+                throw new ArgumentException("no [container] given to [magix.viewport.pin-container]");
+            string container = Expressions.GetExpressionValue(ip["container"].Get<string>(), dp, ip, false) as string;
+
+            if (ViewState["magix.viewport.pin-container"] == null)
+                ViewState["magix.viewport.pin-container"] = new Node();
+
+            Node viewStateNode = ViewState["magix.viewport.pin-container"] as Node;
+            if (!viewStateNode.Contains(container))
+                viewStateNode.Add(new Node(container));
+        }
+
+        /*
          * returns all the default content containers
          */
         protected override string[] GetAllDefaultContainers()
         {
-            return new string[] { "content1", "content2", "content3", "content4", "content5", "content6", "content7" };
+            List<string> retVal = new List<string>(
+                new string[] { 
+                    "content1", 
+                    "content2", 
+                    "content3", 
+                    "content4", 
+                    "content5", 
+                    "content6", 
+                    "content7" });
+            Node viewStateNode = ViewState["magix.viewport.pin-container"] as Node;
+            if (viewStateNode != null)
+            {
+                foreach (Node idx in viewStateNode)
+                {
+                    retVal.Remove(idx.Name);
+                }
+            }
+            return retVal.ToArray();
         }
     }
 }

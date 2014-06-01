@@ -353,13 +353,7 @@ defaults to Comic Sans MS"
               params
                 file=>system42/private/app-wizard/wizards/qr-code-generator.hl
             magix.viewport.clear-controls
-              container=>content3
-            magix.viewport.clear-controls
-              container=>content4
-            magix.viewport.clear-controls
-              container=>content5
-            magix.viewport.clear-controls
-              container=>content6
+              all=>true
         dynamic=>file-browser
           class=>span-17 last
         label=>lblDescriptionStartQrCode

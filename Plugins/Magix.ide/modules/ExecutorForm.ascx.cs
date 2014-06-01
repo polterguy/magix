@@ -99,26 +99,26 @@ namespace Magix.ide.modules
         /*
          * sets code for executor
          */
-		[ActiveEvent(Name = "magix.admin.set-code")]
-		public void magix_admin_set_code(object sender, ActiveEventArgs e)
+        [ActiveEvent(Name = "magix.executor.set-code")]
+        public void magix_executor_set_code(object sender, ActiveEventArgs e)
 		{
             Node ip = Ip(e.Params);
             if (ShouldInspect(ip))
             {
                 AppendInspectFromResource(
                     ip["inspect"],
-                    "Magix.admin",
-                    "Magix.admin.hyperlisp.inspect.hl",
-                    "[magix.admin.set-code-dox].Value");
+                    "Magix.ide",
+                    "Magix.ide.hyperlisp.inspect.hl",
+                    "[magix.executor.set-code-dox].Value");
                 AppendCodeFromResource(
                     ip,
-                    "Magix.data",
-                    "Magix.data.hyperlisp.inspect.hl",
-                    "[magix.admin.set-code-sample]");
+                    "Magix.ide",
+                    "Magix.ide.hyperlisp.inspect.hl",
+                    "[magix.executor.set-code-sample]");
                 return;
 			}
             if (!ip.ContainsValue("code"))
-                throw new ArgumentException("no [code] given to [magix.admin.set-code]");
+                throw new ArgumentException("no [code] given to [magix.executor.set-code]");
             txtIn.Value = ip["code"].Get<string>();
 		}
 

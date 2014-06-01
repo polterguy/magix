@@ -282,6 +282,8 @@ select
 	margin-top:0px;
 	margin-bottom:0px;
 	height:18px;
+    border-left:none 0;
+    border-right:none 0;
 }
 
 .centered
@@ -681,11 +683,19 @@ a.fork
 	border-bottom:1px solid black !important;
 }
 
+.wysiwyg-design-surface-label
+{
+    width:100%;
+    display:block;
+    float:left;
+}
+
 .wysiwyg-design-surface
 {
-	height:100%;
 	width:100%;
-	min-height:90px;
+    padding-top:18px;
+    padding-bottom:18px;
+    overflow:auto;
 }
 
 .wysiwyg-design-surface input[type=button]
@@ -1035,9 +1045,6 @@ input[type=button].toolbox-wysiwyg
     background-repeat:no-repeat;
     padding-left:20px;
     text-align:left;
-    padding-top:0px;
-    border:1px solid rgba(0, 0, 0, .2);
-    width:94px;
 }
 
 input[type=button].toolbox-button
@@ -1047,87 +1054,87 @@ input[type=button].toolbox-button
 
 input[type=button].toolbox-check-box
 {
-    background-position:0px -16px;
+    background-position:0px -18px;
 }
 
 input[type=button].toolbox-dynamic
 {
-    background-position:0px -33px;
+    background-position:0px -36px;
 }
 
 input[type=button].toolbox-hidden
 {
-    background-position:0px -49px;
+    background-position:0px -54px;
 }
 
 input[type=button].toolbox-hyperlink
 {
-    background-position:0px -65px;
+    background-position:0px -72px;
 }
 
 input[type=button].toolbox-img
 {
-    background-position:0px -82px;
+    background-position:0px -90px;
 }
 
 input[type=button].toolbox-label
 {
-    background-position:0px -98px;
+    background-position:0px -108px;
 }
 
 input[type=button].toolbox-lambda
 {
-    background-position:0px -113px;
+    background-position:0px -126px;
 }
 
 input[type=button].toolbox-link-button
 {
-    background-position:0px -129px;
+    background-position:0px -144px;
 }
 
 input[type=button].toolbox-literal
 {
-    background-position:0px -145px;
+    background-position:0px -162px;
 }
 
 input[type=button].toolbox-panel
 {
-    background-position:0px -161px;
+    background-position:0px -180px;
 }
 
 input[type=button].toolbox-radio
 {
-    background-position:0px -177px;
+    background-position:0px -198px;
 }
 
 input[type=button].toolbox-select
 {
-    background-position:0px -193px;
+    background-position:0px -216px;
 }
 
 input[type=button].toolbox-text-area
 {
-    background-position:0px -209px;
+    background-position:0px -234px;
 }
 
 input[type=button].toolbox-text-box
 {
-    background-position:0px -224px;
+    background-position:0px -252px;
 }
 
 input[type=button].toolbox-uploader
 {
-    background-position:0px -241px;
+    background-position:0px -270px;
 }
 
 input[type=button].toolbox-wysiwyg
 {
-    background-position:0px -257px;
+    background-position:0px -288px;
 }
 
 input[type=button].toolbox-timer
 {
-    background-position:0px -272px;
+    background-position:0px -306px;
 }
 
 .qr-code-preview

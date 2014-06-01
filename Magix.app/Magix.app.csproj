@@ -66,22 +66,38 @@
     <Content Include="media\front-end\hipster.css" />
     <Content Include="media\front-end\default.css" />
     <Content Include="media\front-end\pink.css" />
-    <Content Include="media\images\background.png" />
+    <Content Include="media\images\backgrounds\background-hipster.png" />
+    <Content Include="media\images\backgrounds\background-pink.png" />
+    <Content Include="media\images\backgrounds\background-white.png" />
+    <Content Include="media\images\backgrounds\background.png" />
     <Content Include="media\images\crud-app-bg.png" />
-    <Content Include="media\images\magix-logo.png" />
-    <Content Include="media\images\magix-logo-small.png" />
-    <Content Include="media\images\magix-logo-tiny.png" />
+    <Content Include="media\images\help-files\marvin-headshot.png" />
+    <Content Include="media\images\help-files\qr-code-to-magix.png" />
+    <Content Include="media\images\help-files\screenshots\hyper-lisp-spaces.png" />
+    <Content Include="media\images\icons\arrows.png" />
+    <Content Include="media\images\icons\start-button.png" />
+    <Content Include="media\images\icons\toolbox-icons.png" />
     <Content Include="media\bootstrap\js\bootstrap.js" />
     <Content Include="media\bootstrap\js\bootstrap.min.js" />
     <Content Include="media\bootstrap\js\jQuery.js" />
-    <Content Include="media\images\marvin-headshot.png" />
-    <Content Include="media\images\help-files\active-module.png" />
-    <Content Include="media\images\help-files\module-properties.png" />
-    <Content Include="media\images\help-files\mux.png" />
-    <Content Include="media\images\help-files\new-project.png" />
-    <Content Include="media\images\av-background.png" />
     <Content Include="media\images\qr-codes.png" />
-    <Content Include="media\images\toolbox-icons.png" />
+    <Content Include="media\images\source-files\magix-91-1024px.png" />
+    <Content Include="media\images\textures\bumpy-dark.png" />
+    <Content Include="media\images\textures\bumpy-light.png" />
+    <Content Include="media\images\textures\grass-dark.png" />
+    <Content Include="media\images\textures\grass-light.png" />
+    <Content Include="media\images\textures\leaf-dark.png" />
+    <Content Include="media\images\textures\leaf-light.png" />
+    <Content Include="media\images\textures\leather-dark.png" />
+    <Content Include="media\images\textures\leather-light.png" />
+    <Content Include="media\images\textures\marble-dark.png" />
+    <Content Include="media\images\textures\marble-light.png" />
+    <Content Include="media\images\textures\metal-dark.png" />
+    <Content Include="media\images\textures\metal-light.png" />
+    <Content Include="media\images\textures\paint-dark.png" />
+    <Content Include="media\images\textures\paint-light.png" />
+    <Content Include="media\images\textures\sky-dark.png" />
+    <Content Include="media\images\textures\sky-light.png" />
     <Content Include="media\xing-wysihtml5\parser_rules\advanced.js" />
     <Content Include="media\xing-wysihtml5\parser_rules\simple.js" />
     <Content Include="media\xing-wysihtml5\website\css\editor.css" />
@@ -91,13 +107,7 @@
     <Content Include="media\xing-wysihtml5\dist\wysihtml5-0.4.0pre.min.js" />
     <Content Include="media\grid\main.css" />
     <Content Include="media\grid\grid.png" />
-    <Content Include="media\grid\start-button.png" />
-    <Content Include="media\grid\splash.png" />
-    <Content Include="media\grid\RaLogo1600x1600.png" />
-    <Content Include="media\grid\arrows.png" />
     <Content Include="system42\web.config" />
-    <Content Include="media\images\help-files\screenshots\hello-world-screenshot.png" />
-    <Content Include="media\images\help-files\screenshots\hello-world-passing-paremeters.png" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Global.asax.cs">
@@ -348,6 +358,11 @@
     <Content Include="system42\private\startup\unit-tests\while.hl" />
     <Content Include="system42\private\startup\unit-tests\with.hl" />
     <Content Include="system42\private\tools\inspect.hl" />
+    <Content Include="system42\private\forms\builder.hl" />
+    <Content Include="system42\private\forms\parts\add-control\controls.hl" />
+    <Content Include="system42\private\forms\parts\add-control\events.hl" />
+    <Content Include="system42\private\forms\parts\raw-editor\controls.hl" />
+    <Content Include="system42\private\forms\parts\raw-editor\events.hl" />
     <None Include="todo.txt" />
   </ItemGroup>
   <ItemGroup>

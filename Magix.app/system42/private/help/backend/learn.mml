@@ -45,18 +45,12 @@ how to use the web controls</p>
 link-button=>executor
   value=>hyperlisp executor
   onclick
+    magix.viewport.clear-controls
+      all=>true
     magix.viewport.load-module
       class=>span-17 last
       container=>content1
       name=>Magix.ide.modules.ExecutorForm
-    magix.viewport.clear-controls
-      container=>content2
-    magix.viewport.clear-controls
-      container=>content3
-    magix.viewport.clear-controls
-      container=>content4
-    magix.viewport.clear-controls
-      container=>content5
 }}, which is used both by the hyperlisp reference and the web controls learn links, is an environment, from where you can 
 edit and execute any piece of hyperlisp, and instantly see its result.&nbsp;&nbsp;you may think of it like a command line prompt, 
 for executing hyperlisp, which gives you instant feedback about what your hyperlisp code does</p>

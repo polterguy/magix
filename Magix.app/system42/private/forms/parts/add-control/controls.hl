@@ -1,0 +1,77 @@
+﻿
+
+inspect=>@"contains add controls parts of form builder
+
+used to create the form builder.  contains the controls necessary 
+to create the add controls parts of the form builder"
+
+label=>lbl-header
+  value=>web part builder
+  tag=>h2
+
+panel=>controls-wrapper
+  class=>span-15 last boxed air-padding bottom-1
+  controls
+
+    // description
+    label=>lbl-controls-header
+      value=>controls in your system
+      class=>span-15 bottom-1 last
+      tag=>h3
+
+    // add control buttons
+    lambda=>lambda-controls
+      oncreatecontrols
+        _data
+          button
+            ondblclick
+              add=>[/]
+                value=>[:magix.ide.add-control-to-surface[$][value]][0]
+        list-events
+          begins-with=>magix.forms.controls
+        for-each=>[list-events][events]
+          set=>[/][_data][button][value].Value
+            value=>[.].Name
+          replace=>[/][_data][button][value].Value
+            what=>magix.forms.controls.
+          using=>magix.math
+            modulo
+              add
+                =>[$].Count
+                =>1
+              =>5
+          if=>equals
+            lhs=>[@][using][modulo].Value
+            rhs=>0
+            code
+              set=>[/][_data][button][class].Value
+                value=>span-3 bottom-1 last toolbox-{0}
+                  =>[/][_data][button][value].Value
+          else
+            set=>[/][_data][button][class].Value
+              value=>span-3 bottom-1 toolbox-{0}
+                =>[/][_data][button][value].Value
+          add=>[$]
+            value=>[/][_data][button]
+
+    // how and where to add information and choosing
+    label=>lbl-controls-description-1
+      class=>span-4 clear
+      value=>double click to add control
+      tag=>label
+    select=>select-add-where
+      class=>span-2
+      items
+        before=>before
+        after=>after
+        child=>as child of
+      onfirstload
+        magix.forms.set-value
+          form-id=>add-control
+          id=>select-add-where
+          value=>after
+    label=>lbl-controls-description-2
+      class=>span-9 last
+      value=>currently selected control
+      tag=>label
+

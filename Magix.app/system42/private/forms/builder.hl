@@ -1,0 +1,39 @@
+﻿
+
+inspect=>@"form builder
+
+the form builder allows you to visually create web-part control definitions, 
+which you can use in for instance the [magix.forms.create-web-part] active 
+event, to create your forms"
+
+
+magix.forms.create-web-part
+  form-id=>add-control
+  container=>content1
+  class=>span-17 last
+  controls-file=>system42/private/forms/parts/add-control/controls.hl
+  events-file=>system42/private/forms/parts/add-control/events.hl
+
+magix.forms.create-web-part
+  form-id=>form-builder
+  container=>content2
+  class=>span-22 last
+  controls
+    dynamic=>wysiwyg-surface
+      class=>span-22 last
+      onfirstload
+        magix.viewport.load-module
+          name=>Magix.ide.modules.Surface
+          container=>wysiwyg-surface
+          class=>span-22 last showgrid
+    dynamic=>raw-edit
+      class=>span-22 last
+      style=>position:relative;
+      onfirstload
+        magix.forms.create-web-part
+          form-id=>raw-editor
+          container=>raw-edit
+          class=>span-22 last
+          events-file=>system42/private/forms/parts/raw-editor/events.hl
+          controls-file=>system42/private/forms/parts/raw-editor/controls.hl
+

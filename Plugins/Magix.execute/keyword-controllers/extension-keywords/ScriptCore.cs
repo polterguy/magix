@@ -9,7 +9,7 @@ using System.IO;
 using System.Web;
 using Magix.Core;
 
-namespace Magix.admin
+namespace Magix.execute
 {
 	/*
 	 * script hyperlisp logic

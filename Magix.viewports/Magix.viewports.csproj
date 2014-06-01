@@ -34,9 +34,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="SingleContainer.ascx.cs">
+      <DependentUpon>SingleContainer.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Gutenberg.ascx.cs">
+      <DependentUpon>Gutenberg.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
   </ItemGroup>

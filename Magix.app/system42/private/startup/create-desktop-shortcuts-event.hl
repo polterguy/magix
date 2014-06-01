@@ -29,13 +29,7 @@ returns the default dashboard shortcuts in your system"
         category=>applications
         code
           magix.viewport.clear-controls
-            container=>content2
-          magix.viewport.clear-controls
-            container=>content3
-          magix.viewport.clear-controls
-            container=>content4
-          magix.viewport.clear-controls
-            container=>content5
+            all=>true
           execute-script
             file=>system42/private/app-wizard/app-wizard.hl
           magix.help.open-file
@@ -44,6 +38,8 @@ returns the default dashboard shortcuts in your system"
         text=>hyperlisp reference
         category=>learn
         code
+          magix.viewport.clear-controls
+            all=>true
           execute-script
             file=>system42/private/tools/inspect.hl
             params
@@ -58,6 +54,8 @@ returns the default dashboard shortcuts in your system"
         text=>unit tests
         category=>security
         code
+          magix.viewport.clear-controls
+            all=>true
           execute-script
             file=>system42/private/tools/inspect.hl
             params
@@ -75,6 +73,8 @@ returns the default dashboard shortcuts in your system"
         text=>overridden active events
         category=>security
         code
+          magix.viewport.clear-controls
+            all=>true
           execute-script
             file=>system42/private/tools/inspect.hl
             params
@@ -87,6 +87,8 @@ returns the default dashboard shortcuts in your system"
         text=>active events
         category=>tools
         code
+          magix.viewport.clear-controls
+            all=>true
           execute-script
             file=>system42/private/tools/inspect.hl
             params
@@ -97,6 +99,8 @@ returns the default dashboard shortcuts in your system"
         text=>open active events
         category=>security
         code
+          magix.viewport.clear-controls
+            all=>true
           execute-script
             file=>system42/private/tools/inspect.hl
             params
@@ -108,6 +112,8 @@ returns the default dashboard shortcuts in your system"
         text=>tunneled active events
         category=>security
         code
+          magix.viewport.clear-controls
+            all=>true
           execute-script
             file=>system42/private/tools/inspect.hl
             params
@@ -208,7 +214,7 @@ returns the default dashboard shortcuts in your system"
         text=>toggle tracer
         category=>tools
         code
-          magix.admin.toggle-tracer
+          magix.tracer.toggle-tracer
       file-system
         text=>file system
         category=>tools
@@ -229,6 +235,8 @@ returns the default dashboard shortcuts in your system"
         text=>web controls
         category=>learn
         code
+          magix.viewport.clear-controls
+            all=>true
           execute-script
             file=>system42/private/tools/inspect.hl
             params
@@ -241,15 +249,9 @@ returns the default dashboard shortcuts in your system"
         category=>applications
         code
           magix.viewport.clear-controls
-            container=>content2
-          magix.viewport.clear-controls
-            container=>content3
-          magix.viewport.clear-controls
-            container=>content4
-          magix.viewport.clear-controls
-            container=>content5
+            all=>true
           execute-script
-            file=>system42/private/forms/edit-forms.hl
+            file=>system42/private/forms/builder.hl
           magix.help.open-file
             file=>system42/private/help/backend/forms.mml
       help

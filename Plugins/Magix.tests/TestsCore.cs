@@ -151,8 +151,9 @@ namespace Magix.tests
 				
 				node = new Node();
 
-				node["header"].Value = "unit tests executed with errors";
-				node["body"].Value = "magix.tests.run did not execute successfully, message from system; " + err.Message;
+                node["error"].Value = true;
+                node["header"].Value = "unit tests executed with errors";
+                node["body"].Value = "magix.tests.run did not execute successfully, message from system; " + err.Message;
 
 				RaiseActiveEvent(
 					"magix.log.append",
