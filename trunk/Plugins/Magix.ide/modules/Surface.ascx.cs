@@ -6,859 +6,838 @@
 
 using System;
 using System.IO;
-using System.Web.UI;
-using Magix.UX;
-using Magix.UX.Widgets;
-using Magix.UX.Effects;
-using Magix.Core;
 using System.Web;
+using System.Web.UI;
+using System.Diagnostics;
 using System.Configuration;
 using System.Collections.Generic;
-using System.Diagnostics;
+using Magix.UX;
+using Magix.Core;
+using Magix.UX.Widgets;
+using Magix.UX.Effects;
 using Magix.UX.Widgets.Core;
 
 namespace Magix.ide.modules
 {
-    /**
-     * ide surface module for visually building magix markup language forms
+    /*
+     * wysiwyg form builder surface
      */
     public class Surface : ActiveModule
     {
 		protected Panel wrp;
 
+        /*
+         * contains form controls
+         */
 		private Node DataSource
 		{
 			get { return ViewState["DataSource"] as Node; }
 			set { ViewState["DataSource"] = value; }
 		}
 
+        /*
+         * contains clipboard data
+         */
 		private Node ClipBoard
 		{
 			get { return ViewState["ClipBoard"] as Node; }
 			set { ViewState["ClipBoard"] = value; }
 		}
 
-		private string SelectedWidgetDna
+        /*
+         * the currently selected control, if any
+         */
+		private string SelectedControlDna
 		{
-			get { return ViewState["SelectedWidgetDna"] as string; }
-			set { ViewState["SelectedWidgetDna"] = value; }
+            get { return ViewState["SelectedControlDna"] as string; }
+            set { ViewState["SelectedControlDna"] = value; }
 		}
 
 		public override void InitialLoading(Node node)
 		{
 			base.InitialLoading(node);
-
-			if (node.Contains("form"))
-			{
-				Load +=
-					delegate
-					{
-						DataSource = node["form"].Clone();
-						BuildForm();
-					};
-			}
-			else
-			{
-				Load +=
-					delegate
-					{
-						DataSource = new Node("surface");
-						DataSource["controls"].Value = null;
-						BuildForm();
-					};
-			}
+			Load +=
+				delegate
+				{
+					DataSource = new Node("surface");
+					DataSource["controls"].Value = null;
+					BuildForm();
+				};
 		}
 
 		protected override void OnLoad (EventArgs e)
 		{
-			if (!FirstLoad)
-				BuildForm();
+			BuildForm();
 			base.OnLoad(e);
 		}
 
 		private void BuildForm()
 		{
 			wrp.Controls.Clear();
-			if (DataSource.Contains("controls"))
+            if (DataSource != null && DataSource.Contains("controls"))
 			{
 				foreach (Node idx in DataSource["controls"])
 				{
-					BuildWidget(idx, wrp);
+					BuildControl(idx, wrp);
 				}
 			}
 		}
 
-		private void BuildWidget(Node widget, Control parent)
+		private void BuildControl(Node nodeControl, Control parent)
 		{
-			if (!widget.Contains("type"))
-				throw new ArgumentException("need a [type] for your [widget]");
+			string controlType = "magix.forms.controls." + nodeControl.Name;
 
-			string type = widget["type"].Get<string>();
-
-			Node tmp = new Node();
-			if (widget.Contains("properties"))
+            Node nodeCodeCreateControl = new Node(nodeControl.Name, nodeControl.Get<string>());
+			foreach (Node idxProperty in nodeControl)
 			{
-				foreach (Node idx in widget["properties"])
-				{
-					// we don't do event handlers here, since this is 'design view' ...
-					if (!idx.Name.StartsWith("on"))
-						tmp[idx.Name].Value = idx.Value;
-				}
+				// no event handlers here
+                if (!idxProperty.Name.StartsWith("on"))
+                {
+                    nodeCodeCreateControl[idxProperty.Name].Value = idxProperty.Value;
+                    if (idxProperty.Name != "controls")
+                        nodeCodeCreateControl[idxProperty.Name].AddRange(idxProperty.Clone());
+                }
 			}
 
-			// click event handler for selecting widget
-			tmp["onclick"]["select-widget"]["dna"].Value = widget.Dna;
+			// click event handler for selecting control
+			nodeCodeCreateControl["onclick"]["magix.ide.select-control"]["dna"].Value = nodeControl.Dna;
 
-			Node ctrlRaise = new Node();
-			ctrlRaise["_code"].Value = tmp;
+			Node nodeCreateControl = new Node();
+			nodeCreateControl["_code"].Value = nodeCodeCreateControl;
 
 			RaiseActiveEvent(
-				type,
-				ctrlRaise);
+				controlType,
+				nodeCreateControl);
 
-			if ((!ctrlRaise.Contains("_ctrl") || ctrlRaise["_ctrl"].Value == null) && !ctrlRaise.Contains("_tpl"))
-				return;
+            if (!nodeCreateControl.Contains("_ctrl"))
+                throw new ArgumentException("control '" + controlType + "' not found");
 
-			if (ctrlRaise.Contains("_ctrl"))
-			{
-				Control ctrl = ctrlRaise["_ctrl"].Value as Control;
-
-				if (widget.Dna == SelectedWidgetDna)
-				{
-					if (ctrl is BaseWebControl)
-					{
-						(ctrl as BaseWebControl).Class += " selected";
-					}
-				}
-
-				if (widget.Contains("controls"))
-				{
-					foreach (Node idx in widget["controls"])
-					{
-						BuildWidget(idx, ctrl);
-					}
-				}
-
-				parent.Controls.Add(ctrl);
-			}
-			else
-			{
-				foreach (Node idx in ctrlRaise["_tpl"])
-				{
-					BuildWidget(idx, parent);
-				}
-			}
+            if (nodeCreateControl["_ctrl"].Value != null)
+            {
+                Control ctrlObject = nodeCreateControl["_ctrl"].Value as Control;
+                AddSingleControl(nodeControl, parent, ctrlObject);
+            }
+            else
+            {
+                foreach (Node idxCtrl in nodeCreateControl["_ctrl"])
+                {
+                    Control ctrlObject = idxCtrl.Value as Control;
+                    AddSingleControl(nodeControl, parent, ctrlObject);
+                }
+            }
 		}
+
+        private void AddSingleControl(Node nodeControl, Control parent, Control ctrlObject)
+        {
+            if (nodeControl.Dna == SelectedControlDna)
+            {
+                if (ctrlObject is BaseWebControl)
+                    (ctrlObject as BaseWebControl).Class += " selected";
+                else if (ctrlObject is System.Web.UI.WebControls.WebControl)
+                    (ctrlObject as System.Web.UI.WebControls.WebControl).CssClass += " selected";
+            }
+
+            if (nodeControl.Contains("controls"))
+            {
+                foreach (Node idxChildControl in nodeControl["controls"])
+                {
+                    BuildControl(idxChildControl, ctrlObject);
+                }
+            }
+
+            parent.Controls.Add(ctrlObject);
+        }
 
 		protected void wrp_Click(object sender, EventArgs e)
 		{
-			SelectedWidgetDna = null;
+			SelectedControlDna = null;
 
 			BuildForm();
 			wrp.ReRender();
 
 			RaiseActiveEvent("magix.ide.surface-changed");
-			RaiseActiveEvent("magix.ide.widget-selected");
+            RaiseActiveEvent("magix.ide.control-selected");
 		}
 
-		/**
-		 * lists widgets in form object
-		 */
-		[ActiveEvent(Name="magix.execute.list-widgets")]
-		protected void magix_execute_list_widgets(object sender, ActiveEventArgs e)
+        /*
+         * lists controls in form object
+         */
+        [ActiveEvent(Name = "magix.ide.list-controls")]
+		protected void magix_ide_list_controls(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
-			{
-				e.Params["event:magix.execute"].Value = null;
-				e.Params["inspect"].Value = @"lists all widgets as [widgets] in currently edited form.&nbsp;&nbsp;
-not thread safe";
-				e.Params["list-widgets"].Value = null;
-				return;
-			}
-
-			Node retVal = new Node("widgets");
-
-			if (DataSource.Contains("controls"))
-			{
-				foreach (Node idx in DataSource["controls"])
-				{
-					Node tp = new Node("widget");
-					retVal.Add(tp);
-					GetWidget(idx, tp);
-				}
-			}
-
-            (e.Params["_ip"].Value as Node).Add(retVal); /*error here ... doesn't list controls of panels ...*/
-		}
-
-		private void GetWidget(Node widgetNode, Node output)
-		{
-			output["type"].Value = widgetNode["type"].Get<string>();
-			output["dna"].Value = widgetNode.Dna;
-
-			if (widgetNode.Contains("properties"))
-			{
-				foreach (Node idx in widgetNode["properties"])
-				{
-					output["properties"][idx.Name].Value = idx.Value;
-				}
-			}
-
-			if (widgetNode.Contains("controls"))
-			{
-				foreach (Node idx in widgetNode["controls"])
-				{
-					Node tp = new Node("widget");
-					output.Parent.Add(tp);
-					GetWidget(idx, tp);
-				}
-			}
-		}
-
-		/**
-		 * adds widget to surface
-		 */
-		[ActiveEvent(Name="magix.execute.add-widget")]
-		protected void magix_execute_add_widget(object sender, ActiveEventArgs e)
-		{
-			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
-			{
-				e.Params["event:magix.execute"].Value = null;
-				e.Params["inspect"].Value = @"adds a widget to the currently viewed form.&nbsp;&nbsp;
-not thread safe";
-				e.Params["add-widget"]["auto-select"].Value = true;
-				e.Params["add-widget"]["where"]["dna"].Value = "root";
-				e.Params["add-widget"]["where"]["position"].Value = "before|after|child";
-				e.Params["add-widget"]["widget"]["type"].Value = "magix.forms.controls.installed-widget";
-				e.Params["add-widget"]["widget"]["properties"]["id"].Value = "myWidget";
-				e.Params["add-widget"]["widget"]["properties"]["value"].Value = "hello world";
-				return;
-			}
-
             Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
+            {
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.ide",
+                    "Magix.ide.hyperlisp.inspect.hl",
+                    "[magix.ide.list-controls-dox].Value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.ide",
+                    "Magix.ide.hyperlisp.inspect.hl",
+                    "[magix.ide.list-controls-sample]");
+                return;
+			}
 
-			if (!ip.Contains("widget"))
-				throw new ArgumentException("you need a [widget] for add-widget");
+			foreach (Node idxControl in DataSource["controls"])
+			{
+				GetControl(idxControl, ip["controls"]);
+            }
+		}
 
-			if (!ip["widget"].Contains("type"))
-				throw new ArgumentException("you need a [type] for [widget] in add-widget");
+		private void GetControl(Node controlNodeSource, Node root)
+		{
+            Node currentControlDestination = new Node();
+			currentControlDestination.Name = controlNodeSource.Dna;
+            currentControlDestination.Value = controlNodeSource.Name + ":" + controlNodeSource.Get<string>();
+            root.Add(currentControlDestination);
 
-			if (!ip.Contains("where"))
-				throw new ArgumentException("you need a [where] for add-widget");
+			if (controlNodeSource.Contains("controls"))
+			{
+				foreach (Node idxInnerControl in controlNodeSource["controls"])
+				{
+					Node innerControlNode = new Node();
+                    GetControl(idxInnerControl, root);
+				}
+			}
+		}
 
-			if (!ip["where"].Contains("dna"))
-				throw new ArgumentException("you need a [dna] for [where] in add-widget");
+		/*
+		 * adds control to surface
+		 */
+		[ActiveEvent(Name = "magix.ide.add-control")]
+		protected void magix_ide_add_control(object sender, ActiveEventArgs e)
+		{
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
+            {
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.ide",
+                    "Magix.ide.hyperlisp.inspect.hl",
+                    "[magix.ide.add-control-dox].Value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.ide",
+                    "Magix.ide.hyperlisp.inspect.hl",
+                    "[magix.ide.add-control-sample]");
+                return;
+			}
 
-			if (!ip["where"].Contains("position"))
-				throw new ArgumentException("you need a [position] for [where] in add-widget");
+			if (!ip.Contains("control"))
+				throw new ArgumentException("no [control] given to [magix.ide.add-control]");
 
-			string dna 		= ip["where"]["dna"].Get<string>() ?? "root";
-			string position = ip["where"]["position"].Get<string>();
+			if (ip["control"].Count != 1)
+				throw new ArgumentException("you must supply exactly one control to [magix.ide.add-control]");
 
-			Node whereNode = DataSource.FindDna(dna);
+			string dna 		= SelectedControlDna ?? "root";
+            string position = "after";
 
-			Node widgetNode = ip["widget"].Clone();
+            if (ip.Contains("where"))
+            {
+                if (ip["where"].ContainsValue("dna"))
+                    dna = ip["where"]["dna"].Get<string>();
+                if (ip["where"].ContainsValue("position"))
+                    position = ip["where"]["position"].Get<string>();
+            }
 
-			if (!widgetNode.Contains("properties") || 
-			    !widgetNode["properties"].Contains("id") || 
-			    string.IsNullOrEmpty(widgetNode["properties"]["id"].Get<string>()))
-				widgetNode["properties"]["id"].Value = "g" + Guid.NewGuid().ToString().Replace("-", "");
+			Node controlNode = ip["control"][0].Clone();
 
-			// root can only have children, no after or before widgets
-			if (dna == "root")
-				position = "child";
+            if (!controlNode.Contains("id") &&
+                string.IsNullOrEmpty(controlNode.Get<string>()))
+                controlNode.Value = GetNextAvailableControlId();
 
-			switch (position)
+            if (controlNode.Contains("id"))
+            {
+                if (controlNode.Value != null)
+                    throw new ArgumentException("either supply [id] or value, not both");
+                controlNode.Value = controlNode["id"].Get<string>();
+                controlNode["id"].UnTie();
+            }
+
+            Node getControlsNode = new Node();
+            RaiseActiveEvent(
+                "magix.ide.list-controls",
+                getControlsNode);
+            foreach (Node idxCtrl in getControlsNode["controls"])
+            {
+                string idOfIdx = idxCtrl.Get<string>().Split(':')[1];
+                if (controlNode.Get<string>() == idOfIdx)
+                {
+                    // id was occupied
+                    controlNode.Value = GetNextAvailableControlId();
+                }
+            }
+
+            // root can only have children, no after or before controls
+            if (dna == "root")
+            {
+                if (position == "before")
+                {
+                    if (DataSource["controls"].Count > 0)
+                        dna = "root-0-0";
+                }
+                else
+                    position = "child";
+            }
+
+            Node whereNode = DataSource.FindDna(dna);
+            switch (position)
 			{
 			case "before":
-				whereNode.AddBefore(widgetNode);
+				whereNode.AddBefore(controlNode);
 				break;
 			case "after":
-				whereNode.AddAfter(widgetNode);
+				whereNode.AddAfter(controlNode);
 				break;
 			case "child":
 			{
 				if (whereNode.Name == "surface")
-				{
-					whereNode["controls"].Add(widgetNode);
-				}
+					whereNode["controls"].Add(controlNode);
 				else
 				{
-					Node tp = new Node();
-					tp["inspect"].Value = null;
+					Node inspectParent = new Node();
+					inspectParent["inspect"].Value = null;
 
 					RaiseActiveEvent(
-						whereNode["type"].Get<string>(),
-						tp);
+						"magix.forms.controls." + whereNode.Name,
+						inspectParent);
 
-					if (tp["controls"][0].Contains("controls"))
-						whereNode["controls"].Add(widgetNode);
-					else
-						whereNode.AddAfter(widgetNode);
+                    if (inspectParent["magix.forms.create-web-part"]["controls"][0].Contains("controls"))
+                        whereNode["controls"].Add(controlNode);
+                    else
+                    {
+                        Node msg = new Node();
+                        msg["message"].Value = "control didn't support children, added the control after your selection";
+                        msg["color"].Value = "#ffbbbb";
+                        RaiseActiveEvent(
+                            "magix.viewport.show-message",
+                            msg);
+                        whereNode.AddAfter(controlNode); // defaulting to after
+                    }
 				}
 			} break;
 			default:
-				throw new ArgumentException("sorry, don't know where " + ip["position"].Get<string>() + " is");
+				throw new ArgumentException("only before, after or child are legal positions");
 			}
 
 			if (ip.Contains("auto-select") && ip["auto-select"].Get<bool>())
 			{
-				SelectedWidgetDna = widgetNode.Dna;
-
+				SelectedControlDna = controlNode.Dna;
 				BuildForm();
 				wrp.ReRender();
-				
 				RaiseActiveEvent("magix.ide.surface-changed");
 
-				Node tp = new Node();
-				tp["dna"].Value = SelectedWidgetDna;
-
+				Node selectedControlChangedNode = new Node();
+				selectedControlChangedNode["dna"].Value = SelectedControlDna;
 				RaiseActiveEvent(
-					"magix.ide.widget-selected",
-					tp);
+					"magix.ide.control-selected",
+					selectedControlChangedNode);
 			}
 			else
 			{
 				BuildForm();
 				wrp.ReRender();
-				
 				RaiseActiveEvent("magix.ide.surface-changed");
 			}
 		}
 
-		/**
-		 * removes widget from surface
+        /*
+         * returns the next automatic available control id
+         */
+        private string GetNextAvailableControlId()
+        {
+            Node getControlsNode = new Node();
+            RaiseActiveEvent(
+                "magix.ide.list-controls",
+                getControlsNode);
+            int idxNo = getControlsNode["controls"].Count;
+            string retVal = "ctrl" + idxNo;
+            while (true)
+            {
+                bool found = false;
+                foreach (Node idxCtrl in getControlsNode["controls"])
+                {
+                    if (idxCtrl.Get<string>().Contains(":" + retVal))
+                    {
+                        found = true;
+                        idxNo += 1;
+                        retVal = "ctrl" + idxNo;
+                        break;
+                    }
+                }
+                if (!found)
+                    break;
+            }
+            return retVal;
+        }
+
+		/*
+		 * removes control from surface
 		 */
-		[ActiveEvent(Name="magix.execute.remove-widget")]
-		protected void magix_execute_remove_widget(object sender, ActiveEventArgs e)
+		[ActiveEvent(Name = "magix.ide.remove-control")]
+		protected void magix_ide_remove_control(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
-			{
-				e.Params["event:magix.execute"].Value = null;
-				e.Params["inspect"].Value = @"removes the [dna] widget from the currently viewed form.&nbsp;&nbsp;
-not thread safe";
-				e.Params["remove-widget"]["dna"].Value = "root-0";
-				return;
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
+            {
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.ide",
+                    "Magix.ide.hyperlisp.inspect.hl",
+                    "[magix.ide.remove-control-dox].Value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.ide",
+                    "Magix.ide.hyperlisp.inspect.hl",
+                    "[magix.ide.remove-control-sample]");
+                return;
 			}
 
-            Node ip = Ip(e.Params);
-
-			if (!ip.Contains("dna"))
-				throw new ArgumentException("you need a [dna] for remove-widget");
-
+			if (!ip.ContainsValue("dna"))
+				throw new ArgumentException("no [dna] given to [magix.ide.remove-control]");
 			string dna = ip["dna"].Get<string>();
 
 			Node whereNode = DataSource.FindDna(dna);
-
-			whereNode.Parent.Remove(whereNode);
-
+            whereNode.UnTie();
 			BuildForm();
 			wrp.ReRender();
-			
 			RaiseActiveEvent("magix.ide.surface-changed");
 		}
 
-		/**
-		 * changes properties of widget
-		 */
-		[ActiveEvent(Name="magix.execute.change-widget")]
-		protected void magix_execute_change_widget(object sender, ActiveEventArgs e)
+        /*
+         * changes properties of control
+         */
+        [ActiveEvent(Name = "magix.ide.change-control")]
+		protected void magix_ide_change_control_(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
-			{
-				e.Params["event:magix.execute"].Value = null;
-				e.Params["inspect"].Value = @"changes the [dna] widget, adding/changing [change] properties and 
-removing [remove] properties.&nbsp;&nbsp;not thread safe";
-				e.Params["change-widget"]["dna"].Value = "root-0-0";
-				e.Params["change-widget"]["change"]["id"].Value = "myId";
-				e.Params["change-widget"]["remove"]["class"].Value = null;
-				return;
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
+            {
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.ide",
+                    "Magix.ide.hyperlisp.inspect.hl",
+                    "[magix.ide.change-control-dox].Value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.ide",
+                    "Magix.ide.hyperlisp.inspect.hl",
+                    "[magix.ide.change-control-sample]");
+                return;
 			}
 
-            Node ip = Ip(e.Params);
-
 			if (!ip.Contains("change") && !ip.Contains("remove"))
-				throw new ArgumentException("you need a [change] and/or a [remove] for change-widget to signalize which properties are to be updated");
+				throw new ArgumentException("no [change] or [remove] given to [magix.ide.change-control]");
 
-			Node widgetNode = DataSource.FindDna(ip["dna"].Get<string>());
+            if (!ip.ContainsValue("dna"))
+                throw new ArgumentException("no [dna] given to [magix.ide.change-control]");
+
+			Node controlNode = DataSource.FindDna(ip["dna"].Get<string>());
 
 			if (ip.Contains("change"))
 			{
-				foreach (Node idx in ip["change"])
+				foreach (Node idxChange in ip["change"])
 				{
-					// code in text format
-					if ((idx.Name.StartsWith("on") && !string.IsNullOrEmpty(idx.Get<string>())) ||
-					    idx.Name == "items" || idx.Name == "controls")
-					{
-						Node tmp = new Node();
-
-						tmp["code"].Value = idx.Get<string>();
-
-						RaiseActiveEvent(
-							"magix.execute.code-2-node",
-							tmp);
-
-						widgetNode["properties"][idx.Name].Clear();
-						widgetNode["properties"][idx.Name].AddRange(tmp["node"].Clone());
-					}
-					else if (idx.Name.StartsWith("on") && string.IsNullOrEmpty(idx.Get<string>()))
+					if (idxChange.Count > 0)
 					{
 						// code in tree format
-						widgetNode["properties"][idx.Name].AddRange(idx.Clone());
+						controlNode[idxChange.Name].AddRange(idxChange.Clone());
 					}
 					else
 					{
-						if (idx.Value == null || idx.Get<string>() == "")
-							widgetNode["properties"][idx.Name].UnTie();
-						else
-							widgetNode["properties"][idx.Name].Value = idx.Value;
-					}
-				}
-			}
+                        if (idxChange.Name == "id")
+                        {
+                            controlNode.Value = idxChange.Get<string>();
 
-			if (ip.Contains("remove"))
-			{
-				foreach (Node idx in ip["remove"])
-				{
-					widgetNode["properties"][idx.Name].UnTie();
+                            Node getControlsNode = new Node();
+                            RaiseActiveEvent(
+                                "magix.ide.list-controls",
+                                getControlsNode);
+                            foreach (Node idxCtrl in getControlsNode["controls"])
+                            {
+                                string idOfIdx = idxCtrl.Get<string>().Split(':')[1];
+                                if (controlNode.Get<string>() == idOfIdx)
+                                    throw new ArgumentException("that [id] was already occupied");
+                            }
+                        }
+                        else if (string.IsNullOrEmpty(idxChange.Get<string>()))
+                            controlNode[idxChange.Name].UnTie();
+                        else
+                            controlNode[idxChange.Name].Value = idxChange.Value;
+					}
 				}
 			}
 
 			BuildForm();
 			wrp.ReRender();
-		}
+            RaiseActiveEvent("magix.ide.surface-changed");
+        }
 
-		/**
-		 * moves a widget from its current position
+		/*
+		 * moves a control to another position
 		 */
-		[ActiveEvent(Name="magix.execute.move-widget")]
-		protected void magix_execute_move_widget(object sender, ActiveEventArgs e)
+		[ActiveEvent(Name = "magix.ide.move-control")]
+		protected void magix_ide_move_control(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
-			{
-				e.Params["event:magix.execute"].Value = null;
-				e.Params["inspect"].Value = @"moves the [dna] widget to the [position] of the [to] dna.&nbsp;&nbsp;
-not thread safe";
-				e.Params["move-widget"]["dna"].Value = "root-0-0";
-				e.Params["move-widget"]["position"].Value = "before|after|child";
-				e.Params["move-widget"]["to"].Value = "root-0-0";
-				return;
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
+            {
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.ide",
+                    "Magix.ide.hyperlisp.inspect.hl",
+                    "[magix.ide.move-control-dox].Value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.ide",
+                    "Magix.ide.hyperlisp.inspect.hl",
+                    "[magix.ide.move-control-sample]");
+                return;
 			}
 
-            Node ip = Ip(e.Params);
+			if (!ip.ContainsValue("dna"))
+				throw new ArgumentException("no [dna] given to [magix.ide.move-control]");
 
-			if (!ip.Contains("dna"))
-				throw new ArgumentException("you need a [dna] for move-widget");
+			if (!ip.ContainsValue("to"))
+				throw new ArgumentException("no [to] given to [magix.ide.move-control]");
 
-			if (!ip.Contains("to"))
-				throw new ArgumentException("you need a [to] for move-widget");
+			if (!ip.ContainsValue("position"))
+				throw new ArgumentException("no [position] given to [magix.ide.move-control]");
 
-			if (!ip.Contains("position"))
-				throw new ArgumentException("you need a [position] for move-widget");
-
-			Node widgetNode = DataSource.FindDna(ip["dna"].Get<string>()).UnTie();
-
+			Node controlToMoveNode = DataSource.FindDna(ip["dna"].Get<string>());
+            Node destinationControlNode = DataSource.FindDna(ip["to"].Get<string>());
+            if (controlToMoveNode.Dna.IndexOf(destinationControlNode.Dna) != -1)
+                throw new ArgumentException("you cannot move a control into one of its own descendants");
+            controlToMoveNode.UnTie();
 			switch (ip["position"].Get<string>())
 			{
 			case "before":
-				DataSource.FindDna(ip["to"].Get<string>()).AddBefore(widgetNode);
+				destinationControlNode.AddBefore(controlToMoveNode);
 				break;
 			case "after":
-				DataSource.FindDna(ip["to"].Get<string>()).AddAfter(widgetNode);
+                destinationControlNode.AddAfter(controlToMoveNode);
 				break;
 			case "child":
-				DataSource.FindDna(ip["to"].Get<string>()).Add(widgetNode);
+                destinationControlNode.Add(controlToMoveNode);
 				break;
 			default:
-				throw new ArgumentException("sorry, don't know where " + ip["position"].Get<string>() + " is");
+				throw new ArgumentException("only before, after or child are legal values as [position]");
 			}
 
 			BuildForm();
 			wrp.ReRender();
-			
 			RaiseActiveEvent("magix.ide.surface-changed");
 		}
 
-		/**
-		 * selects widget
-		 */
-		[ActiveEvent(Name="magix.execute.select-widget")]
-		protected void magix_execute_select_widget(object sender, ActiveEventArgs e)
+        /*
+         * selects control
+         */
+        [ActiveEvent(Name = "magix.ide.select-control")]
+		protected void magix_ide_select_control(object sender, ActiveEventArgs e)
 		{
-			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
-			{
-				e.Params["event:magix.execute"].Value = null;
-				e.Params["inspect"].Value = @"sets the [dna] widget as the actively selected widget.&nbsp;&nbsp;
-if no [dna] is given, no widget is set as the currently selected.&nbsp;&nbsp;
-raises the magix.ide.widget-selected active event when done.&nbsp;&nbsp;not thread safe";
-				e.Params["select-widget"]["dna"].Value = "root-0-0";
-				return;
-			}
-
-			Node ip = Ip(e.Params);
-
-			if (!ip.Contains("dna"))
-				SelectedWidgetDna = null;
-			else
-			{
-				SelectedWidgetDna = ip["dna"].Get<string>();
-			}
-
-			BuildForm();
-			wrp.ReRender();
-
-			Node tp = new Node();
-			tp["dna"].Value = SelectedWidgetDna;
-
-			RaiseActiveEvent(
-				"magix.ide.widget-selected",
-				tp);
-		}
-
-		/**
-		 * returns selected widget
-		 */
-		[ActiveEvent(Name="magix.execute.get-selected-widget")]
-		protected void magix_execute_get_selected_widget(object sender, ActiveEventArgs e)
-		{
-			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
-			{
-				e.Params["event:magix.execute"].Value = null;
-				e.Params["inspect"].Value = @"returns the currently selected widget as [value], if any.&nbsp;&nbsp;
-not thread safe";
-				e.Params["get-selected-widget"].Value = null;
-				return;
-			}
-
-			Node ip = Ip(e.Params);
-
-			if (!string.IsNullOrEmpty(SelectedWidgetDna))
-			{
-                ip["value"]["widget"].Clear();
-				ip["value"]["widget"].AddRange(DataSource.FindDna(SelectedWidgetDna).Clone());
-				ip["value"]["dna"].Value = DataSource.FindDna(SelectedWidgetDna).Dna;
-			}
-		}
-
-		/**
-		 * copies widget into clipboard
-		 */
-		[ActiveEvent(Name="magix.execute.copy-widget")]
-		protected void magix_execute_copy_widget(object sender, ActiveEventArgs e)
-		{
-			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
-			{
-				e.Params["event:magix.execute"].Value = null;
-				e.Params["inspect"].Value = @"copies the currently selected widget into the clipboard.&nbsp;&nbsp;
-not thread safe";
-				e.Params["copy-widget"].Value = null;
-				return;
-			}
-
-			if (SelectedWidgetDna == null)
-				throw new ArgumentException("no widget currently selected, you must select widget before you can copy it");
-
-			ClipBoard = DataSource.FindDna(SelectedWidgetDna).Clone();
-			ClipBoard["properties"]["id"].Value = Guid.NewGuid().ToString().Replace("-", "");
-		}
-
-		/**
-		 * cuts widget into clipboard
-		 */
-		[ActiveEvent(Name="magix.execute.cut-widget")]
-		protected void magix_execute_cut_widget(object sender, ActiveEventArgs e)
-		{
-			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
-			{
-				e.Params["event:magix.execute"].Value = null;
-				e.Params["inspect"].Value = @"cuts out the currently selected widget and puts it into the clipboard.&nbsp;&nbsp;
-not thread safe";
-				e.Params["cut-widget"]["dna"].Value = "root-0-0";
-				return;
-			}
-
-			if (SelectedWidgetDna == null)
-				throw new ArgumentException("no widget currently selected, you must select widget before you can cut it");
-
-			RaiseActiveEvent(
-				"magix.execute.copy-widget",
-                Ip(e.Params));
-
-			ClipBoard = DataSource.FindDna(SelectedWidgetDna).UnTie();
-			ClipBoard["properties"]["id"].Value = Guid.NewGuid().ToString().Replace("-", "");
-
-			SelectedWidgetDna = null;
-
-			BuildForm();
-			wrp.ReRender();
-			
-			RaiseActiveEvent("magix.ide.surface-changed");
-		}
-
-		/**
-		 * pastes widget
-		 */
-		[ActiveEvent(Name="magix.execute.paste-widget")]
-		protected void magix_execute_paste_widget(object sender, ActiveEventArgs e)
-		{
-			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
-			{
-				e.Params["event:magix.execute"].Value = null;
-				e.Params["inspect"].Value = @"pastes in the widget from the clipboard to the selected widget.&nbsp;&nbsp;
-use [position] to signify the relationship between the node being pasted and the position being pasted into, 
-default is child, meaning if control can contain children, it will be a child, otherwise it will 
-be pasted into the control tree behind the currently selected widget.&nbsp;&nbsp;
-not thread safe";
-				return;
-			}
-
             Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
+            {
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.ide",
+                    "Magix.ide.hyperlisp.inspect.hl",
+                    "[magix.ide.select-control-dox].Value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.ide",
+                    "Magix.ide.hyperlisp.inspect.hl",
+                    "[magix.ide.select-control-sample]");
+                return;
+			}
+
+			if (!ip.ContainsValue("dna"))
+				SelectedControlDna = null;
+			else
+				SelectedControlDna = ip["dna"].Get<string>();
+
+			BuildForm();
+			wrp.ReRender();
+
+            Node controlSelectedNode = new Node();
+			controlSelectedNode["dna"].Value = SelectedControlDna;
+            RaiseActiveEvent(
+				"magix.ide.control-selected",
+				controlSelectedNode);
+		}
+
+        /*
+         * returns selected control
+         */
+        [ActiveEvent(Name = "magix.ide.get-selected-control")]
+		protected void magix_ide_get_selected_control(object sender, ActiveEventArgs e)
+		{
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
+            {
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.ide",
+                    "Magix.ide.hyperlisp.inspect.hl",
+                    "[magix.ide.get-selected-control-dox].Value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.ide",
+                    "Magix.ide.hyperlisp.inspect.hl",
+                    "[magix.ide.get-selected-control-sample]");
+                return;
+			}
+
+			if (!string.IsNullOrEmpty(SelectedControlDna))
+			{
+                ip["dna"].Value = DataSource.FindDna(SelectedControlDna).Dna;
+				ip["value"].Add(DataSource.FindDna(SelectedControlDna).Clone());
+			}
+		}
+
+		/*
+		 * copies control into clipboard
+		 */
+		[ActiveEvent(Name = "magix.ide.copy-control")]
+		protected void magix_ide_copy_control(object sender, ActiveEventArgs e)
+		{
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
+            {
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.ide",
+                    "Magix.ide.hyperlisp.inspect.hl",
+                    "[magix.ide.copy-control-dox].Value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.ide",
+                    "Magix.ide.hyperlisp.inspect.hl",
+                    "[magix.ide.copy-control-sample]");
+                return;
+			}
+
+			if (SelectedControlDna == null)
+				throw new ArgumentException("no control selected");
+
+			ClipBoard = DataSource.FindDna(SelectedControlDna).Clone();
+		}
+
+		/*
+		 * clears all controls on form
+		 */
+        [ActiveEvent(Name = "magix.ide.clear-controls")]
+        protected void magix_ide_clear_controls(object sender, ActiveEventArgs e)
+        {
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
+            {
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.ide",
+                    "Magix.ide.hyperlisp.inspect.hl",
+                    "[magix.ide.clear-controls-dox].Value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.ide",
+                    "Magix.ide.hyperlisp.inspect.hl",
+                    "[magix.ide.clear-controls-sample]");
+                return;
+            }
+            DataSource = new Node("surface");
+            SelectedControlDna = null;
+            BuildForm();
+            wrp.ReRender();
+            RaiseActiveEvent("magix.ide.surface-changed");
+        }
+
+		/*
+		 * paste control
+		 */
+		[ActiveEvent(Name = "magix.ide.paste-control")]
+		protected void magix_ide_paste_control(object sender, ActiveEventArgs e)
+		{
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
+            {
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.ide",
+                    "Magix.ide.hyperlisp.inspect.hl",
+                    "[magix.ide.paste-control-dox].Value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.ide",
+                    "Magix.ide.hyperlisp.inspect.hl",
+                    "[magix.ide.paste-control-sample]");
+                return;
+			}
 
 			if (ClipBoard == null)
-				throw new ArgumentException("cannot paste a widget, since there are no widgets on the clipboard");
+				throw new ArgumentException("no control in clipboard");
 
 			Node destinationNode = DataSource["controls"];
-
-			if (!string.IsNullOrEmpty(SelectedWidgetDna))
-				destinationNode = DataSource.FindDna(SelectedWidgetDna);
+			if (!string.IsNullOrEmpty(SelectedControlDna))
+				destinationNode = DataSource.FindDna(SelectedControlDna);
 
 			string position = "child";
-
-			if (ip.Contains("position"))
+			if (ip.ContainsValue("position"))
 				position = ip["position"].Get<string>();
 
 			Node toAdd = ClipBoard.Clone();
-
-			toAdd["properties"]["id"].Value = Guid.NewGuid().ToString().Replace("-", "");
+            toAdd.Value = GetNextAvailableControlId();
 
 			switch (position)
 			{
-			case "before":
-				destinationNode.AddBefore(toAdd);
-				break;
-			case "after":
-				destinationNode.AddAfter(toAdd);
-				break;
-			case "child":
-			{
-				if (!destinationNode.Contains("type"))
-				{
-					// main surface ...
-					destinationNode.Add(toAdd);
-				}
-				else
-				{
-					Node tp = new Node();
-					tp["inspect"].Value = null;
+			    case "before":
+				    destinationNode.AddBefore(toAdd);
+				    break;
+			    case "after":
+				    destinationNode.AddAfter(toAdd);
+				    break;
+			    case "child":
+			    {
+                    if (string.IsNullOrEmpty(SelectedControlDna))
+					    destinationNode.Add(toAdd);
+				    else
+				    {
+					    Node inspectControl = new Node();
+					    inspectControl["inspect"].Value = null;
 
-					RaiseActiveEvent(
-						destinationNode["type"].Get<string>(),
-						tp);
+					    RaiseActiveEvent(
+						    "magix.forms.controls." + destinationNode.Get<string>(),
+						    inspectControl);
 
-					if (tp["controls"][0].Contains("controls"))
-						destinationNode["controls"].Add(toAdd);
-					else
-						destinationNode.AddAfter(toAdd); // defaulting to add 'after'
-				}
-			} break;
-			default:
-				throw new ArgumentException("sorry, don't know where " + position + " is");
+					    if (inspectControl["magix.forms.create-web-part"]["controls"][0].Contains("controls"))
+						    destinationNode["controls"].Add(toAdd);
+					    else
+						    destinationNode.AddAfter(toAdd); // defaulting to add 'after'
+				    }
+			    } break;
+			    default:
+				    throw new ArgumentException("only before, after or child are legal values");
 			}
 
 			if (ip.Contains("auto-select") && ip["auto-select"].Get<bool>())
 			{
-				SelectedWidgetDna = toAdd.Dna;
-
+				SelectedControlDna = toAdd.Dna;
 				BuildForm();
 				wrp.ReRender();
-				
 				RaiseActiveEvent("magix.ide.surface-changed");
 
-				Node tp = new Node();
-				tp["dna"].Value = SelectedWidgetDna;
-
+				Node selectedControlChangedNode = new Node();
+				selectedControlChangedNode["dna"].Value = SelectedControlDna;
 				RaiseActiveEvent(
-					"magix.ide.widget-selected",
-					tp);
+					"magix.ide.control-selected",
+					selectedControlChangedNode);
 			}
 			else
 			{
 				BuildForm();
 				wrp.ReRender();
-				
 				RaiseActiveEvent("magix.ide.surface-changed");
 			}
 		}
 
-		/**
-		 * saves given form
-		 */
-		[ActiveEvent(Name="magix.execute.save-form")]
-		protected void magix_execute_save_form(object sender, ActiveEventArgs e)
-		{
-			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
-			{
-				e.Params["event:magix.execute"].Value = null;
-				e.Params["inspect"].Value = @"saves the currently loaded form as [name].&nbsp;&nbsp;
-not thread safe";
-				e.Params["save-form"]["name"].Value = "name-of-form";
-				return;
-			}
-
+        /*
+         * returns the current form's data
+         */
+        [ActiveEvent(Name = "magix.ide.get-form")]
+        protected void magix_ide_get_form(object sender, ActiveEventArgs e)
+        {
             Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
+            {
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.ide",
+                    "Magix.ide.hyperlisp.inspect.hl",
+                    "[magix.ide.get-form-dox].Value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.ide",
+                    "Magix.ide.hyperlisp.inspect.hl",
+                    "[magix.ide.get-form-sample]");
+                return;
+            }
 
-			if (!ip.Contains("name"))
-				throw new ArgumentException("no [name] given to save form as");
+            ip.Clear();
+            ip.AddRange(DataSource["controls"].Clone());
+        }
 
-			Node tp = new Node();
-
-			tp["prototype"]["type"].Value = "magix.forms.form";
-			tp["prototype"]["name"].Value = ip["name"].Get<string>();
-
-			RaiseActiveEvent(
-				"magix.data.load",
-				tp);
-
-			Node tmp = new Node();
-
-			if (tp.Contains("objects") && tp["objects"].Count > 0)
-			{
-				tmp["id"].Value = tp["objects"][0].Name;
-			}
-
-			tmp["value"]["form"].Add(DataSource.Clone());
-			tmp["value"]["type"].Value = "magix.forms.form";
-			tmp["value"]["name"].Value = ip["name"].Get<string>();
-
-			RaiseActiveEvent(
-				"magix.data.save",
-				tmp);
-		}
-
-		/**
-		 * loads a form into the surface
-		 */
-		[ActiveEvent(Name="magix.execute.load-form")]
-		protected void magix_execute_load_form(object sender, ActiveEventArgs e)
-		{
-			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
-			{
-				e.Params["event:magix.execute"].Value = null;
-				e.Params["inspect"].Value = @"loads the given [name] form.&nbsp;&nbsp;
-not thread safe";
-				e.Params["load-form"]["name"].Value = "name-of-form";
-				return;
-			}
-
+        /*
+         * sets the current form's data
+         */
+        [ActiveEvent(Name = "magix.ide.set-form")]
+        protected void magix_ide_set_form(object sender, ActiveEventArgs e)
+        {
             Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
+            {
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.ide",
+                    "Magix.ide.hyperlisp.inspect.hl",
+                    "[magix.ide.set-form-dox].Value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.ide",
+                    "Magix.ide.hyperlisp.inspect.hl",
+                    "[magix.ide.set-form-sample]");
+                return;
+            }
 
-			if (!ip.Contains("name"))
-				throw new ArgumentException("no [name] given, don't know which form to load");
+            Node value = ip["value"];
+            Dictionary<string, bool> ids = new Dictionary<string, bool>();
 
-			if (string.IsNullOrEmpty(ip["name"].Get<string>()))
-			{
-				SelectedWidgetDna = null;
+            bool allUnique = true;
+            foreach (Node idxControl in value)
+            {
+                if (CheckControlIdUnique(idxControl, ids) == false)
+                {
+                    allUnique = false;
+                    break;
+                }
+            }
 
-				DataSource = new Node("surface");
-				DataSource["controls"].Value = null;
+            if (!allUnique)
+            {
+                Node msg = new Node();
+                msg["message"].Value = "not all controls had unique ids, please fix before surface can be updated";
+                RaiseActiveEvent(
+                    "magix.viewport.show-message",
+                    msg);
+                return;
+            }
 
-				BuildForm();
-				wrp.ReRender();
-				RaiseActiveEvent("magix.ide.surface-changed");
-				return;
-			}
+            SelectedControlDna = null;
+            DataSource["controls"].Clear();
+            if (ip.Contains("value"))
+                DataSource["controls"].AddRange(value.Clone());
 
-			Node tmp = new Node();
+            BuildForm();
+            wrp.ReRender();
+            RaiseActiveEvent("magix.ide.surface-changed");
+        }
 
-			tmp["prototype"]["name"].Value = ip["name"].Get<string>();
-			tmp["prototype"]["type"].Value = "magix.forms.form";
-
-			RaiseActiveEvent(
-				"magix.data.load",
-				tmp);
-
-			if (tmp.Contains("objects") && tmp["objects"].Count > 0)
-			{
-				DataSource = tmp["objects"][0]["form"][0].Clone();
-
-				SelectedWidgetDna = null;
-
-				BuildForm();
-				wrp.ReRender();
-			}
-			else
-			{
-				Node txt = new Node();
-				txt["message"].Value = "no such form";
-
-				RaiseActiveEvent(
-					"magix.viewport.show-message",
-					txt);
-			}
-
-			RaiseActiveEvent("magix.ide.surface-changed");
-		}
-
-		/**
-		 * returns the given form
-		 */
-		[ActiveEvent(Name="magix.execute.get-form")]
-		protected void magix_execute_get_form(object sender, ActiveEventArgs e)
-		{
-			if (e.Params.Contains("inspect") && e.Params["inspect"].Value == null)
-			{
-				e.Params["event:magix.execute"].Value = null;
-				e.Params["inspect"].Value = @"returns the current form node 
-back to caller as [form]";
-				e.Params["get-form"].Value = null;
-				return;
-			}
-
-            Node ip = Ip(e.Params);
-
-			Node retVal = new Node();
-
-			foreach (Node idx in DataSource["controls"])
-			{
-				BuildControl(retVal["_tmp"], idx);
-			}
-
-            ip["controls"].Clear();
-			ip["controls"].AddRange(retVal);
-		}
-
-		private void BuildControl(Node retVal, Node ctrlNode)
-		{
-			string type = ctrlNode["type"].Get<string>();
-			type = type.Substring(type.LastIndexOf(".") + 1);
-			retVal.Name = type;
-
-			foreach (Node idx in ctrlNode["properties"])
-			{
-				retVal[idx.Name].Value = idx.Value;
-                retVal[idx.Name].Clear();
-                retVal[idx.Name].AddRange(idx.Clone());
-			}
-
-			foreach (Node idx in ctrlNode["controls"])
-			{
-				BuildControl(retVal["controls"]["_tmp"], idx);
-			}
-		}
-	}
+        private bool CheckControlIdUnique(Node idxControl, Dictionary<string, bool> ids)
+        {
+            if (ids.ContainsKey(idxControl.Get<string>()))
+                return false;
+            ids[idxControl.Get<string>()] = true;
+            if (idxControl.Contains("controls"))
+            {
+                foreach (Node idxChild in idxControl["controls"])
+                {
+                    if (!CheckControlIdUnique(idxChild, ids))
+                        return false;
+                }
+            }
+            return true;
+        }
+    }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

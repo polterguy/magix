@@ -1,0 +1,56 @@
+﻿
+
+inspect=>@"contains add controls active events for form builder
+
+used to create the form builder.  contains the active events necessary 
+to create the add controls parts of the form builder"
+
+// creates the add-button code for adding controls to design surface
+magix.ide.add-control-to-surface
+  magix.forms.get-value
+    form-id=>add-control
+    id=>select-add-where
+  set=>[$][magix.ide.add-control][where][position].Value
+    value=>[magix.forms.get-value][value].Value
+  set=>[$][magix.ide.add-control][control][0].Name
+    value=>[$][value].Value
+  set=>[$][magix.ide.add-control][auto-select].Value
+    value=>true
+
+  // decorating control with default properties
+  with=>[$][magix.ide.add-control][control][0]
+    switch=>[$][0].Value
+      case=>button
+        set=>[value].Value
+          value=>your button
+        set=>[class].Value
+          value=>span-3
+      case=>hyperlink
+        set=>[value].Value
+          value=>your link
+        set=>[href].Value
+          value=>http://magixilluminate.com
+      case=>img
+        set=>[alt].Value
+          value=>magix illuminate logo
+        set=>[src].Value
+          value=>media/images/icons/start-button.png
+        set=>[class].Value
+          value=>span-4 last
+      case=>label
+        set=>[value].Value
+          value=>your label
+        set=>[class].Value
+          value=>span-3
+      case=>link-button
+        set=>[value].Value
+          value=>your button
+        set=>[class].Value
+          value=>span-3
+      case=>literal
+        set=>[text].Value
+          value=>your html
+
+  // returning control
+  set=>[$][0]
+

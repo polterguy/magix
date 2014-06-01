@@ -69,6 +69,7 @@ namespace Magix.forms
                 RaiseActiveEvent(
                     "magix.execute.code-2-node",
                     toNode);
+                toNode["node"]["inspect"].UnTie();
 
                 ip["controls"].Clear();
                 ip["controls"].AddRange(toNode["node"]);

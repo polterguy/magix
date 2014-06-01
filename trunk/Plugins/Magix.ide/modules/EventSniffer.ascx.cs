@@ -36,15 +36,15 @@ namespace Magix.ide.modules
             {
                 AppendInspectFromResource(
                     ip["inspect"],
-                    "Magix.admin",
-                    "Magix.admin.hyperlisp.inspect.hl",
+                    "Magix.ide",
+                    "Magix.ide.hyperlisp.inspect.hl",
                     "[magix.viewport.page-init-dox].Value");
                 return;
             }
             if (!ip["is-postback"].Get<bool>())
             {
                 // reloading tracer if we should
-                if (HttpContext.Current.Session["magix.admin.toggle-tracer"] != null)
+                if (HttpContext.Current.Session["magix.tracer.toggle-tracer"] != null)
                 {
                     Node tracerNode = new Node();
                     tracerNode["container"].Value = "trace";
@@ -60,26 +60,26 @@ namespace Magix.ide.modules
 		/*
          * toggles tracer
 		 */
-        [ActiveEvent(Name = "magix.admin.toggle-tracer")]
-        public static void magix_admin_toggle_tracer(object sender, ActiveEventArgs e)
+        [ActiveEvent(Name = "magix.tracer.toggle-tracer")]
+        public static void magix_tracer_toggle_tracer(object sender, ActiveEventArgs e)
         {
             Node ip = Ip(e.Params);
             if (ShouldInspect(ip))
             {
                 AppendInspectFromResource(
                     ip["inspect"],
-                    "Magix.admin",
-                    "Magix.admin.hyperlisp.inspect.hl",
-                    "[magix.admin.toggle-tracer-dox].Value");
+                    "Magix.ide",
+                    "Magix.ide.hyperlisp.inspect.hl",
+                    "[magix.tracer.toggle-tracer-dox].Value");
                 AppendCodeFromResource(
                     ip,
-                    "Magix.admin",
-                    "Magix.admin.hyperlisp.inspect.hl",
-                    "[magix.admin.toggle-tracer-sample]");
+                    "Magix.ide",
+                    "Magix.ide.hyperlisp.inspect.hl",
+                    "[magix.tracer.toggle-tracer-sample]");
                 return;
             }
 
-            if (HttpContext.Current.Session["magix.admin.toggle-tracer"] == null)
+            if (HttpContext.Current.Session["magix.tracer.toggle-tracer"] == null)
             {
                 Node tracerNode = new Node();
                 tracerNode["container"].Value = "trace";
@@ -89,7 +89,7 @@ namespace Magix.ide.modules
                     "magix.viewport.load-module",
                     tracerNode);
 
-                HttpContext.Current.Session["magix.admin.toggle-tracer"] = true;
+                HttpContext.Current.Session["magix.tracer.toggle-tracer"] = true;
             }
             else
             {
@@ -100,7 +100,7 @@ namespace Magix.ide.modules
                     "magix.viewport.clear-controls",
                     clearNode);
 
-                HttpContext.Current.Session.Remove("magix.admin.toggle-tracer");
+                HttpContext.Current.Session.Remove("magix.tracer.toggle-tracer");
             }
         }
 
@@ -115,8 +115,8 @@ namespace Magix.ide.modules
             {
                 AppendInspectFromResource(
                     ip["inspect"],
-                    "Magix.admin",
-                    "Magix.admin.hyperlisp.inspect.hl",
+                    "Magix.ide",
+                    "Magix.ide.hyperlisp.inspect.hl",
                     "[magix.execute-dox].Value");
                 return;
             }

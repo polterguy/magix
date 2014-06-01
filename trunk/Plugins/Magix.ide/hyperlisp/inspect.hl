@@ -1,19 +1,19 @@
 ﻿
 
-inspect=>@"contains documentation for magix.admin
+inspect=>@"contains documentation for magix.ide
 
-contains documentation for active events within the magix.admin project"
+contains documentation for active events within the magix.ide project"
 
 
-magix.admin.toggle-tracer-dox=>@"toggles tracer tool
+magix.tracer.toggle-tracer-dox=>@"toggles tracer tool
 
 turns on and off the tracer tool such that you can spy on active events.  the tracer 
 is a tool that allows you to see all hyperlisp code that's executed within the system.  
 this active event, turns the tracer on if it is turned off, and off if it is turned on"
 
 
-magix.admin.toggle-tracer-sample
-  magix.admin.toggle-tracer
+magix.tracer.toggle-tracer-sample
+  magix.tracer.toggle-tracer
 
 
 magix.viewport.page-init-dox=>@"reloads tracer if toggled on
@@ -28,13 +28,13 @@ spies on all [magix.execute] invocations, and will put all code executed
 into the tracer to show"
 
 
-magix.admin.set-code-dox=>@"sets code for hyperlisp executor
+magix.executor.set-code-dox=>@"sets code for hyperlisp executor
 
 changes the code in the input area of the hyperlisp executor to whatever 
 value is in [code]"
 
-magix.admin.set-code-sample
-  magix.admin.set-code
+magix.executor.set-code-sample
+  magix.executor.set-code
     code=>@"
 _data=>thomas
 if=>equals
@@ -43,3 +43,340 @@ if=>equals
   code
     magix.viewport.show-message
       message=>hello world"
+
+
+magix.ide.list-controls-dox=>@"lists controls in currently edited form
+
+lists all controls that are in the currently edited form as [controls].  
+returns the dna of control as name, and id as value"
+
+magix.ide.list-controls-sample
+  using=>magix.ide
+    add-control
+      where
+        dna=>root
+        position=>child
+      control
+        button=>id-of-button
+          value=>a button
+          class=>span-5 btn-large
+    add-control
+      where
+        dna=>root
+        position=>child
+      control
+        label=>id-of-label
+          value=>a label
+          class=>span-5
+    list-controls
+
+
+magix.ide.add-control-dox=>@"adds a control to design surface
+
+adds a control to the design surface.  if you set [auto-select] to true, 
+the control will be automatically selected once it is added.  [where] is 
+where to add the control, use [where][dna] as the position of the newly 
+added control, and [where][position] being either 'before', 'after' or 
+'child' of where in relationship to the [dna] control you wish to add the 
+control.  if no [where] is given, the control will be added into the child 
+collection of the main form surface
+
+use [control] as a container for the actual control you wish to add, 
+this can be any of the installed controls you have the magix.forms.controls 
+namespace.  put the control's properties directly beneath your control node, 
+and have the id of your control either be the value of your control node, 
+or given through [id] beneath your control node.  if no [id] or value of 
+control node is given, an automatic id will be created and assigned to the 
+control
+
+if you do not supply a [where] node, or the where node does not contain a 
+[dna] node, then the by default the control will be added to the currently 
+selected control.  if you do not supply a [position] node, beneath the 
+[where] node, the control will by default be added after the control you 
+wish to add it to the form in relation to.  if there are no selected controls, 
+and you supply no [where]/[dna] node, the control will be added directly to 
+the surface of your web part
+
+after the control is added, the active event [magix.ide.surface-changed] 
+will be raised, and if you set [auto-select] to true, [magix.ide.control-
+selected] will be raised after surface-changed is raised"
+
+magix.ide.add-control-sample
+  magix.ide.add-control
+    where
+      dna=>root
+      position=>after
+    control
+      button=>id-of-button
+        class=>span-3
+        value=>howdy world
+
+
+magix.ide.remove-control-dox=>@"remove control from design surface
+
+removes the given [dna] control from the design surface, and control collection.  
+afterwards it will raise the [magix.ide.surface-changed] active event"
+
+magix.ide.remove-control-sample
+  using=>magix.ide
+    add-control
+      where
+        dna=>root
+        position=>child
+      control
+        button=>id-of-button
+          class=>span-3
+          value=>will disappear
+    get-form
+    remove-control
+      dna=>root-0-0
+    get-form
+
+
+magix.ide.change-control-dox=>@"changes properties of control
+
+changes the given [change] properties of your control.  if you do not supply 
+a new value for the property, the property will be removed.  you can change 
+as many properties as you wish at the same time.  after the changes have been 
+made, [magix.ide.surface-changed] is raised"
+
+magix.ide.change-control-sample
+  using=>magix.ide
+    add-control
+      where
+        dna=>root
+        position=>child
+      control
+        button=>id-of-button
+          class=>span-3
+          style=>background-color:red;
+          value=>howdy world
+          onmouseover
+            _foo-something
+    get-form
+    change-control
+      dna=>root-0-0
+      change
+        id=>new-id
+        value=>new value
+        class=>span-5 btn-large
+        style
+        onclick
+          magix.viewport.show-message
+            message=>new onclick event handler
+        onmouseover
+    get-form
+
+
+magix.ide.move-control-dox=>@"move a control
+
+moves the given [dna] control to the given [to] dna position, according 
+to [position].  [position] can be either 'before', 'after' or 'child'.  
+after the control has been moved, the [magix.ide.surface-changed] active 
+event will be raised"
+
+magix.ide.move-control-sample
+  using=>magix.ide
+    add-control
+      where
+        dna=>root
+        position=>child
+      control
+        button=>id-of-button
+          value=>was created first
+          class=>span-5 btn-large
+    add-control
+      where
+        dna=>root
+        position=>child
+      control
+        label=>id-of-label
+          value=>was created last
+          class=>span-5
+    get-form
+    move-control
+      dna=>root-0-0
+      to=>root-0-1
+      position=>after
+    get-form
+
+
+magix.ide.select-control-dox=>@"selects a specific control on the design surface
+
+selects the [dna] control on the design surface, and raises the [magix.ide.control-selected] 
+active event to notify other components.  if no [dna] is passed in, the currently selected 
+control is de-selected"
+
+magix.ide.select-control-sample
+  using=>magix.ide
+    add-control
+      where
+        dna=>root
+        position=>child
+      control
+        button=>my-button
+          value=>a button
+          class=>span-5 btn-large
+    select-control
+      dna=>root-0-0
+
+
+magix.ide.get-selected-control-dox=>@"returns the selected control
+
+returns the currently selected control as [control] and [dna] having 
+the [control] return value be the actual control, containing all 
+properties of control"
+
+magix.ide.get-selected-control-sample
+  using=>magix.ide
+    add-control
+      where
+        dna=>root
+        position=>child
+      control
+        button=>my-button
+          value=>howdy
+    select-control
+      dna=>root-0-0
+    get-selected-control
+
+
+magix.ide.copy-control-dox=>@"copies control into clipboard
+
+copies the currently selected control into the surface clipboard"
+
+magix.ide.copy-control-sample
+  using=>magix.ide
+    add-control
+      where
+        dna=>root
+        position=>child
+      control
+        button=>id-of-button
+          class=>span-3 btn-large
+          value=>a button
+    add-control
+      where
+        dna=>root
+        position=>child
+      control
+        label=>id-of-label
+          class=>span-3
+          value=>a label
+    get-form
+    select-control
+      dna=>root-0-0
+    copy-control
+    select-control
+      dna=>root-0-1
+    paste-control
+      position=>after
+      auto-select=>true
+      
+
+magix.ide.clear-controls-dox=>@"removes all controls from design surface
+
+removes all controls from design surface and control collection, and gives 
+the user an empty fresh design surface.  raises the [magix.ide.surface-changed] 
+active event, and clears the currently selected control"
+
+magix.ide.clear-controls-sample
+  using=>magix.ide
+    add-control
+      where
+        dna=>root
+        position=>child
+      control
+        button=>a-button
+          value=>a button
+    add-control
+      where
+        dna=>root
+        position=>child
+      control
+        label=>a-label
+          value=>a label
+    get-form
+    clear-controls
+    get-form
+
+
+magix.ide.paste-control-dox=>@"paste control into design surface
+
+paste the current clipboard control into the design surface at the 
+given selected control's position.  pass in [position] to signal if 
+you wish to have the control pasted as before, after or child of 
+the currently selected control.  you must have something in your 
+clipboard for this active event to work
+
+if no control is currently selected, the control will be pasted into 
+the main design surface of your form.  if you pass in [auto-select] 
+as true, then the newly added control will be automatically selected
+
+after the control has been pasted into the surface, the [magix.ide.
+surface-changed] active event will be raised, and then if you set 
+[auto-select] to true, afterwards the [magix.ide.control-selected] 
+active event will be raised"
+
+magix.ide.paste-control-sample
+  using=>magix.ide
+    add-control
+      where
+        dna=>root
+        position=>child
+      control
+        button=>id-of-button
+          class=>span-3 btn-large
+          value=>a button
+    add-control
+      where
+        dna=>root
+        position=>child
+      control
+        label=>id-of-label
+          class=>span-3
+          value=>a label
+    get-form
+    select-control
+      dna=>root-0-0
+    copy-control
+    select-control
+      dna=>root-0-1
+    paste-control
+      position=>after
+      auto-select=>true
+
+
+magix.ide.get-form-dox=>@"returns form data
+
+returns the form data, with all controls on surface"
+
+magix.ide.get-form-sample
+  using=>magix.ide
+    add-control
+      where
+        dna=>root
+        position=>child
+      control
+        button=>my-button
+          value=>howdy
+    get-form
+
+
+magix.ide.set-form-dox=>@"sets the form's data
+
+changes the form's data to the value in [value].  if no [value] is given, 
+the form will be completely emptied.  raises the [magix.ide.surface-changed] 
+after it has changed the form's data"
+
+magix.ide.set-form-sample
+  using=>magix.ide
+    set-form
+      value
+        link-button=>your-button
+          value=>click this
+          onclick
+            magix.viewport.show-message
+              message=>howdy world
+    get-form
+

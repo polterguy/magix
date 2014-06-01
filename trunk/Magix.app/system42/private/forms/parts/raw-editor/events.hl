@@ -1,0 +1,19 @@
+﻿
+
+inspect=>@"contains raw-editor active events for form builder
+
+used to create the form builder.  contains the active events necessary 
+to create the raw-editor active events parts of the form builder"
+
+magix.ide.surface-changed
+  magix.ide.get-form
+  set=>[node-2-code][node].Value
+    value=>[magix.ide.get-form]
+  node-2-code
+    remove-root=>true
+  set=>[magix.forms.set-value][value].Value
+    value=>[node-2-code][code].Value
+  magix.forms.set-value
+    form-id=>raw-editor
+    id=>txt-raw-code
+

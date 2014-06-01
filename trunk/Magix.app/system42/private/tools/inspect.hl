@@ -10,8 +10,69 @@ you can pass in [overridden] to show only overridden active events,
 [open] to show open events and [remoted] to show remoted active events.  
 you can also pass in [extra-buttons] which is a list of additional 
 buttons that will be associated with the web-part and coupled together 
-with the already existing 'inspect' button"
+with the already existing 'inspect' button.  if you pass in [no-inspect], 
+then there will be no inspect button, to view and inspect the code
 
+by default this web-part is loaded into the content1 container, but 
+this can be overridden by supplying a [container] parameter
+
+if you pass in [description-class], this will serve as the css class 
+of the description parts of your web-part.  if you pass in [list-class], 
+this will serve as the css class of the list of active events parts of 
+your web part, and [form-class] becomes the main web part's css class.  
+the default css class of the description parts is 'span-12', for the 
+list of active events wrapper 'span-5 last' and for the web-part it is 
+'span-17 last'
+
+by default, when you inspect active events, these will be loaded into 
+the hyperlisp executor, which will be loaded into container content2.  
+if you wish to override the container that the executor is loaded into, 
+then pass in [inspect-container].  if you wish to override the css class 
+for the hyperlisp executor, once loaded, then pass in [inspect-class]"
+
+
+// changing css class(es) if requested
+if=>exist
+  lhs=>[$][description-class]
+  code
+    set=>[_controls][**panel=>pnl-description-wrp][class].Value
+      value=>[$][description-class].Value
+if=>exist
+  lhs=>[$][list-class]
+  code
+    set=>[_controls][**panel=>pnl-events][class].Value
+      value=>[$][list-class].Value
+if=>exist
+  lhs=>[$][form-class]
+  code
+    set=>[using][create-web-part][class].Value
+      value=>[$][form-class].Value
+
+// changing container, if requested
+if=>exist
+  lhs=>[$][container]
+  code
+    set=>[using][**container=>?].Value
+      value=>[$][container].Value
+
+// changing inspect container and css class, if requested
+if=>exist
+  lhs=>[$][inspect-container]
+  code
+    set=>[**panel=>btn-wrappers][controls][button][onclick][magix.viewport.load-module][container].Value
+      value=>[$][inspect-container].Value
+if=>exist
+  lhs=>[$][inspect-class]
+  code
+    set=>[**panel=>btn-wrappers][controls][button][onclick][magix.viewport.load-module][class].Value
+      value=>[$][inspect-class].Value
+
+// removing inspect button, if we should
+if=>equals
+  lhs=>[$][no-inspect].Value
+  rhs=>true
+  code
+    set=>[_controls][**button=>inspect]
 
 // listing events according to input parameter
 if=>exist
@@ -19,19 +80,16 @@ if=>exist
   code
     set=>[list-events][begins-with].Value
       value=>[$][namespace].Value
-
 if=>exist
   lhs=>[$][overridden]
   code
     set=>[list-events][overridden].Value
       value=>[$][overridden].Value
-
 if=>exist
   lhs=>[$][open]
   code
     set=>[list-events][open].Value
       value=>[$][open].Value
-
 if=>exist
   lhs=>[$][remoted]
   code
@@ -42,10 +100,6 @@ list-events
 // removing excluded active events according to input parameter
 for-each=>[$][exclude]
   set=>[/][list-events][events][[.].Name]
-
-// clearing out all containers, except the usual suspects
-magix.viewport.clear-controls
-  all=>true
 
 // setting header according to input parameters
 set=>[**label=>lbl-header][value].Value
@@ -72,7 +126,7 @@ _inspect-active-event
 _create-link-button
   _data
     link-button
-      class=>span-5 last
+      style=>width:100%;display:block;
       onclick
         magix.forms.set-value
           form-id=>active-events
@@ -98,7 +152,7 @@ _create-link-button
   set=>[_data][link-button][value].Value
     value=>[$][event].Value
 
-  // setting onclick behavior
+  // setting more onclick behavior
   set=>[_data][link-button][onclick][magix.forms.set-value:1][value].Value
     value=>[$][_inspect].Value
   if=>exist
@@ -108,6 +162,7 @@ _create-link-button
         value=>[$][code]
       node-2-code
         remove-root=>true
+      // making sure html is correctly formatted
       replace=>[@][node-2-code][code].Value
         what=>&
         with=>&amp;
@@ -122,12 +177,11 @@ _create-link-button
   else
     set=>[_data][link-button][onclick][magix.forms.set-value:2][value].Value
       value=>no-code
-
   // returning link-button
   set=>[$][link-button]
     value=>[_data][link-button]
 
-// creating the web controls in our web-part according to the active events we wish to display
+// creating the clickable link-buttons in our 'grid'
 for-each=>[list-events][events]
 
   // inspecting active event first
@@ -137,7 +191,7 @@ for-each=>[list-events][events]
   set=>[@][lambda][_inspect]
   lambda=>[/][_inspect-active-event]
 
-  // creating link-button
+  // formatting data for creation of link-button
   set=>[@][lambda:1][_inspect]
     value=>[@][lambda:0][_inspect]
   if=>exist
@@ -154,15 +208,17 @@ for-each=>[list-events][events]
     code
       set=>[@][..][..][lambda:1][namespace]
         value=>[$][namespace]
+  // creating link-button and adding to [_controls] node
   lambda=>[/][_create-link-button]
   add=>[/][_controls][panel=>pnl-events][controls]
     value=>[@][lambda:1][link-button]
 
+// adding extra buttons, if any
 for-each=>[$][extra-buttons]
   add=>[/][**panel=>btn-wrappers][controls]
     value=>[.]
 
-// our list of web controls to aqssociate with our create-web-part invocation
+// our list of web controls to associate with our create-web-part invocation
 _controls
   label=>lbl-header
     tag=>h2
@@ -171,10 +227,10 @@ _controls
     controls
       label=>lbl-code
         tag=>pre
-        class=>span-12
+        style=>width:100%;display:block;
         value=>example code
       panel=>btn-wrappers
-        class=>span-12
+        style=>width:100%;display:block;
         controls
           button=>inspect
             value=>inspect
@@ -196,11 +252,11 @@ _controls
                 class=>span-17 last left-5
                 container=>content2
                 name=>Magix.ide.modules.ExecutorForm
-              set=>[magix.admin.set-code][code].Value
+              set=>[magix.executor.set-code][code].Value
                 value=>[magix.forms.get-value][value].Value
-              magix.admin.set-code
+              magix.executor.set-code
       label=>lbl-description
-        class=>span-12 top-1
+        style=>width:100%;display:block;
         value=>@"<h3>description of active event</h3><p>more description ...</p>"
   panel=>pnl-events
     class=>span-5 last

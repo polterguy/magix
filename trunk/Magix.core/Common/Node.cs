@@ -120,17 +120,17 @@ namespace Magix.Core
 		 */
 		public Node FindDna(string dna)
 		{
-			Node tmp = RootNode();
+			Node retVal = RootNode();
 			List<string> dnas = new List<string>(dna.Split('-'));
 			dnas.RemoveAt(0);
 
 			while (dnas.Count > 0)
 			{
 				int idxNo = int.Parse(dnas[0]);
-				tmp = tmp[idxNo];
+				retVal = retVal[idxNo];
 				dnas.RemoveAt(0);
 			}
-			return tmp;
+			return retVal;
 		}
 
 		/*

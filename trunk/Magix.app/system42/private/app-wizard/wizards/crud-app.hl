@@ -115,9 +115,7 @@ magix.forms.create-web-part
             value=>close preview
             onclick
               magix.viewport.clear-controls
-                container=>content5
-              magix.viewport.clear-controls
-                container=>content6
+                all=>true
 
     magix.crud-app.delete-field
       magix.data.load
@@ -313,13 +311,7 @@ magix.forms.create-web-part
           params
             file=>system42/private/app-wizard/wizards/crud-app.hl
         magix.viewport.clear-controls
-          container=>content3
-        magix.viewport.clear-controls
-          container=>content4
-        magix.viewport.clear-controls
-          container=>content5
-        magix.viewport.clear-controls
-          container=>content6
+          all=>true
     button=>deleteApp
       class=>span-3 top-1
       value=>delete
@@ -333,13 +325,7 @@ magix.forms.create-web-part
               params
                 file=>system42/private/app-wizard/wizards/crud-app.hl
             magix.viewport.clear-controls
-              container=>content3
-            magix.viewport.clear-controls
-              container=>content4
-            magix.viewport.clear-controls
-              container=>content5
-            magix.viewport.clear-controls
-              container=>content6
+              all=>true
             magix.viewport.show-message
               message=>crud application was deleted
     button=>generateApp

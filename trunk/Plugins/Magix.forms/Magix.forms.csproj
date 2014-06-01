@@ -59,6 +59,7 @@
     <Compile Include="controls\advanced\UploaderController.cs" />
     <Compile Include="controls\LambdaController.cs" />
     <Compile Include="WebPart.ascx.cs">
+      <DependentUpon>WebPart.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="EffectController.cs" />

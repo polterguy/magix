@@ -139,14 +139,11 @@ for-each=>[magix.file.list-files][files]
         value=>@"{0}/"
           pr0=>@"[$][directory].Value"
       replace=>[/][_link-button][value].Value
-  if=>not-exist
+  if=>exist
     lhs=>[$][select-file]
     code
-      set=>[/][_link-button][onclick][magix.admin.edit-file][file].Value
+      set=>[/][_link-button][onclick][_file].Value
         value=>[.].Name
-  else
-    set=>[/][_link-button][onclick][_file].Value
-      value=>[.].Name
   add=>[/][magix.forms.create-web-part][controls]
     value=>[/][_link-button]
   set=>[/][magix.forms.create-web-part][controls][_link-button].Name
@@ -280,13 +277,7 @@ magix.forms.create-web-part
       execute-script
         file=>system42/private/file-manager/file-manager.hl
       magix.viewport.clear-controls
-        container=>content2
-      magix.viewport.clear-controls
-        container=>content3
-      magix.viewport.clear-controls
-        container=>content4
-      magix.viewport.clear-controls
-        container=>content5
+        all=>true
 
   controls
     label=>desc
