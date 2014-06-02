@@ -38,20 +38,51 @@ namespace Magix.ide.modules
         /*
          * contains clipboard data
          */
-		private Node ClipBoard
-		{
-			get { return ViewState["ClipBoard"] as Node; }
-			set { ViewState["ClipBoard"] = value; }
-		}
+        private Node ClipBoard
+        {
+            get { return Session["magix.ide.current-clipboard"] as Node; }
+            set { Session["magix.ide.current-clipboard"] = value.Clone(); }
+        }
+
+        /*
+         * contains undo chain
+         */
+        private Node UndoChain
+        {
+            get
+            {
+                if (ViewState["UndoChain"] == null)
+                    ViewState["UndoChain"] = new Node();
+                return ViewState["UndoChain"] as Node;
+            }
+        }
+
+        /*
+         * contains current undo chain index
+         */
+        private int UndoChainIndex
+        {
+            get { return ViewState["UndoChainIndex"] == null ? 0 : (int)ViewState["UndoChainIndex"]; }
+            set { ViewState["UndoChainIndex"] = value; }
+        }
 
         /*
          * the currently selected control, if any
          */
 		private string SelectedControlDna
 		{
-            get { return ViewState["SelectedControlDna"] as string; }
-            set { ViewState["SelectedControlDna"] = value; }
+            get { return Session["magix.ide.selected-control-dna"] as string; }
+            set { Session["magix.ide.selected-control-dna"] = value; }
 		}
+
+        /*
+         * true if surface is enabled
+         */
+        private bool SurfaceEnabled
+        {
+            get { return ViewState["SurfaceEnabled"] == null ? true : (bool)ViewState["SurfaceEnabled"]; }
+            set { ViewState["SurfaceEnabled"] = value; }
+        }
 
 		public override void InitialLoading(Node node)
 		{
@@ -65,12 +96,15 @@ namespace Magix.ide.modules
 				};
 		}
 
-		protected override void OnLoad (EventArgs e)
+		protected override void OnLoad(EventArgs e)
 		{
 			BuildForm();
 			base.OnLoad(e);
 		}
 
+        /*
+         * builds the design form according to controls in datasource
+         */
 		private void BuildForm()
 		{
 			wrp.Controls.Clear();
@@ -83,6 +117,9 @@ namespace Magix.ide.modules
 			}
 		}
 
+        /*
+         * creates one control
+         */
 		private void BuildControl(Node nodeControl, Control parent)
 		{
 			string controlType = "magix.forms.controls." + nodeControl.Name;
@@ -104,6 +141,7 @@ namespace Magix.ide.modules
 
 			Node nodeCreateControl = new Node();
 			nodeCreateControl["_code"].Value = nodeCodeCreateControl;
+            nodeCreateControl["id-prefix"].Value = "__designer__";
 
 			RaiseActiveEvent(
 				controlType,
@@ -115,6 +153,7 @@ namespace Magix.ide.modules
             if (nodeCreateControl["_ctrl"].Value != null)
             {
                 Control ctrlObject = nodeCreateControl["_ctrl"].Value as Control;
+                VerifyGoodID(ctrlObject);
                 AddSingleControl(nodeControl, parent, ctrlObject);
             }
             else
@@ -122,11 +161,28 @@ namespace Magix.ide.modules
                 foreach (Node idxCtrl in nodeCreateControl["_ctrl"])
                 {
                     Control ctrlObject = idxCtrl.Value as Control;
+                    VerifyGoodID(ctrlObject);
                     AddSingleControl(nodeControl, parent, ctrlObject);
                 }
             }
 		}
 
+        /*
+         * verifies the id of one single control is good, according to html standard
+         */
+        private void VerifyGoodID(Control ctrlObject)
+        {
+            string id = ctrlObject.ID.Replace("__designer__", "");
+            foreach (char idxChar in id)
+            {
+                if ("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890_-".IndexOf(idxChar) == -1)
+                    throw new ArgumentException("illegal control id, '" + id + "' is not legal");
+            }
+        }
+
+        /*
+         * adds one single control to parent control
+         */
         private void AddSingleControl(Node nodeControl, Control parent, Control ctrlObject)
         {
             if (nodeControl.Dna == SelectedControlDna)
@@ -148,6 +204,9 @@ namespace Magix.ide.modules
             parent.Controls.Add(ctrlObject);
         }
 
+        /*
+         * design surface clicked, resetting selected control
+         */
 		protected void wrp_Click(object sender, EventArgs e)
 		{
 			SelectedControlDna = null;
@@ -155,8 +214,7 @@ namespace Magix.ide.modules
 			BuildForm();
 			wrp.ReRender();
 
-			RaiseActiveEvent("magix.ide.surface-changed");
-            RaiseActiveEvent("magix.ide.control-selected");
+            RaiseSurfaceAndSelectionChangedChanged();
 		}
 
         /*
@@ -183,23 +241,33 @@ namespace Magix.ide.modules
 
 			foreach (Node idxControl in DataSource["controls"])
 			{
-				GetControl(idxControl, ip["controls"]);
+				GetControl(idxControl, ip["controls"], 0);
             }
 		}
 
-		private void GetControl(Node controlNodeSource, Node root)
+        /*
+         * helper for above, returns one single control, and its children, flat
+         */
+		private void GetControl(Node controlNodeSource, Node root, int level)
 		{
             Node currentControlDestination = new Node();
 			currentControlDestination.Name = controlNodeSource.Dna;
-            currentControlDestination.Value = controlNodeSource.Name + ":" + controlNodeSource.Get<string>();
+
+            string value = controlNodeSource.Name + ":" + controlNodeSource.Get<string>();
+            int idxLevel = level;
+            while (idxLevel-- != 0)
+                value = "-" + value;
+            currentControlDestination.Value = value;
+
             root.Add(currentControlDestination);
 
 			if (controlNodeSource.Contains("controls"))
 			{
+                level += 1;
 				foreach (Node idxInnerControl in controlNodeSource["controls"])
 				{
 					Node innerControlNode = new Node();
-                    GetControl(idxInnerControl, root);
+                    GetControl(idxInnerControl, root, level);
 				}
 			}
 		}
@@ -226,13 +294,65 @@ namespace Magix.ide.modules
                 return;
 			}
 
+            if (!SurfaceEnabled)
+                throw new ArgumentException("wysiwyg surface is not enabled");
+
 			if (!ip.Contains("control"))
 				throw new ArgumentException("no [control] given to [magix.ide.add-control]");
 
 			if (ip["control"].Count != 1)
 				throw new ArgumentException("you must supply exactly one control to [magix.ide.add-control]");
 
-			string dna 		= SelectedControlDna ?? "root";
+            AddControlToSurface(
+                ip, 
+                ip["control"][0].Clone());
+		}
+
+        /*
+         * paste control
+         */
+        [ActiveEvent(Name = "magix.ide.paste-control")]
+        protected void magix_ide_paste_control(object sender, ActiveEventArgs e)
+        {
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
+            {
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.ide",
+                    "Magix.ide.hyperlisp.inspect.hl",
+                    "[magix.ide.paste-control-dox].Value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.ide",
+                    "Magix.ide.hyperlisp.inspect.hl",
+                    "[magix.ide.paste-control-sample]");
+                return;
+            }
+
+            if (!SurfaceEnabled)
+                throw new ArgumentException("wysiwyg surface is not enabled");
+
+            if (ClipBoard == null)
+                throw new ArgumentException("no control in clipboard");
+
+            Node controlToAddNode = ClipBoard.Clone();
+            controlToAddNode.Value = GetNextAvailableControlId();
+
+            AddControlToSurface(
+                ip,
+                controlToAddNode);
+        }
+
+        /*
+         * adds a control to wysiwyg surface
+         */
+        private void AddControlToSurface(
+            Node ip,
+            Node controlToAddNode)
+        {
+            // defaulting to currently selected if exists, otherwise main surface
+            string dna = SelectedControlDna ?? DataSource["controls"].Dna;
             string position = "after";
 
             if (ip.Contains("where"))
@@ -243,106 +363,77 @@ namespace Magix.ide.modules
                     position = ip["where"]["position"].Get<string>();
             }
 
-			Node controlNode = ip["control"][0].Clone();
-
-            if (!controlNode.Contains("id") &&
-                string.IsNullOrEmpty(controlNode.Get<string>()))
-                controlNode.Value = GetNextAvailableControlId();
-
-            if (controlNode.Contains("id"))
+            if (dna == DataSource["controls"].Dna)
             {
-                if (controlNode.Value != null)
-                    throw new ArgumentException("either supply [id] or value, not both");
-                controlNode.Value = controlNode["id"].Get<string>();
-                controlNode["id"].UnTie();
-            }
-
-            Node getControlsNode = new Node();
-            RaiseActiveEvent(
-                "magix.ide.list-controls",
-                getControlsNode);
-            foreach (Node idxCtrl in getControlsNode["controls"])
-            {
-                string idOfIdx = idxCtrl.Get<string>().Split(':')[1];
-                if (controlNode.Get<string>() == idOfIdx)
-                {
-                    // id was occupied
-                    controlNode.Value = GetNextAvailableControlId();
-                }
-            }
-
-            // root can only have children, no after or before controls
-            if (dna == "root")
-            {
-                if (position == "before")
-                {
-                    if (DataSource["controls"].Count > 0)
-                        dna = "root-0-0";
-                }
+                // main surface is destination, making sure position gets correct if user chose "before", and we can do such a thing
+                if (position == "before" && DataSource["controls"].Count > 0)
+                    dna = DataSource["controls"][0].Dna;
                 else
                     position = "child";
             }
 
-            Node whereNode = DataSource.FindDna(dna);
+            if (!controlToAddNode.Contains("id") &&
+                string.IsNullOrEmpty(controlToAddNode.Get<string>()))
+                controlToAddNode.Value = GetNextAvailableControlId();
+            else if (controlToAddNode.Contains("id"))
+            {
+                if (controlToAddNode.Value != null)
+                    throw new ArgumentException("either supply [id] or value, not both");
+
+                // moving id into value for consistency
+                controlToAddNode.Value = controlToAddNode["id"].Get<string>();
+                controlToAddNode["id"].UnTie();
+            }
+
+            AddToUndoChain(!ip.ContainsValue("skip-undo") || !ip["skip-undo"].Get<bool>());
+
+            Node destinationNode = DataSource.FindDna(dna);
+
             switch (position)
-			{
-			case "before":
-				whereNode.AddBefore(controlNode);
-				break;
-			case "after":
-				whereNode.AddAfter(controlNode);
-				break;
-			case "child":
-			{
-				if (whereNode.Name == "surface")
-					whereNode["controls"].Add(controlNode);
-				else
-				{
-					Node inspectParent = new Node();
-					inspectParent["inspect"].Value = null;
-
-					RaiseActiveEvent(
-						"magix.forms.controls." + whereNode.Name,
-						inspectParent);
-
-                    if (inspectParent["magix.forms.create-web-part"]["controls"][0].Contains("controls"))
-                        whereNode["controls"].Add(controlNode);
-                    else
+            {
+                case "before":
+                    destinationNode.AddBefore(controlToAddNode);
+                    break;
+                case "after":
+                    destinationNode.AddAfter(controlToAddNode);
+                    break;
+                case "child":
                     {
-                        Node msg = new Node();
-                        msg["message"].Value = "control didn't support children, added the control after your selection";
-                        msg["color"].Value = "#ffbbbb";
-                        RaiseActiveEvent(
-                            "magix.viewport.show-message",
-                            msg);
-                        whereNode.AddAfter(controlNode); // defaulting to after
-                    }
-				}
-			} break;
-			default:
-				throw new ArgumentException("only before, after or child are legal positions");
-			}
+                        if (destinationNode.Dna == DataSource["controls"].Dna)
+                            destinationNode.Add(controlToAddNode);
+                        else
+                        {
+                            // verifying control supports having children, otherwise defaulting to 'after'
+                            Node inspectParent = new Node();
+                            inspectParent["inspect"].Value = null;
+                            RaiseActiveEvent(
+                                "magix.forms.controls." + destinationNode.Name,
+                                inspectParent);
 
-			if (ip.Contains("auto-select") && ip["auto-select"].Get<bool>())
-			{
-				SelectedControlDna = controlNode.Dna;
-				BuildForm();
-				wrp.ReRender();
-				RaiseActiveEvent("magix.ide.surface-changed");
+                            if (inspectParent["magix.forms.create-web-part"]["controls"][0].Contains("controls"))
+                                destinationNode["controls"].Add(controlToAddNode);
+                            else
+                            {
+                                Node msg = new Node();
+                                msg["message"].Value = "control didn't support children, added the control after your selection";
+                                msg["color"].Value = "#ffbbbb";
+                                RaiseActiveEvent(
+                                    "magix.viewport.show-message",
+                                    msg);
+                                destinationNode.AddAfter(controlToAddNode); // defaulting to after
+                            }
+                        }
+                    } break;
+                default:
+                    throw new ArgumentException("only before, after or child are legal positions");
+            }
 
-				Node selectedControlChangedNode = new Node();
-				selectedControlChangedNode["dna"].Value = SelectedControlDna;
-				RaiseActiveEvent(
-					"magix.ide.control-selected",
-					selectedControlChangedNode);
-			}
-			else
-			{
-				BuildForm();
-				wrp.ReRender();
-				RaiseActiveEvent("magix.ide.surface-changed");
-			}
-		}
+            if (ip.Contains("auto-select") && ip["auto-select"].Get<bool>())
+                SelectedControlDna = controlToAddNode.Dna;
+            BuildForm();
+            wrp.ReRender();
+            RaiseSurfaceAndSelectionChangedChanged();
+        }
 
         /*
          * returns the next automatic available control id
@@ -396,16 +487,22 @@ namespace Magix.ide.modules
                 return;
 			}
 
-			if (!ip.ContainsValue("dna"))
-				throw new ArgumentException("no [dna] given to [magix.ide.remove-control]");
-			string dna = ip["dna"].Get<string>();
+            if (!SurfaceEnabled)
+                throw new ArgumentException("wysiwyg surface is not enabled");
 
-			Node whereNode = DataSource.FindDna(dna);
+            string dna = SelectedControlDna;
+            if (ip.ContainsValue("dna"))
+			    dna = ip["dna"].Get<string>();
+            SelectedControlDna = null;
+
+            AddToUndoChain(!ip.ContainsValue("skip-undo") || !ip["skip-undo"].Get<bool>());
+            
+            Node whereNode = DataSource.FindDna(dna);
             whereNode.UnTie();
 			BuildForm();
 			wrp.ReRender();
-			RaiseActiveEvent("magix.ide.surface-changed");
-		}
+            RaiseSurfaceAndSelectionChangedChanged();
+        }
 
         /*
          * changes properties of control
@@ -429,13 +526,18 @@ namespace Magix.ide.modules
                 return;
 			}
 
-			if (!ip.Contains("change") && !ip.Contains("remove"))
-				throw new ArgumentException("no [change] or [remove] given to [magix.ide.change-control]");
+            if (!SurfaceEnabled)
+                throw new ArgumentException("wysiwyg surface is not enabled");
+
+            if (!ip.Contains("change") || ip["change"].Count == 0)
+				throw new ArgumentException("no [change] given to [magix.ide.change-control]");
 
             if (!ip.ContainsValue("dna"))
                 throw new ArgumentException("no [dna] given to [magix.ide.change-control]");
 
-			Node controlNode = DataSource.FindDna(ip["dna"].Get<string>());
+            AddToUndoChain(!ip.ContainsValue("skip-undo") || !ip["skip-undo"].Get<bool>());
+            
+            Node controlNode = DataSource.FindDna(ip["dna"].Get<string>());
 
 			if (ip.Contains("change"))
 			{
@@ -476,62 +578,6 @@ namespace Magix.ide.modules
             RaiseActiveEvent("magix.ide.surface-changed");
         }
 
-		/*
-		 * moves a control to another position
-		 */
-		[ActiveEvent(Name = "magix.ide.move-control")]
-		protected void magix_ide_move_control(object sender, ActiveEventArgs e)
-		{
-            Node ip = Ip(e.Params);
-            if (ShouldInspect(ip))
-            {
-                AppendInspectFromResource(
-                    ip["inspect"],
-                    "Magix.ide",
-                    "Magix.ide.hyperlisp.inspect.hl",
-                    "[magix.ide.move-control-dox].Value");
-                AppendCodeFromResource(
-                    ip,
-                    "Magix.ide",
-                    "Magix.ide.hyperlisp.inspect.hl",
-                    "[magix.ide.move-control-sample]");
-                return;
-			}
-
-			if (!ip.ContainsValue("dna"))
-				throw new ArgumentException("no [dna] given to [magix.ide.move-control]");
-
-			if (!ip.ContainsValue("to"))
-				throw new ArgumentException("no [to] given to [magix.ide.move-control]");
-
-			if (!ip.ContainsValue("position"))
-				throw new ArgumentException("no [position] given to [magix.ide.move-control]");
-
-			Node controlToMoveNode = DataSource.FindDna(ip["dna"].Get<string>());
-            Node destinationControlNode = DataSource.FindDna(ip["to"].Get<string>());
-            if (controlToMoveNode.Dna.IndexOf(destinationControlNode.Dna) != -1)
-                throw new ArgumentException("you cannot move a control into one of its own descendants");
-            controlToMoveNode.UnTie();
-			switch (ip["position"].Get<string>())
-			{
-			case "before":
-				destinationControlNode.AddBefore(controlToMoveNode);
-				break;
-			case "after":
-                destinationControlNode.AddAfter(controlToMoveNode);
-				break;
-			case "child":
-                destinationControlNode.Add(controlToMoveNode);
-				break;
-			default:
-				throw new ArgumentException("only before, after or child are legal values as [position]");
-			}
-
-			BuildForm();
-			wrp.ReRender();
-			RaiseActiveEvent("magix.ide.surface-changed");
-		}
-
         /*
          * selects control
          */
@@ -554,7 +600,10 @@ namespace Magix.ide.modules
                 return;
 			}
 
-			if (!ip.ContainsValue("dna"))
+            if (!SurfaceEnabled)
+                throw new ArgumentException("wysiwyg surface is not enabled");
+
+            if (!ip.ContainsValue("dna"))
 				SelectedControlDna = null;
 			else
 				SelectedControlDna = ip["dna"].Get<string>();
@@ -573,8 +622,8 @@ namespace Magix.ide.modules
          * returns selected control
          */
         [ActiveEvent(Name = "magix.ide.get-selected-control")]
-		protected void magix_ide_get_selected_control(object sender, ActiveEventArgs e)
-		{
+        protected void magix_ide_get_selected_control(object sender, ActiveEventArgs e)
+        {
             Node ip = Ip(e.Params);
             if (ShouldInspect(ip))
             {
@@ -589,18 +638,44 @@ namespace Magix.ide.modules
                     "Magix.ide.hyperlisp.inspect.hl",
                     "[magix.ide.get-selected-control-sample]");
                 return;
-			}
+            }
 
-			if (!string.IsNullOrEmpty(SelectedControlDna))
-			{
+            if (!string.IsNullOrEmpty(SelectedControlDna))
+            {
                 ip["dna"].Value = DataSource.FindDna(SelectedControlDna).Dna;
-				ip["value"].Add(DataSource.FindDna(SelectedControlDna).Clone());
-			}
-		}
+                ip["value"].Add(DataSource.FindDna(SelectedControlDna).Clone());
+            }
+        }
 
-		/*
-		 * copies control into clipboard
-		 */
+        /*
+         * returns selected control
+         */
+        [ActiveEvent(Name = "magix.ide.get-clipboard-control")]
+        protected void magix_ide_get_clipboard_control(object sender, ActiveEventArgs e)
+        {
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
+            {
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.ide",
+                    "Magix.ide.hyperlisp.inspect.hl",
+                    "[magix.ide.get-clipboard-control-dox].Value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.ide",
+                    "Magix.ide.hyperlisp.inspect.hl",
+                    "[magix.ide.get-clipboard-control-sample]");
+                return;
+            }
+
+            if (ClipBoard != null)
+                ip["control"].Add(ClipBoard.Clone());
+        }
+
+        /*
+         * copies control into clipboard
+         */
 		[ActiveEvent(Name = "magix.ide.copy-control")]
 		protected void magix_ide_copy_control(object sender, ActiveEventArgs e)
 		{
@@ -647,100 +722,18 @@ namespace Magix.ide.modules
                     "[magix.ide.clear-controls-sample]");
                 return;
             }
+
+            if (!SurfaceEnabled)
+                throw new ArgumentException("wysiwyg surface is not enabled");
+
+            AddToUndoChain(!ip.ContainsValue("skip-undo") || !ip["skip-undo"].Get<bool>());
+
             DataSource = new Node("surface");
             SelectedControlDna = null;
             BuildForm();
             wrp.ReRender();
             RaiseActiveEvent("magix.ide.surface-changed");
         }
-
-		/*
-		 * paste control
-		 */
-		[ActiveEvent(Name = "magix.ide.paste-control")]
-		protected void magix_ide_paste_control(object sender, ActiveEventArgs e)
-		{
-            Node ip = Ip(e.Params);
-            if (ShouldInspect(ip))
-            {
-                AppendInspectFromResource(
-                    ip["inspect"],
-                    "Magix.ide",
-                    "Magix.ide.hyperlisp.inspect.hl",
-                    "[magix.ide.paste-control-dox].Value");
-                AppendCodeFromResource(
-                    ip,
-                    "Magix.ide",
-                    "Magix.ide.hyperlisp.inspect.hl",
-                    "[magix.ide.paste-control-sample]");
-                return;
-			}
-
-			if (ClipBoard == null)
-				throw new ArgumentException("no control in clipboard");
-
-			Node destinationNode = DataSource["controls"];
-			if (!string.IsNullOrEmpty(SelectedControlDna))
-				destinationNode = DataSource.FindDna(SelectedControlDna);
-
-			string position = "child";
-			if (ip.ContainsValue("position"))
-				position = ip["position"].Get<string>();
-
-			Node toAdd = ClipBoard.Clone();
-            toAdd.Value = GetNextAvailableControlId();
-
-			switch (position)
-			{
-			    case "before":
-				    destinationNode.AddBefore(toAdd);
-				    break;
-			    case "after":
-				    destinationNode.AddAfter(toAdd);
-				    break;
-			    case "child":
-			    {
-                    if (string.IsNullOrEmpty(SelectedControlDna))
-					    destinationNode.Add(toAdd);
-				    else
-				    {
-					    Node inspectControl = new Node();
-					    inspectControl["inspect"].Value = null;
-
-					    RaiseActiveEvent(
-						    "magix.forms.controls." + destinationNode.Get<string>(),
-						    inspectControl);
-
-					    if (inspectControl["magix.forms.create-web-part"]["controls"][0].Contains("controls"))
-						    destinationNode["controls"].Add(toAdd);
-					    else
-						    destinationNode.AddAfter(toAdd); // defaulting to add 'after'
-				    }
-			    } break;
-			    default:
-				    throw new ArgumentException("only before, after or child are legal values");
-			}
-
-			if (ip.Contains("auto-select") && ip["auto-select"].Get<bool>())
-			{
-				SelectedControlDna = toAdd.Dna;
-				BuildForm();
-				wrp.ReRender();
-				RaiseActiveEvent("magix.ide.surface-changed");
-
-				Node selectedControlChangedNode = new Node();
-				selectedControlChangedNode["dna"].Value = SelectedControlDna;
-				RaiseActiveEvent(
-					"magix.ide.control-selected",
-					selectedControlChangedNode);
-			}
-			else
-			{
-				BuildForm();
-				wrp.ReRender();
-				RaiseActiveEvent("magix.ide.surface-changed");
-			}
-		}
 
         /*
          * returns the current form's data
@@ -790,6 +783,9 @@ namespace Magix.ide.modules
                 return;
             }
 
+            if (!SurfaceEnabled)
+                throw new ArgumentException("wysiwyg surface is not enabled");
+
             Node value = ip["value"];
             Dictionary<string, bool> ids = new Dictionary<string, bool>();
 
@@ -813,16 +809,209 @@ namespace Magix.ide.modules
                 return;
             }
 
-            SelectedControlDna = null;
+            AddToUndoChain(!ip.ContainsValue("skip-undo") || !ip["skip-undo"].Get<bool>());
+
             DataSource["controls"].Clear();
             if (ip.Contains("value"))
                 DataSource["controls"].AddRange(value.Clone());
 
+            if (SelectedControlDna != null && ((ip.ContainsValue("clear-selection") && ip["clear-selection"].Get<bool>()) ||
+                (DataSource.FindDna(SelectedControlDna) == null ||
+                (DataSource.FindDna(SelectedControlDna).Parent != null && DataSource.FindDna(SelectedControlDna).Parent.Name != "controls"))))
+                SelectedControlDna = null;
+
             BuildForm();
             wrp.ReRender();
-            RaiseActiveEvent("magix.ide.surface-changed");
+
+            if (!ip.ContainsValue("no-update") || !ip["no-update"].Get<bool>())
+                RaiseSurfaceAndSelectionChangedChanged();
         }
 
+        /*
+         * enables or disables the wysiwyg design surface
+         */
+        [ActiveEvent(Name = "magix.ide.enable-surface")]
+        protected void magix_ide_enable_surface(object sender, ActiveEventArgs e)
+        {
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
+            {
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.ide",
+                    "Magix.ide.hyperlisp.inspect.hl",
+                    "[magix.ide.enable-surface-dox].Value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.ide",
+                    "Magix.ide.hyperlisp.inspect.hl",
+                    "[magix.ide.enable-surface-sample]");
+                return;
+            }
+
+            if (!ip.ContainsValue("value"))
+                throw new ArgumentException("no [value] passed into [magix.ide.enable-surface]");
+            SurfaceEnabled = ip["value"].Get<bool>();
+
+            if (!SurfaceEnabled && !wrp.Class.Contains("wysiwyg-disabled"))
+                wrp.Class = wrp.Class + " wysiwyg-disabled";
+            else if (SurfaceEnabled && wrp.Class.Contains("wysiwyg-disabled"))
+                wrp.Class = wrp.Class.Replace(" wysiwyg-disabled", "");
+        }
+
+        /*
+         * retrieves if the surface is enabled or not
+         */
+        [ActiveEvent(Name = "magix.ide.get-enabled")]
+        protected void magix_ide_get_enabled(object sender, ActiveEventArgs e)
+        {
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
+            {
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.ide",
+                    "Magix.ide.hyperlisp.inspect.hl",
+                    "[magix.ide.get-enabled-dox].Value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.ide",
+                    "Magix.ide.hyperlisp.inspect.hl",
+                    "[magix.ide.get-enabled-sample]");
+                return;
+            }
+
+            ip["value"].Value = SurfaceEnabled;
+        }
+
+        /*
+         * undo the last action on the form
+         */
+        [ActiveEvent(Name = "magix.ide.undo")]
+        protected void magix_ide_undo(object sender, ActiveEventArgs e)
+        {
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
+            {
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.ide",
+                    "Magix.ide.hyperlisp.inspect.hl",
+                    "[magix.ide.undo-dox].Value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.ide",
+                    "Magix.ide.hyperlisp.inspect.hl",
+                    "[magix.ide.undo-sample]");
+                return;
+            }
+
+            if (UndoChainIndex <= 0)
+            {
+                Node msg = new Node();
+                msg["message"].Value = "cannot further undo on the surface";
+                RaiseActiveEvent(
+                    "magix.viewport.show-message",
+                    msg);
+                return;
+            }
+
+            // checking to see if this is first undo, if so, we need to add this into the "redo chain"
+            if (UndoChain.Count == UndoChainIndex)
+            {
+                UndoChain.Add(DataSource.Clone());
+                UndoChain[UndoChain.Count - 1]["_selected"].Value = SelectedControlDna;
+            }
+
+            DataSource = UndoChain[--UndoChainIndex].Clone();
+            SelectedControlDna = DataSource["_selected"].Get<string>();
+            DataSource["_selected"].UnTie();
+
+            BuildForm();
+            wrp.ReRender();
+
+            if (!ip.ContainsValue("no-update") || !ip["no-update"].Get<bool>())
+                RaiseSurfaceAndSelectionChangedChanged();
+
+            RaiseUndoChainIndexChanged();
+        }
+
+        /*
+         * raises the surface-changed and the control-selected events
+         */
+        private void RaiseSurfaceAndSelectionChangedChanged()
+        {
+            RaiseActiveEvent("magix.ide.surface-changed");
+
+            Node selectedControlChangedNode = new Node();
+            if (!string.IsNullOrEmpty(SelectedControlDna))
+                selectedControlChangedNode["dna"].Value = SelectedControlDna;
+            RaiseActiveEvent(
+                "magix.ide.control-selected",
+                selectedControlChangedNode);
+        }
+
+        /*
+         * redo the last action on the form
+         */
+        [ActiveEvent(Name = "magix.ide.redo")]
+        protected void magix_ide_redo(object sender, ActiveEventArgs e)
+        {
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
+            {
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.ide",
+                    "Magix.ide.hyperlisp.inspect.hl",
+                    "[magix.ide.redo-dox].Value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.ide",
+                    "Magix.ide.hyperlisp.inspect.hl",
+                    "[magix.ide.redo-sample]");
+                return;
+            }
+
+            if (UndoChainIndex >= UndoChain.Count)
+            {
+                Node msg = new Node();
+                msg["message"].Value = "cannot further redo on the surface";
+                RaiseActiveEvent(
+                    "magix.viewport.show-message",
+                    msg);
+                return;
+            }
+
+            DataSource = UndoChain[++UndoChainIndex].Clone();
+            SelectedControlDna = DataSource["_selected"].Get<string>();
+            DataSource["_selected"].UnTie();
+
+            BuildForm();
+            wrp.ReRender();
+
+            if (!ip.ContainsValue("no-update") || !ip["no-update"].Get<bool>())
+                RaiseSurfaceAndSelectionChangedChanged();
+
+            RaiseUndoChainIndexChanged();
+        }
+
+        /*
+         * raises the undo-chain-index-changed event
+         */
+        private void RaiseUndoChainIndexChanged()
+        {
+            Node undoNode = new Node();
+            undoNode["can-undo"].Value = UndoChainIndex > 0;
+            undoNode["can-redo"].Value = UndoChainIndex < UndoChain.Count - 1;
+            RaiseActiveEvent(
+                "magix.ide.undo-chain-index-changed",
+                undoNode);
+        }
+
+        /*
+         * verifies all controls have unique ids recursively
+         */
         private bool CheckControlIdUnique(Node idxControl, Dictionary<string, bool> ids)
         {
             if (ids.ContainsKey(idxControl.Get<string>()))
@@ -837,6 +1026,32 @@ namespace Magix.ide.modules
                 }
             }
             return true;
+        }
+
+        /*
+         * adds current form to the stack of undo chain items
+         */
+        private void AddToUndoChain(bool raiseUndoChainIndexChanged)
+        {
+            // we don't add this to the undo stack, unless it is either explicitly asked for, or it is the first 
+            // update to the form
+            if (raiseUndoChainIndexChanged || UndoChain.Count == 0)
+            {
+                // removes any undo chains ahead of our curent index, in case user has executed undo, before this action
+                int idxRemove = UndoChain.Count;
+                while (idxRemove > UndoChainIndex)
+                    UndoChain[--idxRemove].UnTie();
+
+                // adding current datasource, and selected control to undo chain list
+                UndoChain.Add(DataSource.Clone());
+                UndoChain[UndoChain.Count - 1]["_selected"].Value = SelectedControlDna;
+            }
+
+            if (raiseUndoChainIndexChanged)
+            {
+                UndoChainIndex = UndoChain.Count;
+                RaiseUndoChainIndexChanged();
+            }
         }
     }
 }

@@ -7,6 +7,7 @@ which you can use in for instance the [magix.forms.create-web-part] active
 event, to create your forms"
 
 
+// creating the "add controls" web part, containing a list of all controls in system
 magix.forms.create-web-part
   form-id=>add-control
   container=>content1
@@ -14,25 +15,39 @@ magix.forms.create-web-part
   controls-file=>system42/private/forms/parts/add-control/controls.hl
   events-file=>system42/private/forms/parts/add-control/events.hl
 
+// creating the wysiwyg designer surface, toolbar, and the raw code text-area editor
 magix.forms.create-web-part
   form-id=>form-builder
   container=>content2
   class=>span-22 last
+  events-file=>system42/private/forms/parts/surface/events.hl
   controls
+
+    // editor toolbar
+    dynamic=>editor-toolbar
+      onfirstload
+        magix.forms.create-web-part
+          form-id=>editor-toolbar
+          container=>editor-toolbar
+          class=>span-22 last
+          events-file=>system42/private/forms/parts/toolbar/events.hl
+          controls-file=>system42/private/forms/parts/toolbar/controls.hl
+
+    // wysiwyg design surface
     dynamic=>wysiwyg-surface
-      class=>span-22 last
       onfirstload
         magix.viewport.load-module
           name=>Magix.ide.modules.Surface
           container=>wysiwyg-surface
           class=>span-22 last showgrid
-    dynamic=>raw-edit
-      class=>span-22 last
+
+    // raw code text-area editor
+    dynamic=>raw-editor
       style=>position:relative;
       onfirstload
         magix.forms.create-web-part
           form-id=>raw-editor
-          container=>raw-edit
+          container=>raw-editor
           class=>span-22 last
           events-file=>system42/private/forms/parts/raw-editor/events.hl
           controls-file=>system42/private/forms/parts/raw-editor/controls.hl

@@ -1,0 +1,47 @@
+﻿
+
+inspect=>@"contains toolbar parts of form builder
+
+used to create the form builder.  contains the controls necessary 
+to create the toolbar parts of the form builder"
+
+select=>select-control
+  class=>span-5
+  onclick
+    magix.ide.selected-control-changed
+
+button=>btn-copy
+  class=>span-2
+  value=>copy
+  disabled=>true
+  onclick
+    magix.ide.copy-control-requested
+
+button=>btn-paste
+  class=>span-2
+  value=>paste
+  disabled=>true
+  onclick
+    magix.ide.paste-control-requested
+
+button=>btn-delete
+  class=>span-2
+  value=>delete
+  disabled=>true
+  onclick
+    magix.ide.remove-control
+
+button=>btn-undo
+  class=>span-2
+  value=>undo
+  disabled=>true
+  onclick
+    magix.ide.undo
+
+button=>btn-redo
+  class=>span-2
+  value=>redo
+  disabled=>true
+  onclick
+    magix.ide.redo
+    

@@ -5,6 +5,7 @@ inspect=>@"contains raw-editor active events for form builder
 used to create the form builder.  contains the active events necessary 
 to create the raw-editor active events parts of the form builder"
 
+// changing the raw code text-area to the new code according to the form data
 magix.ide.surface-changed
   magix.ide.get-form
   set=>[node-2-code][node].Value
@@ -16,4 +17,166 @@ magix.ide.surface-changed
   magix.forms.set-value
     form-id=>raw-editor
     id=>txt-raw-code
+
+// loads the serialized form data from database and sets the
+// main design surface value according to serialized form data
+magix.ide.reload-serialized-form-data
+  try
+    code
+      magix.data.load-username
+        id=>magix.ide.current-surface-controls
+      if=>exist
+        lhs=>[@][magix.data.load-username][objects]
+        code
+
+          // setting raw text-area code first, in case updating wysiwyg surface throws exceptions
+          node-2-code
+            node=>[@][..][..][magix.data.load-username][objects][0]
+            remove-root=>true
+          set=>[@][magix.forms.set-value][value].Value
+            value=>[@][node-2-code][code].Value
+          magix.forms.set-value
+            form-id=>raw-editor
+            id=>txt-raw-code
+
+          // setting wysiwyg surface with serialized form data, with no update parameter, to not 
+          // post the magix.ide.surface-changed active event
+          add=>[@][magix.ide.set-form][value]
+            value=>[@][..][..][magix.data.load-username][objects][0]
+            children-only=>true
+          magix.ide.set-form
+            no-update=>true
+            skip-undo=>true
+      magix.ide.controls-collection-changed
+    catch
+      set=>[@][magix.viewport.show-message][message].Value
+        value=>something went wrong while reloading form, message from system was {0}
+          =>[@][exception].Value
+
+      // since surface couldn't be updated, we clear surface, and allows raw code text-area to show code
+      magix.ide.set-form
+        clear-selection=>true
+        no-update=>true
+      magix.viewport.show-message
+        time=>5000
+        color=>#ffbbbb
+
+      // disabling surface, to not allow for updates, before user has fixed bug in code
+      magix.ide.enable-surface
+        value=>false
+
+// expects [value] parameter, being a textual representation of form data
+// which it serializes towards database for later reference
+magix.ide.serialize-code-update-wysiwyg
+  magix.ide.get-form
+  try
+    code
+
+      // enabling surface, in case it's been disabled by previous calls, 
+      // since otherwise it doesn't allow for changing anything
+      magix.ide.enable-surface
+        value=>true
+
+      // trying to update wysiwyg area
+      set=>[@][code-2-node][code].Value
+        value=>[$][value].Value
+      code-2-node
+
+      // since magix.ide.set-form triggers magix.ide.surface-changed, which again serializes form
+      // to database, we don't need to explicitly save form data here to database, since it is
+      // is done automatically in other event handlers for us, unless an exception occurs, at which 
+      // point the magix.ide.set-form does not raise the magix.ide.surface-changed event
+      add=>[@][magix.ide.set-form][value]
+        value=>[@][code-2-node][node]
+        children-only=>true
+      magix.ide.set-form
+        clear-selection=>true
+    catch
+
+      // something went wrong, just setting old form
+      set=>[@][magix.viewport.show-message][message].Value
+        value=>couldn't update wysiwyg surface area, error message from system was {0}
+          =>[@][exception].Value
+      add=>[@][magix.ide.set-form]
+        value=>[magix.ide.get-form]
+        children-only=>true
+
+      // no update notification, since this will trigger ontextchanged again, and create recursion
+      magix.ide.set-form
+        no-update=>true
+        clear-selection=>true
+      using=>magix.forms
+        set-value
+          form-id=>raw-editor
+          id=>txt-raw-code
+          value=>[$][value].Value
+      magix.viewport.show-message
+        time=>5000
+        color=>#ffbbbb
+
+      // saving the form data, although it is funky, since this doesn't automatically happen when
+      // magix.ide.set-form throws an exception
+      add=>[@][magix.data.save-username][value]
+        value=>[try][code][code-2-node][node]
+        children-only=>true
+      magix.data.save-username
+        id=>magix.ide.current-surface-controls
+
+      // disabling the wysiwyg design surface, to not allow for adding, or changing controls
+      // before the bug is fixed in code
+      magix.ide.enable-surface
+        value=>false
+
+// triggers visibility of raw code text-area
+magix.ide.toggle-visibility-raw-code
+  if=>equals
+    lhs=>[$][value].Value
+    rhs=>hide
+    code
+      // hiding raw code text-area
+      magix.forms.effect
+        type=>roll-up
+        form-id=>raw-editor
+        id=>txt-raw-code
+        time=>250
+      magix.forms.set-value
+        form-id=>raw-editor
+        id=>lnk-toggle-raw-edit
+        value=>show
+      set=>[magix.data.save-username][value][visible].Value
+        value=>false
+  else
+    // showing raw code text-area
+    magix.forms.effect
+      type=>roll-down
+      form-id=>raw-editor
+      id=>txt-raw-code
+      time=>250
+    magix.forms.set-value
+      form-id=>raw-editor
+      id=>lnk-toggle-raw-edit
+      value=>hide
+    set=>[magix.data.save-username][value][visible].Value
+      value=>true
+
+  // saving state of raw code text-area
+  magix.data.save-username
+    id=>magix.ide.raw-code-text-area-visible
+
+magix.ide.set-raw-code-initial-visibility
+  magix.data.load-username
+    id=>magix.ide.raw-code-text-area-visible
+  if=>equals
+    lhs=>[magix.data.load-username][objects][0][visible].Value
+    rhs=>false
+    code
+      magix.forms.set-style
+        form-id=>raw-editor
+        id=>txt-raw-code
+        key=>display
+        value=>none
+      magix.forms.set-value
+        form-id=>raw-editor
+        id=>lnk-toggle-raw-edit
+        value=>show
 

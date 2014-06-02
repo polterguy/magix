@@ -5,7 +5,7 @@ inspect=>@"contains add controls active events for form builder
 used to create the form builder.  contains the active events necessary 
 to create the add controls parts of the form builder"
 
-// creates the add-button code for adding controls to design surface
+// creates the [magix.ide.add-control] code for adding controls to design surface
 magix.ide.add-control-to-surface
   magix.forms.get-value
     form-id=>add-control
@@ -16,8 +16,7 @@ magix.ide.add-control-to-surface
     value=>[$][value].Value
   set=>[$][magix.ide.add-control][auto-select].Value
     value=>true
-
-  // decorating control with default properties
+  // decorating returned control with default properties
   with=>[$][magix.ide.add-control][control][0]
     switch=>[$][0].Value
       case=>button
@@ -50,7 +49,28 @@ magix.ide.add-control-to-surface
       case=>literal
         set=>[text].Value
           value=>your html
-
-  // returning control
+  // returning add control code
   set=>[$][0]
+
+// raises the active event that changes the visibility of the "clear all" buttons according to
+// if the form has any controls at all
+magix.ide.surface-changed
+  magix.ide.set-clear-all-control-enabled
+
+// changes the enabled property of the "clear all" button according to if the form has controls or not
+magix.ide.set-clear-all-control-enabled
+  magix.ide.get-form
+  if=>equals
+    lhs=>[magix.ide.get-form].Count
+    rhs=>0
+    code
+      magix.forms.set-enabled
+        form-id=>add-control
+        id=>btn-clear-controls
+        value=>false
+  else
+    magix.forms.set-enabled
+      form-id=>add-control
+      id=>btn-clear-controls
+      value=>true
 

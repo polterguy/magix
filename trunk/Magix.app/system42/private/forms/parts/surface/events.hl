@@ -1,0 +1,25 @@
+﻿
+
+inspect=>@"contains main surface active events for form builder
+
+used to create the form builder.  contains the active events necessary 
+to create the surface active events parts of the form builder"
+
+// raised by the surface active module when something is changed on the design surface
+// we're just storing the current form in our database, for later reference
+magix.ide.surface-changed
+  // saving current design area controls
+  magix.ide.get-form
+  if=>equals
+    lhs=>[magix.ide.get-form].Count
+    rhs=>0
+    code
+      magix.data.remove-username
+        id=>magix.ide.current-surface-controls
+  else
+    add=>[@][magix.data.save-username][value]
+      value=>[magix.ide.get-form]
+      children-only=>true
+    magix.data.save-username
+      id=>magix.ide.current-surface-controls
+
