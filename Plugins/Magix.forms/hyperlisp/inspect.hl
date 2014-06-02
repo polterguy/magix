@@ -667,7 +667,12 @@ event handlers for you, together with your control's value through the [$] colle
 [onfirstload] can be used as the means to run initialization code during the initial creation of 
 your control in your form.  onfirstload will only be raised the first time the control is created.  
 this active event is useful for initializing properties for your control, or run code which is 
-only supposed to run once, during the initial initialization of your control"
+only supposed to run once, during the initial initialization of your control
+
+if you add [id-prefix] when you create your control, then your control will be created such that 
+the id-prefix value will be prepended in front of the actual [id] of your control.  this is useful 
+if you create a wysiwyg designer, and you have a preview function, and you don't want your design 
+surface control to intercept active events that reference your controls"
 
 
 magix.forms.base-web-dox=>@"[class] is the css class(es) for your 
@@ -979,7 +984,9 @@ the [form-id] parameter, informs the active event of which web
 part the control you wish to change the value of exists within.  
 if no form-id is given, the first control that matches the given 
 id will have its value changed, in any web parts you may have 
-currently loaded"
+currently loaded
+
+[value] can be either a constant or an expression"
 
 magix.forms.set-value-sample
   magix.forms.create-web-part
@@ -1069,6 +1076,41 @@ magix.forms.get-class-sample
           set=>[2][message].Value
             value=>[0][value].Value
           magix.viewport.show-message
+
+
+magix.forms.set-style-dox=>@"sets a style value on web control
+
+sets the given [key] style value to [value] of requested web control.  
+supply [form-id] and/or [id] to inform which web control you wish to 
+change a style of
+
+[key] is the css style name of the value you wish to change, and [value] 
+is the new value you wish to change it to
+
+all parameters can either be constants or expressions"
+
+magix.forms.set-style-sample
+  magix.forms.set-style
+    form-id=>your-form-id
+    id=>some-control-id
+    key=>background-color
+    value=>#ffbbbb
+
+
+magix.forms.get-style-dox=>@"retrieves a style value
+
+returns the requested [key] style value as [value].  supply 
+[form-id] and/or [id] to inform which web control you wish to 
+retrieve the style of.  [key] is the css style name of the 
+value you wish to retrieve
+
+all parameters can either be constants or expressions"
+
+magix.forms.get-style-sample
+  magix.forms.get-style
+    form-id=>some-form-id
+    id=>some-control-id
+    key=>background-color
 
 
 magix.forms.set-focus-dox=>@"sets focus to web control

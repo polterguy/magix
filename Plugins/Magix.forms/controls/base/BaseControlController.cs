@@ -155,8 +155,10 @@ namespace Magix.forms
                 return;
             }
 
+            Node dp = Dp(e.Params);
+
             IValueControl ctrl = FindControl<IValueControl>(ip);
-            ctrl.ControlValue = ip["value"].Get<string>("");
+            ctrl.ControlValue = Expressions.GetExpressionValue(ip["value"].Get<string>(), dp, ip, false);
         }
 
         /*
@@ -228,11 +230,14 @@ namespace Magix.forms
 		{
             Node ip = Ip(pars);
             Node node = ip["_code"].Get<Node>();
+            string idPrefix = "";
+            if (ip.ContainsValue("id-prefix"))
+                idPrefix = ip["id-prefix"].Get<string>();
 
             if (node.ContainsValue("id"))
-				ctrl.ID = node["id"].Get<string>();
+				ctrl.ID = idPrefix + node["id"].Get<string>();
 			else if (node.Value != null)
-				ctrl.ID = node.Get<string>();
+                ctrl.ID = idPrefix + node.Get<string>();
 
             if (node.ContainsValue("visible"))
 				ctrl.Visible = node["visible"].Get<bool>();

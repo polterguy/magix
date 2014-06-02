@@ -1,0 +1,75 @@
+
+
+inspect=>@"creates the username magix.data helper events
+
+creates [magix.data.save-username], [magix.data.load-username] 
+and [magix.data.remove-username]
+
+these active events are useful for storing user specific data 
+in the database, since they append the currently logged in user 
+to the [id] of their magix.data counterparts, and hence creates 
+unique ids, according to the username of the currently logged 
+in user, and hence serves as a user specific data-storage of 
+persistent objects
+
+active event will throw an exception if no user is currently 
+logged in"
+
+
+event
+  name=>magix.data.save-username
+  persist=>false
+  code
+    magix.web.get-session
+      name=>magix.core.user
+    if=>not-exist
+      lhs=>[magix.web.get-session][value]
+      code
+        throw=>no user is currently logged in
+    set=>[magix.data.save][id].Value
+      value=>{0}-{1}
+        =>[$][id].Value
+        =>[magix.web.get-session][value][username].Value
+    add=>[magix.data.save]
+      value=>[$][value]
+    magix.data.save
+
+
+event
+  name=>magix.data.load-username
+  persist=>false
+  code
+    magix.web.get-session
+      name=>magix.core.user
+    if=>not-exist
+      lhs=>[magix.web.get-session][value]
+      code
+        throw=>no user is currently logged in
+    set=>[magix.data.load][id].Value
+      value=>{0}-{1}
+        =>[$][id].Value
+        =>[magix.web.get-session][value][username].Value
+    magix.data.load
+    if=>exist
+      lhs=>[magix.data.load][objects]
+      code
+        add=>[$]
+          value=>[magix.data.load][objects]
+
+
+event
+  name=>magix.data.remove-username
+  persist=>false
+  code
+    magix.web.get-session
+      name=>magix.core.user
+    if=>not-exist
+      lhs=>[magix.web.get-session][value]
+      code
+        throw=>no user is currently logged in
+    set=>[magix.data.remove][id].Value
+      value=>{0}-{1}
+        =>[$][id].Value
+        =>[magix.web.get-session][value][username].Value
+    magix.data.remove
+

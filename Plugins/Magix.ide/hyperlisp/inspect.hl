@@ -99,7 +99,10 @@ the surface of your web part
 
 after the control is added, the active event [magix.ide.surface-changed] 
 will be raised, and if you set [auto-select] to true, [magix.ide.control-
-selected] will be raised after surface-changed is raised"
+selected] will be raised after surface-changed is raised
+
+this active event will raise the [magix.ide.undo-chain-index-changed] event, 
+unless you set [skip-undo] to true"
 
 magix.ide.add-control-sample
   magix.ide.add-control
@@ -115,7 +118,11 @@ magix.ide.add-control-sample
 magix.ide.remove-control-dox=>@"remove control from design surface
 
 removes the given [dna] control from the design surface, and control collection.  
-afterwards it will raise the [magix.ide.surface-changed] active event"
+afterwards it will raise the [magix.ide.surface-changed] active event.  if no [dna] 
+is given, it will remove the currently selected control
+
+this active event will raise the [magix.ide.undo-chain-index-changed] event, 
+unless you set [skip-undo] to true"
 
 magix.ide.remove-control-sample
   using=>magix.ide
@@ -138,7 +145,10 @@ magix.ide.change-control-dox=>@"changes properties of control
 changes the given [change] properties of your control.  if you do not supply 
 a new value for the property, the property will be removed.  you can change 
 as many properties as you wish at the same time.  after the changes have been 
-made, [magix.ide.surface-changed] is raised"
+made, [magix.ide.surface-changed] is raised
+
+this active event will raise the [magix.ide.undo-chain-index-changed] event, 
+unless you set [skip-undo] to true"
 
 magix.ide.change-control-sample
   using=>magix.ide
@@ -165,39 +175,6 @@ magix.ide.change-control-sample
           magix.viewport.show-message
             message=>new onclick event handler
         onmouseover
-    get-form
-
-
-magix.ide.move-control-dox=>@"move a control
-
-moves the given [dna] control to the given [to] dna position, according 
-to [position].  [position] can be either 'before', 'after' or 'child'.  
-after the control has been moved, the [magix.ide.surface-changed] active 
-event will be raised"
-
-magix.ide.move-control-sample
-  using=>magix.ide
-    add-control
-      where
-        dna=>root
-        position=>child
-      control
-        button=>id-of-button
-          value=>was created first
-          class=>span-5 btn-large
-    add-control
-      where
-        dna=>root
-        position=>child
-      control
-        label=>id-of-label
-          value=>was created last
-          class=>span-5
-    get-form
-    move-control
-      dna=>root-0-0
-      to=>root-0-1
-      position=>after
     get-form
 
 
@@ -241,6 +218,28 @@ magix.ide.get-selected-control-sample
     get-selected-control
 
 
+magix.ide.get-clipboard-control-dox=>@"returns the control on the clipboard
+
+returns the current clipboard control as [control] having 
+the [control] return value be the actual control, containing all 
+properties of control.  if no control is on clipboard, no [control] 
+will be returned"
+
+magix.ide.get-clipboard-control-sample
+  using=>magix.ide
+    add-control
+      where
+        dna=>root
+        position=>child
+      control
+        button=>my-button
+          value=>howdy
+    select-control
+      dna=>root-0-0
+    copy-control
+    get-clipboard-control
+
+
 magix.ide.copy-control-dox=>@"copies control into clipboard
 
 copies the currently selected control into the surface clipboard"
@@ -278,7 +277,10 @@ magix.ide.clear-controls-dox=>@"removes all controls from design surface
 
 removes all controls from design surface and control collection, and gives 
 the user an empty fresh design surface.  raises the [magix.ide.surface-changed] 
-active event, and clears the currently selected control"
+active event, and clears the currently selected control
+
+this active event will raise the [magix.ide.undo-chain-index-changed] event, 
+unless you set [skip-undo] to true"
 
 magix.ide.clear-controls-sample
   using=>magix.ide
@@ -304,19 +306,26 @@ magix.ide.clear-controls-sample
 magix.ide.paste-control-dox=>@"paste control into design surface
 
 paste the current clipboard control into the design surface at the 
-given selected control's position.  pass in [position] to signal if 
+given selected control's position.  pass in [where][position] to signal if 
 you wish to have the control pasted as before, after or child of 
 the currently selected control.  you must have something in your 
-clipboard for this active event to work
+clipboard for this active event to work.  you can override where you 
+wish to position the control, by supplying a [where]/[dna].  if you 
+do, then the control will not be pasted in at the current selected 
+control's position, but rather at the position you supplied as [dna]
 
-if no control is currently selected, the control will be pasted into 
-the main design surface of your form.  if you pass in [auto-select] 
-as true, then the newly added control will be automatically selected
+if no control is currently selected, and you do not pass in a [dna] node, 
+the control will be pasted into the main design surface of your form.  
+if you pass in [auto-select] as true, then the newly added control will 
+be automatically selected
 
 after the control has been pasted into the surface, the [magix.ide.
 surface-changed] active event will be raised, and then if you set 
 [auto-select] to true, afterwards the [magix.ide.control-selected] 
-active event will be raised"
+active event will also be raised
+
+this active event will raise the [magix.ide.undo-chain-index-changed] event, 
+unless you set [skip-undo] to true"
 
 magix.ide.paste-control-sample
   using=>magix.ide
@@ -367,7 +376,15 @@ magix.ide.set-form-dox=>@"sets the form's data
 
 changes the form's data to the value in [value].  if no [value] is given, 
 the form will be completely emptied.  raises the [magix.ide.surface-changed] 
-after it has changed the form's data"
+after it has changed the form's data.  id you add [no-update] being true, then 
+no [magix.ide.surface-changed] active event will be raised.  if you add 
+[clear-selection], and have its value be true, then the currently selected 
+control will be reset, otherwise the surface will attempt to keep its currently 
+selected control around, if it can, which might produce weird results, if you 
+completely change the value of the surface
+
+this active event will raise the [magix.ide.undo-chain-index-changed] event, 
+unless you set [skip-undo] to true"
 
 magix.ide.set-form-sample
   using=>magix.ide
@@ -378,5 +395,88 @@ magix.ide.set-form-sample
           onclick
             magix.viewport.show-message
               message=>howdy world
+    get-form
+
+
+magix.ide.enable-surface-dox=>@"enables or disables the wysiwyg design surface
+
+pass in [value] indicating if you wish to enable or disable the wysiwyg design 
+time surface.  if you pass in false, the surface is disabled, if you pass in true, 
+the surface is enabled
+
+if the wysiwyg design surface is disabled, it will not accept any update, remove 
+or add active events, without throwing an exception"
+
+magix.ide.enable-surface-sample
+  magix.ide.enable-surface
+    value=>false
+
+
+magix.ide.get-enabled-dox=>@"retrieves if surface is enabled
+
+return true as [value] if surface is enabled, otherwise it returns false.  
+if the wysiwyg design surface is disabled, it will not accept any update, remove 
+or add active events, without throwing an exception"
+
+
+magix.ide.undo-dox=>@"undo the last action on wysiwyg surface
+
+sets the surface back to the state it was in before the last update action 
+was executed upon it.  this active event will raise the [magix.ide.undo-chain-
+index-changed] active event.  it will also raise the [magix.ide.surface-changed] 
+event, unless you set [no-update] to true.  in addition, it will set the 
+currently selected control to nothing"
+
+magix.ide.undo-sample
+  using=>magix.ide
+    add-control
+      where
+        dna=>root
+        position=>child
+      control
+        button=>id-of-button
+          value=>a button
+          class=>span-5 btn-large
+    add-control
+      where
+        dna=>root
+        position=>child
+      control
+        label=>id-of-label
+          value=>a label
+          class=>span-5
+    undo
+    get-form
+
+
+magix.ide.redo-dox=>@"redo the last action on wysiwyg surface
+
+sets the surface back to the state it was in before the last undo action 
+was executed upon it.  this active event will raise the [magix.ide.undo-chain-
+index-changed] active event.  it will also raise the [magix.ide.surface-changed] 
+event, unless you set [no-update] to true.  in addition, it will set the 
+currently selected control to nothing"
+
+magix.ide.redo-sample
+  using=>magix.ide
+    add-control
+      where
+        dna=>root
+        position=>child
+      control
+        button=>id-of-button
+          value=>a button
+          class=>span-5 btn-large
+    add-control
+      where
+        dna=>root
+        position=>child
+      control
+        label=>id-of-label
+          value=>a label
+          class=>span-5
+    undo
+    get-form
+    redo
     get-form
 

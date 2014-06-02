@@ -363,6 +363,10 @@
     <Content Include="system42\private\forms\parts\add-control\events.hl" />
     <Content Include="system42\private\forms\parts\raw-editor\controls.hl" />
     <Content Include="system42\private\forms\parts\raw-editor\events.hl" />
+    <Content Include="system42\private\forms\parts\surface\events.hl" />
+    <Content Include="system42\private\startup\create-magix-data-username.hl" />
+    <Content Include="system42\private\forms\parts\toolbar\controls.hl" />
+    <Content Include="system42\private\forms\parts\toolbar\events.hl" />
     <None Include="todo.txt" />
   </ItemGroup>
   <ItemGroup>

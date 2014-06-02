@@ -1,0 +1,157 @@
+﻿
+
+inspect=>@"contains toolbar active events for form builder
+
+used to create the form builder.  contains the active events necessary 
+to create the toolbar parts of the form builder"
+
+// just posts the controls-collection-changed event upon every surface-changed event to 
+// notify select drop down list that controls collection has changed, such that it can 
+// update its items collection
+magix.ide.surface-changed
+  magix.ide.controls-collection-changed
+
+// updates the items of our select control drop down list, and sets the other toolbar buttons
+// to enabled or disabled according to the state of the system
+magix.ide.controls-collection-changed
+  magix.ide.list-controls
+  if=>exist
+    lhs=>[magix.ide.list-controls][controls]
+    code
+      add=>[magix.forms.set-values][values]
+        value=>[magix.ide.list-controls][controls]
+        children-only=>true
+  magix.forms.set-values
+    form-id=>editor-toolbar
+    id=>select-control
+    values
+      _default=>select control ...
+  magix.ide.get-selected-control
+  if=>exist
+    lhs=>[magix.ide.get-selected-control][dna]
+    code
+      set=>[magix.forms.set-value][value].Value
+        value=>[magix.ide.get-selected-control][dna].Value
+      magix.forms.set-enabled
+        form-id=>editor-toolbar
+        id=>btn-copy
+        value=>true
+      magix.forms.set-enabled
+        form-id=>editor-toolbar
+        id=>btn-delete
+        value=>true
+  else
+    magix.forms.set-enabled
+      form-id=>editor-toolbar
+      id=>btn-copy
+      value=>false
+    magix.forms.set-enabled
+      form-id=>editor-toolbar
+      id=>btn-delete
+      value=>false
+  magix.forms.set-value
+    form-id=>editor-toolbar
+    id=>select-control
+    value=>_default
+  magix.ide.get-clipboard-control
+  if=>exist
+    lhs=>[magix.ide.get-clipboard-control][control]
+    code
+      magix.forms.set-enabled
+        form-id=>editor-toolbar
+        id=>btn-paste
+        value=>true
+
+// called by surface when control is selected, enables or disables the different toolbar buttons
+magix.ide.control-selected
+  magix.ide.get-selected-control
+  if=>exist
+    lhs=>[magix.ide.get-selected-control][dna]
+    code
+      set=>[magix.forms.set-value][value].Value
+        value=>[magix.ide.get-selected-control][dna].Value
+      magix.forms.set-enabled
+        form-id=>editor-toolbar
+        id=>btn-copy
+        value=>true
+      magix.forms.set-enabled
+        form-id=>editor-toolbar
+        id=>btn-delete
+        value=>true
+  else
+    magix.forms.set-enabled
+      form-id=>editor-toolbar
+      id=>btn-copy
+      value=>false
+    magix.forms.set-enabled
+      form-id=>editor-toolbar
+      id=>btn-delete
+      value=>false
+  magix.forms.set-value
+    form-id=>editor-toolbar
+    id=>select-control
+    value=>_default
+
+// called when selected control is change through the select drop down list
+magix.ide.selected-control-changed
+  magix.forms.get-value
+    form-id=>editor-toolbar
+    id=>select-control
+  if=>not-equals
+    lhs=>[magix.forms.get-value][value].Value
+    rhs=>_default
+    code
+      set=>[magix.ide.select-control][dna].Value
+        value=>[magix.forms.get-value][value].Value
+  magix.ide.select-control
+
+// called when we should copy a control
+magix.ide.copy-control-requested
+  magix.ide.copy-control
+  magix.forms.set-enabled
+    form-id=>editor-toolbar
+    id=>btn-paste
+    value=>true
+
+// called when we should paste a control
+magix.ide.paste-control-requested
+  magix.forms.get-value
+    form-id=>add-control
+    id=>select-add-where
+  set=>[magix.ide.paste-control][where][position].Value
+    value=>[magix.forms.get-value][value].Value
+  magix.ide.paste-control
+    auto-select=>true
+
+// called by surface when undo-chain is changed
+magix.ide.undo-chain-index-changed
+  // enabling or disabling undo button
+  if=>equals
+    lhs=>[$][can-undo].Value
+    rhs=>true
+    code
+      magix.forms.set-enabled
+        form-id=>editor-toolbar
+        id=>btn-undo
+        value=>true
+  else
+    magix.forms.set-enabled
+      form-id=>editor-toolbar
+      id=>btn-undo
+      value=>false
+
+  // enabling or disabling redo button
+  if=>equals
+    lhs=>[$][can-redo].Value
+    rhs=>true
+    code
+      magix.forms.set-enabled
+        form-id=>editor-toolbar
+        id=>btn-redo
+        value=>true
+  else
+    magix.forms.set-enabled
+      form-id=>editor-toolbar
+      id=>btn-redo
+      value=>false
+

@@ -71,9 +71,66 @@ namespace Magix.forms
             ip["value"].Value = ctrl.Class;
 		}
 
-		/*
-		 * sets focus to a specific mux web control
-		 */
+        /*
+         * sets css style value
+         */
+        [ActiveEvent(Name = "magix.forms.set-style")]
+        private static void magix_forms_set_style(object sender, ActiveEventArgs e)
+        {
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
+            {
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.forms",
+                    "Magix.forms.hyperlisp.inspect.hl",
+                    "[magix.forms.set-style-dox].Value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.forms",
+                    "Magix.forms.hyperlisp.inspect.hl",
+                    "[magix.forms.set-style-sample]");
+                return;
+            }
+
+            Node dp = Dp(e.Params);
+
+            BaseWebControl ctrl = FindControl<BaseWebControl>(ip);
+            ctrl.Style[Expressions.GetExpressionValue(ip["key"].Get<string>(), dp, ip, false) as string] =
+                Expressions.GetExpressionValue(ip["value"].Get<string>(), dp, ip, false) as string;
+        }
+
+        /*
+         * retrieves css style value
+         */
+        [ActiveEvent(Name = "magix.forms.get-style")]
+        private static void magix_forms_get_style(object sender, ActiveEventArgs e)
+        {
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
+            {
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.forms",
+                    "Magix.forms.hyperlisp.inspect.hl",
+                    "[magix.forms.get-style-dox].Value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.forms",
+                    "Magix.forms.hyperlisp.inspect.hl",
+                    "[magix.forms.get-style-sample]");
+                return;
+            }
+
+            Node dp = Dp(e.Params);
+
+            BaseWebControl ctrl = FindControl<BaseWebControl>(ip);
+            ip["value"].Value = ctrl.Style[Expressions.GetExpressionValue(ip["key"].Get<string>(), dp, ip, false) as string];
+        }
+
+        /*
+         * sets focus to a specific mux web control
+         */
 		[ActiveEvent(Name = "magix.forms.set-focus")]
 		private static void magix_forms_set_focus(object sender, ActiveEventArgs e)
 		{

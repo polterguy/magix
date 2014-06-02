@@ -9,24 +9,35 @@ label=>lbl-header
   value=>web part builder
   tag=>h2
 
+// creates the panel that wraps all the controls in the system
+// for the user to double click to add a control to the design surface
 panel=>controls-wrapper
   class=>span-15 last boxed air-padding bottom-1
   controls
 
-    // description
+    // descriptive header
     label=>lbl-controls-header
       value=>controls in your system
       class=>span-15 bottom-1 last
       tag=>h3
 
-    // add control buttons
+    // creates all the different add-control buttons
     lambda=>lambda-controls
       oncreatecontrols
         _data
           button
             ondblclick
-              add=>[/]
-                value=>[:magix.ide.add-control-to-surface[$][value]][0]
+              try
+                code
+                  // creates the magix.ide.add-control code to execute according to user selections, 
+                  // and which button was clicked
+                  add=>[@]
+                    value=>[:magix.ide.add-control-to-surface[$][value]][0]
+                catch
+                  set=>[@][magix.viewport.show-message][message].Value
+                    value=>[@][exception].Value
+                  magix.viewport.show-message
+                    color=>#ffbbbb
         list-events
           begins-with=>magix.forms.controls
         for-each=>[list-events][events]
@@ -54,8 +65,14 @@ panel=>controls-wrapper
           add=>[$]
             value=>[/][_data][button]
 
-    // how and where to add information and choosing
-    label=>lbl-controls-description-1
+    // spacer, horizontal ruler, for making some space between different segments
+    label=>spacer
+      tag=>hr
+      class=>span-15 last clear
+
+    // desription of how to add a control, drop down list allowing
+    // user to decide where to add, and the clear controls button
+    label=>lbl-controls-description-begin
       class=>span-4 clear
       value=>double click to add control
       tag=>label
@@ -65,13 +82,43 @@ panel=>controls-wrapper
         before=>before
         after=>after
         child=>as child of
+      onselectedindexchanged
+        set=>[magix.data.save-username][value][position].Value
+          value=>[$][value].Value
+        magix.data.save-username
+          id=>magix.ide.where-position
       onfirstload
+        magix.data.load-username
+          id=>magix.ide.where-position
+        if=>exist
+          lhs=>[magix.data.load-username][objects]
+          code
+            set=>[magix.forms.set-value][value].Value
+              value=>[magix.data.load-username][objects][0][position].Value
         magix.forms.set-value
           form-id=>add-control
           id=>select-add-where
           value=>after
-    label=>lbl-controls-description-2
-      class=>span-9 last
+    label=>lbl-controls-description-end
+      class=>span-6
       value=>currently selected control
       tag=>label
+    button=>btn-clear-controls
+      class=>span-3 last
+      value=>clear controls
+      onclick
+        magix.viewport.confirm
+          message=>are you sure you wish to clear all controls from your form?
+          code
+            try
+              code
+                // in case surface has been disabled
+                magix.ide.enable-surface
+                  value=>true
+                magix.ide.clear-controls
+              catch
+                set=>[@][magix.viewport.show-message][message].Value
+                  value=>[@][exception].Value
+                magix.viewport.show-message
+                  color=>#ffbbbb
 
