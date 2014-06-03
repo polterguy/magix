@@ -79,7 +79,47 @@ magix.ide.request-properties
                     add=>[@][_params][field-type]
                       value=>[.]
                     add=>[$]
-                      value=>[:magix.ide.create-control-property-button[@][_params]][control]
+                      value=>[:magix.ide.create-control-property-modifier-control[@][_params]][control]
+                      children-only=>true
+
+              // creating spacer between properties and events
+              _hr
+                label
+                  tag=>hr
+                  class=>span-20 last clear top-1 bottom-1
+                label
+                  tag=>h3
+                  class=>span-20 last clear bottom-1
+                  value=>events
+              add=>[$]
+                value=>[_hr][label]
+              add=>[$]
+                value=>[_hr][label:1]
+
+              // looping through each control event and items collection
+              for-each=>[**inspect=>?][..][**controls][0]
+                index-of=>[.].Name
+                  what=>on
+                if=>exist
+                  lhs=>[@][index-of][result]
+                  or=>equals
+                    lhs=>[.].Name
+                    rhs=>items
+                  code
+                    // not event handler
+                    set=>[@][_params]
+                    set=>[@][_params][dna]
+                      value=>[/][magix.ide.get-selected-control][dna]
+                    if=>exist
+                      lhs=>[/][magix.ide.get-selected-control][value][0][[.].Name]
+                      code
+                        add=>[@][..][..][_params][content]
+                          value=>[/][magix.ide.get-selected-control][value][0][[.].Name]
+                          children-only=>true
+                    add=>[@][_params][field-type]
+                      value=>[.]
+                    add=>[$]
+                      value=>[:magix.ide.create-control-event-modifier-control[@][_params]][control]
                       children-only=>true
       magix.browser.scroll
         id=>editor-toolbar
@@ -89,7 +129,8 @@ magix.ide.request-properties
     magix.viewport.clear-controls
       container=>control-properties
 
-magix.ide.create-control-property-button
+// creates one property modifier for properties web part
+magix.ide.create-control-property-modifier-control
   _data
     panel
       class=>span-6
@@ -154,6 +195,103 @@ magix.ide.create-control-property-button
         value=>span-10 last
       set=>[_data][panel][controls][text-area][rows].Value
         value=>5
+  add=>[$][control]
+    value=>[_data][panel]
+
+// creates one property modifier for properties web part
+magix.ide.create-control-event-modifier-control
+  _data
+    panel
+      class=>span-20 last
+      controls
+        link-button
+          class=>span-3
+          tag=>label
+          value=>{field-type-name}
+          onclick
+            magix.forms.get-style
+              form-id=>control-properties
+              id=>{field-type-name}
+              key=>display
+            if=>equals
+              lhs=>[magix.forms.get-style][value].Value
+              rhs=>none
+              code
+                magix.forms.effect
+                  type=>roll-down
+                  time=>250
+                  form-id=>control-properties
+                  id=>{field-type-name}
+            else
+              magix.forms.effect
+                type=>roll-up
+                time=>250
+                form-id=>control-properties
+                id=>{field-type-name}
+        text-area=>{field-type-name}
+          style=>display:none;
+          class=>span-17 last
+          rows=>10
+          placeholder=>{field-type-value}
+          value=>{value}
+          ontextchanged
+            _field-name=>{field-type-name}
+            _dna=>{dna}
+            set=>[magix.ide.change-control][dna].Value
+              value=>[_dna].Value
+            if=>not-equals
+              lhs=>[$][value].Value
+              rhs=>
+              code
+                set=>[@][code-2-node][code].Value
+                  value=>[$][value].Value
+                code-2-node
+                  remove-root=>true
+                add=>[magix.ide.change-control][change][[_field-name].Value]
+                  value=>[@][code-2-node][node]
+                  children-only=>true
+            else
+              set=>[magix.ide.change-control][change][[_field-name].Value].Name
+                value=>[_field-name].Value
+            magix.ide.change-control
+  iterate=>[_data]
+    if=>equals
+      lhs=>[.].Value
+      rhs=>{dna}
+      code
+        set=>[.].Value
+          value=>[$][dna].Value
+    else-if=>equals
+      lhs=>[.].Value
+      rhs=>{value}
+      code
+        if=>equals
+          lhs=>[$][content].Count
+          rhs=>0
+          or=>not-exist
+            lhs=>[$][content]
+          code
+            set=>[.].Value
+        else
+          set=>[/][_data][panel][controls][link-button][style].Value
+            value=>font-weight:bold;
+          node-2-code
+            remove-root=>true
+            node=>[$][content]
+          set=>[.].Value
+            value=>[@][node-2-code][code].Value
+    else-if=>equals
+      lhs=>[.].Value
+      rhs=>{field-type-value}
+      code
+        set=>[.].Value
+          value=>[$][field-type][0].Value
+    else-if=>equals
+      lhs=>[.].Value
+      rhs=>{field-type-name}
+      code
+        set=>[.].Value
+          value=>[$][field-type][0].Name
   add=>[$][control]
     value=>[_data][panel]
 
