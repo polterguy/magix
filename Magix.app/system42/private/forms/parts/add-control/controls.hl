@@ -32,7 +32,7 @@ panel=>controls-wrapper
                   // creates the magix.ide.add-control code to execute according to user selections, 
                   // and which button was clicked
                   add=>[@]
-                    value=>[:magix.ide.add-control-to-surface[$][value]][0]
+                    value=>[:magix.ide.add-control-to-surface[$]][0]
                 catch
                   set=>[@][magix.viewport.show-message][message].Value
                     value=>[@][exception].Value

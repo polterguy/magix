@@ -29,7 +29,7 @@ magix.qr.create-sample
     url=>http://magixilluminate.com
     text=>magix
     rounded-corners=(int)>20
-    anti-pixelated=(bool)>True
+    anti-pixelated=>true
     bg-image=>media/images/textures/bumpy-light.png
     fg-image=>media/images/textures/bumpy-dark.png
     bg-color=>

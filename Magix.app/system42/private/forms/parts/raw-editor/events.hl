@@ -48,6 +48,7 @@ magix.ide.reload-serialized-form-data
             no-update=>true
             skip-undo=>true
       magix.ide.controls-collection-changed
+      magix.ide.request-properties
     catch
       set=>[@][magix.viewport.show-message][message].Value
         value=>something went wrong while reloading form, message from system was {0}

@@ -19,6 +19,11 @@ logged in"
 event
   name=>magix.data.save-username
   persist=>false
+  inspect=>@"save a node with username id
+
+saves a node to the database, appending the currently logged in 
+user's username to the id given.  this is useful for saving data 
+on a per user basis"
   code
     magix.web.get-session
       name=>magix.core.user
@@ -38,6 +43,11 @@ event
 event
   name=>magix.data.load-username
   persist=>false
+  inspect=>@"loads a node with username id
+
+loads a node from the database, appending the currently logged in 
+user's username to the id given.  this is useful for storing and 
+retrieving data on a per user basis"
   code
     magix.web.get-session
       name=>magix.core.user
@@ -60,6 +70,11 @@ event
 event
   name=>magix.data.remove-username
   persist=>false
+  inspect=>@"removes a node with username id
+
+removes a node in the database, appending the currently logged in 
+user's username to the id given.  this is useful for manipulating 
+data on a per user basis"
   code
     magix.web.get-session
       name=>magix.core.user

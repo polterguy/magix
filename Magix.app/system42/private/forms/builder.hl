@@ -52,3 +52,9 @@ magix.forms.create-web-part
           events-file=>system42/private/forms/parts/raw-editor/events.hl
           controls-file=>system42/private/forms/parts/raw-editor/controls.hl
 
+    // properties container
+    dynamic=>control-properties
+
+    // preview container
+    dynamic=>preview
+

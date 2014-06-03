@@ -30,14 +30,23 @@ namespace Magix.forms
 				return;
 			}
 
-			LiteralControl ret = new LiteralControl();
+			LiteralControl ctrl = new LiteralControl();
 
             Node node = ip["_code"].Get<Node>();
 
-            if (node.ContainsValue("text"))
-				ret.Text = node["text"].Get<string>();
+            string idPrefix = "";
+            if (ip.ContainsValue("id-prefix"))
+                idPrefix = ip["id-prefix"].Get<string>();
 
-            ip["_ctrl"].Value = ret;
+            if (node.ContainsValue("id"))
+                ctrl.ID = idPrefix + node["id"].Get<string>();
+            else if (node.Value != null)
+                ctrl.ID = idPrefix + node.Get<string>();
+
+            if (node.ContainsValue("text"))
+				ctrl.Text = node["text"].Get<string>();
+
+            ip["_ctrl"].Value = ctrl;
 		}
 
 		private void Inspect(Node node)

@@ -29,19 +29,28 @@ namespace Magix.forms
 				return;
 			}
 
-			Uploader ret = new Uploader();
+			Uploader ctrl = new Uploader();
 
             Node node = ip["_code"].Get<Node>();
 
             if (node.ContainsValue("class"))
-				ret.Class = node["class"].Get<string>();
+				ctrl.Class = node["class"].Get<string>();
 
 			string folder = node["folder"].Get<string>("tmp");
 
-			if (ShouldHandleEvent("onuploaded", node))
+            string idPrefix = "";
+            if (ip.ContainsValue("id-prefix"))
+                idPrefix = ip["id-prefix"].Get<string>();
+
+            if (node.ContainsValue("id"))
+                ctrl.ID = idPrefix + node["id"].Get<string>();
+            else if (node.Value != null)
+                ctrl.ID = idPrefix + node.Get<string>();
+
+            if (ShouldHandleEvent("onuploaded", node))
 			{
 				Node codeNode = node["onuploaded"].Clone();
-				ret.Uploaded += delegate(object sender2, EventArgs e2)
+				ctrl.Uploaded += delegate(object sender2, EventArgs e2)
 				{
                     SaveFile(folder, sender2);
                     FillOutEventInputParameters(codeNode, sender2);
@@ -52,12 +61,12 @@ namespace Magix.forms
 			}
 			else
 			{
-				ret.Uploaded += delegate(object sender2, EventArgs e2)
+				ctrl.Uploaded += delegate(object sender2, EventArgs e2)
 				{
                     SaveFile(folder, sender2);
                 };
 			}
-            ip["_ctrl"].Value = ret;
+            ip["_ctrl"].Value = ctrl;
 		}
 
         /*

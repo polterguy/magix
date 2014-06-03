@@ -86,10 +86,13 @@ namespace Magix.forms
 				{
                     if (!ip.Contains("controls"))
                         throw new ArgumentException("you must supply a [controls] segment for your web part");
-                    
+
                     if (!string.IsNullOrEmpty(ip["controls"].Get<string>()))
-                        DataSource["controls"].Value = 
-                            (Expressions.GetExpressionValue(ip["controls"].Get<string>(), dp, ip, false) as Node).Clone();
+                    {
+                        Node controls = new Node("controls");
+                        controls.AddRange((Expressions.GetExpressionValue(ip["controls"].Get<string>(), dp, ip, false) as Node).Clone());
+                        DataSource["controls"].Value = controls;
+                    }
                     else
                         DataSource["controls"].Value = ip["controls"].Clone();
 

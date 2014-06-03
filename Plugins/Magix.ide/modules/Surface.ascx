@@ -9,7 +9,7 @@
 <mux:Label
     runat="server"
     id="lbl"
-    Class="wysiwyg-design-surface-label"
+    Class="wysiwyg-design-surface-label left-9"
     Tag="label"
     Value="wysiwyg design surface" />
 
