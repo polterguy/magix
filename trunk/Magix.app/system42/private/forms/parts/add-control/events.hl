@@ -27,6 +27,8 @@ magix.ide.add-control-to-surface
       case=>hyperlink
         set=>[value].Value
           value=>your link
+        set=>[class].Value
+          value=>span-4
         set=>[href].Value
           value=>http://magixilluminate.com
       case=>img
@@ -49,6 +51,30 @@ magix.ide.add-control-to-surface
       case=>literal
         set=>[text].Value
           value=>your html
+      case=>select
+        set=>[class].Value
+          value=>span-4
+      case=>text-area
+        set=>[class].Value
+          value=>span-4
+      case=>text-box
+        set=>[class].Value
+          value=>span-4
+      case=>panel
+        set=>[class].Value
+          value=>span-8 min-height-5 boxed-light-green
+      case=>dynamic
+        set=>[class].Value
+          value=>span-8 min-height-5 boxed-light-green
+      case=>check-box
+        set=>[class].Value
+          value=>span-1
+      case=>radio
+        set=>[class].Value
+          value=>span-1
+      case=>wysiwyg
+        set=>[class].Value
+          value=>span-14
   // returning add control code
   set=>[$][0]
 

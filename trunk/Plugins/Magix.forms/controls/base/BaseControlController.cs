@@ -307,8 +307,8 @@ namespace Magix.forms
                 "[magix.forms.base-dox].Value",
                 true);
             node.Value = "control_id";
-            node["visible"].Value = true;
-            node["info"].Value = "any arbitrary additional info";
+            node["visible"].Value = "true";
+            node["info"].Value = "additional data";
             node["onfirstload"].Value = "hyperlisp code";
         }
     }

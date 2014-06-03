@@ -21,6 +21,20 @@ magix.ide.controls-collection-changed
       add=>[magix.forms.set-values][values]
         value=>[magix.ide.list-controls][controls]
         children-only=>true
+  magix.ide.get-form
+  if=>not-equals
+    lhs=>[magix.ide.get-form].Count
+    rhs=>0
+    code
+      magix.forms.set-enabled
+        form-id=>editor-toolbar
+        id=>btn-preview
+        value=>true
+  else
+    magix.forms.set-enabled
+      form-id=>editor-toolbar
+      id=>btn-preview
+      value=>false
   magix.forms.set-values
     form-id=>editor-toolbar
     id=>select-control
@@ -154,4 +168,33 @@ magix.ide.undo-chain-index-changed
       form-id=>editor-toolbar
       id=>btn-redo
       value=>false
+
+magix.ide.show-preview
+  magix.forms.create-web-part
+    form-id=>preview-wrapper
+    container=>preview
+    class=>span-22 last top-1 boxed-light-green
+    controls
+      label=>lbl-preview-description
+        class=>span-10 left-9 bottom-1
+        tag=>label
+        value=>preview of your web part
+      link-button=>lnk-preview-close
+        class=>span-1 right
+        value=>close
+        onclick
+          magix.viewport.clear-controls
+            container=>preview
+      dynamic=>preview-content
+        onfirstload
+          magix.forms.create-web-part
+            form-id=>preview-content
+            container=>preview-content
+            class=>span-22 last bottom-1
+            controls=>[:magix.ide.get-form]
+  magix.viewport.show-message
+    message=>below is your web part, with all active events wired, fully functional, exactly how it would look like on a web page
+    time=>5000
+  magix.browser.scroll
+    id=>preview
 

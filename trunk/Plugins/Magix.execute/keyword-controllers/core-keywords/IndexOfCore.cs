@@ -50,6 +50,8 @@ namespace Magix.execute
             if (string.IsNullOrEmpty(whatToSearchFor))
                 throw new ArgumentException("no value in [what] expression in [index-of]");
 
+            ip["result"].UnTie();
+
             int idxNo = 0;
             while (true)
             {

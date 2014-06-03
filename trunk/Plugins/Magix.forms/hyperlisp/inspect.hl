@@ -544,7 +544,7 @@ radio changes by the user"
 
 magix.forms.radio-sample-end
   name=>id_of_group
-  checked=(bool)>True
+  checked=>true
   oncheckedchanged=>hyperlisp code
 
 magix.forms.select-dox-start=>@"creates a select type of web control
@@ -623,9 +623,9 @@ property.  legal values for type is normal, phone, search, url, email, datetime,
 date, month, week, time, datetimelocal, number, range, color and password"
 
 magix.forms.text-box-sample-end
-  autocapitalize=(bool)>False
-  autocorrect=(bool)>True
-  autocomplete=(bool)>False
+  autocapitalize=>false
+  autocorrect=>true
+  autocomplete=>false
   maxlength=(int)>25
   type=>normal
 
@@ -859,21 +859,21 @@ magix.forms.wysiwyg-sample-end
   value=>some html markup ...
   placeholder=>place holder ...
   ontextchanged=>hyperlisp code
-  has-bold=(bool)>True
-  has-italic=(bool)>True
-  has-unorderedlist=(bool)>True
-  has-orderedlist=(bool)>True
-  has-createlink=(bool)>True
-  has-insertimage=(bool)>True
-  has-h1=(bool)>True
-  has-h2=(bool)>True
-  has-h3=(bool)>False
-  has-h4=(bool)>False
-  has-h5=(bool)>False
-  has-h6=(bool)>False
-  has-forecolor=(bool)>True
-  has-insertspeech=(bool)>True
-  has-showhtml=(bool)>True
+  has-bold=>true
+  has-italic=>true
+  has-unorderedlist=>true
+  has-orderedlist=>true
+  has-createlink=>true
+  has-insertimage=>true
+  has-h1=>true
+  has-h2=>true
+  has-h3=>false
+  has-h4=>false
+  has-h5=>false
+  has-h6=>false
+  has-forecolor=>true
+  has-insertspeech=>true
+  has-showhtml=>true
   editor-css-file=>media/grid/main.css
 
 

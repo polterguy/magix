@@ -691,7 +691,6 @@ a.fork
 
 .wysiwyg-design-surface-label
 {
-    width:100%;
     display:block;
     float:left;
 }
@@ -1055,6 +1054,7 @@ input[type=button].toolbox-paste,
 input[type=button].toolbox-delete,
 input[type=button].toolbox-undo,
 input[type=button].toolbox-redo,
+input[type=button].toolbox-preview,
 input[type=button]:disabled.toolbox-button,
 input[type=button]:disabled.toolbox-check-box,
 input[type=button]:disabled.toolbox-dynamic,
@@ -1077,7 +1077,8 @@ input[type=button]:disabled.toolbox-copy,
 input[type=button]:disabled.toolbox-paste,
 input[type=button]:disabled.toolbox-delete,
 input[type=button]:disabled.toolbox-undo,
-input[type=button]:disabled.toolbox-redo
+input[type=button]:disabled.toolbox-redo,
+input[type=button]:disabled.toolbox-preview
 {
     background:url(../images/icons/toolbox-icons.png);
     background-repeat:no-repeat;
@@ -1220,6 +1221,15 @@ input[type=button]:disabled.toolbox-delete
     box-shadow:none;
 }
 
+input[type=button].toolbox-preview,
+input[type=button]:hover.toolbox-preview,
+input[type=button]:disabled.toolbox-preview
+{
+    background-position:0px -414px;
+    background-color:rgba(0,0,0,.1);
+    box-shadow:none;
+}
+
 input[type=button]:hover.toolbox-undo
 {
     background-color:rgba(0,0,0,.2);
@@ -1241,6 +1251,11 @@ input[type=button]:hover.toolbox-paste
 }
 
 input[type=button]:hover.toolbox-delete
+{
+    background-color:rgba(0,0,0,.2);
+}
+
+input[type=button]:hover.toolbox-preview
 {
     background-color:rgba(0,0,0,.2);
 }
@@ -1270,6 +1285,12 @@ input[type=button]:disabled.toolbox-paste
 }
 
 input[type=button]:disabled.toolbox-delete
+{
+    background-color:rgba(0,0,0,.1);
+    background-image:none;
+}
+
+input[type=button]:disabled.toolbox-preview
 {
     background-color:rgba(0,0,0,.1);
     background-image:none;

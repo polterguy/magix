@@ -233,7 +233,7 @@ namespace Magix.Core
                         {
                             // active event reference
                             string activeEvent = bufferNodeName.Substring(1);
-                            Node newDataNode = new Node();
+                            Node newDataNode = null;
                             if (activeEvent.Contains("["))
                             {
                                 string acNodeExpression = activeEvent.Substring(activeEvent.IndexOf('['));
@@ -246,7 +246,10 @@ namespace Magix.Core
                                 activeEvent = activeEvent.Substring(0, activeEvent.IndexOf('['));
                             }
                             Node exeNode = new Node(null, null);
-                            exeNode[activeEvent].Add(newDataNode);
+                            if (newDataNode != null)
+                                exeNode[activeEvent].AddRange(newDataNode);
+                            else
+                                exeNode[activeEvent].Value = null;
                             Node invokeNode = new Node();
                             invokeNode["_ip"].Value = exeNode;
                             invokeNode["_dp"].Value = exeNode;

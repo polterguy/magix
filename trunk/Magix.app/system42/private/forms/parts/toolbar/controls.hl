@@ -44,4 +44,11 @@ button=>btn-redo
   disabled=>true
   onclick
     magix.ide.redo
+
+button=>btn-preview
+  class=>span-2 toolbox-preview
+  value=>preview
+  disabled=>true
+  onclick
+    magix.ide.show-preview
     

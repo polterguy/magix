@@ -8,7 +8,8 @@ to create the surface active events parts of the form builder"
 // raised by the surface active module when something is changed on the design surface
 // we're just storing the current form in our database, for later reference
 magix.ide.surface-changed
-  // saving current design area controls
+
+  // saving current design area controls to database by user
   magix.ide.get-form
   if=>equals
     lhs=>[magix.ide.get-form].Count
@@ -22,4 +23,137 @@ magix.ide.surface-changed
       children-only=>true
     magix.data.save-username
       id=>magix.ide.current-surface-controls
+
+// creating properties for selected control
+magix.ide.control-selected
+  magix.ide.request-properties
+
+// creating properties for selected control
+magix.ide.request-properties
+  magix.ide.get-selected-control
+  if=>exist
+    lhs=>[magix.ide.get-selected-control][dna]
+    code
+
+      // creating properties web part
+      magix.forms.create-web-part
+        form-id=>control-properties
+        container=>control-properties
+        class=>span-20 last boxed top-1 air-padding
+        controls
+          label=>lbl-properties
+            tag=>h3
+            value=>properties
+
+          // control containing actual properties
+          lambda=>lambda-properties
+            oncreatecontrols
+
+              // finding selected control, and stuffing its properties out into the properties web part
+              magix.ide.get-selected-control
+              set=>[_evt-inspect].Name
+                value=>magix.forms.controls.{0}
+                  =>[magix.ide.get-selected-control][value][0].Name
+              _evt-inspect
+                inspect
+
+              // looping through each control property
+              for-each=>[**inspect=>?][..][**controls][0]
+                index-of=>[.].Name
+                  what=>on
+                if=>not-exist
+                  lhs=>[@][index-of][result]
+                  and=>not-equals
+                    lhs=>[.].Name
+                    rhs=>items
+                  code
+                    // not event handler
+                    set=>[@][_params]
+                    set=>[@][_params][dna]
+                      value=>[/][magix.ide.get-selected-control][dna]
+                    if=>exist
+                      lhs=>[/][magix.ide.get-selected-control][value][0][[.].Name]
+                      code
+                        set=>[@][..][..][_params][content].Value
+                          value=>[/][magix.ide.get-selected-control][value][0][[.].Name].Value
+                    add=>[@][_params][field-type]
+                      value=>[.]
+                    add=>[$]
+                      value=>[:magix.ide.create-control-property-button[@][_params]][control]
+                      children-only=>true
+      magix.browser.scroll
+        id=>editor-toolbar
+  else
+
+    // clearing properties web part
+    magix.viewport.clear-controls
+      container=>control-properties
+
+magix.ide.create-control-property-button
+  _data
+    panel
+      class=>span-6
+      controls
+        label
+          class=>span-3
+          tag=>label
+          value=>{field-type-name}
+        text-box
+          class=>span-3 last
+          placeholder=>{field-type-value}
+          value=>{value}
+          ontextchanged
+            _field-name=>{field-type-name}
+            _dna=>{dna}
+            set=>[magix.ide.change-control][dna].Value
+              value=>[_dna].Value
+            if=>not-equals
+              lhs=>[$][value].Value
+              rhs=>
+              code
+                set=>[magix.ide.change-control][change][[_field-name].Value].Value
+                  value=>[$][value].Value
+            else
+              set=>[magix.ide.change-control][change][[_field-name].Value].Name
+                value=>[_field-name].Value
+            magix.ide.change-control
+  iterate=>[_data]
+    if=>equals
+      lhs=>[.].Value
+      rhs=>{dna}
+      code
+        set=>[.].Value
+          value=>[$][dna].Value
+    else-if=>equals
+      lhs=>[.].Value
+      rhs=>{value}
+      code
+        set=>[.].Value
+          value=>[$][content].Value
+    else-if=>equals
+      lhs=>[.].Value
+      rhs=>{field-type-value}
+      code
+        set=>[.].Value
+          value=>[$][field-type][0].Value
+    else-if=>equals
+      lhs=>[.].Value
+      rhs=>{field-type-name}
+      code
+        set=>[.].Value
+          value=>[$][field-type][0].Name
+  if=>equals
+    lhs=>[$][field-type][0].Name
+    rhs=>text
+    code
+      set=>[_data][panel][class].Value
+        value=>12
+      set=>[_data][panel][controls][text-box].Name
+        value=>text-area
+      set=>[_data][panel][controls][text-area][class].Value
+        value=>span-10 last
+      set=>[_data][panel][controls][text-area][rows].Value
+        value=>5
+  add=>[$][control]
+    value=>[_data][panel]
 

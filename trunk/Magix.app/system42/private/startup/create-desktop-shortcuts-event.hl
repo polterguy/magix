@@ -245,7 +245,7 @@ returns the default dashboard shortcuts in your system"
           magix.help.open-file
             file=>system42/private/help/backend/web-controls.mml
       forms
-        text=>forms
+        text=>web part builder
         category=>applications
         code
           magix.viewport.clear-controls

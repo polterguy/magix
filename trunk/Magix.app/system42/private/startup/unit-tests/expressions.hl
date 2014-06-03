@@ -222,7 +222,7 @@ making sure the expression behaves as expected"
     _buffer
       input=>hello
     if=>not-equals
-      lhs=>[:magix.demo.foo[_buffer][input]][output].Value
+      lhs=>[:magix.demo.foo[_buffer]][output].Value
       rhs=>hello world
       code
         event
@@ -254,33 +254,22 @@ making sure the expression behaves as expected"
       code
         set=>[$][result].Value
           value=>output
-    event
-      name=>magix.demo.foo3
-      persist=>false
-      code
-        set=>[$][result].Value
-          value=>[$][_buffer4].Value
     _buffer
       input=>hello
-    _buffer2=>input
-    _buffer3=>_buffer2
-    _buffer4=>_buffer
+    _buffer2=>_buffer
+    _buffer3=>result
     if=>not-equals
-      lhs=>[:magix.demo.foo[[[:magix.demo.foo3[_buffer4]][result].Value].Name][[[_buffer3].Value].Value]][[:magix.demo.foo2][result].Value].Value
+      lhs=>[:magix.demo.foo[[_buffer2].Value]][[:magix.demo.foo2][[_buffer3].Value].Value].Value
       rhs=>hello world
       code
         event
           name=>magix.demo.foo
         event
           name=>magix.demo.foo2
-        event
-          name=>magix.demo.foo3
         throw=>nested active event expression misbehaved
     else
       event
         name=>magix.demo.foo
       event
         name=>magix.demo.foo2
-      event
-        name=>magix.demo.foo3
 

@@ -300,8 +300,8 @@ namespace Magix.forms
 			node["class"].Value = "css classes";
 			node["dir"].Value = "ltr";
             node["tabindex"].Value = 5;
-            node["title"].Value = "informational tooltip";
-			node["style"].Value = "width:120px;height:120px;";
+            node["title"].Value = "tooltip";
+			node["style"].Value = "css styles";
 			node["onclick"].Value = "hyperlisp code";
 			node["ondblclick"].Value = "hyperlisp code";
 			node["onmousedown"].Value = "hyperlisp code";
