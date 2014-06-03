@@ -413,6 +413,7 @@ namespace Magix.ide.modules
 					if (idxChange.Count > 0)
 					{
 						// code in tree format
+                        controlNode[idxChange.Name].Clear();
 						controlNode[idxChange.Name].AddRange(idxChange.Clone());
 					}
 					else
