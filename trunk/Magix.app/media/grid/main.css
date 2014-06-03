@@ -1049,7 +1049,35 @@ input[type=button].toolbox-text-area,
 input[type=button].toolbox-text-box,
 input[type=button].toolbox-timer,
 input[type=button].toolbox-uploader,
-input[type=button].toolbox-wysiwyg
+input[type=button].toolbox-wysiwyg,
+input[type=button].toolbox-copy,
+input[type=button].toolbox-paste,
+input[type=button].toolbox-delete,
+input[type=button].toolbox-undo,
+input[type=button].toolbox-redo,
+input[type=button]:disabled.toolbox-button,
+input[type=button]:disabled.toolbox-check-box,
+input[type=button]:disabled.toolbox-dynamic,
+input[type=button]:disabled.toolbox-hidden,
+input[type=button]:disabled.toolbox-hyperlink,
+input[type=button]:disabled.toolbox-img,
+input[type=button]:disabled.toolbox-label,
+input[type=button]:disabled.toolbox-lambda,
+input[type=button]:disabled.toolbox-link-button,
+input[type=button]:disabled.toolbox-literal,
+input[type=button]:disabled.toolbox-panel,
+input[type=button]:disabled.toolbox-radio,
+input[type=button]:disabled.toolbox-select,
+input[type=button]:disabled.toolbox-text-area,
+input[type=button]:disabled.toolbox-text-box,
+input[type=button]:disabled.toolbox-timer,
+input[type=button]:disabled.toolbox-uploader,
+input[type=button]:disabled.toolbox-wysiwyg,
+input[type=button]:disabled.toolbox-copy,
+input[type=button]:disabled.toolbox-paste,
+input[type=button]:disabled.toolbox-delete,
+input[type=button]:disabled.toolbox-undo,
+input[type=button]:disabled.toolbox-redo
 {
     background:url(../images/icons/toolbox-icons.png);
     background-repeat:no-repeat;
@@ -1145,6 +1173,106 @@ input[type=button].toolbox-wysiwyg
 input[type=button].toolbox-timer
 {
     background-position:0px -306px;
+}
+
+input[type=button].toolbox-undo,
+input[type=button]:hover.toolbox-undo,
+input[type=button]:disabled.toolbox-undo
+{
+    background-position:0px -324px;
+    background-color:rgba(0,0,0,.1);
+    box-shadow:none;
+}
+
+input[type=button].toolbox-redo,
+input[type=button]:hover.toolbox-redo,
+input[type=button]:disabled.toolbox-redo
+{
+    background-position:0px -342px;
+    background-color:rgba(0,0,0,.1);
+    box-shadow:none;
+}
+
+input[type=button].toolbox-copy,
+input[type=button]:hover.toolbox-copy,
+input[type=button]:disabled.toolbox-copy
+{
+    background-position:0px -360px;
+    background-color:rgba(0,0,0,.1);
+    box-shadow:none;
+}
+
+input[type=button].toolbox-paste,
+input[type=button]:hover.toolbox-paste,
+input[type=button]:disabled.toolbox-paste
+{
+    background-position:0px -378px;
+    background-color:rgba(0,0,0,.1);
+    box-shadow:none;
+}
+
+input[type=button].toolbox-delete,
+input[type=button]:hover.toolbox-delete,
+input[type=button]:disabled.toolbox-delete
+{
+    background-position:0px -396px;
+    background-color:rgba(0,0,0,.1);
+    box-shadow:none;
+}
+
+input[type=button]:hover.toolbox-undo
+{
+    background-color:rgba(0,0,0,.2);
+}
+
+input[type=button]:hover.toolbox-redo
+{
+    background-color:rgba(0,0,0,.2);
+}
+
+input[type=button]:hover.toolbox-copy
+{
+    background-color:rgba(0,0,0,.2);
+}
+
+input[type=button]:hover.toolbox-paste
+{
+    background-color:rgba(0,0,0,.2);
+}
+
+input[type=button]:hover.toolbox-delete
+{
+    background-color:rgba(0,0,0,.2);
+}
+
+input[type=button]:disabled.toolbox-undo
+{
+    background-color:rgba(0,0,0,.1);
+    background-image:none;
+}
+
+input[type=button]:disabled.toolbox-redo
+{
+    background-color:rgba(0,0,0,.1);
+    background-image:none;
+}
+
+input[type=button]:disabled.toolbox-copy
+{
+    background-color:rgba(0,0,0,.1);
+    background-image:none;
+}
+
+input[type=button]:disabled.toolbox-paste
+{
+    background-color:rgba(0,0,0,.1);
+    background-image:none;
+}
+
+input[type=button]:disabled.toolbox-delete
+{
+    background-color:rgba(0,0,0,.1);
+    background-image:none;
 }
 
 .qr-code-preview
