@@ -17,7 +17,7 @@ panel=>controls-wrapper
 
     // descriptive header
     label=>lbl-controls-header
-      value=>controls in your system
+      value=>click the control you wish to add
       class=>span-15 bottom-1 last
       tag=>h3
 
@@ -26,7 +26,7 @@ panel=>controls-wrapper
       oncreatecontrols
         _data
           button
-            ondblclick
+            onclick
               try
                 code
                   // creates the magix.ide.add-control code to execute according to user selections, 
@@ -65,60 +65,64 @@ panel=>controls-wrapper
           add=>[$]
             value=>[/][_data][button]
 
-    // spacer, horizontal ruler, for making some space between different segments
-    label=>spacer
-      tag=>hr
-      class=>span-15 last clear
+    panel=>panel-position
+      class=>span-15 last
+      controls
 
-    // desription of how to add a control, drop down list allowing
-    // user to decide where to add, and the clear controls button
-    label=>lbl-controls-description-begin
-      class=>span-4 clear
-      value=>double click to add control
-      tag=>label
-    select=>select-add-where
-      class=>span-2
-      items
-        before=>before
-        after=>after
-        child=>as child of
-      onselectedindexchanged
-        set=>[magix.data.save-username][value][position].Value
-          value=>[$][value].Value
-        magix.data.save-username
-          id=>magix.ide.where-position
-      onfirstload
-        magix.data.load-username
-          id=>magix.ide.where-position
-        if=>exist
-          lhs=>[magix.data.load-username][objects]
-          code
-            set=>[magix.forms.set-value][value].Value
-              value=>[magix.data.load-username][objects][0][position].Value
-        magix.forms.set-value
-          form-id=>add-control
-          id=>select-add-where
-          value=>after
-    label=>lbl-controls-description-end
-      class=>span-6
-      value=>currently selected control
-      tag=>label
-    button=>btn-clear-controls
-      class=>span-3 last
-      value=>clear controls
-      onclick
-        magix.viewport.confirm
-          message=>are you sure you wish to clear all controls from your form?
-          code
-            try
+        // spacer, horizontal ruler, for making some space between different segments
+        label=>spacer
+          tag=>hr
+          class=>span-15 last clear
+
+        // desription of how to add a control, drop down list allowing
+        // user to decide where to add, and the clear controls button
+        label=>lbl-controls-description-begin
+          class=>span-1 clear
+          value=>add
+          tag=>label
+        select=>select-add-where
+          class=>span-2
+          items
+            before=>before
+            after=>after
+            child=>as child of
+          onselectedindexchanged
+            set=>[magix.data.save-username][value][position].Value
+              value=>[$][value].Value
+            magix.data.save-username
+              id=>magix.ide.where-position
+          onfirstload
+            magix.data.load-username
+              id=>magix.ide.where-position
+            if=>exist
+              lhs=>[magix.data.load-username][objects]
               code
-                // in case surface has been disabled
-                magix.ide.enable-surface
-                  value=>true
-                magix.ide.clear-controls
-              catch
-                set=>[@][magix.viewport.show-message][message].Value
-                  value=>[@][exception].Value
-                magix.viewport.show-message
-                  color=>#ffbbbb
+                set=>[magix.forms.set-value][value].Value
+                  value=>[magix.data.load-username][objects][0][position].Value
+            magix.forms.set-value
+              form-id=>add-control
+              id=>select-add-where
+              value=>after
+        label=>lbl-controls-description-end
+          class=>span-6
+          value=>selected control
+          tag=>label
+        button=>btn-clear-controls
+          class=>span-3 last right
+          value=>clear controls
+          onclick
+            magix.viewport.confirm
+              message=>are you sure you wish to clear all controls from your form?
+              code
+                try
+                  code
+                    // in case surface has been disabled
+                    magix.ide.enable-surface
+                      value=>true
+                    magix.ide.clear-controls
+                  catch
+                    set=>[@][magix.viewport.show-message][message].Value
+                      value=>[@][exception].Value
+                    magix.viewport.show-message
+                      color=>#ffbbbb
 

@@ -64,13 +64,15 @@ magix.ide.set-clear-all-control-enabled
     lhs=>[magix.ide.get-form].Count
     rhs=>0
     code
-      magix.forms.set-enabled
+      magix.forms.set-style
         form-id=>add-control
-        id=>btn-clear-controls
-        value=>false
+        id=>panel-position
+        key=>display
+        value=>none
   else
-    magix.forms.set-enabled
+    magix.forms.set-style
       form-id=>add-control
-      id=>btn-clear-controls
-      value=>true
+      id=>panel-position
+      key=>display
+      value=>block
 

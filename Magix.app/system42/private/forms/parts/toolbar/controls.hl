@@ -11,35 +11,35 @@ select=>select-control
     magix.ide.selected-control-changed
 
 button=>btn-copy
-  class=>span-2
+  class=>span-2 toolbox-copy
   value=>copy
   disabled=>true
   onclick
     magix.ide.copy-control-requested
 
 button=>btn-paste
-  class=>span-2
+  class=>span-2 toolbox-paste
   value=>paste
   disabled=>true
   onclick
     magix.ide.paste-control-requested
 
 button=>btn-delete
-  class=>span-2
+  class=>span-2 toolbox-delete
   value=>delete
   disabled=>true
   onclick
     magix.ide.remove-control
 
 button=>btn-undo
-  class=>span-2
+  class=>span-2 toolbox-undo
   value=>undo
   disabled=>true
   onclick
     magix.ide.undo
 
 button=>btn-redo
-  class=>span-2
+  class=>span-2 toolbox-redo
   value=>redo
   disabled=>true
   onclick

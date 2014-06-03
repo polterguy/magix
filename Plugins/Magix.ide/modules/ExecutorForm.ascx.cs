@@ -217,4 +217,3 @@ namespace Magix.ide.modules
 		}
 	}
 }
-
