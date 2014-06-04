@@ -1,0 +1,27 @@
+﻿
+
+inspect=>@"contains controls for properties
+
+contains controls for properties for web part builder"
+
+
+label=>lbl-properties
+  tag=>h3
+  value=>properties
+  onfirstload
+    magix.ide.get-selected-control
+    set=>[magix.forms.set-value][value].Value
+      value=>{0} properties
+        =>[magix.ide.get-selected-control][value][0].Name
+    magix.forms.set-value
+      form-id=>control-properties
+      id=>lbl-properties
+
+// control containing actual properties
+lambda=>lambda-properties
+  oncreatecontrols
+    magix.ide.create-properties-controls
+    add=>[$]
+      value=>[magix.ide.create-properties-controls]
+      children-only=>true
+

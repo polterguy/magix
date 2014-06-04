@@ -1,0 +1,79 @@
+﻿
+
+inspect=>@"creates the events for saving form into database
+
+contains the events for helping user saving his form into the database"
+
+
+// tries to save to database, asking user to confirm any overwritings
+magix.ide.try-save-to-database
+  magix.forms.get-value
+    form-id=>save-content
+    id=>txt-db-id
+  if=>equals
+    lhs=>[magix.forms.get-value][value].Value
+    rhs=>
+    code
+      magix.viewport.show-message
+        message=>you must supply an id to save your form into the database
+      stop
+  set=>[magix.data.load][id].Value
+    value=>[magix.forms.get-value][value].Value
+  magix.data.load
+  if=>exist
+    lhs=>[magix.data.load][objects]
+    code
+      magix.viewport.confirm
+        message=>that object already exist in database, do you wish to overwrite it?
+        code
+          magix.ide.save-to-database
+  else
+    magix.ide.save-to-database
+
+// actually saves form to database
+magix.ide.save-to-database
+  magix.forms.get-value
+    form-id=>save-content
+    id=>txt-db-id
+  set=>[magix.data.save][id].Value
+    value=>[magix.forms.get-value][value].Value
+  magix.ide.get-form
+  add=>[magix.data.save][value]
+    value=>[magix.ide.get-form]
+    children-only=>true
+  magix.data.save
+  magix.viewport.clear-controls
+    container=>editor-save-wrapper
+  set=>[magix.data.save-username][value][id].Value
+    value=>[magix.forms.get-value][value].Value
+  magix.data.save-username
+    id=>magix.ide.last-used-form-id
+  using=>magix.viewport
+    show-message
+      message=>form was successfully save to database as '{0}'
+        =>[magix.forms.get-value][value].Value
+
+// sets the last used db id on the text-box asking user for id to save web part as
+magix.ide.set-last-used-save-database-id
+  magix.data.load-username
+    id=>magix.ide.last-used-form-id
+  if=>exist
+    lhs=>[magix.data.load-username][objects][0]
+    code
+      set=>[@][magix.forms.set-value][value].Value
+        value=>[magix.data.load-username][objects][0][id].Value
+      magix.forms.set-value
+        form-id=>save-content
+        id=>txt-db-id
+  magix.forms.effect
+    form-id=>save-content
+    id=>txt-db-id
+    type=>timeout
+    time=>25
+    chained
+      e0
+        type=>focus-and-select
+        form-id=>save-content
+        id=>txt-db-id
+
+

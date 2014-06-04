@@ -1,133 +1,83 @@
 ﻿
 
-inspect=>@"contains main surface active events for form builder
+inspect=>@"contains events for properties
 
-used to create the form builder.  contains the active events necessary 
-to create the surface active events parts of the form builder"
+contains events for web part builder properties section"
 
-// raised by the surface active module when something is changed on the design surface
-// we're just storing the current form in our database, for later reference
-magix.ide.surface-changed
 
-  // saving current design area controls to database by user
-  magix.ide.get-form
-  if=>equals
-    lhs=>[magix.ide.get-form].Count
-    rhs=>0
-    code
-      magix.data.remove-username
-        id=>magix.ide.current-surface-controls
-  else
-    add=>[@][magix.data.save-username][value]
-      value=>[magix.ide.get-form]
-      children-only=>true
-    magix.data.save-username
-      id=>magix.ide.current-surface-controls
-
-// creating properties for selected control
-magix.ide.control-selected
-  magix.ide.request-properties
-
-// creating properties for selected control
-magix.ide.request-properties
+magix.ide.create-properties-controls
+  // finding selected control, and stuffing its properties out into the properties web part
   magix.ide.get-selected-control
-  if=>exist
-    lhs=>[magix.ide.get-selected-control][dna]
-    code
+  set=>[_evt-inspect].Name
+    value=>magix.forms.controls.{0}
+      =>[magix.ide.get-selected-control][value][0].Name
+  _evt-inspect
+    inspect
 
-      // creating properties web part
-      magix.forms.create-web-part
-        form-id=>control-properties
-        container=>control-properties
-        class=>span-20 last boxed top-1 air-padding
-        controls
-          label=>lbl-properties
-            tag=>h3
-            value=>properties
+  // looping through each control property
+  for-each=>[**inspect=>?][..][**controls][0]
+    index-of=>[.].Name
+      what=>on
+    if=>not-exist
+      lhs=>[@][index-of][result]
+      and=>not-equals
+        lhs=>[.].Name
+        rhs=>items
+      code
+        // not event handler
+        set=>[@][_params]
+        set=>[@][_params][dna]
+          value=>[/][magix.ide.get-selected-control][dna]
+        if=>exist
+          lhs=>[/][magix.ide.get-selected-control][value][0][[.].Name]
+          code
+            set=>[@][..][..][_params][content].Value
+              value=>[/][magix.ide.get-selected-control][value][0][[.].Name].Value
+        add=>[@][_params][field-type]
+          value=>[.]
+        add=>[$]
+          value=>[:magix.ide.create-control-property-modifier-control[@][_params]][control]
+          children-only=>true
 
-          // control containing actual properties
-          lambda=>lambda-properties
-            oncreatecontrols
+  // creating spacer between properties and events
+  _hr
+    label
+      tag=>hr
+      class=>span-20 last clear top-1 bottom-1
+    label
+      tag=>h3
+      class=>span-20 last clear bottom-1
+      value=>events
+  add=>[$]
+    value=>[_hr][label]
+  add=>[$]
+    value=>[_hr][label:1]
 
-              // finding selected control, and stuffing its properties out into the properties web part
-              magix.ide.get-selected-control
-              set=>[_evt-inspect].Name
-                value=>magix.forms.controls.{0}
-                  =>[magix.ide.get-selected-control][value][0].Name
-              _evt-inspect
-                inspect
-
-              // looping through each control property
-              for-each=>[**inspect=>?][..][**controls][0]
-                index-of=>[.].Name
-                  what=>on
-                if=>not-exist
-                  lhs=>[@][index-of][result]
-                  and=>not-equals
-                    lhs=>[.].Name
-                    rhs=>items
-                  code
-                    // not event handler
-                    set=>[@][_params]
-                    set=>[@][_params][dna]
-                      value=>[/][magix.ide.get-selected-control][dna]
-                    if=>exist
-                      lhs=>[/][magix.ide.get-selected-control][value][0][[.].Name]
-                      code
-                        set=>[@][..][..][_params][content].Value
-                          value=>[/][magix.ide.get-selected-control][value][0][[.].Name].Value
-                    add=>[@][_params][field-type]
-                      value=>[.]
-                    add=>[$]
-                      value=>[:magix.ide.create-control-property-modifier-control[@][_params]][control]
-                      children-only=>true
-
-              // creating spacer between properties and events
-              _hr
-                label
-                  tag=>hr
-                  class=>span-20 last clear top-1 bottom-1
-                label
-                  tag=>h3
-                  class=>span-20 last clear bottom-1
-                  value=>events
-              add=>[$]
-                value=>[_hr][label]
-              add=>[$]
-                value=>[_hr][label:1]
-
-              // looping through each control event and items collection
-              for-each=>[**inspect=>?][..][**controls][0]
-                index-of=>[.].Name
-                  what=>on
-                if=>exist
-                  lhs=>[@][index-of][result]
-                  or=>equals
-                    lhs=>[.].Name
-                    rhs=>items
-                  code
-                    // not event handler
-                    set=>[@][_params]
-                    set=>[@][_params][dna]
-                      value=>[/][magix.ide.get-selected-control][dna]
-                    if=>exist
-                      lhs=>[/][magix.ide.get-selected-control][value][0][[.].Name]
-                      code
-                        add=>[@][..][..][_params][content]
-                          value=>[/][magix.ide.get-selected-control][value][0][[.].Name]
-                          children-only=>true
-                    add=>[@][_params][field-type]
-                      value=>[.]
-                    add=>[$]
-                      value=>[:magix.ide.create-control-event-modifier-control[@][_params]][control]
-                      children-only=>true
-      magix.browser.scroll
-        id=>editor-toolbar
-  else
-
-    // clearing properties web part
-    magix.viewport.clear-controls
-      container=>control-properties
+  // looping through each control event and items collection
+  for-each=>[**inspect=>?][..][**controls][0]
+    index-of=>[.].Name
+      what=>on
+    if=>exist
+      lhs=>[@][index-of][result]
+      or=>equals
+        lhs=>[.].Name
+        rhs=>items
+      code
+        // not event handler
+        set=>[@][_params]
+        set=>[@][_params][dna]
+          value=>[/][magix.ide.get-selected-control][dna]
+        if=>exist
+          lhs=>[/][magix.ide.get-selected-control][value][0][[.].Name]
+          code
+            add=>[@][..][..][_params][content]
+              value=>[/][magix.ide.get-selected-control][value][0][[.].Name]
+              children-only=>true
+        add=>[@][_params][field-type]
+          value=>[.]
+        add=>[$]
+          value=>[:magix.ide.create-control-event-modifier-control[@][_params]][control]
+          children-only=>true
 
 // creates one property modifier for properties web part
 magix.ide.create-control-property-modifier-control
@@ -217,12 +167,26 @@ magix.ide.create-control-event-modifier-control
               lhs=>[magix.forms.get-style][value].Value
               rhs=>none
               code
+                magix.viewport.set-viewstate
+                  name=>magix.ide.visible-event-code-{0}-{1}
+                    =>{dna}
+                    =>{field-type-name}
+                  value=>true
                 magix.forms.effect
                   type=>roll-down
                   time=>250
                   form-id=>control-properties
                   id=>{field-type-name}
+                  chained
+                    e0
+                      type=>focus-and-select
+                      form-id=>control-properties
+                      id=>{field-type-name}
             else
+              magix.viewport.set-viewstate
+                name=>magix.ide.visible-event-code-{0}-{1}
+                  =>{dna}
+                  =>{field-type-name}
               magix.forms.effect
                 type=>roll-up
                 time=>250
@@ -234,6 +198,19 @@ magix.ide.create-control-event-modifier-control
           rows=>10
           placeholder=>{field-type-value}
           value=>{value}
+          onfirstload
+            magix.viewport.get-viewstate
+              name=>magix.ide.visible-event-code-{0}-{1}
+                =>{dna}
+                =>{field-type-name}
+            if=>exist
+              lhs=>[magix.viewport.get-viewstate][value]
+              code
+                magix.forms.set-style
+                  form-id=>control-properties
+                  id=>{field-type-name}
+                  key=>display
+                  value=>block
           ontextchanged
             _field-name=>{field-type-name}
             _dna=>{dna}
@@ -295,3 +272,8 @@ magix.ide.create-control-event-modifier-control
   add=>[$][control]
     value=>[_data][panel]
 
+// form updated, updating property form
+magix.ide.set-form
+  magix.ide.request-properties
+
+  

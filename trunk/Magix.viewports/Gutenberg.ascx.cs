@@ -90,6 +90,8 @@ namespace Magix.viewports
             if (!ip.ContainsValue("message"))
 				throw new ArgumentException("no [message] parameter given to [magix.viewport.show-message]");
             string msgTxt = Expressions.GetExpressionValue(ip["message"].Get<string>(), dp, ip, false) as string;
+            if (ip["message"].Count > 0)
+                msgTxt = Expressions.FormatString(dp, ip, ip["message"], msgTxt);
 
             Label whichMsg = message;
             if (!ip.Contains("code"))

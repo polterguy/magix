@@ -1048,11 +1048,13 @@ input[type=button].toolbox-timer,
 input[type=button].toolbox-uploader,
 input[type=button].toolbox-wysiwyg,
 input[type=button].toolbox-copy,
+input[type=button].toolbox-cut,
 input[type=button].toolbox-paste,
 input[type=button].toolbox-delete,
 input[type=button].toolbox-undo,
 input[type=button].toolbox-redo,
 input[type=button].toolbox-preview,
+input[type=button].toolbox-save,
 input[type=button]:disabled.toolbox-button,
 input[type=button]:disabled.toolbox-check-box,
 input[type=button]:disabled.toolbox-dynamic,
@@ -1072,11 +1074,13 @@ input[type=button]:disabled.toolbox-timer,
 input[type=button]:disabled.toolbox-uploader,
 input[type=button]:disabled.toolbox-wysiwyg,
 input[type=button]:disabled.toolbox-copy,
+input[type=button]:disabled.toolbox-cut,
 input[type=button]:disabled.toolbox-paste,
 input[type=button]:disabled.toolbox-delete,
 input[type=button]:disabled.toolbox-undo,
 input[type=button]:disabled.toolbox-redo,
-input[type=button]:disabled.toolbox-preview
+input[type=button]:disabled.toolbox-preview,
+input[type=button]:disabled.toolbox-save
 {
     background:url(../images/icons/toolbox-icons.png);
     background-repeat:no-repeat;
@@ -1201,6 +1205,15 @@ input[type=button]:disabled.toolbox-copy
     box-shadow:none;
 }
 
+input[type=button].toolbox-cut,
+input[type=button]:hover.toolbox-cut,
+input[type=button]:disabled.toolbox-cut
+{
+    background-position:0px -432px;
+    background-color:rgba(0,0,0,.1);
+    box-shadow:none;
+}
+
 input[type=button].toolbox-paste,
 input[type=button]:hover.toolbox-paste,
 input[type=button]:disabled.toolbox-paste
@@ -1228,6 +1241,15 @@ input[type=button]:disabled.toolbox-preview
     box-shadow:none;
 }
 
+input[type=button].toolbox-save,
+input[type=button]:hover.toolbox-save,
+input[type=button]:disabled.toolbox-save
+{
+    background-position:0px -450px;
+    background-color:rgba(0,0,0,.1);
+    box-shadow:none;
+}
+
 input[type=button]:hover.toolbox-undo
 {
     background-color:rgba(0,0,0,.2);
@@ -1243,6 +1265,11 @@ input[type=button]:hover.toolbox-copy
     background-color:rgba(0,0,0,.2);
 }
 
+input[type=button]:hover.toolbox-cut
+{
+    background-color:rgba(0,0,0,.2);
+}
+
 input[type=button]:hover.toolbox-paste
 {
     background-color:rgba(0,0,0,.2);
@@ -1254,6 +1281,11 @@ input[type=button]:hover.toolbox-delete
 }
 
 input[type=button]:hover.toolbox-preview
+{
+    background-color:rgba(0,0,0,.2);
+}
+
+input[type=button]:hover.toolbox-save
 {
     background-color:rgba(0,0,0,.2);
 }
@@ -1276,6 +1308,12 @@ input[type=button]:disabled.toolbox-copy
     background-image:none;
 }
 
+input[type=button]:disabled.toolbox-cut
+{
+    background-color:rgba(0,0,0,.1);
+    background-image:none;
+}
+
 input[type=button]:disabled.toolbox-paste
 {
     background-color:rgba(0,0,0,.1);
@@ -1289,6 +1327,12 @@ input[type=button]:disabled.toolbox-delete
 }
 
 input[type=button]:disabled.toolbox-preview
+{
+    background-color:rgba(0,0,0,.1);
+    background-image:none;
+}
+
+input[type=button]:disabled.toolbox-save
 {
     background-color:rgba(0,0,0,.1);
     background-image:none;

@@ -251,7 +251,7 @@ returns the default dashboard shortcuts in your system"
           magix.viewport.clear-controls
             all=>true
           execute-script
-            file=>system42/private/forms/builder.hl
+            file=>system42/private/web-part-builder/builder.hl
           magix.help.open-file
             file=>system42/private/help/backend/forms.mml
       help
