@@ -21,7 +21,9 @@ or a constant
 [class] is the css class(es) you wish to use for your web-part.  
 this property will be set to empty if not given, and will become 
 the css classes on the viewport container.  class might be either 
-an expression, or a constant
+an expression, or a constant.  in addition to setting the class 
+property of your web part, you can also explicitly set styles 
+by using the [style] parameter
 
 [controls] contains the controls themselves, and is a list of the 
 controls the form contains.  this is a list of controls, and can 

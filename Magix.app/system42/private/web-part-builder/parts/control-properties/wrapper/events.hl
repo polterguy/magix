@@ -1,0 +1,59 @@
+﻿
+
+inspect=>@"contains events for property wrapper
+
+contains the events for the web part that wraps the properties web part"
+
+
+// show-hide properties link-button was clicked
+magix.ide.show-hide-properties-clicked
+  if=>equals
+    lhs=>[$][value].Value
+    rhs=>hide properties
+    code
+      magix.forms.set-value
+        form-id=>control-properties-wrapper
+        id=>btn-hide-properties
+        value=>show properties
+      magix.data.save-username
+        id=>magix.ide.hide-properties
+        value
+          hidden=>true
+  else
+    magix.forms.set-value
+      form-id=>control-properties-wrapper
+      id=>btn-hide-properties
+      value=>hide properties
+    magix.data.remove-username
+      id=>magix.ide.hide-properties
+  magix.ide.request-properties
+
+// creating properties for selected control
+magix.ide.request-properties
+  magix.data.load-username
+    id=>magix.ide.hide-properties
+  if=>equals
+    lhs=>[magix.data.load-username][objects][0][hidden].Value
+    rhs=>true
+    code
+      magix.viewport.clear-controls
+        container=>control-properties
+      stop
+  magix.ide.get-selected-control
+  if=>exist
+    lhs=>[magix.ide.get-selected-control][dna]
+    code
+
+      // creating properties web part
+      magix.forms.create-web-part
+        form-id=>control-properties
+        container=>control-properties
+        class=>span-20 last boxed air-padding top-1
+        controls-file=>system42/private/web-part-builder/parts/control-properties/controls.hl
+        events-file=>system42/private/web-part-builder/parts/control-properties/events.hl
+  else
+
+    // clearing properties web part
+    magix.viewport.clear-controls
+      container=>control-properties
+

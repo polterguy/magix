@@ -1,0 +1,35 @@
+﻿
+
+inspect=>@"contains the controls for saving form into database
+
+contains the controls for helping user saving his form into the database"
+
+
+label=>lbl-db-id
+  class=>span-2 right-text
+  value=>id
+  tag=>label
+panel=>db-save-wrp
+  class=>span-14 last
+  default=>btn-save-db
+  controls
+    text-box=>txt-db-id
+      class=>span-10
+      placeholder=>database id ...
+      onfirstload
+        magix.ide.set-last-used-save-database-id
+      onesc
+        magix.viewport.clear-controls
+          container=>editor-save-wrapper
+    button=>btn-save-db
+      class=>span-2
+      value=>save
+      onclick
+        magix.ide.try-save-to-database
+    button=>btn-cancel-save
+      class=>span-2 last
+      value=>cancel
+      onclick
+        magix.viewport.clear-controls
+          container=>editor-save-wrapper
+

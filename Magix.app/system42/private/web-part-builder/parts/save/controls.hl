@@ -1,0 +1,33 @@
+﻿
+
+inspect=>@"save where wrapper
+
+creates the controls needed to ask the user where he wants to save his form"
+
+label=>lbl-desc
+  class=>span-1 right-text
+  tag=>label
+  value=>save
+select=>sel-save-where
+  class=>span-3
+  onfirstload
+    magix.data.load-username
+      id=>magix.ide.where-to-save-file
+    if=>exist
+      lhs=>[magix.data.load-username][objects][0]
+      code
+        set=>[@][magix.forms.set-value][value].Value
+          value=>[magix.data.load-username][objects][0][where].Value
+        magix.forms.set-value
+          form-id=>save-wrapper
+          id=>sel-save-where
+  onselectedindexchanged
+    magix.ide.create-save-where-web-part
+  items
+    database=>in database
+    filesystem=>in file system
+dynamic=>save-where-container
+  class=>span-16 last
+  onfirstload
+    magix.ide.create-save-where-web-part
+

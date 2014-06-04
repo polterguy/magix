@@ -1,5 +1,6 @@
 ﻿
 
+
 inspect=>@"contains toolbar parts of form builder
 
 used to create the form builder.  contains the controls necessary 
@@ -16,6 +17,13 @@ button=>btn-copy
   disabled=>true
   onclick
     magix.ide.copy-control-requested
+
+button=>btn-cut
+  class=>span-2 toolbox-cut
+  value=>cut
+  disabled=>true
+  onclick
+    magix.ide.cut-control-requested
 
 button=>btn-paste
   class=>span-2 toolbox-paste
@@ -51,4 +59,11 @@ button=>btn-preview
   disabled=>true
   onclick
     magix.ide.show-preview
+
+button=>btn-save
+  class=>span-2 toolbox-save
+  value=>save
+  disabled=>true
+  onclick
+    magix.ide.save-form
     

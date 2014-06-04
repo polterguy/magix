@@ -365,6 +365,8 @@ namespace Magix.Core
             if (!ip.ContainsValue("name"))
                 throw new ArgumentException("no [name] given to [magix.viewport.set-viewstate]");
             string name = Expressions.GetExpressionValue(ip["name"].Get<string>(), dp, ip, false) as string;
+            if (ip["name"].Count > 0)
+                name = Expressions.FormatString(dp, ip, ip["name"], name);
 
             if (!ip.Contains("value"))
 			{
@@ -409,6 +411,8 @@ namespace Magix.Core
             if (!ip.ContainsValue("name"))
                 throw new ArgumentException("no [name] given to [magix.viewport.get-viewstate]");
             string name = Expressions.GetExpressionValue(ip["name"].Get<string>(), dp, ip, false) as string;
+            if (ip["name"].Count > 0)
+                name = Expressions.FormatString(dp, ip, ip["name"], name);
 
 			if (ViewState[name] != null && ViewState[name] is Node)
                 ip.Add((ViewState[name] as Node).Clone());
@@ -452,13 +456,32 @@ namespace Magix.Core
             string moduleName = Expressions.GetExpressionValue(e.Params["name"].Get<string>(), dp, ip, false) as string;
 
             ClearControls(dyn);
-            
+
             if (ip.ContainsValue("class"))
                 dyn.Class = Expressions.GetExpressionValue(ip["class"].Get<string>(), dp, ip, false) as string;
             else
                 dyn.Class = "";
 
-			dyn.LoadControl(moduleName, e.Params);
+            if (ip.ContainsValue("style"))
+            {
+                string[] styles =
+                    ip["style"].Get<string>().Replace("\n", "").Replace("\r", "").Split(
+                        new char[] { ';' },
+                        StringSplitOptions.RemoveEmptyEntries);
+                foreach (string idxStyle in styles)
+                {
+                    dyn.Style[idxStyle.Split(':')[0]] = idxStyle.Split(':')[1];
+                }
+            }
+            else
+            {
+                foreach (string idx in dyn.Style.Keys)
+                {
+                    dyn.Style[idx] = "";
+                }
+            }
+
+            dyn.LoadControl(moduleName, e.Params);
         }
 
 		/*

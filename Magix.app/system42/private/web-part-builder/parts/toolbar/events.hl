@@ -30,10 +30,18 @@ magix.ide.controls-collection-changed
         form-id=>editor-toolbar
         id=>btn-preview
         value=>true
+      magix.forms.set-enabled
+        form-id=>editor-toolbar
+        id=>btn-save
+        value=>true
   else
     magix.forms.set-enabled
       form-id=>editor-toolbar
       id=>btn-preview
+      value=>false
+    magix.forms.set-enabled
+      form-id=>editor-toolbar
+      id=>btn-save
       value=>false
   magix.forms.set-values
     form-id=>editor-toolbar
@@ -52,12 +60,20 @@ magix.ide.controls-collection-changed
         value=>true
       magix.forms.set-enabled
         form-id=>editor-toolbar
+        id=>btn-cut
+        value=>true
+      magix.forms.set-enabled
+        form-id=>editor-toolbar
         id=>btn-delete
         value=>true
   else
     magix.forms.set-enabled
       form-id=>editor-toolbar
       id=>btn-copy
+      value=>false
+    magix.forms.set-enabled
+      form-id=>editor-toolbar
+      id=>btn-cut
       value=>false
     magix.forms.set-enabled
       form-id=>editor-toolbar
@@ -90,12 +106,20 @@ magix.ide.control-selected
         value=>true
       magix.forms.set-enabled
         form-id=>editor-toolbar
+        id=>btn-cut
+        value=>true
+      magix.forms.set-enabled
+        form-id=>editor-toolbar
         id=>btn-delete
         value=>true
   else
     magix.forms.set-enabled
       form-id=>editor-toolbar
       id=>btn-copy
+      value=>false
+    magix.forms.set-enabled
+      form-id=>editor-toolbar
+      id=>btn-cut
       value=>false
     magix.forms.set-enabled
       form-id=>editor-toolbar
@@ -122,6 +146,15 @@ magix.ide.selected-control-changed
 // called when we should copy a control
 magix.ide.copy-control-requested
   magix.ide.copy-control
+  magix.forms.set-enabled
+    form-id=>editor-toolbar
+    id=>btn-paste
+    value=>true
+
+// called when we should copy a control
+magix.ide.cut-control-requested
+  magix.ide.copy-control
+  magix.ide.remove-control
   magix.forms.set-enabled
     form-id=>editor-toolbar
     id=>btn-paste
@@ -173,7 +206,7 @@ magix.ide.show-preview
   magix.forms.create-web-part
     form-id=>preview-wrapper
     container=>preview
-    class=>span-22 last top-1 boxed-light-green
+    class=>span-22 last top-2 boxed-light-green
     controls
       label=>lbl-preview-description
         class=>span-10 left-9 bottom-1
@@ -192,9 +225,15 @@ magix.ide.show-preview
             container=>preview-content
             class=>span-22 last bottom-1
             controls=>[:magix.ide.get-form]
-  magix.viewport.show-message
-    message=>below is your web part, with all active events wired, fully functional, exactly how it would look like on a web page
-    time=>5000
   magix.browser.scroll
     id=>preview
+
+// saves current active form, first asks user where he wants to save it
+magix.ide.save-form
+  magix.forms.create-web-part
+    form-id=>save-wrapper
+    container=>editor-save-wrapper
+    class=>span-20 last top-1 bottom-1 boxed air-padding
+    controls-file=>system42/private/web-part-builder/parts/save/controls.hl
+    events-file=>system42/private/web-part-builder/parts/save/events.hl
 

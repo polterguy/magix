@@ -677,14 +677,28 @@ namespace Magix.ide.modules
 
             AddToUndoChain(!ip.ContainsValue("skip-undo") || !ip["skip-undo"].Get<bool>());
 
+            bool fundamentalChanges = false;
+
+            Node getControlsNodeBefore = RaiseActiveEvent("magix.ide.list-controls");
+
             DataSource["controls"].Clear();
             if (ip.Contains("value"))
                 DataSource["controls"].AddRange(value.Clone());
 
-            // settting the selected control to null, unless we can find a control again on the surface, at the same dna
-            if (SelectedControlDna != null && ((ip.ContainsValue("clear-selection") && ip["clear-selection"].Get<bool>()) ||
-                (DataSource.FindDna(SelectedControlDna) == null ||
-                (DataSource.FindDna(SelectedControlDna).Parent != null && DataSource.FindDna(SelectedControlDna).Parent.Name != "controls"))))
+            Node getControlsNodeAfter = RaiseActiveEvent("magix.ide.list-controls");
+
+            foreach (Node idx in getControlsNodeBefore["controls"])
+            {
+                if (!getControlsNodeAfter["controls"].Contains(idx.Name))
+                {
+                    fundamentalChanges = true;
+                    break;
+                }
+            }
+
+            if (fundamentalChanges)
+                SelectedControlDna = null;
+            else if (ip.ContainsValue("clear-selection") && ip["clear-selection"].Get<bool>())
                 SelectedControlDna = null;
 
             BuildForm();

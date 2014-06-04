@@ -9,6 +9,7 @@ to create the raw-editor controls parts of the form builder"
 text-area=>txt-raw-code
   class=>span-22 last
   rows=>19
+  style=>display:none;
   placeholder=>raw control data ...
   onfirstload
     magix.ide.reload-serialized-form-data
@@ -20,9 +21,9 @@ text-area=>txt-raw-code
 
 // toggle visibility link-button
 link-button=>lnk-toggle-raw-edit
-  class=>span-1 right
+  class=>span-2 right right-text
   style=>position:absolute;top:0;right:0;z-index:1;
-  value=>hide
+  value=>show code
   onclick
     set=>[magix.ide.toggle-visibility-raw-code][value]
       value=>[$][value]

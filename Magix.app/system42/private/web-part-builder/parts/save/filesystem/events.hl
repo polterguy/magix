@@ -1,0 +1,83 @@
+﻿
+
+inspect=>@"creates the events for saving form into filesystem
+
+contains the events for helping user saving his form into the filesystem"
+
+
+// tries to save to filesystem, asking user to confirm any overwritings
+magix.ide.try-save-to-filesystem
+  magix.forms.get-value
+    form-id=>save-content
+    id=>txt-filename
+  if=>equals
+    lhs=>[magix.forms.get-value][value].Value
+    rhs=>
+    code
+      magix.viewport.show-message
+        message=>you must supply a filename to save your form into the filesystem
+      stop
+  set=>[magix.file.file-exist][file].Value
+    value=>[magix.forms.get-value][value].Value
+  magix.file.file-exist
+  if=>equals
+    lhs=>[magix.file.file-exist][value].Value
+    rhs=>true
+    code
+      magix.viewport.confirm
+        message=>that file already exist, do you wish to overwrite it?
+        code
+          magix.ide.save-to-filesystem
+  else
+    magix.ide.save-to-filesystem
+
+// actually saves form to filesystem
+magix.ide.save-to-filesystem
+  magix.forms.get-value
+    form-id=>save-content
+    id=>txt-filename
+  set=>[magix.file.save][file].Value
+    value=>[magix.forms.get-value][value].Value
+  magix.ide.get-form
+  set=>[node-2-code][node].Value
+    value=>[magix.ide.get-form]
+  node-2-code
+    remove-root=>true
+  set=>[magix.file.save][value].Value
+    value=>[node-2-code][code].Value
+  magix.file.save
+  magix.viewport.clear-controls
+    container=>editor-save-wrapper
+  set=>[magix.data.save-username][value][filename].Value
+    value=>[magix.forms.get-value][value].Value
+  magix.data.save-username
+    id=>magix.ide.last-used-filename
+  using=>magix.viewport
+    show-message
+      message=>form was successfully save to filesystem as '{0}'
+        =>[magix.forms.get-value][value].Value
+
+// sets the last used db id on the text-box asking user for id to save web part as
+magix.ide.set-last-used-save-filename
+  magix.data.load-username
+    id=>magix.ide.last-used-filename
+  if=>exist
+    lhs=>[magix.data.load-username][objects][0]
+    code
+      set=>[@][magix.forms.set-value][value].Value
+        value=>[magix.data.load-username][objects][0][filename].Value
+      magix.forms.set-value
+        form-id=>save-content
+        id=>txt-filename
+  magix.forms.effect
+    form-id=>save-content
+    id=>txt-filename
+    type=>timeout
+    time=>25
+    chained
+      e0
+        type=>focus-and-select
+        form-id=>save-content
+        id=>txt-filename
+
+

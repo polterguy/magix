@@ -12,15 +12,15 @@ magix.forms.create-web-part
   form-id=>add-control
   container=>content1
   class=>span-17 last
-  controls-file=>system42/private/forms/parts/add-control/controls.hl
-  events-file=>system42/private/forms/parts/add-control/events.hl
+  controls-file=>system42/private/web-part-builder/parts/add-control/controls.hl
+  events-file=>system42/private/web-part-builder/parts/add-control/events.hl
 
 // creating the wysiwyg designer surface, toolbar, and the raw code text-area editor
 magix.forms.create-web-part
   form-id=>form-builder
   container=>content2
   class=>span-22 last
-  events-file=>system42/private/forms/parts/surface/events.hl
+  events-file=>system42/private/web-part-builder/parts/surface/events.hl
   controls
 
     // editor toolbar
@@ -30,8 +30,11 @@ magix.forms.create-web-part
           form-id=>editor-toolbar
           container=>editor-toolbar
           class=>span-22 last
-          events-file=>system42/private/forms/parts/toolbar/events.hl
-          controls-file=>system42/private/forms/parts/toolbar/controls.hl
+          controls-file=>system42/private/web-part-builder/parts/toolbar/controls.hl
+          events-file=>system42/private/web-part-builder/parts/toolbar/events.hl
+
+    // editor save wrapper
+    dynamic=>editor-save-wrapper
 
     // wysiwyg design surface
     dynamic=>wysiwyg-surface
@@ -43,17 +46,25 @@ magix.forms.create-web-part
 
     // raw code text-area editor
     dynamic=>raw-editor
-      style=>position:relative;
       onfirstload
         magix.forms.create-web-part
           form-id=>raw-editor
           container=>raw-editor
           class=>span-22 last
-          events-file=>system42/private/forms/parts/raw-editor/events.hl
-          controls-file=>system42/private/forms/parts/raw-editor/controls.hl
+          style=>position:relative;
+          controls-file=>system42/private/web-part-builder/parts/raw-editor/controls.hl
+          events-file=>system42/private/web-part-builder/parts/raw-editor/events.hl
 
     // properties container
-    dynamic=>control-properties
+    dynamic=>control-properties-wrapper
+      onfirstload
+        magix.forms.create-web-part
+          form-id=>control-properties-wrapper
+          container=>control-properties-wrapper
+          class=>span-22 last
+          style=>position:relative;
+          controls-file=>system42/private/web-part-builder/parts/control-properties/wrapper/controls.hl
+          events-file=>system42/private/web-part-builder/parts/control-properties/wrapper/events.hl
 
     // preview container
     dynamic=>preview

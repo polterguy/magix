@@ -248,8 +248,6 @@
     <Content Include="system42\private\app-wizard\wizards\qr-code-generator\qr-code-generator-generator.hl" />
     <Content Include="system42\private\dashboard\menu.mml" />
     <Content Include="system42\private\dashboard\desktop.hl" />
-    <Content Include="system42\private\forms\edit-forms.hl" />
-    <Content Include="system42\private\forms\edit-property.hl" />
     <Content Include="system42\private\help\backend\active-event-executor.mml" />
     <Content Include="system42\private\help\backend\active-events.mml" />
     <Content Include="system42\private\help\backend\applications.mml" />
@@ -358,15 +356,25 @@
     <Content Include="system42\private\startup\unit-tests\while.hl" />
     <Content Include="system42\private\startup\unit-tests\with.hl" />
     <Content Include="system42\private\tools\inspect.hl" />
-    <Content Include="system42\private\forms\builder.hl" />
-    <Content Include="system42\private\forms\parts\add-control\controls.hl" />
-    <Content Include="system42\private\forms\parts\add-control\events.hl" />
-    <Content Include="system42\private\forms\parts\raw-editor\controls.hl" />
-    <Content Include="system42\private\forms\parts\raw-editor\events.hl" />
-    <Content Include="system42\private\forms\parts\surface\events.hl" />
     <Content Include="system42\private\startup\create-magix-data-username.hl" />
-    <Content Include="system42\private\forms\parts\toolbar\controls.hl" />
-    <Content Include="system42\private\forms\parts\toolbar\events.hl" />
+    <Content Include="system42\private\web-part-builder\builder.hl" />
+    <Content Include="system42\private\web-part-builder\parts\add-control\controls.hl" />
+    <Content Include="system42\private\web-part-builder\parts\add-control\events.hl" />
+    <Content Include="system42\private\web-part-builder\parts\raw-editor\controls.hl" />
+    <Content Include="system42\private\web-part-builder\parts\raw-editor\events.hl" />
+    <Content Include="system42\private\web-part-builder\parts\surface\events.hl" />
+    <Content Include="system42\private\web-part-builder\parts\toolbar\controls.hl" />
+    <Content Include="system42\private\web-part-builder\parts\toolbar\events.hl" />
+    <Content Include="system42\private\web-part-builder\parts\control-properties\controls.hl" />
+    <Content Include="system42\private\web-part-builder\parts\control-properties\events.hl" />
+    <Content Include="system42\private\web-part-builder\parts\control-properties\wrapper\controls.hl" />
+    <Content Include="system42\private\web-part-builder\parts\control-properties\wrapper\events.hl" />
+    <Content Include="system42\private\web-part-builder\parts\save\controls.hl" />
+    <Content Include="system42\private\web-part-builder\parts\save\database\events.hl" />
+    <Content Include="system42\private\web-part-builder\parts\save\database\controls.hl" />
+    <Content Include="system42\private\web-part-builder\parts\save\events.hl" />
+    <Content Include="system42\private\web-part-builder\parts\save\filesystem\controls.hl" />
+    <Content Include="system42\private\web-part-builder\parts\save\filesystem\events.hl" />
     <None Include="todo.txt" />
   </ItemGroup>
   <ItemGroup>

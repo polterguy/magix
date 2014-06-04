@@ -7,16 +7,24 @@ to create the raw-editor active events parts of the form builder"
 
 // changing the raw code text-area to the new code according to the form data
 magix.ide.surface-changed
-  magix.ide.get-form
-  set=>[node-2-code][node].Value
-    value=>[magix.ide.get-form]
-  node-2-code
-    remove-root=>true
-  set=>[magix.forms.set-value][value].Value
-    value=>[node-2-code][code].Value
-  magix.forms.set-value
-    form-id=>raw-editor
-    id=>txt-raw-code
+  magix.data.load-username
+    id=>magix.ide.raw-code-text-area-visible
+  if=>exist
+    lhs=>[magix.data.load-username][objects][0]
+    and=>equals
+      lhs=>[magix.data.load-username][objects][0][visible].Value
+      rhs=>true
+    code
+      magix.ide.get-form
+      set=>[@][node-2-code][node].Value
+        value=>[@][magix.ide.get-form]
+      node-2-code
+        remove-root=>true
+      set=>[@][magix.forms.set-value][value].Value
+        value=>[@][node-2-code][code].Value
+      magix.forms.set-value
+        form-id=>raw-editor
+        id=>txt-raw-code
 
 // loads the serialized form data from database and sets the
 // main design surface value according to serialized form data
@@ -48,7 +56,6 @@ magix.ide.reload-serialized-form-data
             no-update=>true
             skip-undo=>true
       magix.ide.controls-collection-changed
-      magix.ide.request-properties
     catch
       set=>[@][magix.viewport.show-message][message].Value
         value=>something went wrong while reloading form, message from system was {0}
@@ -91,7 +98,6 @@ magix.ide.serialize-code-update-wysiwyg
         value=>[@][code-2-node][node]
         children-only=>true
       magix.ide.set-form
-        clear-selection=>true
     catch
 
       // something went wrong, just setting old form
@@ -132,7 +138,7 @@ magix.ide.serialize-code-update-wysiwyg
 magix.ide.toggle-visibility-raw-code
   if=>equals
     lhs=>[$][value].Value
-    rhs=>hide
+    rhs=>hide code
     code
       // hiding raw code text-area
       magix.forms.effect
@@ -143,7 +149,7 @@ magix.ide.toggle-visibility-raw-code
       magix.forms.set-value
         form-id=>raw-editor
         id=>lnk-toggle-raw-edit
-        value=>show
+        value=>show code
       set=>[magix.data.save-username][value][visible].Value
         value=>false
   else
@@ -156,9 +162,19 @@ magix.ide.toggle-visibility-raw-code
     magix.forms.set-value
       form-id=>raw-editor
       id=>lnk-toggle-raw-edit
-      value=>hide
+      value=>hide code
     set=>[magix.data.save-username][value][visible].Value
       value=>true
+    magix.ide.get-form
+    set=>[@][node-2-code][node].Value
+      value=>[@][magix.ide.get-form]
+    node-2-code
+      remove-root=>true
+    set=>[@][magix.forms.set-value:1][value].Value
+      value=>[@][node-2-code][code].Value
+    magix.forms.set-value
+      form-id=>raw-editor
+      id=>txt-raw-code
 
   // saving state of raw code text-area
   magix.data.save-username
@@ -169,15 +185,15 @@ magix.ide.set-raw-code-initial-visibility
     id=>magix.ide.raw-code-text-area-visible
   if=>equals
     lhs=>[magix.data.load-username][objects][0][visible].Value
-    rhs=>false
+    rhs=>true
     code
       magix.forms.set-style
         form-id=>raw-editor
         id=>txt-raw-code
         key=>display
-        value=>none
+        value=>block
       magix.forms.set-value
         form-id=>raw-editor
         id=>lnk-toggle-raw-edit
-        value=>show
+        value=>hide code
 

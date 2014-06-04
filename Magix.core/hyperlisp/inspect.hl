@@ -51,7 +51,9 @@ magix.viewport.set-viewstate-dox=>@"sets a viewstate value
 
 sets the given [name] viewstate value for the current page.  
 pass in [value] as the value to set into the viewstate.  both 
-[name] and [value] can be either constants or expressions"
+[name] and [value] can be either constants or expressions.  [name] 
+can contain format expressions in the form of {0}, {1} and so on, 
+referencing child nodes of name"
 
 magix.viewport.set-viewstate-sample
   magix.viewport.set-viewstate
