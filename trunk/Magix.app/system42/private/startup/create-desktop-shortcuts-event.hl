@@ -61,6 +61,10 @@ returns the default dashboard shortcuts in your system"
             params
               namespace=>magix.test
               header=>unit tests
+              description-class=>span-10
+              list-class=>span-7 last
+              exclude
+                magix.tests.run
               extra-buttons
                 button=>run-all
                   value=>run all
@@ -80,7 +84,8 @@ returns the default dashboard shortcuts in your system"
             params
               overridden=>true
               header=>overridden active events
-              exclude
+              description-class=>span-9
+              list-class=>span-8 last
           magix.help.open-file
             file=>system42/private/help/backend/overriding-events.mml
       active-events

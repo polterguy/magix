@@ -57,18 +57,18 @@ namespace Magix.execute
 				foreach (Node idx in tmp["objects"])
 				{
 					ActiveEvents.Instance.CreateEventMapping(
-						idx["event"].Get<string>(), 
+                        idx["value"]["event"].Get<string>(), 
 						"magix.execute._active-event-2-code-callback");
 
-					if (idx.Contains("remotable") && idx["remotable"].Get<bool>())
-						ActiveEvents.Instance.MakeRemotable(idx["event"].Get<string>());
+                    if (idx["value"].Contains("remotable") && idx["value"]["remotable"].Get<bool>())
+                        ActiveEvents.Instance.MakeRemotable(idx["value"]["event"].Get<string>());
 
-                    _events[idx["event"].Get<string>()].Clear();
-                    _events[idx["event"].Get<string>()].AddRange(idx["code"]);
+                    _events[idx["value"]["event"].Get<string>()].Clear();
+                    _events[idx["value"]["event"].Get<string>()].AddRange(idx["value"]["code"]);
                     if (idx.ContainsValue("inspect"))
                         AppendInspect(
-                            _inspect[idx["event"].Get<string>()],
-                            idx["inspect"].Get<string>());
+                            _inspect[idx["value"]["event"].Get<string>()],
+                            idx["value"]["inspect"].Get<string>());
 				}
 			}
 		}
@@ -359,7 +359,7 @@ namespace Magix.execute
 
 					if (evtNode.Contains("objects"))
 					{
-                        _events[name].AddRange(evtNode["objects"][0]["code"].UnTie());
+                        _events[name].AddRange(evtNode["objects"][0]["value"]["code"].UnTie());
                         return _events[name].Clone();
 					}
 					_events[name].Value = null;

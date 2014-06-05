@@ -15,5 +15,5 @@ else
   magix.data.load
     id=>magix.admin.settings.default-front-end-viewport
   set=>[$][viewport].Value
-    value=>[@][magix.data.load][objects][0][viewport].Value
+    value=>[@][magix.data.load][value][viewport].Value
 

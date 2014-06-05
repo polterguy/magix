@@ -1382,20 +1382,6 @@ input[type=button]:disabled.toolbox-save
     border-top:solid 1px #bbb !important;
 }
 
-.qr-codes-bg
-{
-    background-image:linear-gradient(rgba(250, 250, 250, .93) 0%, rgba(210, 210, 210, .93) 100%), 
-        url(../images/qr-codes.png) !important;
-    background-repeat:no-repeat;
-}
-
-.crud-app-bg
-{
-    background-image:linear-gradient(rgba(250, 250, 250, .93) 0%, rgba(210, 210, 210, .93) 100%), 
-        url(../images/crud-app-bg.png) !important;
-    background-repeat:no-repeat;
-}
-
 .sample-web-control
 {
     background:#aeaeae;

@@ -15,7 +15,9 @@ objects matching your prototype if you supply a prototype node.  or the object m
 id if you supply an id.  if neither prototype nor id is given, it will load all objects from 
 database
 
-returns objects found as [objects], with child nodes of [objects] being the matching objects
+if you supply a prototype, it will return objects found as [objects], with child nodes of 
+[objects] being the matching objects.  if you supply an [id] node, it will return the matched 
+object as [value]
 
 use [start] and [end] to fetch a specific slice of objects, [start] defaults to 0 and [end] defaults 
 to -1, which means all objects matching criteria.  [start], [end] and [prototype] cannot be defined 

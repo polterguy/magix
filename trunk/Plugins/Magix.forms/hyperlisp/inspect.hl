@@ -43,6 +43,19 @@ controls.  if you supply a controls-file node, you cannot supply
 a [controls] node.  controls-file might be either an expression, 
 or a constant
 
+[controls-id] is an alternative way to declare your controls, 
+from an object in your database.  if you supply controls-id, then 
+the loader requires the controls themselves to be existing as nodes, 
+underneath the [surface] node within the database object itself, 
+and that the [type] of your database object is 'magix.forms.web-
+part'.  if you supply a controls-id node, you cannot supply a 
+[controls] node or a [controls-file] node.  controls-id might be 
+either an expression, or a constant
+
+the [controls], [controls-file] and [controls-id] parameters are 
+mutually exclusive, which means you can only supply one of these 
+values
+
 [events] is a list of active events, that will only exist as long 
 as the web part is loaded into the container.  these are temporary 
 active events, used in the ui layer of your application, to tie 
@@ -1073,6 +1086,57 @@ magix.forms.get-class-sample
         value=>click me
         onclick
           magix.forms.get-class
+            form-id=>sample-form
+            id=>btn
+          set=>[2][message].Value
+            value=>[0][value].Value
+          magix.viewport.show-message
+
+
+magix.forms.set-info-dox=>@"sets the info of a web control
+
+the control to set the info of, is given through the [id] 
+node.  [form-id] is the form-id of the web part the control 
+you wish to change the info of.  if no form-id is given, 
+then the first control that matches the id parameter, in any 
+web parts, will be returned"
+
+magix.forms.set-info-sample
+  magix.forms.create-web-part
+    container=>content5
+    form-id=>sample-form
+    class=>span-22 last
+    controls
+      button=>btn
+        info=>old value
+        value=>click me
+        onclick
+          magix.forms.set-info
+            form-id=>sample-form
+            id=>btn
+            value=>some new value ...
+
+
+magix.forms.get-info-dox=>@"retrieves the info of a web control
+
+the control to get the info of, is given through the [id] 
+node.  [form-id] is the form-id of the web part the control 
+you wish to retrieve the info of.  if no form-id is given, 
+then the first control that matches the id parameter, in any 
+web parts, will be returned"
+
+magix.forms.get-info-sample
+  magix.forms.create-web-part
+    container=>content5
+    form-id=>sample-form
+    class=>span-22 last
+    controls
+      button=>btn
+        class=>span-5 btn-large
+        info=>info value ...
+        value=>click me
+        onclick
+          magix.forms.get-info
             form-id=>sample-form
             id=>btn
           set=>[2][message].Value

@@ -21,7 +21,7 @@ magix.ide.try-save-to-database
     value=>[magix.forms.get-value][value].Value
   magix.data.load
   if=>exist
-    lhs=>[magix.data.load][objects]
+    lhs=>[magix.data.load][value]
     code
       magix.viewport.confirm
         message=>that object already exist in database, do you wish to overwrite it?
@@ -38,10 +38,12 @@ magix.ide.save-to-database
   set=>[magix.data.save][id].Value
     value=>[magix.forms.get-value][value].Value
   magix.ide.get-form
-  add=>[magix.data.save][value]
+  add=>[magix.data.save][value][surface]
     value=>[magix.ide.get-form]
     children-only=>true
   magix.data.save
+    value
+      type=>magix.forms.web-part
   magix.viewport.clear-controls
     container=>editor-save-wrapper
   set=>[magix.data.save-username][value][id].Value
@@ -58,10 +60,10 @@ magix.ide.set-last-used-save-database-id
   magix.data.load-username
     id=>magix.ide.last-used-form-id
   if=>exist
-    lhs=>[magix.data.load-username][objects][0]
+    lhs=>[magix.data.load-username][value]
     code
       set=>[@][magix.forms.set-value][value].Value
-        value=>[magix.data.load-username][objects][0][id].Value
+        value=>[magix.data.load-username][value][id].Value
       magix.forms.set-value
         form-id=>save-content
         id=>txt-db-id
@@ -75,5 +77,4 @@ magix.ide.set-last-used-save-database-id
         type=>focus-and-select
         form-id=>save-content
         id=>txt-db-id
-
 

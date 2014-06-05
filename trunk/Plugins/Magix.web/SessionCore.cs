@@ -42,9 +42,11 @@ namespace Magix.web
 
             Node dp = Dp(e.Params);
 
-            if (!ip.ContainsValue("name"))
-                throw new ArgumentException("no [name] given to [magix.web.set-session]");
-            string name = Expressions.GetExpressionValue(ip["name"].Get<string>(), dp, ip, false) as string;
+            if (!ip.ContainsValue("id"))
+                throw new ArgumentException("no [id] given to [magix.web.set-session]");
+            string name = Expressions.GetExpressionValue(ip["id"].Get<string>(), dp, ip, false) as string;
+            if (ip["id"].Count > 0)
+                name = Expressions.FormatString(dp, ip, ip["id"], name);
 
             if (!ip.Contains("value"))
 			{
@@ -87,9 +89,11 @@ namespace Magix.web
 
             Node dp = Dp(e.Params);
 
-            if (!ip.ContainsValue("name"))
-                throw new ArgumentException("no [name] given to [magix.web.get-session]");
-            string name = Expressions.GetExpressionValue(ip["name"].Get<string>(), dp, ip, false) as string;
+            if (!ip.ContainsValue("id"))
+                throw new ArgumentException("no [id] given to [magix.web.get-session]");
+            string name = Expressions.GetExpressionValue(ip["id"].Get<string>(), dp, ip, false) as string;
+            if (ip["id"].Count > 0)
+                name = Expressions.FormatString(dp, ip, ip["id"], name);
 
 			if (Page.Session[name] != null && Page.Session[name] is Node)
                 ip.Add((Page.Session[name] as Node).Clone());

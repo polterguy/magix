@@ -51,16 +51,17 @@ magix.web.get-parameter-sample
 
 magix.web.set-session-dox=>@"sets a session value
 
-will create or overwrite the [name] session variable with node hierarchy 
+will create or overwrite the [id] session object with node hierarchy 
 from [value].  if you pass in no [value], any existing session object with 
-given name will be removed.  both [name] and [value] can be either constants 
-or expressions
+given id will be removed.  both [id] and [value] can be either constants 
+or expressions.  [id] can contain formatting expressions, such as {0}, 
+{1} and so on, referencing child nodes of [id]
 
 not thread safe"
 
 magix.web.set-session-sample
   magix.web.set-session
-    name=>some_key
+    id=>some_key
     value=>something to store into session
       inner-value=>howdy
       x=>y
@@ -69,14 +70,15 @@ magix.web.set-session-sample
 
 magix.web.get-session-dox=>@"retrieves an existing session object
 
-will retrieve the [name] session variable as [value].  [name] can be either 
-a constant, or an expression
+will retrieve the [id] session object as [value].  [id] can be either 
+a constant, or an expression.  [id] can contain formatting expressions, 
+such as {0}, {1} and so on, referencing child nodes of [id]
 
 not thread safe"
 
 magix.web.get-session-sample
   magix.web.get-session
-    name=>some_key
+    id=>some_key
 
 
 magix.browser.redirect-dox=>@"redirects the browser

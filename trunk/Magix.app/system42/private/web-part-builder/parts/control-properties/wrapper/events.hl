@@ -33,7 +33,7 @@ magix.ide.request-properties
   magix.data.load-username
     id=>magix.ide.hide-properties
   if=>equals
-    lhs=>[magix.data.load-username][objects][0][hidden].Value
+    lhs=>[magix.data.load-username][value][hidden].Value
     rhs=>true
     code
       magix.viewport.clear-controls

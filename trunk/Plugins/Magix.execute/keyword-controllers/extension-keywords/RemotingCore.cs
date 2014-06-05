@@ -49,7 +49,7 @@ namespace Magix.execute
             {
                 foreach (Node idx in tmp["objects"])
                 {
-                    ActiveEvents.Instance.MakeRemotable(idx.Name);
+                    ActiveEvents.Instance.MakeRemotable(idx["id"].Get<string>());
                 }
             }
         }
@@ -67,7 +67,7 @@ namespace Magix.execute
             {
                 foreach (Node idx in tmp["objects"])
                 {
-                    ActiveEvents.Instance.OverrideRemotely(idx.Name, idx["url"].Get<string>());
+                    ActiveEvents.Instance.OverrideRemotely(idx["id"].Get<string>(), idx["value"]["url"].Get<string>());
                 }
             }
         }

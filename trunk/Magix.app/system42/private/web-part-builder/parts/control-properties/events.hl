@@ -83,14 +83,14 @@ magix.ide.create-properties-controls
 magix.ide.create-control-property-modifier-control
   _data
     panel
-      class=>span-6
+      class=>span-9
       controls
         label
-          class=>span-3
+          class=>span-3 right-text
           tag=>label
           value=>{field-type-name}
         text-box
-          class=>span-3 last
+          class=>span-6 last
           placeholder=>{field-type-value}
           value=>{value}
           ontextchanged
@@ -168,7 +168,7 @@ magix.ide.create-control-event-modifier-control
               rhs=>none
               code
                 magix.viewport.set-viewstate
-                  name=>magix.ide.visible-event-code-{0}-{1}
+                  id=>magix.ide.visible-event-code-{0}-{1}
                     =>{dna}
                     =>{field-type-name}
                   value=>true
@@ -184,7 +184,7 @@ magix.ide.create-control-event-modifier-control
                       id=>{field-type-name}
             else
               magix.viewport.set-viewstate
-                name=>magix.ide.visible-event-code-{0}-{1}
+                id=>magix.ide.visible-event-code-{0}-{1}
                   =>{dna}
                   =>{field-type-name}
               magix.forms.effect
@@ -200,7 +200,7 @@ magix.ide.create-control-event-modifier-control
           value=>{value}
           onfirstload
             magix.viewport.get-viewstate
-              name=>magix.ide.visible-event-code-{0}-{1}
+              id=>magix.ide.visible-event-code-{0}-{1}
                 =>{dna}
                 =>{field-type-name}
             if=>exist

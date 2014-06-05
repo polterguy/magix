@@ -17,7 +17,7 @@ if=>exist
       magix.data.load
         id=>magix.admin.settings.default-back-end-css-file
       set=>[magix.viewport.include-client-file][file].Value
-        value=>[magix.data.load][objects][0][file].Value
+        value=>[magix.data.load][value][file].Value
       magix.viewport.include-client-file
         type=>css
     magix.forms.create-mml-web-part
@@ -26,7 +26,7 @@ if=>exist
       form-id=>header
       class=>span-22 last
     magix.web.get-session
-      name=>magix.core.user
+      id=>magix.core.user
     if=>exist
       lhs=>[@][magix.web.get-session][value][roles][admin]
       code
@@ -38,7 +38,7 @@ if=>exist
         execute-script
           file=>system42/private/dashboard/desktop.hl
         magix.web.get-session
-          name=>magix.admin.setting.show-help
+          id=>magix.admin.setting.show-help
         if=>not-exist
           lhs=>[@][magix.web.get-session][value]
           code
@@ -48,9 +48,9 @@ if=>exist
             set=>[@][magix.web.set-session][value].Value
               value=>[@][magix.data.load][objects][0][value].Value
             magix.web.set-session
-              name=>magix.admin.setting.show-help
+              id=>magix.admin.setting.show-help
         magix.web.get-session
-          name=>magix.admin.setting.show-help
+          id=>magix.admin.setting.show-help
         if=>equals
           lhs=>[@][magix.web.get-session:1][value].Value
           rhs=>true

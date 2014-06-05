@@ -49,13 +49,13 @@ _dt
 
 for-each=>[magix.data.load][objects]
   set=>[/][_dt][panel][controls][label:0][value].Value
-    value=>[.][header].Value
+    value=>[.][value][header].Value
   set=>[/][_dt][panel][controls][label:1][value].Value
-    value=>[.][date].Value
+    value=>[.][value][date].Value
   set=>[/][_dt][panel][controls][label:2][value].Value
-    value=>[.][body].Value
+    value=>[.][value][body].Value
   if=>equals
-    lhs=>[.][error].Value
+    lhs=>[.][value][error].Value
     rhs=>true
     code
       set=>[/][_dt][panel][class].Value
@@ -64,11 +64,11 @@ for-each=>[magix.data.load][objects]
     set=>[/][_dt][panel][class].Value
       value=>span-15 boxed-light-green air-padding bottom-1 relative
   if=>exist
-    lhs=>[.][code]
+    lhs=>[.][value][code]
     code
       set=>[@][node-2-code][node]
       while=>more-than
-        lhs=>[.][code].Count
+        lhs=>[.][value][code].Count
         rhs=>0
         code
           add=>[@][..][..][node-2-code][node]

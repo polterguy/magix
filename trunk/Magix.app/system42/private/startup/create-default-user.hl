@@ -16,7 +16,7 @@ if=>equals
     magix.data.save
       value
         type=>magix.core.user
-        name=>Phosphorus Admin
+        name=>phosphorus admin
         username=>admin
         pwd=>admin
         roles

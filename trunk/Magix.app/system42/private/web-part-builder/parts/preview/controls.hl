@@ -1,0 +1,46 @@
+﻿
+
+inspect=>@"contains controls for web part builder, preview web part
+
+contains the control definition for the preview parts of the web part builder"
+
+
+// descriptive header
+label=>lbl-preview-description
+  class=>span-10 left-9 bottom-1
+  tag=>label
+  value=>preview of your web part
+
+// button to close preview
+link-button=>lnk-preview-close
+  class=>span-1 right
+  value=>close
+  onclick
+    magix.viewport.clear-controls
+      container=>preview
+
+// actual preview of form
+dynamic=>preview-content
+  onfirstload
+    magix.forms.create-web-part
+      form-id=>preview-content
+      container=>preview-content
+      class=>span-22 last bottom-1
+      controls=>[:magix.ide.get-form]
+
+// shows user how to load web part using hyperlisp
+panel=>pnl-load-description
+  class=>span-20 left-1 bottom-1
+  onfirstload
+    magix.ide.show-hide-preview-load-description
+  controls
+
+    // descriptiove helper
+    label=>lbl-load-description
+      tag=>label
+      value=>to load your web part, as it was last saved, use the code below
+
+    // contains actual code to load web part
+    label=>load-description
+      tag=>pre
+

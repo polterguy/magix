@@ -23,7 +23,6 @@ namespace Magix.data
         private static string _appPath;
         private static Node _database;
         private static AutoResetEvent _resetEvent = new AutoResetEvent(true);
-        private static int _resetEventLoadCount = 0;
 
         #region [ -- publicly available methods -- ]
 
@@ -83,7 +82,7 @@ namespace Magix.data
                         {
                             // loading by id
                             Node curNode = idxObjectNode.Clone();
-                            ip["objects"][idxObjectNode.Get<string>()].AddRange(curNode);
+                            ip["value"].AddRange(curNode);
                             return;
                         }
                         else if (id == null)
@@ -93,8 +92,10 @@ namespace Magix.data
                             {
                                 if ((start == 0 || curMatchingItem >= start) && (end == -1 || curMatchingItem < end))
                                 {
-                                    Node curNode = idxObjectNode.Clone();
-                                    ip["objects"][idxObjectNode.Get<string>()].AddRange(curNode);
+                                    Node objectNode = new Node("object");
+                                    objectNode["id"].Value = idxObjectNode.Get<string>();
+                                    objectNode["value"].AddRange(idxObjectNode.Clone());
+                                    ip["objects"].Add(objectNode);
                                 }
                                 curMatchingItem += 1;
                             }

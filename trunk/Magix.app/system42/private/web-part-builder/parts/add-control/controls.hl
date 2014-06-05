@@ -95,10 +95,10 @@ panel=>controls-wrapper
             magix.data.load-username
               id=>magix.ide.where-position
             if=>exist
-              lhs=>[magix.data.load-username][objects]
+              lhs=>[magix.data.load-username][value]
               code
                 set=>[magix.forms.set-value][value].Value
-                  value=>[magix.data.load-username][objects][0][position].Value
+                  value=>[magix.data.load-username][value][position].Value
             magix.forms.set-value
               form-id=>add-control
               id=>select-add-where

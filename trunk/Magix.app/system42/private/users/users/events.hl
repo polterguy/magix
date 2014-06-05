@@ -1,0 +1,384 @@
+﻿
+
+inspect=>@"contains events for users web part
+
+contains the active events necessary to show the edit users grid"
+
+
+// event to load users
+magix.users.load
+  if=>exist
+    lhs=>[$][start]
+    code
+      set=>[magix.data.load][start]
+        value=>[$][start]
+  if=>exist
+    lhs=>[$][end]
+    code
+      set=>[magix.data.load][end]
+        value=>[$][end]
+  if=>exist
+    lhs=>[$][query]
+    code
+      set=>[magix.data.load][prototype][username].Value
+        value=>%{0}%
+          =>[$][query].Value
+      set=>[magix.data.count][prototype][username].Value
+        value=>%{0}%
+          =>[$][query].Value
+  magix.data.load
+    prototype
+      type=>magix.core.user
+  magix.data.count
+    prototype
+      type=>magix.core.user
+  set=>[$][count]
+    value=>[magix.data.count][count]
+  add=>[$][users]
+    value=>[magix.data.load][objects]
+    children-only=>true
+
+// creates the controls for the datagrid showing the users
+magix.users.create-grid-controls
+  _ctrl
+  _ctrl1
+    panel
+      class=>span-15 last
+      controls
+        label
+          class=>span-5
+          value=>{username}
+        label
+          class=>span-6
+          value=>{name}
+        label
+          class=>span-2
+          value=>{role}
+        link-button
+          class=>span-1
+          value=>edit
+          info=>{id}
+          onclick
+            set=>[magix.users.edit-user][id].Value
+              value=>[$][info].Value
+            magix.users.edit-user
+        link-button
+          class=>span-1 last
+          value=>delete
+          info=>{id}
+          onclick
+            set=>[magix.viewport.confirm][code][magix.users.delete-user][id].Value
+              value=>[$][info].Value
+            magix.viewport.confirm
+              message=>are you sure you wish to delete the user?
+              code
+                magix.users.delete-user
+  magix.viewport.get-viewstate
+    id=>magix.users.current-paging
+  set=>[magix.users.load][start]
+    value=>[magix.viewport.get-viewstate][value][start]
+  set=>[magix.users.load][end]
+    value=>[magix.viewport.get-viewstate][value][end]
+  if=>exist
+    lhs=>[magix.viewport.get-viewstate][value][query].Value
+    code
+      set=>[magix.users.load][query]
+        value=>[magix.viewport.get-viewstate][value][query]
+  magix.users.load
+  for-each=>[magix.users.load][users]
+    _buffer
+    set=>[@][_buffer][0]
+    set=>[@][_buffer][0]
+    add=>[@][_buffer]
+      value=>[.]
+      children-only=>true
+    set=>[/][_ctrl][0]
+      value=>[/][_ctrl1][0]
+    iterate=>[/][_ctrl]
+      switch=>[.].Value
+        case=>{id}
+          set=>[.].Value
+            value=>[/][**_buffer][id].Value
+        case=>{name}
+          set=>[.].Value
+            value=>[/][**_buffer][value][name].Value
+        case=>{username}
+          set=>[.].Value
+            value=>[/][**_buffer][value][username].Value
+        case=>{role}
+          set=>[.].Value
+            value=>[/][**_buffer][value][roles][0].Name
+    add=>[$][controls]
+      value=>[/][_ctrl][panel]
+  if=>more-than
+    lhs=>[magix.users.load][count].Value
+    rhs=>[magix.users.load][users].Count
+    code
+      // need to create paging ...
+      _paging
+        panel
+          class=>span-15 last top-1
+          controls
+            link-button=>previous
+              class=>span-1 left-11
+              value=>&lt;&lt;
+              onclick
+                magix.viewport.get-viewstate
+                  id=>magix.users.current-paging
+                using=>magix.math
+                  subtract
+                    =>[magix.viewport.get-viewstate][value][start].Value
+                    =>10
+                  subtract
+                    =>[magix.viewport.get-viewstate][value][end].Value
+                    =>10
+                set=>[magix.viewport.set-viewstate][value][start].Value
+                  value=>[using][subtract:0].Value
+                set=>[magix.viewport.set-viewstate][value][end].Value
+                  value=>[using][subtract:1].Value
+                set=>[magix.viewport.set-viewstate][value][query].Value
+                  value=>[magix.viewport.get-viewstate][query].Value
+                magix.viewport.set-viewstate
+                  id=>magix.users.current-paging
+                magix.users.show-users-grid
+            label=>lbl-count
+              class=>span-2
+            link-button=>next
+              class=>span-1 last
+              value=>&gt;&gt;
+              onclick
+                magix.viewport.get-viewstate
+                  id=>magix.users.current-paging
+                using=>magix.math
+                  add
+                    =>[magix.viewport.get-viewstate][value][start].Value
+                    =>10
+                  add
+                    =>[magix.viewport.get-viewstate][value][end].Value
+                    =>10
+                set=>[magix.viewport.set-viewstate][value][start].Value
+                  value=>[using][add:0].Value
+                set=>[magix.viewport.set-viewstate][value][end].Value
+                  value=>[using][add:1].Value
+                set=>[magix.viewport.set-viewstate][value][query].Value
+                  value=>[magix.viewport.get-viewstate][query].Value
+                magix.viewport.set-viewstate
+                  id=>magix.users.current-paging
+                magix.users.show-users-grid
+      magix.viewport.get-viewstate
+        id=>magix.users.current-paging
+      _max
+      if=>more-than-equals
+        lhs=>[@][magix.viewport.get-viewstate][value][end].Value
+        rhs=>[magix.users.load][count].Value
+        code
+          set=>[@][..][..][_max].Value
+            value=>[magix.users.load][count].Value
+          set=>[/][**link-button=>next][disabled].Value
+            value=>true
+      else
+        set=>[@][..][_max].Value
+          value=>[@][..][magix.viewport.get-viewstate][value][end].Value
+      if=>equals
+        lhs=>[@][magix.viewport.get-viewstate][value][start].Value
+        rhs=>0
+        code
+          set=>[/][**link-button=>previous][disabled].Value
+            value=>true
+      set=>[@][_paging][**label=>lbl-count][value].Value
+        value=>{0}-{1} of {2}
+          =>[@][magix.viewport.get-viewstate][value][start].Value
+          =>[@][_max].Value
+          =>[magix.users.load][count].Value
+      add=>[$][controls]
+        value=>[@][_paging][panel]
+
+// edits user, expects [id]
+magix.users.edit-user
+  magix.forms.set-value
+    form-id=>users
+    id=>edit-user-header
+    value=>edit user
+  set=>[magix.data.load][id]
+    value=>[$][id]
+  magix.data.load
+  using=>magix.forms
+    set-value
+      form-id=>users
+      id=>edit-pwd
+      value=>[magix.data.load][value][pwd].Value
+    set-value
+      form-id=>users
+      id=>edit-pwd-repeat
+      value=>[magix.data.load][value][pwd].Value
+    set-value
+      form-id=>users
+      id=>edit-username
+      value=>[magix.data.load][value][username].Value
+    set-enabled
+      form-id=>users
+      id=>edit-username
+      value=>false
+    set-value
+      form-id=>users
+      id=>edit-name
+      value=>[magix.data.load][value][name].Value
+    set-value
+      form-id=>users
+      id=>edit-role
+      value=>[magix.data.load][value][roles][0].Name
+  magix.forms.set-class
+    form-id=>users
+    id=>edit-user-wrapper
+    value=>span-15 last boxed-light-green air-padding top-1 clear left-5
+  set=>[magix.forms.set-info][value].Value
+    value=>[$][id].Value
+  magix.forms.set-info
+    form-id=>users
+    id=>save
+  magix.forms.effect
+    type=>focus-and-select
+    form-id=>users
+    id=>edit-name
+
+// deletes user, expects [id]
+magix.users.delete-user
+  set=>[magix.data.remove][id]
+    value=>[$][id]
+  magix.data.remove
+  magix.users.show-users-grid
+
+// saves a new or existing user
+magix.users.save-user
+  using=>magix.forms
+    get-value
+      form-id=>users
+      id=>edit-username
+    get-value
+      form-id=>users
+      id=>edit-name
+    get-value
+      form-id=>users
+      id=>edit-pwd
+    get-value
+      form-id=>users
+      id=>edit-pwd-repeat
+    get-value
+      form-id=>users
+      id=>edit-role
+  if=>exist
+    lhs=>[$][id]
+    code
+      set=>[magix.data.save][id]
+        value=>[$][id]
+      set=>[@][magix.data.load][id]
+        value=>[$][id]
+      magix.data.load
+      set=>[magix.data.save][value]
+        value=>[@][magix.data.load][value]
+  else
+    set=>[@][magix.data.count][prototype][username].Value
+      value=>[using][get-value:0][value].Value
+    magix.data.count
+      prototype
+        type=>magix.core.user
+    if=>not-equals
+      lhs=>[@][magix.data.count][count].Value
+      rhs=>0
+      code
+        magix.viewport.show-message
+          message=>username already exists
+          time=>1000
+          color=>red
+        magix.forms.effect
+          type=>focus-and-select
+          form-id=>users
+          id=>edit-username
+        stop
+  if=>equals
+    lhs=>[using][get-value:0][value].Value
+    rhs=>
+    code
+      magix.viewport.show-message
+        message=>user needs a username
+        time=>1000
+        color=>red
+      magix.forms.effect
+        type=>focus-and-select
+        form-id=>users
+        id=>edit-username
+      stop
+  if=>equals
+    lhs=>[using][get-value:1][value].Value
+    rhs=>
+    code
+      magix.viewport.show-message
+        message=>user needs a name
+        time=>1000
+        color=>red
+      magix.forms.effect
+        type=>focus-and-select
+        form-id=>users
+        id=>edit-name
+      stop
+  if=>equals
+    lhs=>[using][get-value:2][value].Value
+    rhs=>
+    code
+      magix.viewport.show-message
+        message=>user needs a password
+        time=>1000
+        color=>red
+      magix.forms.effect
+        type=>focus-and-select
+        form-id=>users
+        id=>edit-pwd
+      stop
+  if=>not-equals
+    lhs=>[using][get-value:2][value].Value
+    rhs=>[using][get-value:3][value].Value
+    code
+      magix.viewport.show-message
+        message=>passwords don't match
+        time=>1000
+        color=>red
+      magix.forms.effect
+        type=>focus-and-select
+        form-id=>users
+        id=>edit-pwd
+      stop
+  set=>[magix.data.save][value][username].Value
+    value=>[using][get-value:0][value].Value
+  set=>[magix.data.save][value][name].Value
+    value=>[using][get-value:1][value].Value
+  set=>[magix.data.save][value][pwd].Value
+    value=>[using][get-value:2][value].Value
+  set=>[magix.data.save][value][roles]
+  set=>[magix.data.save][value][roles][[using][get-value:4][value].Value].Value
+    value=>true
+  magix.data.save
+    value
+      type=>magix.core.user
+  magix.users.show-users-grid
+
+// loads roles into drop down list
+magix.users.load-roles
+  magix.data.load
+    prototype
+      type=>magix.core.role
+  _roles
+  iterate=>[magix.data.load][objects]
+    if=>equals
+      lhs=>[.].Name
+      rhs=>name
+      code
+        add=>[/][_roles]
+          value=>[.].Value
+            value=>[.].Value
+  add=>[magix.forms.set-values][values]
+    value=>[_roles]
+    children-only=>true
+  magix.forms.set-values
+    form-id=>users
+    id=>edit-role
+

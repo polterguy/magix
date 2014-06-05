@@ -9,7 +9,7 @@ creates the initial default settings in magix"
 magix.data.load
   id=>magix.admin.settings.default-back-end-css-file
 if=>not-exist
-  lhs=>[magix.data.load][objects]
+  lhs=>[magix.data.load][value]
   code
     magix.data.save
       id=>magix.admin.settings.default-back-end-css-file
@@ -22,4 +22,4 @@ if=>not-exist
     magix.data.save
       id=>magix.admin.settings.default-front-end-viewport
       value
-        viewport=>Magix.viewports.Gutenberg
+        viewport=>Magix.viewports.SingleContainer
