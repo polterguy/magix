@@ -206,25 +206,9 @@ magix.ide.show-preview
   magix.forms.create-web-part
     form-id=>preview-wrapper
     container=>preview
-    class=>span-22 last top-2 boxed-light-green
-    controls
-      label=>lbl-preview-description
-        class=>span-10 left-9 bottom-1
-        tag=>label
-        value=>preview of your web part
-      link-button=>lnk-preview-close
-        class=>span-1 right
-        value=>close
-        onclick
-          magix.viewport.clear-controls
-            container=>preview
-      dynamic=>preview-content
-        onfirstload
-          magix.forms.create-web-part
-            form-id=>preview-content
-            container=>preview-content
-            class=>span-22 last bottom-1
-            controls=>[:magix.ide.get-form]
+    class=>span-22 last top-2 boxed
+    controls-file=>system42/private/web-part-builder/parts/preview/controls.hl
+    events-file=>system42/private/web-part-builder/parts/preview/events.hl
   magix.browser.scroll
     id=>preview
 

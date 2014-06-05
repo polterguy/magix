@@ -19,12 +19,12 @@ namespace Magix.forms
 	 */
     public abstract class BaseWebControlController : BaseControlController
 	{
-		/*
-		 * sets css classes
-		 */
-		[ActiveEvent(Name = "magix.forms.set-class")]
-		private static void magix_forms_set_class(object sender, ActiveEventArgs e)
-		{
+        /*
+         * sets css classes
+         */
+        [ActiveEvent(Name = "magix.forms.set-class")]
+        private static void magix_forms_set_class(object sender, ActiveEventArgs e)
+        {
             Node ip = Ip(e.Params);
             if (ShouldInspect(ip))
             {
@@ -38,19 +38,19 @@ namespace Magix.forms
                     "Magix.forms",
                     "Magix.forms.hyperlisp.inspect.hl",
                     "[magix.forms.set-class-sample]");
-				return;
-			}
+                return;
+            }
 
             BaseWebControl ctrl = FindControl<BaseWebControl>(ip);
-			ctrl.Class = ip["value"].Get("");
-		}
+            ctrl.Class = ip["value"].Get("");
+        }
 
-		/*
-		 * retrieves css classes
-		 */
-		[ActiveEvent(Name = "magix.forms.get-class")]
-		private static void magix_forms_get_class(object sender, ActiveEventArgs e)
-		{
+        /*
+         * retrieves css classes
+         */
+        [ActiveEvent(Name = "magix.forms.get-class")]
+        private static void magix_forms_get_class(object sender, ActiveEventArgs e)
+        {
             Node ip = Ip(e.Params);
             if (ShouldInspect(ip))
             {
@@ -64,12 +64,64 @@ namespace Magix.forms
                     "Magix.forms",
                     "Magix.forms.hyperlisp.inspect.hl",
                     "[magix.forms.get-class-sample]");
-				return;
-			}
+                return;
+            }
 
             BaseWebControl ctrl = FindControl<BaseWebControl>(ip);
             ip["value"].Value = ctrl.Class;
-		}
+        }
+
+        /*
+         * sets info value
+         */
+        [ActiveEvent(Name = "magix.forms.set-info")]
+        private static void magix_forms_set_info(object sender, ActiveEventArgs e)
+        {
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
+            {
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.forms",
+                    "Magix.forms.hyperlisp.inspect.hl",
+                    "[magix.forms.set-info-dox].Value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.forms",
+                    "Magix.forms.hyperlisp.inspect.hl",
+                    "[magix.forms.set-info-sample]");
+                return;
+            }
+
+            BaseWebControl ctrl = FindControl<BaseWebControl>(ip);
+            ctrl.Info = ip["value"].Get("");
+        }
+
+        /*
+         * retrieves css classes
+         */
+        [ActiveEvent(Name = "magix.forms.get-info")]
+        private static void magix_forms_get_info(object sender, ActiveEventArgs e)
+        {
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
+            {
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.forms",
+                    "Magix.forms.hyperlisp.inspect.hl",
+                    "[magix.forms.get-info-dox].Value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.forms",
+                    "Magix.forms.hyperlisp.inspect.hl",
+                    "[magix.forms.get-info-sample]");
+                return;
+            }
+
+            BaseWebControl ctrl = FindControl<BaseWebControl>(ip);
+            ip["value"].Value = ctrl.Info;
+        }
 
         /*
          * sets css style value

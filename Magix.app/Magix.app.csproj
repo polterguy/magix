@@ -138,7 +138,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349C5851-65DF-11DA-9384-00065B846F21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>False</AutoAssignPort>
           <DevelopmentServerPort>8080</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
@@ -241,11 +241,6 @@
     <Content Include="system42\private\file-manager\file-manager.hl" />
     <Content Include="system42\private\server-log\log.hl" />
     <Content Include="system42\private\app-wizard\app-wizard.hl" />
-    <Content Include="system42\private\app-wizard\new-app.hl" />
-    <Content Include="system42\private\app-wizard\wizards\crud-app.hl" />
-    <Content Include="system42\private\app-wizard\wizards\crud-app\crud-app-generator.hl" />
-    <Content Include="system42\private\app-wizard\wizards\qr-code-generator.hl" />
-    <Content Include="system42\private\app-wizard\wizards\qr-code-generator\qr-code-generator-generator.hl" />
     <Content Include="system42\private\dashboard\menu.mml" />
     <Content Include="system42\private\dashboard\desktop.hl" />
     <Content Include="system42\private\help\backend\active-event-executor.mml" />
@@ -375,10 +370,15 @@
     <Content Include="system42\private\web-part-builder\parts\save\events.hl" />
     <Content Include="system42\private\web-part-builder\parts\save\filesystem\controls.hl" />
     <Content Include="system42\private\web-part-builder\parts\save\filesystem\events.hl" />
+    <Content Include="system42\private\web-part-builder\parts\preview\controls.hl" />
+    <Content Include="system42\private\web-part-builder\parts\preview\events.hl" />
+    <Content Include="system42\public\index-content.mml" />
+    <Content Include="system42\private\users\users\controls.hl" />
+    <Content Include="system42\private\users\users\events.hl" />
     <None Include="todo.txt" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="database\" />
-    <Folder Include="system42\private\apps\" />
+    <Folder Include="system42\private\app-wizard\wizards\" />
   </ItemGroup>
 </Project>

@@ -39,14 +39,15 @@ namespace Magix.forms
 
             Node dp = Dp(e.Params);
 
-            if (!ip.Contains("controls") && !ip.Contains("controls-file"))
-                throw new ArgumentException("create-web-part needs either a [controls-file] parameter or a [controls] parameter");
+            if (!ip.Contains("controls") && !ip.ContainsValue("controls-file") && !ip.ContainsValue("controls-id"))
+                throw new ArgumentException("[magix.forms.create-web-part] needs either a [controls-file], a [controls] or a [controls-id] parameter");
 
-            if (ip.Contains("controls") && ip.Contains("controls-file"))
-                throw new ArgumentException("either supply [controls-file] or [controls] to create-web-part, not both of them");
+            if ((ip.Contains("controls") && (ip.Contains("controls-file") || ip.Contains("controls-id"))) || 
+                (ip.Contains("controls-file") && (ip.Contains("controls-id"))))
+                throw new ArgumentException("only one of [controls-file], [controls] or [controls-id] are legal parameters to [magix.forms.create-web-part]");
 
             if (ip.Contains("events") && ip.Contains("events-file"))
-                throw new ArgumentException("either supply [events-file] or [events] to create-web-part, not both of them");
+                throw new ArgumentException("either supply [events-file] or [events] to [magix.forms.create-web-part], not both of them");
 
             bool hasControlsFile = false;
             if (ip.Contains("controls-file"))
@@ -75,6 +76,24 @@ namespace Magix.forms
                 ip["controls"].AddRange(toNode["node"]);
 
                 hasControlsFile = true;
+            }
+
+            bool hasControlsId = false;
+            if (ip.Contains("controls-id"))
+            {
+                Node fromData = new Node();
+                fromData["id"].Value = Expressions.GetExpressionValue(ip["controls-id"].Get<string>(), dp, ip, false) as string;
+                RaiseActiveEvent(
+                    "magix.data.load",
+                    fromData);
+                if (!fromData.Contains("value"))
+                    throw new ArgumentException("couldn't find data object with id of; '" + fromData["id"].Get<string>() + "'");
+                if (fromData["value"]["type"].Get<string>() != "magix.forms.web-part")
+                    throw new ArgumentException("database object was not a web-part");
+                ip["controls"].Clear();
+                ip["controls"].AddRange(fromData["value"]["surface"]);
+
+                hasControlsId = true;
             }
 
             bool hasEventsFile = false;
@@ -113,7 +132,7 @@ namespace Magix.forms
                 container,
                 e.Params);
 
-            if (hasControlsFile)
+            if (hasControlsFile || hasControlsId)
                 ip["controls"].UnTie();
 
             if (hasEventsFile)

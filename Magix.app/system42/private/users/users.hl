@@ -1,283 +1,36 @@
 
 
-inspect=>@"creates the data grid 
-of users, from where you can delete, edit and add 
-new users from.&nbsp;&nbsp;a user is how you log 
-into this system, and is the basis for your access 
-rights to the system, which again changes 
-according to which role the user belongs to"
+inspect=>@"creates a crud grid to edit users
+
+creates a data grid to edit users.  users is how you authenticate 
+and authorize into the system.  this fil allows you to edit who 
+has access to the system, and which type of access they have"
 
 
-if=>exist
-  lhs=>[$][start]
-  code
-    set=>[magix.data.load][start].Value
-      value=>[$][start].Value
-    set=>[magix.data.load][end].Value
-      value=>[$][end].Value
-magix.data.load
-  start=(int)>0
-  end=(int)>10
-  prototype
-    type=>magix.core.user
-magix.data.count
-  prototype
-    type=>magix.core.user
-if=>equals
-  lhs=>[magix.data.load][start].Value
-  rhs=>0
-  code
-    set=>[magix.forms.create-web-part][controls][panel:2][controls][link-button:0][disabled].Value
-      value=>true
-else
-  using=>magix.math
-    subtract
-      =>[magix.data.load][start].Value
-      =>10
-  using=>magix.math
-    subtract
-      =>[magix.data.load][end].Value
-      =>10
-  set=>[magix.forms.create-web-part][controls][panel:2][controls][link-button:0][onclick][execute-script][params][start].Value
-    value=>[@][using:0][subtract].Value
-  set=>[magix.forms.create-web-part][controls][panel:2][controls][link-button:0][onclick][execute-script][params][end].Value
-    value=>[@][using:1][subtract].Value
-if=>more-than-equals
-  lhs=>[magix.data.load][end].Value
-  rhs=>[magix.data.count][count].Value
-  code
-    set=>[magix.forms.create-web-part][controls][panel:2][controls][link-button:1][disabled].Value
-      value=>true
-else
-  using=>magix.math
-    add
-      =>[magix.data.load][start].Value
-      =>10
-  using=>magix.math
-    add
-      =>[magix.data.load][end].Value
-      =>10
-  set=>[magix.forms.create-web-part][controls][panel:2][controls][link-button:1][onclick][execute-script][params][start].Value
-    value=>[@][using:0][add].Value
-  set=>[magix.forms.create-web-part][controls][panel:2][controls][link-button:1][onclick][execute-script][params][end].Value
-    value=>[@][using:1][add].Value
-if=>exist
-  lhs=>[magix.data.load][end].Value>[magix.data.count][count].Value
-  code
-    set=>[magix.data.load][end].Value
-      value=>[magix.data.count][count].Value
-using=>magix.math
-  add
-    =>[magix.data.load][start].Value
-    =>1
-set=>[**pr0].Value
-  value=>[using][add].Value
-if=>more-than
-  lhs=>[magix.data.load][end].Value
-  rhs=>[magix.data.count][count].Value
-  code
-    set=>[**pr1].Value
-      value=>[magix.data.count][count].Value
-else
-  set=>[**pr1].Value
-    value=>[magix.data.load][end].Value
-set=>[magix.forms.create-web-part][controls][panel:2][controls][label][value].Value
-  value=>@"{0} - {1} of {2}"
-    pr0
-    pr1
-    pr2=>[magix.data.count][count].Value
+// setting current paging to default
+magix.viewport.set-viewstate
+  id=>magix.users.current-paging
+  value
+    start=>0
+    end=>10
 
-_dt
-  panel
-    class=>span-17 hover-shadow relative
-    controls
-      label
-        class=>span-5
-      label
-        class=>span-4
-      label
-        class=>span-4
-      link-button
-        class=>span-1
-        value=>edit
-        onclick
-          execute-script
-            file=>system42/private/users/edit-user.hl
-      link-button
-        class=>span-1 hover-shadow last right z-1 absolute light-red centered
-        value=>x
-        onclick
-          magix.viewport.confirm
-            message=>are you sure you want to delete this user?
-            code
-              magix.data.remove
-                prototype
-                  type=>magix.core.user
-                  username=>
-              magix.log.append
-                header=>user deleted
-                body=>user {0} deleted
-              execute-script
-                file=>system42/private/users/users.hl
-              magix.viewport.clear-controls
-                container=>content3
+// event to create 
+event
+  name=>magix.users.show-users-grid
+  code
+    if=>not-equals
+      lhs=>[$].Count
+      rhs=>0
+      code
+        add=>[magix.forms.set-viewstate][value]
+          value=>[$]
+          children-only=>true
+        magix.forms.set-viewstate
+          id=>magix.users.current-paging
+    magix.forms.create-web-part
+      form-id=>users
+      controls-file=>system42/private/users/users/controls.hl
+      events-file=>system42/private/users/users/events.hl
 
-for-each=>[magix.data.load][objects]
-  set=>[/][_dt][panel][controls][label:0][value].Value
-    value=>[.][name].Value
-  set=>[/][_dt][panel][controls][label:1][value].Value
-    value=>[.][username].Value
-  set=>[/][_dt][panel][controls][label:2][value].Value
-    value=>[.][pwd].Value
-  set=>[/][_dt][panel][controls][link-button:0][onclick][execute-script][params][username].Value
-    value=>[.][username].Value
-  set=>[/][_dt][panel][controls][link-button:1][onclick][magix.viewport.confirm][code][magix.data.remove][prototype][username].Value
-    value=>[.][username].Value
-  set=>[/][_dt][panel][controls][link-button:1][onclick][magix.viewport.confirm][code][magix.log.append][body][username].Value
-    value=>[.][username].Value
-  add=>[/][magix.forms.create-web-part][controls][panel:1][controls]
-    value=>[/][_dt][0]
-
-magix.forms.create-web-part
-  form-id=>users-grid
-  container=>content1
-  class=>span-17 last
-  controls
-    label=>header
-      class=>span-17 last
-      value=>edit users
-      tag=>h2
-    panel=>userGrdHeader
-      controls
-        label=>headName
-          class=>span-5
-          value=>name
-          tag=>label
-          tip=>name of user
-        label=>headUsername
-          class=>span-4
-          value=>username
-          tag=>label
-          tip=>username of user
-        label=>headPwd
-          class=>span-4
-          value=>password
-          tag=>label
-          tip=>password of user
-        label=>headEdit
-          class=>span-1
-          value=>edit
-          tag=>label
-          tip=>edit user
-        label=>headDelete
-          class=>span-3 last right-text
-          value=>delete
-          tag=>label
-          tip=>delete user
-    panel=>userGrdWrp
-      class=>span-17 light-green
-      controls
-    panel=>pagerWrp
-      class=>span-17
-      controls
-        link-button=>previous
-          value=>&lt;&lt;
-          class=>span-1 left-13 last
-          onclick
-            execute-script
-              file=>system42/private/users/users.hl
-        label=>count
-          class=>span-2
-          value=>54
-        link-button=>next
-          value=>&gt;&gt;
-          class=>span-1 last
-          onclick
-            execute-script
-              file=>system42/private/users/users.hl
-    panel=>newUserWrp
-      class=>span-17 top-1
-      default=>addBtn
-      controls
-        text-box=>nName
-          class=>span-5
-          placeholder=>name of new user ...
-        text-box=>nUsername
-          class=>span-4
-          placeholder=>username ...
-        text-box=>nPwd
-          class=>span-4
-          placeholder=>password ...
-        button=>addBtn
-          class=>span-4 last
-          value=>add
-          onclick
-            magix.forms.get-value
-              form-id=>users-grid
-              id=>nName
-            if=>not-exist
-              lhs=>[magix.forms.get-value][value].Value
-              code
-                magix.viewport.show-message
-                  message=>you must give new user a name
-                magix.forms.set-focus
-                  form-id=>users-grid
-                  id=>nName
-            else
-              set=>[@][else][else][else][magix.data.save][value][name].Value
-                value=>[magix.forms.get-value][value].Value
-              magix.forms.get-value
-                form-id=>users-grid
-                id=>nUsername
-              if=>not-exist
-                lhs=>[@][magix.forms.get-value][value].Value
-                code
-                  magix.viewport.show-message
-                    message=>you must give new user a unique username
-                  magix.forms.set-focus
-                    form-id=>users-grid
-                    id=>nUsername
-              else
-                set=>[@][else][else][magix.data.save][value][username].Value
-                  value=>[@][..][magix.forms.get-value][value].Value
-                set=>[@][else][else][execute-script:1][params][username].Value
-                  value=>[@][..][magix.forms.get-value][value].Value
-                magix.forms.get-value
-                  form-id=>users-grid
-                  id=>nPwd
-                if=>not-exist
-                  lhs=>[@][magix.forms.get-value][value].Value
-                  code
-                    magix.viewport.show-message
-                      message=>you must give new user a password
-                    magix.forms.set-focus
-                      form-id=>users-grid
-                      id=>nPwd
-                else
-                  set=>[@][else][magix.data.save][value][pwd].Value
-                    value=>[@][..][magix.forms.get-value][value].Value
-                  set=>[@][magix.data.load][prototype][username].Value
-                    value=>[@][..][..][magix.forms.get-value][value].Value
-                  magix.data.load
-                    prototype
-                      type=>magix.core.user
-                  if=>more-than
-                    lhs=>[@][magix.data.load][objects].Count
-                    rhs=>0
-                    code
-                      magix.viewport.show-message
-                        message=>user exists from before with same username
-                  else
-                    magix.data.save
-                      value
-                        type=>magix.core.user
-                    set=>[@][magix.log.append][body][username].Value
-                      value=>[@][..][..][magix.forms.get-value:0][value].Value
-                    magix.log.append
-                      header=>new user created
-                      body=>user {0} created
-                    execute-script
-                      file=>system42/private/users/users.hl
-                    execute-script
-                      file=>system42/private/users/edit-user.hl
+magix.users.show-users-grid
 

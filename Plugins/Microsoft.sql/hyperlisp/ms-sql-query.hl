@@ -45,9 +45,9 @@ magix.forms.create-web-part
       for-each=>[magix.data.load][objects]
         _con
         set=>[@][0].Name
-          value=>[.].Name
+          value=>[.][value].Name
         set=>[@][0].Value
-          value=>[.][connection].Value
+          value=>[.][value][connection].Value
         add=>[/][magix.forms.set-values][values]
           value=>[@][0]
       magix.forms.set-values
@@ -88,7 +88,7 @@ magix.forms.create-web-part
         value=>[magix.forms.get-value][value].Value
       magix.data.load
       set=>[microsoft.sql.test-connection][connection].Value
-        value=>[magix.data.load][objects][0][connection].Value
+        value=>[magix.data.load][value][connection].Value
       magix.viewport.clear-controls
         container=>table-list
       magix.viewport.clear-controls
@@ -108,16 +108,16 @@ magix.forms.create-web-part
             time=>5000
           stop
       set=>[magix.forms.set-value][value].Value
-        value=>[magix.data.load][objects][0][connection].Value
+        value=>[magix.data.load][value][connection].Value
       magix.forms.set-value
         id=>lblHeader
       set=>[magix.forms.set-value:1][value].Value
-        value=>[magix.data.load][objects][0][connection].Value
+        value=>[magix.data.load][value][connection].Value
       magix.forms.set-value
         form-id=>sql
         id=>txtNewConnection
       set=>[microsoft.sql.select][connection].Value
-        value=>[magix.data.load][objects][0][connection].Value
+        value=>[magix.data.load][value][connection].Value
       microsoft.sql.select
         sql=>select distinct * from information_schema.tables where table_type='base table'
       for-each=>[microsoft.sql.select][result]
@@ -295,13 +295,13 @@ where
         value=>[@][_pks]
         children-only=>true
       magix.viewport.set-viewstate
-        name=>microsoft.sql.current-primary-keys
+        id=>microsoft.sql.current-primary-keys
       set=>[magix.forms.create-web-part:0][controls][label:1][value].Value
         value=>[$][info].Value
       set=>[@][magix.viewport.set-viewstate:1][value].Value
         value=>[$][info].Value
       magix.viewport.set-viewstate
-        name=>microsoft.sql.current-table
+        id=>microsoft.sql.current-table
       if=>equals
         lhs=>[:microsoft.sql.show-columns][value].Value
         rhs=>false
@@ -363,7 +363,7 @@ where
         lhs=>[$][keep-position]
         code
           magix.viewport.get-viewstate
-            name=>microsoft.sql.current-position
+            id=>microsoft.sql.current-position
           if=>exist
             lhs=>[@][magix.viewport.get-viewstate][value]
             code
@@ -374,7 +374,7 @@ where
         lhs=>[$][force-select]
         code
           magix.viewport.get-viewstate
-            name=>microsoft.sql.current-select-sql
+            id=>microsoft.sql.current-select-sql
           if=>exist
             lhs=>[@][magix.viewport.get-viewstate][value]
             code
@@ -413,7 +413,7 @@ where
           set=>[@][magix.viewport.set-viewstate][value].Value
             value=>[_sql].Value
           magix.viewport.set-viewstate
-            name=>microsoft.sql.current-select-sql
+            id=>microsoft.sql.current-select-sql
           try
             code
               set=>[@][microsoft.sql.select][end].Value
@@ -459,7 +459,7 @@ where
               set=>[@][magix.viewport.set-viewstate][value][count].Value
                 value=>[@][microsoft.sql.select][record-count].Value
               magix.viewport.set-viewstate
-                name=>microsoft.sql.current-position
+                id=>microsoft.sql.current-position
                 value
                   start=>0
             catch
@@ -491,9 +491,9 @@ where
               onclick
                 _sql=>@"update [[___table]] set"
                 magix.viewport.get-viewstate
-                  name=>microsoft.sql.current-table
+                  id=>microsoft.sql.current-table
                 magix.viewport.get-viewstate
-                  name=>microsoft.sql.current-primary-keys
+                  id=>microsoft.sql.current-primary-keys
                 if=>equals
                   lhs=>[magix.viewport.get-viewstate:1][value].Count
                   rhs=>0
@@ -593,7 +593,7 @@ where"
                     value=>&lt;&lt;
                     onclick
                       magix.viewport.get-viewstate
-                        name=>microsoft.sql.current-position
+                        id=>microsoft.sql.current-position
                       if=>equals
                         lhs=>[magix.viewport.get-viewstate][value][start].Value
                         rhs=>0
@@ -622,7 +622,7 @@ where"
                     value=>&gt;&gt;
                     onclick
                       magix.viewport.get-viewstate
-                        name=>microsoft.sql.current-position
+                        id=>microsoft.sql.current-position
                       if=>more-than-equals
                         lhs=>[magix.viewport.get-viewstate][value][end].Value
                         rhs=>[magix.viewport.get-viewstate][value][count].Value
@@ -818,7 +818,7 @@ where"
           class=>span-1 top-1
           oncheckedchanged
             magix.viewport.get-viewstate
-              name=>microsoft.sql.current-table
+              id=>microsoft.sql.current-table
             if=>exist
               lhs=>[magix.viewport.get-viewstate][value].Value
               code

@@ -49,15 +49,15 @@ magix.viewport.include-client-file-sample
 
 magix.viewport.set-viewstate-dox=>@"sets a viewstate value
 
-sets the given [name] viewstate value for the current page.  
+sets the given [id] viewstate value for the current page.  
 pass in [value] as the value to set into the viewstate.  both 
-[name] and [value] can be either constants or expressions.  [name] 
+[id] and [value] can be either constants or expressions.  [id] 
 can contain format expressions in the form of {0}, {1} and so on, 
-referencing child nodes of name"
+referencing child nodes of id"
 
 magix.viewport.set-viewstate-sample
   magix.viewport.set-viewstate
-    name=>some-id
+    id=>some-id
     value
       some=>node
         hierarchy
@@ -68,12 +68,14 @@ magix.viewport.set-viewstate-sample
 
 magix.viewport.get-viewstate-dox=>@"retrieves a viewstate value
 
-retrieves the [name] viewstate value into [value] if existing.  [name] can 
-be either a constant, or an expression"
+retrieves the [id] viewstate value into [value] if existing.  [id] can 
+be either a constant, or an expression.  [id] can contain format 
+expressions in the form of {0}, {1} and so on, referencing child nodes 
+of id"
 
 magix.viewport.get-viewstate-sample
   magix.viewport.get-viewstate
-    name=>some-id
+    id=>some-id
 
 
 magix.viewport.load-module-dox=>@"loads an active module

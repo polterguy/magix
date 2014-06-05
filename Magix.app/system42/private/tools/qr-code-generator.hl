@@ -115,7 +115,7 @@ parts of qr code. defaults to bumpy-light.png"
           value=>...
           onclick
             magix.viewport.set-viewstate
-              name=>stack-of-pages
+              id=>stack-of-pages
               value
                 root=>
                 item=>media

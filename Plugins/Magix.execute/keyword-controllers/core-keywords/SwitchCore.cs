@@ -41,8 +41,6 @@ namespace Magix.execute
 
             Node dp = Dp(e.Params);
 			string value = Expressions.GetExpressionValue(ip.Get<string>(), dp, ip, false) as string;
-            if (value == null)
-                throw new ArgumentException("[switch] statement value was null");
 
             bool foundMatch = false;
             foreach (Node idx in ip)

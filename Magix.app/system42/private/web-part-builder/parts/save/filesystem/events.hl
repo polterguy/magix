@@ -62,10 +62,10 @@ magix.ide.set-last-used-save-filename
   magix.data.load-username
     id=>magix.ide.last-used-filename
   if=>exist
-    lhs=>[magix.data.load-username][objects][0]
+    lhs=>[magix.data.load-username][value]
     code
       set=>[@][magix.forms.set-value][value].Value
-        value=>[magix.data.load-username][objects][0][filename].Value
+        value=>[magix.data.load-username][value][filename].Value
       magix.forms.set-value
         form-id=>save-content
         id=>txt-filename
@@ -79,5 +79,4 @@ magix.ide.set-last-used-save-filename
         type=>focus-and-select
         form-id=>save-content
         id=>txt-filename
-
 

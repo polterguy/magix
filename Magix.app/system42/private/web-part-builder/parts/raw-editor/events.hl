@@ -10,9 +10,9 @@ magix.ide.surface-changed
   magix.data.load-username
     id=>magix.ide.raw-code-text-area-visible
   if=>exist
-    lhs=>[magix.data.load-username][objects][0]
+    lhs=>[magix.data.load-username][value]
     and=>equals
-      lhs=>[magix.data.load-username][objects][0][visible].Value
+      lhs=>[magix.data.load-username][value][visible].Value
       rhs=>true
     code
       magix.ide.get-form
@@ -34,12 +34,12 @@ magix.ide.reload-serialized-form-data
       magix.data.load-username
         id=>magix.ide.current-surface-controls
       if=>exist
-        lhs=>[@][magix.data.load-username][objects]
+        lhs=>[@][magix.data.load-username][value]
         code
 
           // setting raw text-area code first, in case updating wysiwyg surface throws exceptions
           node-2-code
-            node=>[@][..][..][magix.data.load-username][objects][0]
+            node=>[@][..][..][magix.data.load-username][value]
             remove-root=>true
           set=>[@][magix.forms.set-value][value].Value
             value=>[@][node-2-code][code].Value
@@ -50,7 +50,7 @@ magix.ide.reload-serialized-form-data
           // setting wysiwyg surface with serialized form data, with no update parameter, to not 
           // post the magix.ide.surface-changed active event
           add=>[@][magix.ide.set-form][value]
-            value=>[@][..][..][magix.data.load-username][objects][0]
+            value=>[@][..][..][magix.data.load-username][value]
             children-only=>true
           magix.ide.set-form
             no-update=>true
@@ -184,7 +184,7 @@ magix.ide.set-raw-code-initial-visibility
   magix.data.load-username
     id=>magix.ide.raw-code-text-area-visible
   if=>equals
-    lhs=>[magix.data.load-username][objects][0][visible].Value
+    lhs=>[magix.data.load-username][value][visible].Value
     rhs=>true
     code
       magix.forms.set-style

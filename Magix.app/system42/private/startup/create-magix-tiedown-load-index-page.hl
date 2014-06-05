@@ -31,17 +31,31 @@ and a login box, to allow the user to log in, using the
 [magix.core.user] type of authentication and authorization 
 logic"
       code
-        magix.data.load
-          id=>magix.admin.settings.default-back-end-css-file
-        set=>[magix.viewport.include-client-file:1][file].Value
-          value=>[magix.data.load][objects][0][file].Value
         magix.viewport.include-client-file
           type=>css
           file=>media/grid/main.css
+        magix.data.load
+          id=>magix.admin.settings.default-back-end-css-file
+        set=>[magix.viewport.include-client-file:1][file].Value
+          value=>[magix.data.load][value][file].Value
         magix.viewport.include-client-file
           type=>css
-        magix.forms.create-mml-web-part
-          mml-file=>system42/public/index-header.mml
-          form-id=>header
+        magix.forms.create-web-part
+          form-id=>main-landing-page
           class=>span-22 last
+          controls
+            dynamic=>main-header
+              onfirstload
+                magix.forms.create-mml-web-part
+                  container=>main-header
+                  form-id=>header
+                  class=>span-22 last
+                  mml-file=>system42/public/index-header.mml
+            dynamic=>main-content
+              onfirstload
+                magix.forms.create-mml-web-part
+                  container=>main-content
+                  form-id=>content
+                  class=>span-20 last
+                  mml-file=>system42/public/index-content.mml
 

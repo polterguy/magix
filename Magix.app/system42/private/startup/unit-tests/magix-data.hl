@@ -28,7 +28,7 @@ pointing to the object being saved"
       remove
         id=>magix.tests.data-test1
     if=>not-equals
-      lhs=>[using][load][objects][0][tmp].Value
+      lhs=>[using][load][value][tmp].Value
       rhs=>testing
       code
         throw=>[magix.data.save] misbehaved
@@ -54,7 +54,7 @@ loaded is the same as the object saved, using constants"
       remove
         id=>magix.tests.data-test1
     if=>not-equals
-      lhs=>[using][load][objects][0][tmp].Value
+      lhs=>[using][load][value][tmp].Value
       rhs=>testing
       code
         throw=>[magix.data.save] misbehaved
@@ -82,7 +82,7 @@ pointing to the object id of the object being saved and loaded"
       remove
         id=>[_id].Value
     if=>not-equals
-      lhs=>[using][load][objects][0][tmp].Value
+      lhs=>[using][load][value][tmp].Value
       rhs=>testing
       code
         throw=>[magix.data.save] misbehaved
@@ -139,10 +139,10 @@ using a prototype, making sure they are removed"
         prototype
           type=>magix.tests.test-object-type-1
     if=>not-equals
-      lhs=>[using][load][objects][0][tmp].Value
+      lhs=>[using][load][objects][0][value][tmp].Value
       rhs=>testing-1
       or=>not-equals
-        lhs=>[using][load][objects][1][tmp].Value
+        lhs=>[using][load][objects][1][value][tmp].Value
         rhs=>testing-2
       code
         throw=>[magix.data.load] misbehaved
@@ -185,10 +185,10 @@ being an expression"
       load
         prototype=>[_prototype]
     if=>not-equals
-      lhs=>[using][load][objects][0][tmp].Value
+      lhs=>[using][load][objects][0][value][tmp].Value
       rhs=>testing-1
       or=>not-equals
-        lhs=>[using][load][objects][1][tmp].Value
+        lhs=>[using][load][objects][1][value][tmp].Value
         rhs=>testing-2
       code
         throw=>[magix.data.load] misbehaved
@@ -229,10 +229,10 @@ being an expression, and having the prototype contain wildcards"
       load
         prototype=>[_prototype]
     if=>not-equals
-      lhs=>[using][load][objects][0][tmp].Value
+      lhs=>[using][load][objects][0][value][tmp].Value
       rhs=>testing-1
       or=>not-equals
-        lhs=>[using][load][objects][1][tmp].Value
+        lhs=>[using][load][objects][1][value][tmp].Value
         rhs=>testing-2
       code
         throw=>[magix.data.load] misbehaved
@@ -284,10 +284,10 @@ contain wildcards"
       load
         prototype=>[_prototype]
     if=>not-equals
-      lhs=>[using][load][objects][0][tmp].Value
+      lhs=>[using][load][objects][0][value][tmp].Value
       rhs=>testing-%1 object
       or=>not-equals
-        lhs=>[using][load][objects][1][tmp].Value
+        lhs=>[using][load][objects][1][value][tmp].Value
         rhs=>testing-%2 object
       code
         throw=>[magix.data.load] misbehaved

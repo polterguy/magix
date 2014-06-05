@@ -1,0 +1,97 @@
+﻿
+
+inspect=>@"contains controls for users web part
+
+contains the controls necessary to show the edit users grid"
+
+
+label=>lbl-header
+  class=>span-17 last
+  tag=>h2
+  value=>edit users
+
+panel=>users-wrapper
+  class=>span-15 last boxed air-padding
+  controls
+    label
+      class=>span-5
+      tag=>label
+      value=>username
+    label
+      class=>span-6
+      tag=>label
+      value=>name
+    label
+      class=>span-2
+      tag=>label
+      value=>role
+    lambda=>lambda-users-grid
+      oncreatecontrols
+        add=>[$]
+          value=>[:magix.users.create-grid-controls][controls]
+          children-only=>true
+
+panel=>edit-user-wrapper
+  class=>span-15 last boxed air-padding top-1 clear left-5
+  default=>save
+  onesc
+    magix.users.show-users-grid
+  controls
+    label=>edit-user-header
+      class=>span-15 last bottom-1
+      tag=>h3
+      value=>new user
+    label
+      class=>span-3
+      value=>username
+      tag=>label
+    label
+      class=>span-4
+      value=>name
+      tag=>label
+    label
+      class=>span-2
+      value=>role
+      tag=>label
+    label
+      class=>span-3
+      value=>password
+      tag=>label
+    label
+      class=>span-3 last
+      value=>repeat
+      tag=>label
+    text-box=>edit-username
+      class=>span-3 clear
+      placeholder=>username ...
+    text-box=>edit-name
+      class=>span-4
+      placeholder=>name ...
+    select=>edit-role
+      class=>span-2
+      onfirstload
+        magix.users.load-roles
+    text-box=>edit-pwd
+      class=>span-3
+      type=>password
+      placeholder=>password ...
+    text-box=>edit-pwd-repeat
+      class=>span-3 last
+      type=>password
+      placeholder=>repeat ...
+    button=>save
+      class=>span-2 left-11 clear
+      value=>save
+      onclick
+        if=>exist
+          lhs=>[$][info]
+          code
+            set=>[magix.users.save-user][id].Value
+              value=>[$][info].Value
+        magix.users.save-user
+    button=>cancel
+      class=>span-2 last
+      value=>cancel
+      onclick
+        magix.users.show-users-grid
+

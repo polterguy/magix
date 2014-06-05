@@ -14,10 +14,10 @@ select=>sel-save-where
     magix.data.load-username
       id=>magix.ide.where-to-save-file
     if=>exist
-      lhs=>[magix.data.load-username][objects][0]
+      lhs=>[magix.data.load-username][value]
       code
         set=>[@][magix.forms.set-value][value].Value
-          value=>[magix.data.load-username][objects][0][where].Value
+          value=>[magix.data.load-username][value][where].Value
         magix.forms.set-value
           form-id=>save-wrapper
           id=>sel-save-where

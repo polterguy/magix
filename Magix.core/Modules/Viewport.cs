@@ -362,11 +362,11 @@ namespace Magix.Core
 
             Node dp = Dp(e.Params);
 
-            if (!ip.ContainsValue("name"))
-                throw new ArgumentException("no [name] given to [magix.viewport.set-viewstate]");
-            string name = Expressions.GetExpressionValue(ip["name"].Get<string>(), dp, ip, false) as string;
-            if (ip["name"].Count > 0)
-                name = Expressions.FormatString(dp, ip, ip["name"], name);
+            if (!ip.ContainsValue("id"))
+                throw new ArgumentException("no [id] given to [magix.viewport.set-viewstate]");
+            string name = Expressions.GetExpressionValue(ip["id"].Get<string>(), dp, ip, false) as string;
+            if (ip["id"].Count > 0)
+                name = Expressions.FormatString(dp, ip, ip["id"], name);
 
             if (!ip.Contains("value"))
 			{
@@ -408,11 +408,11 @@ namespace Magix.Core
 
             Node dp = Dp(e.Params);
 
-            if (!ip.ContainsValue("name"))
-                throw new ArgumentException("no [name] given to [magix.viewport.get-viewstate]");
-            string name = Expressions.GetExpressionValue(ip["name"].Get<string>(), dp, ip, false) as string;
-            if (ip["name"].Count > 0)
-                name = Expressions.FormatString(dp, ip, ip["name"], name);
+            if (!ip.ContainsValue("id"))
+                throw new ArgumentException("no [id] given to [magix.viewport.get-viewstate]");
+            string name = Expressions.GetExpressionValue(ip["id"].Get<string>(), dp, ip, false) as string;
+            if (ip["id"].Count > 0)
+                name = Expressions.FormatString(dp, ip, ip["id"], name);
 
 			if (ViewState[name] != null && ViewState[name] is Node)
                 ip.Add((ViewState[name] as Node).Clone());
