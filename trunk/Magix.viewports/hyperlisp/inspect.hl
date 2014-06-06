@@ -19,6 +19,9 @@ only the first invocation to this active event will be capable of setting the [c
 and the [time] parameters.  all consecutive invocations to this active event, will 
 simply ignore the color and time parameters
 
+the [message] parameter can contain formatting expressions, such as {0}, {1} etc, 
+referencing children nodes of the message node, to be string formatted
+
 if you supply a [code] parameter, then a much larger message box will appear, with 
 support for having the user click a button to close the message box
 
@@ -36,7 +39,10 @@ magix.viewports.confirm-dox=>@"asks user to confirm action before execution
 takes a piece of hyperlisp code as [code], and asks the user for confirming action, 
 explained in [message], before executing hyperlisp given.  if [closable-only] is 
 supplied, then the code cannot be executed, but is only displayed to the end user 
-instead"
+instead
+
+the [message] parameter can contain formatting expressions, such as {0}, {1} etc, 
+referencing children nodes of the message node, to be string formatted"
 
 magix.viewports.confirm-sample
   magix.viewport.confirm

@@ -177,10 +177,15 @@ namespace Magix.viewports
                 return;
 			}
 
+            Node dp = Dp(e.Params);
 
             if (!ip.ContainsValue("message"))
 				throw new ArgumentException("no [message] given to [magix.viewport.confirm]");
-            confirmLbl.Value = ip["message"].Get<string>();
+            string message = Expressions.GetExpressionValue(ip["message"].Get<string>(), dp, ip, false) as string;
+            if (ip["message"].Count > 0)
+                message = Expressions.FormatString(dp, ip, ip["message"], message);
+
+            confirmLbl.Value = message;
 
             if (ip.Contains("code"))
                 ConfirmCode = ip["code"].Clone();
@@ -224,6 +229,7 @@ namespace Magix.viewports
          */
 		protected void CancelClick(object sender, EventArgs e)
 		{
+            ConfirmCode = null;
             CloseMessageBox();
         }
 
@@ -232,6 +238,7 @@ namespace Magix.viewports
          */
         protected void confirmWrp_Esc(object sender, EventArgs e)
 		{
+            ConfirmCode = null;
             CloseMessageBox();
 		}
 
@@ -240,7 +247,6 @@ namespace Magix.viewports
          */
         private void CloseMessageBox()
         {
-            ConfirmCode = null;
             confirmWrp.Visible = false;
             confirmWrp.Style["display"] = "none";
         }
@@ -250,11 +256,12 @@ namespace Magix.viewports
          */
         protected void OKClick(object sender, EventArgs e)
 		{
+            CloseMessageBox();
             RaiseActiveEvent(
                 "magix.execute",
                 ConfirmCode);
-            CloseMessageBox();
-		}
+            ConfirmCode = null;
+        }
 
         /*
          * locks given container

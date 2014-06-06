@@ -70,7 +70,6 @@
     <Content Include="media\images\backgrounds\background-pink.png" />
     <Content Include="media\images\backgrounds\background-white.png" />
     <Content Include="media\images\backgrounds\background.png" />
-    <Content Include="media\images\crud-app-bg.png" />
     <Content Include="media\images\help-files\marvin-headshot.png" />
     <Content Include="media\images\help-files\qr-code-to-magix.png" />
     <Content Include="media\images\help-files\screenshots\hyper-lisp-spaces.png" />
@@ -80,7 +79,7 @@
     <Content Include="media\bootstrap\js\bootstrap.js" />
     <Content Include="media\bootstrap\js\bootstrap.min.js" />
     <Content Include="media\bootstrap\js\jQuery.js" />
-    <Content Include="media\images\qr-codes.png" />
+    <Content Include="media\images\icons\tree-indent.png" />
     <Content Include="media\images\source-files\magix-91-1024px.png" />
     <Content Include="media\images\textures\bumpy-dark.png" />
     <Content Include="media\images\textures\bumpy-light.png" />
@@ -376,6 +375,7 @@
     <Content Include="system42\private\users\users\events.hl" />
     <Content Include="system42\private\users\roles\controls.hl" />
     <Content Include="system42\private\users\roles\events.hl" />
+    <Content Include="system42\private\users\roles\edit-role\events.hl" />
     <None Include="todo.txt" />
   </ItemGroup>
   <ItemGroup>

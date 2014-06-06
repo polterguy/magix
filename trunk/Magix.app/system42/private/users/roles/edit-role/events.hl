@@ -1,0 +1,127 @@
+﻿
+
+inspect=>@"contains events for editing one role
+
+contains events for editing one role"
+
+
+// adds a child role according to the position of the editing role, and the text value of the text-box
+// expects [parent]
+magix.roles.add-role
+  magix.forms.get-value
+    form-id=>edit-role
+    id=>txt-role-name
+  _role
+  magix.data.load
+    prototype
+      type=>magix.core.role
+
+  // checking to see if role exists from before
+  _found
+  for-each=>[magix.data.load][objects]
+    iterate=>[.]
+      if=>equals
+        lhs=>[/][magix.forms.get-value][value].Value
+        rhs=>[.].Value
+        and=>equals
+          lhs=>[.].Name
+          rhs=>name
+        code
+          set=>[/][**_found].Value
+            value=>true
+
+  // role already exists with the same name if this evaluates to true
+  if=>equals
+    lhs=>[_found].Value
+    rhs=>true
+    code
+      magix.viewport.show-message
+        message=>role exists from before
+        color=>red
+      magix.forms.effect
+        type=>focus-and-select
+        form-id=>edit-role
+        id=>txt-role-name
+      stop
+
+  // finding the correct parent role to update
+  for-each=>[magix.data.load][objects]
+    _role-id
+    _found
+    set=>[@][_role-id].Value
+      value=>[.][id].Value
+    iterate=>[.][value]
+      if=>equals
+        lhs=>[.].Name
+        rhs=>name
+        and=>equals
+          lhs=>[.].Value
+          rhs=>[$][parent].Value
+        code
+          // this is the right role
+          set=>[@][..][..][..][_found].Value
+            value=>true
+
+          // adding child role
+          _child
+            child
+              name
+          set=>[@][_child][child][name].Value
+            value=>[/][magix.forms.get-value][value].Value
+          add=>[.][..]
+            value=>[@][_child]
+            children-only=>true
+          stop
+    if=>equals
+      lhs=>[@][_found].Value
+      rhs=>true
+      code
+        add=>[/][_role]
+          value=>[.]
+          children-only=>true
+        stop
+  add=>[magix.data.save]
+    value=>[_role]
+    children-only=>true
+  magix.data.save
+  magix.roles.show-roles-tree
+
+// deletes role, expects [role]
+magix.roles.delete-role
+  _role
+  magix.data.load
+    prototype
+      type=>magix.core.role
+  for-each=>[magix.data.load][objects]
+    _role-id
+    _found
+    set=>[@][_role-id].Value
+      value=>[.][id].Value
+    iterate=>[.][value]
+      if=>equals
+        lhs=>[.].Name
+        rhs=>name
+        and=>equals
+          lhs=>[.].Value
+          rhs=>[$][role].Value
+        code
+          // this is the right role
+          set=>[@][..][..][..][_found].Value
+            value=>true
+
+          // clearing role
+          set=>[.][..]
+          stop
+    if=>equals
+      lhs=>[@][_found].Value
+      rhs=>true
+      code
+        add=>[/][_role]
+          value=>[.]
+          children-only=>true
+        stop
+  add=>[magix.data.save]
+    value=>[_role]
+    children-only=>true
+  magix.data.save
+
