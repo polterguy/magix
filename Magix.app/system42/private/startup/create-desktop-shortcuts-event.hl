@@ -45,6 +45,8 @@ returns the default dashboard shortcuts in your system"
             params
               namespace=>magix.execute
               header=>hyperlisp reference
+              description-class=>span-14
+              list-class=>span-3 last
               exclude
                 magix.execute._active-event-2-code-callback
                 magix.execute
@@ -97,6 +99,8 @@ returns the default dashboard shortcuts in your system"
           execute-script
             file=>system42/private/tools/inspect.hl
             params
+              description-class=>span-9
+              list-class=>span-8 last
               header=>active events
           magix.help.open-file
             file=>system42/private/help/backend/active-events.mml
@@ -247,6 +251,8 @@ returns the default dashboard shortcuts in your system"
             params
               namespace=>magix.forms.controls
               header=>web controls
+              description-class=>span-14
+              list-class=>span-3 last
           magix.help.open-file
             file=>system42/private/help/backend/web-controls.mml
       forms
