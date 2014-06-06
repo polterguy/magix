@@ -85,6 +85,11 @@ magix.roles.add-role
     children-only=>true
   magix.data.save
   magix.roles.show-roles-tree
+  set=>[magix.log.append-username][body].Value
+    value=>role '{0}' was created
+      =>[magix.forms.get-value][value].Value
+  magix.log.append-username
+    header=>role created
 
 // deletes role, expects [role]
 magix.roles.delete-role
@@ -125,6 +130,11 @@ magix.roles.delete-role
     children-only=>true
   magix.data.save
   magix.roles.clean-up-users
+  set=>[magix.log.append-username][body].Value
+    value=>role '{0}' was deleted
+      =>[$][role].Value
+  magix.log.append-username
+    header=>role deleted
 
 // cleaning up all roles from user objects that doesn't exist in role hierarchy
 magix.roles.clean-up-users

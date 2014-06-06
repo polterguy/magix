@@ -1,0 +1,34 @@
+
+
+inspect=>@"creates the username magix.log helper event
+
+creates [magix.log.append-username]
+
+this active event is useful for logging activity done by the currently 
+logged in user.  active event will throw an exception if no user is currently 
+logged in"
+
+
+event
+  name=>magix.log.append-username
+  persist=>false
+  inspect=>@"logs an action done by user
+
+creates a log item, appending the currently logged in user into the header 
+of the log item"
+  code
+    magix.web.get-session
+      id=>magix.core.user
+    if=>not-exist
+      lhs=>[magix.web.get-session][value]
+      code
+        throw=>no user is currently logged in
+    set=>[$][header].Value
+      value=>{0}, by {1}
+        =>[$][header].Value
+        =>[magix.web.get-session][value][username].Value
+    add=>[@][magix.log.append]
+      value=>[$]
+      children-only=>true
+    magix.log.append
+

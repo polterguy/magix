@@ -156,7 +156,7 @@ namespace Magix.execute
          * entry point for hyperlisp created active event overrides
          */
         [ActiveEvent(Name = "magix.execute._active-event-2-code-callback")]
-        public static void magix_data__active_event_2_code_callback(object sender, ActiveEventArgs e)
+        public static void magix_execute__active_event_2_code_callback(object sender, ActiveEventArgs e)
         {
             Node ip = Ip(e.Params);
             if (ShouldInspect(ip))
@@ -244,7 +244,7 @@ namespace Magix.execute
          * entry point for hyperlisp created active session-event overrides
          */
         [ActiveEvent(Name = "")]
-        public void magix_data__active_event_2_code_callback_session_events(object sender, ActiveEventArgs e)
+        public void magix_execute__active_event_2_code_callback_session_events(object sender, ActiveEventArgs e)
         {
             if (SessionEvents.ContainsKey(e.Name))
             {

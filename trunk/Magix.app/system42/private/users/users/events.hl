@@ -267,6 +267,11 @@ magix.users.delete-user
     value=>[$][id]
   magix.data.remove
   magix.users.show-users-grid
+  set=>[magix.log.append-username][body].Value
+    value=>user '{0}' was deleted
+      =>[magix.data.load][value][username].Value
+  magix.log.append-username
+    header=>user deleted
 
 // saves a new or existing user
 magix.users.save-user
@@ -380,6 +385,11 @@ magix.users.save-user
     value
       type=>magix.core.user
   magix.users.show-users-grid
+  set=>[magix.log.append-username][body].Value
+    value=>user '{0}' was created or edited
+      =>[magix.data.save][value][username].Value
+  magix.log.append-username
+    header=>user created or edited
 
 // loads roles into drop down list
 magix.users.load-roles
