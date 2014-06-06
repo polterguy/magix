@@ -317,7 +317,6 @@
     <Content Include="system42\private\settings\settings.mml" />
     <Content Include="system42\private\tools\magix-markup-editor.hl" />
     <Content Include="system42\private\tools\qr-code-generator.hl" />
-    <Content Include="system42\private\users\edit-user.hl" />
     <Content Include="system42\private\users\roles.hl" />
     <Content Include="system42\private\users\users.hl" />
     <Content Include="system42\private\startup\create-mux-documentation-events.hl" />
@@ -375,6 +374,8 @@
     <Content Include="system42\public\index-content.mml" />
     <Content Include="system42\private\users\users\controls.hl" />
     <Content Include="system42\private\users\users\events.hl" />
+    <Content Include="system42\private\users\roles\controls.hl" />
+    <Content Include="system42\private\users\roles\events.hl" />
     <None Include="todo.txt" />
   </ItemGroup>
   <ItemGroup>

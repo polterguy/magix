@@ -14,9 +14,10 @@ magix.viewport.set-viewstate
     start=>0
     end=>10
 
-// event to create 
+// event to create web part showing all users, and edit user
 event
   name=>magix.users.show-users-grid
+  persist=>false
   code
     if=>not-equals
       lhs=>[$].Count

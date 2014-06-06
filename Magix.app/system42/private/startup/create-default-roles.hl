@@ -17,5 +17,7 @@ if=>equals
         type=>magix.core.role
         name=>admin
         child
-          name=>user
+          name=>poweruser
+          child
+            name=>user
 

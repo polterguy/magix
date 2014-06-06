@@ -1,0 +1,70 @@
+﻿
+
+inspect=>@"contains events for roles web part
+
+contains the active events necessary to show the edit roles tree"
+
+
+// creates edit roles tree
+magix.roles.create-role-tree-controls
+
+  // loading all roles
+  magix.data.load
+    prototype
+      type=>magix.core.role
+
+  // iterating through all "root roles"
+  for-each=>[magix.data.load][objects]
+
+    // creating web controls representing role, and returning to caller
+    add=>[$][controls]
+      value=>[:magix.role.create-tree-node-control[.][value]][controls]
+      children-only=>true
+
+// recursively creates one role link-button
+magix.role.create-tree-node-control
+
+  // buffer holding the panel and link-button that becomes the visual representation of the role
+  _btn
+    panel
+      class=>column clear
+      controls
+        link-button
+          class=>span-5
+          onclick
+  set=>[_btn][panel][controls][link-button][value].Value
+    value=>[$][name].Value
+
+  // checking to see if role has child roles, and if it does, iterates through all children roles, and creates their visual representation
+  if=>exist
+    lhs=>[$][child]
+    code
+
+      // role has children, iterating through all child nodes, finding children roles
+      for-each=>[$]
+        if=>equals
+          lhs=>[.].Name
+          rhs=>child
+          code
+
+            // this is a child role, emptying buffer to be safe
+            set=>[@][_pnl][0]
+            _pnl
+
+            // recursively calling self with current iterating child role
+            add=>[@][_pnl]
+              value=>[:magix.role.create-tree-node-control[.]][controls]
+              children-only=>true
+
+            // making sure this role is indented on screen
+            set=>[@][_pnl][panel][class].Value
+              value=>column clear left-1
+
+            // adding child role to returned value
+            add=>[/][_btn][panel][controls]
+              value=>[@][_pnl][0]
+
+  // returning controls collection back to caller
+  add=>[$][controls]
+    value=>[_btn][panel]
+

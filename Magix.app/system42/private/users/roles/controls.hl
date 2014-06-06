@@ -1,0 +1,25 @@
+﻿
+
+inspect=>@"contains controls for roles web part
+
+contains the controls necessary to show the edit roles tree"
+
+
+// header
+label=>lbl-header
+  class=>span-17 last
+  tag=>h2
+  value=>edit roles
+
+// will contain the roles tree view, showing all roles, recursively as a tree structure to user
+panel=>roles-wrapper
+  class=>span-15 last boxed air-padding
+  controls
+    lambda=>lambda-roles
+      oncreatecontrols
+
+        // invokes event that creates roles tree view control collection
+        add=>[$]
+          value=>[:magix.roles.create-role-tree-controls][controls]
+          children-only=>true
+
