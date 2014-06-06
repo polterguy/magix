@@ -6,6 +6,8 @@
 
 using System;
 using System.IO;
+using System.Web;
+using log4net;
 using Magix.Core;
 
 namespace Magix.log
@@ -15,6 +17,28 @@ namespace Magix.log
 	 */
 	public class LogCore : ActiveController
 	{
+        private static readonly ILog log = LogManager.GetLogger("magix");
+
+        /*
+         * initializes log4net
+         */
+        [ActiveEvent(Name = "magix.core.application-startup")]
+        public static void magix_core_application_startup(object sender, ActiveEventArgs e)
+        {
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
+            {
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.execute",
+                    "Magix.log.hyperlisp.inspect.hl",
+                    "[magix.log.application-startup-dox].Value");
+                return;
+            }
+
+            log4net.Config.XmlConfigurator.Configure(new FileInfo(HttpContext.Current.Server.MapPath("~/Web.config"))); 
+        }
+
 		/*
 		 * will log the given header and body
 		 */
@@ -45,32 +69,17 @@ namespace Magix.log
 
             Node dp = Dp(e.Params);
             string header = Expressions.GetExpressionValue(ip["header"].Get<string>(), dp, ip, false) as string;
-            string body = Expressions.GetExpressionValue(ip["body"].Get<string>(), dp, ip, false) as string;
-			DateTime date = DateTime.Now;
-
-            if (ip["body"].Count > 0)
-                body = Expressions.FormatString(dp, ip, ip["body"], body);
-
             if (ip["header"].Count > 0)
                 header = Expressions.FormatString(dp, ip, ip["header"], header);
+            string body = Expressions.GetExpressionValue(ip["body"].Get<string>(), dp, ip, false) as string;
+            if (ip["body"].Count > 0)
+                body = Expressions.FormatString(dp, ip, ip["body"], body);
+            bool error = ip.ContainsValue("error") && ip["error"].Get<bool>();
 
-			Node node = new Node();
-			node["value"]["type"].Value = "magix.log.item";
-			node["value"]["header"].Value = header;
-			node["value"]["body"].Value   = body;
-			node["value"]["date"].Value   = date;
-
-            if (ip.Contains("error"))
-                node["value"]["error"].Value = bool.Parse(Expressions.GetExpressionValue(ip["error"].Get<string>(), dp, ip, false) as string);
-
-            if (ip.ContainsValue("code"))
-                node["value"]["code"].AddRange(Expressions.GetExpressionValue(ip["code"].Get<string>(), dp, ip, false) as Node);
-            else if (ip.Contains("code"))
-                node["value"]["code"].AddRange(ip["code"].Clone());
-
-			RaiseActiveEvent(
-				"magix.data.save",
-				node);
+            if (error)
+                log.Error(string.Format("{0} - {1}", header, body));
+            else
+                log.Debug(string.Format("{0} - {1}", header, body));
 		}
 	}
 }

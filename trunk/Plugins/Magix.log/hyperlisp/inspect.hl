@@ -3,12 +3,17 @@
 inspect=>@"contains documentation for magix.log"
 
 
+magix.log.application-startup-dox=>@"iitializes log4net
+
+initializes log4net, such that logging will function.  by default, magix logs to 
+a file on the root folder of its installation called log.txt"
+
+
 magix.log.append-dox=>@"appends an items to the log
 
 appends an item to the log.  [header] is the header of your log item.  
-[body] is a larger more thorough description of your log item.  [code] is 
-a piece of code that is associated with your log item.  [error] is a boolean 
-indicating if your log item is describing an error
+[body] is a larger more thorough description of your log item.  [error] 
+is a boolean indicating if your log item is describing an error
 
 only [header] and [body] are mandatory, all other parameters are optional.  
 in addition, the log item will automatically store the date and time for when 
@@ -29,14 +34,4 @@ magix.log.append-sample
     header=>some header
     body=>longer description of log item
     error=>false
-    code
-      _here=>you
-        can
-          supply=>some piece
-        of=>code
-        that
-          becomes
-        associeted=>with
-          your
-        log
-          item
+

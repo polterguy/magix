@@ -162,20 +162,6 @@ returns the default dashboard shortcuts in your system"
             file=>system42/private/users/roles.hl
           magix.help.open-file
             file=>system42/private/help/backend/user-administration.mml
-      server-log
-        text=>server log
-        category=>security
-        code
-          magix.viewport.clear-controls
-            container=>content2
-          magix.viewport.clear-controls
-            container=>content3
-          magix.viewport.clear-controls
-            container=>content4
-          magix.viewport.clear-controls
-            container=>content5
-          execute-script
-            file=>system42/private/server-log/log.hl
       settings
         text=>settings
         category=>tools
