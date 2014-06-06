@@ -15,6 +15,8 @@ label=>lbl-header
 panel=>roles-wrapper
   class=>span-15 last boxed air-padding
   controls
+
+    // contains actual tree view of roles in system
     lambda=>lambda-roles
       oncreatecontrols
 
@@ -22,4 +24,7 @@ panel=>roles-wrapper
         add=>[$]
           value=>[:magix.roles.create-role-tree-controls][controls]
           children-only=>true
+
+// contains the wrapper for editing one role
+dynamic=>edit-role
 

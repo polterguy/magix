@@ -1447,4 +1447,9 @@ ul.list-no-type li span
     font-weight:bold;
 }
 
-
+.tree-indentation
+{
+    background-image:url(../images/icons/tree-indent.png);
+    background-repeat:no-repeat;
+    padding-left:10px;
+}

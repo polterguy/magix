@@ -32,6 +32,9 @@ magix.role.create-tree-node-control
         link-button
           class=>span-5
           onclick
+            set=>[magix.role.edit-role][role].Value
+              value=>[$][value].Value
+            magix.role.edit-role
   set=>[_btn][panel][controls][link-button][value].Value
     value=>[$][name].Value
 
@@ -58,7 +61,7 @@ magix.role.create-tree-node-control
 
             // making sure this role is indented on screen
             set=>[@][_pnl][panel][class].Value
-              value=>column clear left-1
+              value=>column clear tree-indentation
 
             // adding child role to returned value
             add=>[/][_btn][panel][controls]
@@ -67,4 +70,74 @@ magix.role.create-tree-node-control
   // returning controls collection back to caller
   add=>[$][controls]
     value=>[_btn][panel]
+
+// allows user to edit on specific role
+magix.role.edit-role
+  set=>[**label=>role-name][value].Value
+    value=>edit role {0}
+      =>[$][role].Value
+  set=>[**button=>save][info].Value
+    value=>[$][role].Value
+  set=>[**button=>delete][info].Value
+    value=>[$][role].Value
+  if=>equals
+    lhs=>[$][role].Value
+    rhs=>admin
+    code
+      set=>[**button=>delete][visible].Value
+        value=>false
+  magix.forms.create-web-part
+    container=>edit-role
+    form-id=>edit-role
+    class=>span-10 last boxed-light-green air-padding top-1
+    events-file=>system42/private/users/roles/edit-role/events.hl
+    controls
+      label=>role-name
+        class=>span-10 last
+        tag=>h3
+        value=>edit role
+
+      panel=>new-role-wrapper
+        class=>span-10 last top-1
+        default=>save
+        onesc
+          magix.viewport.clear-controls
+            container=>edit-role
+        controls
+          label
+            tag=>label
+            class=>span-3
+            value=>add child role
+          text-box=>txt-role-name
+            class=>span-5
+            placeholder=>new role name ...
+            onfirstload
+              magix.forms.effect
+                type=>focus-and-select
+                form-id=>edit-role
+                id=>txt-role-name
+                time=>50
+          button=>save
+            class=>span-2 last
+            value=>save
+            onclick
+              set=>[**parent].Value
+                value=>[$][info].Value
+              magix.roles.add-role
+                parent
+
+      button=>delete
+        class=>span-2 top-1
+        value=>delete
+        onclick
+          set=>[**role].Value
+            value=>[$][info].Value
+          using=>magix.viewport
+            confirm
+              message=>are you sure you wish to delete the '{0}' role? this action cannot be undone
+                =>[$][info].Value
+              code
+                magix.roles.delete-role
+                  role
+                magix.roles.show-roles-tree
 
