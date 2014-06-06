@@ -42,7 +42,7 @@ panel=>edit-user-wrapper
       tag=>h3
       value=>new user
     label
-      class=>span-3
+      class=>span-4
       value=>username
       tag=>label
     label
@@ -50,37 +50,37 @@ panel=>edit-user-wrapper
       value=>name
       tag=>label
     label
-      class=>span-2
+      class=>span-3
       value=>role
       tag=>label
     label
-      class=>span-3
+      class=>span-2
       value=>password
       tag=>label
     label
-      class=>span-3 last
+      class=>span-2 last
       value=>repeat
       tag=>label
     text-box=>edit-username
-      class=>span-3 clear
+      class=>span-4 clear
       placeholder=>username ...
     text-box=>edit-name
       class=>span-4
       placeholder=>name ...
     select=>edit-role
-      class=>span-2
+      class=>span-3
       onfirstload
         magix.users.load-roles
     text-box=>edit-pwd
-      class=>span-3
+      class=>span-2
       type=>password
       placeholder=>password ...
     text-box=>edit-pwd-repeat
-      class=>span-3 last
+      class=>span-2 last
       type=>password
       placeholder=>repeat ...
     button=>save
-      class=>span-2 left-11 clear
+      class=>span-2 right last top-1
       value=>save
       onclick
         if=>exist
@@ -89,9 +89,4 @@ panel=>edit-user-wrapper
             set=>[magix.users.save-user][id].Value
               value=>[$][info].Value
         magix.users.save-user
-    button=>cancel
-      class=>span-2 last
-      value=>cancel
-      onclick
-        magix.users.show-users-grid
 

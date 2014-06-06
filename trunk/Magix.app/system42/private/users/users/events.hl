@@ -243,6 +243,19 @@ magix.users.edit-user
 
 // deletes user, expects [id]
 magix.users.delete-user
+  set=>[magix.data.load][id]
+    value=>[$][id]
+  magix.data.load
+  magix.web.get-session
+    id=>magix.core.user
+  if=>equals
+    lhs=>[magix.web.get-session][value][username].Value
+    rhs=>[magix.data.load][value][username].Value
+    code
+      magix.viewport.show-message
+        message=>for security reasons, you cannot delete the currently logged in user.&nbsp;&nbsp;if you wish to delete this user, then log in with another user, and then delete it
+        time=>5000
+      stop
   set=>[magix.data.remove][id]
     value=>[$][id]
   magix.data.remove
