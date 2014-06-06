@@ -378,10 +378,12 @@
     <Content Include="system42\private\users\roles\controls.hl" />
     <Content Include="system42\private\users\roles\events.hl" />
     <Content Include="system42\private\users\roles\edit-role\events.hl" />
+    <Content Include="system42\private\startup\create-magix-log-username.hl" />
     <None Include="todo.txt" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="database\" />
     <Folder Include="system42\private\app-wizard\wizards\" />
+    <Folder Include="system42\private\magix-log\" />
   </ItemGroup>
 </Project>
