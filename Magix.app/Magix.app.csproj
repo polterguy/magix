@@ -43,6 +43,9 @@
     <ConsolePause>false</ConsolePause>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="log4net">
+      <HintPath>..\references\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Web" />
@@ -238,7 +241,6 @@
   <ItemGroup>
     <None Include="media\xing-wysihtml5\LICENSE" />
     <Content Include="system42\private\file-manager\file-manager.hl" />
-    <Content Include="system42\private\server-log\log.hl" />
     <Content Include="system42\private\app-wizard\app-wizard.hl" />
     <Content Include="system42\private\dashboard\menu.mml" />
     <Content Include="system42\private\dashboard\desktop.hl" />
