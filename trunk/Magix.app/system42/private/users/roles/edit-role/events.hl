@@ -124,4 +124,45 @@ magix.roles.delete-role
     value=>[_role]
     children-only=>true
   magix.data.save
+  magix.roles.clean-up-users
+
+// cleaning up all roles from user objects that doesn't exist in role hierarchy
+magix.roles.clean-up-users
+  _roles
+  magix.data.load
+    prototype
+      type=>magix.core.role
+  iterate=>[magix.data.load][objects]
+    if=>equals
+      lhs=>[.].Name
+      rhs=>name
+      code
+        add=>[/][_roles]
+          value=>[.].Value
+  magix.data.load
+    prototype
+      type=>magix.core.user
+  for-each=>[magix.data.load:1][objects]
+    _current-user
+    _has-changes
+    set=>[@][_has-changes].Value
+    set=>[@][_current-user][0]
+      value=>[.]
+    for-each=>[.][value][roles]
+      if=>not-exist
+        lhs=>[/][_roles][[.].Name]
+        code
+          // role that user belongs to was deleted
+          set=>[@][..][..][..][_current-user][object][value][roles][[.].Name]
+          set=>[@][..][..][..][_has-changes].Value
+            value=>true
+    if=>equals
+      lhs=>[@][_has-changes].Value
+      rhs=>true
+      code
+        set=>[@][magix.data.save][value]
+          value=>[@][..][..][_current-user][object][value]
+        set=>[@][magix.data.save][id]
+          value=>[@][..][..][_current-user][object][id]
+        magix.data.save
 

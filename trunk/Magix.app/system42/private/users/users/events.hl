@@ -106,8 +106,15 @@ magix.users.create-grid-controls
           set=>[.].Value
             value=>[/][**_buffer][value][username].Value
         case=>{role}
-          set=>[.].Value
-            value=>[/][**_buffer][value][roles][0].Name
+          if=>equals
+            lhs=>[/][**_buffer][value][roles].Count
+            rhs=>0
+            code
+              set=>[.].Value
+                value=>&nbsp;
+          else
+            set=>[.].Value
+              value=>[/][**_buffer][value][roles][0].Name
     add=>[$][controls]
       value=>[/][_ctrl][panel]
   if=>more-than
