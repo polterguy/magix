@@ -86,6 +86,8 @@ magix.role.edit-role
     code
       set=>[**button=>delete][visible].Value
         value=>false
+
+  // creates the web part that allows adding a new role to another role as a child
   magix.forms.create-web-part
     container=>edit-role
     form-id=>edit-role
