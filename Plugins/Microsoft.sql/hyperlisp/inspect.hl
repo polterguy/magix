@@ -3,7 +3,7 @@
 inspect=>@"documentation for ms sql data adapter"
 
 
-microsoft.sql.select-dox=>@"selects from ms sql database
+magix.ms.sql.select-dox=>@"selects from ms sql database
 
 returns an sql query as a list of nodes, underneath the [result] node, from a microsoft sql 
 server
@@ -30,8 +30,8 @@ rows will be returned
 
 thread safe"
 
-microsoft.sql.select-sample
-  microsoft.sql.select
+magix.ms.sql.select-sample
+  magix.ms.sql.select
     connection=>Data Source=(localdb)\v11.0;Initial Catalog=Northwind;Integrated Security=True
     start=(int)>0
     end=(int)>20
@@ -40,7 +40,7 @@ microsoft.sql.select-sample
       ContactTitle=>owner
 
 
-microsoft.sql.select-as-text-dox=>@"selects sql as single-node text
+magix.ms.sql.select-as-text-dox=>@"selects sql as single-node text
 
 selects sql select queries as plain text.  this is useful to supply as a plugin for [magix.file.load], 
 since it can transparently load information from a database and treat it as if it was a file object.  
@@ -57,8 +57,8 @@ string from your web.config called ""NamedConnection""
 
 thread safe"
 
-microsoft.sql.select-as-text-sample
-  microsoft.sql.load-as-file
+magix.ms.sql.select-as-text-sample
+  magix.ms.sql.load-as-file
     file
       connection=>Data Source=(localdb)\v11.0;Initial Catalog=Northwind;Integrated Security=True
       sql=>select * from Customers where ContactTitle=@ContactTitle
@@ -66,7 +66,7 @@ microsoft.sql.select-as-text-sample
         ContactTitle=>owner
 
 
-microsoft.sql.execute-dox=>@"executes a non-query sql statement
+magix.ms.sql.execute-dox=>@"executes a non-query sql statement
 
 executes a non-query sql statement towards a microsoft sql server, and returns the number 
 of rows affected in the [result] node
@@ -82,16 +82,16 @@ and such reference the connection string from your web.config called ""NamedConn
 
 thread safe"
 
-microsoft.sql.execute-sample
-  microsoft.sql.execute
+magix.ms.sql.execute-sample
+  magix.ms.sql.execute
     connection=>Data Source=(localdb)\v11.0;Initial Catalog=Northwind;Integrated Security=True
     sql=>update Customers set ContactTitle='big boss' where ContactTitle=@ContactTitle
     params
       ContactTitle=>Owner
 
 
-magix.admin.desktop-shortcuts.microsoft.sql-dox=>@"returns the desktop shortcuts for ms sql
+magix.admin.desktop-shortcuts.magix.ms.sql-dox=>@"returns the desktop shortcuts for ms sql
 
-returns the desktop shortcuts for the microsoft.sql components
+returns the desktop shortcuts for the magix.ms.sql components
 
 thread safe"

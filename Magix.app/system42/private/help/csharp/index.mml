@@ -8,7 +8,7 @@ or windows forms controls</p>
 <p>in addition to mux, magix features a fully fledged mvc framework.&nbsp;&nbsp;though magix mvc is a superset of traditional mvc, and 
 much more powerful than what you're used to from traditional mvc.&nbsp;&nbsp;this is due to the active event system, which is the axiom 
 magix almost in its entirety is built around.&nbsp;&nbsp;for instance, the model from traditional mvc, becomes completely obsolete 
-due to the active event system, something which can be seen by the way magix can transparently handle databases, in its microsoft.sql 
+due to the active event system, something which can be seen by the way magix can transparently handle databases, in its magix.ms.sql 
 database active events for instance.&nbsp;&nbsp;a view from traditional mvc is called an active module in magix, and a controller is 
 called an active controller</p>
 

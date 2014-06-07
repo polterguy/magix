@@ -99,7 +99,7 @@ constant or an expression
 
 in addition, you can supply a plugin loader to load your files, which is done by setting the [file] 
 parameter to the text;'plugin:' and appending the name of the active event you whish to use as the file 
-loader after 'plugin:'.  for instance 'plugin:microsoft.sql.select-as-text' or 'plugin:magix.web.get-file'.  
+loader after 'plugin:'.  for instance 'plugin:magix.ms.sql.select-as-text' or 'plugin:magix.web.get-file'.  
 this will expect an active event capable of returning text as [value].  if you supply a plugin loader, 
 then all parameters beneath the [magix.file.load] will be passed into the plugin, and used as parameters 
 to the plugin loader

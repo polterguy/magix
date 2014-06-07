@@ -230,9 +230,9 @@
       <Project>{eae2f2ae-0098-44f1-8b3d-1887266e94cf}</Project>
       <Name>Magix.xml</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Plugins\Microsoft.sql\Microsoft.sql.csproj">
+    <ProjectReference Include="..\Plugins\Microsoft.sql\Magix.ms.sql.csproj">
       <Project>{e438846c-9c26-48c0-82fa-c0afb9cd355e}</Project>
-      <Name>Microsoft.sql</Name>
+      <Name>Magix.ms.sql</Name>
     </ProjectReference>
     <ProjectReference Include="..\Tools\QRCodeLib\QRCodeLib.csproj">
       <Project>{e98126b2-af17-4783-96b9-856d6744dca3}</Project>
