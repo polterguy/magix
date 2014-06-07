@@ -54,7 +54,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QRCodeLib", "Tools\QRCodeLi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Magix.QR", "Plugins\Magix.QR\Magix.QR.csproj", "{5EB411DF-ED41-49C5-902F-0D0453B5B698}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Magix.ms.sql", "Plugins\Microsoft.sql\Magix.ms.sql.csproj", "{E438846C-9C26-48C0-82FA-C0AFB9CD355E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Magix.ms.sql", "Plugins\Magix.ms.sql\Magix.ms.sql.csproj", "{E438846C-9C26-48C0-82FA-C0AFB9CD355E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

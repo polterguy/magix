@@ -3,7 +3,7 @@
 inspect=>@"contains documentation for magix.log"
 
 
-magix.log.application-startup-dox=>@"iitializes log4net
+magix.log.application-startup-dox=>@"initializes log4net
 
 initializes log4net, such that logging will function.  by default, magix logs to 
 a file on the root folder of its installation called log.txt"
