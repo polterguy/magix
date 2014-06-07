@@ -88,5 +88,10 @@ namespace Magix.UX.Widgets
             get { return Value; }
             set { Value = Convert.ToString(value); }
         }
+
+        bool IValueControl.IsTrueValue
+        {
+            get { return false; }
+        }
     }
 }

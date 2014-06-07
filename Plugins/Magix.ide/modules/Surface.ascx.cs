@@ -420,8 +420,8 @@ namespace Magix.ide.modules
 					{
                         if (idxChange.Name == "id")
                         {
-                            controlNode.Value = idxChange.Get<string>();
-
+                            string newId = idxChange.Get<string>();
+                            // checking to see if id is occupied
                             Node getControlsNode = new Node();
                             RaiseActiveEvent(
                                 "magix.ide.list-controls",
@@ -429,9 +429,10 @@ namespace Magix.ide.modules
                             foreach (Node idxCtrl in getControlsNode["controls"])
                             {
                                 string idOfIdx = idxCtrl.Get<string>().Split(':')[1];
-                                if (controlNode.Get<string>() == idOfIdx)
+                                if (idOfIdx == newId)
                                     throw new ArgumentException("that [id] was already occupied");
                             }
+                            controlNode.Value = newId;
                         }
                         else if (idxChange.Value == null)
                             controlNode[idxChange.Name].UnTie();

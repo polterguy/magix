@@ -15,7 +15,7 @@ namespace Magix.UX.Widgets
     /*
      * button ajax control
      */
-    public class Button : BaseWebControlFormElementText
+    public class Button : BaseWebControlFormElementText, IValueControl
     {
         protected override void RenderMuxControl(HtmlBuilder builder)
         {
@@ -33,6 +33,17 @@ namespace Magix.UX.Widgets
             el.AddAttribute("type", "button");
             el.AddAttribute("value", Value);
             base.AddAttributes(el);
+        }
+
+        object IValueControl.ControlValue
+        {
+            get { return Value; }
+            set { Value = Convert.ToString(value); }
+        }
+
+        bool IValueControl.IsTrueValue
+        {
+            get { return false; }
         }
     }
 }

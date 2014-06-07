@@ -14,5 +14,6 @@ namespace Magix.UX.Widgets.Core
     public interface IValueControl
     {
         object ControlValue { get; set; }
+        bool IsTrueValue { get; }
     }
 }

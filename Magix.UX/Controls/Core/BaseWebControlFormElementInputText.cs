@@ -15,7 +15,7 @@ namespace Magix.UX.Widgets.Core
     /*
      * class for form elements taking text input
      */
-    public abstract class BaseWebControlFormElementInputText : BaseWebControlFormElementText
+    public abstract class BaseWebControlFormElementInputText : BaseWebControlFormElementText, IValueControl
     {
         /*
          * shown when value is empty
@@ -132,6 +132,17 @@ namespace Magix.UX.Widgets.Core
                 el.AddAttribute("placeholder", PlaceHolder);
             el.AddAttribute("name", ClientID);
             base.AddAttributes(el);
+        }
+
+        object IValueControl.ControlValue
+        {
+            get { return Value; }
+            set { Value = Convert.ToString(value); }
+        }
+
+        bool IValueControl.IsTrueValue
+        {
+            get { return true; }
         }
     }
 }

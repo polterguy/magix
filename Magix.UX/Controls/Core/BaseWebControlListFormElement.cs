@@ -165,5 +165,10 @@ namespace Magix.UX.Widgets.Core
             get { return SelectedItem == null ? null : SelectedItem.Value; }
             set { SetSelectedItemAccordingToValue(Convert.ToString(value)); }
         }
+
+        bool IValueControl.IsTrueValue
+        {
+            get { return true; }
+        }
     }
 }

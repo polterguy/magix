@@ -34,5 +34,10 @@ namespace Magix.UX.Widgets.Core
             get { return Value; }
             set { Value = Convert.ToString(value); }
         }
+
+        bool IValueControl.IsTrueValue
+        {
+            get { return false; }
+        }
     }
 }

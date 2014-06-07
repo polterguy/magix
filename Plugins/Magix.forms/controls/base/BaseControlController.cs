@@ -209,17 +209,24 @@ namespace Magix.forms
                 return;
             }
 
-            BaseControl ctrl = FindControl<BaseControl>(ip);
-            TraverseControlForValues(ip, ctrl);
+            Control ctrl = FindControl<Control>(ip);
+            GetValues(ctrl, ip);
         }
 
-        private static void TraverseControlForValues(Node ip, Control ctrl)
+        /*
+         * helper for above
+         */
+        private static void GetValues(Control ctrl, Node ip)
         {
-            foreach (Control idx in ctrl.Controls)
+            foreach (Control idxCtrl in ctrl.Controls)
             {
-                if (idx is IValueControl)
-                    ip["values"][idx.ID].Value = (idx as IValueControl).ControlValue;
-                TraverseControlForValues(ip, idx);
+                IValueControl valueCtrl = idxCtrl as IValueControl;
+                if (valueCtrl != null && valueCtrl.IsTrueValue)
+                    ip["values"][idxCtrl.ID].Value = valueCtrl.ControlValue;
+                foreach (Control idxChild in idxCtrl.Controls)
+                {
+                    GetValues(idxChild, ip);
+                }
             }
         }
 

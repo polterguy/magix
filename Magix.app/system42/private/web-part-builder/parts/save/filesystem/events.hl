@@ -56,6 +56,11 @@ magix.ide.save-to-filesystem
     show-message
       message=>form was successfully save to filesystem as '{0}'
         =>[magix.forms.get-value][value].Value
+  set=>[magix.log.append-username][body].Value
+    value=>web part was saved to filesystem with filename of '{0}'
+      =>[magix.forms.get-value][value].Value
+  magix.log.append-username
+    header=>web part was saved
 
 // sets the last used db id on the text-box asking user for id to save web part as
 magix.ide.set-last-used-save-filename

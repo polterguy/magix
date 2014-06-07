@@ -14,6 +14,41 @@ magix.ide.create-properties-controls
   _evt-inspect
     inspect
 
+  // creating edit id property
+  _data
+    panel
+      class=>span-9
+      controls
+        label
+          class=>span-3 right-text
+          tag=>label
+          value=>id
+        text-box
+          class=>span-6 last
+          placeholder=>id
+          value=>{value}
+          ontextchanged
+            _dna=>{dna}
+            set=>[magix.ide.change-control][dna].Value
+              value=>[_dna].Value
+            if=>not-equals
+              lhs=>[$][value].Value
+              rhs=>
+              code
+                set=>[magix.ide.change-control][change][id].Value
+                  value=>[$][value].Value
+            else
+              magix.viewport.show-message
+                message=>you cannot set the id property of a control to empty
+            magix.ide.change-control
+  set=>[_data][**value=>{value}].Value
+    value=>[magix.ide.get-selected-control][value][0].Value
+  set=>[_data][**_dna=>{dna}].Value
+    value=>[magix.ide.get-selected-control][dna].Value
+  add=>[$]
+    value=>[_data]
+    children-only=>true
+
   // looping through each control property
   for-each=>[**inspect=>?][..][**controls][0]
     index-of=>[.].Name
