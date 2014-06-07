@@ -15,7 +15,7 @@ namespace Magix.UX.Widgets
     /*
      * ajax hyperlink control
      */
-    public class LinkButton : BaseWebControlFormElementText
+    public class LinkButton : BaseWebControlFormElementText, IValueControl
     {
         /*
          * anchor text
@@ -48,5 +48,16 @@ namespace Magix.UX.Widgets
 
         protected override void SetValue()
         { }
+
+        object IValueControl.ControlValue
+        {
+            get { return Value; }
+            set { Value = Convert.ToString(value); }
+        }
+
+        bool IValueControl.IsTrueValue
+        {
+            get { return false; }
+        }
     }
 }

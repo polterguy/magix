@@ -24,16 +24,6 @@ returns the default dashboard shortcuts in your system"
 
   code
     _scripts
-      app-wizard
-        text=>app wizard
-        category=>applications
-        code
-          magix.viewport.clear-controls
-            all=>true
-          execute-script
-            file=>system42/private/app-wizard/app-wizard.hl
-          magix.help.open-file
-            file=>system42/private/help/backend/applications.mml
       hyperlisp-reference
         text=>hyperlisp reference
         category=>learn
@@ -52,6 +42,16 @@ returns the default dashboard shortcuts in your system"
                 magix.execute
           magix.help.open-file
             file=>system42/private/help/hyper-lisp/index.mml
+      app-wizard
+        text=>wizards
+        category=>applications
+        code
+          magix.viewport.clear-controls
+            all=>true
+          execute-script
+            file=>system42/private/app-wizard/app-wizard.hl
+          magix.help.open-file
+            file=>system42/private/help/backend/applications.mml
       unit-tests
         text=>unit tests
         category=>security
@@ -227,7 +227,7 @@ returns the default dashboard shortcuts in your system"
           magix.help.open-file
             file=>system42/private/help/backend/file-system.mml
       web-controls
-        text=>web controls
+        text=>web controls reference
         category=>learn
         code
           magix.viewport.clear-controls
@@ -259,8 +259,8 @@ returns the default dashboard shortcuts in your system"
           magix.browser.scroll
             id=>help
       qr-codes
-        text=>qr codes
-        category=>tools
+        text=>vanity qr code generator
+        category=>applications
         code
           magix.viewport.clear-controls
             container=>content2

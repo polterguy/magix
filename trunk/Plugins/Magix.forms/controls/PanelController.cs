@@ -94,7 +94,7 @@ namespace Magix.forms
             ip["_ctrl"].Value = ret;
 		}
 
-		protected override void Inspect (Node node)
+        protected override void Inspect(Node node)
 		{
             AppendInspectFromResource(
                 node["inspect"],

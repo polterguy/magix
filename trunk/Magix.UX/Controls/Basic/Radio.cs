@@ -117,5 +117,10 @@ namespace Magix.UX.Widgets
             get { return Checked; }
             set { Checked = Convert.ToBoolean(value); }
         }
+
+        bool IValueControl.IsTrueValue
+        {
+            get { return true; }
+        }
     }
 }

@@ -1,5 +1,6 @@
 ﻿
 
+
 inspect=>@"creates the events for saving form into database
 
 contains the events for helping user saving his form into the database"
@@ -54,6 +55,11 @@ magix.ide.save-to-database
     show-message
       message=>form was successfully save to database as '{0}'
         =>[magix.forms.get-value][value].Value
+  set=>[magix.log.append-username][body].Value
+    value=>web part was saved to database with id of '{0}'
+      =>[magix.forms.get-value][value].Value
+  magix.log.append-username
+    header=>web part was saved
 
 // sets the last used db id on the text-box asking user for id to save web part as
 magix.ide.set-last-used-save-database-id
