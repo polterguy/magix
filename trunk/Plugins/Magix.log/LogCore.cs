@@ -30,7 +30,7 @@ namespace Magix.log
             {
                 AppendInspectFromResource(
                     ip["inspect"],
-                    "Magix.execute",
+                    "Magix.log",
                     "Magix.log.hyperlisp.inspect.hl",
                     "[magix.log.application-startup-dox].Value");
                 return;

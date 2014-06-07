@@ -11,7 +11,7 @@ using System.Configuration;
 using System.Data.SqlClient;
 using Magix.Core;
 
-namespace Microsoft.sql
+namespace Magix.ms.sql
 {
     /*
      * class wrapping microsoft sql server, and the ability to select and do updates towards it
@@ -21,7 +21,7 @@ namespace Microsoft.sql
         /*
          * selects from ms sql server
          */
-        [ActiveEvent(Name = "microsoft.sql.select")]
+        [ActiveEvent(Name = "magix.ms.sql.select")]
         public static void microsoft_sql_select(object sender, ActiveEventArgs e)
         {
             Node ip = Ip(e.Params);
@@ -29,14 +29,14 @@ namespace Microsoft.sql
             {
                 AppendInspectFromResource(
                     ip["inspect"],
-                    "Microsoft.sql",
-                    "Microsoft.sql.hyperlisp.inspect.hl",
-                    "[microsoft.sql.select-dox].Value");
+                    "Magix.ms.sql",
+                    "Magix.ms.sql.sql.hyperlisp.inspect.hl",
+                    "[magix.ms.sql.select-dox].Value");
                 AppendCodeFromResource(
                     ip,
-                    "Microsoft.sql",
-                    "Microsoft.sql.hyperlisp.inspect.hl",
-                    "[microsoft.sql.select-sample]");
+                    "Magix.ms.sql",
+                    "Magix.ms.sql.hyperlisp.inspect.hl",
+                    "[magix.ms.sql.select-sample]");
                 return;
             }
 
@@ -114,7 +114,7 @@ namespace Microsoft.sql
         /*
          * selects table as file
          */
-        [ActiveEvent(Name = "microsoft.sql.select-as-text")]
+        [ActiveEvent(Name = "magix.ms.sql.select-as-text")]
         public static void microsoft_sql_select_as_text(object sender, ActiveEventArgs e)
         {
             Node ip = Ip(e.Params);
@@ -124,19 +124,19 @@ namespace Microsoft.sql
                     ip["inspect"],
                     "Microsoft.sql",
                     "Microsoft.sql.hyperlisp.inspect.hl",
-                    "[microsoft.sql.select-as-text-dox].Value");
+                    "[magix.ms.sql.select-as-text-dox].Value");
                 AppendCodeFromResource(
                     ip,
                     "Microsoft.sql",
                     "Microsoft.sql.hyperlisp.inspect.hl",
-                    "[microsoft.sql.select-as-text-sample]");
+                    "[magix.ms.sql.select-as-text-sample]");
                 return;
             }
 
             Node dp = Dp(e.Params);
 
             if (!ip.Contains("file"))
-                throw new ArgumentException("you need to supply a [file] parameter to [microsoft.sql.select-as-text]");
+                throw new ArgumentException("you need to supply a [file] parameter to [magix.ms.sql.select-as-text]");
 
             if (!ip["file"].Contains("connection"))
                 throw new ArgumentException("you need to supply a [connection] to connect to a database");
@@ -164,7 +164,7 @@ namespace Microsoft.sql
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
                     if (reader.FieldCount > 1)
-                        throw new ArgumentException("select statement to [microsoft.sql.load-as-file] returned multiple result columns");
+                        throw new ArgumentException("select statement to [magix.ms.sql.load-as-file] returned multiple result columns");
 
                     StringBuilder builder = new StringBuilder();
                     while (reader.Read())
@@ -179,7 +179,7 @@ namespace Microsoft.sql
         /*
          * updates and executes sql to ms sql server
          */
-        [ActiveEvent(Name = "microsoft.sql.execute")]
+        [ActiveEvent(Name = "magix.ms.sql.execute")]
         public static void microsoft_sql_execute(object sender, ActiveEventArgs e)
         {
             Node ip = Ip(e.Params);
@@ -189,12 +189,12 @@ namespace Microsoft.sql
                     ip["inspect"],
                     "Microsoft.sql",
                     "Microsoft.sql.hyperlisp.inspect.hl",
-                    "[microsoft.sql.execute-dox].Value");
+                    "[magix.ms.sql.execute-dox].Value");
                 AppendCodeFromResource(
                     ip,
                     "Microsoft.sql",
                     "Microsoft.sql.hyperlisp.inspect.hl",
-                    "[microsoft.sql.execute-sample]");
+                    "[magix.ms.sql.execute-sample]");
                 return;
             }
 
@@ -228,7 +228,7 @@ namespace Microsoft.sql
         /*
          * plugin for the desktop
          */
-        [ActiveEvent(Name = "magix.admin.desktop-shortcuts.microsoft.sql")]
+        [ActiveEvent(Name = "magix.admin.desktop-shortcuts.magix.ms.sql")]
         public static void magix_admin_desktop_shortcuts_microsoft_sql(object sender, ActiveEventArgs e)
         {
             Node ip = Ip(e.Params);
@@ -238,7 +238,7 @@ namespace Microsoft.sql
                     ip["inspect"],
                     "Microsoft.sql",
                     "Microsoft.sql.hyperlisp.inspect.hl",
-                    "[magix.admin.desktop-shortcuts.microsoft.sql-dox].Value");
+                    "[magix.admin.desktop-shortcuts.magix.ms.sql-dox].Value");
                 return;
             }
 

@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{E438846C-9C26-48C0-82FA-C0AFB9CD355E}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>Microsoft.sql</RootNamespace>
-    <AssemblyName>Microsoft.sql</AssemblyName>
+    <RootNamespace>Magix.ms.sql</RootNamespace>
+    <AssemblyName>Magix.ms.sql</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

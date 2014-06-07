@@ -19,6 +19,9 @@ if you supply a prototype, it will return objects found as [objects], with child
 [objects] being the matching objects.  if you supply an [id] node, it will return the matched 
 object as [value]
 
+if you supply a [prototype] and an [only-id], then only the ids of the objects that matches your 
+prototype will be loaded, and not the actual content of your object
+
 use [start] and [end] to fetch a specific slice of objects, [start] defaults to 0 and [end] defaults 
 to -1, which means all objects matching criteria.  [start], [end] and [prototype] cannot be defined 
 if [id] is given, since [id] is supposed to be unique, and will make sure only one object is loaded

@@ -43,7 +43,7 @@ magix.file.load
 
 <pre>
 magix.file.load
-  file=>plugin:microsoft.sql.select-as-text
+  file=>plugin:magix.ms.sql.select-as-text
     connection=>data source=(localdb)\v11.0;initial catalog=northwind;integrated security=true
     sql=>select companyname from customers
 </pre>
@@ -63,7 +63,7 @@ magix.forms.create-mml-web-part
   container=>content3
   class=>span-22 last clear
   mml-file=>tmp/my-mml-file.mml
-  events-file=>plugin:microsoft.sql.select-as-text
+  events-file=>plugin:magix.ms.sql.select-as-text
     connection=>data source=(localdb)\v11.0;initial catalog=mydatabase;integrated security=true
     sql=>select eventcode from activeevents where formid=@myform
     params

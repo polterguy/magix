@@ -3,10 +3,10 @@
 
 <p>magix comes with active events that wraps microsoft sql server for easy access to a relational database.&nbsp;&nbsp;this gives you 
 access to a much more powerful database for storing data in, than the magix.data data access layer can give you.&nbsp;&nbsp;magix will 
-automatically convert from an sql select statement to a node result set.&nbsp;&nbsp;in addition, through the <em>"microsoft.sql.execute"</em>, 
+automatically convert from an sql select statement to a node result set.&nbsp;&nbsp;in addition, through the <em>"magix.ms.sql.execute"</em>, 
 you can run any non-query statements towards the database you wish, such that you can update and delete rows for instance</p>
 
-<p>if you wish to use the ms sql database access layer in magix, this can be found in the <em>"microsoft.sql"</em> namespace.&nbsp;&nbsp;
+<p>if you wish to use the ms sql database access layer in magix, this can be found in the <em>"magix.ms.sql"</em> namespace.&nbsp;&nbsp;
 below is a list of all ms sql database layer active events</p>
 
 <h3>ms sql active events</h3>
@@ -16,7 +16,7 @@ below is a list of all ms sql database layer active events</p>
 lambda=>lmb-sql-database
   oncreatecontrols
     list-events
-      begins-with=>microsoft.sql.
+      begins-with=>magix.ms.sql.
       all=>false
     for-each=>[list-events][events]
       _pnl
@@ -64,7 +64,7 @@ lambda=>lmb-sql-database
 <p style="clear:both;">to select all rows from the northwind customer database tabel for instance, consider the following hyperlisp and sql</p>
 
 <pre>
-microsoft.sql.select
+magix.ms.sql.select
   connection=>Data Source=(localdb)\v11.0;Initial Catalog=Northwind;Integrated Security=True
   sql=>select * from Customers
 </pre>
@@ -72,13 +72,13 @@ microsoft.sql.select
 <p>if you wish to update the name of a customer in the customer table, you could use the following execute hyperlisp and sql</p>
 
 <pre>
-microsoft.sql.execute
+magix.ms.sql.execute
   connection=>Data Source=(localdb)\v11.0;Initial Catalog=Northwind;Integrated Security=True
   sql=>update Customers set ContactName='Thomas Statsminister Hansen' where CustomerID='ALFKI'
 </pre>
 
 <p>sql syntax is beyond the scope of this help file, but can easily be found online, on for instance the microsoft.com website.&nbsp;&nbsp;
-you can use the <em>"microsoft.sql.select"</em> active event for both selecting multiple rows, or aggregate values such as <em>"select count(*) 
+you can use the <em>"magix.ms.sql.select"</em> active event for both selecting multiple rows, or aggregate values such as <em>"select count(*) 
 from Customers"</em>
 </p>
 
