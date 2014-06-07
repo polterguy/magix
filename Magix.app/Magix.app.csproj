@@ -210,6 +210,10 @@
       <Project>{c7a7379b-b495-4d6a-b951-3388f5248fa3}</Project>
       <Name>Magix.math</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Plugins\Magix.ms.sql\Magix.ms.sql.csproj">
+      <Project>{e438846c-9c26-48c0-82fa-c0afb9cd355e}</Project>
+      <Name>Magix.ms.sql</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Plugins\Magix.QR\Magix.QR.csproj">
       <Project>{5eb411df-ed41-49c5-902f-0d0453b5b698}</Project>
       <Name>Magix.QR</Name>
@@ -229,10 +233,6 @@
     <ProjectReference Include="..\Plugins\Magix.xml\Magix.xml.csproj">
       <Project>{eae2f2ae-0098-44f1-8b3d-1887266e94cf}</Project>
       <Name>Magix.xml</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Plugins\Microsoft.sql\Magix.ms.sql.csproj">
-      <Project>{e438846c-9c26-48c0-82fa-c0afb9cd355e}</Project>
-      <Name>Magix.ms.sql</Name>
     </ProjectReference>
     <ProjectReference Include="..\Tools\QRCodeLib\QRCodeLib.csproj">
       <Project>{e98126b2-af17-4783-96b9-856d6744dca3}</Project>
