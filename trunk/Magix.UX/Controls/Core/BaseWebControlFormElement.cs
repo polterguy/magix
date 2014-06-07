@@ -64,11 +64,6 @@ namespace Magix.UX.Widgets.Core
             }
         }
 
-		protected override bool CanRaiseEvent()
-		{
-            return !Disabled;
-		}
-
         /*
          * efffect to run when control looses focus
          */
