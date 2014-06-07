@@ -212,12 +212,21 @@ magix.ide.show-preview
   magix.browser.scroll
     id=>preview
 
-// saves current active form, first asks user where he wants to save it
+// saves current active web part, first asks user where he wants to save it
 magix.ide.save-form
   magix.forms.create-web-part
     form-id=>save-wrapper
-    container=>editor-save-wrapper
+    container=>editor-persist-wrapper
     class=>span-20 last top-1 bottom-1 boxed air-padding
     controls-file=>system42/private/web-part-builder/parts/save/controls.hl
     events-file=>system42/private/web-part-builder/parts/save/events.hl
+
+// loads web part, either from disc or from database
+magix.ide.load-form
+  magix.forms.create-web-part
+    form-id=>load-wrapper
+    container=>editor-persist-wrapper
+    class=>span-20 last top-1 bottom-1 boxed air-padding
+    controls-file=>system42/private/web-part-builder/parts/load/controls.hl
+    events-file=>system42/private/web-part-builder/parts/load/events.hl
 

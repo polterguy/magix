@@ -1,0 +1,33 @@
+﻿
+
+inspect=>@"wrapper for loading a web part
+
+creates the controls needed to ask the user from where he wants to load his web part"
+
+label
+  class=>span-1 right-text
+  tag=>label
+  value=>load
+
+select=>sel-load-where
+  class=>span-3
+  onfirstload
+    magix.data.load-username
+      id=>magix.ide.where-to-load-web-part-from
+    if=>exist
+      lhs=>[magix.data.load-username][value]
+      code
+        set=>[@][magix.forms.set-value][value].Value
+          value=>[magix.data.load-username][value][where].Value
+        magix.forms.set-value
+          form-id=>load-wrapper
+          id=>sel-load-where
+  onselectedindexchanged
+    magix.ide.sel-load-where_onselectedindexchanged
+  items
+    database=>from database
+
+dynamic=>load-where-container
+  onfirstload
+    magix.ide.create-load-where-web-part
+

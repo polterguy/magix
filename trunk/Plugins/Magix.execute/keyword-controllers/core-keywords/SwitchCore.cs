@@ -62,7 +62,7 @@ namespace Magix.execute
             }
             if (!foundMatch && ip.Contains("default"))
             {
-                e.Params["_dp"].Value = dp;
+                e.Params["_ip"].Value = ip["default"];
 
                 RaiseActiveEvent(
                     "magix.execute",

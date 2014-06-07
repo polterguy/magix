@@ -1,0 +1,30 @@
+﻿
+
+inspect=>@"contains events for the load web part
+
+contains events for helping user load a web part"
+
+
+// event handler for select where to save selection changed
+magix.ide.sel-load-where_onselectedindexchanged
+  magix.forms.get-value
+    form-id=>load-wrapper
+    id=>sel-load-where
+  set=>[magix.data.save-username][value][where].Value
+    value=>[magix.forms.get-value][value].Value
+  magix.data.save-username
+    id=>magix.ide.where-to-load-web-part-from
+  magix.ide.create-load-where-web-part
+
+magix.ide.create-load-where-web-part
+  magix.forms.get-value
+    form-id=>load-wrapper
+    id=>sel-load-where
+  switch=>[magix.forms.get-value][value].Value
+    case=>database
+      magix.forms.create-web-part
+        form-id=>load-content
+        container=>load-where-container
+        events-file=>system42/private/web-part-builder/parts/load/database/events.hl
+        controls-file=>system42/private/web-part-builder/parts/load/database/controls.hl
+

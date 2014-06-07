@@ -1,0 +1,75 @@
+﻿
+
+
+inspect=>@"creates the events for loading a web part from the database
+
+contains the events for helping user load a web part from the database"
+
+
+// tries to load from database
+magix.ide.load_onclick
+  magix.forms.get-value
+    form-id=>load-content
+    id=>database-id
+  if=>equals
+    lhs=>[magix.forms.get-value][value].Value
+    rhs=>
+    code
+      magix.viewport.show-message
+        message=>you must supply an id to instruct me which web part to load
+      stop
+  set=>[magix.data.load][id].Value
+    value=>[magix.forms.get-value][value].Value
+  magix.data.load
+  if=>not-exist
+    lhs=>[magix.data.load][value]
+    or=>not-equals
+      lhs=>[magix.data.load][value][type].Value
+      rhs=>magix.forms.web-part
+    code
+      magix.viewport.show-message
+        message=>that object either doesn't exist, or is not a web part
+        color=>#ffbbbb
+  else
+    magix.ide.load-from-database
+
+// actually loads the form
+magix.ide.load-from-database
+  magix.forms.get-value
+    form-id=>load-content
+    id=>database-id
+  using=>magix.data
+    load
+      id=>[magix.forms.get-value][value].Value
+  add=>[magix.ide.set-form][value]
+    value=>[using][load][value][surface]
+    children-only=>true
+  magix.ide.set-form
+  set=>[magix.data.save-username][value][id].Value
+    value=>[magix.forms.get-value][value].Value
+  magix.data.save-username
+    id=>magix.ide.last-used-load-database-id
+  magix.viewport.clear-controls
+    container=>editor-persist-wrapper
+
+// sets the last used db id on the text-box asking user for id to save web part as
+magix.ide.database-id_onfirstload
+  magix.data.load-username
+    id=>magix.ide.last-used-load-database-id
+  if=>exist
+    lhs=>[magix.data.load-username][value]
+    code
+      set=>[@][magix.forms.set-value][value].Value
+        value=>[magix.data.load-username][value][id].Value
+      magix.forms.set-value
+        form-id=>load-content
+        id=>database-id
+  magix.forms.effect
+    type=>timeout
+    time=>25
+    chained
+      e0
+        type=>focus-and-select
+        form-id=>load-content
+        id=>database-id
+

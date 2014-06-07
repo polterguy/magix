@@ -5,31 +5,32 @@ inspect=>@"contains the controls for saving form into filesystem
 contains the controls for helping user saving his form into the filesystem"
 
 
-label=>lbl-filesystem
+label
   class=>span-2 right-text
   value=>filename
   tag=>label
-panel=>file-save-wrp
+
+panel=>save-wrapper
   class=>span-14 last
-  default=>btn-save-file
+  default=>save
   controls
-    text-box=>txt-filename
+    text-box=>filename
       class=>span-10
       placeholder=>filename ...
       onfirstload
-        magix.ide.set-last-used-save-filename
+        magix.ide.filename_onfirstload
       onesc
         magix.viewport.clear-controls
-          container=>editor-save-wrapper
-    button=>btn-save-file
+          container=>editor-persist-wrapper
+    button=>save
       class=>span-2
       value=>save
       onclick
-        magix.ide.try-save-to-filesystem
-    button=>btn-cancel-save
+        magix.ide.save_onclick
+    button=>cancel
       class=>span-2 last
       value=>cancel
       onclick
         magix.viewport.clear-controls
-          container=>editor-save-wrapper
+          container=>editor-persist-wrapper
 

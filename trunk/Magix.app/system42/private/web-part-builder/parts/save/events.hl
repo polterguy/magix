@@ -4,25 +4,34 @@ inspect=>@"contains events for the save web part
 
 contains events for helping user save the web part"
 
-magix.ide.create-save-where-web-part
+
+// stores into database the user's selection of where he wish to save his web part
+magix.ide.sel-save-where_onselectedindexchanged
   magix.forms.get-value
     form-id=>save-wrapper
     id=>sel-save-where
   set=>[magix.data.save-username][value][where].Value
     value=>[magix.forms.get-value][value].Value
   magix.data.save-username
-    id=>magix.ide.where-to-save-file
-  switch=>[magix.forms.get-value][value].Value
-    case=>database
-      magix.forms.create-web-part
-        form-id=>save-content
-        container=>save-where-container
-        events-file=>system42/private/web-part-builder/parts/save/database/events.hl
-        controls-file=>system42/private/web-part-builder/parts/save/database/controls.hl
+    id=>magix.ide.where-to-save-web-part
+  magix.ide.create-save-where-web-part
+
+// creates the web part that asks the user where he wish to save his form
+magix.ide.create-save-where-web-part
+  magix.data.load-username
+    id=>magix.ide.where-to-save-web-part
+
+  switch=>[magix.data.load-username][value][where].Value
     case=>filesystem
       magix.forms.create-web-part
         form-id=>save-content
         container=>save-where-container
         events-file=>system42/private/web-part-builder/parts/save/filesystem/events.hl
         controls-file=>system42/private/web-part-builder/parts/save/filesystem/controls.hl
+    default
+      magix.forms.create-web-part
+        form-id=>save-content
+        container=>save-where-container
+        events-file=>system42/private/web-part-builder/parts/save/database/events.hl
+        controls-file=>system42/private/web-part-builder/parts/save/database/controls.hl
 

@@ -1,8 +1,8 @@
 ﻿
 
-inspect=>@"contains the controls for saving form into database
+inspect=>@"contains the controls for loading web part from database
 
-contains the controls for helping user saving his form into the database"
+contains the controls for helping user load a web part from the database"
 
 
 label
@@ -10,9 +10,9 @@ label
   value=>id
   tag=>label
 
-panel=>save-wrapper
+panel=>load-wrapper
   class=>span-14 last
-  default=>save
+  default=>load
   controls
     text-box=>database-id
       class=>span-10
@@ -22,15 +22,15 @@ panel=>save-wrapper
       onesc
         magix.viewport.clear-controls
           container=>editor-persist-wrapper
-    button=>save
+    button=>load
       class=>span-2
-      value=>save
+      value=>load
       onclick
-        magix.ide.save_onclick
+        magix.ide.load_onclick
     button=>cancel
       class=>span-2 last
       value=>cancel
       onclick
         magix.viewport.clear-controls
-          container=>editor-persist-wrapper
+          container=>editor-load-wrapper
 

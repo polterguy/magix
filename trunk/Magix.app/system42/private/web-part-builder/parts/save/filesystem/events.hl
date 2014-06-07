@@ -6,10 +6,10 @@ contains the events for helping user saving his form into the filesystem"
 
 
 // tries to save to filesystem, asking user to confirm any overwritings
-magix.ide.try-save-to-filesystem
+magix.ide.save_onclick
   magix.forms.get-value
     form-id=>save-content
-    id=>txt-filename
+    id=>filename
   if=>equals
     lhs=>[magix.forms.get-value][value].Value
     rhs=>
@@ -35,7 +35,7 @@ magix.ide.try-save-to-filesystem
 magix.ide.save-to-filesystem
   magix.forms.get-value
     form-id=>save-content
-    id=>txt-filename
+    id=>filename
   set=>[magix.file.save][file].Value
     value=>[magix.forms.get-value][value].Value
   magix.ide.get-form
@@ -47,11 +47,11 @@ magix.ide.save-to-filesystem
     value=>[node-2-code][code].Value
   magix.file.save
   magix.viewport.clear-controls
-    container=>editor-save-wrapper
+    container=>editor-persist-wrapper
   set=>[magix.data.save-username][value][filename].Value
     value=>[magix.forms.get-value][value].Value
   magix.data.save-username
-    id=>magix.ide.last-used-filename
+    id=>magix.ide.last-used-save-filename
   using=>magix.viewport
     show-message
       message=>form was successfully save to filesystem as '{0}'
@@ -63,9 +63,9 @@ magix.ide.save-to-filesystem
     header=>web part was saved
 
 // sets the last used db id on the text-box asking user for id to save web part as
-magix.ide.set-last-used-save-filename
+magix.ide.filename_onfirstload
   magix.data.load-username
-    id=>magix.ide.last-used-filename
+    id=>magix.ide.last-used-save-filename
   if=>exist
     lhs=>[magix.data.load-username][value]
     code
@@ -73,15 +73,13 @@ magix.ide.set-last-used-save-filename
         value=>[magix.data.load-username][value][filename].Value
       magix.forms.set-value
         form-id=>save-content
-        id=>txt-filename
+        id=>filename
   magix.forms.effect
-    form-id=>save-content
-    id=>txt-filename
     type=>timeout
     time=>25
     chained
       e0
         type=>focus-and-select
         form-id=>save-content
-        id=>txt-filename
+        id=>filename
 
