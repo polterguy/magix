@@ -29,5 +29,10 @@ select=>sel-load-where
 
 dynamic=>load-where-container
   onfirstload
+    magix.forms.effect
+      form-id=>load-wrapper
+      id=>editor-persist-wrapper
+      type=>fade-in
+      time=>250
     magix.ide.create-load-where-web-part
 

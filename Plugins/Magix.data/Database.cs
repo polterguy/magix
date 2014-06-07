@@ -73,6 +73,7 @@ namespace Magix.data
             _resetEvent.WaitOne();
             try
             {
+                bool onlyId = ip.ContainsValue("only-id") && ip["only-id"].Get<bool>();
                 int curMatchingItem = 0;
                 foreach (Node idxFileNode in _database)
                 {
@@ -94,7 +95,8 @@ namespace Magix.data
                                 {
                                     Node objectNode = new Node("object");
                                     objectNode["id"].Value = idxObjectNode.Get<string>();
-                                    objectNode["value"].AddRange(idxObjectNode.Clone());
+                                    if (!onlyId)
+                                        objectNode["value"].AddRange(idxObjectNode.Clone());
                                     ip["objects"].Add(objectNode);
                                 }
                                 curMatchingItem += 1;
