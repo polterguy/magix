@@ -16,7 +16,7 @@ namespace Magix.UX.Widgets
     /*
      * textarea ajax control
      */
-    public class TextArea : BaseWebControlFormElementInputText
+    public class TextArea : BaseWebControlFormElementInputText, IValueControl
     {
         /*
          * height of control
@@ -51,6 +51,17 @@ namespace Magix.UX.Widgets
             if (Rows != -1)
                 el.AddAttribute("rows", Rows.ToString());
             base.AddAttributes(el);
+        }
+
+        object IValueControl.ControlValue
+        {
+            get { return Value; }
+            set { Value = value.ToString(); }
+        }
+
+        bool IValueControl.IsTrueValue
+        {
+            get { return true; }
         }
     }
 }

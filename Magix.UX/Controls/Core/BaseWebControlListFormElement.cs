@@ -16,7 +16,7 @@ namespace Magix.UX.Widgets.Core
     /**
      * Abstract base class for widgets which are HTML FORM or multi-choice type of elements
      */
-    public abstract class BaseWebControlListFormElement : BaseWebControlFormElement, IValueControl
+    public abstract class BaseWebControlListFormElement : BaseWebControlFormElement
     {
         private ListItemCollection _listItems;
         private string _selectedItemValue;
@@ -158,17 +158,6 @@ namespace Magix.UX.Widgets.Core
                     break;
                 }
             }
-        }
-
-        object IValueControl.ControlValue
-        {
-            get { return SelectedItem == null ? null : SelectedItem.Value; }
-            set { SetSelectedItemAccordingToValue(Convert.ToString(value)); }
-        }
-
-        bool IValueControl.IsTrueValue
-        {
-            get { return true; }
         }
     }
 }

@@ -240,15 +240,8 @@ namespace Magix.UX.Widgets.Core
             base.AddAttributes(el);
         }
 
-		protected virtual bool CanRaiseEvent()
-		{
-			return true;
-		}
-
         public override void RaiseEvent(string name)
         {
-			if (!CanRaiseEvent())
-				return;
             switch (name)
             {
                 case "click":
@@ -290,8 +283,6 @@ namespace Magix.UX.Widgets.Core
 
         protected override string GetEventsRegisterScript()
         {
-			if (!CanRaiseEvent())
-				return "";
             string evts = GetEventsInitializationString();
             string effects = GetEffectsInitializationString();
             return StringHelper.ConditionalAdd(

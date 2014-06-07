@@ -17,7 +17,7 @@ namespace Magix.UX.Widgets
      * select ajax control
      */
     [ParseChildren(true, "Items")]
-    public class Select : BaseWebControlListFormElement
+    public class Select : BaseWebControlListFormElement, IValueControl
     {
         /*
          * raised when selected item changes
@@ -97,6 +97,17 @@ namespace Magix.UX.Widgets
                 evts += "['change']";
             }
             return evts;
+        }
+
+        object IValueControl.ControlValue
+        {
+            get { return SelectedItem == null ? null : SelectedItem.Value; }
+            set { SetSelectedItemAccordingToValue(Convert.ToString(value)); }
+        }
+
+        bool IValueControl.IsTrueValue
+        {
+            get { return true; }
         }
     }
 }

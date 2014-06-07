@@ -15,7 +15,7 @@ namespace Magix.UX.Widgets
     /*
      * text input ajax control
      */
-    public class TextBox : BaseWebControlFormElementInputText
+    public class TextBox : BaseWebControlFormElementInputText, IValueControl
     {
         /*
          * type of text
@@ -164,6 +164,17 @@ namespace Magix.UX.Widgets
             if (!string.IsNullOrEmpty(PlaceHolder))
                 el.AddAttribute("placeholder", PlaceHolder);
             base.AddAttributes(el);
+        }
+
+        object IValueControl.ControlValue
+        {
+            get { return Value; }
+            set { Value = value.ToString(); }
+        }
+
+        bool IValueControl.IsTrueValue
+        {
+            get { return true; }
         }
     }
 }
