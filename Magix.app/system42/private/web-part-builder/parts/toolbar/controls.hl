@@ -7,7 +7,7 @@ used to create the form builder.  contains the controls necessary
 to create the toolbar parts of the form builder"
 
 select=>select-control
-  class=>span-5
+  class=>span-4
   onclick
     magix.ide.selected-control-changed
 
@@ -66,4 +66,10 @@ button=>btn-save
   disabled=>true
   onclick
     magix.ide.save-form
+
+button=>btn-load
+  class=>span-2 last toolbox-load
+  value=>load
+  onclick
+    magix.ide.load-form
     

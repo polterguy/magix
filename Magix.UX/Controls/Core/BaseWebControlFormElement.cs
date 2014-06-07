@@ -65,7 +65,7 @@ namespace Magix.UX.Widgets.Core
         }
 
         /*
-         * efffect to run when control looses focus
+         * effect to run when control looses focus
          */
         public Effect BlurEffect
         {
@@ -86,6 +86,14 @@ namespace Magix.UX.Widgets.Core
          * sets value of control
          */
         protected abstract void SetValue();
+
+        /*
+         * server-side validation of that we are legally allowed to raise events on this control
+         */
+        protected override bool CanRaiseEvent()
+        {
+            return !Disabled;
+        }
 
         protected override void LoadViewState(object savedState)
         {

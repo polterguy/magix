@@ -240,8 +240,15 @@ namespace Magix.UX.Widgets.Core
             base.AddAttributes(el);
         }
 
+        protected virtual bool CanRaiseEvent()
+        {
+            return true;
+        }
+
         public override void RaiseEvent(string name)
         {
+            if (!CanRaiseEvent())
+                return;
             switch (name)
             {
                 case "click":
