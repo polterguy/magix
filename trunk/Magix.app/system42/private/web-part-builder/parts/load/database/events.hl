@@ -54,6 +54,21 @@ magix.ide.load-from-database
 
 // sets the last used db id on the text-box asking user for id to save web part as
 magix.ide.database-id_onfirstload
+  magix.data.load
+    only-id=>true
+    prototype
+      type=>magix.forms.web-part
+  _items
+  for-each=>[magix.data.load][objects]
+    add=>[/][_items]
+      value=>[.][id].Value
+        value=>[.][id].Value
+  add=>[magix.forms.set-values][values]
+    value=>[_items]
+    children-only=>true
+  magix.forms.set-values
+    form-id=>load-content
+    id=>database-id
   magix.data.load-username
     id=>magix.ide.last-used-load-database-id
   if=>exist

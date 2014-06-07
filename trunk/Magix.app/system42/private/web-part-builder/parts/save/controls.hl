@@ -30,5 +30,10 @@ select=>sel-save-where
 
 dynamic=>save-where-container
   onfirstload
+    magix.forms.effect
+      form-id=>save-wrapper
+      id=>editor-persist-wrapper
+      type=>fade-in
+      time=>250
     magix.ide.create-save-where-web-part
 

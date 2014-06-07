@@ -15,7 +15,7 @@ panel=>save-wrapper
   default=>save
   controls
     text-box=>filename
-      class=>span-10
+      class=>span-8
       placeholder=>filename ...
       onfirstload
         magix.ide.filename_onfirstload

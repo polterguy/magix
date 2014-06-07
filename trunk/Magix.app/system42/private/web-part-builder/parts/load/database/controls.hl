@@ -14,9 +14,8 @@ panel=>load-wrapper
   class=>span-14 last
   default=>load
   controls
-    text-box=>database-id
-      class=>span-10
-      placeholder=>database id ...
+    select=>database-id
+      class=>span-8
       onfirstload
         magix.ide.database-id_onfirstload
       onesc
