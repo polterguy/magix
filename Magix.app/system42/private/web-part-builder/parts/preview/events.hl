@@ -6,14 +6,14 @@ contains events for the preview web part of the web part builder"
 
 magix.ide.show-hide-preview-load-description
   magix.data.load-username
-    id=>magix.ide.where-to-save-file
+    id=>magix.ide.where-to-save-web-part
   if=>exist
     lhs=>[magix.data.load-username][value]
     code
       switch=>[magix.data.load-username][value][where].Value
         case=>database
           magix.data.load-username
-            id=>magix.ide.last-used-form-id
+            id=>magix.ide.last-used-save-database-id
           set=>[@][magix.forms.set-value][value].Value
             value=>@"magix.forms.create-web-part
   form-id=>your-form-id
@@ -25,7 +25,7 @@ magix.ide.show-hide-preview-load-description
             id=>load-description
         case=>filesystem
           magix.data.load-username
-            id=>magix.ide.last-used-filename
+            id=>magix.ide.last-used-save-filename
           set=>[@][magix.forms.set-value][value].Value
             value=>@"magix.forms.create-web-part
   form-id=>your-form-id

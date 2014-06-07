@@ -380,6 +380,10 @@
     <Content Include="system42\private\users\roles\events.hl" />
     <Content Include="system42\private\users\roles\edit-role\events.hl" />
     <Content Include="system42\private\startup\create-magix-log-username.hl" />
+    <Content Include="system42\private\web-part-builder\parts\load\controls.hl" />
+    <Content Include="system42\private\web-part-builder\parts\load\events.hl" />
+    <Content Include="system42\private\web-part-builder\parts\load\database\controls.hl" />
+    <Content Include="system42\private\web-part-builder\parts\load\database\events.hl" />
     <None Include="todo.txt" />
   </ItemGroup>
   <ItemGroup>

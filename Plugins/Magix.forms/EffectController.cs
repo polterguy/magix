@@ -41,8 +41,11 @@ namespace Magix.forms
 				return;
 			}
 
-            CreateEffect(ip, FindControl<Control>(ip)).Render();
-		}
+            if (ip.ContainsValue("id"))
+                CreateEffect(ip, FindControl<Control>(ip)).Render();
+            else
+                CreateEffect(ip, null).Render();
+        }
 
 		private Effect CreateEffect(Node pars, Control ctrl)
 		{
