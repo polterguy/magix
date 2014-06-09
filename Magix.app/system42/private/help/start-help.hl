@@ -50,8 +50,6 @@ event
         form-id=>help-content
         container=>help-content
         mml-file=>[$][file].Value
-    magix.browser.scroll
-      id=>help
     if=>not-equals
       lhs=>[$][freeze-stack].Value
       rhs=>true
@@ -305,6 +303,8 @@ magix.forms.create-web-part
             set=>[magix.help.search-for-file][header].Value
               value=>[magix.forms.get-value][value].Value
             magix.help.search-for-file
+            magix.browser.scroll
+              id=>help
             magix.forms.set-focus
               id=>next-help-page
         button=>next-help-page

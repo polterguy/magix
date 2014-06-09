@@ -3,23 +3,46 @@
 
 inspect=>@"creates default settings
 
-creates the initial default settings in magix"
+creates the initial default settings in magix, and the init event for setting 
+settings per user basis"
 
 
+// creating default front-end viewport setting
+magix.data.load
+  id=>magix.admin.settings.default-front-end-viewport
+if=>not-exist
+  lhs=>[magix.data.load:0][value]
+  code
+    magix.data.save
+      id=>magix.admin.settings.default-front-end-viewport
+      value
+        viewport=>Magix.viewports.SingleContainer
+
+// checking to see if default back-end css file setting exists, and if not, creating it
 magix.data.load
   id=>magix.admin.settings.default-back-end-css-file
 if=>not-exist
-  lhs=>[magix.data.load][value]
+  lhs=>[magix.data.load:1][value]
   code
     magix.data.save
       id=>magix.admin.settings.default-back-end-css-file
       value
         file=>media/front-end/hipster.css
-    magix.data.save
-      value
-        type=>magix.admin.setting.show-help
-        value=>true
-    magix.data.save
-      id=>magix.admin.settings.default-front-end-viewport
-      value
-        viewport=>Magix.viewports.SingleContainer
+
+// creating the event that initializes settings in dashboard on a per user basis
+event
+  name=>magix.admin.create-default-settings-per-user
+  persist=>false
+  code
+
+    // checking to see if setting to show help or not exists, and if not, creating it
+    magix.data.load-username
+      id=>magix.admin.setting.show-help
+    if=>not-exist
+      lhs=>[@][magix.data.load-username][value]
+      code
+        magix.data.save-username
+          id=>magix.admin.setting.show-help
+          value
+            value=>true
+

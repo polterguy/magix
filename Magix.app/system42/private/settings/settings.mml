@@ -58,11 +58,10 @@ label=>lblHelp
 check-box=>chkHelp
   class=>span-1
   onfirstload
-    magix.data.load
-      prototype
-        type=>magix.admin.setting.show-help
+    magix.data.load-username
+      id=>magix.admin.setting.show-help
     if=>equals
-      lhs=>[magix.data.load][objects][0][value][value].Value
+      lhs=>[magix.data.load-username][value][value].Value
       rhs=>true
       code
         magix.forms.set-value
@@ -73,31 +72,23 @@ check-box=>chkHelp
         id=>chkHelp
         value=>false
   oncheckedchanged
-    magix.data.remove
-      prototype
-        type=>magix.admin.setting.show-help
     magix.forms.get-value
       id=>chkHelp
     if=>equals
       lhs=>[magix.forms.get-value][value].Value
       rhs=>true
       code
-        magix.data.save
-          value
-            type=>magix.admin.setting.show-help
-            value=>true
-        magix.web.set-session
+        magix.data.save-username
           id=>magix.admin.setting.show-help
-          value=>true
-        magix.help.start-help
+          value
+            value=>true
+        execute-script
+          file=>system42/private/help/start-help.hl
     else
-      magix.data.save
-        value
-          type=>magix.admin.setting.show-help
-          value=>false
-      magix.web.set-session
+      magix.data.save-username
         id=>magix.admin.setting.show-help
-        value=>false
+        value
+          value=>false
       magix.viewport.clear-controls
         container=>help
 label=>frontEndViewportLabel
