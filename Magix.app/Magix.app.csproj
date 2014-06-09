@@ -194,10 +194,6 @@
       <Project>{71fe057e-9d78-423f-8664-2fae2d0d56a1}</Project>
       <Name>Magix.forms</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Plugins\Magix.help\Magix.help.csproj">
-      <Project>{cb7ee54e-9957-4202-af61-fc6c40053b4c}</Project>
-      <Name>Magix.help</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Plugins\Magix.ide\Magix.ide.csproj">
       <Project>{686be5b7-2ec5-4adf-9483-a3dd90d472f9}</Project>
       <Name>Magix.ide</Name>
@@ -384,6 +380,9 @@
     <Content Include="system42\private\web-part-builder\parts\load\events.hl" />
     <Content Include="system42\private\web-part-builder\parts\load\database\controls.hl" />
     <Content Include="system42\private\web-part-builder\parts\load\database\events.hl" />
+    <Content Include="system42\private\help\start-help.hl" />
+    <Content Include="system42\private\startup\unit-tests\for-each.hl" />
+    <Content Include="system42\private\startup\unit-tests\iterate.hl" />
     <None Include="todo.txt" />
   </ItemGroup>
   <ItemGroup>

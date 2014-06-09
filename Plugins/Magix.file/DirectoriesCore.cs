@@ -56,7 +56,7 @@ namespace Magix.execute
                 Expressions.GetExpressionValue(ip["filter"].Get<string>(), dp, ip, false) as string :
                 null;
 
-            string[] files = null;
+            string[] directories = null;
 
             bool absolutePath = true;
             if (!directory.Contains(":"))
@@ -66,18 +66,18 @@ namespace Magix.execute
             }
 
             if (string.IsNullOrEmpty(filter))
-                files = Directory.GetDirectories(directory);
+                directories = Directory.GetDirectories(directory);
             else
-                files = Directory.GetDirectories(directory, filter);
+                directories = Directory.GetDirectories(directory, filter);
 
             string rootDir = _basePath;
-            foreach (string idxFile in files)
+            foreach (string idxDirectory in directories)
             {
-                string fileName = idxFile;
+                string directoryPath = idxDirectory;
                 if (!absolutePath)
-                    fileName = idxFile.Substring(rootDir.Length);
-                fileName = fileName.Replace("\\", "/");
-                ip["directories"][fileName].Value = null;
+                    directoryPath = idxDirectory.Substring(rootDir.Length);
+                directoryPath = directoryPath.Replace("\\", "/");
+                ip["directories"][directoryPath].Value = null;
             }
         }
 

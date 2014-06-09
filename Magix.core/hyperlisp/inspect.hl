@@ -81,12 +81,16 @@ magix.viewport.get-viewstate-sample
 magix.viewport.load-module-dox=>@"loads an active module
 
 loads up the [name] active module, and puts it into the [container] viewport 
-container, giving the container the given [class] css class(es)
+container, giving the container the given [class] css class(es), and setting the 
+[style] as styles for your dynamic container
 
 all parameters passed into active event, will be passed onto the active module 
 into its initializing method
 
-[name], [container] and [class] can be either constants or expressions"
+[name], [container] and [class] can be either constants or expressions.  [name] is mandatory.  
+if you ommit a [container], the default container on your viewport will be chosen.  if you ommit 
+a [class], the existing classes on the dynamic will be kept.  if you ommit a [style], the dynamic 
+container's existing styles will be kept"
 
 magix.viewport.load-module-sample
   magix.viewport.load-module

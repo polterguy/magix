@@ -1,0 +1,60 @@
+
+
+inspect=>@"creates unit tests for the [iterate] keyword
+
+creates unit tests to test the [iterate] keyword of magix"
+
+
+event
+  name=>magix.test.iterate
+  persist=>false
+  inspect=>@"verifies [iterate] works
+
+creates an [iterate] statement, concatenating all nodes into a result node, 
+verifying the result is as expected"
+  code
+    _result
+    _data
+      =>one, 
+      =>two, 
+        =>three, 
+        =>four, 
+          =>five, 
+            =>six, 
+        =>seven, 
+      =>eight, 
+        =>nine, 
+      =>ten
+    iterate=>[_data]
+      set=>[/][_result].Value
+        value=>{0}{1}
+          =>[/][_result].Value
+          =>[.].Value
+    if=>not-equals
+      lhs=>[_result].Value
+      rhs=>one, two, three, four, five, six, seven, eight, nine, ten
+      code
+        throw=>[iterate] misbehaved
+
+
+event
+  name=>magix.test.iterate-immutable
+  persist=>false
+  inspect=>@"verifies [iterate] is immutable
+
+creates an [iterate] statement, iterating over two nodes, making sure the 
+iterate code scope is immutable, and not changed from iteration to iteration"
+  code
+    _data
+      =>
+      =>
+    iterate=>[_data]
+      _data=>
+      if=>not-equals
+        lhs=>[@][_data].Value
+        rhs=>
+        code
+          throw=>[iterate] misbehaved
+      set=>[@][_data].Value
+        value=>foo
+
