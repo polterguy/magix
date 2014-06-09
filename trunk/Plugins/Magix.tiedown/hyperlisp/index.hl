@@ -13,23 +13,33 @@ magix.web.get-parameter
 if=>exist
   lhs=>[magix.web.get-parameter][value]
   code
-    magix.execute
-      magix.data.load
-        id=>magix.admin.settings.default-back-end-css-file
-      set=>[magix.viewport.include-client-file][file].Value
-        value=>[magix.data.load][value][file].Value
-      magix.viewport.include-client-file
-        type=>css
+
+    // create default settings, if they haven't been created already, per user
+    magix.admin.create-default-settings-per-user
+
+    // stuffing in our default back-end css file, or back-end 'skin'
+    magix.data.load
+      id=>magix.admin.settings.default-back-end-css-file
+    set=>[@][magix.viewport.include-client-file][file].Value
+      value=>[@][magix.data.load][value][file].Value
+    magix.viewport.include-client-file
+      type=>css
+
+    // loading our login/logout box
     magix.forms.create-mml-web-part
       mml-file=>system42/public/index-header.mml
       container=>header
       form-id=>header
       class=>span-22 last
+
+    // checking to see if user is logged in, and if he is 'admin'
     magix.web.get-session
       id=>magix.core.user
     if=>exist
       lhs=>[@][magix.web.get-session][value][roles][admin]
       code
+
+        // user is admin, loading dashboard
         magix.forms.create-mml-web-part
           mml-file=>system42/private/dashboard/menu.mml
           container=>menu
@@ -37,24 +47,19 @@ if=>exist
           class=>span-5
         execute-script
           file=>system42/private/dashboard/desktop.hl
-        magix.web.get-session
-          id=>magix.admin.setting.show-help
-        if=>not-exist
-          lhs=>[@][magix.web.get-session][value]
-          code
-            magix.data.load
-              prototype
-                type=>magix.admin.setting.show-help
-            set=>[@][magix.web.set-session][value].Value
-              value=>[@][magix.data.load][objects][0][value].Value
-            magix.web.set-session
-              id=>magix.admin.setting.show-help
-        magix.web.get-session
+
+        // checking to see if we should show help by default
+        magix.data.load-username
           id=>magix.admin.setting.show-help
         if=>equals
-          lhs=>[@][magix.web.get-session:1][value].Value
+          lhs=>[@][magix.data.load-username][value][value].Value
           rhs=>true
           code
-            magix.help.start-help
+            execute-script
+              file=>system42/private/help/start-help.hl
 else
+
+  // not in dashboard, executing "load-index-page" active event, which is the public tie-down active event
+  // for the default front-end logic
   magix.tiedown.load-index-page
+
