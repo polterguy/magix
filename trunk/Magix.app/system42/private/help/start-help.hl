@@ -2,7 +2,9 @@
 
 inspect=>@"starts help system
 
-starts help system, by loading index.mml into 'help' container viewport"
+starts help system, by loading index.mml into 'help' container viewport.  if 
+user somehow has previously opened another help page, then this help page will 
+be opened instead"
 
 
 // includes necessary javascript files for our autocompleter
@@ -258,6 +260,7 @@ magix.forms.create-web-part
     // navigation parts
     panel=>help-navigation
       class=>span-22 last bottom-1 top-2 btn-group
+      default=>search-button
       controls
         button=>help-back
           class=>btn-large span-2
@@ -282,7 +285,7 @@ magix.forms.create-web-part
               container=>help
         text-box=>search-help
           placeholder=>search ...
-          class=>span-13 input-large
+          class=>span-11 input-large
           autocomplete=>false
           @data-provide=>typeahead
           @data-items=>10
@@ -292,9 +295,15 @@ magix.forms.create-web-part
               type=>focus-and-select
               form-id=>help-wrapper
               id=>search-help
-          onenterpressed
+        button=>search-button
+          class=>span-2 btn-large
+          value=>search
+          onclick
+            magix.forms.get-value
+              form-id=>help-wrapper
+              id=>search-help
             set=>[magix.help.search-for-file][header].Value
-              value=>[$][value].Value
+              value=>[magix.forms.get-value][value].Value
             magix.help.search-for-file
             magix.forms.set-focus
               id=>next-help-page

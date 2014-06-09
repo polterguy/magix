@@ -755,7 +755,13 @@ your web control
 
 [disabled] enables or disables the web control.  this can be changed or retrieved 
 after the button is created, by invoking the [magix.forms.set-enabled] or [magix.
-forms.get-enabled] active events.  legal values are true and false"
+forms.get-enabled] active events.  legal values are true and false
+
+[onfocus] is raised when the control gains focus, either by clicking, or the user 
+some other way making the control gaining focus, such as tabbing through to it
+
+[onblur] is raised when the control looses focus, either by clicking another web 
+control, or by tabbing out from the control"
 
 
 magix.forms.base-web-form-element-text-input-dox=>@"[placeholder] is a piece of shadow text, that will 
