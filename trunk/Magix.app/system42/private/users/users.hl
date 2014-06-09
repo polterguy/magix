@@ -19,15 +19,6 @@ event
   name=>magix.users.show-users-grid
   persist=>false
   code
-    if=>not-equals
-      lhs=>[$].Count
-      rhs=>0
-      code
-        add=>[magix.forms.set-viewstate][value]
-          value=>[$]
-          children-only=>true
-        magix.forms.set-viewstate
-          id=>magix.users.current-paging
     magix.forms.create-web-part
       form-id=>users
       controls-file=>system42/private/users/users/controls.hl

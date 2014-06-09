@@ -49,6 +49,9 @@ namespace Magix.execute
             if (whatToSplit == null)
                 throw new ArgumentException("couldn't make '" + ip.Get<string>() + "' into a string in [split]");
 
+            if (ip.ContainsValue("trim") && ip["trim"].Get<bool>())
+                whatToSplit = whatToSplit.Trim();
+
             ip["result"].UnTie();
 
             if (ip.Contains("what"))

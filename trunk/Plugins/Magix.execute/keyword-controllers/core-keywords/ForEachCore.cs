@@ -50,10 +50,15 @@ namespace Magix.execute
 				{
 					for (int idxNo = 0; idxNo < tmp.Count; idxNo++)
 					{
+                        Node oldIp = ip.Clone();
 						e.Params["_dp"].Value = tmp[idxNo];
+
 						RaiseActiveEvent(
 							"magix.execute", 
 							e.Params);
+
+                        ip.Clear();
+                        ip.AddRange(oldIp);
 					}
 				}
                 catch (Exception err)

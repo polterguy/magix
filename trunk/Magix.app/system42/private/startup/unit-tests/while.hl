@@ -51,3 +51,35 @@ it behaves as expected"
       code
         throw=>[while] misbehaved
 
+
+event
+  name=>magix.test.while-immutable
+  persist=>false
+  inspect=>@"verifies [while] works
+
+loops through a list, verifying while is immutable, and 
+does not create changes that propagates from one iteration 
+to the next iteration, within the while execution scope"
+  code
+    _data
+      =>
+      =>
+    while=>not-equals
+      lhs=>[_data].Count
+      rhs=>0
+      code
+        _tmp=>
+        if=>not-equals
+          lhs=>[@][_tmp].Value
+          rhs=>
+          or=>not-equals
+            lhs=>[@][_tmp].Count
+            rhs=>0
+          code
+            throw=>[while] misbehaved
+        set=>[@][_tmp].Value
+          value=>foo
+        add=>[@][_tmp]
+          value=>[/][_data][0]
+        set=>[/][_data][0]
+

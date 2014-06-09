@@ -1,0 +1,59 @@
+
+
+inspect=>@"tests for the [fork-each] keyword
+
+creates unit tests for testing the [for-each] keyword"
+
+
+event
+  name=>magix.test.for-each
+  persist=>false
+  inspect=>@"verifies [for-each] works
+
+loops through a list of data items, copying their value to 
+a result node, verifying the result is as expected"
+  code
+    _data
+      =>one, 
+      =>two, 
+      =>three
+    _result
+    for-each=>[_data]
+      set=>[/][_result].Value
+        value=>{0}{1}
+          =>[/][_result].Value
+          =>[.].Value
+    if=>not-equals
+      lhs=>[_result].Value
+      rhs=>one, two, three
+      code
+        throw=>[for-each] misbehaved
+
+
+event
+  name=>magix.test.for-each-immutable
+  persist=>false
+  inspect=>@"verifies [for-each] works
+
+loops through a list, verifying for-each is immutable, and 
+does not create changes that propagates from one iteration 
+to the next iteration, within the for-each execution scope"
+  code
+    _data
+      =>
+      =>
+    for-each=>[_data]
+      _tmp=>
+      if=>not-equals
+        lhs=>[@][_tmp].Value
+        rhs=>
+        or=>not-equals
+          lhs=>[@][_tmp].Count
+          rhs=>0
+        code
+          throw=>[for-each] misbehaved
+      set=>[@][_tmp].Value
+        value=>foo
+      add=>[@][_tmp]
+        value=>[.]
+

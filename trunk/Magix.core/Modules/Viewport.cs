@@ -459,11 +459,16 @@ namespace Magix.Core
 
             if (ip.ContainsValue("class"))
                 dyn.Class = Expressions.GetExpressionValue(ip["class"].Get<string>(), dp, ip, false) as string;
-            else
-                dyn.Class = "";
 
             if (ip.ContainsValue("style"))
             {
+                // clearing old styles
+                foreach (string idx in dyn.Style.Keys)
+                {
+                    dyn.Style[idx] = "";
+                }
+
+                // setting new styles
                 string[] styles =
                     ip["style"].Get<string>().Replace("\n", "").Replace("\r", "").Split(
                         new char[] { ';' },
@@ -471,13 +476,6 @@ namespace Magix.Core
                 foreach (string idxStyle in styles)
                 {
                     dyn.Style[idxStyle.Split(':')[0]] = idxStyle.Split(':')[1];
-                }
-            }
-            else
-            {
-                foreach (string idx in dyn.Style.Keys)
-                {
-                    dyn.Style[idx] = "";
                 }
             }
 

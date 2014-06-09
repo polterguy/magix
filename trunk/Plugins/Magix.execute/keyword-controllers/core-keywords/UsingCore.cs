@@ -40,7 +40,6 @@ namespace Magix.execute
 
             try
             {
-                Node dp = Dp(e.Params);
                 e.Params["_namespaces"].Add(new Node("item", ip.Get<string>()));
                 RaiseActiveEvent(
                     "magix.execute",

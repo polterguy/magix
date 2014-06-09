@@ -72,11 +72,18 @@ namespace Magix.execute
         {
             for (int idxNo = 0; idxNo < currentlyIteratedNode.Count; idxNo++)
             {
+                Node ip = Ip(pars);
+                Node oldIp = ip.Clone();
+
                 Node current = currentlyIteratedNode[idxNo];
                 pars["_dp"].Value = current;
+
                 RaiseActiveEvent(
                     "magix.execute",
                     pars);
+
+                ip.Clear();
+                ip.AddRange(oldIp);
 
                 // child nodes
                 IterateNode(pars, current);

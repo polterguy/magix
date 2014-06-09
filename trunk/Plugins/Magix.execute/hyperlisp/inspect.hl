@@ -351,6 +351,12 @@ your code will execute once for every single node you have in
 your return expression.  use the [.] expression to de-reference 
 the currently iterated node
 
+for-each executes immutable, meaning it will not modify its child 
+nodes after it is done executing, and every iteration of the loop 
+will execute on a 'virgin' version of its code.  this means that 
+the code it executes will be reset back to what it originally was 
+for every single iteration of the loop
+
 thread safe"
 
 magix.execute.for-each-sample
@@ -529,6 +535,12 @@ hierarchy
 your code will execute once for every single node you have in your return 
 expression.  use the [.] expression to de-reference the currently iterated 
 node
+
+iterate executes immutable, meaning it will not modify its child 
+nodes after it is done executing, and every iteration of the loop 
+will execute on a 'virgin' version of its code.  this means that 
+the code it executes will be reset back to what it originally was 
+for every single iteration of the loop
 
 thread safe"
 
@@ -784,7 +796,8 @@ magix.execute.split-dox=>@"splits a string
 
 splits the given expression or constant in the value of [split] according to the [what] 
 content or [where] child nodes, and puts the result into the [result] return node as 
-children nodes
+children nodes.  if you add a [trim] parameter, and set its value to true, then the 
+string will be trimmed before it is split
 
 if [what] is given, but has null or empty value, then string will be split for every single 
 character in it.  if [where] is used, then either value of [where] is expected to be one 
@@ -908,6 +921,12 @@ comparison statement(s) in the value of [while] is true
 the [while] is taking arguments similarly as both the [if] and [else-if].  see any of 
 these active events to understand how to create a comparison statement(s) to check for 
 in the while loop
+
+while executes immutable, meaning it will not modify its child 
+nodes after it is done executing, and every iteration of the loop 
+will execute on a 'virgin' version of its code.  this means that 
+the code it executes will be reset back to what it originally was 
+for every single iteration of the loop
 
 thread safe"
 

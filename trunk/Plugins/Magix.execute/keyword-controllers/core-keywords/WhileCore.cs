@@ -45,9 +45,14 @@ namespace Magix.execute
                 e.Params["_ip"].Value = ip["code"];
                 try
                 {
+                    Node oldIp = ip["code"].Clone();
+
                     RaiseActiveEvent(
                         "magix.execute",
                         e.Params);
+
+                    ip["code"].Clear();
+                    ip["code"].AddRange(oldIp);
                 }
                 catch (Exception err)
                 {

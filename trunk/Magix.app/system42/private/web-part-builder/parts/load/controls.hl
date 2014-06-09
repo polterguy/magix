@@ -28,6 +28,7 @@ select=>sel-load-where
     database=>from database
 
 dynamic=>load-where-container
+  class=>span-16 last
   onfirstload
     magix.forms.effect
       form-id=>load-wrapper

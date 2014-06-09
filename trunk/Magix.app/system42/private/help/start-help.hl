@@ -1,0 +1,260 @@
+﻿
+
+inspect=>@"starts help system
+
+starts help system, by loading index.mml into 'help' container viewport"
+
+
+// includes necessary javascript files for our autocompleter
+magix.viewport.include-client-file
+  type=>javascript
+  file=>media/bootstrap/js/jQuery.js
+magix.viewport.include-client-file
+  type=>javascript
+  file=>media/bootstrap/js/bootstrap.min.js
+
+
+// opens the given [file] help file, and adds it to the stack of items, such that back and forward works
+event
+  name=>magix.help.open-file
+  persist=>false
+  code
+    magix.web.get-viewstate
+    using=>magix.forms
+      create-mml-web-part
+        form-id=>help-content
+        container=>help-content
+        mml-file=>[$][file].Value
+    magix.browser.scroll
+      id=>help
+
+// moves helpsystem backwards, if possible
+event
+  name=>magix.help.move-previous
+  persist=>false
+  code
+
+// moves helpsystem forward, if possible. if [turn-page] is true, it will "turn the page" instead of showing the 
+// file in que, which we've moved backwards from
+event
+  name=>magix.help.move-next
+  persist=>false
+  code
+
+// search for the file in [$][header], and loads it if found
+event
+  name=>magix.help.search-for-file
+  persist=>false
+  code
+    magix.web.get-session
+      id=>magix.help.cached-help-files
+    if=>exist
+      lhs=>[magix.web.get-session][value][[$][header].Value]
+      code
+        set=>[@][magix.help.open-file][file].Value
+          value=>[magix.web.get-session][value][[$][header].Value].Value
+        magix.help.open-file
+    else
+      magix.viewport.show-message
+        message=>file not found
+
+// expects [file] and [header], links the header towards the file in a session object, for making it 
+// possible to access a file from its header
+event
+  name=>magix.help.link-header-to-file
+  persist=>false
+  code
+    magix.web.get-session
+      id=>magix.help.cached-help-files
+    if=>exist
+      lhs=>[magix.web.get-session][value]
+      code
+        add=>[magix.web.set-session][value]
+          value=>[magix.web.get-session][value]
+          children-only=>true
+    add=>[magix.web.set-session][value]
+      value=>[$][header].Value
+        value=>[$][file].Value
+    magix.web.set-session
+      id=>magix.help.cached-help-files
+    using=>magix.web
+      get-session
+        id=>magix.help.cached-help-files
+
+
+// event that iterates one directory for all *.mml files, and recursively traverse all child directories
+// creates the json necessary to databind the autocompleter
+event
+  name=>magix.help.iterate-one-directory
+  persist=>false
+  code
+
+    // default directory is main help directory if no directory is given
+    _directory=>system42/private/help
+    _return=>
+    if=>exist
+      lhs=>[$][directory]
+      code
+        set=>[_directory].Value
+          value=>[$][directory].Value
+
+    // listing all *.mml files, and all child directories
+    using=>magix.file
+      list-files
+        directory=>[_directory].Value
+        filter=>*.mml
+      list-directories
+        directory=>[_directory].Value
+
+    // iterating through files in directory
+    for-each=>[using][list-files][files]
+      using=>magix.file
+        load
+          file=>[.].Name
+
+      // lookinf for an h2 header to use as the friendly text of our autocompleter
+      split=>[@][using][load][value].Value
+        what=><h2>
+        trim=>true
+      if=>exist
+        lhs=>[@][split][result]
+        code
+          split=>[@][..][..][split][result][0].Value
+            what=></h2>
+            trim=>true
+          // split-2 now contains file header
+          if=>not-equals
+            lhs=>[/][_return].Value
+            rhs=>
+            code
+              set=>[/][_return].Value
+                value=>{0},
+                  =>[/][_return].Value
+          set=>[/][_return].Value
+            value=>@"{0}""{1}"""
+              =>[/][_return].Value
+              =>[@][split][result][0].Value
+
+          // creating an association between the file's header and the file itself, such that we can later 
+          // load a specific file from a given header
+          set=>[@][magix.help.link-header-to-file][header].Value
+            value=>[@][split][result][0].Value
+          set=>[@][magix.help.link-header-to-file][file].Value
+            value=>[.].Name
+          magix.help.link-header-to-file
+
+    // iterating through directories in directory and recursively calling self
+    for-each=>[using][list-directories][directories]
+      set=>[@][magix.help.iterate-one-directory][directory].Value
+        value=>[.].Name
+      magix.help.iterate-one-directory
+
+      // adding the entire result from the child directory to the output
+      set=>[/][_return].Value
+        value=>@"{0},{1}"
+          =>[/][_return].Value
+          =>[@][magix.help.iterate-one-directory][files].Value
+
+    // returning json back to caller
+    set=>[$][files].Value
+      value=>[_return].Value
+
+// setting the autocompleter's datasource
+set=>[**@data-source=>{data-source}].Value
+  value=>\[{0}]
+    =>[:magix.help.iterate-one-directory][files].Value
+
+// creates help web part
+magix.forms.create-web-part
+  form-id=>help-wrapper
+  container=>help
+  class=>span-22 last clear
+  controls
+
+    // navigation parts
+    panel=>help-navigation
+      class=>span-22 last bottom-1 top-2 btn-group
+      controls
+        button=>help-back
+          class=>btn-large span-2
+          value=>&lt;&lt;
+          onclick
+            magix.help.move-previous
+            magix.browser.scroll
+              id=>help
+        button=>help-index
+          class=>btn-large span-2
+          value=>index
+          onclick
+            magix.help.open-file
+              file=>system42/private/help/index.mml
+            magix.browser.scroll
+              id=>help
+        button=>close-help
+          value=>close
+          class=>btn-large span-2
+          onclick
+            magix.viewport.clear-controls
+              container=>help
+        text-box=>search-help
+          placeholder=>search ...
+          class=>span-11 input-large
+          autocomplete=>false
+          @data-provide=>typeahead
+          @data-items=>10
+          @data-source=>{data-source}
+          onenterpressed
+            set=>[magix.help.search-for-file][header].Value
+              value=>[$][value].Value
+            magix.help.search-for-file
+            magix.forms.set-focus
+              id=>turn-help-page
+            magix.forms.set-value
+              form-id=>help-wrapper
+              id=>search-help
+              value=>
+        button=>turn-help-page
+          value=>turn page
+          class=>btn-large span-3
+          onclick
+            magix.help.move-next
+              turn-page=>true
+            magix.browser.scroll
+              id=>help
+        button=>help-next
+          value=>&gt;&gt;
+          class=>btn-large span-2 last
+          onclick
+            magix.help.move-next
+            magix.browser.scroll
+              id=>help
+
+    // contains actual help content
+    dynamic=>help-content
+      class=>span-22 last
+      onfirstload
+        magix.forms.create-mml-web-part
+          form-id=>help-content
+          container=>help-content
+          mml-file=>system42/private/help/index.mml
+
+    // additional navigation at the bottom, to make it easier to navigate
+    panel=>bottom-help-navigation
+      class=>span-6 right last btn-group top-3
+      controls
+        button=>help-back-bottom
+          value=>back
+          class=>btn-large span-3
+          onclick
+            magix.help.move-previous
+            magix.browser.scroll
+              id=>help
+        button=>turn-help-page-bottom
+          value=>turn page
+          class=>btn-large span-3 last
+          onclick
+            magix.help.move-next
+              turn-page=>true
+            magix.browser.scroll
+              id=>help
+
