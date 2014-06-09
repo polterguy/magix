@@ -74,14 +74,38 @@ namespace Magix.forms
             base.FillOutParameters(pars, ctrl);
 
             Node ip = Ip(pars);
-            Node codeNode = ip["_code"].Value as Node;
+            Node node = ip["_code"].Value as Node;
             BaseWebControlFormElement that = ctrl as BaseWebControlFormElement;
 
-            if (codeNode.ContainsValue("accesskey"))
-                that.AccessKey = codeNode["accesskey"].Get<string>();
+            if (node.ContainsValue("accesskey"))
+                that.AccessKey = node["accesskey"].Get<string>();
 
-            if (codeNode.ContainsValue("disabled"))
-                that.Disabled = codeNode["disabled"].Get<bool>();
+            if (node.ContainsValue("disabled"))
+                that.Disabled = node["disabled"].Get<bool>();
+
+            if (ShouldHandleEvent("onfocus", node))
+            {
+                Node codeNode = node["onfocus"].Clone();
+                that.Focused += delegate(object sender, EventArgs e)
+                {
+                    FillOutEventInputParameters(codeNode, sender);
+                    RaiseActiveEvent(
+                        "magix.execute",
+                        codeNode);
+                };
+            }
+
+            if (ShouldHandleEvent("onblur", node))
+            {
+                Node codeNode = node["onblur"].Clone();
+                that.Blur += delegate(object sender, EventArgs e)
+                {
+                    FillOutEventInputParameters(codeNode, sender);
+                    RaiseActiveEvent(
+                        "magix.execute",
+                        codeNode);
+                };
+            }
         }
 
         protected override void Inspect(Node node)
@@ -98,6 +122,8 @@ namespace Magix.forms
                 true);
             node["accesskey"].Value = "q";
             node["disabled"].Value = "false";
+            node["onfocus"].Value = "hyperlisp code";
+            node["onblur"].Value = "hyperlisp code";
         }
     }
 }

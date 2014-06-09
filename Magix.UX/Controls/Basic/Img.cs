@@ -57,8 +57,6 @@ namespace Magix.UX.Widgets
         {
             el.AddAttribute("src", Src);
             el.AddAttribute("alt", Alt);
-            if (!string.IsNullOrEmpty(AccessKey))
-                el.AddAttribute("accesskey", AccessKey);
             base.AddAttributes(el);
         }
 

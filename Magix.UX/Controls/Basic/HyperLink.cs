@@ -75,8 +75,6 @@ namespace Magix.UX.Widgets
             el.AddAttribute("href", Href);
             if (!string.IsNullOrEmpty(Target))
                 el.AddAttribute("target", Target);
-            if (!string.IsNullOrEmpty(AccessKey))
-                el.AddAttribute("accesskey", AccessKey);
             base.AddAttributes(el);
         }
 
