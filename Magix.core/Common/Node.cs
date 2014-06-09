@@ -101,7 +101,7 @@ namespace Magix.Core
 					int idxNo = 0;
 					foreach (Node idx in Parent.Children)
 					{
-						if (idx.Equals(this))
+						if (idx == this)
 						{
 							dna += idxNo;
 							break;
@@ -738,12 +738,11 @@ namespace Magix.Core
          */
         public bool Remove(Node item)
         {
-            bool retVal = _children.Remove(item);
-
-            if (retVal)
-                item._parent = null;
-
-            return retVal;
+            string[] dnas = item.Dna.Split('-');
+            int idxNo = int.Parse(dnas[dnas.Length - 1]);
+            _children.RemoveAt(idxNo);
+            item._parent = null;
+            return true;
         }
 
         /*
@@ -885,14 +884,14 @@ namespace Magix.Core
 
         private static Node Clone(Node node)
         {
-            Node r = new Node();
-            r.Name = node.Name;
-            r.Value = node.Value;
+            Node clone = new Node();
+            clone.Name = node.Name;
+            clone.Value = node.Value;
             foreach (Node idx in node)
             {
-                r.Add(Clone(idx));
+                clone.Add(Clone(idx));
             }
-            return r;
+            return clone;
         }
 
 		private bool CompareChildren(Node rhs)

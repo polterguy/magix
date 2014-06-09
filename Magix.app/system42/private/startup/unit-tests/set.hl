@@ -83,3 +83,25 @@ the set statements behaved correctly"
       code
         throw=>[set] misbehaved
 
+
+event
+  name=>magix.test.set-remove-similar
+  persist=>false
+  inspect=>@"verifies [set] works
+
+verifies [set] removes the correct node when multiple nodes have 
+the same name and value within the children of the one having 
+one of its children removed by index"
+  code
+    _data
+      v0=>howdy
+      v1=>jo
+      v2=>howdy
+      v0=>howdy
+    set=>[_data][3]
+    if=>not-equals
+      lhs=>[_data][0].Value
+      rhs=>howdy
+      code
+        throw=>[set] misbehaved
+

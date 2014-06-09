@@ -13,13 +13,36 @@ magix.viewport.include-client-file
   type=>javascript
   file=>media/bootstrap/js/bootstrap.min.js
 
+// opens up the help file the user last had open, or the index file if no help file is in the list of items
+event
+  name=>magix.help.open-last-help-file
+  code
+
+    // checking to see if we've got some help files in our list of items
+    magix.web.get-session
+      id=>magix.help.stack-of-help
+    if=>exist
+      lhs=>[magix.web.get-session][value]
+      code
+
+        // we have a stack of open items, figuring out which file is at the end of our stack of items
+        // and opening that page, instead of the default index page
+        using=>magix.math
+          subtract
+            =>[magix.web.get-session][value].Count
+            =>1
+        set=>[magix.help.open-file][file].Value
+          value=>[magix.web.get-session][value][[@][using][subtract].Value].Value
+        set=>[magix.help.open-file][freeze-stack].Value
+          value=>true
+    magix.help.open-file
+      file=>system42/private/help/index.mml
 
 // opens the given [file] help file, and adds it to the stack of items, such that back and forward works
 event
   name=>magix.help.open-file
   persist=>false
   code
-    magix.web.get-viewstate
     using=>magix.forms
       create-mml-web-part
         form-id=>help-content
@@ -27,19 +50,80 @@ event
         mml-file=>[$][file].Value
     magix.browser.scroll
       id=>help
+    if=>not-equals
+      lhs=>[$][freeze-stack].Value
+      rhs=>true
+      code
+        magix.web.get-session
+          id=>magix.help.stack-of-help
+        if=>exist
+          lhs=>[@][magix.web.get-session][value]
+          code
+            set=>[@][..][..][magix.web.set-session][value]
+              value=>[@][..][..][magix.web.get-session][value]
+        add=>[@][magix.web.set-session][value]
+          value=>file
+            value=>[$][file].Value
+        magix.web.set-session
+          id=>magix.help.stack-of-help
+    magix.web.get-session
+      id=>magix.help.stack-of-help
+
+// sets the next help page for the system, which will trigger if user clicks 'next page'
+// [next] contains file to put into que
+event
+  name=>magix.help.set-next
+  persist=>false
+  code
+    set=>[magix.viewport.set-viewstate][value].Value
+      value=>[$][next].Value
+    magix.viewport.set-viewstate
+      id=>magix.help.next-page
 
 // moves helpsystem backwards, if possible
 event
   name=>magix.help.move-previous
   persist=>false
   code
+    magix.web.get-session
+      id=>magix.help.stack-of-help
+    if=>more-than
+      lhs=>[magix.web.get-session][value].Count
+      rhs=>1
+      code
+        using=>magix.math
+          subtract
+            =>[magix.web.get-session][value].Count
+            =>1
+          subtract
+            =>[magix.web.get-session][value].Count
+            =>2
 
-// moves helpsystem forward, if possible. if [turn-page] is true, it will "turn the page" instead of showing the 
-// file in que, which we've moved backwards from
+        // deleting last file, which is the currently viewed page
+        set=>[magix.web.get-session][value][[@][using][subtract:0].Value]
+
+        // opening up the second last page in stack, which is the previously seen page
+        set=>[@][magix.help.open-file][file].Value
+          value=>[magix.web.get-session][value][[@][using][subtract:1].Value].Value
+        set=>[@][magix.web.set-session][value]
+          value=>[magix.web.get-session][value]
+        magix.web.set-session
+          id=>magix.help.stack-of-help
+        magix.help.open-file
+          freeze-stack=>true
+    else
+      magix.viewport.show-message
+        message=>no more previous help files
+
+// moves helpsystem forward, if possible
 event
   name=>magix.help.move-next
   persist=>false
   code
+    magix.viewport.get-viewstate
+      id=>magix.help.next-page
+    set=>[magix.help.open-file][file].Value
+      value=>[magix.viewport.get-viewstate][value].Value
 
 // search for the file in [$][header], and loads it if found
 event
@@ -198,32 +282,25 @@ magix.forms.create-web-part
               container=>help
         text-box=>search-help
           placeholder=>search ...
-          class=>span-11 input-large
+          class=>span-13 input-large
           autocomplete=>false
           @data-provide=>typeahead
           @data-items=>10
           @data-source=>{data-source}
+          onfocus
+            magix.forms.effect
+              type=>focus-and-select
+              form-id=>help-wrapper
+              id=>search-help
           onenterpressed
             set=>[magix.help.search-for-file][header].Value
               value=>[$][value].Value
             magix.help.search-for-file
             magix.forms.set-focus
-              id=>turn-help-page
-            magix.forms.set-value
-              form-id=>help-wrapper
-              id=>search-help
-              value=>
-        button=>turn-help-page
-          value=>turn page
-          class=>btn-large span-3
-          onclick
-            magix.help.move-next
-              turn-page=>true
-            magix.browser.scroll
-              id=>help
-        button=>help-next
-          value=>&gt;&gt;
-          class=>btn-large span-2 last
+              id=>next-help-page
+        button=>next-help-page
+          value=>next page
+          class=>btn-large span-3 last
           onclick
             magix.help.move-next
             magix.browser.scroll
@@ -233,10 +310,7 @@ magix.forms.create-web-part
     dynamic=>help-content
       class=>span-22 last
       onfirstload
-        magix.forms.create-mml-web-part
-          form-id=>help-content
-          container=>help-content
-          mml-file=>system42/private/help/index.mml
+        magix.help.open-last-help-file
 
     // additional navigation at the bottom, to make it easier to navigate
     panel=>bottom-help-navigation
@@ -249,12 +323,11 @@ magix.forms.create-web-part
             magix.help.move-previous
             magix.browser.scroll
               id=>help
-        button=>turn-help-page-bottom
-          value=>turn page
+        button=>next-help-page-bottom
+          value=>next page
           class=>btn-large span-3 last
           onclick
             magix.help.move-next
-              turn-page=>true
             magix.browser.scroll
               id=>help
 
