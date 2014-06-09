@@ -67,47 +67,46 @@ namespace Magix.forms
         public override void InitialLoading(Node node)
 		{
 			isFirst = true;
-			Load +=
-			delegate
-			{
-                Node ip = Ip(node);
-                Node dp = Dp(node);
+            Node ip = Ip(node).Clone();
+            Node dp = Dp(node).Clone();
+            Load +=
+			    delegate
+			    {
+				    if (ip.Contains("form-id"))
+					    FormID = Expressions.GetExpressionValue(ip["form-id"].Get<string>(), dp, ip, false) as string;
 
-				if (ip.Contains("form-id"))
-					FormID = Expressions.GetExpressionValue(ip["form-id"].Get<string>(), dp, ip, false) as string;
+				    if (ip.Contains("mml"))
+				    {
+					    // mml form
+                        string mml = Expressions.GetExpressionValue(ip["mml"].Get<string>(), dp, ip, false) as string;
+					    TokenizeMarkup(mml);
+				    }
+				    else
+				    {
+                        if (!ip.Contains("controls"))
+                            throw new ArgumentException("you must supply a [controls] segment for your web part");
 
-				if (ip.Contains("mml"))
-				{
-					// mml form
-                    string mml = Expressions.GetExpressionValue(ip["mml"].Get<string>(), dp, ip, false) as string;
-					TokenizeMarkup(mml);
-				}
-				else
-				{
-                    if (!ip.Contains("controls"))
-                        throw new ArgumentException("you must supply a [controls] segment for your web part");
+                        if (!string.IsNullOrEmpty(ip["controls"].Get<string>()))
+                        {
+                            Node controls = new Node("controls");
+                            controls.AddRange((Expressions.GetExpressionValue(ip["controls"].Get<string>(), dp, ip, false) as Node).Clone());
+                            DataSource["controls"].Value = controls;
+                        }
+                        else
+                            DataSource["controls"].Value = ip["controls"].Clone();
 
-                    if (!string.IsNullOrEmpty(ip["controls"].Get<string>()))
-                    {
-                        Node controls = new Node("controls");
-                        controls.AddRange((Expressions.GetExpressionValue(ip["controls"].Get<string>(), dp, ip, false) as Node).Clone());
-                        DataSource["controls"].Value = controls;
-                    }
-                    else
-                        DataSource["controls"].Value = ip["controls"].Clone();
-
-					if (ip.Contains("events"))
-					{
-                        Node evts = ip["events"];
-                        if (!string.IsNullOrEmpty(ip["events"].Get<string>()))
-                            evts = Expressions.GetExpressionValue(ip["events"].Get<string>(), dp, ip, false) as Node;
-						foreach (Node idxEvent in evts)
-						{
-							Methods[idxEvent.Name] = idxEvent.Clone();
-						}
-					}
-				}
-			};
+					    if (ip.Contains("events"))
+					    {
+                            Node evts = ip["events"];
+                            if (!string.IsNullOrEmpty(ip["events"].Get<string>()))
+                                evts = Expressions.GetExpressionValue(ip["events"].Get<string>(), dp, ip, false) as Node;
+						    foreach (Node idxEvent in evts)
+						    {
+							    Methods[idxEvent.Name] = idxEvent.Clone();
+						    }
+					    }
+				    }
+			    };
 			base.InitialLoading(node);
 		}
 
