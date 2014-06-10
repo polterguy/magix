@@ -35,14 +35,20 @@ event
   persist=>false
   code
 
-    // checking to see if setting to show help or not exists, and if not, creating it
-    magix.data.load-username
-      id=>magix.admin.setting.show-help
-    if=>not-exist
-      lhs=>[@][magix.data.load-username][value]
+    // checking to see if user is logged in, and if so, checking to see if show help is turned on
+    magix.web.get-session
+      id=>magix.core.user
+    if=>exist
+      lhs=>[magix.web.get-session][value]
       code
-        magix.data.save-username
+        // checking to see if setting to show help or not exists, and if not, creating it
+        magix.data.load-username
           id=>magix.admin.setting.show-help
-          value
-            value=>true
+        if=>not-exist
+          lhs=>[@][magix.data.load-username][value]
+          code
+            magix.data.save-username
+              id=>magix.admin.setting.show-help
+              value
+                value=>true
 
