@@ -10,6 +10,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Diagnostics;
+using System.Configuration;
 
 namespace Magix.Core
 {
@@ -30,6 +31,16 @@ namespace Magix.Core
     [Serializable]
     public class Node : IList<Node>
     {
+        private static readonly string _dnaCodeResolution;
+
+        static Node()
+        {
+            // reading the dna resolution out from our web.config settings
+            string dnaResolution = ConfigurationManager.AppSettings["dna-resolution"];
+            if (!string.IsNullOrEmpty(dnaResolution))
+                _dnaCodeResolution = dnaResolution;
+        }
+
         // Implementation of list
         private readonly List<Node> _children = new List<Node>();
 
@@ -103,7 +114,7 @@ namespace Magix.Core
 					{
 						if (idx == this)
 						{
-							dna += idxNo.ToString("0000");
+							dna += idxNo.ToString(_dnaCodeResolution);
 							break;
 						}
 						idxNo++;

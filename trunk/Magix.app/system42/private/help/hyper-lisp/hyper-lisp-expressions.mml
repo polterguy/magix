@@ -322,6 +322,11 @@ else
     message=>bar is before foo
 </pre>
 
+<p>if you wish to change the dna code's resolution, you can edit this in the web.config file.&nbsp;&nbsp;by default, the resolution is 4 
+digits, meaning you can have a dna code from 0 to 9999.&nbsp;&nbsp;this supports 10.000 siblings per level in your trees.&nbsp;&nbsp;
+if you set it to e.g. 00000, then you can have up to 100.000 siblings per level.&nbsp;&nbsp;however, this makes all dna codes grow 
+in size</p>
+
 {{
 lambda=>next
   oncreatecontrols
