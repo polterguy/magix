@@ -125,5 +125,90 @@ lambda=>lmdaViewport
         value=>[.].Value
     add=>[$]
       value=>[_data][select]
+label
+  tag=>label
+  class=>span-5 top-1
+  value=>default front-end active event
+lambda=>lambda-front-end-event
+  oncreatecontrols
+    // includes necessary javascript files for our autocompleter
+    magix.viewport.include-client-file
+      type=>javascript
+      file=>media/bootstrap/js/jQuery.js
+    magix.viewport.include-client-file
+      type=>javascript
+      file=>media/bootstrap/js/bootstrap.min.js
+    _json=>
+    list-events
+    for-each=>[list-events][events]
+      if=>not-equals
+        lhs=>[/][_json].Value
+        rhs=>
+        code
+          set=>[/][_json].Value
+            value=>{0},
+              =>[/][_json].Value
+      set=>[/][_json].Value
+        value=>@"{0}""{1}"""
+          =>[/][_json].Value
+          =>[.].Name
+    _text
+      text-box=>active-event
+        placeholder=>magix.tiedown.load-index-page ...
+        class=>span-10 clear
+        autocomplete=>false
+        @data-provide=>typeahead
+        @data-items=>5
+        @data-source=>{data-source}
+        onfirstload
+          magix.data.load
+            id=>magix.tiedown.default-index-page-event
+          if=>exist
+            lhs=>[magix.data.load][value]
+            code
+              set=>[@][magix.forms.set-value][value].Value
+                value=>[magix.data.load][value][event].Value
+              magix.forms.set-value
+                id=>active-event
+        onenterpressed
+          magix.forms.get-value
+            id=>active-event
+          if=>equals
+            lhs=>[magix.forms.get-value][value].Value
+            rhs=>
+            code
+              magix.viewport.confirm
+                message=>are you sure you wish to reset the front-end active event to its defult value of 'magix.tiedown.load-index-page'?
+                code
+                  magix.data.remove
+                    id=>magix.tiedown.default-index-page-event
+                  magix.viewport.show-message
+                    message=>front-end active event was reset to its default value
+          else
+            list-events
+            if=>not-exist
+              lhs=>[@][list-events][events][[$][value].Value]
+              code
+                magix.viewport.show-message
+                  message=>that active event doesn't exist
+            else
+              magix.viewport.confirm
+                message=>are you sure you wish to change the front-end active event?
+                code
+                  magix.forms.get-value
+                    id=>active-event
+                  set=>[@][magix.data.save][value][event].Value
+                    value=>[@][magix.forms.get-value][value].Value
+                  magix.data.save
+                    id=>magix.tiedown.default-index-page-event
+                  magix.viewport.show-message
+                    message=>front-end active event was changed
+    set=>[**@data-source=>{data-source}].Value
+      value=>\[{0}]
+        =>[_json].Value
+    add=>[$]
+      value=>[_text][text-box]
+
+
 }}</div>
 

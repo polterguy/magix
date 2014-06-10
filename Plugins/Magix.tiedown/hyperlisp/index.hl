@@ -10,6 +10,7 @@ not an admin, then the run-page.hl script will be executed"
 magix.web.get-parameter
   name=>dashboard
 
+// checking to see if we're in dashboard
 if=>exist
   lhs=>[magix.web.get-parameter][value]
   code
@@ -57,9 +58,26 @@ if=>exist
           code
             execute-script
               file=>system42/private/help/start-help.hl
+    else
+      magix.forms.create-mml-web-part
+        container=>content1
+        form-id=>description
+        class=>span-22 last
+        mml=>@"
+<p>sorry, you do not have sufficient access rights here.&nbsp;&nbsp;please login, or go back to where you came from</p>"
 else
 
   // not in dashboard, executing "load-index-page" active event, which is the public tie-down active event
   // for the default front-end logic
-  magix.tiedown.load-index-page
+  _event=>magix.tiedown.load-index-page
+  magix.data.load
+    id=>magix.tiedown.default-index-page-event
+  if=>exist
+    lhs=>[@][magix.data.load][value]
+    code
+      set=>[@][..][..][_event].Value
+        value=>[@][..][..][magix.data.load][value][event].Value
+  set=>[@][_raise].Name
+    value=>[@][_event].Value
+  _raise
 
