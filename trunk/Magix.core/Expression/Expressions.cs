@@ -47,6 +47,8 @@ namespace Magix.Core
                 retVal = x.Name;
             else if (lastEntity.StartsWith(".Count"))
                 retVal = x.Count;
+            else if (lastEntity.StartsWith(".dna"))
+                retVal = x.Dna;
             else if (lastEntity == "")
                 retVal = x;
 
@@ -104,6 +106,8 @@ namespace Magix.Core
                     destinationNode.Name = "";
                 else if (lastEntity == "")
                     destinationNode.UnTie();
+                else if (lastEntity == ".dna")
+                    throw new ArgumentException("you cannot change a node's dna");
                 else
                     throw new ArgumentException("couldn't understand the last parts of your expression '" + lastEntity + "'");
             }
@@ -133,8 +137,12 @@ namespace Magix.Core
                 else if (lastEntity.StartsWith(".Name"))
                 {
                     if (!(valueToSet is string))
-                        throw new ArgumentException("Cannot set the Name of a node to something which is not a string literal");
+                        throw new ArgumentException("cannot set the name of a node to something which is not a string literal");
                     destinationNode.Name = valueToSet.ToString();
+                }
+                else if (lastEntity.StartsWith(".dna"))
+                {
+                    throw new ArgumentException("cannot change the dna of a node");
                 }
                 else if (lastEntity == "")
                 {
@@ -148,7 +156,7 @@ namespace Magix.Core
                     destinationNode.Value = clone.Value;
                 }
                 else
-                    throw new ArgumentException("Couldn't understand the last parts of your expression '" + lastEntity + "'");
+                    throw new ArgumentException("couldn't understand the last parts of your expression '" + lastEntity + "'");
             }
 		}
 
@@ -228,6 +236,12 @@ namespace Magix.Core
                         else if (bufferNodeName == ".")
                         {
 							idxNode = dp;
+                        }
+                        else if (bufferNodeName.StartsWith(":>"))
+                        {
+                            // dna reference
+                            string dna = bufferNodeName.Substring(2);
+                            idxNode = idxNode.RootNode().FindDna(dna);
                         }
                         else if (bufferNodeName.StartsWith(":"))
                         {

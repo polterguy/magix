@@ -103,7 +103,7 @@ namespace Magix.Core
 					{
 						if (idx == this)
 						{
-							dna += idxNo;
+							dna += idxNo.ToString("0000");
 							break;
 						}
 						idxNo++;
