@@ -156,14 +156,14 @@ if magix.web.postpone-execution has been invoked, this active
 event will execute that postponed hyperlisp code"
 
 
-magix.get-base-directory-dox=>@"retrieves base url for application
+magix.configuration.get-base-directory-dox=>@"retrieves base url for application
 
 returns the base directory of the web application
 
 not thread safe"
 
-magix.get-base-directory-sample
-  magix.get-base-directory
+magix.configuration.get-base-directory-sample
+  magix.configuration.get-base-directory
 
 
 

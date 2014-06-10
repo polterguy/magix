@@ -1,0 +1,218 @@
+﻿
+
+inspect=>@"load web part active event wizard
+
+allows user to create an active event that loads a web part, either from the 
+database or the filesystem"
+
+
+_name=>load web part active event wizard
+
+// creates the wizard main web part
+magix.forms.create-web-part
+  form-id=>wizard
+  class=>span-17 last
+  events
+
+    // creates the 'load from where' web part, that depending upon the value of the 'load from where' select drop down list 
+    // asks the user for an id in the database, or to browse for a file on disc
+    magix.wizard.create-load-from-where-web-part
+      magix.forms.get-value
+        form-id=>wizard
+        id=>sel-load-from-where
+
+      // if user has selected to load from disc, we create the load from disc web part, otherwise we create the load from database web part
+      switch=>[magix.forms.get-value][value].Value
+
+        // user has chosen to load web part from database
+        case=>database
+          magix.forms.create-web-part
+            container=>dyn-load-from-where
+            form-id=>from-where
+            controls
+              select=>database-id
+                class=>span-9 last
+                onfirstload
+
+                  // populating the select database id drop down list with all the ids from the database 
+                  // for web parts
+                  _items
+                    _default=>choose a database id ...
+                  magix.data.load
+                    prototype
+                      type=>magix.forms.web-part
+                  for-each=>[magix.data.load][objects]
+                    add=>[/][_items]
+                      value=>[.][id].Value
+                        value=>[.][id].Value
+                  add=>[_items]
+                    value=>_create-new-web-part
+                      value=>create new web part ...
+                  add=>[magix.forms.set-values][values]
+                    value=>[_items]
+                    children-only=>true
+                  magix.forms.set-values
+                    form-id=>from-where
+                    id=>database-id
+
+        // user has chosen to load web part from file system
+        case=>filesystem
+          magix.forms.create-web-part
+            container=>dyn-load-from-where
+            form-id=>from-where
+            controls
+              text-box=>filename
+                class=>span-7
+                placeholder=>file name ...
+              button=>browse
+                class=>span-2 last
+                value=>browse
+  controls
+    label
+      tag=>h2
+      value=>create load web part active event wizard
+    literal
+      text=>@"<p>here you can create an active event that loads a web part.&nbsp;&nbsp;the web part can be loaded either 
+from the database or the filesystem.&nbsp;&nbsp;this wizard is useful to help you load web parts you have created using 
+the web part builder</p>"
+    panel
+      default=>create
+      class=>span-15 last air-padding boxed
+      controls
+        label
+          class=>clear span-3
+          tag=>label
+          value=>active event name
+        text-box=>active-event-name
+          class=>span-12 last
+          placeholder=>active event name ...
+          onfirstload
+            magix.forms.effect
+              type=>focus-and-select
+              form-id=>wizard
+              id=>active-event-name
+        label
+          tag=>label
+          class=>span-3 top-1
+          value=>load from where
+        select=>sel-load-from-where
+          class=>span-3 top-1
+          onselectedindexchanged
+            magix.wizard.create-load-from-where-web-part
+          items
+            database=>database
+            filesystem=>file system
+        dynamic=>dyn-load-from-where
+          class=>span-9 last top-1
+          onfirstload
+            magix.wizard.create-load-from-where-web-part
+        label
+          tag=>label
+          class=>span-2 top-1
+          value=>container
+        text-box=>container
+          class=>span-4 top-1
+          placeholder=>container ...
+        label
+          tag=>label
+          class=>span-3 top-1
+          value=>css class(es)
+        text-box=>css-class
+          class=>span-4 top-1
+          placeholder=>css classes ...
+        button=>create
+          class=>span-2 last top-1 right
+          value=>create
+
+          // user clicks button to create active event
+          onclick
+
+            // buffer holding event creation code
+            _data
+              event
+                name=>{active-event-name}
+                code
+                  magix.forms.create-web-part
+                    controls-id=>{database-id}
+
+            magix.forms.get-value
+              form-id=>wizard
+              id=>active-event-name
+
+            // checking to see if active event has good name
+            if=>equals
+              lhs=>[magix.forms.get-value][value].Value
+              rhs=>
+              code
+                magix.viewport.show-message
+                  message=>you must give your active event a name
+            else
+              magix.forms.get-value
+                form-id=>wizard
+                id=>sel-load-from-where
+              switch=>[@][magix.forms.get-value][value].Value
+
+                // user wants to use a form from database
+                case=>database
+                  magix.forms.get-value
+                    form-id=>wizard
+                    id=>database-id
+                  if=>equals
+                    lhs=>[@][magix.forms.get-value][value].Value
+                    rhs=>_default
+                    code
+                      magix.viewport.show-message
+                        message=>you must choose a form from your database
+                  else
+                    set=>[/][_good].Value
+                      value=>true
+                    iterate=>[/][_data]
+                      if=>equals
+                        lhs=>[.].Value
+                        rhs=>{database-id}
+                        code
+                          set=>[.].Value
+                            value=>[@][..][..][..][..][magix.forms.get-value][value].Value
+
+            // checking to see if everything is ok
+            if=>equals
+              lhs=>[_good].Value
+              rhs=>true
+              code
+
+                // setting container for our web part, if there is any defined
+                magix.forms.get-value
+                  form-id=>wizard
+                  id=>container
+                if=>not-equals
+                  lhs=>[@][magix.forms.get-value:0][value].Value
+                  rhs=>
+                  code
+                    set=>[_data][event][code][magix.forms.create-web-part][container].Value
+                      value=>[@][..][..][magix.forms.get-value:0][value].Value
+
+                // setting css classes for our web part, if there is any defined
+                magix.forms.get-value
+                  form-id=>wizard
+                  id=>css-class
+                if=>not-equals
+                  lhs=>[@][magix.forms.get-value:1][value].Value
+                  rhs=>
+                  code
+                    set=>[_data][event][code][magix.forms.create-web-part][class].Value
+                      value=>[@][..][..][magix.forms.get-value:1][value].Value
+
+                // setting active event name, class and container
+                iterate=>[/][_data]
+                  if=>equals
+                    lhs=>[.].Value
+                    rhs=>{active-event-name}
+                    code
+                      set=>[.].Value
+                        value=>[/][magix.forms.get-value][value].Value
+
+                // creating active event
+                execute=>[_data]
+                magix.viewport.show-message
+                  message=>active event was created
+
