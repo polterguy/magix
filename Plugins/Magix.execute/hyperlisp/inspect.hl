@@ -736,7 +736,8 @@ thread safe"
 
 magix.execute.execute-script-sample
   execute-script
-    input=>hello world
+    params
+      input=>hello world
     script=>@"
 _data=>thomas
 if=>equals

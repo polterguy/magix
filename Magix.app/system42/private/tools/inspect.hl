@@ -105,41 +105,47 @@ for-each=>[$][exclude]
 set=>[**label=>lbl-header][value].Value
   value=>[$][header].Value
 
-// lambda event, taking [event] as event name, returning [_inspect] and [code]
-_inspect-active-event
-  set=>[_evt].Name
-    value=>[$][event].Value
-  _evt
-    inspect
-  set=>[$][_inspect].Value
-    value=>[[$][event].Value][inspect].Value
-
-  // removing inspect before returning code
-  set=>[[$][event].Value][inspect]
-  for-each=>[[$][event].Value]
-    add=>[$][code]
-      value=>[.]
-
 // creates a link-button web control that it returns back to called
-// taking [inspect] as the description, [code] as sample code, 
-// [event] as active event and [namespace] as namespace to remove
+// taking [event] as active event and [namespace] as namespace to remove
 _create-link-button
   _data
     link-button
       style=>width:100%;display:block;
       onclick
+        _event
+          inspect
         magix.forms.set-value
           form-id=>active-events
           id=>lbl-header
+        set=>[magix.forms.set-value:1][value].Value
+          value=>[0][inspect].Value
         magix.forms.set-value
           form-id=>active-events
           id=>lbl-description
+        set=>[0][inspect]
+        add=>[node-2-code][node]
+          value=>[0]
+          children-only=>true
+        node-2-code
+        replace=>[node-2-code][code].Value
+          what=>&
+          with=>&amp;
+        replace=>[node-2-code][code].Value
+          what=><
+          with=>&lt;
+        replace=>[node-2-code][code].Value
+          what=>>
+          with=>&gt;
+        set=>[magix.forms.set-value:2][value].Value
+          value=>[node-2-code][code].Value
         magix.forms.set-value
           form-id=>active-events
           id=>lbl-code
 
   // setting some onclick behavior, before changing name of active event
   set=>[_data][link-button][onclick][magix.forms.set-value:0][value].Value
+    value=>[$][event].Value
+  set=>[_data][link-button][onclick][_event].Name
     value=>[$][event].Value
 
   // setting properties of link-button
@@ -152,66 +158,28 @@ _create-link-button
   set=>[_data][link-button][value].Value
     value=>[$][event].Value
 
-  // setting more onclick behavior
-  set=>[_data][link-button][onclick][magix.forms.set-value:1][value].Value
-    value=>[$][_inspect].Value
-  if=>exist
-    lhs=>[$][code]
-    code
-      set=>[@][node-2-code][node].Value
-        value=>[$][code]
-      node-2-code
-        remove-root=>true
-      // making sure html is correctly formatted
-      replace=>[@][node-2-code][code].Value
-        what=>&
-        with=>&amp;
-      replace=>[@][node-2-code][code].Value
-        what=><
-        with=>&lt;
-      replace=>[@][node-2-code][code].Value
-        what=>>
-        with=>&gt;
-      set=>[_data][link-button][onclick][magix.forms.set-value:2][value].Value
-        value=>[@][node-2-code][code].Value
-  else
-    set=>[_data][link-button][onclick][magix.forms.set-value:2][value].Value
-      value=>no-code
   // returning link-button
-  set=>[$][link-button]
+  add=>[$]
     value=>[_data][link-button]
 
 // creating the clickable link-buttons in our 'grid'
 for-each=>[list-events][events]
 
-  // inspecting active event first
-  set=>[@][lambda][event].Value
-    value=>[.].Name
-  set=>[@][lambda][code]
-  set=>[@][lambda][_inspect]
-  lambda=>[/][_inspect-active-event]
-
-  // formatting data for creation of link-button
-  set=>[@][lambda:1][_inspect]
-    value=>[@][lambda:0][_inspect]
-  if=>exist
-    lhs=>[@][lambda:0][code]
-    code
-      set=>[@][..][..][lambda:1][code]
-        value=>[@][..][..][lambda:0][code]
-  else
-    set=>[@][..][lambda:1][code]
-  set=>[@][lambda:1][event].Value
-    value=>[.].Name
+  // forwarding namespace
   if=>exist
     lhs=>[$][namespace]
     code
-      set=>[@][..][..][lambda:1][namespace]
+      set=>[@][..][..][lambda][namespace]
         value=>[$][namespace]
+
+  // forwarding event name
+  set=>[@][lambda][event].Value
+    value=>[.].Name
+
   // creating link-button and adding to [_controls] node
   lambda=>[/][_create-link-button]
   add=>[/][_controls][panel=>pnl-events][controls]
-    value=>[@][lambda:1][link-button]
+    value=>[@][lambda][link-button]
 
 // adding extra buttons, if any
 for-each=>[$][extra-buttons]
