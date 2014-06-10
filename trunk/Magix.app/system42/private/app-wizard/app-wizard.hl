@@ -1,22 +1,26 @@
 
 
-inspect=>@"open the application wizard
-such that you can create your own application, 
-using a wizard interface"
+inspect=>@"opens up the wizard web part
+
+opens up the wizard web part, such that user can follow a wizard to 
+create stuff following wizards, instead of having to code directly 
+himself
+
+to create a wizard, create a hyperlisp file within the 'wizards' directory, 
+beneath the directory where this file is, and make sure it has an [inspect] 
+node, which becomes its description, a [_name] node, which is the name of the 
+wizard.  then make sure it allows the user to follow a wizard interface to 
+create whatever functionality your wizard allows the user to create"
+
 
 magix.file.list-files
   directory=>system42/private/app-wizard/wizards
+  filter=>*.hl
 
 _dt
   panel
     class=>boxed span-5 min-height-7 air-padding bottom-1
     style=>cursor:pointer;
-    onclick
-      _file
-      set=>[execute-script][params][file].Value
-        value=>[_file].Value
-      execute-script
-        file=>system42/private/app-wizard/new-app.hl
     controls
       label
         tag=>label
@@ -26,23 +30,23 @@ _dt
         value=>description
 
 for-each=>[magix.file.list-files][files]
-  set=>[@][code-2-node][node]
   set=>[@][code-2-node][file].Value
     value=>[.].Name
   code-2-node
-  set=>[/][_dt][panel][class].Value
-    value=>[@][code-2-node][node][_css].Value
   set=>[/][_dt][panel][controls][label:0][value].Value
     value=>[@][code-2-node][node][_name].Value
   set=>[/][_dt][panel][controls][label:1][value].Value
     value=>[@][code-2-node][node][inspect].Value
-  set=>[/][_dt][panel][onclick][_file].Value
+  set=>[/][_dt][panel][onclick][execute-script][file].Value
     value=>[.].Name
   add=>[/][magix.forms.create-web-part][controls]
     value=>[/][_dt][panel]
 
 magix.forms.create-web-part
-  container=>content2
   form-id=>app-wiz
-  class=>span-17 last top-1
+  class=>span-17 last
+  controls
+    label
+      tag=>h2
+      value=>wizards
 

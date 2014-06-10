@@ -63,12 +63,12 @@ namespace Magix.web
                     ip["inspect"],
                     "Magix.web",
                     "Magix.web.hyperlisp.inspect.hl",
-                    "[magix.get-base-directory-dox].Value");
+                    "[magix.configuration.get-base-directory-dox].Value");
                 AppendCodeFromResource(
                     ip,
                     "Magix.web",
                     "Magix.web.hyperlisp.inspect.hl",
-                    "[magix.get-base-directory-sample]");
+                    "[magix.configuration.get-base-directory-sample]");
                 return;
             }
 
