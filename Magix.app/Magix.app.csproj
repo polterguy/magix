@@ -316,7 +316,7 @@
     <Content Include="system42\private\help\hyper-lisp\working-with-viewports.mml" />
     <Content Include="system42\private\help\index.mml" />
     <Content Include="system42\private\settings\settings.mml" />
-    <Content Include="system42\private\tools\magix-markup-editor.hl" />
+    <Content Include="system42\private\tools\text-editor.hl" />
     <Content Include="system42\private\tools\qr-code-generator.hl" />
     <Content Include="system42\private\users\roles.hl" />
     <Content Include="system42\private\users\users.hl" />

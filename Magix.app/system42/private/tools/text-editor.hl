@@ -1,0 +1,93 @@
+
+
+inspect=>@"allows editing of text files
+
+creates a text-area, where you can edit contents of files on the server, 
+such as hyperlisp or magix markup language files.  [file] is an optional 
+parameter, telling it which file to initially load up.  [container] is 
+optionally parameter, informing which viewport container to load up web 
+part in.  [class] is optional, and defines the css class(es) of the we 
+part itself.  if [allow-filename-change] is false, then the user cannot 
+change the filename of the file being edited"
+
+
+// loading file, if we are given a [file] input parameter
+if=>exist
+  lhs=>[$][file]
+  code
+    using=>magix.file
+      load
+        file=>[$][file].Value
+    replace=>[@][using][load][value].Value
+      what=>&
+      with=>&amp;
+    replace=>[@][using][load][value].Value
+      what=><
+      with=>&lt;
+    replace=>[@][using][load][value].Value
+      what=>>
+      with=>&gt;
+    set=>[**text-area=>editor-surface][value].Value
+      value=>[@][using][load][value].Value
+    set=>[**label=>header][value].Value
+      value=>[$][file].Value
+    set=>[**text-box=>txt-file-name][value].Value
+      value=>[$][file].Value
+
+// enabling or disabling the text-box that allows changing the filename
+if=>equals
+  lhs=>[$][allow-filename-change].Value
+  rhs=>false
+  code
+    set=>[**text-box=>txt-file-name][disabled].Value
+      value=>true
+
+// putting in container, if we're given one, otherwise we're using default container
+if=>exist
+  lhs=>[$][container]
+  code
+    set=>[magix.forms.create-web-part][container].Value
+      value=>[$][container].Value
+
+// adding css classes, if we're given any, otherwise using default of last span-17
+if=>exist
+  lhs=>[$][class]
+  code
+    set=>[magix.forms.create-web-part][class].Value
+      value=>[$][class].Value
+
+// creating web part
+magix.forms.create-web-part
+  form-id=>editor
+  class=>span-17 last
+  controls
+    label=>header
+      tag=>label
+      class=>fill-width
+      value=>filename ...
+    text-area=>editor-surface
+      class=>fill-width
+      rows=>25
+      placeholder=>text content ...
+      onfirstload
+        magix.forms.effect
+          type=>focus-and-select
+          form-id=>editor
+          id=>editor-surface
+    panel
+      default=>save
+      class=>right column last
+      controls
+        label
+          tag=>label
+          class=>span-2
+          value=>save as
+        text-box=>txt-file-name
+          class=>span-10
+          placeholder=>filename ...
+        button=>save
+          class=>span-2 last
+          value=>save
+          onclick
+            debug
+
