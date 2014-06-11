@@ -72,6 +72,58 @@ namespace Magix.forms
         }
 
         /*
+         * sets title
+         */
+        [ActiveEvent(Name = "magix.forms.set-title")]
+        private static void magix_forms_set_title(object sender, ActiveEventArgs e)
+        {
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
+            {
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.forms",
+                    "Magix.forms.hyperlisp.inspect.hl",
+                    "[magix.forms.set-title-dox].Value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.forms",
+                    "Magix.forms.hyperlisp.inspect.hl",
+                    "[magix.forms.set-title-sample]");
+                return;
+            }
+
+            BaseWebControl ctrl = FindControl<BaseWebControl>(ip);
+            ctrl.Title = ip["value"].Get<string>();
+        }
+
+        /*
+         * retrieves title
+         */
+        [ActiveEvent(Name = "magix.forms.get-title")]
+        private static void magix_forms_get_title(object sender, ActiveEventArgs e)
+        {
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
+            {
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.forms",
+                    "Magix.forms.hyperlisp.inspect.hl",
+                    "[magix.forms.get-title-dox].Value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.forms",
+                    "Magix.forms.hyperlisp.inspect.hl",
+                    "[magix.forms.get-title-sample]");
+                return;
+            }
+
+            BaseWebControl ctrl = FindControl<BaseWebControl>(ip);
+            ip["value"].Value = ctrl.Title;
+        }
+
+        /*
          * sets info value
          */
         [ActiveEvent(Name = "magix.forms.set-info")]
