@@ -1,0 +1,248 @@
+﻿
+
+inspect=>@"contains the controls for the load web part event wizard
+
+contains the controls for the web part that allows the user to create an active event 
+that loads up a web part"
+
+
+panel
+  default=>create
+  class=>span-15 last air-padding boxed top-1
+  controls
+    label
+      tag=>h2
+      value=>create load web part active event wizard
+    label
+      class=>clear span-3
+      tag=>label
+      value=>active event name
+    text-box=>active-event-name
+      class=>span-12 last
+      placeholder=>active event name ...
+      onfirstload
+        magix.forms.effect
+          type=>focus-and-select
+          form-id=>wizard
+          id=>active-event-name
+    label
+      tag=>label
+      class=>span-3 top-1
+      value=>load from where
+    select=>sel-load-from-where
+      class=>span-3 top-1
+      onselectedindexchanged
+        magix.wizard.create-load-from-where-web-part
+      items
+        database=>database
+        filesystem=>file system
+    dynamic=>dyn-load-from-where
+      class=>span-9 last top-1
+      onfirstload
+        magix.wizard.create-load-from-where-web-part
+    link-button=>show-advanced
+      class=>span-2 top-1
+      value=>advanced
+      onclick
+        magix.forms.get-value
+          form-id=>wizard
+          id=>show-advanced
+        if=>equals
+          lhs=>[magix.forms.get-value][value].Value
+          rhs=>advanced
+          code
+            magix.forms.set-visible
+              form-id=>wizard
+              id=>show-advanced
+              value=>false
+            magix.forms.effect
+              form-id=>wizard
+              id=>advanced
+              type=>fade-in
+              time=>250
+              chained
+                e0
+                  type=>focus-and-select
+                  form-id=>wizard
+                  id=>container
+        else
+          magix.forms.set-value
+            form-id=>wizard
+            id=>show-advanced
+            value=>advanced
+          magix.forms.effect
+            form-id=>wizard
+            id=>advanced
+            type=>fade-out
+            time=>250
+            chained
+              e0
+                type=>focus-and-select
+                form-id=>wizard
+                id=>active-event-name
+    panel=>advanced
+      class=>span-15 last top-1
+      style=>display:none;
+      controls
+        label
+          tag=>label
+          class=>span-2
+          value=>container
+        text-box=>container
+          class=>span-4
+          placeholder=>container ...
+        label
+          tag=>label
+          class=>span-3 right-text
+          value=>css class(es)
+        text-box=>css-class
+          class=>span-6 last
+          placeholder=>css classes ...
+        dynamic=>css-files
+          class=>span-15 last
+          onfirstload
+            magix.wizard.create-css-files-container
+    button=>create
+      class=>span-2 last top-1 right
+      value=>create
+
+      // user clicks button to create active event
+      onclick
+
+        // buffer holding event creation code
+        _data
+          event
+            name=>{active-event-name}
+            code
+              magix.forms.create-web-part
+                controls-id=>{database-id}
+
+        magix.forms.get-value
+          form-id=>wizard
+          id=>active-event-name
+
+        // checking to see if active event has good name
+        if=>equals
+          lhs=>[magix.forms.get-value][value].Value
+          rhs=>
+          code
+            magix.viewport.show-message
+              message=>you must give your active event a name
+        else
+          magix.forms.get-value
+            form-id=>wizard
+            id=>sel-load-from-where
+          switch=>[@][magix.forms.get-value][value].Value
+
+            // user wants to use a form from database
+            case=>database
+              magix.forms.get-value
+                form-id=>wizard
+                id=>database-id
+              if=>equals
+                lhs=>[@][magix.forms.get-value][value].Value
+                rhs=>_default
+                code
+                  magix.viewport.show-message
+                    message=>you must choose a form from your database
+              else
+                set=>[/][_good].Value
+                  value=>true
+                iterate=>[/][_data]
+                  if=>equals
+                    lhs=>[.].Value
+                    rhs=>{database-id}
+                    code
+                      set=>[.].Value
+                        value=>[@][..][..][..][..][magix.forms.get-value][value].Value
+
+        // checking to see if everything is ok
+        if=>equals
+          lhs=>[_good].Value
+          rhs=>true
+          code
+
+            // setting container for our web part, if there is any defined
+            magix.forms.get-value
+              form-id=>wizard
+              id=>container
+            if=>not-equals
+              lhs=>[@][magix.forms.get-value:0][value].Value
+              rhs=>
+              code
+                set=>[_data][event][code][magix.forms.create-web-part][container].Value
+                  value=>[@][..][..][magix.forms.get-value:0][value].Value
+
+            // setting css classes for our web part, if there is any defined
+            magix.forms.get-value
+              form-id=>wizard
+              id=>css-class
+            if=>not-equals
+              lhs=>[@][magix.forms.get-value:1][value].Value
+              rhs=>
+              code
+                set=>[_data][event][code][magix.forms.create-web-part][class].Value
+                  value=>[@][..][..][magix.forms.get-value:1][value].Value
+
+            // setting active event name
+            iterate=>[/][_data]
+              if=>equals
+                lhs=>[.].Value
+                rhs=>{active-event-name}
+                code
+                  set=>[.].Value
+                    value=>[/][magix.forms.get-value][value].Value
+
+            // setting css files for web part
+            magix.viewport.get-viewstate
+              id=>magix.wizard.css-files
+            for-each=>[@][magix.viewport.get-viewstate][value]
+              _css
+                magix.viewport.include-client-file
+                  type=>css
+              set=>[@][_css][magix.viewport.include-client-file][file].Value
+                value=>[.].Name
+              add=>[/][_data][event][code]
+                value=>[@][_css][magix.viewport.include-client-file]
+
+            // creating active event
+            execute=>[_data]
+            magix.viewport.show-message
+              message=>active event was created
+            magix.forms.set-visible
+              form-id=>wizard
+              id=>edit-event
+              value=>true
+            using=>magix.forms
+              set-info
+                form-id=>wizard
+                id=>edit-event
+                value=>[magix.forms.get-value][value].Value
+
+    link-button=>edit-event
+      class=>span-3 right clear right-text last
+      value=>edit active event
+      visible=>false
+      onclick
+        set=>[magix.data.load][prototype][event].Value
+          value=>[$][info].Value
+        magix.data.load
+          prototype
+            type=>magix.execute.event
+        magix.viewport.clear-controls
+          all=>true
+        magix.viewport.load-module
+          class=>span-17 last
+          container=>content1
+          name=>Magix.ide.modules.ExecutorForm
+        add=>[node-2-code][node]
+          value=>event
+        set=>[node-2-code][node][event][name].Value
+          value=>[$][info].Value
+        add=>[node-2-code][node][event]
+          value=>[magix.data.load][objects][0][value][code]
+        node-2-code
+        set=>[magix.executor.set-code][code].Value
+          value=>[node-2-code][code].Value
+        magix.executor.set-code
+

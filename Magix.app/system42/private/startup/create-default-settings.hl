@@ -27,7 +27,7 @@ if=>not-exist
     magix.data.save
       id=>magix.admin.settings.default-back-end-css-file
       value
-        file=>media/front-end/hipster.css
+        file=>media/front-end/mystique.css
 
 // creating the event that initializes settings in dashboard on a per user basis
 event
