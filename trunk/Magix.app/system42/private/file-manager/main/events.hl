@@ -355,6 +355,7 @@ magix.file-manager.create-preview
           button=>delete-file
             class=>span-2 top-1
             value=>delete
+            title=>deletes the currently selected file
             onclick
 
               // asking user to confirm deletion, before executing deletion
@@ -465,8 +466,8 @@ magix.file-manager.create-preview
                     value=>[magix.viewport.get-viewstate:1][value].Value
               magix.file-manager.create-file-controls
           button=>copy-file
-            class=>span-2 top-1
-            value=>copy
+            class=>span-3 top-1
+            value=>create copy
             title=>creates a copy of the selected file, inside the currently selected directory
             onclick
               magix.viewport.get-viewstate
@@ -548,4 +549,133 @@ magix.file-manager.create-preview
                   id=>magix.file-manager.selected-file
                 magix.file-manager.create-preview
                 magix.file-manager.create-file-controls
+
+          button=>rename-file
+            class=>span-3 top-1 last
+            value=>rename file
+            title=>allows you to rename file
+            onclick
+              magix.forms.create-web-part
+                form-id=>rename-file
+                container=>rename-file-container
+                controls
+                  panel
+                    class=>span-6 last top-1
+                    default=>save-new-name
+                    controls
+                      text-box=>new-file-name
+                        placeholder=>new name ...
+                        class=>span-4
+                        onesc
+                          magix.viewport.clear-controls
+                            container=>rename-file-container
+                        onfirstload
+                          magix.viewport.get-viewstate
+                            id=>magix.file-manager.selected-file
+                          split=>[magix.viewport.get-viewstate][value].Value
+                            what=>/
+                          while=>not-equals
+                            lhs=>[split][result].Count
+                            rhs=>1
+                            code
+                              set=>[split][result][0]
+                          set=>[magix.forms.set-value][value].Value
+                            value=>[split][result][0].Value
+                          magix.forms.set-value
+                            form-id=>rename-file
+                            id=>new-file-name
+                          set=>[magix.forms.set-info][value].Value
+                            value=>[magix.viewport.get-viewstate][value].Value
+                          magix.forms.set-info
+                            form-id=>rename-file
+                            id=>save-new-name
+                          magix.forms.effect
+                            form-id=>rename-file
+                            id=>new-file-name
+                            type=>focus-and-select
+                      button=>save-new-name
+                        class=>span-2 last
+                        value=>save
+                        onclick
+                          magix.forms.get-value
+                            form-id=>rename-file
+                            id=>new-file-name
+                          split=>[$][info].Value
+                            what=>/
+                          using=>magix.math
+                            subtract
+                              =>[split][result].Count
+                              =>1
+                          set=>[split][result][[using][subtract].Value]
+                          _new-file-name
+                          for-each=>[split][result]
+                            set=>[/][_new-file-name].Value
+                              value=>{0}{1}/
+                                =>[/][_new-file-name].Value
+                                =>[.].Value
+                          set=>[_new-file-name].Value
+                            value=>{0}{1}
+                              =>[_new-file-name].Value
+                              =>[magix.forms.get-value][value].Value
+                          if=>not-equals
+                            lhs=>[_new-file-name].Value
+                            rhs=>[$][info].Value
+                            code
+                              using=>magix.file
+                                file-exist
+                                  file=>[_new-file-name].Value
+                              if=>equals
+                                lhs=>[@][using][file-exist][value].Value
+                                rhs=>true
+                                code
+                                  magix.viewport.show-message
+                                    message=>that file already exist
+                                    color=>#ffbbbb
+                                  magix.forms.effect
+                                    type=>focus-and-select
+                                    form-id=>rename-file
+                                    id=>new-file-name
+                              else
+                                using=>magix.file
+                                  move-file
+                                    from=>[$][info].Value
+                                    to=>[_new-file-name].Value
+                                magix.viewport.clear-controls
+                                  container=>rename-file-container
+                                set=>[@][magix.execute][magix.viewport.set-viewstate][value].Value
+                                  value=>[_new-file-name].Value
+
+                                // reloading files
+                                magix.execute
+                                  magix.viewport.get-viewstate
+                                    id=>magix.file-manager.filter
+                                  if=>exist
+                                    lhs=>[magix.viewport.get-viewstate:0][value]
+                                    code
+                                      set=>[magix.file-manager.create-file-controls][filter].Value
+                                        value=>[magix.viewport.get-viewstate:0][value].Value
+                                  magix.viewport.get-viewstate
+                                    id=>magix.file-manager.root
+                                  if=>exist
+                                    lhs=>[magix.viewport.get-viewstate:1][value]
+                                    code
+                                      set=>[magix.file-manager.create-file-controls][root].Value
+                                        value=>[magix.viewport.get-viewstate:1][value].Value
+                                  magix.viewport.get-viewstate
+                                    id=>magix.file-manager.current-folder
+                                  if=>exist
+                                    lhs=>[magix.viewport.get-viewstate:2][value]
+                                    code
+                                      set=>[magix.file-manager.create-file-controls][directory].Value
+                                        value=>[magix.viewport.get-viewstate:2][value].Value
+                                  magix.viewport.set-viewstate
+                                    id=>magix.file-manager.selected-file
+                                  magix.file-manager.create-preview
+                                  magix.file-manager.create-file-controls
+                          else
+                            magix.viewport.clear-controls
+                              container=>rename-file-container
+
+          dynamic=>rename-file-container
+            class=>span-6 last
 
