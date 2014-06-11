@@ -150,7 +150,7 @@ returns the default dashboard shortcuts in your system"
         category=>tools
         code
           execute-script
-            file=>system42/private/tools/magix-markup-editor.hl
+            file=>system42/private/tools/text-editor.hl
       hyperlisp-executor
         text=>hyperlisp executor
         category=>tools

@@ -796,12 +796,13 @@ a.fork
 	font-family:monospace, Courier;
 }
 
-input[type=textarea].fill-width,
+input[type=text].fill-width,
 textarea.fill-width,
 .fill-width
 {
 	width:100%;
 	display:block;
+    margin-right:0;
 }
 
 input[type=text].input-large,

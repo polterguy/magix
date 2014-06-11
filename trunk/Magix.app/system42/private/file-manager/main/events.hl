@@ -380,6 +380,12 @@ magix.file-manager.create-preview
             class=>span-2 top-1 clear
             value=>edit
             disabled=>true
+            onclick
+              magix.viewport.get-viewstate
+                id=>magix.file-manager.selected-file
+              set=>[magix.file-manager.edit-file][file].Value
+                value=>[magix.viewport.get-viewstate][value].Value
+              magix.file-manager.edit-file
           button=>delete-file
             class=>span-2 top-1
             value=>delete
@@ -706,4 +712,15 @@ magix.file-manager.create-preview
 
           dynamic=>rename-file-container
             class=>span-6 last
+
+// edits files that allows to be edited, such as mml and hyperlisp files
+// [file] parameter is file to edit
+magix.file-manager.edit-file
+  set=>[execute-script][params][file].Value
+    value=>[$][file].Value
+  execute-script
+    file=>system42/private/tools/text-editor.hl
+    params
+      container=>content2
+      class=>span-22 last top-1
 
