@@ -167,7 +167,7 @@ returns the default dashboard shortcuts in your system"
         code
           magix.tracer.toggle-tracer
       file-system
-        text=>file system
+        text=>file manager
         category=>tools
         code
           magix.viewport.clear-controls
@@ -204,7 +204,7 @@ returns the default dashboard shortcuts in your system"
           magix.browser.scroll
             id=>help
       qr-codes
-        text=>vanity qr code generator
+        text=>vanity qr codes
         category=>applications
         code
           magix.viewport.clear-controls

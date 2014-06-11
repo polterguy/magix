@@ -138,8 +138,22 @@ thread safe"
 
 magix.file.move-file-sample
   magix.file.move-file
-    from=>media/tmp
-    to=>media/some-new-directory
+    from=>tmp/info.txt
+    to=>media/info.txt
+
+
+magix.file.copy-file-dox=>@"copies a file on disc
+
+copies the given [from] file to the [to] file.  both the file to copy, and the where to 
+copy it, can be either expressions, or constants.  both the [from] and [to] can be either 
+relative path's beneath the web application's folder, or absolute paths
+
+thread safe"
+
+magix.file.copy-file-sample
+  magix.file.copy-file
+    from=>tmp/info.txt
+    to=>media/info-2.txt
 
 
 magix.file.file-exist-dox=>@"checks if a file exist

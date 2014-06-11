@@ -389,6 +389,8 @@
     <Content Include="system42\private\app-wizard\wizards\load-web-part-event-wizard.hl" />
     <Content Include="system42\private\app-wizard\wizards\load-web-part-event-wizard\events.hl" />
     <Content Include="system42\private\app-wizard\wizards\load-web-part-event-wizard\controls.hl" />
+    <None Include="system42\private\file-manager\file-manager.hl.old" />
+    <Content Include="system42\private\file-manager\main\events.hl" />
     <None Include="todo.txt" />
   </ItemGroup>
   <ItemGroup>

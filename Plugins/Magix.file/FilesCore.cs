@@ -209,13 +209,54 @@ namespace Magix.execute
                 from = _basePath + from;
 
             if (!ip.ContainsValue("to"))
-                throw new ArgumentException("you need to define which directory to copy to, as [to] node");
+                throw new ArgumentException("you need to define where to move file to, as [to] node");
 
             string to = Expressions.GetExpressionValue(ip["to"].Get<string>(), dp, ip, false) as string;
             if (!to.Contains(":"))
                 to = _basePath + to;
 
             File.Move(from, to);
+        }
+
+        /*
+         * moves the given file
+         */
+        [ActiveEvent(Name = "magix.file.copy-file")]
+        public static void magix_file_copy_file(object sender, ActiveEventArgs e)
+        {
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
+            {
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.file",
+                    "Magix.file.hyperlisp.inspect.hl",
+                    "[magix.file.copy-file-dox].Value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.file",
+                    "Magix.file.hyperlisp.inspect.hl",
+                    "[magix.file.copy-file-sample]");
+                return;
+            }
+
+            Node dp = Dp(e.Params);
+
+            if (!ip.ContainsValue("from"))
+                throw new ArgumentException("you need to tell the engine which file to copy as the value of the [from]");
+
+            string from = Expressions.GetExpressionValue(ip["from"].Get<string>(), dp, ip, false) as string;
+            if (!from.Contains(":"))
+                from = _basePath + from;
+
+            if (!ip.ContainsValue("to"))
+                throw new ArgumentException("you need to define which file to copy to, as [to] node");
+
+            string to = Expressions.GetExpressionValue(ip["to"].Get<string>(), dp, ip, false) as string;
+            if (!to.Contains(":"))
+                to = _basePath + to;
+
+            File.Copy(from, to);
         }
 
         /*

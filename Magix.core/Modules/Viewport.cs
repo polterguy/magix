@@ -196,7 +196,6 @@ namespace Magix.Core
                     DynamicPanel dyn = Selector.FindControl<DynamicPanel>(
                         this,
                         idx);
-                    dyn.Class = "";
                     ClearControls(dyn);
                 }
             }
@@ -208,7 +207,6 @@ namespace Magix.Core
 
                 if (dyn == null)
                     return;
-                dyn.Class = "";
                 ClearControls(dyn);
             }
 		}

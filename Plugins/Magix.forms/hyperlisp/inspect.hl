@@ -1007,7 +1007,10 @@ if no form-id is given, the first control that matches the given
 id will have its value changed, in any web parts you may have 
 currently loaded
 
-[value] can be either a constant or an expression"
+[value] can be either a constant or an expression.  [value] can 
+also contain formatting expressions, such as {0}, {1} and so on, 
+which references children nodes of [value], and becomes substitude 
+with the value of the children nodes"
 
 magix.forms.set-value-sample
   magix.forms.create-web-part
@@ -1092,6 +1095,55 @@ magix.forms.get-class-sample
         value=>click me
         onclick
           magix.forms.get-class
+            form-id=>sample-form
+            id=>btn
+          set=>[2][message].Value
+            value=>[0][value].Value
+          magix.viewport.show-message
+
+
+magix.forms.set-class-dox=>@"sets the title of a web control
+
+the control to set the title of, is given through the [id] 
+node.  [form-id] is the form-id of the web part the control 
+you wish to change the title of.  if no form-id is given, 
+then the first control that matches the id parameter, in any 
+web parts, will be returned"
+
+magix.forms.set-title-sample
+  magix.forms.create-web-part
+    container=>content5
+    form-id=>sample-form
+    class=>span-22 last
+    controls
+      button=>btn
+        value=>click me
+        onclick
+          magix.forms.set-title
+            form-id=>sample-form
+            id=>btn
+            value=>hello from title
+
+
+magix.forms.get-title-dox=>@"retrieves the title of a web control
+
+the control to get the title of, is given through the [id] 
+node.  [form-id] is the form-id of the web part the control 
+you wish to retrieve the title of.  if no form-id is given, 
+then the first control that matches the id parameter, in any 
+web parts, will be returned"
+
+magix.forms.get-title-sample
+  magix.forms.create-web-part
+    container=>content5
+    form-id=>sample-form
+    class=>span-22 last
+    controls
+      button=>btn
+        class=>span-5 btn-large
+        value=>click me
+        onclick
+          magix.forms.get-title
             form-id=>sample-form
             id=>btn
           set=>[2][message].Value
