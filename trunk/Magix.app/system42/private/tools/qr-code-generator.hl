@@ -6,7 +6,7 @@ at whatever urls you wish"
 
 
 magix.viewport.clear-controls
-  container=>content2
+  all=>true
 
 magix.forms.create-web-part
   container=>content1

@@ -2,7 +2,7 @@
 
 inspect=>@"contains events for preview
 
-contains events for the preview web part of the web part builder"
+contains events for the preview web part of the web part designer"
 
 magix.ide.show-hide-preview-load-description
   magix.data.load-username

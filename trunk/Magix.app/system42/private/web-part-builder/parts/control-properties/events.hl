@@ -2,7 +2,7 @@
 
 inspect=>@"contains events for properties
 
-contains events for web part builder properties section"
+contains events for web part designer properties section"
 
 
 magix.ide.create-properties-controls
