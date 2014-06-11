@@ -258,6 +258,7 @@ magix.file-manager.create-preview
         code
           set=>[@][..][..][split:1][result][0]
       _can-edit=>false
+      _is-image=>false
 
       // checking filetype, and setting a descriptive label, and whether or not the file can be edited
       switch=>[@][split:1][result][0].Value
@@ -284,15 +285,23 @@ magix.file-manager.create-preview
         case=>png
           set=>[/][**value=>unknown filetype].Value
             value=>image file
+          set=>[@][..][..][_is-image].Value
+            value=>true
         case=>jpg
           set=>[/][**value=>unknown filetype].Value
             value=>image file
+          set=>[@][..][..][_is-image].Value
+            value=>true
         case=>jpeg
           set=>[/][**value=>unknown filetype].Value
             value=>image file
+          set=>[@][..][..][_is-image].Value
+            value=>true
         case=>gif
           set=>[/][**value=>unknown filetype].Value
             value=>image file
+          set=>[@][..][..][_is-image].Value
+            value=>true
         case=>cs
           set=>[/][**value=>unknown filetype].Value
             value=>c# file
@@ -336,6 +345,16 @@ magix.file-manager.create-preview
           set=>[/][**button=>edit-file][disabled].Value
             value=>false
 
+      // enabling or disabling view image preview
+      if=>equals
+        lhs=>[@][_is-image].Value
+        rhs=>true
+        code
+          set=>[/][**img=>image-preview][visible].Value
+            value=>true
+          set=>[/][**img=>image-preview][src].Value
+            value=>[magix.viewport.get-viewstate][value].Value
+
       // creating actual preview web part
       magix.forms.create-web-part
         container=>preview
@@ -348,6 +367,15 @@ magix.file-manager.create-preview
           label=>lbl-file-type
             class=>span-6 last
             value=>unknown filetype
+          img=>image-preview
+            visible=>false
+            style=>cursor:pointer;max-height:180px;max-width:230px;
+            class=>clear column
+            onclick
+              using=>magix.viewport
+                execute-javascript
+                  script=>@"window.open('/{0}', '_blank');"
+                    =>[$][value].Value
           button=>edit-file
             class=>span-2 top-1 clear
             value=>edit
