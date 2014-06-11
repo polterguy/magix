@@ -65,6 +65,7 @@
     <Content Include="media\bootstrap\css\bootstrap-responsive.min.css" />
     <Content Include="media\bootstrap\img\glyphicons-halflings.png" />
     <Content Include="media\bootstrap\img\glyphicons-halflings-white.png" />
+    <Content Include="media\front-end\mystique.css" />
     <Content Include="media\front-end\white.css" />
     <Content Include="media\front-end\hipster.css" />
     <Content Include="media\front-end\default.css" />
@@ -73,10 +74,12 @@
     <Content Include="media\images\backgrounds\background-pink.png" />
     <Content Include="media\images\backgrounds\background-white.png" />
     <Content Include="media\images\backgrounds\background.png" />
+    <Content Include="media\images\backgrounds\mystique.png" />
     <Content Include="media\images\help-files\marvin-headshot.png" />
     <Content Include="media\images\help-files\qr-code-to-magix.png" />
     <Content Include="media\images\help-files\screenshots\hyper-lisp-spaces.png" />
     <Content Include="media\images\icons\arrows.png" />
+    <Content Include="media\images\icons\start-button-blue.png" />
     <Content Include="media\images\icons\start-button.png" />
     <Content Include="media\images\icons\toolbox-icons.png" />
     <Content Include="media\bootstrap\js\bootstrap.js" />
@@ -383,10 +386,12 @@
     <Content Include="system42\private\help\start-help.hl" />
     <Content Include="system42\private\startup\unit-tests\for-each.hl" />
     <Content Include="system42\private\startup\unit-tests\iterate.hl" />
+    <Content Include="system42\private\app-wizard\wizards\load-web-part-event-wizard.hl" />
+    <Content Include="system42\private\app-wizard\wizards\load-web-part-event-wizard\events.hl" />
+    <Content Include="system42\private\app-wizard\wizards\load-web-part-event-wizard\controls.hl" />
     <None Include="todo.txt" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="database\" />
-    <Folder Include="system42\private\app-wizard\wizards\" />
   </ItemGroup>
 </Project>

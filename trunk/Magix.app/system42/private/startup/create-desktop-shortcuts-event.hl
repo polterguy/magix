@@ -173,18 +173,12 @@ returns the default dashboard shortcuts in your system"
         text=>hyperlisp executor
         category=>tools
         code
+          magix.viewport.clear-controls
+            all=>true
           magix.viewport.load-module
             class=>span-17 last
             container=>content1
             name=>Magix.ide.modules.ExecutorForm
-          magix.viewport.clear-controls
-            container=>content2
-          magix.viewport.clear-controls
-            container=>content3
-          magix.viewport.clear-controls
-            container=>content4
-          magix.viewport.clear-controls
-            container=>content5
       toggle-tracer
         text=>toggle tracer
         category=>tools

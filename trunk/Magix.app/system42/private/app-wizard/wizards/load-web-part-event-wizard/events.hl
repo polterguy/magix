@@ -1,0 +1,184 @@
+﻿
+
+inspect=>@"contains the active events for the load web part event wizard
+
+contains the active events for the web part that allows the user to create an active event 
+that loads up a web part"
+
+
+// populates the select css file drop down with all css files beneath the media folder
+magix.wizard.populate-select-css-file
+
+  // defaulting directory to media directory, unless a directory is explicitly given as input
+  _directory=>media
+  if=>exist
+    lhs=>[$][directory]
+    code
+      set=>[_directory].Value
+        value=>[$][directory].Value
+
+  // fetching all files and directories from current directory
+  using=>magix.file
+    list-files
+      directory=>[_directory].Value
+      filter=>*.css
+    list-directories
+      directory=>[_directory].Value
+
+  // looping through all files
+  for-each=>[using][list-files][files]
+    add=>[$][files]
+      value=>[.].Name
+        value=>[.].Name
+
+  // looping through all directories, and recursively calling self
+  for-each=>[using][list-directories][directories]
+    set=>[@][magix.wizard.populate-select-css-file][directory].Value
+      value=>[.].Name
+    magix.wizard.populate-select-css-file
+    if=>exist
+      lhs=>[@][magix.wizard.populate-select-css-file][files]
+      code
+        add=>[$][files]
+          value=>[@][..][..][magix.wizard.populate-select-css-file][files]
+          children-only=>true
+
+// creates the web part that holds the css files
+magix.wizard.create-css-files-container
+
+  magix.forms.create-web-part
+    container=>css-files
+    form-id=>css-files
+    class=>span-15 top-1
+    controls
+      label
+        tag=>label
+        class=>span-15 last
+        value=>css files
+      lambda=>lambda-css-files
+        oncreatecontrols
+          _control
+            panel
+              class=>span-15 last
+              controls
+                link-button
+                  class=>span-1 last
+                  value=>x
+                  onclick
+                    magix.viewport.get-viewstate
+                      id=>magix.wizard.css-files
+                    set=>[magix.viewport.get-viewstate][value][[$][info].Value]
+                    set=>[magix.viewport.set-viewstate][value]
+                      value=>[magix.viewport.get-viewstate][value]
+                    magix.viewport.set-viewstate
+                      id=>magix.wizard.css-files
+                    magix.wizard.create-css-files-container
+                label
+                  class=>span-14
+          magix.viewport.get-viewstate
+            id=>magix.wizard.css-files
+          for-each=>[magix.viewport.get-viewstate][value]
+            set=>[/][_control][panel][controls][label][value].Value
+              value=>[.].Name
+            set=>[/][_control][panel][controls][link-button][info].Value
+              value=>[.].Name
+            add=>[$]
+              value=>[/][_control][panel]
+      select=>add-css-file
+        class=>span-6 top-1
+        onfirstload
+          magix.wizard.populate-select-css-file
+          add=>[magix.forms.set-values][values]
+            value=>[magix.wizard.populate-select-css-file][files]
+            children-only=>true
+          magix.forms.set-values
+            form-id=>css-files
+            id=>add-css-file
+            values
+              _default=>insert css file ...
+        onselectedindexchanged
+          magix.forms.get-value
+            form-id=>css-files
+            id=>add-css-file
+          magix.viewport.get-viewstate
+            id=>magix.wizard.css-files
+
+          // checking to see if file is already included
+          _included
+          for-each=>[magix.viewport.get-viewstate][value]
+            if=>equals
+              lhs=>[.].Name
+              rhs=>[/][magix.forms.get-value][value].Value
+              code
+                magix.viewport.show-message
+                  message=>that file is already included
+                set=>[/][_included].Value
+                  value=>true
+                magix.forms.set-value
+                  form-id=>css-files
+                  id=>add-css-file
+                  value=>_default
+          if=>not-equals
+            lhs=>[_included].Value
+            rhs=>true
+            code
+              add=>[@][magix.viewport.set-viewstate][value]
+                value=>[magix.viewport.get-viewstate][value]
+                children-only=>true
+              add=>[@][magix.viewport.set-viewstate][value]
+                value=>[magix.forms.get-value][value].Value
+              magix.viewport.set-viewstate
+                id=>magix.wizard.css-files
+              magix.wizard.create-css-files-container
+
+// creates the 'load from where' web part, that depending upon the value of the 'load from where' select drop down list 
+// asks the user for an id in the database, or to browse for a file on disc
+magix.wizard.create-load-from-where-web-part
+  magix.forms.get-value
+    form-id=>wizard
+    id=>sel-load-from-where
+
+  // if user has selected to load from disc, we create the load from disc web part, otherwise we create the load from database web part
+  switch=>[magix.forms.get-value][value].Value
+
+    // user has chosen to load web part from database
+    case=>database
+      magix.forms.create-web-part
+        container=>dyn-load-from-where
+        form-id=>from-where
+        controls
+          select=>database-id
+            class=>span-9 last
+            onfirstload
+
+              // populating the select database id drop down list with all the ids from the database 
+              // for web parts
+              _items
+                _default=>choose a database id ...
+              magix.data.load
+                prototype
+                  type=>magix.forms.web-part
+              for-each=>[magix.data.load][objects]
+                add=>[/][_items]
+                  value=>[.][id].Value
+                    value=>[.][id].Value
+              add=>[magix.forms.set-values][values]
+                value=>[_items]
+                children-only=>true
+              magix.forms.set-values
+                form-id=>from-where
+                id=>database-id
+
+    // user has chosen to load web part from file system
+    case=>filesystem
+      magix.forms.create-web-part
+        container=>dyn-load-from-where
+        form-id=>from-where
+        controls
+          text-box=>filename
+            class=>span-7
+            placeholder=>file name ...
+          button=>browse
+            class=>span-2 last
+            value=>browse
+
