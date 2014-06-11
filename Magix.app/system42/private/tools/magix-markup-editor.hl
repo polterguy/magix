@@ -6,7 +6,7 @@ markup previewed in another container"
 
 
 magix.viewport.clear-controls
-  container=>content2
+  all=>true
 magix.forms.create-mml-web-part
   container=>content1
   form-id=>mmleditor

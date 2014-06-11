@@ -5,9 +5,8 @@ server query tool"
 
 
 magix.viewport.clear-controls
-  container=>content2
+  all=>true
 magix.forms.create-web-part
-  container=>content1
   class=>span-17 last
   form-id=>sql
 

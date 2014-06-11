@@ -1,8 +1,8 @@
 ﻿
 
-inspect=>@"contains controls for web part builder, preview web part
+inspect=>@"contains controls for web part designer, preview web part
 
-contains the control definition for the preview parts of the web part builder"
+contains the control definition for the preview parts of the web part designer"
 
 
 // descriptive header
