@@ -65,6 +65,7 @@
     <Content Include="media\bootstrap\css\bootstrap-responsive.min.css" />
     <Content Include="media\bootstrap\img\glyphicons-halflings.png" />
     <Content Include="media\bootstrap\img\glyphicons-halflings-white.png" />
+    <Content Include="media\front-end\golden.css" />
     <Content Include="media\front-end\mystique.css" />
     <Content Include="media\front-end\white.css" />
     <Content Include="media\front-end\hipster.css" />
@@ -74,7 +75,8 @@
     <Content Include="media\images\backgrounds\background-pink.png" />
     <Content Include="media\images\backgrounds\background-white.png" />
     <Content Include="media\images\backgrounds\background.png" />
-    <Content Include="media\images\backgrounds\mystique.png" />
+    <Content Include="media\images\backgrounds\golden.jpg" />
+    <Content Include="media\images\backgrounds\mystique.jpg" />
     <Content Include="media\images\help-files\marvin-headshot.png" />
     <Content Include="media\images\help-files\qr-code-to-magix.png" />
     <Content Include="media\images\help-files\screenshots\hyper-lisp-spaces.png" />
@@ -389,7 +391,6 @@
     <Content Include="system42\private\app-wizard\wizards\load-web-part-event-wizard.hl" />
     <Content Include="system42\private\app-wizard\wizards\load-web-part-event-wizard\events.hl" />
     <Content Include="system42\private\app-wizard\wizards\load-web-part-event-wizard\controls.hl" />
-    <None Include="system42\private\file-manager\file-manager.hl.old" />
     <Content Include="system42\private\file-manager\main\events.hl" />
     <None Include="todo.txt" />
   </ItemGroup>

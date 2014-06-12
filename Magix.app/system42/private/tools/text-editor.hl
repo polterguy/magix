@@ -6,9 +6,20 @@ creates a text-area, where you can edit contents of files on the server,
 such as hyperlisp or magix markup language files.  [file] is an optional 
 parameter, telling it which file to initially load up.  [container] is 
 optionally parameter, informing which viewport container to load up web 
-part in.  [class] is optional, and defines the css class(es) of the we 
-part itself.  if [allow-filename-change] is false, then the user cannot 
-change the filename of the file being edited"
+part in.  if no [container] is given, the web part will load up in the 
+content1 containerr.  [class] is optional, and defines the css class(es) 
+of the we part itself.  if [allow-filename-change] is false, then the 
+user cannot change the filename of the file being edited
+
+you can also supply extra buttons, by supplying extra controls through 
+the [extra-buttons] parameters, that will be appended after the save 
+button
+
+if you supply [auto-scroll] and set its value to true, then it will 
+automatically scroll to the container where it is created upon creation
+
+if you supply an [onesc] piec of hyperlisp code, then this code will 
+execute if the user clicks esc"
 
 
 // loading file, if we are given a [file] input parameter
@@ -56,38 +67,85 @@ if=>exist
     set=>[magix.forms.create-web-part][class].Value
       value=>[$][class].Value
 
+// adding extra buttons, if we're given any
+if=>exist
+  lhs=>[$][extra-buttons]
+  code
+    set=>[**button=>save][class].Value
+      value=>span-2
+    add=>[**panel=>save-wrapper][controls]
+      value=>[$][extra-buttons]
+      children-only=>true
+
+// adding automatical scroll, if we're supposed to
+if=>equals
+  lhs=>[$][auto-scroll].Value
+  rhs=>true
+  code
+    set=>[**panel=>save-wrapper][onfirstload][magix.browser.scroll][id].Value
+      value=>[magix.forms.create-web-part][container].Value
+
+// adding [onesc] event handler, if we're given any
+if=>exist
+  lhs=>[$][onesc]
+  code
+    add=>[**panel=>main-wrapper][onesc]
+      value=>[$][onesc]
+      children-only=>true
+
 // creating web part
 magix.forms.create-web-part
   form-id=>editor
+  container=>content1
   class=>span-17 last
   controls
-    label=>header
-      tag=>label
-      class=>fill-width
-      value=>filename ...
-    text-area=>editor-surface
-      class=>fill-width
-      rows=>25
-      placeholder=>text content ...
-      onfirstload
-        magix.forms.effect
-          type=>focus-and-select
-          form-id=>editor
-          id=>editor-surface
-    panel
-      default=>save
-      class=>right column last
+    panel=>main-wrapper
       controls
-        label
+        label=>header
           tag=>label
-          class=>span-2
-          value=>save as
-        text-box=>txt-file-name
-          class=>span-10
-          placeholder=>filename ...
-        button=>save
-          class=>span-2 last
-          value=>save
-          onclick
-            debug
+          class=>fill-width
+          value=>filename ...
+        text-area=>editor-surface
+          class=>fill-width
+          rows=>25
+          placeholder=>text content ...
+          onfirstload
+            magix.forms.effect
+              type=>focus-and-select
+              form-id=>editor
+              id=>editor-surface
+        panel=>save-wrapper
+          default=>save
+          class=>right column last
+          controls
+            label
+              tag=>label
+              class=>span-2
+              value=>save as
+            text-box=>txt-file-name
+              class=>span-10
+              placeholder=>filename ...
+            button=>save
+              class=>span-2 last
+              value=>save
+              onclick
+                magix.forms.get-value
+                  form-id=>editor
+                  id=>txt-file-name
+                magix.forms.get-value
+                  form-id=>editor
+                  id=>editor-surface
+                using=>magix.file
+                  save
+                    file=>[magix.forms.get-value:0][value].Value
+                    value=>[magix.forms.get-value:1][value].Value
+                magix.viewport.show-message
+                  message=>file was successfully saved
+                magix.forms.effect
+                  type=>focus-and-select
+                  form-id=>editor
+                  id=>editor-surface
+                set=>[magix.editor.file-saved][file].Value
+                  value=>[magix.forms.get-value:0][value].Value
+                magix.editor.file-saved
 
