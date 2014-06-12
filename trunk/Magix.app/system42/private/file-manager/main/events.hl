@@ -723,4 +723,55 @@ magix.file-manager.edit-file
     params
       container=>content2
       class=>span-22 last top-1
+      auto-scroll=>true
+      onesc
+        magix.viewport.clear-controls
+          container=>content2
+      extra-buttons
+        button=>close
+          class=>span-2 last
+          value=>close
+          onclick
+            magix.viewport.clear-controls
+              container=>content2
+
+// raised by text-editor when file is saved.  rebinding files, in case filename was changed
+// will be given a [file] parameter.  we're checking to see if the [file] parameter is the same 
+// as the currently selected file, if it is not, we rebind the web part
+magix.editor.file-saved
+  magix.viewport.get-viewstate
+    id=>magix.file-manager.selected-file
+  if=>not-equals
+    lhs=>[$][file].Value
+    rhs=>[magix.viewport.get-viewstate][value].Value
+    code
+      // we need to rebind the web part
+      set=>[@][magix.viewport.set-viewstate][value].Value
+        value=>[$][file].Value
+      magix.viewport.set-viewstate
+        id=>magix.file-manager.selected-file
+      magix.execute
+        magix.viewport.get-viewstate
+          id=>magix.file-manager.filter
+        if=>exist
+          lhs=>[magix.viewport.get-viewstate:0][value]
+          code
+            set=>[magix.file-manager.create-file-controls][filter].Value
+              value=>[magix.viewport.get-viewstate:0][value].Value
+        magix.viewport.get-viewstate
+          id=>magix.file-manager.root
+        if=>exist
+          lhs=>[magix.viewport.get-viewstate:1][value]
+          code
+            set=>[magix.file-manager.create-file-controls][root].Value
+              value=>[magix.viewport.get-viewstate:1][value].Value
+        magix.viewport.get-viewstate
+          id=>magix.file-manager.current-folder
+        if=>exist
+          lhs=>[magix.viewport.get-viewstate:2][value]
+          code
+            set=>[magix.file-manager.create-file-controls][directory].Value
+              value=>[magix.viewport.get-viewstate:2][value].Value
+        magix.file-manager.create-preview
+        magix.file-manager.create-file-controls
 
