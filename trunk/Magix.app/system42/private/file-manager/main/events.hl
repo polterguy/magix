@@ -731,6 +731,7 @@ magix.file-manager.edit-file
         button=>close
           class=>span-2 last
           value=>close
+          title=>close editor
           onclick
             magix.viewport.clear-controls
               container=>content2

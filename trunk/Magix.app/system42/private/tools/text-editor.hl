@@ -18,13 +18,13 @@ button
 if you supply [auto-scroll] and set its value to true, then it will 
 automatically scroll to the container where it is created upon creation
 
-if you supply an [onesc] piec of hyperlisp code, then this code will 
-execute if the user clicks esc"
+if you supply an [onesc] piece of hyperlisp code, then this code will 
+execute when the user clicks esc"
 
 
 // loading file, if we are given a [file] input parameter
 if=>exist
-  lhs=>[$][file]
+  lhs=>[$][file].Value
   code
     using=>magix.file
       load
@@ -44,6 +44,24 @@ if=>exist
       value=>[$][file].Value
     set=>[**text-box=>txt-file-name][value].Value
       value=>[$][file].Value
+
+    // enabling the preview button, but only if file is an mml file
+    split=>[$][file].Value
+      what=>.
+    while=>more-than
+      lhs=>[@][split][result].Count
+      rhs=>1
+      code
+        set=>[@][..][..][split][result][0]
+    if=>equals
+      lhs=>[@][split][result][0].Value
+      rhs=>mml
+      code
+        set=>[**button=>preview][disabled].Value
+          value=>false
+    else
+      set=>[**button=>preview][disabled].Value
+        value=>true
 
 // enabling or disabling the text-box that allows changing the filename
 if=>equals
@@ -105,6 +123,36 @@ magix.forms.create-web-part
           tag=>label
           class=>fill-width
           value=>filename ...
+        panel=>toolbar
+          class=>fill-width column
+          controls
+            button=>preview
+              class=>span-2
+              value=>preview
+              onclick
+                magix.forms.get-value
+                  form-id=>editor
+                  id=>editor-surface
+                using=>magix.forms
+                  create-mml-web-part
+                    container=>preview-container
+                    form-id=>preview
+                    mml=>[magix.forms.get-value][value].Value
+                  create-web-part
+                    container=>preview-toolbar
+                    form-id=>preview-toolbar
+                    controls
+                      button=>close-preview
+                        class=>span-2 last right
+                        value=>close
+                        title=>closes preview
+                        onclick
+                          magix.viewport.clear-controls
+                            container=>preview-container
+                          magix.viewport.clear-controls
+                            container=>preview-toolbar
+                magix.browser.scroll
+                  id=>preview-container
         text-area=>editor-surface
           class=>fill-width
           rows=>25
@@ -147,5 +195,16 @@ magix.forms.create-web-part
                   id=>editor-surface
                 set=>[magix.editor.file-saved][file].Value
                   value=>[magix.forms.get-value:0][value].Value
+                using=>magix.forms
+                  set-value
+                    form-id=>editor
+                    id=>header
+                    value=>[magix.forms.get-value:0][value].Value
                 magix.editor.file-saved
+
+        // preview container
+        dynamic=>preview-container
+          class=>fill-width column top-1
+        dynamic=>preview-toolbar
+          class=>fill-width column
 
