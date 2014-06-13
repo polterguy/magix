@@ -1,0 +1,118 @@
+
+
+inspect=>@"allows wysiwyg editing of html files
+
+creates a wysiwyg editor where the user can edit html files"
+
+
+// loading file, if we are given a [file] input parameter
+if=>exist
+  lhs=>[$][file].Value
+  code
+    using=>magix.file
+      load
+        file=>[$][file].Value
+    replace=>[@][using][load][value].Value
+      what=>&
+      with=>&amp;
+    replace=>[@][using][load][value].Value
+      what=><
+      with=>&lt;
+    replace=>[@][using][load][value].Value
+      what=>>
+      with=>&gt;
+    set=>[**wysiwyg=>editor-surface][value].Value
+      value=>[@][using][load][value].Value
+    set=>[**text-box=>txt-file-name][value].Value
+      value=>[$][file].Value
+
+// putting in container, if we're given one, otherwise we're using default container
+if=>exist
+  lhs=>[$][container]
+  code
+    set=>[magix.forms.create-web-part][container].Value
+      value=>[$][container].Value
+
+// adding css classes, if we're given any, otherwise using default of last span-17
+if=>exist
+  lhs=>[$][class]
+  code
+    set=>[magix.forms.create-web-part][class].Value
+      value=>[$][class].Value
+
+// adding extra buttons, if we're given any
+if=>exist
+  lhs=>[$][extra-buttons]
+  code
+    set=>[**button=>save][class].Value
+      value=>span-2
+    add=>[**panel=>save-wrapper][controls]
+      value=>[$][extra-buttons]
+      children-only=>true
+
+// adding automatical scroll, if we're supposed to
+if=>equals
+  lhs=>[$][auto-scroll].Value
+  rhs=>true
+  code
+    set=>[**panel=>save-wrapper][onfirstload][magix.browser.scroll][id].Value
+      value=>[magix.forms.create-web-part][container].Value
+
+// automatically giving focus, if we're supposed to
+if=>not-equals
+  lhs=>[$][auto-focus].Value
+  rhs=>true
+  code
+    set=>[**text-area=>editor-surface][onfirstload][magix.forms.effect].Name
+      value=>_not
+
+// adding [onesc] event handler, if we're given any
+if=>exist
+  lhs=>[$][onesc]
+  code
+    add=>[**panel=>main-wrapper][onesc]
+      value=>[$][onesc]
+      children-only=>true
+
+// creating web part
+magix.forms.create-web-part
+  form-id=>editor
+  container=>content1
+  class=>span-17 last
+  controls
+    panel=>main-wrapper
+      controls
+        wysiwyg=>editor-surface
+          class=>fill-width
+          placeholder=>text content ...
+        panel=>save-wrapper
+          default=>save
+          class=>right column last
+          controls
+            label
+              tag=>label
+              class=>span-2
+              value=>save as
+            text-box=>txt-file-name
+              class=>span-10
+              placeholder=>filename ...
+            button=>save
+              class=>span-2 last
+              value=>save
+              onclick
+                magix.forms.get-value
+                  form-id=>editor
+                  id=>txt-file-name
+                magix.forms.get-value
+                  form-id=>editor
+                  id=>editor-surface
+                using=>magix.file
+                  save
+                    file=>[magix.forms.get-value:0][value].Value
+                    value=>[magix.forms.get-value:1][value].Value
+                magix.viewport.show-message
+                  message=>file was successfully saved
+                set=>[magix.editor.file-saved][file].Value
+                  value=>[magix.forms.get-value:0][value].Value
+                magix.editor.file-saved
+

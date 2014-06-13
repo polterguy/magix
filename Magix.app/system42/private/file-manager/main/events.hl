@@ -87,6 +87,7 @@ magix.file-manager.create-file-controls
               set=>[magix.file-manager.create-file-controls][root].Value
                 value=>[magix.viewport.get-viewstate:1][value].Value
           magix.file-manager.create-file-controls
+          magix.file-manager.directory-changed
 
     split=>[.].Name
       what=>/
@@ -272,6 +273,16 @@ magix.file-manager.create-preview
             value=>magix markup language file
           set=>[@][..][..][_can-edit].Value
             value=>true
+        case=>html
+          set=>[/][**value=>unknown filetype].Value
+            value=>hyper text markup language file
+          set=>[@][..][..][_can-edit].Value
+            value=>true
+        case=>htm
+          set=>[/][**value=>unknown filetype].Value
+            value=>hyper text markup language file
+          set=>[@][..][..][_can-edit].Value
+            value=>true
         case=>config
           set=>[/][**value=>unknown filetype].Value
             value=>configuration file
@@ -434,6 +445,10 @@ magix.file-manager.create-preview
                     id=>magix.file-manager.current-folder
                   set=>[magix.file-manager.create-file-controls][directory].Value
                     value=>[magix.viewport.get-viewstate:3][value].Value
+
+                  // emptying edit container, in case this is the file we're editing
+                  magix.viewport.clear-controls
+                    container=>content2
 
                   // reloading files
                   magix.file-manager.create-file-controls
@@ -713,28 +728,61 @@ magix.file-manager.create-preview
           dynamic=>rename-file-container
             class=>span-6 last
 
-// edits files that allows to be edited, such as mml and hyperlisp files
+// edits files that allows to be edited, such as mml, html and hyperlisp files
 // [file] parameter is file to edit
+// wil open text-editor if file is mml or hyperlisp, if it is html, it will open wysiwyg-editor
 magix.file-manager.edit-file
-  set=>[execute-script][params][file].Value
-    value=>[$][file].Value
-  execute-script
-    file=>system42/private/tools/text-editor.hl
-    params
-      container=>content2
-      class=>span-22 last top-1
-      auto-scroll=>true
-      onesc
-        magix.viewport.clear-controls
+  split=>[$][file].Value
+    what=>.
+  while=>not-equals
+    lhs=>[split][result].Count
+    rhs=>1
+    code
+      set=>[split][result][0]
+  if=>equals
+    lhs=>[split][result][0].Value
+    rhs=>html
+    or=>equals
+      lhs=>[split][result][0].Value
+      rhs=>htm
+    code
+      set=>[@][execute-script][params][file].Value
+        value=>[$][file].Value
+      execute-script
+        file=>system42/private/tools/wysiwyg-editor.hl
+        params
           container=>content2
-      extra-buttons
-        button=>close
-          class=>span-2 last
-          value=>close
-          title=>close editor
-          onclick
+          class=>span-22 last top-1
+          onesc
             magix.viewport.clear-controls
               container=>content2
+          extra-buttons
+            button=>close
+              class=>span-2 last
+              value=>close
+              title=>close editor
+              onclick
+                magix.viewport.clear-controls
+                  container=>content2
+  else
+    set=>[@][execute-script][params][file].Value
+      value=>[$][file].Value
+    execute-script
+      file=>system42/private/tools/text-editor.hl
+      params
+        container=>content2
+        class=>span-22 last top-1
+        onesc
+          magix.viewport.clear-controls
+            container=>content2
+        extra-buttons
+          button=>close
+            class=>span-2 last
+            value=>close
+            title=>close editor
+            onclick
+              magix.viewport.clear-controls
+                container=>content2
 
 // raised by text-editor when file is saved.  rebinding files, in case filename was changed
 // will be given a [file] parameter.  we're checking to see if the [file] parameter is the same 
@@ -775,4 +823,25 @@ magix.editor.file-saved
               value=>[magix.viewport.get-viewstate:2][value].Value
         magix.file-manager.create-preview
         magix.file-manager.create-file-controls
+
+// raised when current directory is changed
+magix.file-manager.directory-changed
+  magix.viewport.get-viewstate
+    id=>magix.file-manager.current-folder
+  if=>not-equals
+    lhs=>[magix.viewport.get-viewstate][value].Value
+    rhs=>
+    and=>not-equals
+      lhs=>[magix.viewport.get-viewstate][value].Value
+      rhs=>/
+    code
+      magix.forms.set-enabled
+        form-id=>file-manager
+        id=>delete-directory
+        value=>true
+  else
+    magix.forms.set-enabled
+      form-id=>file-manager
+      id=>delete-directory
+      value=>false
 

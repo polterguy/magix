@@ -4776,6 +4776,7 @@ wysihtml5.dom.parse = (function() {
    * which later replaces the entire body content
    */
   function parse(elementOrHtml, rules, context, cleanUp) {
+    return elementOrHtml //turn off parser// isString ? wysihtml5.quirks.getCorrectInnerHTML(element) : element;
     wysihtml5.lang.object(currentRules).merge(defaultRules).merge(rules).get();
     
     context           = context || elementOrHtml.ownerDocument || document;
@@ -4805,9 +4806,7 @@ wysihtml5.dom.parse = (function() {
     
     // Insert new DOM tree
     element.appendChild(fragment);
-    
-    return isString ? wysihtml5.quirks.getCorrectInnerHTML(element) : element;
-  }
+}
   
   function _convert(oldNode, cleanUp) {
     var oldNodeType     = oldNode.nodeType,

@@ -3,13 +3,18 @@
 inspect=>@"allows editing of text files
 
 creates a text-area, where you can edit contents of files on the server, 
-such as hyperlisp or magix markup language files.  [file] is an optional 
-parameter, telling it which file to initially load up.  [container] is 
-optionally parameter, informing which viewport container to load up web 
-part in.  if no [container] is given, the web part will load up in the 
-content1 containerr.  [class] is optional, and defines the css class(es) 
-of the we part itself.  if [allow-filename-change] is false, then the 
-user cannot change the filename of the file being edited
+such as hyperlisp or magix markup language files
+
+[file] is an optional parameter, telling it which file to initially load up
+
+[container] is an optional parameter, informing which viewport container to 
+load up web part in.  if no [container] is given, the web part will load up 
+in the content1 container
+
+[class] is optional, and defines the css class(es) of the we part itself
+
+if [allow-filename-change] is false, then the user cannot change the filename 
+of the file being edited
 
 you can also supply extra buttons, by supplying extra controls through 
 the [extra-buttons] parameters, that will be appended after the save 
@@ -17,6 +22,9 @@ button
 
 if you supply [auto-scroll] and set its value to true, then it will 
 automatically scroll to the container where it is created upon creation
+
+if you supply [auto-focus] and set its value to true, then the editing 
+surface will gain automatic focus after loading
 
 if you supply an [onesc] piece of hyperlisp code, then this code will 
 execute when the user clicks esc"
@@ -40,12 +48,10 @@ if=>exist
       with=>&gt;
     set=>[**text-area=>editor-surface][value].Value
       value=>[@][using][load][value].Value
-    set=>[**label=>header][value].Value
-      value=>[$][file].Value
     set=>[**text-box=>txt-file-name][value].Value
       value=>[$][file].Value
 
-    // enabling the preview button, but only if file is an mml file
+    // enabling the preview button, but only if file is an mml or html file
     split=>[$][file].Value
       what=>.
     while=>more-than
@@ -56,6 +62,12 @@ if=>exist
     if=>equals
       lhs=>[@][split][result][0].Value
       rhs=>mml
+      or=>equals
+        lhs=>[@][split][result][0].Value
+        rhs=>html
+      or=>equals
+        lhs=>[@][split][result][0].Value
+        rhs=>htm
       code
         set=>[**button=>preview][disabled].Value
           value=>false
@@ -63,7 +75,7 @@ if=>exist
       set=>[**button=>preview][disabled].Value
         value=>true
 
-// enabling or disabling the text-box that allows changing the filename
+// disabling the text-box that allows changing the filename, if we're not allowed to change filename of edited file
 if=>equals
   lhs=>[$][allow-filename-change].Value
   rhs=>false
@@ -103,6 +115,14 @@ if=>equals
     set=>[**panel=>save-wrapper][onfirstload][magix.browser.scroll][id].Value
       value=>[magix.forms.create-web-part][container].Value
 
+// automatically giving focus, if we're supposed to
+if=>not-equals
+  lhs=>[$][auto-focus].Value
+  rhs=>true
+  code
+    set=>[**text-area=>editor-surface][onfirstload][magix.forms.effect].Name
+      value=>_not
+
 // adding [onesc] event handler, if we're given any
 if=>exist
   lhs=>[$][onesc]
@@ -119,15 +139,11 @@ magix.forms.create-web-part
   controls
     panel=>main-wrapper
       controls
-        label=>header
-          tag=>label
-          class=>fill-width
-          value=>filename ...
         panel=>toolbar
           class=>fill-width column
           controls
             button=>preview
-              class=>span-2
+              class=>span-2 toolbox-preview
               value=>preview
               onclick
                 magix.forms.get-value
@@ -195,11 +211,6 @@ magix.forms.create-web-part
                   id=>editor-surface
                 set=>[magix.editor.file-saved][file].Value
                   value=>[magix.forms.get-value:0][value].Value
-                using=>magix.forms
-                  set-value
-                    form-id=>editor
-                    id=>header
-                    value=>[magix.forms.get-value:0][value].Value
                 magix.editor.file-saved
 
         // preview container

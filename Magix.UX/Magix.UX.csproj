@@ -91,7 +91,7 @@
     <EmbeddedResource Include="Js\Effects.js" />
     <EmbeddedResource Include="Js\Magix.js" />
     <EmbeddedResource Include="Js\Timer.js" />
-    <EmbeddedResource Include="Js\wysihtml5-0.4.0pre.min.js" />
+    <EmbeddedResource Include="Js\wysihtml5-0.4.0pre.js" />
     <EmbeddedResource Include="Js\advanced.js" />
     <EmbeddedResource Include="Js\Uploader.js" />
   </ItemGroup>
