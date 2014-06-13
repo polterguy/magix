@@ -109,7 +109,7 @@ event
   inspect=>@"verifies [code-2-node] works with files
 
 tries to convert from code to node, where the code 
-being converted is found in a hyper lisp file on disc"
+being converted is found in a hyperlisp file on disc"
   code
     _file-path=>tmp/test-file.txt
     using=>magix.file
