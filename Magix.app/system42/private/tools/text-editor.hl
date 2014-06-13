@@ -133,6 +133,14 @@ if=>exist
       value=>[$][onesc]
       children-only=>true
 
+// removing toolbar if we're supposed to
+if=>equals
+  lhs=>[$][no-toolbar].Value
+  rhs=>true
+  code
+    set=>[**panel=>toolbar][visible].Value
+      value=>false
+
 // creating web part
 magix.forms.create-web-part
   form-id=>editor
@@ -147,6 +155,7 @@ magix.forms.create-web-part
             button=>preview
               class=>span-2 toolbox-preview
               value=>preview
+              disabled=>true
               onclick
                 magix.forms.get-value
                   form-id=>editor
@@ -191,6 +200,7 @@ magix.forms.create-web-part
         text-area=>editor-surface
           class=>fill-width
           rows=>25
+          style=>white-space:pre;word-wrap:normal;
           placeholder=>text content ...
           onfirstload
             magix.forms.effect

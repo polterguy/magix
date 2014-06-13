@@ -1,8 +1,8 @@
 ﻿
 
-inspect=>@"opens up the qr code generator
-such that you can create vanity qr codes
-at whatever urls you wish"
+inspect=>@"opens up the vanity qr code generator
+
+creates the web part needed to create vanity qr codes"
 
 
 magix.viewport.clear-controls
@@ -114,29 +114,28 @@ parts of qr code. defaults to bumpy-light.png"
           class=>text-browse-btn top-1
           value=>...
           onclick
-            magix.viewport.set-viewstate
-              id=>stack-of-pages
-              value
-                root=>
-                item=>media
-                item=>media/images
-                item=>media/images/textures
             execute-script
               file=>system42/private/file-manager/file-manager.hl
               params
-                container=>file-browser
-                class=>span-17 last
-                mode=>select
+                filter=>*.png;*.jpg;*.jpeg
                 directory=>media/images/textures
-                keep-stack
-                select-file
+                container=>file-browser
+                class=>span-15 last boxed air-padding bottom-1
+                editor-container=>editor-for-persist-wrapper
+                no-edit=>true
+                onselect
                   set=>[magix.forms.set-value][value].Value
-                    value=>[_file].Value
+                    value=>[$][file].Value
                   magix.forms.set-value
                     form-id=>qr-codes
                     id=>bg-image
                   magix.viewport.clear-controls
                     container=>file-browser
+                    reset-class=>true
+                oncancel
+                  magix.viewport.clear-controls
+                    container=>file-browser
+                    reset-class=>true
         label=>fgImageDescription
           tag=>label
           class=>span-2 top-1 right-text
@@ -155,18 +154,25 @@ parts of qr code. defaults to bumby-black.png"
             execute-script
               file=>system42/private/file-manager/file-manager.hl
               params
-                container=>file-browser
-                class=>span-17 last
-                mode=>select
+                filter=>*.png
                 directory=>media/images/textures
-                select-file
+                container=>file-browser
+                class=>span-15 last boxed air-padding bottom-1
+                editor-container=>editor-for-persist-wrapper
+                no-edit=>true
+                onselect
                   set=>[magix.forms.set-value][value].Value
-                    value=>[_file].Value
+                    value=>[$][file].Value
                   magix.forms.set-value
                     form-id=>qr-codes
                     id=>fg-image
                   magix.viewport.clear-controls
                     container=>file-browser
+                    reset-class=>true
+                oncancel
+                  magix.viewport.clear-controls
+                    container=>file-browser
+                    reset-class=>true
         label=>fontNameDescription
           tag=>label
           class=>span-2 top-1 right-text clear
@@ -300,3 +306,4 @@ this is the only mandatory parameter in fact"
           tip=>@"will show the resulting qr code once generated.
 drag'n'drop, or righ-click and choose 'save as',
 to download and embed in documents"
+
