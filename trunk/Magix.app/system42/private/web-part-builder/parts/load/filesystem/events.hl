@@ -82,6 +82,7 @@ magix.ide.browse_onclick
       filter=>*.hl
       container=>helper-for-persist-wrapper
       class=>span-15 last boxed air-padding bottom-1
+      editor-container=>editor-for-persist-wrapper
       onselect
         set=>[magix.forms.set-value][value].Value
           value=>[$][file].Value
@@ -99,4 +100,6 @@ magix.ide.browse_onclick
         magix.viewport.clear-controls
           container=>helper-for-persist-wrapper
           reset-class=>true
+  magix.browser.scroll
+    id=>helper-for-persist-wrapper
 

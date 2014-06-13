@@ -372,10 +372,6 @@ magix.file-manager.create-preview
                   magix.viewport.clear-controls
                     container=>preview
 
-                  // emptying edit container, in case this is the file we're editing
-                  magix.viewport.clear-controls
-                    container=>content2
-
                   // reloading files
                   magix.file-manager.open-directory
 
@@ -610,41 +606,63 @@ magix.file-manager.edit-file
     code
       set=>[@][execute-script][params][file].Value
         value=>[$][file].Value
+      magix.viewport.get-viewstate
+        id=>magix.file-manager.editor-container
+      set=>[@][execute-script][params][container].Value
+        value=>[@][magix.viewport.get-viewstate][value].Value
       execute-script
         file=>system42/private/tools/wysiwyg-editor.hl
         params
-          container=>content2
           class=>span-22 last top-1
           onesc
+            magix.viewport.get-viewstate
+              id=>magix.file-manager.editor-container
+            set=>[magix.viewport.clear-controls][container].Value
+              value=>[magix.viewport.get-viewstate][value].Value
             magix.viewport.clear-controls
-              container=>content2
+              reset-class=>true
           extra-buttons
             button=>close
               class=>span-2 last
               value=>close
               title=>close editor
               onclick
+                magix.viewport.get-viewstate
+                  id=>magix.file-manager.editor-container
+                set=>[magix.viewport.clear-controls][value].Value
+                  value=>[magix.viewport.get-viewstate][value].Value
                 magix.viewport.clear-controls
-                  container=>content2
+                  reset-class=>true
   else
     set=>[@][execute-script][params][file].Value
       value=>[$][file].Value
+    magix.viewport.get-viewstate
+      id=>magix.file-manager.editor-container
+    set=>[@][execute-script][params][container].Value
+      value=>[@][magix.viewport.get-viewstate][value].Value
     execute-script
       file=>system42/private/tools/text-editor.hl
       params
-        container=>content2
         class=>span-22 last top-1
         onesc
+          magix.viewport.get-viewstate
+            id=>magix.file-manager.editor-container
+          set=>[magix.viewport.clear-controls][container].Value
+            value=>[magix.viewport.get-viewstate][value].Value
           magix.viewport.clear-controls
-            container=>content2
+            reset-class=>true
         extra-buttons
           button=>close
             class=>span-2 last
             value=>close
             title=>close editor
             onclick
+              magix.viewport.get-viewstate
+                id=>magix.file-manager.editor-container
+              set=>[magix.viewport.clear-controls][container].Value
+                value=>[magix.viewport.get-viewstate][value].Value
               magix.viewport.clear-controls
-                container=>content2
+                reset-class=>true
 
 // raised by text-editor when file is saved.  rebinding files, in case filename was changed
 // will be given a [file] parameter.  we're checking to see if the [file] parameter is the same 
@@ -717,8 +735,9 @@ magix.file-manager.open-directory
 // create-directory was clicked
 magix.file-manager.create-directory_onclick
   magix.forms.create-web-part
-    container=>create-directory-container
-    form-id=>create-directory-container
+    container=>create-file-directory-container
+    class=>span-6 left-9 last top-1 bottom-1
+    form-id=>create-file-directory-container
     controls-file=>system42/private/file-manager/main/create-directory/controls.hl
 
 // delete-directory was clicked
@@ -786,4 +805,12 @@ magix.file-manager.go-up_onclick
   magix.viewport.set-viewstate
     id=>magix.file-manager.current-folder
   magix.file-manager.open-directory
+
+// creates a text file
+magix.file-manager.create-file_onclick
+  magix.forms.create-web-part
+    container=>create-file-directory-container
+    class=>span-6 left-9 last top-1 bottom-1
+    form-id=>create-file-directory-container
+    controls-file=>system42/private/file-manager/main/create-file/controls.hl
 

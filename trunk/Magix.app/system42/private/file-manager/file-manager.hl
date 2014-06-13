@@ -29,6 +29,18 @@ magix.viewport.set-viewstate
   id=>magix.file-manager.current-folder
   value=>
 
+// changing editor-container, if we're supposed to
+_editor-container=>content2
+if=>exist
+  lhs=>[$][editor-container]
+  code
+    set=>[_editor-container].Value
+      value=>[$][editor-container].Value
+set=>[magix.viewport.set-viewstate=>editor-container][value].Value
+  value=>[_editor-container].Value
+magix.viewport.set-viewstate=>editor-container
+  id=>magix.file-manager.editor-container
+
 // changing css class, container and filter, if we're supposed to
 if=>exist
   lhs=>[$][container]
@@ -102,10 +114,10 @@ if=>exist
         class=>span-15 last
         controls
           button=>cancel
-            class=>span-2 right last
+            class=>span-2 right last top-1
             value=>cancel
           button=>select
-            class=>span-2 right
+            class=>span-2 right top-1
             disabled=>true
             value=>select
             onclick
@@ -115,6 +127,12 @@ if=>exist
               set=>[lambda][file].Value
                 value=>[magix.viewport.get-viewstate][value].Value
               lambda=>[_lambda]
+              magix.viewport.get-viewstate
+                id=>magix.file-manager.editor-container
+              set=>[magix.viewport.clear-controls][container].Value
+                value=>[magix.viewport.get-viewstate:1][value].Value
+              magix.viewport.clear-controls
+                reset-class=>true
 
     // adding [onselect] and [oncancel] hyperlisp code
     add=>[@][**button=>select][onclick][_lambda]
@@ -155,8 +173,13 @@ magix.forms.create-web-part
     panel=>directory-wrapper
       class=>span-15 last top-1
       controls
+        button=>create-file
+          class=>span-3 left-6
+          value=>create file
+          onclick
+            magix.file-manager.create-file_onclick
         button=>create-directory
-          class=>span-3 left-9
+          class=>span-3
           value=>create directory
           onclick
             magix.file-manager.create-directory_onclick
@@ -166,6 +189,5 @@ magix.forms.create-web-part
           value=>delete directory
           onclick
             magix.file-manager.delete-directory_onclick
-        dynamic=>create-directory-container
-          class=>span-6 left-9 last top-1
+        dynamic=>create-file-directory-container
 
