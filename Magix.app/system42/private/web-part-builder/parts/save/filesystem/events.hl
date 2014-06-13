@@ -48,6 +48,7 @@ magix.ide.save-to-filesystem
   magix.file.save
   magix.viewport.clear-controls
     container=>editor-persist-wrapper
+    reset-class=>true
   set=>[magix.data.save-username][value][filename].Value
     value=>[magix.forms.get-value][value].Value
   magix.data.save-username
@@ -82,4 +83,21 @@ magix.ide.filename_onfirstload
         type=>focus-and-select
         form-id=>save-content
         id=>filename
+
+// active event for when user clicks the browse button
+magix.ide.browse_onclick
+  execute-script
+    file=>system42/private/file-manager/file-manager.hl
+    params
+      filter=>*.hl
+      container=>helper-for-persist-wrapper
+      class=>span-15 last boxed air-padding bottom-1
+      onselect
+        magix.viewport.clear-controls
+          viewport=>helper-for-persist-wrapper
+          reset-class=>true
+      oncancel
+        magix.viewport.clear-controls
+          viewport=>helper-for-persist-wrapper
+          reset-class=>true
 

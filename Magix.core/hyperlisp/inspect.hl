@@ -10,7 +10,10 @@ container.  [container] can be either a constant, or an expression
 
 if you do not supply a [container] parameter, but instead supply an 
 [all] parameter, then all containers in viewport will be cleared, 
-except the system containers, such as trace and help"
+except the system containers, such as trace and help
+
+if you supply [reset-class] and set its value to true, then the css 
+classes of the dynamic will be reset back to empty"
 
 magix.viewport.clear-controls-sample
   magix.viewport.clear-controls

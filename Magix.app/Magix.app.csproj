@@ -393,6 +393,7 @@
     <Content Include="system42\private\app-wizard\wizards\load-web-part-event-wizard\controls.hl" />
     <Content Include="system42\private\file-manager\main\events.hl" />
     <Content Include="system42\private\tools\wysiwyg-editor.hl" />
+    <Content Include="system42\private\file-manager\main\create-directory\controls.hl" />
     <None Include="todo.txt" />
   </ItemGroup>
   <ItemGroup>

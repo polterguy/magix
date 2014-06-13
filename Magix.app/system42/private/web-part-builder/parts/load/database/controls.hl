@@ -21,6 +21,7 @@ panel=>load-wrapper
       onesc
         magix.viewport.clear-controls
           container=>editor-persist-wrapper
+          reset-class=>true
     button=>load
       class=>span-2
       value=>load
@@ -31,5 +32,6 @@ panel=>load-wrapper
       value=>cancel
       onclick
         magix.viewport.clear-controls
-          container=>editor-load-wrapper
+          container=>editor-persist-wrapper
+          reset-class=>true
 
