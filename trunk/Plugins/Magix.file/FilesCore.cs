@@ -8,6 +8,7 @@ using System;
 using System.IO;
 using System.Web;
 using System.Threading;
+using System.Collections.Generic;
 using Magix.Core;
 
 namespace Magix.execute
@@ -67,7 +68,15 @@ namespace Magix.execute
             if (string.IsNullOrEmpty(filter))
                 files = Directory.GetFiles(dir);
             else
-                files = Directory.GetFiles(dir, filter);
+            {
+                List<string> searchPatterns = new List<string>(filter.Split(';'));
+                List<string> filesList = new List<string>();
+                foreach (string idxPattern in searchPatterns)
+                {
+                    filesList.AddRange(Directory.GetFiles(dir, idxPattern));
+                }
+                files = filesList.ToArray();
+            }
 
             string rootDir = _basePath;
             foreach (string idxFile in files)

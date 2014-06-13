@@ -146,11 +146,41 @@ returns the default dashboard shortcuts in your system"
             form-id=>admin-settings
             class=>span-17 last
       magix-markup-language-editor
-        text=>magix markup language editor
+        text=>text editor
         category=>tools
         code
           execute-script
             file=>system42/private/tools/text-editor.hl
+            params
+              container=>content1
+              extra-buttons
+                button=>browse
+                  class=>span-2 last
+                  value=>open
+                  onclick
+                    execute-script
+                      file=>system42/private/file-manager/file-manager.hl
+                      params
+                        container=>content2
+                        class=>span-15 last boxed air-padding top-1 left-5
+                        onselect
+                          using=>magix.file
+                            load
+                              file=>[$][file].Value
+                          using=>magix.forms
+                            set-value
+                              form-id=>editor
+                              id=>editor-surface
+                              value=>[using:0][load][value].Value
+                            set-value
+                              form-id=>editor
+                              id=>txt-file-name
+                              value=>[$][file].Value
+                          magix.viewport.clear-controls
+                            container=>content2
+                        oncancel
+                          magix.viewport.clear-controls
+                            container=>content2
       hyperlisp-executor
         text=>hyperlisp executor
         category=>tools

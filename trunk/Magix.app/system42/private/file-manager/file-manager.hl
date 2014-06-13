@@ -28,6 +28,8 @@ magix.viewport.set-viewstate
 magix.viewport.set-viewstate
   id=>magix.file-manager.current-folder
   value=>
+magix.viewport.set-viewstate
+  id=>magix.file-manager.no-edit
 
 // changing editor-container, if we're supposed to
 _editor-container=>content2
@@ -59,6 +61,18 @@ if=>exist
       value=>[$][filter].Value
     magix.viewport.set-viewstate
       id=>magix.file-manager.filter
+
+// setting editing of files, folders and such to on/off
+if=>equals
+  lhs=>[$][no-edit].Value
+  rhs=>true
+  code
+    set=>[@][magix.viewport.set-viewstate][value].Value
+      value=>true
+    magix.viewport.set-viewstate
+      id=>magix.file-manager.no-edit
+    set=>[**panel=>directory-wrapper][visible].Value
+      value=>false
 
 // changing its directory and root directory
 if=>exist
