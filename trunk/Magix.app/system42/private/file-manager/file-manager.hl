@@ -20,11 +20,16 @@ will be executed with a [$] parameter being [file], which was the filename
 of the file the user selected"
 
 
-// resetting selected file from previous calls
+// resetting selected file, folder and filter from previous calls
 magix.viewport.set-viewstate
   id=>magix.file-manager.selected-file
+magix.viewport.set-viewstate
+  id=>magix.file-manager.filter
+magix.viewport.set-viewstate
+  id=>magix.file-manager.current-folder
+  value=>
 
-// changing css class and container, if we're supposed to
+// changing css class, container and filter, if we're supposed to
 if=>exist
   lhs=>[$][container]
   code
@@ -35,13 +40,22 @@ if=>exist
   code
     set=>[magix.forms.create-web-part][class].Value
       value=>[$][class].Value
+if=>exist
+  lhs=>[$][filter]
+  code
+    set=>[@][magix.viewport.set-viewstate][value].Value
+      value=>[$][filter].Value
+    magix.viewport.set-viewstate
+      id=>magix.file-manager.filter
 
 // changing its directory and root directory
 if=>exist
   lhs=>[$][directory]
   code
-    set=>[magix.forms.create-web-part][controls][dynamic][onfirstload][magix.file-manager.create-file-controls][directory].Value
+    set=>[@][magix.viewport.set-viewstate][value].Value
       value=>[$][directory].Value
+    magix.viewport.set-viewstate
+      id=>magix.file-manager.current-folder
     if=>not-equals
       lhs=>[$][directory].Value
       rhs=>
@@ -54,9 +68,20 @@ if=>exist
 if=>exist
   lhs=>[$][root]
   code
-    set=>[magix.forms.create-web-part][controls][dynamic][onfirstload][magix.file-manager.create-file-controls][root].Value
+    set=>[@][magix.viewport.set-viewstate][value].Value
       value=>[$][root].Value
+    magix.viewport.set-viewstate
+      id=>magix.file-manager.root
 
+// checking to see if caller has denied creation of directories
+if=>equals
+  lhs=>[$][deny-create-directory].Value
+  rhs=>true
+  code
+    set=>[**panel=>directory-wrapper][visible].Value
+      value=>false
+
+// if user provides [onselect] we allow selection of files
 if=>exist
   lhs=>[$][onselect]
   code
@@ -74,7 +99,7 @@ if=>exist
     // contains actual controls for the 'select' and 'cancel' buttons
     _select
       panel=>ok-cancel-wrapper
-        class=>span-17 last
+        class=>span-15 last
         controls
           button=>cancel
             class=>span-2 right last
@@ -114,51 +139,14 @@ magix.forms.create-web-part
       class=>span-2
       value=>&lt;&lt;
       onclick
-        magix.viewport.get-viewstate
-          id=>magix.file-manager.current-folder
-        split=>[magix.viewport.get-viewstate][value].Value
-          what=>/
-        using=>magix.math
-          subtract
-            =>[split][result].Count
-            =>1
-        set=>[split][result][[using][subtract].Value]
-        _folder=>
-        for-each=>[split][result]
-          if=>not-equals
-            lhs=>[/][_folder].Value
-            rhs=>
-            code
-              set=>[/][_folder].Value
-                value=>{0}/
-                  =>[/][_folder].Value
-          set=>[/][_folder].Value
-            value=>{0}{1}
-              =>[/][_folder].Value
-              =>[.].Value
-        set=>[@][magix.file-manager.create-file-controls][directory].Value
-          value=>[_folder].Value
-        using=>magix.viewport
-          get-viewstate
-            id=>magix.file-manager.filter
-          get-viewstate
-            id=>magix.file-manager.root
-        set=>[@][magix.file-manager.create-file-controls][filter].Value
-          value=>[using:1][get-viewstate:0][value].Value
-        set=>[@][magix.file-manager.create-file-controls][root].Value
-          value=>[using:1][get-viewstate:1][value].Value
-        magix.file-manager.create-file-controls
-        magix.file-manager.directory-changed
+        magix.file-manager.go-up_onclick
     label=>file-header
       class=>span-13 bottom-1 last
       tag=>label
     dynamic=>files
       class=>span-9
       onfirstload
-        magix.file-manager.create-file-controls
-          directory=>
-          filter=>
-          root=>
+        magix.file-manager.open-directory
     dynamic=>preview
       class=>span-6 last
     panel=>directory-wrapper
@@ -168,147 +156,13 @@ magix.forms.create-web-part
           class=>span-3 left-9
           value=>create directory
           onclick
-            magix.forms.create-web-part
-              container=>create-directory-container
-              form-id=>create-directory-container
-              controls
-                panel=>create-dir-wrapper
-                  class=>span-6 last
-                  onesc
-                    magix.viewport.clear-controls
-                      container=>create-directory-container
-                  default=>create-directory-save
-                  controls
-                    text-box=>new-directory-name
-                      class=>span-4
-                      placeholder=>directory name ...
-                      onfirstload
-                        magix.forms.effect
-                          type=>focus-and-select
-                          form-id=>create-directory-container
-                          id=>new-directory-name
-                    button=>create-directory-save
-                      class=>span-2 last
-                      value=>create
-                      onclick
-                        magix.forms.get-value
-                          form-id=>create-directory-container
-                          id=>new-directory-name
-                        if=>equals
-                          lhs=>magix.forms.get-value
-                          rhs=>
-                          code
-                            magix.viewport.show-message
-                              message=>you must give your directory a name
-                              color=>#ffbbbb
-                        else
-                          magix.viewport.get-viewstate
-                            id=>magix.file-manager.current-folder
-                          if=>not-equals
-                            lhs=>[@][magix.viewport.get-viewstate][value].Value
-                            rhs=>
-                            code
-                              set=>[@][..][..][magix.file.create-directory][directory].Value
-                                value=>{0}/{1}
-                                  =>[@][..][..][magix.viewport.get-viewstate][value].Value
-                                  =>[magix.forms.get-value][value].Value
-                          else
-                            set=>[@][..][magix.file.create-directory][directory].Value
-                              value=>[magix.forms.get-value][value].Value
-                          magix.file.create-directory
-                          magix.viewport.clear-controls
-                            container=>create-directory-container
-                          set=>[@][magix.viewport.set-viewstate][value].Value
-                            value=>[@][magix.file.create-directory][directory].Value
-                          magix.viewport.set-viewstate
-                            id=>magix.file-manager.current-folder
-                          magix.execute
-                            magix.viewport.get-viewstate
-                              id=>magix.file-manager.filter
-                            if=>exist
-                              lhs=>[magix.viewport.get-viewstate:0][value]
-                              code
-                                set=>[magix.file-manager.create-file-controls][filter].Value
-                                  value=>[magix.viewport.get-viewstate:0][value].Value
-                            magix.viewport.get-viewstate
-                              id=>magix.file-manager.root
-                            if=>exist
-                              lhs=>[magix.viewport.get-viewstate:1][value]
-                              code
-                                set=>[magix.file-manager.create-file-controls][root].Value
-                                  value=>[magix.viewport.get-viewstate:1][value].Value
-                            magix.viewport.get-viewstate
-                              id=>magix.file-manager.current-folder
-                            if=>exist
-                              lhs=>[magix.viewport.get-viewstate:2][value]
-                              code
-                                set=>[magix.file-manager.create-file-controls][directory].Value
-                                  value=>[magix.viewport.get-viewstate:2][value].Value
-                            magix.file-manager.create-preview
-                            magix.file-manager.create-file-controls
-                            magix.file-manager.directory-changed
+            magix.file-manager.create-directory_onclick
         button=>delete-directory
           class=>span-3 last
           disabled=>true
           value=>delete directory
           onclick
-            magix.viewport.confirm
-              message=>are you sure you wish to delete this directory?
-              code
-                magix.viewport.get-viewstate
-                  id=>magix.file-manager.current-folder
-                using=>magix.file
-                  delete-directory
-                    directory=>[magix.viewport.get-viewstate][value].Value
-                split=>[magix.viewport.get-viewstate][value].Value
-                  what=>/
-                using=>magix.math
-                  subtract
-                    =>[split][result].Count
-                    =>1
-                set=>[split][result][[using:1][subtract].Value]
-                _new-current=>
-                for-each=>[split][result]
-                  if=>not-equals
-                    lhs=>[/][_new-current].Value
-                    rhs=>
-                    code
-                      set=>[/][_new-current].Value
-                        value=>{0}/
-                          =>[/][_new-current].Value
-                  set=>[/][_new-current].Value
-                    value=>{0}{1}
-                      =>[/][_new-current].Value
-                      =>[.].Value
-                set=>[magix.viewport.set-viewstate][value].Value
-                  value=>[_new-current].Value
-                magix.viewport.set-viewstate
-                  id=>magix.file-manager.current-folder
-                magix.execute
-                  magix.viewport.get-viewstate
-                    id=>magix.file-manager.filter
-                  if=>exist
-                    lhs=>[magix.viewport.get-viewstate:0][value]
-                    code
-                      set=>[magix.file-manager.create-file-controls][filter].Value
-                        value=>[magix.viewport.get-viewstate:0][value].Value
-                  magix.viewport.get-viewstate
-                    id=>magix.file-manager.root
-                  if=>exist
-                    lhs=>[magix.viewport.get-viewstate:1][value]
-                    code
-                      set=>[magix.file-manager.create-file-controls][root].Value
-                        value=>[magix.viewport.get-viewstate:1][value].Value
-                  magix.viewport.get-viewstate
-                    id=>magix.file-manager.current-folder
-                  if=>exist
-                    lhs=>[magix.viewport.get-viewstate:2][value]
-                    code
-                      set=>[magix.file-manager.create-file-controls][directory].Value
-                        value=>[magix.viewport.get-viewstate:2][value].Value
-                  magix.file-manager.create-preview
-                  magix.file-manager.create-file-controls
-                  magix.file-manager.directory-changed
+            magix.file-manager.delete-directory_onclick
         dynamic=>create-directory-container
           class=>span-6 left-9 last top-1
 

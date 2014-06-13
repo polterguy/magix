@@ -22,6 +22,7 @@ panel=>save-wrapper
       onesc
         magix.viewport.clear-controls
           container=>editor-persist-wrapper
+          reset-class=>true
     button=>save
       class=>span-2
       value=>save
@@ -33,4 +34,5 @@ panel=>save-wrapper
       onclick
         magix.viewport.clear-controls
           container=>editor-persist-wrapper
+          reset-class=>true
 

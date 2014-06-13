@@ -188,6 +188,9 @@ namespace Magix.Core
 
             Node dp = Dp(e.Params);
             string container = Expressions.GetExpressionValue(ip["container"].Get<string>(), dp, ip, false) as string;
+            bool resetClass = ip.ContainsValue("reset-class") ?
+                bool.Parse(Expressions.GetExpressionValue(ip["reset-class"].Get<string>(), dp, ip, false) as string) :
+                false;
 
             if (ip.ContainsValue("all") && ip["all"].Get<bool>())
             {
@@ -197,6 +200,8 @@ namespace Magix.Core
                         this,
                         idx);
                     ClearControls(dyn);
+                    if (resetClass)
+                        dyn.Class = "";
                 }
             }
             else
@@ -208,6 +213,8 @@ namespace Magix.Core
                 if (dyn == null)
                     return;
                 ClearControls(dyn);
+                if (resetClass)
+                    dyn.Class = "";
             }
 		}
 

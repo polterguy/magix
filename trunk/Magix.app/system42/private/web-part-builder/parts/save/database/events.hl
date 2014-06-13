@@ -47,6 +47,7 @@ magix.ide.save-to-database
       type=>magix.forms.web-part
   magix.viewport.clear-controls
     container=>editor-persist-wrapper
+    reset-class=>true
   set=>[magix.data.save-username][value][id].Value
     value=>[magix.forms.get-value][value].Value
   magix.data.save-username

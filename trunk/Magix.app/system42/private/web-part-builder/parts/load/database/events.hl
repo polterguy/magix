@@ -51,6 +51,7 @@ magix.ide.load-from-database
     id=>magix.ide.last-used-load-database-id
   magix.viewport.clear-controls
     container=>editor-persist-wrapper
+    reset-class=>true
 
 // sets the last used db id on the text-box asking user for id to save web part as
 magix.ide.database-id_onfirstload
