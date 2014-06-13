@@ -78,8 +78,17 @@ magix.file-manager.create-file-controls
       link-button
         class=>span-5 last clear
         onclick
-          set=>[magix.file-manager.select-file][file].Value
-            value=>[$][info].Value
+          magix.viewport.get-viewstate
+            id=>magix.file-manager.selected-file
+          if=>not-equals
+            lhs=>[magix.viewport.get-viewstate][value].Value
+            rhs=>[$][info].Value
+            code
+              set=>[magix.file-manager.select-file][file].Value
+                value=>[$][info].Value
+          else
+            magix.viewport.clear-controls
+              container=>preview
           magix.file-manager.select-file
     split=>[.].Name
       what=>/
@@ -132,8 +141,14 @@ magix.file-manager.create-file-controls
       set=>[@][_filename].Value
         value=>[/][magix.viewport.get-viewstate][value].Value
       set=>[@][_folder].Value
-        value=>{0}/
-          =>[$][directory].Value
+        value=>[$][directory].Value
+      if=>not-equals
+        lhs=>[@][_folder].Value
+        rhs=>
+        code
+          set=>[@][..][..][_folder].Value
+            value=>{0}/
+              =>[@][..][..][_folder].Value
       split=>[@][_filename].Value
         what=>/
       while=>not-equals
@@ -161,26 +176,31 @@ magix.file-manager.create-file-controls
 magix.file-manager.select-file
 
   // changing the viewstate value, signaling which file was selected, and enabling the 'select' button
-  set=>[magix.viewport.set-viewstate][value].Value
-    value=>[$][file].Value
+  if=>exist
+    lhs=>[$][file]
+    code
+      set=>[magix.viewport.set-viewstate][value].Value
+        value=>[$][file].Value
   magix.viewport.set-viewstate
     id=>magix.file-manager.selected-file
   magix.viewport.get-viewstate
     id=>magix.file-manager.has-select-button
   if=>exist
     lhs=>[magix.viewport.get-viewstate][value]
+    and=>exist
+      lhs=>[$][file]
     code
       magix.forms.set-enabled
         form-id=>file-manager
         id=>select
         value=>true
-  using=>magix.viewport
-    get-viewstate
-      id=>magix.file-manager.current-folder
-    get-viewstate
-      id=>magix.file-manager.filter
-    get-viewstate
-      id=>magix.file-manager.root
+  else-if=>exist
+    lhs=>[magix.viewport.get-viewstate][value]
+    code
+      magix.forms.set-enabled
+        form-id=>file-manager
+        id=>select
+        value=>false
   magix.file-manager.open-directory
 
 // creates 'preview' web part
@@ -215,7 +235,7 @@ magix.file-manager.create-preview
       switch=>[@][split:1][result][0].Value
         case=>hl
           set=>[/][**value=>unknown filetype].Value
-            value=>hyper lisp file
+            value=>hyperlisp file
           set=>[@][..][..][_can-edit].Value
             value=>true
         case=>mml
