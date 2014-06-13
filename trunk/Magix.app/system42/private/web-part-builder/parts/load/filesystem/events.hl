@@ -1,0 +1,102 @@
+﻿
+
+
+inspect=>@"creates the events for loading a web part from the filesystem
+
+contains the events for helping user load a web part from the filesystem"
+
+
+// tries to load from filesystem
+magix.ide.load_onclick
+  magix.forms.get-value
+    form-id=>load-content
+    id=>filename
+  if=>equals
+    lhs=>[magix.forms.get-value][value].Value
+    rhs=>
+    code
+      magix.viewport.show-message
+        message=>you must supply a filename to instruct me which web part to load
+      stop
+  using=>magix.file
+    file-exist
+      file=>[magix.forms.get-value][value].Value
+  if=>not-equals
+    lhs=>[using][file-exist][value].Value
+    rhs=>true
+    code
+      magix.viewport.show-message
+        message=>that file doesn't exist
+        color=>#ffbbbb
+  else
+    magix.ide.load-from-filesystem
+
+// actually loads the form
+magix.ide.load-from-filesystem
+  magix.forms.get-value
+    form-id=>load-content
+    id=>filename
+  using=>magix.file
+    load
+      file=>[magix.forms.get-value][value].Value
+  code-2-node
+    code=>[using][load][value].Value
+  add=>[magix.ide.set-form][value]
+    value=>[code-2-node][node]
+    children-only=>true
+  magix.ide.set-form
+  set=>[magix.data.save-username][value][filename].Value
+    value=>[magix.forms.get-value][value].Value
+  magix.data.save-username
+    id=>magix.ide.last-used-load-filename
+  magix.viewport.clear-controls
+    container=>editor-persist-wrapper
+    reset-class=>true
+
+// sets the last used db id on the text-box asking user for id to save web part as
+magix.ide.filesystem_onfirstload
+  magix.data.load-username
+    id=>magix.ide.last-used-load-filename
+  if=>exist
+    lhs=>[magix.data.load-username][value]
+    code
+      set=>[@][magix.forms.set-value][value].Value
+        value=>[magix.data.load-username][value][filename].Value
+      magix.forms.set-value
+        form-id=>load-content
+        id=>filename
+  magix.forms.effect
+    type=>timeout
+    time=>25
+    chained
+      e0
+        type=>focus-and-select
+        form-id=>load-content
+        id=>filename
+
+// browse button was clicked
+magix.ide.browse_onclick
+  execute-script
+    file=>system42/private/file-manager/file-manager.hl
+    params
+      filter=>*.hl
+      container=>helper-for-persist-wrapper
+      class=>span-15 last boxed air-padding bottom-1
+      onselect
+        set=>[magix.forms.set-value][value].Value
+          value=>[$][file].Value
+        magix.forms.set-value
+          form-id=>load-content
+          id=>filename
+        magix.viewport.clear-controls
+          container=>helper-for-persist-wrapper
+          reset-class=>true
+        magix.forms.effect
+          type=>focus-and-select
+          form-id=>load-content
+          id=>filename
+      oncancel
+        magix.viewport.clear-controls
+          container=>helper-for-persist-wrapper
+          reset-class=>true
+

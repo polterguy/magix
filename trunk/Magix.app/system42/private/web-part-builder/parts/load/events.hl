@@ -27,4 +27,10 @@ magix.ide.create-load-where-web-part
         container=>load-where-container
         events-file=>system42/private/web-part-builder/parts/load/database/events.hl
         controls-file=>system42/private/web-part-builder/parts/load/database/controls.hl
+    case=>filesystem
+      magix.forms.create-web-part
+        form-id=>load-content
+        container=>load-where-container
+        events-file=>system42/private/web-part-builder/parts/load/filesystem/events.hl
+        controls-file=>system42/private/web-part-builder/parts/load/filesystem/controls.hl
 

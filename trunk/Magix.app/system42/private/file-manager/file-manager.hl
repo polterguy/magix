@@ -128,6 +128,9 @@ if=>exist
     magix.viewport.set-viewstate
       id=>magix.file-manager.has-select-button
       value=>true
+else
+  magix.viewport.set-viewstate
+    id=>magix.file-manager.has-select-button
 
 // creating the main web part, wrapping everything else
 magix.forms.create-web-part

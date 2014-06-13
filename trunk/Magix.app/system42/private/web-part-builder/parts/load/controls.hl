@@ -26,6 +26,7 @@ select=>sel-load-where
     magix.ide.sel-load-where_onselectedindexchanged
   items
     database=>from database
+    filesystem=>from filesystem
 
 dynamic=>load-where-container
   class=>span-16 last

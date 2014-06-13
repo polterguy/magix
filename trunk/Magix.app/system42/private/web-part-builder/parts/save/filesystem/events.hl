@@ -93,11 +93,20 @@ magix.ide.browse_onclick
       container=>helper-for-persist-wrapper
       class=>span-15 last boxed air-padding bottom-1
       onselect
+        set=>[magix.forms.set-value][value].Value
+          value=>[$][file].Value
+        magix.forms.set-value
+          form-id=>save-content
+          id=>filename
         magix.viewport.clear-controls
-          viewport=>helper-for-persist-wrapper
+          container=>helper-for-persist-wrapper
           reset-class=>true
+        magix.forms.effect
+          type=>focus-and-select
+          form-id=>save-content
+          id=>filename
       oncancel
         magix.viewport.clear-controls
-          viewport=>helper-for-persist-wrapper
+          container=>helper-for-persist-wrapper
           reset-class=>true
 

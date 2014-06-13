@@ -38,6 +38,7 @@ magix.ide.request-properties
     code
       magix.viewport.clear-controls
         container=>control-properties
+        reset-class=>true
       stop
   magix.ide.get-selected-control
   if=>exist
@@ -56,4 +57,5 @@ magix.ide.request-properties
     // clearing properties web part
     magix.viewport.clear-controls
       container=>control-properties
+      reset-class=>true
 

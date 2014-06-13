@@ -169,7 +169,7 @@ namespace Magix.UX.Widgets
         object IValueControl.ControlValue
         {
             get { return Value; }
-            set { Value = value.ToString(); }
+            set { Value = value as string; }
         }
 
         bool IValueControl.IsTrueValue

@@ -1,0 +1,42 @@
+﻿
+
+inspect=>@"contains the controls for loading web part from database
+
+contains the controls for helping user load a web part from the database"
+
+
+label
+  class=>span-2 right-text
+  value=>filename
+  tag=>label
+
+panel=>load-wrapper
+  class=>span-14 last
+  default=>load
+  controls
+    text-box=>filename
+      class=>span-8
+      onfirstload
+        magix.ide.filesystem_onfirstload
+      onesc
+        magix.viewport.clear-controls
+          container=>editor-persist-wrapper
+          reset-class=>true
+    button=>browse
+      class=>span-2
+      value=>browse
+      onclick
+        magix.ide.browse_onclick
+    button=>load
+      class=>span-2
+      value=>load
+      onclick
+        magix.ide.load_onclick
+    button=>cancel
+      class=>span-2 last
+      value=>cancel
+      onclick
+        magix.viewport.clear-controls
+          container=>editor-persist-wrapper
+          reset-class=>true
+
