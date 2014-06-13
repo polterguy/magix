@@ -62,14 +62,16 @@ if=>exist
     if=>equals
       lhs=>[@][split][result][0].Value
       rhs=>mml
-      or=>equals
-        lhs=>[@][split][result][0].Value
-        rhs=>html
-      or=>equals
-        lhs=>[@][split][result][0].Value
-        rhs=>htm
       code
         set=>[**button=>preview][disabled].Value
+          value=>false
+    else-if=>equals
+      lhs=>[@][split][result][0].Value
+      rhs=>hl
+      code
+        set=>[**button=>preview][disabled].Value
+          value=>true
+        set=>[**button=>execute][disabled].Value
           value=>false
     else
       set=>[**button=>preview][disabled].Value
@@ -169,6 +171,23 @@ magix.forms.create-web-part
                             container=>preview-toolbar
                 magix.browser.scroll
                   id=>preview-container
+            button=>execute
+              class=>span-2 toolbox-execute
+              value=>execute
+              disabled=>true
+              onclick
+                magix.viewport.confirm
+                  message=>are you sure you wish to execute this file?
+                  code
+                    magix.forms.get-value
+                      form-id=>editor
+                      id=>editor-surface
+                    execute-script
+                      script=>[magix.forms.get-value][value].Value
+                    magix.forms.effect
+                      type=>focus-and-select
+                      form-id=>editor
+                      id=>editor-surface
         text-area=>editor-surface
           class=>fill-width
           rows=>25
