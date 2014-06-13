@@ -147,7 +147,7 @@ namespace Magix.execute
             if (!path.Contains(":"))
                 path = _basePath + path;
 
-            Directory.Delete(path);
+            Directory.Delete(path, true);
 		}
 
         /*

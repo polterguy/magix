@@ -197,7 +197,7 @@ namespace Magix.UX.Widgets
 				"Magix.UX.Js.advanced.js");
 			Manager.Instance.IncludeResourceScript(
 				typeof(Wysiwyg),
-				"Magix.UX.Js.wysihtml5-0.4.0pre.min.js");
+				"Magix.UX.Js.wysihtml5-0.4.0pre.js");
 			base.OnPreRender(e);
 		}
 
