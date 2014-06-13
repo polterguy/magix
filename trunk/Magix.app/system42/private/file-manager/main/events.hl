@@ -230,13 +230,14 @@ magix.file-manager.create-preview
           set=>[@][..][..][split:1][result][0]
       _can-edit=>false
       _is-image=>false
+      _is-inspect=>false
 
       // checking filetype, and setting a descriptive label, and whether or not the file can be edited
       switch=>[@][split:1][result][0].Value
         case=>hl
-          set=>[/][**value=>unknown filetype].Value
-            value=>hyperlisp file
           set=>[@][..][..][_can-edit].Value
+            value=>true
+          set=>[@][..][..][_is-inspect].Value
             value=>true
         case=>mml
           set=>[/][**value=>unknown filetype].Value
@@ -336,6 +337,25 @@ magix.file-manager.create-preview
           set=>[/][**img=>image-preview][src].Value
             value=>[magix.viewport.get-viewstate][value].Value
 
+      // inspecting file, if we're supposed to
+      if=>equals
+        lhs=>[@][_is-inspect].Value
+        rhs=>true
+        code
+          set=>[@][magix.file.load][file].Value
+            value=>[magix.viewport.get-viewstate][value].Value
+          magix.file.load
+          code-2-node
+            code=>[@][magix.file.load][value].Value
+          if=>exist
+            lhs=>[@][code-2-node][node][inspect]
+            code
+              set=>[**value=>unknown filetype].Value
+                value=>[:magix.file-manager.create-inspect[@][..][..][code-2-node]][result].Value
+          else
+            set=>[**value=>unknown filetype].Value
+              value=>hyperlisp file
+
       // creating actual preview web part
       magix.forms.create-web-part
         container=>preview
@@ -347,6 +367,7 @@ magix.file-manager.create-preview
             value=>selected file
           label=>lbl-file-type
             class=>span-6 last
+            style=>max-height:144px;overflow-y:auto;
             value=>unknown filetype
           img=>image-preview
             visible=>false
@@ -605,6 +626,22 @@ magix.file-manager.create-preview
 
           dynamic=>rename-file-container
             class=>span-6 last
+
+// formats inspect node with paragraphs and such for clarity
+magix.file-manager.create-inspect
+  _inspect
+  set=>[_inspect].Value
+    value=>[$][node][inspect].Value
+  set=>[_inspect].Value
+    value=>@"<p>{0}</p>"
+      =>[_inspect].Value
+  replace=>[_inspect].Value
+    what=>@"
+
+"
+    with=></p><p>
+  set=>[$][result].Value
+    value=>[_inspect].Value
 
 // edits files that allows to be edited, such as mml, html and hyperlisp files
 // [file] parameter is file to edit
