@@ -39,6 +39,8 @@ magix.forms.create-web-part
     // editor save wrapper
     dynamic=>helper-for-persist-wrapper
       class=>span-22 last
+    dynamic=>editor-for-persist-wrapper
+      class=>span-22 last
 
     // wysiwyg design surface
     dynamic=>wysiwyg-surface
