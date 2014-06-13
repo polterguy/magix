@@ -1055,6 +1055,7 @@ input[type=button].toolbox-delete,
 input[type=button].toolbox-undo,
 input[type=button].toolbox-redo,
 input[type=button].toolbox-preview,
+input[type=button].toolbox-execute,
 input[type=button].toolbox-save,
 input[type=button].toolbox-load,
 input[type=button]:disabled.toolbox-button,
@@ -1082,6 +1083,7 @@ input[type=button]:disabled.toolbox-delete,
 input[type=button]:disabled.toolbox-undo,
 input[type=button]:disabled.toolbox-redo,
 input[type=button]:disabled.toolbox-preview,
+input[type=button]:disabled.toolbox-execute,
 input[type=button]:disabled.toolbox-save,
 input[type=button]:disabled.toolbox-load
 {
@@ -1244,6 +1246,15 @@ input[type=button]:disabled.toolbox-preview
     box-shadow:none;
 }
 
+input[type=button].toolbox-execute,
+input[type=button]:hover.toolbox-execute,
+input[type=button]:disabled.toolbox-execute
+{
+    background-position:0px -414px;
+    background-color:rgba(0,0,0,.1);
+    box-shadow:none;
+}
+
 input[type=button].toolbox-save,
 input[type=button]:hover.toolbox-save,
 input[type=button]:disabled.toolbox-save
@@ -1297,6 +1308,11 @@ input[type=button]:hover.toolbox-preview
     background-color:rgba(0,0,0,.2);
 }
 
+input[type=button]:hover.toolbox-execute
+{
+    background-color:rgba(0,0,0,.2);
+}
+
 input[type=button]:hover.toolbox-save
 {
     background-color:rgba(0,0,0,.2);
@@ -1343,7 +1359,7 @@ input[type=button]:disabled.toolbox-delete
     background-image:none;
 }
 
-input[type=button]:disabled.toolbox-preview
+input[type=button]:disabled.toolbox-execute
 {
     background-color:rgba(0,0,0,.1);
     background-image:none;
