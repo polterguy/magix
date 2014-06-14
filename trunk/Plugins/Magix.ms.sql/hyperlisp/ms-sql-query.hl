@@ -43,8 +43,8 @@ magix.forms.create-web-part
           type=>magix.ms.sql.connection
       for-each=>[magix.data.load][objects]
         _con
-        set=>[@][0].Name
-          value=>[.][value].Name
+        set=>[@][_con].Name
+          value=>[.][id].Value
         set=>[@][0].Value
           value=>[.][value][connection].Value
         add=>[/][magix.forms.set-values][values]

@@ -199,26 +199,7 @@ magix.forms.create-web-part
               class=>span-2 last
               value=>save
               onclick
-                magix.forms.get-value
-                  form-id=>editor
-                  id=>txt-file-name
-                magix.forms.get-value
-                  form-id=>editor
-                  id=>editor-surface
-                using=>magix.file
-                  save
-                    file=>[magix.forms.get-value:0][value].Value
-                    value=>[magix.forms.get-value:1][value].Value
-                magix.viewport.show-message
-                  message=>file was successfully saved
-                magix.forms.effect
-                  type=>focus-and-select
-                  form-id=>editor
-                  id=>editor-surface
-                set=>[magix.editor.file-saved][file].Value
-                  value=>[magix.forms.get-value:0][value].Value
-                magix.editor.file-saved
-
+                magix.text-editor.save-file
         // preview container
         dynamic=>preview-container
           class=>fill-width column top-1
