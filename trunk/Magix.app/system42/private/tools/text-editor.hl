@@ -51,32 +51,6 @@ if=>exist
     set=>[**text-box=>txt-file-name][value].Value
       value=>[$][file].Value
 
-    // enabling the preview button, but only if file is an mml or html file
-    split=>[$][file].Value
-      what=>.
-    while=>more-than
-      lhs=>[@][split][result].Count
-      rhs=>1
-      code
-        set=>[@][..][..][split][result][0]
-    if=>equals
-      lhs=>[@][split][result][0].Value
-      rhs=>mml
-      code
-        set=>[**button=>preview][disabled].Value
-          value=>false
-    else-if=>equals
-      lhs=>[@][split][result][0].Value
-      rhs=>hl
-      code
-        set=>[**button=>preview][disabled].Value
-          value=>true
-        set=>[**button=>execute][disabled].Value
-          value=>false
-    else
-      set=>[**button=>preview][disabled].Value
-        value=>true
-
 // disabling the text-box that allows changing the filename, if we're not allowed to change filename of edited file
 if=>equals
   lhs=>[$][allow-filename-change].Value
@@ -146,8 +120,11 @@ magix.forms.create-web-part
   form-id=>editor
   container=>content1
   class=>span-17 last
+  events-file=>system42/private/tools/text-editor/events.hl
   controls
     panel=>main-wrapper
+      onfirstload
+        magix.text-editor.refresh-toolbar
       controls
         panel=>toolbar
           class=>fill-width column

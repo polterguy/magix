@@ -1,0 +1,54 @@
+﻿
+
+inspect=>@"contains the active events for the text-editor
+
+contains the active events for the text-editor web part"
+
+
+magix.text-editor.refresh-toolbar
+  // enabling the preview button, but only if file is an mml or html file
+  // and enabling the execute button, if file is a hyperlisp file
+  magix.forms.get-value
+    form-id=>editor
+    id=>txt-file-name
+  split=>[magix.forms.get-value][value].Value
+    what=>.
+  while=>more-than
+    lhs=>[@][split][result].Count
+    rhs=>1
+    code
+      set=>[@][..][..][split][result][0]
+  if=>equals
+    lhs=>[@][split][result][0].Value
+    rhs=>mml
+    code
+      magix.forms.set-enabled
+        form-id=>editor
+        id=>preview
+        value=>true
+      magix.forms.set-enabled
+        form-id=>editor
+        id=>execute
+        value=>false
+  else-if=>equals
+    lhs=>[@][split][result][0].Value
+    rhs=>hl
+    code
+      magix.forms.set-enabled
+        form-id=>editor
+        id=>preview
+        value=>false
+      magix.forms.set-enabled
+        form-id=>editor
+        id=>execute
+        value=>true
+  else
+    magix.forms.set-enabled
+      form-id=>editor
+      id=>preview
+      value=>false
+    magix.forms.set-enabled
+      form-id=>editor
+      id=>execute
+      value=>false
+
