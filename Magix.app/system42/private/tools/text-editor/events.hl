@@ -52,3 +52,27 @@ magix.text-editor.refresh-toolbar
       id=>execute
       value=>false
 
+// saves file
+magix.text-editor.save-file
+  magix.forms.get-value
+    form-id=>editor
+    id=>txt-file-name
+  magix.forms.get-value
+    form-id=>editor
+    id=>editor-surface
+  using=>magix.file
+    save
+      file=>[magix.forms.get-value:0][value].Value
+      value=>[magix.forms.get-value:1][value].Value
+  magix.viewport.show-message
+    message=>file was successfully saved
+  magix.forms.effect
+    type=>focus-and-select
+    form-id=>editor
+    id=>editor-surface
+  set=>[magix.editor.file-saved][file].Value
+    value=>[magix.forms.get-value:0][value].Value
+  magix.text-editor.refresh-toolbar
+  magix.editor.file-saved
+
+
