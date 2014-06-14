@@ -7,13 +7,19 @@ user somehow has previously opened another help page, then this help page will
 be opened instead"
 
 
-// includes necessary javascript files for our autocompleter
+// includes necessary javascript and css files for our autocompleter
 magix.viewport.include-client-file
   type=>javascript
   file=>media/bootstrap/js/jQuery.js
 magix.viewport.include-client-file
   type=>javascript
   file=>media/bootstrap/js/bootstrap.min.js
+magix.viewport.include-client-file
+  type=>css
+  file=>media/back-end/typeahead.css
+magix.viewport.include-client-file
+  type=>css
+  file=>media/back-end/help.css
 
 // opens up the help file the user last had open, or the index file if no help file is in the list of items
 event

@@ -30,6 +30,11 @@ if you supply an [onesc] piece of hyperlisp code, then this code will
 execute when the user clicks esc"
 
 
+// including toolbox buttons css file
+magix.viewport.include-client-file
+  type=>css
+  file=>media/back-end/toolbar-buttons.css
+
 // loading file, if we are given a [file] input parameter
 if=>exist
   lhs=>[$][file].Value

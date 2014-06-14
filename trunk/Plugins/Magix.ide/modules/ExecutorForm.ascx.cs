@@ -69,7 +69,15 @@ namespace Magix.ide.modules
 					"magix.viewport.include-client-file",
 					tmp);
 
-				activeEvent.Attributes.Add(new AttributeControl.Attribute("data-provide", "typeahead"));
+                tmp = new Node();
+                tmp["type"].Value = "css";
+                tmp["file"].Value = "media/back-end/event-executor.css";
+
+                RaiseActiveEvent(
+                    "magix.viewport.include-client-file",
+                    tmp);
+
+                activeEvent.Attributes.Add(new AttributeControl.Attribute("data-provide", "typeahead"));
 				activeEvent.Attributes.Add(new AttributeControl.Attribute("data-items", "12"));
 				activeEvent.Attributes.Add(new AttributeControl.Attribute("data-source", GetDataSource()));
 			}

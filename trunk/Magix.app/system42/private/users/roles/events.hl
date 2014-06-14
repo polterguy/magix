@@ -61,7 +61,9 @@ magix.role.create-tree-node-control
 
             // making sure this role is indented on screen
             set=>[@][_pnl][panel][class].Value
-              value=>column clear tree-indentation
+              value=>column clear
+            set=>[@][_pnl][panel][style].Value
+              value=>padding-left:10px;background-repeat:no-repeat;background-image:url(media/images/icons/tree-indent.png);
 
             // adding child role to returned value
             add=>[/][_btn][panel][controls]

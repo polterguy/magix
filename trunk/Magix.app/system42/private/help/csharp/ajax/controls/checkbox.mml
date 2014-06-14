@@ -32,7 +32,7 @@ the active module as an embedded resource if you want to compile this sample</p>
     runat="server"
     id="lbl"
     Tag="label"
-    Class="span-5 right-text"
+    Class="span-5 text-right"
     Value="associated with checkbox"
     For="chk"/&gt;
 &lt;mux:CheckBox
@@ -74,7 +74,7 @@ label=>lbl
   value=>associated with checkbox
   tag=>label
   for=>chk
-  class=>span-5 right-text
+  class=>span-5 text-right
 check-box=>chk
   class=>span-1
   oncheckedchanged

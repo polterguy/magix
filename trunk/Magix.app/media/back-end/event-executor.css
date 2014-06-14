@@ -1,0 +1,44 @@
+﻿
+
+.indent-event-executor
+{
+	z-index:5;
+	position:absolute;
+	top:5px;
+	right:5px;
+	width:36px;
+	height:36px;
+	background:transparent url(../images/icons/arrows.png) no-repeat -36px 0;
+	transition-property:opacity;
+	transition-duration:.5s;
+	opacity:.2;
+}
+
+.de-indent-event-executor
+{
+	z-index:5;
+	position:absolute;
+	top:5px;
+	right:41px;
+	width:36px;
+	height:36px;
+	background:transparent url(../images/icons/arrows.png) no-repeat 0 0;
+	transition-property:opacity;
+	transition-duration:.5s;
+	opacity:.2;
+}
+
+.indent-event-executor:hover
+{
+	transition-property:opacity;
+	transition-duration:.5s;
+	opacity:1;
+}
+
+.de-indent-event-executor:hover
+{
+	transition-property:opacity;
+	transition-duration:.5s;
+	opacity:1;
+}
+

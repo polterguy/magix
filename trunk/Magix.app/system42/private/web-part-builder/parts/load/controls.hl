@@ -5,7 +5,7 @@ inspect=>@"wrapper for loading a web part
 creates the controls needed to ask the user from where he wants to load his web part"
 
 label
-  class=>span-1 right-text
+  class=>span-1 text-right
   tag=>label
   value=>load
 

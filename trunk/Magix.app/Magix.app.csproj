@@ -59,18 +59,19 @@
   <ItemGroup>
     <Content Include="Global.asax" />
     <Content Include="Default.aspx" />
+    <Content Include="media\back-end\event-executor.css" />
+    <Content Include="media\back-end\file-uploader.css" />
+    <Content Include="media\back-end\help.css" />
+    <Content Include="media\back-end\toolbar-buttons.css" />
+    <Content Include="media\back-end\typeahead.css" />
+    <Content Include="media\back-end\wysihtml.css" />
     <Content Include="media\bootstrap\css\bootstrap.css" />
     <Content Include="media\bootstrap\css\bootstrap.min.css" />
     <Content Include="media\bootstrap\css\bootstrap-responsive.css" />
     <Content Include="media\bootstrap\css\bootstrap-responsive.min.css" />
     <Content Include="media\bootstrap\img\glyphicons-halflings.png" />
     <Content Include="media\bootstrap\img\glyphicons-halflings-white.png" />
-    <Content Include="media\front-end\golden.css" />
     <Content Include="media\front-end\mystique.css" />
-    <Content Include="media\front-end\white.css" />
-    <Content Include="media\front-end\hipster.css" />
-    <Content Include="media\front-end\default.css" />
-    <Content Include="media\front-end\pink.css" />
     <Content Include="media\images\backgrounds\background-hipster.png" />
     <Content Include="media\images\backgrounds\background-pink.png" />
     <Content Include="media\images\backgrounds\background-white.png" />
@@ -105,13 +106,7 @@
     <Content Include="media\images\textures\paint-light.png" />
     <Content Include="media\images\textures\sky-dark.png" />
     <Content Include="media\images\textures\sky-light.png" />
-    <Content Include="media\xing-wysihtml5\parser_rules\advanced.js" />
-    <Content Include="media\xing-wysihtml5\parser_rules\simple.js" />
-    <Content Include="media\xing-wysihtml5\website\css\editor.css" />
-    <Content Include="media\xing-wysihtml5\website\css\stylesheet.css" />
     <Content Include="media\xing-wysihtml5\website\img\spr_toolbar_icons_r1.png" />
-    <Content Include="media\xing-wysihtml5\dist\wysihtml5-0.4.0pre.js" />
-    <Content Include="media\xing-wysihtml5\dist\wysihtml5-0.4.0pre.min.js" />
     <Content Include="media\grid\main.css" />
     <Content Include="media\grid\grid.png" />
     <Content Include="system42\private\magix-log\log.txt" />
@@ -146,7 +141,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349C5851-65DF-11DA-9384-00065B846F21}">
         <WebProjectProperties>
-          <UseIIS>False</UseIIS>
+          <UseIIS>True</UseIIS>
           <AutoAssignPort>False</AutoAssignPort>
           <DevelopmentServerPort>8080</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>

@@ -220,7 +220,7 @@ where
         set=>[@][_lb][value].Value
           value=>[.][COLUMN_NAME].Value
         set=>[@][_lb][class].Value
-          value=>span-5 clear table-column
+          value=>span-5 clear
         _pk
         set=>[@][_pk].Value
           value=>[.][COLUMN_NAME].Value
@@ -240,7 +240,7 @@ where
           rhs=>true
           code
             set=>[@][..][..][_lb][class].Value
-              value=>{0} primary-key-column
+              value=>{0} bold
                 v0=>[@][..][..][_lb][class].Value
             set=>[@][..][..][_lb][title].Value
               value=>primary key
@@ -731,7 +731,7 @@ where"
             magix.ms.sql.close-selected-connection
         label=>lblNew
           tag=>label
-          class=>span-1 right-text
+          class=>span-1 text-right
           value=>new
         text-box=>txtNewConnection
           placeholder=>connection string ...
@@ -781,7 +781,7 @@ where"
           for=>chkTables
           tag=>label
           value=>tables
-          class=>span-2 top-1 right-text
+          class=>span-2 top-1 text-right
         check-box=>chkTables
           checked=>true
           class=>span-1 top-1
@@ -811,7 +811,7 @@ where"
           for=>chkColumns
           tag=>label
           value=>columns
-          class=>span-2 top-1 right-text
+          class=>span-2 top-1 text-right
         check-box=>chkColumns
           checked=>true
           class=>span-1 top-1

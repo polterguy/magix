@@ -5,7 +5,7 @@
 <div class="span-15 last boxed air-padding">{{
 label=>frontEndCssLbl
   value=>skin css file
-  class=>span-2 right-text
+  class=>span-2 text-right
   tag=>label
 lambda=>lmda
   oncreatecontrols
@@ -52,7 +52,7 @@ lambda=>lmda
       value=>[_data][select]
 label=>lblHelp
   value=>show help
-  class=>span-2 right-text
+  class=>span-2 text-right
   tag=>label
   for=>chkHelp
 check-box=>chkHelp
@@ -93,7 +93,7 @@ check-box=>chkHelp
         container=>help
 label=>frontEndViewportLabel
   value=>front end viewport
-  class=>span-3 right-text
+  class=>span-3 text-right
   tag=>label
 lambda=>lmdaViewport
   oncreatecontrols
@@ -138,6 +138,9 @@ lambda=>lambda-front-end-event
     magix.viewport.include-client-file
       type=>javascript
       file=>media/bootstrap/js/bootstrap.min.js
+    magix.viewport.include-client-file
+      type=>css
+      file=>media/back-end/typeahead.css
     _json=>
     list-events
     for-each=>[list-events][events]
