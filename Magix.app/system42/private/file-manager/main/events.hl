@@ -818,6 +818,19 @@ magix.file-manager.delete-directory_onclick
     code
       magix.viewport.get-viewstate
         id=>magix.file-manager.current-folder
+
+      // checking to see if selected file is inside of folder being deleted, and if so, un-selecting it
+      magix.viewport.get-viewstate
+        id=>magix.file-manager.selected-file
+      index-of=>[magix.viewport.get-viewstate:1][value].Value
+        what=>[magix.viewport.get-viewstate:0][value].Value
+      if=>not-equals
+        lhs=>[index-of][result].Count
+        rhs=>0
+        code
+          magix.viewport.set-viewstate
+            id=>magix.file-manager.selected-file
+
       using=>magix.file
         delete-directory
           directory=>[magix.viewport.get-viewstate][value].Value

@@ -178,9 +178,12 @@ returns the default dashboard shortcuts in your system"
                               value=>[$][file].Value
                           magix.viewport.clear-controls
                             container=>content2
+                            reset-class=>true
+                          magix.text-editor.refresh-toolbar
                         oncancel
                           magix.viewport.clear-controls
                             container=>content2
+                            reset-class=>true
       hyperlisp-executor
         text=>hyperlisp executor
         category=>tools
