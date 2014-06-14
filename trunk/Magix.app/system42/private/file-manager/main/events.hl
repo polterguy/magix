@@ -756,6 +756,11 @@ magix.editor.file-saved
 magix.file-manager.directory-changed
   magix.viewport.get-viewstate
     id=>magix.file-manager.current-folder
+  set=>[magix.forms.uploader-set-directory][value].Value
+    value=>[magix.viewport.get-viewstate][value].Value
+  magix.forms.uploader-set-directory
+    form-id=>file-manager
+    id=>uploader
   if=>not-equals
     lhs=>[magix.viewport.get-viewstate][value].Value
     rhs=>
@@ -822,14 +827,17 @@ magix.file-manager.delete-directory_onclick
       // checking to see if selected file is inside of folder being deleted, and if so, un-selecting it
       magix.viewport.get-viewstate
         id=>magix.file-manager.selected-file
-      index-of=>[magix.viewport.get-viewstate:1][value].Value
-        what=>[magix.viewport.get-viewstate:0][value].Value
-      if=>not-equals
-        lhs=>[index-of][result].Count
-        rhs=>0
+      if=>exist
+        lhs=>[magix.viewport.get-viewstate:1][value]
         code
-          magix.viewport.set-viewstate
-            id=>magix.file-manager.selected-file
+          index-of=>[magix.viewport.get-viewstate:1][value].Value
+            what=>[magix.viewport.get-viewstate:0][value].Value
+          if=>not-equals
+            lhs=>[@][index-of][result].Count
+            rhs=>0
+            code
+              magix.viewport.set-viewstate
+                id=>magix.file-manager.selected-file
 
       using=>magix.file
         delete-directory

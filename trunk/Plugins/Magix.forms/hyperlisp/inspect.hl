@@ -826,7 +826,7 @@ magix.forms.uploader-sample-start
     container=>content5
     form-id=>sample-form
 
-magix.forms.uploader-dox-end=>@"[folder] is the folder where the files 
+magix.forms.uploader-dox-end=>@"[directory] is the directory where the files 
 will be uploaded.  the filename of the file from the client-side, will be the same 
 when the file is uploaded to the server
 
@@ -840,7 +840,7 @@ or if there are more files waiting in the que to be uploaded, before the uploade
 finished"
 
 magix.forms.uploader-sample-end
-  folder=>tmp
+  directory=>tmp
   onuploaded
     magix.viewport.show-message
       message=>file was uploaded
@@ -912,9 +912,8 @@ magix.forms.uploader-has-more-data-sample
     form-id=>sample-form
     controls
       uploader=>uploader-id
-        onfirstload=>hyperlisp code
         class=>mux-file-uploader
-        folder=>tmp
+        directory=>tmp
         onuploaded
           magix.forms.uploader-has-more-data
             form-id=>sample-form
@@ -925,6 +924,30 @@ magix.forms.uploader-has-more-data-sample
             code
               magix.viewport.show-message
                 message=>this was the last file
+
+
+magix.forms.uploader-set-directory-dox=>@"changes upload directory for uploader
+
+changes the current directory for an uploader"
+
+magix.forms.uploader-set-directory-sample
+  magix.forms.create-web-part
+    container=>content5
+    form-id=>sample-form
+    controls
+      button=>change
+        value=>change upload directory
+        onclick
+          magix.forms.uploader-set-directory
+            form-id=>sample-form
+            id=>uploader-id
+            value=>tmp
+      uploader=>uploader-id
+        class=>mux-file-uploader
+        directory=>system42
+        onuploaded
+          magix.viewport.show-message
+            message=>uploaded file to current directory
 
 
 magix.forms.list-control-types-dox=>@"list all control types in the system
