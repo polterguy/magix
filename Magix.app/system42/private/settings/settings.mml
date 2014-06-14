@@ -40,12 +40,12 @@ lambda=>lmda
             form-id=>admin-settings
             id=>frontEndCss
     magix.file.list-files
-      directory=>media/front-end
+      directory=>media/back-end/skins
     for-each=>[magix.file.list-files][files]
       set=>[/][_data][select][items][[.].Name].Value
         value=>[.].Name
       replace=>[/][_data][select][items][[.].Name].Value
-        what=>media/front-end/
+        what=>media/back-end/skins/
       replace=>[/][_data][select][items][[.].Name].Value
         what=>.css
     add=>[$]

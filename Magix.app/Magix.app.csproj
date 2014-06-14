@@ -71,7 +71,7 @@
     <Content Include="media\bootstrap\css\bootstrap-responsive.min.css" />
     <Content Include="media\bootstrap\img\glyphicons-halflings.png" />
     <Content Include="media\bootstrap\img\glyphicons-halflings-white.png" />
-    <Content Include="media\front-end\mystique.css" />
+    <Content Include="media\back-end\skins\mystique.css" />
     <Content Include="media\images\backgrounds\background-hipster.png" />
     <Content Include="media\images\backgrounds\background-pink.png" />
     <Content Include="media\images\backgrounds\background-white.png" />

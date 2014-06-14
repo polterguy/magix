@@ -7,6 +7,10 @@ user somehow has previously opened another help page, then this help page will
 be opened instead"
 
 
+// cleans up from previous calls
+magix.web.set-session
+  id=>magix.help.cached-help-files
+
 // includes necessary javascript and css files for our autocompleter
 magix.viewport.include-client-file
   type=>javascript
