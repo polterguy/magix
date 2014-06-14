@@ -30,6 +30,8 @@ magix.viewport.set-viewstate
   value=>
 magix.viewport.set-viewstate
   id=>magix.file-manager.no-edit
+magix.viewport.set-viewstate
+  id=>magix.file-manager.has-upload
 
 // changing editor-container, if we're supposed to
 _editor-container=>content2
@@ -177,6 +179,9 @@ if=>equals
         directory=>
         onuploaded
           magix.file-manager.open-directory
+    magix.viewport.set-viewstate
+      id=>magix.file-manager.has-upload
+      value=>true
     if=>exist
       lhs=>[$][directory]
       code

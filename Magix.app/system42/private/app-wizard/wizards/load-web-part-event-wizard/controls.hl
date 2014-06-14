@@ -116,10 +116,18 @@ panel
             code
               magix.forms.create-web-part
                 controls-id=>{database-id}
+        _data2
+          event
+            name=>{active-event-name}
+            code
+              magix.forms.create-web-part
+                controls-file=>{filename}
 
         magix.forms.get-value
           form-id=>wizard
           id=>active-event-name
+
+        _current
 
         // checking to see if active event has good name
         if=>equals
@@ -136,6 +144,8 @@ panel
 
             // user wants to use a form from database
             case=>database
+              set=>[/][_current].Value
+                value=>_data
               magix.forms.get-value
                 form-id=>wizard
                 id=>database-id
@@ -155,6 +165,28 @@ panel
                     code
                       set=>[.].Value
                         value=>[@][..][..][..][..][magix.forms.get-value][value].Value
+            case=>filesystem
+              set=>[/][_current].Value
+                value=>_data2
+              magix.forms.get-value
+                form-id=>from-where
+                id=>filename
+              if=>equals
+                lhs=>[@][magix.forms.get-value][value].Value
+                rhs=>
+                code
+                  magix.viewport.show-message
+                    message=>you must choose a web part hyperlisp file from your filesystem
+              else
+                set=>[/][_good].Value
+                  value=>true
+                iterate=>[/][_data2]
+                  if=>equals
+                    lhs=>[.].Value
+                    rhs=>{filename}
+                    code
+                      set=>[.].Value
+                        value=>[@][..][..][..][..][magix.forms.get-value][value].Value
 
         // checking to see if everything is ok
         if=>equals
@@ -170,7 +202,7 @@ panel
               lhs=>[@][magix.forms.get-value:0][value].Value
               rhs=>
               code
-                set=>[_data][event][code][magix.forms.create-web-part][container].Value
+                set=>[[/][_current].Value][event][code][magix.forms.create-web-part][container].Value
                   value=>[@][..][..][magix.forms.get-value:0][value].Value
 
             // setting css classes for our web part, if there is any defined
@@ -181,11 +213,11 @@ panel
               lhs=>[@][magix.forms.get-value:1][value].Value
               rhs=>
               code
-                set=>[_data][event][code][magix.forms.create-web-part][class].Value
+                set=>[[/][_current].Value][event][code][magix.forms.create-web-part][class].Value
                   value=>[@][..][..][magix.forms.get-value:1][value].Value
 
             // setting active event name
-            iterate=>[/][_data]
+            iterate=>[/][[/][_current].Value]
               if=>equals
                 lhs=>[.].Value
                 rhs=>{active-event-name}
@@ -202,11 +234,11 @@ panel
                   type=>css
               set=>[@][_css][magix.viewport.include-client-file][file].Value
                 value=>[.].Name
-              add=>[/][_data][event][code]
+              add=>[/][[/][_current].Value][event][code]
                 value=>[@][_css][magix.viewport.include-client-file]
 
             // creating active event
-            execute=>[_data]
+            execute=>[[/][_current].Value]
             magix.viewport.show-message
               message=>active event was created
             magix.forms.set-visible
@@ -245,4 +277,7 @@ panel
         set=>[magix.executor.set-code][code].Value
           value=>[node-2-code][code].Value
         magix.executor.set-code
+
+dynamic=>file-browser
+  class=>span-17 last
 

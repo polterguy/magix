@@ -13,7 +13,6 @@ magix.viewport.set-viewstate
   id=>magix.wizard.css-files
   value
     media/grid/main.css
-    media/back-end/skins/mystique.css
 
 // creates the wizard main web part
 magix.forms.create-web-part

@@ -756,11 +756,17 @@ magix.editor.file-saved
 magix.file-manager.directory-changed
   magix.viewport.get-viewstate
     id=>magix.file-manager.current-folder
-  set=>[magix.forms.uploader-set-directory][value].Value
-    value=>[magix.viewport.get-viewstate][value].Value
-  magix.forms.uploader-set-directory
-    form-id=>file-manager
-    id=>uploader
+  magix.viewport.get-viewstate
+    id=>magix.file-manager.has-upload
+  if=>equals
+    lhs=>[magix.viewport.get-viewstate:1][value].Value
+    rhs=>true
+    code
+      set=>[@][magix.forms.uploader-set-directory][value].Value
+        value=>[magix.viewport.get-viewstate][value].Value
+      magix.forms.uploader-set-directory
+        form-id=>file-manager
+        id=>uploader
   if=>not-equals
     lhs=>[magix.viewport.get-viewstate][value].Value
     rhs=>

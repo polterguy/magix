@@ -181,4 +181,23 @@ magix.wizard.create-load-from-where-web-part
           button=>browse
             class=>span-2 last
             value=>browse
+            onclick
+              execute-script
+                file=>system42/private/file-manager/file-manager.hl
+                params
+                  filter=>*.hl
+                  container=>file-browser
+                  onselect
+                    magix.viewport.clear-controls
+                      container=>file-browser
+                      reset-class=>true
+                    using=>magix.forms
+                      set-value
+                        form-id=>from-where
+                        id=>filename
+                        value=>[$][file].Value
+                  oncancel
+                    magix.viewport.clear-controls
+                      container=>file-browser
+                      reset-class=>true
 
