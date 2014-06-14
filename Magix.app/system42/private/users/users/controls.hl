@@ -32,7 +32,7 @@ panel=>users-wrapper
           children-only=>true
 
 panel=>edit-user-wrapper
-  class=>span-15 last boxed air-padding top-1 clear left-5
+  class=>span-15 last boxed air-padding top-1 clear
   default=>save
   onesc
     magix.users.show-users-grid

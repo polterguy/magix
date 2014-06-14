@@ -195,7 +195,7 @@ _controls
     controls
       label=>lbl-code
         tag=>pre
-        style=>width:100%;display:block;
+        style=>width:100%;display:block;overflow-x:hidden;
         value=>example code
       panel=>btn-wrappers
         style=>width:100%;display:block;

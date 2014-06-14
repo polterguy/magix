@@ -107,6 +107,7 @@ magix.role.edit-role
         onesc
           magix.viewport.clear-controls
             container=>edit-role
+            reset-class=>true
         controls
           label
             tag=>label
