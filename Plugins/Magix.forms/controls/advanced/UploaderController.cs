@@ -36,7 +36,8 @@ namespace Magix.forms
             if (node.ContainsValue("class"))
 				ctrl.Class = node["class"].Get<string>();
 
-			string folder = node["folder"].Get<string>("tmp");
+			string folder = node["directory"].Get<string>("tmp");
+            ctrl.Folder = folder;
 
             string idPrefix = "";
             if (ip.ContainsValue("id-prefix"))
@@ -52,7 +53,8 @@ namespace Magix.forms
 				Node codeNode = node["onuploaded"].Clone();
 				ctrl.Uploaded += delegate(object sender2, EventArgs e2)
 				{
-                    SaveFile(folder, sender2);
+                    string directory = (sender2 as Uploader).Folder;
+                    SaveFile(directory, sender2);
                     FillOutEventInputParameters(codeNode, sender2);
                     RaiseActiveEvent(
 						"magix.execute",
@@ -87,15 +89,15 @@ namespace Magix.forms
             }
         }
 
-		/*
-		 * has more data
-		 */
-		[ActiveEvent(Name = "magix.forms.uploader-has-more-data")]
-		private void magix_forms_uploader_has_more_data(object sender, ActiveEventArgs e)
-		{
+        /*
+         * has more data
+         */
+        [ActiveEvent(Name = "magix.forms.uploader-has-more-data")]
+        private void magix_forms_uploader_has_more_data(object sender, ActiveEventArgs e)
+        {
             Node ip = Ip(e.Params);
-			if (ShouldInspect(ip))
-			{
+            if (ShouldInspect(ip))
+            {
                 AppendInspectFromResource(
                     ip["inspect"],
                     "Magix.forms",
@@ -106,14 +108,43 @@ namespace Magix.forms
                     "Magix.forms",
                     "Magix.forms.hyperlisp.inspect.hl",
                     "[magix.forms.uploader-has-more-data-sample]");
-				return;
-			}
+                return;
+            }
 
             Uploader ctrl = FindControl<Uploader>(ip);
             ip["value"].Value = ctrl.SizeOfBatch > ctrl.CurrentNo + 1;
-		}
+        }
 
-		protected override void Inspect(Node node)
+        /*
+         * sets the directory of where to upload files to
+         */
+        [ActiveEvent(Name = "magix.forms.uploader-set-directory")]
+        private void magix_forms_uploader_set_directory(object sender, ActiveEventArgs e)
+        {
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
+            {
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.forms",
+                    "Magix.forms.hyperlisp.inspect.hl",
+                    "[magix.forms.uploader-set-directory-dox].Value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.forms",
+                    "Magix.forms.hyperlisp.inspect.hl",
+                    "[magix.forms.uploader-set-directory-sample]");
+                return;
+            }
+
+            if (!ip.ContainsValue("value"))
+                throw new ArgumentException("no [value] given to [magix.forms.uploader-set-directory]");
+
+            Uploader ctrl = FindControl<Uploader>(ip);
+            ctrl.Folder = ip["value"].Get<string>();
+        }
+
+        protected override void Inspect(Node node)
 		{
             AppendInspectFromResource(
                 node["inspect"],

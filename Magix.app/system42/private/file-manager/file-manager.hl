@@ -164,6 +164,27 @@ else
   magix.viewport.set-viewstate
     id=>magix.file-manager.has-select-button
 
+if=>equals
+  lhs=>[$][allow-upload].Value
+  rhs=>true
+  code
+    magix.viewport.include-client-file
+      type=>css
+      file=>media/back-end/file-uploader.css
+    _uploader
+      uploader=>uploader
+        class=>mux-file-uploader
+        directory=>
+        onuploaded
+          magix.file-manager.open-directory
+    if=>exist
+      lhs=>[$][directory]
+      code
+        set=>[@][..][..][_uploader][uploader][directory].Value
+          value=>[$][directory].Value
+    add=>[magix.forms.create-web-part][controls]
+      value=>[@][_uploader][uploader]
+
 // creating the main web part, wrapping everything else
 magix.forms.create-web-part
   form-id=>file-manager

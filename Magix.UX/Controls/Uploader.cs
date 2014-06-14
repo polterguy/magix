@@ -14,19 +14,15 @@ using Magix.UX.Widgets.Core;
 
 namespace Magix.UX.Widgets
 {
-    // TODO: Remove inheritance from BaseWebControl and implement CssClass by hand, in this 
-    // control, since it is overkill, and carries a lot of properties not needed, i think ...?
-	/**
-     * Widget encapsulating an HTML5 drag and drop File Uploader control,
-     * with progress bar and support for multiple files
+	/*
+     * uploader control
      */
 	public class Uploader : BaseWebControl
 	{
 		private string _fileCache = null;
 
-		/**
-         * Fired when File is uploaded. Access the file in raw [BASE64 encoded] through
-         * the GetFileRawBASE64
+		/*
+         * event firec when file is uploaded
          */
 		public event EventHandler Uploaded;
 
@@ -35,9 +31,17 @@ namespace Magix.UX.Widgets
 			Class = "mux-file-uploader";
 		}
 
-		/**
-         * Returns the raw BASE64 encoded information about the file. Use Convert.FromBase64...
-         * to convert file to raw byte[] content ...
+        /*
+         * folder for saving files in
+         */
+        public string Folder
+        {
+            get { return ViewState["Folder"] as string; }
+            set { ViewState["Folder"] = value; }
+        }
+
+		/*
+         * returns file as base64 encoded
          */
 		public string GetFileRawBASE64()
 		{
@@ -53,8 +57,8 @@ namespace Magix.UX.Widgets
 			return _fileCache;
 		}
 
-		/**
-         * Returns the file's client side filename
+		/*
+         * returns client side filename
          */
 		public string GetFileName()
 		{
@@ -64,24 +68,16 @@ namespace Magix.UX.Widgets
 			return Page.Request["__FILENAME"];
 		}
 
-		/**
-         * Since the user can drag and drop multiple files into the browser at
-         * the same time, we need to track which is our 'current file' to be able to notify
-         * our code that a 'batch is finished'. This one returns the size [number of files]
-         * in the 'current processed batch'. Meaning, as long as SizeOfBatch is higher than
-         * CurrentNo, then you've got more files coming in after this one ...
+		/*
+         * number of files currently being uploaded
          */
 		public int SizeOfBatch
 		{
 			get { return int.Parse(Page.Request.Params["__MUX_TOTAL"]); }
 		}
 
-		/**
-         * Since the user can drag and drop multiple files into the browser at
-         * the same time, we need to track which is our 'current file' to be able to notify
-         * our code that a 'batch is finished'. This one returns the current index
-         * in the 'current processed batch'. Meaning, as long as SizeOfBatch is higher than
-         * CurrentNo, then you've got more files coming in after this one ...
+		/*
+         * current file being uploaded of total batch
          */
 		public int CurrentNo
 		{

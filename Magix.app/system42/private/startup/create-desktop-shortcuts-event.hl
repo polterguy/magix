@@ -207,6 +207,8 @@ returns the default dashboard shortcuts in your system"
             all=>true
           execute-script
             file=>system42/private/file-manager/file-manager.hl
+            params
+              allow-upload=>true
       web-controls
         text=>web controls reference
         category=>learn
