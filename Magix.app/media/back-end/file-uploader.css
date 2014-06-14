@@ -1,0 +1,65 @@
+﻿
+
+.mux-file-uploader
+{
+	position:fixed;
+	top:0;
+	left:0;
+	width:450px;
+	min-height:36px;
+	padding:36px 36px 18px 36px;
+	z-index:100000;
+	display:none;
+	color:White;
+	border-radius:0 0 50px 0;
+	background-image: linear-gradient(rgba(0, 0, 0, 1) 0%, rgba(64, 64, 64, 1) 100%);
+	box-shadow: -2px 2px 3px rgba(0, 0, 0, .5);
+}
+
+.mux-file-uploader ul
+{
+	margin-left:50px;
+}
+
+.mux-file-uploader p
+{
+	margin-left:50px;
+}
+
+.mux-file-uploader ul li
+{
+	list-style-type:none;
+}
+
+.mux-file-uploader img
+{
+	display:block;
+	position:fixed;
+	top:30px;
+	left:25px;
+}
+
+@keyframes mux-uploader-processing
+{
+ from {
+   color: rgba(255, 0, 0, 1);
+ }
+ to {
+   color: rgba(255, 200, 0, 1);
+ }
+}
+
+.mux-file-uploader ul li.mux-uploader-processing
+{
+	animation-name: mux-uploader-processing;
+	animation-duration: 2s;
+	animation-iteration-count: infinite;
+	animation-direction: alternate;
+}
+
+.mux-file-uploader .mux-uploader-processing-error
+{
+	font-weight:bold;
+	color:Red;
+}
+

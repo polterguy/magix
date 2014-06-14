@@ -7,7 +7,7 @@ contains the controls for the web part that wraps the properties web part"
 
 // link button that allows user to show and hide properties
 link-button=>btn-hide-properties
-  class=>span-3 right right-text top-1
+  class=>span-3 right text-right top-1
   style=>position:absolute;top:0;right:0;z-index:1;
   value=>hide properties
   onfirstload

@@ -6,7 +6,7 @@ contains the controls for helping user load a web part from the database"
 
 
 label
-  class=>span-2 right-text
+  class=>span-2 text-right
   value=>id
   tag=>label
 

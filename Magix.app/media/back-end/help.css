@@ -1,0 +1,58 @@
+﻿
+
+.sample-web-control
+{
+    background:#aeaeae;
+    border:dashed 2px Black;
+    padding-left:40px;
+    padding-right:40px;
+    padding-top:18px;
+    padding-bottom:18px;
+    clear:both;
+    display:block;
+    overflow:auto;
+}
+
+.dox-for-web-control
+{
+    background:#dedede;
+    padding-left:40px;
+    padding-right:40px;
+    padding-top:18px;
+    padding-bottom:18px;
+    clear:both;
+    display:block;
+    overflow:auto;
+    margin-bottom:18px;
+}
+
+ul.list-no-bullet
+{
+    padding-left:0px;
+}
+
+ul.list-no-bullet li
+{
+    list-style:none;
+}
+
+.dox-for-web-control ul li
+{
+    list-style:none;
+}
+
+ul.list-no-type
+{
+    list-style:none;
+}
+
+ul.list-no-type li
+{
+    text-align:right;
+}
+
+ul.list-no-type li span
+{
+    text-align:left;
+}
+

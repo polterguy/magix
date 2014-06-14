@@ -20,7 +20,7 @@ magix.ide.create-properties-controls
       class=>span-9
       controls
         label
-          class=>span-3 right-text
+          class=>span-3 text-right
           tag=>label
           value=>id
         text-box
@@ -121,7 +121,7 @@ magix.ide.create-control-property-modifier-control
       class=>span-9
       controls
         label
-          class=>span-3 right-text
+          class=>span-3 text-right
           tag=>label
           value=>{field-type-name}
         text-box

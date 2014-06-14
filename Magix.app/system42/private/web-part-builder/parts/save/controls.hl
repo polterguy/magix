@@ -5,7 +5,7 @@ inspect=>@"save where wrapper
 creates the controls needed to ask the user where he wants to save his form"
 
 label
-  class=>span-1 right-text
+  class=>span-1 text-right
   tag=>label
   value=>save
 

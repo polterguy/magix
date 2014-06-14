@@ -6,7 +6,7 @@ contains the controls for helping user saving his form into the filesystem"
 
 
 label
-  class=>span-2 right-text
+  class=>span-2 text-right
   value=>filename
   tag=>label
 
