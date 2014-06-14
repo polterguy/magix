@@ -254,7 +254,8 @@ textarea.min-height-30,.min-height-30 {min-height:576px;}
 .right {right:0px;}
 .bold {font-weight:bold;}
 
-html, body, form {width:100%;min-height:100%;background-color:#303030;}
+html, body, form {width:100%;min-height:100%;}
+html {background-color:#303030;}
 
 .text-left {text-align: left;}
 .text-right {text-align: right;}

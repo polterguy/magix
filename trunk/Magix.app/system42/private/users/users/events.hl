@@ -237,7 +237,7 @@ magix.users.edit-user
   magix.forms.set-class
     form-id=>users
     id=>edit-user-wrapper
-    value=>span-15 last boxed-light-green air-padding top-1 clear left-5
+    value=>span-15 last boxed-light-green air-padding top-1 clear
   set=>[magix.forms.set-info][value].Value
     value=>[$][id].Value
   magix.forms.set-info

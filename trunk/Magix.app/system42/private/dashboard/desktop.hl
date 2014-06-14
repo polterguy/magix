@@ -10,7 +10,7 @@ list-events
   begins-with=>magix.admin.desktop-shortcuts.
 
 _btn
-  class=>span-6 last desktop-widget-item
+  class=>span-5 last desktop-widget-item
   onclick
 
 for-each=>[list-events][events]
