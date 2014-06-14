@@ -272,7 +272,7 @@ magix.forms.create-web-part
       controls
         button=>help-back
           class=>btn-large span-2
-          value=>&lt;&lt;
+          value=>back
           onclick
             magix.help.move-previous
             magix.browser.scroll

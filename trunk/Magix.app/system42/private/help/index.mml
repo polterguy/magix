@@ -61,7 +61,13 @@ link-button=>go-to-settings
 }} and change the <em>"show help in admin panel"</em> to false.&nbsp;&nbsp;you can still access help if you do, 
 by explicitly opening up help from your dashboard</p>
 
+<p>the <em>"next page"</em> will bring you to the next page in the help system, almost like turning the page of a book.&nbsp;&nbsp;the 
+<em>"back"</em> button, will bring you to your previous page.&nbsp;&nbsp;the back button is useful if you jump from one chapter to another 
+through a hyperlink, or by searching for a specific topic, and you wish to go back to where you came from</p>
+
 <h3>main sections</h3>
+<p>although you are encouraged to read the help files sequentially, as you would have read a book, by clicking <em>"next page"</em>, you 
+can access a specific section below</p>
 <ul class="list-no-bullet">
 {{
 lambda=>help-index

@@ -1,42 +1,46 @@
 ﻿
-<h2>magix backend features</h2>
+<h2>the dashboard</h2>
 
-<p>the backend of magix is a place from where you can do almost anything you wish.&nbsp;&nbsp;
-from the back-end administrative interface of magix, you can do almost everything described in these help files, 
-including create applications in hyperlisp.&nbsp;&nbsp;
-from the backend parts of magix, you can</p>
-
-<ul>
-<li>create {{
-link-button=>go-to-hyper-lisp
-  value=>hyperlisp
-  onclick
-    magix.help.open-file
-      file=>system42/private/help/hyper-lisp/index.mml
-}} applications through the supplied browser-based {{
-link-button=>go-to-apps
-  value=>integrated development environment
-  onclick
-    magix.help.open-file
-      file=>system42/private/help/backend/applications.mml
-}}</li>
-<li>publish and manage web pages in your system, as you would from a cms or publishing system</li>
-<li>create, edit and manage applications, through for instance the built-in integrated development environment</li>
-<li>configure magix as a cloud system, override active events such that they are running externally, or open local events for external invocation</li>
-<li>edit, create and manage files through the file browser</li>
-<li>created qr codes, for easy access to your system from smart phones, and similar technologies</li>
-<li>change security settings of your system</li>
-<li>play around with hyperlisp code to teach yourself the system through the built-in hyperlisp executor</li>
-</ul>
+<p>the dashboard in magix is the administrative interface, from where you can perform most tasks.&nbsp;&nbsp;this is where you are now.&nbsp;&nbsp;
+from the dashboard, you can create applications in hyperlisp, manage files, users, roles and so on.&nbsp;&nbsp;in fact, you can create entire 
+applications using nothing but the dashboard interface of magix</p>
 
 <p>when you open up magix, you will see 4 different main panels; learn, applications, security and tools.&nbsp;&nbsp;
-learn is the place you go to teach yourself magix.&nbsp;&nbsp;applications is where you create new applications or pages from.&nbsp;&nbsp;
+learn is the place you go to teach yourself magix.&nbsp;&nbsp;applications is where you create new applications.&nbsp;&nbsp;
 security contains helpers for managing the security of your system.&nbsp;&nbsp;tools are additional tools for your convenience.&nbsp;&nbsp;
 in addition, the magix logo itself serves as a <em>"go home button"</em>, since it will show these panels once clicked, such that 
 you can find back to the "desktop" of magix easily, regardless of where you are</p>
 
 <p>every part of magix is also accessible from smart phones, such that you can play around with everything in magix from your 
 phone, on the bus, or where ever you are in this world</p>
+
+<p>probably the funniest place to start using magix, is the <em>"web part designer"</em>, which allows you to visually create applications 
+within minutes after starting using magix.&nbsp;&nbsp;below is a screenshot of how the designer looks like.&nbsp;&nbsp;open up the 
+{{
+link-button=>jump-to-designer
+  value=>web part designer
+  onclick
+    magix.viewport.clear-controls
+      all=>true
+    execute-script
+      file=>system42/private/web-part-builder/builder.hl
+    magix.browser.scroll
+}}</p>
+
+<img src="media/images/help-files/web-part-designer-screenshot.jpg" alt="web part designer" />
+
+<p>another place you might have some fun, is the {{
+link-button=>jump-to-qr-codes
+  value=>vanity qr code generator
+  onclick
+    magix.viewport.clear-controls
+      all=>true
+    execute-script
+      file=>system42/private/tools/qr-code-generator.hl
+    magix.browser.scroll
+}}, from where you can create <em>"vanity"</em> qr codes.&nbsp;&nbsp;to understand what a vanity qr code is, take a look at the screenshot below</p>
+
+<img src="media/images/help-files/qr-code-generator-screenshot.jpg" alt="web part designer" />
 
 {{
 lambda=>next
