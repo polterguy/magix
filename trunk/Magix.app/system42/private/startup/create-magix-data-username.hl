@@ -25,16 +25,16 @@ saves a node to the database, appending the currently logged in
 user's username to the id given.  this is useful for saving data 
 on a per user basis"
   code
-    magix.web.get-session
+    magix.session.get
       id=>magix.core.user
     if=>not-exist
-      lhs=>[magix.web.get-session][value]
+      lhs=>[magix.session.get][value]
       code
         throw=>no user is currently logged in
     set=>[magix.data.save][id].Value
       value=>{0}-{1}
         =>[$][id].Value
-        =>[magix.web.get-session][value][username].Value
+        =>[magix.session.get][value][username].Value
     add=>[magix.data.save]
       value=>[$][value]
     magix.data.save
@@ -49,16 +49,16 @@ loads a node from the database, appending the currently logged in
 user's username to the id given.  this is useful for storing and 
 retrieving data on a per user basis"
   code
-    magix.web.get-session
+    magix.session.get
       id=>magix.core.user
     if=>not-exist
-      lhs=>[magix.web.get-session][value]
+      lhs=>[magix.session.get][value]
       code
         throw=>no user is currently logged in
     set=>[magix.data.load][id].Value
       value=>{0}-{1}
         =>[$][id].Value
-        =>[magix.web.get-session][value][username].Value
+        =>[magix.session.get][value][username].Value
     magix.data.load
     if=>exist
       lhs=>[magix.data.load][value]
@@ -76,15 +76,15 @@ removes a node in the database, appending the currently logged in
 user's username to the id given.  this is useful for manipulating 
 data on a per user basis"
   code
-    magix.web.get-session
+    magix.session.get
       id=>magix.core.user
     if=>not-exist
-      lhs=>[magix.web.get-session][value]
+      lhs=>[magix.session.get][value]
       code
         throw=>no user is currently logged in
     set=>[magix.data.remove][id].Value
       value=>{0}-{1}
         =>[$][id].Value
-        =>[magix.web.get-session][value][username].Value
+        =>[magix.session.get][value][username].Value
     magix.data.remove
 

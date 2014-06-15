@@ -1,0 +1,296 @@
+﻿
+
+inspect=>@"contains the active events for the select from ms sql active event wizard
+
+contains the active events for the web part that allows the user to create an active event 
+that selects records from an ms sql database table"
+
+
+magix.wizard.web-config-connection_oncheckedchanged
+  if=>equals
+    lhs=>[$][value].Value
+    rhs=>true
+    code
+      magix.forms.set-enabled
+        form-id=>wizard
+        id=>connection-string
+        value=>false
+      magix.forms.set-enabled
+        form-id=>wizard
+        id=>web-config-connection-select
+        value=>true
+  else
+    magix.forms.set-enabled
+      form-id=>wizard
+      id=>connection-string
+      value=>true
+    magix.forms.set-enabled
+      form-id=>wizard
+      id=>web-config-connection-select
+      value=>false
+
+magix.wizard.web-config-connection-select_onselectedindexchanged
+  using=>magix.forms
+    get-value
+      form-id=>wizard
+      id=>web-config-connection-select
+  if=>equals
+    lhs=>[using][get-value][value].Value
+    rhs=>_default
+    code
+      magix.forms.set-value
+        form-id=>wizard
+        id=>connection-string
+        value=>
+  else
+    using=>magix.forms
+      set-value
+        form-id=>wizard
+        id=>connection-string
+        value=>web.config:{0}
+          =>[using][get-value][value].Value
+
+magix.wizard.web-config-connection-selected_onfirstload
+  _items
+    _default=>choose ...
+  magix.configuration.get-connection-strings
+  for-each=>[magix.configuration.get-connection-strings][result]
+    add=>[/][_items]
+      value=>[.].Value
+        value=>[.].Value
+  add=>[magix.forms.set-values][values]
+    value=>[_items]
+    children-only=>true
+  magix.forms.set-values
+    form-id=>wizard
+    id=>web-config-connection-select
+
+magix.wizard.next-1_onclick
+
+  // validating input first
+  magix.forms.get-value
+    form-id=>wizard
+    id=>active-event-name
+  split=>[magix.forms.get-value][value].Value
+    what=>.
+  if=>equals
+    lhs=>[split][result].Count
+    rhs=>1
+    or=>equals
+      lhs=>[split][result][0].Value
+      rhs=>magix
+    or=>equals
+      lhs=>[magix.forms.get-value][value].Value
+      rhs=>
+    code
+      magix.viewport.show-message
+        message=>you must supply an active event.&nbsp;&nbsp;your active event must contain a '.', and cannot start with 'magix.'
+        time=>5000
+        color=>#ffaaaa
+      magix.forms.effect
+        type=>focus-and-select
+        form-id=>wizard
+        id=>active-event-name
+      stop
+  magix.forms.get-value
+    form-id=>wizard
+    id=>connection-string
+  if=>equals
+    lhs=>[magix.forms.get-value:1][value].Value
+    rhs=>
+    code
+      magix.viewport.show-message
+        message=>you must supply a onnection string
+        time=>5000
+        color=>#ffaaaa
+      magix.forms.effect
+        type=>focus-and-select
+        form-id=>wizard
+        id=>connection-string
+      stop
+  magix.forms.effect
+    form-id=>wizard
+    id=>inner-wrapper
+    type=>slide
+    time=>250
+    offset=>-1
+  magix.wizard.initialize-second-page
+
+magix.wizard.initialize-second-page
+  magix.forms.get-value
+    form-id=>wizard
+    id=>connection-string
+  using=>magix.ms.sql
+    select
+      sql=>select distinct * from information_schema.tables where table_type='base table'
+      connection=>[magix.forms.get-value][value].Value
+  _items
+    _default=>select table ...
+  for-each=>[using][select][result]
+    add=>[/][_items]
+      value=>[.][TABLE_NAME].Value
+        value=>[.][TABLE_NAME].Value
+  add=>[magix.forms.set-values][values]
+    value=>[_items]
+    children-only=>true
+  magix.forms.set-values
+    form-id=>wizard
+    id=>select-table
+
+magix.wizard.next-2_onclick
+
+  // validating input
+  magix.forms.get-value
+    form-id=>wizard
+    id=>select-table
+  if=>equals
+    lhs=>[magix.forms.get-value][value].Value
+    rhs=>_default
+    code
+      magix.viewport.show-message
+        message=>you must choose a database table
+        time=>5000
+        color=>#ffaaaa
+      magix.forms.effect
+        type=>focus-and-select
+        form-id=>wizard
+        id=>select-table
+      stop
+  magix.forms.effect
+    form-id=>wizard
+    id=>inner-wrapper
+    type=>slide
+    time=>250
+    offset=>-2
+  magix.wizard.initialize-third-page
+
+magix.wizard.initialize-third-page
+  magix.forms.get-value
+    form-id=>wizard
+    id=>select-table
+  set=>[magix.ms.sql.select][sql].Value
+    value=>@"select * from information_schema.columns where table_name = N'{0}'"
+      =>[magix.forms.get-value][value].Value
+  magix.forms.get-value
+    form-id=>wizard
+    id=>connection-string
+  set=>[magix.ms.sql.select][connection].Value
+    value=>[magix.forms.get-value:1][value].Value
+  magix.ms.sql.select
+  for-each=>[magix.ms.sql.select][result]
+    _chk
+      check-box
+        class=>span-1
+        checked=>true
+      label
+        tag=>label
+        class=>span-4
+    set=>[@][_chk][check-box].Value
+      value=>[.][COLUMN_NAME].Value
+    set=>[@][_chk][label][for].Value
+      value=>[.][COLUMN_NAME].Value
+    set=>[@][_chk][label][value].Value
+      value=>[.][COLUMN_NAME].Value
+    set=>[@][_chk][check-box][info].Value
+      value=>[.][COLUMN_NAME].Value
+    set=>[@][_chk][label][title].Value
+      value=>data type: '{0}', max length: '{1}', is nullable: '{2}'
+        =>[.][DATA_TYPE].Value
+        =>[.][CHARACTER_MAXIMUM_LENGTH].Value
+        =>[.][IS_NULLABLE].Value
+    using=>magix.math
+      modulo
+        =>[/][magix.forms.create-web-part][controls].Count
+        =>6
+    if=>equals
+      lhs=>[@][using][modulo].Value
+      rhs=>0
+      code
+        set=>[@][..][..][_chk][label][class].Value
+          value=>span-4 last
+    add=>[/][magix.forms.create-web-part][controls]
+      value=>[@][_chk]
+      children-only=>true
+  magix.forms.create-web-part
+    form-id=>columns
+    container=>columns-container
+
+magix.wizard.next-3_onclick
+  magix.forms.get-children-values
+    form-id=>columns
+    id=>columns-container
+  _columns=>
+  for-each=>[magix.forms.get-children-values][values]
+    if=>equals
+      lhs=>[.].Value
+      rhs=>true
+      code
+        if=>not-equals
+          lhs=>[/][_columns].Value
+          rhs=>
+          code
+            set=>[/][_columns].Value
+              value=>{0},
+                =>[/][_columns].Value
+        set=>[/][_columns].Value
+          value=>{0}[{1}]
+            =>[/][_columns].Value
+            =>[.].Name
+  _sql
+  magix.forms.get-value
+    form-id=>wizard
+    id=>select-table
+  set=>[_sql].Value
+    value=>select {0} from [{1}]
+      =>[_columns].Value
+      =>[magix.forms.get-value][value].Value
+  magix.forms.get-value
+    form-id=>wizard
+    id=>connection-string
+  magix.forms.get-value
+    form-id=>wizard
+    id=>active-event-name
+  _event
+    event
+      name=>{active-event-name}
+      code
+        magix.ms.sql.select
+          connection=>{connection}
+          sql=>{sql}
+        add=>[$][result]
+          value=>[magix.ms.sql.select][result]
+          children-only=>true
+  iterate=>[_event]
+    if=>equals
+      lhs=>[.].Value
+      rhs=>{active-event-name}
+      code
+        set=>[.].Value
+          value=>[/][magix.forms.get-value:2][value].Value
+    else-if=>equals
+      lhs=>[.].Value
+      rhs=>{connection}
+      code
+        set=>[.].Value
+          value=>[/][magix.forms.get-value:1][value].Value
+    else-if=>equals
+      lhs=>[.].Value
+      rhs=>{sql}
+      code
+        set=>[.].Value
+          value=>[/][_sql].Value
+  lambda=>[_event]
+  magix.viewport.show-message
+    message=>active event was created
+    color=>#aaffaa
+    time=>3000
+  magix.forms.set-visible
+    form-id=>wizard
+    id=>edit-active-event
+    value=>true
+  using=>magix.forms
+    set-info
+      form-id=>wizard
+      id=>edit-active-event
+      value=>[_event][event][name].Value
+

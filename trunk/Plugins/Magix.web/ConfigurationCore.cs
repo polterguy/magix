@@ -51,6 +51,64 @@ namespace Magix.web
 		}
 
         /*
+         * returns all web.config connection strings
+         */
+        [ActiveEvent(Name = "magix.configuration.get-connection-strings")]
+        public static void magix_configuration_get_connection_strings(object sender, ActiveEventArgs e)
+        {
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
+            {
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.web",
+                    "Magix.web.hyperlisp.inspect.hl",
+                    "[magix.configuration.get-connection-strings-dox].Value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.web",
+                    "Magix.web.hyperlisp.inspect.hl",
+                    "[magix.configuration.get-connection-strings-sample]");
+                return;
+            }
+
+            foreach (ConnectionStringSettings idx in System.Web.Configuration.WebConfigurationManager.ConnectionStrings)
+            {
+                ip["result"].Add(new Node("", idx.Name));
+            }
+        }
+
+        /*
+         * returns named web.config connection string
+         */
+        [ActiveEvent(Name = "magix.configuration.get-connection-string")]
+        public static void magix_configuration_get_connection_string(object sender, ActiveEventArgs e)
+        {
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
+            {
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.web",
+                    "Magix.web.hyperlisp.inspect.hl",
+                    "[magix.configuration.get-connection-string-dox].Value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.web",
+                    "Magix.web.hyperlisp.inspect.hl",
+                    "[magix.configuration.get-connection-string-sample]");
+                return;
+            }
+
+            Node dp = Dp(e.Params);
+            if (!ip.ContainsValue("id"))
+                throw new ArgumentException("no [id] given to [magix.configuration.get-connection-string]");
+            string id = Expressions.GetExpressionValue(ip["id"].Get<string>(), dp, ip, false) as string;
+
+            ip["value"].Value = System.Web.Configuration.WebConfigurationManager.ConnectionStrings[id].ConnectionString;
+        }
+
+        /*
          * returns the base url of the application
          */
         [ActiveEvent(Name = "magix.configuration.get-base-directory")]

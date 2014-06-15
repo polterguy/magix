@@ -17,16 +17,16 @@ event
 creates a log item, appending the currently logged in user into the header 
 of the log item"
   code
-    magix.web.get-session
+    magix.session.get
       id=>magix.core.user
     if=>not-exist
-      lhs=>[magix.web.get-session][value]
+      lhs=>[magix.session.get][value]
       code
         throw=>no user is currently logged in
     set=>[$][header].Value
       value=>{0}, by {1}
         =>[$][header].Value
-        =>[magix.web.get-session][value][username].Value
+        =>[magix.session.get][value][username].Value
     add=>[@][magix.log.append]
       value=>[$]
       children-only=>true

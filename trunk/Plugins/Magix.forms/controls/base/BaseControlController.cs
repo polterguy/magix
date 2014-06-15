@@ -228,6 +228,9 @@ namespace Magix.forms
                     ip["values"][idxCtrl.ID].Value = valueCtrl.ControlValue;
                 foreach (Control idxChild in idxCtrl.Controls)
                 {
+                    IValueControl valueChildCtrl = idxChild as IValueControl;
+                    if (valueChildCtrl != null && valueChildCtrl.IsTrueValue)
+                        ip["values"][idxChild.ID].Value = valueChildCtrl.ControlValue;
                     GetValues(idxChild, ip);
                 }
             }

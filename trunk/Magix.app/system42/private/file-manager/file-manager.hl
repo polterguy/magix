@@ -21,16 +21,16 @@ of the file the user selected"
 
 
 // resetting selected file, folder and filter from previous calls
-magix.viewport.set-viewstate
+magix.viewstate.set
   id=>magix.file-manager.selected-file
-magix.viewport.set-viewstate
+magix.viewstate.set
   id=>magix.file-manager.filter
-magix.viewport.set-viewstate
+magix.viewstate.set
   id=>magix.file-manager.current-folder
   value=>
-magix.viewport.set-viewstate
+magix.viewstate.set
   id=>magix.file-manager.no-edit
-magix.viewport.set-viewstate
+magix.viewstate.set
   id=>magix.file-manager.has-upload
 
 // changing editor-container, if we're supposed to
@@ -40,9 +40,9 @@ if=>exist
   code
     set=>[_editor-container].Value
       value=>[$][editor-container].Value
-set=>[magix.viewport.set-viewstate=>editor-container][value].Value
+set=>[magix.viewstate.set=>editor-container][value].Value
   value=>[_editor-container].Value
-magix.viewport.set-viewstate=>editor-container
+magix.viewstate.set=>editor-container
   id=>magix.file-manager.editor-container
 
 // changing css class, container and filter, if we're supposed to
@@ -59,9 +59,9 @@ if=>exist
 if=>exist
   lhs=>[$][filter]
   code
-    set=>[@][magix.viewport.set-viewstate][value].Value
+    set=>[@][magix.viewstate.set][value].Value
       value=>[$][filter].Value
-    magix.viewport.set-viewstate
+    magix.viewstate.set
       id=>magix.file-manager.filter
 
 // setting editing of files, folders and such to on/off
@@ -69,9 +69,9 @@ if=>equals
   lhs=>[$][no-edit].Value
   rhs=>true
   code
-    set=>[@][magix.viewport.set-viewstate][value].Value
+    set=>[@][magix.viewstate.set][value].Value
       value=>true
-    magix.viewport.set-viewstate
+    magix.viewstate.set
       id=>magix.file-manager.no-edit
     set=>[**panel=>directory-wrapper][visible].Value
       value=>false
@@ -80,9 +80,9 @@ if=>equals
 if=>exist
   lhs=>[$][directory]
   code
-    set=>[@][magix.viewport.set-viewstate][value].Value
+    set=>[@][magix.viewstate.set][value].Value
       value=>[$][directory].Value
-    magix.viewport.set-viewstate
+    magix.viewstate.set
       id=>magix.file-manager.current-folder
     if=>not-equals
       lhs=>[$][directory].Value
@@ -96,9 +96,9 @@ if=>exist
 if=>exist
   lhs=>[$][root]
   code
-    set=>[@][magix.viewport.set-viewstate][value].Value
+    set=>[@][magix.viewstate.set][value].Value
       value=>[$][root].Value
-    magix.viewport.set-viewstate
+    magix.viewstate.set
       id=>magix.file-manager.root
 
 // checking to see if caller has denied creation of directories
@@ -138,15 +138,15 @@ if=>exist
             value=>select
             onclick
               _lambda
-              magix.viewport.get-viewstate
+              magix.viewstate.get
                 id=>magix.file-manager.selected-file
               set=>[lambda][file].Value
-                value=>[magix.viewport.get-viewstate][value].Value
+                value=>[magix.viewstate.get][value].Value
               lambda=>[_lambda]
-              magix.viewport.get-viewstate
+              magix.viewstate.get
                 id=>magix.file-manager.editor-container
               set=>[magix.viewport.clear-controls][container].Value
-                value=>[magix.viewport.get-viewstate:1][value].Value
+                value=>[magix.viewstate.get:1][value].Value
               magix.viewport.clear-controls
                 reset-class=>true
 
@@ -159,11 +159,11 @@ if=>exist
       children-only=>true
     add=>[magix.forms.create-web-part][controls]
       value=>[@][_select][panel]
-    magix.viewport.set-viewstate
+    magix.viewstate.set
       id=>magix.file-manager.has-select-button
       value=>true
 else
-  magix.viewport.set-viewstate
+  magix.viewstate.set
     id=>magix.file-manager.has-select-button
 
 if=>equals
@@ -179,7 +179,7 @@ if=>equals
         directory=>
         onuploaded
           magix.file-manager.open-directory
-    magix.viewport.set-viewstate
+    magix.viewstate.set
       id=>magix.file-manager.has-upload
       value=>true
     if=>exist

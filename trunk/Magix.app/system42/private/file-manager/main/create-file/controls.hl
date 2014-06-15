@@ -36,15 +36,15 @@ panel=>create-file-wrapper
               message=>you must give your new file a name
               color=>#ffbbbb
         else
-          magix.viewport.get-viewstate
+          magix.viewstate.get
             id=>magix.file-manager.current-folder
           if=>not-equals
-            lhs=>[@][magix.viewport.get-viewstate][value].Value
+            lhs=>[@][magix.viewstate.get][value].Value
             rhs=>
             code
               set=>[@][..][..][magix.file.save][file].Value
                 value=>{0}/{1}
-                  =>[@][..][..][magix.viewport.get-viewstate][value].Value
+                  =>[@][..][..][magix.viewstate.get][value].Value
                   =>[magix.forms.get-value][value].Value
           else
             set=>[@][..][magix.file.save][file].Value

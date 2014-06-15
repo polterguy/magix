@@ -8,7 +8,7 @@ be opened instead"
 
 
 // cleans up from previous calls
-magix.web.set-session
+magix.session.set
   id=>magix.help.cached-help-files
 
 // includes necessary javascript and css files for our autocompleter
@@ -31,20 +31,20 @@ event
   code
 
     // checking to see if we've got some help files in our list of items
-    magix.web.get-session
+    magix.session.get
       id=>magix.help.stack-of-help
     if=>exist
-      lhs=>[magix.web.get-session][value]
+      lhs=>[magix.session.get][value]
       code
 
         // we have a stack of open items, figuring out which file is at the end of our stack of items
         // and opening that page, instead of the default index page
         using=>magix.math
           subtract
-            =>[magix.web.get-session][value].Count
+            =>[magix.session.get][value].Count
             =>1
         set=>[magix.help.open-file][file].Value
-          value=>[magix.web.get-session][value][[@][using][subtract].Value].Value
+          value=>[magix.session.get][value][[@][using][subtract].Value].Value
         set=>[magix.help.open-file][freeze-stack].Value
           value=>true
     magix.help.open-file
@@ -64,19 +64,19 @@ event
       lhs=>[$][freeze-stack].Value
       rhs=>true
       code
-        magix.web.get-session
+        magix.session.get
           id=>magix.help.stack-of-help
         if=>exist
-          lhs=>[@][magix.web.get-session][value]
+          lhs=>[@][magix.session.get][value]
           code
-            set=>[@][..][..][magix.web.set-session][value]
-              value=>[@][..][..][magix.web.get-session][value]
-        add=>[@][magix.web.set-session][value]
+            set=>[@][..][..][magix.session.set][value]
+              value=>[@][..][..][magix.session.get][value]
+        add=>[@][magix.session.set][value]
           value=>file
             value=>[$][file].Value
-        magix.web.set-session
+        magix.session.set
           id=>magix.help.stack-of-help
-    magix.web.get-session
+    magix.session.get
       id=>magix.help.stack-of-help
 
 // sets the next help page for the system, which will trigger if user clicks 'next page'
@@ -85,9 +85,9 @@ event
   name=>magix.help.set-next
   persist=>false
   code
-    set=>[magix.viewport.set-viewstate][value].Value
+    set=>[magix.viewstate.set][value].Value
       value=>[$][next].Value
-    magix.viewport.set-viewstate
+    magix.viewstate.set
       id=>magix.help.next-page
 
 // moves helpsystem backwards, if possible
@@ -95,29 +95,29 @@ event
   name=>magix.help.move-previous
   persist=>false
   code
-    magix.web.get-session
+    magix.session.get
       id=>magix.help.stack-of-help
     if=>more-than
-      lhs=>[magix.web.get-session][value].Count
+      lhs=>[magix.session.get][value].Count
       rhs=>1
       code
         using=>magix.math
           subtract
-            =>[magix.web.get-session][value].Count
+            =>[magix.session.get][value].Count
             =>1
           subtract
-            =>[magix.web.get-session][value].Count
+            =>[magix.session.get][value].Count
             =>2
 
         // deleting last file, which is the currently viewed page
-        set=>[magix.web.get-session][value][[@][using][subtract:0].Value]
+        set=>[magix.session.get][value][[@][using][subtract:0].Value]
 
         // opening up the second last page in stack, which is the previously seen page
         set=>[@][magix.help.open-file][file].Value
-          value=>[magix.web.get-session][value][[@][using][subtract:1].Value].Value
-        set=>[@][magix.web.set-session][value]
-          value=>[magix.web.get-session][value]
-        magix.web.set-session
+          value=>[magix.session.get][value][[@][using][subtract:1].Value].Value
+        set=>[@][magix.session.set][value]
+          value=>[magix.session.get][value]
+        magix.session.set
           id=>magix.help.stack-of-help
         magix.help.open-file
           freeze-stack=>true
@@ -130,23 +130,23 @@ event
   name=>magix.help.move-next
   persist=>false
   code
-    magix.viewport.get-viewstate
+    magix.viewstate.get
       id=>magix.help.next-page
     set=>[magix.help.open-file][file].Value
-      value=>[magix.viewport.get-viewstate][value].Value
+      value=>[magix.viewstate.get][value].Value
 
 // search for the file in [$][header], and loads it if found
 event
   name=>magix.help.search-for-file
   persist=>false
   code
-    magix.web.get-session
+    magix.session.get
       id=>magix.help.cached-help-files
     if=>exist
-      lhs=>[magix.web.get-session][value][[$][header].Value]
+      lhs=>[magix.session.get][value][[$][header].Value]
       code
         set=>[@][magix.help.open-file][file].Value
-          value=>[magix.web.get-session][value][[$][header].Value].Value
+          value=>[magix.session.get][value][[$][header].Value].Value
         magix.help.open-file
     else
       magix.viewport.show-message
@@ -158,21 +158,21 @@ event
   name=>magix.help.link-header-to-file
   persist=>false
   code
-    magix.web.get-session
+    magix.session.get
       id=>magix.help.cached-help-files
     if=>exist
-      lhs=>[magix.web.get-session][value]
+      lhs=>[magix.session.get][value]
       code
-        add=>[magix.web.set-session][value]
-          value=>[magix.web.get-session][value]
+        add=>[magix.session.set][value]
+          value=>[magix.session.get][value]
           children-only=>true
-    add=>[magix.web.set-session][value]
+    add=>[magix.session.set][value]
       value=>[$][header].Value
         value=>[$][file].Value
-    magix.web.set-session
+    magix.session.set
       id=>magix.help.cached-help-files
-    using=>magix.web
-      get-session
+    using=>magix.session
+      get
         id=>magix.help.cached-help-files
 
 

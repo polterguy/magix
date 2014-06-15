@@ -202,7 +202,7 @@ magix.ide.create-control-event-modifier-control
               lhs=>[magix.forms.get-style][value].Value
               rhs=>none
               code
-                magix.viewport.set-viewstate
+                magix.viewstate.set
                   id=>magix.ide.visible-event-code-{0}-{1}
                     =>{dna}
                     =>{field-type-name}
@@ -218,7 +218,7 @@ magix.ide.create-control-event-modifier-control
                       form-id=>control-properties
                       id=>{field-type-name}
             else
-              magix.viewport.set-viewstate
+              magix.viewstate.set
                 id=>magix.ide.visible-event-code-{0}-{1}
                   =>{dna}
                   =>{field-type-name}
@@ -234,12 +234,12 @@ magix.ide.create-control-event-modifier-control
           placeholder=>{field-type-value}
           value=>{value}
           onfirstload
-            magix.viewport.get-viewstate
+            magix.viewstate.get
               id=>magix.ide.visible-event-code-{0}-{1}
                 =>{dna}
                 =>{field-type-name}
             if=>exist
-              lhs=>[magix.viewport.get-viewstate][value]
+              lhs=>[magix.viewstate.get][value]
               code
                 magix.forms.set-style
                   form-id=>control-properties

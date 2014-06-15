@@ -1,15 +1,13 @@
 ﻿
 
-inspect=>@"load web part active event wizard
-
-allows user to create an active event that loads a web part, either from the 
-database or the filesystem"
+inspect=>@"allows you to create an active event that loads a web part, 
+either from the database or the filesystem"
 
 
-_name=>load web part active event wizard
+_name=>load web part active event
 
 // setting default css files to include for web part
-magix.viewport.set-viewstate
+magix.viewstate.set
   id=>magix.wizard.css-files
   value
     media/grid/main.css

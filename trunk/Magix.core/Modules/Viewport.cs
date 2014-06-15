@@ -346,8 +346,8 @@ namespace Magix.Core
 		/*
 		 * sets a viewstate object
 		 */
-		[ActiveEvent(Name = "magix.viewport.set-viewstate")]
-		protected virtual void magix_viewport_set_viewstate(object sender, ActiveEventArgs e)
+		[ActiveEvent(Name = "magix.viewstate.set")]
+		protected virtual void magix_viewstate_set(object sender, ActiveEventArgs e)
 		{
             Node ip = Ip(e.Params);
             if (ShouldInspect(ip))
@@ -356,19 +356,19 @@ namespace Magix.Core
                     ip["inspect"],
                     "Magix.Core",
                     "Magix.Core.hyperlisp.inspect.hl",
-                    "[magix.viewport.set-viewstate-dox].Value");
+                    "[magix.viewstate.set-dox].Value");
                 AppendCodeFromResource(
                     ip,
                     "Magix.Core",
                     "Magix.Core.hyperlisp.inspect.hl",
-                    "[magix.viewport.set-viewstate-sample]");
+                    "[magix.viewstate.set-sample]");
                 return;
 			}
 
             Node dp = Dp(e.Params);
 
             if (!ip.ContainsValue("id"))
-                throw new ArgumentException("no [id] given to [magix.viewport.set-viewstate]");
+                throw new ArgumentException("no [id] given to [magix.viewstate.set]");
             string name = Expressions.GetExpressionValue(ip["id"].Get<string>(), dp, ip, false) as string;
             if (ip["id"].Count > 0)
                 name = Expressions.FormatString(dp, ip, ip["id"], name);
@@ -392,8 +392,8 @@ namespace Magix.Core
 		/*
 		 * retrieves a viewstate object
 		 */
-		[ActiveEvent(Name = "magix.viewport.get-viewstate")]
-		protected virtual void magix_viewport_get_viewstate(object sender, ActiveEventArgs e)
+		[ActiveEvent(Name = "magix.viewstate.get")]
+		protected virtual void magix_viewstate_get(object sender, ActiveEventArgs e)
 		{
             Node ip = Ip(e.Params);
             if (ShouldInspect(ip))
@@ -402,19 +402,19 @@ namespace Magix.Core
                     ip["inspect"],
                     "Magix.Core",
                     "Magix.Core.hyperlisp.inspect.hl",
-                    "[magix.viewport.get-viewstate-dox].Value");
+                    "[magix.viewstate.get-dox].Value");
                 AppendCodeFromResource(
                     ip,
                     "Magix.Core",
                     "Magix.Core.hyperlisp.inspect.hl",
-                    "[magix.viewport.get-viewstate-sample]");
+                    "[magix.viewstate.get-sample]");
                 return;
 			}
 
             Node dp = Dp(e.Params);
 
             if (!ip.ContainsValue("id"))
-                throw new ArgumentException("no [id] given to [magix.viewport.get-viewstate]");
+                throw new ArgumentException("no [id] given to [magix.viewstate.get]");
             string name = Expressions.GetExpressionValue(ip["id"].Get<string>(), dp, ip, false) as string;
             if (ip["id"].Count > 0)
                 name = Expressions.FormatString(dp, ip, ip["id"], name);

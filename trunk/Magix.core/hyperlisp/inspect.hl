@@ -50,7 +50,7 @@ magix.viewport.include-client-file-sample
     type=>css
 
 
-magix.viewport.set-viewstate-dox=>@"sets a viewstate value
+magix.viewstate.set-dox=>@"sets a viewstate value
 
 sets the given [id] viewstate value for the current page.  
 pass in [value] as the value to set into the viewstate.  both 
@@ -58,8 +58,8 @@ pass in [value] as the value to set into the viewstate.  both
 can contain format expressions in the form of {0}, {1} and so on, 
 referencing child nodes of id"
 
-magix.viewport.set-viewstate-sample
-  magix.viewport.set-viewstate
+magix.viewstate.set-sample
+  magix.viewstate.set
     id=>some-id
     value
       some=>node
@@ -69,15 +69,15 @@ magix.viewport.set-viewstate-sample
           =>the viewstate
 
 
-magix.viewport.get-viewstate-dox=>@"retrieves a viewstate value
+magix.viewstate.get-dox=>@"retrieves a viewstate value
 
 retrieves the [id] viewstate value into [value] if existing.  [id] can 
 be either a constant, or an expression.  [id] can contain format 
 expressions in the form of {0}, {1} and so on, referencing child nodes 
 of id"
 
-magix.viewport.get-viewstate-sample
-  magix.viewport.get-viewstate
+magix.viewstate.get-sample
+  magix.viewstate.get
     id=>some-id
 
 

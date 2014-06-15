@@ -395,6 +395,9 @@
     <Content Include="system42\private\web-part-builder\parts\load\filesystem\events.hl" />
     <Content Include="system42\private\file-manager\main\create-file\controls.hl" />
     <Content Include="system42\private\tools\text-editor\events.hl" />
+    <Content Include="system42\private\app-wizard\wizards\select-from-ms-sql-event-wizard.hl" />
+    <Content Include="system42\private\app-wizard\wizards\select-from-ms-sql-event-wizard\controls.hl" />
+    <Content Include="system42\private\app-wizard\wizards\select-from-ms-sql-event-wizard\events.hl" />
     <None Include="todo.txt" />
   </ItemGroup>
   <ItemGroup>
