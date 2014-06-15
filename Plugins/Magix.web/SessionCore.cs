@@ -21,8 +21,8 @@ namespace Magix.web
 		/*
 		 * sets a session object
 		 */
-		[ActiveEvent(Name = "magix.web.set-session")]
-		private void magix_web_set_session(object sender, ActiveEventArgs e)
+		[ActiveEvent(Name = "magix.session.set")]
+		private void magix_session_set(object sender, ActiveEventArgs e)
 		{
             Node ip = Ip(e.Params);
             if (ShouldInspect(ip))
@@ -31,19 +31,19 @@ namespace Magix.web
                     ip["inspect"],
                     "Magix.web",
                     "Magix.web.hyperlisp.inspect.hl",
-                    "[magix.web.set-session-dox].Value");
+                    "[magix.session.set-dox].Value");
                 AppendCodeFromResource(
                     ip,
                     "Magix.web",
                     "Magix.web.hyperlisp.inspect.hl",
-                    "[magix.web.set-session-sample]");
+                    "[magix.session.set-sample]");
                 return;
 			}
 
             Node dp = Dp(e.Params);
 
             if (!ip.ContainsValue("id"))
-                throw new ArgumentException("no [id] given to [magix.web.set-session]");
+                throw new ArgumentException("no [id] given to [magix.session.set]");
             string name = Expressions.GetExpressionValue(ip["id"].Get<string>(), dp, ip, false) as string;
             if (ip["id"].Count > 0)
                 name = Expressions.FormatString(dp, ip, ip["id"], name);
@@ -68,8 +68,8 @@ namespace Magix.web
         /*
          * returns an existing session object
          */
-		[ActiveEvent(Name = "magix.web.get-session")]
-		private void magix_web_get_session(object sender, ActiveEventArgs e)
+		[ActiveEvent(Name = "magix.session.get")]
+		private void magix_session_get(object sender, ActiveEventArgs e)
 		{
             Node ip = Ip(e.Params);
             if (ShouldInspect(ip))
@@ -78,19 +78,19 @@ namespace Magix.web
                     ip["inspect"],
                     "Magix.web",
                     "Magix.web.hyperlisp.inspect.hl",
-                    "[magix.web.get-session-dox].Value");
+                    "[magix.session.get-dox].Value");
                 AppendCodeFromResource(
                     ip,
                     "Magix.web",
                     "Magix.web.hyperlisp.inspect.hl",
-                    "[magix.web.get-session-sample]");
+                    "[magix.session.get-sample]");
                 return;
 			}
 
             Node dp = Dp(e.Params);
 
             if (!ip.ContainsValue("id"))
-                throw new ArgumentException("no [id] given to [magix.web.get-session]");
+                throw new ArgumentException("no [id] given to [magix.session.get]");
             string name = Expressions.GetExpressionValue(ip["id"].Get<string>(), dp, ip, false) as string;
             if (ip["id"].Count > 0)
                 name = Expressions.FormatString(dp, ip, ip["id"], name);

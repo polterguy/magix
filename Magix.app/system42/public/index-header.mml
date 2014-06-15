@@ -2,10 +2,10 @@
 <div class="span-22 last relative">
 {{
 system42.travel.change-login-box
-  magix.web.get-session
+  magix.session.get
     id=>magix.core.user
   if=>not-exist
-    lhs=>[magix.web.get-session][value]
+    lhs=>[magix.session.get][value]
     code
       magix.forms.set-visible
         form-id=>header
@@ -37,10 +37,10 @@ system42.travel.try-login
     lhs=>[magix.data.load][objects].Count
     rhs=>0
     code
-      add=>[@][magix.web.set-session][value]
+      add=>[@][magix.session.set][value]
         value=>[magix.data.load][objects][0][value]
         children-only=>true
-      magix.web.set-session
+      magix.session.set
         id=>magix.core.user
       if=>exist
         lhs=>[magix.data.load][objects][0][value][roles][admin]
@@ -119,15 +119,15 @@ panel=>logoutWrp
       class=>span-4 btn-large
       value=>logout
       onclick
-        magix.web.set-session
+        magix.session.set
           id=>magix.core.user
         magix.browser.redirect=>~
     lambda=>createLoadDashboard
       oncreatecontrols
-        magix.web.get-session
+        magix.session.get
           id=>magix.core.user
         if=>exist
-          lhs=>[magix.web.get-session][value][roles][admin]
+          lhs=>[magix.session.get][value][roles][admin]
           code
             _lnk=>load_dashboard
               class=>span-4 text-right

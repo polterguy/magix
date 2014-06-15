@@ -73,17 +73,17 @@ magix.users.create-grid-controls
               message=>are you sure you wish to delete the user?
               code
                 magix.users.delete-user
-  magix.viewport.get-viewstate
+  magix.viewstate.get
     id=>magix.users.current-paging
   set=>[magix.users.load][start]
-    value=>[magix.viewport.get-viewstate][value][start]
+    value=>[magix.viewstate.get][value][start]
   set=>[magix.users.load][end]
-    value=>[magix.viewport.get-viewstate][value][end]
+    value=>[magix.viewstate.get][value][end]
   if=>exist
-    lhs=>[magix.viewport.get-viewstate][value][query].Value
+    lhs=>[magix.viewstate.get][value][query].Value
     code
       set=>[magix.users.load][query]
-        value=>[magix.viewport.get-viewstate][value][query]
+        value=>[magix.viewstate.get][value][query]
   magix.users.load
   for-each=>[magix.users.load][users]
     _buffer
@@ -130,22 +130,22 @@ magix.users.create-grid-controls
               class=>span-1 left-11
               value=>&lt;&lt;
               onclick
-                magix.viewport.get-viewstate
+                magix.viewstate.get
                   id=>magix.users.current-paging
                 using=>magix.math
                   subtract
-                    =>[magix.viewport.get-viewstate][value][start].Value
+                    =>[magix.viewstate.get][value][start].Value
                     =>10
                   subtract
-                    =>[magix.viewport.get-viewstate][value][end].Value
+                    =>[magix.viewstate.get][value][end].Value
                     =>10
-                set=>[magix.viewport.set-viewstate][value][start].Value
+                set=>[magix.viewstate.set][value][start].Value
                   value=>[using][subtract:0].Value
-                set=>[magix.viewport.set-viewstate][value][end].Value
+                set=>[magix.viewstate.set][value][end].Value
                   value=>[using][subtract:1].Value
-                set=>[magix.viewport.set-viewstate][value][query].Value
-                  value=>[magix.viewport.get-viewstate][query].Value
-                magix.viewport.set-viewstate
+                set=>[magix.viewstate.set][value][query].Value
+                  value=>[magix.viewstate.get][query].Value
+                magix.viewstate.set
                   id=>magix.users.current-paging
                 magix.users.show-users-grid
             label=>lbl-count
@@ -154,29 +154,29 @@ magix.users.create-grid-controls
               class=>span-1 last
               value=>&gt;&gt;
               onclick
-                magix.viewport.get-viewstate
+                magix.viewstate.get
                   id=>magix.users.current-paging
                 using=>magix.math
                   add
-                    =>[magix.viewport.get-viewstate][value][start].Value
+                    =>[magix.viewstate.get][value][start].Value
                     =>10
                   add
-                    =>[magix.viewport.get-viewstate][value][end].Value
+                    =>[magix.viewstate.get][value][end].Value
                     =>10
-                set=>[magix.viewport.set-viewstate][value][start].Value
+                set=>[magix.viewstate.set][value][start].Value
                   value=>[using][add:0].Value
-                set=>[magix.viewport.set-viewstate][value][end].Value
+                set=>[magix.viewstate.set][value][end].Value
                   value=>[using][add:1].Value
-                set=>[magix.viewport.set-viewstate][value][query].Value
-                  value=>[magix.viewport.get-viewstate][query].Value
-                magix.viewport.set-viewstate
+                set=>[magix.viewstate.set][value][query].Value
+                  value=>[magix.viewstate.get][query].Value
+                magix.viewstate.set
                   id=>magix.users.current-paging
                 magix.users.show-users-grid
-      magix.viewport.get-viewstate
+      magix.viewstate.get
         id=>magix.users.current-paging
       _max
       if=>more-than-equals
-        lhs=>[@][magix.viewport.get-viewstate][value][end].Value
+        lhs=>[@][magix.viewstate.get][value][end].Value
         rhs=>[magix.users.load][count].Value
         code
           set=>[@][..][..][_max].Value
@@ -185,16 +185,16 @@ magix.users.create-grid-controls
             value=>true
       else
         set=>[@][..][_max].Value
-          value=>[@][..][magix.viewport.get-viewstate][value][end].Value
+          value=>[@][..][magix.viewstate.get][value][end].Value
       if=>equals
-        lhs=>[@][magix.viewport.get-viewstate][value][start].Value
+        lhs=>[@][magix.viewstate.get][value][start].Value
         rhs=>0
         code
           set=>[/][**link-button=>previous][disabled].Value
             value=>true
       set=>[@][_paging][**label=>lbl-count][value].Value
         value=>{0}-{1} of {2}
-          =>[@][magix.viewport.get-viewstate][value][start].Value
+          =>[@][magix.viewstate.get][value][start].Value
           =>[@][_max].Value
           =>[magix.users.load][count].Value
       add=>[$][controls]
@@ -253,10 +253,10 @@ magix.users.delete-user
   set=>[magix.data.load][id]
     value=>[$][id]
   magix.data.load
-  magix.web.get-session
+  magix.session.get
     id=>magix.core.user
   if=>equals
-    lhs=>[magix.web.get-session][value][username].Value
+    lhs=>[magix.session.get][value][username].Value
     rhs=>[magix.data.load][value][username].Value
     code
       magix.viewport.show-message

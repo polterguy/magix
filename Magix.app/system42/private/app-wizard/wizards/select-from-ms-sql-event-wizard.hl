@@ -1,0 +1,15 @@
+﻿
+
+inspect=>@"allows you to create an active event that loads records from 
+an ms sql database table"
+
+
+_name=>select from ms sql active event
+
+// creates the wizard main web part
+magix.forms.create-web-part
+  form-id=>wizard
+  class=>span-17 last
+  events-file=>system42/private/app-wizard/wizards/select-from-ms-sql-event-wizard/events.hl
+  controls-file=>system42/private/app-wizard/wizards/select-from-ms-sql-event-wizard/controls.hl
+

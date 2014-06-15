@@ -44,7 +44,6 @@ magix.ide.request-properties
   if=>exist
     lhs=>[magix.ide.get-selected-control][dna]
     code
-
       // creating properties web part
       magix.forms.create-web-part
         form-id=>control-properties

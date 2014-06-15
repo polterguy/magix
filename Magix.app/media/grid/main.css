@@ -462,6 +462,12 @@ input[type=button]:disabled
 	color:#aaa;
 }
 
+select:disabled
+{
+    color:rgb(84, 84, 84);
+    background-color:rgb(235, 235, 228);
+}
+
 .info-message
 {
 	position:fixed;

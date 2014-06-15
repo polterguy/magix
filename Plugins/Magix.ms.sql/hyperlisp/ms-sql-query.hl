@@ -290,16 +290,16 @@ where
             value=>[@][..][_lb]
           set=>[/][magix.forms.create-web-part:0][controls][_lb].Name
             value=>label
-      add=>[@][magix.viewport.set-viewstate][value]
+      add=>[@][magix.viewstate.set][value]
         value=>[@][_pks]
         children-only=>true
-      magix.viewport.set-viewstate
+      magix.viewstate.set
         id=>magix.ms.sql.current-primary-keys
       set=>[magix.forms.create-web-part:0][controls][label:1][value].Value
         value=>[$][info].Value
-      set=>[@][magix.viewport.set-viewstate:1][value].Value
+      set=>[@][magix.viewstate.set:1][value].Value
         value=>[$][info].Value
-      magix.viewport.set-viewstate
+      magix.viewstate.set
         id=>magix.ms.sql.current-table
       if=>equals
         lhs=>[:magix.ms.sql.show-columns][value].Value
@@ -361,24 +361,24 @@ where
       if=>exist
         lhs=>[$][keep-position]
         code
-          magix.viewport.get-viewstate
+          magix.viewstate.get
             id=>magix.ms.sql.current-position
           if=>exist
-            lhs=>[@][magix.viewport.get-viewstate][value]
+            lhs=>[@][magix.viewstate.get][value]
             code
               add=>[_position]
-                value=>[@][..][..][magix.viewport.get-viewstate][value]
+                value=>[@][..][..][magix.viewstate.get][value]
                 children-only=>true
       if=>exist
         lhs=>[$][force-select]
         code
-          magix.viewport.get-viewstate
+          magix.viewstate.get
             id=>magix.ms.sql.current-select-sql
           if=>exist
-            lhs=>[@][magix.viewport.get-viewstate][value]
+            lhs=>[@][magix.viewstate.get][value]
             code
               set=>[_sql].Value
-                value=>[@][..][..][magix.viewport.get-viewstate][value].Value
+                value=>[@][..][..][magix.viewstate.get][value].Value
           else
             magix.forms.get-value
               form-id=>select-query
@@ -409,15 +409,15 @@ where
             value=>[_sql].Value
           set=>[@][try][code][magix.ms.sql.select][connection].Value
             value=>[magix.forms.get-value][value].Value
-          set=>[@][magix.viewport.set-viewstate][value].Value
+          set=>[@][magix.viewstate.set][value].Value
             value=>[_sql].Value
-          magix.viewport.set-viewstate
+          magix.viewstate.set
             id=>magix.ms.sql.current-select-sql
           try
             code
               set=>[@][magix.ms.sql.select][end].Value
                 value=>[:magix.ms.sql.visible-records-count][value].Value
-              set=>[@][magix.viewport.set-viewstate][value][end].Value
+              set=>[@][magix.viewstate.set][value][end].Value
                 value=>[:magix.ms.sql.visible-records-count][value].Value
               if=>exist
                 lhs=>[_position]
@@ -426,9 +426,9 @@ where
                     value=>[_position][start].Value
                   set=>[@][..][..][magix.ms.sql.select][end].Value
                     value=>[_position][end].Value
-                  set=>[@][..][..][magix.viewport.set-viewstate][value][start].Value
+                  set=>[@][..][..][magix.viewstate.set][value][start].Value
                     value=>[_position][start].Value
-                  set=>[@][..][..][magix.viewport.set-viewstate][value][end].Value
+                  set=>[@][..][..][magix.viewstate.set][value][end].Value
                     value=>[_position][end].Value
               else-if=>exist
                 lhs=>[$][start]
@@ -437,9 +437,9 @@ where
                     value=>[$][start].Value
                   set=>[@][..][..][magix.ms.sql.select][end].Value
                     value=>[$][end].Value
-                  set=>[@][..][..][magix.viewport.set-viewstate][value][start].Value
+                  set=>[@][..][..][magix.viewstate.set][value][start].Value
                     value=>[$][start].Value
-                  set=>[@][..][..][magix.viewport.set-viewstate][value][end].Value
+                  set=>[@][..][..][magix.viewstate.set][value][end].Value
                     value=>[$][end].Value
               magix.ms.sql.select
                 start=>0
@@ -455,9 +455,9 @@ where
                   v1=>[@][magix.ms.sql.select][end].Value
                   v2=>[@][magix.ms.sql.select][record-count].Value
 
-              set=>[@][magix.viewport.set-viewstate][value][count].Value
+              set=>[@][magix.viewstate.set][value][count].Value
                 value=>[@][magix.ms.sql.select][record-count].Value
-              magix.viewport.set-viewstate
+              magix.viewstate.set
                 id=>magix.ms.sql.current-position
                 value
                   start=>0
@@ -489,12 +489,12 @@ where
               title=>click to create update sql statement
               onclick
                 _sql=>@"update [[___table]] set"
-                magix.viewport.get-viewstate
+                magix.viewstate.get
                   id=>magix.ms.sql.current-table
-                magix.viewport.get-viewstate
+                magix.viewstate.get
                   id=>magix.ms.sql.current-primary-keys
                 if=>equals
-                  lhs=>[magix.viewport.get-viewstate:1][value].Count
+                  lhs=>[magix.viewstate.get:1][value].Count
                   rhs=>0
                   code
                     magix.viewport.show-message
@@ -506,11 +506,11 @@ you select the table from the list of tables, before you run your select from it
                     stop
                 replace=>[_sql].Value
                   what=>\[___table]
-                  with=>[magix.viewport.get-viewstate][value].Value
+                  with=>[magix.viewstate.get][value].Value
                 _first=>true
                 for-each=>[_columns]
                   if=>not-exist
-                    lhs=>[/][magix.viewport.get-viewstate:1][value][[.].Name]
+                    lhs=>[/][magix.viewstate.get:1][value][[.].Name]
                     code
                       if=>equals
                         lhs=>[/][_first].Value
@@ -539,7 +539,7 @@ where"
                   value=>true
                 for-each=>[_columns]
                   if=>exist
-                    lhs=>[/][magix.viewport.get-viewstate:1][value][[.].Name]
+                    lhs=>[/][magix.viewstate.get:1][value][[.].Name]
                     code
                       if=>exist
                         lhs=>[.].Value
@@ -591,10 +591,10 @@ where"
                     class=>span-1
                     value=>&lt;&lt;
                     onclick
-                      magix.viewport.get-viewstate
+                      magix.viewstate.get
                         id=>magix.ms.sql.current-position
                       if=>equals
-                        lhs=>[magix.viewport.get-viewstate][value][start].Value
+                        lhs=>[magix.viewstate.get][value][start].Value
                         rhs=>0
                         code
                           magix.viewport.show-message
@@ -602,10 +602,10 @@ where"
                           stop
                       using=>magix.math
                         subtract
-                          =>[/][magix.viewport.get-viewstate][value][start].Value
+                          =>[/][magix.viewstate.get][value][start].Value
                           =>[:magix.ms.sql.visible-records-count][value].Value
                         subtract
-                          =>[/][magix.viewport.get-viewstate][value][end].Value
+                          =>[/][magix.viewstate.get][value][end].Value
                           =>[:magix.ms.sql.visible-records-count][value].Value
                       set=>[magix.ms.sql.run-query][start].Value
                         value=>[using][subtract:0].Value
@@ -620,21 +620,21 @@ where"
                     class=>span-1
                     value=>&gt;&gt;
                     onclick
-                      magix.viewport.get-viewstate
+                      magix.viewstate.get
                         id=>magix.ms.sql.current-position
                       if=>more-than-equals
-                        lhs=>[magix.viewport.get-viewstate][value][end].Value
-                        rhs=>[magix.viewport.get-viewstate][value][count].Value
+                        lhs=>[magix.viewstate.get][value][end].Value
+                        rhs=>[magix.viewstate.get][value][count].Value
                         code
                           magix.viewport.show-message
                             message=>already at end
                           stop
                       using=>magix.math
                         add
-                          =>[/][magix.viewport.get-viewstate][value][start].Value
+                          =>[/][magix.viewstate.get][value][start].Value
                           =>[:magix.ms.sql.visible-records-count][value].Value
                         add
-                          =>[/][magix.viewport.get-viewstate][value][end].Value
+                          =>[/][magix.viewstate.get][value][end].Value
                           =>[:magix.ms.sql.visible-records-count][value].Value
                       set=>[magix.ms.sql.run-query][start].Value
                         value=>[using][add:0].Value
@@ -816,13 +816,13 @@ where"
           checked=>true
           class=>span-1 top-1
           oncheckedchanged
-            magix.viewport.get-viewstate
+            magix.viewstate.get
               id=>magix.ms.sql.current-table
             if=>exist
-              lhs=>[magix.viewport.get-viewstate][value].Value
+              lhs=>[magix.viewstate.get][value].Value
               code
                 set=>[magix.ms.sql.create-table-definition-and-sql][info].Value
-                  value=>[magix.viewport.get-viewstate][value].Value
+                  value=>[magix.viewstate.get][value].Value
     dynamic=>table-list
     dynamic=>column-list
     dynamic=>select-query

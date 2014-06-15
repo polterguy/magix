@@ -1,0 +1,125 @@
+﻿
+
+inspect=>@"contains the controls for the select from ms sql database active event wizard
+
+contains the controls for the web part that allows the user to create an active event 
+that selects records from an ms sql database"
+
+
+panel=>wrapper
+  class=>span-15 last air-padding boxed top-1
+  controls
+    label
+      tag=>h2
+      value=>create select from ms sql active event wizard
+    panel=>outer-wrapper
+      style=>width:590px;overflow-x:hidden;
+      controls
+        panel=>inner-wrapper
+          style=>width:1770px;margin-left:0px;
+          class=>column
+          controls
+            panel=>first-page
+              class=>span-15 last
+              default=>next-1
+              controls
+                label
+                  class=>clear span-3
+                  tag=>label
+                  value=>active event name
+                text-box=>active-event-name
+                  class=>span-12 last
+                  placeholder=>active event name ...
+                  onfirstload
+                    magix.forms.effect
+                      type=>focus-and-select
+                      form-id=>wizard
+                      id=>active-event-name
+                label
+                  class=>clear span-3 top-1
+                  tag=>label
+                  value=>connection string
+                text-box=>connection-string
+                  class=>span-6 top-1
+                  placeholder=>connection string ...
+                label
+                  tag=>label
+                  class=>span-2 top-1 text-right
+                  for=>web-config-connection
+                  value=>web.config
+                check-box=>web-config-connection
+                  class=>span-1 top-1
+                  checked=>false
+                  oncheckedchanged
+                    set=>[magix.wizard.web-config-connection_oncheckedchanged][value].Value
+                      value=>[$][value].Value
+                    magix.wizard.web-config-connection_oncheckedchanged
+                select=>web-config-connection-select
+                  class=>span-3 last top-1
+                  disabled=>true
+                  onselectedindexchanged
+                    magix.wizard.web-config-connection-select_onselectedindexchanged
+                  onfirstload
+                    magix.wizard.web-config-connection-selected_onfirstload
+                button=>next-1
+                  class=>span-2 last right clear top-1
+                  value=>&gt;&gt;
+                  onclick
+                    magix.wizard.next-1_onclick
+            panel=>second-page
+              class=>span-15 last
+              default=>next-2
+              controls
+                label
+                  tag=>label
+                  class=>span-3
+                  value=>choose table
+                select=>select-table
+                  class=>span-8
+                button=>next-2
+                  class=>span-2 last right clear top-1
+                  value=>&gt;&gt;
+                  onclick
+                    magix.wizard.next-2_onclick
+            panel=>third-page
+              class=>span-15 last
+              default=>next-3
+              controls
+                label
+                  tag=>label
+                  class=>span-15 last bottom-1
+                  value=>choose columns
+                dynamic=>columns-container
+                  class=>span-15 last
+                button=>next-3
+                  class=>span-2 last right clear top-1
+                  value=>create
+                  onclick
+                    magix.wizard.next-3_onclick
+                link-button=>edit-active-event
+                  class=>span-3 clear last text-right right
+                  value=>edit active event
+                  visible=>false
+                  onclick
+                    set=>[magix.data.load][prototype][event].Value
+                      value=>[$][info].Value
+                    magix.data.load
+                      prototype
+                        type=>magix.execute.event
+                    magix.viewport.clear-controls
+                      all=>true
+                    magix.viewport.load-module
+                      class=>span-17 last
+                      container=>content1
+                      name=>Magix.ide.modules.ExecutorForm
+                    add=>[node-2-code][node]
+                      value=>event
+                    set=>[node-2-code][node][event][name].Value
+                      value=>[$][info].Value
+                    add=>[node-2-code][node][event]
+                      value=>[magix.data.load][objects][0][value][code]
+                    node-2-code
+                    set=>[magix.executor.set-code][code].Value
+                      value=>[node-2-code][code].Value
+                    magix.executor.set-code
+

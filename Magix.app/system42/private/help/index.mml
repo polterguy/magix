@@ -72,9 +72,9 @@ can access a specific section below</p>
 {{
 lambda=>help-index
   oncreatecontrols
-    magix.web.get-session
+    magix.session.get
       id=>magix.help.cached-help-files
-    for-each=>[magix.web.get-session][value]
+    for-each=>[magix.session.get][value]
       index-of=>[.].Value
         what=>/index.mml
       if=>exist

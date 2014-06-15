@@ -19,7 +19,7 @@ magix.file.list-files
 
 _dt
   panel
-    class=>boxed span-5 min-height-7 air-padding bottom-1
+    class=>boxed span-5 min-height-7 air-padding bottom-1 desktop-widget
     style=>cursor:pointer;
     controls
       label

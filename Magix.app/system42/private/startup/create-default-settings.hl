@@ -36,10 +36,10 @@ event
   code
 
     // checking to see if user is logged in, and if so, checking to see if show help is turned on
-    magix.web.get-session
+    magix.session.get
       id=>magix.core.user
     if=>exist
-      lhs=>[magix.web.get-session][value]
+      lhs=>[magix.session.get][value]
       code
         // checking to see if setting to show help or not exists, and if not, creating it
         magix.data.load-username
