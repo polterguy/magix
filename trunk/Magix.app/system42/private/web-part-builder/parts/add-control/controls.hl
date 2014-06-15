@@ -56,11 +56,11 @@ panel=>controls-wrapper
             rhs=>0
             code
               set=>[/][_data][button][class].Value
-                value=>span-3 bottom-1 last toolbox-{0}
+                value=>span-3 last toolbox-{0}
                   =>[/][_data][button][value].Value
           else
             set=>[/][_data][button][class].Value
-              value=>span-3 bottom-1 toolbox-{0}
+              value=>span-3 toolbox-{0}
                 =>[/][_data][button][value].Value
           add=>[$]
             value=>[/][_data][button]
@@ -72,7 +72,7 @@ panel=>controls-wrapper
         // spacer, horizontal ruler, for making some space between different segments
         label=>spacer
           tag=>hr
-          class=>span-15 last clear bottom-1
+          class=>span-15 last clear bottom-1 top-1
 
         // desription of how to add a control, drop down list allowing
         // user to decide where to add, and the clear controls button
