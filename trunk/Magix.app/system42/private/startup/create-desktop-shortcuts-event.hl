@@ -68,7 +68,7 @@ returns the default dashboard shortcuts in your system"
               extra-buttons
                 button=>run-all
                   value=>run all
-                  class=>span-2 right
+                  class=>span-2
                   onclick
                     magix.tests.run
       overridden-active-events
@@ -84,6 +84,64 @@ returns the default dashboard shortcuts in your system"
               header=>overridden active events
               description-class=>span-9
               list-class=>span-8 last
+              extra-buttons
+                button=>delete-event
+                  value=>delete
+                  class=>span-2
+                  onclick
+                    magix.viewport.confirm
+                      message=>are you sure you wish to delete this active event?
+                      code
+                        using=>magix.forms
+                          get-value
+                            form-id=>active-events
+                            id=>lbl-header
+                        event
+                          name=>[using][get-value][value].Value
+                        magix.viewport.show-message
+                          message=>active event was deleted, changes will not show before you reload overridden active events
+                          color=>#aaffaa
+                          time=>5000
+                button=>edit-event
+                  value=>edit
+                  class=>span-2
+                  onclick
+                    magix.viewport.load-module
+                      class=>span-22 top-1 last
+                      container=>content2
+                      name=>Magix.ide.modules.ExecutorForm
+                    magix.forms.get-value
+                      form-id=>active-events
+                      id=>lbl-code
+                    replace=>[magix.forms.get-value][value].Value
+                      what=>&amp;
+                      with=>&
+                    replace=>[magix.forms.get-value][value].Value
+                      what=>&lt;
+                      with=><
+                    replace=>[magix.forms.get-value][value].Value
+                      what=>&gt;
+                      with=>>
+                    magix.forms.get-value
+                      form-id=>active-events
+                      id=>lbl-header
+                    code-2-node
+                      code=>[magix.forms.get-value][value].Value
+                    _code
+                      event
+                        name
+                        code
+                    set=>[_code][**name].Value
+                      value=>[magix.forms.get-value:1][value].Value
+                    add=>[_code][**code]
+                      value=>[code-2-node][node]
+                      children-only=>true
+                    node-2-code
+                      node=>[_code][event]
+                    using=>magix.executor
+                      set-code
+                        code=>[node-2-code][code].Value
+
       active-events
         text=>active events
         category=>tools

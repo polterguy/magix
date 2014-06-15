@@ -95,9 +95,11 @@ namespace Magix.execute
                 return;
 			}
 
+            Node dp = Dp(e.Params);
+
             if (!ip.ContainsValue("name"))
                 throw new ArgumentException("you cannot create an event without a [name]");
-            string activeEvent = ip["name"].Get<string>();
+            string activeEvent = Expressions.GetExpressionValue(ip["name"].Get<string>(), dp, ip, false) as string;
 
 			bool remotable = ip.Contains("remotable") && ip["remotable"].Get<bool>();
 

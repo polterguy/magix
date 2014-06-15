@@ -31,7 +31,9 @@ into the tracer to show"
 magix.executor.set-code-dox=>@"sets code for hyperlisp executor
 
 changes the code in the input area of the hyperlisp executor to whatever 
-value is in [code]"
+value is in [code]
+
+[code] can be either an expression or a constant"
 
 magix.executor.set-code-sample
   magix.executor.set-code
