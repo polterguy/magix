@@ -1,0 +1,42 @@
+﻿
+/*
+ * css for web part builder
+ */
+
+.wysiwyg-design-surface-label
+{
+    display:block;
+    float:left;
+}
+
+.wysiwyg-design-surface
+{
+	width:100%;
+    padding-bottom:18px;
+    overflow:auto;
+}
+
+.wysiwyg-disabled
+{
+    background-color:rgba(2555, 128, 128, .3);
+}
+
+.wysiwyg-design-surface input[type=button]
+{
+	animation-name:none;
+	box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.7);
+}
+
+.wysiwyg-design-surface input[type=button]:hover
+{
+	animation-name:none;
+	box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.7);
+}
+
+.wysiwyg-design-surface input[type=button].selected,
+.wysiwyg-design-surface input[type=button]:hover.selected,
+.wysiwyg-design-surface .selected
+{
+	box-shadow: 7px 7px 3px rgba(0, 0, 0, 0.7);
+}
+

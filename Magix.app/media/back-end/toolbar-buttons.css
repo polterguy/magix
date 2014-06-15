@@ -98,95 +98,24 @@ input[type=button]:hover.toolbox-load
     background-color:rgba(0,0,0,.05);
 }
 
-input[type=button].toolbox-button
-{
-    background-position:0px 0px;
-}
-
-input[type=button].toolbox-check-box
-{
-    background-position:0px -18px;
-}
-
-input[type=button].toolbox-dynamic
-{
-    background-position:0px -36px;
-}
-
-input[type=button].toolbox-hidden
-{
-    background-position:0px -54px;
-}
-
-input[type=button].toolbox-hyperlink
-{
-    background-position:0px -72px;
-}
-
-input[type=button].toolbox-img
-{
-    background-position:0px -90px;
-}
-
-input[type=button].toolbox-label
-{
-    background-position:0px -108px;
-}
-
-input[type=button].toolbox-lambda
-{
-    background-position:0px -126px;
-}
-
-input[type=button].toolbox-link-button
-{
-    background-position:0px -144px;
-}
-
-input[type=button].toolbox-literal
-{
-    background-position:0px -162px;
-}
-
-input[type=button].toolbox-panel
-{
-    background-position:0px -180px;
-}
-
-input[type=button].toolbox-radio
-{
-    background-position:0px -198px;
-}
-
-input[type=button].toolbox-select
-{
-    background-position:0px -216px;
-}
-
-input[type=button].toolbox-text-area
-{
-    background-position:0px -234px;
-}
-
-input[type=button].toolbox-text-box
-{
-    background-position:0px -252px;
-}
-
-input[type=button].toolbox-uploader
-{
-    background-position:0px -270px;
-}
-
-input[type=button].toolbox-wysiwyg
-{
-    background-position:0px -288px;
-}
-
-input[type=button].toolbox-timer
-{
-    background-position:0px -306px;
-}
+input[type=button].toolbox-button {background-position:0px 0px;}
+input[type=button].toolbox-check-box {background-position:0px -18px;}
+input[type=button].toolbox-dynamic {background-position:0px -36px;}
+input[type=button].toolbox-hidden {background-position:0px -54px;}
+input[type=button].toolbox-hyperlink {background-position:0px -72px;}
+input[type=button].toolbox-img {background-position:0px -90px;}
+input[type=button].toolbox-label {background-position:0px -108px;}
+input[type=button].toolbox-lambda {background-position:0px -126px;}
+input[type=button].toolbox-link-button {background-position:0px -144px;}
+input[type=button].toolbox-literal {background-position:0px -162px;}
+input[type=button].toolbox-panel {background-position:0px -180px;}
+input[type=button].toolbox-radio {background-position:0px -198px;}
+input[type=button].toolbox-select {background-position:0px -216px;}
+input[type=button].toolbox-text-area {background-position:0px -234px;}
+input[type=button].toolbox-text-box {background-position:0px -252px;}
+input[type=button].toolbox-uploader {background-position:0px -270px;}
+input[type=button].toolbox-wysiwyg {background-position:0px -288px;}
+input[type=button].toolbox-timer {background-position:0px -306px;}
 
 input[type=button].toolbox-undo,
 input[type=button]:hover.toolbox-undo,
@@ -276,5 +205,59 @@ input[type=button]:disabled.toolbox-load
     background-position:0px -468px;
     background-color:rgba(0,0,0,.1);
     box-shadow:none;
+}
+
+
+
+
+
+input[type=button]:hover.toolbox-undo
+{
+    background-color:rgba(0,0,0,.2);
+}
+
+input[type=button]:hover.toolbox-redo
+{
+    background-color:rgba(0,0,0,.2);
+}
+
+input[type=button]:hover.toolbox-copy
+{
+    background-color:rgba(0,0,0,.2);
+}
+
+input[type=button]:hover.toolbox-cut
+{
+    background-color:rgba(0,0,0,.2);
+}
+
+input[type=button]:hover.toolbox-paste
+{
+    background-color:rgba(0,0,0,.2);
+}
+
+input[type=button]:hover.toolbox-delete
+{
+    background-color:rgba(0,0,0,.2);
+}
+
+input[type=button]:hover.toolbox-preview
+{
+    background-color:rgba(0,0,0,.2);
+}
+
+input[type=button]:hover.toolbox-execute
+{
+    background-color:rgba(0,0,0,.2);
+}
+
+input[type=button]:hover.toolbox-save
+{
+    background-color:rgba(0,0,0,.2);
+}
+
+input[type=button]:hover.toolbox-load
+{
+    background-color:rgba(0,0,0,.2);
 }
 

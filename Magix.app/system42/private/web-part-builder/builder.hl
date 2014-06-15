@@ -12,6 +12,11 @@ magix.viewport.include-client-file
   type=>css
   file=>media/back-end/toolbar-buttons.css
 
+// including toolbox buttons css file
+magix.viewport.include-client-file
+  type=>css
+  file=>media/back-end/web-part-builder.css
+
 // creating the "add controls" web part, containing a list of all controls in system
 magix.forms.create-web-part
   form-id=>add-control
