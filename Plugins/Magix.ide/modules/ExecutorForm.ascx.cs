@@ -77,6 +77,14 @@ namespace Magix.ide.modules
                     "magix.viewport.include-client-file",
                     tmp);
 
+                tmp = new Node();
+                tmp["type"].Value = "css";
+                tmp["file"].Value = "media/back-end/typeahead.css";
+
+                RaiseActiveEvent(
+                    "magix.viewport.include-client-file",
+                    tmp);
+
                 activeEvent.Attributes.Add(new AttributeControl.Attribute("data-provide", "typeahead"));
 				activeEvent.Attributes.Add(new AttributeControl.Attribute("data-items", "12"));
 				activeEvent.Attributes.Add(new AttributeControl.Attribute("data-source", GetDataSource()));
@@ -127,7 +135,8 @@ namespace Magix.ide.modules
 			}
             if (!ip.ContainsValue("code"))
                 throw new ArgumentException("no [code] given to [magix.executor.set-code]");
-            txtIn.Value = ip["code"].Get<string>();
+            Node dp = Dp(e.Params);
+            txtIn.Value = Expressions.GetExpressionValue(ip["code"].Get<string>(), dp, ip, false) as string;
 		}
 
 		protected void move_Click(object sender, EventArgs e)

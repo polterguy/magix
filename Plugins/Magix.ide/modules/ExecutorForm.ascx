@@ -6,7 +6,7 @@
     AutoEventWireup="true" 
     Inherits="Magix.ide.modules.ExecutorForm" %>
 
-<div class="fill-width relative span-17 last">
+<div class="fill-width relative last">
     <mux:LinkButton
     	runat="server"
     	Class="indent-event-executor"
@@ -27,7 +27,7 @@
 		runat="server"
 		ID="exeWrp"
 		Default="run"
-		Class="btn-group span-17 last">
+		Class="btn-group fill-width last column">
 		<mux:TextBox
 			id="activeEvent"
 			runat="server"

@@ -125,6 +125,8 @@ events whom are created for instance during the startup of your application, sin
 will save time, since they will anyway be overwritten the next time your application 
 restarts
 
+[name] can be either an expression, or a constant
+
 thread safe"
 
 magix.execute.event-sample

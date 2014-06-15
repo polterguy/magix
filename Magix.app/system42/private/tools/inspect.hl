@@ -186,6 +186,14 @@ for-each=>[$][extra-buttons]
   add=>[/][**panel=>btn-wrappers][controls]
     value=>[.]
 
+// changing style of button group if extra buttons are supplied
+if=>exist
+  lhs=>[$][extra-buttons]
+  code
+    set=>[_controls][**panel=>btn-wrappers][class].Value
+      value=>{0} btn-group
+        =>[_controls][**panel=>btn-wrappers][class].Value
+
 // our list of web controls to associate with our create-web-part invocation
 _controls
   label=>lbl-header
@@ -193,16 +201,12 @@ _controls
   panel=>pnl-description-wrp
     class=>span-12
     controls
-      label=>lbl-code
-        tag=>pre
-        style=>width:100%;display:block;overflow-x:hidden;
-        value=>example code
       panel=>btn-wrappers
-        style=>width:100%;display:block;
+        class=>fill-width column column
         controls
           button=>inspect
             value=>inspect
-            class=>span-2 right last
+            class=>span-2 last
             onclick
               magix.forms.get-value
                 form-id=>active-events
@@ -223,6 +227,11 @@ _controls
               set=>[magix.executor.set-code][code].Value
                 value=>[magix.forms.get-value][value].Value
               magix.executor.set-code
+      label=>lbl-code
+        tag=>pre
+        style=>overflow-x:hidden;
+        class=>column fill-width bottom-1
+        value=>example code
       label=>lbl-description
         style=>width:100%;display:block;
         value=>@"<h3>description of active event</h3><p>more description ...</p>"
