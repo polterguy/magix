@@ -49,6 +49,18 @@ magix.web.get-parameter-sample
     name=>some-get-parameter
 
 
+magix.web.transfer.file-dox=>@"transfers a file to the client
+
+will transfer a file back to the client.  the file to transfer is given 
+as [file]
+
+not thread safe"
+
+magix.web.transfer.file-sample
+  magix.web.transfer-file
+    file=>some-get-parameter
+
+
 magix.session.set-dox=>@"sets a session value
 
 will create or overwrite the [id] session object with node hierarchy 

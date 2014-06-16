@@ -111,6 +111,7 @@
     <Content Include="media\xing-wysihtml5\website\img\spr_toolbar_icons_r1.png" />
     <Content Include="media\grid\main.css" />
     <Content Include="media\grid\grid.png" />
+    <Content Include="my-files\readme.txt" />
     <Content Include="system42\private\magix-log\log.txt" />
     <Content Include="system42\web.config" />
   </ItemGroup>
@@ -398,11 +399,12 @@
     <Content Include="system42\private\app-wizard\wizards\select-from-ms-sql-event-wizard.hl" />
     <Content Include="system42\private\app-wizard\wizards\select-from-ms-sql-event-wizard\controls.hl" />
     <Content Include="system42\private\app-wizard\wizards\select-from-ms-sql-event-wizard\events.hl" />
+    <Content Include="system42\private\startup\create-transfer-file-helper.hl" />
     <None Include="todo.txt" />
+    <Content Include="your-files\readme.txt" />
     <Content Include="your-files\web.config" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="database\" />
-    <Folder Include="my-files\" />
   </ItemGroup>
 </Project>

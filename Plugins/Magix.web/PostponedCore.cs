@@ -68,13 +68,13 @@ namespace Magix.web
             if (Page.Session["magix.web.postpone-execution"] != null)
             {
                 Node code = Page.Session["magix.web.postpone-execution"] as Node;
+                Page.Session.Remove("magix.web.postpone-execution");
                 foreach (Node idxNode in code)
                 {
                     RaiseActiveEvent(
                         "magix.execute",
                         idxNode);
                 }
-                Page.Session.Remove("magix.web.postpone-execution");
             }
         }
     }
