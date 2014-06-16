@@ -1,10 +1,10 @@
 ﻿
 
-inspect=>@"allows you to create an active event that loads a web part, 
-either from the database or the filesystem"
+inspect=>@"allows you to create an active event that loads and creates 
+a web part, either from the database or the filesystem"
 
 
-_name=>load web part active event
+_name=>create web part active event
 
 // setting default css files to include for web part
 magix.viewstate.set
