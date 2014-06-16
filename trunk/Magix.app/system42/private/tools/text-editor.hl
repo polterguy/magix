@@ -204,7 +204,7 @@ magix.forms.create-web-part
               class=>span-2 last
               value=>save
               onclick
-                magix.text-editor.save-file
+                magix.text-editor.save_onclick
         // preview container
         dynamic=>preview-container
           class=>fill-width column top-1

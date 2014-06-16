@@ -53,6 +53,51 @@ magix.text-editor.refresh-toolbar
       value=>false
 
 // saves file
+magix.text-editor.save_onclick
+  magix.forms.get-value
+    form-id=>editor
+    id=>txt-file-name
+  magix.forms.get-value
+    form-id=>editor
+    id=>editor-surface
+  if=>equals
+    lhs=>[magix.forms.get-value:1][value].Value
+    rhs=>
+    code
+      magix.viewport.show-message
+        message=>nothing to save
+        color=>#ffaaaa
+      stop
+  if=>equals
+    lhs=>[magix.forms.get-value:0][value].Value
+    rhs=>
+    code
+      // no filename given, opening up browse to figure out a filename to save file as
+      execute-script
+        file=>system42/private/file-manager/file-manager.hl
+        params
+          container=>content2
+          no-edit-button=>true
+          class=>span-15 last boxed air-padding top-1 left-5
+          onselect
+            set=>[magix.forms.set-value][value].Value
+              value=>[$][file].Value
+            magix.forms.set-value
+              form-id=>editor
+              id=>txt-file-name
+            magix.viewport.clear-controls
+              container=>content2
+              reset-class=>true
+            magix.text-editor.refresh-toolbar
+            magix.text-editor.save-file
+          oncancel
+            magix.viewport.clear-controls
+              container=>content2
+              reset-class=>true
+  else
+    magix.text-editor.save-file
+
+// actually saves file
 magix.text-editor.save-file
   magix.forms.get-value
     form-id=>editor
@@ -60,6 +105,14 @@ magix.text-editor.save-file
   magix.forms.get-value
     form-id=>editor
     id=>editor-surface
+  if=>equals
+    lhs=>[magix.forms.get-value:1][value].Value
+    rhs=>
+    code
+      magix.viewport.show-message
+        message=>nothing to save
+        color=>#ffaaaa
+      stop
   using=>magix.file
     save
       file=>[magix.forms.get-value:0][value].Value
@@ -74,5 +127,4 @@ magix.text-editor.save-file
     value=>[magix.forms.get-value:0][value].Value
   magix.text-editor.refresh-toolbar
   magix.editor.file-saved
-
 
