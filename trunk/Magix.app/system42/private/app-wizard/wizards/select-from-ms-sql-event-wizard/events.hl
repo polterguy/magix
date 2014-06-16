@@ -137,6 +137,64 @@ magix.wizard.initialize-second-page
     form-id=>wizard
     id=>select-table
 
+magix.wizard.select-table_onselectedindexchanged
+  magix.forms.set-enabled
+    form-id=>wizard
+    id=>sort-descending
+    value=>false
+  if=>equals
+    lhs=>[$][value].Value
+    rhs=>_default
+    code
+      magix.forms.set-enabled
+        form-id=>wizard
+        id=>select-sort
+        value=>false
+  else
+    magix.forms.set-enabled
+      form-id=>wizard
+      id=>select-sort
+      value=>true
+    magix.forms.get-value
+      form-id=>wizard
+      id=>select-table
+    set=>[@][magix.ms.sql.select][sql].Value
+      value=>@"select * from information_schema.columns where table_name = N'{0}'"
+        =>[@][magix.forms.get-value][value].Value
+    magix.forms.get-value
+      form-id=>wizard
+      id=>connection-string
+    set=>[@][magix.ms.sql.select][connection].Value
+      value=>[@][magix.forms.get-value:1][value].Value
+    magix.ms.sql.select
+    _items
+      _default=>select sort ...
+    for-each=>[@][magix.ms.sql.select][result]
+      add=>[@][..][_items]
+        value=>[.][COLUMN_NAME].Value
+          value=>[.][COLUMN_NAME].Value
+    add=>[@][magix.forms.set-values][values]
+      value=>[@][_items]
+      children-only=>true
+    magix.forms.set-values
+      form-id=>wizard
+      id=>select-sort
+
+magix.wizard.select-sort_onselectedindexchanged
+  if=>equals
+    lhs=>[$][value].Value
+    rhs=>_default
+    code
+      magix.forms.set-enabled
+        form-id=>wizard
+        id=>sort-descending
+        value=>false
+  else
+    magix.forms.set-enabled
+      form-id=>wizard
+      id=>sort-descending
+      value=>true
+
 magix.wizard.next-2_onclick
 
   // validating input
@@ -260,6 +318,27 @@ magix.wizard.next-3_onclick
         add=>[$][result]
           value=>[magix.ms.sql.select][result]
           children-only=>true
+  magix.forms.get-value
+    form-id=>wizard
+    id=>select-sort
+  magix.forms.get-value
+    form-id=>wizard
+    id=>sort-descending
+  if=>not-equals
+    lhs=>[magix.forms.get-value:3][value].Value
+    rhs=>_default
+    code
+      set=>[_sql].Value
+        value=>{0} order by {1}
+          =>[_sql].Value
+          =>[magix.forms.get-value:3][value].Value
+      if=>equals
+        lhs=>[magix.forms.get-value:4][value].Value
+        rhs=>true
+        code
+          set=>[_sql].Value
+            value=>{0} desc
+              =>[_sql].Value
   iterate=>[_event]
     if=>equals
       lhs=>[.].Value
