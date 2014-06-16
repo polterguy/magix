@@ -91,12 +91,12 @@ namespace Magix.ms.sql
                                 for (int idxNo = 0; idxNo < reader.VisibleFieldCount; idxNo++)
                                 {
                                     if (reader[idxNo] == DBNull.Value)
-                                        ip["result"][idxRecordNo.ToString()][reader.GetName(idxNo)].Value = null;
+                                        ip["result"]["idx_" + idxRecordNo.ToString()][reader.GetName(idxNo)].Value = null;
                                     else
                                     {
                                         if (!blobs && reader[idxNo] is byte[])
                                             continue;
-                                        ip["result"][idxRecordNo.ToString()][reader.GetName(idxNo)].Value = reader[idxNo];
+                                        ip["result"]["idx_" + idxRecordNo.ToString()][reader.GetName(idxNo)].Value = reader[idxNo];
                                     }
                                 }
                             }

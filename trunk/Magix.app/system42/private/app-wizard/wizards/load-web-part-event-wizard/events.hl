@@ -187,6 +187,7 @@ magix.wizard.create-load-from-where-web-part
                 params
                   filter=>*.hl
                   container=>file-browser
+                  deny-create-directory=>true
                   onselect
                     magix.viewport.clear-controls
                       container=>file-browser
@@ -258,7 +259,7 @@ magix.wizard.create-active-event
       rhs=>
     code
       magix.viewport.show-message
-        message=>your active event must contain a '.', and cannot start with 'magix.'
+        message=>you must supply a name for your active event.&nbsp;&nbsp;the name must contain a '.', and cannot start with 'magix.'
         time=>5000
         color=>#ffaaaa
       magix.forms.effect

@@ -84,7 +84,7 @@ magix.wizard.next-1_onclick
       rhs=>
     code
       magix.viewport.show-message
-        message=>you must supply an active event.&nbsp;&nbsp;your active event must contain a '.', and cannot start with 'magix.'
+        message=>you must supply a name for your active event.&nbsp;&nbsp;the name must contain a '.', and cannot start with 'magix.'
         time=>5000
         color=>#ffaaaa
       magix.forms.effect
@@ -302,6 +302,16 @@ magix.wizard.next-3_onclick
     value=>select {0} from [{1}]
       =>[_columns].Value
       =>[magix.forms.get-value][value].Value
+  set=>[_event][event][inspect].Value
+    value=>@"selects records from {0}
+
+automatically wizard generated active event that selects records from the 
+{0} database table.  [start] and [count] are parameters that allows you to 
+decide where to start the extraction of values
+
+result will be returned as [result] and [record-count] will contain the total 
+number of records in your table"
+      =>[magix.forms.get-value][value].Value
   magix.forms.get-value
     form-id=>wizard
     id=>connection-string
@@ -312,12 +322,38 @@ magix.wizard.next-3_onclick
     event
       name=>{active-event-name}
       code
+        if=>exist
+          lhs=>[$][start].Value
+          code
+            set=>[magix.ms.sql.select][start].Value
+              value=>[$][start].Value
+        else
+          set=>[magix.ms.sql.select][start].Value
+            value=>0
+        if=>exist
+          lhs=>[$][count].Value
+          code
+            using=>magix.math
+              add
+                =>[$][start].Value
+                =>[$][count].Value
+            set=>[magix.ms.sql.select][end].Value
+              value=>[@][using][add].Value
+        else
+          using=>magix.math
+            add
+              =>[magix.ms.sql.select][start].Value
+              =>10
+          set=>[magix.ms.sql.select][end].Value
+            value=>[@][using][add].Value
         magix.ms.sql.select
           connection=>{connection}
           sql=>{sql}
         add=>[$][result]
           value=>[magix.ms.sql.select][result]
           children-only=>true
+        set=>[$][record-count].Value
+          value=>[magix.ms.sql.select][record-count].Value
   magix.forms.get-value
     form-id=>wizard
     id=>select-sort
