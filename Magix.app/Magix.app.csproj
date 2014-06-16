@@ -399,8 +399,10 @@
     <Content Include="system42\private\app-wizard\wizards\select-from-ms-sql-event-wizard\controls.hl" />
     <Content Include="system42\private\app-wizard\wizards\select-from-ms-sql-event-wizard\events.hl" />
     <None Include="todo.txt" />
+    <Content Include="your-files\web.config" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="database\" />
+    <Folder Include="my-files\" />
   </ItemGroup>
 </Project>

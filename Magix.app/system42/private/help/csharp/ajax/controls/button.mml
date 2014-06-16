@@ -44,7 +44,7 @@ the active module as an embedded resource if you want to compile this sample</p>
     id="btn"
     OnClick="btn_Click"
     Value="click me!"
-    Class="span-5 btn-large"/&gt;
+    Class="span-5 large"/&gt;
 </pre>
 
 <label>SampleModule.ascx.cs</label>
@@ -73,7 +73,7 @@ namespace Magix.sample
 {{
 button=>btn
   value=>click me!
-  class=>span-5 btn-large
+  class=>span-5 large
   onclick
     magix.forms.set-value
       id=>btn

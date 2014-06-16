@@ -98,7 +98,7 @@ panel=>loginWrp
           class=>error span-2
         button=>loginBtn
           value=>login
-          class=>right span-2 btn-large last
+          class=>right span-2 last
           onclick
             magix.forms.get-value
               form-id=>header
@@ -116,7 +116,7 @@ panel=>logoutWrp
   class=>absolute top right span-4 top-1 z-1 last
   controls
     button=>logOut
-      class=>span-4 btn-large
+      class=>span-4 large
       value=>logout
       onclick
         magix.session.set

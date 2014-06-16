@@ -61,7 +61,7 @@ magix.ide.list-controls-sample
       control
         button=>id-of-button
           value=>a button
-          class=>span-5 btn-large
+          class=>span-5 large
     add-control
       where
         dna=>root
@@ -171,7 +171,7 @@ magix.ide.change-control-sample
       change
         id=>new-id
         value=>new value
-        class=>span-5 btn-large
+        class=>span-5 large
         style
         onclick
           magix.viewport.show-message
@@ -195,7 +195,7 @@ magix.ide.select-control-sample
       control
         button=>my-button
           value=>a button
-          class=>span-5 btn-large
+          class=>span-5 large
     select-control
       dna=>root-0-0
 
@@ -254,7 +254,7 @@ magix.ide.copy-control-sample
         position=>child
       control
         button=>id-of-button
-          class=>span-3 btn-large
+          class=>span-3 large
           value=>a button
     add-control
       where
@@ -337,7 +337,7 @@ magix.ide.paste-control-sample
         position=>child
       control
         button=>id-of-button
-          class=>span-3 btn-large
+          class=>span-3 large
           value=>a button
     add-control
       where
@@ -438,7 +438,7 @@ magix.ide.undo-sample
       control
         button=>id-of-button
           value=>a button
-          class=>span-5 btn-large
+          class=>span-5 large
     add-control
       where
         dna=>root
@@ -468,7 +468,7 @@ magix.ide.redo-sample
       control
         button=>id-of-button
           value=>a button
-          class=>span-5 btn-large
+          class=>span-5 large
     add-control
       where
         dna=>root
