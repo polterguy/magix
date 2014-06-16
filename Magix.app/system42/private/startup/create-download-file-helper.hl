@@ -1,12 +1,12 @@
 ﻿
 
-inspect=>@"create the transfer-file helper
+inspect=>@"create the download file helper
 
 creates an active event that will help transfering private files 
 from the server to the client"
 
 event
-  name=>magix.file.transfer-file
+  name=>magix.file.download
   inspect=>@"transfers a file to the client
 
 will transfer a file from the server to the client.  useful 
@@ -16,7 +16,7 @@ to file to transfer"
     if=>not-exist
       lhs=>[$][file].Value
       code
-        throw=>no [file] given to [magix.file.transfer-file]
+        throw=>no [file] given to [magix.file.download]
     set=>[magix.web.postpone-execution][code][magix.web.transfer-file][file].Value
       value=>[$][file].Value
     magix.web.postpone-execution
@@ -24,6 +24,8 @@ to file to transfer"
         magix.web.transfer-file
     magix.configuration.get-base-directory
     using=>magix.viewport
+      // since we've got a postponed execution, that will perform a download, we can safely 
+      // redirect the client back to "base", which will initiate the download of the file requested
       execute-javascript
         script=>@"window.location = '{0}';"
           =>[magix.configuration.get-base-directory][value].Value
