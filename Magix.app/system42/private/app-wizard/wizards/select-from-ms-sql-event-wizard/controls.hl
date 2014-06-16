@@ -76,11 +76,44 @@ panel=>wrapper
                   value=>choose table
                 select=>select-table
                   class=>span-8
+                  onselectedindexchanged
+                    set=>[magix.wizard.select-table_onselectedindexchanged][value].Value
+                      value=>[$][value].Value
+                    magix.wizard.select-table_onselectedindexchanged
+                label
+                  class=>span-3 clear top-1
+                  tag=>label
+                  value=>sort on
+                select=>select-sort
+                  class=>span-5 top-1
+                  disabled=>true
+                  onselectedindexchanged
+                    set=>[magix.wizard.select-sort_onselectedindexchanged][value].Value
+                      value=>[$][value].Value
+                    magix.wizard.select-sort_onselectedindexchanged
+                label
+                  class=>span-2 top-1 text-right
+                  tag=>label
+                  for=>sort-descending
+                  value=>descending
+                check-box=>sort-descending
+                  class=>span-1 top-1
+                  disabled=>true
                 button=>next-2
                   class=>span-2 last right clear top-1
                   value=>&gt;&gt;
                   onclick
                     magix.wizard.next-2_onclick
+                button=>previous-2
+                  class=>span-2 right top-1
+                  value=>&lt;&lt;
+                  onclick
+                    magix.forms.effect
+                      form-id=>wizard
+                      id=>inner-wrapper
+                      type=>slide
+                      time=>250
+                      offset=>0
             panel=>third-page
               class=>span-15 last
               default=>next-3
@@ -96,6 +129,16 @@ panel=>wrapper
                   value=>create
                   onclick
                     magix.wizard.next-3_onclick
+                button=>previous-3
+                  class=>span-2 right top-1
+                  value=>&lt;&lt;
+                  onclick
+                    magix.forms.effect
+                      form-id=>wizard
+                      id=>inner-wrapper
+                      type=>slide
+                      time=>250
+                      offset=>-1
                 link-button=>edit-active-event
                   class=>span-3 clear last text-right right
                   value=>edit active event
