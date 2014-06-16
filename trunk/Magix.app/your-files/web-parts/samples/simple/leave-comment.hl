@@ -1,0 +1,55 @@
+panel=>comment-wrapper
+  class=>top-2 left-5 span-10 min-height-5 boxed-light-green air-padding
+  controls
+    label=>header
+      value=>leave your comment
+      class=>span-10 last bottom-1
+      tag=>h1
+    label=>label-0
+      value=>your name
+      class=>span-10 last
+      tag=>label
+    text-box=>name
+      class=>span-10 last large bottom-1
+      placeholder=>full name ...
+    label=>label-1
+      value=>your email
+      class=>span-10 last
+      tag=>label
+    text-box=>email
+      class=>span-10 last large bottom-1
+      placeholder=>email ...
+      type=>email
+    label=>label-2
+      value=>your comment
+      class=>span-10 last
+      tag=>label
+    text-area=>comment
+      class=>span-10 last
+      rows=>8
+      placeholder=>comment ...
+    button=>save
+      value=>send
+      class=>span-3 top-1 last right large
+      onclick
+        magix.forms.get-children-values
+          id=>comment-wrapper
+        add=>[magix.data.save][value]
+          value=>[magix.forms.get-children-values][values]
+          children-only=>true
+        magix.data.save
+          value
+            type=>magix.samples.leave-comment
+        magix.forms.set-value
+          id=>name
+          value=>
+        magix.forms.set-value
+          id=>email
+          value=>
+        magix.forms.set-value
+          id=>comment
+          value=>
+        magix.viewport.show-message
+          message=>thank you for leaving your comment
+          color=>#aaffaa
+  default=>save
