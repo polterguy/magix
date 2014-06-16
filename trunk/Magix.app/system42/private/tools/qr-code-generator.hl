@@ -224,7 +224,7 @@ by default, a unique file name will be created within
 the tmp folder"
           placeholder=>filename ...
         button=>generate
-          class=>span-4 btn-large right clear top-1 last
+          class=>span-4 large right clear top-1 last
           value=>generate
           onclick
             magix.viewport.clear-controls

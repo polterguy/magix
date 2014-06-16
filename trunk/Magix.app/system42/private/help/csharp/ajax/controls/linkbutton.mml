@@ -73,7 +73,7 @@ namespace Magix.sample
 {{
 link-button=>btn
   value=>click me!
-  class=>span-5 btn-large
+  class=>span-5 large
   onclick
     magix.forms.set-value
       id=>btn

@@ -271,14 +271,14 @@ magix.forms.create-web-part
       default=>search-button
       controls
         button=>help-back
-          class=>btn-large span-2
+          class=>large span-2
           value=>back
           onclick
             magix.help.move-previous
             magix.browser.scroll
               id=>help
         button=>help-index
-          class=>btn-large span-2
+          class=>large span-2
           value=>index
           onclick
             magix.help.open-file
@@ -287,13 +287,13 @@ magix.forms.create-web-part
               id=>help
         button=>close-help
           value=>close
-          class=>btn-large span-2
+          class=>large span-2
           onclick
             magix.viewport.clear-controls
               container=>help
         text-box=>search-help
           placeholder=>search ...
-          class=>span-11 input-large
+          class=>span-11 large
           autocomplete=>false
           @data-provide=>typeahead
           @data-items=>10
@@ -304,7 +304,7 @@ magix.forms.create-web-part
               form-id=>help-wrapper
               id=>search-help
         button=>search-button
-          class=>span-2 btn-large
+          class=>span-2 large
           value=>search
           onclick
             magix.forms.get-value
@@ -319,7 +319,7 @@ magix.forms.create-web-part
               id=>next-help-page
         button=>next-help-page
           value=>next page
-          class=>btn-large span-3 last
+          class=>large span-3 last
           onclick
             magix.help.move-next
             magix.browser.scroll
@@ -337,14 +337,14 @@ magix.forms.create-web-part
       controls
         button=>help-back-bottom
           value=>back
-          class=>btn-large span-3
+          class=>large span-3
           onclick
             magix.help.move-previous
             magix.browser.scroll
               id=>help
         button=>next-help-page-bottom
           value=>next page
-          class=>btn-large span-3 last
+          class=>large span-3 last
           onclick
             magix.help.move-next
             magix.browser.scroll

@@ -61,7 +61,6 @@ input[type=button] {border:0 none;}
 input[type=checkbox] {height:18px;max-height:18px;margin-bottom:0;margin-left:0;}
 label {font-weight:bold;}
 .small {font-size:.8em;margin-bottom:1.875em;line-height:1.875em;}
-.large {font-size:1.2em;line-height:2.5em;margin-bottom:1.25em;}
 .quiet {color:#666;}
 .loud {color:#000;}
 .highlight {background:#ff0;}
@@ -262,7 +261,24 @@ html {background-color:#303030;}
 .text-center {text-align: center;}
 .centered {margin-left:auto;margin-right:auto;}
 
-input[type=button].btn-large {height:36px;font-size:16px;}
+input[type=button].large {height:36px;font-size:18px;line-height:36px;}
+
+input[type=text].large,
+input[type=color].large,
+input[type=email].large,
+input[type=datetime].large,
+input[type=datetimelocal].large,
+input[type=date].large,
+input[type=month].large,
+input[type=number].large,
+input[type=password].large,
+input[type=tel].large,
+input[type=range].large,
+input[type=search].large,
+input[type=time].large,
+input[type=url].large,
+input[type=week].large {height:36px;font-size:18px;line-height:36px;}
+
 select {margin-top:0px;margin-bottom:0px;height:18px;border-left:none 0;border-right:none 0;}
 
 .wysiwyg-color-silver {color:silver;}
@@ -334,14 +350,6 @@ textarea.fill-width,
 	width:100%;
 	display:block;
     margin-right:0;
-}
-
-input[type=text].input-large,
-textarea.input-large,
-.input-large
-{
-	height:34px;
-	font-size:24px;
 }
 
 .container

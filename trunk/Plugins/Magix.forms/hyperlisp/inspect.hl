@@ -1096,7 +1096,7 @@ magix.forms.set-class-sample
           magix.forms.set-class
             form-id=>sample-form
             id=>btn
-            value=>span-5 btn-large
+            value=>span-5 large
 
 
 magix.forms.get-class-dox=>@"retrieves the css class of a web control
@@ -1114,7 +1114,7 @@ magix.forms.get-class-sample
     class=>span-22 last
     controls
       button=>btn
-        class=>span-5 btn-large
+        class=>span-5 large
         value=>click me
         onclick
           magix.forms.get-class
@@ -1163,7 +1163,7 @@ magix.forms.get-title-sample
     class=>span-22 last
     controls
       button=>btn
-        class=>span-5 btn-large
+        class=>span-5 large
         value=>click me
         onclick
           magix.forms.get-title
@@ -1213,7 +1213,7 @@ magix.forms.get-info-sample
     class=>span-22 last
     controls
       button=>btn
-        class=>span-5 btn-large
+        class=>span-5 large
         info=>info value ...
         value=>click me
         onclick

@@ -32,20 +32,20 @@
 			id="activeEvent"
 			runat="server"
 			PlaceHolder="active event ..."
-			Class="span-11 monospaced input-large" />
+			Class="span-11 monospaced large" />
 		<mux:Button
 			runat="server"
 			id="run"
 			Value="execute"
 			AccessKey="X"
-			Class="span-3 btn-large"
+			Class="span-3 large"
 			OnClick="run_Click" />
 		<mux:Button
 			runat="server"
 			id="move"
 			Value="move up"
 			AccessKey="U"
-			Class="span-3 last btn-large"
+			Class="span-3 last large"
 			OnClick="move_Click" />
 	</mux:Panel>
 	<mux:TextArea

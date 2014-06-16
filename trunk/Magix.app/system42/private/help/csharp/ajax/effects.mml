@@ -22,7 +22,7 @@ the active module as an embedded resource if you want to compile this sample</p>
     id="btn"
     OnClick="btn_Click"
     Value="click me!"
-    Class="span-3 btn-large"/&gt;
+    Class="span-3 large"/&gt;
 
 &lt;mux:Label
     runat="server"
@@ -64,7 +64,7 @@ having an effect run as the user clicks a web control</p>
 {{
 button=>btn
   value=>click me!
-  class=>span-3 btn-large
+  class=>span-3 large
   onclick
     magix.forms.effect
       id=>lbl

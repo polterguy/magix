@@ -303,7 +303,7 @@ _data
   msg1=>howdy world
     msg=>this is howdy world talking
     type=>button
-    css=>btn-large span-9
+    css=>large span-9
   msg2=>yo world
     msg=>this is yo world talking
     type=>link-button
@@ -343,7 +343,7 @@ dynamic=>dyn-help-sample-2-web-controls
       msg1=>howdy world
         msg=>this is howdy world talking
         type=>button
-        css=>btn-large span-9
+        css=>large span-9
       msg2=>yo world
         msg=>this is yo world talking
         type=>link-button

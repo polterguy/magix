@@ -26,7 +26,7 @@ raises an active event when the button is clicked, and handles another active ev
     id="btn"
     OnClick="btn_Click"
     Value="Click Me!"
-    Class="span-3 btn-large"/&gt;
+    Class="span-3 large"/&gt;
 </pre>
 
 <label>SampleModule.ascx.cs</label>
