@@ -7,6 +7,7 @@ link-button=>desktop
   onclick
     magix.viewport.clear-controls
       all=>true
+      reset-class=>true
     execute-script
       file=>system42/private/dashboard/desktop.hl
 }}

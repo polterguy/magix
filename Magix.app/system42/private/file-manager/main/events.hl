@@ -326,8 +326,14 @@ magix.file-manager.create-preview
         lhs=>[@][_can-edit].Value
         rhs=>true
         code
-          set=>[/][**button=>edit-file][disabled].Value
-            value=>false
+          magix.viewstate.get
+            id=>magix.file-manager.no-edit-button
+          if=>not-equals
+            lhs=>[@][magix.viewstate.get][value].Value
+            rhs=>true
+            code
+              set=>[/][**button=>edit-file][disabled].Value
+                value=>false
 
       // enabling or disabling view image preview
       if=>equals

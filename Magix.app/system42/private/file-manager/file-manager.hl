@@ -76,6 +76,15 @@ if=>equals
     set=>[**panel=>directory-wrapper][visible].Value
       value=>false
 
+// setting editing of files, folders and such to on/off
+if=>equals
+  lhs=>[$][no-edit-button].Value
+  rhs=>true
+  code
+    magix.viewstate.set
+      id=>magix.file-manager.no-edit-button
+      value=>true
+
 // changing its directory and root directory
 if=>exist
   lhs=>[$][directory]
