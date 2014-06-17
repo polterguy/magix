@@ -83,5 +83,5 @@ magix.forms.create-web-part
           events-file=>system42/private/web-part-builder/parts/control-properties/wrapper/events.hl
 
     // preview container
-    dynamic=>preview
+    dynamic=>preview-web-part
 

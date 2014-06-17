@@ -124,7 +124,7 @@ magix.ide.create-control-property-modifier-control
           class=>span-3 text-right
           tag=>label
           value=>{field-type-name}
-        text-box
+        text-box=>{field-type-name}
           class=>span-6 last
           placeholder=>{field-type-value}
           value=>{value}
@@ -143,6 +143,74 @@ magix.ide.create-control-property-modifier-control
               set=>[magix.ide.change-control][change][[_field-name].Value].Name
                 value=>[_field-name].Value
             magix.ide.change-control
+
+  // handling text [literal controls] specially
+  if=>equals
+    lhs=>[$][field-type][0].Name
+    rhs=>text
+    code
+      set=>[_data][panel][class].Value
+        value=>span-20 last clear top-1
+      set=>[_data][panel][controls][text-box].Name
+        value=>text-area
+      set=>[_data][panel][controls][text-area][class].Value
+        value=>span-15 last
+      set=>[_data][panel][controls][text-area][rows].Value
+        value=>10
+
+  // handling src [image controls] specially
+  if=>equals
+    lhs=>[$][field-type][0].Name
+    rhs=>src
+    code
+      _data
+        button
+          class=>span-2 last
+          value=>browse
+          onclick
+            magix.browser.scroll
+              id=>content3
+            execute-script
+              file=>system42/private/file-manager/file-manager.hl
+              params
+                filter=>*.png;*.jpg;*.jpeg
+                directory=>media
+                container=>content3
+                editor-container=>
+                class=>span-15 last boxed air-padding bottom-1 top-1 left-5
+                no-edit=>true
+                onselect
+                  set=>[magix.forms.set-value][value].Value
+                    value=>[$][file].Value
+                  magix.forms.set-value
+                    form-id=>control-properties-wrapper
+                    id=>src
+                  magix.viewport.clear-controls
+                    container=>content3
+                    reset-class=>true
+                  _field-name=>{field-type-name}
+                  _dna=>{dna}
+                  set=>[magix.ide.change-control][dna].Value
+                    value=>[_dna].Value
+                  if=>not-equals
+                    lhs=>[$][file].Value
+                    rhs=>
+                    code
+                      set=>[magix.ide.change-control][change][[_field-name].Value].Value
+                        value=>[$][file].Value
+                  else
+                    set=>[magix.ide.change-control][change][[_field-name].Value].Name
+                      value=>[_field-name].Value
+                  magix.ide.change-control
+                oncancel
+                  magix.viewport.clear-controls
+                    container=>content3
+                    reset-class=>true
+      set=>[_data][panel][controls][text-box][class].Value
+        value=>span-4
+      add=>[_data][panel][controls]
+        value=>[@][_data][button]
+
   iterate=>[_data]
     if=>equals
       lhs=>[.].Value
@@ -168,18 +236,8 @@ magix.ide.create-control-property-modifier-control
       code
         set=>[.].Value
           value=>[$][field-type][0].Name
-  if=>equals
-    lhs=>[$][field-type][0].Name
-    rhs=>text
-    code
-      set=>[_data][panel][class].Value
-        value=>12
-      set=>[_data][panel][controls][text-box].Name
-        value=>text-area
-      set=>[_data][panel][controls][text-area][class].Value
-        value=>span-10 last
-      set=>[_data][panel][controls][text-area][rows].Value
-        value=>5
+
+  // returning control for modifying property back to caller
   add=>[$][control]
     value=>[_data][panel]
 

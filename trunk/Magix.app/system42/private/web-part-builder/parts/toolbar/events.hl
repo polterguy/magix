@@ -205,12 +205,12 @@ magix.ide.undo-chain-index-changed
 magix.ide.show-preview
   magix.forms.create-web-part
     form-id=>preview-wrapper
-    container=>preview
+    container=>preview-web-part
     class=>span-22 last top-2 boxed
     controls-file=>system42/private/web-part-builder/parts/preview/controls.hl
     events-file=>system42/private/web-part-builder/parts/preview/events.hl
   magix.browser.scroll
-    id=>preview
+    id=>preview-web-part
 
 // saves current active web part, first asks user where he wants to save it
 magix.ide.save-form
