@@ -17,7 +17,7 @@ link-button=>lnk-preview-close
   value=>close
   onclick
     magix.viewport.clear-controls
-      container=>preview
+      container=>preview-web-part
 
 // actual preview of form
 dynamic=>preview-content
