@@ -1,0 +1,438 @@
+﻿
+
+inspect=>@"contains controls for the web part designer style builder
+
+contains the control definition for the style builder parts of the web part designer"
+
+
+label
+  class=>span-20 last bottom-1
+  value=>style builder
+  tag=>h3
+
+panel=>outer-wrapper
+  style=>width:790px;overflow:hidden;
+  onfirstload
+    magix.ide.outer-wrapper_onfirstload
+  controls
+    panel=>inner-wrapper
+      style=>width:3260px;
+      controls
+
+        // first tab
+        panel=>first-tab
+          class=>span-20 last
+          controls
+            panel
+              class=>span-6 air-padding boxed-light-green bottom-1 left-2
+              controls
+                label
+                  tag=>label
+                  class=>span-6 last bottom-1
+                  value=>size and position
+                label
+                  tag=>label
+                  class=>span-1
+                  value=>width
+                text-box=>width
+                  class=>span-2
+                  placeholder=>width ...
+                  type=>number
+                label
+                  tag=>label
+                  class=>span-1
+                  value=>height
+                text-box=>height
+                  class=>span-2 last
+                  placeholder=>height ...
+                  type=>number
+                label
+                  class=>span-1 top-1
+                  tag=>label
+                  value=>pos
+                select=>position
+                  class=>span-2 last top-1
+                  onselectedindexchanged
+                    if=>equals
+                      lhs=>[$][value].Value
+                      rhs=>_default
+                      code
+                        magix.forms.set-enabled
+                          form-id=>style-builder
+                          id=>top
+                          value=>false
+                        magix.forms.set-enabled
+                          form-id=>style-builder
+                          id=>left
+                          value=>false
+                    else
+                      magix.forms.set-enabled
+                        form-id=>style-builder
+                        id=>top
+                        value=>true
+                      magix.forms.set-enabled
+                        form-id=>style-builder
+                        id=>left
+                        value=>true
+                  items
+                    _default=>default ...
+                    fixed=>fixed
+                    relative=>relative
+                    absolute=>absolute
+                label
+                  tag=>label
+                  class=>span-1 clear
+                  value=>top
+                text-box=>top
+                  class=>span-2
+                  placeholder=>top ...
+                  disabled=>true
+                  type=>number
+                label
+                  tag=>label
+                  class=>span-1
+                  value=>left
+                text-box=>left
+                  class=>span-2 last
+                  placeholder=>left ...
+                  disabled=>true
+                  type=>number
+            panel
+              class=>span-6 air-padding boxed-light-green bottom-1
+              controls
+                label
+                  tag=>label
+                  class=>span-6 last bottom-1
+                  value=>borders
+                label
+                  tag=>label
+                  class=>span-1
+                  value=>style
+                select=>border-style
+                  class=>span-2
+                  onselectedindexchanged
+                    if=>equals
+                      lhs=>[$][value].Value
+                      rhs=>_default
+                      code
+                        magix.forms.set-enabled
+                          form-id=>style-builder
+                          id=>border-width
+                          value=>false
+                    else
+                      magix.forms.set-enabled
+                        form-id=>style-builder
+                        id=>border-width
+                        value=>true
+                  items
+                    _default=>type ...
+                    none=>none
+                    hidden=>hidden
+                    dotted=>dotted
+                    dashed=>dashed
+                    solid=>solid
+                    double=>double
+                    groove=>groove
+                    ridge=>ridge
+                    inset=>inset
+                    outset=>outset
+                    initial=>initial
+                    inherit=>inherit
+                label
+                  tag=>label
+                  class=>span-1
+                  value=>width
+                text-box=>border-width
+                  class=>span-2 last
+                  placeholder=>size ...
+                  type=>number
+                  disabled=>true
+                label
+                  tag=>label
+                  class=>span-1 top-1
+                  value=>radius
+                text-box=>border-radius
+                  class=>span-2 top-1
+                  placeholder=>radius ...
+                  type=>number
+            button=>next-1
+              class=>span-2 right last clear
+              value=>&gt;&gt;
+              onclick
+                magix.forms.effect
+                  form-id=>style-builder
+                  id=>inner-wrapper
+                  type=>slide
+                  time=>250
+                  offset=>-1
+        panel=>second-tab
+          class=>span-20 last
+          controls
+            panel
+              class=>span-6 air-padding boxed-light-green bottom-1 left-2
+              controls
+                label
+                  tag=>label
+                  class=>span-6 last
+                  value=>margin
+                label
+                  tag=>label
+                  class=>span-1 top-1
+                  value=>left
+                text-box=>margin-left
+                  class=>span-2 top-1
+                  placeholder=>left ...
+                  type=>number
+                label
+                  tag=>label
+                  class=>span-1 top-1
+                  value=>right
+                text-box=>margin-right
+                  class=>span-2 top-1 last
+                  placeholder=>right ...
+                  type=>number
+                label
+                  tag=>label
+                  class=>span-1 top-1
+                  value=>top
+                text-box=>margin-top
+                  class=>span-2 top-1
+                  placeholder=>top ...
+                  type=>number
+                label
+                  tag=>label
+                  class=>span-1 top-1
+                  value=>bottom
+                text-box=>margin-bottom
+                  class=>span-2 top-1 last
+                  placeholder=>bottom ...
+                  type=>number
+            panel
+              class=>span-6 air-padding boxed-light-green bottom-1
+              controls
+                label
+                  tag=>label
+                  class=>span-6 last
+                  value=>padding
+                label
+                  tag=>label
+                  class=>span-1 top-1
+                  value=>left
+                text-box=>padding-left
+                  class=>span-2 top-1
+                  placeholder=>left ...
+                  type=>number
+                label
+                  tag=>label
+                  class=>span-1 top-1
+                  value=>right
+                text-box=>padding-right
+                  class=>span-2 top-1 last
+                  placeholder=>right ...
+                  type=>number
+                label
+                  tag=>label
+                  class=>span-1 top-1
+                  value=>top
+                text-box=>padding-top
+                  class=>span-2 top-1
+                  placeholder=>top ...
+                  type=>number
+                label
+                  tag=>label
+                  class=>span-1 top-1
+                  value=>bottom
+                text-box=>padding-bottom
+                  class=>span-2 top-1 last
+                  placeholder=>bottom ...
+                  type=>number
+            button=>next-2
+              class=>span-2 right last clear top-1
+              value=>&gt;&gt;
+              onclick
+                magix.forms.effect
+                  form-id=>style-builder
+                  id=>inner-wrapper
+                  type=>slide
+                  time=>250
+                  offset=>-2
+            button=>previous-2
+              class=>span-2 right top-1
+              value=>&lt;&lt;
+              onclick
+                magix.forms.effect
+                  form-id=>style-builder
+                  id=>inner-wrapper
+                  type=>slide
+                  time=>250
+                  offset=>0
+        panel=>third-tab
+          class=>span-20 last
+          controls
+            panel
+              class=>span-6 air-padding boxed-light-green bottom-1 left-2
+              controls
+                label
+                  tag=>label
+                  class=>span-6 last
+                  value=>box shadow
+                label
+                  tag=>label
+                  class=>span-1 top-1
+                  value=>right
+                text-box=>box-shadow-right
+                  class=>span-2 top-1
+                  placeholder=>right ...
+                  type=>number
+                label
+                  tag=>label
+                  class=>span-1 top-1
+                  value=>bottom
+                text-box=>box-shadow-bottom
+                  class=>span-2 top-1 last
+                  placeholder=>bottom ...
+                  type=>number
+                label
+                  tag=>label
+                  class=>span-1 top-1
+                  value=>blur
+                text-box=>box-shadow-blur
+                  class=>span-2 top-1
+                  placeholder=>blur ...
+                  type=>number
+                label
+                  tag=>label
+                  class=>span-1 top-1
+                  value=>color
+                text-box=>box-shadow-color
+                  class=>span-2 top-1 last
+                  placeholder=>color ...
+                  type=>color
+            panel
+              class=>span-6 air-padding boxed-light-green bottom-1
+              controls
+                label
+                  tag=>label
+                  class=>span-6 last
+                  value=>text shadow
+                label
+                  tag=>label
+                  class=>span-1 top-1
+                  value=>right
+                text-box=>text-shadow-right
+                  class=>span-2 top-1
+                  placeholder=>right ...
+                  type=>number
+                label
+                  tag=>label
+                  class=>span-1 top-1
+                  value=>bottom
+                text-box=>text-shadow-bottom
+                  class=>span-2 top-1 last
+                  placeholder=>bottom ...
+                  type=>number
+                label
+                  tag=>label
+                  class=>span-1 top-1
+                  value=>blur
+                text-box=>text-shadow-blur
+                  class=>span-2 top-1
+                  placeholder=>blur ...
+                  type=>number
+                label
+                  tag=>label
+                  class=>span-1 top-1
+                  value=>color
+                text-box=>text-shadow-color
+                  class=>span-2 top-1 last
+                  placeholder=>color ...
+                  type=>color
+            button=>next-3
+              class=>span-2 right last clear top-1
+              value=>&gt;&gt;
+              onclick
+                magix.forms.effect
+                  form-id=>style-builder
+                  id=>inner-wrapper
+                  type=>slide
+                  time=>250
+                  offset=>-3
+            button=>previous-3
+              class=>span-2 right top-1
+              value=>&lt;&lt;
+              onclick
+                magix.forms.effect
+                  form-id=>style-builder
+                  id=>inner-wrapper
+                  type=>slide
+                  time=>250
+                  offset=>-1
+
+        panel=>fourth-tab
+          class=>span-20 last
+          controls
+            panel
+              class=>span-6 air-padding boxed-light-green bottom-1 left-2
+              controls
+                label
+                  tag=>label
+                  class=>span-6 last
+                  value=>color
+                label
+                  tag=>label
+                  class=>span-3 top-1
+                  value=>background color
+                text-box=>background-color
+                  class=>span-2 top-1
+                  type=>color
+                label
+                  tag=>label
+                  class=>span-3 top-1
+                  value=>color
+                text-box=>color
+                  class=>span-2 top-1 last
+                  type=>color
+            panel
+              class=>span-6 air-padding boxed-light-green bottom-1
+              controls
+                label
+                  tag=>label
+                  class=>span-6 last
+                  value=>font
+                label
+                  tag=>label
+                  class=>span-2 top-1
+                  value=>font name
+                text-box=>font-name
+                  class=>span-3 top-1
+                  placeholder=>name ...
+                label
+                  tag=>label
+                  class=>span-2 top-1
+                  value=>font size
+                text-box=>font-size
+                  class=>span-3 top-1
+                  placeholder=>size ...
+                  type=>number
+            button=>save
+              class=>span-2 right last clear top-1
+              value=>save
+              onclick
+                magix.style-builder.serialize-styles
+            button=>previous-3
+              class=>span-2 right top-1
+              value=>&lt;&lt;
+              onclick
+                magix.forms.effect
+                  form-id=>style-builder
+                  id=>inner-wrapper
+                  type=>slide
+                  time=>250
+                  offset=>-2
+    button=>close
+      class=>span-2 right last top-1
+      value=>close
+      onclick
+        magix.viewport.clear-controls
+          container=>content3
+          reset-class=>true
