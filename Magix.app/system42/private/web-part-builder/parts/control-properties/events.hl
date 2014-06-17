@@ -174,10 +174,10 @@ magix.ide.create-control-property-modifier-control
               file=>system42/private/file-manager/file-manager.hl
               params
                 filter=>*.png;*.jpg;*.jpeg
-                directory=>media
+                directory=>media/images
                 container=>content3
                 editor-container=>
-                class=>span-15 last boxed air-padding bottom-1 top-1 left-5
+                class=>span-15 last boxed air-padding bottom-1 top-1
                 no-edit=>true
                 onselect
                   set=>[magix.forms.set-value][value].Value
@@ -206,6 +206,29 @@ magix.ide.create-control-property-modifier-control
                   magix.viewport.clear-controls
                     container=>content3
                     reset-class=>true
+      set=>[_data][panel][controls][text-box][class].Value
+        value=>span-4
+      add=>[_data][panel][controls]
+        value=>[@][_data][button]
+
+  // handling style for all controls specially
+  if=>equals
+    lhs=>[$][field-type][0].Name
+    rhs=>style
+    code
+      _data
+        button
+          class=>span-2 last
+          value=>build
+          onclick
+            magix.forms.create-web-part
+              container=>content3
+              form-id=>style-builder
+              class=>span-20 air-padding boxed last top-1
+              controls-file=>system42/private/web-part-builder/parts/style-builder/controls.hl
+              events-file=>system42/private/web-part-builder/parts/style-builder/events.hl
+            magix.browser.scroll
+              id=>content3
       set=>[_data][panel][controls][text-box][class].Value
         value=>span-4
       add=>[_data][panel][controls]

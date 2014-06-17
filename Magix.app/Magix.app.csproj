@@ -400,6 +400,8 @@
     <Content Include="system42\private\app-wizard\wizards\select-from-ms-sql-event-wizard\controls.hl" />
     <Content Include="system42\private\app-wizard\wizards\select-from-ms-sql-event-wizard\events.hl" />
     <Content Include="system42\private\startup\create-download-file-helper.hl" />
+    <Content Include="system42\private\web-part-builder\parts\style-builder\controls.hl" />
+    <Content Include="system42\private\web-part-builder\parts\style-builder\events.hl" />
     <None Include="todo.txt" />
     <Content Include="your-files\readme.txt" />
     <Content Include="your-files\web.config" />
