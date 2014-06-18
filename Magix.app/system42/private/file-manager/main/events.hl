@@ -397,6 +397,7 @@ magix.file-manager.create-preview
                   script=>@"window.open('/{0}', '_blank');"
                     =>[$][value].Value
           panel=>edit-wrapper
+            class=>btn-group
             controls
               button=>edit-file
                 class=>span-2 top-1 clear
@@ -691,13 +692,6 @@ magix.file-manager.edit-file
         file=>system42/private/tools/wysiwyg-editor.hl
         params
           class=>span-22 last top-1
-          onesc
-            magix.viewstate.get
-              id=>magix.file-manager.editor-container
-            set=>[magix.viewport.clear-controls][container].Value
-              value=>[magix.viewstate.get][value].Value
-            magix.viewport.clear-controls
-              reset-class=>true
           extra-buttons
             button=>close
               class=>span-2 last
@@ -706,7 +700,7 @@ magix.file-manager.edit-file
               onclick
                 magix.viewstate.get
                   id=>magix.file-manager.editor-container
-                set=>[magix.viewport.clear-controls][value].Value
+                set=>[magix.viewport.clear-controls][container].Value
                   value=>[magix.viewstate.get][value].Value
                 magix.viewport.clear-controls
                   reset-class=>true

@@ -293,7 +293,23 @@ select {margin-top:0px;margin-bottom:0px;height:18px;border-left:none 0;border-r
 
 .confirm-button-wrapper {margin-left:auto;margin-right:auto;float:none;}
 
-.btn-group input[type=button]
+.btn-group input[type=button],
+.btn-group input[type=color],
+.btn-group input[type=email],
+.btn-group input[type=datetime],
+.btn-group input[type=datetimelocal],
+.btn-group input[type=date],
+.btn-group input[type=month],
+.btn-group input[type=text],
+.btn-group input[type=number],
+.btn-group input[type=password],
+.btn-group input[type=tel],
+.btn-group input[type=range],
+.btn-group input[type=search],
+.btn-group input[type=time],
+.btn-group input[type=url],
+.btn-group input[type=week],
+.btn-group select
 {
 	border-right:solid 1px rgba(128,128,128,.3);
 	padding-left:4px;
@@ -304,38 +320,47 @@ select {margin-top:0px;margin-bottom:0px;height:18px;border-left:none 0;border-r
 	border-radius:0px;
 }
 
-.btn-group input[type=button]:first-child
+.btn-group input[type=button]:first-child,
+.btn-group input[type=color]:first-child,
+.btn-group input[type=email]:first-child,
+.btn-group input[type=datetime]:first-child,
+.btn-group input[type=datetimelocal]:first-child,
+.btn-group input[type=date]:first-child,
+.btn-group input[type=month]:first-child,
+.btn-group input[type=text]:first-child,
+.btn-group input[type=number]:first-child,
+.btn-group input[type=password]:first-child,
+.btn-group input[type=tel]:first-child,
+.btn-group input[type=range]:first-child,
+.btn-group input[type=search]:first-child,
+.btn-group input[type=time]:first-child,
+.btn-group input[type=url]:first-child,
+.btn-group input[type=week]:first-child,
+.btn-group select:first-child
 {
 	border-radius:15px 0px 0px 15px;
 }
 
-.btn-group input[type=button]:last-child
+.btn-group input[type=button]:last-child,
+.btn-group input[type=color]:last-child,
+.btn-group input[type=email]:last-child,
+.btn-group input[type=datetime]:last-child,
+.btn-group input[type=datetimelocal]:last-child,
+.btn-group input[type=date]:last-child,
+.btn-group input[type=month]:last-child,
+.btn-group input[type=text]:last-child,
+.btn-group input[type=number]:last-child,
+.btn-group input[type=password]:last-child,
+.btn-group input[type=tel]:last-child,
+.btn-group input[type=range]:last-child,
+.btn-group input[type=search]:last-child,
+.btn-group input[type=time]:last-child,
+.btn-group input[type=url]:last-child,
+.btn-group input[type=week]:last-child,
+.btn-group select:last-child
 {
 	border-radius:0px 15px 15px 0px;
 	border-right:none 0;
-}
-
-.btn-group input[type=text]
-{
-	border-right:solid 1px rgba(128,128,128,.3);
-	border-top:solid 1px rgba(0,0,0,.1);
-	border-bottom:solid 1px rgba(0,0,0,.3);
-	padding-left:4px;
-	padding-right:5px;
-	margin-right:0px;
-	display:block;
-	float:left;
-	background-image: linear-gradient(rgba(245, 245, 245, .5) 0%, rgba(230, 230, 230, .5) 100%);
-}
-
-.btn-group input[type=text]:first-child
-{
-	border-radius:15px 0px 0px 15px;
-}
-
-.btn-group input[type=text]:last-child
-{
-	border-radius:0px 15px 15px 0px;
 }
 
 .monospaced
