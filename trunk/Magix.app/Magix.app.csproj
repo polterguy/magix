@@ -402,6 +402,7 @@
     <Content Include="system42\private\startup\create-download-file-helper.hl" />
     <Content Include="system42\private\web-part-builder\parts\style-builder\controls.hl" />
     <Content Include="system42\private\web-part-builder\parts\style-builder\events.hl" />
+    <Content Include="system42\private\tools\fusion-remoting.hl" />
     <None Include="todo.txt" />
     <Content Include="your-files\readme.txt" />
     <Content Include="your-files\web.config" />

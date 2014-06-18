@@ -154,28 +154,14 @@ returns the default dashboard shortcuts in your system"
               description-class=>span-9
               list-class=>span-8 last
               header=>active events
-      open-active-events
-        text=>open active events
+      fusion-remoting
+        text=>fusion remoting
         category=>security
         code
           magix.viewport.clear-controls
             all=>true
           execute-script
-            file=>system42/private/tools/inspect.hl
-            params
-              open=>true
-              header=>open active events
-      tunneled-active-events
-        text=>tunneled active events
-        category=>security
-        code
-          magix.viewport.clear-controls
-            all=>true
-          execute-script
-            file=>system42/private/tools/inspect.hl
-            params
-              remoted=>true
-              header=>tunneled active events
+            file=>system42/private/tools/fusion-remoting.hl
       edit-users
         text=>edit users
         category=>security
@@ -203,7 +189,7 @@ returns the default dashboard shortcuts in your system"
             container=>content1
             form-id=>admin-settings
             class=>span-17 last
-      magix-markup-language-editor
+      text-editor
         text=>text editor
         category=>tools
         code
@@ -220,6 +206,47 @@ returns the default dashboard shortcuts in your system"
                       file=>system42/private/file-manager/file-manager.hl
                       params
                         container=>content2
+                        no-edit-button=>true
+                        class=>span-15 last boxed air-padding top-1 left-5
+                        onselect
+                          using=>magix.file
+                            load
+                              file=>[$][file].Value
+                          using=>magix.forms
+                            set-value
+                              form-id=>editor
+                              id=>editor-surface
+                              value=>[using:0][load][value].Value
+                            set-value
+                              form-id=>editor
+                              id=>txt-file-name
+                              value=>[$][file].Value
+                          magix.viewport.clear-controls
+                            container=>content2
+                            reset-class=>true
+                          magix.text-editor.refresh-toolbar
+                        oncancel
+                          magix.viewport.clear-controls
+                            container=>content2
+                            reset-class=>true
+      wysiwyg-editor
+        text=>html editor
+        category=>tools
+        code
+          execute-script
+            file=>system42/private/tools/wysiwyg-editor.hl
+            params
+              container=>content1
+              extra-buttons
+                button=>browse
+                  class=>span-2 last
+                  value=>open
+                  onclick
+                    execute-script
+                      file=>system42/private/file-manager/file-manager.hl
+                      params
+                        container=>content2
+                        filter=>*.html
                         no-edit-button=>true
                         class=>span-15 last boxed air-padding top-1 left-5
                         onselect

@@ -1,0 +1,48 @@
+﻿
+
+inspect=>@"administrates fusion remoting
+
+creates the web part needed to configure the fusion remoting 
+features of magix"
+
+
+magix.forms.create-web-part
+  container=>content1
+  class=>span-17 last
+  controls
+    label
+      tag=>h2
+      class=>span-17 last
+      value=>fusion remoting
+    label
+      class=>span-17 last
+      tag=>p
+      value=>@"fusion remoting allows you to configure which active events you wish to 
+remotely override with implementations on other servers, and which active events you wish 
+to open for activation from other sources"
+    panel=>toolbar
+      class=>span-17 last btn-group top-1 bottom-1
+      controls
+        button=>open-events
+          class=>span-5
+          value=>open active events
+          onclick
+            execute-script
+              file=>system42/private/tools/inspect.hl
+              params
+                open=>true
+                header=>open active events
+                container=>active-events
+        button=>tunneled-events
+          class=>span-5
+          value=>tunneled active events
+          onclick
+            execute-script
+              file=>system42/private/tools/inspect.hl
+              params
+                remoted=>true
+                header=>tunneled active events
+                container=>active-events
+    dynamic=>active-events
+      class=>span-17 last
+
