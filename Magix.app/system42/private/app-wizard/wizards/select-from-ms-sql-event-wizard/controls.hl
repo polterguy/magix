@@ -40,23 +40,10 @@ panel=>wrapper
                   tag=>label
                   value=>connection string
                 text-box=>connection-string
-                  class=>span-6 top-1
+                  class=>span-8 top-1
                   placeholder=>connection string ...
-                label
-                  tag=>label
-                  class=>span-2 top-1 text-right
-                  for=>web-config-connection
-                  value=>web.config
-                check-box=>web-config-connection
-                  class=>span-1 top-1
-                  checked=>false
-                  oncheckedchanged
-                    set=>[magix.wizard.web-config-connection_oncheckedchanged][value].Value
-                      value=>[$][value].Value
-                    magix.wizard.web-config-connection_oncheckedchanged
                 select=>web-config-connection-select
-                  class=>span-3 last top-1
-                  disabled=>true
+                  class=>span-4 last top-1
                   onselectedindexchanged
                     magix.wizard.web-config-connection-select_onselectedindexchanged
                   onfirstload
