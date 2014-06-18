@@ -5,6 +5,11 @@ inspect=>@"allows wysiwyg editing of html files
 creates a wysiwyg editor where the user can edit html files"
 
 
+// including wysiwyg css
+magix.viewport.include-client-file
+  type=>css
+  file=>media/back-end/wysihtml.css
+
 // loading file, if we are given a [file] input parameter
 if=>exist
   lhs=>[$][file].Value

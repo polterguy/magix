@@ -220,7 +220,7 @@ magix.forms.create-web-part
     dynamic=>preview
       class=>span-6 last
     panel=>directory-wrapper
-      class=>span-15 last top-1
+      class=>span-15 last top-1 btn-group
       controls
         button=>create-file
           class=>span-3 left-6
