@@ -84,6 +84,76 @@ magix.forms.create-web-part
   form-id=>editor
   container=>content1
   class=>span-17 last
+  events
+    magix.wysiwyg-editor.save_onclick
+      magix.forms.get-value
+        form-id=>editor
+        id=>txt-file-name
+      magix.forms.get-value
+        form-id=>editor
+        id=>editor-surface
+      if=>equals
+        lhs=>[magix.forms.get-value:1][value].Value
+        rhs=>
+        code
+          magix.viewport.show-message
+            message=>nothing to save
+            color=>#ffaaaa
+          stop
+      if=>equals
+        lhs=>[magix.forms.get-value:0][value].Value
+        rhs=>
+        code
+          // no filename given, opening up browse to figure out a filename to save file as
+          execute-script
+            file=>system42/private/file-manager/file-manager.hl
+            params
+              container=>content2
+              no-edit-button=>true
+              class=>span-15 last boxed air-padding top-1 left-5
+              onselect
+                set=>[magix.forms.set-value][value].Value
+                  value=>[$][file].Value
+                magix.forms.set-value
+                  form-id=>editor
+                  id=>txt-file-name
+                magix.viewport.clear-controls
+                  container=>content2
+                  reset-class=>true
+                magix.wysiwyg-editor.save-file
+              oncancel
+                magix.viewport.clear-controls
+                  container=>content2
+                  reset-class=>true
+      else
+        magix.wysiwyg-editor.save-file
+
+    // actually saves file
+    magix.wysiwyg-editor.save-file
+      magix.forms.get-value
+        form-id=>editor
+        id=>txt-file-name
+      magix.forms.get-value
+        form-id=>editor
+        id=>editor-surface
+      if=>equals
+        lhs=>[magix.forms.get-value:1][value].Value
+        rhs=>
+        code
+          magix.viewport.show-message
+            message=>nothing to save
+            color=>#ffaaaa
+          stop
+      using=>magix.file
+        save
+          file=>[magix.forms.get-value:0][value].Value
+          value=>[magix.forms.get-value:1][value].Value
+      magix.viewport.show-message
+        message=>file was successfully saved
+      magix.forms.effect
+        type=>focus-and-select
+        form-id=>editor
+        id=>editor-surface
   controls
     panel=>main-wrapper
       controls
@@ -105,19 +175,5 @@ magix.forms.create-web-part
               class=>span-2 last
               value=>save
               onclick
-                magix.forms.get-value
-                  form-id=>editor
-                  id=>txt-file-name
-                magix.forms.get-value
-                  form-id=>editor
-                  id=>editor-surface
-                using=>magix.file
-                  save
-                    file=>[magix.forms.get-value:0][value].Value
-                    value=>[magix.forms.get-value:1][value].Value
-                magix.viewport.show-message
-                  message=>file was successfully saved
-                set=>[magix.editor.file-saved][file].Value
-                  value=>[magix.forms.get-value:0][value].Value
-                magix.editor.file-saved
+                magix.wysiwyg-editor.save_onclick
 
