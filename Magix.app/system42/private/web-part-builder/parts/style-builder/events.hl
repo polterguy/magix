@@ -210,6 +210,10 @@ magix.style-builder.serialize-styles
 
 magix.ide.outer-wrapper_onfirstload
   magix.ide.get-selected-control
+  if=>not-exist
+    lhs=>[magix.ide.get-selected-control][value][0][style].Value
+    code
+      stop
   split=>[magix.ide.get-selected-control][value][0][style].Value
     what=>;
   for-each=>[split][result]

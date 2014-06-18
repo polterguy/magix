@@ -191,6 +191,49 @@ namespace Magix.forms
         }
 
         /*
+         * clear all children values
+         */
+        [ActiveEvent(Name = "magix.forms.clear-children-values")]
+        private static void magix_forms_clear_children_values(object sender, ActiveEventArgs e)
+        {
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
+            {
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.forms",
+                    "Magix.forms.hyperlisp.inspect.hl",
+                    "[magix.forms.clear-children-values-dox].Value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.forms",
+                    "Magix.forms.hyperlisp.inspect.hl",
+                    "[magix.forms.clear-children-values-sample]");
+                return;
+            }
+
+            Control ctrl = FindControl<Control>(ip);
+            ClearValues(ctrl, ip);
+        }
+
+        private static void ClearValues(Control ctrl, Node ip)
+        {
+            foreach (Control idxCtrl in ctrl.Controls)
+            {
+                IValueControl valueCtrl = idxCtrl as IValueControl;
+                if (valueCtrl != null && valueCtrl.IsTrueValue)
+                    valueCtrl.ControlValue = null;
+                foreach (Control idxChild in idxCtrl.Controls)
+                {
+                    IValueControl valueChildCtrl = idxChild as IValueControl;
+                    if (valueChildCtrl != null && valueChildCtrl.IsTrueValue)
+                        valueChildCtrl.ControlValue = null;
+                    GetValues(idxChild, ip);
+                }
+            }
+        }
+
+        /*
          * returns values
          */
         [ActiveEvent(Name = "magix.forms.get-children-values")]

@@ -495,7 +495,7 @@ parserRules: wysihtml5ParserRules});";
         object IValueControl.ControlValue
         {
             get { return Value; }
-            set { Value = value.ToString(); }
+            set { Value = value == null ? "" : Convert.ToString(value); }
         }
 
         bool IValueControl.IsTrueValue

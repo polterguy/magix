@@ -95,7 +95,7 @@ namespace Magix.UX.Widgets
         object IValueControl.ControlValue
         {
             get { return Checked; }
-            set { Checked = Convert.ToBoolean(value); }
+            set { Checked = value == null ? false : Convert.ToBoolean(value); }
         }
 
         bool IValueControl.IsTrueValue
