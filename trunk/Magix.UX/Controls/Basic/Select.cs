@@ -102,7 +102,7 @@ namespace Magix.UX.Widgets
         object IValueControl.ControlValue
         {
             get { return SelectedItem == null ? null : SelectedItem.Value; }
-            set { SetSelectedItemAccordingToValue(Convert.ToString(value)); }
+            set { SetSelectedItemAccordingToValue(value == null ? null : Convert.ToString(value)); }
         }
 
         bool IValueControl.IsTrueValue

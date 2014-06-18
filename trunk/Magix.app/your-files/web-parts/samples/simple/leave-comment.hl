@@ -9,14 +9,14 @@ panel=>comment-wrapper
       value=>your name
       class=>span-10 last
       tag=>label
-    text-box=>name
+    text-box=>feedback-full-name
       class=>span-10 last large bottom-1
       placeholder=>full name ...
     label=>label-1
       value=>your email
       class=>span-10 last
       tag=>label
-    text-box=>email
+    text-box=>feedback-email
       class=>span-10 last large bottom-1
       placeholder=>email ...
       type=>email
@@ -24,7 +24,7 @@ panel=>comment-wrapper
       value=>your comment
       class=>span-10 last
       tag=>label
-    text-area=>comment
+    text-area=>feedback-comment
       class=>span-10 last
       rows=>8
       placeholder=>comment ...
@@ -34,22 +34,51 @@ panel=>comment-wrapper
       onclick
         magix.forms.get-children-values
           id=>comment-wrapper
-        add=>[magix.data.save][value]
-          value=>[magix.forms.get-children-values][values]
-          children-only=>true
-        magix.data.save
-          value
-            type=>magix.samples.leave-comment
-        magix.forms.set-value
-          id=>name
-          value=>
-        magix.forms.set-value
-          id=>email
-          value=>
-        magix.forms.set-value
-          id=>comment
-          value=>
-        magix.viewport.show-message
-          message=>thank you for leaving your comment
-          color=>#aaffaa
-  default=>save
+        _good=>true
+        if=>exist
+          lhs=>[magix.forms.get-children-values][values][feedback-email]
+          code
+            split=>[magix.forms.get-children-values][values][feedback-email].Value
+              what=>@
+            if=>not-equals
+              lhs=>[@][split][result].Count
+              rhs=>2
+              code
+                magix.viewport.show-message
+                  message=>that's not a good email address
+                  color=>#ffaaaa
+                magix.forms.effect
+                  id=>feedback-email
+                  type=>focus-and-select
+                set=>[_good].Value
+                  value=>false
+            else
+              split=>[@][..][split][result][1].Value
+                what=>.
+              if=>not-equals
+                lhs=>[@][split][result].Count
+                rhs=>2
+                code
+                  magix.viewport.show-message
+                    message=>that's not a good email address
+                    color=>#ffaaaa
+                  magix.forms.effect
+                    id=>feedback-email
+                    type=>focus-and-select
+                  set=>[_good].Value
+                    value=>false
+        if=>equals
+          lhs=>[_good].Value
+          rhs=>true
+          code
+            add=>[magix.data.save][value]
+              value=>[magix.forms.get-children-values][values]
+              children-only=>true
+            magix.data.save
+              value
+                type=>magix.samples.leave-comment
+            magix.forms.clear-children-values
+              id=>comment-wrapper
+            magix.viewport.show-message
+              message=>thank you for leaving your comment
+              color=>#aaffaa

@@ -226,7 +226,7 @@ namespace Magix.code
 						switch (tmp.Substring(name.Length).Split('>')[0] + ">")
 						{
 						case "=>":
-							if (!tmp.Substring(name.Length + 2).TrimStart().StartsWith("@"))
+							if (!tmp.Substring(name.Length + 2).TrimStart().StartsWith("@\""))
 							{
 								value = tmp.Substring(name.Length + 2).TrimStart();
 							}

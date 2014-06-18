@@ -157,6 +157,8 @@ namespace Magix.UX.Widgets.Core
                     idx.Selected = true;
                     break;
                 }
+                else
+                    idx.Selected = false;
             }
         }
     }

@@ -56,7 +56,7 @@ namespace Magix.UX.Widgets
         object IValueControl.ControlValue
         {
             get { return Value; }
-            set { Value = value.ToString(); }
+            set { Value = value == null ? "" : Convert.ToString(value); }
         }
 
         bool IValueControl.IsTrueValue

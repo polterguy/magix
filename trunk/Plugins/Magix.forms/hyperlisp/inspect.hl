@@ -1365,6 +1365,39 @@ magix.forms.select-all-sample
             form-id=>sample-form
 
 
+magix.forms.clear-children-values-dox=>@"clears all children's values
+
+will recursively traverse all children controls of a panel, or any other 
+container controls, and clear the value of all of them.  the panel to 
+traverse is given through the [id] parameter, and the web part is given 
+through [form-id].  form-id is optional, and if omitted, the active event 
+will act on the values of the first web control 
+that matches the id given"
+
+magix.forms.clear-children-values-sample
+  magix.forms.create-web-part
+    container=>content5
+    form-id=>sample-form
+    class=>span-22 last
+    controls
+      panel=>pnl-wrapper
+        controls
+          text-box=>txt-box-ctrl
+            value=>this is text-box
+          hidden=>hidden-ctrl
+            value=>this is hidden
+          panel=>pnl-inner
+            controls
+              text-area=>txt-area-inner
+                value=>this is inner text
+      button=>btn
+        value=>click me
+        onclick
+          magix.forms.clear-children-values
+            id=>pnl-wrapper
+            form-id=>sample-form
+
+
 magix.forms.get-children-values-dox=>@"retrieves the values of all children
 
 will recursively traverse all children controls of a panel, or any other 
