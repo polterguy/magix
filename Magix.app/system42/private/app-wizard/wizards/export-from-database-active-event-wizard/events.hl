@@ -1,0 +1,92 @@
+﻿
+
+inspect=>@"contains the active events for the export from database event wizard
+
+contains the active events for the web part that allows the user to export from 
+the database"
+
+
+magix.wizard.next-1_onclick
+
+  // validating input first
+  magix.forms.get-value
+    form-id=>wizard
+    id=>item-types
+  if=>equals
+    lhs=>[magix.forms.get-value][value].Value
+    rhs=>
+    code
+      magix.viewport.show-message
+        message=>you need to give me an item type to export
+        color=>#ffaaaa
+      magix.forms.effect
+        type=>focus-and-select
+        form-id=>wizard
+        id=>item-types
+      stop
+  set=>[magix.data.count][prototype][type].Value
+    value=>[magix.forms.get-value][value].Value
+  magix.data.count
+  if=>equals
+    lhs=>[magix.data.count][count].Value
+    rhs=>0
+    code
+      magix.viewport.show-message
+        message=>there are no sample records in the database of that type, please supply at least one sample record before continuing
+        time=>5000
+        color=>#ffaaaa
+      magix.forms.effect
+        type=>focus-and-select
+        form-id=>wizard
+        id=>item-types
+      stop
+  magix.forms.effect
+    form-id=>wizard
+    id=>inner-wrapper
+    type=>slide
+    time=>250
+    offset=>-1
+  magix.wizard.initialize-second-page
+
+magix.wizard.initialize-second-page
+  magix.forms.create-web-part
+    container=>fields-container
+    form-id=>fields-container
+    controls
+      lambda=>lambda-fields
+        oncreatecontrols
+          magix.forms.get-value
+            form-id=>wizard
+            id=>item-types
+          set=>[magix.data.load][prototype][type].Value
+            value=>[magix.forms.get-value][value].Value
+          magix.data.load
+            start=>0
+            end=>1
+          set=>[magix.data.load][objects][0][value][type]
+          for-each=>[magix.data.load][objects][0][value]
+            _column-name
+            _panel
+              panel
+                class=>span-4
+                controls
+                  check-box=>{column-name}
+                    class=>span-1
+                    checked=>true
+                  label
+                    tag=>label
+                    class=>span-3 last
+                    value=>{column-name}
+                    for=>{column-name}
+            set=>[@][_column-name].Value
+              value=>[.].Name
+            iterate=>[@][_panel]
+              if=>equals
+                lhs=>[.].Value
+                rhs=>{column-name}
+                code
+                  set=>[.].Value
+                    value=>[@][..][..][..][_column-name].Value
+            add=>[$]
+              value=>[@][_panel][panel]
+          
