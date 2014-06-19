@@ -1,0 +1,14 @@
+﻿
+
+inspect=>@"allows you to create an active event that helps you 
+export records from your database to a csv/excel file"
+
+
+_name=>export from db active event
+
+magix.forms.create-web-part
+  form-id=>wizard
+  class=>span-17 last
+  events-file=>system42/private/app-wizard/wizards/export-from-database-active-event-wizard/events.hl
+  controls-file=>system42/private/app-wizard/wizards/export-from-database-active-event-wizard/controls.hl
+
