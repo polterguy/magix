@@ -71,7 +71,7 @@ panel=>comment-wrapper
           lhs=>[_good].Value
           rhs=>true
           code
-            add=>[magix.data.save][value]
+            add=>[@][magix.data.save][value]
               value=>[magix.forms.get-children-values][values]
               children-only=>true
             magix.data.save

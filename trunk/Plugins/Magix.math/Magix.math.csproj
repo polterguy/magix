@@ -33,6 +33,7 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DateCore.cs" />
     <Compile Include="MathCore.cs" />
   </ItemGroup>
   <ItemGroup>

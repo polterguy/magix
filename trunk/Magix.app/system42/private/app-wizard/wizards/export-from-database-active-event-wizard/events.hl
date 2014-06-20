@@ -11,9 +11,34 @@ magix.wizard.next-1_onclick
   // validating input first
   magix.forms.get-value
     form-id=>wizard
+    id=>active-event-name
+  split=>[magix.forms.get-value][value].Value
+    what=>.
+  if=>equals
+    lhs=>[split][result].Count
+    rhs=>1
+    or=>equals
+      lhs=>[split][result][0].Value
+      rhs=>magix
+    or=>equals
+      lhs=>[magix.forms.get-value][value].Value
+      rhs=>
+    code
+      magix.viewport.show-message
+        message=>you must supply a name for your active event.&nbsp;&nbsp;the name must contain a '.', and cannot start with 'magix.'
+        time=>5000
+        color=>#ffaaaa
+      magix.forms.effect
+        type=>focus-and-select
+        form-id=>wizard
+        id=>active-event-name
+      stop
+
+  magix.forms.get-value
+    form-id=>wizard
     id=>item-types
   if=>equals
-    lhs=>[magix.forms.get-value][value].Value
+    lhs=>[magix.forms.get-value:1][value].Value
     rhs=>
     code
       magix.viewport.show-message
@@ -25,7 +50,7 @@ magix.wizard.next-1_onclick
         id=>item-types
       stop
   set=>[magix.data.count][prototype][type].Value
-    value=>[magix.forms.get-value][value].Value
+    value=>[magix.forms.get-value:1][value].Value
   magix.data.count
   if=>equals
     lhs=>[magix.data.count][count].Value
@@ -40,6 +65,7 @@ magix.wizard.next-1_onclick
         form-id=>wizard
         id=>item-types
       stop
+
   magix.forms.effect
     form-id=>wizard
     id=>inner-wrapper
@@ -68,14 +94,14 @@ magix.wizard.initialize-second-page
             _column-name
             _panel
               panel
-                class=>span-4
+                class=>span-5
                 controls
                   check-box=>{column-name}
                     class=>span-1
                     checked=>true
                   label
                     tag=>label
-                    class=>span-3 last
+                    class=>span-4 last
                     value=>{column-name}
                     for=>{column-name}
             set=>[@][_column-name].Value
@@ -88,5 +114,151 @@ magix.wizard.initialize-second-page
                   set=>[.].Value
                     value=>[@][..][..][..][_column-name].Value
             add=>[$]
+              value=>_tmp
+            using=>magix.math
+              modulo
+                =>[$].Count
+                =>3
+            set=>[$][_tmp]
+            if=>equals
+              lhs=>[@][using=>magix.math][modulo].Value
+              rhs=>0
+              code
+                set=>[@][..][..][_panel][panel][class].Value
+                  value=>span-5 last
+            add=>[$]
               value=>[@][_panel][panel]
           
+magix.wizard.save_onclick
+  magix.forms.get-children-values
+    form-id=>wizard
+    id=>fields-container
+  _event
+    event
+      name=>{active-event-name}
+      code
+        _fields
+        magix.data.load
+          prototype
+            type=>{type-name}
+        _file-value=>
+        for-each=>[magix.data.load][objects]
+          _line-value=>
+          _obj
+          add=>[@][_obj]
+            value=>[.][value]
+            children-only=>true
+          for-each=>[/][_fields]
+            replace=>[@][..][_obj][[.].Name].Value
+              what=>@""""
+              with=>@""""""
+            replace=>[@][..][_obj][[.].Name].Value
+              what=>@"
+"
+              with=>@"\n"
+            if=>not-equals
+              lhs=>[@][..][_line-value].Value
+              rhs=>
+              code
+                set=>[@][..][..][..][_line-value].Value
+                  value=>{0},
+                    =>[@][..][..][..][_line-value].Value
+            set=>[@][..][_line-value].Value
+              value=>@"{0}""{1}"""
+                =>[@][..][_line-value].Value
+                =>[@][..][_obj][[.].Name].Value
+          set=>[@][_line-value].Value
+            value=>@"{0}
+"
+              =>[@][_line-value].Value
+          set=>[@][..][_file-value].Value
+            value=>{0}{1}
+              =>[@][..][_file-value].Value
+              =>[@][_line-value].Value
+        magix.date.now
+          as-string=>true
+        replace=>[magix.date.now][value].Value
+          what=>@" "
+          with=>-
+        replace=>[magix.date.now][value].Value
+          what=>.
+        replace=>[magix.date.now][value].Value
+          what=>@":"
+        set=>[magix.date.now][value].Value
+          value=>your-files/tmp/{0}.csv
+            =>[magix.date.now][value].Value
+        using=>magix.file
+          save
+            file=>[magix.date.now][value].Value
+            value=>[_file-value].Value
+        magix.log.append
+          header=>items exported
+          body=>items of type '{type-name}' was exported to file
+
+        // redirecting to file
+        set=>[magix.file.download][file].Value
+          value=>[magix.date.now][value].Value
+        magix.file.download
+  _delete
+    magix.data.remove
+      prototype
+        type=>{type-name}
+    magix.log.append
+      header=>items deleted
+      body=>items of type '{type-name}' was deleted
+  for-each=>[magix.forms.get-children-values][values]
+    if=>equals
+      lhs=>[.].Value
+      rhs=>true
+      code
+        add=>[/][_event][**_fields]
+          value=>[.].Name
+  magix.forms.get-value
+    form-id=>wizard
+    id=>active-event-name
+  magix.forms.get-value
+    form-id=>wizard
+    id=>item-types
+  iterate=>[_event]
+    if=>equals
+      lhs=>[.].Value
+      rhs=>{active-event-name}
+      code
+        set=>[.].Value
+          value=>[/][magix.forms.get-value:0][value].Value
+    if=>equals
+      lhs=>[.].Value
+      rhs=>{type-name}
+      code
+        set=>[.].Value
+          value=>[/][magix.forms.get-value:1][value].Value
+  magix.forms.get-value
+    form-id=>wizard
+    id=>delete-items
+  if=>equals
+    lhs=>[magix.forms.get-value:2][value].Value
+    rhs=>true
+    code
+      iterate=>[_delete]
+        if=>equals
+          lhs=>[.].Value
+          rhs=>{type-name}
+          code
+            set=>[.].Value
+              value=>[/][magix.forms.get-value:1][value].Value
+      add=>[_event][event][code]
+        value=>[_delete]
+        children-only=>true
+  execute=>[_event]
+  magix.viewport.show-message
+    message=>active event was created
+  magix.forms.set-visible
+    form-id=>wizard
+    id=>edit-event
+    value=>true
+  using=>magix.forms
+    set-info
+      form-id=>wizard
+      id=>edit-event
+      value=>[magix.forms.get-value][value].Value
+
