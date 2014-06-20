@@ -77,48 +77,12 @@ magix.math.modulo-sample
     =>5
 
 
+magix.date.now-dox=>@"returns current date and time
 
+returns the current date and time
 
+thread safe"
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+magix.date.now-sample
+  magix.date.now
 

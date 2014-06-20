@@ -403,9 +403,14 @@
     <Content Include="system42\private\web-part-builder\parts\style-builder\controls.hl" />
     <Content Include="system42\private\web-part-builder\parts\style-builder\events.hl" />
     <Content Include="system42\private\tools\fusion-remoting.hl" />
+    <Content Include="system42\private\app-wizard\wizards\export-from-database-active-event-wizard.hl" />
+    <Content Include="system42\private\app-wizard\wizards\export-from-database-active-event-wizard\controls.hl" />
+    <Content Include="system42\private\app-wizard\wizards\export-from-database-active-event-wizard\events.hl" />
     <None Include="todo.txt" />
     <Content Include="your-files\readme.txt" />
+    <Content Include="your-files\tmp\readme.txt" />
     <Content Include="your-files\web.config" />
+    <Content Include="your-files\web-parts\samples\simple\leave-comment.hl" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="database\" />

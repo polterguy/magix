@@ -25,24 +25,31 @@ panel
               default=>next-1
               controls
                 label
+                  class=>clear span-3
                   tag=>label
-                  class=>span-3
-                  value=>item types
-                text-box=>item-types
-                  class=>span-7
-                  placeholder=>item types ...
+                  value=>active event name
+                text-box=>active-event-name
+                  class=>span-12 last
+                  placeholder=>active event name ...
                   onfirstload
                     magix.forms.effect
                       type=>focus-and-select
                       form-id=>wizard
-                      id=>item-types
+                      id=>active-event-name
                 label
                   tag=>label
-                  class=>span-4
+                  class=>span-3 top-1
+                  value=>item types
+                text-box=>item-types
+                  class=>span-7 top-1
+                  placeholder=>item types ...
+                label
+                  tag=>label
+                  class=>span-4 top-1
                   for=>delete-items
                   value=>delete items afterwards
                 check-box=>delete-items
-                  class=>span-1 last
+                  class=>span-1 last top-1
                 button=>next-1
                   class=>span-2 last right clear top-1
                   value=>&gt;&gt;
@@ -57,6 +64,8 @@ panel
                 button=>save
                   class=>span-2 last right clear top-1
                   value=>save
+                  onclick
+                    magix.wizard.save_onclick
                 button=>previous-2
                   class=>span-2 right top-1
                   value=>&lt;&lt;
@@ -67,4 +76,30 @@ panel
                       type=>slide
                       time=>250
                       offset=>0
+                link-button=>edit-event
+                  class=>span-3 right clear text-right last
+                  value=>edit active event
+                  visible=>false
+                  onclick
+                    set=>[magix.data.load][prototype][event].Value
+                      value=>[$][info].Value
+                    magix.data.load
+                      prototype
+                        type=>magix.execute.event
+                    magix.viewport.clear-controls
+                      all=>true
+                    magix.viewport.load-module
+                      class=>span-17 last
+                      container=>content1
+                      name=>Magix.ide.modules.ExecutorForm
+                    add=>[node-2-code][node]
+                      value=>event
+                    set=>[node-2-code][node][event][name].Value
+                      value=>[$][info].Value
+                    add=>[node-2-code][node][event]
+                      value=>[magix.data.load][objects][0][value][code]
+                    node-2-code
+                    set=>[magix.executor.set-code][code].Value
+                      value=>[node-2-code][code].Value
+                    magix.executor.set-code
 
