@@ -57,7 +57,7 @@ namespace Magix.sample
 <div class="sample-web-control">
 {{
 uploader=>upl
-  folder=>tmp
+  folder=>your-files/tmp
   onuploaded
     magix.viewport.show-message
       message=>file uploaded to tmp folder

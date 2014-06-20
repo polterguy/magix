@@ -38,9 +38,9 @@ magix.qr.create-sample
     font-size=(int)>-1
     font-color=>#999999
     rotate=(int)>-12
-    file-name=>tmp/file-name.png
+    file-name=>your-files/tmp/file-name.png
   magix.viewport.execute-javascript
-    script=>window.open('tmp/file-name.png', '_blank');
+    script=>window.open('your-files/tmp/file-name.png', '_blank');
 
 
 

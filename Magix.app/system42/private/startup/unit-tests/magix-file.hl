@@ -71,19 +71,19 @@ event
 creates a file on disc, verifying that the file was created"
   code
     magix.file.save
-      file=>tmp/mumbo.txt
+      file=>your-files/tmp/mumbo.txt
       value=>@"howdy world"
     magix.file.file-exist
-      file=>tmp/mumbo.txt
+      file=>your-files/tmp/mumbo.txt
     if=>not-equals
       lhs=>[magix.file.file-exist][value].Value
       rhs=>true
       code
         throw=>[magix.file.save] misbehaved
     magix.file.load
-      file=>tmp/mumbo.txt
+      file=>your-files/tmp/mumbo.txt
     magix.file.delete
-      file=>tmp/mumbo.txt
+      file=>your-files/tmp/mumbo.txt
     if=>not-equals
       lhs=>[magix.file.load][value].Value
       rhs=>@"howdy world"
@@ -99,7 +99,7 @@ event
 creates a file on disc, pointed to by an expression, verifying the 
 file is correctly created"
   code
-    _data=>tmp/mumbo.txt
+    _data=>your-files/tmp/mumbo.txt
     _value=>howdy world
     using=>magix.file
       save
@@ -132,7 +132,7 @@ creates a file on disc, then creates a new file, which is shorter than
 the original file created, but with the same name and path, for then 
 to verify the file is correctly modified"
   code
-    _file=>tmp/mumbo.txt
+    _file=>your-files/tmp/mumbo.txt
     using=>magix.file
       save
         file=>[_file].Value
@@ -159,8 +159,8 @@ event
 creates a file on disc, moves it, for then to 
 verify that the file was correctly moved"
   code
-    _file1=>tmp/mumbo1.txt
-    _file2=>tmp/mumbo2.txt
+    _file1=>your-files/tmp/mumbo1.txt
+    _file2=>your-files/tmp/mumbo2.txt
     using=>magix.file
       save
         file=>[_file1].Value
@@ -198,8 +198,8 @@ creates a couple of files in the tmp directory, for
 then verify the files was correctly listed using the 
 [magix.file.list-files] active event"
   code
-    _data1=>tmp/mumbo1.txtquery
-    _data2=>tmp/mumbo2.txtquery
+    _data1=>your-files/tmp/mumbo1.txtquery
+    _data2=>your-files/tmp/mumbo2.txtquery
     _filter=>*.txtquery
     using=>magix.file
       save
@@ -209,7 +209,7 @@ then verify the files was correctly listed using the
         file=>[_data2].Value
         value=>mumbo2
       list-files
-        directory=>tmp
+        directory=>your-files/tmp
         filter=>[_filter].Value
       delete
         file=>[_data1].Value
@@ -230,7 +230,7 @@ event
 creates a directory on disc, verifying the directory is 
 correctly created"
   code
-    _data=>tmp/mumbo
+    _data=>your-files/tmp/mumbo
     using=>magix.file
       create-directory
         directory=>[_data].Value
@@ -253,7 +253,7 @@ event
 creates a directory, for then to delete it, verifying the 
 directory is correctly deleted"
   code
-    _data=>tmp/mumbo
+    _data=>your-files/tmp/mumbo
     using=>magix.file
       create-directory
         directory=>[_data].Value
@@ -283,8 +283,8 @@ event
 creates a directory, for then to move it, and verify it 
 was correctly moved"
   code
-    _data1=>tmp/mumbo1
-    _data2=>tmp/mumbo2
+    _data1=>your-files/tmp/mumbo1
+    _data2=>your-files/tmp/mumbo2
     using=>magix.file
       create-directory
         directory=>[_data1].Value
@@ -310,15 +310,15 @@ event
 creates two directories, for then to list them, verifying they 
 were both listed correctly"
   code
-    _data1=>tmp/mumbo1
-    _data2=>tmp/mumbo2
+    _data1=>your-files/tmp/mumbo1
+    _data2=>your-files/tmp/mumbo2
     using=>magix.file
       create-directory
         directory=>[_data1].Value
       create-directory
         directory=>[_data2].Value
       list-directories
-        directory=>tmp
+        directory=>your-files/tmp
         filter=>mumbo*
       delete-directory
         directory=>[_data1].Value

@@ -58,7 +58,7 @@ event
 executes a script from a file, passing in parameters, making 
 sure the parameters and the script is correctly executed"
   code
-    _file=>tmp/test-script.txt
+    _file=>your-files/tmp/test-script.txt
     using=>magix.file
       save
         file=>[_file].Value
@@ -89,7 +89,7 @@ executes a script from a file, where the script in the file
 is throwing an exception, making sure the exception is correctly 
 catched from the outside of the file"
   code
-    _file=>tmp/test-script.txt
+    _file=>your-files/tmp/test-script.txt
     _exception
     using=>magix.file
       save

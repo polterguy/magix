@@ -225,14 +225,14 @@ magix.forms.create-mml-web-part
   container=>content3
   class=>span-22 last
   form-id=>my-form
-  mml-file=>tmp/some-mml-file.mml
+  mml-file=>your-files/tmp/some-mml-file.mml
   events
     magix.test.foo
       magix.viewport.show-message
         message=>howdy world
 </pre>
 
-<label>content of tmp/some-mml-file.mml</label>
+<label>content of your-files/tmp/some-mml-file.mml</label>
 <pre>
 &lt;p&gt;howdy, this is a test {{
 lambda=>lmb-file-1

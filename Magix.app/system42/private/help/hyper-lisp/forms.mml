@@ -170,7 +170,7 @@ events</p>
 you can also put both your web controls and your active events into files.&nbsp;&nbsp;this is useful for further separating logic 
 and ui.&nbsp;&nbsp;imagine you have two files on your system, one file containing your web controls collection called 
 <em>"web-controls.txt"</em>, and another file containing your form's active events called <em>"active-events.txt"</em>.&nbsp;&nbsp;
-now imagine that these files are inside of your <strong>"tmp"</strong> folder on disc</p>
+now imagine that these files are inside of your <strong>"your-files/tmp"</strong> folder on disc</p>
 
 <label>content of web-controls.txt file</label>
 <pre>
@@ -219,8 +219,8 @@ magix.forms.create-web-part
   container=>content3
   class=>span-22 last
   form-id=>my-form
-  controls-file=>tmp/web-controls.txt
-  events-file=>tmp/active-events.txt
+  controls-file=>your-files/tmp/web-controls.txt
+  events-file=>your-files/tmp/active-events.txt
 </pre>
 
 <p>this helps you create cleaner code, since it allows for the separation of code and logic.&nbsp;&nbsp;in addition, it also allows 

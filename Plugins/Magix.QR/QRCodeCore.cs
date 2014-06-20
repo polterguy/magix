@@ -74,7 +74,7 @@ namespace Magix.QR
             // if no file-name is given, a unique name is automatically assigned, and returned to caller
             if (string.IsNullOrEmpty(fileName))
             {
-                fileName = "tmp/qr-" + Guid.NewGuid().ToString() + ".png";
+                fileName = "your-files/tmp/qr-" + Guid.NewGuid().ToString() + ".png";
 
                 // Need to RETURN the newly created path back to caller ...
                 e.Params["file-name"].Value = fileName;

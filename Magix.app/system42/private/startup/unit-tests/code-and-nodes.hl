@@ -111,7 +111,7 @@ event
 tries to convert from code to node, where the code 
 being converted is found in a hyperlisp file on disc"
   code
-    _file-path=>tmp/test-file.txt
+    _file-path=>your-files/tmp/test-file.txt
     using=>magix.file
       save
         file=>[_file-path].Value
