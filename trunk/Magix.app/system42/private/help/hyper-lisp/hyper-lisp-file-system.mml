@@ -9,10 +9,10 @@ to load a file from disc, consider the following code</p>
 
 <pre>
 magix.file.load
-  file=>tmp/todo.txt
+  file=>your-files/tmp/todo.txt
 </pre>
 
-<p>the above code will load a file from the tmp folder within your web application's directory.&nbsp;&nbsp;in addition, you can also supply 
+<p>the above code will load a file from the your-files/tmp folder within your web application's directory.&nbsp;&nbsp;in addition, you can also supply 
 a full path, such as <em>"c:/my-files/todo.txt"</em>.&nbsp;&nbsp;if you use a full path, you must of course make sure the iis worker 
 process has read access to the files within that folder somehow.&nbsp;&nbsp;you can also use expressions to supply the path to 
 the file you wish to load.&nbsp;&nbsp;in addition to loading files from disc, magix has several plugin active events, that works together 
@@ -62,7 +62,7 @@ active events from database, completely transparently.&nbsp;&nbsp;consider the f
 magix.forms.create-mml-web-part
   container=>content3
   class=>span-22 last clear
-  mml-file=>tmp/my-mml-file.mml
+  mml-file=>your-files/tmp/my-mml-file.mml
   events-file=>plugin:magix.ms.sql.select-as-text
     connection=>data source=(localdb)\v11.0;initial catalog=mydatabase;integrated security=true
     sql=>select eventcode from activeevents where formid=@myform
@@ -91,12 +91,12 @@ file parameters, will also optionally take plugin loaders as parameters</p>
 
 <pre>
 magix.file.save
-  file=>tmp/tmp.txt
+  file=>your-files/tmp/tmp.txt
   value=>@"some piece of 
 text that spans multiple lines"
 </pre>
 
-<p>the above code will create a file called <em>"tmp.txt"</em> in your tmp folder, with the content of <em>"some piece of text that 
+<p>the above code will create a file called <em>"tmp.txt"</em> in your your-files/tmp folder, with the content of <em>"some piece of text that 
 spans multiple lines"</em>.&nbsp;&nbsp;there are many more active events within the magix.file namespace.&nbsp;&nbsp;all these 
 active events are listed below for your convenience</p>
 

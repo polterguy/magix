@@ -124,7 +124,7 @@ thread safe"
 
 magix.file.save-sample
   magix.file.save
-    file=>tmp/sample.txt
+    file=>your-files/tmp/sample.txt
     value=>contents of file
 
 
@@ -138,7 +138,7 @@ thread safe"
 
 magix.file.move-file-sample
   magix.file.move-file
-    from=>tmp/info.txt
+    from=>your-files/tmp/info.txt
     to=>media/info.txt
 
 
@@ -152,7 +152,7 @@ thread safe"
 
 magix.file.copy-file-sample
   magix.file.copy-file
-    from=>tmp/info.txt
+    from=>your-files/tmp/info.txt
     to=>media/info-2.txt
 
 
