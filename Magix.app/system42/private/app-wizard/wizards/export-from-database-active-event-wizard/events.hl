@@ -200,7 +200,8 @@ magix.wizard.save_onclick
         type=>{type-name}
     magix.log.append
       header=>items deleted
-      body=>items of type '{type-name}' was deleted
+      body=>items of type '{0}' was deleted
+        =>{type-name}
   for-each=>[magix.forms.get-children-values][values]
     if=>equals
       lhs=>[.].Value

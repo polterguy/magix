@@ -1,21 +1,7 @@
 
 * create support for multiple data pointers, and de-referencing them through [.], [..], [...] and so on
 
-* clean up saving logic for web forms in forms builder
-
-* support for dynamically filling all containers in viewport through page/master-page builder, or something
-
-* crud app to be removed and replaced with database based editor
-
-* clean up [inspect] for all active events, including unit tests
-
 * create support for "call-base" for active events that are overridden
-
-* fix saving/loading of > and < in mml editor
-
-* add support for plugins in magix.file.save
-
-* change app wizard to use unique ids to load to and from database instead of name of application as id
 
 * remove all /** comments for consistency
 
@@ -34,22 +20,12 @@
 
 * refactor all active events to not take value parameters, such as set-viewstate
 
-* refactor all places that uses Ip(e.Params) for simplicity
-
 * delete record in ms sql database manager button
-
-* create comments for all hyperlisp, and refactor most hyperlisp
-
-* make sure magix.math.xxx uses e.params correctly, and document magix.math
 
 * make it possible to save queries in the ms sql database manager
 
-* implement all event handlers for text-box in inspect of text-box, and other controls too
-
 * make Ip method take boolean declaring whether or not "_ip" is mandatory, and if so, throw exception, to clean up all
   checks for "_ip" in magix.execute namespace for instance
-
-* make all return statements in "inspect" logic become else statements instead
 
 * create expression support for operators in if/else/while etc
 
@@ -57,13 +33,9 @@
 
 * fix yellow screen of death to show up in ajax callbacks, and create support for showing code that fissles
 
-* replace logging functionality with log4net
-
 * create event to invoke to lock screen for iPhones/tablets, etc at 950 pixels
 
-* refactor the "inspect tools" scripts to use same script file, since they're bassically the same
-
-* make all controllers with non static event handlers sealed!
+* make all controllers with non static event handlers sealed! verify!
 
 * verify that active event expressions don't bypass sandbox and max-execution-iterations
 
@@ -88,29 +60,14 @@
 
 * change the select web control, such that the selected item is set initially through its items collection
 
-* find an intelligent name for magix.forms.get-children-values
-
-* check up magix.forms.set-values, i think it is creating list items wrong, in that it is using 
-  the name of node for value and the value of node as id...?
-
 * make all magix.forms active events take expressions, such as magix.forms.set-values
 
 * create common class to wrap methods commond between active controllers and active modules, such as Ip, Dp, 
   AppendCodeFromResource, etc. composition and interfaces ...?
 
-* create active event on webpart.ascx.cs to rerender wepb part with new controls, the same way we have change-mml
+* create active event on webpart.ascx.cs to re-render web part with new controls, the same way we have change-mml
 
 * create support for escaping {{ in magix markup language, in addition to inner {{ values, as text values of controls for instance
-
-* create support for recursive expressions, using for instance => as an "operator" prependding the first [ brace, which 
-  means that the expression class will recursively traverse the expression inwards, instead of returning an expression
-  as a value
-
-* clean up inspect logic, such that it doesn't need to check for null value
-
-* add support for automatic conversion in Expressions.GetExpressionValue
-
-* add support for {0} string.formatting in message in magix.viewport.show-message
 
 * support for multiple stacked sandboxes
 
@@ -118,16 +75,9 @@
 
 * create support for expressions in [throw], and change unit tests to add \[ when they do throw
 
-* implement a custom database instead of db4o in magix.data namespace
-
 * implement multi threading support in magix.file namespace
 
-* remove the magix-admin.hl file, and create files instead of having the magix.admin active events
-
-* remove magix.forms.change-mml and refactor help system
+* remove magix.forms.change-mml
 
 * implement support for locking containers on viewport
-
-
-
 
