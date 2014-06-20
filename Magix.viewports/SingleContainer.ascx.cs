@@ -58,7 +58,7 @@ namespace Magix.viewports
 
             if (!ip.ContainsValue("message"))
 				throw new ArgumentException("no [message] given to [magix.viewport.show-message]");
-            string msgTxt = Expressions.GetExpressionValue(ip["message"].Get<string>(), dp, ip, false) as string;
+            string msgTxt = Expressions.GetExpressionValue<string>(ip["message"].Get<string>(), dp, ip, false);
             if (ip["message"].Count > 0)
                 msgTxt = Expressions.FormatString(dp, ip, ip["message"], msgTxt);
 
@@ -72,13 +72,13 @@ namespace Magix.viewports
 				_isFirst = false;
 
                 if (ip.Contains("color"))
-                    messageSmall.Style[Styles.backgroundColor] = Expressions.GetExpressionValue(ip["color"].Get<string>(), dp, ip, false) as string;
+                    messageSmall.Style[Styles.backgroundColor] = Expressions.GetExpressionValue<string>(ip["color"].Get<string>(), dp, ip, false);
                 else
                     messageSmall.Style[Styles.backgroundColor] = "";
 
                 int time = 3000;
                 if (ip.Contains("time"))
-                    time = int.Parse(Expressions.GetExpressionValue(ip["time"].Get<string>(), dp, ip, false) as string);
+                    time = Expressions.GetExpressionValue<int>(ip["time"].Get<string>(), dp, ip, false);
                 if (time == -1)
                     new EffectFadeIn(messageSmall, 250)
 						.Render();

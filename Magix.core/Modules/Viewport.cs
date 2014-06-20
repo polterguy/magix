@@ -187,9 +187,9 @@ namespace Magix.Core
             }
 
             Node dp = Dp(e.Params);
-            string container = Expressions.GetExpressionValue(ip["container"].Get<string>(), dp, ip, false) as string;
+            string container = Expressions.GetExpressionValue<string>(ip["container"].Get<string>(), dp, ip, false);
             bool resetClass = ip.ContainsValue("reset-class") ?
-                bool.Parse(Expressions.GetExpressionValue(ip["reset-class"].Get<string>(), dp, ip, false) as string) :
+                Expressions.GetExpressionValue<bool>(ip["reset-class"].Get<string>(), dp, ip, false) :
                 false;
 
             if (ip.ContainsValue("all") && ip["all"].Get<bool>())
@@ -245,7 +245,7 @@ namespace Magix.Core
 
             Node dp = Dp(e.Params);
 
-            string script = Expressions.GetExpressionValue(ip["script"].Get<string>(), dp, ip, false) as string;
+            string script = Expressions.GetExpressionValue<string>(ip["script"].Get<string>(), dp, ip, false);
             if (ip["script"].Count > 0)
                 script = Expressions.FormatString(dp, ip, ip["script"], script);
 
@@ -317,11 +317,11 @@ namespace Magix.Core
 
             if (!ip.ContainsValue("type"))
                 throw new ArgumentException("no [type] given to [magix.viewport.include-client-file]");
-            string type = Expressions.GetExpressionValue(ip["type"].Get<string>(), dp, ip, false) as string;
+            string type = Expressions.GetExpressionValue<string>(ip["type"].Get<string>(), dp, ip, false);
 
             if (!ip.ContainsValue("file"))
                 throw new ArgumentException("no [file] given to [magix.viewport.include-client-file]");
-            string file = Expressions.GetExpressionValue(ip["file"].Get<string>(), dp, ip, false) as string;
+            string file = Expressions.GetExpressionValue<string>(ip["file"].Get<string>(), dp, ip, false);
 
             if (type == "css")
 			{
@@ -369,7 +369,7 @@ namespace Magix.Core
 
             if (!ip.ContainsValue("id"))
                 throw new ArgumentException("no [id] given to [magix.viewstate.set]");
-            string name = Expressions.GetExpressionValue(ip["id"].Get<string>(), dp, ip, false) as string;
+            string name = Expressions.GetExpressionValue<string>(ip["id"].Get<string>(), dp, ip, false);
             if (ip["id"].Count > 0)
                 name = Expressions.FormatString(dp, ip, ip["id"], name);
 
@@ -382,7 +382,7 @@ namespace Magix.Core
 			{
                 Node value = null;
                 if (ip.ContainsValue("value") && ip["value"].Get<string>().StartsWith("["))
-                    value = (Expressions.GetExpressionValue(ip["value"].Get<string>(), dp, ip, false) as Node).Clone();
+                    value = Expressions.GetExpressionValue<Node>(ip["value"].Get<string>(), dp, ip, false).Clone();
                 else
                     value = ip["value"].Clone();
 				ViewState[name] = value;
@@ -415,7 +415,7 @@ namespace Magix.Core
 
             if (!ip.ContainsValue("id"))
                 throw new ArgumentException("no [id] given to [magix.viewstate.get]");
-            string name = Expressions.GetExpressionValue(ip["id"].Get<string>(), dp, ip, false) as string;
+            string name = Expressions.GetExpressionValue<string>(ip["id"].Get<string>(), dp, ip, false);
             if (ip["id"].Count > 0)
                 name = Expressions.FormatString(dp, ip, ip["id"], name);
 
@@ -449,7 +449,7 @@ namespace Magix.Core
 
             string container = GetDefaultContainer();
             if (ip.ContainsValue("container"))
-                container = Expressions.GetExpressionValue(ip["container"].Get<string>(), dp, ip, false) as string;
+                container = Expressions.GetExpressionValue<string>(ip["container"].Get<string>(), dp, ip, false);
 
 			DynamicPanel dyn = Selector.FindControl<DynamicPanel>(
             	this,
@@ -458,12 +458,12 @@ namespace Magix.Core
             if (dyn == null && ip.ContainsValue("container"))
 				return;
 
-            string moduleName = Expressions.GetExpressionValue(e.Params["name"].Get<string>(), dp, ip, false) as string;
+            string moduleName = Expressions.GetExpressionValue<string>(e.Params["name"].Get<string>(), dp, ip, false);
 
             ClearControls(dyn);
 
             if (ip.ContainsValue("class"))
-                dyn.Class = Expressions.GetExpressionValue(ip["class"].Get<string>(), dp, ip, false) as string;
+                dyn.Class = Expressions.GetExpressionValue<string>(ip["class"].Get<string>(), dp, ip, false);
 
             if (ip.ContainsValue("style"))
             {

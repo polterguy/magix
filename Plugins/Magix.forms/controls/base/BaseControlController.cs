@@ -158,7 +158,7 @@ namespace Magix.forms
             Node dp = Dp(e.Params);
 
             IValueControl ctrl = FindControl<IValueControl>(ip);
-            string value = Expressions.GetExpressionValue(ip["value"].Get<string>(), dp, ip, false) as string;
+            string value = Expressions.GetExpressionValue<string>(ip["value"].Get<string>(), dp, ip, false);
             if (ip["value"].Count > 0)
                 value = Expressions.FormatString(dp, ip, ip["value"], value);
             ctrl.ControlValue = value;

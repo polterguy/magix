@@ -38,10 +38,7 @@ namespace Magix.date
                 return;
             }
 
-            if (ip.ContainsValue("as-string") && ip["as-string"].Get<bool>())
-                ip["value"].Value = DateTime.Now.ToString("yyyy.MM.dd HH:mm:ss", CultureInfo.InvariantCulture);
-            else
-                ip["value"].Value = DateTime.Now;
+            ip["value"].Value = DateTime.Now;
         }
     }
 }

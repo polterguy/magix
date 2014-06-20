@@ -73,12 +73,12 @@ namespace Magix.forms
 			    delegate
 			    {
 				    if (ip.Contains("form-id"))
-					    FormID = Expressions.GetExpressionValue(ip["form-id"].Get<string>(), dp, ip, false) as string;
+					    FormID = Expressions.GetExpressionValue<string>(ip["form-id"].Get<string>(), dp, ip, false);
 
 				    if (ip.Contains("mml"))
 				    {
 					    // mml form
-                        string mml = Expressions.GetExpressionValue(ip["mml"].Get<string>(), dp, ip, false) as string;
+                        string mml = Expressions.GetExpressionValue<string>(ip["mml"].Get<string>(), dp, ip, false);
 					    TokenizeMarkup(mml);
 				    }
 				    else
@@ -89,7 +89,7 @@ namespace Magix.forms
                         if (!string.IsNullOrEmpty(ip["controls"].Get<string>()))
                         {
                             Node controls = new Node("controls");
-                            controls.AddRange((Expressions.GetExpressionValue(ip["controls"].Get<string>(), dp, ip, false) as Node).Clone());
+                            controls.AddRange(Expressions.GetExpressionValue<Node>(ip["controls"].Get<string>(), dp, ip, false).Clone());
                             DataSource["controls"].Value = controls;
                         }
                         else
@@ -99,7 +99,7 @@ namespace Magix.forms
 					    {
                             Node evts = ip["events"];
                             if (!string.IsNullOrEmpty(ip["events"].Get<string>()))
-                                evts = Expressions.GetExpressionValue(ip["events"].Get<string>(), dp, ip, false) as Node;
+                                evts = Expressions.GetExpressionValue<Node>(ip["events"].Get<string>(), dp, ip, false);
 						    foreach (Node idxEvent in evts)
 						    {
 							    Methods[idxEvent.Name] = idxEvent.Clone();
@@ -168,7 +168,7 @@ to the value in [mml]";
 
 				DataSource = new Node();
 				Methods.Clear();
-                TokenizeMarkup(Expressions.GetExpressionValue(ip["mml"].Get<string>(), dp, ip, false) as string);
+                TokenizeMarkup(Expressions.GetExpressionValue<string>(ip["mml"].Get<string>(), dp, ip, false));
 				this.Controls.Clear();
 				isFirst = true;
 				BuildControls();

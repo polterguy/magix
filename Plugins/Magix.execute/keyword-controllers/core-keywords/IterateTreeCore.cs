@@ -42,7 +42,7 @@ namespace Magix.execute
             if (string.IsNullOrEmpty(ip.Get<string>()))
                 throw new ArgumentException("you must supply an expression to [for-each]");
 
-			Node rootExpressionNode = Expressions.GetExpressionValue(ip.Get<string>(), dp, ip, false) as Node;
+			Node rootExpressionNode = Expressions.GetExpressionValue<Node>(ip.Get<string>(), dp, ip, false);
 			if (rootExpressionNode != null)
 			{
                 object oldDp = e.Params["_dp"].Value;

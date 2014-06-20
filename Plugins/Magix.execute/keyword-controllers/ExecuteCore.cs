@@ -78,7 +78,7 @@ namespace Magix.execute
 
                 if (ip.Name == "execute" && ip.Value != null && ip.Get<string>().StartsWith("["))
                 {
-                    Node newIp = Expressions.GetExpressionValue(ip.Get<string>(), dp, ip, false) as Node; // lambda execute expression
+                    Node newIp = Expressions.GetExpressionValue<Node>(ip.Get<string>(), dp, ip, false); // lambda execute expression
 
                     if (newIp == null)
                         throw new ArgumentException("nothing to [execute]");

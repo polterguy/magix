@@ -22,11 +22,10 @@ to file to transfer"
     magix.web.postpone-execution
       code
         magix.web.transfer-file
-    magix.configuration.get-base-directory
     using=>magix.viewport
       // since we've got a postponed execution, that will perform a download, we can safely 
       // redirect the client back to "base", which will initiate the download of the file requested
       execute-javascript
         script=>@"window.location = '{0}';"
-          =>[magix.configuration.get-base-directory][value].Value
+          =>[:magix.configuration.get-base-directory][value].Value
 

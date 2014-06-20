@@ -50,10 +50,10 @@ namespace Magix.execute
             Node dp = Dp(e.Params);
 
             string dir = ip.ContainsValue("directory") ?
-                Expressions.GetExpressionValue(ip["directory"].Get<string>().TrimStart('/'), dp, ip, false) as string :
+                Expressions.GetExpressionValue<string>(ip["directory"].Get<string>().TrimStart('/'), dp, ip, false) :
                 "";
             string filter = ip.ContainsValue("filter") ?
-                Expressions.GetExpressionValue(ip["filter"].Get<string>(), dp, ip, false) as string :
+                Expressions.GetExpressionValue<string>(ip["filter"].Get<string>(), dp, ip, false) :
                 null;
 
             string[] files = null;
@@ -117,7 +117,7 @@ namespace Magix.execute
             if (!ip.ContainsValue("file"))
                 throw new ArgumentException("you need to supply which file to load as the [file] parameter");
 
-            string filepath = Expressions.GetExpressionValue(ip["file"].Get<string>(), dp, ip, false) as string;
+            string filepath = Expressions.GetExpressionValue<string>(ip["file"].Get<string>(), dp, ip, false);
 
 			if (filepath.StartsWith("plugin:"))
             {
@@ -163,14 +163,14 @@ namespace Magix.execute
             if (!ip.ContainsValue("file"))
                 throw new ArgumentException("you need to define which file to save, as [file]");
 
-            string file = Expressions.GetExpressionValue(ip["file"].Get<string>(), dp, ip, false) as string;
+            string file = Expressions.GetExpressionValue<string>(ip["file"].Get<string>(), dp, ip, false);
 
             if (!file.Contains(":"))
                 file = _basePath + file;
 
             if (ip.ContainsValue("value"))
             {
-                string fileContent = Expressions.GetExpressionValue(ip["value"].Get<string>(), dp, ip, false) as string;
+                string fileContent = Expressions.GetExpressionValue<string>(ip["value"].Get<string>(), dp, ip, false);
                 using (Stream fileStream = File.Open(file, FileMode.Create))
                 {
                     using (TextWriter writer = new StreamWriter(fileStream))
@@ -213,14 +213,14 @@ namespace Magix.execute
             if (!ip.ContainsValue("from"))
                 throw new ArgumentException("you need to tell the engine which file to move as the value of the [from]");
 
-            string from = Expressions.GetExpressionValue(ip["from"].Get<string>(), dp, ip, false) as string;
+            string from = Expressions.GetExpressionValue<string>(ip["from"].Get<string>(), dp, ip, false);
             if (!from.Contains(":"))
                 from = _basePath + from;
 
             if (!ip.ContainsValue("to"))
                 throw new ArgumentException("you need to define where to move file to, as [to] node");
 
-            string to = Expressions.GetExpressionValue(ip["to"].Get<string>(), dp, ip, false) as string;
+            string to = Expressions.GetExpressionValue<string>(ip["to"].Get<string>(), dp, ip, false);
             if (!to.Contains(":"))
                 to = _basePath + to;
 
@@ -254,14 +254,14 @@ namespace Magix.execute
             if (!ip.ContainsValue("from"))
                 throw new ArgumentException("you need to tell the engine which file to copy as the value of the [from]");
 
-            string from = Expressions.GetExpressionValue(ip["from"].Get<string>(), dp, ip, false) as string;
+            string from = Expressions.GetExpressionValue<string>(ip["from"].Get<string>(), dp, ip, false);
             if (!from.Contains(":"))
                 from = _basePath + from;
 
             if (!ip.ContainsValue("to"))
                 throw new ArgumentException("you need to define which file to copy to, as [to] node");
 
-            string to = Expressions.GetExpressionValue(ip["to"].Get<string>(), dp, ip, false) as string;
+            string to = Expressions.GetExpressionValue<string>(ip["to"].Get<string>(), dp, ip, false);
             if (!to.Contains(":"))
                 to = _basePath + to;
 
@@ -295,7 +295,7 @@ namespace Magix.execute
             if (!ip.ContainsValue("file"))
                 throw new ArgumentException("you didn't supply a [file] for [file-exist]");
 
-            string file = Expressions.GetExpressionValue(ip["file"].Get<string>().TrimStart('/'), dp, ip, false) as string;
+            string file = Expressions.GetExpressionValue<string>(ip["file"].Get<string>().TrimStart('/'), dp, ip, false);
             if (!file.Contains(":"))
                 file = _basePath + file;
 

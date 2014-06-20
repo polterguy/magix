@@ -49,7 +49,7 @@ namespace Magix.code
             else if (ip["node"].Value != null && ip["node"].Value is string)
             {
                 node = new Node();
-                node.Add(Expressions.GetExpressionValue(ip["node"].Get<string>(), dp, ip, false) as Node);
+                node.Add(Expressions.GetExpressionValue<Node>(ip["node"].Get<string>(), dp, ip, false));
             }
             else
                 node = ip["node"].Clone();
@@ -155,7 +155,7 @@ namespace Magix.code
             Node dp = Dp(e.Params);
             string codeTextString = null;
             if (ip.Contains("code"))
-                codeTextString = Expressions.GetExpressionValue(ip["code"].Get<string>(), dp, ip, false) as string;
+                codeTextString = Expressions.GetExpressionValue<string>(ip["code"].Get<string>(), dp, ip, false);
             else
             {
                 try

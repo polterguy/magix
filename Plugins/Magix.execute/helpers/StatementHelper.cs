@@ -91,7 +91,7 @@ namespace Magix.execute
             Node ip,
             Node dp)
         {
-            object objectValueOfExpression = Expressions.GetExpressionValue(stringValue, dp, ip, false);
+            object objectValueOfExpression = Expressions.GetExpressionValue<object>(stringValue, dp, ip, false);
             if (!(objectValueOfExpression is string))
             {
                 objectValue = objectValueOfExpression;

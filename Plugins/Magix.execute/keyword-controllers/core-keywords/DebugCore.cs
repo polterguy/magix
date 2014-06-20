@@ -41,7 +41,7 @@ namespace Magix.execute
             if (!string.IsNullOrEmpty(ip.Get<string>()))
             {
                 Node dp = Dp(e.Params);
-                stack = Expressions.GetExpressionValue(ip.Get<string>(), dp, ip, false) as Node;
+                stack = Expressions.GetExpressionValue<Node>(ip.Get<string>(), dp, ip, false);
                 if (stack == null)
                     throw new ArgumentException("tried to debug a non-existing node tree in [debug]");
             }

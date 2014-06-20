@@ -45,22 +45,19 @@ namespace Magix.web
 
             if (!ip.ContainsValue("name"))
                 throw new ArgumentException("no [name] given to [magix.web.set-cookie]");
-            string name = Expressions.GetExpressionValue(ip["name"].Get<string>(), dp, ip, false) as string;
+            string name = Expressions.GetExpressionValue<string>(ip["name"].Get<string>(), dp, ip, false);
 
 			string value = null;
             if (ip.ContainsValue("value"))
-                value = Expressions.GetExpressionValue(ip["value"].Get<string>(), dp, ip, false) as string;
+                value = Expressions.GetExpressionValue<string>(ip["value"].Get<string>(), dp, ip, false);
 
             bool httpOnly = true;
             if (ip.ContainsValue("http-only"))
-                httpOnly = bool.Parse(Expressions.GetExpressionValue(ip["http-only"].Get<string>(), dp, ip, false) as string);
+                httpOnly = Expressions.GetExpressionValue<bool>(ip["http-only"].Get<string>(), dp, ip, false);
 
             DateTime expires = DateTime.Now.AddYears(3);
             if (ip.Contains("expires"))
-                expires = DateTime.ParseExact(
-                        Expressions.GetExpressionValue(ip["expires"].Get<string>(), dp, ip, false) as string,
-                        "yyyy.MM.dd HH:mm:ss",
-                        CultureInfo.InvariantCulture);
+                expires = Expressions.GetExpressionValue<DateTime>(ip["expires"].Get<string>(), dp, ip, false);
             
             if (value == null)
 				HttpContext.Current.Response.Cookies.Remove(name);

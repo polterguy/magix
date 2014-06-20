@@ -205,7 +205,7 @@ namespace Magix.Core
                 "magix.execute.code-2-node",
                 loadFile);
 
-            string value = Expressions.GetExpressionValue(expression, loadFile["node"], loadFile["node"], false).ToString();
+            string value = Expressions.GetExpressionValue<string>(expression, loadFile["node"], loadFile["node"], false);
             AppendInspect(destinationNode, value, dropInitialHeader);
         }
 
@@ -226,7 +226,7 @@ namespace Magix.Core
                 "magix.execute.code-2-node",
                 loadFile);
 
-            Node value = Expressions.GetExpressionValue(expression, loadFile["node"], loadFile["node"], false) as Node;
+            Node value = Expressions.GetExpressionValue<Node>(expression, loadFile["node"], loadFile["node"], false);
             destinationNode.AddRange(value);
         }
     }

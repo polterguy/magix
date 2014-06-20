@@ -82,7 +82,7 @@ namespace Magix.forms
             if (ip.Contains("controls-id"))
             {
                 Node fromData = new Node();
-                fromData["id"].Value = Expressions.GetExpressionValue(ip["controls-id"].Get<string>(), dp, ip, false) as string;
+                fromData["id"].Value = Expressions.GetExpressionValue<string>(ip["controls-id"].Get<string>(), dp, ip, false);
                 RaiseActiveEvent(
                     "magix.data.load",
                     fromData);
@@ -125,7 +125,7 @@ namespace Magix.forms
 
             string container = null;
             if (ip.Contains("container"))
-                container = Expressions.GetExpressionValue(ip["container"].Get<string>(), dp, ip, false) as string;
+                container = Expressions.GetExpressionValue<string>(ip["container"].Get<string>(), dp, ip, false);
 
 			LoadActiveModule(
 				"Magix.forms.WebPart",
@@ -230,7 +230,7 @@ namespace Magix.forms
 
             string container = null;
             if (ip.Contains("container"))
-                container = Expressions.GetExpressionValue(ip["container"].Get<string>(), dp, ip, false) as string;
+                container = Expressions.GetExpressionValue<string>(ip["container"].Get<string>(), dp, ip, false);
 
             LoadActiveModule(
 				"Magix.forms.WebPart", 

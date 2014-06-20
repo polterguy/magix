@@ -42,11 +42,11 @@ namespace Magix.execute
                 throw new ArgumentException("[index-of] needs a [what] child to understand what to search for");
 
             Node dp = Dp(e.Params);
-            string whatToSearch = Expressions.GetExpressionValue(ip.Get<string>(), dp, ip, false) as string;
+            string whatToSearch = Expressions.GetExpressionValue<string>(ip.Get<string>(), dp, ip, false);
             if (whatToSearch == null)
                 throw new ArgumentException("couldn't make '" + ip.Get<string>() + "' into a string in [index-of]");
 
-            string whatToSearchFor = Expressions.GetExpressionValue(ip["what"].Get<string>(), dp, ip, false) as string;
+            string whatToSearchFor = Expressions.GetExpressionValue<string>(ip["what"].Get<string>(), dp, ip, false);
             if (string.IsNullOrEmpty(whatToSearchFor))
                 throw new ArgumentException("no value in [what] expression in [index-of]");
 

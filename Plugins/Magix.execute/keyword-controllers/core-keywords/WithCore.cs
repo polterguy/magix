@@ -41,7 +41,7 @@ namespace Magix.execute
                 throw new ArgumentException("you must supply an expression to [with]");
 
             Node dp = Dp(e.Params);
-			Node withExpression = Expressions.GetExpressionValue(ip.Get<string>(), dp, ip, true) as Node;
+			Node withExpression = Expressions.GetExpressionValue<Node>(ip.Get<string>(), dp, ip, true);
             if (withExpression == null)
                 throw new ArgumentException("the expression in your [with] statement returned nothing");
 

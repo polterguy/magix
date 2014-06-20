@@ -38,13 +38,13 @@ namespace Magix.execute
 
 			Node dp = Dp(e.Params);
 
-            Node destinationNode = Expressions.GetExpressionValue(ip.Get<string>(), dp, ip, true) as Node;
+            Node destinationNode = Expressions.GetExpressionValue<Node>(ip.Get<string>(), dp, ip, true);
             if (destinationNode == null)
                 throw new ArgumentException("[add] must return an existing node-list, [add] value returned null, expression was; " + ip.Get<string>());
 
             if (ip.Contains("value") && ip["value"].Value != null)
             {
-                object sourceObject = Expressions.GetExpressionValue(ip["value"].Get<string>(), dp, ip, false);
+                object sourceObject = Expressions.GetExpressionValue<object>(ip["value"].Get<string>(), dp, ip, false);
 
                 if (sourceObject is Node)
                 {
@@ -60,7 +60,7 @@ namespace Magix.execute
 
                     object nodeValue = null;
                     if (ip["value"].Contains("value"))
-                        nodeValue = Expressions.GetExpressionValue(ip["value"]["value"].Get<string>(), dp, ip, false);
+                        nodeValue = Expressions.GetExpressionValue<object>(ip["value"]["value"].Get<string>(), dp, ip, false);
                     destinationNode.Add(new Node(nodeName, nodeValue));
                 }
             }
