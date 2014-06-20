@@ -217,17 +217,10 @@ namespace Magix.math
                 if (isFirst)
                 {
                     isFirst = false;
-                    result = first(
-                        Convert.ToDecimal(
-                            Expressions.GetExpressionValue(idx.Get<string>(), dp, ip, false), 
-                            CultureInfo.InvariantCulture));
+                    result = first(Expressions.GetExpressionValue<decimal>(idx.Get<string>(), dp, ip, false));
                 }
                 else
-                    result = second(
-                        Convert.ToDecimal(
-                            Expressions.GetExpressionValue(idx.Get<string>(), dp, ip, false), 
-                            CultureInfo.InvariantCulture), 
-                        result);
+                    result = second(Expressions.GetExpressionValue<decimal>(idx.Get<string>(), dp, ip, false), result);
             }
             ip.Value = result;
         }

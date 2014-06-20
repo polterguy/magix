@@ -136,7 +136,7 @@ namespace Magix.ide.modules
             if (!ip.ContainsValue("code"))
                 throw new ArgumentException("no [code] given to [magix.executor.set-code]");
             Node dp = Dp(e.Params);
-            txtIn.Value = Expressions.GetExpressionValue(ip["code"].Get<string>(), dp, ip, false) as string;
+            txtIn.Value = Expressions.GetExpressionValue<string>(ip["code"].Get<string>(), dp, ip, false);
 		}
 
 		protected void move_Click(object sender, EventArgs e)

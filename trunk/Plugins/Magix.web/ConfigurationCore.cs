@@ -45,7 +45,7 @@ namespace Magix.web
 
             Node dp = Dp(e.Params);
 
-            string val = ConfigurationManager.AppSettings[Expressions.GetExpressionValue(ip["name"].Get<string>(), dp, ip, false) as string];
+            string val = ConfigurationManager.AppSettings[Expressions.GetExpressionValue<string>(ip["name"].Get<string>(), dp, ip, false)];
 			if (!string.IsNullOrEmpty(val))
                 ip["value"].Value = val;
 		}
@@ -103,7 +103,7 @@ namespace Magix.web
             Node dp = Dp(e.Params);
             if (!ip.ContainsValue("id"))
                 throw new ArgumentException("no [id] given to [magix.configuration.get-connection-string]");
-            string id = Expressions.GetExpressionValue(ip["id"].Get<string>(), dp, ip, false) as string;
+            string id = Expressions.GetExpressionValue<string>(ip["id"].Get<string>(), dp, ip, false);
 
             ip["value"].Value = System.Web.Configuration.WebConfigurationManager.ConnectionStrings[id].ConnectionString;
         }

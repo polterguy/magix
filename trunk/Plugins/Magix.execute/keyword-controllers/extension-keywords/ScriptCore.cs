@@ -48,7 +48,7 @@ namespace Magix.execute
 
             string script = null;
             if (ip.Contains("script"))
-                script = Expressions.GetExpressionValue(ip["script"].Get<string>(), dp, ip, false) as string;
+                script = Expressions.GetExpressionValue<string>(ip["script"].Get<string>(), dp, ip, false);
             else
             {
                 try

@@ -48,11 +48,11 @@ namespace Magix.execute
 
             if (!ip["file"].ContainsValue("assembly"))
                 throw new ArgumentException("you need to supply which assembly to load the file from as the [file]/[assembly] parameter");
-            string assembly = Expressions.GetExpressionValue(ip["file"]["assembly"].Get<string>(), dp, ip, false) as string;
+            string assembly = Expressions.GetExpressionValue<string>(ip["file"]["assembly"].Get<string>(), dp, ip, false);
 
             if (!ip["file"].ContainsValue("resource-name"))
                 throw new ArgumentException("you need to define which resource to load as [file]/[resource-name]");
-            string resourceName = Expressions.GetExpressionValue(ip["file"]["resource-name"].Get<string>(), dp, ip, false) as string;
+            string resourceName = Expressions.GetExpressionValue<string>(ip["file"]["resource-name"].Get<string>(), dp, ip, false);
 
             Assembly asm = null;
             foreach (Assembly idxAsm in ModuleControllerLoader.ModuleAssemblies)

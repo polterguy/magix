@@ -11,17 +11,67 @@ using System.Collections.Generic;
 namespace Magix.Core
 {
     /*
-     * Implementer of Expression logic, such that nodes can be retrieved
-     * and manipulated using expressions, such as e.g. [Data][Name].Value, which will
-     * traverse the Data node's Name node, and return its Value
+     * implements expressions
      */
 	public class Expressions
 	{
         /*
-         * Returns the value of the given expression, which might return a string, 
-         * list of nodes, or any other object your node tree might contain
+         * returns expression value
          */
-        public static object GetExpressionValue(string expression, Node dp, Node ip, bool createPath)
+        public static T GetExpressionValue<T>(string expression, Node dp, Node ip, bool createPath)
+        {
+            object retVal = GetExpressionValue(expression, dp, ip, createPath);
+            if (retVal == null)
+                return default(T);
+
+            if (typeof(T) != retVal.GetType())
+            {
+                switch (typeof(T).FullName)
+                {
+                    case "System.Int32":
+                        return (T)(object)int.Parse(GetString(retVal), CultureInfo.InvariantCulture);
+                    case "System.Boolean":
+                        return (T)(object)bool.Parse(GetString(retVal));
+                    case "System.Decimal":
+                        return (T)(object)decimal.Parse(GetString(retVal), CultureInfo.InvariantCulture);
+                    case "System.DateTime":
+                        return (T)(object)DateTime.ParseExact(GetString(retVal), "yyyy.MM.dd HH:mm:ss", CultureInfo.InvariantCulture);
+                    case "System.String":
+                        return (T)(object)GetString(retVal);
+                    default:
+                        if (retVal is T)
+                            return (T)retVal;
+                        throw new ArgumentException("cannot convert expression to given type; " + typeof(T).Name);
+                }
+            }
+
+            return (T)retVal;
+        }
+
+        /*
+         * helper for above
+         */
+        private static string GetString(object value)
+        {
+            switch (value.GetType().FullName)
+            {
+                case "System.Int32":
+                    return value.ToString();
+                case "System.Boolean":
+                    return value.ToString();
+                case "System.Decimal":
+                    return ((decimal)value).ToString(CultureInfo.InvariantCulture);
+                case "System.DateTime":
+                    return ((DateTime)value).ToString("yyyy.MM.dd HH:mm:ss", CultureInfo.InvariantCulture);
+                default:
+                    return value.ToString();
+            }
+        }
+
+        /*
+         * returns expression value
+         */
+        private static object GetExpressionValue(string expression, Node dp, Node ip, bool createPath)
         {
             if (expression == null)
                 return null;
@@ -67,15 +117,13 @@ namespace Magix.Core
                 if (idx.Count > 0)
                     arrs[idxNo++] = FormatString(dp, ip, idx, idx.Get<string>());
                 else
-                    arrs[idxNo++] = Expressions.GetExpressionValue(idx.Get<string>(), dp, ip, false);
+                    arrs[idxNo++] = Expressions.GetExpressionValue<string>(idx.Get<string>(), dp, ip, false);
             }
             return string.Format(CultureInfo.InvariantCulture, valueToSet.ToString(), arrs);
         }
 
         /*
-         * Sets the given exprDestination to the valuer of exprSource. If
-         * exprSource starts with a '[', it is expected to be a reference to another
-         * expression, else it will be assumed to be a static value
+         * sets an expression
          */
 		public static void SetNodeValue(
 			string destinationExpression, 

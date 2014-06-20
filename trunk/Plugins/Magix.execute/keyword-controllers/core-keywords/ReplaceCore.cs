@@ -45,16 +45,16 @@ namespace Magix.execute
 				throw new ArgumentException("[replace] needs an expression or a constant as a value to know where to replace");
 
             Node dp = Dp(e.Params);
-			string sourceExpressionValue = Expressions.GetExpressionValue(destinationExpression, dp, ip, false) as string;
+			string sourceExpressionValue = Expressions.GetExpressionValue<string>(destinationExpression, dp, ip, false);
             if (sourceExpressionValue == null)
                 return; // the string user wanted to replace was null
 
-			string what = Expressions.GetExpressionValue(ip["what"].Get<string>(), dp, ip, false) as string;
+			string what = Expressions.GetExpressionValue<string>(ip["what"].Get<string>(), dp, ip, false);
             if (ip["what"].Count > 0)
                 what = Expressions.FormatString(dp, ip, ip["what"], what);
 
 			string with = ip.Contains("with") ? 
-                Expressions.GetExpressionValue(ip["with"].Get<string>(""), dp, ip, false) as string : 
+                Expressions.GetExpressionValue<string>(ip["with"].Get<string>(""), dp, ip, false) : 
                 "";
             if (!string.IsNullOrEmpty(with))
             {

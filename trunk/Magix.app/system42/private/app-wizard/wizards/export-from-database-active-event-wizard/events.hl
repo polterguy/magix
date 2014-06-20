@@ -152,10 +152,6 @@ magix.wizard.save_onclick
             replace=>[@][..][_obj][[.].Name].Value
               what=>@""""
               with=>@""""""
-            replace=>[@][..][_obj][[.].Name].Value
-              what=>@"
-"
-              with=>@"\n"
             if=>not-equals
               lhs=>[@][..][_line-value].Value
               rhs=>
@@ -176,7 +172,6 @@ magix.wizard.save_onclick
               =>[@][..][_file-value].Value
               =>[@][_line-value].Value
         magix.date.now
-          as-string=>true
         replace=>[magix.date.now][value].Value
           what=>@" "
           with=>-
@@ -185,7 +180,7 @@ magix.wizard.save_onclick
         replace=>[magix.date.now][value].Value
           what=>@":"
         set=>[magix.date.now][value].Value
-          value=>your-files/tmp/{0}.csv
+          value=>your-files/tmp/export-{0}.csv
             =>[magix.date.now][value].Value
         using=>magix.file
           save

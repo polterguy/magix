@@ -39,7 +39,7 @@ namespace Magix.execute
             Node dp = Dp(e.Params);
 
 			string lambdaExpression = ip.Get<string>();
-            Node lambdaCodeBlock = (Expressions.GetExpressionValue(lambdaExpression, dp, ip, false) as Node);
+            Node lambdaCodeBlock = Expressions.GetExpressionValue<Node>(lambdaExpression, dp, ip, false);
 
             if (lambdaCodeBlock == null)
                 throw new ArgumentException("[lambda] couldn't find a block of code to execute from its expression");

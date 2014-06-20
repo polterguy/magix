@@ -44,21 +44,21 @@ namespace Magix.ms.sql
 
             if (!ip.Contains("connection"))
                 throw new ArgumentException("you need to supply a [connection] to connect to a database");
-            string connectionString = Expressions.GetExpressionValue(ip["connection"].Get<string>(), dp, ip, false) as string;
+            string connectionString = Expressions.GetExpressionValue<string>(ip["connection"].Get<string>(), dp, ip, false);
             if (connectionString.IndexOf("web.config:") == 0)
                 connectionString = ConfigurationManager.ConnectionStrings[connectionString.Replace("web.config:", "")].ConnectionString;
 
             if (!ip.Contains("sql"))
                 throw new ArgumentException("you need to supply a [sql] to know what query to run");
-            string query = Expressions.GetExpressionValue(ip["sql"].Get<string>(), dp, ip, false) as string;
+            string query = Expressions.GetExpressionValue<string>(ip["sql"].Get<string>(), dp, ip, false);
 
             int start = -1;
             if (ip.Contains("start"))
-                start = int.Parse(Expressions.GetExpressionValue(ip["start"].Get<string>(), dp, ip, false) as string);
+                start = Expressions.GetExpressionValue<int>(ip["start"].Get<string>(), dp, ip, false);
 
             int end = -1;
             if (ip.Contains("end"))
-                end = int.Parse(Expressions.GetExpressionValue(ip["end"].Get<string>(), dp, ip, false) as string);
+                end = Expressions.GetExpressionValue<int>(ip["end"].Get<string>(), dp, ip, false);
 
             bool count = true;
             if (ip.Contains("count"))
@@ -141,14 +141,14 @@ namespace Magix.ms.sql
             if (!ip["file"].Contains("connection"))
                 throw new ArgumentException("you need to supply a [connection] to connect to a database");
 
-            string connectionString = Expressions.GetExpressionValue(ip["file"]["connection"].Get<string>(), dp, ip, false) as string;
+            string connectionString = Expressions.GetExpressionValue<string>(ip["file"]["connection"].Get<string>(), dp, ip, false);
             if (connectionString.IndexOf("web.config:") == 0)
                 connectionString = ConfigurationManager.ConnectionStrings[connectionString.Replace("web.config:", "")].ConnectionString;
 
             if (!ip["file"].Contains("sql"))
                 throw new ArgumentException("you need to supply a [sql] to know what query to run");
 
-            string query = Expressions.GetExpressionValue(ip["file"]["sql"].Get<string>(), dp, ip, false) as string;
+            string query = Expressions.GetExpressionValue<string>(ip["file"]["sql"].Get<string>(), dp, ip, false);
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -202,13 +202,13 @@ namespace Magix.ms.sql
 
             if (!ip.Contains("connection"))
                 throw new ArgumentException("you need to supply a [connection] to connect to a database");
-            string connectionString = Expressions.GetExpressionValue(ip["connection"].Get<string>(), dp, ip, false) as string;
+            string connectionString = Expressions.GetExpressionValue<string>(ip["connection"].Get<string>(), dp, ip, false);
             if (connectionString.IndexOf("web.config:") == 0)
                 connectionString = ConfigurationManager.ConnectionStrings[connectionString.Replace("web.config:", "")].ConnectionString;
 
             if (!ip.Contains("sql"))
                 throw new ArgumentException("you need to supply a [sql] to know what query to run");
-            string query = Expressions.GetExpressionValue(ip["sql"].Get<string>(), dp, ip, false) as string;
+            string query = Expressions.GetExpressionValue<string>(ip["sql"].Get<string>(), dp, ip, false);
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {

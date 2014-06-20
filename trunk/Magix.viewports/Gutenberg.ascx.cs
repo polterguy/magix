@@ -89,7 +89,7 @@ namespace Magix.viewports
 
             if (!ip.ContainsValue("message"))
 				throw new ArgumentException("no [message] parameter given to [magix.viewport.show-message]");
-            string msgTxt = Expressions.GetExpressionValue(ip["message"].Get<string>(), dp, ip, false) as string;
+            string msgTxt = Expressions.GetExpressionValue<string>(ip["message"].Get<string>(), dp, ip, false);
             if (ip["message"].Count > 0)
                 msgTxt = Expressions.FormatString(dp, ip, ip["message"], msgTxt);
 
@@ -108,7 +108,7 @@ namespace Magix.viewports
                 if (string.IsNullOrEmpty(ip["code"].Get<string>()))
                     code = ip["code"].Clone();
                 else
-                    code = (Expressions.GetExpressionValue(ip["code"].Get<string>(), dp, ip, false) as Node ?? new Node()).Clone();
+                    code = (Expressions.GetExpressionValue<Node>(ip["code"].Get<string>(), dp, ip, false) ?? new Node()).Clone();
 				code.Name = "";
                 
                 Node tmp = new Node();
@@ -127,13 +127,13 @@ namespace Magix.viewports
 				_isFirst = false;
 
                 if (ip.Contains("color"))
-                    whichMsg.Style[Styles.backgroundColor] = Expressions.GetExpressionValue(ip["color"].Get<string>(), dp, ip, false) as string;
+                    whichMsg.Style[Styles.backgroundColor] = Expressions.GetExpressionValue<string>(ip["color"].Get<string>(), dp, ip, false);
                 else
                     whichMsg.Style[Styles.backgroundColor] = "";
 
                 int time = 3000;
                 if (ip.Contains("time"))
-                    time = int.Parse(Expressions.GetExpressionValue(ip["time"].Get<string>(), dp, ip, false) as string);
+                    time = Expressions.GetExpressionValue<int>(ip["time"].Get<string>(), dp, ip, false);
                 if (time == -1)
                     new EffectFadeIn(whichMsg, 250)
 						.Render();
@@ -181,7 +181,7 @@ namespace Magix.viewports
 
             if (!ip.ContainsValue("message"))
 				throw new ArgumentException("no [message] given to [magix.viewport.confirm]");
-            string message = Expressions.GetExpressionValue(ip["message"].Get<string>(), dp, ip, false) as string;
+            string message = Expressions.GetExpressionValue<string>(ip["message"].Get<string>(), dp, ip, false);
             if (ip["message"].Count > 0)
                 message = Expressions.FormatString(dp, ip, ip["message"], message);
 
@@ -289,7 +289,7 @@ namespace Magix.viewports
 
             if (!ip.ContainsValue("container"))
                 throw new ArgumentException("no [container] given to [magix.viewport.pin-container]");
-            string container = Expressions.GetExpressionValue(ip["container"].Get<string>(), dp, ip, false) as string;
+            string container = Expressions.GetExpressionValue<string>(ip["container"].Get<string>(), dp, ip, false);
 
             if (ViewState["magix.viewport.pin-container"] == null)
                 ViewState["magix.viewport.pin-container"] = new Node();

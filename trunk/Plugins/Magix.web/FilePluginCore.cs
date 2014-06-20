@@ -48,7 +48,7 @@ namespace Magix.web
             if (!ip["file"].ContainsValue("url"))
                 throw new ArgumentException("you need to supply which file to load as the [url] parameter");
 
-            string filepath = Expressions.GetExpressionValue(ip["file"]["url"].Get<string>(), dp, ip, false) as string;
+            string filepath = Expressions.GetExpressionValue<string>(ip["file"]["url"].Get<string>(), dp, ip, false);
             if (string.IsNullOrEmpty(filepath))
                 throw new ArgumentException("you need to define which file to load, as [url]");
 

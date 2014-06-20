@@ -49,11 +49,11 @@ namespace Magix.execute
             Node dp = Dp(e.Params);
 
             string directory = ip.Contains("directory") ?
-                Expressions.GetExpressionValue(ip["directory"].Get<string>().TrimStart('/'), dp, ip, false) as string :
+                Expressions.GetExpressionValue<string>(ip["directory"].Get<string>().TrimStart('/'), dp, ip, false) :
                 "";
 
             string filter = ip.Contains("filter") ?
-                Expressions.GetExpressionValue(ip["filter"].Get<string>(), dp, ip, false) as string :
+                Expressions.GetExpressionValue<string>(ip["filter"].Get<string>(), dp, ip, false) :
                 null;
 
             string[] directories = null;
@@ -107,7 +107,7 @@ namespace Magix.execute
 
             if (!ip.ContainsValue("directory"))
                 throw new ArgumentException("[create-directory] needs a [directory] argument to know where to create the directory");
-            string path = Expressions.GetExpressionValue(ip["directory"].Get<string>(), dp, ip, false) as string;
+            string path = Expressions.GetExpressionValue<string>(ip["directory"].Get<string>(), dp, ip, false);
 
             if (!path.Contains(":"))
                 path = _basePath + path;
@@ -142,7 +142,7 @@ namespace Magix.execute
             if (!ip.ContainsValue("directory"))
                 throw new ArgumentException("you must supply a [directory] to [delete-directory]");
 
-            string path = Expressions.GetExpressionValue(ip["directory"].Get<string>(), dp, ip, false) as string;
+            string path = Expressions.GetExpressionValue<string>(ip["directory"].Get<string>(), dp, ip, false);
 
             if (!path.Contains(":"))
                 path = _basePath + path;
@@ -176,14 +176,14 @@ namespace Magix.execute
 
             if (!ip.ContainsValue("from"))
                 throw new ArgumentException("you need to supply a [from] node to [move-directory]");
-            string from = Expressions.GetExpressionValue(ip["from"].Get<string>(), dp, ip, false) as string;
+            string from = Expressions.GetExpressionValue<string>(ip["from"].Get<string>(), dp, ip, false);
 
             if (!from.Contains(":"))
                 from = _basePath + from;
 
             if (!ip.ContainsValue("to"))
                 throw new ArgumentException("you need to define which directory to copy to, as [to] node");
-            string to = Expressions.GetExpressionValue(ip["to"].Get<string>(), dp, ip, false) as string;
+            string to = Expressions.GetExpressionValue<string>(ip["to"].Get<string>(), dp, ip, false);
 
             if (!to.Contains(":"))
                 to = _basePath+ to;
@@ -218,7 +218,7 @@ namespace Magix.execute
             if (!ip.ContainsValue("directory"))
                 throw new ArgumentException("you didn't supply a [directory] to search for to [magix.file.directory-exist]");
 
-            string dir = Expressions.GetExpressionValue(ip["directory"].Get<string>().TrimStart('/'), dp, ip, false) as string;
+            string dir = Expressions.GetExpressionValue<string>(ip["directory"].Get<string>().TrimStart('/'), dp, ip, false);
 
             if (!dir.Contains(":"))
                 dir = _basePath + dir;

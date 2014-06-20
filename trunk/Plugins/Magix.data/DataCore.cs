@@ -66,22 +66,22 @@ namespace Magix.data
             if (ip.Contains("prototype"))
             {
                 if (ip.ContainsValue("prototype"))
-                    prototype = Expressions.GetExpressionValue(ip["prototype"].Get<string>(), dp, ip, false) as Node;
+                    prototype = Expressions.GetExpressionValue<Node>(ip["prototype"].Get<string>(), dp, ip, false);
                 else
                     prototype = ip["prototype"];
             }
             else if (ip.ContainsValue("id"))
-                id = Expressions.GetExpressionValue(ip["id"].Get<string>(), dp, ip, false) as string;
+                id = Expressions.GetExpressionValue<string>(ip["id"].Get<string>(), dp, ip, false);
             else
                 throw new ArgumentException("either [prototype] or [id] is needed for [magix.data.load]");
 
 			int start = 0;
             if (ip.ContainsValue("start"))
-                start = int.Parse(Expressions.GetExpressionValue(ip["start"].Get<string>(), dp, ip, false) as string);
+                start = Expressions.GetExpressionValue<int>(ip["start"].Get<string>(), dp, ip, false);
 
 			int end = -1;
             if (ip.ContainsValue("end"))
-                end = int.Parse(Expressions.GetExpressionValue(ip["end"].Get<string>(), dp, ip, false) as string);
+                end = Expressions.GetExpressionValue<int>(ip["end"].Get<string>(), dp, ip, false);
 
 			if (id != null && (start != 0 || end != -1 || prototype != null))
 				throw new ArgumentException("if you supply an [id], then [start], [end] and [prototype] cannot be defined");
@@ -118,13 +118,13 @@ namespace Magix.data
 
             Node dp = Dp(e.Params);
             if (ip.ContainsValue("value"))
-                value = (Expressions.GetExpressionValue(ip["value"].Get<string>(), dp, ip, false) as Node).Clone();
+                value = Expressions.GetExpressionValue<Node>(ip["value"].Get<string>(), dp, ip, false).Clone();
             else
                 value = ip["value"].Clone();
 
             if (ip.Contains("id"))
             {
-                string id = Expressions.GetExpressionValue(ip["id"].Get<string>(), dp, ip, false) as string;
+                string id = Expressions.GetExpressionValue<string>(ip["id"].Get<string>(), dp, ip, false);
                 Database.SaveById(value, id);
             }
             else
@@ -162,7 +162,7 @@ namespace Magix.data
             if (ip.Contains("prototype"))
             {
                 if (ip.ContainsValue("prototype"))
-                    prototype = Expressions.GetExpressionValue(ip["prototype"].Get<string>(), dp, ip, false) as Node;
+                    prototype = Expressions.GetExpressionValue<Node>(ip["prototype"].Get<string>(), dp, ip, false);
                 else
                     prototype = ip["prototype"];
             }
@@ -172,7 +172,7 @@ namespace Magix.data
 
             if (ip.Contains("id"))
             {
-                string id = Expressions.GetExpressionValue(ip["id"].Get<string>(), dp, ip, false) as string;
+                string id = Expressions.GetExpressionValue<string>(ip["id"].Get<string>(), dp, ip, false);
                 Database.RemoveById(id);
             }
             else
@@ -207,7 +207,7 @@ namespace Magix.data
             if (ip.Contains("prototype"))
             {
                 if (ip.ContainsValue("prototype"))
-                    prototype = Expressions.GetExpressionValue(ip["prototype"].Get<string>(), dp, ip, false) as Node;
+                    prototype = Expressions.GetExpressionValue<Node>(ip["prototype"].Get<string>(), dp, ip, false);
                 else
                     prototype = ip["prototype"];
             }

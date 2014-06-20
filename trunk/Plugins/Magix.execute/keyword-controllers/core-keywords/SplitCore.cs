@@ -45,7 +45,7 @@ namespace Magix.execute
                 throw new ArgumentException("only either [what] or [where] can be submitted to [split]");
 
             Node dp = Dp(e.Params);
-            string whatToSplit = Expressions.GetExpressionValue(ip.Get<string>(), dp, ip, false) as string;
+            string whatToSplit = Expressions.GetExpressionValue<string>(ip.Get<string>(), dp, ip, false);
             if (whatToSplit == null)
                 throw new ArgumentException("couldn't make '" + ip.Get<string>() + "' into a string in [split]");
 
@@ -58,7 +58,7 @@ namespace Magix.execute
             {
                 string what = null;
                 if (ip.Contains("what"))
-                    what = Expressions.GetExpressionValue(ip["what"].Get<string>(), dp, ip, false) as string;
+                    what = Expressions.GetExpressionValue<string>(ip["what"].Get<string>(), dp, ip, false);
 
                 if (string.IsNullOrEmpty(what))
                 {
@@ -86,10 +86,10 @@ namespace Magix.execute
                 List<int> ints = new List<int>();
                 if (ip["where"].Value != null)
                     ints.Add(
-                        int.Parse(Expressions.GetExpressionValue(ip["where"].Get<string>(), dp, ip, false) as string));
+                        Expressions.GetExpressionValue<int>(ip["where"].Get<string>(), dp, ip, false));
                 foreach (Node idx in ip["where"])
                 {
-                    ints.Add(int.Parse(Expressions.GetExpressionValue(idx.Get<string>(), dp, ip, false) as string));
+                    ints.Add(Expressions.GetExpressionValue<int>(idx.Get<string>(), dp, ip, false));
                 }
 
                 int idxNo = 0;

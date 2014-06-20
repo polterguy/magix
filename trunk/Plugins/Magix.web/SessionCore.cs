@@ -44,7 +44,7 @@ namespace Magix.web
 
             if (!ip.ContainsValue("id"))
                 throw new ArgumentException("no [id] given to [magix.session.set]");
-            string name = Expressions.GetExpressionValue(ip["id"].Get<string>(), dp, ip, false) as string;
+            string name = Expressions.GetExpressionValue<string>(ip["id"].Get<string>(), dp, ip, false);
             if (ip["id"].Count > 0)
                 name = Expressions.FormatString(dp, ip, ip["id"], name);
 
@@ -58,7 +58,7 @@ namespace Magix.web
 				// adding or overwiting existing value
                 Node value = null;
                 if (ip.ContainsValue("value") && ip["value"].Get<string>().StartsWith("["))
-                    value = (Expressions.GetExpressionValue(ip["value"].Get<string>(), dp, ip, false) as Node).Clone();
+                    value = Expressions.GetExpressionValue<Node>(ip["value"].Get<string>(), dp, ip, false).Clone();
                 else
                     value = ip["value"].Clone();
 				Page.Session[name] = value;
@@ -91,7 +91,7 @@ namespace Magix.web
 
             if (!ip.ContainsValue("id"))
                 throw new ArgumentException("no [id] given to [magix.session.get]");
-            string name = Expressions.GetExpressionValue(ip["id"].Get<string>(), dp, ip, false) as string;
+            string name = Expressions.GetExpressionValue<string>(ip["id"].Get<string>(), dp, ip, false);
             if (ip["id"].Count > 0)
                 name = Expressions.FormatString(dp, ip, ip["id"], name);
 

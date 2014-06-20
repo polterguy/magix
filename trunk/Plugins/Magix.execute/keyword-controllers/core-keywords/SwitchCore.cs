@@ -40,14 +40,14 @@ namespace Magix.execute
 				throw new ArgumentException("[switch] needs at least one [case] value");
 
             Node dp = Dp(e.Params);
-			string value = Expressions.GetExpressionValue(ip.Get<string>(), dp, ip, false) as string;
+			string value = Expressions.GetExpressionValue<string>(ip.Get<string>(), dp, ip, false);
 
             bool foundMatch = false;
             foreach (Node idx in ip)
             {
                 if (idx.Name == "case")
                 {
-                    if (value == Expressions.GetExpressionValue(idx.Get<string>(), dp, ip, false).ToString())
+                    if (value == Expressions.GetExpressionValue<string>(idx.Get<string>(), dp, ip, false))
                     {
                         foundMatch = true;
                         e.Params["_ip"].Value = idx;
