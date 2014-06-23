@@ -19,50 +19,59 @@ namespace Magix.data
 	 */
 	internal static class Database
 	{
+        private static object _locker = new object();
+        private static object _transactionalLocker = new object();
         private static string _dbPath;
         private static string _appPath;
         private static Node _database;
-        private static AutoResetEvent _resetEvent = new AutoResetEvent(true);
-        private static Tuple<Guid, AutoResetEvent, Node> _transaction = 
-            new Tuple<Guid, AutoResetEvent, Node>(Guid.Empty, new AutoResetEvent(true), new Node());
+        private static Tuple<Guid, Node> _transaction = new Tuple<Guid, Node>(Guid.Empty, new Node());
 
         #region [ -- publicly available methods -- ]
 
         internal static void Initialize()
         {
-            _appPath = HttpContext.Current.Server.MapPath("/");
-            _appPath = _appPath.Replace("\\", "/");
-            _dbPath = ConfigurationManager.AppSettings["magix.core.database-path"];
-            _database = new Node();
-
-            Node listDirectoriesNode = new Node();
-            listDirectoriesNode["directory"].Value = _dbPath;
-            ActiveEvents.Instance.RaiseActiveEvent(
-                typeof(Database),
-                "magix.file.list-directories",
-                listDirectoriesNode);
-
-            foreach (Node idxDir in listDirectoriesNode["directories"])
+            lock (_locker)
             {
-                // retrieving data files
-                Node listFilesNode = new Node();
-                listFilesNode["filter"].Value = "db*.hl";
-                listFilesNode["directory"].Value = idxDir.Name;
-                ActiveEvents.Instance.RaiseActiveEvent(
-                    typeof(Database),
-                    "magix.file.list-files",
-                    listFilesNode);
-
-                foreach (Node idxFileNode in listFilesNode["files"])
+                lock (_transactionalLocker)
                 {
-                    Node loadFile = new Node();
-                    loadFile["file"].Value = idxFileNode.Name;
+                    if (_appPath != null)
+                        return; // multiple initializations might occur
+
+                    _appPath = HttpContext.Current.Server.MapPath("/");
+                    _appPath = _appPath.Replace("\\", "/");
+                    _dbPath = ConfigurationManager.AppSettings["magix.core.database-path"];
+                    _database = new Node();
+
+                    Node listDirectoriesNode = new Node();
+                    listDirectoriesNode["directory"].Value = _dbPath;
                     ActiveEvents.Instance.RaiseActiveEvent(
                         typeof(Database),
-                        "magix.execute.code-2-node",
-                        loadFile);
+                        "magix.file.list-directories",
+                        listDirectoriesNode);
 
-                    _database[idxFileNode.Name].AddRange(loadFile["node"]);
+                    foreach (Node idxDir in listDirectoriesNode["directories"])
+                    {
+                        // retrieving data files
+                        Node listFilesNode = new Node();
+                        listFilesNode["filter"].Value = "db*.hl";
+                        listFilesNode["directory"].Value = idxDir.Name;
+                        ActiveEvents.Instance.RaiseActiveEvent(
+                            typeof(Database),
+                            "magix.file.list-files",
+                            listFilesNode);
+
+                        foreach (Node idxFileNode in listFilesNode["files"])
+                        {
+                            Node loadFile = new Node();
+                            loadFile["file"].Value = idxFileNode.Name;
+                            ActiveEvents.Instance.RaiseActiveEvent(
+                                typeof(Database),
+                                "magix.execute.code-2-node",
+                                loadFile);
+
+                            _database[idxFileNode.Name].AddRange(loadFile["node"]);
+                        }
+                    }
                 }
             }
         }
@@ -70,24 +79,27 @@ namespace Magix.data
         /*
          * creates a database transaction
          */
-        internal static Guid CreateTransaction()
+        internal static void ExecuteTransaction(Node pars)
         {
-            _resetEvent.WaitOne();
-            try
-            {
-                if (_transaction.Item1 != Guid.Empty)
-                    _transaction.Item2.WaitOne();
+            if (pars.Contains("_database-transaction"))
+                throw new ApplicationException("there is already an open transaction towards the database");
 
-                lock (_database)
-                {
-                    Guid transaction = Guid.NewGuid();
-                    _transaction = new Tuple<Guid, AutoResetEvent, Node>(transaction, _transaction.Item2, _database.Clone());
-                    return transaction;
-                }
-            }
-            finally
+            lock (_transactionalLocker)
             {
-                _resetEvent.Set();
+                _transaction = new Tuple<Guid, Node>(Guid.NewGuid(), _database.Clone());
+                pars["_database-transaction"].Value = _transaction.Item1;
+                try
+                {
+                    ActiveEvents.Instance.RaiseActiveEvent(
+                        typeof(Database),
+                        "magix.execute",
+                        pars);
+                }
+                finally
+                {
+                    pars["_database-transaction"].UnTie();
+                    Rollback(_transaction.Item1);
+                }
             }
         }
 
@@ -96,96 +108,75 @@ namespace Magix.data
          */
         internal static void Rollback(Guid transaction)
         {
-            _resetEvent.WaitOne();
-            try
-            {
-                lock (_database)
-                {
-                    if (_transaction.Item1 != transaction)
-                        return; // already committed ...
-
-                    _transaction = new Tuple<Guid, AutoResetEvent, Node>(Guid.Empty, _transaction.Item2, new Node());
-                }
-            }
-            finally
-            {
-                _transaction.Item2.Set();
-                _resetEvent.Set();
-            }
+            if (_transaction.Item1 != transaction)
+                return; // already committed ...
+            _transaction = new Tuple<Guid, Node>(Guid.Empty, new Node());
         }
 
         /*
          * commits the active transaction
          */
-        internal static void Commit(Guid transaction)
+        internal static void Commit(Node pars)
         {
-            _resetEvent.WaitOne();
-            try
+            lock (_locker)
             {
-                lock (_database)
+                Guid transaction = pars["_database-transaction"].UnTie().Get<Guid>();
+                if (_transaction.Item1 != transaction)
+                    throw new ApplicationException("transaction id mismatch in commit");
+
+                _database = _transaction.Item2;
+                _transaction = new Tuple<Guid, Node>(Guid.Empty, new Node());
+                List<Node> toBeRemoved = new List<Node>();
+
+                // removing items that should be removed first
+                foreach (Node idx in _database)
                 {
-                    if (_transaction.Item1 != transaction)
-                        throw new ApplicationException("transaction id mismatch in commit");
-
-                    _database = _transaction.Item3;
-                    _transaction = new Tuple<Guid, AutoResetEvent, Node>(Guid.Empty, _transaction.Item2, new Node());
-                    List<Node> toBeRemoved = new List<Node>();
-
-                    // removing items that should be removed first
-                    foreach (Node idx in _database)
+                    if (idx.Count == 0 && idx.Name != "added:")
                     {
-                        if (idx.Count == 0)
-                        {
-                            toBeRemoved.Add(idx);
-                        }
+                        toBeRemoved.Add(idx);
                     }
-                    foreach (Node idx in toBeRemoved)
-                    {
-                        RemoveNodeFromDatabase(idx);
-                    }
-
-                    // updating changed items
-                    foreach (Node idx in _database)
-                    {
-                        if (idx.Name.StartsWith("changed:") && idx.Count > 0)
-                        {
-                            idx.Name = idx.Name.Substring(8);
-                            SaveFileNodeToDisc(idx);
-                        }
-                    }
-
-                    // adding new items
-                    List<Node> toBeRemovedFromDatabase = new List<Node>();
-                    int objectsPerFile = int.Parse(ConfigurationManager.AppSettings["magix.core.database-objects-per-file"]);
-                    foreach (Node idx in _database)
-                    {
-                        if (idx.Name == "added:")
-                        {
-                            Node availableNode = FindAvailableNode();
-                            while (idx.Count > 0)
-                            {
-                                while (availableNode.Count < objectsPerFile && idx.Count > 0)
-                                {
-                                    availableNode.Add(idx[0].UnTie());
-                                }
-                                SaveFileNodeToDisc(availableNode);
-                                availableNode = FindAvailableNode();
-                            }
-                            toBeRemovedFromDatabase.Add(idx);
-                            break;
-                        }
-                    }
-                    foreach (Node idx in toBeRemovedFromDatabase)
-                    {
-                        _database.Remove(idx);
-                    }
-
                 }
-            }
-            finally
-            {
-                _transaction.Item2.Set();
-                _resetEvent.Set();
+                foreach (Node idx in toBeRemoved)
+                {
+                    RemoveNodeFromDatabase(idx);
+                }
+
+                // updating changed items
+                foreach (Node idx in _database)
+                {
+                    if (idx.Name.StartsWith("changed:") && idx.Count > 0)
+                    {
+                        idx.Name = idx.Name.Substring(8);
+                        SaveFileNodeToDisc(idx);
+                    }
+                }
+
+                // adding new items
+                List<Node> toBeRemovedFromDatabase = new List<Node>();
+                int objectsPerFile = int.Parse(ConfigurationManager.AppSettings["magix.core.database-objects-per-file"]);
+                foreach (Node idx in _database)
+                {
+                    if (idx.Name == "added:")
+                    {
+                        Node availableNode = FindAvailableNode();
+                        while (idx.Count > 0)
+                        {
+                            while (availableNode.Count < objectsPerFile && idx.Count > 0)
+                            {
+                                availableNode.Add(idx[0].UnTie());
+                            }
+                            SaveFileNodeToDisc(availableNode);
+                            availableNode = FindAvailableNode();
+                        }
+                        toBeRemovedFromDatabase.Add(idx);
+                        break;
+                    }
+                }
+                foreach (Node idx in toBeRemovedFromDatabase)
+                {
+                    _database.Remove(idx);
+                }
+
             }
         }
 
@@ -195,10 +186,13 @@ namespace Magix.data
         internal static void LoadItems(Node ip, Node prototype, string id, int start, int end, Guid transaction)
         {
             if (transaction != _transaction.Item1)
-                _transaction.Item2.WaitOne();
-
-            _resetEvent.WaitOne();
-            try
+            {
+                lock (_transactionalLocker)
+                {
+                    LoadItems(ip, prototype, id, start, end, transaction);
+                }
+            }
+            lock (_locker)
             {
                 bool onlyId = ip.ContainsValue("only-id") && ip["only-id"].Get<bool>();
                 int curMatchingItem = 0;
@@ -232,10 +226,6 @@ namespace Magix.data
                     }
                 }
             }
-            finally
-            {
-                _resetEvent.Set();
-            }
         }
 
         /*
@@ -244,10 +234,13 @@ namespace Magix.data
         internal static void CountRecords(Node ip, Node prototype, Guid transaction)
         {
             if (transaction != _transaction.Item1)
-                _transaction.Item2.WaitOne();
-
-            _resetEvent.WaitOne();
-            try
+            {
+                lock (_transactionalLocker)
+                {
+                    CountRecords(ip, prototype, transaction);
+                }
+            }
+            lock (_locker)
             {
                 int count = 0;
                 foreach (Node idxFileNode in GetDatabase())
@@ -265,10 +258,6 @@ namespace Magix.data
                 }
                 ip["count"].Value = count;
             }
-            finally
-            {
-                _resetEvent.Set();
-            }
         }
 
         /*
@@ -277,10 +266,13 @@ namespace Magix.data
         internal static void SaveById(Node value, string id, Guid transaction)
         {
             if (transaction != _transaction.Item1)
-                _transaction.Item2.WaitOne();
-
-            _resetEvent.WaitOne();
-            try
+            {
+                lock (_transactionalLocker)
+                {
+                    SaveById(value, id, transaction);
+                }
+            }
+            lock (_locker)
             {
                 Node fileNode = null;
                 value.Value = id;
@@ -309,10 +301,6 @@ namespace Magix.data
                 else
                     SaveNewObject(value, id);
             }
-            finally
-            {
-                _resetEvent.Set();
-            }
         }
 
         /*
@@ -321,16 +309,15 @@ namespace Magix.data
         internal static string SaveNewObject(Node value, Guid transaction)
         {
             if (transaction != _transaction.Item1)
-                _transaction.Item2.WaitOne();
-
-            _resetEvent.WaitOne();
-            try
+            {
+                lock (_transactionalLocker)
+                {
+                    SaveNewObject(value, transaction);
+                }
+            }
+            lock (_locker)
             {
                 return SaveNewObject(value, null);
-            }
-            finally
-            {
-                _resetEvent.Set();
             }
         }
 
@@ -340,10 +327,13 @@ namespace Magix.data
         internal static void RemoveByPrototype(Node prototype, Guid transaction)
         {
             if (transaction != _transaction.Item1)
-                _transaction.Item2.WaitOne();
-
-            _resetEvent.WaitOne();
-            try
+            {
+                lock (_transactionalLocker)
+                {
+                    RemoveByPrototype(prototype, transaction);
+                }
+            }
+            lock (_locker)
             {
                 List<Node> nodesToRemove = new List<Node>();
                 List<string> filesToUpdate = new List<string>();
@@ -375,10 +365,6 @@ namespace Magix.data
                         SaveFileNodeToDisc(GetDatabase()[idx]);
                 }
             }
-            finally
-            {
-                _resetEvent.Set();
-            }
         }
 
         /*
@@ -387,10 +373,13 @@ namespace Magix.data
         internal static void RemoveById(string id, Guid transaction)
         {
             if (transaction != _transaction.Item1)
-                _transaction.Item2.WaitOne();
-
-            _resetEvent.WaitOne();
-            try
+            {
+                lock (_transactionalLocker)
+                {
+                    RemoveById(id, transaction);
+                }
+            }
+            lock (_locker)
             {
                 Node objectToRemove = null;
                 foreach (Node idxFileNode in GetDatabase())
@@ -419,10 +408,6 @@ namespace Magix.data
                         RemoveNodeFromDatabase(fileObject);
                 }
             }
-            finally
-            {
-                _resetEvent.Set();
-            }
         }
 
         #endregion
@@ -435,7 +420,7 @@ namespace Magix.data
         private static Node GetDatabase()
         {
             if (_transaction.Item1 != Guid.Empty)
-                return _transaction.Item3; // we have an open transaction
+                return _transaction.Item2; // we have an open transaction
 
             // no open transaction
             return _database;

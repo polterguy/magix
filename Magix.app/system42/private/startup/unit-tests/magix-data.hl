@@ -482,3 +482,148 @@ discarded"
       code
         throw=>[magix.data.transaction] misbehaved
 
+
+event
+  name=>magix.test.data-transaction-threading
+  persist=>false
+  inspect=>@"verifies [magix.data.transaction] works correctly
+
+spawns multiple threads, each with its own database transaction, 
+making sure every thread finishes before the next one starts"
+  code
+    event
+      name=>magix.test.transactional-tmp-event
+      code
+        magix.data.transaction
+          magix.data.save
+            value
+              type=>magix.test.transactional-object
+              name=>howdy world
+                real-name=>thomas
+          magix.data.count
+            prototype
+              type=>magix.test.transactional-object
+          magix.data.remove
+            prototype
+              type=>magix.test.transactional-object
+          magix.data.commit
+          if=>not-equals
+            lhs=>[magix.data.count][count].Value
+            rhs=>1
+            code
+              throw=>[magix.data.transaction] misbehaved with threads
+    wait
+      fork
+        magix.test.transactional-tmp-event
+      fork
+        magix.test.transactional-tmp-event
+        magix.test.transactional-tmp-event
+      fork
+        magix.test.transactional-tmp-event
+        magix.test.transactional-tmp-event
+        magix.test.transactional-tmp-event
+        magix.test.transactional-tmp-event
+      fork
+        magix.test.transactional-tmp-event
+        magix.test.transactional-tmp-event
+        magix.test.transactional-tmp-event
+        magix.test.transactional-tmp-event
+      fork
+        magix.test.transactional-tmp-event
+        magix.test.transactional-tmp-event
+        magix.test.transactional-tmp-event
+        magix.test.transactional-tmp-event
+      fork
+        magix.test.transactional-tmp-event
+        magix.test.transactional-tmp-event
+        magix.test.transactional-tmp-event
+        magix.test.transactional-tmp-event
+      fork
+        magix.test.transactional-tmp-event
+        magix.test.transactional-tmp-event
+        magix.test.transactional-tmp-event
+        magix.test.transactional-tmp-event
+      fork
+        magix.test.transactional-tmp-event
+      fork
+        magix.test.transactional-tmp-event
+      fork
+        magix.test.transactional-tmp-event
+      fork
+        magix.test.transactional-tmp-event
+      fork
+        magix.test.transactional-tmp-event
+      fork
+        magix.test.transactional-tmp-event
+      fork
+        magix.test.transactional-tmp-event
+      fork
+        magix.test.transactional-tmp-event
+    event
+      name=>magix.test.transactional-tmp-event
+    magix.data.count
+      prototype
+        type=>magix.test.transactional-object
+    if=>not-equals
+      lhs=>[magix.data.count][count].Value
+      rhs=>0
+      code
+        throw=>[magix.data.transaction] misbehaved with threads
+
+
+event
+  name=>magix.test.data-transaction-shared
+  persist=>false
+  inspect=>@"verifies [magix.data.transaction] works correctly
+
+spawns multiple threads, each with its own database transaction, 
+making sure every thread finishes before the next one starts"
+  code
+    event
+      name=>magix.test.transactional-tmp-event
+      code
+        magix.data.save
+          value
+            type=>magix.test.transactional-object
+            name=>howdy world
+              real-name=>thomas
+        magix.data.count
+          prototype
+            type=>magix.test.transactional-object
+        magix.data.load
+          prototype
+            type=>magix.test.transactional-object
+        magix.data.save
+          value
+            type=>magix.test.transactional-object
+            name=>howdy world 2.0
+              real-name=>thomas 2.0
+    magix.data.transaction
+      wait
+        fork
+          magix.test.transactional-tmp-event
+        fork
+          magix.test.transactional-tmp-event
+        fork
+          magix.test.transactional-tmp-event
+          magix.test.transactional-tmp-event
+          magix.test.transactional-tmp-event
+        fork
+          magix.test.transactional-tmp-event
+          magix.test.transactional-tmp-event
+          magix.test.transactional-tmp-event
+      magix.data.commit
+    event
+      name=>magix.test.transactional-tmp-event
+    magix.data.count
+      prototype
+        type=>magix.test.transactional-object
+    magix.data.remove
+      prototype
+        type=>magix.test.transactional-object
+    if=>not-equals
+      lhs=>[magix.data.count][count].Value
+      rhs=>16
+      code
+        throw=>[magix.data.transaction] misbehaved with threads
+

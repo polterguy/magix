@@ -56,23 +56,7 @@ namespace Magix.data
                 return;
             }
 
-            Guid transaction = Guid.Empty;
-            if (e.Params.Contains("_database-transaction"))
-                throw new ArgumentException("there is already an open transaction towards the database");
-            try
-            {
-                transaction = Database.CreateTransaction();
-                e.Params["_database-transaction"].Value = transaction;
-                RaiseActiveEvent(
-                    "magix.execute",
-                    e.Params);
-            }
-            finally
-            {
-                // if commit is called before this point, rollback will do nothing
-                Database.Rollback(transaction);
-                e.Params["_database-transaction"].UnTie();
-            }
+            Database.ExecuteTransaction(e.Params);
         }
 
         /*
@@ -97,9 +81,7 @@ namespace Magix.data
                 return;
             }
 
-            Guid transaction = e.Params["_database-transaction"].Get<Guid>();
-            Database.Commit(transaction);
-            e.Params["_database-transaction"].UnTie();
+            Database.Commit(e.Params);
         }
 
 		/*
