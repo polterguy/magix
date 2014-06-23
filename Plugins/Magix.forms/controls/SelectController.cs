@@ -66,7 +66,7 @@ namespace Magix.forms
                     ip["inspect"],
                     "Magix.forms",
                     "Magix.forms.hyperlisp.inspect.hl",
-                    "[magix.forms.set-values-dox].Value");
+                    "[magix.forms.set-values-dox].value");
                 AppendCodeFromResource(
                     ip,
                     "Magix.forms",
@@ -94,7 +94,7 @@ namespace Magix.forms
                 node["inspect"],
                 "Magix.forms",
                 "Magix.forms.hyperlisp.inspect.hl",
-                "[magix.forms.select-dox-start].Value");
+                "[magix.forms.select-dox-start].value");
             AppendCodeFromResource(
                 node,
                 "Magix.forms",
@@ -105,7 +105,7 @@ namespace Magix.forms
                 node["inspect"],
                 "Magix.forms",
                 "Magix.forms.hyperlisp.inspect.hl",
-                "[magix.forms.select-dox-end].Value",
+                "[magix.forms.select-dox-end].value",
                 true);
             AppendCodeFromResource(
                 node["magix.forms.create-web-part"]["controls"]["select"],

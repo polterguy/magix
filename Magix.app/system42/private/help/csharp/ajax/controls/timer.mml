@@ -52,7 +52,7 @@ namespace Magix.sample
 
         protected void timer_Tick(object sender, EventArgs e)
         {
-            lbl.Value += "-tick";
+            lbl.value += "-tick";
         }
     }
 }</pre>
@@ -64,9 +64,9 @@ timer=>timer
   ontick
     magix.forms.get-value
       id=>lbl
-    set=>[magix.forms.set-value][value].Value
+    set=>[magix.forms.set-value][value].value
       value=>{0}{1}
-        v0=>[magix.forms.get-value][value].Value
+        v0=>[magix.forms.get-value][value].value
         v1=>-tick
     magix.forms.set-value
       id=>lbl

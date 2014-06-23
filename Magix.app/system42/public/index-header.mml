@@ -26,15 +26,15 @@ system42.travel.change-login-box
       value=>true
 
 system42.travel.try-login
-  set=>[magix.data.load][prototype][username].Value
-    value=>[$][username].Value
-  set=>[magix.data.load][prototype][pwd].Value
-    value=>[$][pwd].Value
+  set=>[magix.data.load][prototype][username].value
+    value=>[$][username].value
+  set=>[magix.data.load][prototype][pwd].value
+    value=>[$][pwd].value
   magix.data.load
     prototype
       type=>magix.core.user
   if=>more-than
-    lhs=>[magix.data.load][objects].Count
+    lhs=>[magix.data.load][objects].count
     rhs=>0
     code
       add=>[@][magix.session.set][value]
@@ -70,8 +70,8 @@ lambda=>header
         tag=>h1
     magix.configuration.get-setting
       name=>magix.core.portal-name
-    set=>[_data][label][value].Value
-      value=>[magix.configuration.get-setting][value].Value
+    set=>[_data][label][value].value
+      value=>[magix.configuration.get-setting][value].value
     add=>[$]
       value=>[_data][label]
 
@@ -106,10 +106,10 @@ panel=>loginWrp
             magix.forms.get-value
               form-id=>header
               id=>pwd
-            set=>[system42.travel.try-login][username].Value
-              value=>[magix.forms.get-value][value].Value
-            set=>[system42.travel.try-login][pwd].Value
-              value=>[magix.forms.get-value:1][value].Value
+            set=>[system42.travel.try-login][username].value
+              value=>[magix.forms.get-value][value].value
+            set=>[system42.travel.try-login][pwd].value
+              value=>[magix.forms.get-value:1][value].value
             system42.travel.try-login
 
 panel=>logoutWrp
@@ -136,18 +136,18 @@ panel=>logoutWrp
             if=>exist
               lhs=>[@][magix.web.get-parameter][value]
               code
-                set=>[if][code][_lnk][href].Value
+                set=>[if][code][_lnk][href].value
                   value=>~
-                set=>[if][code][_lnk][value].Value
+                set=>[if][code][_lnk][value].value
                   value=>website
             else
-              set=>[if][code][_lnk][href].Value
+              set=>[if][code][_lnk][href].value
                 value=>~?dashboard=
-              set=>[if][code][_lnk][value].Value
+              set=>[if][code][_lnk][value].value
                 value=>dashboard
             add=>[$]
               value=>[@][_lnk]
-            set=>[$][_lnk].Name
+            set=>[$][_lnk].name
               value=>hyperlink
 }}
 </div>

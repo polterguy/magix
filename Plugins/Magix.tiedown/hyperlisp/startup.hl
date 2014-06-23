@@ -12,6 +12,6 @@ magix.file.list-files
   filter=>*.hl
 
 for-each=>[@][magix.file.list-files][files]
-  set=>[@][execute-script][file].Value
-    value=>[.].Name
+  set=>[@][execute-script][file].value
+    value=>[.].name
 

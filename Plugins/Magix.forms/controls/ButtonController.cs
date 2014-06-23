@@ -41,7 +41,7 @@ namespace Magix.forms
                 node["inspect"],
                 "Magix.forms",
                 "Magix.forms.hyperlisp.inspect.hl",
-                "[magix.forms.button-dox].Value");
+                "[magix.forms.button-dox].value");
             AppendCodeFromResource(
                 node,
                 "Magix.forms",

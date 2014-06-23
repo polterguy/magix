@@ -30,7 +30,7 @@ namespace Magix.web
                     ip["inspect"],
                     "Magix.web",
                     "Magix.web.hyperlisp.inspect.hl",
-                    "[magix.browser.scroll-dox].Value");
+                    "[magix.browser.scroll-dox].value");
                 AppendCodeFromResource(
                     ip,
                     "Magix.web",
@@ -76,7 +76,7 @@ namespace Magix.web
                     ip["inspect"],
                     "Magix.web",
                     "Magix.web.hyperlisp.inspect.hl",
-                    "[magix.browser.redirect-dox].Value");
+                    "[magix.browser.redirect-dox].value");
                 AppendCodeFromResource(
                     ip,
                     "Magix.web",

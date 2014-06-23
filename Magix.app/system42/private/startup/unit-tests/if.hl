@@ -18,16 +18,16 @@ not executing"
     _data1=>x1
     _data2=>y1
     if=>equals
-      lhs=>[_data1].Value
+      lhs=>[_data1].value
       rhs=>x
       and=>equals
-        lhs=>[_data2].Value
+        lhs=>[_data2].value
         rhs=>y
       or=>equals
-        lhs=>[_data1].Value
+        lhs=>[_data1].value
         rhs=>x1
         and=>equals
-          lhs=>[@][_data2].Value
+          lhs=>[@][_data2].value
           rhs=>y1
       code
     else
@@ -45,16 +45,16 @@ block is not executing"
     _data1=>x1
     _data2=>y
     if=>equals
-      lhs=>[_data1].Value
+      lhs=>[_data1].value
       rhs=>x
       and=>equals
-        lhs=>[_data2].Value
+        lhs=>[_data2].value
         rhs=>y
       or=>equals
-        lhs=>[_data1].Value
+        lhs=>[_data1].value
         rhs=>x1
         and=>equals
-          lhs=>[@][_data2].Value
+          lhs=>[@][_data2].value
           rhs=>y1
       code
         throw=>[if] misbehaved
@@ -74,16 +74,16 @@ is not executing"
     _data3=>z
     _data4=>q
     if=>equals
-      lhs=>[_data1].Value
+      lhs=>[_data1].value
       rhs=>x
       and=>equals
-        lhs=>[_data2].Value
+        lhs=>[_data2].value
         rhs=>y
       and=>equals
-        lhs=>[_data3].Value
+        lhs=>[_data3].value
         rhs=>z
       and=>equals
-        lhs=>[_data4].Value
+        lhs=>[_data4].value
         rhs=>q
       code
     else
@@ -104,16 +104,16 @@ that is supposed to yield false, making sure the if statement's
     _data3=>z
     _data4=>q1
     if=>equals
-      lhs=>[_data1].Value
+      lhs=>[_data1].value
       rhs=>x
       and=>equals
-        lhs=>[_data2].Value
+        lhs=>[_data2].value
         rhs=>y
       and=>equals
-        lhs=>[_data3].Value
+        lhs=>[_data3].value
         rhs=>z
       and=>equals
-        lhs=>[_data4].Value
+        lhs=>[_data4].value
         rhs=>q
       code
         throw=>[if] misbehaved
@@ -133,16 +133,16 @@ is not executing"
     _data3=>z1
     _data4=>q
     if=>equals
-      lhs=>[_data1].Value
+      lhs=>[_data1].value
       rhs=>x
       or=>equals
-        lhs=>[_data2].Value
+        lhs=>[_data2].value
         rhs=>y
       or=>equals
-        lhs=>[_data3].Value
+        lhs=>[_data3].value
         rhs=>z
       or=>equals
-        lhs=>[_data4].Value
+        lhs=>[_data4].value
         rhs=>q
       code
     else
@@ -163,16 +163,16 @@ that is supposed to yield false, making sure the if statement's
     _data3=>z1
     _data4=>q1
     if=>equals
-      lhs=>[_data1].Value
+      lhs=>[_data1].value
       rhs=>x
       or=>equals
-        lhs=>[_data2].Value
+        lhs=>[_data2].value
         rhs=>y
       or=>equals
-        lhs=>[_data3].Value
+        lhs=>[_data3].value
         rhs=>z
       or=>equals
-        lhs=>[_data4].Value
+        lhs=>[_data4].value
         rhs=>q
       code
         throw=>[if] misbehaved
@@ -192,16 +192,16 @@ making sure its associated [else] is not executing"
     _data3=>z
     _data4=>q
     if=>equals
-      lhs=>[_data1].Value
+      lhs=>[_data1].value
       rhs=>x
       and=>equals
-        lhs=>[_data2].Value
+        lhs=>[_data2].value
         rhs=>y
         and=>equals
-          lhs=>[_data3].Value
+          lhs=>[_data3].value
           rhs=>z
           and=>equals
-            lhs=>[@][_data4].Value
+            lhs=>[@][_data4].value
             rhs=>q
       code
     else
@@ -222,16 +222,16 @@ making sure its associated [else] is not executing"
     _data3=>z
     _data4=>q1
     if=>equals
-      lhs=>[_data1].Value
+      lhs=>[_data1].value
       rhs=>x
       and=>equals
-        lhs=>[_data2].Value
+        lhs=>[_data2].value
         rhs=>y
         and=>equals
-          lhs=>[_data3].Value
+          lhs=>[_data3].value
           rhs=>z
           and=>equals
-            lhs=>[@][_data4].Value
+            lhs=>[@][_data4].value
             rhs=>q
       code
         throw=>[if] misbehaved
@@ -251,16 +251,16 @@ making sure its associated [else] is not executing"
     _data3=>z1
     _data4=>q
     if=>equals
-      lhs=>[_data1].Value
+      lhs=>[_data1].value
       rhs=>x
       or=>equals
-        lhs=>[_data2].Value
+        lhs=>[_data2].value
         rhs=>y
         or=>equals
-          lhs=>[_data3].Value
+          lhs=>[_data3].value
           rhs=>z
           or=>equals
-            lhs=>[@][_data4].Value
+            lhs=>[@][_data4].value
             rhs=>q
       code
     else
@@ -281,16 +281,16 @@ making sure its [code] block is not executing"
     _data3=>z1
     _data4=>q1
     if=>equals
-      lhs=>[_data1].Value
+      lhs=>[_data1].value
       rhs=>x
       or=>equals
-        lhs=>[_data2].Value
+        lhs=>[_data2].value
         rhs=>y
         or=>equals
-          lhs=>[_data3].Value
+          lhs=>[_data3].value
           rhs=>z
           or=>equals
-            lhs=>[@][_data4].Value
+            lhs=>[@][_data4].value
             rhs=>q
       code
         throw=>[if] misbehaved
@@ -365,33 +365,33 @@ does not affect the result of another"
       _v1=>error2
       _v2=>error3
     if=>not-equals
-      lhs=>[_data][_v0].Value
+      lhs=>[_data][_v0].value
       rhs=>error1
       code
         throw=>[if] misbehaved
     else
-      set=>[_data][_v0].Value
+      set=>[_data][_v0].value
         value=>success
     if=>not-equals
-      lhs=>[_data][_v1].Value
+      lhs=>[_data][_v1].value
       rhs=>error2
       code
         throw=>[if] misbehaved
     else
-      set=>[_data][_v1].Value
+      set=>[_data][_v1].value
         value=>success
       if=>equals
-        lhs=>[_data][_v2].Value
+        lhs=>[_data][_v2].value
         rhs=>success
         code
           throw=>[if] misbehaved
       else-if=>not-equals
-        lhs=>[_data][_v2].Value
+        lhs=>[_data][_v2].value
         rhs=>error3
         code
           throw=>[if] misbehaved
       else
-        set=>[_data][_v2].Value
+        set=>[_data][_v2].value
           value=>success
         stop
     throw=>[if] misbehaved
@@ -409,15 +409,15 @@ the result of another"
     _data
       _v0=>error1
     if=>not-equals
-      lhs=>[_data][_v0].Value
+      lhs=>[_data][_v0].value
       rhs=>error1
       code
         throw=>[if] misbehaved
     if=>equals
-      lhs=>[_data][_v0].Value
+      lhs=>[_data][_v0].value
       rhs=>error1
       code
-        set=>[_data][_v1].Value
+        set=>[_data][_v1].value
           value=>success
     else
       throw=>[if] misbehaved
@@ -434,15 +434,15 @@ sure the else statement is executed, and not its associated if"
     _data
       _v0=>error1
     if=>not-equals
-      lhs=>[_data][_v0].Value
+      lhs=>[_data][_v0].value
       rhs=>error1
       code
         throw=>[if] misbehaved
     else
-      set=>[_data][_v0].Value
+      set=>[_data][_v0].value
         value=>success
     if=>not-equals
-      lhs=>[_data][_v0].Value
+      lhs=>[_data][_v0].value
       rhs=>success
       code
         throw=>[if] misbehaved
@@ -459,12 +459,12 @@ execute, making sure it doesn't"
     _data
       _v0=>error1
     if=>not-equals
-      lhs=>[_data][_v0].Value
+      lhs=>[_data][_v0].value
       rhs=>error1
       code
         throw=>[if] misbehaved
     else-if=>not-exist
-      lhs=>[_data][_v0].Value
+      lhs=>[_data][_v0].value
       code
         throw=>[else-if] misbehaved
 
@@ -495,14 +495,14 @@ of one of them, does not affect the comparison of the others"
       code
         throw=>[if] misbehaved
     else
-      set=>[_data][v0].Value
+      set=>[_data][v0].value
         value=>success
     if=>not-exist
       lhs=>[_data]
       code
         throw=>[if] misbehaved
     else
-      set=>[_data][v1].Value
+      set=>[_data][v1].value
         value=>success
     if=>not-exist
       lhs=>[_data]
@@ -511,22 +511,22 @@ of one of them, does not affect the comparison of the others"
     else-if=>not-exist
       lhs=>[_data1]
       code
-        set=>[_data][v2].Value
+        set=>[_data][v2].value
           value=>success
     else
       throw=>[if] misbehaved
     if=>not-equals
-      lhs=>[_data][v0].Value
+      lhs=>[_data][v0].value
       rhs=>success
       code
         throw=>[if] misbehaved
     if=>not-equals
-      lhs=>[_data][v1].Value
+      lhs=>[_data][v1].value
       rhs=>success
       code
         throw=>[if] misbehaved
     if=>not-equals
-      lhs=>[_data][v2].Value
+      lhs=>[_data][v2].value
       rhs=>success
       code
         throw=>[if] misbehaved
@@ -563,10 +563,10 @@ function, without affecting each other in any ways"
                   if=>exist
                     lhs=>[_data]
                     code
-                      set=>[_data].Value
+                      set=>[_data].value
                         value=>success
     if=>not-equals
-      lhs=>[_data].Value
+      lhs=>[_data].value
       rhs=>success
       code
         throw=>[if] misbehaved
@@ -587,10 +587,10 @@ statement, making sure the execution engine throws an exception"
           lhs=>[_data]
           code
       catch
-        set=>[_data].Value
+        set=>[_data].value
           value=>success
     if=>not-equals
-      lhs=>[_data].Value
+      lhs=>[_data].value
       rhs=>success
       code
         throw=>[else-if] misbehaved
@@ -609,10 +609,10 @@ statement, making sure the execution engine throws an exception"
       code
         else
       catch
-        set=>[_data].Value
+        set=>[_data].value
           value=>success
     if=>not-equals
-      lhs=>[_data].Value
+      lhs=>[_data].value
       rhs=>success
       code
         throw=>[else] misbehaved

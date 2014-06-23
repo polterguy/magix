@@ -49,7 +49,7 @@ namespace Magix.forms
                 node["inspect"],
                 "Magix.forms",
                 "Magix.forms.hyperlisp.inspect.hl",
-                "[magix.forms.img-dox-start].Value");
+                "[magix.forms.img-dox-start].value");
             AppendCodeFromResource(
                 node,
                 "Magix.forms",
@@ -60,7 +60,7 @@ namespace Magix.forms
                 node["inspect"],
                 "Magix.forms",
                 "Magix.forms.hyperlisp.inspect.hl",
-                "[magix.forms.img-dox-end].Value",
+                "[magix.forms.img-dox-end].value",
                 true);
             AppendCodeFromResource(
                 node["magix.forms.create-web-part"]["controls"]["img"],

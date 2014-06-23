@@ -32,7 +32,7 @@ namespace Magix.execute
                     ip["inspect"],
                     "Magix.file",
                     "Magix.file.hyperlisp.inspect.hl",
-                    "[magix.file.load-from-resource-dox].Value");
+                    "[magix.file.load-from-resource-dox].value");
                 AppendCodeFromResource(
                     ip,
                     "Magix.file",

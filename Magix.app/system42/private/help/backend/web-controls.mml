@@ -40,34 +40,34 @@ lambda=>lmb
           label
             class=>left-2 span-15 last
             tag=>pre
-      set=>[@][_pnl][controls][label:0][value].Value
-        value=>[.].Name
-      replace=>[@][_pnl][controls][label:0][value].Value
+      set=>[@][_pnl][controls][label:0][value].value
+        value=>[.].name
+      replace=>[@][_pnl][controls][label:0][value].value
         what=>magix.forms.controls.
       _lmb
-        set=>[1].Name
-          value=>[$][name].Value
+        set=>[1].name
+          value=>[$][name].value
         _1
           inspect
-        set=>[$][description].Value
-          value=>[1][inspect].Value
+        set=>[$][description].value
+          value=>[1][inspect].value
         set=>[1][inspect]
-        set=>[node-2-code][node].Value
+        set=>[node-2-code][node].value
           value=>[1]
         node-2-code
           remove-root=>true
-        set=>[$][code].Value
-          value=>[node-2-code][code].Value
-      set=>[@][lambda][name].Value
-        value=>[.].Name
+        set=>[$][code].value
+          value=>[node-2-code][code].value
+      set=>[@][lambda][name].value
+        value=>[.].name
       lambda=>[@][_lmb]
-      set=>[@][_pnl][controls][label:1][value].Value
-        value=>[@][lambda][description].Value
-      set=>[@][_pnl][controls][label:2][value].Value
-        value=>[@][lambda][code].Value
+      set=>[@][_pnl][controls][label:1][value].value
+        value=>[@][lambda][description].value
+      set=>[@][_pnl][controls][label:2][value].value
+        value=>[@][lambda][code].value
       add=>[$]
         value=>[@][_pnl]
-      set=>[$][_pnl].Name
+      set=>[$][_pnl].name
         value=>panel
 }}
 </ul>

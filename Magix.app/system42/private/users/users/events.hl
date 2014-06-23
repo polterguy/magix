@@ -20,12 +20,12 @@ magix.users.load
   if=>exist
     lhs=>[$][query]
     code
-      set=>[magix.data.load][prototype][username].Value
+      set=>[magix.data.load][prototype][username].value
         value=>%{0}%
-          =>[$][query].Value
-      set=>[magix.data.count][prototype][username].Value
+          =>[$][query].value
+      set=>[magix.data.count][prototype][username].value
         value=>%{0}%
-          =>[$][query].Value
+          =>[$][query].value
   magix.data.load
     prototype
       type=>magix.core.user
@@ -59,16 +59,16 @@ magix.users.create-grid-controls
           value=>edit
           info=>{id}
           onclick
-            set=>[magix.users.edit-user][id].Value
-              value=>[$][info].Value
+            set=>[magix.users.edit-user][id].value
+              value=>[$][info].value
             magix.users.edit-user
         link-button
           class=>span-1 last
           value=>delete
           info=>{id}
           onclick
-            set=>[magix.viewport.confirm][code][magix.users.delete-user][id].Value
-              value=>[$][info].Value
+            set=>[magix.viewport.confirm][code][magix.users.delete-user][id].value
+              value=>[$][info].value
             magix.viewport.confirm
               message=>are you sure you wish to delete the user?
               code
@@ -80,7 +80,7 @@ magix.users.create-grid-controls
   set=>[magix.users.load][end]
     value=>[magix.viewstate.get][value][end]
   if=>exist
-    lhs=>[magix.viewstate.get][value][query].Value
+    lhs=>[magix.viewstate.get][value][query].value
     code
       set=>[magix.users.load][query]
         value=>[magix.viewstate.get][value][query]
@@ -95,31 +95,31 @@ magix.users.create-grid-controls
     set=>[/][_ctrl][0]
       value=>[/][_ctrl1][0]
     iterate=>[/][_ctrl]
-      switch=>[.].Value
+      switch=>[.].value
         case=>{id}
-          set=>[.].Value
-            value=>[/][**_buffer][id].Value
+          set=>[.].value
+            value=>[/][**_buffer][id].value
         case=>{name}
-          set=>[.].Value
-            value=>[/][**_buffer][value][name].Value
+          set=>[.].value
+            value=>[/][**_buffer][value][name].value
         case=>{username}
-          set=>[.].Value
-            value=>[/][**_buffer][value][username].Value
+          set=>[.].value
+            value=>[/][**_buffer][value][username].value
         case=>{role}
           if=>equals
-            lhs=>[/][**_buffer][value][roles].Count
+            lhs=>[/][**_buffer][value][roles].count
             rhs=>0
             code
-              set=>[.].Value
+              set=>[.].value
                 value=>&nbsp;
           else
-            set=>[.].Value
-              value=>[/][**_buffer][value][roles][0].Name
+            set=>[.].value
+              value=>[/][**_buffer][value][roles][0].name
     add=>[$][controls]
       value=>[/][_ctrl][panel]
   if=>more-than
-    lhs=>[magix.users.load][count].Value
-    rhs=>[magix.users.load][users].Count
+    lhs=>[magix.users.load][count].value
+    rhs=>[magix.users.load][users].count
     code
       // need to create paging ...
       _paging
@@ -134,17 +134,17 @@ magix.users.create-grid-controls
                   id=>magix.users.current-paging
                 using=>magix.math
                   subtract
-                    =>[magix.viewstate.get][value][start].Value
+                    =>[magix.viewstate.get][value][start].value
                     =>10
                   subtract
-                    =>[magix.viewstate.get][value][end].Value
+                    =>[magix.viewstate.get][value][end].value
                     =>10
-                set=>[magix.viewstate.set][value][start].Value
-                  value=>[using][subtract:0].Value
-                set=>[magix.viewstate.set][value][end].Value
-                  value=>[using][subtract:1].Value
-                set=>[magix.viewstate.set][value][query].Value
-                  value=>[magix.viewstate.get][query].Value
+                set=>[magix.viewstate.set][value][start].value
+                  value=>[using][subtract:0].value
+                set=>[magix.viewstate.set][value][end].value
+                  value=>[using][subtract:1].value
+                set=>[magix.viewstate.set][value][query].value
+                  value=>[magix.viewstate.get][query].value
                 magix.viewstate.set
                   id=>magix.users.current-paging
                 magix.users.show-users-grid
@@ -158,17 +158,17 @@ magix.users.create-grid-controls
                   id=>magix.users.current-paging
                 using=>magix.math
                   add
-                    =>[magix.viewstate.get][value][start].Value
+                    =>[magix.viewstate.get][value][start].value
                     =>10
                   add
-                    =>[magix.viewstate.get][value][end].Value
+                    =>[magix.viewstate.get][value][end].value
                     =>10
-                set=>[magix.viewstate.set][value][start].Value
-                  value=>[using][add:0].Value
-                set=>[magix.viewstate.set][value][end].Value
-                  value=>[using][add:1].Value
-                set=>[magix.viewstate.set][value][query].Value
-                  value=>[magix.viewstate.get][query].Value
+                set=>[magix.viewstate.set][value][start].value
+                  value=>[using][add:0].value
+                set=>[magix.viewstate.set][value][end].value
+                  value=>[using][add:1].value
+                set=>[magix.viewstate.set][value][query].value
+                  value=>[magix.viewstate.get][query].value
                 magix.viewstate.set
                   id=>magix.users.current-paging
                 magix.users.show-users-grid
@@ -176,27 +176,27 @@ magix.users.create-grid-controls
         id=>magix.users.current-paging
       _max
       if=>more-than-equals
-        lhs=>[@][magix.viewstate.get][value][end].Value
-        rhs=>[magix.users.load][count].Value
+        lhs=>[@][magix.viewstate.get][value][end].value
+        rhs=>[magix.users.load][count].value
         code
-          set=>[@][..][..][_max].Value
-            value=>[magix.users.load][count].Value
-          set=>[/][**link-button=>next][disabled].Value
+          set=>[@][..][..][_max].value
+            value=>[magix.users.load][count].value
+          set=>[/][**link-button=>next][disabled].value
             value=>true
       else
-        set=>[@][..][_max].Value
-          value=>[@][..][magix.viewstate.get][value][end].Value
+        set=>[@][..][_max].value
+          value=>[@][..][magix.viewstate.get][value][end].value
       if=>equals
-        lhs=>[@][magix.viewstate.get][value][start].Value
+        lhs=>[@][magix.viewstate.get][value][start].value
         rhs=>0
         code
-          set=>[/][**link-button=>previous][disabled].Value
+          set=>[/][**link-button=>previous][disabled].value
             value=>true
-      set=>[@][_paging][**label=>lbl-count][value].Value
+      set=>[@][_paging][**label=>lbl-count][value].value
         value=>{0}-{1} of {2}
-          =>[@][magix.viewstate.get][value][start].Value
-          =>[@][_max].Value
-          =>[magix.users.load][count].Value
+          =>[@][magix.viewstate.get][value][start].value
+          =>[@][_max].value
+          =>[magix.users.load][count].value
       add=>[$][controls]
         value=>[@][_paging][panel]
 
@@ -213,15 +213,15 @@ magix.users.edit-user
     set-value
       form-id=>users
       id=>edit-pwd
-      value=>[magix.data.load][value][pwd].Value
+      value=>[magix.data.load][value][pwd].value
     set-value
       form-id=>users
       id=>edit-pwd-repeat
-      value=>[magix.data.load][value][pwd].Value
+      value=>[magix.data.load][value][pwd].value
     set-value
       form-id=>users
       id=>edit-username
-      value=>[magix.data.load][value][username].Value
+      value=>[magix.data.load][value][username].value
     set-enabled
       form-id=>users
       id=>edit-username
@@ -229,17 +229,17 @@ magix.users.edit-user
     set-value
       form-id=>users
       id=>edit-name
-      value=>[magix.data.load][value][name].Value
+      value=>[magix.data.load][value][name].value
     set-value
       form-id=>users
       id=>edit-role
-      value=>[magix.data.load][value][roles][0].Name
+      value=>[magix.data.load][value][roles][0].name
   magix.forms.set-class
     form-id=>users
     id=>edit-user-wrapper
     value=>span-15 last boxed-light-green air-padding top-1 clear
-  set=>[magix.forms.set-info][value].Value
-    value=>[$][id].Value
+  set=>[magix.forms.set-info][value].value
+    value=>[$][id].value
   magix.forms.set-info
     form-id=>users
     id=>save
@@ -256,8 +256,8 @@ magix.users.delete-user
   magix.session.get
     id=>magix.core.user
   if=>equals
-    lhs=>[magix.session.get][value][username].Value
-    rhs=>[magix.data.load][value][username].Value
+    lhs=>[magix.session.get][value][username].value
+    rhs=>[magix.data.load][value][username].value
     code
       magix.viewport.show-message
         message=>for security reasons, you cannot delete the currently logged in user.&nbsp;&nbsp;if you wish to delete this user, then log in with another user, and then delete it
@@ -267,9 +267,9 @@ magix.users.delete-user
     value=>[$][id]
   magix.data.remove
   magix.users.show-users-grid
-  set=>[magix.log.append-username][body].Value
+  set=>[magix.log.append-username][body].value
     value=>user '{0}' was deleted
-      =>[magix.data.load][value][username].Value
+      =>[magix.data.load][value][username].value
   magix.log.append-username
     header=>user deleted
 
@@ -302,13 +302,13 @@ magix.users.save-user
       set=>[magix.data.save][value]
         value=>[@][magix.data.load][value]
   else
-    set=>[@][magix.data.count][prototype][username].Value
-      value=>[using][get-value:0][value].Value
+    set=>[@][magix.data.count][prototype][username].value
+      value=>[using][get-value:0][value].value
     magix.data.count
       prototype
         type=>magix.core.user
     if=>not-equals
-      lhs=>[@][magix.data.count][count].Value
+      lhs=>[@][magix.data.count][count].value
       rhs=>0
       code
         magix.viewport.show-message
@@ -321,7 +321,7 @@ magix.users.save-user
           id=>edit-username
         stop
   if=>equals
-    lhs=>[using][get-value:0][value].Value
+    lhs=>[using][get-value:0][value].value
     rhs=>
     code
       magix.viewport.show-message
@@ -334,7 +334,7 @@ magix.users.save-user
         id=>edit-username
       stop
   if=>equals
-    lhs=>[using][get-value:1][value].Value
+    lhs=>[using][get-value:1][value].value
     rhs=>
     code
       magix.viewport.show-message
@@ -347,7 +347,7 @@ magix.users.save-user
         id=>edit-name
       stop
   if=>equals
-    lhs=>[using][get-value:2][value].Value
+    lhs=>[using][get-value:2][value].value
     rhs=>
     code
       magix.viewport.show-message
@@ -360,8 +360,8 @@ magix.users.save-user
         id=>edit-pwd
       stop
   if=>not-equals
-    lhs=>[using][get-value:2][value].Value
-    rhs=>[using][get-value:3][value].Value
+    lhs=>[using][get-value:2][value].value
+    rhs=>[using][get-value:3][value].value
     code
       magix.viewport.show-message
         message=>passwords don't match
@@ -372,22 +372,22 @@ magix.users.save-user
         form-id=>users
         id=>edit-pwd
       stop
-  set=>[magix.data.save][value][username].Value
-    value=>[using][get-value:0][value].Value
-  set=>[magix.data.save][value][name].Value
-    value=>[using][get-value:1][value].Value
-  set=>[magix.data.save][value][pwd].Value
-    value=>[using][get-value:2][value].Value
+  set=>[magix.data.save][value][username].value
+    value=>[using][get-value:0][value].value
+  set=>[magix.data.save][value][name].value
+    value=>[using][get-value:1][value].value
+  set=>[magix.data.save][value][pwd].value
+    value=>[using][get-value:2][value].value
   set=>[magix.data.save][value][roles]
-  set=>[magix.data.save][value][roles][[using][get-value:4][value].Value].Value
+  set=>[magix.data.save][value][roles][[using][get-value:4][value].value].value
     value=>true
   magix.data.save
     value
       type=>magix.core.user
   magix.users.show-users-grid
-  set=>[magix.log.append-username][body].Value
+  set=>[magix.log.append-username][body].value
     value=>user '{0}' was created or edited
-      =>[magix.data.save][value][username].Value
+      =>[magix.data.save][value][username].value
   magix.log.append-username
     header=>user created or edited
 
@@ -399,12 +399,12 @@ magix.users.load-roles
   _roles
   iterate=>[magix.data.load][objects]
     if=>equals
-      lhs=>[.].Name
+      lhs=>[.].name
       rhs=>name
       code
         add=>[/][_roles]
-          value=>[.].Value
-            value=>[.].Value
+          value=>[.].value
+            value=>[.].value
   add=>[magix.forms.set-values][values]
     value=>[_roles]
     children-only=>true

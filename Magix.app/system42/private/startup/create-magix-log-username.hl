@@ -23,10 +23,10 @@ of the log item"
       lhs=>[magix.session.get][value]
       code
         throw=>no user is currently logged in
-    set=>[$][header].Value
+    set=>[$][header].value
       value=>{0}, by {1}
-        =>[$][header].Value
-        =>[magix.session.get][value][username].Value
+        =>[$][header].value
+        =>[magix.session.get][value][username].value
     add=>[@][magix.log.append]
       value=>[$]
       children-only=>true

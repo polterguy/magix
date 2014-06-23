@@ -34,34 +34,34 @@ panel=>controls-wrapper
                   add=>[@]
                     value=>[:magix.ide.add-control-to-surface[$]][0]
                 catch
-                  set=>[@][magix.viewport.show-message][message].Value
-                    value=>[@][exception].Value
+                  set=>[@][magix.viewport.show-message][message].value
+                    value=>[@][exception].value
                   magix.viewport.show-message
                     color=>#ffbbbb
         list-events
           begins-with=>magix.forms.controls
         for-each=>[list-events][events]
-          set=>[/][_data][button][value].Value
-            value=>[.].Name
-          replace=>[/][_data][button][value].Value
+          set=>[/][_data][button][value].value
+            value=>[.].name
+          replace=>[/][_data][button][value].value
             what=>magix.forms.controls.
           using=>magix.math
             modulo
               add
-                =>[$].Count
+                =>[$].count
                 =>1
               =>5
           if=>equals
-            lhs=>[@][using][modulo].Value
+            lhs=>[@][using][modulo].value
             rhs=>0
             code
-              set=>[/][_data][button][class].Value
+              set=>[/][_data][button][class].value
                 value=>span-3 last toolbox-{0}
-                  =>[/][_data][button][value].Value
+                  =>[/][_data][button][value].value
           else
-            set=>[/][_data][button][class].Value
+            set=>[/][_data][button][class].value
               value=>span-3 toolbox-{0}
-                =>[/][_data][button][value].Value
+                =>[/][_data][button][value].value
           add=>[$]
             value=>[/][_data][button]
 
@@ -87,8 +87,8 @@ panel=>controls-wrapper
             after=>after
             child=>as child of
           onselectedindexchanged
-            set=>[magix.data.save-username][value][position].Value
-              value=>[$][value].Value
+            set=>[magix.data.save-username][value][position].value
+              value=>[$][value].value
             magix.data.save-username
               id=>magix.ide.where-position
           onfirstload
@@ -97,8 +97,8 @@ panel=>controls-wrapper
             if=>exist
               lhs=>[magix.data.load-username][value]
               code
-                set=>[magix.forms.set-value][value].Value
-                  value=>[magix.data.load-username][value][position].Value
+                set=>[magix.forms.set-value][value].value
+                  value=>[magix.data.load-username][value][position].value
             magix.forms.set-value
               form-id=>add-control
               id=>select-add-where
@@ -121,8 +121,8 @@ panel=>controls-wrapper
                       value=>true
                     magix.ide.clear-controls
                   catch
-                    set=>[@][magix.viewport.show-message][message].Value
-                      value=>[@][exception].Value
+                    set=>[@][magix.viewport.show-message][message].value
+                      value=>[@][exception].value
                     magix.viewport.show-message
                       color=>#ffbbbb
 

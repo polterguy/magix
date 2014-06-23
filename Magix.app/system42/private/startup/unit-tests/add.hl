@@ -22,7 +22,7 @@ added all nodes as expected"
     add=>[_buffer]
       value=>[_data1]
     if=>not-equals
-      lhs=>[_buffer][_data1][tmp].Value
+      lhs=>[_buffer][_data1][tmp].value
       rhs=>testing
       code
         throw=>[add] misbehaved
@@ -42,7 +42,7 @@ added all nodes as expected"
       _data1
         tmp=>testing
     if=>not-equals
-      lhs=>[_buffer][_data1][tmp].Value
+      lhs=>[_buffer][_data1][tmp].value
       rhs=>testing
       code
         throw=>[add] misbehaved
@@ -65,7 +65,7 @@ of the value node are being added"
       value=>[_data1]
       children-only=>true
     if=>not-equals
-      lhs=>[_buffer][tmp].Value
+      lhs=>[_buffer][tmp].value
       rhs=>testing
       code
         throw=>[add] misbehaved
@@ -85,7 +85,7 @@ the newly added node is accurate"
       value=>tmp
         value=>testing
     if=>not-equals
-      lhs=>[_buffer][tmp].Value
+      lhs=>[_buffer][tmp].value
       rhs=>testing
       code
         throw=>[add] misbehaved
@@ -106,7 +106,7 @@ correct name, and a null value"
     if=>not-exist
       lhs=>[_buffer][tmp]
       or=>exist
-        lhs=>[_buffer][tmp].Value
+        lhs=>[_buffer][tmp].value
       code
         throw=>[add] misbehaved
 

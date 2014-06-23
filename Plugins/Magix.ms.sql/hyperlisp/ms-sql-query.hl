@@ -15,27 +15,27 @@ magix.forms.create-web-part
     magix.ms.sql.show-columns
       magix.forms.get-value
         id=>chkColumns
-      set=>[$][value].Value
-        value=>[magix.forms.get-value][value].Value
+      set=>[$][value].value
+        value=>[magix.forms.get-value][value].value
 
     magix.ms.sql.show-tables
       magix.forms.get-value
         id=>chkTables
-      set=>[$][value].Value
-        value=>[magix.forms.get-value][value].Value
+      set=>[$][value].value
+        value=>[magix.forms.get-value][value].value
 
     magix.ms.sql.visible-records-count
       magix.forms.get-value
         id=>visible-records-count
       if=>equals
-        lhs=>[magix.forms.get-value][value].Value
+        lhs=>[magix.forms.get-value][value].value
         rhs=>
         code
-          set=>[$][value].Value
+          set=>[$][value].value
             value=>10
       else
-        set=>[$][value].Value
-          value=>[magix.forms.get-value][value].Value
+        set=>[$][value].value
+          value=>[magix.forms.get-value][value].value
 
     magix.ms.sql.populate-selector
       magix.data.load
@@ -43,10 +43,10 @@ magix.forms.create-web-part
           type=>magix.ms.sql.connection
       for-each=>[magix.data.load][objects]
         _con
-        set=>[@][_con].Name
-          value=>[.][id].Value
-        set=>[@][0].Value
-          value=>[.][value][connection].Value
+        set=>[@][_con].name
+          value=>[.][id].value
+        set=>[@][0].value
+          value=>[.][value][connection].value
         add=>[/][magix.forms.set-values][values]
           value=>[@][0]
       magix.forms.set-values
@@ -56,18 +56,18 @@ magix.forms.create-web-part
           _default=>choose connection ...
 
     magix.ms.sql.test-connection
-      set=>[try][code][magix.ms.sql.select][connection].Value
-        value=>[$][connection].Value
+      set=>[try][code][magix.ms.sql.select][connection].value
+        value=>[$][connection].value
       try
         code
           magix.ms.sql.select
             sql=>@"use master"
-          set=>[$][success].Value
+          set=>[$][success].value
             value=>true
         catch
-          set=>[@][magix.viewport.show-message][message].Value
-            value=>[@][exception].Value
-          set=>[$][success].Value
+          set=>[@][magix.viewport.show-message][message].value
+            value=>[@][exception].value
+          set=>[$][success].value
             value=>false
           magix.viewport.show-message
             color=>#ffaaaa
@@ -83,11 +83,11 @@ magix.forms.create-web-part
       magix.forms.get-value
         form-id=>sql
         id=>ddlConnection
-      set=>[magix.data.load][id].Value
-        value=>[magix.forms.get-value][value].Value
+      set=>[magix.data.load][id].value
+        value=>[magix.forms.get-value][value].value
       magix.data.load
-      set=>[magix.ms.sql.test-connection][connection].Value
-        value=>[magix.data.load][value][connection].Value
+      set=>[magix.ms.sql.test-connection][connection].value
+        value=>[magix.data.load][value][connection].value
       magix.viewport.clear-controls
         container=>table-list
       magix.viewport.clear-controls
@@ -98,7 +98,7 @@ magix.forms.create-web-part
         container=>content2
       magix.ms.sql.test-connection
       if=>equals
-        lhs=>[magix.ms.sql.test-connection][success].Value
+        lhs=>[magix.ms.sql.test-connection][success].value
         rhs=>false
         code
           magix.viewport.show-message
@@ -106,42 +106,42 @@ magix.forms.create-web-part
             color=>#ffaaaa
             time=>5000
           stop
-      set=>[magix.forms.set-value][value].Value
-        value=>[magix.data.load][value][connection].Value
+      set=>[magix.forms.set-value][value].value
+        value=>[magix.data.load][value][connection].value
       magix.forms.set-value
         id=>lblHeader
-      set=>[magix.forms.set-value:1][value].Value
-        value=>[magix.data.load][value][connection].Value
+      set=>[magix.forms.set-value:1][value].value
+        value=>[magix.data.load][value][connection].value
       magix.forms.set-value
         form-id=>sql
         id=>txtNewConnection
-      set=>[magix.ms.sql.select][connection].Value
-        value=>[magix.data.load][value][connection].Value
+      set=>[magix.ms.sql.select][connection].value
+        value=>[magix.data.load][value][connection].value
       magix.ms.sql.select
         sql=>select distinct * from information_schema.tables where table_type='base table'
       for-each=>[magix.ms.sql.select][result]
         _lb
           onclick
-            set=>[magix.ms.sql.create-table-definition-and-sql][info].Value
-              value=>[$][info].Value
-        set=>[@][_lb][value].Value
-          value=>[.][TABLE_NAME].Value
-        set=>[@][_lb][info].Value
-          value=>[.][TABLE_NAME].Value
-        set=>[@][_lb][class].Value
+            set=>[magix.ms.sql.create-table-definition-and-sql][info].value
+              value=>[$][info].value
+        set=>[@][_lb][value].value
+          value=>[.][TABLE_NAME].value
+        set=>[@][_lb][info].value
+          value=>[.][TABLE_NAME].value
+        set=>[@][_lb][class].value
           value=>span-5
         add=>[/][magix.forms.create-web-part][controls]
           value=>[@][_lb]
-        set=>[/][magix.forms.create-web-part][controls][_lb].Name
+        set=>[/][magix.forms.create-web-part][controls][_lb].name
           value=>link-button
 
       if=>equals
-        lhs=>[:magix.ms.sql.show-tables][value].Value
+        lhs=>[:magix.ms.sql.show-tables][value].value
         rhs=>false
         code
-          set=>[magix.forms.create-web-part].Name
+          set=>[magix.forms.create-web-part].name
             value=>_not
-          set=>[magix.forms.effect].Name
+          set=>[magix.forms.effect].name
             value=>_not
           magix.ms.sql.create-table-definition-and-sql
       magix.forms.create-web-part
@@ -194,16 +194,16 @@ magix.forms.create-web-part
       magix.forms.get-value
         form-id=>sql
         id=>txtNewConnection
-      set=>[magix.ms.sql.select][connection].Value
-        value=>[magix.forms.get-value][value].Value
-      set=>[magix.ms.sql.select][sql].Value
+      set=>[magix.ms.sql.select][connection].value
+        value=>[magix.forms.get-value][value].value
+      set=>[magix.ms.sql.select][sql].value
         value=>@"select * from information_schema.columns where table_name = N'{0}'"
-          v0=>[$][info].Value
+          v0=>[$][info].value
       magix.ms.sql.select
             
-      set=>[magix.ms.sql.select:1][connection].Value
-        value=>[magix.forms.get-value][value].Value
-      set=>[magix.ms.sql.select:1][sql].Value
+      set=>[magix.ms.sql.select:1][connection].value
+        value=>[magix.forms.get-value][value].value
+      set=>[magix.ms.sql.select:1][sql].value
         value=>@"select * from 
     information_schema.table_constraints tab, 
     information_schema.constraint_column_usage col 
@@ -212,100 +212,100 @@ where
     and col.table_name = tab.table_name
     and constraint_type = 'primary key'
     and col.table_name = N'{0}'"
-          v0=>[$][info].Value
+          v0=>[$][info].value
       magix.ms.sql.select
       _pks
       for-each=>[magix.ms.sql.select][result]
         _lb
-        set=>[@][_lb][value].Value
-          value=>[.][COLUMN_NAME].Value
-        set=>[@][_lb][class].Value
+        set=>[@][_lb][value].value
+          value=>[.][COLUMN_NAME].value
+        set=>[@][_lb][class].value
           value=>span-5 clear
         _pk
-        set=>[@][_pk].Value
-          value=>[.][COLUMN_NAME].Value
+        set=>[@][_pk].value
+          value=>[.][COLUMN_NAME].value
         for-each=>[@][..][magix.ms.sql.select:1][result]
           if=>equals
-            lhs=>[.][COLUMN_NAME].Value
-            rhs=>[@][..][_pk].Value
+            lhs=>[.][COLUMN_NAME].value
+            rhs=>[@][..][_pk].value
             code
-              set=>[@][..][..][..][_pk].Value
+              set=>[@][..][..][..][_pk].value
                 value=>true
               add=>[@][..][..][..][..][_pks]
-                value=>[.][COLUMN_NAME].Value
+                value=>[.][COLUMN_NAME].value
                   value
               stop
         if=>equals
-          lhs=>[@][_pk].Value
+          lhs=>[@][_pk].value
           rhs=>true
           code
-            set=>[@][..][..][_lb][class].Value
+            set=>[@][..][..][_lb][class].value
               value=>{0} bold
-                v0=>[@][..][..][_lb][class].Value
-            set=>[@][..][..][_lb][title].Value
+                v0=>[@][..][..][_lb][class].value
+            set=>[@][..][..][_lb][title].value
               value=>primary key
         else
           set=>[@][..][_lb][title]
         add=>[/][magix.forms.create-web-part:0][controls]
           value=>[@][_lb]
-        set=>[/][magix.forms.create-web-part:0][controls][_lb].Name
+        set=>[/][magix.forms.create-web-part:0][controls][_lb].name
           value=>label
 
-        set=>[@][_lb][value].Value
-          value=>[.][DATA_TYPE].Value
-        set=>[@][_lb][class].Value
+        set=>[@][_lb][value].value
+          value=>[.][DATA_TYPE].value
+        set=>[@][_lb][class].value
           value=>span-2
         add=>[/][magix.forms.create-web-part:0][controls]
           value=>[@][_lb]
-        set=>[/][magix.forms.create-web-part:0][controls][_lb].Name
+        set=>[/][magix.forms.create-web-part:0][controls][_lb].name
           value=>label
 
-        set=>[@][_lb][value].Value
+        set=>[@][_lb][value].value
           value=>@"&nbsp;{0}"
-            v0=>[.][CHARACTER_MAXIMUM_LENGTH].Value
-        set=>[@][_lb][class].Value
+            v0=>[.][CHARACTER_MAXIMUM_LENGTH].value
+        set=>[@][_lb][class].value
           value=>span-3
         add=>[/][magix.forms.create-web-part:0][controls]
           value=>[@][_lb]
-        set=>[/][magix.forms.create-web-part:0][controls][_lb].Name
+        set=>[/][magix.forms.create-web-part:0][controls][_lb].name
           value=>label
         if=>equals
-          lhs=>[.][IS_NULLABLE].Value
+          lhs=>[.][IS_NULLABLE].value
           rhs=>NO
           code
-            set=>[@][..][..][_lb][value].Value
+            set=>[@][..][..][_lb][value].value
               value=>not nullable
-            set=>[@][..][..][_lb][class].Value
+            set=>[@][..][..][_lb][class].value
               value=>span-2
             add=>[/][magix.forms.create-web-part:0][controls]
               value=>[@][..][..][_lb]
-            set=>[/][magix.forms.create-web-part:0][controls][_lb].Name
+            set=>[/][magix.forms.create-web-part:0][controls][_lb].name
               value=>label
         else
-          set=>[@][..][_lb][value].Value
+          set=>[@][..][_lb][value].value
             value=>nullable
-          set=>[@][..][_lb][class].Value
+          set=>[@][..][_lb][class].value
             value=>span-2
           add=>[/][magix.forms.create-web-part:0][controls]
             value=>[@][..][_lb]
-          set=>[/][magix.forms.create-web-part:0][controls][_lb].Name
+          set=>[/][magix.forms.create-web-part:0][controls][_lb].name
             value=>label
       add=>[@][magix.viewstate.set][value]
         value=>[@][_pks]
         children-only=>true
       magix.viewstate.set
         id=>magix.ms.sql.current-primary-keys
-      set=>[magix.forms.create-web-part:0][controls][label:1][value].Value
-        value=>[$][info].Value
-      set=>[@][magix.viewstate.set:1][value].Value
-        value=>[$][info].Value
+      set=>[magix.forms.create-web-part:0][controls][label:1][value].value
+        value=>[$][info].value
+      set=>[@][magix.viewstate.set:1][value].value
+        value=>[$][info].value
       magix.viewstate.set
         id=>magix.ms.sql.current-table
       if=>equals
-        lhs=>[:magix.ms.sql.show-columns][value].Value
+        lhs=>[:magix.ms.sql.show-columns][value].value
         rhs=>false
         code
-          set=>[/][magix.forms.create-web-part].Name
+          set=>[/][magix.forms.create-web-part].name
             value=>_not
           magix.viewport.clear-controls
             container=>column-list
@@ -318,9 +318,9 @@ where
             tag=>hr
           label=>tableHeader
             tag=>h3
-      set=>[@][**text-area=>sqlQuery][value].Value
+      set=>[@][**text-area=>sqlQuery][value].value
         value=>@"select * from [{0}]"
-          v0=>[$][info].Value
+          v0=>[$][info].value
       magix.forms.create-web-part
         container=>select-query
         form-id=>select-query
@@ -336,7 +336,7 @@ where
             onclick
               magix.ms.sql.run-query
       if=>equals
-        lhs=>[:magix.ms.sql.show-columns][value].Value
+        lhs=>[:magix.ms.sql.show-columns][value].value
         rhs=>false
         code
           magix.forms.effect
@@ -377,27 +377,27 @@ where
           if=>exist
             lhs=>[@][magix.viewstate.get][value]
             code
-              set=>[_sql].Value
-                value=>[@][..][..][magix.viewstate.get][value].Value
+              set=>[_sql].value
+                value=>[@][..][..][magix.viewstate.get][value].value
           else
             magix.forms.get-value
               form-id=>select-query
               id=>sqlQuery
-            set=>[_sql].Value
-              value=>[@][magix.forms.get-value][value].Value
+            set=>[_sql].value
+              value=>[@][magix.forms.get-value][value].value
       else
         magix.forms.get-value
           form-id=>select-query
           id=>sqlQuery
-        set=>[_sql].Value
-          value=>[@][magix.forms.get-value][value].Value
+        set=>[_sql].value
+          value=>[@][magix.forms.get-value][value].value
       magix.forms.get-value
         form-id=>sql
         id=>txtNewConnection
-      index-of=>[_sql].Value
+      index-of=>[_sql].value
         what=>select
       if=>less-than
-        lhs=>[index-of][result][0].Value
+        lhs=>[index-of][result][0].value
         rhs=>10
         and=>exist
           lhs=>[index-of][result]
@@ -405,65 +405,65 @@ where
           magix.forms.set-enabled
             id=>visible-records-count
             value=>false
-          set=>[@][try][code][magix.ms.sql.select][sql].Value
-            value=>[_sql].Value
-          set=>[@][try][code][magix.ms.sql.select][connection].Value
-            value=>[magix.forms.get-value][value].Value
-          set=>[@][magix.viewstate.set][value].Value
-            value=>[_sql].Value
+          set=>[@][try][code][magix.ms.sql.select][sql].value
+            value=>[_sql].value
+          set=>[@][try][code][magix.ms.sql.select][connection].value
+            value=>[magix.forms.get-value][value].value
+          set=>[@][magix.viewstate.set][value].value
+            value=>[_sql].value
           magix.viewstate.set
             id=>magix.ms.sql.current-select-sql
           try
             code
-              set=>[@][magix.ms.sql.select][end].Value
-                value=>[:magix.ms.sql.visible-records-count][value].Value
-              set=>[@][magix.viewstate.set][value][end].Value
-                value=>[:magix.ms.sql.visible-records-count][value].Value
+              set=>[@][magix.ms.sql.select][end].value
+                value=>[:magix.ms.sql.visible-records-count][value].value
+              set=>[@][magix.viewstate.set][value][end].value
+                value=>[:magix.ms.sql.visible-records-count][value].value
               if=>exist
                 lhs=>[_position]
                 code
-                  set=>[@][..][..][magix.ms.sql.select][start].Value
-                    value=>[_position][start].Value
-                  set=>[@][..][..][magix.ms.sql.select][end].Value
-                    value=>[_position][end].Value
-                  set=>[@][..][..][magix.viewstate.set][value][start].Value
-                    value=>[_position][start].Value
-                  set=>[@][..][..][magix.viewstate.set][value][end].Value
-                    value=>[_position][end].Value
+                  set=>[@][..][..][magix.ms.sql.select][start].value
+                    value=>[_position][start].value
+                  set=>[@][..][..][magix.ms.sql.select][end].value
+                    value=>[_position][end].value
+                  set=>[@][..][..][magix.viewstate.set][value][start].value
+                    value=>[_position][start].value
+                  set=>[@][..][..][magix.viewstate.set][value][end].value
+                    value=>[_position][end].value
               else-if=>exist
                 lhs=>[$][start]
                 code
-                  set=>[@][..][..][magix.ms.sql.select][start].Value
-                    value=>[$][start].Value
-                  set=>[@][..][..][magix.ms.sql.select][end].Value
-                    value=>[$][end].Value
-                  set=>[@][..][..][magix.viewstate.set][value][start].Value
-                    value=>[$][start].Value
-                  set=>[@][..][..][magix.viewstate.set][value][end].Value
-                    value=>[$][end].Value
+                  set=>[@][..][..][magix.ms.sql.select][start].value
+                    value=>[$][start].value
+                  set=>[@][..][..][magix.ms.sql.select][end].value
+                    value=>[$][end].value
+                  set=>[@][..][..][magix.viewstate.set][value][start].value
+                    value=>[$][start].value
+                  set=>[@][..][..][magix.viewstate.set][value][end].value
+                    value=>[$][end].value
               magix.ms.sql.select
                 start=>0
               if=>more-than
-                lhs=>[@][magix.ms.sql.select][end].Value
-                rhs=>[@][magix.ms.sql.select][record-count].Value
+                lhs=>[@][magix.ms.sql.select][end].value
+                rhs=>[@][magix.ms.sql.select][record-count].value
                 code
-                  set=>[@][..][..][**v1=>?].Value
-                    value=>[@][..][..][magix.ms.sql.select][record-count].Value
-              set=>[/][**panel=>tblPaging][controls][label=>lblCount][value].Value
+                  set=>[@][..][..][**v1=>?].value
+                    value=>[@][..][..][magix.ms.sql.select][record-count].value
+              set=>[/][**panel=>tblPaging][controls][label=>lblCount][value].value
                 value=>@"{0}/{1} of {2}"
-                  v0=>[@][magix.ms.sql.select][start].Value
-                  v1=>[@][magix.ms.sql.select][end].Value
-                  v2=>[@][magix.ms.sql.select][record-count].Value
+                  v0=>[@][magix.ms.sql.select][start].value
+                  v1=>[@][magix.ms.sql.select][end].value
+                  v2=>[@][magix.ms.sql.select][record-count].value
 
-              set=>[@][magix.viewstate.set][value][count].Value
-                value=>[@][magix.ms.sql.select][record-count].Value
+              set=>[@][magix.viewstate.set][value][count].value
+                value=>[@][magix.ms.sql.select][record-count].value
               magix.viewstate.set
                 id=>magix.ms.sql.current-position
                 value
                   start=>0
             catch
-              set=>[@][magix.viewport.show-message][message].Value
-                value=>[@][exception].Value
+              set=>[@][magix.viewport.show-message][message].value
+                value=>[@][exception].value
               magix.viewport.show-message
                 time=>10000
                 color=>#ffaaaa
@@ -471,11 +471,11 @@ where
           for-each=>[@][try][code][magix.ms.sql.select][result][0]
             _th
               tag=>th
-            set=>[@][_th][value].Value
-              value=>[.].Name
+            set=>[@][_th][value].value
+              value=>[.].name
             add=>[@][..][**panel=>tbl][controls][panel][controls]
               value=>[@][_th]
-            set=>[@][..][**panel=>tbl][controls][panel][controls][_th].Name
+            set=>[@][..][**panel=>tbl][controls][panel][controls][_th].name
               value=>label
           for-each=>[@][try][code][magix.ms.sql.select][result]
             set=>[@][_pnl][controls]
@@ -494,7 +494,7 @@ where
                 magix.viewstate.get
                   id=>magix.ms.sql.current-primary-keys
                 if=>equals
-                  lhs=>[magix.viewstate.get:1][value].Count
+                  lhs=>[magix.viewstate.get:1][value].count
                   rhs=>0
                   code
                     magix.viewport.show-message
@@ -504,79 +504,79 @@ either because table has no primary keys, or because table definitions is not tu
 &nbsp;&nbsp;turn on table definitions by clicking the 'tables' checkbox, and make sure 
 you select the table from the list of tables, before you run your select from it"
                     stop
-                replace=>[_sql].Value
+                replace=>[_sql].value
                   what=>\[___table]
-                  with=>[magix.viewstate.get][value].Value
+                  with=>[magix.viewstate.get][value].value
                 _first=>true
                 for-each=>[_columns]
                   if=>not-exist
-                    lhs=>[/][magix.viewstate.get:1][value][[.].Name]
+                    lhs=>[/][magix.viewstate.get:1][value][[.].name]
                     code
                       if=>equals
-                        lhs=>[/][_first].Value
+                        lhs=>[/][_first].value
                         rhs=>true
                         code
-                          set=>[/][_first].Value
+                          set=>[/][_first].value
                             value=>false
                       else
-                        set=>[/][_sql].Value
+                        set=>[/][_sql].value
                           value=>@"{0},"
-                            =>[/][_sql].Value
-                      replace=>[.].Value
+                            =>[/][_sql].value
+                      replace=>[.].value
                         what=>'
                         with=>''
-                      set=>[/][_sql].Value
+                      set=>[/][_sql].value
                         value=>@"{0}
   {1}='{2}'"
-                          =>[/][_sql].Value
-                          =>[.].Name
-                          =>[.].Value
-                set=>[/][_sql].Value
+                          =>[/][_sql].value
+                          =>[.].name
+                          =>[.].value
+                set=>[/][_sql].value
                   value=>@"{0}
 where"
-                    =>[/][_sql].Value
-                set=>[_first].Value
+                    =>[/][_sql].value
+                set=>[_first].value
                   value=>true
                 for-each=>[_columns]
                   if=>exist
-                    lhs=>[/][magix.viewstate.get:1][value][[.].Name]
+                    lhs=>[/][magix.viewstate.get:1][value][[.].name]
                     code
                       if=>exist
-                        lhs=>[.].Value
+                        lhs=>[.].value
                         code
                           if=>equals
-                            lhs=>[/][_first].Value
+                            lhs=>[/][_first].value
                             rhs=>true
                             code
-                              set=>[/][_first].Value
+                              set=>[/][_first].value
                                 value=>false
                           else
-                            set=>[/][_sql].Value
+                            set=>[/][_sql].value
                               value=>{0} and
-                                =>[/][_sql].Value
-                          set=>[/][_sql].Value
+                                =>[/][_sql].value
+                          set=>[/][_sql].value
                             value=>@"{0}
   {1}='{2}'"
-                              =>[/][_sql].Value
-                              =>[.].Name
-                              =>[.].Value
-                set=>[magix.forms.set-value][value].Value
-                  value=>[_sql].Value
+                              =>[/][_sql].value
+                              =>[.].name
+                              =>[.].value
+                set=>[magix.forms.set-value][value].value
+                  value=>[_sql].value
                 magix.forms.set-value
                   form-id=>select-query
                   id=>sqlQuery
             for-each=>[.]
               _lbl
                 tag=>td
-              set=>[@][_lbl][value].Value
-                value=>[.].Value
+              set=>[@][_lbl][value].value
+                value=>[.].value
               add=>[@][..][_pnl][controls]
                 value=>[@][_lbl]
-              set=>[@][..][_pnl][controls][_lbl].Name
+              set=>[@][..][_pnl][controls][_lbl].name
                 value=>label
             add=>[@][..][magix.forms.create-web-part][controls][panel=>tbl][controls]
               value=>[@][_pnl]
-            set=>[@][..][magix.forms.create-web-part][controls][panel=>tbl][controls][_pnl].Name
+            set=>[@][..][magix.forms.create-web-part][controls][panel=>tbl][controls][_pnl].name
               value=>panel
 
           magix.forms.create-web-part
@@ -594,7 +594,7 @@ where"
                       magix.viewstate.get
                         id=>magix.ms.sql.current-position
                       if=>equals
-                        lhs=>[magix.viewstate.get][value][start].Value
+                        lhs=>[magix.viewstate.get][value][start].value
                         rhs=>0
                         code
                           magix.viewport.show-message
@@ -602,15 +602,15 @@ where"
                           stop
                       using=>magix.math
                         subtract
-                          =>[/][magix.viewstate.get][value][start].Value
-                          =>[:magix.ms.sql.visible-records-count][value].Value
+                          =>[/][magix.viewstate.get][value][start].value
+                          =>[:magix.ms.sql.visible-records-count][value].value
                         subtract
-                          =>[/][magix.viewstate.get][value][end].Value
-                          =>[:magix.ms.sql.visible-records-count][value].Value
-                      set=>[magix.ms.sql.run-query][start].Value
-                        value=>[using][subtract:0].Value
-                      set=>[magix.ms.sql.run-query][end].Value
-                        value=>[using][subtract:1].Value
+                          =>[/][magix.viewstate.get][value][end].value
+                          =>[:magix.ms.sql.visible-records-count][value].value
+                      set=>[magix.ms.sql.run-query][start].value
+                        value=>[using][subtract:0].value
+                      set=>[magix.ms.sql.run-query][end].value
+                        value=>[using][subtract:1].value
                       magix.ms.sql.run-query
                         force-select=>true
                   label=>lblCount
@@ -623,23 +623,23 @@ where"
                       magix.viewstate.get
                         id=>magix.ms.sql.current-position
                       if=>more-than-equals
-                        lhs=>[magix.viewstate.get][value][end].Value
-                        rhs=>[magix.viewstate.get][value][count].Value
+                        lhs=>[magix.viewstate.get][value][end].value
+                        rhs=>[magix.viewstate.get][value][count].value
                         code
                           magix.viewport.show-message
                             message=>already at end
                           stop
                       using=>magix.math
                         add
-                          =>[/][magix.viewstate.get][value][start].Value
-                          =>[:magix.ms.sql.visible-records-count][value].Value
+                          =>[/][magix.viewstate.get][value][start].value
+                          =>[:magix.ms.sql.visible-records-count][value].value
                         add
-                          =>[/][magix.viewstate.get][value][end].Value
-                          =>[:magix.ms.sql.visible-records-count][value].Value
-                      set=>[magix.ms.sql.run-query][start].Value
-                        value=>[using][add:0].Value
-                      set=>[magix.ms.sql.run-query][end].Value
-                        value=>[using][add:1].Value
+                          =>[/][magix.viewstate.get][value][end].value
+                          =>[:magix.ms.sql.visible-records-count][value].value
+                      set=>[magix.ms.sql.run-query][start].value
+                        value=>[using][add:0].value
+                      set=>[magix.ms.sql.run-query][end].value
+                        value=>[using][add:1].value
                       magix.ms.sql.run-query
                         force-select=>true
                   button=>close-select
@@ -658,24 +658,24 @@ where"
                   panel
                     tag=>tr
       else
-        set=>[@][try][code][magix.ms.sql.execute][sql].Value
-          value=>[/][_sql].Value
-        set=>[@][try][code][magix.ms.sql.execute][connection].Value
-          value=>[/][magix.forms.get-value][value].Value
+        set=>[@][try][code][magix.ms.sql.execute][sql].value
+          value=>[/][_sql].value
+        set=>[@][try][code][magix.ms.sql.execute][connection].value
+          value=>[/][magix.forms.get-value][value].value
         try
           code
             magix.ms.sql.execute
-            set=>[@][magix.viewport.show-message][message].Value
+            set=>[@][magix.viewport.show-message][message].value
               value=>@"{0} records affected"
-                v0=>[@][magix.ms.sql.execute][result].Value
+                v0=>[@][magix.ms.sql.execute][result].value
             magix.ms.sql.run-query
               force-select=>true
               keep-position=>true
             magix.viewport.show-message
               time=>5000
           catch
-            set=>[@][magix.viewport.show-message][message].Value
-              value=>[@][exception].Value
+            set=>[@][magix.viewport.show-message][message].value
+              value=>[@][exception].value
             magix.viewport.show-message
               time=>10000
               color=>#ffaaaa
@@ -698,7 +698,7 @@ where"
             magix.ms.sql.populate-selector
           onselectedindexchanged
             if=>not-equals
-              lhs=>[$][value].Value
+              lhs=>[$][value].value
               rhs=>_default
               code
                 magix.forms.set-enabled
@@ -720,8 +720,8 @@ where"
             magix.forms.get-value
               form-id=>sql
               id=>ddlConnection
-            set=>[magix.data.remove][id].Value
-              value=>[magix.forms.get-value][value].Value
+            set=>[magix.data.remove][id].value
+              value=>[magix.forms.get-value][value].value
             magix.data.remove
             magix.ms.sql.populate-selector
             magix.forms.set-enabled
@@ -743,24 +743,24 @@ where"
             magix.forms.get-value
               form-id=>sql
               id=>txtNewConnection
-            set=>[magix.ms.sql.test-connection][connection].Value
-              value=>[magix.forms.get-value][value].Value
+            set=>[magix.ms.sql.test-connection][connection].value
+              value=>[magix.forms.get-value][value].value
             magix.ms.sql.test-connection
             if=>equals
-              lhs=>[magix.ms.sql.test-connection][success].Value
+              lhs=>[magix.ms.sql.test-connection][success].value
               rhs=>false
               code
                 magix.viewport.show-message
                   message=>that is not a good connection
                 stop
-            set=>[magix.data.save][value][connection].Value
-              value=>[magix.forms.get-value][value].Value
+            set=>[magix.data.save][value][connection].value
+              value=>[magix.forms.get-value][value].value
             magix.data.save
               value
                 type=>magix.ms.sql.connection
             magix.ms.sql.populate-selector
-            set=>[magix.forms.set-value][value].Value
-              value=>[magix.data.save][id].Value
+            set=>[magix.forms.set-value][value].value
+              value=>[magix.data.save][id].value
             magix.forms.set-value
               form-id=>sql
               id=>ddlConnection
@@ -787,7 +787,7 @@ where"
           class=>span-1 top-1
           oncheckedchanged
             if=>equals
-              lhs=>[$][value].Value
+              lhs=>[$][value].value
               rhs=>false
               code
                 magix.forms.set-enabled
@@ -803,7 +803,7 @@ where"
             magix.forms.get-enabled
               id=>txtNewConnection
             if=>equals
-              lhs=>[magix.forms.get-enabled][value].Value
+              lhs=>[magix.forms.get-enabled][value].value
               rhs=>false
               code
                 magix.ms.sql.open-selected-connection
@@ -819,10 +819,10 @@ where"
             magix.viewstate.get
               id=>magix.ms.sql.current-table
             if=>exist
-              lhs=>[magix.viewstate.get][value].Value
+              lhs=>[magix.viewstate.get][value].value
               code
-                set=>[magix.ms.sql.create-table-definition-and-sql][info].Value
-                  value=>[magix.viewstate.get][value].Value
+                set=>[magix.ms.sql.create-table-definition-and-sql][info].value
+                  value=>[magix.viewstate.get][value].value
     dynamic=>table-list
     dynamic=>column-list
     dynamic=>select-query

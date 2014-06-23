@@ -12,11 +12,11 @@ the [if] keyword makes it possible for you to conditionally execute code, accord
 <pre>
 _data=>5
 if=>less-than
-  lhs=>[_data].Value
+  lhs=>[_data].value
   rhs=>6
   code
     magix.viewport.show-message
-      message=>yes, the [_data].Value is less than 6
+      message=>yes, the [_data].value is less than 6
 </pre>
 
 <p>the above piece of code, checks to see if the value of [_data] is less than 6, and if it is, it will execute the code inside of the 
@@ -25,14 +25,14 @@ if=>less-than
 <pre>
 _data=>5
 if=>less-than
-  lhs=>[_data].Value
+  lhs=>[_data].value
   rhs=>6
   and=>more-than
-    lhs=>[_data].Value
+    lhs=>[_data].value
     rhs=>4
   code
     magix.viewport.show-message
-      message=>yes, the [_data].Value is less than 6 and more than 4
+      message=>yes, the [_data].value is less than 6 and more than 4
 </pre>
 
 <p>the above code checks to see if the value of [_data] is less than 6 and more than 4, and only if both statements are true, it will 
@@ -43,14 +43,14 @@ execute the code in the [code] block.&nbsp;&nbsp;you can create multiple and sta
 <pre>
 _data=>5
 if=>less-than
-  lhs=>[_data].Value
+  lhs=>[_data].value
   rhs=>5
   or=>equals
-    lhs=>[_data].Value
+    lhs=>[_data].value
     rhs=>5
   code
     magix.viewport.show-message
-      message=>yes, the [_data].Value is either less than 5, or 5
+      message=>yes, the [_data].value is either less than 5, or 5
 </pre>
 
 <p>the above code, checks to see if [_data] is less than 5, or if it is 5 exactly.&nbsp;&nbsp;if either one of those statements are 
@@ -61,17 +61,17 @@ the following</p>
 <pre>
 _data=>5
 if=>less-than
-  lhs=>[_data].Value
+  lhs=>[_data].value
   rhs=>5
   and=>equals
-    lhs=>[_data].Name
+    lhs=>[_data].name
     rhs=>_data2
   or=>equals
-    lhs=>[_data].Value
+    lhs=>[_data].value
     rhs=>5
   code
     magix.viewport.show-message
-      message=>yes, the [_data].Value is either less than 5 and the [_data] node's name is [_data2], or [_data] node's value is 5
+      message=>yes, the [_data].value is either less than 5 and the [_data] node's name is [_data2], or [_data] node's value is 5
 </pre>
 
 <p>in the above code, it checks to see first if the [_data] node's value is less than 5 and the name of the [_data] node is [_data2], which 
@@ -84,14 +84,14 @@ conside the following</p>
 <pre>
 _data=>5
 if=>less-than
-  lhs=>[_data].Value
+  lhs=>[_data].value
   rhs=>5
   code
     magix.viewport.show-message
-      message=>yes, the [_data].Value is less than 5
+      message=>yes, the [_data].value is less than 5
 else
   magix.viewport.show-message
-    message=>no, the [_data].Value is not less than 5
+    message=>no, the [_data].value is not less than 5
 </pre>
 
 
@@ -150,8 +150,8 @@ _data
   =>2
   =>1
 for-each=>[_data]
-  set=>[@][magix.viewport.show-message][message].Value
-    value=>[.].Value
+  set=>[@][magix.viewport.show-message][message].value
+    value=>[.].value
 </pre>
 
 <p>the above piece of code will show 5 message boxes.&nbsp;&nbsp;one for each of the value in the nodes inside the [_data] node.&nbsp;&nbsp;
@@ -178,8 +178,8 @@ _data
   =>2
   =>1
 iterate=>[_data]
-  set=>[@][magix.viewport.show-message][message].Value
-    value=>[.].Value
+  set=>[@][magix.viewport.show-message][message].value
+    value=>[.].value
 </pre>
 
 <p>if you exchange the [iterate] keyword above with a [for-each] keyword, then the output of the above code will be the same as the [for-each] 
@@ -192,7 +192,7 @@ value whom it matches, and if no match is found, executes the [default] code blo
 
 <pre>
 _data=>2
-switch=>[_data].Value
+switch=>[_data].value
   case=>0
     magix.viewport.show-message
       message=>error
@@ -221,8 +221,8 @@ switch=>[_data].Value
 
 <pre>
 _data
-  set=>[/][magix.viewport.show-message][message].Value
-    value=>[$][message].Value
+  set=>[/][magix.viewport.show-message][message].value
+    value=>[$][message].value
 lambda=>[_data]
   message=>howdy world
 </pre>
@@ -242,8 +242,8 @@ _data
     add=>[/][using][add]
       value=>[.]
   using=>magix.math
-  set=>[$][result].Value
-    value=>[@][using][add].Value
+  set=>[$][result].value
+    value=>[@][using][add].value
 lambda=>[_data]
   =>5
   =>4
@@ -258,8 +258,8 @@ _data
     add=>[/][using][add]
       value=>[.]
   using=>magix.math
-  set=>[$][result].Value
-    value=>[@][using][add].Value
+  set=>[$][result].value
+    value=>[@][using][add].value
 lambda=>[_data]
   =>5
   =>4

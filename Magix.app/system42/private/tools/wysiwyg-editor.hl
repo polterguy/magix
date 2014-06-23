@@ -16,44 +16,44 @@ magix.viewport.include-client-file
 
 // loading file, if we are given a [file] input parameter
 if=>exist
-  lhs=>[$][file].Value
+  lhs=>[$][file].value
   code
     using=>magix.file
       load
-        file=>[$][file].Value
-    replace=>[@][using][load][value].Value
+        file=>[$][file].value
+    replace=>[@][using][load][value].value
       what=>&
       with=>&amp;
-    replace=>[@][using][load][value].Value
+    replace=>[@][using][load][value].value
       what=><
       with=>&lt;
-    replace=>[@][using][load][value].Value
+    replace=>[@][using][load][value].value
       what=>>
       with=>&gt;
-    set=>[**wysiwyg=>editor-surface][value].Value
-      value=>[@][using][load][value].Value
-    set=>[**text-box=>txt-file-name][value].Value
-      value=>[$][file].Value
+    set=>[**wysiwyg=>editor-surface][value].value
+      value=>[@][using][load][value].value
+    set=>[**text-box=>txt-file-name][value].value
+      value=>[$][file].value
 
 // putting in container, if we're given one, otherwise we're using default container
 if=>exist
   lhs=>[$][container]
   code
-    set=>[magix.forms.create-web-part][container].Value
-      value=>[$][container].Value
+    set=>[magix.forms.create-web-part][container].value
+      value=>[$][container].value
 
 // adding css classes, if we're given any, otherwise using default of last span-17
 if=>exist
   lhs=>[$][class]
   code
-    set=>[magix.forms.create-web-part][class].Value
-      value=>[$][class].Value
+    set=>[magix.forms.create-web-part][class].value
+      value=>[$][class].value
 
 // adding extra buttons, if we're given any
 if=>exist
   lhs=>[$][extra-buttons]
   code
-    set=>[**button=>save][class].Value
+    set=>[**button=>save][class].value
       value=>span-2
     add=>[**panel=>save-wrapper][controls]
       value=>[$][extra-buttons]
@@ -61,18 +61,18 @@ if=>exist
 
 // adding automatical scroll, if we're supposed to
 if=>equals
-  lhs=>[$][auto-scroll].Value
+  lhs=>[$][auto-scroll].value
   rhs=>true
   code
-    set=>[**panel=>save-wrapper][onfirstload][magix.browser.scroll][id].Value
-      value=>[magix.forms.create-web-part][container].Value
+    set=>[**panel=>save-wrapper][onfirstload][magix.browser.scroll][id].value
+      value=>[magix.forms.create-web-part][container].value
 
 // automatically giving focus, if we're supposed to
 if=>not-equals
-  lhs=>[$][auto-focus].Value
+  lhs=>[$][auto-focus].value
   rhs=>true
   code
-    set=>[**text-area=>editor-surface][onfirstload][magix.forms.effect].Name
+    set=>[**text-area=>editor-surface][onfirstload][magix.forms.effect].name
       value=>_not
 
 // adding [onesc] event handler, if we're given any
@@ -97,7 +97,7 @@ magix.forms.create-web-part
         form-id=>editor
         id=>editor-surface
       if=>equals
-        lhs=>[magix.forms.get-value:1][value].Value
+        lhs=>[magix.forms.get-value:1][value].value
         rhs=>
         code
           magix.viewport.show-message
@@ -105,7 +105,7 @@ magix.forms.create-web-part
             color=>#ffaaaa
           stop
       if=>equals
-        lhs=>[magix.forms.get-value:0][value].Value
+        lhs=>[magix.forms.get-value:0][value].value
         rhs=>
         code
           // no filename given, opening up browse to figure out a filename to save file as
@@ -116,8 +116,8 @@ magix.forms.create-web-part
               no-edit-button=>true
               class=>span-15 last boxed air-padding top-1 left-5
               onselect
-                set=>[magix.forms.set-value][value].Value
-                  value=>[$][file].Value
+                set=>[magix.forms.set-value][value].value
+                  value=>[$][file].value
                 magix.forms.set-value
                   form-id=>editor
                   id=>txt-file-name
@@ -141,7 +141,7 @@ magix.forms.create-web-part
         form-id=>editor
         id=>editor-surface
       if=>equals
-        lhs=>[magix.forms.get-value:1][value].Value
+        lhs=>[magix.forms.get-value:1][value].value
         rhs=>
         code
           magix.viewport.show-message
@@ -150,8 +150,8 @@ magix.forms.create-web-part
           stop
       using=>magix.file
         save
-          file=>[magix.forms.get-value:0][value].Value
-          value=>[magix.forms.get-value:1][value].Value
+          file=>[magix.forms.get-value:0][value].value
+          value=>[magix.forms.get-value:1][value].value
       magix.viewport.show-message
         message=>file was successfully saved
       magix.forms.effect

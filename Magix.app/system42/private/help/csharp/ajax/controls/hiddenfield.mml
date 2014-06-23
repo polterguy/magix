@@ -67,13 +67,13 @@ namespace Magix.sample
 
         protected void btn_Click(object sender, EventArgs e)
         {
-            hid.Value ="new value";
-            btn2.Value = "then me again!";
+            hid.value ="new value";
+            btn2.value = "then me again!";
         }
 
         protected void btn2_Click(object sender, EventArgs e)
         {
-            btn2.Value = hid.Value;
+            btn2.value = hid.value;
         }
     }
 }</pre>
@@ -99,8 +99,8 @@ button=>btn2
   onclick
     magix.forms.get-value
       id=>hid
-    set=>[magix.forms.set-value][value].Value
-      value=>[magix.forms.get-value][value].Value
+    set=>[magix.forms.set-value][value].value
+      value=>[magix.forms.get-value][value].value
     magix.forms.set-value
       id=>btn2
 }}

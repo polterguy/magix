@@ -12,7 +12,7 @@ magix.ide.load_onclick
     form-id=>load-content
     id=>filename
   if=>equals
-    lhs=>[magix.forms.get-value][value].Value
+    lhs=>[magix.forms.get-value][value].value
     rhs=>
     code
       magix.viewport.show-message
@@ -20,9 +20,9 @@ magix.ide.load_onclick
       stop
   using=>magix.file
     file-exist
-      file=>[magix.forms.get-value][value].Value
+      file=>[magix.forms.get-value][value].value
   if=>not-equals
-    lhs=>[using][file-exist][value].Value
+    lhs=>[using][file-exist][value].value
     rhs=>true
     code
       magix.viewport.show-message
@@ -38,15 +38,15 @@ magix.ide.load-from-filesystem
     id=>filename
   using=>magix.file
     load
-      file=>[magix.forms.get-value][value].Value
+      file=>[magix.forms.get-value][value].value
   code-2-node
-    code=>[using][load][value].Value
+    code=>[using][load][value].value
   add=>[magix.ide.set-form][value]
     value=>[code-2-node][node]
     children-only=>true
   magix.ide.set-form
-  set=>[magix.data.save-username][value][filename].Value
-    value=>[magix.forms.get-value][value].Value
+  set=>[magix.data.save-username][value][filename].value
+    value=>[magix.forms.get-value][value].value
   magix.data.save-username
     id=>magix.ide.last-used-load-filename
   magix.viewport.clear-controls
@@ -60,8 +60,8 @@ magix.ide.filesystem_onfirstload
   if=>exist
     lhs=>[magix.data.load-username][value]
     code
-      set=>[@][magix.forms.set-value][value].Value
-        value=>[magix.data.load-username][value][filename].Value
+      set=>[@][magix.forms.set-value][value].value
+        value=>[magix.data.load-username][value][filename].value
       magix.forms.set-value
         form-id=>load-content
         id=>filename
@@ -84,8 +84,8 @@ magix.ide.browse_onclick
       class=>span-15 last boxed air-padding bottom-1
       editor-container=>editor-for-persist-wrapper
       onselect
-        set=>[magix.forms.set-value][value].Value
-          value=>[$][file].Value
+        set=>[magix.forms.set-value][value].value
+          value=>[$][file].value
         magix.forms.set-value
           form-id=>load-content
           id=>filename

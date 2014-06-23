@@ -39,7 +39,7 @@ namespace Magix.forms
                 tmp["inspect"],
                 "Magix.forms",
                 "Magix.forms.hyperlisp.inspect.hl",
-                "[magix.forms.base-web-form-element-text-dox].Value",
+                "[magix.forms.base-web-form-element-text-dox].value",
                 true);
             node["value"].Value = "text value";
         }

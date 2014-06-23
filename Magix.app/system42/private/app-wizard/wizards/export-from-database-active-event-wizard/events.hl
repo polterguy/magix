@@ -12,16 +12,16 @@ magix.wizard.next-1_onclick
   magix.forms.get-value
     form-id=>wizard
     id=>active-event-name
-  split=>[magix.forms.get-value][value].Value
+  split=>[magix.forms.get-value][value].value
     what=>.
   if=>equals
-    lhs=>[split][result].Count
+    lhs=>[split][result].count
     rhs=>1
     or=>equals
-      lhs=>[split][result][0].Value
+      lhs=>[split][result][0].value
       rhs=>magix
     or=>equals
-      lhs=>[magix.forms.get-value][value].Value
+      lhs=>[magix.forms.get-value][value].value
       rhs=>
     code
       magix.viewport.show-message
@@ -38,7 +38,7 @@ magix.wizard.next-1_onclick
     form-id=>wizard
     id=>item-types
   if=>equals
-    lhs=>[magix.forms.get-value:1][value].Value
+    lhs=>[magix.forms.get-value:1][value].value
     rhs=>
     code
       magix.viewport.show-message
@@ -49,11 +49,11 @@ magix.wizard.next-1_onclick
         form-id=>wizard
         id=>item-types
       stop
-  set=>[magix.data.count][prototype][type].Value
-    value=>[magix.forms.get-value:1][value].Value
+  set=>[magix.data.count][prototype][type].value
+    value=>[magix.forms.get-value:1][value].value
   magix.data.count
   if=>equals
-    lhs=>[magix.data.count][count].Value
+    lhs=>[magix.data.count][count].value
     rhs=>0
     code
       magix.viewport.show-message
@@ -84,8 +84,8 @@ magix.wizard.initialize-second-page
           magix.forms.get-value
             form-id=>wizard
             id=>item-types
-          set=>[magix.data.load][prototype][type].Value
-            value=>[magix.forms.get-value][value].Value
+          set=>[magix.data.load][prototype][type].value
+            value=>[magix.forms.get-value][value].value
           magix.data.load
             start=>0
             end=>1
@@ -104,27 +104,27 @@ magix.wizard.initialize-second-page
                     class=>span-4 last
                     value=>{column-name}
                     for=>{column-name}
-            set=>[@][_column-name].Value
-              value=>[.].Name
+            set=>[@][_column-name].value
+              value=>[.].name
             iterate=>[@][_panel]
               if=>equals
-                lhs=>[.].Value
+                lhs=>[.].value
                 rhs=>{column-name}
                 code
-                  set=>[.].Value
-                    value=>[@][..][..][..][_column-name].Value
+                  set=>[.].value
+                    value=>[@][..][..][..][_column-name].value
             add=>[$]
               value=>_tmp
             using=>magix.math
               modulo
-                =>[$].Count
+                =>[$].count
                 =>3
             set=>[$][_tmp]
             if=>equals
-              lhs=>[@][using=>magix.math][modulo].Value
+              lhs=>[@][using=>magix.math][modulo].value
               rhs=>0
               code
-                set=>[@][..][..][_panel][panel][class].Value
+                set=>[@][..][..][_panel][panel][class].value
                   value=>span-5 last
             add=>[$]
               value=>[@][_panel][panel]
@@ -149,50 +149,50 @@ magix.wizard.save_onclick
             value=>[.][value]
             children-only=>true
           for-each=>[/][_fields]
-            replace=>[@][..][_obj][[.].Name].Value
+            replace=>[@][..][_obj][[.].name].value
               what=>@""""
               with=>@""""""
             if=>not-equals
-              lhs=>[@][..][_line-value].Value
+              lhs=>[@][..][_line-value].value
               rhs=>
               code
-                set=>[@][..][..][..][_line-value].Value
+                set=>[@][..][..][..][_line-value].value
                   value=>{0},
-                    =>[@][..][..][..][_line-value].Value
-            set=>[@][..][_line-value].Value
+                    =>[@][..][..][..][_line-value].value
+            set=>[@][..][_line-value].value
               value=>@"{0}""{1}"""
-                =>[@][..][_line-value].Value
-                =>[@][..][_obj][[.].Name].Value
-          set=>[@][_line-value].Value
+                =>[@][..][_line-value].value
+                =>[@][..][_obj][[.].name].value
+          set=>[@][_line-value].value
             value=>@"{0}
 "
-              =>[@][_line-value].Value
-          set=>[@][..][_file-value].Value
+              =>[@][_line-value].value
+          set=>[@][..][_file-value].value
             value=>{0}{1}
-              =>[@][..][_file-value].Value
-              =>[@][_line-value].Value
+              =>[@][..][_file-value].value
+              =>[@][_line-value].value
         magix.date.now
-        replace=>[magix.date.now][value].Value
+        replace=>[magix.date.now][value].value
           what=>@" "
           with=>-
-        replace=>[magix.date.now][value].Value
+        replace=>[magix.date.now][value].value
           what=>.
-        replace=>[magix.date.now][value].Value
+        replace=>[magix.date.now][value].value
           what=>@":"
-        set=>[magix.date.now][value].Value
+        set=>[magix.date.now][value].value
           value=>your-files/tmp/export-{0}.csv
-            =>[magix.date.now][value].Value
+            =>[magix.date.now][value].value
         using=>magix.file
           save
-            file=>[magix.date.now][value].Value
-            value=>[_file-value].Value
+            file=>[magix.date.now][value].value
+            value=>[_file-value].value
         magix.log.append
           header=>items exported
           body=>items of type '{type-name}' was exported to file
 
         // redirecting to file
-        set=>[magix.file.download][file].Value
-          value=>[magix.date.now][value].Value
+        set=>[magix.file.download][file].value
+          value=>[magix.date.now][value].value
         magix.file.download
   _delete
     magix.data.remove
@@ -204,11 +204,11 @@ magix.wizard.save_onclick
         =>{type-name}
   for-each=>[magix.forms.get-children-values][values]
     if=>equals
-      lhs=>[.].Value
+      lhs=>[.].value
       rhs=>true
       code
         add=>[/][_event][**_fields]
-          value=>[.].Name
+          value=>[.].name
   magix.forms.get-value
     form-id=>wizard
     id=>active-event-name
@@ -217,31 +217,31 @@ magix.wizard.save_onclick
     id=>item-types
   iterate=>[_event]
     if=>equals
-      lhs=>[.].Value
+      lhs=>[.].value
       rhs=>{active-event-name}
       code
-        set=>[.].Value
-          value=>[/][magix.forms.get-value:0][value].Value
+        set=>[.].value
+          value=>[/][magix.forms.get-value:0][value].value
     if=>equals
-      lhs=>[.].Value
+      lhs=>[.].value
       rhs=>{type-name}
       code
-        set=>[.].Value
-          value=>[/][magix.forms.get-value:1][value].Value
+        set=>[.].value
+          value=>[/][magix.forms.get-value:1][value].value
   magix.forms.get-value
     form-id=>wizard
     id=>delete-items
   if=>equals
-    lhs=>[magix.forms.get-value:2][value].Value
+    lhs=>[magix.forms.get-value:2][value].value
     rhs=>true
     code
       iterate=>[_delete]
         if=>equals
-          lhs=>[.].Value
+          lhs=>[.].value
           rhs=>{type-name}
           code
-            set=>[.].Value
-              value=>[/][magix.forms.get-value:1][value].Value
+            set=>[.].value
+              value=>[/][magix.forms.get-value:1][value].value
       add=>[_event][event][code]
         value=>[_delete]
         children-only=>true
@@ -256,5 +256,5 @@ magix.wizard.save_onclick
     set-info
       form-id=>wizard
       id=>edit-event
-      value=>[magix.forms.get-value][value].Value
+      value=>[magix.forms.get-value][value].value
 

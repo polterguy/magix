@@ -10,28 +10,28 @@ magix.ide.show-hide-preview-load-description
   if=>exist
     lhs=>[magix.data.load-username][value]
     code
-      switch=>[magix.data.load-username][value][where].Value
+      switch=>[magix.data.load-username][value][where].value
         case=>database
           magix.data.load-username
             id=>magix.ide.last-used-save-database-id
-          set=>[@][magix.forms.set-value][value].Value
+          set=>[@][magix.forms.set-value][value].value
             value=>@"magix.forms.create-web-part
   form-id=>your-form-id
   container=>content2
   controls-id=>{0}"
-              =>[@][magix.data.load-username][value][id].Value
+              =>[@][magix.data.load-username][value][id].value
           magix.forms.set-value
             form-id=>preview-wrapper
             id=>load-description
         case=>filesystem
           magix.data.load-username
             id=>magix.ide.last-used-save-filename
-          set=>[@][magix.forms.set-value][value].Value
+          set=>[@][magix.forms.set-value][value].value
             value=>@"magix.forms.create-web-part
   form-id=>your-form-id
   container=>content2
   controls-file=>{0}"
-              =>[@][magix.data.load-username][value][filename].Value
+              =>[@][magix.data.load-username][value][filename].value
           magix.forms.set-value
             form-id=>preview-wrapper
             id=>load-description

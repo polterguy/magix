@@ -38,10 +38,10 @@ panel=>comment-wrapper
         if=>exist
           lhs=>[magix.forms.get-children-values][values][feedback-email]
           code
-            split=>[magix.forms.get-children-values][values][feedback-email].Value
+            split=>[magix.forms.get-children-values][values][feedback-email].value
               what=>@
             if=>not-equals
-              lhs=>[@][split][result].Count
+              lhs=>[@][split][result].count
               rhs=>2
               code
                 magix.viewport.show-message
@@ -50,13 +50,13 @@ panel=>comment-wrapper
                 magix.forms.effect
                   id=>feedback-email
                   type=>focus-and-select
-                set=>[_good].Value
+                set=>[_good].value
                   value=>false
             else
-              split=>[@][..][split][result][1].Value
+              split=>[@][..][split][result][1].value
                 what=>.
               if=>not-equals
-                lhs=>[@][split][result].Count
+                lhs=>[@][split][result].count
                 rhs=>2
                 code
                   magix.viewport.show-message
@@ -65,10 +65,10 @@ panel=>comment-wrapper
                   magix.forms.effect
                     id=>feedback-email
                     type=>focus-and-select
-                  set=>[_good].Value
+                  set=>[_good].value
                     value=>false
         if=>equals
-          lhs=>[_good].Value
+          lhs=>[_good].value
           rhs=>true
           code
             add=>[@][magix.data.save][value]

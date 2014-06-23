@@ -177,7 +177,7 @@ namespace Magix.Core
                     ip["inspect"],
                     "Magix.Core",
                     "Magix.Core.hyperlisp.inspect.hl",
-                    "[magix.viewport.clear-controls-dox].Value");
+                    "[magix.viewport.clear-controls-dox].value");
                 AppendCodeFromResource(
                     ip,
                     "Magix.Core",
@@ -231,7 +231,7 @@ namespace Magix.Core
                     ip["inspect"],
                     "Magix.Core",
                     "Magix.Core.hyperlisp.inspect.hl",
-                    "[magix.viewport.execute-javascript-dox].Value");
+                    "[magix.viewport.execute-javascript-dox].value");
                 AppendCodeFromResource(
                     ip,
                     "Magix.Core",
@@ -304,7 +304,7 @@ namespace Magix.Core
                     ip["inspect"],
                     "Magix.Core",
                     "Magix.Core.hyperlisp.inspect.hl",
-                    "[magix.viewport.include-client-file-dox].Value");
+                    "[magix.viewport.include-client-file-dox].value");
                 AppendCodeFromResource(
                     ip,
                     "Magix.Core",
@@ -356,7 +356,7 @@ namespace Magix.Core
                     ip["inspect"],
                     "Magix.Core",
                     "Magix.Core.hyperlisp.inspect.hl",
-                    "[magix.viewstate.set-dox].Value");
+                    "[magix.viewstate.set-dox].value");
                 AppendCodeFromResource(
                     ip,
                     "Magix.Core",
@@ -402,7 +402,7 @@ namespace Magix.Core
                     ip["inspect"],
                     "Magix.Core",
                     "Magix.Core.hyperlisp.inspect.hl",
-                    "[magix.viewstate.get-dox].Value");
+                    "[magix.viewstate.get-dox].value");
                 AppendCodeFromResource(
                     ip,
                     "Magix.Core",
@@ -436,7 +436,7 @@ namespace Magix.Core
                     ip["inspect"],
                     "Magix.Core",
                     "Magix.Core.hyperlisp.inspect.hl",
-                    "[magix.viewport.load-module-dox].Value");
+                    "[magix.viewport.load-module-dox].value");
                 AppendCodeFromResource(
                     ip,
                     "Magix.Core",

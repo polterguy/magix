@@ -47,7 +47,7 @@ namespace Magix.forms
                 node["inspect"],
                 "Magix.forms",
                 "Magix.forms.hyperlisp.inspect.hl",
-                "[magix.forms.text-area-dox-start].Value");
+                "[magix.forms.text-area-dox-start].value");
             AppendCodeFromResource(
                 node,
                 "Magix.forms",
@@ -58,7 +58,7 @@ namespace Magix.forms
                 node["inspect"],
                 "Magix.forms",
                 "Magix.forms.hyperlisp.inspect.hl",
-                "[magix.forms.text-area-dox-end].Value",
+                "[magix.forms.text-area-dox-end].value",
                 true);
             AppendCodeFromResource(
                 node["magix.forms.create-web-part"]["controls"]["text-area"],

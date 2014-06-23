@@ -46,7 +46,7 @@ namespace Magix.forms
                 tmp["inspect"],
                 "Magix.forms",
                 "Magix.forms.hyperlisp.inspect.hl",
-                "[magix.forms.base-web-list-form-element-dox].Value",
+                "[magix.forms.base-web-list-form-element-dox].value",
                 true);
             node["items"]["item1"].Value = "this is item 1";
             node["items"]["item2"].Value = "this is item 2";

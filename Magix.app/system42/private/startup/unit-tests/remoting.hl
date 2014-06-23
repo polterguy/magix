@@ -19,17 +19,17 @@ over http"
       name=>magix.test.temp-test-event
       persist=>false
       code
-        set=>[$][output].Value
+        set=>[$][output].value
           value=>{0} {1}
-            =>[$][input].Value
+            =>[$][input].value
             =>world
     open
       name=>magix.test.temp-test-event
     try
       code
         magix.configuration.get-base-directory
-        set=>[@][remote][url].Value
-          value=>[@][magix.configuration.get-base-directory][value].Value
+        set=>[@][remote][url].value
+          value=>[@][magix.configuration.get-base-directory][value].value
         remote
           name=>magix.test.temp-test-event
           params
@@ -40,7 +40,7 @@ over http"
     event
       name=>magix.test.temp-test-event
     if=>not-equals
-      lhs=>[try][code][remote][params][output].Value
+      lhs=>[try][code][remote][params][output].value
       rhs=>hello world
       code
         throw=>[open] and/or [remote] misbehaved
@@ -71,21 +71,21 @@ throws an exception"
     try
       code
         magix.configuration.get-base-directory
-        set=>[@][remote][url].Value
-          value=>[@][magix.configuration.get-base-directory][value].Value
+        set=>[@][remote][url].value
+          value=>[@][magix.configuration.get-base-directory][value].value
         remote
           name=>magix.test.temp-test-event
           params
             inspect
       catch
-        set=>[_success].Value
+        set=>[_success].value
           value=>true
     close
       name=>magix.test.temp-test-event
     event
       name=>magix.test.temp-test-event
     if=>not-equals
-      lhs=>[_success].Value
+      lhs=>[_success].value
       rhs=>true
       code
         throw=>[remote] misbehaved with inspect

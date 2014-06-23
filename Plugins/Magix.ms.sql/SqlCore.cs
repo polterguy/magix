@@ -31,7 +31,7 @@ namespace Magix.ms.sql
                     ip["inspect"],
                     "Magix.ms.sql",
                     "Magix.ms.sql.hyperlisp.inspect.hl",
-                    "[magix.ms.sql.select-dox].Value");
+                    "[magix.ms.sql.select-dox].value");
                 AppendCodeFromResource(
                     ip,
                     "Magix.ms.sql",
@@ -124,7 +124,7 @@ namespace Magix.ms.sql
                     ip["inspect"],
                     "Magix.ms.sql",
                     "Magix.ms.sql.hyperlisp.inspect.hl",
-                    "[magix.ms.sql.select-as-text-dox].Value");
+                    "[magix.ms.sql.select-as-text-dox].value");
                 AppendCodeFromResource(
                     ip,
                     "Magix.ms.sql",
@@ -189,7 +189,7 @@ namespace Magix.ms.sql
                     ip["inspect"],
                     "Magix.ms.sql",
                     "Magix.ms.sql.hyperlisp.inspect.hl",
-                    "[magix.ms.sql.execute-dox].Value");
+                    "[magix.ms.sql.execute-dox].value");
                 AppendCodeFromResource(
                     ip,
                     "Magix.ms.sql",
@@ -238,7 +238,7 @@ namespace Magix.ms.sql
                     ip["inspect"],
                     "Magix.ms.sql",
                     "Magix.ms.sql.hyperlisp.inspect.hl",
-                    "[magix.admin.desktop-shortcuts.magix.ms.sql-dox].Value");
+                    "[magix.admin.desktop-shortcuts.magix.ms.sql-dox].value");
                 return;
             }
 

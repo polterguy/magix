@@ -124,8 +124,8 @@ parts of qr code. defaults to bumpy-light.png"
                 editor-container=>editor-for-persist-wrapper
                 no-edit=>true
                 onselect
-                  set=>[magix.forms.set-value][value].Value
-                    value=>[$][file].Value
+                  set=>[magix.forms.set-value][value].value
+                    value=>[$][file].value
                   magix.forms.set-value
                     form-id=>qr-codes
                     id=>bg-image
@@ -161,8 +161,8 @@ parts of qr code. defaults to bumby-black.png"
                 editor-container=>editor-for-persist-wrapper
                 no-edit=>true
                 onselect
-                  set=>[magix.forms.set-value][value].Value
-                    value=>[$][file].Value
+                  set=>[magix.forms.set-value][value].value
+                    value=>[$][file].value
                   magix.forms.set-value
                     form-id=>qr-codes
                     id=>fg-image
@@ -233,7 +233,7 @@ the tmp folder"
               form-id=>qr-codes
               id=>qr-code-wrap
             if=>equals
-              lhs=>[magix.forms.get-children-values][values][url].Value
+              lhs=>[magix.forms.get-children-values][values][url].value
               rhs=>
               code
                 magix.viewport.show-message
@@ -261,32 +261,32 @@ this is the only mandatory parameter in fact"
             _execute-remove-empty
               for-each=>[/][magix.forms.get-children-values][values]
                 if=>equals
-                  lhs=>[.].Value
+                  lhs=>[.].value
                   rhs=>
                   code
                     if=>equals
-                      lhs=>[.].Name
+                      lhs=>[.].name
                       rhs=>bg-image
                       code
                     else-if=>equals
-                      lhs=>[.].Name
+                      lhs=>[.].name
                       rhs=>fg-image
                       code
                     else
                       set=>[.]
             while=>not-equals
-              rhs=>[/][magix.forms.get-children-values][values].Count
+              rhs=>[/][magix.forms.get-children-values][values].count
               lhs=>0
               code
-                set=>[/][while][lhs].Value
-                  value=>[/][magix.forms.get-children-values][values].Count
+                set=>[/][while][lhs].value
+                  value=>[/][magix.forms.get-children-values][values].count
                 execute=>[/][_execute-remove-empty]
             for-each=>[magix.forms.get-children-values][values]
               add=>[/][magix.qr.create]
                 value=>[.]
             magix.qr.create
-            set=>[magix.forms.set-value][value].Value
-              value=>[magix.qr.create][file-name].Value
+            set=>[magix.forms.set-value][value].value
+              value=>[magix.qr.create][file-name].value
             magix.forms.set-value
               form-id=>qr-codes
               id=>qrImage

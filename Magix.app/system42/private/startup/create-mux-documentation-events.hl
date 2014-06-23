@@ -584,10 +584,10 @@ mux web controls in your system"
   code
     magix.forms.dox._get-control-methods
     magix.forms.dox._get-web-control-methods
-    set=>[_evt].Name
+    set=>[_evt].name
       value=>{0}.{1}
         v0=>magix.forms.dox.create-dox-for
-        v1=>[$][control].Value
+        v1=>[$][control].value
     _evt
     add=>[_data]
       value=>[magix.forms.dox._get-control-methods]
@@ -598,23 +598,23 @@ mux web controls in your system"
     add=>[_data]
       value=>[3]
       children-only=>true
-    set=>[magix.forms.create-web-part][container].Value
-      value=>[$][container].Value
-    set=>[magix.forms.create-web-part][class].Value
-      value=>[$][class].Value
+    set=>[magix.forms.create-web-part][container].value
+      value=>[$][container].value
+    set=>[magix.forms.create-web-part][class].value
+      value=>[$][class].value
     for-each=>[_data]
       _lit
-      set=>[@][_lit][text].Value
+      set=>[@][_lit][text].value
         value=>@"<li><strong class=""span-4 bottom-1"">{0}</strong><span class=""span-15 bottom-1 last"">{1}</span></li>"
-          v0=>[.].Name
-          v1=>[.].Value
+          v0=>[.].name
+          v1=>[.].value
       add=>[/][magix.forms.create-web-part][controls]
         value=>[@][_lit]
-      set=>[/][magix.forms.create-web-part][controls][_lit].Name
+      set=>[/][magix.forms.create-web-part][controls][_lit].name
         value=>literal
-    set=>[magix.forms.create-web-part][controls][_lit][text].Value
+    set=>[magix.forms.create-web-part][controls][_lit][text].value
       value=>@"</ul>"
-    set=>[magix.forms.create-web-part][controls][_lit].Name
+    set=>[magix.forms.create-web-part][controls][_lit].name
       value=>literal
     magix.forms.create-web-part
       form-id=>methods
@@ -635,10 +635,10 @@ control you wish to retrieve documentation for.  control parameter
 can be any of the installed mux controls in your system"
   code
     magix.forms.dox._get-control-methods
-    set=>[_evt].Name
+    set=>[_evt].name
       value=>{0}.{1}
         v0=>magix.forms.dox.create-dox-for
-        v1=>[$][control].Value
+        v1=>[$][control].value
     _evt
     add=>[_data]
       value=>[magix.forms.dox._get-control-methods]
@@ -646,23 +646,23 @@ can be any of the installed mux controls in your system"
     add=>[_data]
       value=>[2]
       children-only=>true
-    set=>[magix.forms.create-web-part][container].Value
-      value=>[$][container].Value
-    set=>[magix.forms.create-web-part][class].Value
-      value=>[$][class].Value
+    set=>[magix.forms.create-web-part][container].value
+      value=>[$][container].value
+    set=>[magix.forms.create-web-part][class].value
+      value=>[$][class].value
     for-each=>[_data]
       _lit
-      set=>[@][_lit][text].Value
+      set=>[@][_lit][text].value
         value=>@"<li><strong class=""span-4 bottom-1"">{0}</strong><span class=""span-15 bottom-1 last"">{1}</span></li>"
-          v0=>[.].Name
-          v1=>[.].Value
+          v0=>[.].name
+          v1=>[.].value
       add=>[/][magix.forms.create-web-part][controls]
         value=>[@][_lit]
-      set=>[/][magix.forms.create-web-part][controls][_lit].Name
+      set=>[/][magix.forms.create-web-part][controls][_lit].name
         value=>literal
-    set=>[magix.forms.create-web-part][controls][_lit][text].Value
+    set=>[magix.forms.create-web-part][controls][_lit][text].value
       value=>@"</ul>"
-    set=>[magix.forms.create-web-part][controls][_lit].Name
+    set=>[magix.forms.create-web-part][controls][_lit].name
       value=>literal
     magix.forms.create-web-part
       form-id=>methods

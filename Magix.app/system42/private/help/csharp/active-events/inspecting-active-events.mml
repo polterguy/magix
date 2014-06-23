@@ -18,9 +18,9 @@ namespace Magix.sample
       {
           if (ShouldInspect(e.Params))
           {
-              e.Params["event:magix.execute"].Value = null;
-              e.Params["inspect"].Value = "description of what your active event actually does";
-              e.Params["magix.sample.self-documenting"]["parameter"].Value = "some parameter";
+              e.Params["event:magix.execute"].value = null;
+              e.Params["inspect"].value = "description of what your active event actually does";
+              e.Params["magix.sample.self-documenting"]["parameter"].value = "some parameter";
               return;
           }
           /* ... */
@@ -37,7 +37,7 @@ make sure the documentation is always up to date, and also saves you of a lot of
 down the road.&nbsp;&nbsp;to retrieve the documentation for your above active event, invoke it as shown below</p>
 
 <pre>Node node = new Node();
-node["inspect"].Value = null; // important that the inspect node is null!
+node["inspect"].value = null; // important that the inspect node is null!
 
 Magix.Core.ActiveEvents.Instance.RaiseActiveEvent(
    this, 

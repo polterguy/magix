@@ -30,7 +30,7 @@ what was expected"
             =>15
             =>6
     if=>not-equals
-      lhs=>[using=>magix.math][add].Value
+      lhs=>[using=>magix.math][add].value
       rhs=>34
       code
         throw=>magix.math misbehaved

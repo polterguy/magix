@@ -40,7 +40,7 @@ magix.executor.set-code-sample
     code=>@"
 _data=>thomas
 if=>equals
-  lhs=>[_data].Value==thomas
+  lhs=>[_data].value==thomas
   rhs=>thomas
   code
     magix.viewport.show-message

@@ -97,7 +97,7 @@ namespace Magix.forms
                 node["inspect"],
                 "Magix.forms",
                 "Magix.forms.hyperlisp.inspect.hl",
-                "[magix.forms.wysiwyg-dox-start].Value");
+                "[magix.forms.wysiwyg-dox-start].value");
             AppendCodeFromResource(
                 node,
                 "Magix.forms",
@@ -110,7 +110,7 @@ namespace Magix.forms
                 node["inspect"],
                 "Magix.forms",
                 "Magix.forms.hyperlisp.inspect.hl",
-                "[magix.forms.wysiwyg-dox-end].Value",
+                "[magix.forms.wysiwyg-dox-end].value",
                 true);
             AppendCodeFromResource(
                 node["magix.forms.create-web-part"]["controls"]["wysiwyg"],

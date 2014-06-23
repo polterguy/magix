@@ -10,8 +10,8 @@ magix.ide.sel-save-where_onselectedindexchanged
   magix.forms.get-value
     form-id=>save-wrapper
     id=>sel-save-where
-  set=>[magix.data.save-username][value][where].Value
-    value=>[magix.forms.get-value][value].Value
+  set=>[magix.data.save-username][value][where].value
+    value=>[magix.forms.get-value][value].value
   magix.data.save-username
     id=>magix.ide.where-to-save-web-part
   magix.ide.create-save-where-web-part
@@ -21,7 +21,7 @@ magix.ide.create-save-where-web-part
   magix.data.load-username
     id=>magix.ide.where-to-save-web-part
 
-  switch=>[magix.data.load-username][value][where].Value
+  switch=>[magix.data.load-username][value][where].value
     case=>filesystem
       magix.forms.create-web-part
         form-id=>save-content

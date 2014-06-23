@@ -15,14 +15,14 @@ magix.file-manager.create-file-controls
       form-id=>file-manager
       id=>file-header
       value=>files in /{0}
-        =>[$][directory].Value
+        =>[$][directory].value
 
   if=>equals
-    lhs=>[$][directory].Value
+    lhs=>[$][directory].value
     rhs=>
     or=>equals
-      lhs=>[$][directory].Value
-      rhs=>[$][root].Value
+      lhs=>[$][directory].value
+      rhs=>[$][root].value
     code
       magix.forms.set-enabled
         form-id=>file-manager
@@ -37,10 +37,10 @@ magix.file-manager.create-file-controls
   // listing files and directories according to input parameters
   using=>magix.file
     list-files
-      directory=>[$][directory].Value
-      filter=>[$][filter].Value
+      directory=>[$][directory].value
+      filter=>[$][filter].value
     list-directories
-      directory=>[$][directory].Value
+      directory=>[$][directory].value
 
   // iterating through all directories, creating web controls for displaying one directory
   for-each=>[using:1][list-directories][directories]
@@ -49,23 +49,23 @@ magix.file-manager.create-file-controls
         class=>span-4 last clear
         onclick
           // onclick event handler for clicking a folder
-          set=>[magix.viewstate.set][value].Value
-            value=>[$][info].Value
+          set=>[magix.viewstate.set][value].value
+            value=>[$][info].value
           magix.viewstate.set
             id=>magix.file-manager.current-folder
           magix.file-manager.open-directory
 
-    split=>[.].Name
+    split=>[.].name
       what=>/
     while=>not-equals
-      lhs=>[@][split][result].Count
+      lhs=>[@][split][result].count
       rhs=>1
       code
         set=>[@][..][..][split][result][0]
-    set=>[@][_data][link-button][value].Value
-      value=>[@][split][result][0].Value
-    set=>[@][_data][link-button][info].Value
-      value=>[.].Name
+    set=>[@][_data][link-button][value].value
+      value=>[@][split][result][0].value
+    set=>[@][_data][link-button][info].value
+      value=>[.].name
     add=>[/][_controls][panel:0][controls]
       value=>[@][_data][link-button]
 
@@ -81,31 +81,31 @@ magix.file-manager.create-file-controls
           magix.viewstate.get
             id=>magix.file-manager.selected-file
           if=>not-equals
-            lhs=>[magix.viewstate.get][value].Value
-            rhs=>[$][info].Value
+            lhs=>[magix.viewstate.get][value].value
+            rhs=>[$][info].value
             code
-              set=>[magix.file-manager.select-file][file].Value
-                value=>[$][info].Value
+              set=>[magix.file-manager.select-file][file].value
+                value=>[$][info].value
           else
             magix.viewport.clear-controls
               container=>preview
           magix.file-manager.select-file
-    split=>[.].Name
+    split=>[.].name
       what=>/
     while=>not-equals
-      lhs=>[@][split][result].Count
+      lhs=>[@][split][result].count
       rhs=>1
       code
         set=>[@][..][..][split][result][0]
-    set=>[@][_data][link-button][info].Value
-      value=>[.].Name
-    set=>[@][_data][link-button][value].Value
-      value=>[@][split][result][0].Value
+    set=>[@][_data][link-button][info].value
+      value=>[.].name
+    set=>[@][_data][link-button][value].value
+      value=>[@][split][result][0].value
     if=>equals
-      lhs=>[.].Name
-      rhs=>[@][..][magix.viewstate.get][value].Value
+      lhs=>[.].name
+      rhs=>[@][..][magix.viewstate.get][value].value
       code
-        set=>[@][..][..][_data][link-button][style].Value
+        set=>[@][..][..][_data][link-button][style].value
           value=>text-decoration:underline;
     add=>[/][_controls][panel:1][controls]
       value=>[@][_data][link-button]
@@ -140,29 +140,29 @@ magix.file-manager.create-file-controls
     code
       _filename
       _folder
-      set=>[@][_filename].Value
-        value=>[/][magix.viewstate.get][value].Value
-      set=>[@][_folder].Value
-        value=>[$][directory].Value
+      set=>[@][_filename].value
+        value=>[/][magix.viewstate.get][value].value
+      set=>[@][_folder].value
+        value=>[$][directory].value
       if=>not-equals
-        lhs=>[@][_folder].Value
+        lhs=>[@][_folder].value
         rhs=>
         code
-          set=>[@][..][..][_folder].Value
+          set=>[@][..][..][_folder].value
             value=>{0}/
-              =>[@][..][..][_folder].Value
-      split=>[@][_filename].Value
+              =>[@][..][..][_folder].value
+      split=>[@][_filename].value
         what=>/
       while=>not-equals
-        lhs=>[@][split][result].Count
+        lhs=>[@][split][result].count
         rhs=>1
         code
           set=>[@][..][..][split][result][0]
-      replace=>[@][_filename].Value
-        what=>[@][split][result][0].Value
+      replace=>[@][_filename].value
+        what=>[@][split][result][0].value
       if=>equals
-        lhs=>[@][_filename].Value
-        rhs=>[@][_folder].Value
+        lhs=>[@][_filename].value
+        rhs=>[@][_folder].value
         code
           magix.forms.set-enabled
             form-id=>preview
@@ -181,8 +181,8 @@ magix.file-manager.select-file
   if=>exist
     lhs=>[$][file]
     code
-      set=>[magix.viewstate.set][value].Value
-        value=>[$][file].Value
+      set=>[magix.viewstate.set][value].value
+        value=>[$][file].value
   magix.viewstate.set
     id=>magix.file-manager.selected-file
   magix.viewstate.get
@@ -212,21 +212,21 @@ magix.file-manager.create-preview
   if=>exist
     lhs=>[magix.viewstate.get][value]
     code
-      split=>[magix.viewstate.get][value].Value
+      split=>[magix.viewstate.get][value].value
         what=>/
       while=>not-equals
-        lhs=>[@][split][result].Count
+        lhs=>[@][split][result].count
         rhs=>1
         code
           set=>[@][..][..][split][result][0]
-      set=>[/][**label=>preview-label][value].Value
-        value=>[@][split][result][0].Value
-      set=>[/][**label=>preview-label][title].Value
-        value=>[magix.viewstate.get][value].Value
-      split=>[@][split][result][0].Value
+      set=>[/][**label=>preview-label][value].value
+        value=>[@][split][result][0].value
+      set=>[/][**label=>preview-label][title].value
+        value=>[magix.viewstate.get][value].value
+      split=>[@][split][result][0].value
         what=>.
       while=>not-equals
-        lhs=>[@][split:1][result].Count
+        lhs=>[@][split:1][result].count
         rhs=>1
         code
           set=>[@][..][..][split:1][result][0]
@@ -235,143 +235,143 @@ magix.file-manager.create-preview
       _is-inspect=>false
 
       // checking filetype, and setting a descriptive label, and whether or not the file can be edited
-      switch=>[@][split:1][result][0].Value
+      switch=>[@][split:1][result][0].value
         case=>hl
-          set=>[@][..][..][_can-edit].Value
+          set=>[@][..][..][_can-edit].value
             value=>true
-          set=>[@][..][..][_is-inspect].Value
+          set=>[@][..][..][_is-inspect].value
             value=>true
         case=>mml
-          set=>[/][**value=>unknown filetype].Value
+          set=>[/][**value=>unknown filetype].value
             value=>magix markup language file
-          set=>[@][..][..][_can-edit].Value
+          set=>[@][..][..][_can-edit].value
             value=>true
         case=>html
-          set=>[/][**value=>unknown filetype].Value
+          set=>[/][**value=>unknown filetype].value
             value=>hyper text markup language file
-          set=>[@][..][..][_can-edit].Value
+          set=>[@][..][..][_can-edit].value
             value=>true
         case=>htm
-          set=>[/][**value=>unknown filetype].Value
+          set=>[/][**value=>unknown filetype].value
             value=>hyper text markup language file
-          set=>[@][..][..][_can-edit].Value
+          set=>[@][..][..][_can-edit].value
             value=>true
         case=>config
-          set=>[/][**value=>unknown filetype].Value
+          set=>[/][**value=>unknown filetype].value
             value=>configuration file
-          set=>[@][..][..][_can-edit].Value
+          set=>[@][..][..][_can-edit].value
             value=>true
         case=>css
-          set=>[/][**value=>unknown filetype].Value
+          set=>[/][**value=>unknown filetype].value
             value=>stylesheet file
-          set=>[@][..][..][_can-edit].Value
+          set=>[@][..][..][_can-edit].value
             value=>true
         case=>png
-          set=>[/][**value=>unknown filetype].Value
+          set=>[/][**value=>unknown filetype].value
             value=>image file
-          set=>[@][..][..][_is-image].Value
+          set=>[@][..][..][_is-image].value
             value=>true
         case=>jpg
-          set=>[/][**value=>unknown filetype].Value
+          set=>[/][**value=>unknown filetype].value
             value=>image file
-          set=>[@][..][..][_is-image].Value
+          set=>[@][..][..][_is-image].value
             value=>true
         case=>jpeg
-          set=>[/][**value=>unknown filetype].Value
+          set=>[/][**value=>unknown filetype].value
             value=>image file
-          set=>[@][..][..][_is-image].Value
+          set=>[@][..][..][_is-image].value
             value=>true
         case=>gif
-          set=>[/][**value=>unknown filetype].Value
+          set=>[/][**value=>unknown filetype].value
             value=>image file
-          set=>[@][..][..][_is-image].Value
+          set=>[@][..][..][_is-image].value
             value=>true
         case=>cs
-          set=>[/][**value=>unknown filetype].Value
+          set=>[/][**value=>unknown filetype].value
             value=>c# file
         case=>aspx
-          set=>[/][**value=>unknown filetype].Value
+          set=>[/][**value=>unknown filetype].value
             value=>asp.net page file
         case=>ascx
-          set=>[/][**value=>unknown filetype].Value
+          set=>[/][**value=>unknown filetype].value
             value=>asp.net user control file
         case=>asax
-          set=>[/][**value=>unknown filetype].Value
+          set=>[/][**value=>unknown filetype].value
             value=>asp.net application file
         case=>ico
-          set=>[/][**value=>unknown filetype].Value
+          set=>[/][**value=>unknown filetype].value
             value=>icon file
         case=>csproj
-          set=>[/][**value=>unknown filetype].Value
+          set=>[/][**value=>unknown filetype].value
             value=>c# project file
         case=>user
-          set=>[/][**value=>unknown filetype].Value
+          set=>[/][**value=>unknown filetype].value
             value=>c# project user settings file
         case=>txt
-          set=>[/][**value=>unknown filetype].Value
+          set=>[/][**value=>unknown filetype].value
             value=>text file
-          set=>[@][..][..][_can-edit].Value
+          set=>[@][..][..][_can-edit].value
             value=>true
         case=>dll
-          set=>[/][**value=>unknown filetype].Value
+          set=>[/][**value=>unknown filetype].value
             value=>dynamic library file
         case=>js
-          set=>[/][**value=>unknown filetype].Value
+          set=>[/][**value=>unknown filetype].value
             value=>javascript file
-          set=>[@][..][..][_can-edit].Value
+          set=>[@][..][..][_can-edit].value
             value=>true
 
       // enabling or disabling 'edit' button
       if=>equals
-        lhs=>[@][_can-edit].Value
+        lhs=>[@][_can-edit].value
         rhs=>true
         code
           magix.viewstate.get
             id=>magix.file-manager.no-edit-button
           if=>not-equals
-            lhs=>[@][magix.viewstate.get][value].Value
+            lhs=>[@][magix.viewstate.get][value].value
             rhs=>true
             code
-              set=>[/][**button=>edit-file][disabled].Value
+              set=>[/][**button=>edit-file][disabled].value
                 value=>false
 
       // enabling or disabling view image preview
       if=>equals
-        lhs=>[@][_is-image].Value
+        lhs=>[@][_is-image].value
         rhs=>true
         code
-          set=>[/][**img=>image-preview][visible].Value
+          set=>[/][**img=>image-preview][visible].value
             value=>true
-          set=>[/][**img=>image-preview][src].Value
-            value=>[magix.viewstate.get][value].Value
+          set=>[/][**img=>image-preview][src].value
+            value=>[magix.viewstate.get][value].value
 
       // inspecting file, if we're supposed to
       if=>equals
-        lhs=>[@][_is-inspect].Value
+        lhs=>[@][_is-inspect].value
         rhs=>true
         code
-          set=>[@][magix.file.load][file].Value
-            value=>[magix.viewstate.get][value].Value
+          set=>[@][magix.file.load][file].value
+            value=>[magix.viewstate.get][value].value
           magix.file.load
           code-2-node
-            code=>[@][magix.file.load][value].Value
+            code=>[@][magix.file.load][value].value
           if=>exist
             lhs=>[@][code-2-node][node][inspect]
             code
-              set=>[**value=>unknown filetype].Value
-                value=>[:magix.file-manager.create-inspect[@][..][..][code-2-node]][result].Value
+              set=>[**value=>unknown filetype].value
+                value=>[:magix.file-manager.create-inspect[@][..][..][code-2-node]][result].value
           else
-            set=>[**value=>unknown filetype].Value
+            set=>[**value=>unknown filetype].value
               value=>hyperlisp file
 
       // turning on or off editing of files, according to input
       magix.viewstate.get=>no-edit
         id=>magix.file-manager.no-edit
       if=>equals
-        lhs=>[@][magix.viewstate.get=>no-edit][value].Value
+        lhs=>[@][magix.viewstate.get=>no-edit][value].value
         rhs=>true
         code
-          set=>[**panel=>edit-wrapper][visible].Value
+          set=>[**panel=>edit-wrapper][visible].value
             value=>false
 
       // creating actual preview web part
@@ -395,7 +395,7 @@ magix.file-manager.create-preview
               using=>magix.viewport
                 execute-javascript
                   script=>@"window.open('/{0}', '_blank');"
-                    =>[$][value].Value
+                    =>[$][value].value
           panel=>edit-wrapper
             class=>btn-group
             controls
@@ -406,8 +406,8 @@ magix.file-manager.create-preview
                 onclick
                   magix.viewstate.get
                     id=>magix.file-manager.selected-file
-                  set=>[magix.file-manager.edit-file][file].Value
-                    value=>[magix.viewstate.get][value].Value
+                  set=>[magix.file-manager.edit-file][file].value
+                    value=>[magix.viewstate.get][value].value
                   magix.file-manager.edit-file
               button=>delete-file
                 class=>span-2 top-1
@@ -424,7 +424,7 @@ magix.file-manager.create-preview
                         id=>magix.file-manager.selected-file
                       using=>magix.file
                         delete
-                          file=>[magix.viewstate.get:0][value].Value
+                          file=>[magix.viewstate.get:0][value].value
 
                       // clearing selected file
                       magix.viewstate.set
@@ -454,25 +454,25 @@ magix.file-manager.create-preview
                       id=>magix.file-manager.selected-file
 
                   // removing folder name from selected file, and adding filename to 'to-folder'
-                  split=>[using][get:0][value].Value
+                  split=>[using][get:0][value].value
                     what=>/
                   while=>not-equals
-                    lhs=>[split][result].Count
+                    lhs=>[split][result].count
                     rhs=>1
                     code
                       set=>[@][..][..][split][result][0]
 
                   // changing the current folder, appending the filename to it
-                  set=>[using][get:1][value].Value
+                  set=>[using][get:1][value].value
                     value=>{0}/{1}
-                      =>[using][get:1][value].Value
-                      =>[split][result][0].Value
+                      =>[using][get:1][value].value
+                      =>[split][result][0].value
 
                   // actually moving file
                   using=>magix.file
                     move-file
-                      from=>[using][get:0][value].Value
-                      to=>[using][get:1][value].Value
+                      from=>[using][get:0][value].value
+                      to=>[using][get:1][value].value
 
                   // clearing 'preview' container
                   magix.viewport.clear-controls
@@ -490,52 +490,52 @@ magix.file-manager.create-preview
                   magix.viewstate.get
                     id=>magix.file-manager.current-folder
                   _copy-filename
-                  split=>[magix.viewstate.get][value].Value
+                  split=>[magix.viewstate.get][value].value
                     what=>/
                   while=>not-equals
-                    lhs=>[split][result].Count
+                    lhs=>[split][result].count
                     rhs=>1
                     code
                       set=>[split][result][0]
-                  set=>[_copy-filename].Value
-                    value=>[magix.viewstate.get:1][value].Value
-                  set=>[_copy-filename].Value
+                  set=>[_copy-filename].value
+                    value=>[magix.viewstate.get:1][value].value
+                  set=>[_copy-filename].value
                     value=>{0}/copy - {1}
-                      =>[_copy-filename].Value
-                      =>[split][result][0].Value
+                      =>[_copy-filename].value
+                      =>[split][result][0].value
                   using=>magix.file
                     file-exist
-                      file=>[_copy-filename].Value
+                      file=>[_copy-filename].value
                   _file-exist
                   _counter=>2
-                  set=>[_file-exist].Value
-                    value=>[using][file-exist][value].Value
+                  set=>[_file-exist].value
+                    value=>[using][file-exist][value].value
                   while=>equals
-                    lhs=>[_file-exist].Value
+                    lhs=>[_file-exist].value
                     rhs=>true
                     code
-                      set=>[_copy-filename].Value
+                      set=>[_copy-filename].value
                         value=>{0}/copy-{1}-{2}
-                          =>[magix.viewstate.get:1][value].Value
-                          =>[_counter].Value
-                          =>[split][result][0].Value
+                          =>[magix.viewstate.get:1][value].value
+                          =>[_counter].value
+                          =>[split][result][0].value
                       using=>magix.file
                         file-exist
-                          file=>[_copy-filename].Value
-                      set=>[_file-exist].Value
-                        value=>[@][using][file-exist][value].Value
+                          file=>[_copy-filename].value
+                      set=>[_file-exist].value
+                        value=>[@][using][file-exist][value].value
                       using=>magix.math
                         add
-                          =>[_counter].Value
+                          =>[_counter].value
                           =>1
-                      set=>[_counter].Value
-                        value=>[@][using:1][add].Value
+                      set=>[_counter].value
+                        value=>[@][using:1][add].value
                   using=>magix.file
                     copy-file
-                      from=>[magix.viewstate.get:0][value].Value
-                      to=>[_copy-filename].Value
-                  set=>[magix.viewstate.set][value].Value
-                    value=>[_copy-filename].Value
+                      from=>[magix.viewstate.get:0][value].value
+                      to=>[_copy-filename].value
+                  set=>[magix.viewstate.set][value].value
+                    value=>[_copy-filename].value
                   magix.viewstate.set
                     id=>magix.file-manager.selected-file
 
@@ -564,20 +564,20 @@ magix.file-manager.create-preview
                             onfirstload
                               magix.viewstate.get
                                 id=>magix.file-manager.selected-file
-                              split=>[magix.viewstate.get][value].Value
+                              split=>[magix.viewstate.get][value].value
                                 what=>/
                               while=>not-equals
-                                lhs=>[split][result].Count
+                                lhs=>[split][result].count
                                 rhs=>1
                                 code
                                   set=>[split][result][0]
-                              set=>[magix.forms.set-value][value].Value
-                                value=>[split][result][0].Value
+                              set=>[magix.forms.set-value][value].value
+                                value=>[split][result][0].value
                               magix.forms.set-value
                                 form-id=>rename-file
                                 id=>new-file-name
-                              set=>[magix.forms.set-info][value].Value
-                                value=>[magix.viewstate.get][value].Value
+                              set=>[magix.forms.set-info][value].value
+                                value=>[magix.viewstate.get][value].value
                               magix.forms.set-info
                                 form-id=>rename-file
                                 id=>save-new-name
@@ -592,32 +592,32 @@ magix.file-manager.create-preview
                               magix.forms.get-value
                                 form-id=>rename-file
                                 id=>new-file-name
-                              split=>[$][info].Value
+                              split=>[$][info].value
                                 what=>/
                               using=>magix.math
                                 subtract
-                                  =>[split][result].Count
+                                  =>[split][result].count
                                   =>1
-                              set=>[split][result][[using][subtract].Value]
+                              set=>[split][result][[using][subtract].value]
                               _new-file-name
                               for-each=>[split][result]
-                                set=>[/][_new-file-name].Value
+                                set=>[/][_new-file-name].value
                                   value=>{0}{1}/
-                                    =>[/][_new-file-name].Value
-                                    =>[.].Value
-                              set=>[_new-file-name].Value
+                                    =>[/][_new-file-name].value
+                                    =>[.].value
+                              set=>[_new-file-name].value
                                 value=>{0}{1}
-                                  =>[_new-file-name].Value
-                                  =>[magix.forms.get-value][value].Value
+                                  =>[_new-file-name].value
+                                  =>[magix.forms.get-value][value].value
                               if=>not-equals
-                                lhs=>[_new-file-name].Value
-                                rhs=>[$][info].Value
+                                lhs=>[_new-file-name].value
+                                rhs=>[$][info].value
                                 code
                                   using=>magix.file
                                     file-exist
-                                      file=>[_new-file-name].Value
+                                      file=>[_new-file-name].value
                                   if=>equals
-                                    lhs=>[@][using][file-exist][value].Value
+                                    lhs=>[@][using][file-exist][value].value
                                     rhs=>true
                                     code
                                       magix.viewport.show-message
@@ -630,12 +630,12 @@ magix.file-manager.create-preview
                                   else
                                     using=>magix.file
                                       move-file
-                                        from=>[$][info].Value
-                                        to=>[_new-file-name].Value
+                                        from=>[$][info].value
+                                        to=>[_new-file-name].value
                                     magix.viewport.clear-controls
                                       container=>rename-file-container
-                                    set=>[@][magix.viewstate.set][value].Value
-                                      value=>[_new-file-name].Value
+                                    set=>[@][magix.viewstate.set][value].value
+                                      value=>[_new-file-name].value
                                     magix.viewstate.set
                                       id=>magix.file-manager.selected-file
 
@@ -651,43 +651,43 @@ magix.file-manager.create-preview
 // formats inspect node with paragraphs and such for clarity
 magix.file-manager.create-inspect
   _inspect
-  set=>[_inspect].Value
-    value=>[$][node][inspect].Value
-  set=>[_inspect].Value
+  set=>[_inspect].value
+    value=>[$][node][inspect].value
+  set=>[_inspect].value
     value=>@"<p>{0}</p>"
-      =>[_inspect].Value
-  replace=>[_inspect].Value
+      =>[_inspect].value
+  replace=>[_inspect].value
     what=>@"
 
 "
     with=></p><p>
-  set=>[$][result].Value
-    value=>[_inspect].Value
+  set=>[$][result].value
+    value=>[_inspect].value
 
 // edits files that allows to be edited, such as mml, html and hyperlisp files
 // [file] parameter is file to edit
 // wil open text-editor if file is mml or hyperlisp, if it is html, it will open wysiwyg-editor
 magix.file-manager.edit-file
-  split=>[$][file].Value
+  split=>[$][file].value
     what=>.
   while=>not-equals
-    lhs=>[split][result].Count
+    lhs=>[split][result].count
     rhs=>1
     code
       set=>[split][result][0]
   if=>equals
-    lhs=>[split][result][0].Value
+    lhs=>[split][result][0].value
     rhs=>html
     or=>equals
-      lhs=>[split][result][0].Value
+      lhs=>[split][result][0].value
       rhs=>htm
     code
-      set=>[@][execute-script][params][file].Value
-        value=>[$][file].Value
+      set=>[@][execute-script][params][file].value
+        value=>[$][file].value
       magix.viewstate.get
         id=>magix.file-manager.editor-container
-      set=>[@][execute-script][params][container].Value
-        value=>[@][magix.viewstate.get][value].Value
+      set=>[@][execute-script][params][container].value
+        value=>[@][magix.viewstate.get][value].value
       execute-script
         file=>system42/private/tools/wysiwyg-editor.hl
         params
@@ -700,17 +700,17 @@ magix.file-manager.edit-file
               onclick
                 magix.viewstate.get
                   id=>magix.file-manager.editor-container
-                set=>[magix.viewport.clear-controls][container].Value
-                  value=>[magix.viewstate.get][value].Value
+                set=>[magix.viewport.clear-controls][container].value
+                  value=>[magix.viewstate.get][value].value
                 magix.viewport.clear-controls
                   reset-class=>true
   else
-    set=>[@][execute-script][params][file].Value
-      value=>[$][file].Value
+    set=>[@][execute-script][params][file].value
+      value=>[$][file].value
     magix.viewstate.get
       id=>magix.file-manager.editor-container
-    set=>[@][execute-script][params][container].Value
-      value=>[@][magix.viewstate.get][value].Value
+    set=>[@][execute-script][params][container].value
+      value=>[@][magix.viewstate.get][value].value
     execute-script
       file=>system42/private/tools/text-editor.hl
       params
@@ -718,8 +718,8 @@ magix.file-manager.edit-file
         onesc
           magix.viewstate.get
             id=>magix.file-manager.editor-container
-          set=>[magix.viewport.clear-controls][container].Value
-            value=>[magix.viewstate.get][value].Value
+          set=>[magix.viewport.clear-controls][container].value
+            value=>[magix.viewstate.get][value].value
           magix.viewport.clear-controls
             reset-class=>true
         extra-buttons
@@ -730,8 +730,8 @@ magix.file-manager.edit-file
             onclick
               magix.viewstate.get
                 id=>magix.file-manager.editor-container
-              set=>[magix.viewport.clear-controls][container].Value
-                value=>[magix.viewstate.get][value].Value
+              set=>[magix.viewport.clear-controls][container].value
+                value=>[magix.viewstate.get][value].value
               magix.viewport.clear-controls
                 reset-class=>true
 
@@ -742,12 +742,12 @@ magix.editor.file-saved
   magix.viewstate.get
     id=>magix.file-manager.selected-file
   if=>not-equals
-    lhs=>[$][file].Value
-    rhs=>[magix.viewstate.get][value].Value
+    lhs=>[$][file].value
+    rhs=>[magix.viewstate.get][value].value
     code
       // we need to rebind the web part
-      set=>[@][magix.viewstate.set][value].Value
-        value=>[$][file].Value
+      set=>[@][magix.viewstate.set][value].value
+        value=>[$][file].value
       magix.viewstate.set
         id=>magix.file-manager.selected-file
       magix.file-manager.open-directory
@@ -759,19 +759,19 @@ magix.file-manager.directory-changed
   magix.viewstate.get
     id=>magix.file-manager.has-upload
   if=>equals
-    lhs=>[magix.viewstate.get:1][value].Value
+    lhs=>[magix.viewstate.get:1][value].value
     rhs=>true
     code
-      set=>[@][magix.forms.uploader-set-directory][value].Value
-        value=>[magix.viewstate.get][value].Value
+      set=>[@][magix.forms.uploader-set-directory][value].value
+        value=>[magix.viewstate.get][value].value
       magix.forms.uploader-set-directory
         form-id=>file-manager
         id=>uploader
   if=>not-equals
-    lhs=>[magix.viewstate.get][value].Value
+    lhs=>[magix.viewstate.get][value].value
     rhs=>
     and=>not-equals
-      lhs=>[magix.viewstate.get][value].Value
+      lhs=>[magix.viewstate.get][value].value
       rhs=>/
     code
       magix.forms.set-enabled
@@ -791,22 +791,22 @@ magix.file-manager.open-directory
   if=>exist
     lhs=>[magix.viewstate.get:0][value]
     code
-      set=>[magix.file-manager.create-file-controls][filter].Value
-        value=>[magix.viewstate.get:0][value].Value
+      set=>[magix.file-manager.create-file-controls][filter].value
+        value=>[magix.viewstate.get:0][value].value
   magix.viewstate.get
     id=>magix.file-manager.root
   if=>exist
     lhs=>[magix.viewstate.get:1][value]
     code
-      set=>[magix.file-manager.create-file-controls][root].Value
-        value=>[magix.viewstate.get:1][value].Value
+      set=>[magix.file-manager.create-file-controls][root].value
+        value=>[magix.viewstate.get:1][value].value
   magix.viewstate.get
     id=>magix.file-manager.current-folder
   if=>exist
     lhs=>[magix.viewstate.get:2][value]
     code
-      set=>[magix.file-manager.create-file-controls][directory].Value
-        value=>[magix.viewstate.get:2][value].Value
+      set=>[magix.file-manager.create-file-controls][directory].value
+        value=>[magix.viewstate.get:2][value].value
   magix.file-manager.create-preview
   magix.file-manager.create-file-controls
     filter=>
@@ -836,10 +836,10 @@ magix.file-manager.delete-directory_onclick
       if=>exist
         lhs=>[magix.viewstate.get:1][value]
         code
-          index-of=>[magix.viewstate.get:1][value].Value
-            what=>[magix.viewstate.get:0][value].Value
+          index-of=>[magix.viewstate.get:1][value].value
+            what=>[magix.viewstate.get:0][value].value
           if=>not-equals
-            lhs=>[@][index-of][result].Count
+            lhs=>[@][index-of][result].count
             rhs=>0
             code
               magix.viewstate.set
@@ -847,29 +847,29 @@ magix.file-manager.delete-directory_onclick
 
       using=>magix.file
         delete-directory
-          directory=>[magix.viewstate.get][value].Value
-      split=>[magix.viewstate.get][value].Value
+          directory=>[magix.viewstate.get][value].value
+      split=>[magix.viewstate.get][value].value
         what=>/
       using=>magix.math
         subtract
-          =>[split][result].Count
+          =>[split][result].count
           =>1
-      set=>[split][result][[using:1][subtract].Value]
+      set=>[split][result][[using:1][subtract].value]
       _new-current=>
       for-each=>[split][result]
         if=>not-equals
-          lhs=>[/][_new-current].Value
+          lhs=>[/][_new-current].value
           rhs=>
           code
-            set=>[/][_new-current].Value
+            set=>[/][_new-current].value
               value=>{0}/
-                =>[/][_new-current].Value
-        set=>[/][_new-current].Value
+                =>[/][_new-current].value
+        set=>[/][_new-current].value
           value=>{0}{1}
-            =>[/][_new-current].Value
-            =>[.].Value
-      set=>[magix.viewstate.set][value].Value
-        value=>[_new-current].Value
+            =>[/][_new-current].value
+            =>[.].value
+      set=>[magix.viewstate.set][value].value
+        value=>[_new-current].value
       magix.viewstate.set
         id=>magix.file-manager.current-folder
       magix.file-manager.open-directory
@@ -878,28 +878,28 @@ magix.file-manager.delete-directory_onclick
 magix.file-manager.go-up_onclick
   magix.viewstate.get
     id=>magix.file-manager.current-folder
-  split=>[magix.viewstate.get][value].Value
+  split=>[magix.viewstate.get][value].value
     what=>/
   using=>magix.math
     subtract
-      =>[split][result].Count
+      =>[split][result].count
       =>1
-  set=>[split][result][[using][subtract].Value]
+  set=>[split][result][[using][subtract].value]
   _folder=>
   for-each=>[split][result]
     if=>not-equals
-      lhs=>[/][_folder].Value
+      lhs=>[/][_folder].value
       rhs=>
       code
-        set=>[/][_folder].Value
+        set=>[/][_folder].value
           value=>{0}/
-            =>[/][_folder].Value
-    set=>[/][_folder].Value
+            =>[/][_folder].value
+    set=>[/][_folder].value
       value=>{0}{1}
-        =>[/][_folder].Value
-        =>[.].Value
-  set=>[magix.viewstate.set][value].Value
-    value=>[_folder].Value
+        =>[/][_folder].value
+        =>[.].value
+  set=>[magix.viewstate.set][value].value
+    value=>[_folder].value
   magix.viewstate.set
     id=>magix.file-manager.current-folder
   magix.file-manager.open-directory

@@ -34,15 +34,15 @@ _dt
         value=>description
 
 for-each=>[magix.file.list-files][files]
-  set=>[@][code-2-node][file].Value
-    value=>[.].Name
+  set=>[@][code-2-node][file].value
+    value=>[.].name
   code-2-node
-  set=>[/][_dt][panel][controls][label:0][value].Value
-    value=>[@][code-2-node][node][_name].Value
-  set=>[/][_dt][panel][controls][label:1][value].Value
-    value=>[@][code-2-node][node][inspect].Value
-  set=>[/][_dt][panel][onclick][execute-script][file].Value
-    value=>[.].Name
+  set=>[/][_dt][panel][controls][label:0][value].value
+    value=>[@][code-2-node][node][_name].value
+  set=>[/][_dt][panel][controls][label:1][value].value
+    value=>[@][code-2-node][node][inspect].value
+  set=>[/][_dt][panel][onclick][execute-script][file].value
+    value=>[.].name
   add=>[/][magix.forms.create-web-part][controls]
     value=>[/][_dt][panel]
 

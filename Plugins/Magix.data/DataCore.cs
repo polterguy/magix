@@ -28,7 +28,7 @@ namespace Magix.data
                     ip["inspect"],
                     "Magix.data",
                     "Magix.data.hyperlisp.inspect.hl",
-                    "[magix.data.application-startup-dox].Value");
+                    "[magix.data.application-startup-dox].value");
                 return;
             }
             Database.Initialize();
@@ -47,7 +47,7 @@ namespace Magix.data
                     ip["inspect"],
                     "Magix.data",
                     "Magix.data.hyperlisp.inspect.hl",
-                    "[magix.data.transaction-dox].Value");
+                    "[magix.data.transaction-dox].value");
                 AppendCodeFromResource(
                     ip,
                     "Magix.data",
@@ -72,7 +72,7 @@ namespace Magix.data
                     ip["inspect"],
                     "Magix.data",
                     "Magix.data.hyperlisp.inspect.hl",
-                    "[magix.data.commit-dox].Value");
+                    "[magix.data.commit-dox].value");
                 AppendCodeFromResource(
                     ip,
                     "Magix.data",
@@ -97,7 +97,7 @@ namespace Magix.data
                     ip["inspect"],
                     "Magix.data",
                     "Magix.data.hyperlisp.inspect.hl",
-                    "[magix.data.load-dox].Value");
+                    "[magix.data.load-dox].value");
                 AppendCodeFromResource(
                     ip,
                     "Magix.data",
@@ -156,7 +156,7 @@ namespace Magix.data
                     ip["inspect"],
                     "Magix.data",
                     "Magix.data.hyperlisp.inspect.hl",
-                    "[magix.data.save-dox].Value");
+                    "[magix.data.save-dox].value");
                 AppendCodeFromResource(
                     ip,
                     "Magix.data",
@@ -202,7 +202,7 @@ namespace Magix.data
                     ip["inspect"],
                     "Magix.data",
                     "Magix.data.hyperlisp.inspect.hl",
-                    "[magix.data.remove-dox].Value");
+                    "[magix.data.remove-dox].value");
                 AppendCodeFromResource(
                     ip,
                     "Magix.data",
@@ -254,7 +254,7 @@ namespace Magix.data
                     ip["inspect"],
                     "Magix.data",
                     "Magix.data.hyperlisp.inspect.hl",
-                    "[magix.data.count-dox].Value");
+                    "[magix.data.count-dox].value");
                 AppendCodeFromResource(
                     ip,
                     "Magix.data",

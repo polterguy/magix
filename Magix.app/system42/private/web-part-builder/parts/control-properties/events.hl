@@ -8,9 +8,9 @@ contains events for web part designer properties section"
 magix.ide.create-properties-controls
   // finding selected control, and stuffing its properties out into the properties web part
   magix.ide.get-selected-control
-  set=>[_evt-inspect].Name
+  set=>[_evt-inspect].name
     value=>magix.forms.controls.{0}
-      =>[magix.ide.get-selected-control][value][0].Name
+      =>[magix.ide.get-selected-control][value][0].name
   _evt-inspect
     inspect
 
@@ -29,34 +29,34 @@ magix.ide.create-properties-controls
           value=>{value}
           ontextchanged
             _dna=>{dna}
-            set=>[magix.ide.change-control][dna].Value
-              value=>[_dna].Value
+            set=>[magix.ide.change-control][dna].value
+              value=>[_dna].value
             if=>not-equals
-              lhs=>[$][value].Value
+              lhs=>[$][value].value
               rhs=>
               code
-                set=>[magix.ide.change-control][change][id].Value
-                  value=>[$][value].Value
+                set=>[magix.ide.change-control][change][id].value
+                  value=>[$][value].value
             else
               magix.viewport.show-message
                 message=>you cannot set the id property of a control to empty
             magix.ide.change-control
-  set=>[_data][**value=>{value}].Value
-    value=>[magix.ide.get-selected-control][value][0].Value
-  set=>[_data][**_dna=>{dna}].Value
-    value=>[magix.ide.get-selected-control][dna].Value
+  set=>[_data][**value=>{value}].value
+    value=>[magix.ide.get-selected-control][value][0].value
+  set=>[_data][**_dna=>{dna}].value
+    value=>[magix.ide.get-selected-control][dna].value
   add=>[$]
     value=>[_data]
     children-only=>true
 
   // looping through each control property
   for-each=>[**inspect=>?][..][**controls][0]
-    index-of=>[.].Name
+    index-of=>[.].name
       what=>on
     if=>not-exist
       lhs=>[@][index-of][result]
       and=>not-equals
-        lhs=>[.].Name
+        lhs=>[.].name
         rhs=>items
       code
         // not event handler
@@ -64,10 +64,10 @@ magix.ide.create-properties-controls
         set=>[@][_params][dna]
           value=>[/][magix.ide.get-selected-control][dna]
         if=>exist
-          lhs=>[/][magix.ide.get-selected-control][value][0][[.].Name]
+          lhs=>[/][magix.ide.get-selected-control][value][0][[.].name]
           code
-            set=>[@][..][..][_params][content].Value
-              value=>[/][magix.ide.get-selected-control][value][0][[.].Name].Value
+            set=>[@][..][..][_params][content].value
+              value=>[/][magix.ide.get-selected-control][value][0][[.].name].value
         add=>[@][_params][field-type]
           value=>[.]
         add=>[$]
@@ -90,12 +90,12 @@ magix.ide.create-properties-controls
 
   // looping through each control event and items collection
   for-each=>[**inspect=>?][..][**controls][0]
-    index-of=>[.].Name
+    index-of=>[.].name
       what=>on
     if=>exist
       lhs=>[@][index-of][result]
       or=>equals
-        lhs=>[.].Name
+        lhs=>[.].name
         rhs=>items
       code
         // not event handler
@@ -103,10 +103,10 @@ magix.ide.create-properties-controls
         set=>[@][_params][dna]
           value=>[/][magix.ide.get-selected-control][dna]
         if=>exist
-          lhs=>[/][magix.ide.get-selected-control][value][0][[.].Name]
+          lhs=>[/][magix.ide.get-selected-control][value][0][[.].name]
           code
             add=>[@][..][..][_params][content]
-              value=>[/][magix.ide.get-selected-control][value][0][[.].Name]
+              value=>[/][magix.ide.get-selected-control][value][0][[.].name]
               children-only=>true
         add=>[@][_params][field-type]
           value=>[.]
@@ -131,36 +131,36 @@ magix.ide.create-control-property-modifier-control
           ontextchanged
             _field-name=>{field-type-name}
             _dna=>{dna}
-            set=>[magix.ide.change-control][dna].Value
-              value=>[_dna].Value
+            set=>[magix.ide.change-control][dna].value
+              value=>[_dna].value
             if=>not-equals
-              lhs=>[$][value].Value
+              lhs=>[$][value].value
               rhs=>
               code
-                set=>[magix.ide.change-control][change][[_field-name].Value].Value
-                  value=>[$][value].Value
+                set=>[magix.ide.change-control][change][[_field-name].value].value
+                  value=>[$][value].value
             else
-              set=>[magix.ide.change-control][change][[_field-name].Value].Name
-                value=>[_field-name].Value
+              set=>[magix.ide.change-control][change][[_field-name].value].name
+                value=>[_field-name].value
             magix.ide.change-control
 
   // handling text [literal controls] specially
   if=>equals
-    lhs=>[$][field-type][0].Name
+    lhs=>[$][field-type][0].name
     rhs=>text
     code
-      set=>[_data][panel][class].Value
+      set=>[_data][panel][class].value
         value=>span-20 last clear top-1
-      set=>[_data][panel][controls][text-box].Name
+      set=>[_data][panel][controls][text-box].name
         value=>text-area
-      set=>[_data][panel][controls][text-area][class].Value
+      set=>[_data][panel][controls][text-area][class].value
         value=>span-15 last
-      set=>[_data][panel][controls][text-area][rows].Value
+      set=>[_data][panel][controls][text-area][rows].value
         value=>10
 
   // handling src [image controls] specially
   if=>equals
-    lhs=>[$][field-type][0].Name
+    lhs=>[$][field-type][0].name
     rhs=>src
     code
       _data
@@ -180,8 +180,8 @@ magix.ide.create-control-property-modifier-control
                 class=>span-15 last boxed air-padding bottom-1 top-1
                 no-edit=>true
                 onselect
-                  set=>[magix.forms.set-value][value].Value
-                    value=>[$][file].Value
+                  set=>[magix.forms.set-value][value].value
+                    value=>[$][file].value
                   magix.forms.set-value
                     form-id=>control-properties-wrapper
                     id=>src
@@ -190,30 +190,30 @@ magix.ide.create-control-property-modifier-control
                     reset-class=>true
                   _field-name=>{field-type-name}
                   _dna=>{dna}
-                  set=>[magix.ide.change-control][dna].Value
-                    value=>[_dna].Value
+                  set=>[magix.ide.change-control][dna].value
+                    value=>[_dna].value
                   if=>not-equals
-                    lhs=>[$][file].Value
+                    lhs=>[$][file].value
                     rhs=>
                     code
-                      set=>[magix.ide.change-control][change][[_field-name].Value].Value
-                        value=>[$][file].Value
+                      set=>[magix.ide.change-control][change][[_field-name].value].value
+                        value=>[$][file].value
                   else
-                    set=>[magix.ide.change-control][change][[_field-name].Value].Name
-                      value=>[_field-name].Value
+                    set=>[magix.ide.change-control][change][[_field-name].value].name
+                      value=>[_field-name].value
                   magix.ide.change-control
                 oncancel
                   magix.viewport.clear-controls
                     container=>content3
                     reset-class=>true
-      set=>[_data][panel][controls][text-box][class].Value
+      set=>[_data][panel][controls][text-box][class].value
         value=>span-4
       add=>[_data][panel][controls]
         value=>[@][_data][button]
 
   // handling style for all controls specially
   if=>equals
-    lhs=>[$][field-type][0].Name
+    lhs=>[$][field-type][0].name
     rhs=>style
     code
       _data
@@ -229,36 +229,36 @@ magix.ide.create-control-property-modifier-control
               events-file=>system42/private/web-part-builder/parts/style-builder/events.hl
             magix.browser.scroll
               id=>content3
-      set=>[_data][panel][controls][text-box][class].Value
+      set=>[_data][panel][controls][text-box][class].value
         value=>span-4
       add=>[_data][panel][controls]
         value=>[@][_data][button]
 
   iterate=>[_data]
     if=>equals
-      lhs=>[.].Value
+      lhs=>[.].value
       rhs=>{dna}
       code
-        set=>[.].Value
-          value=>[$][dna].Value
+        set=>[.].value
+          value=>[$][dna].value
     else-if=>equals
-      lhs=>[.].Value
+      lhs=>[.].value
       rhs=>{value}
       code
-        set=>[.].Value
-          value=>[$][content].Value
+        set=>[.].value
+          value=>[$][content].value
     else-if=>equals
-      lhs=>[.].Value
+      lhs=>[.].value
       rhs=>{field-type-value}
       code
-        set=>[.].Value
-          value=>[$][field-type][0].Value
+        set=>[.].value
+          value=>[$][field-type][0].value
     else-if=>equals
-      lhs=>[.].Value
+      lhs=>[.].value
       rhs=>{field-type-name}
       code
-        set=>[.].Value
-          value=>[$][field-type][0].Name
+        set=>[.].value
+          value=>[$][field-type][0].name
 
   // returning control for modifying property back to caller
   add=>[$][control]
@@ -280,7 +280,7 @@ magix.ide.create-control-event-modifier-control
               id=>{field-type-name}
               key=>display
             if=>equals
-              lhs=>[magix.forms.get-style][value].Value
+              lhs=>[magix.forms.get-style][value].value
               rhs=>none
               code
                 magix.viewstate.set
@@ -330,61 +330,61 @@ magix.ide.create-control-event-modifier-control
           ontextchanged
             _field-name=>{field-type-name}
             _dna=>{dna}
-            set=>[magix.ide.change-control][dna].Value
-              value=>[_dna].Value
+            set=>[magix.ide.change-control][dna].value
+              value=>[_dna].value
             if=>not-equals
-              lhs=>[$][value].Value
+              lhs=>[$][value].value
               rhs=>
               code
-                set=>[@][code-2-node][code].Value
-                  value=>[$][value].Value
+                set=>[@][code-2-node][code].value
+                  value=>[$][value].value
                 code-2-node
                   remove-root=>true
-                add=>[magix.ide.change-control][change][[_field-name].Value]
+                add=>[magix.ide.change-control][change][[_field-name].value]
                   value=>[@][code-2-node][node]
                   children-only=>true
             else
-              set=>[magix.ide.change-control][change][[_field-name].Value].Name
-                value=>[_field-name].Value
+              set=>[magix.ide.change-control][change][[_field-name].value].name
+                value=>[_field-name].value
             magix.ide.change-control
   iterate=>[_data]
     if=>equals
-      lhs=>[.].Value
+      lhs=>[.].value
       rhs=>{dna}
       code
-        set=>[.].Value
-          value=>[$][dna].Value
+        set=>[.].value
+          value=>[$][dna].value
     else-if=>equals
-      lhs=>[.].Value
+      lhs=>[.].value
       rhs=>{value}
       code
         if=>equals
-          lhs=>[$][content].Count
+          lhs=>[$][content].count
           rhs=>0
           or=>not-exist
             lhs=>[$][content]
           code
-            set=>[.].Value
+            set=>[.].value
         else
-          set=>[/][_data][panel][controls][link-button][style].Value
+          set=>[/][_data][panel][controls][link-button][style].value
             value=>font-weight:bold;
           node-2-code
             remove-root=>true
             node=>[$][content]
-          set=>[.].Value
-            value=>[@][node-2-code][code].Value
+          set=>[.].value
+            value=>[@][node-2-code][code].value
     else-if=>equals
-      lhs=>[.].Value
+      lhs=>[.].value
       rhs=>{field-type-value}
       code
-        set=>[.].Value
-          value=>[$][field-type][0].Value
+        set=>[.].value
+          value=>[$][field-type][0].value
     else-if=>equals
-      lhs=>[.].Value
+      lhs=>[.].value
       rhs=>{field-type-name}
       code
-        set=>[.].Value
-          value=>[$][field-type][0].Name
+        set=>[.].value
+          value=>[$][field-type][0].name
   add=>[$][control]
     value=>[_data][panel]
 

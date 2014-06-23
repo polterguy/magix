@@ -12,7 +12,7 @@ magix.ide.surface-changed
   // saving current design area controls to database by user
   magix.ide.get-form
   if=>equals
-    lhs=>[magix.ide.get-form].Count
+    lhs=>[magix.ide.get-form].count
     rhs=>0
     code
       magix.data.remove-username

@@ -28,7 +28,7 @@ pointing to the object being saved"
       remove
         id=>magix.tests.data-test1
     if=>not-equals
-      lhs=>[using][load][value][tmp].Value
+      lhs=>[using][load][value][tmp].value
       rhs=>testing
       code
         throw=>[magix.data.save] misbehaved
@@ -54,7 +54,7 @@ loaded is the same as the object saved, using constants"
       remove
         id=>magix.tests.data-test1
     if=>not-equals
-      lhs=>[using][load][value][tmp].Value
+      lhs=>[using][load][value][tmp].value
       rhs=>testing
       code
         throw=>[magix.data.save] misbehaved
@@ -72,17 +72,17 @@ pointing to the object id of the object being saved and loaded"
     _id=>magix.tests.data-test2
     using=>magix.data
       remove
-        id=>[_id].Value
+        id=>[_id].value
       save
-        id=>[_id].Value
+        id=>[_id].value
         value
           tmp=>testing
       load
-        id=>[_id].Value
+        id=>[_id].value
       remove
-        id=>[_id].Value
+        id=>[_id].value
     if=>not-equals
-      lhs=>[using][load][value][tmp].Value
+      lhs=>[using][load][value][tmp].value
       rhs=>testing
       code
         throw=>[magix.data.save] misbehaved
@@ -99,15 +99,15 @@ object does not exist"
     _id=>magix.tests.data-test3
     using=>magix.data
       remove
-        id=>[_id].Value
+        id=>[_id].value
       save
-        id=>[_id].Value
+        id=>[_id].value
         value
           tmp=>testing
       remove
-        id=>[_id].Value
+        id=>[_id].value
       load
-        id=>[_id].Value
+        id=>[_id].value
     if=>exist
       lhs=>[using][load][objects]
       code
@@ -139,10 +139,10 @@ using a prototype, making sure they are removed"
         prototype
           type=>magix.tests.test-object-type-1
     if=>not-equals
-      lhs=>[using][load][objects][0][value][tmp].Value
+      lhs=>[using][load][objects][0][value][tmp].value
       rhs=>testing-1
       or=>not-equals
-        lhs=>[using][load][objects][1][value][tmp].Value
+        lhs=>[using][load][objects][1][value][tmp].value
         rhs=>testing-2
       code
         throw=>[magix.data.load] misbehaved
@@ -185,10 +185,10 @@ being an expression"
       load
         prototype=>[_prototype]
     if=>not-equals
-      lhs=>[using][load][objects][0][value][tmp].Value
+      lhs=>[using][load][objects][0][value][tmp].value
       rhs=>testing-1
       or=>not-equals
-        lhs=>[using][load][objects][1][value][tmp].Value
+        lhs=>[using][load][objects][1][value][tmp].value
         rhs=>testing-2
       code
         throw=>[magix.data.load] misbehaved
@@ -229,10 +229,10 @@ being an expression, and having the prototype contain wildcards"
       load
         prototype=>[_prototype]
     if=>not-equals
-      lhs=>[using][load][objects][0][value][tmp].Value
+      lhs=>[using][load][objects][0][value][tmp].value
       rhs=>testing-1
       or=>not-equals
-        lhs=>[using][load][objects][1][value][tmp].Value
+        lhs=>[using][load][objects][1][value][tmp].value
         rhs=>testing-2
       code
         throw=>[magix.data.load] misbehaved
@@ -284,10 +284,10 @@ contain wildcards"
       load
         prototype=>[_prototype]
     if=>not-equals
-      lhs=>[using][load][objects][0][value][tmp].Value
+      lhs=>[using][load][objects][0][value][tmp].value
       rhs=>testing-%1 object
       or=>not-equals
-        lhs=>[using][load][objects][1][value][tmp].Value
+        lhs=>[using][load][objects][1][value][tmp].value
         rhs=>testing-%2 object
       code
         throw=>[magix.data.load] misbehaved
@@ -339,7 +339,7 @@ contain wildcards, and for then to count them again"
       count
         prototype=>[_prototype]
     if=>not-equals
-      lhs=>[using][count][count].Value
+      lhs=>[using][count][count].value
       rhs=>2
       code
         throw=>[magix.data.count] misbehaved
@@ -349,7 +349,7 @@ contain wildcards, and for then to count them again"
       count
         prototype=>[_prototype]
     if=>not-equals
-      lhs=>[using:1][count][count].Value
+      lhs=>[using:1][count][count].value
       rhs=>0
       code
         throw=>[magix.data.count] misbehaved
@@ -366,7 +366,7 @@ is explicitly invoked, the entire update to the database is discarded"
     magix.data.transaction
       _int=>0
       while=>less-than
-        lhs=>[_int].Value
+        lhs=>[_int].value
         rhs=>50
         code
           magix.data.save
@@ -375,15 +375,15 @@ is explicitly invoked, the entire update to the database is discarded"
               name=>howdy world
           using=>magix.math
             add
-              =>[_int].Value
+              =>[_int].value
               =>1
-          set=>[_int].Value
-            value=>[@][using][add].Value
+          set=>[_int].value
+            value=>[@][using][add].value
     magix.data.count
       prototype
         type=>magix.test.transactional-object
     if=>not-equals
-      lhs=>[magix.data.count][count].Value
+      lhs=>[magix.data.count][count].value
       rhs=>0
       code
         throw=>[magix.data.transaction] misbehaved
@@ -400,7 +400,7 @@ the database is serialized"
     magix.data.transaction
       _int=>0
       while=>less-than
-        lhs=>[_int].Value
+        lhs=>[_int].value
         rhs=>50
         code
           magix.data.save
@@ -409,10 +409,10 @@ the database is serialized"
               name=>howdy world
           using=>magix.math
             add
-              =>[_int].Value
+              =>[_int].value
               =>1
-          set=>[_int].Value
-            value=>[@][using][add].Value
+          set=>[_int].value
+            value=>[@][using][add].value
       magix.data.commit
     magix.data.count
       prototype
@@ -421,7 +421,7 @@ the database is serialized"
       prototype
         type=>magix.test.transactional-object
     if=>not-equals
-      lhs=>[magix.data.count][count].Value
+      lhs=>[magix.data.count][count].value
       rhs=>50
       code
         throw=>[magix.data.transaction] misbehaved
@@ -472,12 +472,12 @@ discarded"
       prototype
         type=>magix.test.transactional-object
     if=>not-equals
-      lhs=>[magix.data.transaction][magix.data.count][count].Value
+      lhs=>[magix.data.transaction][magix.data.count][count].value
       rhs=>5
       code
         throw=>[magix.data.transaction] misbehaved
     if=>not-equals
-      lhs=>[magix.data.count][count].Value
+      lhs=>[magix.data.count][count].value
       rhs=>0
       code
         throw=>[magix.data.transaction] misbehaved
@@ -508,7 +508,7 @@ making sure every thread finishes before the next one starts"
               type=>magix.test.transactional-object
           magix.data.commit
           if=>not-equals
-            lhs=>[magix.data.count][count].Value
+            lhs=>[magix.data.count][count].value
             rhs=>1
             code
               throw=>[magix.data.transaction] misbehaved with threads
@@ -565,7 +565,7 @@ making sure every thread finishes before the next one starts"
       prototype
         type=>magix.test.transactional-object
     if=>not-equals
-      lhs=>[magix.data.count][count].Value
+      lhs=>[magix.data.count][count].value
       rhs=>0
       code
         throw=>[magix.data.transaction] misbehaved with threads
@@ -622,7 +622,7 @@ making sure every thread finishes before the next one starts"
       prototype
         type=>magix.test.transactional-object
     if=>not-equals
-      lhs=>[magix.data.count][count].Value
+      lhs=>[magix.data.count][count].value
       rhs=>16
       code
         throw=>[magix.data.transaction] misbehaved with threads

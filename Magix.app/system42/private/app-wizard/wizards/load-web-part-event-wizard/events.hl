@@ -14,27 +14,27 @@ magix.wizard.populate-select-css-file
   if=>exist
     lhs=>[$][directory]
     code
-      set=>[_directory].Value
-        value=>[$][directory].Value
+      set=>[_directory].value
+        value=>[$][directory].value
 
   // fetching all files and directories from current directory
   using=>magix.file
     list-files
-      directory=>[_directory].Value
+      directory=>[_directory].value
       filter=>*.css
     list-directories
-      directory=>[_directory].Value
+      directory=>[_directory].value
 
   // looping through all files
   for-each=>[using][list-files][files]
     add=>[$][files]
-      value=>[.].Name
-        value=>[.].Name
+      value=>[.].name
+        value=>[.].name
 
   // looping through all directories, and recursively calling self
   for-each=>[using][list-directories][directories]
-    set=>[@][magix.wizard.populate-select-css-file][directory].Value
-      value=>[.].Name
+    set=>[@][magix.wizard.populate-select-css-file][directory].value
+      value=>[.].name
     magix.wizard.populate-select-css-file
     if=>exist
       lhs=>[@][magix.wizard.populate-select-css-file][files]
@@ -67,7 +67,7 @@ magix.wizard.create-css-files-container
                   onclick
                     magix.viewstate.get
                       id=>magix.wizard.css-files
-                    set=>[magix.viewstate.get][value][[$][info].Value]
+                    set=>[magix.viewstate.get][value][[$][info].value]
                     set=>[magix.viewstate.set][value]
                       value=>[magix.viewstate.get][value]
                     magix.viewstate.set
@@ -78,10 +78,10 @@ magix.wizard.create-css-files-container
           magix.viewstate.get
             id=>magix.wizard.css-files
           for-each=>[magix.viewstate.get][value]
-            set=>[/][_control][panel][controls][label][value].Value
-              value=>[.].Name
-            set=>[/][_control][panel][controls][link-button][info].Value
-              value=>[.].Name
+            set=>[/][_control][panel][controls][label][value].value
+              value=>[.].name
+            set=>[/][_control][panel][controls][link-button][info].value
+              value=>[.].name
             add=>[$]
               value=>[/][_control][panel]
       select=>add-css-file
@@ -107,26 +107,26 @@ magix.wizard.create-css-files-container
           _included
           for-each=>[magix.viewstate.get][value]
             if=>equals
-              lhs=>[.].Name
-              rhs=>[/][magix.forms.get-value][value].Value
+              lhs=>[.].name
+              rhs=>[/][magix.forms.get-value][value].value
               code
                 magix.viewport.show-message
                   message=>that file is already included
-                set=>[/][_included].Value
+                set=>[/][_included].value
                   value=>true
                 magix.forms.set-value
                   form-id=>css-files
                   id=>add-css-file
                   value=>_default
           if=>not-equals
-            lhs=>[_included].Value
+            lhs=>[_included].value
             rhs=>true
             code
               add=>[@][magix.viewstate.set][value]
                 value=>[magix.viewstate.get][value]
                 children-only=>true
               add=>[@][magix.viewstate.set][value]
-                value=>[magix.forms.get-value][value].Value
+                value=>[magix.forms.get-value][value].value
               magix.viewstate.set
                 id=>magix.wizard.css-files
               magix.wizard.create-css-files-container
@@ -139,7 +139,7 @@ magix.wizard.create-load-from-where-web-part
     id=>sel-load-from-where
 
   // if user has selected to load from disc, we create the load from disc web part, otherwise we create the load from database web part
-  switch=>[magix.forms.get-value][value].Value
+  switch=>[magix.forms.get-value][value].value
 
     // user has chosen to load web part from database
     case=>database
@@ -160,8 +160,8 @@ magix.wizard.create-load-from-where-web-part
                   type=>magix.forms.web-part
               for-each=>[magix.data.load][objects]
                 add=>[/][_items]
-                  value=>[.][id].Value
-                    value=>[.][id].Value
+                  value=>[.][id].value
+                    value=>[.][id].value
               add=>[magix.forms.set-values][values]
                 value=>[_items]
                 children-only=>true
@@ -196,7 +196,7 @@ magix.wizard.create-load-from-where-web-part
                       set-value
                         form-id=>from-where
                         id=>filename
-                        value=>[$][file].Value
+                        value=>[$][file].value
                   oncancel
                     magix.viewport.clear-controls
                       container=>file-browser
@@ -208,7 +208,7 @@ magix.wizard.show-advanced-settings
     form-id=>wizard
     id=>show-advanced
   if=>equals
-    lhs=>[magix.forms.get-value][value].Value
+    lhs=>[magix.forms.get-value][value].value
     rhs=>advanced
     code
       magix.forms.set-visible
@@ -246,16 +246,16 @@ magix.wizard.create-active-event
   magix.forms.get-value
     form-id=>wizard
     id=>active-event-name
-  split=>[magix.forms.get-value][value].Value
+  split=>[magix.forms.get-value][value].value
     what=>.
   if=>equals
-    lhs=>[split][result].Count
+    lhs=>[split][result].count
     rhs=>1
     or=>equals
-      lhs=>[split][result][0].Value
+      lhs=>[split][result][0].value
       rhs=>magix
     or=>equals
-      lhs=>[magix.forms.get-value][value].Value
+      lhs=>[magix.forms.get-value][value].value
       rhs=>
     code
       magix.viewport.show-message
@@ -273,7 +273,7 @@ magix.wizard.create-active-event
 
   // checking to see if active event has good name
   if=>equals
-    lhs=>[magix.forms.get-value][value].Value
+    lhs=>[magix.forms.get-value][value].value
     rhs=>
     code
       magix.viewport.show-message
@@ -282,57 +282,57 @@ magix.wizard.create-active-event
     magix.forms.get-value
       form-id=>wizard
       id=>sel-load-from-where
-    switch=>[@][magix.forms.get-value][value].Value
+    switch=>[@][magix.forms.get-value][value].value
 
       // user wants to use a form from database
       case=>database
-        set=>[/][_current].Value
+        set=>[/][_current].value
           value=>_data
         magix.forms.get-value
           form-id=>wizard
           id=>database-id
         if=>equals
-          lhs=>[@][magix.forms.get-value][value].Value
+          lhs=>[@][magix.forms.get-value][value].value
           rhs=>_default
           code
             magix.viewport.show-message
               message=>you must choose a form from your database
         else
-          set=>[/][_good].Value
+          set=>[/][_good].value
             value=>true
           iterate=>[/][_data]
             if=>equals
-              lhs=>[.].Value
+              lhs=>[.].value
               rhs=>{database-id}
               code
-                set=>[.].Value
-                  value=>[@][..][..][..][..][magix.forms.get-value][value].Value
+                set=>[.].value
+                  value=>[@][..][..][..][..][magix.forms.get-value][value].value
       case=>filesystem
-        set=>[/][_current].Value
+        set=>[/][_current].value
           value=>_data2
         magix.forms.get-value
           form-id=>from-where
           id=>filename
         if=>equals
-          lhs=>[@][magix.forms.get-value][value].Value
+          lhs=>[@][magix.forms.get-value][value].value
           rhs=>
           code
             magix.viewport.show-message
               message=>you must choose a web part hyperlisp file from your filesystem
         else
-          set=>[/][_good].Value
+          set=>[/][_good].value
             value=>true
           iterate=>[/][_data2]
             if=>equals
-              lhs=>[.].Value
+              lhs=>[.].value
               rhs=>{filename}
               code
-                set=>[.].Value
-                  value=>[@][..][..][..][..][magix.forms.get-value][value].Value
+                set=>[.].value
+                  value=>[@][..][..][..][..][magix.forms.get-value][value].value
 
   // checking to see if everything is ok
   if=>equals
-    lhs=>[_good].Value
+    lhs=>[_good].value
     rhs=>true
     code
 
@@ -341,31 +341,31 @@ magix.wizard.create-active-event
         form-id=>wizard
         id=>container
       if=>not-equals
-        lhs=>[@][magix.forms.get-value:0][value].Value
+        lhs=>[@][magix.forms.get-value:0][value].value
         rhs=>
         code
-          set=>[[/][_current].Value][event][code][magix.forms.create-web-part][container].Value
-            value=>[@][..][..][magix.forms.get-value:0][value].Value
+          set=>[[/][_current].value][event][code][magix.forms.create-web-part][container].value
+            value=>[@][..][..][magix.forms.get-value:0][value].value
 
       // setting css classes for our web part, if there is any defined
       magix.forms.get-value
         form-id=>wizard
         id=>css-class
       if=>not-equals
-        lhs=>[@][magix.forms.get-value:1][value].Value
+        lhs=>[@][magix.forms.get-value:1][value].value
         rhs=>
         code
-          set=>[[/][_current].Value][event][code][magix.forms.create-web-part][class].Value
-            value=>[@][..][..][magix.forms.get-value:1][value].Value
+          set=>[[/][_current].value][event][code][magix.forms.create-web-part][class].value
+            value=>[@][..][..][magix.forms.get-value:1][value].value
 
       // setting active event name
-      iterate=>[/][[/][_current].Value]
+      iterate=>[/][[/][_current].value]
         if=>equals
-          lhs=>[.].Value
+          lhs=>[.].value
           rhs=>{active-event-name}
           code
-            set=>[.].Value
-              value=>[/][magix.forms.get-value][value].Value
+            set=>[.].value
+              value=>[/][magix.forms.get-value][value].value
 
       // setting css files for web part
       magix.viewstate.get
@@ -374,13 +374,13 @@ magix.wizard.create-active-event
         _css
           magix.viewport.include-client-file
             type=>css
-        set=>[@][_css][magix.viewport.include-client-file][file].Value
-          value=>[.].Name
-        add=>[/][[/][_current].Value][event][code]
+        set=>[@][_css][magix.viewport.include-client-file][file].value
+          value=>[.].name
+        add=>[/][[/][_current].value][event][code]
           value=>[@][_css][magix.viewport.include-client-file]
 
       // creating active event
-      execute=>[[/][_current].Value]
+      execute=>[[/][_current].value]
       magix.viewport.show-message
         message=>active event was created
       magix.forms.set-visible
@@ -391,5 +391,5 @@ magix.wizard.create-active-event
         set-info
           form-id=>wizard
           id=>edit-event
-          value=>[magix.forms.get-value][value].Value
+          value=>[magix.forms.get-value][value].value
 

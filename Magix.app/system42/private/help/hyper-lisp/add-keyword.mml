@@ -57,7 +57,7 @@ ommit the second value, then the added node will have a null value, as long as t
 _destination
 _name=>new-node
 add=>[_destination]
-  value=>[_name].Value
+  value=>[_name].value
 </pre>
 
 <p>the above code will create a new node with the name of [new-node] beneath the [_destination] node, with a null value.&nbsp;&nbsp;while the 
@@ -71,7 +71,7 @@ add=>[_destination]
   value=>[_name]
 </pre>
 
-<p>notice that the only parts missing in the second example compared to the first is the <strong>.Value</strong> parts</p>
+<p>notice that the only parts missing in the second example compared to the first is the <strong>.value</strong> parts</p>
 
 <p>if you wish, you can also directly inline the nodes you wish to add to your destination beneath the [add] node.&nbsp;&nbsp;however, 
 this can only be done if you do not have a [value] node beneath your add, that has a value.&nbsp;&nbsp;consider the following code</p>

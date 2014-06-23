@@ -47,7 +47,7 @@ namespace Magix.forms
                 node["inspect"],
                 "Magix.forms",
                 "Magix.forms.hyperlisp.inspect.hl",
-                "[magix.forms.link-button-dox-start].Value");
+                "[magix.forms.link-button-dox-start].value");
             AppendCodeFromResource(
                 node,
                 "Magix.forms",
@@ -58,7 +58,7 @@ namespace Magix.forms
                 node["inspect"],
                 "Magix.forms",
                 "Magix.forms.hyperlisp.inspect.hl",
-                "[magix.forms.link-button-dox-end].Value",
+                "[magix.forms.link-button-dox-end].value",
                 true);
             node["magix.forms.create-web-part"]["controls"]["link-button"]["onclick"].UnTie();
             AppendCodeFromResource(

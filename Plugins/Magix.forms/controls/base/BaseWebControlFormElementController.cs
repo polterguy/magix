@@ -30,7 +30,7 @@ namespace Magix.forms
                     ip["inspect"],
                     "Magix.forms",
                     "Magix.forms.hyperlisp.inspect.hl",
-                    "[magix.forms.set-enabled-dox].Value");
+                    "[magix.forms.set-enabled-dox].value");
                 AppendCodeFromResource(
                     ip,
                     "Magix.forms",
@@ -56,7 +56,7 @@ namespace Magix.forms
                     ip["inspect"],
                     "Magix.forms",
                     "Magix.forms.hyperlisp.inspect.hl",
-                    "[magix.forms.get-enabled-dox].Value");
+                    "[magix.forms.get-enabled-dox].value");
                 AppendCodeFromResource(
                     ip,
                     "Magix.forms",
@@ -118,7 +118,7 @@ namespace Magix.forms
                 tmp["inspect"],
                 "Magix.forms",
                 "Magix.forms.hyperlisp.inspect.hl",
-                "[magix.forms.base-web-form-element-dox].Value",
+                "[magix.forms.base-web-form-element-dox].value",
                 true);
             node["accesskey"].Value = "q";
             node["disabled"].Value = "false";

@@ -74,7 +74,7 @@ namespace Magix.forms
                 node["inspect"],
                 "Magix.forms",
                 "Magix.forms.hyperlisp.inspect.hl",
-                "[magix.forms.dynamic-dox-start].Value");
+                "[magix.forms.dynamic-dox-start].value");
             AppendCodeFromResource(
                 node,
                 "Magix.forms",
@@ -85,7 +85,7 @@ namespace Magix.forms
                 node["inspect"],
                 "Magix.forms",
                 "Magix.forms.hyperlisp.inspect.hl",
-                "[magix.forms.dynamic-dox-end].Value",
+                "[magix.forms.dynamic-dox-end].value",
                 true);
             node["magix.forms.create-web-part"]["controls"]["dynamic"]["onfirstload"].UnTie();
             AppendCodeFromResource(

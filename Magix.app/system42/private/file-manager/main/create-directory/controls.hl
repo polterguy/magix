@@ -39,22 +39,22 @@ panel=>create-dir-wrapper
           magix.viewstate.get
             id=>magix.file-manager.current-folder
           if=>not-equals
-            lhs=>[@][magix.viewstate.get][value].Value
+            lhs=>[@][magix.viewstate.get][value].value
             rhs=>
             code
-              set=>[@][..][..][magix.file.create-directory][directory].Value
+              set=>[@][..][..][magix.file.create-directory][directory].value
                 value=>{0}/{1}
-                  =>[@][..][..][magix.viewstate.get][value].Value
-                  =>[magix.forms.get-value][value].Value
+                  =>[@][..][..][magix.viewstate.get][value].value
+                  =>[magix.forms.get-value][value].value
           else
-            set=>[@][..][magix.file.create-directory][directory].Value
-              value=>[magix.forms.get-value][value].Value
+            set=>[@][..][magix.file.create-directory][directory].value
+              value=>[magix.forms.get-value][value].value
           magix.file.create-directory
           magix.viewport.clear-controls
             container=>create-file-directory-container
             reset-class=>true
-          set=>[@][magix.viewstate.set][value].Value
-            value=>[@][magix.file.create-directory][directory].Value
+          set=>[@][magix.viewstate.set][value].value
+            value=>[@][magix.file.create-directory][directory].value
           magix.viewstate.set
             id=>magix.file-manager.current-folder
           magix.file-manager.open-directory

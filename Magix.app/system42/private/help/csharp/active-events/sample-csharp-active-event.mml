@@ -7,7 +7,7 @@ public void magix_sample_active_event(object sender, ActiveEventArgs e)
    int input1 = e.Params["input1"].Get&lt;int&gt;();
    int input2 = e.Params["input2"].Get&lt;int&gt;();
 
-   e.Params["result"].Value = input1 + input2;
+   e.Params["result"].value = input1 + input2;
 }</pre>
 
 <p>above is an example of an active event, written in c#. the above active event expects two input parameters, which it adds together, and returns as "result" back to the caller</p>
@@ -23,8 +23,8 @@ link-button=>go-to-node
 
 <pre>Node node = new Node();
 
-node["input1"].Value = 4;
-node["input2"].Value = 5;
+node["input1"].value = 4;
+node["input2"].value = 5;
 
 Magix.Core.ActiveEvents.Instance.RaiseActiveEvent(
     this, 

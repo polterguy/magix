@@ -9,7 +9,7 @@ you open up a web control collection with two braces { and close it again with t
 &lt;p&gt;this is a paragraph that contains a {{
 lambda=>lmb1
   oncreatecontrols
-    set=>[$][literal][text].Value
+    set=>[$][literal][text].value
       value=>{0}{1}
         =>{
         =>{
@@ -22,7 +22,7 @@ link-button=>btn
 {{
 lambda=>lmb2
   oncreatecontrols
-    set=>[$][literal][text].Value
+    set=>[$][literal][text].value
       value=>{0}{1}
         =>}
         =>}
@@ -62,7 +62,7 @@ has several web control collections</p>
 &lt;p&gt;this is a paragraph that contains a {{
 lambda=>lmb1
   oncreatecontrols
-    set=>[$][literal][text].Value
+    set=>[$][literal][text].value
       value=>{0}{1}
         =>{
         =>{
@@ -75,7 +75,7 @@ link-button=>btn
 {{
 lambda=>lmb2
   oncreatecontrols
-    set=>[$][literal][text].Value
+    set=>[$][literal][text].value
       value=>{0}{1}
         =>}
         =>}
@@ -84,7 +84,7 @@ lambda=>lmb2
 &lt;p&gt;this is another paragraph, with another web control, which is a button {{
 lambda=>lmb3
   oncreatecontrols
-    set=>[$][literal][text].Value
+    set=>[$][literal][text].value
       value=>{0}{1}
         =>{
         =>{
@@ -97,7 +97,7 @@ button=>btn2
 {{
 lambda=>lmb4
   oncreatecontrols
-    set=>[$][literal][text].Value
+    set=>[$][literal][text].value
       value=>{0}{1}
         =>}
         =>}
@@ -118,7 +118,7 @@ active event.&nbsp;&nbsp;consider the following code, that has one active event,
 &lt;p&gt;this mml contains a web control and an active event {{
 lambda=>lmb1
   oncreatecontrols
-    set=>[$][literal][text].Value
+    set=>[$][literal][text].value
       value=>{0}{1}
         =>{
         =>{
@@ -136,7 +136,7 @@ link-button=>btn-av
 {{
 lambda=>lmb2
   oncreatecontrols
-    set=>[$][literal][text].Value
+    set=>[$][literal][text].value
       value=>{0}{1}
         =>}
         =>}
@@ -165,34 +165,34 @@ lambda=>lmb
           label
             class=>span-22 last
             tag=>pre
-      set=>[@][_pnl][controls][label:0][value].Value
-        value=>[.].Name
-      replace=>[@][_pnl][controls][label:0][value].Value
+      set=>[@][_pnl][controls][label:0][value].value
+        value=>[.].name
+      replace=>[@][_pnl][controls][label:0][value].value
         what=>magix.forms.controls.
       _lmb
-        set=>[1].Name
-          value=>[$][name].Value
+        set=>[1].name
+          value=>[$][name].value
         _1
           inspect
-        set=>[$][description].Value
-          value=>[1][inspect].Value
+        set=>[$][description].value
+          value=>[1][inspect].value
         set=>[1][inspect]
-        set=>[node-2-code][node].Value
+        set=>[node-2-code][node].value
           value=>[1]
         node-2-code
           remove-root=>true
-        set=>[$][code].Value
-          value=>[node-2-code][code].Value
-      set=>[@][lambda][name].Value
-        value=>[.].Name
+        set=>[$][code].value
+          value=>[node-2-code][code].value
+      set=>[@][lambda][name].value
+        value=>[.].name
       lambda=>[@][_lmb]
-      set=>[@][_pnl][controls][label:1][value].Value
-        value=>[@][lambda][description].Value
-      set=>[@][_pnl][controls][label:2][value].Value
-        value=>[@][lambda][code].Value
+      set=>[@][_pnl][controls][label:1][value].value
+        value=>[@][lambda][description].value
+      set=>[@][_pnl][controls][label:2][value].value
+        value=>[@][lambda][code].value
       add=>[$]
         value=>[@][_pnl]
-      set=>[$][_pnl].Name
+      set=>[$][_pnl].name
         value=>panel
 }}
 </ul>
@@ -237,7 +237,7 @@ magix.forms.create-mml-web-part
 &lt;p&gt;howdy, this is a test {{
 lambda=>lmb-file-1
   oncreatecontrols
-    set=>[$][literal][text].Value
+    set=>[$][literal][text].value
       value=>{0}{1}
         =>{
         =>{
@@ -249,7 +249,7 @@ link-button=>lnk
 {{
 lambda=>lmb-file-2
   oncreatecontrols
-    set=>[$][literal][text].Value
+    set=>[$][literal][text].value
       value=>{0}{1}
         =>}
         =>}
@@ -282,17 +282,17 @@ magix.forms.create-mml-web-part
         id=>txt-name
       magix.forms.get-value
         id=>sel-age
-      set=>[magix.viewport.show-message][message].Value
+      set=>[magix.viewport.show-message][message].value
         value=>dude, your name is {0} and you're {1} old
-          =>[magix.forms.get-value:0][value].Value
-          =>[magix.forms.get-value:1][value].Value
+          =>[magix.forms.get-value:0][value].value
+          =>[magix.forms.get-value:1][value].value
   mml=>@"
 &lt;div class=""sample-web-control""&gt;
 &lt;h1&gt;give me your data&lt;/h1&gt;
 &lt;p class=""span-3""&gt;first your name&lt;/p&gt;{{
 lambda=>lmb-file-11
   oncreatecontrols
-    set=>[$][literal][text].Value
+    set=>[$][literal][text].value
       value=>{0}{1}
         =>{
         =>{
@@ -305,14 +305,14 @@ text-box=>txt-name
 {{
 lambda=>lmb-file-12
   oncreatecontrols
-    set=>[$][literal][text].Value
+    set=>[$][literal][text].value
       value=>{0}{1}
         =>}
         =>}
 }}&lt;p class=""span-3""&gt;then your age&lt;/p&gt;{{
 lambda=>lmb-file-111
   oncreatecontrols
-    set=>[$][literal][text].Value
+    set=>[$][literal][text].value
       value=>{0}{1}
         =>{
         =>{
@@ -333,7 +333,7 @@ button=>btn-submit
 {{
 lambda=>lmb-file-122
   oncreatecontrols
-    set=>[$][literal][text].Value
+    set=>[$][literal][text].value
       value=>{0}{1}
         =>}
         =>}

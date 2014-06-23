@@ -37,7 +37,7 @@ namespace Magix.execute
                     ip["inspect"],
                     "Magix.file",
                     "Magix.file.hyperlisp.inspect.hl",
-                    "[magix.file.list-directories-dox].Value");
+                    "[magix.file.list-directories-dox].value");
                 AppendCodeFromResource(
                     ip,
                     "Magix.file",
@@ -94,7 +94,7 @@ namespace Magix.execute
                     ip["inspect"],
                     "Magix.file",
                     "Magix.file.hyperlisp.inspect.hl",
-                    "[magix.file.create-directory-dox].Value");
+                    "[magix.file.create-directory-dox].value");
                 AppendCodeFromResource(
                     ip,
                     "Magix.file",
@@ -128,7 +128,7 @@ namespace Magix.execute
                     ip["inspect"],
                     "Magix.file",
                     "Magix.file.hyperlisp.inspect.hl",
-                    "[magix.file.delete-directory-dox].Value");
+                    "[magix.file.delete-directory-dox].value");
                 AppendCodeFromResource(
                     ip,
                     "Magix.file",
@@ -163,7 +163,7 @@ namespace Magix.execute
                     ip["inspect"],
                     "Magix.file",
                     "Magix.file.hyperlisp.inspect.hl",
-                    "[magix.file.move-directory-dox].Value");
+                    "[magix.file.move-directory-dox].value");
                 AppendCodeFromResource(
                     ip,
                     "Magix.file",
@@ -204,7 +204,7 @@ namespace Magix.execute
                     ip["inspect"],
                     "Magix.file",
                     "Magix.file.hyperlisp.inspect.hl",
-                    "[magix.file.directory-exist-dox].Value");
+                    "[magix.file.directory-exist-dox].value");
                 AppendCodeFromResource(
                     ip,
                     "Magix.file",

@@ -16,30 +16,30 @@ upon every index of ' ', making sure the result is
 what is expected"
   code
     _data=>howdy world this is cool
-    index-of=>[_data].Value
+    index-of=>[_data].value
       what=>@" "
     if=>not-equals
-      lhs=>[index-of][result].Count
+      lhs=>[index-of][result].count
       rhs=>4
       code
         throw=>[index-of] misbehaved
     if=>not-equals
-      lhs=>[index-of][result][0].Value
+      lhs=>[index-of][result][0].value
       rhs=>5
       code
         throw=>[index-of] misbehaved
     if=>not-equals
-      lhs=>[index-of][result][1].Value
+      lhs=>[index-of][result][1].value
       rhs=>11
       code
         throw=>[index-of] misbehaved
     if=>not-equals
-      lhs=>[index-of][result][2].Value
+      lhs=>[index-of][result][2].value
       rhs=>16
       code
         throw=>[index-of] misbehaved
     if=>not-equals
-      lhs=>[index-of][result][3].Value
+      lhs=>[index-of][result][3].value
       rhs=>19
       code
         throw=>[index-of] misbehaved
@@ -57,30 +57,30 @@ pointing to a node, who's value is ' '"
   code
     _what=>@" "
     _data=>howdy world this is cool
-    index-of=>[_data].Value
-      what=>[_what].Value
+    index-of=>[_data].value
+      what=>[_what].value
     if=>not-equals
-      lhs=>[index-of][result].Count
+      lhs=>[index-of][result].count
       rhs=>4
       code
         throw=>[index-of] misbehaved
     if=>not-equals
-      lhs=>[index-of][result][0].Value
+      lhs=>[index-of][result][0].value
       rhs=>5
       code
         throw=>[index-of] misbehaved
     if=>not-equals
-      lhs=>[index-of][result][1].Value
+      lhs=>[index-of][result][1].value
       rhs=>11
       code
         throw=>[index-of] misbehaved
     if=>not-equals
-      lhs=>[index-of][result][2].Value
+      lhs=>[index-of][result][2].value
       rhs=>16
       code
         throw=>[index-of] misbehaved
     if=>not-equals
-      lhs=>[index-of][result][3].Value
+      lhs=>[index-of][result][3].value
       rhs=>19
       code
         throw=>[index-of] misbehaved

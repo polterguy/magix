@@ -11,15 +11,15 @@ magix.text-editor.refresh-toolbar
   magix.forms.get-value
     form-id=>editor
     id=>txt-file-name
-  split=>[magix.forms.get-value][value].Value
+  split=>[magix.forms.get-value][value].value
     what=>.
   while=>more-than
-    lhs=>[@][split][result].Count
+    lhs=>[@][split][result].count
     rhs=>1
     code
       set=>[@][..][..][split][result][0]
   if=>equals
-    lhs=>[@][split][result][0].Value
+    lhs=>[@][split][result][0].value
     rhs=>mml
     code
       magix.forms.set-enabled
@@ -31,7 +31,7 @@ magix.text-editor.refresh-toolbar
         id=>execute
         value=>false
   else-if=>equals
-    lhs=>[@][split][result][0].Value
+    lhs=>[@][split][result][0].value
     rhs=>hl
     code
       magix.forms.set-enabled
@@ -61,7 +61,7 @@ magix.text-editor.save_onclick
     form-id=>editor
     id=>editor-surface
   if=>equals
-    lhs=>[magix.forms.get-value:1][value].Value
+    lhs=>[magix.forms.get-value:1][value].value
     rhs=>
     code
       magix.viewport.show-message
@@ -69,7 +69,7 @@ magix.text-editor.save_onclick
         color=>#ffaaaa
       stop
   if=>equals
-    lhs=>[magix.forms.get-value:0][value].Value
+    lhs=>[magix.forms.get-value:0][value].value
     rhs=>
     code
       // no filename given, opening up browse to figure out a filename to save file as
@@ -80,8 +80,8 @@ magix.text-editor.save_onclick
           no-edit-button=>true
           class=>span-15 last boxed air-padding top-1 left-5
           onselect
-            set=>[magix.forms.set-value][value].Value
-              value=>[$][file].Value
+            set=>[magix.forms.set-value][value].value
+              value=>[$][file].value
             magix.forms.set-value
               form-id=>editor
               id=>txt-file-name
@@ -106,7 +106,7 @@ magix.text-editor.save-file
     form-id=>editor
     id=>editor-surface
   if=>equals
-    lhs=>[magix.forms.get-value:1][value].Value
+    lhs=>[magix.forms.get-value:1][value].value
     rhs=>
     code
       magix.viewport.show-message
@@ -115,16 +115,16 @@ magix.text-editor.save-file
       stop
   using=>magix.file
     save
-      file=>[magix.forms.get-value:0][value].Value
-      value=>[magix.forms.get-value:1][value].Value
+      file=>[magix.forms.get-value:0][value].value
+      value=>[magix.forms.get-value:1][value].value
   magix.viewport.show-message
     message=>file was successfully saved
   magix.forms.effect
     type=>focus-and-select
     form-id=>editor
     id=>editor-surface
-  set=>[magix.editor.file-saved][file].Value
-    value=>[magix.forms.get-value:0][value].Value
+  set=>[magix.editor.file-saved][file].value
+    value=>[magix.forms.get-value:0][value].value
   magix.text-editor.refresh-toolbar
   magix.editor.file-saved
 

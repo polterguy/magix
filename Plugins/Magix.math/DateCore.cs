@@ -29,7 +29,7 @@ namespace Magix.date
                     ip["inspect"],
                     "Magix.math",
                     "Magix.math.hyperlisp.inspect.hl",
-                    "[magix.math.add-dox].Value");
+                    "[magix.math.add-dox].value");
                 AppendCodeFromResource(
                     ip,
                     "Magix.math",

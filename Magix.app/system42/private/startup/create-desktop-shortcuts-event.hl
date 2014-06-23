@@ -97,7 +97,7 @@ returns the default dashboard shortcuts in your system"
                             form-id=>active-events
                             id=>lbl-header
                         event
-                          name=>[using][get-value][value].Value
+                          name=>[using][get-value][value].value
                         magix.viewport.show-message
                           message=>active event was deleted, changes will not show before you reload overridden active events
                           color=>#aaffaa
@@ -113,26 +113,26 @@ returns the default dashboard shortcuts in your system"
                     magix.forms.get-value
                       form-id=>active-events
                       id=>lbl-code
-                    replace=>[magix.forms.get-value][value].Value
+                    replace=>[magix.forms.get-value][value].value
                       what=>&amp;
                       with=>&
-                    replace=>[magix.forms.get-value][value].Value
+                    replace=>[magix.forms.get-value][value].value
                       what=>&lt;
                       with=><
-                    replace=>[magix.forms.get-value][value].Value
+                    replace=>[magix.forms.get-value][value].value
                       what=>&gt;
                       with=>>
                     magix.forms.get-value
                       form-id=>active-events
                       id=>lbl-header
                     code-2-node
-                      code=>[magix.forms.get-value][value].Value
+                      code=>[magix.forms.get-value][value].value
                     _code
                       event
                         name
                         code
-                    set=>[_code][**name].Value
-                      value=>[magix.forms.get-value:1][value].Value
+                    set=>[_code][**name].value
+                      value=>[magix.forms.get-value:1][value].value
                     add=>[_code][**code]
                       value=>[code-2-node][node]
                       children-only=>true
@@ -140,7 +140,7 @@ returns the default dashboard shortcuts in your system"
                       node=>[_code][event]
                     using=>magix.executor
                       set-code
-                        code=>[node-2-code][code].Value
+                        code=>[node-2-code][code].value
 
       active-events
         text=>active events
@@ -211,16 +211,16 @@ returns the default dashboard shortcuts in your system"
                         onselect
                           using=>magix.file
                             load
-                              file=>[$][file].Value
+                              file=>[$][file].value
                           using=>magix.forms
                             set-value
                               form-id=>editor
                               id=>editor-surface
-                              value=>[using:0][load][value].Value
+                              value=>[using:0][load][value].value
                             set-value
                               form-id=>editor
                               id=>txt-file-name
-                              value=>[$][file].Value
+                              value=>[$][file].value
                           magix.viewport.clear-controls
                             container=>content2
                             reset-class=>true
@@ -252,16 +252,16 @@ returns the default dashboard shortcuts in your system"
                         onselect
                           using=>magix.file
                             load
-                              file=>[$][file].Value
+                              file=>[$][file].value
                           using=>magix.forms
                             set-value
                               form-id=>editor
                               id=>editor-surface
-                              value=>[using:0][load][value].Value
+                              value=>[using:0][load][value].value
                             set-value
                               form-id=>editor
                               id=>txt-file-name
-                              value=>[$][file].Value
+                              value=>[$][file].value
                           magix.viewport.clear-controls
                             container=>content2
                             reset-class=>true

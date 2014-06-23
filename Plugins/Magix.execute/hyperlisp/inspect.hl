@@ -94,7 +94,7 @@ not thread safe"
 
 magix.execute.debug-sample
   magix.execute
-    set=>[@][foo.bar].Value
+    set=>[@][foo.bar].value
       value=>true
   debug=>[magix.execute]
 
@@ -138,13 +138,13 @@ magix.execute.event-sample
       _data=>thomas
       _backup=>thomas
       if=>equals
-        lhs=>[_data].Value
-        rhs=>[_backup].Value
+        lhs=>[_data].value
+        rhs=>[_backup].value
         code
-          set=>[$][output].Value
+          set=>[$][output].value
             value=>return-value
-          set=>[/][magix.viewport.show-message][message].Value
-            value=>[$][input].Value
+          set=>[/][magix.viewport.show-message][message].value
+            value=>[$][input].value
       magix.viewport.show-message
   foo.bar
     input=>hello world 2.0
@@ -190,13 +190,13 @@ magix.execute.session-event-sample
       _data=>thomas
       _backup=>thomas
       if=>equals
-        lhs=>[_data].Value
-        rhs=>[_backup].Value
+        lhs=>[_data].value
+        rhs=>[_backup].value
         code
-          set=>[$][output].Value
+          set=>[$][output].value
             value=>return-value
-          set=>[/][magix.viewport.show-message][message].Value
-            value=>[$][input].Value
+          set=>[/][magix.viewport.show-message][message].value
+            value=>[$][input].value
       magix.viewport.show-message
   foo.bar
     input=>hello world 2.0
@@ -247,8 +247,8 @@ magix.execute.try-sample
       magix.viewport.show-message
         message=>crap, didn't work
     catch
-      set=>[@][magix.viewport.show-message][message].Value
-        value=>[@][exception].Value
+      set=>[@][magix.viewport.show-message][message].value
+        value=>[@][exception].value
       magix.viewport.show-message
 
 
@@ -266,8 +266,8 @@ magix.execute.throw-sample
     code
       throw=>some exception error message
     catch
-      set=>[@][magix.viewport.show-message][message].Value
-        value=>[@][exception].Value
+      set=>[@][magix.viewport.show-message][message].value
+        value=>[@][exception].value
       magix.viewport.show-message
 
 
@@ -287,7 +287,7 @@ magix.execute.using-sample
       =(int)>1
   using=>magix.viewport
     show-message
-      message=>[using][add].Value
+      message=>[using][add].value
 
 
 magix.execute.sandbox-dox=>@"restricts the active events possible to raise
@@ -331,14 +331,14 @@ magix.execute.execute-sample
     value=>thomas
   execute
     if=>equals
-      lhs=>[_data][value].Value
+      lhs=>[_data][value].value
       rhs=>thomas
       code
         magix.execute
           _data=>hi thomas
           using=>magix.viewport
             show-message
-              message=>[_data].Value
+              message=>[_data].value
     else
       magix.viewport.show-message
         message=>hi stranger
@@ -372,8 +372,8 @@ magix.execute.for-each-sample
       message6=>howdy world 6.0
       message7=>howdy world 7.0
   for-each=>[_data][items]
-    set=>[@][magix.viewport.show-message][message].Value
-      value=>[.].Value
+    set=>[@][magix.viewport.show-message][message].value
+      value=>[.].value
 
 
 magix.execute.if-dox=>@"checks statement and executes code if true
@@ -422,10 +422,10 @@ magix.execute.if-sample
     item=>cache-object
     cache
   if=>not-equals
-    lhs=>[_data][item].Value
-    rhs=>[_data][1].Name
+    lhs=>[_data][item].value
+    rhs=>[_data][1].name
     and=>not-exist
-      lhs=>[_data].Value
+      lhs=>[_data].value
     code
       magix.viewport.show-message
         message=>not equal, and no _data value
@@ -478,7 +478,7 @@ magix.execute.else-if-sample
   _data
     node
   if=>exist
-    lhs=>[_data][node].Value
+    lhs=>[_data][node].value
     code
       magix.viewport.show-message
         message=>darn it
@@ -517,7 +517,7 @@ thread safe"
 
 magix.execute.index-of-sample
   _data=>this will return the position of all 'r' characters in string
-  index-of=>[_data].Value
+  index-of=>[_data].value
     what=>r
 
 
@@ -562,10 +562,10 @@ magix.execute.iterate-sample
       message7=>howdy world 7.0
   iterate=>[_data][items]
     if=>exist
-      lhs=>[.].Value
+      lhs=>[.].value
       code
-        set=>[@][magix.viewport.show-message][message].Value
-          value=>[.].Value
+        set=>[@][magix.viewport.show-message][message].value
+          value=>[.].value
 
 
 magix.execute.lambda-dox=>@"executes a piece of code
@@ -583,9 +583,9 @@ thread safe"
 
 magix.execute.lambda-sample
   _data
-    set=>[$][output].Value
+    set=>[$][output].value
       value=>{0} {1}
-        v0=>[$][input].Value
+        v0=>[$][input].value
         v1=>hansen
   lambda=>[_data]
     input=>thomas
@@ -716,7 +716,7 @@ thread safe"
 
 magix.execute.replace-sample
   _expression=>some value to be replaced
-  replace=>[_expression].Value
+  replace=>[_expression].value
     what=>some
     with=>some other
 
@@ -743,13 +743,13 @@ magix.execute.execute-script-sample
     script=>@"
 _data=>thomas
 if=>equals
-  lhs=>[_data].Value
+  lhs=>[_data].value
   rhs=>thomas
   code
-    set=>[@][magix.viewport.show-message][message].Value
-      value=>[$][input].Value
+    set=>[@][magix.viewport.show-message][message].value
+      value=>[$][input].value
     magix.viewport.show-message
-    set=>[$][output].Value
+    set=>[$][output].value
       value=>dude's still thomas"
 
 
@@ -791,7 +791,7 @@ thread safe"
 magix.execute.set-sample
   _data
     children=>old value
-  set=>[_data][children].Value
+  set=>[_data][children].value
     value=>new value
 
 
@@ -816,7 +816,7 @@ thread safe"
 
 magix.execute.split-sample
   _data=>some text which will be split for every space
-  split=>[_data].Value
+  split=>[_data].value
     what=>@" "
 
 
@@ -831,15 +831,15 @@ thread safe"
 magix.execute.stop-sample
   _data=(int)>5
   while=>more-than-equals
-    lhs=>[_data].Value
+    lhs=>[_data].value
     rhs=>1
     code
       using=>magix.math
         add
-          =>[_data].Value
+          =>[_data].value
           =>-1
-      set=>[_data].Value
-        value=>[@][using][add].Value
+      set=>[_data].value
+        value=>[@][using][add].value
       stop
 
 
@@ -857,14 +857,14 @@ thread safe"
 magix.execute.switch-sample
   _data=>3
   _success=>3
-  switch=>[_data].Value
+  switch=>[_data].value
     case=>1
       magix.viewport.show-message
         message=>ERROR!!
     case=>2
       magix.viewport.show-message
         message=>ERROR!!
-    case=>[_success].Value
+    case=>[_success].value
       magix.viewport.show-message
         message=>success!
     default
@@ -891,7 +891,7 @@ magix.execute.fork-sample
     _data
       value=>thomas
     if=>equals
-      lhs=>[_data][value].Value
+      lhs=>[_data][value].value
       rhs=>thomas
       code
         _do-some-legthy
@@ -939,11 +939,11 @@ magix.execute.while-sample
     txt2=>hello world 2.0
     txt3=>hello world 3.0
   while=>not-equals
-    lhs=>[_data].Count
+    lhs=>[_data].count
     rhs=>0
     code
-      set=>[@][magix.viewport.show-message][message].Value
-        value=>[_data][0].Value
+      set=>[@][magix.viewport.show-message][message].value
+        value=>[_data][0].value
       set=>[_data][0]
       magix.viewport.show-message
         message=>to be changed
@@ -973,8 +973,8 @@ magix.execute.with-sample
           message7=>howdy world 7.0
   with=>[_data][_somewhere][_over]
     for-each=>[items]
-      set=>[@][magix.viewport.show-message][message].Value
-        value=>[.].Value
+      set=>[@][magix.viewport.show-message][message].value
+        value=>[.].value
 
 
 

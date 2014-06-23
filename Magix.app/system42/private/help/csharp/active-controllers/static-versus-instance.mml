@@ -64,7 +64,7 @@ namespace Magix.sample
       {
          int i1 = e.Params["input1"].Get&lt;int&gt;();
          int i2 = e.Params["input2"].Get&lt;int&gt;();
-         e.Params["result"].Value = i1 * i2;
+         e.Params["result"].value = i1 * i2;
       }
    }
 }

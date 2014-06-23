@@ -10,8 +10,8 @@ then consider the following code</p>
 <pre>
 _buffer=>@"_inner
   v0=>hello"
-set=>[_result].Value
-  value=>[_buffer].Value[_inner][v0].Value
+set=>[_result].value
+  value=>[_buffer].value[_inner][v0].value
 </pre>
 
 <p>the above code, will create a node list, where the [_data][node] value is another node tree.&nbsp;&nbsp;then it will 
@@ -22,10 +22,10 @@ consider the following code</p>
 _inner
   v0=>hello
 _buffer
-set=>[_buffer].Value
+set=>[_buffer].value
   value=>[_inner]
-set=>[_result].Value
-  value=>[_buffer].Value[_inner][v0].Value
+set=>[_result].value
+  value=>[_buffer].value[_inner][v0].value
 </pre>
 
 <p>both of the above pieces of code, basically does the same.&nbsp;&nbsp;the first one starts out with a textual representation of a node 

@@ -60,8 +60,8 @@ namespace Magix.samples
             {
                 // to include any custom css files for your viewport
                 Node node = new Node();
-                node["type"].Value = "css";
-                node["file"].Value = "media/my-css-file.css";
+                node["type"].value = "css";
+                node["file"].value = "media/my-css-file.css";
 
                 RaiseActiveEvent(
                     "magix.viewport.include-client-file",

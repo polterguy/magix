@@ -54,7 +54,7 @@ panel=>outer-wrapper
                   class=>span-2 last top-1
                   onselectedindexchanged
                     if=>equals
-                      lhs=>[$][value].Value
+                      lhs=>[$][value].value
                       rhs=>_default
                       code
                         magix.forms.set-enabled
@@ -112,7 +112,7 @@ panel=>outer-wrapper
                   class=>span-2
                   onselectedindexchanged
                     if=>equals
-                      lhs=>[$][value].Value
+                      lhs=>[$][value].value
                       rhs=>_default
                       code
                         magix.forms.set-enabled

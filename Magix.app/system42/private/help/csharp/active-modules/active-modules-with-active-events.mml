@@ -51,7 +51,7 @@ namespace Magix.sample
         [ActiveEvent(Name = "magix.sample.another-active-event")]
         protected void magix_sample_another_active_event(object sender, ActiveEventArgs e)
         {
-            btn.Value = "event invoked!";
+            btn.value = "event invoked!";
         }
     }
 }</pre>

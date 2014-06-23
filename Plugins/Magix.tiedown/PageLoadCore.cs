@@ -28,7 +28,7 @@ namespace Magix.tiedown
                     ip["inspect"],
                     "Magix.tiedown",
                     "Magix.tiedown.hyperlisp.inspect.hl",
-                    "[magix.viewport.page-load-dox].Value");
+                    "[magix.viewport.page-load-dox].value");
                 return;
 			}
 

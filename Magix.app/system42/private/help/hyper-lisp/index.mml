@@ -44,7 +44,7 @@ creates new code, in the execution pointer itself!</p>
 
 <label>hello world in hyperlisp</label>
 <pre>
-set=>[magix.viewport.show-message][message].Value
+set=>[magix.viewport.show-message][message].value
   value=>hello world
 </pre>
 
@@ -58,7 +58,7 @@ that for a while.&nbsp;&nbsp;to explain, the above code will become the code bel
 
 <label>hello world in hyperlisp, after the excution</label>
 <pre>
-set=>[magix.viewport.show-message][message].Value
+set=>[magix.viewport.show-message][message].value
   value=>hello world
 magix.viewport.show-message
   message=>hello world

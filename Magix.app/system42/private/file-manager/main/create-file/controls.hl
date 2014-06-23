@@ -39,23 +39,23 @@ panel=>create-file-wrapper
           magix.viewstate.get
             id=>magix.file-manager.current-folder
           if=>not-equals
-            lhs=>[@][magix.viewstate.get][value].Value
+            lhs=>[@][magix.viewstate.get][value].value
             rhs=>
             code
-              set=>[@][..][..][magix.file.save][file].Value
+              set=>[@][..][..][magix.file.save][file].value
                 value=>{0}/{1}
-                  =>[@][..][..][magix.viewstate.get][value].Value
-                  =>[magix.forms.get-value][value].Value
+                  =>[@][..][..][magix.viewstate.get][value].value
+                  =>[magix.forms.get-value][value].value
           else
-            set=>[@][..][magix.file.save][file].Value
-              value=>[magix.forms.get-value][value].Value
+            set=>[@][..][magix.file.save][file].value
+              value=>[magix.forms.get-value][value].value
           magix.file.save
             value=>
           magix.viewport.clear-controls
             container=>create-file-directory-container
             reset-class=>true
-          set=>[@][magix.file-manager.select-file][file].Value
-            value=>[@][magix.file.save][file].Value
+          set=>[@][magix.file-manager.select-file][file].value
+            value=>[@][magix.file.save][file].value
           magix.file-manager.select-file
             id=>magix.file-manager.selected-file
           magix.file-manager.open-directory

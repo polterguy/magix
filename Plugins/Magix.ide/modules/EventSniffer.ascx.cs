@@ -38,7 +38,7 @@ namespace Magix.ide.modules
                     ip["inspect"],
                     "Magix.ide",
                     "Magix.ide.hyperlisp.inspect.hl",
-                    "[magix.viewport.page-init-dox].Value");
+                    "[magix.viewport.page-init-dox].value");
                 return;
             }
             if (!ip["is-postback"].Get<bool>())
@@ -70,7 +70,7 @@ namespace Magix.ide.modules
                     ip["inspect"],
                     "Magix.ide",
                     "Magix.ide.hyperlisp.inspect.hl",
-                    "[magix.tracer.toggle-tracer-dox].Value");
+                    "[magix.tracer.toggle-tracer-dox].value");
                 AppendCodeFromResource(
                     ip,
                     "Magix.ide",
@@ -117,7 +117,7 @@ namespace Magix.ide.modules
                     ip["inspect"],
                     "Magix.ide",
                     "Magix.ide.hyperlisp.inspect.hl",
-                    "[magix.execute-dox].Value");
+                    "[magix.execute-dox].value");
                 return;
             }
             Node toCodeNode = new Node();

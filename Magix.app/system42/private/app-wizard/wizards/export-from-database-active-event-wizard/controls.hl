@@ -81,8 +81,8 @@ panel
                   value=>edit active event
                   visible=>false
                   onclick
-                    set=>[magix.data.load][prototype][event].Value
-                      value=>[$][info].Value
+                    set=>[magix.data.load][prototype][event].value
+                      value=>[$][info].value
                     magix.data.load
                       prototype
                         type=>magix.execute.event
@@ -94,12 +94,12 @@ panel
                       name=>Magix.ide.modules.ExecutorForm
                     add=>[node-2-code][node]
                       value=>event
-                    set=>[node-2-code][node][event][name].Value
-                      value=>[$][info].Value
+                    set=>[node-2-code][node][event][name].value
+                      value=>[$][info].value
                     add=>[node-2-code][node][event]
                       value=>[magix.data.load][objects][0][value][code]
                     node-2-code
-                    set=>[magix.executor.set-code][code].Value
-                      value=>[node-2-code][code].Value
+                    set=>[magix.executor.set-code][code].value
+                      value=>[node-2-code][code].value
                     magix.executor.set-code
 

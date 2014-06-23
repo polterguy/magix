@@ -83,10 +83,10 @@ magix.forms.create-web-part
       magix.forms.get-value
         form-id=>my-form
         id=>txt-age
-      set=>[magix.viewport.show-message][message].Value
+      set=>[magix.viewport.show-message][message].value
         value=>hello {0}, you're {1} years old
-          v0=>[magix.forms.get-value:0][value].Value
-          v1=>[magix.forms.get-value:1][value].Value
+          v0=>[magix.forms.get-value:0][value].value
+          v1=>[magix.forms.get-value:1][value].value
       magix.viewport.show-message
   controls
     label=>lbl-name
@@ -127,10 +127,10 @@ dynamic=>dyn-help-sample-web-controls
           magix.forms.get-value
             form-id=>my-form
             id=>txt-age
-          set=>[magix.viewport.show-message][message].Value
+          set=>[magix.viewport.show-message][message].value
             value=>hello {0}, you're {1} years old
-              v0=>[magix.forms.get-value:0][value].Value
-              v1=>[magix.forms.get-value:1][value].Value
+              v0=>[magix.forms.get-value:0][value].value
+              v1=>[magix.forms.get-value:1][value].value
           magix.viewport.show-message
       controls
         label=>lbl-name
@@ -204,10 +204,10 @@ help.show-message-name-age
   magix.forms.get-value
     form-id=>my-form
     id=>txt-age
-  set=>[magix.viewport.show-message][message].Value
+  set=>[magix.viewport.show-message][message].value
     value=>hello {0}, you're {1} years old
-      v0=>[magix.forms.get-value:0][value].Value
-      v1=>[magix.forms.get-value:1][value].Value
+      v0=>[magix.forms.get-value:0][value].value
+      v1=>[magix.forms.get-value:1][value].value
   magix.viewport.show-message
 </pre>
 
@@ -276,10 +276,10 @@ _events
     magix.forms.get-value
       form-id=>my-form
       id=>txt-age
-    set=>[magix.viewport.show-message][message].Value
+    set=>[magix.viewport.show-message][message].value
       value=>hello {0}, you're {1} years old
-        v0=>[magix.forms.get-value:0][value].Value
-        v1=>[magix.forms.get-value:1][value].Value
+        v0=>[magix.forms.get-value:0][value].value
+        v1=>[magix.forms.get-value:1][value].value
     magix.viewport.show-message
 
 using=>magix.forms
@@ -317,16 +317,16 @@ _controls
 
 for-each=>[_data]
   _btn
-  set=>[@][_btn][value].Value
-    value=>[.].Value
-  set=>[@][_btn][class].Value
-    value=>[.][css].Value
-  set=>[@][_btn][onclick][magix.viewport.show-message][message].Value
-    value=>[.][msg].Value
+  set=>[@][_btn][value].value
+    value=>[.].value
+  set=>[@][_btn][class].value
+    value=>[.][css].value
+  set=>[@][_btn][onclick][magix.viewport.show-message][message].value
+    value=>[.][msg].value
   add=>[/][_controls]
     value=>[@][_btn]
-  set=>[/][_controls][_btn].Name
-    value=>[.][type].Value
+  set=>[/][_controls][_btn].name
+    value=>[.][type].value
 
 using=>magix.forms
   create-web-part
@@ -355,16 +355,16 @@ dynamic=>dyn-help-sample-2-web-controls
     _controls
     for-each=>[_data]
       _btn
-      set=>[@][_btn][value].Value
-        value=>[.].Value
-      set=>[@][_btn][class].Value
-        value=>[.][css].Value
-      set=>[@][_btn][onclick][magix.viewport.show-message][message].Value
-        value=>[.][msg].Value
+      set=>[@][_btn][value].value
+        value=>[.].value
+      set=>[@][_btn][class].value
+        value=>[.][css].value
+      set=>[@][_btn][onclick][magix.viewport.show-message][message].value
+        value=>[.][msg].value
       add=>[/][_controls]
         value=>[@][_btn]
-      set=>[/][_controls][_btn].Name
-        value=>[.][type].Value
+      set=>[/][_controls][_btn].name
+        value=>[.][type].value
     using=>magix.forms
       create-web-part
         class=>sample-web-control bottom-1

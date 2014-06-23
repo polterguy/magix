@@ -41,7 +41,7 @@ namespace Magix.execute
                     ip["inspect"],
                     "Magix.execute",
                     "Magix.execute.hyperlisp.inspect.hl",
-                    "[magix.execute.application-startup-dox].Value");
+                    "[magix.execute.application-startup-dox].value");
 				return;
 			}
 
@@ -86,7 +86,7 @@ namespace Magix.execute
                     ip["inspect"],
                     "Magix.execute",
                     "Magix.execute.hyperlisp.inspect.hl",
-                    "[magix.execute.event-dox].Value");
+                    "[magix.execute.event-dox].value");
                 AppendCodeFromResource(
                     ip,
                     "Magix.execute",
@@ -190,7 +190,7 @@ namespace Magix.execute
                         ip["inspect"],
                         "Magix.execute",
                         "Magix.execute.hyperlisp.inspect.hl",
-                        "[magix.execute._active-event-2-code-callback-dox].Value");
+                        "[magix.execute._active-event-2-code-callback-dox].value");
                 }
                 else if (_events.Contains(e.Name))
                 {
@@ -198,7 +198,7 @@ namespace Magix.execute
                         ip["inspect"],
                         "Magix.execute",
                         "Magix.execute.hyperlisp.inspect.hl",
-                        "[magix.execute._active-event-2-code-callback-dynamic-dox].Value");
+                        "[magix.execute._active-event-2-code-callback-dynamic-dox].value");
 
                     if (_inspect.ContainsValue(e.Name))
                     {
@@ -269,7 +269,7 @@ namespace Magix.execute
                     ip["inspect"],
                     "Magix.execute",
                     "Magix.execute.hyperlisp.inspect.hl",
-                    "[magix.execute.session-event-dox].Value");
+                    "[magix.execute.session-event-dox].value");
                 AppendCodeFromResource(
                     ip,
                     "Magix.execute",
@@ -328,7 +328,7 @@ namespace Magix.execute
                     ip["inspect"],
                     "Magix.execute",
                     "Magix.execute.hyperlisp.inspect.hl",
-                    "[magix.execute.list-events-dox].Value");
+                    "[magix.execute.list-events-dox].value");
                 AppendCodeFromResource(
                     ip,
                     "Magix.execute",

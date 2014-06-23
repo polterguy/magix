@@ -32,7 +32,7 @@ namespace Magix.math
                     ip["inspect"],
                     "Magix.math",
                     "Magix.math.hyperlisp.inspect.hl",
-                    "[magix.math.add-dox].Value");
+                    "[magix.math.add-dox].value");
                 AppendCodeFromResource(
                     ip,
                     "Magix.math",
@@ -65,7 +65,7 @@ namespace Magix.math
                     ip["inspect"],
                     "Magix.math",
                     "Magix.math.hyperlisp.inspect.hl",
-                    "[magix.math.subtract-dox].Value");
+                    "[magix.math.subtract-dox].value");
                 AppendCodeFromResource(
                     ip,
                     "Magix.math",
@@ -98,7 +98,7 @@ namespace Magix.math
                     ip["inspect"],
                     "Magix.math",
                     "Magix.math.hyperlisp.inspect.hl",
-                    "[magix.math.multiply-dox].Value");
+                    "[magix.math.multiply-dox].value");
                 AppendCodeFromResource(
                     ip,
                     "Magix.math",
@@ -131,7 +131,7 @@ namespace Magix.math
                     ip["inspect"],
                     "Magix.math",
                     "Magix.math.hyperlisp.inspect.hl",
-                    "[magix.math.divide-dox].Value");
+                    "[magix.math.divide-dox].value");
                 AppendCodeFromResource(
                     ip,
                     "Magix.math",
@@ -164,7 +164,7 @@ namespace Magix.math
                     ip["inspect"],
                     "Magix.math",
                     "Magix.math.hyperlisp.inspect.hl",
-                    "[magix.math.modulo-dox].Value");
+                    "[magix.math.modulo-dox].value");
                 AppendCodeFromResource(
                     ip,
                     "Magix.math",

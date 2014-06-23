@@ -38,10 +38,10 @@ _editor-container=>content2
 if=>exist
   lhs=>[$][editor-container]
   code
-    set=>[_editor-container].Value
-      value=>[$][editor-container].Value
-set=>[magix.viewstate.set=>editor-container][value].Value
-  value=>[_editor-container].Value
+    set=>[_editor-container].value
+      value=>[$][editor-container].value
+set=>[magix.viewstate.set=>editor-container][value].value
+  value=>[_editor-container].value
 magix.viewstate.set=>editor-container
   id=>magix.file-manager.editor-container
 
@@ -49,36 +49,36 @@ magix.viewstate.set=>editor-container
 if=>exist
   lhs=>[$][container]
   code
-    set=>[magix.forms.create-web-part][container].Value
-      value=>[$][container].Value
+    set=>[magix.forms.create-web-part][container].value
+      value=>[$][container].value
 if=>exist
   lhs=>[$][class]
   code
-    set=>[magix.forms.create-web-part][class].Value
-      value=>[$][class].Value
+    set=>[magix.forms.create-web-part][class].value
+      value=>[$][class].value
 if=>exist
   lhs=>[$][filter]
   code
-    set=>[@][magix.viewstate.set][value].Value
-      value=>[$][filter].Value
+    set=>[@][magix.viewstate.set][value].value
+      value=>[$][filter].value
     magix.viewstate.set
       id=>magix.file-manager.filter
 
 // setting editing of files, folders and such to on/off
 if=>equals
-  lhs=>[$][no-edit].Value
+  lhs=>[$][no-edit].value
   rhs=>true
   code
-    set=>[@][magix.viewstate.set][value].Value
+    set=>[@][magix.viewstate.set][value].value
       value=>true
     magix.viewstate.set
       id=>magix.file-manager.no-edit
-    set=>[**panel=>directory-wrapper][visible].Value
+    set=>[**panel=>directory-wrapper][visible].value
       value=>false
 
 // setting editing of files, folders and such to on/off
 if=>equals
-  lhs=>[$][no-edit-button].Value
+  lhs=>[$][no-edit-button].value
   rhs=>true
   code
     magix.viewstate.set
@@ -89,33 +89,33 @@ if=>equals
 if=>exist
   lhs=>[$][directory]
   code
-    set=>[@][magix.viewstate.set][value].Value
-      value=>[$][directory].Value
+    set=>[@][magix.viewstate.set][value].value
+      value=>[$][directory].value
     magix.viewstate.set
       id=>magix.file-manager.current-folder
     if=>not-equals
-      lhs=>[$][directory].Value
+      lhs=>[$][directory].value
       rhs=>
       and=>not-equals
-        lhs=>[$][directory].Value
+        lhs=>[$][directory].value
         rhs=>/
       code
-        set=>[**button=>delete-directory][disabled].Value
+        set=>[**button=>delete-directory][disabled].value
           value=>false
 if=>exist
   lhs=>[$][root]
   code
-    set=>[@][magix.viewstate.set][value].Value
-      value=>[$][root].Value
+    set=>[@][magix.viewstate.set][value].value
+      value=>[$][root].value
     magix.viewstate.set
       id=>magix.file-manager.root
 
 // checking to see if caller has denied creation of directories
 if=>equals
-  lhs=>[$][deny-create-directory].Value
+  lhs=>[$][deny-create-directory].value
   rhs=>true
   code
-    set=>[**panel=>directory-wrapper][visible].Value
+    set=>[**panel=>directory-wrapper][visible].value
       value=>false
 
 // if user provides [onselect] we allow selection of files
@@ -149,13 +149,13 @@ if=>exist
               _lambda
               magix.viewstate.get
                 id=>magix.file-manager.selected-file
-              set=>[lambda][file].Value
-                value=>[magix.viewstate.get][value].Value
+              set=>[lambda][file].value
+                value=>[magix.viewstate.get][value].value
               lambda=>[_lambda]
               magix.viewstate.get
                 id=>magix.file-manager.editor-container
-              set=>[magix.viewport.clear-controls][container].Value
-                value=>[magix.viewstate.get:1][value].Value
+              set=>[magix.viewport.clear-controls][container].value
+                value=>[magix.viewstate.get:1][value].value
               magix.viewport.clear-controls
                 reset-class=>true
 
@@ -176,7 +176,7 @@ else
     id=>magix.file-manager.has-select-button
 
 if=>equals
-  lhs=>[$][allow-upload].Value
+  lhs=>[$][allow-upload].value
   rhs=>true
   code
     magix.viewport.include-client-file
@@ -194,8 +194,8 @@ if=>equals
     if=>exist
       lhs=>[$][directory]
       code
-        set=>[@][..][..][_uploader][uploader][directory].Value
-          value=>[$][directory].Value
+        set=>[@][..][..][_uploader][uploader][directory].value
+          value=>[$][directory].value
     add=>[magix.forms.create-web-part][controls]
       value=>[@][_uploader][uploader]
 

@@ -59,7 +59,7 @@ namespace Magix.forms
                 node["inspect"],
                 "Magix.forms",
                 "Magix.forms.hyperlisp.inspect.hl",
-                "[magix.forms.timer-dox-start].Value");
+                "[magix.forms.timer-dox-start].value");
             AppendCodeFromResource(
                 node,
                 "Magix.forms",
@@ -71,7 +71,7 @@ namespace Magix.forms
                 node["inspect"],
                 "Magix.forms",
                 "Magix.forms.hyperlisp.inspect.hl",
-                "[magix.forms.timer-dox-end].Value",
+                "[magix.forms.timer-dox-end].value",
                 true);
             AppendCodeFromResource(
                 node["magix.forms.create-web-part"]["controls"]["timer"],

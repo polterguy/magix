@@ -29,7 +29,7 @@ namespace Magix.forms
                     ip["inspect"],
                     "Magix.forms",
                     "Magix.forms.hyperlisp.inspect.hl",
-                    "[magix.forms.lambda-dox-start].Value");
+                    "[magix.forms.lambda-dox-start].value");
                 AppendCodeFromResource(
                     ip,
                     "Magix.forms",

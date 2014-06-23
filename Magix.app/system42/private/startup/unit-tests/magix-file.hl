@@ -20,7 +20,7 @@ tries to load a file from disc, verifying it is correctly loaded"
     magix.file.load
       file=>system42/private/startup/create-unit-tests.hl
     if=>not-exist
-      lhs=>[magix.file.load][value].Value
+      lhs=>[magix.file.load][value].value
       code
         throw=>[magix.file.load] misbehaved
 
@@ -36,11 +36,11 @@ verifying that the file is correctly loaded"
     _file-path=>system42/private/startup/create-unit-tests.hl
     using=>magix.file
       load
-        file=>[_file-path].Value
+        file=>[_file-path].value
     if=>not-exist
-      lhs=>[using][load][value].Value
+      lhs=>[using][load][value].value
       or=>equals
-        lhs=>[using][load][value].Value
+        lhs=>[using][load][value].value
         rhs=>
       code
         throw=>[magix.file.load] misbehaved
@@ -58,7 +58,7 @@ was loaded"
       file=>plugin:magix.web.get-file
         url=>http://google.com
     if=>not-exist
-      lhs=>[magix.file.load][value].Value
+      lhs=>[magix.file.load][value].value
       code
         throw=>[magix.file.load] misbehaved
 
@@ -76,7 +76,7 @@ creates a file on disc, verifying that the file was created"
     magix.file.file-exist
       file=>your-files/tmp/mumbo.txt
     if=>not-equals
-      lhs=>[magix.file.file-exist][value].Value
+      lhs=>[magix.file.file-exist][value].value
       rhs=>true
       code
         throw=>[magix.file.save] misbehaved
@@ -85,7 +85,7 @@ creates a file on disc, verifying that the file was created"
     magix.file.delete
       file=>your-files/tmp/mumbo.txt
     if=>not-equals
-      lhs=>[magix.file.load][value].Value
+      lhs=>[magix.file.load][value].value
       rhs=>@"howdy world"
       code
         throw=>[magix.file.save] misbehaved
@@ -103,21 +103,21 @@ file is correctly created"
     _value=>howdy world
     using=>magix.file
       save
-        file=>[_data].Value
-        value=>[_value].Value
+        file=>[_data].value
+        value=>[_value].value
       file-exist
-        file=>[_data].Value
+        file=>[_data].value
       load
-        file=>[_data].Value
+        file=>[_data].value
       delete
-        file=>[_data].Value
+        file=>[_data].value
     if=>not-equals
-      lhs=>[using][file-exist][value].Value
+      lhs=>[using][file-exist][value].value
       rhs=>true
       code
         throw=>[magix.file.save] misbehaved
     if=>not-equals
-      lhs=>[using][load][value].Value
+      lhs=>[using][load][value].value
       rhs=>howdy world
       code
         throw=>[magix.file.save] misbehaved
@@ -135,17 +135,17 @@ to verify the file is correctly modified"
     _file=>your-files/tmp/mumbo.txt
     using=>magix.file
       save
-        file=>[_file].Value
+        file=>[_file].value
         value=>howdy world
       save
-        file=>[_file].Value
+        file=>[_file].value
         value=>howdy
       load
-        file=>[_file].Value
+        file=>[_file].value
       delete
-        file=>[_file].Value
+        file=>[_file].value
     if=>not-equals
-      lhs=>[using][load][value].Value
+      lhs=>[using][load][value].value
       rhs=>howdy
       code
         throw=>[magix.file.save] misbehaved
@@ -163,27 +163,27 @@ verify that the file was correctly moved"
     _file2=>your-files/tmp/mumbo2.txt
     using=>magix.file
       save
-        file=>[_file1].Value
+        file=>[_file1].value
         value=>howdy
       move-file
-        from=>[_file1].Value
-        to=>[_file2].Value
+        from=>[_file1].value
+        to=>[_file2].value
       file-exist
-        file=>[_file1].Value
+        file=>[_file1].value
       file-exist
-        file=>[_file2].Value
+        file=>[_file2].value
       load
-        file=>[_file2].Value
+        file=>[_file2].value
       delete
-        file=>[_file2].Value
+        file=>[_file2].value
     if=>not-equals
-      lhs=>[using][file-exist:0][value].Value
+      lhs=>[using][file-exist:0][value].value
       rhs=>false
       or=>not-equals
-        lhs=>[using][file-exist:1][value].Value
+        lhs=>[using][file-exist:1][value].value
         rhs=>true
       or=>not-equals
-        lhs=>[using][load][value].Value
+        lhs=>[using][load][value].value
         rhs=>howdy
       code
         throw=>[magix.file.move-file] misbehaved
@@ -203,20 +203,20 @@ then verify the files was correctly listed using the
     _filter=>*.txtquery
     using=>magix.file
       save
-        file=>[_data1].Value
+        file=>[_data1].value
         value=>mumbo1
       save
-        file=>[_data2].Value
+        file=>[_data2].value
         value=>mumbo2
       list-files
         directory=>your-files/tmp
-        filter=>[_filter].Value
+        filter=>[_filter].value
       delete
-        file=>[_data1].Value
+        file=>[_data1].value
       delete
-        file=>[_data2].Value
+        file=>[_data2].value
     if=>not-equals
-      lhs=>[using][list-files][files].Count
+      lhs=>[using][list-files][files].count
       rhs=>2
       code
         throw=>[magix.file.list-files] misbehaved
@@ -233,13 +233,13 @@ correctly created"
     _data=>your-files/tmp/mumbo
     using=>magix.file
       create-directory
-        directory=>[_data].Value
+        directory=>[_data].value
       directory-exist
-        directory=>[_data].Value
+        directory=>[_data].value
       delete-directory
-        directory=>[_data].Value
+        directory=>[_data].value
     if=>not-equals
-      lhs=>[using][directory-exist][value].Value
+      lhs=>[using][directory-exist][value].value
       rhs=>true
       code
         throw=>[magix.file.create-directory] misbehaved
@@ -256,20 +256,20 @@ directory is correctly deleted"
     _data=>your-files/tmp/mumbo
     using=>magix.file
       create-directory
-        directory=>[_data].Value
+        directory=>[_data].value
       directory-exist
-        directory=>[_data].Value
+        directory=>[_data].value
       delete-directory
-        directory=>[_data].Value
+        directory=>[_data].value
       directory-exist
-        directory=>[_data].Value
+        directory=>[_data].value
     if=>not-equals
-      lhs=>[using][directory-exist][value].Value
+      lhs=>[using][directory-exist][value].value
       rhs=>true
       code
         throw=>[magix.file.create-directory] misbehaved
     if=>not-equals
-      lhs=>[using][directory-exist:1][value].Value
+      lhs=>[using][directory-exist:1][value].value
       rhs=>false
       code
         throw=>[magix.file.delete-directory] misbehaved
@@ -287,16 +287,16 @@ was correctly moved"
     _data2=>your-files/tmp/mumbo2
     using=>magix.file
       create-directory
-        directory=>[_data1].Value
+        directory=>[_data1].value
       move-directory
-        from=>[_data1].Value
-        to=>[_data2].Value
+        from=>[_data1].value
+        to=>[_data2].value
       directory-exist
-        directory=>[_data2].Value
+        directory=>[_data2].value
       delete-directory
-        directory=>[_data2].Value
+        directory=>[_data2].value
     if=>not-equals
-      lhs=>[using][directory-exist][value].Value
+      lhs=>[using][directory-exist][value].value
       rhs=>true
       code
         throw=>[magix.file.move-directory] misbehaved
@@ -314,18 +314,18 @@ were both listed correctly"
     _data2=>your-files/tmp/mumbo2
     using=>magix.file
       create-directory
-        directory=>[_data1].Value
+        directory=>[_data1].value
       create-directory
-        directory=>[_data2].Value
+        directory=>[_data2].value
       list-directories
         directory=>your-files/tmp
         filter=>mumbo*
       delete-directory
-        directory=>[_data1].Value
+        directory=>[_data1].value
       delete-directory
-        directory=>[_data2].Value
+        directory=>[_data2].value
     if=>not-equals
-      lhs=>[using][list-directories][directories].Count
+      lhs=>[using][list-directories][directories].count
       rhs=>2
       code
         throw=>[magix.file.list-directories] misbehaved

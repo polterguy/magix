@@ -20,16 +20,16 @@ of how these work</p>
 _data=>jo
   mumbo
 for-each=>[_data]
-  set=>[/][_res][v0].Value
-    value=>[..].Name
-  set=>[/][_res][v1].Value
-    value=>[/][_data].Value
-  set=>[/][_res][v2].Value
-    value=>[.ip].Value
-  set=>[/][_res][v3].Value
-    value=>[@].Name
-  set=>[/][_res][v4].Value
-    value=>[.].Name
+  set=>[/][_res][v0].value
+    value=>[..].name
+  set=>[/][_res][v1].value
+    value=>[/][_data].value
+  set=>[/][_res][v2].value
+    value=>[.ip].value
+  set=>[/][_res][v3].value
+    value=>[@].name
+  set=>[/][_res][v4].value
+    value=>[.].name
 _res
 </pre>
 
@@ -56,7 +56,7 @@ when you start creating an expression.&nbsp;&nbsp;this means that regardless of 
 are, you will still start from the root node when you create an expression.&nbsp;&nbsp;while iterating with the [for-each] keyword however, 
 this is not true, and the node you start out from is the currently iterated node.&nbsp;&nbsp;it is common curtesy to explicitly 
 state that you want to access the <em>currently iterated node</em> though, by using the [.].&nbsp;&nbsp;for instance, in the above 
-code, it would have been nice if we had modified the expression [..].Name to [.][..].Name for clarity</p>
+code, it would have been nice if we had modified the expression [..].name to [.][..].name for clarity</p>
 
 <p>the output of the above code, if you run it through the hyperlisp executor for instance, will become</p>
 
@@ -64,20 +64,20 @@ code, it would have been nice if we had modified the expression [..].Name to [.]
 _data=>jo
   mumbo
 for-each=>[_data]
-  set=>[/][_res][v0].Value
-    value=>[..].Name
-  set=>[/][_res][v1].Value
-    value=>[/][_data].Value
-  set=>[/][_res][v2].Value
-    value=>[.ip].Value
-  set=>[/][_res][v3].Value
-    value=>[@].Name
-  set=>[/][_res][v4].Value
-    value=>[.].Name
+  set=>[/][_res][v0].value
+    value=>[..].name
+  set=>[/][_res][v1].value
+    value=>[/][_data].value
+  set=>[/][_res][v2].value
+    value=>[.ip].value
+  set=>[/][_res][v3].value
+    value=>[@].name
+  set=>[/][_res][v4].value
+    value=>[.].name
 _res
   v0=>_data
   v1=>jo
-  v2=>[/][_res][v2].Value
+  v2=>[/][_res][v2].value
   v3=>for-each
   v4=>mumbo
 </pre>

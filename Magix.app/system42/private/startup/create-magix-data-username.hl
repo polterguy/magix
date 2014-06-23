@@ -31,10 +31,10 @@ on a per user basis"
       lhs=>[magix.session.get][value]
       code
         throw=>no user is currently logged in
-    set=>[magix.data.save][id].Value
+    set=>[magix.data.save][id].value
       value=>{0}-{1}
-        =>[$][id].Value
-        =>[magix.session.get][value][username].Value
+        =>[$][id].value
+        =>[magix.session.get][value][username].value
     add=>[magix.data.save]
       value=>[$][value]
     magix.data.save
@@ -55,10 +55,10 @@ retrieving data on a per user basis"
       lhs=>[magix.session.get][value]
       code
         throw=>no user is currently logged in
-    set=>[magix.data.load][id].Value
+    set=>[magix.data.load][id].value
       value=>{0}-{1}
-        =>[$][id].Value
-        =>[magix.session.get][value][username].Value
+        =>[$][id].value
+        =>[magix.session.get][value][username].value
     magix.data.load
     if=>exist
       lhs=>[magix.data.load][value]
@@ -82,9 +82,9 @@ data on a per user basis"
       lhs=>[magix.session.get][value]
       code
         throw=>no user is currently logged in
-    set=>[magix.data.remove][id].Value
+    set=>[magix.data.remove][id].value
       value=>{0}-{1}
-        =>[$][id].Value
-        =>[magix.session.get][value][username].Value
+        =>[$][id].value
+        =>[magix.session.get][value][username].value
     magix.data.remove
 

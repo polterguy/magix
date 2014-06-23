@@ -32,7 +32,7 @@ namespace Magix.log
                     ip["inspect"],
                     "Magix.log",
                     "Magix.log.hyperlisp.inspect.hl",
-                    "[magix.log.application-startup-dox].Value");
+                    "[magix.log.application-startup-dox].value");
                 return;
             }
 
@@ -52,7 +52,7 @@ namespace Magix.log
                     ip["inspect"],
                     "Magix.log",
                     "Magix.log.hyperlisp.inspect.hl",
-                    "[magix.log.append-dox].Value");
+                    "[magix.log.append-dox].value");
                 AppendCodeFromResource(
                     ip,
                     "Magix.log",

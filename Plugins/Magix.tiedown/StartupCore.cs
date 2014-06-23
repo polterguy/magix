@@ -32,7 +32,7 @@ namespace Magix.tiedown
                     ip["inspect"],
                     "Magix.tiedown",
                     "Magix.tiedown.hyperlisp.inspect.hl",
-                    "[magix.core.application-startup-dox].Value");
+                    "[magix.core.application-startup-dox].value");
                 return;
 			}
 

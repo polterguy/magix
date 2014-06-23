@@ -30,12 +30,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="Db4objects.Db4o.NativeQueries">
-      <HintPath>..\references\Db4objects.Db4o.NativeQueries.dll</HintPath>
-    </Reference>
-    <Reference Include="Db4objects.Db4o">
-      <HintPath>..\references\Db4objects.Db4o.dll</HintPath>
-    </Reference>
     <Reference Include="System.configuration" />
     <Reference Include="System.Web" />
   </ItemGroup>

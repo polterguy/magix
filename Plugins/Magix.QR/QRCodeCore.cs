@@ -33,7 +33,7 @@ namespace Magix.QR
                     ip["inspect"],
                     "Magix.QR",
                     "Magix.QR.hyperlisp.inspect.hl",
-                    "[magix.qr.create-dox].Value");
+                    "[magix.qr.create-dox].value");
                 AppendCodeFromResource(
                     ip,
                     "Magix.QR",

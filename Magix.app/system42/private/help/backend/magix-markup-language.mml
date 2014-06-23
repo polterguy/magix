@@ -19,7 +19,7 @@ the following magix markup language</p>
 <pre>
 &lt;p&gt;some paragraph&lt;/p&gt;{{label=>begin
   onfirstload
-    set=>[magix.forms.set-value][value].Value
+    set=>[magix.forms.set-value][value].value
       value=>{0}{1}
         v0=>{
         v1=>{
@@ -35,7 +35,7 @@ button=>my-button
 {{
 label=>end
   onfirstload
-    set=>[magix.forms.set-value][value].Value
+    set=>[magix.forms.set-value][value].value
       value=>{0}{1}
         v0=>}
         v1=>}

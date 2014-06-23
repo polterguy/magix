@@ -38,7 +38,7 @@ namespace Magix.execute
                     ip["inspect"],
                     "Magix.file",
                     "Magix.file.hyperlisp.inspect.hl",
-                    "[magix.file.list-files-dox].Value");
+                    "[magix.file.list-files-dox].value");
                 AppendCodeFromResource(
                     ip,
                     "Magix.file",
@@ -103,7 +103,7 @@ namespace Magix.execute
                     ip["inspect"],
                     "Magix.file",
                     "Magix.file.hyperlisp.inspect.hl",
-                    "[magix.file.load-dox].Value");
+                    "[magix.file.load-dox].value");
                 AppendCodeFromResource(
                     ip,
                     "Magix.file",
@@ -149,7 +149,7 @@ namespace Magix.execute
                     ip["inspect"],
                     "Magix.file",
                     "Magix.file.hyperlisp.inspect.hl",
-                    "[magix.file.save-dox].Value");
+                    "[magix.file.save-dox].value");
                 AppendCodeFromResource(
                     ip,
                     "Magix.file",
@@ -199,7 +199,7 @@ namespace Magix.execute
                     ip["inspect"],
                     "Magix.file",
                     "Magix.file.hyperlisp.inspect.hl",
-                    "[magix.file.move-file-dox].Value");
+                    "[magix.file.move-file-dox].value");
                 AppendCodeFromResource(
                     ip,
                     "Magix.file",
@@ -240,7 +240,7 @@ namespace Magix.execute
                     ip["inspect"],
                     "Magix.file",
                     "Magix.file.hyperlisp.inspect.hl",
-                    "[magix.file.copy-file-dox].Value");
+                    "[magix.file.copy-file-dox].value");
                 AppendCodeFromResource(
                     ip,
                     "Magix.file",
@@ -281,7 +281,7 @@ namespace Magix.execute
                     ip["inspect"],
                     "Magix.file",
                     "Magix.file.hyperlisp.inspect.hl",
-                    "[magix.file.file-exist-dox].Value");
+                    "[magix.file.file-exist-dox].value");
                 AppendCodeFromResource(
                     ip,
                     "Magix.file",

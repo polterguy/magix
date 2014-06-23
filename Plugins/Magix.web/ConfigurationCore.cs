@@ -31,7 +31,7 @@ namespace Magix.web
                     ip["inspect"],
                     "Magix.web",
                     "Magix.web.hyperlisp.inspect.hl",
-                    "[magix.configuration.get-setting-dox].Value");
+                    "[magix.configuration.get-setting-dox].value");
                 AppendCodeFromResource(
                     ip,
                     "Magix.web",
@@ -63,7 +63,7 @@ namespace Magix.web
                     ip["inspect"],
                     "Magix.web",
                     "Magix.web.hyperlisp.inspect.hl",
-                    "[magix.configuration.get-connection-strings-dox].Value");
+                    "[magix.configuration.get-connection-strings-dox].value");
                 AppendCodeFromResource(
                     ip,
                     "Magix.web",
@@ -91,7 +91,7 @@ namespace Magix.web
                     ip["inspect"],
                     "Magix.web",
                     "Magix.web.hyperlisp.inspect.hl",
-                    "[magix.configuration.get-connection-string-dox].Value");
+                    "[magix.configuration.get-connection-string-dox].value");
                 AppendCodeFromResource(
                     ip,
                     "Magix.web",
@@ -121,7 +121,7 @@ namespace Magix.web
                     ip["inspect"],
                     "Magix.web",
                     "Magix.web.hyperlisp.inspect.hl",
-                    "[magix.configuration.get-base-directory-dox].Value");
+                    "[magix.configuration.get-base-directory-dox].value");
                 AppendCodeFromResource(
                     ip,
                     "Magix.web",
