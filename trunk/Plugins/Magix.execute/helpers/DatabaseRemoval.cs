@@ -13,7 +13,7 @@ namespace Magix.execute
     internal class DataBaseRemoval
     {
         /*
-         * helper for above
+         * helper to remove stuff from database
          */
         internal static void Remove(string activeEvent, string type, Node pars)
         {
@@ -29,8 +29,8 @@ namespace Magix.execute
                 pars["_dp"].Value = removeNode;
                 ActiveEvents.Instance.RaiseActiveEvent(
                     typeof(DataBaseRemoval),
-                    "magix.execute",
-                    removeNode);
+                    "magix.data.remove",
+                    pars);
             }
             finally
             {

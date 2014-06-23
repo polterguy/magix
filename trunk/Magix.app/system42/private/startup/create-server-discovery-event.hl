@@ -26,5 +26,6 @@ each other"
         value=>[.].Name
 
 open
+  persist=>false
   name=>magix.public.get-public-events
 
