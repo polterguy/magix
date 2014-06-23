@@ -20,7 +20,7 @@ namespace Magix.execute
          * hyperlisp implementation
          */
         [ActiveEvent(Name = "magix.execute")]
-        [ActiveEvent(Name = "magix.execute.execute")]
+        [ActiveEvent(Name = "magix.execute.execute")] // TODO: remove ...?
         public static void magix_execute(object sender, ActiveEventArgs e)
 		{
             Node ip = Ip(e.Params);
@@ -130,41 +130,32 @@ namespace Magix.execute
                 noCurrentExecutedHyperLispWords += 1;
                 pars["_current-executed-iterations"].Value = noCurrentExecutedHyperLispWords;
 
+                // verifying we're allowed to execute current active event
+                CheckSandbox(activeEvent, pars);
+
                 if (activeEvent.Contains("."))
                 {
-                    // verifying we're allowed to execute current active event
-                    CheckSandbox(activeEvent, pars);
-
                     // this is an active event reference, and does not have access to entire tree
                     Node parent = idx.Parent;
                     idx.SetParent(null);
+                    Node oldDp = pars["_dp"].Get<Node>();
                     try
                     {
-                        Node executionNode = idx;
-                        if (activeEvent.StartsWith("magix.execute"))
-                        {
-                            Node tmpExe = new Node();
-                            tmpExe.AddRange(pars.Clone());
-                            tmpExe["_ip"].Value = executionNode;
-                            tmpExe["_dp"].Value = executionNode;
-                            executionNode = tmpExe;
-                        }
+                        pars["_ip"].Value = idx;
+                        pars["_dp"].Value = idx;
                         RaiseActiveEvent(
                             activeEvent,
-                            executionNode);
+                            pars);
                     }
                     finally
                     {
                         idx.SetParent(parent);
+                        pars["_dp"].Value = oldDp;
+                        pars["_ip"].Value = ip;
                     }
                 }
                 else
                 {
-                    // verifying we're allowed to execute current active event
-                    CheckSandbox(activeEvent, pars);
-
-                    object oldIp = pars.Contains("_ip") ? pars["_ip"].Value : null;
-
                     // this is a keyword, and have access to the entire tree, and also needs to have the default namespace 
                     // prepended in front of it before being raised
                     if (pars.Contains("_namespaces") && pars["_namespaces"].Count > 0)
@@ -173,21 +164,10 @@ namespace Magix.execute
                         activeEvent = "magix.execute." + activeEvent;
 
                     pars["_ip"].Value = idx;
-
-                    if (!pars.Contains("_dp"))
-                        pars["_dp"].Value = ip;
-
-                    try
-                    {
-                        RaiseActiveEvent(
-                            activeEvent,
-                            pars);
-                    }
-                    finally
-                    {
-                        if (oldIp != null)
-                            pars["_ip"].Value = oldIp;
-                    }
+                    RaiseActiveEvent(
+                        activeEvent,
+                        pars);
+                    pars["_ip"].Value = ip;
                 }
             }
         }

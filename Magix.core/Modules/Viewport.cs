@@ -458,7 +458,7 @@ namespace Magix.Core
             if (dyn == null && ip.ContainsValue("container"))
 				return;
 
-            string moduleName = Expressions.GetExpressionValue<string>(e.Params["name"].Get<string>(), dp, ip, false);
+            string moduleName = Expressions.GetExpressionValue<string>(ip["name"].Get<string>(), dp, ip, false);
 
             ClearControls(dyn);
 

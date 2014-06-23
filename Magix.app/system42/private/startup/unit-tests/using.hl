@@ -37,7 +37,7 @@ correctly"
     event
       name=>magix.test.temp-using
       code
-        set=>[$][_ip].Value[output].Value
+        set=>[$][output].Value
           value=>success
     using=>magix.test
       temp-using

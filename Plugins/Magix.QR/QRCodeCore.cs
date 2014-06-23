@@ -16,12 +16,12 @@ using Magix.Core;
 namespace Magix.QR
 {
     /*
-     * QR codes controller
+     * qr codes controller
      */
     internal sealed class QRCodeCore : ActiveController
     {
         /*
-         * creates a QR code according to the given input
+         * creates a qr code according to the given input
          */
         [ActiveEvent(Name = "magix.qr.create")]
         private void magix_qr_create(object sender, ActiveEventArgs e)
@@ -42,42 +42,42 @@ namespace Magix.QR
                 return;
             }
 
-            if (!e.Params.ContainsValue("url"))
+            if (!ip.ContainsValue("url"))
                 throw new ArgumentException("[magix.qr.create] requires a [url] property");
 
             // Retreiving attributes for QR Code...
-            int scale = e.Params["scale"].Get<int>(6);
-            string errCorrection = e.Params["err"].Get<string>("Q");
-            string fullUrl = e.Params["url"].Get<string>();
-            string explanation = e.Params["text"].Get<string>();
-            int cornerRadius = e.Params["rounded-corners"].Get<int>(20);
-            bool animate = e.Params["anti-pixelated"].Get<bool>(true);
-            string backgroundImage = e.Params["bg-image"].Get<string>("media/images/textures/bumpy-light.png");
-            string foregroundImage = e.Params["fg-image"].Get<string>("media/images/textures/bumpy-dark.png");
+            int scale = ip["scale"].Get<int>(6);
+            string errCorrection = ip["err"].Get<string>("Q");
+            string fullUrl = ip["url"].Get<string>();
+            string explanation = ip["text"].Get<string>();
+            int cornerRadius = ip["rounded-corners"].Get<int>(20);
+            bool animate = ip["anti-pixelated"].Get<bool>(true);
+            string backgroundImage = ip["bg-image"].Get<string>("media/images/textures/bumpy-light.png");
+            string foregroundImage = ip["fg-image"].Get<string>("media/images/textures/bumpy-dark.png");
 
             // Image has presedence ...
             string backgroundColor =
                 string.IsNullOrEmpty(backgroundImage) ?
-                    e.Params["bg-color"].Get<string>() :
+                    ip["bg-color"].Get<string>() :
                     null;
             string foregroundColor =
                 string.IsNullOrEmpty(foregroundImage) ?
-                    e.Params["fg-color"].Get<string>() :
+                    ip["fg-color"].Get<string>() :
                     null;
 
-            string fontName = e.Params["font-name"].Get<string>("Comic Sans MS");
-            int fontSize = e.Params["font-size"].Get<int>(-1);
-            string fontColor = e.Params["font-color"].Get<string>("#999999");
-            int rotateAngle = e.Params["rotate"].Get<int>();
-            string fileName = e.Params["file-name"].Get<string>();
+            string fontName = ip["font-name"].Get<string>("Comic Sans MS");
+            int fontSize = ip["font-size"].Get<int>(-1);
+            string fontColor = ip["font-color"].Get<string>("#999999");
+            int rotateAngle = ip["rotate"].Get<int>();
+            string fileName = ip["file-name"].Get<string>();
 
             // if no file-name is given, a unique name is automatically assigned, and returned to caller
             if (string.IsNullOrEmpty(fileName))
             {
-                fileName = "your-files/tmp/qr-" + Guid.NewGuid().ToString() + ".png";
+                fileName = "my-files/tmp/qr-" + Guid.NewGuid().ToString() + ".png";
 
                 // Need to RETURN the newly created path back to caller ...
-                e.Params["file-name"].Value = fileName;
+                ip["file-name"].Value = fileName;
             }
 
             string physicalPath = Page.MapPath("~/" + fileName);

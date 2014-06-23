@@ -55,10 +55,9 @@ namespace Magix.Core
             if (string.IsNullOrEmpty(name))
                 throw new ApplicationException("You have to specify which Module you want to load");
 
-			node = node.Clone();
-
-			node["container"].Value = container;
-			node["name"].Value = name;
+            Node ip = Ip(node);
+			ip["container"].Value = container;
+			ip["name"].Value = name;
 
 			RaiseActiveEvent(
 				"magix.viewport.load-module", 

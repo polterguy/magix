@@ -195,14 +195,14 @@ namespace Magix.execute
             Node code = GetEventCode(e.Name);
             if (code != null)
             {
-                code["$"].AddRange(e.Params);
+                code["$"].AddRange(ip);
 
                 RaiseActiveEvent(
                     "magix.execute",
                     code);
 
-                e.Params.Clear();
-                e.Params.AddRange(code["$"]);
+                ip.Clear();
+                ip.AddRange(code["$"]);
             }
         }
 
@@ -250,15 +250,16 @@ namespace Magix.execute
         {
             if (SessionEvents.ContainsKey(e.Name))
             {
-                Node code = SessionEvents[e.Name];
-                code["$"].AddRange(e.Params);
+                Node ip = Ip(e.Params);
+                Node code = SessionEvents[e.Name].Clone();
+                code["$"].AddRange(ip);
 
                 RaiseActiveEvent(
                     "magix.execute",
                     code);
 
-                e.Params.Clear();
-                e.Params.AddRange(code["$"]);
+                ip.Clear();
+                ip.AddRange(code["$"]);
             }
         }
 
