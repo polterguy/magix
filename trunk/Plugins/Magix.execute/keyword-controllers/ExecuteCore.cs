@@ -20,7 +20,7 @@ namespace Magix.execute
          * hyperlisp implementation
          */
         [ActiveEvent(Name = "magix.execute")]
-        [ActiveEvent(Name = "magix.execute.execute")] // TODO: remove ...?
+        [ActiveEvent(Name = "magix.execute.execute")]
         public static void magix_execute(object sender, ActiveEventArgs e)
 		{
             Node ip = Ip(e.Params);
@@ -111,9 +111,9 @@ namespace Magix.execute
             }
 		}
 
-        private static void ExecuteSingleNode(Node ip, Node pars, Node idx)
+        private static void ExecuteSingleNode(Node ip, Node pars, Node executionNode)
         {
-            string activeEvent = idx.Name;
+            string activeEvent = executionNode.Name;
 
             // checking to see if this is just a data/comment buffer ...
             if (!activeEvent.StartsWith("_") &&
@@ -135,21 +135,21 @@ namespace Magix.execute
 
                 if (activeEvent.Contains("."))
                 {
-                    // this is an active event reference, and does not have access to entire tree
-                    Node parent = idx.Parent;
-                    idx.SetParent(null);
+                    Node oldParent = executionNode.Parent;
                     Node oldDp = pars["_dp"].Get<Node>();
                     try
                     {
-                        pars["_ip"].Value = idx;
-                        pars["_dp"].Value = idx;
+                        // this is an active event reference, and does not have access to entire tree
+                        executionNode.SetParent(null);
+                        pars["_ip"].Value = executionNode;
+                        pars["_dp"].Value = executionNode;
                         RaiseActiveEvent(
                             activeEvent,
                             pars);
                     }
                     finally
                     {
-                        idx.SetParent(parent);
+                        executionNode.SetParent(oldParent);
                         pars["_dp"].Value = oldDp;
                         pars["_ip"].Value = ip;
                     }
@@ -163,7 +163,7 @@ namespace Magix.execute
                     else
                         activeEvent = "magix.execute." + activeEvent;
 
-                    pars["_ip"].Value = idx;
+                    pars["_ip"].Value = executionNode;
                     RaiseActiveEvent(
                         activeEvent,
                         pars);

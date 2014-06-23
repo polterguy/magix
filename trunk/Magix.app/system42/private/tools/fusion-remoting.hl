@@ -6,6 +6,10 @@ creates the web part needed to configure the fusion remoting
 features of magix"
 
 
+// verifies user is in admin role
+magix.core.verify-role
+  role=>admin
+
 magix.forms.create-web-part
   container=>content1
   class=>span-17 last

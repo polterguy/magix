@@ -40,7 +40,7 @@ namespace Magix.execute
             Node dp = Dp(e.Params);
 
             if (string.IsNullOrEmpty(ip.Get<string>()))
-                throw new ArgumentException("you must supply an expression to [for-each]");
+                throw new ArgumentException("you must supply an expression to [iterate]");
 
 			Node rootExpressionNode = Expressions.GetExpressionValue<Node>(ip.Get<string>(), dp, ip, false);
 			if (rootExpressionNode != null)
@@ -70,9 +70,9 @@ namespace Magix.execute
 
         private static void IterateNode(Node pars, Node currentlyIteratedNode)
         {
+            Node ip = Ip(pars);
             for (int idxNo = 0; idxNo < currentlyIteratedNode.Count; idxNo++)
             {
-                Node ip = Ip(pars);
                 Node oldIp = ip.Clone();
 
                 Node current = currentlyIteratedNode[idxNo];

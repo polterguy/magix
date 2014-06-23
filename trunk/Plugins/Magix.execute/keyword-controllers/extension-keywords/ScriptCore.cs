@@ -83,17 +83,16 @@ namespace Magix.execute
 		 */
 		private static void ExecuteScript(Node exe, Node ip)
 		{
-            if (ip.Contains("params"))
-            {
+            if (ip.Contains("params") && ip["params"].Count > 0)
                 exe["$"].AddRange(ip["params"]);
-            }
 
 			RaiseActiveEvent(
 				"magix.execute", 
 				exe);
 
-            ip["params"].Clear();
-            ip["params"].AddRange(exe["$"]);
+            ip["params"].UnTie();
+            if (exe.Contains("$") && exe["$"].Count > 0)
+                ip["params"].AddRange(exe["$"]);
 		}
 	}
 }

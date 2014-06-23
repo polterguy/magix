@@ -15,16 +15,28 @@ namespace Magix.execute
         /*
          * helper for above
          */
-        internal static void Remove(string activeEvent, string type)
+        internal static void Remove(string activeEvent, string type, Node pars)
         {
-            Node removeNode = new Node();
+            Node removeNode = new Node("magix.data.remove");
             removeNode["prototype"]["event"].Value = activeEvent;
             removeNode["prototype"]["type"].Value = type;
 
-            ActiveEvents.Instance.RaiseActiveEvent(
-                typeof(DataBaseRemoval),
-                "magix.data.remove",
-                removeNode);
+            Node oldIp = pars["_ip"].Get<Node>();
+            Node oldDp = pars["_dp"].Get<Node>();
+            try
+            {
+                pars["_ip"].Value = removeNode;
+                pars["_dp"].Value = removeNode;
+                ActiveEvents.Instance.RaiseActiveEvent(
+                    typeof(DataBaseRemoval),
+                    "magix.execute",
+                    removeNode);
+            }
+            finally
+            {
+                pars["_ip"].Value = oldIp;
+                pars["_dp"].Value = oldDp;
+            }
         }
     }
 }

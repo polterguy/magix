@@ -4,6 +4,10 @@ inspect=>@"allows you to create an active event that loads records from
 an ms sql database table"
 
 
+// verifies user is in admin role
+magix.core.verify-role
+  role=>admin
+
 _name=>select from ms sql active event
 
 // creates the wizard main web part

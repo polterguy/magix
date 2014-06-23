@@ -73,17 +73,21 @@ namespace Magix.data
         internal static Guid CreateTransaction()
         {
             _resetEvent.WaitOne();
-            _resetEvent.Reset();
-            if (_transaction.Item1 != Guid.Empty)
-                _transaction.Item2.WaitOne();
-            _transaction.Item2.Reset();
-
-            lock (_database)
+            try
             {
-                Guid transaction = Guid.NewGuid();
-                _transaction = new Tuple<Guid, AutoResetEvent, Node>(transaction, _transaction.Item2, _database.Clone());
+                if (_transaction.Item1 != Guid.Empty)
+                    _transaction.Item2.WaitOne();
+
+                lock (_database)
+                {
+                    Guid transaction = Guid.NewGuid();
+                    _transaction = new Tuple<Guid, AutoResetEvent, Node>(transaction, _transaction.Item2, _database.Clone());
+                    return transaction;
+                }
+            }
+            finally
+            {
                 _resetEvent.Set();
-                return transaction;
             }
         }
 
@@ -93,13 +97,18 @@ namespace Magix.data
         internal static void Rollback(Guid transaction)
         {
             _resetEvent.WaitOne();
-            _resetEvent.Reset();
-            lock (_database)
+            try
             {
-                if (_transaction.Item1 != transaction)
-                    return; // already committed ...
+                lock (_database)
+                {
+                    if (_transaction.Item1 != transaction)
+                        return; // already committed ...
 
-                _transaction = new Tuple<Guid, AutoResetEvent, Node>(Guid.Empty, _transaction.Item2, new Node());
+                    _transaction = new Tuple<Guid, AutoResetEvent, Node>(Guid.Empty, _transaction.Item2, new Node());
+                }
+            }
+            finally
+            {
                 _transaction.Item2.Set();
                 _resetEvent.Set();
             }
@@ -110,64 +119,73 @@ namespace Magix.data
          */
         internal static void Commit(Guid transaction)
         {
-            lock (_database)
+            _resetEvent.WaitOne();
+            try
             {
-                if (_transaction.Item1 != transaction)
-                    throw new ApplicationException("transaction id mismatch in commit");
+                lock (_database)
+                {
+                    if (_transaction.Item1 != transaction)
+                        throw new ApplicationException("transaction id mismatch in commit");
 
-                _database = _transaction.Item3;
-                _transaction = new Tuple<Guid, AutoResetEvent, Node>(Guid.Empty, _transaction.Item2, new Node());
-                List<Node> toBeRemoved = new List<Node>();
-                
-                // removing items that should be removed first
-                foreach (Node idx in _database)
-                {
-                    if (idx.Count == 0)
-                    {
-                        toBeRemoved.Add(idx);
-                    }
-                }
-                foreach (Node idx in toBeRemoved)
-                {
-                    RemoveNodeFromDatabase(idx);
-                }
+                    _database = _transaction.Item3;
+                    _transaction = new Tuple<Guid, AutoResetEvent, Node>(Guid.Empty, _transaction.Item2, new Node());
+                    List<Node> toBeRemoved = new List<Node>();
 
-                // updating changed items
-                foreach (Node idx in _database)
-                {
-                    if (idx.Name.StartsWith("changed:") && idx.Count > 0)
+                    // removing items that should be removed first
+                    foreach (Node idx in _database)
                     {
-                        idx.Name = idx.Name.Substring(8);
-                        SaveFileNodeToDisc(idx);
-                    }
-                }
-
-                // adding new items
-                List<Node> toBeRemovedFromDatabase = new List<Node>();
-                int objectsPerFile = int.Parse(ConfigurationManager.AppSettings["magix.core.database-objects-per-file"]);
-                foreach (Node idx in _database)
-                {
-                    if (idx.Name == "added:")
-                    {
-                        Node availableNode = FindAvailableNode();
-                        while (idx.Count > 0)
+                        if (idx.Count == 0)
                         {
-                            while (availableNode.Count < objectsPerFile && idx.Count > 0)
-                            {
-                                availableNode.Add(idx[0].UnTie());
-                            }
-                            SaveFileNodeToDisc(availableNode);
-                            availableNode = FindAvailableNode();
+                            toBeRemoved.Add(idx);
                         }
-                        toBeRemovedFromDatabase.Add(idx);
                     }
-                }
-                foreach (Node idx in toBeRemovedFromDatabase)
-                {
-                    _database.Remove(idx);
-                }
+                    foreach (Node idx in toBeRemoved)
+                    {
+                        RemoveNodeFromDatabase(idx);
+                    }
 
+                    // updating changed items
+                    foreach (Node idx in _database)
+                    {
+                        if (idx.Name.StartsWith("changed:") && idx.Count > 0)
+                        {
+                            idx.Name = idx.Name.Substring(8);
+                            SaveFileNodeToDisc(idx);
+                        }
+                    }
+
+                    // adding new items
+                    List<Node> toBeRemovedFromDatabase = new List<Node>();
+                    int objectsPerFile = int.Parse(ConfigurationManager.AppSettings["magix.core.database-objects-per-file"]);
+                    foreach (Node idx in _database)
+                    {
+                        if (idx.Name == "added:")
+                        {
+                            Node availableNode = FindAvailableNode();
+                            while (idx.Count > 0)
+                            {
+                                while (availableNode.Count < objectsPerFile && idx.Count > 0)
+                                {
+                                    availableNode.Add(idx[0].UnTie());
+                                }
+                                SaveFileNodeToDisc(availableNode);
+                                availableNode = FindAvailableNode();
+                            }
+                            toBeRemovedFromDatabase.Add(idx);
+                            break;
+                        }
+                    }
+                    foreach (Node idx in toBeRemovedFromDatabase)
+                    {
+                        _database.Remove(idx);
+                    }
+
+                }
+            }
+            finally
+            {
                 _transaction.Item2.Set();
+                _resetEvent.Set();
             }
         }
 
@@ -569,7 +587,7 @@ namespace Magix.data
             int objectsPerFile = int.Parse(ConfigurationManager.AppSettings["magix.core.database-objects-per-file"]);
             foreach (Node idxFileNode in _database)
             {
-                if (idxFileNode.Count < objectsPerFile)
+                if (idxFileNode.Count < objectsPerFile && !idxFileNode.Name.StartsWith("added:"))
                     return idxFileNode;
             }
 

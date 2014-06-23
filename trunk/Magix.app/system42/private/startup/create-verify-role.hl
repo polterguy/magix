@@ -1,0 +1,51 @@
+
+
+inspect=>@"creates verify role active event
+
+creates an active event that will verify the currently logged in user belongs 
+to a specific role, and if not, throws an exception.  expects [role] as input 
+parameter, being the role to check the user belongs to.  also expects that a 
+user is logged in"
+
+
+event
+  name=>magix.core.verify-role
+  persist=>false
+  code
+    magix.session.get
+      id=>magix.core.user
+    if=>not-exist
+      lhs=>[magix.session.get][value]
+      code
+        throw=>no logged in user
+    _found=>false
+    magix.data.load
+      prototype
+        type=>magix.core.role
+    _user-roles
+    iterate=>[magix.data.load][objects]
+      if=>equals
+        lhs=>[.].Name
+        rhs=>name
+        and=>exist
+          lhs=>[/][magix.session.get][value][roles][[.].Value]
+        code
+          add=>[/][_user-roles]
+            value=>[.][..]
+    iterate=>[_user-roles]
+      if=>equals
+        lhs=>[.].Name
+        rhs=>name
+        and=>equals
+          lhs=>[.].Value
+          rhs=>[$][role].Value
+        code
+          set=>[/][_found].Value
+            value=>true
+          stop
+    if=>equals
+      lhs=>[_found].Value
+      rhs=>false
+      code
+        throw=>user not in role
+

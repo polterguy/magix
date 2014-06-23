@@ -34,11 +34,12 @@ creates an event in the magix.test namespace, then tries to invoke
 the event using a [using] statement, for then to verify it behaves 
 correctly"
   code
+    _data=>success
     event
       name=>magix.test.temp-using
       code
         set=>[$][output].Value
-          value=>success
+          value=>[_data].Value
     using=>magix.test
       temp-using
     event

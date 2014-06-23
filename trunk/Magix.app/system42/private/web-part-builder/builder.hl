@@ -7,6 +7,10 @@ which you can use in for instance the [magix.forms.create-web-part] active
 event, to create your forms"
 
 
+// verifies user is in admin role
+magix.core.verify-role
+  role=>admin
+
 // including toolbox buttons css file
 magix.viewport.include-client-file
   type=>css

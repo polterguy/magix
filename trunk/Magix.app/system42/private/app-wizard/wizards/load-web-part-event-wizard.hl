@@ -4,6 +4,10 @@ inspect=>@"allows you to create an active event that loads and creates
 a web part, either from the database or the filesystem"
 
 
+// verifies user is in admin role
+magix.core.verify-role
+  role=>admin
+
 _name=>create web part active event
 
 // setting default css files to include for web part

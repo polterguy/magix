@@ -101,58 +101,79 @@ namespace Magix.execute
                 throw new ArgumentException("you cannot create an event without a [name]");
             string activeEvent = Expressions.GetExpressionValue<string>(ip["name"].Get<string>(), dp, ip, false);
 
-			bool remotable = ip.Contains("remotable") && ip["remotable"].Get<bool>();
-
 			if (ip.Contains("code"))
 			{
-                if (!ip.Contains("persist") || ip["persist"].Get<bool>())
-                {
-                    // removing any previous similar events
-                    DataBaseRemoval.Remove(activeEvent, "magix.execute.event");
-
-                    Node saveNode = new Node();
-                    saveNode["id"].Value = Guid.NewGuid().ToString();
-                    saveNode["value"]["event"].Value = activeEvent;
-                    saveNode["value"]["type"].Value = "magix.execute.event";
-                    saveNode["value"]["remotable"].Value = remotable;
-                    saveNode["value"]["code"].AddRange(ip["code"].Clone());
-
-                    if (ip.Contains("inspect"))
-                        saveNode["value"]["inspect"].Value = ip["inspect"].Value;
-
-                    RaiseActiveEvent(
-                        "magix.data.save",
-                        saveNode);
-                }
-
-				ActiveEvents.Instance.CreateEventMapping(
-					activeEvent, 
-					"magix.execute._active-event-2-code-callback");
-
-				if (remotable)
-					ActiveEvents.Instance.MakeRemotable(activeEvent);
-				else
-					ActiveEvents.Instance.RemoveRemotable(activeEvent);
-
-				_events[activeEvent].Clear();
-                _events[activeEvent].AddRange(ip["code"].Clone());
-
-                _inspect[activeEvent].Clear();
-                if (ip.Contains("inspect"))
-                    _inspect[activeEvent].Value = ip["inspect"].Value;
+                CreateActiveEvent(ip, activeEvent, e.Params);
 			}
 			else
 			{
-                if (!ip.Contains("persist") || ip["persist"].Get<bool>())
-                    DataBaseRemoval.Remove(activeEvent, "magix.execute.event");
-
-				ActiveEvents.Instance.RemoveMapping(activeEvent);
-				ActiveEvents.Instance.RemoveRemotable(activeEvent);
-
-                _events[activeEvent].UnTie();
-                _inspect[activeEvent].UnTie();
+                RemoveActiveEvent(ip, activeEvent, e.Params);
 			}
 		}
+
+        private static void RemoveActiveEvent(Node ip, string activeEvent, Node pars)
+        {
+            if (!ip.Contains("persist") || ip["persist"].Get<bool>())
+                DataBaseRemoval.Remove(activeEvent, "magix.execute.event", pars);
+
+            ActiveEvents.Instance.RemoveMapping(activeEvent);
+            ActiveEvents.Instance.RemoveRemotable(activeEvent);
+
+            _events[activeEvent].UnTie();
+            _inspect[activeEvent].UnTie();
+        }
+
+        private static void CreateActiveEvent(Node ip, string activeEvent, Node pars)
+        {
+            bool remotable = ip.Contains("remotable") && ip["remotable"].Get<bool>();
+            if (!ip.Contains("persist") || ip["persist"].Get<bool>())
+            {
+                // removing any previous similar events
+                DataBaseRemoval.Remove(activeEvent, "magix.execute.event", pars);
+
+                Node saveNode = new Node("magix.data.save");
+                saveNode["id"].Value = Guid.NewGuid().ToString();
+                saveNode["value"]["event"].Value = activeEvent;
+                saveNode["value"]["type"].Value = "magix.execute.event";
+                saveNode["value"]["remotable"].Value = remotable;
+                saveNode["value"]["code"].AddRange(ip["code"].Clone());
+
+                if (ip.Contains("inspect"))
+                    saveNode["value"]["inspect"].Value = ip["inspect"].Value;
+
+                Node oldIp = pars["_ip"].Get<Node>();
+                Node oldDp = pars["_dp"].Get<Node>();
+                try
+                {
+                    pars["_ip"].Value = saveNode;
+                    pars["_dp"].Value = saveNode;
+                    RaiseActiveEvent(
+                        "magix.execute",
+                        pars);
+                }
+                finally
+                {
+                    pars["_ip"].Value = oldIp;
+                    pars["_dp"].Value = oldDp;
+                }
+            }
+
+            ActiveEvents.Instance.CreateEventMapping(
+                activeEvent,
+                "magix.execute._active-event-2-code-callback");
+
+            if (remotable)
+                ActiveEvents.Instance.MakeRemotable(activeEvent);
+            else
+                ActiveEvents.Instance.RemoveRemotable(activeEvent);
+
+            _events[activeEvent].Clear();
+            _events[activeEvent].AddRange(ip["code"].Clone());
+
+            _inspect[activeEvent].Clear();
+            if (ip.Contains("inspect"))
+                _inspect[activeEvent].Value = ip["inspect"].Value;
+        }
 
         /*
          * entry point for hyperlisp created active event overrides
@@ -192,17 +213,46 @@ namespace Magix.execute
                 return;
             }
 
+            Node dp = Dp(e.Params);
+
             Node code = GetEventCode(e.Name);
             if (code != null)
             {
-                code["$"].AddRange(ip);
+                if (ip.Count > 0)
+                    code["$"].AddRange(ip);
 
-                RaiseActiveEvent(
-                    "magix.execute",
-                    code);
+                e.Params["_ip"].Value = code;
+                if (!e.Params.Contains("_dp") || (ip.Name != null && ip.Name.Contains(".")))
+                    e.Params["_dp"].Value = code;
+
+                // making sure we're starting with correct namespace
+                e.Params["_namespaces"].Add(new Node("item", "magix.execute"));
+                try
+                {
+                    RaiseActiveEvent(
+                        "magix.execute",
+                        e.Params);
+                }
+                catch (Exception err)
+                {
+                    while (err.InnerException != null)
+                        err = err.InnerException;
+
+                    if (!(err is StopCore.HyperLispStopException))
+                        throw;
+                }
+                finally
+                {
+                    e.Params["_namespaces"][e.Params["_namespaces"].Count - 1].UnTie();
+                    if (e.Params["_namespaces"].Count == 0)
+                        e.Params["_namespaces"].UnTie();
+                    e.Params["_ip"].Value = ip;
+                    e.Params["_dp"].Value = dp;
+                }
 
                 ip.Clear();
-                ip.AddRange(code["$"]);
+                if (code.Contains("$") && code["$"].Count > 0)
+                    ip.AddRange(code["$"]);
             }
         }
 
@@ -252,14 +302,16 @@ namespace Magix.execute
             {
                 Node ip = Ip(e.Params);
                 Node code = SessionEvents[e.Name].Clone();
-                code["$"].AddRange(ip);
+                if (ip.Count > 0)
+                    code["$"].AddRange(ip);
 
                 RaiseActiveEvent(
                     "magix.execute",
                     code);
 
                 ip.Clear();
-                ip.AddRange(code["$"]);
+                if (code.Contains("$") && code["$"].Count > 0)
+                    ip.AddRange(code["$"]);
             }
         }
 
@@ -336,6 +388,9 @@ namespace Magix.execute
                 });
         }
 
+        /*
+         * returns stored active event
+         */
         private static Node GetEventCode(string name)
 		{
 			if (_events.Contains(name) && _events[name].Count > 0)
