@@ -31,7 +31,7 @@ namespace Magix.forms
                     ip["inspect"],
                     "Magix.forms",
                     "Magix.forms.hyperlisp.inspect.hl",
-                    "[magix.forms.list-control-types-dox].Value");
+                    "[magix.forms.list-control-types-dox].value");
 				ip["magix.forms.list-control-types"].Value = null;
 				return;
 			}
@@ -94,7 +94,7 @@ namespace Magix.forms
                     ip["inspect"],
                     "Magix.forms",
                     "Magix.forms.hyperlisp.inspect.hl",
-                    "[magix.forms.set-visible-dox].Value");
+                    "[magix.forms.set-visible-dox].value");
                 AppendCodeFromResource(
                     ip,
                     "Magix.forms",
@@ -120,7 +120,7 @@ namespace Magix.forms
                     ip["inspect"],
                     "Magix.forms",
                     "Magix.forms.hyperlisp.inspect.hl",
-                    "[magix.forms.get-visible-dox].Value");
+                    "[magix.forms.get-visible-dox].value");
                 AppendCodeFromResource(
                     ip,
                     "Magix.forms",
@@ -146,7 +146,7 @@ namespace Magix.forms
                     ip["inspect"],
                     "Magix.forms",
                     "Magix.forms.hyperlisp.inspect.hl",
-                    "[magix.forms.set-value-dox].Value");
+                    "[magix.forms.set-value-dox].value");
                 AppendCodeFromResource(
                     ip,
                     "Magix.forms",
@@ -177,7 +177,7 @@ namespace Magix.forms
                     ip["inspect"],
                     "Magix.forms",
                     "Magix.forms.hyperlisp.inspect.hl",
-                    "[magix.forms.get-value-dox].Value");
+                    "[magix.forms.get-value-dox].value");
                 AppendCodeFromResource(
                     ip,
                     "Magix.forms",
@@ -203,7 +203,7 @@ namespace Magix.forms
                     ip["inspect"],
                     "Magix.forms",
                     "Magix.forms.hyperlisp.inspect.hl",
-                    "[magix.forms.clear-children-values-dox].Value");
+                    "[magix.forms.clear-children-values-dox].value");
                 AppendCodeFromResource(
                     ip,
                     "Magix.forms",
@@ -246,7 +246,7 @@ namespace Magix.forms
                     ip["inspect"],
                     "Magix.forms",
                     "Magix.forms.hyperlisp.inspect.hl",
-                    "[magix.forms.get-children-values-dox].Value");
+                    "[magix.forms.get-children-values-dox].value");
                 AppendCodeFromResource(
                     ip,
                     "Magix.forms",
@@ -360,7 +360,7 @@ namespace Magix.forms
                 tmp["inspect"],
                 "Magix.forms",
                 "Magix.forms.hyperlisp.inspect.hl",
-                "[magix.forms.base-dox].Value",
+                "[magix.forms.base-dox].value",
                 true);
             node.Value = "control_id";
             node["visible"].Value = "true";

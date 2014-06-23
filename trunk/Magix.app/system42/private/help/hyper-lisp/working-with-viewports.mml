@@ -23,7 +23,7 @@ building the rest of your viewport logic in hyperlisp.&nbsp;&nbsp;to create a vi
 {{
 lambda=>lmb1-viewport
   oncreatecontrols
-    set=>[$][literal][text].Value
+    set=>[$][literal][text].value
       value=>{0}{1}
         =>{
         =>{
@@ -32,7 +32,7 @@ dynamic=>my-viewport
 {{
 lambda=>lmb2-viewport
   oncreatecontrols
-    set=>[$][literal][text].Value
+    set=>[$][literal][text].value
       value=>{0}{1}
         =>}
         =>}

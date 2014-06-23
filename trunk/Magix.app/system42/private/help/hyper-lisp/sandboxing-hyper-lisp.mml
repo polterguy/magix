@@ -35,13 +35,13 @@ following code</p>
 _data=>false
 magix.execute
   while=>equals
-    lhs=>[/][while][code][_data].Value
+    lhs=>[/][while][code][_data].value
     rhs=>false
     code
       _data=>false
       magix.viewport.show-message
         message=>howdy world
-      set=>[/][_data].Value
+      set=>[/][_data].value
         value=>true
       stop
 </pre>
@@ -49,7 +49,7 @@ magix.execute
 <p>the above code would execute indefinitely, until the execution engines overflowed, if it hadn't been for the [stop] keyword at the end 
 of the [code] scope of our while.&nbsp;&nbsp;however, more importantly, if it hadn't been for the fact of that we fully qualified the 
 [while] keyword as [magix.execute.while], then the first [_data] node's value would have changed, which was not its intention.&nbsp;&nbsp;
-all of this because instead of supplying a [@][_data].Value expression, the author typed one tiny bug, and made the [@] become a [/].
+all of this because instead of supplying a [@][_data].value expression, the author typed one tiny bug, and made the [@] become a [/].
 &nbsp;&nbsp;and in fact, if you run the code through the hyperlisp executor, you will see a new [_data] node appended beneath the 
 [magix.execute.while] node, which obviously seems to be in a very wrong place</p>
 

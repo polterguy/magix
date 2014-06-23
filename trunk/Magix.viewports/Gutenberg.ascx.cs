@@ -76,7 +76,7 @@ namespace Magix.viewports
                     ip["inspect"],
                     "Magix.viewports",
                     "Magix.viewports.hyperlisp.inspect.hl",
-                    "[magix.viewports.show-message-dox].Value");
+                    "[magix.viewports.show-message-dox].value");
                 AppendCodeFromResource(
                     ip,
                     "Magix.viewports",
@@ -168,7 +168,7 @@ namespace Magix.viewports
                     ip["inspect"],
                     "Magix.viewports",
                     "Magix.viewports.hyperlisp.inspect.hl",
-                    "[magix.viewports.confirm-dox].Value");
+                    "[magix.viewports.confirm-dox].value");
                 AppendCodeFromResource(
                     ip,
                     "Magix.viewports",
@@ -276,7 +276,7 @@ namespace Magix.viewports
                     ip["inspect"],
                     "Magix.viewports",
                     "Magix.viewports.hyperlisp.inspect.hl",
-                    "[magix.viewports.pin-container-dox].Value");
+                    "[magix.viewports.pin-container-dox].value");
                 AppendCodeFromResource(
                     ip,
                     "Magix.viewports",

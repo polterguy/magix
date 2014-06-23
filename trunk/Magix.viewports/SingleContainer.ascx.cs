@@ -45,7 +45,7 @@ namespace Magix.viewports
                     ip["inspect"],
                     "Magix.viewports",
                     "Magix.viewports.hyperlisp.inspect.hl",
-                    "[magix.viewports.show-message-dox].Value");
+                    "[magix.viewports.show-message-dox].value");
                 AppendCodeFromResource(
                     ip,
                     "Magix.viewports",

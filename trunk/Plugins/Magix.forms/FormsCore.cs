@@ -28,7 +28,7 @@ namespace Magix.forms
                     ip["inspect"], 
                     "Magix.forms", 
                     "Magix.forms.hyperlisp.inspect.hl", 
-                    "[magix.forms.create-web-part-dox].Value");
+                    "[magix.forms.create-web-part-dox].value");
                 AppendCodeFromResource(
                     ip,
                     "Magix.forms",
@@ -152,7 +152,7 @@ namespace Magix.forms
                     ip["inspect"],
                     "Magix.forms",
                     "Magix.forms.hyperlisp.inspect.hl",
-                    "[magix.forms.create-mml-web-part-dox].Value");
+                    "[magix.forms.create-mml-web-part-dox].value");
                 AppendCodeFromResource(
                     ip,
                     "Magix.forms",

@@ -14,7 +14,7 @@ link-button=>go-to-node
 <pre>
 _data=>hello world
 if=>equals
-  lhs=>[_data].Value
+  lhs=>[_data].value
   rhs=>hello world
   code
     magix.viewport.show-message
@@ -34,11 +34,11 @@ of how to produce the exact same tree structure with c#</p>
 
 <pre>
 Node node = new Node();
-node["_data"].Value = "hello world";
-node["if"]["lhs"].Value = "[_data].Value";
-node["if"]["rhs"].Value = "hello world";
-node["if"]["code"]["magix.viewport.show-message"]["message"].Value = "if statement evaluated to true";
-node["else"]["magix.viewport.show-message"]["message"].Value = "if statement evaluated to false";
+node["_data"].value = "hello world";
+node["if"]["lhs"].value = "[_data].value";
+node["if"]["rhs"].value = "hello world";
+node["if"]["code"]["magix.viewport.show-message"]["message"].value = "if statement evaluated to true";
+node["else"]["magix.viewport.show-message"]["message"].value = "if statement evaluated to false";
 </pre>
 
 <p>hyperlisp is really nothing but a tree structure, and doesn't actually have any syntax, the way 

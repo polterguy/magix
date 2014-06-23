@@ -28,7 +28,7 @@ namespace Magix.tests
                     ip["inspect"],
                     "Magix.tests",
                     "Magix.tests.hyperlisp.inspect.hl",
-                    "[magix.tests.run-dox].Value");
+                    "[magix.tests.run-dox].value");
 				int av = 0;
 				int tests = 0;
                 ip["active-events"].Value = null; // to make sure it ends up at the top

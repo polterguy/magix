@@ -8,7 +8,7 @@ contains the events for the web part that wraps the properties web part"
 // show-hide properties link-button was clicked
 magix.ide.show-hide-properties-clicked
   if=>equals
-    lhs=>[$][value].Value
+    lhs=>[$][value].value
     rhs=>hide properties
     code
       magix.forms.set-value
@@ -33,7 +33,7 @@ magix.ide.request-properties
   magix.data.load-username
     id=>magix.ide.hide-properties
   if=>equals
-    lhs=>[magix.data.load-username][value][hidden].Value
+    lhs=>[magix.data.load-username][value][hidden].value
     rhs=>true
     code
       magix.viewport.clear-controls

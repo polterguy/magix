@@ -26,10 +26,10 @@ exception"
             bar
             foo
       catch
-        set=>[_exception].Value
+        set=>[_exception].value
           value=>true
     if=>equals
-      lhs=>[_exception].Value
+      lhs=>[_exception].value
       rhs=>true
       code
         throw=>[sandbox] misbehaved
@@ -53,10 +53,10 @@ throws an exception"
           code
             bar
       catch
-        set=>[_exception].Value
+        set=>[_exception].value
           value=>true
     if=>not-equals
-      lhs=>[_exception].Value
+      lhs=>[_exception].value
       rhs=>true
       code
         throw=>[sandbox] misbehaved
@@ -82,10 +82,10 @@ for then to verify the engine chokes, and throws an exception"
               whitelist
                 bar
       catch
-        set=>[_exception].Value
+        set=>[_exception].value
           value=>true
     if=>not-equals
-      lhs=>[_exception].Value
+      lhs=>[_exception].value
       rhs=>true
       code
         throw=>[sandbox] misbehaved

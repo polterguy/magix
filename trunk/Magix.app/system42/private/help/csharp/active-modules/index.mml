@@ -46,7 +46,7 @@ namespace Magix.sample
 
         protected void btn_Click(object sender, EventArgs e)
         {
-            btn.Value ="howdy world";
+            btn.value ="howdy world";
         }
     }
 }</pre>

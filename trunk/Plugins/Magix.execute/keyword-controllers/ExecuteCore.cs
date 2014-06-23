@@ -30,7 +30,7 @@ namespace Magix.execute
                     ip["inspect"],
                     "Magix.execute",
                     "Magix.execute.hyperlisp.inspect.hl",
-                    "[magix.execute.execute-dox].Value");
+                    "[magix.execute.execute-dox].value");
                 AppendCodeFromResource(
                     ip,
                     "Magix.execute",

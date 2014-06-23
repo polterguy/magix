@@ -33,7 +33,7 @@ event
   code
     _data=>5
     if=>not-equals
-      lhs=>[_data].Value
+      lhs=>[_data].value
       rhs=>5
       code
         throw=>equality operator doesn't behave as expected

@@ -62,7 +62,7 @@ namespace Magix.forms
                 node["inspect"],
                 "Magix.forms",
                 "Magix.forms.hyperlisp.inspect.hl",
-                "[magix.forms.radio-dox-start].Value");
+                "[magix.forms.radio-dox-start].value");
             AppendCodeFromResource(
                 node,
                 "Magix.forms",
@@ -73,7 +73,7 @@ namespace Magix.forms
                 node["inspect"],
                 "Magix.forms",
                 "Magix.forms.hyperlisp.inspect.hl",
-                "[magix.forms.radio-dox-end].Value",
+                "[magix.forms.radio-dox-end].value",
                 true);
             AppendCodeFromResource(
                 node["magix.forms.create-web-part"]["controls"]["radio"],

@@ -10,7 +10,7 @@ is a variable</p>
 expressions.&nbsp;&nbsp;an expression looks like the following</p>
 
 <pre>
-set=>[_data][v0].Value
+set=>[_data][v0].value
   value=>5
 </pre>
 
@@ -21,7 +21,7 @@ which are "paths" to find specific nodes, and their values and names within your
 create the followwing result</p>
 
 <pre>
-set=>[_data][v0].Value
+set=>[_data][v0].value
   value=>5
 _data
   v0=>5
@@ -40,7 +40,7 @@ _data
 <p>if you wish to access the [child-of-another] node's value, you'd have to create an expression similar to the one below</p>
 
 <pre>
-[_data][another-node][child-of-another].Value
+[_data][another-node][child-of-another].value
 </pre>
 
 <p>to see a working piece of code, doing just that, imagine the following code</p>
@@ -51,8 +51,8 @@ _data
     child-1=>5
   another-node
     child-of-another=>hello world
-set=>[magix.viewport.show-message][message].Value
-  value=>[_data][another-node][child-of-another].Value
+set=>[magix.viewport.show-message][message].value
+  value=>[_data][another-node][child-of-another].value
 </pre>
 
 <p>the above code, will fetch the value of [child-of-another] node, and put it into a message box.&nbsp;&nbsp;if you have multiple 
@@ -66,10 +66,10 @@ _data
     child-of-another=>hello world
   another-node
     child-of-another=>hello world 2
-set=>[magix.viewport.show-message][message].Value
-  value=>[_data][another-node:0][child-of-another].Value
-set=>[magix.viewport.show-message:1][message].Value
-  value=>[_data][another-node:1][child-of-another].Value
+set=>[magix.viewport.show-message][message].value
+  value=>[_data][another-node:0][child-of-another].value
+set=>[magix.viewport.show-message:1][message].value
+  value=>[_data][another-node:1][child-of-another].value
 </pre>
 
 <p>which will produce the following output</p>
@@ -82,10 +82,10 @@ _data
     child-of-another=>hello world
   another-node
     child-of-another=>hello world 2
-set=>[magix.viewport.show-message][message].Value
-  value=>[_data][another-node:0][child-of-another].Value
-set=>[magix.viewport.show-message:1][message].Value
-  value=>[_data][another-node:1][child-of-another].Value
+set=>[magix.viewport.show-message][message].value
+  value=>[_data][another-node:0][child-of-another].value
+set=>[magix.viewport.show-message:1][message].value
+  value=>[_data][another-node:1][child-of-another].value
 magix.viewport.show-message
   message=>hello world
 magix.viewport.show-message
@@ -100,8 +100,8 @@ _data
     child-1=>5
   another-node
     child-of-another=>hello world 3
-set=>[magix.viewport.show-message][message].Value
-  value=>[0][1][0].Value
+set=>[magix.viewport.show-message][message].value
+  value=>[0][1][0].value
 </pre>
 
 <h3>searching for nodes in your execution tree</h3>
@@ -114,8 +114,8 @@ _data
     content=>hello world
   message=>msg2
     content=>hello world 2
-set=>[magix.viewport.show-message][message].Value
-  value=>[_data][message<strong>=>msg2</strong>][content].Value
+set=>[magix.viewport.show-message][message].value
+  value=>[_data][message<strong>=>msg2</strong>][content].value
 </pre>
 
 <p>the above code, will look for the [message] node containing the value of "msg2", and use the [content] of that node 
@@ -131,12 +131,12 @@ _data
   v1=>
   v2
   v3=>y
-set=>[magix.viewport.show-message:0][message].Value
-  value=>[_data][?=>y].Name
-set=>[magix.viewport.show-message:1][message].Value
-  value=>[_data][?=>].Name
-set=>[magix.viewport.show-message:2][message].Value
-  value=>[_data][?].Name
+set=>[magix.viewport.show-message:0][message].value
+  value=>[_data][?=>y].name
+set=>[magix.viewport.show-message:1][message].value
+  value=>[_data][?=>].name
+set=>[magix.viewport.show-message:2][message].value
+  value=>[_data][?].name
 </pre>
 
 <p>the above will show a message box which contains v3 first, then v1 for then to show v2.&nbsp;&nbsp;this is because the 
@@ -157,8 +157,8 @@ _buffer-data
       message=>wrong one
     v0=>hello
       message=>success! howdy world :)
-set=>[magix.viewport.show-message][message].Value
-  value=>[_buffer-data][<strong>**v0=>hello</strong>][message].Value
+set=>[magix.viewport.show-message][message].value
+  value=>[_buffer-data][<strong>**v0=>hello</strong>][message].value
 </pre>
 
 <p>the above code will traverse through your entire tree, starting from [_buffer-data], looking for any node that has the name of 
@@ -177,8 +177,8 @@ _buffer-data
       message=>too wrongs never make a wright
     v0=>
       message=>dude, correct!
-set=>[magix.viewport.show-message][message].Value
-  value=>[_buffer-data][<strong>**v0=></strong>][message].Value
+set=>[magix.viewport.show-message][message].value
+  value=>[_buffer-data][<strong>**v0=></strong>][message].value
 </pre>
 
 <p>the above code will match only the third child of [_data].&nbsp;&nbsp;if you ommit the =&gt; in its entirety, then it 
@@ -193,8 +193,8 @@ _buffer-data
       message=>error 2.0
     v0
       message=>correctish!
-set=>[magix.viewport.show-message][message].Value
-  value=>[_buffer-data][<strong>**v0</strong>][message].Value
+set=>[magix.viewport.show-message][message].value
+  value=>[_buffer-data][<strong>**v0</strong>][message].value
 </pre>
 
 <p>the above code will only match a node who's name is "v0" and who's value is null.&nbsp;&nbsp;the above code will show the 
@@ -213,8 +213,8 @@ _buffer-data
       message=>crap
     v0=>hello
       message=>correctish!
-set=>[magix.viewport.show-message][message].Value
-  value=>[_buffer-data][<strong>**?=&gt;hello</strong>][message].Value
+set=>[magix.viewport.show-message][message].value
+  value=>[_buffer-data][<strong>**?=&gt;hello</strong>][message].value
 </pre>
 
 <p>or if you wish to search for a node who's name you know, but who's value you don't know, you could do something like this</p>
@@ -230,8 +230,8 @@ _buffer-data
       message-error=>crap
     v0=>hello
       message-success=>correctish!
-set=>[magix.viewport.show-message][message].Value
-  value=>[_buffer-data][<strong>**message-success=&gt;?</strong>].Value
+set=>[magix.viewport.show-message][message].value
+  value=>[_buffer-data][<strong>**message-success=&gt;?</strong>].value
 </pre>
 
 <p>notice how the wildcard operator "**" can traverse any depths of your tree, but that it starts it search from within where ever you 
@@ -247,8 +247,8 @@ _data
         somewhere
           over=>search-query
             msg=>success
-set=>[magix.viewport.show-message][message].Value
-  value=>[_data][_buffer][<strong>**?=>search-query</strong>][msg].Value
+set=>[magix.viewport.show-message][message].value
+  value=>[_data][_buffer][<strong>**?=>search-query</strong>][msg].value
 </pre>
 
 <p>the wildcard operator will traverse your tree, looking for the first node that matches its criteria, regardless of how deep it 
@@ -273,7 +273,7 @@ _data
     jo1=>howdy
     jo2=>there
     jo3=>dude
-set=>[_result].Value
+set=>[_result].value
   value=>[_data][tmp][jo3].dna
 </pre>
 
@@ -290,7 +290,7 @@ _data
   here
     is
     foo
-set=>[<strong>:>root-0000-0002-0001</strong>].Value
+set=>[<strong>:>root-0000-0002-0001</strong>].value
   value=>success
 </pre>
 

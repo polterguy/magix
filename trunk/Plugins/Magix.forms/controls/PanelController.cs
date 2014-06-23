@@ -100,7 +100,7 @@ namespace Magix.forms
                 node["inspect"],
                 "Magix.forms",
                 "Magix.forms.hyperlisp.inspect.hl",
-                "[magix.forms.panel-dox-start].Value");
+                "[magix.forms.panel-dox-start].value");
             AppendCodeFromResource(
                 node,
                 "Magix.forms",
@@ -111,7 +111,7 @@ namespace Magix.forms
                 node["inspect"],
                 "Magix.forms",
                 "Magix.forms.hyperlisp.inspect.hl",
-                "[magix.forms.panel-dox-end].Value",
+                "[magix.forms.panel-dox-end].value",
                 true);
             AppendCodeFromResource(
                 node["magix.forms.create-web-part"]["controls"]["panel"],

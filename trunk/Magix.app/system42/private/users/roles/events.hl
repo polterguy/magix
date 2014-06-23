@@ -32,11 +32,11 @@ magix.role.create-tree-node-control
         link-button
           class=>span-5
           onclick
-            set=>[magix.role.edit-role][role].Value
-              value=>[$][value].Value
+            set=>[magix.role.edit-role][role].value
+              value=>[$][value].value
             magix.role.edit-role
-  set=>[_btn][panel][controls][link-button][value].Value
-    value=>[$][name].Value
+  set=>[_btn][panel][controls][link-button][value].value
+    value=>[$][name].value
 
   // checking to see if role has child roles, and if it does, iterates through all children roles, and creates their visual representation
   if=>exist
@@ -46,7 +46,7 @@ magix.role.create-tree-node-control
       // role has children, iterating through all child nodes, finding children roles
       for-each=>[$]
         if=>equals
-          lhs=>[.].Name
+          lhs=>[.].name
           rhs=>child
           code
 
@@ -60,9 +60,9 @@ magix.role.create-tree-node-control
               children-only=>true
 
             // making sure this role is indented on screen
-            set=>[@][_pnl][panel][class].Value
+            set=>[@][_pnl][panel][class].value
               value=>column clear
-            set=>[@][_pnl][panel][style].Value
+            set=>[@][_pnl][panel][style].value
               value=>padding-left:10px;background-repeat:no-repeat;background-image:url(media/images/icons/tree-indent.png);
 
             // adding child role to returned value
@@ -75,18 +75,18 @@ magix.role.create-tree-node-control
 
 // allows user to edit on specific role
 magix.role.edit-role
-  set=>[**label=>role-name][value].Value
+  set=>[**label=>role-name][value].value
     value=>edit role {0}
-      =>[$][role].Value
-  set=>[**button=>save][info].Value
-    value=>[$][role].Value
-  set=>[**button=>delete][info].Value
-    value=>[$][role].Value
+      =>[$][role].value
+  set=>[**button=>save][info].value
+    value=>[$][role].value
+  set=>[**button=>delete][info].value
+    value=>[$][role].value
   if=>equals
-    lhs=>[$][role].Value
+    lhs=>[$][role].value
     rhs=>admin
     code
-      set=>[**button=>delete][visible].Value
+      set=>[**button=>delete][visible].value
         value=>false
 
   // creates the web part that allows adding a new role to another role as a child
@@ -126,8 +126,8 @@ magix.role.edit-role
             class=>span-2 last
             value=>save
             onclick
-              set=>[**parent].Value
-                value=>[$][info].Value
+              set=>[**parent].value
+                value=>[$][info].value
               magix.roles.add-role
                 parent
 
@@ -135,12 +135,12 @@ magix.role.edit-role
         class=>span-2 top-1
         value=>delete
         onclick
-          set=>[**role].Value
-            value=>[$][info].Value
+          set=>[**role].value
+            value=>[$][info].value
           using=>magix.viewport
             confirm
               message=>are you sure you wish to delete the '{0}' role? this action cannot be undone
-                =>[$][info].Value
+                =>[$][info].value
               code
                 magix.roles.delete-role
                   role

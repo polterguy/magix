@@ -19,12 +19,12 @@ and out from"
       params
         input=>this
       script=>@"
-set=>[$][output].Value
+set=>[$][output].value
   value=>{0} {1}
-    =>[$][input].Value
+    =>[$][input].value
     =>worked"
     if=>not-equals
-      lhs=>[execute-script][params][output].Value
+      lhs=>[execute-script][params][output].value
       rhs=>this worked
       code
         throw=>[execute-script] misbehaved
@@ -61,20 +61,20 @@ sure the parameters and the script is correctly executed"
     _file=>your-files/tmp/test-script.txt
     using=>magix.file
       save
-        file=>[_file].Value
+        file=>[_file].value
         value=>@"
-set=>[$][output].Value
+set=>[$][output].value
   value=>{0} world
-    =>[$][input].Value"
+    =>[$][input].value"
     execute-script
       params
         input=>howdy
-      file=>[_file].Value
+      file=>[_file].value
     using=>magix.file
       delete
-        file=>[_file].Value
+        file=>[_file].value
     if=>not-equals
-      lhs=>[execute-script][params][output].Value
+      lhs=>[execute-script][params][output].value
       rhs=>howdy world
       code
         throw=>[execute-script] misbehaved
@@ -93,7 +93,7 @@ catched from the outside of the file"
     _exception
     using=>magix.file
       save
-        file=>[_file].Value
+        file=>[_file].value
         value=>@"
 throw=>success"
     try
@@ -101,15 +101,15 @@ throw=>success"
         execute-script
           params
             input=>howdy
-          file=>[_file].Value
+          file=>[_file].value
       catch
-        set=>[_exception].Value
-          value=>[@][exception].Value
+        set=>[_exception].value
+          value=>[@][exception].value
     using=>magix.file
       delete
-        file=>[_file].Value
+        file=>[_file].value
     if=>not-equals
-      lhs=>[_exception].Value
+      lhs=>[_exception].value
       rhs=>success
       code
         throw=>[execute-script] misbehaved

@@ -336,9 +336,9 @@ magix.forms.hidden-sample-end
     magix.forms.get-value
       form-id=>sample-form
       id=>control_id
-    set=>[magix.viewport.show-message][message].Value
+    set=>[magix.viewport.show-message][message].value
       value=>value of hidden field; '{0}'
-        =>[magix.forms.get-value][value].Value
+        =>[magix.forms.get-value][value].value
 
 
 magix.forms.hyperlink-dox-start=>@"creates a hyperlink input type of web control
@@ -444,10 +444,10 @@ magix.forms.lambda-sample-start
     controls
       lambda=>idOfLambda
         oncreatecontrols
-          set=>[$][link-button][value].Value
+          set=>[$][link-button][value].value
             value=>click me
           with=>[$][link-button][onclick]
-            set=>[magix.viewport.show-message][message].Value
+            set=>[magix.viewport.show-message][message].value
               value=>howdy world :)
 
 
@@ -919,7 +919,7 @@ magix.forms.uploader-has-more-data-sample
             form-id=>sample-form
             id=>uploader-id
           if=>not-equals
-            lhs=>[magix.forms.uploader-has-more-data][value].Value
+            lhs=>[magix.forms.uploader-has-more-data][value].value
             rhs=>true
             code
               magix.viewport.show-message
@@ -1009,7 +1009,7 @@ magix.forms.get-visible-sample
             form-id=>sample-form
             id=>btn
           if=>equals
-            lhs=>[magix.forms.get-visible][value].Value
+            lhs=>[magix.forms.get-visible][value].value
             rhs=>true
             code
               magix.viewport.show-message
@@ -1071,8 +1071,8 @@ magix.forms.get-value-sample
           magix.forms.get-value
             form-id=>sample-form
             id=>btn
-          set=>[2][message].Value
-            value=>[0][value].Value
+          set=>[2][message].value
+            value=>[0][value].value
           magix.viewport.show-message
 
 
@@ -1120,8 +1120,8 @@ magix.forms.get-class-sample
           magix.forms.get-class
             form-id=>sample-form
             id=>btn
-          set=>[2][message].Value
-            value=>[0][value].Value
+          set=>[2][message].value
+            value=>[0][value].value
           magix.viewport.show-message
 
 
@@ -1169,8 +1169,8 @@ magix.forms.get-title-sample
           magix.forms.get-title
             form-id=>sample-form
             id=>btn
-          set=>[2][message].Value
-            value=>[0][value].Value
+          set=>[2][message].value
+            value=>[0][value].value
           magix.viewport.show-message
 
 
@@ -1220,8 +1220,8 @@ magix.forms.get-info-sample
           magix.forms.get-info
             form-id=>sample-form
             id=>btn
-          set=>[2][message].Value
-            value=>[0][value].Value
+          set=>[2][message].value
+            value=>[0][value].value
           magix.viewport.show-message
 
 
@@ -1334,8 +1334,8 @@ magix.forms.get-enabled-sample
           magix.forms.get-enabled
             id=>txt-box-enabled
             form-id=>sample-form
-          set=>[2][message].Value
-            value=>[0][value].Value
+          set=>[2][message].value
+            value=>[0][value].value
           magix.viewport.show-message
 
 
@@ -1430,8 +1430,8 @@ magix.forms.get-children-values-sample
             id=>pnl-wrapper
             form-id=>sample-form
           for-each=>[0][values]
-            set=>[@][**message=>?].Value
-              value=>[.].Value
+            set=>[@][**message=>?].value
+              value=>[.].value
             magix.viewport.show-message
               message
 

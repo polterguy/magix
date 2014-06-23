@@ -63,12 +63,12 @@ namespace Magix.sample
 
         protected void btn_Click(object sender, EventArgs e)
         {
-            lbl.Value ="label text was changed!";
+            lbl.value ="label text was changed!";
         }
 
         protected void lbl_MouseOver(object sender, EventArgs e)
         {
-            lbl.Value ="DON'T TOUCH ME!!! OUCH!";
+            lbl.value ="DON'T TOUCH ME!!! OUCH!";
         }
     }
 }</pre>

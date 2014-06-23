@@ -47,7 +47,7 @@ namespace Magix.forms
                 tmp["inspect"],
                 "Magix.forms",
                 "Magix.forms.hyperlisp.inspect.hl",
-                "[magix.forms.attribute-dox].Value",
+                "[magix.forms.attribute-dox].value",
                 true);
         }
     }

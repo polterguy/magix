@@ -31,7 +31,7 @@ namespace Magix.web
                     ip["inspect"],
                     "Magix.web",
                     "Magix.web.hyperlisp.inspect.hl",
-                    "[magix.web.postpone-execution-dox].Value");
+                    "[magix.web.postpone-execution-dox].value");
                 AppendCodeFromResource(
                     ip,
                     "Magix.web",
@@ -61,7 +61,7 @@ namespace Magix.web
                     ip["inspect"],
                     "Magix.web",
                     "Magix.web.hyperlisp.inspect.hl",
-                    "[magix.viewport.page-load-dox].Value");
+                    "[magix.viewport.page-load-dox].value");
                 return;
             }
 

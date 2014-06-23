@@ -63,33 +63,33 @@ or [magix.data.remove], then this unit test might fail"
             born=>true
               where=>narvik
     while=>less-than
-      lhs=>[_data][iter].Value
+      lhs=>[_data][iter].value
       rhs=>64
       code
         using=>magix.math
           add
-            =>[_data][iter].Value
+            =>[_data][iter].value
             =>1
-        set=>[_data][iter].Value
-          value=>[@][using][add].Value
+        set=>[_data][iter].value
+          value=>[@][using][add].value
         add=>[magix.execute][wait]
           value=>[_data][fork]
     magix.execute
     iterate=>[@][magix.execute]
       if=>equals
-        lhs=>[.].Name
+        lhs=>[.].name
         rhs=>magix.data.save
         code
           if=>not-exist
-            lhs=>[.][id].Value
+            lhs=>[.][id].value
             code
               throw=>[wait] malfunctioned
       if=>equals
-        lhs=>[.].Name
+        lhs=>[.].name
         rhs=>magix.data.count
         code
           if=>not-exist
-            lhs=>[.][count].Value
+            lhs=>[.][count].value
             code
               throw=>[wait] malfunctioned
     magix.data.count
@@ -99,7 +99,7 @@ or [magix.data.remove], then this unit test might fail"
       prototype
         type=>magix.tests.thread-object-stored
     if=>not-equals
-      lhs=>[magix.data.count][count].Value
+      lhs=>[magix.data.count][count].value
       rhs=>64
       code
         throw=>[fork] malfunctioned
@@ -153,33 +153,33 @@ or [magix.data.remove], then this unit test might fail"
           prototype
             type=>magix.tests.thread-object
     while=>less-than
-      lhs=>[_data][iter].Value
+      lhs=>[_data][iter].value
       rhs=>64
       code
         using=>magix.math
           add
-            =>[_data][iter].Value
+            =>[_data][iter].value
             =>1
-        set=>[_data][iter].Value
-          value=>[@][using][add].Value
+        set=>[_data][iter].value
+          value=>[@][using][add].value
         add=>[magix.execute]
           value=>[_data][fork]
     magix.execute
     iterate=>[@][magix.execute]
       if=>equals
-        lhs=>[.].Name
+        lhs=>[.].name
         rhs=>magix.data.save
         code
           if=>exist
-            lhs=>[.][id].Value
+            lhs=>[.][id].value
             code
               throw=>[fork] malfunctioned
       if=>equals
-        lhs=>[.].Name
+        lhs=>[.].name
         rhs=>magix.data.count
         code
           if=>exist
-            lhs=>[.][count].Value
+            lhs=>[.][count].value
             code
               throw=>[fork] malfunctioned
 
@@ -214,14 +214,14 @@ thrown on the main thread"
           fork
             throw=>and this too
       catch
-    index-of=>[try][catch][exception].Value
+    index-of=>[try][catch][exception].value
       what=>this has to work
-    index-of=>[try][catch][exception].Value
+    index-of=>[try][catch][exception].value
       what=>and this too
     if=>not-exist
-      lhs=>[index-of:0][result][0].Value
+      lhs=>[index-of:0][result][0].value
       or=>not-exist
-        lhs=>[index-of:1][result][0].Value
+        lhs=>[index-of:1][result][0].value
       code
         throw=>[wait] malfunctioned
 
@@ -240,23 +240,23 @@ verifying that the execution engine overflows as a result"
       fork
         _iter=>0
         while=>less-than
-          lhs=>[_iter].Value
+          lhs=>[_iter].value
           rhs=>21000
           code
             using=>magix.math
               add
-                =>[_iter].Value
+                =>[_iter].value
                 =>1
-            set=>[_iter].Value
-              value=>[@][using][add].Value
+            set=>[_iter].value
+              value=>[@][using][add].value
     _iter=>0
     while=>less-than
-      lhs=>[_iter].Value
+      lhs=>[_iter].value
       rhs=>3000
       code
         using=>magix.math
           add
-            =>[_iter].Value
+            =>[_iter].value
             =>1
-        set=>[_iter].Value
-          value=>[@][using][add].Value
+        set=>[_iter].value
+          value=>[@][using][add].value

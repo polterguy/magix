@@ -26,12 +26,12 @@ verifying the result is as expected"
         =>nine, 
       =>ten
     iterate=>[_data]
-      set=>[/][_result].Value
+      set=>[/][_result].value
         value=>{0}{1}
-          =>[/][_result].Value
-          =>[.].Value
+          =>[/][_result].value
+          =>[.].value
     if=>not-equals
-      lhs=>[_result].Value
+      lhs=>[_result].value
       rhs=>one, two, three, four, five, six, seven, eight, nine, ten
       code
         throw=>[iterate] misbehaved
@@ -51,10 +51,10 @@ iterate code scope is immutable, and not changed from iteration to iteration"
     iterate=>[_data]
       _data=>
       if=>not-equals
-        lhs=>[@][_data].Value
+        lhs=>[@][_data].value
         rhs=>
         code
           throw=>[iterate] misbehaved
-      set=>[@][_data].Value
+      set=>[@][_data].value
         value=>foo
 

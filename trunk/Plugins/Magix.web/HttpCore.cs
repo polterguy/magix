@@ -31,7 +31,7 @@ namespace Magix.web
                     ip["inspect"],
                     "Magix.web",
                     "Magix.web.hyperlisp.inspect.hl",
-                    "[magix.web.get-parameter-dox].Value");
+                    "[magix.web.get-parameter-dox].value");
                 AppendCodeFromResource(
                     ip,
                     "Magix.web",
@@ -63,7 +63,7 @@ namespace Magix.web
                     ip["inspect"],
                     "Magix.web",
                     "Magix.web.hyperlisp.inspect.hl",
-                    "[magix.web.transfer-file-dox].Value");
+                    "[magix.web.transfer-file-dox].value");
                 AppendCodeFromResource(
                     ip,
                     "Magix.web",

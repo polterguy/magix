@@ -6,14 +6,14 @@ convert to strong types in c#. if you pass an integer around between an active e
 value of the Node instance, all you have to do is to use the Get method</p>
 
 <pre>Node node = new Node();
-node["myInteger"].Value = 5;
+node["myInteger"].value = 5;
 
 // then when you want to use the "myInteger" value in an active event handler for instance
 int myInteger = node["myInteger"].Get&lt;int&gt;();
 
 // to convert a value which actually is of type string to an integer also works
 // if there exists valid conversion
-node["myInteger"].Value = "5"; // notice that this is a string!
+node["myInteger"].value = "5"; // notice that this is a string!
 int myInteger = node["myInteger"].Get&lt;int&gt;();</pre>
 
 <p>the Node class has three basic properties; Value, Name and Children. Value is the underlaying assigned 
@@ -31,7 +31,7 @@ is located in the child collection of Nodes</p>
 
 <pre>// these two accessors will return the same Node
 Node node = new Node();
-node["someValue"].Value = "testing";
+node["someValue"].value = "testing";
 
 string someValue = node["someValue"].Get&lt;string&gt;();
 // or ...
@@ -43,8 +43,8 @@ the child collection. consider this</p>
 
 <pre>
 Node node = new Node();
-node["someValue", 0].Value = "testing-1";
-node["someValue", 1].Value = "testing-2";
+node["someValue", 0].value = "testing-1";
+node["someValue", 1].value = "testing-2";
 
 string someValue1 = node["someValue", 0].Get&lt;string&gt;();
 string someValue2 = node["someValue", 1].Get&lt;string&gt;();

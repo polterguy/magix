@@ -86,7 +86,7 @@ panel=>edit-user-wrapper
         if=>exist
           lhs=>[$][info]
           code
-            set=>[magix.users.save-user][id].Value
-              value=>[$][info].Value
+            set=>[magix.users.save-user][id].value
+              value=>[$][info].value
         magix.users.save-user
 

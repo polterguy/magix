@@ -10,9 +10,9 @@ label=>lbl-properties
   value=>properties
   onfirstload
     magix.ide.get-selected-control
-    set=>[magix.forms.set-value][value].Value
+    set=>[magix.forms.set-value][value].value
       value=>{0} properties
-        =>[magix.ide.get-selected-control][value][0].Name
+        =>[magix.ide.get-selected-control][value][0].name
     magix.forms.set-value
       form-id=>control-properties
       id=>lbl-properties

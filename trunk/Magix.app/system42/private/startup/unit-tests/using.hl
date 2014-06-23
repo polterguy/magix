@@ -19,7 +19,7 @@ code, verifying the code block behaves correctly"
         =>4
         =>3
     if=>not-equals
-      lhs=>[using][add].Value
+      lhs=>[using][add].value
       rhs=>12
       code
         throw=>[using] misbehaved
@@ -38,14 +38,14 @@ correctly"
     event
       name=>magix.test.temp-using
       code
-        set=>[$][output].Value
-          value=>[_data].Value
+        set=>[$][output].value
+          value=>[_data].value
     using=>magix.test
       temp-using
     event
       name=>magix.test.temp-using
     if=>not-equals
-      lhs=>[using][temp-using][output].Value
+      lhs=>[using][temp-using][output].value
       rhs=>success
       code
         throw=>[using] misbehaved

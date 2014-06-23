@@ -9,10 +9,10 @@ event
   name=>magix.demo.foo
   persist=>false
   code
-    set=>[$][output].Value
+    set=>[$][output].value
       value=>howdy world
-set=>[magix.viewport.show-message][message].Value
-  value=><strong>[:magix.demo.foo]</strong>[output].Value
+set=>[magix.viewport.show-message][message].value
+  value=><strong>[:magix.demo.foo]</strong>[output].value
 event
   name=>magix.demo.foo
 </pre>
@@ -41,11 +41,11 @@ event
   name=>magix.foo
   persist=>false
   code
-    set=>[$][output].Value
+    set=>[$][output].value
       value=>{0} world
-        =>[$][msg].Value
-set=>[magix.viewport.show-message][message].Value
-  value=>[:magix.foo<strong>[_input][msg]</strong>][output].Value
+        =>[$][msg].value
+set=>[magix.viewport.show-message][message].value
+  value=>[:magix.foo<strong>[_input][msg]</strong>][output].value
 event
   name=>magix.foo
 </pre>

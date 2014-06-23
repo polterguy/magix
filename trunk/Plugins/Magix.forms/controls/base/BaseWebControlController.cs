@@ -32,7 +32,7 @@ namespace Magix.forms
                     ip["inspect"],
                     "Magix.forms",
                     "Magix.forms.hyperlisp.inspect.hl",
-                    "[magix.forms.set-class-dox].Value");
+                    "[magix.forms.set-class-dox].value");
                 AppendCodeFromResource(
                     ip,
                     "Magix.forms",
@@ -58,7 +58,7 @@ namespace Magix.forms
                     ip["inspect"],
                     "Magix.forms",
                     "Magix.forms.hyperlisp.inspect.hl",
-                    "[magix.forms.get-class-dox].Value");
+                    "[magix.forms.get-class-dox].value");
                 AppendCodeFromResource(
                     ip,
                     "Magix.forms",
@@ -84,7 +84,7 @@ namespace Magix.forms
                     ip["inspect"],
                     "Magix.forms",
                     "Magix.forms.hyperlisp.inspect.hl",
-                    "[magix.forms.set-title-dox].Value");
+                    "[magix.forms.set-title-dox].value");
                 AppendCodeFromResource(
                     ip,
                     "Magix.forms",
@@ -110,7 +110,7 @@ namespace Magix.forms
                     ip["inspect"],
                     "Magix.forms",
                     "Magix.forms.hyperlisp.inspect.hl",
-                    "[magix.forms.get-title-dox].Value");
+                    "[magix.forms.get-title-dox].value");
                 AppendCodeFromResource(
                     ip,
                     "Magix.forms",
@@ -136,7 +136,7 @@ namespace Magix.forms
                     ip["inspect"],
                     "Magix.forms",
                     "Magix.forms.hyperlisp.inspect.hl",
-                    "[magix.forms.set-info-dox].Value");
+                    "[magix.forms.set-info-dox].value");
                 AppendCodeFromResource(
                     ip,
                     "Magix.forms",
@@ -163,7 +163,7 @@ namespace Magix.forms
                     ip["inspect"],
                     "Magix.forms",
                     "Magix.forms.hyperlisp.inspect.hl",
-                    "[magix.forms.get-info-dox].Value");
+                    "[magix.forms.get-info-dox].value");
                 AppendCodeFromResource(
                     ip,
                     "Magix.forms",
@@ -189,7 +189,7 @@ namespace Magix.forms
                     ip["inspect"],
                     "Magix.forms",
                     "Magix.forms.hyperlisp.inspect.hl",
-                    "[magix.forms.set-style-dox].Value");
+                    "[magix.forms.set-style-dox].value");
                 AppendCodeFromResource(
                     ip,
                     "Magix.forms",
@@ -218,7 +218,7 @@ namespace Magix.forms
                     ip["inspect"],
                     "Magix.forms",
                     "Magix.forms.hyperlisp.inspect.hl",
-                    "[magix.forms.get-style-dox].Value");
+                    "[magix.forms.get-style-dox].value");
                 AppendCodeFromResource(
                     ip,
                     "Magix.forms",
@@ -246,7 +246,7 @@ namespace Magix.forms
                     ip["inspect"],
                     "Magix.forms",
                     "Magix.forms.hyperlisp.inspect.hl",
-                    "[magix.forms.set-focus-dox].Value");
+                    "[magix.forms.set-focus-dox].value");
                 AppendCodeFromResource(
                     ip,
                     "Magix.forms",
@@ -400,7 +400,7 @@ namespace Magix.forms
                 tmp["inspect"],
                 "Magix.forms",
                 "Magix.forms.hyperlisp.inspect.hl",
-                "[magix.forms.base-web-dox].Value",
+                "[magix.forms.base-web-dox].value",
                 true);
 			node["class"].Value = "css classes";
 			node["dir"].Value = "ltr";

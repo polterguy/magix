@@ -18,10 +18,10 @@ event
   code
     using=>magix.math
       add
-        =>[$][_ip].Value[0].Value
-        =>[$][_ip].Value[1].Value
-    set=>[$][_ip].Value[result].Value
-      value=>[using][add].Value
+        =>[$][_ip].value[0].value
+        =>[$][_ip].value[1].value
+    set=>[$][_ip].value[result].value
+      value=>[using][add].value
 </pre>
 
 <p>the above code actually modifies the programming language itself, and creates a new keyword, which is called [add-two-numbers].&nbsp;&nbsp;don't worry 
@@ -84,8 +84,8 @@ how this affects you</p>
 <pre>
 _data=>5
 magix.execute
-  set=>[_x].Value
-    value=>[_data].Value
+  set=>[_x].value
+    value=>[_data].value
 </pre>
 
 <p>then compare the result from that execution to the almost identical example below here</p>
@@ -93,8 +93,8 @@ magix.execute
 <pre>
 _data=>5
 execute
-  set=>[_x].Value
-    value=>[_data].Value
+  set=>[_x].value
+    value=>[_data].value
 </pre>
 
 <p>in the first sample, the [magix.execute] statement does not have access to anything outside of the [magix.execute] statement.&nbsp;&nbsp;

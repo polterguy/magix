@@ -64,8 +64,8 @@ panel=>wrapper
                 select=>select-table
                   class=>span-8
                   onselectedindexchanged
-                    set=>[magix.wizard.select-table_onselectedindexchanged][value].Value
-                      value=>[$][value].Value
+                    set=>[magix.wizard.select-table_onselectedindexchanged][value].value
+                      value=>[$][value].value
                     magix.wizard.select-table_onselectedindexchanged
                 label
                   class=>span-3 clear top-1
@@ -75,8 +75,8 @@ panel=>wrapper
                   class=>span-5 top-1
                   disabled=>true
                   onselectedindexchanged
-                    set=>[magix.wizard.select-sort_onselectedindexchanged][value].Value
-                      value=>[$][value].Value
+                    set=>[magix.wizard.select-sort_onselectedindexchanged][value].value
+                      value=>[$][value].value
                     magix.wizard.select-sort_onselectedindexchanged
                 label
                   class=>span-2 top-1 text-right
@@ -131,8 +131,8 @@ panel=>wrapper
                   value=>edit active event
                   visible=>false
                   onclick
-                    set=>[magix.data.load][prototype][event].Value
-                      value=>[$][info].Value
+                    set=>[magix.data.load][prototype][event].value
+                      value=>[$][info].value
                     magix.data.load
                       prototype
                         type=>magix.execute.event
@@ -144,12 +144,12 @@ panel=>wrapper
                       name=>Magix.ide.modules.ExecutorForm
                     add=>[node-2-code][node]
                       value=>event
-                    set=>[node-2-code][node][event][name].Value
-                      value=>[$][info].Value
+                    set=>[node-2-code][node][event][name].value
+                      value=>[$][info].value
                     add=>[node-2-code][node][event]
                       value=>[magix.data.load][objects][0][value][code]
                     node-2-code
-                    set=>[magix.executor.set-code][code].Value
-                      value=>[node-2-code][code].Value
+                    set=>[magix.executor.set-code][code].value
+                      value=>[node-2-code][code].value
                     magix.executor.set-code
 

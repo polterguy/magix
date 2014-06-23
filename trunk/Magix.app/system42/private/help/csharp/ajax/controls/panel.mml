@@ -65,7 +65,7 @@ namespace Magix.sample
 
         protected void pnl_MouseOver(object sender, EventArgs e)
         {
-            lbl.Value ="don't touch me! ouch!";
+            lbl.value ="don't touch me! ouch!";
         }
     }
 }</pre>

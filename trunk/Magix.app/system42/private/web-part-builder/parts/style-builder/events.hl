@@ -12,197 +12,197 @@ magix.style-builder.serialize-styles
   _style=>
   with=>[magix.forms.get-children-values][values]
     if=>not-equals
-      lhs=>[.][width].Value
+      lhs=>[.][width].value
       rhs=>
       code
-        set=>[/][_style].Value
+        set=>[/][_style].value
           value=>{1}width:{0}px;
-            =>[.][width].Value
-            =>[/][_style].Value
+            =>[.][width].value
+            =>[/][_style].value
     if=>not-equals
-      lhs=>[.][height].Value
+      lhs=>[.][height].value
       rhs=>
       code
-        set=>[/][_style].Value
+        set=>[/][_style].value
           value=>{1}height:{0}px;
-            =>[.][height].Value
-            =>[/][_style].Value
+            =>[.][height].value
+            =>[/][_style].value
     if=>not-equals
-      lhs=>[.][position].Value
+      lhs=>[.][position].value
       rhs=>_default
       code
-        set=>[/][_style].Value
+        set=>[/][_style].value
           value=>{1}position:{0};
-            =>[.][position].Value
-            =>[/][_style].Value
+            =>[.][position].value
+            =>[/][_style].value
         if=>not-equals
-          lhs=>[.][top].Value
+          lhs=>[.][top].value
           rhs=>
           code
-            set=>[/][_style].Value
+            set=>[/][_style].value
               value=>{1}top:{0}px;
-                =>[.][top].Value
-                =>[/][_style].Value
+                =>[.][top].value
+                =>[/][_style].value
         if=>not-equals
-          lhs=>[.][left].Value
+          lhs=>[.][left].value
           rhs=>
           code
-            set=>[/][_style].Value
+            set=>[/][_style].value
               value=>{1}left:{0}px;
-                =>[.][left].Value
-                =>[/][_style].Value
+                =>[.][left].value
+                =>[/][_style].value
     if=>not-equals
-      lhs=>[.][border-style].Value
+      lhs=>[.][border-style].value
       rhs=>_default
       code
-        set=>[/][_style].Value
+        set=>[/][_style].value
           value=>{1}border-style:{0};
-            =>[.][border-style].Value
-            =>[/][_style].Value
+            =>[.][border-style].value
+            =>[/][_style].value
         if=>not-equals
-          lhs=>[.][border-width].Value
+          lhs=>[.][border-width].value
           rhs=>
           code
-            set=>[/][_style].Value
+            set=>[/][_style].value
               value=>{1}border-width:{0}px;
-                =>[.][border-width].Value
-                =>[/][_style].Value
+                =>[.][border-width].value
+                =>[/][_style].value
     if=>not-equals
-      lhs=>[.][border-radius].Value
+      lhs=>[.][border-radius].value
       rhs=>
       code
-        set=>[/][_style].Value
+        set=>[/][_style].value
           value=>{1}border-radius:{0}px;
-            =>[.][border-radius].Value
-            =>[/][_style].Value
+            =>[.][border-radius].value
+            =>[/][_style].value
     if=>not-equals
-      lhs=>[.][margin-left].Value
+      lhs=>[.][margin-left].value
       rhs=>
       code
-        set=>[/][_style].Value
+        set=>[/][_style].value
           value=>{1}margin-left:{0}px;
-            =>[.][margin-left].Value
-            =>[/][_style].Value
+            =>[.][margin-left].value
+            =>[/][_style].value
     if=>not-equals
-      lhs=>[.][margin-right].Value
+      lhs=>[.][margin-right].value
       rhs=>
       code
-        set=>[/][_style].Value
+        set=>[/][_style].value
           value=>{1}margin-right:{0}px;
-            =>[.][margin-right].Value
-            =>[/][_style].Value
+            =>[.][margin-right].value
+            =>[/][_style].value
     if=>not-equals
-      lhs=>[.][margin-top].Value
+      lhs=>[.][margin-top].value
       rhs=>
       code
-        set=>[/][_style].Value
+        set=>[/][_style].value
           value=>{1}margin-top:{0}px;
-            =>[.][margin-top].Value
-            =>[/][_style].Value
+            =>[.][margin-top].value
+            =>[/][_style].value
     if=>not-equals
-      lhs=>[.][margin-bottom].Value
+      lhs=>[.][margin-bottom].value
       rhs=>
       code
-        set=>[/][_style].Value
+        set=>[/][_style].value
           value=>{1}margin-bottom:{0}px;
-            =>[.][margin-bottom].Value
-            =>[/][_style].Value
+            =>[.][margin-bottom].value
+            =>[/][_style].value
     if=>not-equals
-      lhs=>[.][padding-left].Value
+      lhs=>[.][padding-left].value
       rhs=>
       code
-        set=>[/][_style].Value
+        set=>[/][_style].value
           value=>{1}padding-left:{0}px;
-            =>[.][padding-left].Value
-            =>[/][_style].Value
+            =>[.][padding-left].value
+            =>[/][_style].value
     if=>not-equals
-      lhs=>[.][padding-right].Value
+      lhs=>[.][padding-right].value
       rhs=>
       code
-        set=>[/][_style].Value
+        set=>[/][_style].value
           value=>{1}padding-right:{0}px;
-            =>[.][padding-right].Value
-            =>[/][_style].Value
+            =>[.][padding-right].value
+            =>[/][_style].value
     if=>not-equals
-      lhs=>[.][padding-top].Value
+      lhs=>[.][padding-top].value
       rhs=>
       code
-        set=>[/][_style].Value
+        set=>[/][_style].value
           value=>{1}padding-top:{0}px;
-            =>[.][padding-top].Value
-            =>[/][_style].Value
+            =>[.][padding-top].value
+            =>[/][_style].value
     if=>not-equals
-      lhs=>[.][padding-bottom].Value
+      lhs=>[.][padding-bottom].value
       rhs=>
       code
-        set=>[/][_style].Value
+        set=>[/][_style].value
           value=>{1}padding-bottom:{0}px;
-            =>[.][padding-bottom].Value
-            =>[/][_style].Value
+            =>[.][padding-bottom].value
+            =>[/][_style].value
     if=>not-equals
-      lhs=>[.][box-shadow-color].Value
+      lhs=>[.][box-shadow-color].value
       rhs=>#000000
       code
-        set=>[/][_style].Value
+        set=>[/][_style].value
           value=>{4}box-shadow:{0}px {1}px {2}px {3};
-            =>[.][box-shadow-right].Value
-            =>[.][box-shadow-bottom].Value
-            =>[.][box-shadow-blur].Value
-            =>[.][box-shadow-color].Value
-            =>[/][_style].Value
+            =>[.][box-shadow-right].value
+            =>[.][box-shadow-bottom].value
+            =>[.][box-shadow-blur].value
+            =>[.][box-shadow-color].value
+            =>[/][_style].value
     if=>not-equals
-      lhs=>[.][text-shadow-color].Value
+      lhs=>[.][text-shadow-color].value
       rhs=>#000000
       code
-        set=>[/][_style].Value
+        set=>[/][_style].value
           value=>{4}text-shadow:{0}px {1}px {2}px {3};
-            =>[.][text-shadow-right].Value
-            =>[.][text-shadow-bottom].Value
-            =>[.][text-shadow-blur].Value
-            =>[.][text-shadow-color].Value
-            =>[/][_style].Value
+            =>[.][text-shadow-right].value
+            =>[.][text-shadow-bottom].value
+            =>[.][text-shadow-blur].value
+            =>[.][text-shadow-color].value
+            =>[/][_style].value
     if=>not-equals
-      lhs=>[.][background-color].Value
+      lhs=>[.][background-color].value
       rhs=>#000000
       code
-        set=>[/][_style].Value
+        set=>[/][_style].value
           value=>{1}background-color:{0};
-            =>[.][background-color].Value
-            =>[/][_style].Value
+            =>[.][background-color].value
+            =>[/][_style].value
     if=>not-equals
-      lhs=>[.][color].Value
+      lhs=>[.][color].value
       rhs=>#000000
       code
-        set=>[/][_style].Value
+        set=>[/][_style].value
           value=>{1}color:{0};
-            =>[.][color].Value
-            =>[/][_style].Value
+            =>[.][color].value
+            =>[/][_style].value
     if=>not-equals
-      lhs=>[.][font-name].Value
+      lhs=>[.][font-name].value
       rhs=>
       code
-        set=>[/][_style].Value
+        set=>[/][_style].value
           value=>{1}font-name:{0};
-            =>[.][font-name].Value
-            =>[/][_style].Value
+            =>[.][font-name].value
+            =>[/][_style].value
     if=>not-equals
-      lhs=>[.][font-size].Value
+      lhs=>[.][font-size].value
       rhs=>
       code
-        set=>[/][_style].Value
+        set=>[/][_style].value
           value=>{1}font-size:{0}px;
-            =>[.][font-size].Value
-            =>[/][_style].Value
-  set=>[magix.forms.set-value][value].Value
-    value=>[_style].Value
+            =>[.][font-size].value
+            =>[/][_style].value
+  set=>[magix.forms.set-value][value].value
+    value=>[_style].value
   magix.forms.set-value
     form-id=>control-properties-wrapper
     id=>style
   magix.ide.get-selected-control
-  set=>[magix.ide.change-control][change][style].Value
-    value=>[_style].Value
-  set=>[magix.ide.change-control][dna].Value
-    value=>[magix.ide.get-selected-control][dna].Value
+  set=>[magix.ide.change-control][change][style].value
+    value=>[_style].value
+  set=>[magix.ide.change-control][dna].value
+    value=>[magix.ide.get-selected-control][dna].value
   magix.ide.change-control
   magix.viewport.clear-controls
     container=>content3
@@ -211,39 +211,39 @@ magix.style-builder.serialize-styles
 magix.ide.outer-wrapper_onfirstload
   magix.ide.get-selected-control
   if=>not-exist
-    lhs=>[magix.ide.get-selected-control][value][0][style].Value
+    lhs=>[magix.ide.get-selected-control][value][0][style].value
     code
       stop
-  split=>[magix.ide.get-selected-control][value][0][style].Value
+  split=>[magix.ide.get-selected-control][value][0][style].value
     what=>;
   for-each=>[split][result]
-    split=>[.].Value
+    split=>[.].value
       what=>:
-    switch=>[@][split][result][0].Value
+    switch=>[@][split][result][0].value
 
       // first tab
       case=>width
-        replace=>[@][..][..][split][result][1].Value
+        replace=>[@][..][..][split][result][1].value
           what=>px
         using=>magix.forms
           set-value
             form-id=>style-builder
             id=>width
-            value=>[@][..][..][..][split][result][1].Value
+            value=>[@][..][..][..][split][result][1].value
       case=>height
-        replace=>[@][..][..][split][result][1].Value
+        replace=>[@][..][..][split][result][1].value
           what=>px
         using=>magix.forms
           set-value
             form-id=>style-builder
             id=>height
-            value=>[@][..][..][..][split][result][1].Value
+            value=>[@][..][..][..][split][result][1].value
       case=>position
         using=>magix.forms
           set-value
             form-id=>style-builder
             id=>position
-            value=>[@][..][..][..][split][result][1].Value
+            value=>[@][..][..][..][split][result][1].value
           set-enabled
             form-id=>style-builder
             id=>left
@@ -253,159 +253,159 @@ magix.ide.outer-wrapper_onfirstload
             id=>top
             value=>true
       case=>left
-        replace=>[@][..][..][split][result][1].Value
+        replace=>[@][..][..][split][result][1].value
           what=>px
         using=>magix.forms
           set-value
             form-id=>style-builder
             id=>left
-            value=>[@][..][..][..][split][result][1].Value
+            value=>[@][..][..][..][split][result][1].value
       case=>top
-        replace=>[@][..][..][split][result][1].Value
+        replace=>[@][..][..][split][result][1].value
           what=>px
         using=>magix.forms
           set-value
             form-id=>style-builder
             id=>top
-            value=>[@][..][..][..][split][result][1].Value
+            value=>[@][..][..][..][split][result][1].value
       case=>border-style
         using=>magix.forms
           set-value
             form-id=>style-builder
             id=>border-style
-            value=>[@][..][..][..][split][result][1].Value
+            value=>[@][..][..][..][split][result][1].value
           set-enabled
             form-id=>style-builder
             id=>border-width
             value=>true
       case=>border-width
-        replace=>[@][..][..][split][result][1].Value
+        replace=>[@][..][..][split][result][1].value
           what=>px
         using=>magix.forms
           set-value
             form-id=>style-builder
             id=>border-width
-            value=>[@][..][..][..][split][result][1].Value
+            value=>[@][..][..][..][split][result][1].value
       case=>border-radius
-        replace=>[@][..][..][split][result][1].Value
+        replace=>[@][..][..][split][result][1].value
           what=>px
         using=>magix.forms
           set-value
             form-id=>style-builder
             id=>border-radius
-            value=>[@][..][..][..][split][result][1].Value
+            value=>[@][..][..][..][split][result][1].value
 
       // second tab
       case=>margin-left
-        replace=>[@][..][..][split][result][1].Value
+        replace=>[@][..][..][split][result][1].value
           what=>px
         using=>magix.forms
           set-value
             form-id=>style-builder
             id=>margin-left
-            value=>[@][..][..][..][split][result][1].Value
+            value=>[@][..][..][..][split][result][1].value
       case=>margin-right
-        replace=>[@][..][..][split][result][1].Value
+        replace=>[@][..][..][split][result][1].value
           what=>px
         using=>magix.forms
           set-value
             form-id=>style-builder
             id=>margin-right
-            value=>[@][..][..][..][split][result][1].Value
+            value=>[@][..][..][..][split][result][1].value
       case=>margin-top
-        replace=>[@][..][..][split][result][1].Value
+        replace=>[@][..][..][split][result][1].value
           what=>px
         using=>magix.forms
           set-value
             form-id=>style-builder
             id=>margin-top
-            value=>[@][..][..][..][split][result][1].Value
+            value=>[@][..][..][..][split][result][1].value
       case=>margin-bottom
-        replace=>[@][..][..][split][result][1].Value
+        replace=>[@][..][..][split][result][1].value
           what=>px
         using=>magix.forms
           set-value
             form-id=>style-builder
             id=>margin-bottom
-            value=>[@][..][..][..][split][result][1].Value
+            value=>[@][..][..][..][split][result][1].value
       case=>padding-left
-        replace=>[@][..][..][split][result][1].Value
+        replace=>[@][..][..][split][result][1].value
           what=>px
         using=>magix.forms
           set-value
             form-id=>style-builder
             id=>padding-left
-            value=>[@][..][..][..][split][result][1].Value
+            value=>[@][..][..][..][split][result][1].value
       case=>padding-right
-        replace=>[@][..][..][split][result][1].Value
+        replace=>[@][..][..][split][result][1].value
           what=>px
         using=>magix.forms
           set-value
             form-id=>style-builder
             id=>padding-right
-            value=>[@][..][..][..][split][result][1].Value
+            value=>[@][..][..][..][split][result][1].value
       case=>padding-top
-        replace=>[@][..][..][split][result][1].Value
+        replace=>[@][..][..][split][result][1].value
           what=>px
         using=>magix.forms
           set-value
             form-id=>style-builder
             id=>padding-top
-            value=>[@][..][..][..][split][result][1].Value
+            value=>[@][..][..][..][split][result][1].value
       case=>padding-bottom
-        replace=>[@][..][..][split][result][1].Value
+        replace=>[@][..][..][split][result][1].value
           what=>px
         using=>magix.forms
           set-value
             form-id=>style-builder
             id=>padding-bottom
-            value=>[@][..][..][..][split][result][1].Value
+            value=>[@][..][..][..][split][result][1].value
 
       // third tab
       case=>box-shadow
-        replace=>[@][..][..][split][result][1].Value
+        replace=>[@][..][..][split][result][1].value
           what=>px
-        split=>[@][..][..][split][result][1].Value
+        split=>[@][..][..][split][result][1].value
           what=>@" "
         using=>magix.forms
           set-value
             form-id=>style-builder
             id=>box-shadow-right
-            value=>[@][..][split][result][0].Value
+            value=>[@][..][split][result][0].value
           set-value
             form-id=>style-builder
             id=>box-shadow-bottom
-            value=>[@][..][split][result][1].Value
+            value=>[@][..][split][result][1].value
           set-value
             form-id=>style-builder
             id=>box-shadow-blur
-            value=>[@][..][split][result][2].Value
+            value=>[@][..][split][result][2].value
           set-value
             form-id=>style-builder
             id=>box-shadow-color
-            value=>[@][..][split][result][3].Value
+            value=>[@][..][split][result][3].value
       case=>text-shadow
-        replace=>[@][..][..][split][result][1].Value
+        replace=>[@][..][..][split][result][1].value
           what=>px
-        split=>[@][..][..][split][result][1].Value
+        split=>[@][..][..][split][result][1].value
           what=>@" "
         using=>magix.forms
           set-value
             form-id=>style-builder
             id=>text-shadow-right
-            value=>[@][..][split][result][0].Value
+            value=>[@][..][split][result][0].value
           set-value
             form-id=>style-builder
             id=>text-shadow-bottom
-            value=>[@][..][split][result][1].Value
+            value=>[@][..][split][result][1].value
           set-value
             form-id=>style-builder
             id=>text-shadow-blur
-            value=>[@][..][split][result][2].Value
+            value=>[@][..][split][result][2].value
           set-value
             form-id=>style-builder
             id=>text-shadow-color
-            value=>[@][..][split][result][3].Value
+            value=>[@][..][split][result][3].value
 
       // fourth tab
       case=>background-color
@@ -413,25 +413,25 @@ magix.ide.outer-wrapper_onfirstload
           set-value
             form-id=>style-builder
             id=>background-color
-            value=>[@][..][..][..][split][result][1].Value
+            value=>[@][..][..][..][split][result][1].value
       case=>color
         using=>magix.forms
           set-value
             form-id=>style-builder
             id=>color
-            value=>[@][..][..][..][split][result][1].Value
+            value=>[@][..][..][..][split][result][1].value
       case=>font-name
         using=>magix.forms
           set-value
             form-id=>style-builder
             id=>font-name
-            value=>[@][..][..][..][split][result][1].Value
+            value=>[@][..][..][..][split][result][1].value
       case=>font-size
-        replace=>[@][..][..][split][result][1].Value
+        replace=>[@][..][..][split][result][1].value
           what=>px
         using=>magix.forms
           set-value
             form-id=>style-builder
             id=>font-size
-            value=>[@][..][..][..][split][result][1].Value
+            value=>[@][..][..][..][split][result][1].value
 

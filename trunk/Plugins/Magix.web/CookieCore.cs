@@ -32,7 +32,7 @@ namespace Magix.web
                     ip["inspect"],
                     "Magix.web",
                     "Magix.web.hyperlisp.inspect.hl",
-                    "[magix.web.set-cookie-dox].Value");
+                    "[magix.web.set-cookie-dox].value");
                 AppendCodeFromResource(
                     ip,
                     "Magix.web",
@@ -83,7 +83,7 @@ namespace Magix.web
                     ip["inspect"],
                     "Magix.web",
                     "Magix.web.hyperlisp.inspect.hl",
-                    "[magix.web.get-cookie-dox].Value");
+                    "[magix.web.get-cookie-dox].value");
                 AppendCodeFromResource(
                     ip,
                     "Magix.web",

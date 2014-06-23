@@ -17,8 +17,8 @@ select=>sel-save-where
     if=>exist
       lhs=>[magix.data.load-username][value]
       code
-        set=>[@][magix.forms.set-value][value].Value
-          value=>[magix.data.load-username][value][where].Value
+        set=>[@][magix.forms.set-value][value].value
+          value=>[magix.data.load-username][value][where].value
         magix.forms.set-value
           form-id=>save-wrapper
           id=>sel-save-where

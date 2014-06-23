@@ -75,12 +75,12 @@ lambda=>help-index
     magix.session.get
       id=>magix.help.cached-help-files
     for-each=>[magix.session.get][value]
-      index-of=>[.].Value
+      index-of=>[.].value
         what=>/index.mml
       if=>exist
         lhs=>[@][index-of][result]
         and=>not-equals
-          lhs=>[.].Value
+          lhs=>[.].value
           rhs=>system42/private/help/index.mml
         code
           // this is an index page
@@ -91,10 +91,10 @@ lambda=>help-index
                 link-button
                   onclick
                     debug
-          set=>[@][_link][**link-button][value].Value
-            value=>[.].Name
-          set=>[@][_link][**link-button][info].Value
-            value=>[.].Value
+          set=>[@][_link][**link-button][value].value
+            value=>[.].name
+          set=>[@][_link][**link-button][info].value
+            value=>[.].value
           add=>[$]
             value=>[@][_link][0]
       

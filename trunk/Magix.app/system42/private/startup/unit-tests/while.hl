@@ -16,37 +16,37 @@ it behaves as expected"
     _data1=>x1
     _data2=>y1
     while=>equals
-      lhs=>[_data1].Value
+      lhs=>[_data1].value
       rhs=>x
       and=>equals
-        lhs=>[_data2].Value
+        lhs=>[_data2].value
         rhs=>y
       or=>equals
-        lhs=>[_data1].Value
+        lhs=>[_data1].value
         rhs=>x1
         and=>equals
-          lhs=>[@][_data2].Value
+          lhs=>[@][_data2].value
           rhs=>y1
       code
         if=>equals
-          lhs=>[_data1].Value
+          lhs=>[_data1].value
           rhs=>x1
           and=>equals
-            lhs=>[_data2].Value
+            lhs=>[_data2].value
             rhs=>y1
           code
-            set=>[_data1].Value
+            set=>[_data1].value
               value=>x
-            set=>[_data2].Value
+            set=>[_data2].value
               value=>y
         else
-          set=>[_data2].Value
+          set=>[_data2].value
             value=>y2
     if=>not-equals
-      lhs=>[_data1].Value
+      lhs=>[_data1].value
       rhs=>x
       or=>not-equals
-        lhs=>[_data2].Value
+        lhs=>[_data2].value
         rhs=>y2
       code
         throw=>[while] misbehaved
@@ -65,19 +65,19 @@ to the next iteration, within the while execution scope"
       =>
       =>
     while=>not-equals
-      lhs=>[_data].Count
+      lhs=>[_data].count
       rhs=>0
       code
         _tmp=>
         if=>not-equals
-          lhs=>[@][_tmp].Value
+          lhs=>[@][_tmp].value
           rhs=>
           or=>not-equals
-            lhs=>[@][_tmp].Count
+            lhs=>[@][_tmp].count
             rhs=>0
           code
             throw=>[while] misbehaved
-        set=>[@][_tmp].Value
+        set=>[@][_tmp].value
           value=>foo
         add=>[@][_tmp]
           value=>[/][_data][0]

@@ -11,17 +11,17 @@ magix.ide.save_onclick
     form-id=>save-content
     id=>filename
   if=>equals
-    lhs=>[magix.forms.get-value][value].Value
+    lhs=>[magix.forms.get-value][value].value
     rhs=>
     code
       magix.viewport.show-message
         message=>you must supply a filename to save your form into the filesystem
       stop
-  set=>[magix.file.file-exist][file].Value
-    value=>[magix.forms.get-value][value].Value
+  set=>[magix.file.file-exist][file].value
+    value=>[magix.forms.get-value][value].value
   magix.file.file-exist
   if=>equals
-    lhs=>[magix.file.file-exist][value].Value
+    lhs=>[magix.file.file-exist][value].value
     rhs=>true
     code
       magix.viewport.confirm
@@ -36,30 +36,30 @@ magix.ide.save-to-filesystem
   magix.forms.get-value
     form-id=>save-content
     id=>filename
-  set=>[magix.file.save][file].Value
-    value=>[magix.forms.get-value][value].Value
+  set=>[magix.file.save][file].value
+    value=>[magix.forms.get-value][value].value
   magix.ide.get-form
-  set=>[node-2-code][node].Value
+  set=>[node-2-code][node].value
     value=>[magix.ide.get-form]
   node-2-code
     remove-root=>true
-  set=>[magix.file.save][value].Value
-    value=>[node-2-code][code].Value
+  set=>[magix.file.save][value].value
+    value=>[node-2-code][code].value
   magix.file.save
   magix.viewport.clear-controls
     container=>editor-persist-wrapper
     reset-class=>true
-  set=>[magix.data.save-username][value][filename].Value
-    value=>[magix.forms.get-value][value].Value
+  set=>[magix.data.save-username][value][filename].value
+    value=>[magix.forms.get-value][value].value
   magix.data.save-username
     id=>magix.ide.last-used-save-filename
   using=>magix.viewport
     show-message
       message=>form was successfully save to filesystem as '{0}'
-        =>[magix.forms.get-value][value].Value
-  set=>[magix.log.append-username][body].Value
+        =>[magix.forms.get-value][value].value
+  set=>[magix.log.append-username][body].value
     value=>web part was saved to filesystem with filename of '{0}'
-      =>[magix.forms.get-value][value].Value
+      =>[magix.forms.get-value][value].value
   magix.log.append-username
     header=>web part was saved
 
@@ -70,8 +70,8 @@ magix.ide.filename_onfirstload
   if=>exist
     lhs=>[magix.data.load-username][value]
     code
-      set=>[@][magix.forms.set-value][value].Value
-        value=>[magix.data.load-username][value][filename].Value
+      set=>[@][magix.forms.set-value][value].value
+        value=>[magix.data.load-username][value][filename].value
       magix.forms.set-value
         form-id=>save-content
         id=>filename
@@ -94,8 +94,8 @@ magix.ide.browse_onclick
       class=>span-15 last boxed air-padding bottom-1
       editor-container=>editor-for-persist-wrapper
       onselect
-        set=>[magix.forms.set-value][value].Value
-          value=>[$][file].Value
+        set=>[magix.forms.set-value][value].value
+          value=>[$][file].value
         magix.forms.set-value
           form-id=>save-content
           id=>filename

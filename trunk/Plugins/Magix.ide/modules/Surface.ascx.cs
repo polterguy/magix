@@ -244,7 +244,7 @@ namespace Magix.ide.modules
                     ip["inspect"],
                     "Magix.ide",
                     "Magix.ide.hyperlisp.inspect.hl",
-                    "[magix.ide.list-controls-dox].Value");
+                    "[magix.ide.list-controls-dox].value");
                 AppendCodeFromResource(
                     ip,
                     "Magix.ide",
@@ -272,7 +272,7 @@ namespace Magix.ide.modules
                     ip["inspect"],
                     "Magix.ide",
                     "Magix.ide.hyperlisp.inspect.hl",
-                    "[magix.ide.add-control-dox].Value");
+                    "[magix.ide.add-control-dox].value");
                 AppendCodeFromResource(
                     ip,
                     "Magix.ide",
@@ -308,7 +308,7 @@ namespace Magix.ide.modules
                     ip["inspect"],
                     "Magix.ide",
                     "Magix.ide.hyperlisp.inspect.hl",
-                    "[magix.ide.paste-control-dox].Value");
+                    "[magix.ide.paste-control-dox].value");
                 AppendCodeFromResource(
                     ip,
                     "Magix.ide",
@@ -344,7 +344,7 @@ namespace Magix.ide.modules
                     ip["inspect"],
                     "Magix.ide",
                     "Magix.ide.hyperlisp.inspect.hl",
-                    "[magix.ide.remove-control-dox].Value");
+                    "[magix.ide.remove-control-dox].value");
                 AppendCodeFromResource(
                     ip,
                     "Magix.ide",
@@ -384,7 +384,7 @@ namespace Magix.ide.modules
                     ip["inspect"],
                     "Magix.ide",
                     "Magix.ide.hyperlisp.inspect.hl",
-                    "[magix.ide.change-control-dox].Value");
+                    "[magix.ide.change-control-dox].value");
                 AppendCodeFromResource(
                     ip,
                     "Magix.ide",
@@ -460,7 +460,7 @@ namespace Magix.ide.modules
                     ip["inspect"],
                     "Magix.ide",
                     "Magix.ide.hyperlisp.inspect.hl",
-                    "[magix.ide.select-control-dox].Value");
+                    "[magix.ide.select-control-dox].value");
                 AppendCodeFromResource(
                     ip,
                     "Magix.ide",
@@ -500,7 +500,7 @@ namespace Magix.ide.modules
                     ip["inspect"],
                     "Magix.ide",
                     "Magix.ide.hyperlisp.inspect.hl",
-                    "[magix.ide.get-selected-control-dox].Value");
+                    "[magix.ide.get-selected-control-dox].value");
                 AppendCodeFromResource(
                     ip,
                     "Magix.ide",
@@ -529,7 +529,7 @@ namespace Magix.ide.modules
                     ip["inspect"],
                     "Magix.ide",
                     "Magix.ide.hyperlisp.inspect.hl",
-                    "[magix.ide.get-clipboard-control-dox].Value");
+                    "[magix.ide.get-clipboard-control-dox].value");
                 AppendCodeFromResource(
                     ip,
                     "Magix.ide",
@@ -555,7 +555,7 @@ namespace Magix.ide.modules
                     ip["inspect"],
                     "Magix.ide",
                     "Magix.ide.hyperlisp.inspect.hl",
-                    "[magix.ide.copy-control-dox].Value");
+                    "[magix.ide.copy-control-dox].value");
                 AppendCodeFromResource(
                     ip,
                     "Magix.ide",
@@ -583,7 +583,7 @@ namespace Magix.ide.modules
                     ip["inspect"],
                     "Magix.ide",
                     "Magix.ide.hyperlisp.inspect.hl",
-                    "[magix.ide.clear-controls-dox].Value");
+                    "[magix.ide.clear-controls-dox].value");
                 AppendCodeFromResource(
                     ip,
                     "Magix.ide",
@@ -617,7 +617,7 @@ namespace Magix.ide.modules
                     ip["inspect"],
                     "Magix.ide",
                     "Magix.ide.hyperlisp.inspect.hl",
-                    "[magix.ide.get-form-dox].Value");
+                    "[magix.ide.get-form-dox].value");
                 AppendCodeFromResource(
                     ip,
                     "Magix.ide",
@@ -642,7 +642,7 @@ namespace Magix.ide.modules
                     ip["inspect"],
                     "Magix.ide",
                     "Magix.ide.hyperlisp.inspect.hl",
-                    "[magix.ide.set-form-dox].Value");
+                    "[magix.ide.set-form-dox].value");
                 AppendCodeFromResource(
                     ip,
                     "Magix.ide",
@@ -722,7 +722,7 @@ namespace Magix.ide.modules
                     ip["inspect"],
                     "Magix.ide",
                     "Magix.ide.hyperlisp.inspect.hl",
-                    "[magix.ide.enable-surface-dox].Value");
+                    "[magix.ide.enable-surface-dox].value");
                 AppendCodeFromResource(
                     ip,
                     "Magix.ide",
@@ -754,7 +754,7 @@ namespace Magix.ide.modules
                     ip["inspect"],
                     "Magix.ide",
                     "Magix.ide.hyperlisp.inspect.hl",
-                    "[magix.ide.get-enabled-dox].Value");
+                    "[magix.ide.get-enabled-dox].value");
                 AppendCodeFromResource(
                     ip,
                     "Magix.ide",
@@ -779,7 +779,7 @@ namespace Magix.ide.modules
                     ip["inspect"],
                     "Magix.ide",
                     "Magix.ide.hyperlisp.inspect.hl",
-                    "[magix.ide.undo-dox].Value");
+                    "[magix.ide.undo-dox].value");
                 AppendCodeFromResource(
                     ip,
                     "Magix.ide",
@@ -831,7 +831,7 @@ namespace Magix.ide.modules
                     ip["inspect"],
                     "Magix.ide",
                     "Magix.ide.hyperlisp.inspect.hl",
-                    "[magix.ide.redo-dox].Value");
+                    "[magix.ide.redo-dox].value");
                 AppendCodeFromResource(
                     ip,
                     "Magix.ide",

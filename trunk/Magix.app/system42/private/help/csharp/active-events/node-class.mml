@@ -9,10 +9,10 @@ class is a data-carrier class for objects. consider the following code</p>
 
 <pre>Node node = new Node();
 
-node["employee"].Value = 5678932;
-node["employee"]["name"].Value = "john doe";
-node["employee"]["address"]["street"].Value = "Glen Allen Rd. 56798";
-node["employee"]["address"]["zip"].Value = "CA 98765";</pre>
+node["employee"].value = 5678932;
+node["employee"]["name"].value = "john doe";
+node["employee"]["address"]["street"].value = "Glen Allen Rd. 56798";
+node["employee"]["address"]["zip"].value = "CA 98765";</pre>
 
 <p>the above code, creates an employee object for you, which contains all the data associated with your 
 employee. inside the employee object, you will find a name object. you will also find an address object, 

@@ -16,16 +16,16 @@ with parameters, making sure the passing of the parameters
 is done correctly"
   code
     _data
-      set=>[/][_output].Value
+      set=>[/][_output].value
         value=>not shown
-      set=>[$][output].Value
+      set=>[$][output].value
         value=>{0} {1}
-          =>[$][input].Value
+          =>[$][input].value
           =>world
     lambda=>[_data]
       input=>howdy
     if=>not-equals
-      lhs=>[lambda][output].Value
+      lhs=>[lambda][output].value
       rhs=>howdy world
       code
         throw=>[lambda] misbehaved

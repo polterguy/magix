@@ -96,7 +96,7 @@ event
     if=>exist
       lhs=>[$][_dp]
       code
-        set=>[$][_dp].Value[_data].Value
+        set=>[$][_dp].value[_data].value
           value=>howdy
 </pre>
 

@@ -66,11 +66,11 @@ namespace Magix.sample
             if (e.Key == "button")
             {
                 Button tmp = new Button();
-                tmp.Value = "click me too";
+                tmp.value = "click me too";
                 tmp.Click +=
                     delegate
                     {
-                        tmp.Value = "i was clicked";
+                        tmp.value = "i was clicked";
                     };
                 dyn.Controls.Add(tmp);
             }
@@ -89,7 +89,7 @@ namespace Magix.sample
 button=>btn
   value=>click me!
   onclick
-    set=>[magix.forms.create-mml-web-part][mml].Value
+    set=>[magix.forms.create-mml-web-part][mml].value
       value=>{0}{1}{2}{3}{4}
         v0=>{
         v1=>{

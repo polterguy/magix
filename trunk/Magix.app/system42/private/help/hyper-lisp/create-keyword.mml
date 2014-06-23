@@ -9,12 +9,12 @@ event
   name=>magix.execute.add-numbers
   persist=>false
   code
-    for-each=>[$][_ip].Value
+    for-each=>[$][_ip].value
       add=>[@][..][using][add]
         value=>[.]
     using=>magix.math
-    set=>[$][_ip].Value.Value
-      value=>[using][add].Value
+    set=>[$][_ip].value.value
+      value=>[using][add].value
 </pre>
 
 <p>the above active event, will loop through all child nodes of [add-numbers] and add these nodes up as children to the [using] 
@@ -53,12 +53,12 @@ event
   name=>magix.execute.add-numbers
   persist=>false
   code
-    for-each=>[$][_ip].Value
+    for-each=>[$][_ip].value
       add=>[@][..][using][add]
         value=>[.]
     using=>magix.math
-    set=>[$][_ip].Value.Value
-      value=>[using][add].Value
+    set=>[$][_ip].value.value
+      value=>[using][add].value
     debug
 </pre>
 
@@ -73,15 +73,15 @@ add-numbers
 <p>the above code, will after the modification of the active event produce the following result shown in a message window</p>
 
 <pre>
-for-each=>[$][_ip].Value
+for-each=>[$][_ip].value
   add=>[@][..][using][add]
     value=>[.]
 using=>magix.math
   add=(dec)>9
     =>4
     =>5
-set=>[$][_ip].Value.Value
-  value=>[using][add].Value
+set=>[$][_ip].value.value
+  value=>[using][add].value
 debug
 $
   _ip=(node)>@"add-numbers=(dec)>9

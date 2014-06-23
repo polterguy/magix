@@ -21,8 +21,8 @@ if=>exist
     // stuffing in our default back-end css file, or back-end 'skin'
     magix.data.load
       id=>magix.admin.settings.default-back-end-css-file
-    set=>[@][magix.viewport.include-client-file][file].Value
-      value=>[@][magix.data.load][value][file].Value
+    set=>[@][magix.viewport.include-client-file][file].value
+      value=>[@][magix.data.load][value][file].value
     magix.viewport.include-client-file
       type=>css
 
@@ -53,7 +53,7 @@ if=>exist
         magix.data.load-username
           id=>magix.admin.setting.show-help
         if=>equals
-          lhs=>[@][magix.data.load-username][value][value].Value
+          lhs=>[@][magix.data.load-username][value][value].value
           rhs=>true
           code
             execute-script
@@ -75,9 +75,9 @@ else
   if=>exist
     lhs=>[@][magix.data.load][value]
     code
-      set=>[@][..][..][_event].Value
-        value=>[@][..][..][magix.data.load][value][event].Value
-  set=>[@][_raise].Name
-    value=>[@][_event].Value
+      set=>[@][..][..][_event].value
+        value=>[@][..][..][magix.data.load][value][event].value
+  set=>[@][_raise].name
+    value=>[@][_event].value
   _raise
 

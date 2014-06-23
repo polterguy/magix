@@ -10,7 +10,7 @@ lambda=>lmb
         username=>admin
         pwd=>admin
     if=>more-than-equals
-      lhs=>[magix.data.count][count].Value
+      lhs=>[magix.data.count][count].value
       rhs=>1
       code
         _label=>error
@@ -19,7 +19,7 @@ lambda=>lmb
           tag=>label
         add=>[$]
           value=>[@][_label]
-        set=>[$][_label].Name
+        set=>[$][_label].name
           value=>label
 }}
 

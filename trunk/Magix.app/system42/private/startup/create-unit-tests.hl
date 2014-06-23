@@ -31,7 +31,7 @@ magix.file.directory-exist
   directory=>system42/private/startup/unit-tests
 
 if=>equals
-  lhs=>[magix.file.directory-exist][value].Value
+  lhs=>[magix.file.directory-exist][value].value
   rhs=>true
   code
     magix.file.list-files
@@ -39,6 +39,6 @@ if=>equals
       filter=>*.hl
 
     for-each=>[@][magix.file.list-files][files]
-      set=>[@][execute-script][file].Value
-        value=>[.].Name
+      set=>[@][execute-script][file].value
+        value=>[.].name
 

@@ -18,11 +18,11 @@ an expression pointing to an execution node list"
   code
     _outside
     _data
-      set=>[_outside].Value
+      set=>[_outside].value
         value=>executed
     execute=>[_data]
     if=>not-equals
-      lhs=>[_outside].Value
+      lhs=>[_outside].value
       rhs=>executed
       code
         throw=>[execute] misbehaved
@@ -42,13 +42,13 @@ outside of the execution tree scope"
   code
     _outside
     magix.execute
-      set=>[/][_outside].Value
+      set=>[/][_outside].value
         value=>executed
     if=>equals
-      lhs=>[_outside].Value
+      lhs=>[_outside].value
       rhs=>executed
       or=>not-equals
-        lhs=>[magix.execute][_outside].Value
+        lhs=>[magix.execute][_outside].value
         rhs=>executed
       code
         throw=>[execute] misbehaved
@@ -65,10 +65,10 @@ execution of the code is correctly done"
   code
     _outside
     execute
-      set=>[_outside].Value
+      set=>[_outside].value
         value=>executed
     if=>not-equals
-      lhs=>[_outside].Value
+      lhs=>[_outside].value
       rhs=>executed
       code
         throw=>[execute] misbehaved
@@ -85,15 +85,15 @@ executes normally, without any problems"
     _outside
     execute=>labeled-execution
       _inside
-      set=>[_outside].Value
+      set=>[_outside].value
         value=>executed
-      set=>[@][_inside].Value
+      set=>[@][_inside].value
         value=>executed
     if=>not-equals
-      lhs=>[_outside].Value
+      lhs=>[_outside].value
       rhs=>executed
       or=>not-equals
-        lhs=>[execute=>labeled-execution][_inside].Value
+        lhs=>[execute=>labeled-execution][_inside].value
         rhs=>executed
       code
         throw=>[execute] misbehaved
@@ -113,15 +113,15 @@ the execution overflows the execution engine"
     // since [using] is one keyword, [add] another and [set] the third
     // 17000 times 3 is 51000, which should raise an exception
     while=>less-than-equals
-      lhs=>[_iter].Value
+      lhs=>[_iter].value
       rhs=>22000
       code
         using=>magix.math
           add
-            =>[/][_iter].Value
+            =>[/][_iter].value
             =>1
-        set=>[/][_iter].Value
-          value=>[@][using][add].Value
+        set=>[/][_iter].value
+          value=>[@][using][add].value
 
 
 event
@@ -138,13 +138,13 @@ the execution doesn't overflow the execution engine"
     // 16000 times 3 is 48000, which should not raise an exception
     // although it will be a close call
     while=>less-than-equals
-      lhs=>[_iter].Value
+      lhs=>[_iter].value
       rhs=>21000
       code
         using=>magix.math
           add
-            =>[/][_iter].Value
+            =>[/][_iter].value
             =>1
-        set=>[/][_iter].Value
-          value=>[@][using][add].Value
+        set=>[/][_iter].value
+          value=>[@][using][add].value
 

@@ -10,8 +10,8 @@ try
   code
     throw=>this is an exception
   catch
-    set=>[magix.viewport.show-message][message].Value
-      value=>[@][exception].Value
+    set=>[magix.viewport.show-message][message].value
+      value=>[@][exception].value
 </pre>
 
 <p>the [try] keyword creates an exception block, where you can execute code from within.&nbsp;&nbsp;if an exception occurs 

@@ -14,11 +14,11 @@ replaces occurencies of ' ' with |, for then to
 verify the replacement operation was successful"
   code
     _data=>howdy this is   a test of replace
-    replace=>[_data].Value
+    replace=>[_data].value
       what=>@" "
       with=>|
     if=>not-equals
-      lhs=>[_data].Value
+      lhs=>[_data].value
       rhs=>howdy|this|is|||a|test|of|replace
       code
         throw=>[replace] misbehaved

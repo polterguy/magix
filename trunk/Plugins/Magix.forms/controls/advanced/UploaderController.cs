@@ -102,7 +102,7 @@ namespace Magix.forms
                     ip["inspect"],
                     "Magix.forms",
                     "Magix.forms.hyperlisp.inspect.hl",
-                    "[magix.forms.uploader-has-more-data-dox].Value");
+                    "[magix.forms.uploader-has-more-data-dox].value");
                 AppendCodeFromResource(
                     ip,
                     "Magix.forms",
@@ -128,7 +128,7 @@ namespace Magix.forms
                     ip["inspect"],
                     "Magix.forms",
                     "Magix.forms.hyperlisp.inspect.hl",
-                    "[magix.forms.uploader-set-directory-dox].Value");
+                    "[magix.forms.uploader-set-directory-dox].value");
                 AppendCodeFromResource(
                     ip,
                     "Magix.forms",
@@ -150,7 +150,7 @@ namespace Magix.forms
                 node["inspect"],
                 "Magix.forms",
                 "Magix.forms.hyperlisp.inspect.hl",
-                "[magix.forms.uploader-dox-start].Value");
+                "[magix.forms.uploader-dox-start].value");
             AppendCodeFromResource(
                 node,
                 "Magix.forms",
@@ -176,7 +176,7 @@ namespace Magix.forms
                 node["inspect"],
                 "Magix.forms",
                 "Magix.forms.hyperlisp.inspect.hl",
-                "[magix.forms.uploader-dox-end].Value",
+                "[magix.forms.uploader-dox-end].value",
                 true);
             AppendCodeFromResource(
                 node["magix.forms.create-web-part"]["controls"]["uploader"],

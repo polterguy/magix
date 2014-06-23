@@ -22,8 +22,8 @@ each other"
     list-events
       open=(bool)>true
     for-each=>[list-events][events]
-      set=>[$][events][[.].Name].Name
-        value=>[.].Name
+      set=>[$][events][[.].name].name
+        value=>[.].name
 
 open
   persist=>false

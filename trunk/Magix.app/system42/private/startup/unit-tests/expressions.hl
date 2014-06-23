@@ -21,7 +21,7 @@ wildcard, and the value of the node is given"
       v3
       v4=>z
     if=>not-equals
-      lhs=>[_data][?=>z].Name
+      lhs=>[_data][?=>z].name
       rhs=>v4
       code
         throw=>wildcard expressions misbehaved
@@ -41,7 +41,7 @@ wildcard, and the value of the node must be null"
       v2=>
       v3
     if=>not-equals
-      lhs=>[_data][?].Name
+      lhs=>[_data][?].name
       rhs=>v3
       code
         throw=>wildcard expressions misbehaved
@@ -61,7 +61,7 @@ wildcard, and the value of the node must be an empty string"
       v2
       v3=>
     if=>not-equals
-      lhs=>[_data][?=>].Name
+      lhs=>[_data][?=>].name
       rhs=>v3
       code
         throw=>wildcard expressions misbehaved
@@ -84,7 +84,7 @@ node must be null"
         v0
           message=>success
     if=>not-equals
-      lhs=>[_buffer-data][**v0][message].Value
+      lhs=>[_buffer-data][**v0][message].value
       rhs=>success
       code
         throw=>wildcard expressions misbehaved
@@ -107,7 +107,7 @@ node must be an empty string"
         v0=>
           message=>success
     if=>not-equals
-      lhs=>[_buffer-data][**v0=>][message].Value
+      lhs=>[_buffer-data][**v0=>][message].value
       rhs=>success
       code
         throw=>wildcard expressions misbehaved
@@ -130,7 +130,7 @@ node is given, and the name of the node is a wildcard"
         v0=>correct
           message=>success
     if=>not-equals
-      lhs=>[_buffer-data][**?=>correct][message].Value
+      lhs=>[_buffer-data][**?=>correct][message].value
       rhs=>success
       code
         throw=>wildcard expressions misbehaved
@@ -153,7 +153,7 @@ node is a wildcard, and the name of the node is given"
         v1=>correct
           message=>success
     if=>not-equals
-      lhs=>[_buffer-data][**v1=>?][message].Value
+      lhs=>[_buffer-data][**v1=>?][message].value
       rhs=>success
       code
         throw=>wildcard expressions misbehaved
@@ -179,7 +179,7 @@ the first match has a null value"
         v1=>xxx
           message=>error
     if=>not-equals
-      lhs=>[_buffer-data][**v1=>?][message].Value
+      lhs=>[_buffer-data][**v1=>?][message].value
       rhs=>success
       code
         throw=>wildcard expressions misbehaved
@@ -198,7 +198,7 @@ the expression behaves as expected"
       _data
         message=>success
     if=>not-equals
-      lhs=>[_buffer-data][[_buffer-data][_node-name].Value][message].Value
+      lhs=>[_buffer-data][[_buffer-data][_node-name].value][message].value
       rhs=>success
       code
         throw=>nested expressions misbehaved
@@ -216,13 +216,13 @@ making sure the expression behaves as expected"
       name=>magix.demo.foo
       persist=>false
       code
-        set=>[$][output].Value
+        set=>[$][output].value
           value=>{0} world
-            =>[$][input].Value
+            =>[$][input].value
     _buffer
       input=>hello
     if=>not-equals
-      lhs=>[:magix.demo.foo[_buffer]][output].Value
+      lhs=>[:magix.demo.foo[_buffer]][output].value
       rhs=>hello world
       code
         event
@@ -245,21 +245,21 @@ making sure the expression behaves as expected"
       name=>magix.demo.foo
       persist=>false
       code
-        set=>[$][output].Value
+        set=>[$][output].value
           value=>{0} world
-            =>[$][input].Value
+            =>[$][input].value
     event
       name=>magix.demo.foo2
       persist=>false
       code
-        set=>[$][result].Value
+        set=>[$][result].value
           value=>output
     _buffer
       input=>hello
     _buffer2=>_buffer
     _buffer3=>result
     if=>not-equals
-      lhs=>[:magix.demo.foo[[_buffer2].Value]][[:magix.demo.foo2][[_buffer3].Value].Value].Value
+      lhs=>[:magix.demo.foo[[_buffer2].value]][[:magix.demo.foo2][[_buffer3].value].value].value
       rhs=>hello world
       code
         event

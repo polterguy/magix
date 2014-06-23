@@ -125,7 +125,7 @@ namespace Magix.forms
                         ip["inspect"],
                         "Magix.forms",
                         "Magix.forms.hyperlisp.inspect.hl",
-                        "[magix.forms.web-part-null-event-handler-dox].Value");
+                        "[magix.forms.web-part-null-event-handler-dox].value");
                     ip.AddRange(Methods[e.Name].Clone());
 					return;
 				}
@@ -190,7 +190,7 @@ to the value in [mml]";
                         ip["inspect"],
                         "Magix.forms",
                         "Magix.forms.hyperlisp.inspect.hl",
-                        "[magix.forms._get-control-dox].Value");
+                        "[magix.forms._get-control-dox].value");
 				return;
 			}
 

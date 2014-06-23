@@ -26,10 +26,10 @@ the correct value"
               value=>failure
               value=>success
     _value
-    set=>[_value].Value
-      value=>[_data][buffer=>howdy2][x=>y][z=>z][1][value:1].Value
+    set=>[_value].value
+      value=>[_data][buffer=>howdy2][x=>y][z=>z][1][value:1].value
     if=>not-equals
-      lhs=>[_value].Value
+      lhs=>[_value].value
       rhs=>success
       code
         throw=>[set] misbehaved
@@ -52,17 +52,17 @@ the set statements behaved correctly"
     set=>[_buffer][_result]
       value=>[_data1]
     if=>not-equals
-      lhs=>[_buffer][0].Name
+      lhs=>[_buffer][0].name
       rhs=>_data1
       or=>exist
-        lhs=>[_buffer][_data1].Value
+        lhs=>[_buffer][_data1].value
       code
         throw=>[set] misbehaved
     if=>not-equals
-      lhs=>[_buffer][_data1][value1].Value
+      lhs=>[_buffer][_data1][value1].value
       rhs=>howdy
       or=>not-equals
-        lhs=>[_buffer][_data1][value2].Value
+        lhs=>[_buffer][_data1][value2].value
         rhs=>world
       code
         throw=>[set] misbehaved
@@ -71,14 +71,14 @@ the set statements behaved correctly"
       lhs=>[_data1][value1]
       code
         throw=>[set] misbehaved
-    set=>[_buffer].Value
+    set=>[_buffer].value
     if=>exist
-      lhs=>[_buffer].Value
+      lhs=>[_buffer].value
       code
         throw=>[set] misbehaved
-    set=>[_buffer].Name
+    set=>[_buffer].name
     if=>not-equals
-      lhs=>[1].Name
+      lhs=>[1].name
       rhs=>
       code
         throw=>[set] misbehaved
@@ -100,7 +100,7 @@ one of its children removed by index"
       v0=>howdy
     set=>[_data][3]
     if=>not-equals
-      lhs=>[_data][0].Value
+      lhs=>[_data][0].value
       rhs=>howdy
       code
         throw=>[set] misbehaved

@@ -14,11 +14,11 @@ for transfering private files to the client.  [file] is path
 to file to transfer"
   code
     if=>not-exist
-      lhs=>[$][file].Value
+      lhs=>[$][file].value
       code
         throw=>no [file] given to [magix.file.download]
-    set=>[magix.web.postpone-execution][code][magix.web.transfer-file][file].Value
-      value=>[$][file].Value
+    set=>[magix.web.postpone-execution][code][magix.web.transfer-file][file].value
+      value=>[$][file].value
     magix.web.postpone-execution
       code
         magix.web.transfer-file
@@ -27,5 +27,5 @@ to file to transfer"
       // redirect the client back to "base", which will initiate the download of the file requested
       execute-javascript
         script=>@"window.location = '{0}';"
-          =>[:magix.configuration.get-base-directory][value].Value
+          =>[:magix.configuration.get-base-directory][value].value
 

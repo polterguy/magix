@@ -8,7 +8,7 @@ that selects records from an ms sql database table"
 
 magix.wizard.web-config-connection_oncheckedchanged
   if=>equals
-    lhs=>[$][value].Value
+    lhs=>[$][value].value
     rhs=>true
     code
       magix.forms.set-enabled
@@ -35,7 +35,7 @@ magix.wizard.web-config-connection-select_onselectedindexchanged
       form-id=>wizard
       id=>web-config-connection-select
   if=>equals
-    lhs=>[using][get-value][value].Value
+    lhs=>[using][get-value][value].value
     rhs=>_default
     code
       magix.forms.set-value
@@ -48,7 +48,7 @@ magix.wizard.web-config-connection-select_onselectedindexchanged
         form-id=>wizard
         id=>connection-string
         value=>web.config:{0}
-          =>[using][get-value][value].Value
+          =>[using][get-value][value].value
 
 magix.wizard.web-config-connection-selected_onfirstload
   _items
@@ -56,8 +56,8 @@ magix.wizard.web-config-connection-selected_onfirstload
   magix.configuration.get-connection-strings
   for-each=>[magix.configuration.get-connection-strings][result]
     add=>[/][_items]
-      value=>[.].Value
-        value=>[.].Value
+      value=>[.].value
+        value=>[.].value
   add=>[magix.forms.set-values][values]
     value=>[_items]
     children-only=>true
@@ -71,16 +71,16 @@ magix.wizard.next-1_onclick
   magix.forms.get-value
     form-id=>wizard
     id=>active-event-name
-  split=>[magix.forms.get-value][value].Value
+  split=>[magix.forms.get-value][value].value
     what=>.
   if=>equals
-    lhs=>[split][result].Count
+    lhs=>[split][result].count
     rhs=>1
     or=>equals
-      lhs=>[split][result][0].Value
+      lhs=>[split][result][0].value
       rhs=>magix
     or=>equals
-      lhs=>[magix.forms.get-value][value].Value
+      lhs=>[magix.forms.get-value][value].value
       rhs=>
     code
       magix.viewport.show-message
@@ -96,7 +96,7 @@ magix.wizard.next-1_onclick
     form-id=>wizard
     id=>connection-string
   if=>equals
-    lhs=>[magix.forms.get-value:1][value].Value
+    lhs=>[magix.forms.get-value:1][value].value
     rhs=>
     code
       magix.viewport.show-message
@@ -123,13 +123,13 @@ magix.wizard.initialize-second-page
   using=>magix.ms.sql
     select
       sql=>select distinct * from information_schema.tables where table_type='base table'
-      connection=>[magix.forms.get-value][value].Value
+      connection=>[magix.forms.get-value][value].value
   _items
     _default=>select table ...
   for-each=>[using][select][result]
     add=>[/][_items]
-      value=>[.][TABLE_NAME].Value
-        value=>[.][TABLE_NAME].Value
+      value=>[.][TABLE_NAME].value
+        value=>[.][TABLE_NAME].value
   add=>[magix.forms.set-values][values]
     value=>[_items]
     children-only=>true
@@ -143,7 +143,7 @@ magix.wizard.select-table_onselectedindexchanged
     id=>sort-descending
     value=>false
   if=>equals
-    lhs=>[$][value].Value
+    lhs=>[$][value].value
     rhs=>_default
     code
       magix.forms.set-enabled
@@ -158,21 +158,21 @@ magix.wizard.select-table_onselectedindexchanged
     magix.forms.get-value
       form-id=>wizard
       id=>select-table
-    set=>[@][magix.ms.sql.select][sql].Value
+    set=>[@][magix.ms.sql.select][sql].value
       value=>@"select * from information_schema.columns where table_name = N'{0}'"
-        =>[@][magix.forms.get-value][value].Value
+        =>[@][magix.forms.get-value][value].value
     magix.forms.get-value
       form-id=>wizard
       id=>connection-string
-    set=>[@][magix.ms.sql.select][connection].Value
-      value=>[@][magix.forms.get-value:1][value].Value
+    set=>[@][magix.ms.sql.select][connection].value
+      value=>[@][magix.forms.get-value:1][value].value
     magix.ms.sql.select
     _items
       _default=>select sort ...
     for-each=>[@][magix.ms.sql.select][result]
       add=>[@][..][_items]
-        value=>[.][COLUMN_NAME].Value
-          value=>[.][COLUMN_NAME].Value
+        value=>[.][COLUMN_NAME].value
+          value=>[.][COLUMN_NAME].value
     add=>[@][magix.forms.set-values][values]
       value=>[@][_items]
       children-only=>true
@@ -182,7 +182,7 @@ magix.wizard.select-table_onselectedindexchanged
 
 magix.wizard.select-sort_onselectedindexchanged
   if=>equals
-    lhs=>[$][value].Value
+    lhs=>[$][value].value
     rhs=>_default
     code
       magix.forms.set-enabled
@@ -202,7 +202,7 @@ magix.wizard.next-2_onclick
     form-id=>wizard
     id=>select-table
   if=>equals
-    lhs=>[magix.forms.get-value][value].Value
+    lhs=>[magix.forms.get-value][value].value
     rhs=>_default
     code
       magix.viewport.show-message
@@ -226,14 +226,14 @@ magix.wizard.initialize-third-page
   magix.forms.get-value
     form-id=>wizard
     id=>select-table
-  set=>[magix.ms.sql.select][sql].Value
+  set=>[magix.ms.sql.select][sql].value
     value=>@"select * from information_schema.columns where table_name = N'{0}'"
-      =>[magix.forms.get-value][value].Value
+      =>[magix.forms.get-value][value].value
   magix.forms.get-value
     form-id=>wizard
     id=>connection-string
-  set=>[magix.ms.sql.select][connection].Value
-    value=>[magix.forms.get-value:1][value].Value
+  set=>[magix.ms.sql.select][connection].value
+    value=>[magix.forms.get-value:1][value].value
   magix.ms.sql.select
   for-each=>[magix.ms.sql.select][result]
     _chk
@@ -243,28 +243,28 @@ magix.wizard.initialize-third-page
       label
         tag=>label
         class=>span-4
-    set=>[@][_chk][check-box].Value
-      value=>[.][COLUMN_NAME].Value
-    set=>[@][_chk][label][for].Value
-      value=>[.][COLUMN_NAME].Value
-    set=>[@][_chk][label][value].Value
-      value=>[.][COLUMN_NAME].Value
-    set=>[@][_chk][check-box][info].Value
-      value=>[.][COLUMN_NAME].Value
-    set=>[@][_chk][label][title].Value
+    set=>[@][_chk][check-box].value
+      value=>[.][COLUMN_NAME].value
+    set=>[@][_chk][label][for].value
+      value=>[.][COLUMN_NAME].value
+    set=>[@][_chk][label][value].value
+      value=>[.][COLUMN_NAME].value
+    set=>[@][_chk][check-box][info].value
+      value=>[.][COLUMN_NAME].value
+    set=>[@][_chk][label][title].value
       value=>data type: '{0}', max length: '{1}', is nullable: '{2}'
-        =>[.][DATA_TYPE].Value
-        =>[.][CHARACTER_MAXIMUM_LENGTH].Value
-        =>[.][IS_NULLABLE].Value
+        =>[.][DATA_TYPE].value
+        =>[.][CHARACTER_MAXIMUM_LENGTH].value
+        =>[.][IS_NULLABLE].value
     using=>magix.math
       modulo
-        =>[/][magix.forms.create-web-part][controls].Count
+        =>[/][magix.forms.create-web-part][controls].count
         =>6
     if=>equals
-      lhs=>[@][using][modulo].Value
+      lhs=>[@][using][modulo].value
       rhs=>0
       code
-        set=>[@][..][..][_chk][label][class].Value
+        set=>[@][..][..][_chk][label][class].value
           value=>span-4 last
     add=>[/][magix.forms.create-web-part][controls]
       value=>[@][_chk]
@@ -280,29 +280,29 @@ magix.wizard.next-3_onclick
   _columns=>
   for-each=>[magix.forms.get-children-values][values]
     if=>equals
-      lhs=>[.].Value
+      lhs=>[.].value
       rhs=>true
       code
         if=>not-equals
-          lhs=>[/][_columns].Value
+          lhs=>[/][_columns].value
           rhs=>
           code
-            set=>[/][_columns].Value
+            set=>[/][_columns].value
               value=>{0},
-                =>[/][_columns].Value
-        set=>[/][_columns].Value
+                =>[/][_columns].value
+        set=>[/][_columns].value
           value=>{0}[{1}]
-            =>[/][_columns].Value
-            =>[.].Name
+            =>[/][_columns].value
+            =>[.].name
   _sql
   magix.forms.get-value
     form-id=>wizard
     id=>select-table
-  set=>[_sql].Value
+  set=>[_sql].value
     value=>select {0} from [{1}]
-      =>[_columns].Value
-      =>[magix.forms.get-value][value].Value
-  set=>[_event][event][inspect].Value
+      =>[_columns].value
+      =>[magix.forms.get-value][value].value
+  set=>[_event][event][inspect].value
     value=>@"selects records from {0}
 
 automatically wizard generated active event that selects records from the 
@@ -311,7 +311,7 @@ decide where to start the extraction of values
 
 result will be returned as [result] and [record-count] will contain the total 
 number of records in your table"
-      =>[magix.forms.get-value][value].Value
+      =>[magix.forms.get-value][value].value
   magix.forms.get-value
     form-id=>wizard
     id=>connection-string
@@ -323,37 +323,37 @@ number of records in your table"
       name=>{active-event-name}
       code
         if=>exist
-          lhs=>[$][start].Value
+          lhs=>[$][start].value
           code
-            set=>[magix.ms.sql.select][start].Value
-              value=>[$][start].Value
+            set=>[magix.ms.sql.select][start].value
+              value=>[$][start].value
         else
-          set=>[magix.ms.sql.select][start].Value
+          set=>[magix.ms.sql.select][start].value
             value=>0
         if=>exist
-          lhs=>[$][count].Value
+          lhs=>[$][count].value
           code
             using=>magix.math
               add
-                =>[$][start].Value
-                =>[$][count].Value
-            set=>[magix.ms.sql.select][end].Value
-              value=>[@][using][add].Value
+                =>[$][start].value
+                =>[$][count].value
+            set=>[magix.ms.sql.select][end].value
+              value=>[@][using][add].value
         else
           using=>magix.math
             add
-              =>[magix.ms.sql.select][start].Value
+              =>[magix.ms.sql.select][start].value
               =>10
-          set=>[magix.ms.sql.select][end].Value
-            value=>[@][using][add].Value
+          set=>[magix.ms.sql.select][end].value
+            value=>[@][using][add].value
         magix.ms.sql.select
           connection=>{connection}
           sql=>{sql}
         add=>[$][result]
           value=>[magix.ms.sql.select][result]
           children-only=>true
-        set=>[$][record-count].Value
-          value=>[magix.ms.sql.select][record-count].Value
+        set=>[$][record-count].value
+          value=>[magix.ms.sql.select][record-count].value
   magix.forms.get-value
     form-id=>wizard
     id=>select-sort
@@ -361,39 +361,39 @@ number of records in your table"
     form-id=>wizard
     id=>sort-descending
   if=>not-equals
-    lhs=>[magix.forms.get-value:3][value].Value
+    lhs=>[magix.forms.get-value:3][value].value
     rhs=>_default
     code
-      set=>[_sql].Value
+      set=>[_sql].value
         value=>{0} order by {1}
-          =>[_sql].Value
-          =>[magix.forms.get-value:3][value].Value
+          =>[_sql].value
+          =>[magix.forms.get-value:3][value].value
       if=>equals
-        lhs=>[magix.forms.get-value:4][value].Value
+        lhs=>[magix.forms.get-value:4][value].value
         rhs=>true
         code
-          set=>[_sql].Value
+          set=>[_sql].value
             value=>{0} desc
-              =>[_sql].Value
+              =>[_sql].value
   iterate=>[_event]
     if=>equals
-      lhs=>[.].Value
+      lhs=>[.].value
       rhs=>{active-event-name}
       code
-        set=>[.].Value
-          value=>[/][magix.forms.get-value:2][value].Value
+        set=>[.].value
+          value=>[/][magix.forms.get-value:2][value].value
     else-if=>equals
-      lhs=>[.].Value
+      lhs=>[.].value
       rhs=>{connection}
       code
-        set=>[.].Value
-          value=>[/][magix.forms.get-value:1][value].Value
+        set=>[.].value
+          value=>[/][magix.forms.get-value:1][value].value
     else-if=>equals
-      lhs=>[.].Value
+      lhs=>[.].value
       rhs=>{sql}
       code
-        set=>[.].Value
-          value=>[/][_sql].Value
+        set=>[.].value
+          value=>[/][_sql].value
   lambda=>[_event]
   magix.viewport.show-message
     message=>active event was created
@@ -407,5 +407,5 @@ number of records in your table"
     set-info
       form-id=>wizard
       id=>edit-active-event
-      value=>[_event][event][name].Value
+      value=>[_event][event][name].value
 

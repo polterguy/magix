@@ -41,52 +41,52 @@ magix.viewport.include-client-file
 
 // loading file, if we are given a [file] input parameter
 if=>exist
-  lhs=>[$][file].Value
+  lhs=>[$][file].value
   code
     using=>magix.file
       load
-        file=>[$][file].Value
-    replace=>[@][using][load][value].Value
+        file=>[$][file].value
+    replace=>[@][using][load][value].value
       what=>&
       with=>&amp;
-    replace=>[@][using][load][value].Value
+    replace=>[@][using][load][value].value
       what=><
       with=>&lt;
-    replace=>[@][using][load][value].Value
+    replace=>[@][using][load][value].value
       what=>>
       with=>&gt;
-    set=>[**text-area=>editor-surface][value].Value
-      value=>[@][using][load][value].Value
-    set=>[**text-box=>txt-file-name][value].Value
-      value=>[$][file].Value
+    set=>[**text-area=>editor-surface][value].value
+      value=>[@][using][load][value].value
+    set=>[**text-box=>txt-file-name][value].value
+      value=>[$][file].value
 
 // disabling the text-box that allows changing the filename, if we're not allowed to change filename of edited file
 if=>equals
-  lhs=>[$][allow-filename-change].Value
+  lhs=>[$][allow-filename-change].value
   rhs=>false
   code
-    set=>[**text-box=>txt-file-name][disabled].Value
+    set=>[**text-box=>txt-file-name][disabled].value
       value=>true
 
 // putting in container, if we're given one, otherwise we're using default container
 if=>exist
   lhs=>[$][container]
   code
-    set=>[magix.forms.create-web-part][container].Value
-      value=>[$][container].Value
+    set=>[magix.forms.create-web-part][container].value
+      value=>[$][container].value
 
 // adding css classes, if we're given any, otherwise using default of last span-17
 if=>exist
   lhs=>[$][class]
   code
-    set=>[magix.forms.create-web-part][class].Value
-      value=>[$][class].Value
+    set=>[magix.forms.create-web-part][class].value
+      value=>[$][class].value
 
 // adding extra buttons, if we're given any
 if=>exist
   lhs=>[$][extra-buttons]
   code
-    set=>[**button=>save][class].Value
+    set=>[**button=>save][class].value
       value=>span-2
     add=>[**panel=>save-wrapper][controls]
       value=>[$][extra-buttons]
@@ -94,18 +94,18 @@ if=>exist
 
 // adding automatical scroll, if we're supposed to
 if=>equals
-  lhs=>[$][auto-scroll].Value
+  lhs=>[$][auto-scroll].value
   rhs=>true
   code
-    set=>[**panel=>save-wrapper][onfirstload][magix.browser.scroll][id].Value
-      value=>[magix.forms.create-web-part][container].Value
+    set=>[**panel=>save-wrapper][onfirstload][magix.browser.scroll][id].value
+      value=>[magix.forms.create-web-part][container].value
 
 // automatically giving focus, if we're supposed to
 if=>not-equals
-  lhs=>[$][auto-focus].Value
+  lhs=>[$][auto-focus].value
   rhs=>true
   code
-    set=>[**text-area=>editor-surface][onfirstload][magix.forms.effect].Name
+    set=>[**text-area=>editor-surface][onfirstload][magix.forms.effect].name
       value=>_not
 
 // adding [onesc] event handler, if we're given any
@@ -118,10 +118,10 @@ if=>exist
 
 // removing toolbar if we're supposed to
 if=>equals
-  lhs=>[$][no-toolbar].Value
+  lhs=>[$][no-toolbar].value
   rhs=>true
   code
-    set=>[**panel=>toolbar][visible].Value
+    set=>[**panel=>toolbar][visible].value
       value=>false
 
 // creating web part
@@ -150,7 +150,7 @@ magix.forms.create-web-part
                   create-mml-web-part
                     container=>preview-container
                     form-id=>preview
-                    mml=>[magix.forms.get-value][value].Value
+                    mml=>[magix.forms.get-value][value].value
                   create-web-part
                     container=>preview-toolbar
                     form-id=>preview-toolbar
@@ -178,7 +178,7 @@ magix.forms.create-web-part
                       form-id=>editor
                       id=>editor-surface
                     execute-script
-                      script=>[magix.forms.get-value][value].Value
+                      script=>[magix.forms.get-value][value].value
                     magix.forms.effect
                       type=>focus-and-select
                       form-id=>editor

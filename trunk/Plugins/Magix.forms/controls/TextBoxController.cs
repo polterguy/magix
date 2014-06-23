@@ -120,7 +120,7 @@ namespace Magix.forms
                 node["inspect"],
                 "Magix.forms",
                 "Magix.forms.hyperlisp.inspect.hl",
-                "[magix.forms.text-box-dox-start].Value");
+                "[magix.forms.text-box-dox-start].value");
             AppendCodeFromResource(
                 node,
                 "Magix.forms",
@@ -131,7 +131,7 @@ namespace Magix.forms
                 node["inspect"],
                 "Magix.forms",
                 "Magix.forms.hyperlisp.inspect.hl",
-                "[magix.forms.text-box-dox-end].Value",
+                "[magix.forms.text-box-dox-end].value",
                 true);
             AppendCodeFromResource(
                 node["magix.forms.create-web-part"]["controls"]["text-box"],

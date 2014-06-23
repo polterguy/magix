@@ -60,9 +60,9 @@ namespace Magix.sample
         protected void chk_CheckedChanged(object sender, EventArgs e)
         {
             if (chk.Checked)
-                lbl.Value = "checkbox is on!";
+                lbl.value = "checkbox is on!";
             else
-                lbl.Value = "checkbox is off!";
+                lbl.value = "checkbox is off!";
         }
     }
 }</pre>
@@ -81,7 +81,7 @@ check-box=>chk
     magix.forms.get-value
       id=>chk
     if=>equals
-      lhs=>[magix.forms.get-value][value].Value
+      lhs=>[magix.forms.get-value][value].value
       rhs=>true
       code
         magix.forms.set-value

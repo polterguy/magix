@@ -91,11 +91,11 @@ namespace Magix.Core
 
             object retVal = null;
 
-            if (lastEntity.StartsWith(".Value"))
+            if (lastEntity.StartsWith(".value"))
                 retVal = x.Value;
-            else if (lastEntity.StartsWith(".Name"))
+            else if (lastEntity.StartsWith(".name"))
                 retVal = x.Name;
-            else if (lastEntity.StartsWith(".Count"))
+            else if (lastEntity.StartsWith(".count"))
                 retVal = x.Count;
             else if (lastEntity.StartsWith(".dna"))
                 retVal = x.Dna;
@@ -148,9 +148,9 @@ namespace Magix.Core
                 if (destinationNode == null)
                     return;
 
-                if (lastEntity == ".Value")
+                if (lastEntity == ".value")
                     destinationNode.Value = null;
-                else if (lastEntity == ".Name")
+                else if (lastEntity == ".name")
                     destinationNode.Name = "";
                 else if (lastEntity == "")
                     destinationNode.UnTie();
@@ -161,13 +161,13 @@ namespace Magix.Core
             }
             else
             {
-                string lastEntity = ".Value";
+                string lastEntity = ".value";
                 Node destinationNode = ip;
                 
                 if (destinationExpression != null)
                     destinationNode = GetNode(destinationExpression, dp, ip, ref lastEntity, true);
 
-                if (lastEntity.StartsWith(".Value"))
+                if (lastEntity.StartsWith(".value"))
                 {
                     if (valueToSet is Node)
                     {
@@ -182,7 +182,7 @@ namespace Magix.Core
                     }
                     destinationNode.Value = valueToSet;
                 }
-                else if (lastEntity.StartsWith(".Name"))
+                else if (lastEntity.StartsWith(".name"))
                 {
                     if (!(valueToSet is string))
                         throw new ArgumentException("cannot set the name of a node to something which is not a string literal");
@@ -507,7 +507,7 @@ namespace Magix.Core
                         lastEntity += tmp;
                 }
             }
-            if (lastEntity.StartsWith(".Value") && lastEntity.Length > 6)
+            if (lastEntity.StartsWith(".value") && lastEntity.Length > 6)
             {
                 // this is a concatenated expression, returning a Node list, where we wish to directly 
                 // access another node inside of the node by reference

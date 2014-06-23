@@ -29,7 +29,7 @@ namespace Magix.execute
                     ip["inspect"],
                     "Magix.execute",
                     "Magix.execute.hyperlisp.inspect.hl",
-                    "[magix.execute.app-startup-dox].Value");
+                    "[magix.execute.app-startup-dox].value");
                 return;
 			}
             RemapTunneledEvents();
@@ -91,7 +91,7 @@ namespace Magix.execute
                     ip["inspect"],
                     "Magix.execute",
                     "Magix.execute.hyperlisp.inspect.hl",
-                    "[magix.execute.tunnel-dox].Value");
+                    "[magix.execute.tunnel-dox].value");
                 AppendCodeFromResource(
                     ip,
                     "Magix.execute",
@@ -147,7 +147,7 @@ namespace Magix.execute
                     ip["inspect"],
                     "Magix.execute",
                     "Magix.execute.hyperlisp.inspect.hl",
-                    "[magix.execute.open-dox].Value");
+                    "[magix.execute.open-dox].value");
                 AppendCodeFromResource(
                     ip,
                     "Magix.execute",
@@ -189,7 +189,7 @@ namespace Magix.execute
                     ip["inspect"],
                     "Magix.execute",
                     "Magix.execute.hyperlisp.inspect.hl",
-                    "[magix.execute.close-dox].Value");
+                    "[magix.execute.close-dox].value");
                 AppendCodeFromResource(
                     ip,
                     "Magix.execute",
@@ -221,7 +221,7 @@ namespace Magix.execute
                     ip["inspect"],
                     "Magix.execute",
                     "Magix.execute.hyperlisp.inspect.hl",
-                    "[magix.execute.remote-dox].Value");
+                    "[magix.execute.remote-dox].value");
                 AppendCodeFromResource(
                     ip,
                     "Magix.execute",

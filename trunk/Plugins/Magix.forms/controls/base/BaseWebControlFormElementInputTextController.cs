@@ -30,7 +30,7 @@ namespace Magix.forms
                     ip["inspect"],
                     "Magix.forms",
                     "Magix.forms.hyperlisp.inspect.hl",
-                    "[magix.forms.select-all-dox].Value");
+                    "[magix.forms.select-all-dox].value");
                 AppendCodeFromResource(
                     ip,
                     "Magix.forms",
@@ -76,7 +76,7 @@ namespace Magix.forms
                 tmp["inspect"],
                 "Magix.forms",
                 "Magix.forms.hyperlisp.inspect.hl",
-                "[magix.forms.base-web-form-element-text-input-dox].Value",
+                "[magix.forms.base-web-form-element-text-input-dox].value",
                 true);
             node["placeholder"].Value = "shadow text ...";
             node["ontextchanged"].Value = "hyperlisp code";

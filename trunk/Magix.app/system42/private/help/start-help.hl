@@ -41,11 +41,11 @@ event
         // and opening that page, instead of the default index page
         using=>magix.math
           subtract
-            =>[magix.session.get][value].Count
+            =>[magix.session.get][value].count
             =>1
-        set=>[magix.help.open-file][file].Value
-          value=>[magix.session.get][value][[@][using][subtract].Value].Value
-        set=>[magix.help.open-file][freeze-stack].Value
+        set=>[magix.help.open-file][file].value
+          value=>[magix.session.get][value][[@][using][subtract].value].value
+        set=>[magix.help.open-file][freeze-stack].value
           value=>true
     magix.help.open-file
       file=>system42/private/help/index.mml
@@ -59,9 +59,9 @@ event
       create-mml-web-part
         form-id=>help-content
         container=>help-content
-        mml-file=>[$][file].Value
+        mml-file=>[$][file].value
     if=>not-equals
-      lhs=>[$][freeze-stack].Value
+      lhs=>[$][freeze-stack].value
       rhs=>true
       code
         magix.session.get
@@ -73,7 +73,7 @@ event
               value=>[@][..][..][magix.session.get][value]
         add=>[@][magix.session.set][value]
           value=>file
-            value=>[$][file].Value
+            value=>[$][file].value
         magix.session.set
           id=>magix.help.stack-of-help
     magix.session.get
@@ -85,8 +85,8 @@ event
   name=>magix.help.set-next
   persist=>false
   code
-    set=>[magix.viewstate.set][value].Value
-      value=>[$][next].Value
+    set=>[magix.viewstate.set][value].value
+      value=>[$][next].value
     magix.viewstate.set
       id=>magix.help.next-page
 
@@ -98,23 +98,23 @@ event
     magix.session.get
       id=>magix.help.stack-of-help
     if=>more-than
-      lhs=>[magix.session.get][value].Count
+      lhs=>[magix.session.get][value].count
       rhs=>1
       code
         using=>magix.math
           subtract
-            =>[magix.session.get][value].Count
+            =>[magix.session.get][value].count
             =>1
           subtract
-            =>[magix.session.get][value].Count
+            =>[magix.session.get][value].count
             =>2
 
         // deleting last file, which is the currently viewed page
-        set=>[magix.session.get][value][[@][using][subtract:0].Value]
+        set=>[magix.session.get][value][[@][using][subtract:0].value]
 
         // opening up the second last page in stack, which is the previously seen page
-        set=>[@][magix.help.open-file][file].Value
-          value=>[magix.session.get][value][[@][using][subtract:1].Value].Value
+        set=>[@][magix.help.open-file][file].value
+          value=>[magix.session.get][value][[@][using][subtract:1].value].value
         set=>[@][magix.session.set][value]
           value=>[magix.session.get][value]
         magix.session.set
@@ -132,8 +132,8 @@ event
   code
     magix.viewstate.get
       id=>magix.help.next-page
-    set=>[magix.help.open-file][file].Value
-      value=>[magix.viewstate.get][value].Value
+    set=>[magix.help.open-file][file].value
+      value=>[magix.viewstate.get][value].value
 
 // search for the file in [$][header], and loads it if found
 event
@@ -143,10 +143,10 @@ event
     magix.session.get
       id=>magix.help.cached-help-files
     if=>exist
-      lhs=>[magix.session.get][value][[$][header].Value]
+      lhs=>[magix.session.get][value][[$][header].value]
       code
-        set=>[@][magix.help.open-file][file].Value
-          value=>[magix.session.get][value][[$][header].Value].Value
+        set=>[@][magix.help.open-file][file].value
+          value=>[magix.session.get][value][[$][header].value].value
         magix.help.open-file
     else
       magix.viewport.show-message
@@ -167,8 +167,8 @@ event
           value=>[magix.session.get][value]
           children-only=>true
     add=>[magix.session.set][value]
-      value=>[$][header].Value
-        value=>[$][file].Value
+      value=>[$][header].value
+        value=>[$][file].value
     magix.session.set
       id=>magix.help.cached-help-files
     using=>magix.session
@@ -189,74 +189,74 @@ event
     if=>exist
       lhs=>[$][directory]
       code
-        set=>[_directory].Value
-          value=>[$][directory].Value
+        set=>[_directory].value
+          value=>[$][directory].value
 
     // listing all *.mml files, and all child directories
     using=>magix.file
       list-files
-        directory=>[_directory].Value
+        directory=>[_directory].value
         filter=>*.mml
       list-directories
-        directory=>[_directory].Value
+        directory=>[_directory].value
 
     // iterating through files in directory
     for-each=>[using][list-files][files]
       using=>magix.file
         load
-          file=>[.].Name
+          file=>[.].name
 
       // lookinf for an h2 header to use as the friendly text of our autocompleter
-      split=>[@][using][load][value].Value
+      split=>[@][using][load][value].value
         what=><h2>
         trim=>true
       if=>exist
         lhs=>[@][split][result]
         code
-          split=>[@][..][..][split][result][0].Value
+          split=>[@][..][..][split][result][0].value
             what=></h2>
             trim=>true
           // split-2 now contains file header
           if=>not-equals
-            lhs=>[/][_return].Value
+            lhs=>[/][_return].value
             rhs=>
             code
-              set=>[/][_return].Value
+              set=>[/][_return].value
                 value=>{0},
-                  =>[/][_return].Value
-          set=>[/][_return].Value
+                  =>[/][_return].value
+          set=>[/][_return].value
             value=>@"{0}""{1}"""
-              =>[/][_return].Value
-              =>[@][split][result][0].Value
+              =>[/][_return].value
+              =>[@][split][result][0].value
 
           // creating an association between the file's header and the file itself, such that we can later 
           // load a specific file from a given header
-          set=>[@][magix.help.link-header-to-file][header].Value
-            value=>[@][split][result][0].Value
-          set=>[@][magix.help.link-header-to-file][file].Value
-            value=>[.].Name
+          set=>[@][magix.help.link-header-to-file][header].value
+            value=>[@][split][result][0].value
+          set=>[@][magix.help.link-header-to-file][file].value
+            value=>[.].name
           magix.help.link-header-to-file
 
     // iterating through directories in directory and recursively calling self
     for-each=>[using][list-directories][directories]
-      set=>[@][magix.help.iterate-one-directory][directory].Value
-        value=>[.].Name
+      set=>[@][magix.help.iterate-one-directory][directory].value
+        value=>[.].name
       magix.help.iterate-one-directory
 
       // adding the entire result from the child directory to the output
-      set=>[/][_return].Value
+      set=>[/][_return].value
         value=>@"{0},{1}"
-          =>[/][_return].Value
-          =>[@][magix.help.iterate-one-directory][files].Value
+          =>[/][_return].value
+          =>[@][magix.help.iterate-one-directory][files].value
 
     // returning json back to caller
-    set=>[$][files].Value
-      value=>[_return].Value
+    set=>[$][files].value
+      value=>[_return].value
 
 // setting the autocompleter's datasource
-set=>[**@data-source=>{data-source}].Value
+set=>[**@data-source=>{data-source}].value
   value=>\[{0}]
-    =>[:magix.help.iterate-one-directory][files].Value
+    =>[:magix.help.iterate-one-directory][files].value
 
 // creates help web part
 magix.forms.create-web-part
@@ -310,8 +310,8 @@ magix.forms.create-web-part
             magix.forms.get-value
               form-id=>help-wrapper
               id=>search-help
-            set=>[magix.help.search-for-file][header].Value
-              value=>[magix.forms.get-value][value].Value
+            set=>[magix.help.search-for-file][header].value
+              value=>[magix.forms.get-value][value].value
             magix.help.search-for-file
             magix.browser.scroll
               id=>help

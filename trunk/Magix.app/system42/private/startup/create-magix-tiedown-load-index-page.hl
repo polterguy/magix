@@ -36,8 +36,8 @@ logic"
           file=>media/grid/main.css
         magix.data.load
           id=>magix.admin.settings.default-back-end-css-file
-        set=>[magix.viewport.include-client-file:1][file].Value
-          value=>[magix.data.load][value][file].Value
+        set=>[magix.viewport.include-client-file:1][file].value
+          value=>[magix.data.load][value][file].value
         magix.viewport.include-client-file
           type=>css
         magix.forms.create-web-part

@@ -29,10 +29,10 @@ stopped correctly"
         for-each=>[/]
           stop
           throw=>[stop] misbehaved
-      set=>[@][_ranAll].Value
+      set=>[@][_ranAll].value
         value=>true
     if=>not-equals
-      lhs=>[magix.execute][_ranAll].Value
+      lhs=>[magix.execute][_ranAll].value
       rhs=>true
       code
         throw=>[stop] misbehaved

@@ -39,41 +39,41 @@ magix.core.verify-role
 if=>exist
   lhs=>[$][description-class]
   code
-    set=>[_controls][**panel=>pnl-description-wrp][class].Value
-      value=>[$][description-class].Value
+    set=>[_controls][**panel=>pnl-description-wrp][class].value
+      value=>[$][description-class].value
 if=>exist
   lhs=>[$][list-class]
   code
-    set=>[_controls][**panel=>pnl-events][class].Value
-      value=>[$][list-class].Value
+    set=>[_controls][**panel=>pnl-events][class].value
+      value=>[$][list-class].value
 if=>exist
   lhs=>[$][form-class]
   code
-    set=>[using][create-web-part][class].Value
-      value=>[$][form-class].Value
+    set=>[using][create-web-part][class].value
+      value=>[$][form-class].value
 
 // changing container, if requested
 if=>exist
   lhs=>[$][container]
   code
-    set=>[using][**container=>?].Value
-      value=>[$][container].Value
+    set=>[using][**container=>?].value
+      value=>[$][container].value
 
 // changing inspect container and css class, if requested
 if=>exist
   lhs=>[$][inspect-container]
   code
-    set=>[**panel=>btn-wrappers][controls][button][onclick][magix.viewport.load-module][container].Value
-      value=>[$][inspect-container].Value
+    set=>[**panel=>btn-wrappers][controls][button][onclick][magix.viewport.load-module][container].value
+      value=>[$][inspect-container].value
 if=>exist
   lhs=>[$][inspect-class]
   code
-    set=>[**panel=>btn-wrappers][controls][button][onclick][magix.viewport.load-module][class].Value
-      value=>[$][inspect-class].Value
+    set=>[**panel=>btn-wrappers][controls][button][onclick][magix.viewport.load-module][class].value
+      value=>[$][inspect-class].value
 
 // removing inspect button, if we should
 if=>equals
-  lhs=>[$][no-inspect].Value
+  lhs=>[$][no-inspect].value
   rhs=>true
   code
     set=>[_controls][**button=>inspect]
@@ -82,32 +82,32 @@ if=>equals
 if=>exist
   lhs=>[$][namespace]
   code
-    set=>[list-events][begins-with].Value
-      value=>[$][namespace].Value
+    set=>[list-events][begins-with].value
+      value=>[$][namespace].value
 if=>exist
   lhs=>[$][overridden]
   code
-    set=>[list-events][overridden].Value
-      value=>[$][overridden].Value
+    set=>[list-events][overridden].value
+      value=>[$][overridden].value
 if=>exist
   lhs=>[$][open]
   code
-    set=>[list-events][open].Value
-      value=>[$][open].Value
+    set=>[list-events][open].value
+      value=>[$][open].value
 if=>exist
   lhs=>[$][remoted]
   code
-    set=>[list-events][remoted].Value
-      value=>[$][remoted].Value
+    set=>[list-events][remoted].value
+      value=>[$][remoted].value
 list-events
 
 // removing excluded active events according to input parameter
 for-each=>[$][exclude]
-  set=>[/][list-events][events][[.].Name]
+  set=>[/][list-events][events][[.].name]
 
 // setting header according to input parameters
-set=>[**label=>lbl-header][value].Value
-  value=>[$][header].Value
+set=>[**label=>lbl-header][value].value
+  value=>[$][header].value
 
 // creates a link-button web control that it returns back to called
 // taking [event] as active event and [namespace] as namespace to remove
@@ -121,8 +121,8 @@ _create-link-button
         magix.forms.set-value
           form-id=>active-events
           id=>lbl-header
-        set=>[magix.forms.set-value:1][value].Value
-          value=>[0][inspect].Value
+        set=>[magix.forms.set-value:1][value].value
+          value=>[0][inspect].value
         magix.forms.set-value
           form-id=>active-events
           id=>lbl-description
@@ -131,36 +131,36 @@ _create-link-button
           value=>[0]
           children-only=>true
         node-2-code
-        replace=>[node-2-code][code].Value
+        replace=>[node-2-code][code].value
           what=>&
           with=>&amp;
-        replace=>[node-2-code][code].Value
+        replace=>[node-2-code][code].value
           what=><
           with=>&lt;
-        replace=>[node-2-code][code].Value
+        replace=>[node-2-code][code].value
           what=>>
           with=>&gt;
-        set=>[magix.forms.set-value:2][value].Value
-          value=>[node-2-code][code].Value
+        set=>[magix.forms.set-value:2][value].value
+          value=>[node-2-code][code].value
         magix.forms.set-value
           form-id=>active-events
           id=>lbl-code
 
   // setting some onclick behavior, before changing name of active event
-  set=>[_data][link-button][onclick][magix.forms.set-value:0][value].Value
-    value=>[$][event].Value
-  set=>[_data][link-button][onclick][_event].Name
-    value=>[$][event].Value
+  set=>[_data][link-button][onclick][magix.forms.set-value:0][value].value
+    value=>[$][event].value
+  set=>[_data][link-button][onclick][_event].name
+    value=>[$][event].value
 
   // setting properties of link-button
   if=>exist
-    lhs=>[$][namespace].Value
+    lhs=>[$][namespace].value
     code
-      replace=>[$][event].Value
+      replace=>[$][event].value
         what=>{0}.
-          =>[$][namespace].Value
-  set=>[_data][link-button][value].Value
-    value=>[$][event].Value
+          =>[$][namespace].value
+  set=>[_data][link-button][value].value
+    value=>[$][event].value
 
   // returning link-button
   add=>[$]
@@ -177,8 +177,8 @@ for-each=>[list-events][events]
         value=>[$][namespace]
 
   // forwarding event name
-  set=>[@][lambda][event].Value
-    value=>[.].Name
+  set=>[@][lambda][event].value
+    value=>[.].name
 
   // creating link-button and adding to [_controls] node
   lambda=>[/][_create-link-button]
@@ -194,9 +194,9 @@ for-each=>[$][extra-buttons]
 if=>exist
   lhs=>[$][extra-buttons]
   code
-    set=>[_controls][**panel=>btn-wrappers][class].Value
+    set=>[_controls][**panel=>btn-wrappers][class].value
       value=>{0} btn-group
-        =>[_controls][**panel=>btn-wrappers][class].Value
+        =>[_controls][**panel=>btn-wrappers][class].value
 
 // our list of web controls to associate with our create-web-part invocation
 _controls
@@ -215,21 +215,21 @@ _controls
               magix.forms.get-value
                 form-id=>active-events
                 id=>lbl-code
-              replace=>[magix.forms.get-value][value].Value
+              replace=>[magix.forms.get-value][value].value
                 what=>&amp;
                 with=>&
-              replace=>[magix.forms.get-value][value].Value
+              replace=>[magix.forms.get-value][value].value
                 what=>&lt;
                 with=><
-              replace=>[magix.forms.get-value][value].Value
+              replace=>[magix.forms.get-value][value].value
                 what=>&gt;
                 with=>>
               magix.viewport.load-module
                 class=>span-17 last left-5
                 container=>content2
                 name=>Magix.ide.modules.ExecutorForm
-              set=>[magix.executor.set-code][code].Value
-                value=>[magix.forms.get-value][value].Value
+              set=>[magix.executor.set-code][code].value
+                value=>[magix.forms.get-value][value].value
               magix.executor.set-code
       label=>lbl-code
         tag=>pre

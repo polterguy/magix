@@ -17,21 +17,21 @@ they all behave as expected"
       _item1
         yo=>test
     with=>[_data]
-      set=>[_item1].Value
+      set=>[_item1].value
         value=>test
       with=>[_item1]
-        set=>[.][yo].Value
+        set=>[.][yo].value
           value=>hello
-      set=>[.].Value
+      set=>[.].value
         value=>success
     if=>not-equals
-      lhs=>[_data][_item1].Value
+      lhs=>[_data][_item1].value
       rhs=>test
       or=>not-equals
-        lhs=>[_data][_item1][yo].Value
+        lhs=>[_data][_item1][yo].value
         rhs=>hello
       or=>not-equals
-        lhs=>[_data].Value
+        lhs=>[_data].value
         rhs=>success
       code
         throw=>[with] misbehaved
@@ -56,22 +56,22 @@ for then to verify it behaves correctly"
               code
                 throw=>catched beneath here
               catch
-                set=>[.].Value
+                set=>[.].value
                   value=>item1
             throw=>eek
         catch
-          set=>[_item1][yo].Value
+          set=>[_item1][yo].value
             value=>tested
-      set=>[.].Value
+      set=>[.].value
         value=>howdy
     if=>not-equals
-      lhs=>[_data].Value
+      lhs=>[_data].value
       rhs=>howdy
       or=>not-equals
-        lhs=>[_data][_item1].Value
+        lhs=>[_data][_item1].value
         rhs=>item1
       or=>not-equals
-        lhs=>[_data][_item1][yo].Value
+        lhs=>[_data][_item1][yo].value
         rhs=>tested
       code
         throw=>[with] misbehaved

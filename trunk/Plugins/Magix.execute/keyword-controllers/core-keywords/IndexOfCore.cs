@@ -29,7 +29,7 @@ namespace Magix.execute
                     ip["inspect"],
                     "Magix.execute",
                     "Magix.execute.hyperlisp.inspect.hl",
-                    "[magix.execute.index-of-dox].Value");
+                    "[magix.execute.index-of-dox].value");
                 AppendCodeFromResource(
                     ip,
                     "Magix.execute",

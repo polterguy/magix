@@ -45,7 +45,7 @@ namespace Magix.sample
         protected void upl_Uploaded(object sender, EventArgs e)
         {
             Node node = new Node();
-            node["message"].Value = "file uploaded to tmp folder";
+            node["message"].value = "file uploaded to tmp folder";
             RaiseActiveEvent(
                 "magix.viewport.show-message",
                 node);

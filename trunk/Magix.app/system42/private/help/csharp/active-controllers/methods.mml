@@ -57,7 +57,7 @@ namespace Magix.sample
                 "content1");
 
             Node node = new Node();
-            node["data"].Value = 5;
+            node["data"].value = 5;
 
             RaiseActiveEvent(
                 "magix.sample.some-event",

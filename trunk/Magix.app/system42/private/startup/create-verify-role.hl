@@ -25,26 +25,26 @@ event
     _user-roles
     iterate=>[magix.data.load][objects]
       if=>equals
-        lhs=>[.].Name
+        lhs=>[.].name
         rhs=>name
         and=>exist
-          lhs=>[/][magix.session.get][value][roles][[.].Value]
+          lhs=>[/][magix.session.get][value][roles][[.].value]
         code
           add=>[/][_user-roles]
             value=>[.][..]
     iterate=>[_user-roles]
       if=>equals
-        lhs=>[.].Name
+        lhs=>[.].name
         rhs=>name
         and=>equals
-          lhs=>[.].Value
-          rhs=>[$][role].Value
+          lhs=>[.].value
+          rhs=>[$][role].value
         code
-          set=>[/][_found].Value
+          set=>[/][_found].value
             value=>true
           stop
     if=>equals
-      lhs=>[_found].Value
+      lhs=>[_found].value
       rhs=>false
       code
         throw=>user not in role

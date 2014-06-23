@@ -17,11 +17,11 @@ converted is the value of the [node] parameter to node-2-code"
     _data=>jo
       buffer=>5
       buffer=>4
-    set=>[node-2-code][node].Value
+    set=>[node-2-code][node].value
       value=>[_data]
     node-2-code
     if=>not-equals
-      lhs=>[node-2-code][code].Value
+      lhs=>[node-2-code][code].value
       rhs=>@"_data=>jo
   buffer=>5
   buffer=>4
@@ -45,7 +45,7 @@ node-2-code"
           buffer=>5
           buffer=>4
     if=>not-equals
-      lhs=>[node-2-code][code].Value
+      lhs=>[node-2-code][code].value
       rhs=>@"_data=>jo
   buffer=>5
   buffer=>4
@@ -69,7 +69,7 @@ execution tree"
     node-2-code
       node=>[_data]
     if=>not-equals
-      lhs=>[node-2-code][code].Value
+      lhs=>[node-2-code][code].value
       rhs=>@"_data=>jo
   buffer=>5
   buffer=>4
@@ -91,13 +91,13 @@ is a text string, containing the code to be converted"
   buffer=>5
   buffer=>4"
     if=>not-equals
-      lhs=>[code-2-node][node][_data][buffer:0].Value
+      lhs=>[code-2-node][node][_data][buffer:0].value
       rhs=>5
       or=>not-equals
-        lhs=>[code-2-node][node][_data][buffer:1].Value
+        lhs=>[code-2-node][node][_data][buffer:1].value
         rhs=>4
       or=>not-equals
-        lhs=>[code-2-node][node][_data].Value
+        lhs=>[code-2-node][node][_data].value
         rhs=>jo
       code
         throw=>[code-2-node] misbehaved
@@ -114,24 +114,24 @@ being converted is found in a hyperlisp file on disc"
     _file-path=>your-files/tmp/test-file.txt
     using=>magix.file
       save
-        file=>[_file-path].Value
+        file=>[_file-path].value
         value=>@"
 _buffer=>jo
   _data1=>hello
   _data2=>howdy"
     code-2-node
-      file=>[_file-path].Value
+      file=>[_file-path].value
     using=>magix.file
       delete
-        file=>[_file-path].Value
+        file=>[_file-path].value
     if=>not-equals
-      lhs=>[code-2-node][node][_buffer][_data1].Value
+      lhs=>[code-2-node][node][_buffer][_data1].value
       rhs=>hello
       or=>not-equals
-        lhs=>[code-2-node][node][_buffer][_data2].Value
+        lhs=>[code-2-node][node][_buffer][_data2].value
         rhs=>howdy
       or=>not-equals
-        lhs=>[code-2-node][node][_buffer].Value
+        lhs=>[code-2-node][node][_buffer].value
         rhs=>jo
       code
         throw=>[code-2-node] misbehaved

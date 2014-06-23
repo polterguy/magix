@@ -12,14 +12,14 @@ magix.ide.save_onclick
     form-id=>save-content
     id=>database-id
   if=>equals
-    lhs=>[magix.forms.get-value][value].Value
+    lhs=>[magix.forms.get-value][value].value
     rhs=>
     code
       magix.viewport.show-message
         message=>you must supply an id to save your form into the database
   else
-    set=>[@][magix.data.load][id].Value
-      value=>[magix.forms.get-value][value].Value
+    set=>[@][magix.data.load][id].value
+      value=>[magix.forms.get-value][value].value
     magix.data.load
     if=>exist
       lhs=>[@][magix.data.load][value]
@@ -36,8 +36,8 @@ magix.ide.save-to-database
   magix.forms.get-value
     form-id=>save-content
     id=>database-id
-  set=>[magix.data.save][id].Value
-    value=>[magix.forms.get-value][value].Value
+  set=>[magix.data.save][id].value
+    value=>[magix.forms.get-value][value].value
   magix.ide.get-form
   add=>[magix.data.save][value][surface]
     value=>[magix.ide.get-form]
@@ -48,17 +48,17 @@ magix.ide.save-to-database
   magix.viewport.clear-controls
     container=>editor-persist-wrapper
     reset-class=>true
-  set=>[magix.data.save-username][value][id].Value
-    value=>[magix.forms.get-value][value].Value
+  set=>[magix.data.save-username][value][id].value
+    value=>[magix.forms.get-value][value].value
   magix.data.save-username
     id=>magix.ide.last-used-save-database-id
   using=>magix.viewport
     show-message
       message=>form was successfully save to database as '{0}'
-        =>[magix.forms.get-value][value].Value
-  set=>[magix.log.append-username][body].Value
+        =>[magix.forms.get-value][value].value
+  set=>[magix.log.append-username][body].value
     value=>web part was saved to database with id of '{0}'
-      =>[magix.forms.get-value][value].Value
+      =>[magix.forms.get-value][value].value
   magix.log.append-username
     header=>web part was saved
 
@@ -69,8 +69,8 @@ magix.ide.database-id_onfirstload
   if=>exist
     lhs=>[magix.data.load-username][value]
     code
-      set=>[@][magix.forms.set-value][value].Value
-        value=>[magix.data.load-username][value][id].Value
+      set=>[@][magix.forms.set-value][value].value
+        value=>[magix.data.load-username][value][id].value
       magix.forms.set-value
         form-id=>save-content
         id=>database-id

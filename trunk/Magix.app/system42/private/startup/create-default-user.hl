@@ -10,7 +10,7 @@ magix.data.count
   prototype
     type=>magix.core.user
 if=>equals
-  lhs=>[magix.data.count][count].Value
+  lhs=>[magix.data.count][count].value
   rhs=>0
   code
     magix.data.save

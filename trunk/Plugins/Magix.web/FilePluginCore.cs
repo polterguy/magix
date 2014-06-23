@@ -31,7 +31,7 @@ namespace Magix.web
                     ip["inspect"],
                     "Magix.web",
                     "Magix.web.hyperlisp.inspect.hl",
-                    "[magix.web.get-file-dox].Value");
+                    "[magix.web.get-file-dox].value");
                 AppendCodeFromResource(
                     ip,
                     "Magix.web",

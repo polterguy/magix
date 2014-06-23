@@ -19,15 +19,15 @@ _btn
   onclick
 
 for-each=>[list-events][events]
-  set=>[/][_evts][_evt].Name
-    value=>[.].Name
+  set=>[/][_evts][_evt].name
+    value=>[.].name
 
 _evts
 execute=>[_evts]
 
 for-each=>[_evts]
   for-each=>[.]
-    set=>[/][_categories][[.][category].Value].Value
+    set=>[/][_categories][[.][category].value].value
       value=>
 
 _categories
@@ -35,39 +35,39 @@ _categories
 _curCat
 
 for-each=>[_categories]
-  set=>[/][_pnl][controls][label][value].Value
-    value=>[.].Name
+  set=>[/][_pnl][controls][label][value].value
+    value=>[.].name
   set=>[/][_pnl][controls][panel][controls]
-  set=>[/][_curCat].Value
-    value=>[.].Name
-  set=>[/][_pnl].Value
+  set=>[/][_curCat].value
+    value=>[.].name
+  set=>[/][_pnl].value
     value=>@"{0}Wrp"
-      pr0=>[/][_curCat].Value
-  set=>[/][_pnl][controls][panel].Value
+      pr0=>[/][_curCat].value
+  set=>[/][_pnl][controls][panel].value
     value=>@"{0}WrpOuter"
-      pr0=>[/][_curCat].Value
+      pr0=>[/][_curCat].value
   for-each=>[/][_evts]
     for-each=>[.]
       if=>equals
-        lhs=>[.][category].Value
-        rhs=>[/][_curCat].Value
+        lhs=>[.][category].value
+        rhs=>[/][_curCat].value
         code
-          set=>[/][_btn][value].Value
-            value=>[.][text].Value
-          set=>[/][_btn].Value
-            value=>[.].Name
+          set=>[/][_btn][value].value
+            value=>[.][text].value
+          set=>[/][_btn].value
+            value=>[.].name
           add=>[/][_btn]
             value=>[.][code]
           set=>[/][_btn][onclick]
-          set=>[/][_btn][code].Name
+          set=>[/][_btn][code].name
             value=>onclick
           add=>[/][_pnl][controls][panel][controls]
             value=>[/][_btn]
-          set=>[/][_pnl][controls][panel][controls][_btn].Name
+          set=>[/][_pnl][controls][panel][controls][_btn].name
             value=>link-button
   add=>[/][magix.forms.create-web-part][controls]
     value=>[/][_pnl]
-  set=>[/][magix.forms.create-web-part][controls][_pnl].Name
+  set=>[/][magix.forms.create-web-part][controls][_pnl].name
     value=>panel
 
 _pnl

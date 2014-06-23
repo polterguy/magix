@@ -21,13 +21,13 @@ should work"
         throw=>exception thrown
       catch
         if=>equals
-          lhs=>[@][exception].Value
+          lhs=>[@][exception].value
           rhs=>exception thrown
           code
-            set=>[_thrown].Value
+            set=>[_thrown].value
               value=>yes
     if=>not-equals
-      lhs=>[_thrown].Value
+      lhs=>[_thrown].value
       rhs=>yes
       code
         throw=>[catch]/[try] misbehaved
@@ -47,10 +47,10 @@ tries to throw an exception to verify that the
         throw=>exception thrown
       catch
       finally
-        set=>[_finally].Value
+        set=>[_finally].value
           value=>yes
     if=>not-equals
-      lhs=>[_finally].Value
+      lhs=>[_finally].value
       rhs=>yes
       code
         throw=>[finally] misbehaved
@@ -72,11 +72,11 @@ also without a [catch] block"
           code
             throw=>exception thrown
           finally
-            set=>[_finally].Value
+            set=>[_finally].value
               value=>yes
       catch
     if=>not-equals
-      lhs=>[_finally].Value
+      lhs=>[_finally].value
       rhs=>yes
       code
         throw=>[finally] misbehaved
@@ -94,10 +94,10 @@ when no exception is thrown"
     try
       code
       finally
-        set=>[_finally].Value
+        set=>[_finally].value
           value=>yes
     if=>not-equals
-      lhs=>[_finally].Value
+      lhs=>[_finally].value
       rhs=>yes
       code
         throw=>[finally] misbehaved

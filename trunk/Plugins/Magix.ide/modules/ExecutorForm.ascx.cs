@@ -125,7 +125,7 @@ namespace Magix.ide.modules
                     ip["inspect"],
                     "Magix.ide",
                     "Magix.ide.hyperlisp.inspect.hl",
-                    "[magix.executor.set-code-dox].Value");
+                    "[magix.executor.set-code-dox].value");
                 AppendCodeFromResource(
                     ip,
                     "Magix.ide",

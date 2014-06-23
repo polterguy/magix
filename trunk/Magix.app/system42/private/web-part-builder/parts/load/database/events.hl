@@ -12,19 +12,19 @@ magix.ide.load_onclick
     form-id=>load-content
     id=>database-id
   if=>equals
-    lhs=>[magix.forms.get-value][value].Value
+    lhs=>[magix.forms.get-value][value].value
     rhs=>
     code
       magix.viewport.show-message
         message=>you must supply an id to instruct me which web part to load
       stop
-  set=>[magix.data.load][id].Value
-    value=>[magix.forms.get-value][value].Value
+  set=>[magix.data.load][id].value
+    value=>[magix.forms.get-value][value].value
   magix.data.load
   if=>not-exist
     lhs=>[magix.data.load][value]
     or=>not-equals
-      lhs=>[magix.data.load][value][type].Value
+      lhs=>[magix.data.load][value][type].value
       rhs=>magix.forms.web-part
     code
       magix.viewport.show-message
@@ -40,13 +40,13 @@ magix.ide.load-from-database
     id=>database-id
   using=>magix.data
     load
-      id=>[magix.forms.get-value][value].Value
+      id=>[magix.forms.get-value][value].value
   add=>[magix.ide.set-form][value]
     value=>[using][load][value][surface]
     children-only=>true
   magix.ide.set-form
-  set=>[magix.data.save-username][value][id].Value
-    value=>[magix.forms.get-value][value].Value
+  set=>[magix.data.save-username][value][id].value
+    value=>[magix.forms.get-value][value].value
   magix.data.save-username
     id=>magix.ide.last-used-load-database-id
   magix.viewport.clear-controls
@@ -62,8 +62,8 @@ magix.ide.database-id_onfirstload
   _items
   for-each=>[magix.data.load][objects]
     add=>[/][_items]
-      value=>[.][id].Value
-        value=>[.][id].Value
+      value=>[.][id].value
+        value=>[.][id].value
   add=>[magix.forms.set-values][values]
     value=>[_items]
     children-only=>true
@@ -75,8 +75,8 @@ magix.ide.database-id_onfirstload
   if=>exist
     lhs=>[magix.data.load-username][value]
     code
-      set=>[@][magix.forms.set-value][value].Value
-        value=>[magix.data.load-username][value][id].Value
+      set=>[@][magix.forms.set-value][value].value
+        value=>[magix.data.load-username][value][id].value
       magix.forms.set-value
         form-id=>load-content
         id=>database-id

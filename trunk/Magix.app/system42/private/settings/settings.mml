@@ -15,8 +15,8 @@ lambda=>lmda
         onselectedindexchanged
           magix.forms.get-value
             id=>frontEndCss
-          set=>[magix.data.save][value][file].Value
-            value=>[magix.forms.get-value][value].Value
+          set=>[magix.data.save][value][file].value
+            value=>[magix.forms.get-value][value].value
           magix.data.save
             id=>magix.admin.settings.default-back-end-css-file
           magix.browser.redirect=>?dashboard=
@@ -34,19 +34,19 @@ lambda=>lmda
         onfirstload
           magix.data.load
             id=>magix.admin.settings.default-back-end-css-file
-          set=>[magix.forms.set-value][value].Value
-            value=>[magix.data.load][value][file].Value
+          set=>[magix.forms.set-value][value].value
+            value=>[magix.data.load][value][file].value
           magix.forms.set-value
             form-id=>admin-settings
             id=>frontEndCss
     magix.file.list-files
       directory=>media/back-end/skins
     for-each=>[magix.file.list-files][files]
-      set=>[/][_data][select][items][[.].Name].Value
-        value=>[.].Name
-      replace=>[/][_data][select][items][[.].Name].Value
+      set=>[/][_data][select][items][[.].name].value
+        value=>[.].name
+      replace=>[/][_data][select][items][[.].name].value
         what=>media/back-end/skins/
-      replace=>[/][_data][select][items][[.].Name].Value
+      replace=>[/][_data][select][items][[.].name].value
         what=>.css
     add=>[$]
       value=>[_data][select]
@@ -61,7 +61,7 @@ check-box=>chkHelp
     magix.data.load-username
       id=>magix.admin.setting.show-help
     if=>equals
-      lhs=>[magix.data.load-username][value][value].Value
+      lhs=>[magix.data.load-username][value][value].value
       rhs=>true
       code
         magix.forms.set-value
@@ -75,7 +75,7 @@ check-box=>chkHelp
     magix.forms.get-value
       id=>chkHelp
     if=>equals
-      lhs=>[magix.forms.get-value][value].Value
+      lhs=>[magix.forms.get-value][value].value
       rhs=>true
       code
         magix.data.save-username
@@ -103,8 +103,8 @@ lambda=>lmdaViewport
         onselectedindexchanged
           magix.forms.get-value
             id=>frontEndViewport
-          set=>[magix.data.save][value][viewport].Value
-            value=>[magix.forms.get-value][value].Value
+          set=>[magix.data.save][value][viewport].value
+            value=>[magix.forms.get-value][value].value
           magix.data.save
             id=>magix.admin.settings.default-front-end-viewport
           magix.viewport.show-message
@@ -112,8 +112,8 @@ lambda=>lmdaViewport
         onfirstload
           magix.data.load
             id=>magix.admin.settings.default-front-end-viewport
-          set=>[magix.forms.set-value][value].Value
-            value=>[magix.data.load][value][viewport].Value
+          set=>[magix.forms.set-value][value].value
+            value=>[magix.data.load][value][viewport].value
           magix.forms.set-value
             form-id=>admin-settings
             id=>frontEndViewport
@@ -121,8 +121,8 @@ lambda=>lmdaViewport
       Magix.viewports.Gutenberg=>gutenberg
       Magix.viewports.SingleContainer=>single container
     for-each=>[_viewports]
-      set=>[/][_data][select][items][[.].Name].Value
-        value=>[.].Value
+      set=>[/][_data][select][items][[.].name].value
+        value=>[.].value
     add=>[$]
       value=>[_data][select]
 label
@@ -145,16 +145,16 @@ lambda=>lambda-front-end-event
     list-events
     for-each=>[list-events][events]
       if=>not-equals
-        lhs=>[/][_json].Value
+        lhs=>[/][_json].value
         rhs=>
         code
-          set=>[/][_json].Value
+          set=>[/][_json].value
             value=>{0},
-              =>[/][_json].Value
-      set=>[/][_json].Value
+              =>[/][_json].value
+      set=>[/][_json].value
         value=>@"{0}""{1}"""
-          =>[/][_json].Value
-          =>[.].Name
+          =>[/][_json].value
+          =>[.].name
     _text
       text-box=>active-event
         placeholder=>magix.tiedown.load-index-page ...
@@ -169,15 +169,15 @@ lambda=>lambda-front-end-event
           if=>exist
             lhs=>[magix.data.load][value]
             code
-              set=>[@][magix.forms.set-value][value].Value
-                value=>[magix.data.load][value][event].Value
+              set=>[@][magix.forms.set-value][value].value
+                value=>[magix.data.load][value][event].value
               magix.forms.set-value
                 id=>active-event
         onenterpressed
           magix.forms.get-value
             id=>active-event
           if=>equals
-            lhs=>[magix.forms.get-value][value].Value
+            lhs=>[magix.forms.get-value][value].value
             rhs=>
             code
               magix.viewport.confirm
@@ -190,7 +190,7 @@ lambda=>lambda-front-end-event
           else
             list-events
             if=>not-exist
-              lhs=>[@][list-events][events][[$][value].Value]
+              lhs=>[@][list-events][events][[$][value].value]
               code
                 magix.viewport.show-message
                   message=>that active event doesn't exist
@@ -200,15 +200,15 @@ lambda=>lambda-front-end-event
                 code
                   magix.forms.get-value
                     id=>active-event
-                  set=>[@][magix.data.save][value][event].Value
-                    value=>[@][magix.forms.get-value][value].Value
+                  set=>[@][magix.data.save][value][event].value
+                    value=>[@][magix.forms.get-value][value].value
                   magix.data.save
                     id=>magix.tiedown.default-index-page-event
                   magix.viewport.show-message
                     message=>front-end active event was changed
-    set=>[**@data-source=>{data-source}].Value
+    set=>[**@data-source=>{data-source}].value
       value=>\[{0}]
-        =>[_json].Value
+        =>[_json].value
     add=>[$]
       value=>[_text][text-box]
 

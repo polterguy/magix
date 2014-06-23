@@ -14,7 +14,7 @@ link-button=>btn-hide-properties
     magix.data.load-username
       id=>magix.ide.hide-properties
     if=>equals
-      lhs=>[magix.data.load-username][value][hidden].Value
+      lhs=>[magix.data.load-username][value][hidden].value
       rhs=>true
       code
         magix.forms.set-value
