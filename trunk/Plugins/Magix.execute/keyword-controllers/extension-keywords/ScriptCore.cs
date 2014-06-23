@@ -40,14 +40,14 @@ namespace Magix.execute
 
             Node dp = Dp(e.Params);
 
-            if (!ip.Contains("file") && !ip.Contains("script"))
+            if (!ip.ContainsValue("file") && !ip.ContainsValue("script"))
                 throw new ArgumentException("[execute-script] needs either a [file] or a [script] parameter");
 
-            if (ip.Contains("file") && ip.Contains("script"))
+            if (ip.ContainsValue("file") && ip.ContainsValue("script"))
                 throw new ArgumentException("you cannot supply both [file] and [script] to [execute-script]");
 
             string script = null;
-            if (ip.Contains("script"))
+            if (ip.ContainsValue("script"))
                 script = Expressions.GetExpressionValue<string>(ip["script"].Get<string>(), dp, ip, false);
             else
             {
@@ -75,7 +75,6 @@ namespace Magix.execute
             conversionNode["node"]["inspect"].UnTie();
 
             Node exe = conversionNode["node"].Clone();
-            exe["inspect"].UnTie();
 			ExecuteScript(exe, ip);
 		}
 
@@ -86,21 +85,15 @@ namespace Magix.execute
 		{
             if (ip.Contains("params"))
             {
-                foreach (Node idx in ip["params"])
-                {
-                    exe["$"].Add(idx.Clone());
-                }
+                exe["$"].AddRange(ip["params"]);
             }
 
 			RaiseActiveEvent(
 				"magix.execute", 
 				exe);
 
-            if (exe.Contains("$"))
-            {
-                ip["params"].Clear();
-                ip["params"].AddRange(exe["$"]);
-            }
+            ip["params"].Clear();
+            ip["params"].AddRange(exe["$"]);
 		}
 	}
 }

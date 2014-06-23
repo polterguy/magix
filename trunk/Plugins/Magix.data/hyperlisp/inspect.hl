@@ -8,6 +8,47 @@ magix.data.application-startup-dox=>@"loads entire database from disc
 reloads serialized ram-based database into memory of web-server"
 
 
+magix.data.transaction-dox=>@"initiates a database transaction
+
+creates a database transaction.  unless [magix.data.commit] is raised before the scope of the 
+transaction ends somehow, all changes done to the database inside of the transaction will be 
+rolled back, and discarded.  this is useful to make sure a long operation is successful as a 
+whole to allow changes to the database.  as long as a transaction is active, no other threads 
+will be able to access the database, and will have to wait for the transaction to finish, before 
+they're allowed to read and write to and from the database
+
+thread safe"
+
+magix.data.transaction-sample
+  magix.data.transaction
+    magix.data.save
+      value
+        type=>magix.test.some-object
+        name=>thomas
+    throw=>we throw here
+
+    // since this line is never executed, the changes to the database 
+    // above will never be serialized, and discarded
+    magix.data.commit
+
+
+magix.data.commit-dox=>@"commits a database transaction
+
+commits a database transaction.  if you have started a database transaction through for instance 
+the [magix.data.transaction], then unless commit is explicitly raised before the scope of the 
+transaction ends, the changes to the database inside of the transaction will be discarded
+
+thread safe"
+
+magix.data.commit-sample
+  magix.data.transaction
+    magix.data.save
+      value
+        type=>magix.test.some-object
+        name=>thomas
+    magix.data.commit
+
+
 magix.data.load-dox=>@"loads a node from database
 
 loads the first object matching the given [id] or the given [prototype].  it will return all 

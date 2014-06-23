@@ -34,6 +34,72 @@ namespace Magix.data
             Database.Initialize();
         }
 
+        /*
+         * creates a database transaction
+         */
+        [ActiveEvent(Name = "magix.data.transaction")]
+        public static void magix_data_transaction(object sender, ActiveEventArgs e)
+        {
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
+            {
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.data",
+                    "Magix.data.hyperlisp.inspect.hl",
+                    "[magix.data.transaction-dox].Value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.data",
+                    "Magix.data.hyperlisp.inspect.hl",
+                    "[magix.data.transaction-sample]");
+                return;
+            }
+
+            Guid transaction = Guid.Empty;
+            try
+            {
+                transaction = Database.CreateTransaction();
+                e.Params["_database-transaction"].Value = transaction;
+                RaiseActiveEvent(
+                    "magix.execute",
+                    e.Params);
+            }
+            finally
+            {
+                // if commit is called before this point, rollback will do nothing
+                Database.Rollback(transaction);
+                e.Params["_database-transaction"].UnTie();
+            }
+        }
+
+        /*
+         * commits a database transaction
+         */
+        [ActiveEvent(Name = "magix.data.commit")]
+        public static void magix_data_commit(object sender, ActiveEventArgs e)
+        {
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
+            {
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.data",
+                    "Magix.data.hyperlisp.inspect.hl",
+                    "[magix.data.commit-dox].Value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.data",
+                    "Magix.data.hyperlisp.inspect.hl",
+                    "[magix.data.commit-sample]");
+                return;
+            }
+
+            Guid transaction = e.Params["_database-transaction"].Get<Guid>();
+            Database.Commit(transaction);
+            e.Params["_database-transaction"].UnTie();
+        }
+
 		/*
 		 * loads an object from database
 		 */
@@ -86,7 +152,11 @@ namespace Magix.data
 			if (id != null && (start != 0 || end != -1 || prototype != null))
 				throw new ArgumentException("if you supply an [id], then [start], [end] and [prototype] cannot be defined");
 
-            Database.LoadItems(ip, prototype, id, start, end);
+            Guid transaction = Guid.Empty;
+            if (e.Params.ContainsValue("_database-transaction"))
+                transaction = e.Params["_database-transaction"].Get<Guid>();
+
+            Database.LoadItems(ip, prototype, id, start, end, transaction);
 		}
 
 		/*
@@ -122,13 +192,17 @@ namespace Magix.data
             else
                 value = ip["value"].Clone();
 
+            Guid transaction = Guid.Empty;
+            if (e.Params.ContainsValue("_database-transaction"))
+                transaction = e.Params["_database-transaction"].Get<Guid>();
+
             if (ip.Contains("id"))
             {
                 string id = Expressions.GetExpressionValue<string>(ip["id"].Get<string>(), dp, ip, false);
-                Database.SaveById(value, id);
+                Database.SaveById(value, id, transaction);
             }
             else
-                ip["id"].Value = Database.SaveNewObject(value);
+                ip["id"].Value = Database.SaveNewObject(value, transaction);
 		}
 
 		/*
@@ -170,13 +244,17 @@ namespace Magix.data
             if (!ip.ContainsValue("id") && prototype == null)
 				throw new ArgumentException("missing [id] or [prototype] while trying to remove object");
 
+            Guid transaction = Guid.Empty;
+            if (e.Params.ContainsValue("_database-transaction"))
+                transaction = e.Params["_database-transaction"].Get<Guid>();
+
             if (ip.Contains("id"))
             {
                 string id = Expressions.GetExpressionValue<string>(ip["id"].Get<string>(), dp, ip, false);
-                Database.RemoveById(id);
+                Database.RemoveById(id, transaction);
             }
             else
-                Database.RemoveByPrototype(prototype);
+                Database.RemoveByPrototype(prototype, transaction);
         }
 
 		/*
@@ -211,7 +289,12 @@ namespace Magix.data
                 else
                     prototype = ip["prototype"];
             }
-            Database.CountRecords(ip, prototype);
+
+            Guid transaction = Guid.Empty;
+            if (e.Params.ContainsValue("_database-transaction"))
+                transaction = e.Params["_database-transaction"].Get<Guid>();
+
+            Database.CountRecords(ip, prototype, transaction);
 		}
 	}
 }
