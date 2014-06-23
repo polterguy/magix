@@ -48,7 +48,7 @@ namespace Magix.execute
 
                 if (!ip.Contains("persist") || ip["persist"].Get<bool>())
                 {
-                    DataBaseRemoval.Remove(activeEvent, "magix.execute.override");
+                    DataBaseRemoval.Remove(activeEvent, "magix.execute.override", e.Params);
 
                     Node saveNode = new Node();
                     saveNode["id"].Value = Guid.NewGuid().ToString();
@@ -65,7 +65,7 @@ namespace Magix.execute
             else
             {
                 if (!ip.Contains("persist") || ip["persist"].Get<bool>())
-                    DataBaseRemoval.Remove(activeEvent, "magix.execute.override");
+                    DataBaseRemoval.Remove(activeEvent, "magix.execute.override", e.Params);
 
                 ActiveEvents.Instance.RemoveMapping(activeEvent);
             }

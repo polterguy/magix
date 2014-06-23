@@ -6,6 +6,10 @@ creates a grid showing all roles in the system, allowing the user to edit
 and manage these roles"
 
 
+// verifies user is in admin role
+magix.core.verify-role
+  role=>admin
+
 // event that creates tree view showing all roles in system
 event
   name=>magix.roles.show-roles-tree

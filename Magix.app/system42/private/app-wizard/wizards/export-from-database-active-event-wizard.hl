@@ -4,6 +4,10 @@ inspect=>@"allows you to create an active event that helps you
 export records from your database to a csv/excel file"
 
 
+// verifies user is in admin role
+magix.core.verify-role
+  role=>admin
+
 _name=>export from db active event
 
 magix.forms.create-web-part

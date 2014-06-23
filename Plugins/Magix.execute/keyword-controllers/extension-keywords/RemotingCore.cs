@@ -36,6 +36,9 @@ namespace Magix.execute
             RemapOpenEvents();
 		}
 
+        /*
+         * remaps stored open active events
+         */
         private static void RemapOpenEvents()
         {
             Node tmp = new Node();
@@ -54,6 +57,9 @@ namespace Magix.execute
             }
         }
 
+        /*
+         * remaps stored tunneled active events
+         */
         private static void RemapTunneledEvents()
         {
             Node tmp = new Node();
@@ -104,7 +110,7 @@ namespace Magix.execute
 			if (string.IsNullOrEmpty(url))
 			{
                 if (!ip.Contains("persist") || ip["persist"].Get<bool>())
-                    DataBaseRemoval.Remove(activeEvent, "magix.execute.tunnel");
+                    DataBaseRemoval.Remove(activeEvent, "magix.execute.tunnel", e.Params);
 
 				ActiveEvents.Instance.RemoveRemoteOverride(activeEvent);
 			}
@@ -112,7 +118,7 @@ namespace Magix.execute
 			{
                 if (!ip.Contains("persist") || ip["persist"].Get<bool>())
                 {
-                    DataBaseRemoval.Remove(activeEvent, "magix.execute.tunnel");
+                    DataBaseRemoval.Remove(activeEvent, "magix.execute.tunnel", e.Params);
 
                     Node saveNode = new Node();
                     saveNode["id"].Value = Guid.NewGuid();
@@ -156,7 +162,7 @@ namespace Magix.execute
 
             if (!ip.Contains("persist") || ip["persist"].Get<bool>())
             {
-                DataBaseRemoval.Remove(activeEvent, "magix.execute.open");
+                DataBaseRemoval.Remove(activeEvent, "magix.execute.open", e.Params);
 
                 Node saveNode = new Node();
                 saveNode["id"].Value = Guid.NewGuid();
@@ -197,7 +203,7 @@ namespace Magix.execute
             string activeEvent = ip["name"].Get<string>();
 
             if (!ip.Contains("persist") || ip["persist"].Get<bool>())
-                DataBaseRemoval.Remove(activeEvent, "magix.execute.open");
+                DataBaseRemoval.Remove(activeEvent, "magix.execute.open", e.Params);
 
 			ActiveEvents.Instance.RemoveRemotable(activeEvent);
 		}

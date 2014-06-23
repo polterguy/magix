@@ -31,6 +31,10 @@ then pass in [inspect-container].  if you wish to override the css class
 for the hyperlisp executor, once loaded, then pass in [inspect-class]"
 
 
+// verifies user is in admin role
+magix.core.verify-role
+  role=>admin
+
 // changing css class(es) if requested
 if=>exist
   lhs=>[$][description-class]

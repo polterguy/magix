@@ -46,17 +46,16 @@ namespace Magix.execute
 
             lambdaCodeBlock = lambdaCodeBlock.Clone();
 
-            foreach (Node idx in ip)
-            {
-                lambdaCodeBlock["$"].Add(idx);
-            }
+            if (ip.Count > 0)
+                lambdaCodeBlock["$"].AddRange(ip);
 
             RaiseActiveEvent(
                 "magix.execute",
                 lambdaCodeBlock);
 
             ip.Clear();
-            ip.AddRange(lambdaCodeBlock["$"]);
+            if (lambdaCodeBlock.Contains("$") && lambdaCodeBlock["$"].Count > 0)
+                ip.AddRange(lambdaCodeBlock["$"]);
         }
 	}
 }

@@ -13,6 +13,10 @@ wizard.  then make sure it allows the user to follow a wizard interface to
 create whatever functionality your wizard allows the user to create"
 
 
+// verifies user is in admin role
+magix.core.verify-role
+  role=>admin
+
 magix.file.list-files
   directory=>system42/private/app-wizard/wizards
   filter=>*.hl

@@ -6,6 +6,11 @@ namespace.&nbsp;&nbsp;see the file events-create-desktop-shortcuts.hl
 in the startup folder to see an example of how you can extend
 the desktop yourself"
 
+
+// verifies user is in admin role
+magix.core.verify-role
+  role=>admin
+
 list-events
   begins-with=>magix.admin.desktop-shortcuts.
 

@@ -7,6 +7,10 @@ and authorize into the system.  this fil allows you to edit who
 has access to the system, and which type of access they have"
 
 
+// verifies user is in admin role
+magix.core.verify-role
+  role=>admin
+
 // setting current paging to default
 magix.viewstate.set
   id=>magix.users.current-paging

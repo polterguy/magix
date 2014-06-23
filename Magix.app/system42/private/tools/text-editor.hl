@@ -30,6 +30,10 @@ if you supply an [onesc] piece of hyperlisp code, then this code will
 execute when the user clicks esc"
 
 
+// verifies user is in admin role
+magix.core.verify-role
+  role=>admin
+
 // including toolbox buttons css file
 magix.viewport.include-client-file
   type=>css

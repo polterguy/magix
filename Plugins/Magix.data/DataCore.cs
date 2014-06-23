@@ -57,6 +57,8 @@ namespace Magix.data
             }
 
             Guid transaction = Guid.Empty;
+            if (e.Params.Contains("_database-transaction"))
+                throw new ArgumentException("there is already an open transaction towards the database");
             try
             {
                 transaction = Database.CreateTransaction();

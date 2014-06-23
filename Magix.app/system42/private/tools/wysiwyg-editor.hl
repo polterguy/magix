@@ -5,6 +5,10 @@ inspect=>@"allows wysiwyg editing of html files
 creates a wysiwyg editor where the user can edit html files"
 
 
+// verifies user is in admin role
+magix.core.verify-role
+  role=>admin
+
 // including wysiwyg css
 magix.viewport.include-client-file
   type=>css
@@ -156,6 +160,8 @@ magix.forms.create-web-part
         id=>editor-surface
   controls
     panel=>main-wrapper
+      class=>fill-width
+      style=>overflow:hidden;
       controls
         wysiwyg=>editor-surface
           class=>fill-width

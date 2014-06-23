@@ -354,3 +354,131 @@ contain wildcards, and for then to count them again"
       code
         throw=>[magix.data.count] misbehaved
 
+
+event
+  name=>magix.test.data-transaction-rollback
+  persist=>false
+  inspect=>@"verifies [magix.data.transaction] rolls back correctly
+
+saves multiple objects, and verifies that unless [magix.data.commit] 
+is explicitly invoked, the entire update to the database is discarded"
+  code
+    magix.data.transaction
+      _int=>0
+      while=>less-than
+        lhs=>[_int].Value
+        rhs=>50
+        code
+          magix.data.save
+            value
+              type=>magix.test.transactional-object
+              name=>howdy world
+          using=>magix.math
+            add
+              =>[_int].Value
+              =>1
+          set=>[_int].Value
+            value=>[@][using][add].Value
+    magix.data.count
+      prototype
+        type=>magix.test.transactional-object
+    if=>not-equals
+      lhs=>[magix.data.count][count].Value
+      rhs=>0
+      code
+        throw=>[magix.data.transaction] misbehaved
+
+
+event
+  name=>magix.test.data-transaction-commit
+  persist=>false
+  inspect=>@"verifies [magix.data.transaction] commits correctly
+
+saves multiple objects, commits, and verifies that the changes to 
+the database is serialized"
+  code
+    magix.data.transaction
+      _int=>0
+      while=>less-than
+        lhs=>[_int].Value
+        rhs=>50
+        code
+          magix.data.save
+            value
+              type=>magix.test.transactional-object
+              name=>howdy world
+          using=>magix.math
+            add
+              =>[_int].Value
+              =>1
+          set=>[_int].Value
+            value=>[@][using][add].Value
+      magix.data.commit
+    magix.data.count
+      prototype
+        type=>magix.test.transactional-object
+    magix.data.remove
+      prototype
+        type=>magix.test.transactional-object
+    if=>not-equals
+      lhs=>[magix.data.count][count].Value
+      rhs=>50
+      code
+        throw=>[magix.data.transaction] misbehaved
+
+
+event
+  name=>magix.test.data-transaction-multiple-throws
+  persist=>false
+  inspect=>@"verifies [magix.data.transaction] works correctly
+
+tries to open two consecutive transactions, verifying that the second 
+attempt throws an exception"
+  code
+    _expected-exception
+    magix.data.transaction
+    magix.data.transaction
+
+
+event
+  name=>magix.test.data-transaction-event-rollback
+  persist=>false
+  inspect=>@"verifies [magix.data.transaction] works correctly
+
+opens a transaction, and invokes an active event that stores to 
+the database, ensuring the data items stored in the event is 
+discarded"
+  code
+    magix.data.transaction
+      event
+        name=>magix.test.foo
+        code
+          magix.data.save
+            value
+              type=>magix.test.transactional-object
+              name=>howdy world
+                real-name=>thomas
+      magix.test.foo
+      magix.test.foo
+      magix.test.foo
+      magix.test.foo
+      magix.test.foo
+      event
+        name=>magix.foo
+      magix.data.count
+        prototype
+          type=>magix.test.transactional-object
+    magix.data.count
+      prototype
+        type=>magix.test.transactional-object
+    if=>not-equals
+      lhs=>[magix.data.transaction][magix.data.count][count].Value
+      rhs=>5
+      code
+        throw=>[magix.data.transaction] misbehaved
+    if=>not-equals
+      lhs=>[magix.data.count][count].Value
+      rhs=>0
+      code
+        throw=>[magix.data.transaction] misbehaved
+
