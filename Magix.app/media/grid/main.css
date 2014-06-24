@@ -567,8 +567,12 @@ select:disabled
 {
     width:70px;
     height:72px;
-    margin-right:10px;
     background-image:url(../images/icons/star.png);
     background-position:0 -72px;
+}
+
+.mux-rating a.last
+{
+    margin-right:0;
 }
 
