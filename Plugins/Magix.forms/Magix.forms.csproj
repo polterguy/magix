@@ -38,6 +38,7 @@
     <Compile Include="controls\base\BaseWebControlFormElementTextController.cs" />
     <Compile Include="controls\base\BaseWebControlListFormElementController.cs" />
     <Compile Include="controls\base\AttributeControlController.cs" />
+    <Compile Include="controls\RatingController.cs" />
     <Compile Include="controls\DynamicController.cs" />
     <Compile Include="FormsCore.cs" />
     <Compile Include="controls\LabelController.cs" />

@@ -9,6 +9,10 @@ adds the underlaying values together and puts the result in value
 of [magix.math.add] node.  [add] nodes can be nested with other 
 magix.math nodes
 
+if you wish, you can have the [add] node's value be an expression, at 
+which case the result will be stored in the value of the expression's 
+return value.  you can only use node lists expressions this way
+
 thread safe"
 
 magix.math.add-sample
@@ -23,6 +27,10 @@ magix.math.subtract-dox=>@"subtracts two or more numbers
 subtracts the underlaying values together and puts the result in value 
 of [magix.math.subtract] node.  [subtract] nodes can be nested with other 
 magix.math nodes
+
+if you wish, you can have the [add] node's value be an expression, at 
+which case the result will be stored in the value of the expression's 
+return value.  you can only use node lists expressions this way
 
 thread safe"
 
@@ -39,6 +47,10 @@ multiplies the underlaying values together and puts the result in value
 of [magix.math.multiply] node.  [multiply] nodes can be nested with other 
 magix.math nodes
 
+if you wish, you can have the [add] node's value be an expression, at 
+which case the result will be stored in the value of the expression's 
+return value.  you can only use node lists expressions this way
+
 thread safe"
 
 magix.math.multiply-sample
@@ -54,6 +66,10 @@ divides the underlaying values together and puts the result in value
 of [magix.math.divide] node.  [divide] nodes can be nested with other 
 magix.math nodes
 
+if you wish, you can have the [add] node's value be an expression, at 
+which case the result will be stored in the value of the expression's 
+return value.  you can only use node lists expressions this way
+
 thread safe"
 
 magix.math.divide-sample
@@ -68,6 +84,10 @@ magix.math.modulo-dox=>@"modulos two or more numbers
 modulos the underlaying values together and puts the result in value 
 of [magix.math.modulo] node.  [modulo] nodes can be nested with other 
 magix.math nodes
+
+if you wish, you can have the [add] node's value be an expression, at 
+which case the result will be stored in the value of the expression's 
+return value.  you can only use node lists expressions this way
 
 thread safe"
 

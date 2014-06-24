@@ -547,3 +547,28 @@ select:disabled
 	padding-bottom:18px;
 }
 
+.mux-rating
+{
+    display:block;
+    float:left;
+}
+
+.mux-rating a
+{
+    width:70px;
+    height:72px;
+    margin-right:10px;
+    background-image:url(../images/icons/star.png);
+    display:block;
+    float:left;
+}
+
+.mux-rating a.rating-checked
+{
+    width:70px;
+    height:72px;
+    margin-right:10px;
+    background-image:url(../images/icons/star.png);
+    background-position:0 -72px;
+}
+

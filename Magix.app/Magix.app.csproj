@@ -84,6 +84,7 @@
     <Content Include="media\images\help-files\screenshots\hyper-lisp-spaces.png" />
     <Content Include="media\images\help-files\web-part-designer-screenshot.jpg" />
     <Content Include="media\images\icons\arrows.png" />
+    <Content Include="media\images\icons\star.png" />
     <Content Include="media\images\icons\start-button-blue.png" />
     <Content Include="media\images\icons\start-button.png" />
     <Content Include="media\images\icons\toolbox-icons.png" />
@@ -145,7 +146,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349C5851-65DF-11DA-9384-00065B846F21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>False</AutoAssignPort>
           <DevelopmentServerPort>8080</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>

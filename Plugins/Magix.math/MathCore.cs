@@ -222,7 +222,15 @@ namespace Magix.math
                 else
                     result = second(Expressions.GetExpressionValue<decimal>(idx.Get<string>(), dp, ip, false), result);
             }
-            ip.Value = result;
+            if (!string.IsNullOrEmpty(ip.Get<string>()) && ip.Get<string>().StartsWith("["))
+            {
+                Node resultNode = Expressions.GetExpressionValue<Node>(ip.Get<string>(), dp, ip, true);
+                if (resultNode == null)
+                    throw new ArgumentException("only node lists can be set as values of [" + ip.Name + "]");
+                resultNode.Value = result;
+            }
+            else
+                ip.Value = result;
         }
     }
 }
