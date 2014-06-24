@@ -252,6 +252,22 @@ magix.forms.button-sample-end
     magix.viewport.show-message
       message=>button was clicked
 
+magix.forms.rating-dox=>@"creates a rating input type of web control
+
+the rating web control is useful for allowing people to give their rating to some object 
+according to what they think"
+
+magix.forms.rating-sample
+  magix.forms.create-web-part
+    container=>content5
+    form-id=>sample-form
+
+magix.forms.rating-sample-end
+  max-value=>5
+  onrate
+    magix.viewport.show-message
+      message=>something was rated
+
 magix.forms.check-box-dox-start=>@"creates a check-box input type of web control
 
 the check-box web control is useful for representing to the user that he needs 
