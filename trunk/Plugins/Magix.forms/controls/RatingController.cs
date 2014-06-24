@@ -10,6 +10,7 @@ using Magix.Core;
 using Magix.UX.Widgets;
 using Magix.UX.Widgets.Core;
 using System.Web.UI;
+using Magix.UX;
 
 namespace Magix.forms
 {
@@ -35,9 +36,17 @@ namespace Magix.forms
             Panel ret = new Panel();
             ret.Class = "mux-rating";
             FillOutParameters(e.Params, ret);
+            ret.ID += "-wrapper";
+
+            ret.PreRender += delegate
+            {
+                Hidden hidValue = Selector.FindControl<Hidden>(ret, ret.ID.Replace("-wrapper", ""));
+                if (string.IsNullOrEmpty(hidValue.Value))
+                    SetChecked(ret, 0);
+            };
 
             Hidden hid = new Hidden();
-            hid.ID = ret.ID + "-value";
+            hid.ID = ret.ID.Replace("-wrapper", "");
             ret.Controls.Add(hid);
 
             int maxValue = 5;
@@ -55,12 +64,17 @@ namespace Magix.forms
                 btn.ID = "star_" + idxNo;
                 if (idxNo < value)
                     btn.Class = "rating-checked";
+                if (idxNo == maxValue - 1)
+                {
+                    // last control
+                    btn.Class += " last";
+                }
                 if (ShouldHandleEvent("onrate", codeNode))
                 {
                     if (!e.Params.ContainsValue("id-prefix"))
                     {
                         Node onRateCode = codeNode["onrate"].Clone();
-                        btn.Click += delegate(object sender2, EventArgs e2)
+                        btn.Click += delegate
                         {
                             SetChecked(ret, buttonIndex);
                             onRateCode["$"]["value"].Value = buttonIndex;
@@ -75,7 +89,7 @@ namespace Magix.forms
                 {
                     if (!e.Params.ContainsValue("id-prefix"))
                     {
-                        btn.Click += delegate(object sender2, EventArgs e2)
+                        btn.Click += delegate
                         {
                             hid.Value = buttonIndex.ToString();
                             SetChecked(ret, buttonIndex);

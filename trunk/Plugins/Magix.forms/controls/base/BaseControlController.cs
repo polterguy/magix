@@ -218,18 +218,12 @@ namespace Magix.forms
 
         private static void ClearValues(Control ctrl, Node ip)
         {
-            foreach (Control idxCtrl in ctrl.Controls)
+            IValueControl valueCtrl = ctrl as IValueControl;
+            if (valueCtrl != null && valueCtrl.IsTrueValue)
+                valueCtrl.ControlValue = null;
+            foreach (Control idxChild in ctrl.Controls)
             {
-                IValueControl valueCtrl = idxCtrl as IValueControl;
-                if (valueCtrl != null && valueCtrl.IsTrueValue)
-                    valueCtrl.ControlValue = null;
-                foreach (Control idxChild in idxCtrl.Controls)
-                {
-                    IValueControl valueChildCtrl = idxChild as IValueControl;
-                    if (valueChildCtrl != null && valueChildCtrl.IsTrueValue)
-                        valueChildCtrl.ControlValue = null;
-                    GetValues(idxChild, ip);
-                }
+                ClearValues(idxChild, ip);
             }
         }
 
@@ -264,18 +258,12 @@ namespace Magix.forms
          */
         private static void GetValues(Control ctrl, Node ip)
         {
-            foreach (Control idxCtrl in ctrl.Controls)
+            IValueControl valueCtrl = ctrl as IValueControl;
+            if (valueCtrl != null && valueCtrl.IsTrueValue)
+                ip["values"][ctrl.ID].Value = valueCtrl.ControlValue;
+            foreach (Control idxChild in ctrl.Controls)
             {
-                IValueControl valueCtrl = idxCtrl as IValueControl;
-                if (valueCtrl != null && valueCtrl.IsTrueValue)
-                    ip["values"][idxCtrl.ID].Value = valueCtrl.ControlValue;
-                foreach (Control idxChild in idxCtrl.Controls)
-                {
-                    IValueControl valueChildCtrl = idxChild as IValueControl;
-                    if (valueChildCtrl != null && valueChildCtrl.IsTrueValue)
-                        ip["values"][idxChild.ID].Value = valueChildCtrl.ControlValue;
-                    GetValues(idxChild, ip);
-                }
+                GetValues(idxChild, ip);
             }
         }
 
