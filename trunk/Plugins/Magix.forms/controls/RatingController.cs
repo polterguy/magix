@@ -43,10 +43,14 @@ namespace Magix.forms
                 Hidden hidValue = Selector.FindControl<Hidden>(ret, ret.ID.Replace("-wrapper", ""));
                 if (string.IsNullOrEmpty(hidValue.Value))
                     SetChecked(ret, 0);
+                else
+                    SetChecked(ret, int.Parse(hidValue.Value));
             };
 
             Hidden hid = new Hidden();
             hid.ID = ret.ID.Replace("-wrapper", "");
+            if (codeNode.ContainsValue("value"))
+                hid.Value = codeNode["value"].Get<string>();
             ret.Controls.Add(hid);
 
             int maxValue = 5;
@@ -62,12 +66,10 @@ namespace Magix.forms
                 int buttonIndex = idxNo + 1;
                 LinkButton btn = new LinkButton();
                 btn.ID = "star_" + idxNo;
-                if (idxNo < value)
-                    btn.Class = "rating-checked";
                 if (idxNo == maxValue - 1)
                 {
                     // last control
-                    btn.Class += " last";
+                    btn.Class = "last";
                 }
                 if (ShouldHandleEvent("onrate", codeNode))
                 {
@@ -102,14 +104,14 @@ namespace Magix.forms
             ip["_ctrl"].Value = ret;
 		}
 
-        private static void SetChecked(Panel ret, int buttonIndex)
+        private static void SetChecked(Panel ret, int value)
         {
             foreach (Control idxCtrl in ret.Controls)
             {
                 LinkButton idxBtn = idxCtrl as LinkButton;
                 if (idxBtn != null)
                 {
-                    if (int.Parse(idxBtn.ID.Substring(5)) < buttonIndex)
+                    if (int.Parse(idxBtn.ID.Substring(5)) < value)
                     {
                         if (!idxBtn.Class.Contains(" rating-checked"))
                             idxBtn.Class += " rating-checked";
