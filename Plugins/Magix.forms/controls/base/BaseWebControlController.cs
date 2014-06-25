@@ -406,7 +406,7 @@ namespace Magix.forms
 			node["dir"].Value = "ltr";
             node["tabindex"].Value = 5;
             node["title"].Value = "tooltip";
-			node["style"].Value = "css styles";
+			node["style"].Value = "background-color:#fafafa;";
 			node["onclick"].Value = "hyperlisp code";
 			node["ondblclick"].Value = "hyperlisp code";
 			node["onmousedown"].Value = "hyperlisp code";

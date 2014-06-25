@@ -252,10 +252,18 @@ magix.forms.button-sample-end
     magix.viewport.show-message
       message=>button was clicked
 
-magix.forms.rating-dox=>@"creates a rating input type of web control
+magix.forms.rating-dox-start=>@"creates a rating input type of web control
 
 the rating web control is useful for allowing people to give their rating to some object 
 according to what they think"
+
+magix.forms.rating-dox-end=>@"[value] is the initial value of the control, or how many 
+stars are initially selected
+
+[max-value] is the number of stars in total the user can choose to fill
+
+[onrate] is an active event raised when the user clicks one of the stars, and chooses to 
+give the rating control a value"
 
 magix.forms.rating-sample
   magix.forms.create-web-part
@@ -267,6 +275,25 @@ magix.forms.rating-sample-end
   onrate
     magix.viewport.show-message
       message=>something was rated
+
+
+magix.forms.video-dox-start=>@"creates a video web control
+
+the video web control is useful for displaying videos on your web page"
+
+magix.forms.video-dox-end=>@"[src] is the url to the video file you wish to display.  magix supports only 
+webm out of the box, but by modifying the mime formats in the web.config file 
+of your installation, and applying some other changes, other formats can be 
+supported"
+
+magix.forms.video-sample
+  magix.forms.create-web-part
+    container=>content5
+    form-id=>sample-form
+
+magix.forms.video-sample-end
+  src=>media/videos/unsustainable-growth.webm
+
 
 magix.forms.check-box-dox-start=>@"creates a check-box input type of web control
 

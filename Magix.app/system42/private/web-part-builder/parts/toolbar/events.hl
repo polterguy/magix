@@ -208,7 +208,6 @@ magix.ide.show-preview
     container=>preview-web-part
     class=>span-22 last top-2 boxed
     controls-file=>system42/private/web-part-builder/parts/preview/controls.hl
-    events-file=>system42/private/web-part-builder/parts/preview/events.hl
   magix.browser.scroll
     id=>preview-web-part
 

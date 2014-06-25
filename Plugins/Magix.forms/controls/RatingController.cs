@@ -17,7 +17,7 @@ namespace Magix.forms
 	/*
 	 * contains the rating control
 	 */
-    internal sealed class RatingController : BaseWebControlFormElementTextController
+    internal sealed class RatingController : BaseWebControlController
 	{
 		/*
 		 * creates button widget
@@ -129,13 +129,19 @@ namespace Magix.forms
                 node["inspect"],
                 "Magix.forms",
                 "Magix.forms.hyperlisp.inspect.hl",
-                "[magix.forms.rating-dox].value");
+                "[magix.forms.rating-dox-start].value");
             AppendCodeFromResource(
                 node,
                 "Magix.forms",
                 "Magix.forms.hyperlisp.inspect.hl",
                 "[magix.forms.rating-sample]");
             base.Inspect(node["magix.forms.create-web-part"]["controls"]["rating"]);
+            AppendInspectFromResource(
+                node["inspect"],
+                "Magix.forms",
+                "Magix.forms.hyperlisp.inspect.hl",
+                "[magix.forms.rating-dox-end].value",
+                true);
             node["magix.forms.create-web-part"]["controls"]["rating"]["class"].Value = "mux-rating";
             node["magix.forms.create-web-part"]["controls"]["rating"]["value"].Value = "2";
             AppendCodeFromResource(
