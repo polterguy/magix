@@ -1,0 +1,142 @@
+panel=>main-wrapper
+  class=>span-22 last
+  controls
+    label=>label-header
+      value=>Remember your favorite
+      class=>span-12 left-5 top-2
+      tag=>h1
+    label=>label-0
+      value=>Here you can rate our wines, and send a note to yourself, such that you can remember which wine was your favorite when you did our wine flight. Or if you wish, you can purchase our wines from our website, and have them shipped directly to where you live.
+      class=>span-20 left-1 last clear top-1
+    panel=>wine-rating-09
+      class=>span-18 top-2 left-1 min-height-5 air-padding
+      controls
+        img=>image-pinot-09
+          alt=>ceja vineyards pinot 09
+          src=>media/images/samples/2010 Carneros Pinot Noir.jpg
+          class=>span-4 last
+          style=>border-radius:25px;margin-right:10px;box-shadow:3px 3px 5px rgba(0,0,0,.5);
+        label=>label-wine-09
+          value=>2010 Carneros Pinot Noir
+          class=>span-12
+          tag=>h2
+        hyperlink=>hyperlink-0
+          value=>purchase
+          class=>span-2 last
+          href=>http://www.cejavineyards.com/product/2010-Carneros-Pinot-Noir
+        label=>label-description-09
+          value=>The aromas are fresh and floral with red plum, black cherry blossoms and hibiscus scents. The palate showcases a savory medley of Jamaica tea, dried berry, herb and spice flavors. This is a bright, crisp and balanced Pinot Noir with soft tannins and layers of textures.
+          class=>span-7 right-2
+        text-area=>carneros-2010-pinot-noir-comment
+          class=>span-7 top-1
+          rows=>5
+          placeholder=>your comment ...
+          style=>background-color:transparent;
+        rating=>carneros-2010-pinot-noir-rating
+          class=>mux-rating top-1
+      style=>border-radius:25px;background-color:#ffffff;background-image:url(media/images/samples/vineyard.jpg);box-shadow:3px 3px 5px rgba(0,0,0,.5);
+    panel=>wine-rating-08
+      class=>span-18 left-1 top-2 min-height-5 air-padding
+      controls
+        img=>image-pinot-08
+          alt=>ceja vineyards pinot 08
+          src=>media/images/samples/2009 Sonoma Coast Pinot Noir.jpg
+          class=>span-4 last
+          style=>border-radius:25px;margin-right:10px;box-shadow:3px 3px 5px rgba(0,0,0,.5);
+        label=>label-wine-08
+          value=>2009 Sonoma Coast Pinot Noir
+          class=>span-12
+          tag=>h2
+        hyperlink=>hyperlink-1
+          value=>purchase
+          class=>span-2 last
+          href=>http://www.cejavineyards.com/product/2009-Sonoma-Coast-Pinot-Noir
+        label=>label-description-08
+          value=>Aromas of wild berry, pretty plum, cola and earthy raspberry. The palate is smooth and richly flavored with a mix of savory dark berry, blackberry, mineral and sage flavors. This is beautifully crafted Pinot Noir that is rich, elegant and intense.
+          class=>span-7 right-2
+        text-area=>sonoma-2009-pinot-noir-comment
+          class=>span-7 top-1
+          rows=>5
+          placeholder=>your comment ...
+          style=>background-color:transparent;
+        rating=>sonoma-2009-pinot-noir-rating
+          class=>mux-rating top-1
+      style=>border-radius:25px;background-color:#ffffff;background-image:url(media/images/samples/vineyard.jpg);box-shadow:3px 3px 5px rgba(0,0,0,.5);
+    panel=>email-wrapper
+      class=>top-4 left-5 span-10 min-height-5 boxed-light-green air-padding
+      controls
+        label=>label-name
+          value=>your name
+          class=>span-10 last top-1
+          tag=>label
+        text-box=>full-name
+          class=>span-10 last large bottom-1
+          placeholder=>full name ...
+        label=>label-email
+          value=>your email
+          class=>span-10 last
+          tag=>label
+        text-box=>email
+          class=>span-10 last large bottom-1
+          placeholder=>email ...
+          type=>email
+        label=>label-disclaimer
+          value=>(*) by clicking send, you accept to subscribe to our monthly newsletter, where we will inform you about news from ceja vineyards
+          class=>span-10 last
+          tag=>p
+          style=>color:#7a7a7a;
+        button=>save
+          value=>send
+          class=>span-3 top-1 last right large bottom-1
+          onclick
+            magix.forms.get-children-values
+              id=>main-wrapper
+            _good=>true
+            if=>exist
+              lhs=>[magix.forms.get-children-values][values][email]
+              code
+                split=>[magix.forms.get-children-values][values][email].value
+                  what=>@
+                if=>not-equals
+                  lhs=>[@][split][result].count
+                  rhs=>2
+                  code
+                    magix.viewport.show-message
+                      message=>that's not a good email address
+                      color=>#ffaaaa
+                    magix.forms.effect
+                      id=>email
+                      type=>focus-and-select
+                    set=>[_good].value
+                      value=>false
+                else
+                  split=>[@][..][split][result][1].value
+                    what=>.
+                  if=>not-equals
+                    lhs=>[@][split][result].count
+                    rhs=>2
+                    code
+                      magix.viewport.show-message
+                        message=>that's not a good email address
+                        color=>#ffaaaa
+                      magix.forms.effect
+                        id=>email
+                        type=>focus-and-select
+                      set=>[_good].value
+                        value=>false
+            if=>equals
+              lhs=>[_good].value
+              rhs=>true
+              code
+                add=>[@][magix.data.save][value]
+                  value=>[magix.forms.get-children-values][values]
+                  children-only=>true
+                magix.data.save
+                  value
+                    type=>magix.samples.wine-rating
+                magix.forms.clear-children-values
+                  id=>main-wrapper
+                magix.viewport.show-message
+                  message=>thank you for rating our wines
+                  color=>#aaffaa
+      style=>box-shadow:3px 3px 5px rgba(0,0,0,.5);
