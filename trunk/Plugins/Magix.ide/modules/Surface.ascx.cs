@@ -324,7 +324,7 @@ namespace Magix.ide.modules
                 throw new ArgumentException("no control in clipboard");
 
             Node controlToAddNode = ClipBoard.Clone();
-            controlToAddNode.Value = GetNextAvailableControlId(controlToAddNode);
+            GetNextAvailableControlId(controlToAddNode);
 
             AddControlToSurface(
                 ip,
@@ -924,7 +924,7 @@ namespace Magix.ide.modules
 
             if (!controlToAddNode.Contains("id") &&
                 string.IsNullOrEmpty(controlToAddNode.Get<string>()))
-                controlToAddNode.Value = GetNextAvailableControlId(controlToAddNode);
+                GetNextAvailableControlId(controlToAddNode);
             else if (controlToAddNode.Contains("id"))
             {
                 if (controlToAddNode.Value != null)
@@ -988,13 +988,18 @@ namespace Magix.ide.modules
         /*
          * returns the next automatic available control id
          */
-        private string GetNextAvailableControlId(Node controlNode)
+        private void GetNextAvailableControlId(Node controlNode)
         {
-            string ctrlString = controlNode.Name;
             Node getControlsNode = new Node();
             RaiseActiveEvent(
                 "magix.ide.list-controls",
                 getControlsNode);
+            GetNextAvailableControlIdForSingleControl(controlNode, getControlsNode);
+        }
+
+        private static void GetNextAvailableControlIdForSingleControl(Node controlNode, Node getControlsNode)
+        {
+            string ctrlString = controlNode.Name;
             int idxNo = 0;
             string retVal = ctrlString + "-" + idxNo;
             while (true)
@@ -1011,9 +1016,19 @@ namespace Magix.ide.modules
                     }
                 }
                 if (!found)
+                {
+                    getControlsNode["controls"].Add("", ctrlString + ":" + retVal);
+                    controlNode.Value = retVal;
                     break;
+                }
             }
-            return retVal;
+            if (controlNode.Contains("controls"))
+            {
+                foreach (Node idxChildCtrl in controlNode["controls"])
+                {
+                    GetNextAvailableControlIdForSingleControl(idxChildCtrl, getControlsNode);
+                }
+            }
         }
 
         /*
