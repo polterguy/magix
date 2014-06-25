@@ -373,7 +373,6 @@
     <Content Include="system42\private\web-part-builder\parts\save\filesystem\controls.hl" />
     <Content Include="system42\private\web-part-builder\parts\save\filesystem\events.hl" />
     <Content Include="system42\private\web-part-builder\parts\preview\controls.hl" />
-    <Content Include="system42\private\web-part-builder\parts\preview\events.hl" />
     <Content Include="system42\public\index-content.mml" />
     <Content Include="system42\private\users\users\controls.hl" />
     <Content Include="system42\private\users\users\events.hl" />

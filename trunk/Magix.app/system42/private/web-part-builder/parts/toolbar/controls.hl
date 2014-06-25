@@ -8,7 +8,7 @@ to create the toolbar parts of the form builder"
 
 select=>select-control
   class=>span-4
-  onclick
+  onselectedindexchanged
     magix.ide.selected-control-changed
 
 button=>btn-copy
