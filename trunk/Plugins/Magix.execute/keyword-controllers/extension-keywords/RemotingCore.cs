@@ -52,7 +52,7 @@ namespace Magix.execute
             {
                 foreach (Node idx in tmp["objects"])
                 {
-                    ActiveEvents.Instance.MakeRemotable(idx["id"].Get<string>());
+                    ActiveEvents.Instance.MakeRemotable(idx["value"]["event"].Get<string>());
                 }
             }
         }
@@ -73,7 +73,7 @@ namespace Magix.execute
             {
                 foreach (Node idx in tmp["objects"])
                 {
-                    ActiveEvents.Instance.OverrideRemotely(idx["id"].Get<string>(), idx["value"]["url"].Get<string>());
+                    ActiveEvents.Instance.OverrideRemotely(idx["value"]["event"].Get<string>(), idx["value"]["url"].Get<string>());
                 }
             }
         }
@@ -155,7 +155,9 @@ namespace Magix.execute
 
             if (!ip.ContainsValue("name"))
                 throw new ArgumentException("[open] needs a [name] parameter");
-            string activeEvent = ip["name"].Get<string>();
+
+            Node dp = Dp(e.Params);
+            string activeEvent = Expressions.GetExpressionValue<string>(ip["name"].Get<string>(), dp, ip, false);
 
             if (!ip.Contains("persist") || ip["persist"].Get<bool>())
             {
@@ -195,7 +197,9 @@ namespace Magix.execute
 
             if (!ip.ContainsValue("name"))
                 throw new ArgumentException("[close] needs a [name]");
-            string activeEvent = ip["name"].Get<string>();
+
+            Node dp = Dp(e.Params);
+            string activeEvent = Expressions.GetExpressionValue<string>(ip["name"].Get<string>(), dp, ip, false);
 
             if (!ip.Contains("persist") || ip["persist"].Get<bool>())
                 DataBaseRemoval.Remove(activeEvent, "magix.execute.open", e.Params);

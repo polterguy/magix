@@ -13,6 +13,44 @@ magix.core.verify-role
 magix.forms.create-web-part
   container=>content1
   class=>span-17 last
+  events
+    magix.fusion.show-open-active-events
+      execute-script
+        file=>system42/private/tools/inspect.hl
+        params
+          open=>true
+          header=>open active events
+          container=>active-events
+          form-class=>span-17 last top-3
+          extra-buttons
+            button=>close-event
+              class=>span-2
+              value=>close
+              onclick
+                magix.forms.get-value
+                  form-id=>active-events
+                  id=>lbl-header
+                if=>equals
+                  lhs=>[magix.forms.get-value][value].value
+                  rhs=>magix.public.get-public-events
+                  code
+                    magix.viewport.show-message
+                      message=>i cannot allow you to close that event, except through the hyperlisp executor!
+                      color=>#ffaaaa
+                    stop
+                magix.viewport.confirm
+                  message=>are you sure you wish to close this active event?
+                  code
+                    magix.forms.get-value
+                      form-id=>active-events
+                      id=>lbl-header
+                    close
+                      name=>[magix.forms.get-value][value].value
+                    using=>magix.viewport
+                      show-message
+                        message=>the active event '{0}' was closed
+                          =>[magix.forms.get-value][value].value
+                    magix.fusion.show-open-active-events
   controls
     label
       tag=>h2
@@ -31,12 +69,7 @@ to open for activation from other sources"
           class=>span-5
           value=>open active events
           onclick
-            execute-script
-              file=>system42/private/tools/inspect.hl
-              params
-                open=>true
-                header=>open active events
-                container=>active-events
+            magix.fusion.show-open-active-events
         button=>tunneled-events
           class=>span-5
           value=>tunneled active events
@@ -47,6 +80,80 @@ to open for activation from other sources"
                 remoted=>true
                 header=>tunneled active events
                 container=>active-events
+                form-class=>span-17 last top-3
+
+    label
+      tag=>label
+      class=>span-4 clear
+      value=>open up active event
+    lambda=>lambda-open-active-event
+      oncreatecontrols
+        // includes necessary javascript files for our autocompleter
+        magix.viewport.include-client-file
+          type=>javascript
+          file=>media/bootstrap/js/jQuery.js
+        magix.viewport.include-client-file
+          type=>javascript
+          file=>media/bootstrap/js/bootstrap.min.js
+        magix.viewport.include-client-file
+          type=>css
+          file=>media/back-end/typeahead.css
+        _json=>
+        list-events
+        for-each=>[list-events][events]
+          if=>not-equals
+            lhs=>[/][_json].value
+            rhs=>
+            code
+              set=>[/][_json].value
+                value=>{0},
+                  =>[/][_json].value
+          set=>[/][_json].value
+            value=>@"{0}""{1}"""
+              =>[/][_json].value
+              =>[.].name
+        _text
+          text-box=>active-event
+            placeholder=>open up active event ...
+            class=>span-6
+            autocomplete=>false
+            @data-provide=>typeahead
+            @data-items=>5
+            @data-source=>{data-source}
+            onenterpressed
+              magix.forms.get-value
+                id=>active-event
+              if=>not-equals
+                lhs=>[magix.forms.get-value][value].value
+                rhs=>
+                code
+                  list-events
+                  if=>not-exist
+                    lhs=>[@][list-events][events][[$][value].value]
+                    code
+                      magix.viewport.show-message
+                        message=>that active event doesn't exist
+                  else
+                    magix.viewport.confirm
+                      message=>are you sure you wish to open up this active event, such that it can be remotely invoked?
+                      code
+                        magix.forms.get-value
+                          id=>active-event
+                        open
+                          name=>[magix.forms.get-value][value].value
+                        magix.forms.set-value
+                          id=>active-event
+                          value=>
+                        using=>magix.viewport
+                          show-message
+                            message=>active event '{0}' was opened
+                              =>[magix.forms.get-value][value].value
+                        magix.fusion.show-open-active-events
+        set=>[**@data-source=>{data-source}].value
+          value=>\[{0}]
+            =>[_json].value
+        add=>[$]
+          value=>[_text][text-box]
+
     dynamic=>active-events
-      class=>span-17 last
 
