@@ -72,7 +72,7 @@ returns the default dashboard shortcuts in your system"
                   onclick
                     magix.tests.run
       overridden-active-events
-        text=>overridden active events
+        text=>dynamic active events
         category=>security
         code
           magix.viewport.clear-controls
@@ -99,7 +99,7 @@ returns the default dashboard shortcuts in your system"
                         event
                           name=>[using][get-value][value].value
                         magix.viewport.show-message
-                          message=>active event was deleted, changes will not show before you reload overridden active events
+                          message=>active event was deleted, changes will not show before you reload dynamic active events
                           color=>#aaffaa
                           time=>5000
                 button=>edit-event
@@ -112,30 +112,25 @@ returns the default dashboard shortcuts in your system"
                       name=>Magix.ide.modules.ExecutorForm
                     magix.forms.get-value
                       form-id=>active-events
-                      id=>lbl-code
-                    replace=>[magix.forms.get-value][value].value
-                      what=>&amp;
-                      with=>&
-                    replace=>[magix.forms.get-value][value].value
-                      what=>&lt;
-                      with=><
-                    replace=>[magix.forms.get-value][value].value
-                      what=>&gt;
-                      with=>>
-                    magix.forms.get-value
-                      form-id=>active-events
                       id=>lbl-header
-                    code-2-node
-                      code=>[magix.forms.get-value][value].value
+                    set=>[_inspect].name
+                      value=>[magix.forms.get-value][value].value
+                    _inspect
+                      inspect
+                        type=>no-html
                     _code
                       event
                         name
+                        inspect
                         code
+                    set=>[_code][**inspect].value
+                      value=>[**inspect=>?].value
                     set=>[_code][**name].value
-                      value=>[magix.forms.get-value:1][value].value
+                      value=>[magix.forms.get-value][value].value
                     add=>[_code][**code]
-                      value=>[code-2-node][node]
+                      value=>[**inspect=>?][..]
                       children-only=>true
+                    set=>[_code][**code][inspect]
                     node-2-code
                       node=>[_code][event]
                     using=>magix.executor
@@ -143,7 +138,7 @@ returns the default dashboard shortcuts in your system"
                         code=>[node-2-code][code].value
 
       active-events
-        text=>active events
+        text=>all active events
         category=>tools
         code
           magix.viewport.clear-controls

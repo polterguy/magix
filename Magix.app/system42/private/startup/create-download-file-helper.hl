@@ -1,12 +1,14 @@
 ﻿
 
-inspect=>@"create the download file helper
+inspect=>@"creates the download file helper
 
 creates an active event that will help transfering private files 
 from the server to the client"
 
+
 event
   name=>magix.file.download
+  persist=>false
   inspect=>@"transfers a file to the client
 
 will transfer a file from the server to the client.  useful 

@@ -161,16 +161,22 @@ namespace Magix.Core
         {
             if (!dropInitialHeader)
                 dropInitialHeader = node.ContainsValue("type") && node["type"].Get("") == "drop-header";
-            bool dropHtml = node.ContainsValue("type") && node["type"].Get("") == "no-html";
+            bool dropHtml = node.ContainsValue("type") && node["type"].Get<string>() == "no-html";
+
+            if (dropHtml)
+            {
+                node.Value = node.Get<string>() + value;
+                return;
+            }
 
             int noCharsSinceCR = 0;
             StringBuilder builder = new StringBuilder(node.Get<string>());
-            if (!dropInitialHeader || dropHtml)
+            if (!dropInitialHeader)
             {
                 noCharsSinceCR += 4;
                 builder.Append("<h3>");
             }
-            else if (!dropHtml)
+            else
             {
                 noCharsSinceCR += 3;
                 builder.Append("<p>");
@@ -187,7 +193,7 @@ namespace Magix.Core
                     case '\t':
                         continue;
                     case '\n':
-                        if (!dropHtml && lastChar == '\n')
+                        if (lastChar == '\n')
                         {
                             builder.Remove(builder.Length - 1, 1);
                             if (!hasClosedH3 && !dropInitialHeader)
@@ -203,33 +209,15 @@ namespace Magix.Core
                             }
                         }
                         else
-                        {
-                            if (noCharsSinceCR >= 33)
-                            {
-                                builder.Append("\n");
-                                noCharsSinceCR = 0;
-                            }
-                            else
-                                builder.Append(' ');
-                        }
+                            builder.Append("\n");
                         break;
                     case '[':
-                        if (!dropHtml)
-                        {
-                            noCharsSinceCR += 8;
-                            builder.Append("<strong>[");
-                        }
-                        else
-                            builder.Append("[");
+                        noCharsSinceCR += 8;
+                        builder.Append("<strong>[");
                         break;
                     case ']':
-                        if (!dropHtml)
-                        {
-                            noCharsSinceCR += 9;
-                            builder.Append("]</strong>");
-                        }
-                        else
-                            builder.Append("]");
+                        noCharsSinceCR += 9;
+                        builder.Append("]</strong>");
                         break;
                     case ' ':
                         if (noCharsSinceCR >= 33)
@@ -240,13 +228,8 @@ namespace Magix.Core
                         else if (lastChar == ' ' && secondLastChar == '.')
                         {
                             builder.Remove(builder.Length - 1, 1);
-                            if (!dropHtml)
-                            {
-                                noCharsSinceCR += 12;
-                                builder.Append("&nbsp;&nbsp;");
-                            }
-                            else
-                                builder.Append("  ");
+                            noCharsSinceCR += 12;
+                            builder.Append("&nbsp;&nbsp;");
                         }
                         else
                             builder.Append(" ");
@@ -258,8 +241,7 @@ namespace Magix.Core
                 secondLastChar = lastChar;
                 lastChar = idxChar;
             }
-            if (!dropHtml)
-                builder.Append("</p>");
+            builder.Append("</p>");
             node.Value = builder.ToString().Replace("<p></p>", "");
         }
 

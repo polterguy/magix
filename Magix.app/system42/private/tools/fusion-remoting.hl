@@ -12,8 +12,10 @@ magix.core.verify-role
 
 magix.forms.create-web-part
   container=>content1
+  form-id=>fusion
   class=>span-17 last
   events
+
     magix.fusion.show-open-active-events
       execute-script
         file=>system42/private/tools/inspect.hl
@@ -51,6 +53,37 @@ magix.forms.create-web-part
                         message=>the active event '{0}' was closed
                           =>[magix.forms.get-value][value].value
                     magix.fusion.show-open-active-events
+
+    magix.fusion.show-tunneled-active-events
+      execute-script
+        file=>system42/private/tools/inspect.hl
+        params
+          remoted=>true
+          header=>tunneled active events
+          container=>active-events
+          form-class=>span-17 last top-3
+          extra-buttons
+            button=>remove-tunnel
+              class=>span-2
+              value=>remove
+              onclick
+                magix.forms.get-value
+                  form-id=>active-events
+                  id=>lbl-header
+                magix.viewport.confirm
+                  message=>are you sure you wish to remove this tunnel?
+                  code
+                    magix.forms.get-value
+                      form-id=>active-events
+                      id=>lbl-header
+                    tunnel
+                      name=>[magix.forms.get-value][value].value
+                    using=>magix.viewport
+                      show-message
+                        message=>the tunnel '{0}' was removed
+                          =>[magix.forms.get-value][value].value
+                    magix.fusion.show-tunneled-active-events
+
   controls
     label
       tag=>h2
@@ -74,13 +107,7 @@ to open for activation from other sources"
           class=>span-5
           value=>tunneled active events
           onclick
-            execute-script
-              file=>system42/private/tools/inspect.hl
-              params
-                remoted=>true
-                header=>tunneled active events
-                container=>active-events
-                form-class=>span-17 last top-3
+            magix.fusion.show-tunneled-active-events
 
     label
       tag=>label
@@ -154,6 +181,46 @@ to open for activation from other sources"
             =>[_json].value
         add=>[$]
           value=>[_text][text-box]
+
+    panel=>tunnel-wrapper
+      class=>span-17 last top-1 btn-group
+      default=>create-tunnel
+      controls
+        label
+          tag=>label
+          class=>span-4
+          value=>tunnel active event
+        text-box=>tunnel-active-event
+          class=>span-6
+          placeholder=>tunnel active event ...
+        text-box=>tunnel-url
+          class=>span-4
+          placeholder=>tunnel url ...
+        button=>create-tunnel
+          class=>span-3
+          value=>create tunnel
+          onclick
+            magix.forms.get-value
+              form-id=>fusion
+              id=>tunnel-active-event
+            magix.forms.get-value
+              form-id=>fusion
+              id=>tunnel-url
+            tunnel
+              name=>[magix.forms.get-value:0][value].value
+              url=>[magix.forms.get-value:1][value].value
+            using=>magix.viewport
+              show-message
+                message=>active event '{0}' was tunneled to '{1}'
+                  =>[magix.forms.get-value:0][value].value
+                  =>[magix.forms.get-value:1][value].value
+            magix.forms.set-value
+              form-id=>fusion
+              id=>tunnel-active-event
+            magix.forms.set-value
+              form-id=>fusion
+              id=>tunnel-url
+            magix.fusion.show-tunneled-active-events
 
     dynamic=>active-events
 

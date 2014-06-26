@@ -33,6 +33,10 @@ if=>not-exist
 event
   name=>magix.admin.create-default-settings-per-user
   persist=>false
+  inspect=>@"creates default settings per user
+
+creates the default user settings for your installation, such as whether or not to show help or not 
+while in dashboard"
   code
 
     // checking to see if user is logged in, and if so, checking to see if show help is turned on
