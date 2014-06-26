@@ -654,6 +654,8 @@ restarted.  this is useful for active events whom are created for instance durin
 the startup of your application, since it will save time, since they will anyway 
 be overwritten the next time your application restarts
 
+[name] can be either an expression or a constant
+
 thread safe"
 
 magix.execute.open-sample
@@ -672,6 +674,8 @@ as the application is not restarted.  this is useful for active
 events whom are created for instance during the startup of your 
 application, since it will save time, since they will anyway be 
 overwritten the next time your application restarts
+
+[name] can be either an expression or a constant
 
 thread safe"
 
