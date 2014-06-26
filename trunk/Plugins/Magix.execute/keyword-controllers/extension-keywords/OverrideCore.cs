@@ -56,23 +56,7 @@ namespace Magix.execute
                     saveNode["value"]["type"].Value = "magix.execute.override";
                     saveNode["value"]["with"].Value = newActiveEvent;
 
-                    Node oldIp = e.Params["_ip"].Get<Node>();
-                    Node oldDp = e.Params["_dp"].Get<Node>();
-                    e.Params["_root-only-execution"].Value = true;
-                    try
-                    {
-                        e.Params["_ip"].Value = saveNode;
-                        e.Params["_dp"].Value = saveNode;
-                        RaiseActiveEvent(
-                            "magix.execute",
-                            e.Params);
-                    }
-                    finally
-                    {
-                        e.Params["_ip"].Value = oldIp;
-                        e.Params["_dp"].Value = oldDp;
-                        e.Params["_root-only-execution"].UnTie();
-                    }
+                    BypassExecuteActiveEvent(saveNode, e.Params);
                 }
                 ActiveEvents.Instance.CreateEventMapping(activeEvent, newActiveEvent);
             }

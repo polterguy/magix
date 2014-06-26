@@ -81,3 +81,5 @@
 
 * implement support for locking containers on viewport
 
+* make "magix.data." - transactional support for magix.execute.event/tunnel/override ....
+
