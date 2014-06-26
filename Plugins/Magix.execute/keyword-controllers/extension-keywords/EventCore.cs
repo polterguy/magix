@@ -143,6 +143,7 @@ namespace Magix.execute
 
                 Node oldIp = pars["_ip"].Get<Node>();
                 Node oldDp = pars["_dp"].Get<Node>();
+                pars["_root-only-execution"].Value = true;
                 try
                 {
                     pars["_ip"].Value = saveNode;
@@ -155,6 +156,7 @@ namespace Magix.execute
                 {
                     pars["_ip"].Value = oldIp;
                     pars["_dp"].Value = oldDp;
+                    pars["_root-only-execution"].UnTie();
                 }
             }
 
