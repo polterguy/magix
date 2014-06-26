@@ -125,24 +125,7 @@ namespace Magix.execute
                     saveNode["value"]["event"].Value = activeEvent;
                     saveNode["value"]["type"].Value = "magix.execute.tunnel";
                     saveNode["value"]["url"].Value = url;
-
-                    Node oldIp = e.Params["_ip"].Get<Node>();
-                    Node oldDp = e.Params["_dp"].Get<Node>();
-                    e.Params["_root-only-execution"].Value = true;
-                    try
-                    {
-                        e.Params["_ip"].Value = saveNode;
-                        e.Params["_dp"].Value = saveNode;
-                        RaiseActiveEvent(
-                            "magix.execute",
-                            e.Params);
-                    }
-                    finally
-                    {
-                        e.Params["_ip"].Value = oldIp;
-                        e.Params["_dp"].Value = oldDp;
-                        e.Params["_root-only-execution"].UnTie();
-                    }
+                    BypassExecuteActiveEvent(saveNode, e.Params);
                 }
 				ActiveEvents.Instance.OverrideRemotely(activeEvent, url);
 			}
@@ -178,14 +161,12 @@ namespace Magix.execute
             {
                 DataBaseRemoval.Remove(activeEvent, "magix.execute.open", e.Params);
 
-                Node saveNode = new Node();
+                Node saveNode = new Node("magix.data.save");
                 saveNode["id"].Value = Guid.NewGuid();
                 saveNode["value"]["event"].Value = activeEvent;
                 saveNode["value"]["type"].Value = "magix.execute.open";
 
-                RaiseActiveEvent(
-                    "magix.data.save",
-                    saveNode);
+                BypassExecuteActiveEvent(saveNode, e.Params);
             }
 			ActiveEvents.Instance.MakeRemotable(activeEvent);
 		}

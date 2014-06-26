@@ -111,18 +111,9 @@ namespace Magix.execute
 			}
 		}
 
-        private static void RemoveActiveEvent(Node ip, string activeEvent, Node pars)
-        {
-            if (!ip.Contains("persist") || ip["persist"].Get<bool>())
-                DataBaseRemoval.Remove(activeEvent, "magix.execute.event", pars);
-
-            ActiveEvents.Instance.RemoveMapping(activeEvent);
-            ActiveEvents.Instance.RemoveRemotable(activeEvent);
-
-            _events[activeEvent].UnTie();
-            _inspect[activeEvent].UnTie();
-        }
-
+        /*
+         * creates an active event
+         */
         private static void CreateActiveEvent(Node ip, string activeEvent, Node pars)
         {
             bool remotable = ip.Contains("remotable") && ip["remotable"].Get<bool>();
@@ -141,23 +132,7 @@ namespace Magix.execute
                 if (ip.Contains("inspect"))
                     saveNode["value"]["inspect"].Value = ip["inspect"].Value;
 
-                Node oldIp = pars["_ip"].Get<Node>();
-                Node oldDp = pars["_dp"].Get<Node>();
-                pars["_root-only-execution"].Value = true;
-                try
-                {
-                    pars["_ip"].Value = saveNode;
-                    pars["_dp"].Value = saveNode;
-                    RaiseActiveEvent(
-                        "magix.execute",
-                        pars);
-                }
-                finally
-                {
-                    pars["_ip"].Value = oldIp;
-                    pars["_dp"].Value = oldDp;
-                    pars["_root-only-execution"].UnTie();
-                }
+                BypassExecuteActiveEvent(saveNode, pars);
             }
 
             ActiveEvents.Instance.CreateEventMapping(
@@ -175,6 +150,21 @@ namespace Magix.execute
             _inspect[activeEvent].Clear();
             if (ip.Contains("inspect"))
                 _inspect[activeEvent].Value = ip["inspect"].Value;
+        }
+
+        /*
+         * removes an active event
+         */
+        private static void RemoveActiveEvent(Node ip, string activeEvent, Node pars)
+        {
+            if (!ip.Contains("persist") || ip["persist"].Get<bool>())
+                DataBaseRemoval.Remove(activeEvent, "magix.execute.event", pars);
+
+            ActiveEvents.Instance.RemoveMapping(activeEvent);
+            ActiveEvents.Instance.RemoveRemotable(activeEvent);
+
+            _events[activeEvent].UnTie();
+            _inspect[activeEvent].UnTie();
         }
 
         /*

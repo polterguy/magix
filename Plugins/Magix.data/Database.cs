@@ -203,21 +203,20 @@ namespace Magix.data
                         if (id != null && id == idxObjectNode.Get<string>())
                         {
                             // loading by id
-                            Node curNode = idxObjectNode.Clone();
-                            ip["value"].AddRange(curNode);
+                            ip["value"].AddRange(idxObjectNode["value"].Clone());
                             return;
                         }
                         else if (id == null)
                         {
                             // loading by prototype
-                            if (idxObjectNode.HasNodes(prototype))
+                            if (idxObjectNode["value"].HasNodes(prototype))
                             {
                                 if ((start == 0 || curMatchingItem >= start) && (end == -1 || curMatchingItem < end))
                                 {
                                     Node objectNode = new Node("object");
                                     objectNode["id"].Value = idxObjectNode.Get<string>();
                                     if (!onlyId)
-                                        objectNode["value"].AddRange(idxObjectNode.Clone());
+                                        objectNode["value"].AddRange(idxObjectNode["value"].Clone());
                                     ip["objects"].Add(objectNode);
                                 }
                                 curMatchingItem += 1;
@@ -251,7 +250,7 @@ namespace Magix.data
                             count += 1;
                         else
                         {
-                            if (idxObjectNode.HasNodes(prototype))
+                            if (idxObjectNode["value"].HasNodes(prototype))
                                 count += 1;
                         }
                     }
@@ -284,8 +283,10 @@ namespace Magix.data
                     {
                         if (idxObjectNode.Get<string>() == id)
                         {
-                            idxObjectNode.Clear();
-                            idxObjectNode.AddRange(value);
+                            idxObjectNode["value"].UnTie();
+                            idxObjectNode["updated"].Value = DateTime.Now;
+                            idxObjectNode["revision-count"].Value = idxObjectNode["revision-count"].Get<decimal>() + 1M;
+                            idxObjectNode["value"].AddRange(value);
                             fileNode = idxFileNode;
                             found = true;
                             break;
@@ -341,7 +342,7 @@ namespace Magix.data
                 {
                     foreach (Node idxObjectNode in idxFileNode)
                     {
-                        if (idxObjectNode.HasNodes(prototype))
+                        if (idxObjectNode["value"].HasNodes(prototype))
                         {
                             nodesToRemove.Add(idxObjectNode);
                             if (!filesToUpdate.Exists(
@@ -433,11 +434,13 @@ namespace Magix.data
         {
             if (string.IsNullOrEmpty(id))
                 id = Guid.NewGuid().ToString().Replace("-", "");
-            value.Name = "id";
-            value.Value = id;
+            Node saveObject = new Node("id", id);
+            saveObject["created"].Value = DateTime.Now;
+            saveObject["revision-count"].Value = 1M;
+            saveObject["value"].AddRange(value.Clone());
 
             Node availableFileNode = FindAvailableNode();
-            availableFileNode.Add(value);
+            availableFileNode.Add(saveObject);
             SaveFileNodeToDisc(availableFileNode);
 
             return id;

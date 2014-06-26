@@ -451,20 +451,20 @@ discarded"
   code
     magix.data.transaction
       event
-        name=>magix.test.foo
+        name=>magix.test-events.foo
         code
           magix.data.save
             value
               type=>magix.test.transactional-object
               name=>howdy world
                 real-name=>thomas
-      magix.test.foo
-      magix.test.foo
-      magix.test.foo
-      magix.test.foo
-      magix.test.foo
+      magix.test-events.foo
+      magix.test-events.foo
+      magix.test-events.foo
+      magix.test-events.foo
+      magix.test-events.foo
       event
-        name=>magix.foo
+        name=>magix.test-events.foo
       magix.data.count
         prototype
           type=>magix.test.transactional-object
@@ -492,7 +492,7 @@ spawns multiple threads, each with its own database transaction,
 making sure every thread finishes before the next one starts"
   code
     event
-      name=>magix.test.transactional-tmp-event
+      name=>magix.test-events.transactional-tmp-event
       code
         magix.data.transaction
           magix.data.save
@@ -507,60 +507,63 @@ making sure every thread finishes before the next one starts"
             prototype
               type=>magix.test.transactional-object
           magix.data.commit
+          magix.data.count
+            prototype
+              type=>magix.test.transactional-object
           if=>not-equals
-            lhs=>[magix.data.count][count].value
-            rhs=>1
+            lhs=>[magix.data.count:1][count].value
+            rhs=>0
             code
               throw=>[magix.data.transaction] misbehaved with threads
     wait
       fork
-        magix.test.transactional-tmp-event
+        magix.test-events.transactional-tmp-event
       fork
-        magix.test.transactional-tmp-event
-        magix.test.transactional-tmp-event
+        magix.test-events.transactional-tmp-event
+        magix.test-events.transactional-tmp-event
       fork
-        magix.test.transactional-tmp-event
-        magix.test.transactional-tmp-event
-        magix.test.transactional-tmp-event
-        magix.test.transactional-tmp-event
+        magix.test-events.transactional-tmp-event
+        magix.test-events.transactional-tmp-event
+        magix.test-events.transactional-tmp-event
+        magix.test-events.transactional-tmp-event
       fork
-        magix.test.transactional-tmp-event
-        magix.test.transactional-tmp-event
-        magix.test.transactional-tmp-event
-        magix.test.transactional-tmp-event
+        magix.test-events.transactional-tmp-event
+        magix.test-events.transactional-tmp-event
+        magix.test-events.transactional-tmp-event
+        magix.test-events.transactional-tmp-event
       fork
-        magix.test.transactional-tmp-event
-        magix.test.transactional-tmp-event
-        magix.test.transactional-tmp-event
-        magix.test.transactional-tmp-event
+        magix.test-events.transactional-tmp-event
+        magix.test-events.transactional-tmp-event
+        magix.test-events.transactional-tmp-event
+        magix.test-events.transactional-tmp-event
       fork
-        magix.test.transactional-tmp-event
-        magix.test.transactional-tmp-event
-        magix.test.transactional-tmp-event
-        magix.test.transactional-tmp-event
+        magix.test-events.transactional-tmp-event
+        magix.test-events.transactional-tmp-event
+        magix.test-events.transactional-tmp-event
+        magix.test-events.transactional-tmp-event
       fork
-        magix.test.transactional-tmp-event
-        magix.test.transactional-tmp-event
-        magix.test.transactional-tmp-event
-        magix.test.transactional-tmp-event
+        magix.test-events.transactional-tmp-event
+        magix.test-events.transactional-tmp-event
+        magix.test-events.transactional-tmp-event
+        magix.test-events.transactional-tmp-event
       fork
-        magix.test.transactional-tmp-event
+        magix.test-events.transactional-tmp-event
       fork
-        magix.test.transactional-tmp-event
+        magix.test-events.transactional-tmp-event
       fork
-        magix.test.transactional-tmp-event
+        magix.test-events.transactional-tmp-event
       fork
-        magix.test.transactional-tmp-event
+        magix.test-events.transactional-tmp-event
       fork
-        magix.test.transactional-tmp-event
+        magix.test-events.transactional-tmp-event
       fork
-        magix.test.transactional-tmp-event
+        magix.test-events.transactional-tmp-event
       fork
-        magix.test.transactional-tmp-event
+        magix.test-events.transactional-tmp-event
       fork
-        magix.test.transactional-tmp-event
+        magix.test-events.transactional-tmp-event
     event
-      name=>magix.test.transactional-tmp-event
+      name=>magix.test-events.transactional-tmp-event
     magix.data.count
       prototype
         type=>magix.test.transactional-object
@@ -580,7 +583,7 @@ spawns multiple threads, each with its own database transaction,
 making sure every thread finishes before the next one starts"
   code
     event
-      name=>magix.test.transactional-tmp-event
+      name=>magix.test-events.transactional-tmp-event
       code
         magix.data.save
           value
@@ -601,29 +604,37 @@ making sure every thread finishes before the next one starts"
     magix.data.transaction
       wait
         fork
-          magix.test.transactional-tmp-event
+          magix.test-events.transactional-tmp-event
         fork
-          magix.test.transactional-tmp-event
+          magix.test-events.transactional-tmp-event
         fork
-          magix.test.transactional-tmp-event
-          magix.test.transactional-tmp-event
-          magix.test.transactional-tmp-event
+          magix.test-events.transactional-tmp-event
+          magix.test-events.transactional-tmp-event
+          magix.test-events.transactional-tmp-event
         fork
-          magix.test.transactional-tmp-event
-          magix.test.transactional-tmp-event
-          magix.test.transactional-tmp-event
+          magix.test-events.transactional-tmp-event
+          magix.test-events.transactional-tmp-event
+          magix.test-events.transactional-tmp-event
       magix.data.commit
     event
-      name=>magix.test.transactional-tmp-event
+      name=>magix.test-events.transactional-tmp-event
     magix.data.count
       prototype
         type=>magix.test.transactional-object
     magix.data.remove
       prototype
         type=>magix.test.transactional-object
+    magix.data.count
+      prototype
+        type=>magix.test.transactional-object
     if=>not-equals
       lhs=>[magix.data.count][count].value
       rhs=>16
+      code
+        throw=>[magix.data.transaction] misbehaved with threads
+    if=>not-equals
+      lhs=>[magix.data.count:1][count].value
+      rhs=>0
       code
         throw=>[magix.data.transaction] misbehaved with threads
 

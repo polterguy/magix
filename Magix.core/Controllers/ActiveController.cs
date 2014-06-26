@@ -322,5 +322,20 @@ namespace Magix.Core
             Node value = Expressions.GetExpressionValue<Node>(expression, loadFile["node"], loadFile["node"], false);
             destinationNode.AddRange(value);
         }
+
+        /*
+         * tunnels an execute active event
+         */
+        protected static void BypassExecuteActiveEvent(Node saveNode, Node pars)
+        {
+            Node newPars = pars.Clone();
+            newPars["_root-only-execution"].Value = true;
+            newPars["_ip"].Value = saveNode;
+            newPars["_dp"].Value = saveNode;
+
+            RaiseActiveEvent(
+                "magix.execute",
+                newPars);
+        }
     }
 }
