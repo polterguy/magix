@@ -51,10 +51,10 @@ panel
       controls
         label
           tag=>label
-          class=>span-2
+          class=>span-3
           value=>container
         text-box=>container
-          class=>span-4
+          class=>span-3
           placeholder=>container ...
         label
           tag=>label
@@ -63,8 +63,15 @@ panel
         text-box=>css-class
           class=>span-6 last
           placeholder=>css classes ...
+        label
+          tag=>label
+          class=>span-3 top-1
+          value=>form-id
+        text-box=>form-id
+          class=>span-3 top-1
+          placeholder=>form-id ...
         dynamic=>css-files
-          class=>span-15 last
+          class=>span-9 last
           onfirstload
             magix.wizard.create-css-files-container
     button=>create

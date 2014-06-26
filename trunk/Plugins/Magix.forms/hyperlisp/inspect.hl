@@ -281,10 +281,10 @@ magix.forms.video-dox-start=>@"creates a video web control
 
 the video web control is useful for displaying videos on your web page"
 
-magix.forms.video-dox-end=>@"[src] is the url to the video file you wish to display.  magix supports only 
-webm out of the box, but by modifying the mime formats in the web.config file 
-of your installation, and applying some other changes, other formats can be 
-supported"
+magix.forms.video-dox-end=>@"[src] is the url to the video file you wish to 
+display.  magix supports only webm and mp4 out of the box, but by modifying 
+the mime formats in the web.config file of your installation, and applying 
+some other changes, other formats can be supported"
 
 magix.forms.video-sample
   magix.forms.create-web-part

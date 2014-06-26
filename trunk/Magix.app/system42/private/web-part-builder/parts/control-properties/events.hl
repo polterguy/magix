@@ -173,7 +173,7 @@ magix.ide.create-control-property-modifier-control
             execute-script
               file=>system42/private/file-manager/file-manager.hl
               params
-                filter=>*.png;*.jpg;*.jpeg;*.webm;
+                filter=>*.png;*.jpg;*.jpeg;*.webm;*.mp4;
                 directory=>media/images
                 container=>content3
                 editor-container=>

@@ -49,43 +49,14 @@ magix.wizard.create-css-files-container
   magix.forms.create-web-part
     container=>css-files
     form-id=>css-files
-    class=>span-15 top-1
+    class=>span-9 last
     controls
       label
         tag=>label
-        class=>span-15 last
+        class=>span-3 top-1 text-right
         value=>css files
-      lambda=>lambda-css-files
-        oncreatecontrols
-          _control
-            panel
-              class=>span-15 last
-              controls
-                link-button
-                  class=>span-1 last
-                  value=>x
-                  onclick
-                    magix.viewstate.get
-                      id=>magix.wizard.css-files
-                    set=>[magix.viewstate.get][value][[$][info].value]
-                    set=>[magix.viewstate.set][value]
-                      value=>[magix.viewstate.get][value]
-                    magix.viewstate.set
-                      id=>magix.wizard.css-files
-                    magix.wizard.create-css-files-container
-                label
-                  class=>span-14
-          magix.viewstate.get
-            id=>magix.wizard.css-files
-          for-each=>[magix.viewstate.get][value]
-            set=>[/][_control][panel][controls][label][value].value
-              value=>[.].name
-            set=>[/][_control][panel][controls][link-button][info].value
-              value=>[.].name
-            add=>[$]
-              value=>[/][_control][panel]
       select=>add-css-file
-        class=>span-6 top-1
+        class=>span-6 last top-1 bottom-1
         onfirstload
           magix.wizard.populate-select-css-file
           add=>[magix.forms.set-values][values]
@@ -130,6 +101,35 @@ magix.wizard.create-css-files-container
               magix.viewstate.set
                 id=>magix.wizard.css-files
               magix.wizard.create-css-files-container
+      lambda=>lambda-css-files
+        oncreatecontrols
+          _control
+            panel
+              class=>span-6 left-3 last
+              controls
+                link-button
+                  class=>span-1 last
+                  value=>x
+                  onclick
+                    magix.viewstate.get
+                      id=>magix.wizard.css-files
+                    set=>[magix.viewstate.get][value][[$][info].value]
+                    set=>[magix.viewstate.set][value]
+                      value=>[magix.viewstate.get][value]
+                    magix.viewstate.set
+                      id=>magix.wizard.css-files
+                    magix.wizard.create-css-files-container
+                label
+                  class=>span-5
+          magix.viewstate.get
+            id=>magix.wizard.css-files
+          for-each=>[magix.viewstate.get][value]
+            set=>[/][_control][panel][controls][label][value].value
+              value=>[.].name
+            set=>[/][_control][panel][controls][link-button][info].value
+              value=>[.].name
+            add=>[$]
+              value=>[/][_control][panel]
 
 // creates the 'load from where' web part, that depending upon the value of the 'load from where' select drop down list 
 // asks the user for an id in the database, or to browse for a file on disc
@@ -378,6 +378,16 @@ magix.wizard.create-active-event
           value=>[.].name
         add=>[/][[/][_current].value][event][code]
           value=>[@][_css][magix.viewport.include-client-file]
+
+      magix.forms.get-value
+        form-id=>wizard
+        id=>form-id
+      if=>not-equals
+        lhs=>[@][magix.forms.get-value:2][value].value
+        rhs=>
+        code
+          set=>[[/][_current].value][event][code][magix.forms.create-web-part][form-id].value
+            value=>[@][..][..][magix.forms.get-value:2][value].value
 
       // creating active event
       execute=>[[/][_current].value]
