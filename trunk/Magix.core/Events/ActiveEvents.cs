@@ -180,7 +180,7 @@ namespace Magix.Core
 			}
 		}
 
-		/**
+		/*
 		 * Makes an active event override to a remote server, such that once
 		 * you raise it internally within your system, it will go polymorphistically
 		 * and transparently towards your URL end-point, and raise the event instead

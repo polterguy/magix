@@ -116,19 +116,30 @@ _create-link-button
     link-button
       style=>width:100%;display:block;
       onclick
-        _event
-          inspect
+        try
+          code
+            _event
+              inspect
+          catch
+            using=>magix.viewport
+              show-message
+                message=>active event didn't allow inspection, error message from inspect invocation was; '{0}'
+                  =>[@][..][exception].value
+                color=>#ffaaaa
+                time=>5000
+            set=>[/][**inspect].value
+              value=>[@][exception].value
         magix.forms.set-value
           form-id=>active-events
           id=>lbl-header
         set=>[magix.forms.set-value:1][value].value
-          value=>[0][inspect].value
+          value=>[try][code][0][inspect].value
         magix.forms.set-value
           form-id=>active-events
           id=>lbl-description
-        set=>[0][inspect]
+        set=>[try][code][0][inspect]
         add=>[node-2-code][node]
-          value=>[0]
+          value=>[try][code][0]
           children-only=>true
         node-2-code
         replace=>[node-2-code][code].value
@@ -149,7 +160,7 @@ _create-link-button
   // setting some onclick behavior, before changing name of active event
   set=>[_data][link-button][onclick][magix.forms.set-value:0][value].value
     value=>[$][event].value
-  set=>[_data][link-button][onclick][_event].name
+  set=>[_data][link-button][onclick][**_event].name
     value=>[$][event].value
 
   // setting properties of link-button
@@ -206,7 +217,7 @@ _controls
     class=>span-12
     controls
       panel=>btn-wrappers
-        class=>fill-width column column
+        class=>fill-width column
         controls
           button=>inspect
             value=>inspect
@@ -233,7 +244,7 @@ _controls
               magix.executor.set-code
       label=>lbl-code
         tag=>pre
-        style=>overflow-x:hidden;
+        style=>overflow-x:auto;overflow-y:auto;max-height:360px;
         class=>column fill-width bottom-1
         value=>example code
       label=>lbl-description

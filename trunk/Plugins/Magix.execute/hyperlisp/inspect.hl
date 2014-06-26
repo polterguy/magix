@@ -631,6 +631,8 @@ if a [persist] parameter exists, and it has a value of false, then the tunnel wi
 be serialized into the data layer, which is useful for active events which anyway will 
 be re-mapped when the application pool is restarted
 
+both [name] and [url] can be either expressions or constants
+
 thread safe"
 
 magix.execute.tunnel-sample

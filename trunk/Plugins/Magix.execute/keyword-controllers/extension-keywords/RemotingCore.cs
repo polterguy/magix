@@ -73,7 +73,15 @@ namespace Magix.execute
             {
                 foreach (Node idx in tmp["objects"])
                 {
-                    ActiveEvents.Instance.OverrideRemotely(idx["value"]["event"].Get<string>(), idx["value"]["url"].Get<string>());
+                    string activeEvent = idx["value"]["event"].Get<string>();
+                    ActiveEvents.Instance.OverrideRemotely(activeEvent, idx["value"]["url"].Get<string>());
+                    if (!ActiveEvents.Instance.IsOverride(activeEvent))
+                    {
+                        // to make sure the local system actually has an active event with that name
+                        ActiveEvents.Instance.CreateEventMapping(
+                            activeEvent,
+                            "magix.execute._mumbo-jumbo");
+                    }
                 }
             }
         }
@@ -103,9 +111,11 @@ namespace Magix.execute
             if (!ip.ContainsValue("name"))
                 throw new ArgumentException(
                     @"[tunnel] needs [name], being active event name, to know which event to override to go externally");
-            string activeEvent = ip["name"].Get<string>();
 
-			string url = ip.Contains("url") ? ip["url"].Get<string>() : null;
+            Node dp = Dp(e.Params);
+
+            string activeEvent = Expressions.GetExpressionValue<string>(ip["name"].Get<string>(), dp, ip, false);
+			string url = ip.Contains("url") ? Expressions.GetExpressionValue<string>(ip["url"].Get<string>(), dp, ip, false) : null;
 
 			if (string.IsNullOrEmpty(url))
 			{
@@ -113,6 +123,13 @@ namespace Magix.execute
                     DataBaseRemoval.Remove(activeEvent, "magix.execute.tunnel", e.Params);
 
 				ActiveEvents.Instance.RemoveRemoteOverride(activeEvent);
+
+                string originalName = "";
+                string origActiveEvent = ActiveEvents.Instance.GetEventMappingValue(activeEvent, ref originalName);
+                if (origActiveEvent == "magix.execute._mumbo-jumbo")
+                {
+                    ActiveEvents.Instance.RemoveMapping(activeEvent);
+                }
 			}
 			else
 			{
@@ -128,6 +145,13 @@ namespace Magix.execute
                     BypassExecuteActiveEvent(saveNode, e.Params);
                 }
 				ActiveEvents.Instance.OverrideRemotely(activeEvent, url);
+                if (!ActiveEvents.Instance.IsOverride(activeEvent))
+                {
+                    // to make sure the local system actually has an active event with that name
+                    ActiveEvents.Instance.CreateEventMapping(
+                        activeEvent,
+                        "magix.execute._mumbo-jumbo");
+                }
 			}
 		}
 
@@ -269,9 +293,9 @@ namespace Magix.execute
                         string val = reader.ReadToEnd();
                         if (!val.StartsWith("return:"))
                             throw new Exception(
-                                "Something went wrong when connecting to '" +
+                                "something went wrong when connecting to '" +
                                 url +
-                                "'. Server responded with: " + val);
+                                "'.&nbsp;&nbsp;server responded with: " + val);
 
                         if (val.Length > 7)
                         {
