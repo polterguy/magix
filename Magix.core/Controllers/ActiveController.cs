@@ -169,16 +169,13 @@ namespace Magix.Core
                 return;
             }
 
-            int noCharsSinceCR = 0;
             StringBuilder builder = new StringBuilder(node.Get<string>());
             if (!dropInitialHeader)
             {
-                noCharsSinceCR += 4;
                 builder.Append("<h3>");
             }
             else
             {
-                noCharsSinceCR += 3;
                 builder.Append("<p>");
             }
             bool hasClosedH3 = false;
@@ -186,7 +183,6 @@ namespace Magix.Core
             char lastChar = char.MinValue, secondLastChar = char.MinValue;
             foreach (char idxChar in value)
             {
-                noCharsSinceCR += 1;
                 switch (idxChar)
                 {
                     case '\r':
@@ -195,44 +191,25 @@ namespace Magix.Core
                     case '\n':
                         if (lastChar == '\n')
                         {
-                            builder.Remove(builder.Length - 1, 1);
+                            builder.Remove(builder.Length - 2, 1);
                             if (!hasClosedH3 && !dropInitialHeader)
                             {
                                 hasClosedH3 = true;
                                 builder.Append("</h3>\r\n<p>");
-                                noCharsSinceCR = 3;
                             }
                             else
                             {
-                                noCharsSinceCR = 3;
                                 builder.Append("</p>\r\n<p>");
                             }
                         }
                         else
-                            builder.Append("\n");
+                            builder.Append(" \n");
                         break;
                     case '[':
-                        noCharsSinceCR += 8;
                         builder.Append("<strong>[");
                         break;
                     case ']':
-                        noCharsSinceCR += 9;
                         builder.Append("]</strong>");
-                        break;
-                    case ' ':
-                        if (noCharsSinceCR >= 33)
-                        {
-                            builder.Append("\n");
-                            noCharsSinceCR = 0;
-                        }
-                        else if (lastChar == ' ' && secondLastChar == '.')
-                        {
-                            builder.Remove(builder.Length - 1, 1);
-                            noCharsSinceCR += 12;
-                            builder.Append("&nbsp;&nbsp;");
-                        }
-                        else
-                            builder.Append(" ");
                         break;
                     default:
                         builder.Append(idxChar);

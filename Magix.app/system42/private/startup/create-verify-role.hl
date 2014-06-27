@@ -11,6 +11,10 @@ user is logged in"
 event
   name=>magix.core.verify-role
   persist=>false
+  inspect=>@"verifies user belongs to given [role]
+
+will throw an exception if currently logged in user does not belong
+the to given [role]"
   code
     magix.session.get
       id=>magix.core.user

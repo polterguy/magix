@@ -182,14 +182,14 @@ to open for activation from other sources"
         add=>[$]
           value=>[_text][text-box]
 
+    label
+      tag=>label
+      class=>span-4 top-1 clear
+      value=>tunnel active event
     panel=>tunnel-wrapper
-      class=>span-17 last top-1 btn-group
+      class=>span-13 last top-1 btn-group
       default=>create-tunnel
       controls
-        label
-          tag=>label
-          class=>span-4
-          value=>tunnel active event
         text-box=>tunnel-active-event
           class=>span-6
           placeholder=>tunnel active event ...
@@ -197,7 +197,7 @@ to open for activation from other sources"
           class=>span-4
           placeholder=>tunnel url ...
         button=>create-tunnel
-          class=>span-3
+          class=>span-3 last
           value=>create tunnel
           onclick
             magix.forms.get-value
@@ -206,6 +206,26 @@ to open for activation from other sources"
             magix.forms.get-value
               form-id=>fusion
               id=>tunnel-url
+            split=>[magix.forms.get-value:1][value].value
+              what=>://
+            if=>not-equals
+              lhs=>[split][result].count
+              rhs=>2
+              or=>not-equals
+                lhs=>[split][result][0].value
+                rhs=>http
+                and=>not-equals
+                  lhs=>[split][result][0].value
+                  rhs=>https
+              code
+                magix.viewport.show-message
+                  message=>that is not a url!
+                  color=>#ff9999
+                magix.forms.effect
+                  type=>focus-and-select
+                  form-id=>fusion
+                  id=>tunnel-url
+                stop
             tunnel
               name=>[magix.forms.get-value:0][value].value
               url=>[magix.forms.get-value:1][value].value

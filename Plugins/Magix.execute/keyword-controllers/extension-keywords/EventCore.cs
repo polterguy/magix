@@ -65,7 +65,7 @@ namespace Magix.execute
 
                     _events[idx["value"]["event"].Get<string>()].Clear();
                     _events[idx["value"]["event"].Get<string>()].AddRange(idx["value"]["code"]);
-                    if (idx.ContainsValue("inspect"))
+                    if (idx["value"].ContainsValue("inspect"))
                         AppendInspect(
                             _inspect[idx["value"]["event"].Get<string>()],
                             idx["value"]["inspect"].Get<string>());
@@ -127,10 +127,9 @@ namespace Magix.execute
                 saveNode["value"]["event"].Value = activeEvent;
                 saveNode["value"]["type"].Value = "magix.execute.event";
                 saveNode["value"]["remotable"].Value = remotable;
-                saveNode["value"]["code"].AddRange(ip["code"].Clone());
-
                 if (ip.Contains("inspect"))
                     saveNode["value"]["inspect"].Value = ip["inspect"].Value;
+                saveNode["value"]["code"].AddRange(ip["code"].Clone());
 
                 BypassExecuteActiveEvent(saveNode, pars);
             }
@@ -371,6 +370,10 @@ namespace Magix.execute
                     continue;
 
                 ip["events"][idx].Value = null;
+
+                string remoteOverride = ActiveEvents.Instance.RemotelyOverriddenURL(idx);
+                if (!string.IsNullOrEmpty(remoteOverride))
+                    ip["events"][idx]["url"].Value = remoteOverride;
             }
 
             ip["events"].Sort(
