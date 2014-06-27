@@ -5,7 +5,15 @@ inspect=>@"documentation for magix.xml"
 
 magix.xml.xml-2-node-dox=>@"creates a node tree from xml
 
-will return [dom] node structure, parsed from xml in value
+will return [dom] node structure, parsed from [xml] node.  optionally you 
+can supply a [file] node, at which point magix.file.load will be invoked to 
+load the xml
+
+both [xml] and [file] can be expressions, and if you use [file], you can use 
+any of the plugin mechanisms that functions together with magix.file.load to 
+load the file
+
+the parsed xml will be returned as [dom]
 
 thread safe"
 

@@ -408,6 +408,7 @@
     <Content Include="system42\private\app-wizard\wizards\export-from-database-active-event-wizard\controls.hl" />
     <Content Include="system42\private\app-wizard\wizards\export-from-database-active-event-wizard\events.hl" />
     <Content Include="system42\private\startup\create-verify-role.hl" />
+    <Content Include="system42\private\startup\unit-tests\xml.hl" />
     <None Include="todo.txt" />
     <Content Include="your-files\readme.txt" />
     <Content Include="your-files\tmp\readme.txt" />

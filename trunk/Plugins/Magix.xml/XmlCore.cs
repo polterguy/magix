@@ -20,7 +20,7 @@ namespace Magix.execute
 		 * returns [xml] as [dom]
 		 */
 		[ActiveEvent(Name = "magix.xml.xml-2-node")]
-		public static void magix_web_get(object sender, ActiveEventArgs e)
+		public static void magix_xml_xml_2_node(object sender, ActiveEventArgs e)
 		{
             Node ip = Ip(e.Params);
             if (ShouldInspect(ip))
@@ -38,10 +38,31 @@ namespace Magix.execute
                 return;
 			}
 
-            string xml = ip.Get<string>();
+            Node dp = Dp(e.Params);
 
-			if (string.IsNullOrEmpty(xml))
-				throw new ArgumentException("need xml value to [magix.xml.xml-2-node]");
+            if (!ip.ContainsValue("xml") && !ip.ContainsValue("file"))
+                throw new ArgumentException("no [xml] or [file] value given to [magix.xml.xml-2-node]");
+            if (ip.ContainsValue("xml") && ip.ContainsValue("file"))
+                throw new ArgumentException("you cannot give both [file] and [xml] to [magix.xml.xml-2-node]");
+
+            string xml = null;
+            if (ip.ContainsValue("xml"))
+                xml = Expressions.GetExpressionValue<string>(ip["xml"].Get<string>(), dp, ip, false);
+            else
+            {
+                try
+                {
+                    RaiseActiveEvent(
+                        "magix.file.load",
+                        e.Params);
+
+                    xml = ip["value"].Get<string>();
+                }
+                finally
+                {
+                    ip["value"].UnTie();
+                }
+            }
 
 			XmlDocument doc = new XmlDocument();
 			doc.LoadXml(xml);

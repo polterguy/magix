@@ -3,6 +3,19 @@
 inspect=>@"documentation for magix.web"
 
 
+magix.web.send-email-dox=>@"sends an email over smtp
+
+will send an smtp email, using the magix.smtp.settings from database
+
+requires [header], [body] and [to]"
+
+magix.web.send-email-sample
+  magix.web.send-email
+    header=>this is the header
+    body=>this is the body of your email
+    to=>thomas@magixilluminate.com
+
+
 magix.browser.scroll-dox=>@"scrolls the browser window
 
 will scroll the browser window such that is shows a specific 

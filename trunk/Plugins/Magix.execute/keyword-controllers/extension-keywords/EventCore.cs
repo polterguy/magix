@@ -218,6 +218,7 @@ namespace Magix.execute
 
                 // making sure we're starting with correct namespace
                 e.Params["_namespaces"].Add(new Node("item", "magix.execute"));
+                e.Params["_root-only-execution"].UnTie();
                 try
                 {
                     RaiseActiveEvent(
@@ -244,6 +245,8 @@ namespace Magix.execute
                 ip.Clear();
                 if (code.Contains("$") && code["$"].Count > 0)
                     ip.AddRange(code["$"]);
+                if (code.ContainsValue("$"))
+                    ip.Value = code["$"].Value;
             }
         }
 
