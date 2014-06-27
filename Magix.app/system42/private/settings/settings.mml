@@ -1,11 +1,11 @@
 
 
-<h2 class="span-17 last">admin settings</h2>
-
-<div class="span-15 last boxed air-padding">{{
+<div class="span-15 last boxed top-1 air-padding">
+  <h2 class="span-15 bottom-1 last">settings</h2>
+{{
 label=>frontEndCssLbl
-  value=>skin css file
-  class=>span-2 text-right
+  value=>dashboard skin
+  class=>span-3
   tag=>label
 lambda=>lmda
   oncreatecontrols
@@ -99,7 +99,7 @@ lambda=>lmdaViewport
   oncreatecontrols
     _data
       select=>frontEndViewport
-        class=>span-4 last
+        class=>span-3 last
         onselectedindexchanged
           magix.forms.get-value
             id=>frontEndViewport
@@ -119,7 +119,7 @@ lambda=>lmdaViewport
             id=>frontEndViewport
     _viewports
       Magix.viewports.Gutenberg=>gutenberg
-      Magix.viewports.SingleContainer=>single container
+      Magix.viewports.SingleContainer=>single view
     for-each=>[_viewports]
       set=>[/][_data][select][items][[.].name].value
         value=>[.].value
@@ -127,7 +127,7 @@ lambda=>lmdaViewport
       value=>[_data][select]
 label
   tag=>label
-  class=>span-5 top-1
+  class=>span-6 top-1
   value=>default front-end active event
 lambda=>lambda-front-end-event
   oncreatecontrols
@@ -158,7 +158,7 @@ lambda=>lambda-front-end-event
     _text
       text-box=>active-event
         placeholder=>magix.tiedown.load-index-page ...
-        class=>span-10 clear
+        class=>span-9 last top-1
         autocomplete=>false
         @data-provide=>typeahead
         @data-items=>5
@@ -212,6 +212,97 @@ lambda=>lambda-front-end-event
     add=>[$]
       value=>[_text][text-box]
 
+panel=>smtp-wrapper
+  class=>span-13 last top-1 boxed-light-green air-padding
+  default=>update-smtp
+  onfirstload
+    magix.data.load
+      id=>magix.smtp.settings
+    using=>magix.forms
+      set-value
+        id=>smtp-server
+        value=>[magix.data.load][value][host].value
+      set-value
+        id=>smtp-port
+        value=>[magix.data.load][value][port].value
+      set-value
+        id=>smtp-ssl
+        value=>[magix.data.load][value][ssl].value
+      set-value
+        id=>smtp-username
+        value=>[magix.data.load][value][username].value
+      set-value
+        id=>smtp-password
+        value=>[magix.data.load][value][password].value
+      set-value
+        id=>smtp-from
+        value=>[magix.data.load][value][admin-email].value
+  controls
+    label
+      tag=>label
+      class=>span-3
+      value=>smtp server
+    text-box=>smtp-server
+      class=>span-5
+      placeholder=>smtp server ...
+    label
+      tag=>label
+      class=>span-1
+      value=>port
+    text-box=>smtp-port
+      class=>span-2
+      placeholder=>port ...
+    label
+      tag=>label
+      class=>span-1
+      for=>smtp-ssl
+      value=>ssl
+    check-box=>smtp-ssl
+      class=>span-1 last
+    label
+      tag=>label
+      class=>span-3 top-1
+      value=>username
+    text-box=>smtp-username
+      class=>span-5 top-1
+      placeholder=>username ...
+    label
+      tag=>label
+      class=>span-1 top-1
+      value=>pwd
+    text-box=>smtp-password
+      class=>span-2 top-1
+      placeholder=>password ...
+      type=>password
+    label
+      tag=>label
+      class=>span-3 top-1 clear
+      value=>from
+    text-box=>smtp-from
+      class=>span-5 last top-1
+      placeholder=>admin email ...
+    button=>update-smtp
+      class=>span-2 top-1 right clear last
+      value=>update
+      onclick
+        magix.forms.get-children-values
+          id=>smtp-wrapper
+        set=>[magix.data.save][value][host].value
+          value=>[magix.forms.get-children-values][values][smtp-server].value
+        set=>[magix.data.save][value][port].value
+          value=>[magix.forms.get-children-values][values][smtp-port].value
+        set=>[magix.data.save][value][ssl].value
+          value=>[magix.forms.get-children-values][values][smtp-ssl].value
+        set=>[magix.data.save][value][username].value
+          value=>[magix.forms.get-children-values][values][smtp-username].value
+        set=>[magix.data.save][value][password].value
+          value=>[magix.forms.get-children-values][values][smtp-password].value
+        set=>[magix.data.save][value][admin-email].value
+          value=>[magix.forms.get-children-values][values][smtp-from].value
+        magix.data.save
+          id=>magix.smtp.settings
+        magix.viewport.show-message
+          message=>smtp settings was updated
 
 }}</div>
 

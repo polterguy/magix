@@ -285,12 +285,12 @@ namespace Magix.Core
         /*
          * tunnels an execute active event
          */
-        protected static void BypassExecuteActiveEvent(Node saveNode, Node pars)
+        protected static void BypassExecuteActiveEvent(Node executionNode, Node pars)
         {
             Node newPars = pars.Clone();
             newPars["_root-only-execution"].Value = true;
-            newPars["_ip"].Value = saveNode;
-            newPars["_dp"].Value = saveNode;
+            newPars["_ip"].Value = executionNode;
+            newPars["_dp"].Value = executionNode;
 
             RaiseActiveEvent(
                 "magix.execute",

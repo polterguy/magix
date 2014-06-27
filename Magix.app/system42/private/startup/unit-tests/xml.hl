@@ -1,0 +1,37 @@
+
+
+inspect=>@"tests for the [magix.xml.xml-2-node]
+
+creates unit tests to verify that [magix.xml.xml-2-node] works"
+
+
+event
+  name=>magix.test.xml-2-node
+  persist=>false
+  inspect=>@"verifies xml-2-node works
+
+loads xml as static text, and verifies the correct dom structure 
+is created as a result"
+  code
+    magix.xml.xml-2-node
+      xml=>@"
+<root>
+  <tmp atr1=""jo"" />
+  <tmp atr2=""dude"" />
+  <tmp atr3=""howdy"">hello world</tmp>
+</root>
+"
+    _dom
+      root
+        tmp
+          @atr1=>jo
+        tmp
+          @atr2=>dude
+        tmp=>@"hello world"
+          @atr3=>howdy
+    if=>not-equals
+      lhs=>[_dom][root]
+      rhs=>[magix.xml.xml-2-node][dom][root]
+      code
+        throw=>[magix.xml.xml-2-node] misbehaved
+

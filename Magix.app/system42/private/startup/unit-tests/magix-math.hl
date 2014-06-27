@@ -35,3 +35,52 @@ what was expected"
       code
         throw=>magix.math misbehaved
 
+
+event
+  name=>magix.test.math-expression-result
+  persist=>false
+  inspect=>@"verifies the magix.math namespace works
+
+creates a math expression, with the result node being an 
+expression, verifying the result will end up in the 
+expression's node"
+  code
+    _result
+    using=>magix.math
+      add=>[_result]
+        =>5
+        =>1
+    if=>not-equals
+      lhs=>[_result].value
+      rhs=>6
+      code
+        throw=>magix.math misbehaved
+
+
+event
+  name=>magix.test.math-sub-events
+  persist=>false
+  inspect=>@"verifies the magix.math namespace works
+
+creates a math expression, with sub active events, verifying 
+the sub active events are invoked and used as a part of the 
+math expression"
+  code
+    event
+      name=>magix.test-event.foo
+      persist=>false
+      code
+        set=>[$].value
+          value=>2
+    using=>magix.math
+      add
+        magix.test-event.foo
+        =>1
+    event
+      name=>magix.test-event.foo
+    if=>not-equals
+      lhs=>[using][add].value
+      rhs=>3
+      code
+        throw=>magix.math misbehaved
+

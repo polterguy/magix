@@ -27,18 +27,32 @@ verify the integrity of your system, is probably more
 secure, than deleting them"
 
 
-magix.file.directory-exist
-  directory=>system42/private/startup/unit-tests
+event
+  name=>magix.tests.verify-exist
+  persist=>false
+  inspect=>@"verifies unit tests exists
 
-if=>equals
-  lhs=>[magix.file.directory-exist][value].value
-  rhs=>true
+verifies unit tests exists, and if not, creates all dynamic 
+unit tests in the system"
   code
-    magix.file.list-files
-      directory=>system42/private/startup/unit-tests
-      filter=>*.hl
+    list-events
+      begins-with=>magix.test.
+    if=>less-than
+      lhs=>[list-events][events].count
+      rhs=>100
+      code
+        magix.file.directory-exist
+          directory=>system42/private/startup/unit-tests
 
-    for-each=>[@][magix.file.list-files][files]
-      set=>[@][execute-script][file].value
-        value=>[.].name
+        if=>equals
+          lhs=>[@][magix.file.directory-exist][value].value
+          rhs=>true
+          code
+            magix.file.list-files
+              directory=>system42/private/startup/unit-tests
+              filter=>*.hl
+
+            for-each=>[@][magix.file.list-files][files]
+              set=>[@][execute-script][file].value
+                value=>[.].name
 
