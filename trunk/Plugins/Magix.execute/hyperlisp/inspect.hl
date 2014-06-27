@@ -696,6 +696,8 @@ this effectively raises an active event, except the event will be
 serialized over http, and invoked on another server, returning 
 transparently back to the caller, as if it was invoked locally
 
+both [url] and [name] can be either expressions or constants
+
 thread safe"
 
 magix.execute.remote-sample

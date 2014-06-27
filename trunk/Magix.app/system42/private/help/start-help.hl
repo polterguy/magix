@@ -28,6 +28,10 @@ magix.viewport.include-client-file
 // opens up the help file the user last had open, or the index file if no help file is in the list of items
 event
   name=>magix.help.open-last-help-file
+  inspect=>@"opens up last viewed help file
+
+opens up the last viewed help file, or the index help file if no file has 
+been viewed in the current session"
   code
 
     // checking to see if we've got some help files in our list of items

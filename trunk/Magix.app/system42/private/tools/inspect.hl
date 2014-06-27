@@ -172,6 +172,13 @@ _create-link-button
           =>[$][namespace].value
   set=>[_data][link-button][value].value
     value=>[$][event].value
+  if=>exist
+    lhs=>[$][url].value
+    code
+      set=>[_data][link-button][value].value
+        value=>{0} - [{1}]
+          =>[_data][link-button][value].value
+          =>[$][url].value
 
   // returning link-button
   add=>[$]
@@ -190,6 +197,13 @@ for-each=>[list-events][events]
   // forwarding event name
   set=>[@][lambda][event].value
     value=>[.].name
+
+  if=>exist
+    lhs=>[.][url]
+    code
+      // remotely overridden, forwarding url
+      set=>[@][..][..][lambda][url].value
+        value=>[.][url].value
 
   // creating link-button and adding to [_controls] node
   lambda=>[/][_create-link-button]

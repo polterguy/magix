@@ -53,40 +53,39 @@ over http"
 
 
 event
-  name=>magix.test.remote-throw-inspect
+  name=>magix.test.remote-inspect
   persist=>false
-  inspect=>@"verifies inspect fails on remote events
+  inspect=>@"verifies inspect works on remote events
 
 creates an open active event, then tries to inspect it 
 remotely over http, for then to verify the invocation 
-throws an exception"
+returns only the inspect node"
   code
-    _success=>false
     event
       name=>magix.test.temp-test-event
+      inspect=>this is a test of inspect
       persist=>false
       code
+        _bullshit
     open
       name=>magix.test.temp-test-event
-    try
-      code
-        magix.configuration.get-base-directory
-        set=>[@][remote][url].value
-          value=>[@][magix.configuration.get-base-directory][value].value
-        remote
-          name=>magix.test.temp-test-event
-          params
-            inspect
-      catch
-        set=>[_success].value
-          value=>true
+    magix.configuration.get-base-directory
+    remote
+      name=>magix.test.temp-test-event
+      url=>[@][magix.configuration.get-base-directory][value].value
+      params
+        inspect
+          type=>no-html
     close
       name=>magix.test.temp-test-event
     event
       name=>magix.test.temp-test-event
     if=>not-equals
-      lhs=>[_success].value
-      rhs=>true
+      lhs=>[remote][params][inspect].value
+      rhs=>this is a test of inspect
+      or=>not-equals
+        lhs=>[remote][params].count
+        rhs=>1
       code
         throw=>[remote] misbehaved with inspect
 

@@ -101,21 +101,28 @@ namespace Magix.Core
 					{
 						Node node = new Node();
 
-						if (!string.IsNullOrEmpty (Page.Request["params"]))
-							node = Node.FromJSONString (Page.Request["params"]);
+						if (!string.IsNullOrEmpty(Page.Request["params"]))
+							node = Node.FromJSONString(Page.Request["params"]);
 
-                        if (node.Contains("inspect"))
-                            throw new ArgumentException("no events can be remotely inspected, through the [inspect] feature");
+                        bool inspect = node.Contains("inspect");
 
 						RaiseActiveEvent(
 							Page.Request["event"],
 							node);
 
-						Page.Response.Clear ();
-						Page.Response.Write ("return:" + node.ToJSONString ());
+                        if (inspect)
+                        {
+                            // removing all nodes from result, except inspect
+                            Node inspectNode = node["inspect"];
+                            node.Clear();
+                            node.Add(inspectNode);
+                        }
+
+						Page.Response.Clear();
+						Page.Response.Write("return:" + node.ToJSONString());
 						try
 						{
-							Page.Response.End ();
+							Page.Response.End();
 						}
 						catch
 						{

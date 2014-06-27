@@ -253,13 +253,15 @@ namespace Magix.execute
                 return;
 			}
 
+            Node dp = Dp(e.Params);
+
             if (!ip.ContainsValue("name"))
                 throw new ArgumentException("[remote] needs a [name]");
-            string activeEvent = ip["name"].Get<string>();
+            string activeEvent = Expressions.GetExpressionValue<string>(ip["name"].Get<string>(), dp, ip, false);
 
             if (!ip.Contains("url") || string.IsNullOrEmpty(ip["url"].Get<string>()))
 				throw new ArgumentException("[remote] needs a [url]");
-            string url = ip["url"].Get<string>();
+            string url = Expressions.GetExpressionValue<string>(ip["url"].Get<string>(), dp, ip, false);
 
             RemotelyInvokeActiveEvent(ip, activeEvent, url);
 		}
