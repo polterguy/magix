@@ -2,8 +2,8 @@ panel=>main-wrapper
   class=>span-22 last
   controls
     label=>label-header
-      value=>Remember your favorite
-      class=>span-12 left-5 top-2
+      value=>Remember your favorite wine
+      class=>span-12 left-4 top-2 bottom-2
       tag=>h1
     label=>label-description
       value=>Here you can rate our wines, and send a note to yourself, such that you can remember which wine was your favorite when you did our wine flight. Or if you wish, you can purchase our wines from our website, and have them shipped directly to where you live.
@@ -32,8 +32,26 @@ panel=>main-wrapper
           rows=>5
           placeholder=>your comment ...
           style=>background-color:rgba(255,255,255,.5);
+          onfirstload
+            magix.web.get-parameter
+              name=>view-rating
+            if=>exist
+              lhs=>[magix.web.get-parameter][value]
+              code
+                using=>magix.forms
+                  set-enabled
+                    id=>[$][id].value
+                    value=>false
         rating=>carneros-2010-pinot-noir-rating
           class=>mux-rating top-1
+          onrate
+            magix.web.get-parameter
+              name=>view-rating
+            if=>exist
+              lhs=>[magix.web.get-parameter][value]
+              code
+                magix.viewport.show-message
+                  message=>sorry, that doesn't really work.  if you wish to rate these wines for real, you'll have to visit the vineyard ...
       style=>border-radius:25px;background-color:#ffffff;background-image:url(media/images/samples/vineyard.jpg);box-shadow:3px 3px 5px rgba(0,0,0,.5);
     panel=>wine-rating-sonoma-2009-wrapper
       class=>span-18 left-1 top-2 min-height-5 air-padding
@@ -59,8 +77,26 @@ panel=>main-wrapper
           rows=>5
           placeholder=>your comment ...
           style=>background-color:rgba(255,255,255,.5);
+          onfirstload
+            magix.web.get-parameter
+              name=>view-rating
+            if=>exist
+              lhs=>[magix.web.get-parameter][value]
+              code
+                using=>magix.forms
+                  set-enabled
+                    id=>[$][id].value
+                    value=>false
         rating=>sonoma-2009-pinot-noir-rating
           class=>mux-rating top-1
+          onrate
+            magix.web.get-parameter
+              name=>view-rating
+            if=>exist
+              lhs=>[magix.web.get-parameter][value]
+              code
+                magix.viewport.show-message
+                  message=>sorry, that doesn't really work.  if you wish to rate these wines for real, you'll have to visit the vineyard ...
       style=>border-radius:25px;background-color:#ffffff;background-image:url(media/images/samples/vineyard.jpg);box-shadow:3px 3px 5px rgba(0,0,0,.5);
     panel=>panel-2011-carneros-chardonnay-wrapper
       class=>span-18 left-1 top-2 min-height-5 air-padding
@@ -86,8 +122,26 @@ panel=>main-wrapper
           rows=>5
           placeholder=>your comment ...
           style=>background-color:rgba(255,255,255,.5);
+          onfirstload
+            magix.web.get-parameter
+              name=>view-rating
+            if=>exist
+              lhs=>[magix.web.get-parameter][value]
+              code
+                using=>magix.forms
+                  set-enabled
+                    id=>[$][id].value
+                    value=>false
         rating=>carneros-2011-chardonnay-rating
           class=>mux-rating top-1
+          onrate
+            magix.web.get-parameter
+              name=>view-rating
+            if=>exist
+              lhs=>[magix.web.get-parameter][value]
+              code
+                magix.viewport.show-message
+                  message=>sorry, that doesn't really work.  if you wish to rate these wines for real, you'll have to visit the vineyard ...
       style=>border-radius:25px;background-color:#ffffff;background-image:url(media/images/samples/vineyard.jpg);box-shadow:3px 3px 5px rgba(0,0,0,.5);
     panel=>email-wrapper
       class=>top-4 left-5 span-10 min-height-5 boxed-light-green air-padding
@@ -163,7 +217,87 @@ panel=>main-wrapper
                     type=>magix.samples.wine-rating
                 magix.forms.clear-children-values
                   id=>main-wrapper
+                using=>magix.web
+                  send-email
+                    to=>[@][..][magix.data.save][value][email].value
+                    subject=>Thank you for rating our wines {0}
+                      =>[@][..][magix.data.save][value][full-name].value
+                    body=>@"You can view your rating at {0}?view-rating={1}, from where you can also share your experience with your friends at facebook, and similar social networks.
+
+We value your feedback, and will use it to improve ourselves in the future.
+
+
+Have a nice day :)
+
+John Winemaker @ Acme Wines, Inc."
+                      =>[:magix.configuration.get-base-directory][value].value
+                      =>[@][..][magix.data.save][id].value
                 magix.viewport.show-message
                   message=>thank you for rating our wines
                   color=>#aaffaa
       style=>box-shadow:3px 3px 5px rgba(0,0,0,.5);
+      onfirstload
+        magix.web.get-parameter
+          name=>view-rating
+        if=>exist
+          lhs=>[magix.web.get-parameter][value]
+          code
+            magix.forms.set-visible
+              id=>email-wrapper
+              value=>false
+    panel=>fb-wrapper
+      class=>span-4 last top-2 left-18 min-height-2
+      controls
+        lambda=>lambda-facebook
+          oncreatecontrols
+            magix.web.get-parameter
+              name=>view-rating
+            if=>exist
+              lhs=>[magix.web.get-parameter][value]
+              code
+                add=>[$]
+                  value=>[_literal][literal]
+            _literal
+              literal=>literal-0
+                text=>@"<div id=""fb-root""></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = ""//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.0"";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+<div class=""fb-share-button"" data-href=""https://developers.facebook.com/docs/plugins/"" data-type=""button_count""></div>"
+  onfirstload
+    magix.web.get-parameter
+      name=>view-rating
+    if=>exist
+      lhs=>[magix.web.get-parameter][value]
+      code
+        using=>magix.data
+          load
+            id=>[magix.web.get-parameter][value].value
+        add=>[@][magix.data.save][value]
+          value=>[@][using][load][value]
+          children-only=>true
+        set=>[@][magix.data.save][value][verified].value
+          value=>true
+        set=>[@][magix.data.save][id].value
+          value=>[magix.web.get-parameter][value].value
+        magix.data.save
+        set=>[@][using][load][value][type]
+        set=>[@][using][load][value][verified]
+        for-each=>[@][using][load][value]
+          using=>magix.forms
+            set-value
+              id=>[.].name
+              value=>[.].value
+        using=>magix.forms
+          set-value
+            id=>label-header
+            value=>{0}'s favorites
+              =>[@][..][using][load][value][full-name].value
+          set-value
+            id=>label-description
+            value=>This was {0}'s favorites when he or she paid a visit to our vineyard, and tasted our wines
+              =>[@][..][using][load][value][full-name].value

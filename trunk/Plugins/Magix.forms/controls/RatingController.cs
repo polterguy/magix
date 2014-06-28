@@ -71,9 +71,9 @@ namespace Magix.forms
                     // last control
                     btn.Class = "last";
                 }
-                if (ShouldHandleEvent("onrate", codeNode))
+                if (!e.Params.ContainsValue("id-prefix"))
                 {
-                    if (!e.Params.ContainsValue("id-prefix"))
+                    if (ShouldHandleEvent("onrate", codeNode))
                     {
                         Node onRateCode = codeNode["onrate"].Clone();
                         btn.Click += delegate
@@ -86,10 +86,7 @@ namespace Magix.forms
                                 onRateCode);
                         };
                     }
-                }
-                else
-                {
-                    if (!e.Params.ContainsValue("id-prefix"))
+                    else
                     {
                         btn.Click += delegate
                         {

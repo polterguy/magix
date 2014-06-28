@@ -103,7 +103,7 @@ namespace Magix.forms
 				return;
 			}
 
-            Control ctrl = FindControl<Control>(ip);
+            Control ctrl = FindControl<Control>(e.Params);
             ctrl.Visible = ip["value"].Get<bool>(false);
 		}
 
@@ -129,7 +129,7 @@ namespace Magix.forms
 				return;
 			}
 
-            Control ctrl = FindControl<Control>(ip);
+            Control ctrl = FindControl<Control>(e.Params);
             ip["value"].Value = ctrl.Visible;
 		}
 
@@ -157,7 +157,7 @@ namespace Magix.forms
 
             Node dp = Dp(e.Params);
 
-            IValueControl ctrl = FindControl<IValueControl>(ip);
+            IValueControl ctrl = FindControl<IValueControl>(e.Params);
             string value = Expressions.GetExpressionValue<string>(ip["value"].Get<string>(), dp, ip, false);
             if (ip["value"].Count > 0)
                 value = Expressions.FormatString(dp, ip, ip["value"], value);
@@ -186,7 +186,7 @@ namespace Magix.forms
                 return;
             }
 
-            IValueControl ctrl = FindControl<IValueControl>(ip);
+            IValueControl ctrl = FindControl<IValueControl>(e.Params);
             ip["value"].Value = ctrl.ControlValue;
         }
 
@@ -212,7 +212,7 @@ namespace Magix.forms
                 return;
             }
 
-            Control ctrl = FindControl<Control>(ip);
+            Control ctrl = FindControl<Control>(e.Params);
             ClearValues(ctrl, ip);
         }
 
@@ -249,7 +249,7 @@ namespace Magix.forms
                 return;
             }
 
-            Control ctrl = FindControl<Control>(ip);
+            Control ctrl = FindControl<Control>(e.Params);
             GetValues(ctrl, ip);
         }
 
@@ -304,17 +304,19 @@ namespace Magix.forms
 
 		protected static T FindControl<T>(Node pars)
 		{
-			if (!pars.Contains("id"))
+            Node ip = Ip(pars);
+			if (!ip.Contains("id"))
 				throw new ArgumentException("this active event needs an [id] parameter");
 
-			Node ctrlNode = new Node();
-			ctrlNode["id"].Value = pars["id"].Value;
-			if (pars.Contains("form-id"))
-				ctrlNode["form-id"].Value = pars["form-id"].Value;
+			Node ctrlNode = new Node("magix.forms._get-control");
+			ctrlNode["id"].Value = ip["id"].Value;
+			if (ip.Contains("form-id"))
+				ctrlNode["form-id"].Value = ip["form-id"].Value;
 
-			RaiseActiveEvent(
-				"magix.forms._get-control",
-				ctrlNode);
+            pars["_ip"].Value = ctrlNode;
+            RaiseActiveEvent(
+                "magix.forms._get-control",
+                pars);
 
 			if (ctrlNode.Contains("_ctrl"))
                 return ctrlNode["_ctrl"].Get<T>();
@@ -337,6 +339,8 @@ namespace Magix.forms
 
             if (that is IValueControl)
                 node["$"]["value"].Value = (that as IValueControl).ControlValue;
+
+            node["$"]["id"].Value = that.ID;
         }
 
         protected virtual void Inspect(Node node)

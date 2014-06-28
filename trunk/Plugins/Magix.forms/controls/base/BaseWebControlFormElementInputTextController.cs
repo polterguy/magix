@@ -39,7 +39,7 @@ namespace Magix.forms
                 return;
             }
 
-            BaseWebControlFormElementInputText ctrl = FindControl<BaseWebControlFormElementInputText>(ip);
+            BaseWebControlFormElementInputText ctrl = FindControl<BaseWebControlFormElementInputText>(e.Params);
             ctrl.Select();
         }
 

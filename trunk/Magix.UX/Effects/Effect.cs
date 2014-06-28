@@ -84,7 +84,10 @@ namespace Magix.UX.Effects
         public void Render()
         {
             List<Effect> chained = new List<Effect>(_chained);
-            Manager.Instance.JavaScriptWriter.WriteLine(RenderImplementation(true, chained));
+            if (Manager.Instance.IsAjaxCallback)
+                Manager.Instance.JavaScriptWriter.WriteLine(RenderImplementation(true, chained));
+            else
+                Manager.Instance.InternalJavaScriptWriter.WriteLine(RenderImplementation(true, chained));
         }
 
         public string RenderString()

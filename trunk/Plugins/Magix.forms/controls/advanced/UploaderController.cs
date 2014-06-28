@@ -111,7 +111,7 @@ namespace Magix.forms
                 return;
             }
 
-            Uploader ctrl = FindControl<Uploader>(ip);
+            Uploader ctrl = FindControl<Uploader>(e.Params);
             ip["value"].Value = ctrl.SizeOfBatch > ctrl.CurrentNo + 1;
         }
 
@@ -140,7 +140,7 @@ namespace Magix.forms
             if (!ip.ContainsValue("value"))
                 throw new ArgumentException("no [value] given to [magix.forms.uploader-set-directory]");
 
-            Uploader ctrl = FindControl<Uploader>(ip);
+            Uploader ctrl = FindControl<Uploader>(e.Params);
             ctrl.Folder = ip["value"].Get<string>();
         }
 

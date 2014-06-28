@@ -194,14 +194,17 @@ to the value in [mml]";
 				return;
 			}
 
+            Node dp = Dp(e.Params);
+
             if (!ip.ContainsValue("id"))
 				throw new ArgumentException("you need to supply an [id] to know which control to find");
 
-            if (!ip.Contains("form-id") || ip["form-id"].Get("") == FormID)
+            if (!ip.Contains("form-id") || Expressions.GetExpressionValue<string>(ip["form-id"].Get<string>(), dp, ip, false) == FormID)
 			{
+                string id = Expressions.GetExpressionValue<string>(ip["id"].Get<string>(), dp, ip, false);
                 Control ctrl = Selector.FindControl<Control>(
                     this.Parent /* to include viewport itself */, 
-                    ip["id"].Get<string>());
+                    id);
                 if (ctrl != null)
                     ip["_ctrl"].Value = ctrl;
 			}

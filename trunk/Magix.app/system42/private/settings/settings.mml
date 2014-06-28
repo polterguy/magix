@@ -3,214 +3,236 @@
 <div class="span-15 last boxed top-1 air-padding">
   <h2 class="span-15 bottom-1 last">settings</h2>
 {{
-label=>frontEndCssLbl
-  value=>dashboard skin
-  class=>span-3
-  tag=>label
-lambda=>lmda
-  oncreatecontrols
-    _data
-      select=>frontEndCss
-        class=>span-3
-        onselectedindexchanged
-          magix.forms.get-value
-            id=>frontEndCss
-          set=>[magix.data.save][value][file].value
-            value=>[magix.forms.get-value][value].value
-          magix.data.save
-            id=>magix.admin.settings.default-back-end-css-file
-          magix.browser.redirect=>?dashboard=
-          magix.web.postpone-execution
-            code
-              magix.viewport.clear-controls
-                all=>true
-              magix.forms.create-mml-web-part
-                mml-file=>system42/private/settings/settings.mml
-                container=>content1
-                form-id=>admin-settings
-                class=>span-17 last
-              magix.viewport.show-message
-                message=>theme was changed and portal was reloaded
-        onfirstload
-          magix.data.load
-            id=>magix.admin.settings.default-back-end-css-file
-          set=>[magix.forms.set-value][value].value
-            value=>[magix.data.load][value][file].value
-          magix.forms.set-value
-            form-id=>admin-settings
-            id=>frontEndCss
-    magix.file.list-files
-      directory=>media/back-end/skins
-    for-each=>[magix.file.list-files][files]
-      set=>[/][_data][select][items][[.].name].value
-        value=>[.].name
-      replace=>[/][_data][select][items][[.].name].value
-        what=>media/back-end/skins/
-      replace=>[/][_data][select][items][[.].name].value
-        what=>.css
-    add=>[$]
-      value=>[_data][select]
-label=>lblHelp
-  value=>show help
-  class=>span-2 text-right
-  tag=>label
-  for=>chkHelp
-check-box=>chkHelp
-  class=>span-1
-  onfirstload
-    magix.data.load-username
-      id=>magix.admin.setting.show-help
-    if=>equals
-      lhs=>[magix.data.load-username][value][value].value
-      rhs=>true
-      code
-        magix.forms.set-value
-          id=>chkHelp
-          value=>true
-    else
-      magix.forms.set-value
-        id=>chkHelp
-        value=>false
-  oncheckedchanged
-    magix.forms.get-value
-      id=>chkHelp
-    if=>equals
-      lhs=>[magix.forms.get-value][value].value
-      rhs=>true
-      code
-        magix.data.save-username
-          id=>magix.admin.setting.show-help
-          value
-            value=>true
-        execute-script
-          file=>system42/private/help/start-help.hl
-    else
-      magix.data.save-username
-        id=>magix.admin.setting.show-help
-        value
-          value=>false
-      magix.viewport.clear-controls
-        container=>help
-label=>frontEndViewportLabel
-  value=>front end viewport
-  class=>span-3 text-right
-  tag=>label
-lambda=>lmdaViewport
-  oncreatecontrols
-    _data
-      select=>frontEndViewport
-        class=>span-3 last
-        onselectedindexchanged
-          magix.forms.get-value
-            id=>frontEndViewport
-          set=>[magix.data.save][value][viewport].value
-            value=>[magix.forms.get-value][value].value
-          magix.data.save
-            id=>magix.admin.settings.default-front-end-viewport
-          magix.viewport.show-message
-            message=>front end viewport was changed
-        onfirstload
-          magix.data.load
-            id=>magix.admin.settings.default-front-end-viewport
-          set=>[magix.forms.set-value][value].value
-            value=>[magix.data.load][value][viewport].value
-          magix.forms.set-value
-            form-id=>admin-settings
-            id=>frontEndViewport
-    _viewports
-      Magix.viewports.Gutenberg=>gutenberg
-      Magix.viewports.SingleContainer=>single view
-    for-each=>[_viewports]
-      set=>[/][_data][select][items][[.].name].value
-        value=>[.].value
-    add=>[$]
-      value=>[_data][select]
-label
-  tag=>label
-  class=>span-6 top-1
-  value=>default front-end active event
-lambda=>lambda-front-end-event
-  oncreatecontrols
-    // includes necessary javascript files for our autocompleter
-    magix.viewport.include-client-file
-      type=>javascript
-      file=>media/bootstrap/js/jQuery.js
-    magix.viewport.include-client-file
-      type=>javascript
-      file=>media/bootstrap/js/bootstrap.min.js
-    magix.viewport.include-client-file
-      type=>css
-      file=>media/back-end/typeahead.css
-    _json=>
-    list-events
-    for-each=>[list-events][events]
-      if=>not-equals
-        lhs=>[/][_json].value
-        rhs=>
-        code
-          set=>[/][_json].value
-            value=>{0},
-              =>[/][_json].value
-      set=>[/][_json].value
-        value=>@"{0}""{1}"""
-          =>[/][_json].value
-          =>[.].name
-    _text
-      text-box=>active-event
-        placeholder=>magix.tiedown.load-index-page ...
-        class=>span-9 last top-1
-        autocomplete=>false
-        @data-provide=>typeahead
-        @data-items=>5
-        @data-source=>{data-source}
-        onfirstload
-          magix.data.load
-            id=>magix.tiedown.default-index-page-event
-          if=>exist
-            lhs=>[magix.data.load][value]
-            code
-              set=>[@][magix.forms.set-value][value].value
-                value=>[magix.data.load][value][event].value
+panel
+  class=>span-13 last boxed-light-green air-padding
+  controls
+    label
+      class=>span-13 last bottom-1
+      tag=>h3
+      value=>dashboard settings
+    label
+      class=>span-13 last bottom-1
+      value=>these are your dashboard settings, which changes the way your dashboard works
+    label
+      value=>dashboard skin
+      class=>span-3
+      tag=>label
+    lambda=>lmda
+      oncreatecontrols
+        _data
+          select=>frontEndCss
+            class=>span-3
+            onselectedindexchanged
+              magix.forms.get-value
+                id=>frontEndCss
+              set=>[magix.data.save][value][file].value
+                value=>[magix.forms.get-value][value].value
+              magix.data.save
+                id=>magix.admin.settings.default-back-end-css-file
+              magix.browser.redirect=>?dashboard=
+              magix.web.postpone-execution
+                code
+                  magix.viewport.clear-controls
+                    all=>true
+                  magix.forms.create-mml-web-part
+                    mml-file=>system42/private/settings/settings.mml
+                    container=>content1
+                    form-id=>admin-settings
+                    class=>span-17 last
+                  magix.viewport.show-message
+                    message=>theme was changed and portal was reloaded
+            onfirstload
+              magix.data.load
+                id=>magix.admin.settings.default-back-end-css-file
+              set=>[magix.forms.set-value][value].value
+                value=>[magix.data.load][value][file].value
               magix.forms.set-value
-                id=>active-event
-        onenterpressed
-          magix.forms.get-value
-            id=>active-event
-          if=>equals
-            lhs=>[magix.forms.get-value][value].value
+                form-id=>admin-settings
+                id=>frontEndCss
+        magix.file.list-files
+          directory=>media/back-end/skins
+        for-each=>[magix.file.list-files][files]
+          set=>[/][_data][select][items][[.].name].value
+            value=>[.].name
+          replace=>[/][_data][select][items][[.].name].value
+            what=>media/back-end/skins/
+          replace=>[/][_data][select][items][[.].name].value
+            what=>.css
+        add=>[$]
+          value=>[_data][select]
+    label=>lblHelp
+      value=>show help
+      class=>span-2 text-right
+      tag=>label
+      for=>chkHelp
+    check-box=>chkHelp
+      class=>span-1
+      onfirstload
+        magix.data.load-username
+          id=>magix.admin.setting.show-help
+        if=>equals
+          lhs=>[magix.data.load-username][value][value].value
+          rhs=>true
+          code
+            magix.forms.set-value
+              id=>chkHelp
+              value=>true
+        else
+          magix.forms.set-value
+            id=>chkHelp
+            value=>false
+      oncheckedchanged
+        magix.forms.get-value
+          id=>chkHelp
+        if=>equals
+          lhs=>[magix.forms.get-value][value].value
+          rhs=>true
+          code
+            magix.data.save-username
+              id=>magix.admin.setting.show-help
+              value
+                value=>true
+            execute-script
+              file=>system42/private/help/start-help.hl
+        else
+          magix.data.save-username
+            id=>magix.admin.setting.show-help
+            value
+              value=>false
+          magix.viewport.clear-controls
+            container=>help
+panel
+  class=>span-13 last boxed-light-green air-padding top-1
+  controls
+    label
+      class=>span-13 last bottom-1
+      tag=>h3
+      value=>front end settings
+    label
+      class=>span-13 last bottom-1
+      value=>@"these are front end settings, which changes the way your front end works.&nbsp;&nbsp;default active event is 
+the active event that will be raised when the front end web page is initially requested by a browser.&nbsp;&nbsp;by changing this, you 
+change the logic of the front end parts of your system"
+    label=>frontEndViewportLabel
+      value=>viewport
+      class=>span-2
+      tag=>label
+    lambda=>lmdaViewport
+      oncreatecontrols
+        _data
+          select=>frontEndViewport
+            class=>span-3
+            onselectedindexchanged
+              magix.forms.get-value
+                id=>frontEndViewport
+              set=>[magix.data.save][value][viewport].value
+                value=>[magix.forms.get-value][value].value
+              magix.data.save
+                id=>magix.admin.settings.default-front-end-viewport
+              magix.viewport.show-message
+                message=>front end viewport was changed
+            onfirstload
+              magix.data.load
+                id=>magix.admin.settings.default-front-end-viewport
+              set=>[magix.forms.set-value][value].value
+                value=>[magix.data.load][value][viewport].value
+              magix.forms.set-value
+                form-id=>admin-settings
+                id=>frontEndViewport
+        _viewports
+          Magix.viewports.Gutenberg=>gutenberg
+          Magix.viewports.SingleContainer=>single view
+        for-each=>[_viewports]
+          set=>[/][_data][select][items][[.].name].value
+            value=>[.].value
+        add=>[$]
+          value=>[_data][select]
+    label
+      tag=>label
+      class=>span-3
+      value=>default active event
+    lambda=>lambda-front-end-event
+      oncreatecontrols
+        // includes necessary javascript files for our autocompleter
+        magix.viewport.include-client-file
+          type=>javascript
+          file=>media/bootstrap/js/jQuery.js
+        magix.viewport.include-client-file
+          type=>javascript
+          file=>media/bootstrap/js/bootstrap.min.js
+        magix.viewport.include-client-file
+          type=>css
+          file=>media/back-end/typeahead.css
+        _json=>
+        list-events
+        for-each=>[list-events][events]
+          if=>not-equals
+            lhs=>[/][_json].value
             rhs=>
             code
-              magix.viewport.confirm
-                message=>are you sure you wish to reset the front-end active event to its defult value of 'magix.tiedown.load-index-page'?
+              set=>[/][_json].value
+                value=>{0},
+                  =>[/][_json].value
+          set=>[/][_json].value
+            value=>@"{0}""{1}"""
+              =>[/][_json].value
+              =>[.].name
+        _text
+          text-box=>active-event
+            placeholder=>magix.tiedown.load-index-page ...
+            class=>span-5 last
+            autocomplete=>false
+            @data-provide=>typeahead
+            @data-items=>5
+            @data-source=>{data-source}
+            onfirstload
+              magix.data.load
+                id=>magix.tiedown.default-index-page-event
+              if=>exist
+                lhs=>[magix.data.load][value]
                 code
-                  magix.data.remove
-                    id=>magix.tiedown.default-index-page-event
-                  magix.viewport.show-message
-                    message=>front-end active event was reset to its default value
-          else
-            list-events
-            if=>not-exist
-              lhs=>[@][list-events][events][[$][value].value]
-              code
-                magix.viewport.show-message
-                  message=>that active event doesn't exist
-            else
-              magix.viewport.confirm
-                message=>are you sure you wish to change the front-end active event?
-                code
-                  magix.forms.get-value
+                  set=>[@][magix.forms.set-value][value].value
+                    value=>[magix.data.load][value][event].value
+                  magix.forms.set-value
                     id=>active-event
-                  set=>[@][magix.data.save][value][event].value
-                    value=>[@][magix.forms.get-value][value].value
-                  magix.data.save
-                    id=>magix.tiedown.default-index-page-event
-                  magix.viewport.show-message
-                    message=>front-end active event was changed
-    set=>[**@data-source=>{data-source}].value
-      value=>\[{0}]
-        =>[_json].value
-    add=>[$]
-      value=>[_text][text-box]
+            onenterpressed
+              magix.forms.get-value
+                id=>active-event
+              if=>equals
+                lhs=>[magix.forms.get-value][value].value
+                rhs=>
+                code
+                  magix.viewport.confirm
+                    message=>are you sure you wish to reset the front-end active event to its defult value of 'magix.tiedown.load-index-page'?
+                    code
+                      magix.data.remove
+                        id=>magix.tiedown.default-index-page-event
+                      magix.viewport.show-message
+                        message=>front-end active event was reset to its default value
+              else
+                list-events
+                if=>not-exist
+                  lhs=>[@][list-events][events][[$][value].value]
+                  code
+                    magix.viewport.show-message
+                      message=>that active event doesn't exist
+                else
+                  magix.viewport.confirm
+                    message=>are you sure you wish to change the front-end active event?
+                    code
+                      magix.forms.get-value
+                        id=>active-event
+                      set=>[@][magix.data.save][value][event].value
+                        value=>[@][magix.forms.get-value][value].value
+                      magix.data.save
+                        id=>magix.tiedown.default-index-page-event
+                      magix.viewport.show-message
+                        message=>front-end active event was changed
+        set=>[**@data-source=>{data-source}].value
+          value=>\[{0}]
+            =>[_json].value
+        add=>[$]
+          value=>[_text][text-box]
 
 panel=>smtp-wrapper
   class=>span-13 last top-1 boxed-light-green air-padding
@@ -238,6 +260,13 @@ panel=>smtp-wrapper
         id=>smtp-from
         value=>[magix.data.load][value][admin-email].value
   controls
+    label
+      class=>span-13 last bottom-1
+      tag=>h3
+      value=>smtp settings
+    label
+      class=>span-13 last bottom-1
+      value=>to send email using your magix installation, make sure these smtp settings point to a valid smtp server which allows you to send emails
     label
       tag=>label
       class=>span-3

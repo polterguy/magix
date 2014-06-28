@@ -271,7 +271,7 @@ namespace Magix.Core
                         }
 						else if (bufferNodeName == "$")
 						{
-							idxNode = ip.RootNode()["$"];
+							idxNode = dp.RootNode()["$"];
 						}
 						else if (bufferNodeName == ".ip")
 						{
