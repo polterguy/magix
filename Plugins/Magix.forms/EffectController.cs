@@ -42,7 +42,7 @@ namespace Magix.forms
 			}
 
             if (ip.ContainsValue("id"))
-                CreateEffect(ip, FindControl<Control>(ip)).Render();
+                CreateEffect(ip, FindControl<Control>(e.Params)).Render();
             else
                 CreateEffect(ip, null).Render();
         }
@@ -99,7 +99,8 @@ namespace Magix.forms
 			{
 				foreach (Node idx in pars["chained"])
 				{
-					Effect chained = CreateEffect(idx, FindControl<Control>(idx));
+                    pars["_ip"].Value = idx;
+					Effect chained = CreateEffect(idx, FindControl<Control>(pars));
 					tmp.Chained.Add(chained);
 				}
 			}

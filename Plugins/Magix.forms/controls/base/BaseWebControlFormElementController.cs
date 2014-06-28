@@ -39,7 +39,7 @@ namespace Magix.forms
 				return;
 			}
 
-            BaseWebControlFormElement ctrl = FindControl<BaseWebControlFormElement>(ip);
+            BaseWebControlFormElement ctrl = FindControl<BaseWebControlFormElement>(e.Params);
             ctrl.Disabled = !ip["value"].Get<bool>(true);
 		}
 
@@ -65,7 +65,7 @@ namespace Magix.forms
                 return;
             }
 
-            BaseWebControlFormElement ctrl = FindControl<BaseWebControlFormElement>(ip);
+            BaseWebControlFormElement ctrl = FindControl<BaseWebControlFormElement>(e.Params);
             ip["value"].Value = !ctrl.Disabled;
 		}
 

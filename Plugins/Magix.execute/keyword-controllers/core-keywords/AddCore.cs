@@ -52,7 +52,7 @@ namespace Magix.execute
                     if (!ip.Contains("children-only") || !ip["children-only"].Get<bool>())
                         destinationNode.Add(sourceNode.Clone());
                     else
-                        destinationNode.AddRange(sourceNode);
+                        destinationNode.AddRange(sourceNode.Clone());
                 }
                 else
                 {

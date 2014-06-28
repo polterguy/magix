@@ -75,7 +75,7 @@ namespace Magix.forms
                 return;
 			}
 
-            Select lst = FindControl<Select>(ip);
+            Select lst = FindControl<Select>(e.Params);
 			lst.Items.Clear();
             if (ip.Contains("values"))
 			{

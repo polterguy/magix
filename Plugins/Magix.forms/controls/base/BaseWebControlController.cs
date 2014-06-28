@@ -41,7 +41,7 @@ namespace Magix.forms
                 return;
             }
 
-            BaseWebControl ctrl = FindControl<BaseWebControl>(ip);
+            BaseWebControl ctrl = FindControl<BaseWebControl>(e.Params);
             ctrl.Class = ip["value"].Get("");
         }
 
@@ -67,7 +67,7 @@ namespace Magix.forms
                 return;
             }
 
-            BaseWebControl ctrl = FindControl<BaseWebControl>(ip);
+            BaseWebControl ctrl = FindControl<BaseWebControl>(e.Params);
             ip["value"].Value = ctrl.Class;
         }
 
@@ -93,7 +93,7 @@ namespace Magix.forms
                 return;
             }
 
-            BaseWebControl ctrl = FindControl<BaseWebControl>(ip);
+            BaseWebControl ctrl = FindControl<BaseWebControl>(e.Params);
             ctrl.Title = ip["value"].Get<string>();
         }
 
@@ -119,7 +119,7 @@ namespace Magix.forms
                 return;
             }
 
-            BaseWebControl ctrl = FindControl<BaseWebControl>(ip);
+            BaseWebControl ctrl = FindControl<BaseWebControl>(e.Params);
             ip["value"].Value = ctrl.Title;
         }
 
@@ -145,7 +145,7 @@ namespace Magix.forms
                 return;
             }
 
-            BaseWebControl ctrl = FindControl<BaseWebControl>(ip);
+            BaseWebControl ctrl = FindControl<BaseWebControl>(e.Params);
             Node dp = Dp(e.Params);
             ctrl.Info = Expressions.GetExpressionValue<string>(ip["value"].Get<string>(), dp, ip, false);
         }
@@ -172,7 +172,7 @@ namespace Magix.forms
                 return;
             }
 
-            BaseWebControl ctrl = FindControl<BaseWebControl>(ip);
+            BaseWebControl ctrl = FindControl<BaseWebControl>(e.Params);
             ip["value"].Value = ctrl.Info;
         }
 
@@ -200,7 +200,7 @@ namespace Magix.forms
 
             Node dp = Dp(e.Params);
 
-            BaseWebControl ctrl = FindControl<BaseWebControl>(ip);
+            BaseWebControl ctrl = FindControl<BaseWebControl>(e.Params);
             ctrl.Style[Expressions.GetExpressionValue<string>(ip["key"].Get<string>(), dp, ip, false)] =
                 Expressions.GetExpressionValue<string>(ip["value"].Get<string>(), dp, ip, false);
         }
@@ -229,7 +229,7 @@ namespace Magix.forms
 
             Node dp = Dp(e.Params);
 
-            BaseWebControl ctrl = FindControl<BaseWebControl>(ip);
+            BaseWebControl ctrl = FindControl<BaseWebControl>(e.Params);
             ip["value"].Value = ctrl.Style[Expressions.GetExpressionValue<string>(ip["key"].Get<string>(), dp, ip, false)];
         }
 
@@ -255,7 +255,7 @@ namespace Magix.forms
 				return;
 			}
 
-            FindControl<BaseWebControl>(ip).Focus();
+            FindControl<BaseWebControl>(e.Params).Focus();
 		}
 
 		/*

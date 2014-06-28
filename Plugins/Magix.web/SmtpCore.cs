@@ -40,6 +40,8 @@ namespace Magix.web
                 return;
 			}
 
+            Node dp = Dp(e.Params);
+
             Node smtpSettings = new Node("magix.data.load");
             smtpSettings["id"].Value = "magix.smtp.settings";
             BypassExecuteActiveEvent(smtpSettings, e.Params);
@@ -59,11 +61,19 @@ namespace Magix.web
                     smtpSettings["value"]["password"].Get<string>());
             }
 
+            string subject = Expressions.GetExpressionValue<string>(ip["subject"].Get<string>(), dp, ip, false);
+            if (ip["subject"].Count > 0)
+                subject = Expressions.FormatString(dp, ip, ip["subject"], subject);
+
+            string body = Expressions.GetExpressionValue<string>(ip["body"].Get<string>(), dp, ip, false);
+            if (ip["body"].Count > 0)
+                body = Expressions.FormatString(dp, ip, ip["body"], body);
+
             MailMessage msg = new MailMessage(
                 smtpSettings["value"]["admin-email"].Get<string>(),
-                ip["to"].Get<string>(),
-                ip["subject"].Get<string>(),
-                ip["body"].Get<string>());
+                Expressions.GetExpressionValue<string>(ip["to"].Get<string>(), dp, ip, false),
+                subject,
+                body);
 
             smtp.Send(msg);
 		}
