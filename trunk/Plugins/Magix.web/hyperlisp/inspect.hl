@@ -7,7 +7,11 @@ magix.web.send-email-dox=>@"sends an email over smtp
 
 will send an smtp email, using the magix.smtp.settings from database
 
-requires [header], [body] and [to]"
+requires [header], [body] and [to]
+
+by default, the email is sent from the [admin-email] from your smtp settings 
+which can be configured in your settings.  this can be overridden however, by 
+supplying a [from] parameter, which then will become the sender's email"
 
 magix.web.send-email-sample
   magix.web.send-email

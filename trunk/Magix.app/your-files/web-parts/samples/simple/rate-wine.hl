@@ -303,9 +303,12 @@ panel=>main-wrapper
                     to=>[@][..][magix.data.load][value][admin-email].value
                     subject=>A new rating from {0} has been created
                       =>[@][..][magix.data.save][value][full-name].value
-                    body=>A new rating at {0}?view-rating={1} has been created
+                    body=>@"A new rating at {0}?view-rating={1} has been created
+
+The person's email address was {2}"
                       =>[:magix.configuration.get-base-directory][value].value
                       =>[@][..][magix.data.save][id].value
+                      =>[@][..][magix.data.save][value][email].value
                   send-email
                     to=>[@][..][magix.data.save][value][email].value
                     subject=>Thank you for rating our wines {0}
@@ -348,6 +351,13 @@ John Winemaker @ Acme Wines, Inc."
             _literal
               literal=>literal-0
                 text=>@"<div id=""fb-root""></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = ""//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.0"";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
 
 <div class=""fb-share-button"" data-href=""https://developers.facebook.com/docs/plugins/"" data-type=""button_count""></div>"
   onfirstload
