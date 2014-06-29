@@ -209,12 +209,13 @@ namespace Magix.execute
             Node code = GetEventCode(e.Name);
             if (code != null)
             {
-                if (ip.Count > 0)
-                    code["$"].AddRange(ip);
-
                 e.Params["_ip"].Value = code;
                 if (!e.Params.Contains("_dp") || (ip.Name != null && ip.Name.Contains(".")))
                     e.Params["_dp"].Value = code;
+
+                Node nDp = Dp(e.Params);
+                if (ip.Count > 0)
+                    nDp["$"].AddRange(ip);
 
                 // making sure we're starting with correct namespace
                 e.Params["_namespaces"].Add(new Node("item", "magix.execute"));
@@ -224,6 +225,14 @@ namespace Magix.execute
                     RaiseActiveEvent(
                         "magix.execute",
                         e.Params);
+                    ip.Clear();
+                    if (nDp.Contains("$") && nDp["$"].Count > 0)
+                        ip.AddRange(nDp["$"]);
+                    if (nDp.ContainsValue("$"))
+                        ip.Value = nDp["$"].Value;
+                    nDp["$"].UnTie();
+                    e.Params["_dp"].Value = dp;
+                    e.Params["_ip"].Value = ip;
                 }
                 catch (Exception err)
                 {
@@ -235,18 +244,15 @@ namespace Magix.execute
                 }
                 finally
                 {
-                    e.Params["_namespaces"][e.Params["_namespaces"].Count - 1].UnTie();
-                    if (e.Params["_namespaces"].Count == 0)
-                        e.Params["_namespaces"].UnTie();
-                    e.Params["_ip"].Value = ip;
-                    e.Params["_dp"].Value = dp;
+                    if (ip != e.Params)
+                    {
+                        e.Params["_namespaces"][e.Params["_namespaces"].Count - 1].UnTie();
+                        if (e.Params["_namespaces"].Count == 0)
+                            e.Params["_namespaces"].UnTie();
+                        e.Params["_ip"].Value = ip;
+                        e.Params["_dp"].Value = dp;
+                    }
                 }
-
-                ip.Clear();
-                if (code.Contains("$") && code["$"].Count > 0)
-                    ip.AddRange(code["$"]);
-                if (code.ContainsValue("$"))
-                    ip.Value = code["$"].Value;
             }
         }
 

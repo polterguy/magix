@@ -50,3 +50,83 @@ correctly"
       code
         throw=>[using] misbehaved
 
+
+event
+  name=>magix.test.using-return-value
+  persist=>false
+  inspect=>@"verifies [using] works with dynamically created events
+
+creates an event in the magix.test namespace, then tries to invoke 
+the event using a [using] statement, for then to verify it behaves 
+correctly, and that it returns the value of the [$] node back to 
+caller"
+  code
+    event
+      name=>magix.test.temp-using
+      code
+        set=>[$].value
+          value=>howdy
+    using=>magix.test
+      temp-using
+    event
+      name=>magix.test.temp-using
+    if=>not-equals
+      lhs=>[using][temp-using].value
+      rhs=>howdy
+      code
+        throw=>[using] misbehaved
+
+
+event
+  name=>magix.test.using-cleans-up
+  persist=>false
+  inspect=>@"verifies [using] works with dynamically created events
+
+creates an event in the magix.test namespace, then tries to invoke 
+the event using a [using] statement, for then to verify it behaves 
+correctly, and that it cleans up after it is finished executing"
+  code
+    event
+      name=>magix.test.temp-using
+      code
+        set=>[$].value
+          value=>howdy
+        set=>[$][output].value
+          value=>howdy
+    using=>magix.test
+      temp-using
+    event
+      name=>magix.test.temp-using
+    if=>exist
+      lhs=>[$]
+      code
+        throw=>[using] misbehaved
+
+
+event
+  name=>magix.test.using-cleans-up-2
+  persist=>false
+  inspect=>@"verifies [using] works with dynamically created events
+
+creates an event in the magix.test namespace, then tries to invoke 
+the event using a [using] statement, for then to verify it behaves 
+correctly, and that it cleans up after it is finished executing, 
+making sure both input and output parameters are there, without any 
+redundant values"
+  code
+    event
+      name=>magix.test.temp-using
+      code
+        set=>[$][output].value
+          value=>howdy
+    using=>magix.test
+      temp-using
+        input=>jo
+    event
+      name=>magix.test.temp-using
+    if=>not-equals
+      lhs=>[using][temp-using].count
+      rhs=>2
+      code
+        throw=>[using] misbehaved
+

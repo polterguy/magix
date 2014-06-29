@@ -42,6 +42,9 @@ over http"
     if=>not-equals
       lhs=>[try][code][remote][params][output].value
       rhs=>hello world
+      or=>not-equals
+        lhs=>[try][code][remote][params].count
+        rhs=>2
       code
         throw=>[open] and/or [remote] misbehaved
     list-events

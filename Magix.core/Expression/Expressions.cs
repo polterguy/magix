@@ -271,7 +271,15 @@ namespace Magix.Core
                         }
 						else if (bufferNodeName == "$")
 						{
-							idxNode = dp.RootNode()["$"];
+                            if (forcePath)
+                                idxNode = dp.RootNode()["$"];
+                            else
+                            {
+                                if (dp.RootNode().Contains("$"))
+                                    idxNode = dp.RootNode()["$"];
+                                else
+                                    return null;
+                            }
 						}
 						else if (bufferNodeName == ".ip")
 						{

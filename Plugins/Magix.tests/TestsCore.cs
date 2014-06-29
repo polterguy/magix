@@ -84,7 +84,14 @@ namespace Magix.tests
                             expectedExceptionString = inspectTest["_expected-exception"].Get<string>();
                         try
                         {
-                            RaiseActiveEvent(idxTest);
+                            Node exe = new Node();
+                            exe[idxTest].Value = null;
+                            Node pars = new Node();
+                            pars["_ip"].Value = exe;
+                            pars["_dp"].Value = exe;
+                            RaiseActiveEvent(
+                                "magix.execute",
+                                pars);
                             if (expectsException)
                                 throw new ApplicationException("unit test expected an exception, which didn't occur");
                         }
