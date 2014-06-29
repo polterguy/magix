@@ -306,7 +306,7 @@ panel=>smtp-wrapper
     label
       tag=>label
       class=>span-3 top-1 clear
-      value=>from
+      value=>admin email
     text-box=>smtp-from
       class=>span-5 last top-1
       placeholder=>admin email ...

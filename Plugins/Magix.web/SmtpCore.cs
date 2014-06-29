@@ -69,8 +69,12 @@ namespace Magix.web
             if (ip["body"].Count > 0)
                 body = Expressions.FormatString(dp, ip, ip["body"], body);
 
+            string fromEmail = smtpSettings["value"]["admin-email"].Get<string>();
+            if (ip.ContainsValue("from"))
+                fromEmail = Expressions.GetExpressionValue<string>(ip["from"].Get<string>(), dp, ip, false);
+
             MailMessage msg = new MailMessage(
-                smtpSettings["value"]["admin-email"].Get<string>(),
+                fromEmail,
                 Expressions.GetExpressionValue<string>(ip["to"].Get<string>(), dp, ip, false),
                 subject,
                 body);
