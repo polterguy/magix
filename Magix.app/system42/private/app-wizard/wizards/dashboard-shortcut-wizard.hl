@@ -1,0 +1,20 @@
+﻿
+
+inspect=>@"allows you to create a dashboard shortcut which 
+raises an active event"
+
+
+// verifies user is in admin role
+magix.core.verify-role
+  role=>admin
+
+_name=>create dashboard shortcut
+
+// creates the wizard main web part
+magix.forms.create-web-part
+  form-id=>wizard
+  container=>content1
+  class=>span-17 last
+  events-file=>system42/private/app-wizard/wizards/dashboard-shortcut-wizard/events.hl
+  controls-file=>system42/private/app-wizard/wizards/dashboard-shortcut-wizard/controls.hl
+
