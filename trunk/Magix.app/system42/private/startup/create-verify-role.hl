@@ -53,3 +53,55 @@ the to given [role]"
       code
         throw=>user not in role
 
+
+event
+  name=>magix.core.check-role
+  persist=>false
+  inspect=>@"checks if user belongs to given [role]
+
+will return false as [result] unless currently logged in user 
+belongs to [role]"
+  code
+    magix.session.get
+      id=>magix.core.user
+    if=>not-exist
+      lhs=>[magix.session.get][value]
+      code
+        set=>[$][result].value
+          value=>false
+        stop
+    _found=>false
+    magix.data.load
+      prototype
+        type=>magix.core.role
+    _user-roles
+    iterate=>[magix.data.load][objects]
+      if=>equals
+        lhs=>[.].name
+        rhs=>name
+        and=>exist
+          lhs=>[/][magix.session.get][value][roles][[.].value]
+        code
+          add=>[/][_user-roles]
+            value=>[.][..]
+    iterate=>[_user-roles]
+      if=>equals
+        lhs=>[.].name
+        rhs=>name
+        and=>equals
+          lhs=>[.].value
+          rhs=>[$][role].value
+        code
+          set=>[/][_found].value
+            value=>true
+          stop
+    if=>equals
+      lhs=>[_found].value
+      rhs=>false
+      code
+        set=>[$][result].value
+          value=>false
+    else
+      set=>[$][result].value
+        value=>true
+

@@ -11,6 +11,7 @@ below is a list of these operators, together with example code, to illustrate ho
   <li>[.ip] - moves the current pointer to the currently executed node in the tree</li>
   <li>[@] - moves the current pointer to the currently executed block, or scope of nodes</li>
   <li>[.] - moves the current pointer to the data-pointer node.&nbsp;&nbsp;only useful with some few keywords, such as [for-each], [iterate] and [with]</li>
+  <li>[&gt;last] - returns the last child node of the current collection</li>
 </ul>
 
 <p>all of the above expressions, will return some specific node within the tree.&nbsp;&nbsp;check out the code below, for examples 

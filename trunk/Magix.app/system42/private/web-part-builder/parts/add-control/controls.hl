@@ -5,14 +5,10 @@ inspect=>@"contains add controls parts of form builder
 used to create the form builder.  contains the controls necessary 
 to create the add controls parts of the form builder"
 
-label=>lbl-header
-  value=>web part designer
-  tag=>h2
-
 // creates the panel that wraps all the controls in the system
 // for the user to double click to add a control to the design surface
 panel=>controls-wrapper
-  class=>span-15 last boxed air-padding bottom-1
+  class=>span-15 last boxed air-padding bottom-1 top-1
   controls
 
     // descriptive header
