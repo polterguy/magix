@@ -1,15 +1,25 @@
 panel=>wrap-all
   controls
     panel=>main-wrapper
-      class=>span-20 top-2 air-padding last boxed-light-green
+      class=>fill-width column top-2 last boxed-light-green
       controls
         label=>header
           value=>file sharing
-          class=>span-5 left-8 last bottom-1
+          class=>span-5 last bottom-1 left-1 top-1
           tag=>h3
         label=>label-description
           value=>drop files here to upload to server
-          class=>span-5 clear left-7
+          class=>span-5 clear left-1 bottom-1
+          onfirstload
+            magix.core.check-role
+              role=>poweruser
+            if=>equals
+              lhs=>[magix.core.check-role][result].value
+              rhs=>false
+              code
+                magix.forms.set-visible
+                  id=>label-description
+                  value=>false
         lambda=>lambda-files
           oncreatecontrols
             magix.core.verify-role
@@ -28,7 +38,7 @@ panel=>wrap-all
               _header
                 label
                   tag=>label
-                  class=>span-20 last
+                  class=>fill-width column last
               set=>[@][_header][label][value].value
                 value=>[.].name
               add=>[$]
@@ -40,7 +50,7 @@ panel=>wrap-all
               for-each=>[.]
                 _item
                   link-button
-                    class=>span-20 last
+                    class=>fill-width column last
                     onclick
                       set=>[magix.file.download][file].value
                         value=>[$][info].value
