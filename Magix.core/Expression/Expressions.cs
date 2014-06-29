@@ -269,7 +269,11 @@ namespace Magix.Core
                         {
                             idxNode = idxNode.RootNode();
                         }
-						else if (bufferNodeName == "$")
+                        else if (bufferNodeName == ">last")
+                        {
+                            idxNode = idxNode[idxNode.Count - 1];
+                        }
+                        else if (bufferNodeName == "$")
 						{
                             if (forcePath)
                                 idxNode = dp.RootNode()["$"];
