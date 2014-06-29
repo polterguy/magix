@@ -101,25 +101,31 @@ namespace Magix.Core
 					{
 						Node node = new Node();
 
-						if (!string.IsNullOrEmpty(Page.Request["params"]))
-							node = Node.FromJSONString(Page.Request["params"]);
+                        if (!string.IsNullOrEmpty(Page.Request["params"]))
+                            node[Page.Request["event"]].AddRange(Node.FromJSONString(Page.Request["params"]));
+                        else
+                            node[Page.Request["event"]].Value = null;
 
-                        bool inspect = node.Contains("inspect");
+                        bool inspect = node[Page.Request["event"]].Contains("inspect");
+
+                        Node exe = new Node();
+                        exe["_ip"].Value = node;
+                        exe["_dp"].Value = node;
 
 						RaiseActiveEvent(
-							Page.Request["event"],
-							node);
+							"magix.execute",
+							exe);
 
                         if (inspect)
                         {
                             // removing all nodes from result, except inspect
-                            Node inspectNode = node["inspect"];
-                            node.Clear();
-                            node.Add(inspectNode);
+                            Node inspectNode = node[Page.Request["event"]]["inspect"];
+                            node[Page.Request["event"]].Clear();
+                            node[Page.Request["event"]].Add(inspectNode);
                         }
 
 						Page.Response.Clear();
-						Page.Response.Write("return:" + node.ToJSONString());
+                        Page.Response.Write("return:" + node[Page.Request["event"]].ToJSONString());
 						try
 						{
 							Page.Response.End();
