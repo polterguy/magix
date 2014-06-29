@@ -16,6 +16,7 @@ magix.ide.add-control-to-surface
     value=>[$][value].value
   set=>[$][magix.ide.add-control][auto-select].value
     value=>true
+
   // decorating returned control with default properties
   with=>[$][magix.ide.add-control][control][0]
     switch=>[$][0].value
@@ -75,6 +76,7 @@ magix.ide.add-control-to-surface
       case=>wysiwyg
         set=>[class].value
           value=>span-14
+
   // returning add control code
   set=>[$][0]
 
