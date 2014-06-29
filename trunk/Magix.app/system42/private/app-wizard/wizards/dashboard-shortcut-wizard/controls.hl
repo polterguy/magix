@@ -1,0 +1,143 @@
+﻿
+
+inspect=>@"contains the controls for the create dashboard shortcut wizard
+
+contains the controls for the web part that allows the user to create a dashboard 
+shortcut active event"
+
+
+panel
+  class=>span-15 last air-padding boxed top-1
+  controls
+    label
+      class=>span-15 last
+      tag=>h2
+      value=>create dashboard shortcut active event wizard
+    label
+      class=>span-15 last bottom-1
+      value=>from here you can create a dashboard shortcut that will raise an active event of your choice when clicked
+    label
+      tag=>label
+      class=>span-2
+      value=>link text
+    text-box=>link-text
+      class=>span-7
+      placeholder=>link text ...
+    label
+      tag=>label
+      class=>span-2 text-right
+      value=>category
+    text-box=>link-category
+      class=>span-4 last
+      placeholder=>category ...
+    label
+      tag=>label
+      class=>span-2 clear top-1
+      value=>active event
+
+    lambda=>lambda-front-end-event
+      oncreatecontrols
+        // includes necessary javascript files for our autocompleter
+        magix.viewport.include-client-file
+          type=>javascript
+          file=>media/bootstrap/js/jQuery.js
+        magix.viewport.include-client-file
+          type=>javascript
+          file=>media/bootstrap/js/bootstrap.min.js
+        magix.viewport.include-client-file
+          type=>css
+          file=>media/back-end/typeahead.css
+        _json=>
+        list-events
+        for-each=>[list-events][events]
+          if=>not-equals
+            lhs=>[/][_json].value
+            rhs=>
+            code
+              set=>[/][_json].value
+                value=>{0},
+                  =>[/][_json].value
+          set=>[/][_json].value
+            value=>@"{0}""{1}"""
+              =>[/][_json].value
+              =>[.].name
+        _text
+          text-box=>active-event
+            placeholder=>active event ...
+            class=>span-7 top-1
+            autocomplete=>false
+            @data-provide=>typeahead
+            @data-items=>5
+            @data-source=>{data-source}
+        set=>[**@data-source=>{data-source}].value
+          value=>\[{0}]
+            =>[_json].value
+        add=>[$]
+          value=>[_text][text-box]
+    button=>save
+      class=>span-2 last right top-1 clear
+      value=>save
+      onclick
+        magix.forms.get-children-values
+          form-id=>wizard
+          id=>content1
+        _event
+          event
+            name=>{name}
+            code
+              _data
+                {date}
+                  text=>{link-text}
+                  category=>{category}
+                  code
+                    {active-event}
+              add=>[$]
+                value=>[_data][0]
+        magix.date.now
+        replace=>[magix.date.now][value].value
+          what=>@" "
+          with=>-
+        replace=>[magix.date.now][value].value
+          what=>.
+        replace=>[magix.date.now][value].value
+          what=>@":"
+        _event-name
+        set=>[_event-name].value
+          value=>magix.admin.desktop-shortcuts.wizard-created-{0}
+            =>[magix.date.now][value].value
+        iterate=>[_event]
+          if=>equals
+            lhs=>[.].value
+            rhs=>{name}
+            code
+              set=>[.].value
+                value=>[/][_event-name].value
+          else-if=>equals
+            lhs=>[.].name
+            rhs=>{active-event}
+            code
+              set=>[.].name
+                value=>[/][magix.forms.get-children-values][values][active-event].value
+          else-if=>equals
+            lhs=>[.].name
+            rhs=>{date}
+            code
+              set=>[.].name
+                value=>name-{0}
+                  =>[/][magix.date.now][value].value
+          else-if=>equals
+            lhs=>[.].value
+            rhs=>{link-text}
+            code
+              set=>[.].value
+                value=>[/][magix.forms.get-children-values][values][link-text].value
+          else-if=>equals
+            lhs=>[.].value
+            rhs=>{category}
+            code
+              set=>[.].value
+                value=>[/][magix.forms.get-children-values][values][link-category].value
+        lambda=>[_event]
+        magix.viewport.show-message
+          message=>dashboard shortcut was created
+
