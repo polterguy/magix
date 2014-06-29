@@ -1,3 +1,46 @@
+button=>btn-hide
+  class=>span-4 last right
+  value=>toggle visible
+  onfirstload
+    magix.web.get-parameter
+      name=>view-rating
+    magix.session.get
+      id=>magix.core.user
+    if=>not-equals
+      lhs=>[magix.session.get][value][roles][admin].value
+      rhs=>true
+      or=>not-exist
+        lhs=>[magix.web.get-parameter][value]
+      code
+        magix.forms.set-visible
+          id=>btn-hide
+  onclick
+    magix.web.get-parameter
+      name=>view-rating
+    using=>magix.data
+      load
+        id=>[magix.web.get-parameter][value].value
+    add=>[magix.data.save][value]
+      value=>[using][load][value]
+      children-only=>true
+    set=>[magix.data.save][id].value
+      value=>[magix.web.get-parameter][value].value
+    if=>equals
+      lhs=>[using][load][value][closed].value
+      rhs=>true
+      code
+        set=>[magix.data.save][value][closed]
+    else
+      set=>[magix.data.save][value][closed].value
+        value=>true
+    magix.data.save
+    magix.viewport.execute-javascript
+      script=>location.reload();
+label=>error-404
+  class=>span-22 top-2 last
+  tag=>h1
+  value=>the page you requested doesn't exist
+  visible=>false
 panel=>main-wrapper
   class=>span-22 last
   controls
@@ -143,6 +186,42 @@ panel=>main-wrapper
                 magix.viewport.show-message
                   message=>sorry, that doesn't really work.  if you wish to rate these wines for real, you'll have to visit the vineyard ...
       style=>border-radius:25px;background-color:#ffffff;background-image:url(media/images/samples/vineyard.jpg);box-shadow:3px 3px 5px rgba(0,0,0,.5);
+    panel=>panel-0
+      class=>span-18 left-1 top-2 min-height-5 air-padding
+      controls
+        label=>label-0
+          value=>Service
+          class=>span-12 left-4
+          tag=>h2
+        label=>label-1
+          value=>Feel free to also rate our service here, and let us know how we can improve. Or tell the world about your experience here at our vineyard. If we did anything wrong, then tell us how we can improve. If we did anything right, then tell the world :)
+          class=>span-7 right-2 left-4
+        text-area=>service-comment
+          class=>span-10 top-1 clear left-4
+          rows=>8
+          placeholder=>your comment ...
+          style=>background-color:rgba(255,255,255,.5);
+          onfirstload
+            magix.web.get-parameter
+              name=>view-rating
+            if=>exist
+              lhs=>[magix.web.get-parameter][value]
+              code
+                using=>magix.forms
+                  set-enabled
+                    id=>[$][id].value
+                    value=>false
+        rating=>service-rating
+          class=>mux-rating top-1 clear left-4
+          onrate
+            magix.web.get-parameter
+              name=>view-rating
+            if=>exist
+              lhs=>[magix.web.get-parameter][value]
+              code
+                magix.viewport.show-message
+                  message=>sorry, that doesn't really work.  if you wish to rate these wines for real, you'll have to visit the vineyard ...
+      style=>border-radius:25px;background-color:#ffffff;background-image:url(media/images/samples/vineyard.jpg);box-shadow:3px 3px 5px rgba(0,0,0,.5);
     panel=>email-wrapper
       class=>top-4 left-5 span-10 min-height-5 boxed-light-green air-padding
       controls
@@ -217,7 +296,16 @@ panel=>main-wrapper
                     type=>magix.samples.wine-rating
                 magix.forms.clear-children-values
                   id=>main-wrapper
+                magix.data.load
+                  id=>magix.smtp.settings
                 using=>magix.web
+                  send-email
+                    to=>[@][..][magix.data.load][value][admin-email].value
+                    subject=>A new rating from {0} has been created
+                      =>[@][..][magix.data.save][value][full-name].value
+                    body=>A new rating at {0}?view-rating={1} has been created
+                      =>[:magix.configuration.get-base-directory][value].value
+                      =>[@][..][magix.data.save][id].value
                   send-email
                     to=>[@][..][magix.data.save][value][email].value
                     subject=>Thank you for rating our wines {0}
@@ -260,13 +348,7 @@ John Winemaker @ Acme Wines, Inc."
             _literal
               literal=>literal-0
                 text=>@"<div id=""fb-root""></div>
-<script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-  js = d.createElement(s); js.id = id;
-  js.src = ""//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.0"";
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
+
 <div class=""fb-share-button"" data-href=""https://developers.facebook.com/docs/plugins/"" data-type=""button_count""></div>"
   onfirstload
     magix.web.get-parameter
@@ -287,6 +369,17 @@ John Winemaker @ Acme Wines, Inc."
         magix.data.save
         set=>[@][using][load][value][type]
         set=>[@][using][load][value][verified]
+        if=>equals
+          lhs=>[@][using][load][value][closed].value
+          rhs=>true
+          code
+            magix.forms.set-visible
+              id=>main-wrapper
+              value=>false
+            magix.forms.set-visible
+              id=>error-404
+              value=>true
+            stop
         for-each=>[@][using][load][value]
           using=>magix.forms
             set-value

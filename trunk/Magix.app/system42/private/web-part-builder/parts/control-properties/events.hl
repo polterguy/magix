@@ -373,6 +373,15 @@ magix.ide.create-control-event-modifier-control
             node=>[$][content]
           set=>[.].value
             value=>[@][node-2-code][code].value
+          replace=>[.].value
+            what=>&
+            with=>&amp;
+          replace=>[.].value
+            what=>>
+            with=>&gt;
+          replace=>[.].value
+            what=><
+            with=>&lt;
     else-if=>equals
       lhs=>[.].value
       rhs=>{field-type-value}
