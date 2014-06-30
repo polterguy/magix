@@ -17,13 +17,17 @@ create whatever functionality your wizard allows the user to create"
 magix.core.verify-role
   role=>admin
 
+magix.viewport.include-client-file
+  type=>css
+  file=>media/back-end/wizard.css
+
 magix.file.list-files
   directory=>system42/private/app-wizard/wizards
   filter=>*.hl
 
 _dt
   panel
-    class=>boxed span-5 min-height-6 air-padding bottom-1 desktop-widget
+    class=>boxed span-5 min-height-6 air-padding bottom-1 desktop-widget wizard-widget
     style=>cursor:pointer;
     controls
       label
