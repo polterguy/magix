@@ -340,6 +340,14 @@ namespace Magix.forms
             if (that is IValueControl)
                 node["$"]["value"].Value = (that as IValueControl).ControlValue;
 
+            Control tmp = that;
+            while (tmp != null && !(tmp is DynamicPanel))
+            {
+                tmp = tmp.Parent;
+            }
+            if (tmp != null)
+                node["$"]["container"].Value = tmp.ID;
+
             node["$"]["id"].Value = that.ID;
         }
 
