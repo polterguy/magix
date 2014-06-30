@@ -22,7 +22,8 @@
 		id="txtIn"
 		Rows="15"
 		PlaceHolder="input nodes ..."
-		Class="fill-width monospaced" />
+		Class="fill-width monospaced"
+        OnTextChanged="txtIn_TextChanged" />
 	<mux:Panel
 		runat="server"
 		ID="exeWrp"

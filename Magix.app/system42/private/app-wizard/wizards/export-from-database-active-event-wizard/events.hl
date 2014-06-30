@@ -188,7 +188,8 @@ magix.wizard.save_onclick
             value=>[_file-value].value
         magix.log.append
           header=>items exported
-          body=>items of type '{type-name}' was exported to file
+          body=>items of type '{0}' was exported to file
+            =>{type-name}
 
         // redirecting to file
         set=>[magix.file.download][file].value

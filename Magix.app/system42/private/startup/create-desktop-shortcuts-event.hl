@@ -107,36 +107,12 @@ returns the default dashboard shortcuts in your system"
                   value=>edit
                   class=>span-2
                   onclick
-                    magix.viewport.load-module
-                      class=>span-22 top-1 last
-                      container=>content2
-                      name=>Magix.ide.modules.ExecutorForm
                     magix.forms.get-value
                       form-id=>active-events
                       id=>lbl-header
-                    set=>[_inspect].name
+                    set=>[magix.event.edit-event][event].value
                       value=>[magix.forms.get-value][value].value
-                    _inspect
-                      inspect
-                        type=>no-html
-                    _code
-                      event
-                        name
-                        inspect
-                        code
-                    set=>[_code][**inspect].value
-                      value=>[**inspect=>?].value
-                    set=>[_code][**name].value
-                      value=>[magix.forms.get-value][value].value
-                    add=>[_code][**code]
-                      value=>[**inspect=>?][..]
-                      children-only=>true
-                    set=>[_code][**code][inspect]
-                    node-2-code
-                      node=>[_code][event]
-                    using=>magix.executor
-                      set-code
-                        code=>[node-2-code][code].value
+                    magix.event.edit-event
 
       active-events
         text=>all active events

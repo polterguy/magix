@@ -418,6 +418,7 @@
     <Content Include="system42\private\app-wizard\wizards\url-map-wizard.hl" />
     <Content Include="system42\private\app-wizard\wizards\url-map-wizard\controls.hl" />
     <Content Include="system42\private\app-wizard\wizards\url-map-wizard\events.hl" />
+    <Content Include="system42\private\startup\create-edit-event.hl" />
     <None Include="todo.txt" />
     <Content Include="your-files\readme.txt" />
     <Content Include="your-files\tmp\readme.txt" />

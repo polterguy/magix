@@ -51,6 +51,10 @@ namespace Magix.ide.modules
 				else
 					txtIn.Value = code;
 
+                string storedCode = Session["magix.executor-form.stored-message"] as string;
+                if (!string.IsNullOrEmpty(storedCode))
+                    txtIn.Value = storedCode;
+
 				// Including JavaScript files ...
 				Node tmp = new Node();
 
@@ -137,7 +141,14 @@ namespace Magix.ide.modules
                 throw new ArgumentException("no [code] given to [magix.executor.set-code]");
             Node dp = Dp(e.Params);
             txtIn.Value = Expressions.GetExpressionValue<string>(ip["code"].Get<string>(), dp, ip, false);
+
+            Session["magix.executor-form.stored-message"] = txtIn.Value;
 		}
+
+        protected void txtIn_TextChanged(object sender, EventArgs e)
+        {
+            Session["magix.executor-form.stored-message"] = txtIn.Value;
+        }
 
 		protected void move_Click(object sender, EventArgs e)
 		{
