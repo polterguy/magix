@@ -78,6 +78,14 @@ if=>equals
   code
     set=>[_controls][**button=>inspect]
 
+// adding extra selection code, if there is any
+if=>exist
+  lhs=>[$][extra-selection-code]
+  code
+    add=>[**create-web-part][**magix.inspect.event-selected]
+      value=>[$][extra-selection-code]
+      children-only=>true
+
 // listing events according to input parameter
 if=>exist
   lhs=>[$][namespace]
@@ -156,6 +164,7 @@ _create-link-button
         magix.forms.set-value
           form-id=>active-events
           id=>lbl-code
+        magix.inspect.event-selected
 
   // setting some onclick behavior, before changing name of active event
   set=>[_data][link-button][onclick][magix.forms.set-value:0][value].value
@@ -275,4 +284,6 @@ using=>magix.forms
     container=>content1
     class=>span-17 last
     controls=>[_controls]
+    events
+      magix.inspect.event-selected
 

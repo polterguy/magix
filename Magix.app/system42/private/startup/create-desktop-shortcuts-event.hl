@@ -76,43 +76,61 @@ returns the default dashboard shortcuts in your system"
         text=>dynamic active events
         category=>security
         code
-          magix.viewport.clear-controls
-            all=>true
-          execute-script
-            file=>system42/private/tools/inspect.hl
-            params
-              overridden=>true
-              header=>overridden active events
-              description-class=>span-9
-              list-class=>span-8 last
-              extra-buttons
-                button=>delete-event
-                  value=>delete
-                  class=>span-2
-                  onclick
-                    magix.viewport.confirm
-                      message=>are you sure you wish to delete this active event?
-                      code
-                        using=>magix.forms
-                          get-value
-                            form-id=>active-events
-                            id=>lbl-header
-                        event
-                          name=>[using][get-value][value].value
-                        magix.viewport.show-message
-                          message=>active event was deleted, changes will not show before you reload dynamic active events
-                          color=>#aaffaa
-                          time=>5000
-                button=>edit-event
-                  value=>edit
-                  class=>span-2
-                  onclick
-                    magix.forms.get-value
-                      form-id=>active-events
-                      id=>lbl-header
-                    set=>[magix.event.edit-event][event].value
-                      value=>[magix.forms.get-value][value].value
-                    magix.event.edit-event
+          event
+            // to support recursive calling of self ...
+            name=>magix.event.view-overridden-active-events
+            code
+              magix.viewport.clear-controls
+                all=>true
+              execute-script
+                file=>system42/private/tools/inspect.hl
+                params
+                  overridden=>true
+                  header=>overridden active events
+                  description-class=>span-9
+                  list-class=>span-8 last
+                  extra-selection-code
+                    using=>magix.forms
+                      set-enabled
+                        form-id=>active-events
+                        id=>delete-event
+                        value=>true
+                      set-enabled
+                        form-id=>active-events
+                        id=>edit-event
+                        value=>true
+                  extra-buttons
+                    button=>delete-event
+                      value=>delete
+                      class=>span-2
+                      disabled=>true
+                      onclick
+                        magix.viewport.confirm
+                          message=>are you sure you wish to delete this active event?
+                          code
+                            using=>magix.forms
+                              get-value
+                                form-id=>active-events
+                                id=>lbl-header
+                            event
+                              name=>[using][get-value][value].value
+                            magix.viewport.show-message
+                              message=>active event was deleted
+                            magix.event.view-overridden-active-events
+                    button=>edit-event
+                      value=>edit
+                      class=>span-2
+                      disabled=>true
+                      onclick
+                        magix.forms.get-value
+                          form-id=>active-events
+                          id=>lbl-header
+                        set=>[magix.event.edit-event][event].value
+                          value=>[magix.forms.get-value][value].value
+                        magix.event.edit-event
+                          container=>content2
+                          class=>span-17 left-5 last top-2
+          magix.event.view-overridden-active-events
 
       active-events
         text=>all active events
