@@ -534,6 +534,69 @@ select:disabled
 	padding-bottom:18px;
 }
 
+@-webkit-keyframes hover-shade-animation-on
+{
+ from {
+    background-color:rgba(0,0,0,.0);
+ }
+ to {
+    background-color:rgba(0,0,0,.1);
+ }
+}
+
+@-webkit-keyframes hover-shade-animation-off
+{
+ from {
+    background-color:rgba(0,0,0,.1);
+ }
+ to {
+    background-color:rgba(0,0,0,.0);
+ }
+}
+
+@-moz-keyframes hover-shade-animation-on
+{
+ from {
+    background-color:rgba(0,0,0,.0);
+ }
+ to {
+    background-color:rgba(0,0,0,.1);
+ }
+}
+
+@-moz-keyframes hover-shade-animation-off
+{
+ from {
+    background-color:rgba(0,0,0,.1);
+ }
+ to {
+    background-color:rgba(0,0,0,.0);
+ }
+}
+
+.hover-shade
+{
+    background-color:rgba(0,0,0,.0);
+    border-radius:5px;
+	-webkit-animation-name: hover-shade-animation-off;
+	-webkit-animation-duration: .2s;
+	-webkit-animation-direction: normal;
+	-moz-animation-name: hover-shade-animation-off;
+	-moz-animation-duration: .2s;
+	-moz-animation-direction: normal;
+}
+
+.hover-shade:hover
+{
+	-webkit-animation-name: hover-shade-animation-on;
+	-webkit-animation-duration: .2s;
+	-webkit-animation-direction: normal;
+	-moz-animation-name: hover-shade-animation-on;
+	-moz-animation-duration: .2s;
+	-moz-animation-direction: normal;
+    background-color:rgba(0,0,0,.1);
+}
+
 .mux-rating
 {
     display:block;

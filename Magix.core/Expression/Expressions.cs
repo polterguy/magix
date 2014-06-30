@@ -253,11 +253,9 @@ namespace Magix.Core
                         noBraces += 1;
                     if (tmp == ']' && --noBraces == 0)
                     {
-                        if (string.IsNullOrEmpty(bufferNodeName))
-							throw new ArgumentException("opps, empty node name/index ...");
                         isInside = false;
                         lastEntity = "";
-                        bool allNumber = true;
+                        bool allNumber = !string.IsNullOrEmpty(bufferNodeName);
                         if (bufferNodeName == "..")
                         {
 							// One up!
