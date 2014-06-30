@@ -26,7 +26,7 @@ magix.url-map.add-value_onclick
         time=>5000
       magix.forms.effect
         form-id=>wizard
-        id=>active-event
+        id=>parameter-value
         type=>focus-and-select
       stop
   magix.viewstate.get
@@ -51,7 +51,7 @@ magix.url-map.add-value_onclick
   magix.forms.effect
     type=>focus-and-select
     form-id=>wizard
-    id=>active-event
+    id=>parameter-value
 
 magix.url-map.create_onclick
   magix.forms.get-value
@@ -84,8 +84,12 @@ magix.url-map.create_onclick
 will map an http get parameter to an active event according to a list of 
 values to active events.  the name of the http get parameter that is used 
 here is '{0}', and its different mapping values can be found in the [_items] 
-collection of the code block of the active event"
+collection of the code block of the active event
+
+the default active event, that will be raised if no get parameter is given, or 
+its value is empty, is '{1}'"
         =>{parameter}
+        =>{default}
       code
         _items
         magix.web.get-parameter
@@ -98,9 +102,19 @@ collection of the code block of the active event"
             set=>[@][_invoke].name
               value=>[_items][[magix.web.get-parameter][value].value].value
             _invoke
+        else
+          set=>[@][_invoke].name
+            value=>[_items][].value
+          _invoke
   add=>[_event][**_items]
     value=>[magix.viewstate.get][value]
     children-only=>true
+  magix.forms.get-value
+    form-id=>wizard
+    id=>default-active-event
+  add=>[_event][**_items]
+    value=>
+      value=>[magix.forms.get-value:2][value].value
   iterate=>[_event]
     if=>equals
       lhs=>[.].value
@@ -114,6 +128,12 @@ collection of the code block of the active event"
       code
         set=>[.].value
           value=>[/][magix.forms.get-value:0][value].value
+    else-if=>equals
+      lhs=>[.].value
+      rhs=>{default}
+      code
+        set=>[.].value
+          value=>[/][magix.forms.get-value:2][value].value
   lambda=>[_event]
   magix.viewport.show-message
     message=>your active event was created
@@ -142,31 +162,39 @@ magix.url-map.databind-items
       stop
   _items
     panel
-      class=>span-15 last
+      class=>span-13 last
   for-each=>[magix.viewstate.get][value]
     _item
-      label
-        class=>span-3
-      label
-        class=>span-10
-      link-button
-        class=>span-2 last text-right
-        value=>delete
-        onclick
-          magix.viewstate.get
-            id=>magix.url-map.items
-          set=>[magix.viewstate.get][value][[$][info].value]
-          add=>[magix.viewstate.set][value]
-            value=>[magix.viewstate.get][value]
-            children-only=>true
-          magix.viewstate.set
-            id=>magix.url-map.items
-          magix.url-map.databind-items
-    set=>[@][_item][label:0][value].value
+      panel
+        class=>span-13 last hover-shade
+        controls
+          label
+            class=>span-3
+            tag=>label
+          label
+            class=>span-8
+          link-button
+            class=>span-2 last text-right
+            value=>delete
+            onclick
+              magix.viewstate.get
+                id=>magix.url-map.items
+              set=>[magix.viewstate.get][value][[$][info].value]
+              add=>[magix.viewstate.set][value]
+                value=>[magix.viewstate.get][value]
+                children-only=>true
+              magix.viewstate.set
+                id=>magix.url-map.items
+              magix.url-map.databind-items
+              magix.forms.effect
+                form-id=>wizard
+                id=>parameter-value
+                type=>focus-and-select
+    set=>[@][_item][panel][controls][label:0][value].value
       value=>[.].name
-    set=>[@][_item][label:1][value].value
+    set=>[@][_item][panel][controls][label:1][value].value
       value=>[.].value
-    set=>[@][_item][link-button][info].value
+    set=>[@][_item][panel][controls][link-button][info].value
       value=>[.].name
     add=>[/][_items][panel][controls]
       value=>[@][_item]
@@ -174,7 +202,7 @@ magix.url-map.databind-items
   using=>magix.forms
     create-web-part
       form-id=>url-items
-      class=>span-15 last bottom-1
+      class=>span-13 last bottom-1 air-padding boxed-light-green
       container=>url-parameters
       controls=>[_items]
 
