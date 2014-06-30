@@ -235,7 +235,7 @@ change the logic of the front end parts of your system"
           value=>[_text][text-box]
 
 panel=>smtp-wrapper
-  class=>span-13 last top-1 boxed-light-green air-padding
+  class=>span-13 last top-1 boxed-light-green air-padding bottom-1
   default=>update-smtp
   onfirstload
     magix.data.load

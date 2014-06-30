@@ -415,7 +415,9 @@
     <Content Include="system42\private\startup\unit-tests\xml.hl" />
     <Content Include="system42\private\app-wizard\wizards\dashboard-shortcut-wizard.hl" />
     <Content Include="system42\private\app-wizard\wizards\dashboard-shortcut-wizard\controls.hl" />
-    <Content Include="system42\private\app-wizard\wizards\dashboard-shortcut-wizard\events.hl" />
+    <Content Include="system42\private\app-wizard\wizards\url-map-wizard.hl" />
+    <Content Include="system42\private\app-wizard\wizards\url-map-wizard\controls.hl" />
+    <Content Include="system42\private\app-wizard\wizards\url-map-wizard\events.hl" />
     <None Include="todo.txt" />
     <Content Include="your-files\readme.txt" />
     <Content Include="your-files\tmp\readme.txt" />
@@ -426,5 +428,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="database\" />
+    <Folder Include="your-files\shared\" />
   </ItemGroup>
 </Project>

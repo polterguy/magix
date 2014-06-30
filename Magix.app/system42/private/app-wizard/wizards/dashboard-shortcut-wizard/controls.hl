@@ -18,24 +18,23 @@ panel
       value=>from here you can create a dashboard shortcut that will raise an active event of your choice when clicked
     label
       tag=>label
-      class=>span-2
+      class=>span-2 bottom-1
       value=>link text
     text-box=>link-text
-      class=>span-7
+      class=>span-7 bottom-1
       placeholder=>link text ...
     label
       tag=>label
-      class=>span-2 text-right
+      class=>span-2 text-right bottom-1
       value=>category
     text-box=>link-category
-      class=>span-4 last
+      class=>span-4 last bottom-1
       placeholder=>category ...
     label
       tag=>label
-      class=>span-2 clear top-1
+      class=>span-2 clear
       value=>active event
-
-    lambda=>lambda-front-end-event
+    lambda=>lambda-active-event
       oncreatecontrols
         // includes necessary javascript files for our autocompleter
         magix.viewport.include-client-file
@@ -64,7 +63,7 @@ panel
         _text
           text-box=>active-event
             placeholder=>active event ...
-            class=>span-7 top-1
+            class=>span-7
             autocomplete=>false
             @data-provide=>typeahead
             @data-items=>5

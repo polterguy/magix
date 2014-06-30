@@ -83,3 +83,7 @@
 
 * make "magix.data." - transactional support for magix.execute.event/tunnel/override ....
 
+* implement ReRender active event on viewports
+
+* pass in container into all hyperlisp active event handlers
+
