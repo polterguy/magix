@@ -11,7 +11,18 @@ panel=>wrapper
   controls
     label
       tag=>h2
+      class=>span-13
       value=>create select from ms sql active event wizard
+    link-button
+      class=>span-2 last text-right
+      value=>back
+      onclick
+        execute-script
+          file=>system42/private/app-wizard/app-wizard.hl
+    label
+      class=>span-15 last bottom-1
+      value=>@"from here you can create an active event that will select records from an ms sql database when raised.&nbsp;&nbsp;
+the active event created will have support for paging"
     panel=>outer-wrapper
       style=>width:590px;overflow-x:hidden;
       controls

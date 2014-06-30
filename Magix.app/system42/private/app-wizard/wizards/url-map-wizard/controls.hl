@@ -11,12 +11,19 @@ panel=>main-wrapper
   default=>add-value
   controls
     label
-      class=>span-15 last
+      class=>span-13
       tag=>h2
       value=>create url map wizard
+    link-button
+      class=>span-2 last text-right
+      value=>back
+      onclick
+        execute-script
+          file=>system42/private/app-wizard/app-wizard.hl
     label
       class=>span-15 last bottom-1
-      value=>from here you can create an active event that maps http get parameters to active events
+      value=>@"from here you can create an active event that maps http get parameters to active events, such that if a specific 
+http get parameter is given, with a specific value, an active event of your choice will be raised"
     label
       class=>span-2 bottom-1
       tag=>label

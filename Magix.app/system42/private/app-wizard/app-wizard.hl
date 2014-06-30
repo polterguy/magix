@@ -23,14 +23,14 @@ magix.file.list-files
 
 _dt
   panel
-    class=>boxed span-5 min-height-7 air-padding bottom-1 desktop-widget
+    class=>boxed span-5 min-height-6 air-padding bottom-1 desktop-widget
     style=>cursor:pointer;
     controls
       label
         tag=>label
         value=>name
+        class=>column clear bottom-1
       label
-        tag=>p
         value=>description
 
 for-each=>[magix.file.list-files][files]
