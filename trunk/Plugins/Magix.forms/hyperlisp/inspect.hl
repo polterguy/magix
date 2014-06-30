@@ -515,7 +515,6 @@ this is the property which is changed or retrieved when you invoke the [magix.fo
 value] and the [magix.forms.get-value] for your link-button"
 
 magix.forms.link-button-sample-end
-  value=>hello world
   onclick
     magix.viewport.show-message
       message=>howdy world
