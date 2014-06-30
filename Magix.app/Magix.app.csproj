@@ -57,8 +57,10 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Default.aspx" />
+    <Content Include="media\back-end\wizard.css" />
     <Content Include="media\back-end\web-part-builder.css" />
     <Content Include="media\back-end\event-executor.css" />
     <Content Include="media\back-end\file-uploader.css" />
@@ -84,6 +86,7 @@
     <Content Include="media\images\help-files\screenshots\hyper-lisp-spaces.png" />
     <Content Include="media\images\help-files\web-part-designer-screenshot.jpg" />
     <Content Include="media\images\icons\arrows.png" />
+    <Content Include="media\images\icons\lightning.png" />
     <Content Include="media\images\icons\star.png" />
     <Content Include="media\images\icons\start-button-blue.png" />
     <Content Include="media\images\icons\start-button.png" />
@@ -245,6 +248,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="media\videos\unsustainable-growth.webm" />
     <None Include="media\xing-wysihtml5\LICENSE" />
     <Content Include="system42\private\file-manager\file-manager.hl" />
     <Content Include="system42\private\app-wizard\app-wizard.hl" />

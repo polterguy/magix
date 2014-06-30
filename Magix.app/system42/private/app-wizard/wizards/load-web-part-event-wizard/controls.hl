@@ -8,7 +8,7 @@ that loads up a web part"
 
 panel
   default=>create
-  class=>span-15 last air-padding boxed top-1
+  class=>span-15 last air-padding boxed top-1 wizard-content desktop-widget
   controls
     label
       tag=>h2

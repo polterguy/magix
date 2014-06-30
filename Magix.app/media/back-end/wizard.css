@@ -7,3 +7,11 @@
 {
     background-image:url(../images/icons/lightning.png), linear-gradient(rgba(240, 240, 255, 1) 0%, rgba(190, 190, 210, 1) 100%);
 }
+
+.wizard-content
+{
+    background-image:url(../images/icons/lightning.png), linear-gradient(rgba(240, 240, 255, 1) 0%, rgba(190, 190, 210, 1) 100%);
+    background-repeat:no-repeat;
+    background-position:top right;
+}
+

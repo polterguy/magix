@@ -49,14 +49,14 @@ magix.wizard.create-css-files-container
   magix.forms.create-web-part
     container=>css-files
     form-id=>css-files
-    class=>span-9 last
+    class=>span-7 last air-padding boxed-light-green
     controls
       label
         tag=>label
-        class=>span-3 top-1 text-right
+        class=>span-2
         value=>css files
       select=>add-css-file
-        class=>span-6 last top-1 bottom-1
+        class=>span-5 last bottom-1
         onfirstload
           magix.wizard.populate-select-css-file
           add=>[magix.forms.set-values][values]
@@ -105,11 +105,13 @@ magix.wizard.create-css-files-container
         oncreatecontrols
           _control
             panel
-              class=>span-6 left-3 last
+              class=>span-7 last hover-shade
               controls
+                label
+                  class=>span-5
                 link-button
-                  class=>span-1 last
-                  value=>x
+                  class=>span-2 last text-right
+                  value=>remove
                   onclick
                     magix.viewstate.get
                       id=>magix.wizard.css-files
@@ -119,8 +121,6 @@ magix.wizard.create-css-files-container
                     magix.viewstate.set
                       id=>magix.wizard.css-files
                     magix.wizard.create-css-files-container
-                label
-                  class=>span-5
           magix.viewstate.get
             id=>magix.wizard.css-files
           for-each=>[magix.viewstate.get][value]

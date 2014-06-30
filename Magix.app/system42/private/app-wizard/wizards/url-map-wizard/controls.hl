@@ -7,7 +7,7 @@ active event that maps http get parameters to active events"
 
 
 panel=>main-wrapper
-  class=>span-15 last air-padding boxed top-1
+  class=>span-15 last air-padding boxed top-1 wizard-content desktop-widget
   default=>add-value
   controls
     label
