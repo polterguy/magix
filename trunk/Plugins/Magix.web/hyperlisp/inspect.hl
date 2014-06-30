@@ -66,14 +66,22 @@ magix.web.get-parameter-sample
     name=>some-get-parameter
 
 
-magix.web.transfer.file-dox=>@"transfers a file to the client
+magix.web.get-url-dox=>@"returns the url of the current request
+
+returns the current url as [url]"
+
+magix.web.get-url-sample
+  magix.web.get-url
+
+
+magix.web.transfer-file-dox=>@"transfers a file to the client
 
 will transfer a file back to the client.  the file to transfer is given 
 as [file]
 
 not thread safe"
 
-magix.web.transfer.file-sample
+magix.web.transfer-file-sample
   magix.web.transfer-file
     file=>some-get-parameter
 

@@ -298,22 +298,37 @@ panel=>main-wrapper
                   id=>main-wrapper
                 magix.data.load
                   id=>magix.smtp.settings
+                _url
+                magix.web.get-url
+                split=>[@][magix.web.get-url][url].value
+                  what=>?
+                if=>equals
+                  lhs=>[@][split][result].count
+                  rhs=>2
+                  code
+                    set=>[@][..][..][_url].value
+                      value=>{0}&
+                        =>[@][..][..][magix.web.get-url][url].value
+                else
+                  set=>[@][..][_url].value
+                    value=>{0}?
+                      =>[@][..][magix.web.get-url][url].value
                 using=>magix.web
                   send-email
                     to=>[@][..][magix.data.load][value][admin-email].value
                     subject=>A new rating from {0} has been created
                       =>[@][..][magix.data.save][value][full-name].value
-                    body=>@"A new rating at {0}?view-rating={1} has been created
+                    body=>@"A new rating at {0}view-rating={1} has been created
 
 The person's email address was {2}"
-                      =>[:magix.configuration.get-base-directory][value].value
+                      =>[@][..][_url].value
                       =>[@][..][magix.data.save][id].value
                       =>[@][..][magix.data.save][value][email].value
                   send-email
                     to=>[@][..][magix.data.save][value][email].value
                     subject=>Thank you for rating our wines {0}
                       =>[@][..][magix.data.save][value][full-name].value
-                    body=>@"You can view your rating at {0}?view-rating={1}, from where you can also share your experience with your friends at facebook, and similar social networks.
+                    body=>@"You can view your rating at {0}view-rating={1}, from where you can also share your experience with your friends at facebook, and similar social networks.
 
 We value your feedback, and will use it to improve ourselves in the future.
 
@@ -321,7 +336,7 @@ We value your feedback, and will use it to improve ourselves in the future.
 Have a nice day :)
 
 John Winemaker @ Acme Wines, Inc."
-                      =>[:magix.configuration.get-base-directory][value].value
+                      =>[@][..][_url].value
                       =>[@][..][magix.data.save][id].value
                 magix.viewport.show-message
                   message=>thank you for rating our wines

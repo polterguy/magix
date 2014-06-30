@@ -53,6 +53,31 @@ namespace Magix.web
         /*
          * transfer a file to client
          */
+        [ActiveEvent(Name = "magix.web.get-url")]
+        private void magix_web_get_url(object sender, ActiveEventArgs e)
+        {
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
+            {
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.web",
+                    "Magix.web.hyperlisp.inspect.hl",
+                    "[magix.web.get-url-dox].value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.web",
+                    "Magix.web.hyperlisp.inspect.hl",
+                    "[magix.web.get-url-sample]");
+                return;
+            }
+
+            ip["url"].Value = HttpContext.Current.Request.Url.AbsoluteUri.ToString().ToLower().Replace("default.aspx", "");
+        }
+
+        /*
+         * transfer a file to client
+         */
         [ActiveEvent(Name = "magix.web.transfer-file")]
         private void magix_web_transfer_file(object sender, ActiveEventArgs e)
         {
@@ -92,6 +117,9 @@ namespace Magix.web
             Page.Response.End();
         }
 
+        /*
+         * helper for above
+         */
         private string GetContentType(string extension)
         {
             switch (extension)
