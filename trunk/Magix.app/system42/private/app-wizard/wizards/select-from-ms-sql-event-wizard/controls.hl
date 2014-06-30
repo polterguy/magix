@@ -7,7 +7,7 @@ that selects records from an ms sql database"
 
 
 panel=>wrapper
-  class=>span-15 last air-padding boxed top-1
+  class=>span-15 last air-padding boxed top-1 wizard-content desktop-widget
   controls
     label
       tag=>h2
