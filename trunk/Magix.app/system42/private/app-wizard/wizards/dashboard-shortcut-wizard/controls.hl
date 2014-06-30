@@ -23,6 +23,11 @@ panel
     text-box=>link-text
       class=>span-7 bottom-1
       placeholder=>link text ...
+      onfirstload
+        magix.forms.effect
+          form-id=>wizard
+          id=>link-text
+          type=>focus-and-select
     label
       tag=>label
       class=>span-2 text-right bottom-1
@@ -83,6 +88,12 @@ panel
         _event
           event
             name=>{name}
+            inspect=>@"automatically wizard generated shortcut
+
+returns a dashboard shortcut link, which has been automatically generated
+by the create dashboard shortcut wizard.  the dashboard link invokes the 
+[{0}] active event"
+              inspect=>{active-event}
             code
               _data
                 {date}
@@ -118,6 +129,12 @@ panel
               set=>[.].name
                 value=>[/][magix.forms.get-children-values][values][active-event].value
           else-if=>equals
+            lhs=>[.].value
+            rhs=>{active-event}
+            code
+              set=>[.].value
+                value=>[/][magix.forms.get-children-values][values][active-event].value
+          else-if=>equals
             lhs=>[.].name
             rhs=>{date}
             code
@@ -139,4 +156,21 @@ panel
         lambda=>[_event]
         magix.viewport.show-message
           message=>dashboard shortcut was created
+        using=>magix.forms
+          set-info
+            form-id=>wizard
+            id=>edit-event
+            value=>[_event][**name=>?].value
+          set-visible
+            form-id=>wizard
+            id=>edit-event
+            value=>true
+    link-button=>edit-event
+      class=>span-3 right clear text-right last
+      value=>edit active event
+      visible=>false
+      onclick
+        set=>[magix.event.edit-event][event].value
+          value=>[$][info].value
+        magix.event.edit-event
 

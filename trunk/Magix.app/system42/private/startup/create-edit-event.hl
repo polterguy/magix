@@ -1,0 +1,51 @@
+
+
+inspect=>@"creates the edit event active event
+
+creates an active event which allowss for editing other active events.  
+pass in [event] as the name of the active event you wish to edit"
+
+
+event
+  name=>magix.event.edit-event
+  inspect=>@"allows editing active events
+
+allows the user to edit active events using the hyperlisp 
+executor.  expects [event] as event name to edit
+
+currently logged in user must belong to the admin role to 
+invoke this active event"
+  code
+    magix.core.verify-role
+      role=>admin
+    set=>[_event][_event].name
+      value=>[$][event].value
+    execute=>[_event]
+    _event
+      _event
+        inspect
+          type=>no-html
+    magix.viewport.clear-controls
+      all=>true
+    magix.viewport.load-module
+      class=>span-17 last
+      container=>content1
+      name=>Magix.ide.modules.ExecutorForm
+    add=>[node-2-code][node]
+      value=>event
+    set=>[node-2-code][node][event][name].value
+      value=>[$][event].value
+    add=>[node-2-code][node][event][code]
+      value=>[_event][0]
+      children-only=>true
+    set=>[node-2-code][node][event][inspect].value
+      value=>[_event][0][inspect].value
+    add=>[node-2-code][node][event]
+      value=>[node-2-code][node][event][code]
+    set=>[node-2-code][node][event][code:0]
+    set=>[node-2-code][node][event][code][inspect]
+    node-2-code
+    set=>[magix.executor.set-code][code].value
+      value=>[node-2-code][code].value
+    magix.executor.set-code
+

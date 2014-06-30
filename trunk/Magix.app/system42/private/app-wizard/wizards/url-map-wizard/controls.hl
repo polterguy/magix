@@ -109,30 +109,7 @@ panel=>main-wrapper
       value=>edit active event
       visible=>false
       onclick
-        set=>[magix.data.load][prototype][event].value
+        set=>[magix.event.edit-event][event].value
           value=>[$][info].value
-        magix.data.load
-          prototype
-            type=>magix.execute.event
-        magix.viewport.clear-controls
-          all=>true
-        magix.viewport.load-module
-          class=>span-17 last
-          container=>content1
-          name=>Magix.ide.modules.ExecutorForm
-        add=>[node-2-code][node]
-          value=>event
-        set=>[node-2-code][node][event][name].value
-          value=>[$][info].value
-        add=>[node-2-code][node][event]
-          value=>[magix.data.load][objects][0][value][code]
-        set=>[node-2-code][node][event][inspect].value
-          value=>[magix.data.load][objects][object][value][inspect].value
-        add=>[node-2-code][node][event]
-          value=>[node-2-code][node][event][code]
-        set=>[node-2-code][node][event][code:0]
-        node-2-code
-        set=>[magix.executor.set-code][code].value
-          value=>[node-2-code][code].value
-        magix.executor.set-code
-        
+        magix.event.edit-event
+
