@@ -1,0 +1,138 @@
+﻿
+
+inspect=>@"contains the controls for the url map wizard
+
+contains the controls for the web part that allows the user to create an 
+active event that maps http get parameters to active events"
+
+
+panel=>main-wrapper
+  class=>span-15 last air-padding boxed top-1
+  default=>add-value
+  controls
+    label
+      class=>span-15 last
+      tag=>h2
+      value=>create url map wizard
+    label
+      class=>span-15 last bottom-1
+      value=>from here you can create an active event that maps http get parameters to active events
+    label
+      class=>span-3 bottom-1
+      tag=>label
+      value=>parameter name
+    text-box=>parameter-name
+      class=>span-5 bottom-1
+      title=>this is the name of the http get parameter you wish to use
+      placeholder=>parameter name ...
+      onfirstload
+        magix.forms.effect
+          type=>focus-and-select
+          form-id=>wizard
+          id=>parameter-name
+    label
+      class=>span-2 bottom-1
+      tag=>label
+      value=>event name
+    text-box=>active-event-name
+      class=>span-5 bottom-1 last
+      title=>this is the name of the active event you wish to create
+      placeholder=>active event name ...
+    dynamic=>url-parameters
+    label
+      class=>span-3 clear
+      tag=>label
+      value=>active event
+    lambda=>lambda-active-event
+      oncreatecontrols
+        // includes necessary javascript files for our autocompleter
+        magix.viewport.include-client-file
+          type=>javascript
+          file=>media/bootstrap/js/jQuery.js
+        magix.viewport.include-client-file
+          type=>javascript
+          file=>media/bootstrap/js/bootstrap.min.js
+        magix.viewport.include-client-file
+          type=>css
+          file=>media/back-end/typeahead.css
+        _json=>
+        list-events
+        for-each=>[list-events][events]
+          if=>not-equals
+            lhs=>[/][_json].value
+            rhs=>
+            code
+              set=>[/][_json].value
+                value=>{0},
+                  =>[/][_json].value
+          set=>[/][_json].value
+            value=>@"{0}""{1}"""
+              =>[/][_json].value
+              =>[.].name
+        _text
+          text-box=>active-event
+            placeholder=>active event ...
+            title=>this is the active event you wish to associate with the value of the get parameter
+            class=>span-5
+            autocomplete=>false
+            @data-provide=>typeahead
+            @data-items=>5
+            @data-source=>{data-source}
+        set=>[**@data-source=>{data-source}].value
+          value=>\[{0}]
+            =>[_json].value
+        add=>[$]
+          value=>[_text][text-box]
+    label
+      class=>span-2 text-right
+      tag=>label
+      value=>value
+    text-box=>parameter-value
+      class=>span-5 last
+      title=>this is the value the http get parameter should have to raise the given active event
+      placeholder=>parameter value ...
+    button=>create
+      class=>span-2 last clear right top-1
+      value=>create
+      onclick
+        magix.url-map.create_onclick
+    button=>add-value
+      class=>span-2 right top-1
+      value=>add
+      onfirstload
+        magix.viewstate.set
+          id=>magix.url-map.items
+      onclick
+        magix.url-map.add-value_onclick
+    link-button=>edit-event
+      class=>span-3 right clear text-right last
+      value=>edit active event
+      visible=>false
+      onclick
+        set=>[magix.data.load][prototype][event].value
+          value=>[$][info].value
+        magix.data.load
+          prototype
+            type=>magix.execute.event
+        magix.viewport.clear-controls
+          all=>true
+        magix.viewport.load-module
+          class=>span-17 last
+          container=>content1
+          name=>Magix.ide.modules.ExecutorForm
+        add=>[node-2-code][node]
+          value=>event
+        set=>[node-2-code][node][event][name].value
+          value=>[$][info].value
+        add=>[node-2-code][node][event]
+          value=>[magix.data.load][objects][0][value][code]
+        set=>[node-2-code][node][event][inspect].value
+          value=>[magix.data.load][objects][object][value][inspect].value
+        add=>[node-2-code][node][event]
+          value=>[node-2-code][node][event][code]
+        set=>[node-2-code][node][event][code:0]
+        node-2-code
+        set=>[magix.executor.set-code][code].value
+          value=>[node-2-code][code].value
+        magix.executor.set-code
+        

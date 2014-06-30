@@ -15,6 +15,5 @@ magix.forms.create-web-part
   form-id=>wizard
   container=>content1
   class=>span-17 last
-  events-file=>system42/private/app-wizard/wizards/dashboard-shortcut-wizard/events.hl
   controls-file=>system42/private/app-wizard/wizards/dashboard-shortcut-wizard/controls.hl
 

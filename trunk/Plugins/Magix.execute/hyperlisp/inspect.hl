@@ -125,6 +125,10 @@ events whom are created for instance during the startup of your application, sin
 will save time, since they will anyway be overwritten the next time your application 
 restarts
 
+if you add an [inspect] node, then this will become the inspect value of the active event.  
+[inspect] can be either an expression or a constant, and can also contain formatting 
+expressions, such as {0} and {1}, referencing values beneath the inspect node
+
 [name] can be either an expression, or a constant
 
 thread safe"

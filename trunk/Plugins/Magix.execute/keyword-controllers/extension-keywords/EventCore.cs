@@ -116,7 +116,14 @@ namespace Magix.execute
          */
         private static void CreateActiveEvent(Node ip, string activeEvent, Node pars)
         {
+            Node dp = Dp(pars);
+
             bool remotable = ip.Contains("remotable") && ip["remotable"].Get<bool>();
+
+            string inspect = Expressions.GetExpressionValue<string>(ip["inspect"].Get<string>(), dp, ip, false);
+            if (ip["inspect"].Count != 0)
+                inspect = Expressions.FormatString(dp, ip, ip["inspect"], inspect);
+
             if (!ip.Contains("persist") || ip["persist"].Get<bool>())
             {
                 // removing any previous similar events
@@ -128,7 +135,7 @@ namespace Magix.execute
                 saveNode["value"]["type"].Value = "magix.execute.event";
                 saveNode["value"]["remotable"].Value = remotable;
                 if (ip.Contains("inspect"))
-                    saveNode["value"]["inspect"].Value = ip["inspect"].Value;
+                    saveNode["value"]["inspect"].Value = inspect;
                 saveNode["value"]["code"].AddRange(ip["code"].Clone());
 
                 BypassExecuteActiveEvent(saveNode, pars);
@@ -148,7 +155,7 @@ namespace Magix.execute
 
             _inspect[activeEvent].Clear();
             if (ip.Contains("inspect"))
-                _inspect[activeEvent].Value = ip["inspect"].Value;
+                _inspect[activeEvent].Value = inspect;
         }
 
         /*
