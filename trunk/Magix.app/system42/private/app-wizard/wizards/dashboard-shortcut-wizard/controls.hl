@@ -8,11 +8,18 @@ shortcut active event"
 
 panel
   class=>span-15 last air-padding boxed top-1
+  default=>save
   controls
     label
-      class=>span-15 last
+      class=>span-13
       tag=>h2
       value=>create dashboard shortcut active event wizard
+    link-button
+      class=>span-2 last text-right
+      value=>back
+      onclick
+        execute-script
+          file=>system42/private/app-wizard/app-wizard.hl
     label
       class=>span-15 last bottom-1
       value=>from here you can create a dashboard shortcut that will raise an active event of your choice when clicked
@@ -85,6 +92,25 @@ panel
         magix.forms.get-children-values
           form-id=>wizard
           id=>content1
+        if=>equals
+          lhs=>[magix.forms.get-children-values][values][active-event].value
+          rhs=>
+          or=>equals
+            lhs=>[magix.forms.get-children-values][values][link-text].value
+            rhs=>
+          or=>equals
+            lhs=>[magix.forms.get-children-values][values][link-category].value
+            rhs=>
+          code
+            magix.viewport.show-message
+              message=>you must fill in active event name, link text and link category
+              color=>#ffaaaa
+              time=>5000
+            magix.forms.effect
+              form-id=>wizard
+              id=>link-text
+              type=>focus-and-select
+            stop
         _event
           event
             name=>{name}

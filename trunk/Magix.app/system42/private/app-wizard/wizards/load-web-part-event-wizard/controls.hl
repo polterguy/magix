@@ -12,7 +12,18 @@ panel
   controls
     label
       tag=>h2
+      class=>span-13
       value=>create load web part active event wizard
+    link-button
+      class=>span-2 last text-right
+      value=>back
+      onclick
+        execute-script
+          file=>system42/private/app-wizard/app-wizard.hl
+    label
+      class=>span-15 last bottom-1
+      value=>@"from here you can create an active event that will load a web part when raised, either from disc, or from the database.&nbsp;&nbsp;
+optionally, you can include additional css files when the active event is raised"
     label
       class=>clear span-3
       tag=>label

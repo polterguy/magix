@@ -12,7 +12,18 @@ panel
   controls
     label
       tag=>h2
+      class=>span-13
       value=>create export from database active event wizard
+    link-button
+      class=>span-2 last text-right
+      value=>back
+      onclick
+        execute-script
+          file=>system42/private/app-wizard/app-wizard.hl
+    label
+      class=>span-15 last bottom-1
+      value=>@"from here you can create an active event that will export database items of your choice to a csv file, 
+and transfer the file to the client when the active event is raised"
     panel=>outer-wrapper
       style=>width:590px;overflow-x:hidden;
       controls
@@ -45,7 +56,7 @@ panel
                   placeholder=>item types ...
                 label
                   tag=>label
-                  class=>span-4 top-1
+                  class=>span-4 top-1 text-right
                   for=>delete-items
                   value=>delete items afterwards
                 check-box=>delete-items
@@ -62,12 +73,12 @@ panel
                 dynamic=>fields-container
                   class=>span-15 last
                 button=>save
-                  class=>span-2 last right clear top-1
+                  class=>span-2 last right clear top-3
                   value=>save
                   onclick
                     magix.wizard.save_onclick
                 button=>previous-2
-                  class=>span-2 right top-1
+                  class=>span-2 right top-3
                   value=>&lt;&lt;
                   onclick
                     magix.forms.effect
