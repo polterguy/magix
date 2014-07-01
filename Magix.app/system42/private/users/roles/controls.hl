@@ -5,16 +5,15 @@ inspect=>@"contains controls for roles web part
 contains the controls necessary to show the edit roles tree"
 
 
-// header
-label=>lbl-header
-  class=>span-17 last
-  tag=>h2
-  value=>edit roles
-
 // will contain the roles tree view, showing all roles, recursively as a tree structure to user
 panel=>roles-wrapper
-  class=>span-15 last boxed air-padding desktop-widget
+  class=>span-15 last boxed air-padding desktop-widget top-1
   controls
+
+    label=>lbl-header
+      class=>span-15 last
+      tag=>h2
+      value=>edit roles
 
     // contains actual tree view of roles in system
     lambda=>lambda-roles

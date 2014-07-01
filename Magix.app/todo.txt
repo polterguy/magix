@@ -11,9 +11,6 @@
 
 * "console.log" feature for logging into a visible tracer-like tool
 
-* support for expressions in magix.math.add/subtract/etc to change a value directly inside of the tree, 
-  instead of having to go "set" to change value
-
 * unit testing for sandboxing features
 
 * timed execution, hyperlisp executing at a specific datetime, and/or interval
@@ -26,8 +23,6 @@
 
 * make Ip method take boolean declaring whether or not "_ip" is mandatory, and if so, throw exception, to clean up all
   checks for "_ip" in magix.execute namespace for instance
-
-* create expression support for operators in if/else/while etc
 
 * create zip package manager for installing packages
 
@@ -65,8 +60,6 @@
 * create common class to wrap methods commond between active controllers and active modules, such as Ip, Dp, 
   AppendCodeFromResource, etc. composition and interfaces ...?
 
-* create active event on webpart.ascx.cs to re-render web part with new controls, the same way we have change-mml
-
 * create support for escaping {{ in magix markup language, in addition to inner {{ values, as text values of controls for instance
 
 * support for multiple stacked sandboxes
@@ -77,13 +70,4 @@
 
 * implement multi threading support in magix.file namespace
 
-* remove magix.forms.change-mml
-
-* implement support for locking containers on viewport
-
 * make "magix.data." - transactional support for magix.execute.event/tunnel/override ....
-
-* implement ReRender active event on viewports
-
-* pass in container into all hyperlisp active event handlers
-

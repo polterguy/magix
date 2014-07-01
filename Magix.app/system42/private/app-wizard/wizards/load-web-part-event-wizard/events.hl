@@ -185,7 +185,7 @@ magix.wizard.create-load-from-where-web-part
               execute-script
                 file=>system42/private/file-manager/file-manager.hl
                 params
-                  filter=>*.hl
+                  filter=>*.hl;*.mml;
                   container=>file-browser
                   deny-create-directory=>true
                   onselect
@@ -320,6 +320,17 @@ magix.wizard.create-active-event
             magix.viewport.show-message
               message=>you must choose a web part hyperlisp file from your filesystem
         else
+          // checking to see if it's an mml file or a hyperlisp file
+          split=>[@][..][magix.forms.get-value][value].value
+            what=>.
+          if=>equals
+            lhs=>[@][split][result][>last].value
+            rhs=>mml
+            code
+              set=>[/][_data2][**magix.forms.create-web-part].name
+                value=>magix.forms.create-mml-web-part
+              set=>[/][_data2][**magix.forms.create-mml-web-part][**controls-file=>?].name
+                value=>mml-file
           set=>[/][_good].value
             value=>true
           iterate=>[/][_data2]
@@ -344,7 +355,7 @@ magix.wizard.create-active-event
         lhs=>[@][magix.forms.get-value:0][value].value
         rhs=>
         code
-          set=>[[/][_current].value][event][code][magix.forms.create-web-part][container].value
+          set=>[[/][_current].value][event][code][0][container].value
             value=>[@][..][..][magix.forms.get-value:0][value].value
 
       // setting css classes for our web part, if there is any defined
@@ -355,7 +366,7 @@ magix.wizard.create-active-event
         lhs=>[@][magix.forms.get-value:1][value].value
         rhs=>
         code
-          set=>[[/][_current].value][event][code][magix.forms.create-web-part][class].value
+          set=>[[/][_current].value][event][code][0][class].value
             value=>[@][..][..][magix.forms.get-value:1][value].value
 
       // setting active event name
@@ -386,7 +397,7 @@ magix.wizard.create-active-event
         lhs=>[@][magix.forms.get-value:2][value].value
         rhs=>
         code
-          set=>[[/][_current].value][event][code][magix.forms.create-web-part][form-id].value
+          set=>[[/][_current].value][event][code][0][form-id].value
             value=>[@][..][..][magix.forms.get-value:2][value].value
 
       // creating active event

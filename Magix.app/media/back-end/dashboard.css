@@ -5,3 +5,31 @@
     border-radius:5px;
     overflow:hidden;
 }
+
+.tools-desktop-widget
+{
+    background-image:url(../images/icons/wrench.png), linear-gradient(rgba(240, 240, 255, 1) 0%, rgba(190, 190, 210, 1) 100%);
+    background-repeat:no-repeat;
+    background-position:top right;
+}
+
+.security-desktop-widget
+{
+    background-image:url(../images/icons/key.png), linear-gradient(rgba(240, 240, 255, 1) 0%, rgba(190, 190, 210, 1) 100%);
+    background-repeat:no-repeat;
+    background-position:top right;
+}
+
+.applications-desktop-widget
+{
+    background-image:url(../images/icons/tree.png), linear-gradient(rgba(240, 240, 255, 1) 0%, rgba(190, 190, 210, 1) 100%);
+    background-repeat:no-repeat;
+    background-position:top right;
+}
+
+.learn-desktop-widget
+{
+    background-image:url(../images/icons/book.png), linear-gradient(rgba(240, 240, 255, 1) 0%, rgba(190, 190, 210, 1) 100%);
+    background-repeat:no-repeat;
+    background-position:top right;
+}

@@ -41,6 +41,9 @@ _curCat
 for-each=>[_categories]
   set=>[/][_pnl][controls][label][value].value
     value=>[.].name
+  set=>[/][_pnl][class].value
+    value=>span-5 desktop-widget top-1 left-1 {0}-desktop-widget
+      =>[.].name
   set=>[/][_pnl][controls][panel][controls]
   set=>[/][_curCat].value
     value=>[.].name
@@ -75,7 +78,6 @@ for-each=>[_categories]
     value=>panel
 
 _pnl
-  class=>span-5 desktop-widget top-1 left-1
   controls
     label=>header
       class=>desktop-widget-header span-4
