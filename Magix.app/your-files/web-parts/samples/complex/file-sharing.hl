@@ -11,6 +11,9 @@ panel=>wrap-all
           value=>drop files here to upload to server
           class=>span-5 clear left-1 bottom-1
           onfirstload
+            magix.viewport.include-client-file
+              type=>css
+              file=>media/back-end/file-uploader.css
             magix.core.check-role
               role=>poweruser
             if=>equals
@@ -20,60 +23,63 @@ panel=>wrap-all
                 magix.forms.set-visible
                   id=>label-description
                   value=>false
-        lambda=>lambda-files
-          oncreatecontrols
-            magix.core.verify-role
-              role=>user
-            _data-source
-              magix.file.list-files
-                directory=>your-files/shared
-              for-each=>[magix.file.list-files][files]
-                _item
-                set=>[_item][file][filename].value
-                  value=>[.].name
-                add=>[$]
-                  value=>[_item][0]
-            lambda=>[_data-source]
-            for-each=>[lambda][0]
-              _header
-                label
-                  tag=>label
-                  class=>fill-width column last
-              set=>[@][_header][label][value].value
-                value=>[.].name
-              add=>[$]
-                value=>[@][_header][label]
-            for-each=>[lambda]
-              _item
-                panel
-                  class=>fill-width clear column
-              for-each=>[.]
-                _item
-                  link-button
-                    class=>fill-width column last
-                    onclick
-                      set=>[magix.file.download][file].value
-                        value=>[$][info].value
-                      magix.file.download
-                set=>[@][_item][0][info].value
-                  value=>[.].value
-                split=>[.].value
-                  what=>/
-                set=>[@][_item][0][value].value
-                  value=>[@][split][result][>last].value
-                add=>[@][..][_item][panel][controls]
-                  value=>[@][_item][0]
-              add=>[$]
-                value=>[@][_item][panel]
-            magix.core.check-role
-              role=>poweruser
-            if=>equals
-              lhs=>[magix.core.check-role][result].value
-              rhs=>true
-              code
-                _uploader
-                  uploader=>uploader
+        panel
+          class=>fill-width column bottom-1
+          controls
+            lambda=>lambda-files
+              oncreatecontrols
+                magix.core.verify-role
+                  role=>user
+                _data-source
+                  magix.file.list-files
                     directory=>your-files/shared
-                add=>[$]
-                  value=>[@][_uploader][uploader]
+                  for-each=>[magix.file.list-files][files]
+                    _item
+                    set=>[_item][file][filename].value
+                      value=>[.].name
+                    add=>[$]
+                      value=>[_item][0]
+                lambda=>[_data-source]
+                for-each=>[lambda][0]
+                  _header
+                    label
+                      tag=>label
+                      class=>fill-width-left-air column last
+                  set=>[@][_header][label][value].value
+                    value=>[.].name
+                  add=>[$]
+                    value=>[@][_header][label]
+                for-each=>[lambda]
+                  _item
+                    panel
+                      class=>fill-width-left-air clear column
+                  for-each=>[.]
+                    _item
+                      link-button
+                        class=>fill-width column last
+                        onclick
+                          set=>[magix.file.download][file].value
+                            value=>[$][info].value
+                          magix.file.download
+                    set=>[@][_item][0][info].value
+                      value=>[.].value
+                    split=>[.].value
+                      what=>/
+                    set=>[@][_item][0][value].value
+                      value=>[@][split][result][>last].value
+                    add=>[@][..][_item][panel][controls]
+                      value=>[@][_item][0]
+                  add=>[$]
+                    value=>[@][_item][panel]
+                magix.core.check-role
+                  role=>poweruser
+                if=>equals
+                  lhs=>[magix.core.check-role][result].value
+                  rhs=>true
+                  code
+                    _uploader
+                      uploader=>uploader
+                        directory=>your-files/shared
+                    add=>[$]
+                      value=>[@][_uploader][uploader]
   style=>min-height:800px;

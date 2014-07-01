@@ -60,6 +60,8 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Default.aspx" />
+    <Content Include="media\back-end\dashboard.css" />
+    <Content Include="media\back-end\skins\golden.css" />
     <Content Include="media\back-end\wizard.css" />
     <Content Include="media\back-end\web-part-builder.css" />
     <Content Include="media\back-end\event-executor.css" />
@@ -423,6 +425,7 @@
     <Content Include="system42\private\app-wizard\wizards\url-map-wizard\controls.hl" />
     <Content Include="system42\private\app-wizard\wizards\url-map-wizard\events.hl" />
     <Content Include="system42\private\startup\create-edit-event.hl" />
+    <Content Include="system42\private\startup\create-empty-tmp-folders.hl" />
     <None Include="todo.txt" />
     <Content Include="your-files\readme.txt" />
     <Content Include="your-files\tmp\readme.txt" />

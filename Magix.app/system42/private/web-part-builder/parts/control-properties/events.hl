@@ -177,7 +177,7 @@ magix.ide.create-control-property-modifier-control
                 directory=>media/images
                 container=>content3
                 editor-container=>
-                class=>span-15 last boxed air-padding bottom-1 top-1
+                class=>span-15 last boxed air-padding bottom-1 top-1 desktop-widget
                 no-edit=>true
                 onselect
                   set=>[magix.forms.set-value][value].value
@@ -224,7 +224,7 @@ magix.ide.create-control-property-modifier-control
             magix.forms.create-web-part
               container=>content3
               form-id=>style-builder
-              class=>span-20 air-padding boxed last top-1
+              class=>span-20 air-padding boxed last top-1 desktop-widget
               controls-file=>system42/private/web-part-builder/parts/style-builder/controls.hl
               events-file=>system42/private/web-part-builder/parts/style-builder/events.hl
             magix.browser.scroll
