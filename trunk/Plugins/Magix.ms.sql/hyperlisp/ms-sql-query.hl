@@ -682,7 +682,8 @@ where"
 
   controls
     label=>lblHeader
-      tag=>h3
+      tag=>h2
+      class=>span-17 last top-1
       value=>ms sql query tool
     panel=>connectionWrp
       class=>span-17 last

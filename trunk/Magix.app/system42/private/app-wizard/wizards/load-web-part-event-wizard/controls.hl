@@ -23,7 +23,8 @@ panel
     label
       class=>span-15 last bottom-1
       value=>@"from here you can create an active event that will load a web part when raised, either from disc, or from the database.&nbsp;&nbsp;
-optionally, you can include additional css files when the active event is raised"
+optionally, you can include additional css files when the active event is raised.&nbsp;&nbsp;you can also have the active event load a magix markup 
+language file"
     label
       class=>clear span-3
       tag=>label

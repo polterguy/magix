@@ -1,0 +1,20 @@
+
+
+inspect=>@"creates the initialize active event
+
+creates an active event that allows for re-initializing magix 
+without having to restart the application process"
+
+
+event
+  name=>magix.core.init
+  persist=>false
+  inspect=>@"initializes your magix installation
+
+executes the startup.hl file from magix.tiedown"
+  code
+    execute-file
+      file=>plugin:magix.file.load-from-resource
+        assembly=>Magix.tiedown
+        resource-name=>Magix.tiedown.hyperlisp.startup.hl
+

@@ -6,8 +6,7 @@
 	top:0;
 	left:0;
 	width:450px;
-	min-height:36px;
-	padding:36px 36px 18px 36px;
+	padding:36px 36px 18px 18px;
 	z-index:100000;
 	display:none;
 	color:White;

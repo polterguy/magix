@@ -186,6 +186,7 @@ returns the default dashboard shortcuts in your system"
           execute-script
             file=>system42/private/tools/text-editor.hl
             params
+              class=>span-17 last top-1
               container=>content1
               extra-buttons
                 button=>browse
@@ -226,6 +227,7 @@ returns the default dashboard shortcuts in your system"
           execute-script
             file=>system42/private/tools/wysiwyg-editor.hl
             params
+              class=>span-17 last top-1
               container=>content1
               extra-buttons
                 button=>browse
@@ -267,7 +269,7 @@ returns the default dashboard shortcuts in your system"
           magix.viewport.clear-controls
             all=>true
           magix.viewport.load-module
-            class=>span-17 last
+            class=>span-17 last top-1
             container=>content1
             name=>Magix.ide.modules.ExecutorForm
       toggle-tracer

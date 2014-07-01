@@ -81,13 +81,16 @@
     <Content Include="media\images\backgrounds\background-pink.png" />
     <Content Include="media\images\backgrounds\background-white.png" />
     <Content Include="media\images\backgrounds\background.png" />
-    <Content Include="media\images\backgrounds\golden.jpg" />
     <Content Include="media\images\backgrounds\mystique.jpg" />
+    <Content Include="media\images\backgrounds\sand.jpg" />
     <Content Include="media\images\help-files\marvin-headshot.png" />
+    <Content Include="media\images\help-files\qr-code-generator-screenshot.jpg" />
     <Content Include="media\images\help-files\qr-code-to-magix.png" />
     <Content Include="media\images\help-files\screenshots\hyper-lisp-spaces.png" />
     <Content Include="media\images\help-files\web-part-designer-screenshot.jpg" />
     <Content Include="media\images\icons\arrows.png" />
+    <Content Include="media\images\icons\book.png" />
+    <Content Include="media\images\icons\key.png" />
     <Content Include="media\images\icons\lightning.png" />
     <Content Include="media\images\icons\star.png" />
     <Content Include="media\images\icons\start-button-blue.png" />
@@ -97,6 +100,8 @@
     <Content Include="media\bootstrap\js\bootstrap.min.js" />
     <Content Include="media\bootstrap\js\jQuery.js" />
     <Content Include="media\images\icons\tree-indent.png" />
+    <Content Include="media\images\icons\tree.png" />
+    <Content Include="media\images\icons\wrench.png" />
     <Content Include="media\images\samples\2009 Sonoma Coast Pinot Noir.jpg" />
     <Content Include="media\images\samples\2010 Carneros Pinot Noir.jpg" />
     <Content Include="media\images\samples\2011 Carneros Chardonnay.jpg" />
@@ -251,6 +256,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="media\videos\unsustainable-growth.webm" />
+    <Content Include="database\web.config" />
     <None Include="media\xing-wysihtml5\LICENSE" />
     <Content Include="system42\private\file-manager\file-manager.hl" />
     <Content Include="system42\private\app-wizard\app-wizard.hl" />
@@ -426,6 +432,7 @@
     <Content Include="system42\private\app-wizard\wizards\url-map-wizard\events.hl" />
     <Content Include="system42\private\startup\create-edit-event.hl" />
     <Content Include="system42\private\startup\create-empty-tmp-folders.hl" />
+    <Content Include="system42\private\startup\create-init-event.hl" />
     <None Include="todo.txt" />
     <Content Include="your-files\readme.txt" />
     <Content Include="your-files\tmp\readme.txt" />
@@ -435,7 +442,6 @@
     <Content Include="your-files\web-parts\samples\complex\file-sharing.hl" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="database\" />
     <Folder Include="your-files\shared\" />
   </ItemGroup>
 </Project>

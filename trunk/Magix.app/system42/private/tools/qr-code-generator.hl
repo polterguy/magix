@@ -11,7 +11,7 @@ magix.viewport.clear-controls
 magix.forms.create-web-part
   container=>content1
   form-id=>qr-codes
-  class=>span-17 last
+  class=>span-17 last top-1
   controls
     label=>header
       value=>vanity qr code generator
