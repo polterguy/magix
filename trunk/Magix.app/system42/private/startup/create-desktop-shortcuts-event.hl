@@ -86,7 +86,7 @@ returns the default dashboard shortcuts in your system"
                 file=>system42/private/tools/inspect.hl
                 params
                   overridden=>true
-                  header=>overridden active events
+                  header=>dynamic active events
                   description-class=>span-9
                   list-class=>span-8 last
                   extra-selection-code

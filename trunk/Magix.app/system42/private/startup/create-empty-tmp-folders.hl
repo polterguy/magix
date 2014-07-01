@@ -1,0 +1,43 @@
+
+
+inspect=>@"creates event to empty tmp folders
+
+creates the active event needed to empty temporary folders"
+
+
+event
+  name=>magix.file.empty-tmp-folders
+  persist=>false
+  inspect=>@"empties tmp directories
+
+empties all tmp directories.  your-files/tmp and my-files/tmp.  will leave 
+the readme.txt files inside of these directories"
+  code
+    using=>magix.file
+      list-files
+        directory=>your-files/tmp
+      list-files
+        directory=>my-files/tmp
+      list-directories
+        directory=>your-files/tmp
+      list-directories
+        directory=>my-files/tmp
+    set=>[using][list-files:0][files][your-files/tmp/readme.txt]
+    set=>[using][list-files:1][files][my-files/tmp/readme.txt]
+    for-each=>[using][list-files:0][files]
+      using=>magix.file
+        delete
+          file=>[.].name
+    for-each=>[using][list-files:1][files]
+      using=>magix.file
+        delete
+          file=>[.].name
+    for-each=>[using][list-directories:0][directories]
+      using=>magix.file
+        delete-directory
+          directory=>[.].name
+    for-each=>[using][list-directories:1][directories]
+      using=>magix.file
+        delete-directory
+          directory=>[.].name
+

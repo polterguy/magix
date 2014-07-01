@@ -48,6 +48,7 @@ namespace Magix.ide.modules
                 {
                     Node tracerNode = new Node();
                     tracerNode["container"].Value = "trace";
+                    tracerNode["class"].Value = "top-2 column";
                     tracerNode["name"].Value = "Magix.ide.modules.EventSniffer";
 
                     RaiseActiveEvent(
@@ -83,6 +84,7 @@ namespace Magix.ide.modules
             {
                 Node tracerNode = new Node();
                 tracerNode["container"].Value = "trace";
+                tracerNode["class"].Value = "top-2 column";
                 tracerNode["name"].Value = "Magix.ide.modules.EventSniffer";
 
                 RaiseActiveEvent(
@@ -120,6 +122,10 @@ namespace Magix.ide.modules
                     "[magix.execute-dox].value");
                 return;
             }
+
+            if (e.Params.ContainsValue("_ip"))
+                return;
+
             Node toCodeNode = new Node();
             toCodeNode["node"].Value = ip;
 
@@ -132,7 +138,7 @@ namespace Magix.ide.modules
                 string code = toCodeNode["code"].Get<string>();
                 code = code.Replace("&", "&amp;").Replace("<", "&lt;").Replace(">", "&gt;");
                 string origin = "origin: " + e.Params.Name;
-                code = "<label class=\"span-22 last\">" + origin + "</label><pre class=\"span-22 last bottom-1\">" + code + "</pre>";
+                code = "<label class=\"fill-width column last\">" + origin + "</label><pre class=\"fill-width column view-code last bottom-1\">" + code + "</pre>";
                 lbl.Value += code;
             }
 		}

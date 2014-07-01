@@ -5,14 +5,13 @@ inspect=>@"contains controls for users web part
 contains the controls necessary to show the edit users grid"
 
 
-label=>lbl-header
-  class=>span-17 last
-  tag=>h2
-  value=>edit users
-
 panel=>users-wrapper
-  class=>span-15 last boxed air-padding
+  class=>span-15 last boxed air-padding top-1 desktop-widget
   controls
+    label=>lbl-header
+      class=>span-15 last
+      tag=>h2
+      value=>edit users
     label
       class=>span-5
       tag=>label
@@ -32,7 +31,7 @@ panel=>users-wrapper
           children-only=>true
 
 panel=>edit-user-wrapper
-  class=>span-15 last boxed air-padding top-1 clear
+  class=>span-15 last boxed air-padding top-1 clear desktop-widget
   default=>save
   onesc
     magix.users.show-users-grid

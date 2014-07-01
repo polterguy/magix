@@ -11,6 +11,10 @@ the desktop yourself"
 magix.core.verify-role
   role=>admin
 
+magix.viewport.include-client-file
+  type=>css
+  file=>media/back-end/dashboard.css
+
 list-events
   begins-with=>magix.admin.desktop-shortcuts.
 

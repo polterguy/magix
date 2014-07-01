@@ -110,6 +110,4 @@ magix.ide.browse_onclick
         magix.viewport.clear-controls
           container=>helper-for-persist-wrapper
           reset-class=>true
-  magix.browser.scroll
-    id=>helper-for-persist-wrapper
 

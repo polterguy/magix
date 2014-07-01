@@ -235,15 +235,22 @@ if=>exist
 // our list of web controls to associate with our create-web-part invocation
 _controls
   label=>lbl-header
-    tag=>h2
+    tag=>h3
+    class=>top-1
   panel=>pnl-description-wrp
     class=>span-12
     controls
+      label=>lbl-code
+        tag=>pre
+        style=>overflow-x:auto;overflow-y:auto;max-height:360px;
+        class=>column fill-width view-code
+        value=>&nbsp;
       panel=>btn-wrappers
-        class=>fill-width column
+        class=>column bottom-1 right last
         controls
           button=>inspect
             value=>inspect
+            disabled=>true
             class=>span-2 last
             onclick
               magix.forms.get-value
@@ -265,17 +272,12 @@ _controls
               set=>[magix.executor.set-code][code].value
                 value=>[magix.forms.get-value][value].value
               magix.executor.set-code
-      label=>lbl-code
-        tag=>pre
-        style=>overflow-x:auto;overflow-y:auto;max-height:360px;
-        class=>column fill-width bottom-1
-        value=>example code
       label=>lbl-description
         style=>width:100%;display:block;
-        value=>@"<h3>description of active event</h3><p>more description ...</p>"
+        class=>clear
   panel=>pnl-events
     class=>span-5 last
-    style=>max-height:500px;overflow-y:auto;overflow-x:hidden;
+    style=>max-height:450px;overflow-y:auto;overflow-x:hidden;
 
 // creating web-part to show active events requested
 using=>magix.forms
@@ -286,4 +288,8 @@ using=>magix.forms
     controls=>[_controls]
     events
       magix.inspect.event-selected
+        magix.forms.set-enabled
+          form-id=>active-events
+          id=>inspect
+          value=>true
 

@@ -13,7 +13,7 @@ label=>lbl-header
 
 // will contain the roles tree view, showing all roles, recursively as a tree structure to user
 panel=>roles-wrapper
-  class=>span-15 last boxed air-padding
+  class=>span-15 last boxed air-padding desktop-widget
   controls
 
     // contains actual tree view of roles in system

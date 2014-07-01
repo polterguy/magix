@@ -202,8 +202,9 @@ if=>equals
 // creating the main web part, wrapping everything else
 magix.forms.create-web-part
   form-id=>file-manager
-  class=>span-15 last boxed air-padding top-1
+  class=>span-15 last boxed air-padding top-1 desktop-widget
   events-file=>system42/private/file-manager/main/events.hl
+  style=>min-height:324px;
   controls
     button=>go-up
       class=>span-2

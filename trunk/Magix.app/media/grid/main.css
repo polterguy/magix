@@ -376,6 +376,17 @@ textarea.fill-width,
     margin-right:0;
 }
 
+input[type=text].fill-width-left-air,
+textarea.fill-width-left-air,
+.fill-width-left-air
+{
+	width:100%;
+	display:block;
+    margin-right:0;
+    padding-left:40px;
+    margin-right:-40px;
+}
+
 .boxed
 {
 	display:block;

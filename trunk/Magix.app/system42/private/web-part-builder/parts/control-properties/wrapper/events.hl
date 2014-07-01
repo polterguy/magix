@@ -48,7 +48,7 @@ magix.ide.request-properties
       magix.forms.create-web-part
         form-id=>control-properties
         container=>control-properties
-        class=>span-20 last boxed air-padding top-1
+        class=>span-20 last boxed air-padding top-1 desktop-widget
         controls-file=>system42/private/web-part-builder/parts/control-properties/controls.hl
         events-file=>system42/private/web-part-builder/parts/control-properties/events.hl
   else

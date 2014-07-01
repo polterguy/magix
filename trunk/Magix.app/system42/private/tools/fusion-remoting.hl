@@ -24,10 +24,17 @@ magix.forms.create-web-part
           header=>open active events
           container=>active-events
           form-class=>span-17 last top-3
+          extra-selection-code
+            using=>magix.forms
+              set-enabled
+                form-id=>active-events
+                id=>close-event
+                value=>true
           extra-buttons
             button=>close-event
               class=>span-2
               value=>close
+              disabled=>true
               onclick
                 magix.forms.get-value
                   form-id=>active-events
@@ -62,9 +69,16 @@ magix.forms.create-web-part
           header=>tunneled active events
           container=>active-events
           form-class=>span-17 last top-3
+          extra-selection-code
+            using=>magix.forms
+              set-enabled
+                form-id=>active-events
+                id=>remove-tunnel
+                value=>true
           extra-buttons
             button=>remove-tunnel
               class=>span-2
+              disabled=>true
               value=>remove
               onclick
                 magix.forms.get-value

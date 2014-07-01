@@ -208,6 +208,15 @@ namespace Magix.Core
                     case '[':
                         builder.Append("<strong>[");
                         break;
+                    case ' ':
+                        if (!dropHtml && secondLastChar != ' ' && lastChar == ' ')
+                        {
+                            builder.Remove(builder.Length - 1, 1);
+                            builder.Append("&nbsp;&nbsp;");
+                        }
+                        else
+                            builder.Append(" ");
+                        break;
                     case ']':
                         builder.Append("]</strong>");
                         break;
