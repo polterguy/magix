@@ -433,6 +433,7 @@
     <Content Include="system42\private\startup\create-edit-event.hl" />
     <Content Include="system42\private\startup\create-empty-tmp-folders.hl" />
     <Content Include="system42\private\startup\create-init-event.hl" />
+    <Content Include="system42\private\startup\create-login-user.hl" />
     <None Include="todo.txt" />
     <Content Include="your-files\readme.txt" />
     <Content Include="your-files\tmp\readme.txt" />

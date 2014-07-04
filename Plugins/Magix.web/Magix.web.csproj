@@ -37,6 +37,7 @@
     <Compile Include="BrowserCore.cs" />
     <Compile Include="CookieCore.cs" />
     <Compile Include="ConfigurationCore.cs" />
+    <Compile Include="EncryptCore.cs" />
     <Compile Include="SmtpCore.cs" />
     <Compile Include="PostponedCore.cs" />
     <Compile Include="FilePluginCore.cs" />

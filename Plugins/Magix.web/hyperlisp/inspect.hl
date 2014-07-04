@@ -105,6 +105,20 @@ magix.session.set-sample
         z=>q
 
 
+magix.encryption.hash-string-dox=>@"creates a hashed string
+
+creates a hashed string from any string value.  pass in the string 
+to hash as [value].  hashed version is returned as [hash]
+
+[value] can be either an expression or a constant
+
+thread safe"
+
+magix.encryption.hash-string-sample
+  magix.encryption.hash-string
+    value=>some-string-value
+
+
 magix.session.get-dox=>@"retrieves an existing session object
 
 will retrieve the [id] session object as [value].  [id] can be either 
