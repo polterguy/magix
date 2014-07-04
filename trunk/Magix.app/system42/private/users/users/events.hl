@@ -209,6 +209,10 @@ magix.users.edit-user
   set=>[magix.data.load][id]
     value=>[$][id]
   magix.data.load
+  set=>[magix.viewstate.set][value].value
+    value=>[magix.data.load][value][pwd].value
+  magix.viewstate.set
+    id=>magix.users.editing-password
   using=>magix.forms
     set-value
       form-id=>users
@@ -291,6 +295,7 @@ magix.users.save-user
     get-value
       form-id=>users
       id=>edit-role
+  _same-password=>false
   if=>exist
     lhs=>[$][id]
     code
@@ -301,6 +306,14 @@ magix.users.save-user
       magix.data.load
       set=>[magix.data.save][value]
         value=>[@][magix.data.load][value]
+      magix.viewstate.get
+        id=>magix.users.editing-password
+      if=>equals
+        lhs=>[@][magix.viewstate.get][value].value
+        rhs=>[using][get-value:2][value].value
+        code
+          set=>[_same-password].value
+            value=>true
   else
     set=>[@][magix.data.count][prototype][username].value
       value=>[using][get-value:0][value].value
@@ -376,8 +389,18 @@ magix.users.save-user
     value=>[using][get-value:0][value].value
   set=>[magix.data.save][value][name].value
     value=>[using][get-value:1][value].value
-  set=>[magix.data.save][value][pwd].value
-    value=>[using][get-value:2][value].value
+  if=>equals
+    lhs=>[_same-password].value
+    rhs=>true
+    code
+      set=>[magix.data.save][value][pwd].value
+        value=>[using][get-value:2][value].value
+  else
+    using=>magix.encryption
+      hash-string
+        value=>[using][get-value:2][value].value
+    set=>[magix.data.save][value][pwd].value
+      value=>[@][using][hash-string][hash].value
   set=>[magix.data.save][value][roles]
   set=>[magix.data.save][value][roles][[using][get-value:4][value].value].value
     value=>true

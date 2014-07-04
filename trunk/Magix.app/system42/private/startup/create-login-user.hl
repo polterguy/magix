@@ -1,0 +1,45 @@
+
+
+inspect=>@"creates login active event
+
+creates the active event necessary to login user"
+
+
+event
+  name=>magix.core.login-user
+  persist=>false
+  inspect=>@"logs user into system
+
+logs in user into system.  requires [username] and [password].  
+will return [success] as either true or false.  if the user is 
+successfully logged in, the user can be accessed in the session 
+under the id of 'magix.core.user'.  password is removed before 
+user is put into session
+
+[password] will be automatically hashed using md5, before a 
+check towards the database is performed"
+  code
+    using=>magix.encryption
+      hash-string
+        value=>[$][password].value
+    set=>[magix.data.load][prototype][username].value
+      value=>[$][username].value
+    set=>[magix.data.load][prototype][pwd].value
+      value=>[using][hash-string][hash].value
+    magix.data.load
+      prototype
+        type=>magix.core.user
+    if=>more-than
+      lhs=>[magix.data.load][objects].count
+      rhs=>0
+      code
+        // removing password before putting user into session
+        set=>[magix.data.load][objects][0][value][pwd]
+        add=>[@][magix.session.set][value]
+          value=>[magix.data.load][objects][0][value]
+          children-only=>true
+        magix.session.set
+          id=>magix.core.user
+        set=>[$][success].value
+          value=>true
+

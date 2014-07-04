@@ -71,3 +71,7 @@
 * implement multi threading support in magix.file namespace
 
 * make "magix.data." - transactional support for magix.execute.event/tunnel/override ....
+
+* hashed passwords on magix.core.user
+
+* saving user in 'edit users' without changing user's password double hashes the password ...

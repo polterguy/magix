@@ -8,7 +8,8 @@ lambda=>lmb
       prototype
         type=>magix.core.user
         username=>admin
-        pwd=>admin
+        // hashed version of 'admin'
+        pwd=>21232f297a57a5a743894a0e4a801fc3
     if=>more-than-equals
       lhs=>[magix.data.count][count].value
       rhs=>1
