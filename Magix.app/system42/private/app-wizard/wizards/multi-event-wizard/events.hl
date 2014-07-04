@@ -1,0 +1,147 @@
+﻿
+
+inspect=>@"contains the events for the multi event wizard
+
+contains the events for the web part that allows the user to create an 
+active event that raises multiple other active events"
+
+
+magix.multi-event.add-value_onclick
+  magix.forms.get-value
+    form-id=>wizard
+    id=>active-event
+  if=>equals
+    lhs=>[magix.forms.get-value][value].value
+    rhs=>
+    code
+      magix.viewport.show-message
+        message=>you must declare which active event to raise
+        color=>#ffaaaa
+        time=>5000
+      magix.forms.effect
+        form-id=>wizard
+        id=>active-event
+        type=>focus-and-select
+      stop
+  magix.viewstate.get
+    id=>magix.multi-event.items
+  if=>exist
+    lhs=>[magix.viewstate.get][value]
+    code
+      add=>[magix.viewstate.set]
+        value=>[magix.viewstate.get][value]
+  add=>[magix.viewstate.set][value]
+    value=>[magix.forms.get-value][value].value
+  magix.viewstate.set
+    id=>magix.multi-event.items
+  magix.multi-event.databind-items
+  magix.forms.set-value
+    form-id=>wizard
+    id=>active-event
+  magix.forms.effect
+    type=>focus-and-select
+    form-id=>wizard
+    id=>active-event
+
+magix.multi-event.databind-items
+  magix.viewstate.get
+    id=>magix.multi-event.items
+  if=>equals
+    lhs=>[magix.viewstate.get][value].count
+    rhs=>0
+    or=>not-exist
+      lhs=>[magix.viewstate.get][value]
+    code
+      magix.viewport.clear-controls
+        container=>raised-events
+        reset-class=>true
+      stop
+  _items
+    panel
+      class=>span-13 last
+  for-each=>[magix.viewstate.get][value]
+    _item
+      panel
+        class=>span-13 last hover-shade
+        controls
+          label
+            class=>span-11
+          link-button
+            class=>span-2 last text-right
+            value=>delete
+            onclick
+              magix.viewstate.get
+                id=>magix.multi-event.items
+              set=>[magix.viewstate.get][value][[$][info].value]
+              add=>[magix.viewstate.set][value]
+                value=>[magix.viewstate.get][value]
+                children-only=>true
+              magix.viewstate.set
+                id=>magix.multi-event.items
+              magix.multi-event.databind-items
+              magix.forms.effect
+                form-id=>wizard
+                id=>active-event
+                type=>focus-and-select
+    set=>[@][_item][panel][controls][label][value].value
+      value=>[.].name
+    set=>[@][_item][panel][controls][link-button][info].value
+      value=>[.].name
+    add=>[/][_items][panel][controls]
+      value=>[@][_item]
+      children-only=>true
+  using=>magix.forms
+    create-web-part
+      form-id=>raised-events
+      class=>span-13 last bottom-1 air-padding boxed-light-green
+      container=>raised-events
+      controls=>[_items]
+
+magix.multi-event.create_onclick
+  magix.forms.get-value
+    form-id=>wizard
+    id=>active-event-name
+  magix.viewstate.get
+    id=>magix.multi-event.items
+  if=>equals
+    lhs=>[magix.forms.get-value][value].value
+    rhs=>
+    or=>not-exist
+      lhs=>[magix.viewstate.get][value]
+    code
+      magix.viewport.show-message
+        message=>you must give me an active event name, and a list of active events to raise
+        color=>#ffaaaa
+        time=>7000
+      stop
+  _event
+    event
+      name=>{active-event-name}
+      inspect=>@"multi event wizard active event
+
+will raise a list of other active events once raised"
+      code
+        _items
+        execute=>[_items]
+  add=>[_event][**_items]
+    value=>[magix.viewstate.get][value]
+    children-only=>true
+  iterate=>[_event]
+    if=>equals
+      lhs=>[.].value
+      rhs=>{active-event-name}
+      code
+        set=>[.].value
+          value=>[/][magix.forms.get-value][value].value
+  lambda=>[_event]
+  magix.viewport.show-message
+    message=>your active event was created
+  using=>magix.forms
+    set-info
+      form-id=>wizard
+      id=>edit-event
+      value=>[magix.forms.get-value][value].value
+    set-visible
+      form-id=>wizard
+      id=>edit-event
+      value=>true

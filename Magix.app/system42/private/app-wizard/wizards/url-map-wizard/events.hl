@@ -1,8 +1,8 @@
 ﻿
 
-inspect=>@"contains the controls for the url map wizard
+inspect=>@"contains the events for the url map wizard
 
-contains the controls for the web part that allows the user to create an 
+contains the events for the web part that allows the user to create an 
 active event that maps http get parameters to active events"
 
 
