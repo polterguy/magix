@@ -13,7 +13,7 @@ select=>sel-save-where
   class=>span-3
   onfirstload
     magix.data.load-username
-      id=>magix.ide.where-to-save-web-part
+      id=>magix.ide.where-to-persist-web-part
     if=>exist
       lhs=>[magix.data.load-username][value]
       code

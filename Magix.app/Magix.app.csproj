@@ -91,7 +91,6 @@
     <Content Include="media\images\icons\arrows.png" />
     <Content Include="media\images\icons\book.png" />
     <Content Include="media\images\icons\key.png" />
-    <Content Include="media\images\icons\lightbulb.png" />
     <Content Include="media\images\icons\star.png" />
     <Content Include="media\images\icons\start-button-blue.png" />
     <Content Include="media\images\icons\start-button.png" />

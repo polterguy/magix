@@ -193,22 +193,59 @@ magix.forms.create-web-part
               type=>focus-and-select
               form-id=>editor
               id=>editor-surface
+            magix.viewstate.get
+              id=>magix.text-editor.current-text
+            if=>exist
+              lhs=>[magix.viewstate.get][value]
+              code
+                using=>magix.forms
+                  set-value
+                    form-id=>editor
+                    id=>editor-surface
+                    value=>[magix.viewstate.get][value].value
+          ontextchanged
+            magix.forms.get-value
+              form-id=>editor
+              id=>editor-surface
+            set=>[magix.viewstate.set][value].value
+              value=>[magix.forms.get-value][value].value
+            magix.viewstate.set
+              id=>magix.text-editor.current-text
         panel=>save-wrapper
           default=>save
-          class=>right column last
+          class=>right column last btn-group
           controls
-            label
-              tag=>label
-              class=>span-2
-              value=>save as
             text-box=>txt-file-name
               class=>span-10
               placeholder=>filename ...
+              ontextchanged
+                magix.forms.get-value
+                  form-id=>editor
+                  id=>txt-file-name
+                set=>[magix.viewstate.set][value].value
+                  value=>[magix.forms.get-value][value].value
+                magix.viewstate.set
+                  id=>magix.text-editor.current-file
+              onfirstload
+                magix.viewstate.get
+                  id=>magix.text-editor.current-file
+                if=>exist
+                  lhs=>[magix.viewstate.get][value]
+                  code
+                    using=>magix.forms
+                      set-value
+                        form-id=>editor
+                        id=>txt-file-name
+                        value=>[magix.viewstate.get][value].value
             button=>save
               class=>span-2 last
               value=>save
               onclick
                 magix.text-editor.save_onclick
+        label
+          tag=>label
+          class=>span-2 right
+          value=>filename
         // preview container
         dynamic=>preview-container
           class=>fill-width column top-1

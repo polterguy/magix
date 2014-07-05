@@ -17,6 +17,37 @@ namespace Magix.forms
 	 */
     public abstract class AttributeControlController : BaseWebControlController
 	{
+		/*
+		 * creates an attribute
+		 */
+        [ActiveEvent(Name = "magix.forms.add-attribute")]
+        private static void magix_forms_add_attribute(object sender, ActiveEventArgs e)
+        {
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
+            {
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.forms",
+                    "Magix.forms.hyperlisp.inspect.hl",
+                    "[magix.forms.add-attribute-dox].value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.forms",
+                    "Magix.forms.hyperlisp.inspect.hl",
+                    "[magix.forms.add-attribute-sample]");
+                return;
+            }
+
+            Node dp = Dp(e.Params);
+
+            string name = Expressions.GetExpressionValue<string>(ip["name"].Get<string>(), dp, ip, false);
+            string value = Expressions.GetExpressionValue<string>(ip["value"].Get<string>(), dp, ip, false);
+
+            AttributeControl ctrl = FindControl<AttributeControl>(e.Params);
+            ctrl.Attributes.Add(new AttributeControl.Attribute(name, value));
+        }
+
         /*
          * fills out the attributes
          */

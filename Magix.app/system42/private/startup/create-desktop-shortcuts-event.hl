@@ -60,6 +60,7 @@ returns the default dashboard shortcuts in your system"
           execute-script
             file=>system42/private/tools/inspect.hl
             params
+              has-search=>true
               namespace=>magix.test
               header=>unit tests
               description-class=>span-10
@@ -85,6 +86,7 @@ returns the default dashboard shortcuts in your system"
               execute-script
                 file=>system42/private/tools/inspect.hl
                 params
+                  has-search=>true
                   overridden=>true
                   header=>dynamic active events
                   description-class=>span-9
@@ -141,6 +143,7 @@ returns the default dashboard shortcuts in your system"
           execute-script
             file=>system42/private/tools/inspect.hl
             params
+              has-search=>true
               description-class=>span-9
               list-class=>span-8 last
               header=>active events
@@ -216,6 +219,14 @@ returns the default dashboard shortcuts in your system"
                             container=>content2
                             reset-class=>true
                           magix.text-editor.refresh-toolbar
+                          set=>[magix.viewstate.set][value].value
+                            value=>[using][load][value].value
+                          magix.viewstate.set
+                            id=>magix.text-editor.current-text
+                          set=>[magix.viewstate.set:1][value].value
+                            value=>[$][file].value
+                          magix.viewstate.set
+                            id=>magix.text-editor.current-file
                         oncancel
                           magix.viewport.clear-controls
                             container=>content2

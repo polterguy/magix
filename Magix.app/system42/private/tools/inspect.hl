@@ -46,11 +46,20 @@ if=>exist
   code
     set=>[_controls][**panel=>pnl-events][class].value
       value=>[$][list-class].value
+    set=>[_controls][**text-box=>search-events][class].value
+      value=>[$][list-class].value
 if=>exist
   lhs=>[$][form-class]
   code
     set=>[using][create-web-part][class].value
       value=>[$][form-class].value
+
+// changing visibility of search field
+if=>not-exist
+  lhs=>[$][has-search].value
+  code
+    set=>[_controls][**text-box=>search-events][visible].value
+      value=>false
 
 // changing container, if requested
 if=>exist
@@ -107,6 +116,12 @@ if=>exist
   code
     set=>[list-events][remoted].value
       value=>[$][remoted].value
+
+// making sure our search field has same parameters as main list of events
+add=>[**text-box=>search-events][onfirstload][**list-events]
+  value=>[list-events]
+  children-only=>true
+
 list-events
 
 // removing excluded active events according to input parameter
@@ -275,9 +290,102 @@ _controls
       label=>lbl-description
         style=>width:100%;display:block;
         class=>clear
+  text-box=>search-events
+    placeholder=>search ...
+    class=>span-5 last
+    @data-provide=>typeahead
+    @data-items=>10
+    onenterpressed
+      set=>[try][code][_event].name
+        value=>[$][value].value
+      try
+        code
+          _event
+            inspect
+        catch
+          using=>magix.viewport
+            show-message
+              message=>active event didn't allow inspection, error message from inspect invocation was; '{0}'
+                =>[@][..][exception].value
+              color=>#ffaaaa
+              time=>5000
+          set=>[/][**inspect].value
+            value=>[@][exception].value
+      magix.forms.set-value
+        form-id=>active-events
+        id=>lbl-header
+      set=>[magix.forms.set-value:1][value].value
+        value=>[try][code][0][inspect].value
+      magix.forms.set-value
+        form-id=>active-events
+        id=>lbl-description
+      set=>[try][code][0][inspect]
+      add=>[node-2-code][node]
+        value=>[try][code][0]
+        children-only=>true
+      node-2-code
+      replace=>[node-2-code][code].value
+        what=>&
+        with=>&amp;
+      replace=>[node-2-code][code].value
+        what=><
+        with=>&lt;
+      replace=>[node-2-code][code].value
+        what=>>
+        with=>&gt;
+      set=>[magix.forms.set-value:2][value].value
+        value=>[node-2-code][code].value
+      magix.forms.set-value
+        form-id=>active-events
+        id=>lbl-code
+      magix.inspect.event-selected
+      magix.forms.set-value
+        form-id=>active-events
+        id=>search-events
+        value=>
+      using=>magix.forms
+        set-value
+          form-id=>active-events
+          id=>lbl-header
+          value=>[$][value].value
+    onfirstload
+      // includes necessary javascript files for our autocompleter
+      magix.viewport.include-client-file
+        type=>javascript
+        file=>media/bootstrap/js/jQuery.js
+      magix.viewport.include-client-file
+        type=>javascript
+        file=>media/bootstrap/js/bootstrap.min.js
+      magix.viewport.include-client-file
+        type=>css
+        file=>media/back-end/typeahead.css
+      _json=>
+      list-events
+      for-each=>[list-events][events]
+        if=>not-equals
+          lhs=>[/][_json].value
+          rhs=>
+          code
+            set=>[/][_json].value
+              value=>{0},
+                =>[/][_json].value
+        set=>[/][_json].value
+          value=>@"{0}""{1}"""
+            =>[/][_json].value
+            =>[.].name
+      set=>[_json].value
+        value=>\[{0}]
+          =>[_json].value
+      using=>magix.forms
+        add-attribute
+          form-id=>active-events
+          id=>search-events
+          name=>data-source
+          value=>[_json].value
   panel=>pnl-events
     class=>span-5 last
     style=>max-height:450px;overflow-y:auto;overflow-x:hidden;
+    controls
 
 // creating web-part to show active events requested
 using=>magix.forms

@@ -13,13 +13,13 @@ magix.ide.sel-save-where_onselectedindexchanged
   set=>[magix.data.save-username][value][where].value
     value=>[magix.forms.get-value][value].value
   magix.data.save-username
-    id=>magix.ide.where-to-save-web-part
+    id=>magix.ide.where-to-persist-web-part
   magix.ide.create-save-where-web-part
 
 // creates the web part that asks the user where he wish to save his form
 magix.ide.create-save-where-web-part
   magix.data.load-username
-    id=>magix.ide.where-to-save-web-part
+    id=>magix.ide.where-to-persist-web-part
 
   switch=>[magix.data.load-username][value][where].value
     case=>filesystem

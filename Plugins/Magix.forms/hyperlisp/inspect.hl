@@ -5,6 +5,29 @@ contains the documentation for all active events in the
 Magix.forms assembly"
 
 
+magix.forms.add-attribute-dox=>@"adds an attribute to a control
+
+adds an attribute to a web control.  [name] is the name of the 
+attribute, and [value] is its value.  [form-id] is the id of the 
+form the control belongs to and [id] is the id of the control 
+you wish to add an attribute to"
+
+magix.forms.add-attribute-sample
+  magix.forms.create-web-part
+    container=>content3
+    class=>css class(es) of your form
+    form-id=>unique-id
+    controls
+      label=>btn
+        value=>check out my attribute
+        onfirstload
+          magix.forms.add-attribute
+            form-id=>unique-id
+            id=>btn
+            name=>data-source
+            value=>some-value
+
+
 magix.forms.create-web-part-dox=>@"creates a web part
 
 creates a web-part from either a collection of controls, from the 

@@ -7,7 +7,7 @@ contains the events for helping user load a web part from the filesystem"
 
 
 // tries to load from filesystem
-magix.ide.load_onclick
+magix.ide.load-file
   magix.forms.get-value
     form-id=>load-content
     id=>filename
@@ -45,23 +45,24 @@ magix.ide.load-from-filesystem
     value=>[code-2-node][node]
     children-only=>true
   magix.ide.set-form
-  set=>[magix.data.save-username][value][filename].value
+    clear-undo=>true
+  set=>[magix.viewstate.set][value].value
     value=>[magix.forms.get-value][value].value
-  magix.data.save-username
-    id=>magix.ide.last-used-load-filename
+  magix.viewstate.set
+    id=>magix.ide.last-used-filename
   magix.viewport.clear-controls
     container=>editor-persist-wrapper
     reset-class=>true
 
 // sets the last used db id on the text-box asking user for id to save web part as
 magix.ide.filesystem_onfirstload
-  magix.data.load-username
-    id=>magix.ide.last-used-load-filename
+  magix.viewstate.get
+    id=>magix.ide.last-used-filename
   if=>exist
-    lhs=>[magix.data.load-username][value]
+    lhs=>[magix.viewstate.get][value]
     code
       set=>[@][magix.forms.set-value][value].value
-        value=>[magix.data.load-username][value][filename].value
+        value=>[magix.viewstate.get][value].value
       magix.forms.set-value
         form-id=>load-content
         id=>filename
@@ -99,5 +100,8 @@ magix.ide.browse_onclick
       oncancel
         magix.viewport.clear-controls
           container=>helper-for-persist-wrapper
+          reset-class=>true
+        magix.viewport.clear-controls
+          container=>editor-persist-wrapper
           reset-class=>true
 

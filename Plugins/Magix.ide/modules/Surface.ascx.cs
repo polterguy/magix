@@ -597,6 +597,11 @@ namespace Magix.ide.modules
 
             AddToUndoChain(!ip.ContainsValue("skip-undo") || !ip["skip-undo"].Get<bool>());
 
+            // clearing undo chain
+            UndoChainIndex = 0;
+            UndoChain.Clear();
+            RaiseUndoChainIndexChanged();
+
             DataSource["controls"].Clear();
             SelectedControlDna = null;
             BuildForm();
@@ -677,6 +682,14 @@ namespace Magix.ide.modules
             }
 
             AddToUndoChain(!ip.ContainsValue("skip-undo") || !ip["skip-undo"].Get<bool>());
+
+            if (ip.ContainsValue("clear-undo") && ip["clear-undo"].Get<bool>())
+            {
+                // clearing undo chain
+                UndoChainIndex = 0;
+                UndoChain.Clear();
+                RaiseUndoChainIndexChanged();
+            }
 
             bool fundamentalChanges = false;
 
@@ -1051,6 +1064,8 @@ namespace Magix.ide.modules
          */
         private bool CheckControlIdUnique(Node idxControl, Dictionary<string, bool> ids)
         {
+            if (idxControl.Value == null)
+                return true;
             if (ids.ContainsKey(idxControl.Get<string>()))
                 return false;
             ids[idxControl.Get<string>()] = true;

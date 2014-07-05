@@ -40,14 +40,14 @@ language file"
     label
       tag=>label
       class=>span-3 top-1
-      value=>load from where
+      value=>load
     select=>sel-load-from-where
       class=>span-3 top-1
       onselectedindexchanged
         magix.wizard.create-load-from-where-web-part
       items
-        database=>database
-        filesystem=>file system
+        database=>from database
+        filesystem=>from filesystem
     dynamic=>dyn-load-from-where
       class=>span-9 last top-1
       onfirstload
