@@ -366,6 +366,7 @@ namespace Magix.forms
             node["visible"].Value = "true";
             node["info"].Value = "additional data";
             node["onfirstload"].Value = "hyperlisp code";
+            node["events"].Value = "hyperlisp code";
         }
     }
 }

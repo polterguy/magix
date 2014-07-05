@@ -826,7 +826,10 @@ forms.get-enabled] active events.  legal values are true and false
 some other way making the control gaining focus, such as tabbing through to it
 
 [onblur] is raised when the control looses focus, either by clicking another web 
-control, or by tabbing out from the control"
+control, or by tabbing out from the control
+
+[events] is a list of active events, which are associatedd with your control.  
+this active events cannot start with 'magix.'"
 
 
 magix.forms.base-web-form-element-text-input-dox=>@"[placeholder] is a piece of shadow text, that will 

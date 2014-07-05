@@ -132,7 +132,7 @@ namespace Magix.forms
 
 				Node tmp = Methods[e.Name].Clone();
 
-				// cloning in the incoming parameters
+				// cloning the incoming parameters
                 if (ip.Count > 0)
                     tmp["$"].AddRange(ip.Clone());
 
@@ -146,10 +146,123 @@ namespace Magix.forms
                     ip.AddRange(tmp["$"]);
 				}
 			}
+
+            // shortcutting execute keywords for efficiency
+            if (DataSource.ContainsValue("controls"))
+            {
+                if (!HasSetCachedControlEvents)
+                {
+                    HasSetCachedControlEvents = true;
+                    foreach (Node idx in SearchEvents(e.Name, DataSource["controls"].Get<Node>()))
+                    {
+                        Node tmp = idx.Clone();
+
+                        // cloning the incoming parameters
+                        if (ip.Count > 0)
+                            tmp["$"].AddRange(ip.Clone());
+
+                        RaiseActiveEvent(
+                            "magix.execute",
+                            tmp);
+
+                        if (tmp.Contains("$"))
+                        {
+                            ip.Clear();
+                            ip.AddRange(tmp["$"]);
+                        }
+                    }
+                }
+                else
+                {
+                    if (CachedControlEvents.ContainsKey(e.Name))
+                    {
+                        Node cache = CachedControlEvents[e.Name];
+                        foreach (Node idx in cache)
+                        {
+                            Node tmp = idx.Get<Node>().Clone();
+
+                            // cloning the incoming parameters
+                            if (ip.Count > 0)
+                                tmp["$"].AddRange(ip.Clone());
+
+                            RaiseActiveEvent(
+                                "magix.execute",
+                                tmp);
+
+                            if (tmp.Contains("$"))
+                            {
+                                ip.Clear();
+                                ip.AddRange(tmp["$"]);
+                            }
+                        }
+                    }
+                }
+            }
 		}
+
+        /*
+         * contains a shallow copy of all control events
+         */
+        private Dictionary<string, Node> CachedControlEvents
+        {
+            get
+            {
+                if (ViewState["CachedControlEvents"] == null)
+                    ViewState["CachedControlEvents"] = new Dictionary<string, Node>();
+                return ViewState["CachedControlEvents"] as Dictionary<string, Node>;
+            }
+        }
+
+        /*
+         * if true, then control active events cache have been initialized
+         */
+        private bool HasSetCachedControlEvents
+        {
+            get
+            {
+                if (ViewState["HasSetCachedControlEvents"] == null)
+                    return false;
+                return (bool)ViewState["HasSetCachedControlEvents"];
+            }
+            set
+            {
+                ViewState["HasSetCachedControlEvents"] = value;
+            }
+        }
+
+        /*
+         * searches through all controls for event handlers for the given name
+         */
+        private IEnumerable<Node> SearchEvents(string name, Node node)
+        {
+            if (node != null)
+            {
+                foreach (Node idx in node)
+                {
+                    if (idx.Name == "events")
+                    {
+                        foreach (Node idxInner in idx)
+                        {
+                            if (!CachedControlEvents.ContainsKey(idxInner.Name))
+                                CachedControlEvents[idxInner.Name] = new Node();
+                            CachedControlEvents[idxInner.Name].Add("", idxInner);
+                            if (idxInner.Name == name)
+                                yield return idxInner;
+                        }
+                    }
+                    else
+                    {
+                        foreach (Node idxInner in SearchEvents(name, idx))
+                        {
+                            yield return idxInner;
+                        }
+                    }
+                }
+            }
+        }
 		
 		/*
-		 * raises form events, if match
+		 * changes the mml of web part
 		 */
 		[ActiveEvent(Name = "magix.forms.change-mml")]
 		private void magix_forms_change_mml(object sender, ActiveEventArgs e)
@@ -160,6 +273,9 @@ namespace Magix.forms
 to the value in [mml]";
 				return;
 			}
+
+            HasSetCachedControlEvents = false;
+            CachedControlEvents.Clear();
 
             if (FormID == Ip(e.Params)["form-id"].Get<string>())
 			{

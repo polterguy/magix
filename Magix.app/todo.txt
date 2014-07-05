@@ -64,6 +64,8 @@
 
 * support for multiple stacked sandboxes
 
+* make sure [sandbox] doesn't affect execution of active events legally invoked such that keywords in the events are not allowed to be executed
+
 * create support for multiple dynamic events with same name
 
 * create support for expressions in [throw], and change unit tests to add \[ when they do throw
@@ -72,6 +74,9 @@
 
 * make "magix.data." - transactional support for magix.execute.event/tunnel/override ....
 
-* hashed passwords on magix.core.user
+* active event to lock viewport to devices
 
-* saving user in 'edit users' without changing user's password double hashes the password ...
+* pass in form-id into every control event handler
+
+* support controls without id in web part designer
+

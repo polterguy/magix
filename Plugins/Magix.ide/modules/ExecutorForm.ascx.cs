@@ -184,15 +184,20 @@ namespace Magix.ide.modules
 					"magix.execute.code-2-node",
 					toNode);
 
-                Node codeNode = toNode["node"].Clone();
-                codeNode.Name = activeEvent.Value;
-				RaiseActiveEvent(
-					activeEvent.Value, 
-					codeNode);
+                Node ip = new Node();
+                ip[activeEvent.Value].Value = null;
+                ip[activeEvent.Value].AddRange(toNode["node"]);
+                Node exe = new Node();
+                exe["_ip"].Value = ip;
+                exe["_dp"].Value = ip;
+                RaiseActiveEvent(
+                    "magix.execute",
+                    exe);
 
                 Node toCode = new Node();
-                toCode["node"].AddRange(codeNode);
-				RaiseActiveEvent(
+                toCode["node"].Value = exe["_ip"].Value;
+                toCode["remove-root"].Value = true;
+                RaiseActiveEvent(
 					"magix.execute.node-2-code",
                     toCode);
 
@@ -200,11 +205,19 @@ namespace Magix.ide.modules
 			}
 			else
 			{
-				Node node = RaiseActiveEvent(activeEvent.Value);
+                Node ip = new Node();
+                ip[activeEvent.Value].Value = null;
+                Node exe = new Node();
+                exe["_ip"].Value = ip;
+                exe["_dp"].Value = ip;
+                RaiseActiveEvent(
+                    "magix.execute",
+                    exe);
 
 				Node toCode = new Node();
-				toCode["node"].Value = node;
-				RaiseActiveEvent(
+				toCode["node"].Value = exe["_ip"].Value;
+                toCode["remove-root"].Value = true;
+                RaiseActiveEvent(
 					"magix.execute.node-2-code", 
 					toCode);
 

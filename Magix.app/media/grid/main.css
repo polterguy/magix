@@ -637,3 +637,22 @@ select:disabled
     margin-right:0;
 }
 
+.no-code
+{
+    padding-bottom:0;
+    padding-top:0;
+    background-color:initial;
+    font:inherit;
+}
+
+.line-item:nth-child(odd)
+{
+    border-radius:5px;
+}
+
+.line-item:nth-child(even)
+{
+    background-color:rgba(0,0,0,.04);
+    border-radius:5px;
+}
+
