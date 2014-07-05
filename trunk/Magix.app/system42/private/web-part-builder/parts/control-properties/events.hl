@@ -58,6 +58,12 @@ magix.ide.create-properties-controls
       and=>not-equals
         lhs=>[.].name
         rhs=>items
+      and=>not-equals
+        lhs=>[.].name
+        rhs=>events
+      and=>not-equals
+        lhs=>[.].name
+        rhs=>controls
       code
         // not event handler
         set=>[@][_params]
@@ -97,6 +103,12 @@ magix.ide.create-properties-controls
       or=>equals
         lhs=>[.].name
         rhs=>items
+      or=>equals
+        lhs=>[.].name
+        rhs=>events
+      and=>not-equals
+        lhs=>[.].name
+        rhs=>controls
       code
         // not event handler
         set=>[@][_params]
