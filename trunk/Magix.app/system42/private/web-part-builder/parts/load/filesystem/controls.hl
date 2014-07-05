@@ -1,8 +1,8 @@
 ﻿
 
-inspect=>@"contains the controls for loading web part from database
+inspect=>@"contains the controls for loading web part from filesystem
 
-contains the controls for helping user load a web part from the database"
+contains the controls for helping user load a web part from the filesystem"
 
 
 label
@@ -11,7 +11,7 @@ label
   tag=>label
 
 panel=>load-wrapper
-  class=>span-14 last
+  class=>span-14 last btn-group
   default=>load
   controls
     text-box=>filename
@@ -31,12 +31,15 @@ panel=>load-wrapper
       class=>span-2
       value=>load
       onclick
-        magix.ide.load_onclick
+        magix.ide.load-file
     button=>cancel
       class=>span-2 last
       value=>cancel
       onclick
         magix.viewport.clear-controls
           container=>editor-persist-wrapper
+          reset-class=>true
+        magix.viewport.clear-controls
+          container=>helper-for-persist-wrapper
           reset-class=>true
 

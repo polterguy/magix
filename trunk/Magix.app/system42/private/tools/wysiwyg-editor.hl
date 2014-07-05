@@ -168,12 +168,8 @@ magix.forms.create-web-part
           placeholder=>text content ...
         panel=>save-wrapper
           default=>save
-          class=>right column last
+          class=>right column last btn-group
           controls
-            label
-              tag=>label
-              class=>span-2
-              value=>save as
             text-box=>txt-file-name
               class=>span-10
               placeholder=>filename ...
@@ -182,4 +178,8 @@ magix.forms.create-web-part
               value=>save
               onclick
                 magix.wysiwyg-editor.save_onclick
+        label
+          tag=>label
+          class=>span-2 last text-right
+          value=>filename
 

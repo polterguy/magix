@@ -49,10 +49,10 @@ magix.ide.save-to-filesystem
   magix.viewport.clear-controls
     container=>editor-persist-wrapper
     reset-class=>true
-  set=>[magix.data.save-username][value][filename].value
+  set=>[magix.viewstate.set][value].value
     value=>[magix.forms.get-value][value].value
-  magix.data.save-username
-    id=>magix.ide.last-used-save-filename
+  magix.viewstate.set
+    id=>magix.ide.last-used-filename
   using=>magix.viewport
     show-message
       message=>form was successfully save to filesystem as '{0}'
@@ -65,13 +65,13 @@ magix.ide.save-to-filesystem
 
 // sets the last used db id on the text-box asking user for id to save web part as
 magix.ide.filename_onfirstload
-  magix.data.load-username
-    id=>magix.ide.last-used-save-filename
+  magix.viewstate.get
+    id=>magix.ide.last-used-filename
   if=>exist
-    lhs=>[magix.data.load-username][value]
+    lhs=>[magix.viewstate.get][value]
     code
       set=>[@][magix.forms.set-value][value].value
-        value=>[magix.data.load-username][value][filename].value
+        value=>[magix.viewstate.get][value].value
       magix.forms.set-value
         form-id=>save-content
         id=>filename
@@ -103,11 +103,14 @@ magix.ide.browse_onclick
           container=>helper-for-persist-wrapper
           reset-class=>true
         magix.forms.effect
-          type=>focus-and-select
           form-id=>save-content
           id=>filename
+          type=>focus-and-select
       oncancel
         magix.viewport.clear-controls
           container=>helper-for-persist-wrapper
+          reset-class=>true
+        magix.viewport.clear-controls
+          container=>editor-persist-wrapper
           reset-class=>true
 

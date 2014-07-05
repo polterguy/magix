@@ -13,7 +13,7 @@ magix.ide.sel-load-where_onselectedindexchanged
   set=>[magix.data.save-username][value][where].value
     value=>[magix.forms.get-value][value].value
   magix.data.save-username
-    id=>magix.ide.where-to-load-web-part-from
+    id=>magix.ide.where-to-persist-web-part
   magix.ide.create-load-where-web-part
 
 magix.ide.create-load-where-web-part

@@ -215,57 +215,31 @@ input[type=button]:disabled.toolbox-load
     box-shadow:none;
 }
 
-
-
-
-
-input[type=button]:hover.toolbox-undo
-{
-    background-color:rgba(0,0,0,.2);
-}
-
-input[type=button]:hover.toolbox-redo
-{
-    background-color:rgba(0,0,0,.2);
-}
-
-input[type=button]:hover.toolbox-copy
-{
-    background-color:rgba(0,0,0,.2);
-}
-
-input[type=button]:hover.toolbox-cut
-{
-    background-color:rgba(0,0,0,.2);
-}
-
-input[type=button]:hover.toolbox-paste
-{
-    background-color:rgba(0,0,0,.2);
-}
-
-input[type=button]:hover.toolbox-delete
-{
-    background-color:rgba(0,0,0,.2);
-}
-
-input[type=button]:hover.toolbox-preview
-{
-    background-color:rgba(0,0,0,.2);
-}
-
-input[type=button]:hover.toolbox-execute
-{
-    background-color:rgba(0,0,0,.2);
-}
-
-input[type=button]:hover.toolbox-save
-{
-    background-color:rgba(0,0,0,.2);
-}
-
+input[type=button]:hover.toolbox-undo,
+input[type=button]:hover.toolbox-redo,
+input[type=button]:hover.toolbox-copy,
+input[type=button]:hover.toolbox-cut,
+input[type=button]:hover.toolbox-paste,
+input[type=button]:hover.toolbox-delete,
+input[type=button]:hover.toolbox-preview,
+input[type=button]:hover.toolbox-execute,
+input[type=button]:hover.toolbox-save,
 input[type=button]:hover.toolbox-load
 {
     background-color:rgba(0,0,0,.2);
+}
+
+input[type=button]:hover:disabled.toolbox-undo,
+input[type=button]:hover:disabled.toolbox-redo,
+input[type=button]:hover:disabled.toolbox-copy,
+input[type=button]:hover:disabled.toolbox-cut,
+input[type=button]:hover:disabled.toolbox-paste,
+input[type=button]:hover:disabled.toolbox-delete,
+input[type=button]:hover:disabled.toolbox-preview,
+input[type=button]:hover:disabled.toolbox-execute,
+input[type=button]:hover:disabled.toolbox-save,
+input[type=button]:hover:disabled.toolbox-load
+{
+    background-color:rgba(0,0,0,.1);
 }
 

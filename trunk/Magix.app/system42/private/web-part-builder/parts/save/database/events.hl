@@ -48,10 +48,10 @@ magix.ide.save-to-database
   magix.viewport.clear-controls
     container=>editor-persist-wrapper
     reset-class=>true
-  set=>[magix.data.save-username][value][id].value
+  set=>[magix.viewstate.set][value].value
     value=>[magix.forms.get-value][value].value
-  magix.data.save-username
-    id=>magix.ide.last-used-save-database-id
+  magix.viewstate.set
+    id=>magix.ide.last-database-id
   using=>magix.viewport
     show-message
       message=>form was successfully save to database as '{0}'
@@ -64,13 +64,13 @@ magix.ide.save-to-database
 
 // sets the last used db id on the text-box asking user for id to save web part as
 magix.ide.database-id_onfirstload
-  magix.data.load-username
-    id=>magix.ide.last-used-save-database-id
+  magix.viewstate.get
+    id=>magix.ide.last-database-id
   if=>exist
-    lhs=>[magix.data.load-username][value]
+    lhs=>[magix.viewstate.get][value]
     code
       set=>[@][magix.forms.set-value][value].value
-        value=>[magix.data.load-username][value][id].value
+        value=>[magix.viewstate.get][value].value
       magix.forms.set-value
         form-id=>save-content
         id=>database-id

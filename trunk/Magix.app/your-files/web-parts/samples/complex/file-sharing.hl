@@ -23,7 +23,7 @@ panel=>wrap-all
                 magix.forms.set-visible
                   id=>label-description
                   value=>false
-        panel
+        panel=>lambda-wrapper
           class=>fill-width column bottom-1
           controls
             lambda=>lambda-files

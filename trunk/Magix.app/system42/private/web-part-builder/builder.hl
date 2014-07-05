@@ -43,7 +43,7 @@ magix.forms.create-web-part
         magix.forms.create-web-part
           form-id=>editor-toolbar
           container=>editor-toolbar
-          class=>span-22 last btn-group left-1
+          class=>span-22 last btn-group
           controls-file=>system42/private/web-part-builder/parts/toolbar/controls.hl
           events-file=>system42/private/web-part-builder/parts/toolbar/events.hl
 

@@ -11,7 +11,7 @@ label
   tag=>label
 
 panel=>save-wrapper
-  class=>span-14 last
+  class=>span-14 last btn-group
   default=>save
   controls
     text-box=>filename
