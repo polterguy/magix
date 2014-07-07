@@ -42,18 +42,12 @@ namespace Magix.execute
             if (destinationNode == null)
                 throw new ArgumentException("[add] must return an existing node-list, [add] value returned null, expression was; " + ip.Get<string>());
 
-            if (ip.Contains("value") && ip["value"].Value != null)
+            if (ip.ContainsValue("value"))
             {
                 object sourceObject = Expressions.GetExpressionValue<object>(ip["value"].Get<string>(), dp, ip, false);
 
                 if (sourceObject is Node)
-                {
-                    Node sourceNode = sourceObject as Node;
-                    if (!ip.Contains("children-only") || !ip["children-only"].Get<bool>())
-                        destinationNode.Add(sourceNode.Clone());
-                    else
-                        destinationNode.AddRange(sourceNode.Clone());
-                }
+                    destinationNode.Add((sourceObject as Node).Clone());
                 else
                 {
                     string nodeName = sourceObject.ToString();
@@ -63,6 +57,18 @@ namespace Magix.execute
                         nodeValue = Expressions.GetExpressionValue<object>(ip["value"]["value"].Get<string>(), dp, ip, false);
                     destinationNode.Add(new Node(nodeName, nodeValue));
                 }
+            }
+            else if (ip.ContainsValue("values"))
+            {
+                object sourceObject = Expressions.GetExpressionValue<object>(ip["values"].Get<string>(), dp, ip, false);
+
+                if (sourceObject is Node)
+                {
+                    Node sourceNode = sourceObject as Node;
+                    destinationNode.AddRange(sourceNode.Clone());
+                }
+                else
+                    throw new ArgumentException("[values] didn't return nodes in [add]");
             }
             else
             {

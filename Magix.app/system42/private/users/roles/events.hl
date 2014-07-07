@@ -18,8 +18,7 @@ magix.roles.create-role-tree-controls
 
     // creating web controls representing role, and returning to caller
     add=>[$][controls]
-      value=>[:magix.role.create-tree-node-control[.][value]][controls]
-      children-only=>true
+      values=>[:magix.role.create-tree-node-control[.][value]][controls]
 
 // recursively creates one role link-button
 magix.role.create-tree-node-control
@@ -56,8 +55,7 @@ magix.role.create-tree-node-control
 
             // recursively calling self with current iterating child role
             add=>[@][_pnl]
-              value=>[:magix.role.create-tree-node-control[.]][controls]
-              children-only=>true
+              values=>[:magix.role.create-tree-node-control[.]][controls]
 
             // making sure this role is indented on screen
             set=>[@][_pnl][panel][class].value

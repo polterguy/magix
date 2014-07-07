@@ -22,6 +22,5 @@ lambda=>lambda-properties
   oncreatecontrols
     magix.ide.create-properties-controls
     add=>[$]
-      value=>[magix.ide.create-properties-controls]
-      children-only=>true
+      values=>[magix.ide.create-properties-controls]
 

@@ -28,7 +28,6 @@ of the log item"
         =>[$][header].value
         =>[magix.session.get][value][username].value
     add=>[@][magix.log.append]
-      value=>[$]
-      children-only=>true
+      values=>[$]
     magix.log.append
 

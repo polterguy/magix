@@ -59,8 +59,7 @@ magix.wizard.web-config-connection-selected_onfirstload
       value=>[.].value
         value=>[.].value
   add=>[magix.forms.set-values][values]
-    value=>[_items]
-    children-only=>true
+    values=>[_items]
   magix.forms.set-values
     form-id=>wizard
     id=>web-config-connection-select
@@ -131,8 +130,7 @@ magix.wizard.initialize-second-page
       value=>[.][TABLE_NAME].value
         value=>[.][TABLE_NAME].value
   add=>[magix.forms.set-values][values]
-    value=>[_items]
-    children-only=>true
+    values=>[_items]
   magix.forms.set-values
     form-id=>wizard
     id=>select-table
@@ -174,8 +172,7 @@ magix.wizard.select-table_onselectedindexchanged
         value=>[.][COLUMN_NAME].value
           value=>[.][COLUMN_NAME].value
     add=>[@][magix.forms.set-values][values]
-      value=>[@][_items]
-      children-only=>true
+      values=>[@][_items]
     magix.forms.set-values
       form-id=>wizard
       id=>select-sort
@@ -267,8 +264,7 @@ magix.wizard.initialize-third-page
         set=>[@][..][..][_chk][label][class].value
           value=>span-4 last
     add=>[/][magix.forms.create-web-part][controls]
-      value=>[@][_chk]
-      children-only=>true
+      values=>[@][_chk]
   magix.forms.create-web-part
     form-id=>columns
     container=>columns-container
@@ -350,8 +346,7 @@ number of records in your table"
           connection=>{connection}
           sql=>{sql}
         add=>[$][result]
-          value=>[magix.ms.sql.select][result]
-          children-only=>true
+          values=>[magix.ms.sql.select][result]
         set=>[$][record-count].value
           value=>[magix.ms.sql.select][record-count].value
   magix.forms.get-value

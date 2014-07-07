@@ -35,8 +35,7 @@ magix.users.load
   set=>[$][count]
     value=>[magix.data.count][count]
   add=>[$][users]
-    value=>[magix.data.load][objects]
-    children-only=>true
+    values=>[magix.data.load][objects]
 
 // creates the controls for the datagrid showing the users
 magix.users.create-grid-controls
@@ -90,8 +89,7 @@ magix.users.create-grid-controls
     set=>[@][_buffer][0]
     set=>[@][_buffer][0]
     add=>[@][_buffer]
-      value=>[.]
-      children-only=>true
+      values=>[.]
     set=>[/][_ctrl][0]
       value=>[/][_ctrl1][0]
     iterate=>[/][_ctrl]
@@ -429,8 +427,7 @@ magix.users.load-roles
           value=>[.].value
             value=>[.].value
   add=>[magix.forms.set-values][values]
-    value=>[_roles]
-    children-only=>true
+    values=>[_roles]
   magix.forms.set-values
     form-id=>users
     id=>edit-role

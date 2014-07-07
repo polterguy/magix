@@ -69,20 +69,17 @@ magix.roles.add-role
           set=>[@][_child][child][name].value
             value=>[/][magix.forms.get-value][value].value
           add=>[.][..]
-            value=>[@][_child]
-            children-only=>true
+            values=>[@][_child]
           stop
     if=>equals
       lhs=>[@][_found].value
       rhs=>true
       code
         add=>[/][_role]
-          value=>[.]
-          children-only=>true
+          values=>[.]
         stop
   add=>[magix.data.save]
-    value=>[_role]
-    children-only=>true
+    values=>[_role]
   magix.data.save
   magix.roles.show-roles-tree
   set=>[magix.log.append-username][body].value
@@ -122,12 +119,10 @@ magix.roles.delete-role
       rhs=>true
       code
         add=>[/][_role]
-          value=>[.]
-          children-only=>true
+          values=>[.]
         stop
   add=>[magix.data.save]
-    value=>[_role]
-    children-only=>true
+    values=>[_role]
   magix.data.save
   magix.roles.clean-up-users
   set=>[magix.log.append-username][body].value

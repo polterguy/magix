@@ -92,8 +92,7 @@ if=>exist
   lhs=>[$][extra-selection-code]
   code
     add=>[**create-web-part][**magix.inspect.event-selected]
-      value=>[$][extra-selection-code]
-      children-only=>true
+      values=>[$][extra-selection-code]
 
 // listing events according to input parameter
 if=>exist
@@ -119,8 +118,7 @@ if=>exist
 
 // making sure our search field has same parameters as main list of events
 add=>[**text-box=>search-events][onfirstload][**list-events]
-  value=>[list-events]
-  children-only=>true
+  values=>[list-events]
 
 list-events
 
@@ -162,8 +160,7 @@ _create-link-button
           id=>lbl-description
         set=>[try][code][0][inspect]
         add=>[node-2-code][node]
-          value=>[try][code][0]
-          children-only=>true
+          values=>[try][code][0]
         node-2-code
         replace=>[node-2-code][code].value
           what=>&
@@ -321,8 +318,7 @@ _controls
         id=>lbl-description
       set=>[try][code][0][inspect]
       add=>[node-2-code][node]
-        value=>[try][code][0]
-        children-only=>true
+        values=>[try][code][0]
       node-2-code
       replace=>[node-2-code][code].value
         what=>&

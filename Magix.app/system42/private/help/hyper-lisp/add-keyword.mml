@@ -31,7 +31,7 @@ add=>[_destination]
 <p>the above hyperlisp will create a copy of the entire [_source] node list, and append into the [_destination] node list.&nbsp;&nbsp;to 
 accomplish the same with the [set] statement is possible, but will require multiple invocation to [set], instead of a single invocation, such 
 as the above code demonstrates.&nbsp;&nbsp;if you wish to only add the children of the [_source] node into the [_destination] node, this can 
-be accomplished by adding a [children-only] parameter to the [add] invocation</p>
+be accomplished by adding a [values] parameter to the [add] invocation instead of a [value] node</p>
 
 <pre>
 _source
@@ -40,8 +40,7 @@ _source
     q=>w
 _destination
 add=>[_destination]
-  value=>[_source]
-  children-only=>true
+  values=>[_source]
 </pre>
 
 <p>the above code will copy all the children of the [_source] node, and append them into the [_destination] node's list of children</p>

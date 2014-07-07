@@ -80,3 +80,5 @@
 
 * support controls without id in web part designer
 
+* use magix.data.save-username for last loaded/saved web part in web part designer and not viewstate
+

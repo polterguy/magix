@@ -27,8 +27,7 @@ panel=>users-wrapper
     lambda=>lambda-users-grid
       oncreatecontrols
         add=>[$]
-          value=>[:magix.users.create-grid-controls][controls]
-          children-only=>true
+          values=>[:magix.users.create-grid-controls][controls]
 
 panel=>edit-user-wrapper
   class=>span-15 last boxed air-padding top-1 clear desktop-widget

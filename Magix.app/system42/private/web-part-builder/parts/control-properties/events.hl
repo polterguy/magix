@@ -46,8 +46,7 @@ magix.ide.create-properties-controls
   set=>[_data][**_dna=>{dna}].value
     value=>[magix.ide.get-selected-control][dna].value
   add=>[$]
-    value=>[_data]
-    children-only=>true
+    values=>[_data]
 
   // looping through each control property
   for-each=>[**inspect=>?][..][**controls][0]
@@ -77,8 +76,7 @@ magix.ide.create-properties-controls
         add=>[@][_params][field-type]
           value=>[.]
         add=>[$]
-          value=>[:magix.ide.create-control-property-modifier-control[@][_params]][control]
-          children-only=>true
+          values=>[:magix.ide.create-control-property-modifier-control[@][_params]][control]
 
   // creating spacer between properties and events
   _hr
@@ -118,13 +116,11 @@ magix.ide.create-properties-controls
           lhs=>[/][magix.ide.get-selected-control][value][0][[.].name]
           code
             add=>[@][..][..][_params][content]
-              value=>[/][magix.ide.get-selected-control][value][0][[.].name]
-              children-only=>true
+              values=>[/][magix.ide.get-selected-control][value][0][[.].name]
         add=>[@][_params][field-type]
           value=>[.]
         add=>[$]
-          value=>[:magix.ide.create-control-event-modifier-control[@][_params]][control]
-          children-only=>true
+          values=>[:magix.ide.create-control-event-modifier-control[@][_params]][control]
 
 // creates one property modifier for properties web part
 magix.ide.create-control-property-modifier-control
@@ -353,8 +349,7 @@ magix.ide.create-control-event-modifier-control
                 code-2-node
                   remove-root=>true
                 add=>[magix.ide.change-control][change][[_field-name].value]
-                  value=>[@][code-2-node][node]
-                  children-only=>true
+                  values=>[@][code-2-node][node]
             else
               set=>[magix.ide.change-control][change][[_field-name].value].name
                 value=>[_field-name].value

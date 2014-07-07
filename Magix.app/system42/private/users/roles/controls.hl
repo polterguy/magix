@@ -21,8 +21,7 @@ panel=>roles-wrapper
 
         // invokes event that creates roles tree view control collection
         add=>[$]
-          value=>[:magix.roles.create-role-tree-controls][controls]
-          children-only=>true
+          values=>[:magix.roles.create-role-tree-controls][controls]
 
 // contains the wrapper for editing one role
 dynamic=>edit-role

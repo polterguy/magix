@@ -291,8 +291,7 @@ where
           set=>[/][magix.forms.create-web-part:0][controls][_lb].name
             value=>label
       add=>[@][magix.viewstate.set][value]
-        value=>[@][_pks]
-        children-only=>true
+        values=>[@][_pks]
       magix.viewstate.set
         id=>magix.ms.sql.current-primary-keys
       set=>[magix.forms.create-web-part:0][controls][label:1][value].value
@@ -367,8 +366,7 @@ where
             lhs=>[@][magix.viewstate.get][value]
             code
               add=>[_position]
-                value=>[@][..][..][magix.viewstate.get][value]
-                children-only=>true
+                values=>[@][..][..][magix.viewstate.get][value]
       if=>exist
         lhs=>[$][force-select]
         code
@@ -481,8 +479,7 @@ where
             set=>[@][_pnl][controls]
             set=>[@][_pnl][onclick][_columns]
             add=>[@][_pnl][onclick][_columns]
-              value=>[.]
-              children-only=>true
+              values=>[.]
             _pnl
               tag=>tr
               style=>cursor:pointer;

@@ -60,6 +60,12 @@ if=>exist
     set=>[**text-box=>txt-file-name][value].value
       value=>[$][file].value
 
+    // removing the loading of last file logic
+    set=>[magix.forms.create-web-part][**text-area=>editor-surface][onfirstload][execute]
+    set=>[magix.forms.create-web-part][**text-area=>editor-surface][onfirstload][_load-last-file]
+    set=>[magix.forms.create-web-part][**text-box=>txt-file-name][onfirstload]
+
+
 // disabling the text-box that allows changing the filename, if we're not allowed to change filename of edited file
 if=>equals
   lhs=>[$][allow-filename-change].value
@@ -89,8 +95,7 @@ if=>exist
     set=>[**button=>save][class].value
       value=>span-2
     add=>[**panel=>save-wrapper][controls]
-      value=>[$][extra-buttons]
-      children-only=>true
+      values=>[$][extra-buttons]
 
 // adding automatical scroll, if we're supposed to
 if=>equals
@@ -113,8 +118,7 @@ if=>exist
   lhs=>[$][onesc]
   code
     add=>[**panel=>main-wrapper][onesc]
-      value=>[$][onesc]
-      children-only=>true
+      values=>[$][onesc]
 
 // removing toolbar if we're supposed to
 if=>equals
@@ -193,16 +197,18 @@ magix.forms.create-web-part
               type=>focus-and-select
               form-id=>editor
               id=>editor-surface
-            magix.viewstate.get
-              id=>magix.text-editor.current-text
-            if=>exist
-              lhs=>[magix.viewstate.get][value]
-              code
-                using=>magix.forms
-                  set-value
-                    form-id=>editor
-                    id=>editor-surface
-                    value=>[magix.viewstate.get][value].value
+            execute=>[_load-last-file]
+            _load-last-file
+              magix.viewstate.get
+                id=>magix.text-editor.current-text
+              if=>exist
+                lhs=>[@][magix.viewstate.get][value]
+                code
+                  using=>magix.forms
+                    set-value
+                      form-id=>editor
+                      id=>editor-surface
+                      value=>[@][..][..][..][magix.viewstate.get][value].value
           ontextchanged
             magix.forms.get-value
               form-id=>editor

@@ -11,12 +11,10 @@ creates a deep copy of the node returned by the expression in the [value] node, 
 it into the expression found in [add].  if no [value] node is given, then all children of 
 [add] will be added.  the [add] node must have en expression returning a node lists
 
-if a [value] node is given, its value is an expression, and a [children-only] node exists, and 
-its value is true, then only the children of the node returned by the expression in [value] 
-will be added to the nodes found in the expression of [add].  if no [children-only] node exists, 
-or its value is false, but a [value] node exists, with an expression returning a node list, then 
-the entire node tree will be copied, with its children, including the node returned from [value] 
-itself
+if a [values] node is given then only the children of the node returned by the expression in [values] 
+will be added to the nodes found in the expression of [add].  if a [value] node exists, with an 
+expression returning a node list, then the entire node tree will be copied, with its children, 
+including the node returned from [value] itself
 
 if a [value] node exists, and it is a contant, or an expression returning anything but a node list, 
 then a node with the name returned from the constant or expression of the [value] node will be 
@@ -36,8 +34,7 @@ magix.execute.add-sample
       item1=>will be copied too
       item2=>will also be copied
   add=>[_copy]
-    value=>[_data]
-    children-only=>true
+    values=>[_data]
 
 
 magix.execute.node-2-code-dox=>@"transforms a node to text

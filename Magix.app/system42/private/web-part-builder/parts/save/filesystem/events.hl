@@ -49,9 +49,9 @@ magix.ide.save-to-filesystem
   magix.viewport.clear-controls
     container=>editor-persist-wrapper
     reset-class=>true
-  set=>[magix.viewstate.set][value].value
+  set=>[magix.data.save-username][value][filename].value
     value=>[magix.forms.get-value][value].value
-  magix.viewstate.set
+  magix.data.save-username
     id=>magix.ide.last-used-filename
   using=>magix.viewport
     show-message
@@ -65,13 +65,13 @@ magix.ide.save-to-filesystem
 
 // sets the last used db id on the text-box asking user for id to save web part as
 magix.ide.filename_onfirstload
-  magix.viewstate.get
+  magix.data.load-username
     id=>magix.ide.last-used-filename
   if=>exist
-    lhs=>[magix.viewstate.get][value]
+    lhs=>[magix.data.load-username][value][filename]
     code
       set=>[@][magix.forms.set-value][value].value
-        value=>[magix.viewstate.get][value].value
+        value=>[magix.data.load-username][value][filename].value
       magix.forms.set-value
         form-id=>save-content
         id=>filename
