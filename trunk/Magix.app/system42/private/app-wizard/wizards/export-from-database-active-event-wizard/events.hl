@@ -146,8 +146,7 @@ magix.wizard.save_onclick
           _line-value=>
           _obj
           add=>[@][_obj]
-            value=>[.][value]
-            children-only=>true
+            values=>[.][value]
           for-each=>[/][_fields]
             replace=>[@][..][_obj][[.].name].value
               what=>@""""
@@ -244,8 +243,7 @@ magix.wizard.save_onclick
             set=>[.].value
               value=>[/][magix.forms.get-value:1][value].value
       add=>[_event][event][code]
-        value=>[_delete]
-        children-only=>true
+        values=>[_delete]
   execute=>[_event]
   magix.viewport.show-message
     message=>active event was created

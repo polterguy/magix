@@ -19,8 +19,7 @@ magix.ide.controls-collection-changed
     lhs=>[magix.ide.list-controls][controls]
     code
       add=>[magix.forms.set-values][values]
-        value=>[magix.ide.list-controls][controls]
-        children-only=>true
+        values=>[magix.ide.list-controls][controls]
   magix.ide.get-form
   if=>not-equals
     lhs=>[magix.ide.get-form].count

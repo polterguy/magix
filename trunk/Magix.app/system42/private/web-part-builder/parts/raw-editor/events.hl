@@ -50,8 +50,7 @@ magix.ide.reload-serialized-form-data
           // setting wysiwyg surface with serialized form data, with no update parameter, to not 
           // post the magix.ide.surface-changed active event
           add=>[@][magix.ide.set-form][value]
-            value=>[@][..][..][magix.data.load-username][value]
-            children-only=>true
+            values=>[@][..][..][magix.data.load-username][value]
           magix.ide.set-form
             no-update=>true
             skip-undo=>true
@@ -95,8 +94,7 @@ magix.ide.serialize-code-update-wysiwyg
       // is done automatically in other event handlers for us, unless an exception occurs, at which 
       // point the magix.ide.set-form does not raise the magix.ide.surface-changed event
       add=>[@][magix.ide.set-form][value]
-        value=>[@][code-2-node][node]
-        children-only=>true
+        values=>[@][code-2-node][node]
       magix.ide.set-form
     catch
 
@@ -105,8 +103,7 @@ magix.ide.serialize-code-update-wysiwyg
         value=>couldn't update wysiwyg surface area, error message from system was {0}
           =>[@][exception].value
       add=>[@][magix.ide.set-form]
-        value=>[magix.ide.get-form]
-        children-only=>true
+        values=>[magix.ide.get-form]
 
       // no update notification, since this will trigger ontextchanged again, and create recursion
       magix.ide.set-form
@@ -124,8 +121,7 @@ magix.ide.serialize-code-update-wysiwyg
       // saving the form data, although it is funky, since this doesn't automatically happen when
       // magix.ide.set-form throws an exception
       add=>[@][magix.data.save-username][value]
-        value=>[try][code][code-2-node][node]
-        children-only=>true
+        values=>[try][code][code-2-node][node]
       magix.data.save-username
         id=>magix.ide.current-surface-controls
 

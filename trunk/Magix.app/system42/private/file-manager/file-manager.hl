@@ -161,11 +161,9 @@ if=>exist
 
     // adding [onselect] and [oncancel] hyperlisp code
     add=>[@][**button=>select][onclick][_lambda]
-      value=>[$][onselect]
-      children-only=>true
+      values=>[$][onselect]
     add=>[@][**button=>cancel][onclick]
-      value=>[$][oncancel]
-      children-only=>true
+      values=>[$][oncancel]
     add=>[magix.forms.create-web-part][controls]
       value=>[@][_select][panel]
     magix.viewstate.set

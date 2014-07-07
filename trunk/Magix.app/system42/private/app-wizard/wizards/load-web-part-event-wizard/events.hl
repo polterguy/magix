@@ -40,8 +40,7 @@ magix.wizard.populate-select-css-file
       lhs=>[@][magix.wizard.populate-select-css-file][files]
       code
         add=>[$][files]
-          value=>[@][..][..][magix.wizard.populate-select-css-file][files]
-          children-only=>true
+          values=>[@][..][..][magix.wizard.populate-select-css-file][files]
 
 // creates the web part that holds the css files
 magix.wizard.create-css-files-container
@@ -60,8 +59,7 @@ magix.wizard.create-css-files-container
         onfirstload
           magix.wizard.populate-select-css-file
           add=>[magix.forms.set-values][values]
-            value=>[magix.wizard.populate-select-css-file][files]
-            children-only=>true
+            values=>[magix.wizard.populate-select-css-file][files]
           magix.forms.set-values
             form-id=>css-files
             id=>add-css-file
@@ -94,8 +92,7 @@ magix.wizard.create-css-files-container
             rhs=>true
             code
               add=>[@][magix.viewstate.set][value]
-                value=>[magix.viewstate.get][value]
-                children-only=>true
+                values=>[magix.viewstate.get][value]
               add=>[@][magix.viewstate.set][value]
                 value=>[magix.forms.get-value][value].value
               magix.viewstate.set
@@ -163,8 +160,7 @@ magix.wizard.create-load-from-where-web-part
                   value=>[.][id].value
                     value=>[.][id].value
               add=>[magix.forms.set-values][values]
-                value=>[_items]
-                children-only=>true
+                values=>[_items]
               magix.forms.set-values
                 form-id=>from-where
                 id=>database-id

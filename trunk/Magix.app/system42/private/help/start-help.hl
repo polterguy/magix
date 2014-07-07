@@ -169,8 +169,7 @@ event
       lhs=>[magix.session.get][value]
       code
         add=>[magix.session.set][value]
-          value=>[magix.session.get][value]
-          children-only=>true
+          values=>[magix.session.get][value]
     add=>[magix.session.set][value]
       value=>[$][header].value
         value=>[$][file].value

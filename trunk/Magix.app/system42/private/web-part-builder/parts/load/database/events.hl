@@ -51,8 +51,7 @@ magix.ide.load-from-database
     load
       id=>[magix.forms.get-value][value].value
   add=>[magix.ide.set-form][value]
-    value=>[using][load][value][surface]
-    children-only=>true
+    values=>[using][load][value][surface]
   magix.ide.set-form
     clear-undo=>true
   magix.viewport.clear-controls
@@ -72,8 +71,7 @@ magix.ide.database-id_onfirstload
       value=>[.][id].value
         value=>[.][id].value
   add=>[magix.forms.set-values][values]
-    value=>[_items]
-    children-only=>true
+    values=>[_items]
   magix.forms.set-values
     form-id=>load-content
     id=>database-id

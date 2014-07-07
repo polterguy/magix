@@ -1,120 +1,94 @@
-panel=>paging-wrapper
-  class=>span-2 left-10 bottom-1
-  onfirstload
-    magix.data.count
-      prototype
-        type=>magix.samples.todo
-    if=>less-than
-      lhs=>[magix.data.count][count].value
-      rhs=>10
-      code
-        magix.forms.set-visible
-          id=>paging-wrapper
-          value=>false
-  controls
-    link-button=>previous
-      class=>span-1
-      value=>&lt;&lt;
-      onclick
-        magix.viewstate.get
-          id=>magix.crud-app.paging-start
-        if=>exist
-          lhs=>[magix.viewstate.get][value]
-          code
-            set=>[magix.todo-grid.re-render][start].value
-              value=>[magix.viewstate.get][value].value
-        if=>not-equals
-          lhs=>[magix.todo-grid.re-render][start].value
-          rhs=>0
-          code
-            using=>magix.math
-              subtract=>[magix.todo-grid.re-render][start]
-                =>[magix.todo-grid.re-render][start].value
-                =>10
-              add=>[magix.todo-grid.re-render][end]
-                =>[magix.todo-grid.re-render][start].value
-                =>10
-        else
-          magix.viewport.show-message
-            message=>you're already at the beginning
-            color=>#ffaaaa
-          stop
-        set=>[magix.viewstate.set][value].value
-          value=>[magix.todo-grid.re-render][start].value
-        magix.viewstate.set
-          id=>magix.crud-app.paging-start
-        magix.todo-grid.re-render
-          start=>0
-          end=>10
-    link-button=>next
-      class=>span-1 last
-      value=>&gt;&gt;
-      onclick
-        magix.viewstate.get
-          id=>magix.crud-app.paging-start
-        if=>not-exist
-          lhs=>[magix.viewstate.get][value]
-          code
-            set=>[magix.viewstate.get][value].value
-              value=>10
-        else
-          using=>magix.math
-            add=>[magix.viewstate.get][value]
-              =>[magix.viewstate.get][value].value
-              =>10
-        magix.data.count
-          prototype
-            type=>magix.samples.todo
-        if=>less-than
-          lhs=>[magix.viewstate.get][value].value
-          rhs=>[magix.data.count][count].value
-          code
-            set=>[magix.todo-grid.re-render][start].value
-              value=>[magix.viewstate.get][value].value
-            using=>magix.math
-              add=>[magix.todo-grid.re-render][end]
-                =>[magix.todo-grid.re-render][start].value
-                =>10
-        else
-          magix.viewport.show-message
-            message=>you're already at the end
-            color=>#ffaaaa
-          stop
-        set=>[magix.viewstate.set][value].value
-          value=>[magix.todo-grid.re-render][start].value
-        magix.viewstate.set
-          id=>magix.crud-app.paging-start
-        magix.todo-grid.re-render
-          start=>0
-          end=>10
 dynamic=>dynamic-todo-items
-  class=>span-20 last boxed-light-green air-padding bottom-1
+  class=>span-20 last boxed-light-green air-padding bottom-1 top-1
+  style=>position:relative;padding-top:54px;
   onfirstload
-    magix.viewstate.set
-      id=>magix.crud-app.paging-start
-    magix.todo-grid.re-render
+    magix.todo-grid.re-databind
   events
-    magix.todo-grid.re-render
-      magix.forms.get-children-values
-        id=>panel-edit-item
-      for-each=>[magix.forms.get-children-values][values]
-        _label
-          label
-            class=>span-10
-            tag=>label
-        set=>[@][_label][label][value].value
-          value=>[.].name
-        add=>[/][magix.forms.create-web-part][controls]
-          value=>[@][_label][label]
-      set=>[magix.forms.create-web-part][controls][>last][class].value
-        value=>span-10 last
+    magix.todo-grid.re-databind
+      magix.viewstate.get
+        id=>magix.crud-app.paging-start
       if=>exist
-        lhs=>[$][start].value
+        lhs=>[magix.viewstate.get][value]
+        code
+          set=>[magix.todo-grid.re-render][start].value
+            value=>[magix.viewstate.get][value][start].value
+          using=>magix.math
+            add=>[magix.todo-grid.re-render][end]
+              =>[magix.todo-grid.re-render][start].value
+              =>10
+      magix.todo-grid.re-render
+        start=>0
+        end=>10
+    magix.todo-grid.re-render
+      magix.viewstate.get
+        id=>magix.crud-app.criteria
+      if=>exist
+        lhs=>[magix.viewstate.get][value]
+        code
+          add=>[magix.data.load][prototype]
+            values=>[magix.viewstate.get][value]
+          _link-button
+            link-button
+              style=>position:absolute;top:0;right:0;
+              class=>span-2 top-1 bottom-1
+              value=>clear filter
+              onclick
+                magix.viewstate.set
+                  id=>magix.crud-app.paging-start
+                magix.viewstate.set
+                  id=>magix.crud-app.criteria
+                magix.todo-grid.re-databind
+          node-2-code
+            node=>[magix.viewstate.get][value]
+            remove-root=>true
+          set=>[@][_link-button][link-button][title].value
+            value=>[@][node-2-code][code].value
+          add=>[magix.forms.create-web-part][controls]
+            value=>[@][_link-button][link-button]
+      magix.viewstate.get
+        id=>magix.crud-app.paging-start
+      if=>exist
+        lhs=>[magix.viewstate.get:1][value]
         code
           set=>[magix.data.load][start].value
-            value=>[$][start].value
+            value=>[magix.viewstate.get:1][value][start].value
           set=>[magix.data.load][end].value
-            value=>[$][end].value
+            value=>[magix.viewstate.get:1][value][end].value
+      magix.forms.get-children-values
+        id=>panel-edit-item
+      if=>exist
+        lhs=>[magix.viewstate.get:0][value]
+        code
+          add=>[magix.data.count][prototype]
+            values=>[magix.viewstate.get:0][value]
+      magix.data.count
+        prototype
+          type=>magix.samples.todo
+      if=>less-than-equals
+        lhs=>[magix.data.count][count].value
+        rhs=>10
+        code
+          set=>[magix.forms.create-web-part][**panel=>paging-wrapper]
+      else
+        _start
+        _count
+        set=>[@][_count].value
+          value=>[magix.data.load][end].value
+        if=>more-than
+          lhs=>[@][_count].value
+          rhs=>[magix.data.count][count].value
+          code
+            set=>[@][..][..][_count].value
+              value=>[magix.data.count][count].value
+        using=>magix.math
+          add=>[@][..][_start]
+            =>[magix.data.load][start].value
+            =>1
+        set=>[magix.forms.create-web-part][**label=>label-count][value].value
+          value=>{0}/{1} of {2}
+            =>[@][_start].value
+            =>[@][_count].value
+            =>[magix.data.count][count].value
       magix.data.load
         start=>0
         end=>10
@@ -126,31 +100,152 @@ dynamic=>dynamic-todo-items
             class=>span-20 last line-item
         _item
         add=>[@][_item]
-          value=>[.]
-          children-only=>true
+          values=>[.]
         for-each=>[/][magix.forms.get-children-values][values]
           _label
             label
-              class=>span-10
+              class=>span-2
+              tag=>label
+            label
+              tag=>pre
+              class=>span-7 no-code
           if=>not-exist
             lhs=>[@][..][_item][value][[.].name].value
             code
-              set=>[@][..][..][_label][label][value].value
+              set=>[@][..][..][_label][label:1][value].value
                 value=>&nbsp;
           else
-            set=>[@][..][_label][label][value].value
+            set=>[@][..][_label][label:1][value].value
               value=>[@][..][..][_item][value][[.].name].value
+          set=>[@][_label][label:0][value].value
+            value=>[.].name
           add=>[@][..][_panel][panel][controls]
-            value=>[@][_label][label]
-        set=>[@][_panel][panel][controls][>last][class].value
-          value=>span-10 last no-code
-        set=>[@][_panel][panel][controls][>last][tag].value
-          value=>pre
+            values=>[@][_label]
+        _edit-ctrls
+          link-button
+            class=>span-1 clear right
+            value=>delete
+            onclick
+              using=>magix.data
+                remove
+                  id=>[$][info].value
+              magix.todo-grid.re-databind
+          link-button
+            class=>span-1 right
+            value=>edit
+            onclick
+              using=>magix.data
+                load
+                  id=>[$][info].value
+              set=>[using][load][value][type]
+              for-each=>[using][load][value]
+                using=>magix.forms
+                  set-value
+                    id=>[.].name
+                    value=>[.].value
+              using=>magix.forms
+                set-value
+                  id=>editing-todo-item
+                  value=>[$][info].value
+              magix.forms.effect
+                id=>save
+                type=>focus-and-select
+        set=>[@][_edit-ctrls][link-button:0][info].value
+          value=>[.][id].value
+        set=>[@][_edit-ctrls][link-button:1][info].value
+          value=>[.][id].value
+        add=>[@][_panel][panel][controls]
+          values=>[@][_edit-ctrls]
         add=>[/][magix.forms.create-web-part][controls]
           value=>[@][_panel][panel]
       magix.forms.create-web-part
         form-id=>dynamic-todo-items
         container=>dynamic-todo-items
+        controls
+          panel=>paging-wrapper
+            class=>span-5 left-9 top-1
+            style=>position:absolute;top:0;left:0;
+            controls
+              link-button=>previous
+                class=>span-1
+                value=>&lt;&lt;
+                onclick
+                  magix.viewstate.get
+                    id=>magix.crud-app.paging-start
+                  if=>exist
+                    lhs=>[magix.viewstate.get][value]
+                    code
+                      set=>[magix.viewstate.set][value][start].value
+                        value=>[magix.viewstate.get][value][start].value
+                  else
+                    set=>[magix.viewstate.set][value][start].value
+                      value=>0
+                  if=>not-equals
+                    lhs=>[magix.viewstate.set][value][start].value
+                    rhs=>0
+                    code
+                      using=>magix.math
+                        subtract=>[magix.viewstate.set][value][start]
+                          =>[magix.viewstate.set][value][start].value
+                          =>10
+                        add=>[magix.viewstate.set][value][end]
+                          =>[magix.viewstate.set][value][start].value
+                          =>10
+                  else
+                    magix.viewport.show-message
+                      message=>you're already at the beginning
+                      color=>#ffaaaa
+                    stop
+                  magix.viewstate.set
+                    id=>magix.crud-app.paging-start
+                  magix.todo-grid.re-databind
+              label=>label-count
+                class=>span-3 text-center
+              link-button=>next
+                class=>span-1 last
+                value=>&gt;&gt;
+                onclick
+                  magix.viewstate.get
+                    id=>magix.crud-app.paging-start
+                  magix.viewstate.get
+                    id=>magix.crud-app.criteria
+                  if=>exist
+                    lhs=>[magix.viewstate.get:1][value]
+                    code
+                      add=>[magix.data.count][prototype]
+                        values=>[magix.viewstate.get:1][value]
+                  if=>not-exist
+                    lhs=>[magix.viewstate.get][value]
+                    code
+                      set=>[magix.viewstate.get][value][start].value
+                        value=>10
+                  else
+                    using=>magix.math
+                      add=>[magix.viewstate.get][value][start]
+                        =>[magix.viewstate.get][value][start].value
+                        =>10
+                  magix.data.count
+                    prototype
+                      type=>magix.samples.todo
+                  if=>less-than
+                    lhs=>[magix.viewstate.get][value][start].value
+                    rhs=>[magix.data.count][count].value
+                    code
+                      using=>magix.math
+                        add=>[magix.viewstate.set][value][end]
+                          =>[magix.viewstate.get][value][start].value
+                          =>10
+                      set=>[magix.viewstate.set][value][start].value
+                        value=>[magix.viewstate.get][value][start].value
+                  else
+                    magix.viewport.show-message
+                      message=>you're already at the end
+                      color=>#ffaaaa
+                    stop
+                  magix.viewstate.set
+                    id=>magix.crud-app.paging-start
+                  magix.todo-grid.re-databind
+hidden=>editing-todo-item
 panel=>panel-edit-item
   class=>span-10 left-5 air-padding last boxed-light-green
   controls
@@ -158,26 +253,34 @@ panel=>panel-edit-item
       value=>header
       class=>span-10 last
       tag=>label
-    text-box=>header
+    text-box=>todo-header
       class=>span-10 last
       placeholder=>header ...
     label=>label-1
       value=>body
       class=>span-10 last top-1
       tag=>label
-    text-area=>body
+    text-area=>todo-body
       class=>span-10 last
       rows=>7
       placeholder=>body ...
     button=>save
       value=>save
-      class=>span-2 left-8 last top-1
+      class=>span-2 left-6 top-1
       onclick
         magix.forms.get-children-values
           id=>panel-edit-item
         add=>[magix.data.save][value]
-          value=>[magix.forms.get-children-values][values]
-          children-only=>true
+          values=>[magix.forms.get-children-values][values]
+        magix.forms.get-value
+          id=>editing-todo-item
+        if=>exist
+          lhs=>[magix.forms.get-value][value].value
+          code
+            set=>[magix.data.save][id].value
+              value=>[magix.forms.get-value][value].value
+            magix.forms.set-value
+              id=>editing-todo-item
         magix.data.save
           value
             type=>magix.samples.todo
@@ -185,27 +288,46 @@ panel=>panel-edit-item
           id=>panel-edit-item
         magix.viewport.show-message
           message=>item was saved
-        magix.viewstate.get
+        magix.todo-grid.re-databind
+    button=>search
+      value=>search
+      class=>span-2 last top-1
+      onclick
+        magix.forms.get-children-values
+          id=>panel-edit-item
+        _changes=>true
+        while=>equals
+          lhs=>[_changes].value
+          rhs=>true
+          code
+            set=>[_changes].value
+              value=>false
+            for-each=>[magix.forms.get-children-values][values]
+              if=>equals
+                lhs=>[.].value
+                rhs=>
+                code
+                  set=>[.]
+                  set=>[@][..][..][..][..][..][_changes].value
+                    value=>true
+        for-each=>[magix.forms.get-children-values][values]
+          set=>[.].value
+            value=>%{0}%
+              =>[.].value
+        if=>more-than
+          lhs=>[magix.forms.get-children-values][values].count
+          rhs=>0
+          code
+            add=>[magix.viewstate.set][value]
+              values=>[magix.forms.get-children-values][values]
+        else
+          magix.viewport.show-message
+            message=>to search, fill in what search criteria you wish to search by in your edit form, and then click search
+            time=>5000
+        magix.viewstate.set
+          id=>magix.crud-app.criteria
+        magix.viewstate.set
           id=>magix.crud-app.paging-start
-        if=>exist
-          lhs=>[magix.viewstate.get][value]
-          code
-            set=>[magix.todo-grid.re-render][start].value
-              value=>[magix.viewstate.get][value].value
-            using=>magix.math
-              add=>[magix.todo-grid.re-render][end]
-                =>[magix.todo-grid.re-render][start].value
-                =>10
-        magix.todo-grid.re-render
-          start=>0
-          end=>10
-        magix.data.count
-          prototype
-            type=>magix.samples.todo
-        if=>equals
-          lhs=>[magix.data.count][count].value
-          rhs=>11
-          code
-            magix.forms.set-visible
-              id=>paging-wrapper
-              value=>true
+        magix.todo-grid.re-databind
+        magix.forms.clear-children-values
+          id=>panel-edit-item

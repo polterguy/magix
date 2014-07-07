@@ -74,8 +74,7 @@ magix.multi-event.databind-items
                 id=>magix.multi-event.items
               set=>[magix.viewstate.get][value][[$][info].value]
               add=>[magix.viewstate.set][value]
-                value=>[magix.viewstate.get][value]
-                children-only=>true
+                values=>[magix.viewstate.get][value]
               magix.viewstate.set
                 id=>magix.multi-event.items
               magix.multi-event.databind-items
@@ -88,8 +87,7 @@ magix.multi-event.databind-items
     set=>[@][_item][panel][controls][link-button][info].value
       value=>[.].name
     add=>[/][_items][panel][controls]
-      value=>[@][_item]
-      children-only=>true
+      values=>[@][_item]
   using=>magix.forms
     create-web-part
       form-id=>raised-events
@@ -124,8 +122,7 @@ will raise a list of other active events once raised"
         _items
         execute=>[_items]
   add=>[_event][**_items]
-    value=>[magix.viewstate.get][value]
-    children-only=>true
+    values=>[magix.viewstate.get][value]
   iterate=>[_event]
     if=>equals
       lhs=>[.].value

@@ -56,8 +56,7 @@ if=>exist
     set=>[**button=>save][class].value
       value=>span-2
     add=>[**panel=>save-wrapper][controls]
-      value=>[$][extra-buttons]
-      children-only=>true
+      values=>[$][extra-buttons]
 
 // adding automatical scroll, if we're supposed to
 if=>equals
@@ -80,8 +79,7 @@ if=>exist
   lhs=>[$][onesc]
   code
     add=>[**panel=>main-wrapper][onesc]
-      value=>[$][onesc]
-      children-only=>true
+      values=>[$][onesc]
 
 // creating web part
 magix.forms.create-web-part

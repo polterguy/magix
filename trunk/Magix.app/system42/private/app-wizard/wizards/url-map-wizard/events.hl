@@ -107,8 +107,7 @@ its value is empty, is '{1}'"
             value=>[_items][].value
           _invoke
   add=>[_event][**_items]
-    value=>[magix.viewstate.get][value]
-    children-only=>true
+    values=>[magix.viewstate.get][value]
   magix.forms.get-value
     form-id=>wizard
     id=>default-active-event
@@ -181,8 +180,7 @@ magix.url-map.databind-items
                 id=>magix.url-map.items
               set=>[magix.viewstate.get][value][[$][info].value]
               add=>[magix.viewstate.set][value]
-                value=>[magix.viewstate.get][value]
-                children-only=>true
+                values=>[magix.viewstate.get][value]
               magix.viewstate.set
                 id=>magix.url-map.items
               magix.url-map.databind-items
@@ -197,8 +195,7 @@ magix.url-map.databind-items
     set=>[@][_item][panel][controls][link-button][info].value
       value=>[.].name
     add=>[/][_items][panel][controls]
-      value=>[@][_item]
-      children-only=>true
+      values=>[@][_item]
   using=>magix.forms
     create-web-part
       form-id=>url-items

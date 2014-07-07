@@ -36,8 +36,7 @@ check towards the database is performed"
         // removing password before putting user into session
         set=>[magix.data.load][objects][0][value][pwd]
         add=>[@][magix.session.set][value]
-          value=>[magix.data.load][objects][0][value]
-          children-only=>true
+          values=>[magix.data.load][objects][0][value]
         magix.session.set
           id=>magix.core.user
         set=>[$][success].value

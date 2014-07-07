@@ -51,8 +51,7 @@ class of the executor once loaded"
     set=>[node-2-code][node][event][name].value
       value=>[$][event].value
     add=>[node-2-code][node][event][code]
-      value=>[_event][0]
-      children-only=>true
+      values=>[_event][0]
     set=>[node-2-code][node][event][inspect].value
       value=>[_event][0][inspect].value
     add=>[node-2-code][node][event]

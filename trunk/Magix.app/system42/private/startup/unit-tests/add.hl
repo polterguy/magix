@@ -49,21 +49,20 @@ added all nodes as expected"
 
 
 event
-  name=>magix.test.add-children-only
+  name=>magix.test.add-values
   persist=>false
-  inspect=>@"verifies [add] works with [children-only]
+  inspect=>@"verifies [add] works with [values]
 
 tries to add a node to another, pointed to by an 
-expression, where the add node has [children-only] 
-being set to true, to make sure only the children 
+expression, where the add node has [values] 
+instead of [value], to make sure only the children 
 of the value node are being added"
   code
     _data1
       tmp=>testing
     _buffer
     add=>[_buffer]
-      value=>[_data1]
-      children-only=>true
+      values=>[_data1]
     if=>not-equals
       lhs=>[_buffer][tmp].value
       rhs=>testing

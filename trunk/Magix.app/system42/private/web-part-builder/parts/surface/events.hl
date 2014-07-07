@@ -19,8 +19,7 @@ magix.ide.surface-changed
         id=>magix.ide.current-surface-controls
   else
     add=>[@][magix.data.save-username][value]
-      value=>[magix.ide.get-form]
-      children-only=>true
+      values=>[magix.ide.get-form]
     magix.data.save-username
       id=>magix.ide.current-surface-controls
 

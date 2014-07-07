@@ -26,8 +26,7 @@ is not true, then control is in-visible"
 for the user, but might be useful 
 for the developer"
     add=>[$]
-      value=>[_data]
-      children-only=>true
+      values=>[_data]
 
 
 event
@@ -82,8 +81,7 @@ on his keyboard"
       OnEsc=>@"raised when user clicks the escape key on 
 his keyboard, and the control has focus"
     add=>[$]
-      value=>[_data]
-      children-only=>true
+      values=>[_data]
 
 
 event
@@ -106,8 +104,7 @@ and can not be interacted with"
       BlurEffect=>@"effect(s) to run when control is loosing focus"
       FocusedEffect=>@"effect(s) to run when control is gaining focus"
     add=>[$]
-      value=>[_data]
-      children-only=>true
+      values=>[_data]
 
 
 event
@@ -134,8 +131,7 @@ and can not be interacted with"
       BlurEffect=>@"effect(s) to run when control is loosing focus"
       FocusedEffect=>@"effect(s) to run when control is gaining focus"
     add=>[$]
-      value=>[_data]
-      children-only=>true
+      values=>[_data]
 
 
 event
@@ -165,8 +161,7 @@ the dynamic panel"
 be 'clicked' when user clicks the carriage return 
 key inside of the dynamic panel"
     add=>[$]
-      value=>[_data]
-      children-only=>true
+      values=>[_data]
 
 
 event
@@ -180,8 +175,7 @@ returns all the public properties and methods for mux hidden"
       Value=>@"actual value of hidden field, 
 you can put any text information here"
     add=>[$]
-      value=>[_data]
-      children-only=>true
+      values=>[_data]
 
 
 event
@@ -208,8 +202,7 @@ the checkbox"
       BlurEffect=>@"effect(s) to run when control is loosing focus"
       FocusedEffect=>@"effect(s) to run when control is gaining focus"
     add=>[$]
-      value=>[_data]
-      children-only=>true
+      values=>[_data]
 
 
 event
@@ -227,8 +220,7 @@ while image is being loaded"
 to use to access and change the value of 
 the checkbox"
     add=>[$]
-      value=>[_data]
-      children-only=>true
+      values=>[_data]
 
 
 event
@@ -248,8 +240,7 @@ the label to another control on your page, such as a checkbox or
 a radio button.&nbsp;&nbsp;if you do, then clicking the label 
 will toggle the checkbox or radiobutton"
     add=>[$]
-      value=>[_data]
-      children-only=>true
+      values=>[_data]
 
 
 event
@@ -272,8 +263,7 @@ and can not be interacted with"
       BlurEffect=>@"effect(s) to run when control is loosing focus"
       FocusedEffect=>@"effect(s) to run when control is gaining focus"
     add=>[$]
-      value=>[_data]
-      children-only=>true
+      values=>[_data]
 
 
 event
@@ -294,8 +284,7 @@ this property will be clicked.&nbsp;&nbsp;useful if you
 wish to have a default action upon every textbox, etc, within 
 the panel"
     add=>[$]
-      value=>[_data]
-      children-only=>true
+      values=>[_data]
 
 
 event
@@ -326,8 +315,7 @@ and can not be interacted with"
       BlurEffect=>@"effect(s) to run when control is loosing focus"
       FocusedEffect=>@"effect(s) to run when control is gaining focus"
     add=>[$]
-      value=>[_data]
-      children-only=>true
+      values=>[_data]
 
 
 event
@@ -363,8 +351,7 @@ and can not be interacted with"
       BlurEffect=>@"effect(s) to run when control is loosing focus"
       FocusedEffect=>@"effect(s) to run when control is gaining focus"
     add=>[$]
-      value=>[_data]
-      children-only=>true
+      values=>[_data]
 
 
 event
@@ -398,8 +385,7 @@ and can not be interacted with"
       BlurEffect=>@"effect(s) to run when control is loosing focus"
       FocusedEffect=>@"effect(s) to run when control is gaining focus"
     add=>[$]
-      value=>[_data]
-      children-only=>true
+      values=>[_data]
 
 
 event
@@ -446,8 +432,7 @@ and can not be interacted with"
       BlurEffect=>@"effect(s) to run when control is loosing focus"
       FocusedEffect=>@"effect(s) to run when control is gaining focus"
     add=>[$]
-      value=>[_data]
-      children-only=>true
+      values=>[_data]
 
 
 event
@@ -468,8 +453,7 @@ and can not be interacted with"
 of milliseconds between each time the server side OnTick 
 event is raised"
     add=>[$]
-      value=>[_data]
-      children-only=>true
+      values=>[_data]
 
 
 event
@@ -499,8 +483,7 @@ event"
 web control, which is being used on the notification area 
 for the files being transfered"
     add=>[$]
-      value=>[_data]
-      children-only=>true
+      values=>[_data]
 
 
 event
@@ -568,8 +551,7 @@ and can not be interacted with"
       BlurEffect=>@"effect(s) to run when control is loosing focus"
       FocusedEffect=>@"effect(s) to run when control is gaining focus"
     add=>[$]
-      value=>[_data]
-      children-only=>true
+      values=>[_data]
 
 
 event
@@ -590,14 +572,11 @@ mux web controls in your system"
         v1=>[$][control].value
     _evt
     add=>[_data]
-      value=>[magix.forms.dox._get-control-methods]
-      children-only=>true
+      values=>[magix.forms.dox._get-control-methods]
     add=>[_data]
-      value=>[magix.forms.dox._get-web-control-methods]
-      children-only=>true
+      values=>[magix.forms.dox._get-web-control-methods]
     add=>[_data]
-      value=>[3]
-      children-only=>true
+      values=>[3]
     set=>[magix.forms.create-web-part][container].value
       value=>[$][container].value
     set=>[magix.forms.create-web-part][class].value
@@ -641,11 +620,9 @@ can be any of the installed mux controls in your system"
         v1=>[$][control].value
     _evt
     add=>[_data]
-      value=>[magix.forms.dox._get-control-methods]
-      children-only=>true
+      values=>[magix.forms.dox._get-control-methods]
     add=>[_data]
-      value=>[2]
-      children-only=>true
+      values=>[2]
     set=>[magix.forms.create-web-part][container].value
       value=>[$][container].value
     set=>[magix.forms.create-web-part][class].value
