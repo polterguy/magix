@@ -1,0 +1,303 @@
+panel=>video-wrapper
+  class=>span-20 air-padding top-1 boxed-light-green
+  controls
+    video=>video-player
+      style=>background-color:#333333;
+      class=>span-9
+      onfirstload
+        magix.web.get-parameter
+          name=>view
+        if=>exist
+          lhs=>[magix.web.get-parameter][value]
+          code
+            using=>magix.forms
+              set-video
+                id=>video-player
+                video=>[magix.web.get-parameter][value].value
+            set=>[@][magix.data.load][prototype][url].value
+              value=>[magix.web.get-parameter][value].value
+            magix.data.load
+              prototype
+                type=>magix.video.video-description
+            if=>exist
+              lhs=>[@][magix.data.load][objects]
+              code
+                using=>magix.forms
+                  set-value
+                    id=>lbl-header
+                    value=>[@][..][..][..][magix.data.load][objects][0][value][header].value
+                  set-value
+                    id=>lbl-description
+                    value=>[@][..][..][..][magix.data.load][objects][0][value][description].value
+                using=>magix.viewport
+                  set-title
+                    title=>[@][..][..][..][magix.data.load][objects][0][value][header].value
+            else
+              using=>magix.forms
+                set-value
+                  id=>lbl-header
+                  value=>no title
+                set-value
+                  id=>lbl-description
+                  value=>no description
+              magix.viewport.set-title
+                title=>no title [video]
+        else
+          magix.forms.set-visible
+            id=>video-wrapper
+            value=>false
+    panel=>description-wrapper
+      class=>span-11 last
+      controls
+        label=>lbl-header
+          class=>column fill-width
+          tag=>h2
+          value=>header of video
+        label=>lbl-description
+          class=>column fill-width
+          tag=>p
+          value=>description of video
+        lambda=>edit-video
+          oncreatecontrols
+            magix.core.check-role
+              role=>poweruser
+            if=>equals
+              lhs=>[magix.core.check-role][result].value
+              rhs=>true
+              code
+                _lb
+                  link-button
+                    class=>span-2
+                    value=>edit
+                    onclick
+                      magix.forms.set-visible
+                        id=>description-wrapper
+                        value=>false
+                      magix.forms.set-visible
+                        id=>edit-wrapper
+                        value=>true
+                      magix.web.get-parameter
+                        name=>view
+                      set=>[magix.data.load][prototype][url].value
+                        value=>[magix.web.get-parameter][value].value
+                      magix.data.load
+                        prototype
+                          type=>magix.video.video-description
+                      using=>magix.forms
+                        set-value
+                          id=>edit-header
+                          value=>[magix.data.load][objects][0][value][header].value
+                        set-value
+                          id=>edit-description
+                          value=>[magix.data.load][objects][0][value][description].value
+                      magix.forms.effect
+                        id=>edit-header
+                        type=>focus-and-select
+                  link-button
+                    class=>span-2
+                    value=>delete
+                    onclick
+                      magix.viewport.confirm
+                        message=>are you sure you wish to delete this video?
+                        code
+                          magix.web.get-parameter
+                            name=>view
+                          set=>[@][magix.data.remove][prototype][url].value
+                            value=>[@][magix.web.get-parameter][value].value
+                          magix.data.remove
+                            prototype
+                              type=>magix.video.video-description
+                          using=>magix.file
+                            delete
+                              file=>[@][..][magix.web.get-parameter][value].value
+                          magix.web.postpone-execution
+                            code
+                              magix.viewport.show-message
+                                message=>your video was deleted, and website was refreshed
+                          magix.web.get-url
+                          replace=>[@][magix.web.get-url][url].value
+                            what=>?view={0}
+                              =>[@][magix.web.get-parameter][value].value
+                          replace=>[@][magix.web.get-url][url].value
+                            what=>&view={0}
+                              =>[@][magix.web.get-parameter][value].value
+                          using=>magix.viewport
+                            execute-javascript
+                              script=>window.location = '{0}';
+                                =>[@][..][magix.web.get-url][url].value
+                add=>[$]
+                  values=>[@][_lb]
+    panel=>edit-wrapper
+      class=>span-11 last
+      visible=>false
+      onesc
+        magix.forms.set-visible
+          id=>description-wrapper
+          value=>true
+        magix.forms.set-visible
+          id=>edit-wrapper
+          value=>false
+      controls
+        label=>label-0
+          tag=>label
+          value=>header
+          class=>column fill-width
+        text-box=>edit-header
+          class=>column fill-width
+          placeholder=>header of video ...
+        label=>label-1
+          tag=>label
+          value=>description
+          class=>column fill-width top-1
+        text-area=>edit-description
+          class=>column fill-width
+          rows=>6
+          placeholder=>description of video ...
+        button=>save-description
+          class=>span-2 last right
+          value=>save
+          onclick
+            using=>magix.forms
+              get-value
+                id=>edit-header
+              get-value
+                id=>edit-description
+            magix.web.get-parameter
+              name=>view
+            set=>[magix.data.remove][prototype][url].value
+              value=>[magix.web.get-parameter][value].value
+            set=>[magix.data.save][value][url].value
+              value=>[magix.web.get-parameter][value].value
+            set=>[magix.data.save][value][header].value
+              value=>[using][get-value:0][value].value
+            set=>[magix.data.save][value][description].value
+              value=>[using][get-value:1][value].value
+            magix.data.remove
+              prototype
+                type=>magix.video.video-description
+            magix.data.save
+              value
+                type=>magix.video.video-description
+            magix.forms.set-visible
+              id=>description-wrapper
+              value=>true
+            magix.forms.set-visible
+              id=>edit-wrapper
+              value=>false
+            using=>magix.forms
+              set-value
+                id=>lbl-header
+                value=>[using][get-value:0][value].value
+              set-value
+                id=>lbl-description
+                value=>[using][get-value:1][value].value
+panel=>video-list
+  class=>span-22 last top-1 min-height-20
+  onfirstload
+    magix.viewport.include-client-file
+      type=>css
+      file=>media/back-end/file-uploader.css
+  controls
+    lambda=>lambda-videos
+      oncreatecontrols
+        magix.file.list-files
+          directory=>media/videos
+          filter=>*.mp4;*.ogg;*.webm;
+        magix.web.get-parameter
+          name=>view
+        for-each=>[magix.file.list-files][files]
+          _lb
+            panel
+              class=>span-9 air-padding boxed-light-green min-height-8 bottom-1
+              controls
+                hyperlink
+                  class=>span-9 text-right
+                  value=>view
+                label
+                  tag=>h3
+                  class=>span-9 last
+                  value=>no title
+                label
+                  class=>span-9 last
+                  value=>no description
+          if=>not-equals
+            lhs=>[.].name
+            rhs=>[/][magix.web.get-parameter][value].value
+            code
+              split=>[.].name
+                what=>/
+              set=>[@][..][..][_lb][panel][controls][hyperlink][title].value
+                value=>[@][split][result][>last].value
+              set=>[@][magix.data.load][prototype][url].value
+                value=>[.].name
+              magix.data.load
+                prototype
+                  type=>magix.video.video-description
+              if=>exist
+                lhs=>[@][magix.data.load][objects]
+                code
+                  set=>[@][..][..][..][..][_lb][panel][controls][label:0][value].value
+                    value=>[@][..][..][magix.data.load][objects][0][value][header].value
+                  set=>[@][..][..][..][..][_lb][panel][controls][label:1][value].value
+                    value=>[@][..][..][magix.data.load][objects][0][value][description].value
+              magix.web.get-url
+              split=>[@][magix.web.get-url][url].value
+                what=>?
+              if=>not-equals
+                lhs=>[@][split:1][result].count
+                rhs=>2
+                code
+                  set=>[@][..][..][..][..][_lb][panel][controls][hyperlink][href].value
+                    value=>{0}?view={1}
+                      =>[@][..][..][magix.web.get-url][url].value
+                      =>[.].name
+              else
+                set=>[@][..][..][..][_lb][panel][controls][hyperlink][href].value
+                  value=>{0}&view={1}
+                    =>[@][..][magix.web.get-url][url].value
+                    =>[.].name
+                replace=>[@][..][..][..][_lb][panel][controls][hyperlink][href].value
+                  what=>view={0}
+                    =>[/][magix.web.get-parameter][value].value
+                replace=>[@][..][..][..][_lb][panel][controls][hyperlink][href].value
+                  what=>?&
+                  with=>?
+              add=>[$]
+                value=>[@][..][..][_lb][panel]
+              using=>magix.math
+                modulo
+                  =>[$].count
+                  =>2
+              if=>equals
+                lhs=>[@][using][modulo].value
+                rhs=>0
+                code
+                  set=>[$][>last][class].value
+                    value=>span-9 air-padding boxed-light-green min-height-8 bottom-1 last
+        magix.core.check-role
+          role=>poweruser
+        if=>equals
+          lhs=>[magix.core.check-role][result].value
+          rhs=>true
+          code
+            _up
+              uploader=>upload-videos
+                directory=>media/videos
+                class=>mux-file-uploader
+                onuploaded
+                  magix.forms.uploader-has-more-data
+                    id=>upload-videos
+                  if=>equals
+                    lhs=>[magix.forms.uploader-has-more-data][value].value
+                    rhs=>false
+                    code
+                      magix.web.postpone-execution
+                        code
+                          magix.viewport.show-message
+                            message=>your video(s) was uploaded, and website was refreshed
+                      using=>magix.viewport
+                        execute-javascript
+                          script=>window.location = '{0}';
+                            =>[:magix.web.get-url][value].value
+            add=>[$]
+              value=>[@][_up][uploader]

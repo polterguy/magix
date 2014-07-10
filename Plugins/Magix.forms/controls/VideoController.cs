@@ -46,6 +46,38 @@ namespace Magix.forms
             ip["_ctrl"].Value = ret;
 		}
 
+		/*
+		 * creates an attribute
+		 */
+        [ActiveEvent(Name = "magix.forms.set-video")]
+        private static void magix_forms_set_video(object sender, ActiveEventArgs e)
+        {
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
+            {
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.forms",
+                    "Magix.forms.hyperlisp.inspect.hl",
+                    "[magix.forms.set-video-dox].value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.forms",
+                    "Magix.forms.hyperlisp.inspect.hl",
+                    "[magix.forms.set-video-sample]");
+                return;
+            }
+
+            Node dp = Dp(e.Params);
+
+            if (!ip.ContainsValue("video"))
+                throw new ArgumentException("no [video] value given to [magix.forms.set-video]");
+            string video = Expressions.GetExpressionValue<string>(ip["video"].Get<string>(), dp, ip, false);
+
+            AttributeControl ctrl = FindControl<AttributeControl>(e.Params);
+            ctrl.SetAttribute("src", video);
+        }
+
 		protected override void Inspect(Node node)
 		{
             AppendInspectFromResource(

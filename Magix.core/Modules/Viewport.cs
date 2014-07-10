@@ -177,6 +177,37 @@ namespace Magix.Core
             dynamic.ClearControls();
         }
 
+        /*
+         * changes the title of the web page
+         */
+        [ActiveEvent(Name = "magix.viewport.set-title")]
+        protected void magix_viewport_set_title(object sender, ActiveEventArgs e)
+        {
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
+            {
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.Core",
+                    "Magix.Core.hyperlisp.inspect.hl",
+                    "[magix.viewport.set-title-dox].value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.Core",
+                    "Magix.Core.hyperlisp.inspect.hl",
+                    "[magix.viewport.set-title-sample]");
+                return;
+            }
+
+            Node dp = Dp(e.Params);
+
+            if (!ip.ContainsValue("title"))
+                throw new ArgumentException("no [title] given to [magix.viewport.set-title]");
+            string title = Expressions.GetExpressionValue<string>(ip["title"].Get<string>(), dp, ip, false);
+
+            Page.Title = title;
+        }
+
 		/*
 		 * clears the given container
          */
@@ -200,6 +231,7 @@ namespace Magix.Core
             }
 
             Node dp = Dp(e.Params);
+
             string container = Expressions.GetExpressionValue<string>(ip["container"].Get<string>(), dp, ip, false);
             bool resetClass = ip.ContainsValue("reset-class") ?
                 Expressions.GetExpressionValue<bool>(ip["reset-class"].Get<string>(), dp, ip, false) :

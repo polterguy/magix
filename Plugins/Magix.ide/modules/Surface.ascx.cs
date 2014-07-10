@@ -715,6 +715,17 @@ namespace Magix.ide.modules
             else if (ip.ContainsValue("clear-selection") && ip["clear-selection"].Get<bool>())
                 SelectedControlDna = null;
 
+            foreach (Node idx in getControlsNodeAfter["controls"])
+            {
+                string id = idx.Get<string>().Split(':')[1];
+                if (string.IsNullOrEmpty(id))
+                {
+                    // control has no id, creating one now ...
+                    Node ctrlNode = DataSource.FindDna(idx.Name);
+                    GetNextAvailableControlId(ctrlNode);
+                }
+            }
+
             BuildForm();
             wrp.ReRender();
 

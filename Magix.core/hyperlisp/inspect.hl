@@ -3,6 +3,19 @@
 inspect=>@"contains the documentation for magix.core"
 
 
+magix.viewport.set-title-dox=>@"changes the title of the web page
+
+sets the title of your web page to [title].  [title] can be either 
+an expression or a constant
+
+does not work in ajax callbacks, only in initial rendering of page, 
+or conventional postbacks"
+
+magix.viewport.set-title-sample
+  magix.viewport.set-title
+    title=>my cool app
+
+
 magix.viewport.clear-controls-dox=>@"clears viewport container
 
 clears out all controls and web-parts from the [container] viewport 

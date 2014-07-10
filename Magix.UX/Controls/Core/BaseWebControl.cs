@@ -400,7 +400,18 @@ namespace Magix.UX.Widgets.Core
             }
             else
             {
-                ; // TODO: implement
+                AttributeControl ctrl = this as AttributeControl;
+                if (ctrl == null)
+                    throw new ArgumentException("only AttributeControl can set attributes");
+                AttributeControl.Attribute atr = ctrl.Attributes.Find(
+                    delegate(AttributeControl.Attribute search)
+                    {
+                        return search.Name == key;
+                    });
+                if (atr != null)
+                    atr.Value = value;
+                else
+                    ctrl.Attributes.Add(new AttributeControl.Attribute(key, value));
             }
         }
     }
