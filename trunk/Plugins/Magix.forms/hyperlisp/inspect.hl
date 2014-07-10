@@ -1433,6 +1433,30 @@ magix.forms.select-all-sample
             form-id=>sample-form
 
 
+magix.forms.set-video-dox=>@"sets video on a video web control
+
+changes the current video on a video web control.  pass in [form-id] and 
+[id] to identify which video web control you wish to set the value of.  
+[form-id] is optional, and if not given, will change the video of the first 
+video web control on the page that matches the given [id]
+
+[video] is the url to what video to display.  [video] can be either an 
+expression or a constant, and a relative path or an absolute path"
+
+magix.forms.set-video-sample
+  magix.forms.create-web-part
+    container=>content5
+    form-id=>sample-form
+    class=>span-22 last
+    controls
+      video=>video-control
+        onfirstload
+          magix.forms.set-video
+            form-id=>sample-form
+            id=>video-control
+            video=>media/videos/unsustainable-growth.webm
+
+
 magix.forms.clear-children-values-dox=>@"clears all children's values
 
 will recursively traverse all children controls of a panel, or any other 
@@ -1560,3 +1584,4 @@ a control to match
 [id] is the id of the control you wish to retrieve
 
 the control will be returned as [_ctrl]"
+

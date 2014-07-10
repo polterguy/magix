@@ -446,6 +446,7 @@
     <Content Include="your-files\web-parts\samples\complex\file-sharing.hl" />
     <Content Include="your-files\web-parts\samples\simple\change-password.hl" />
     <Content Include="your-files\web-parts\samples\complex\crud-app.hl" />
+    <Content Include="your-files\web-parts\samples\complex\video-server.hl" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="your-files\shared\" />

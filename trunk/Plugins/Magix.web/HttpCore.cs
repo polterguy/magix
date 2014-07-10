@@ -47,7 +47,7 @@ namespace Magix.web
             string name = Expressions.GetExpressionValue<string>(ip["name"].Get<string>(), dp, ip, false);
 
             if (HttpContext.Current.Request.Params[name] != null)
-                ip["value"].Value = HttpContext.Current.Request.Params[name];
+                ip["value"].Value = HttpUtility.UrlDecode(HttpContext.Current.Request.Params[name]);
         }
 
         /*
@@ -72,7 +72,7 @@ namespace Magix.web
                 return;
             }
 
-            ip["url"].Value = HttpContext.Current.Request.Url.AbsoluteUri.ToString().ToLower().Replace("default.aspx", "");
+            ip["url"].Value = HttpUtility.UrlDecode(HttpContext.Current.Request.Url.AbsoluteUri.ToString().ToLower().Replace("default.aspx", ""));
         }
 
         /*
