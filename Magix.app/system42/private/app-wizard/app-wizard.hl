@@ -33,8 +33,9 @@ _dt
       label
         tag=>label
         value=>name
-        class=>column clear bottom-1
+        class=>clear bottom-1 span-5 last
       label
+        class=>span-5 last
         value=>description
 
 for-each=>[magix.file.list-files][files]

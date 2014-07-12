@@ -22,37 +22,37 @@
 		id="txtIn"
 		Rows="15"
 		PlaceHolder="input nodes ..."
-		Class="fill-width monospaced"
+		Class="fill-width monospaced hyperlisp-executor"
         OnTextChanged="txtIn_TextChanged" />
-	<mux:Panel
-		runat="server"
-		ID="exeWrp"
-		Default="run"
-		Class="btn-group fill-width last column">
-		<mux:TextBox
-			id="activeEvent"
-			runat="server"
-			PlaceHolder="active event ..."
-			Class="span-11 monospaced large" />
-		<mux:Button
-			runat="server"
-			id="run"
-			Value="execute"
-			AccessKey="X"
-			Class="span-3 large"
-			OnClick="run_Click" />
-		<mux:Button
-			runat="server"
-			id="move"
-			Value="move up"
-			AccessKey="U"
-			Class="span-3 last large"
-			OnClick="move_Click" />
-	</mux:Panel>
-	<mux:TextArea
-		runat="server"
-		id="txtOut"
-		Rows="15"
-		PlaceHolder="output nodes ..."
-        Class="fill-width" />
 </div>
+<mux:Panel
+	runat="server"
+	ID="exeWrp"
+	Default="run"
+	Class="btn-group fill-width last column">
+	<mux:TextBox
+		id="activeEvent"
+		runat="server"
+		PlaceHolder="active event ..."
+		Class="span-11 monospaced large" />
+	<mux:Button
+		runat="server"
+		id="run"
+		Value="execute"
+		AccessKey="X"
+		Class="span-3 large"
+		OnClick="run_Click" />
+	<mux:Button
+		runat="server"
+		id="move"
+		Value="move up"
+		AccessKey="U"
+		Class="span-3 last large"
+		OnClick="move_Click" />
+</mux:Panel>
+<mux:TextArea
+	runat="server"
+	id="txtOut"
+	Rows="15"
+	PlaceHolder="output nodes ..."
+    Class="fill-width monospaced hyperlisp-executor-result" />

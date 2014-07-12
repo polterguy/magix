@@ -89,8 +89,13 @@
     <Content Include="media\images\help-files\screenshots\hyper-lisp-spaces.png" />
     <Content Include="media\images\help-files\web-part-designer-screenshot.jpg" />
     <Content Include="media\images\icons\arrows.png" />
+    <Content Include="media\images\icons\big-arrow.png" />
+    <Content Include="media\images\icons\blackboard.png" />
     <Content Include="media\images\icons\book.png" />
+    <Content Include="media\images\icons\fusion.png" />
     <Content Include="media\images\icons\key.png" />
+    <Content Include="media\images\icons\lightning.png" />
+    <Content Include="media\images\icons\qr-code.png" />
     <Content Include="media\images\icons\star.png" />
     <Content Include="media\images\icons\start-button-blue.png" />
     <Content Include="media\images\icons\start-button.png" />
@@ -100,6 +105,7 @@
     <Content Include="media\bootstrap\js\jQuery.js" />
     <Content Include="media\images\icons\tree-indent.png" />
     <Content Include="media\images\icons\tree.png" />
+    <Content Include="media\images\icons\user-management.png" />
     <Content Include="media\images\icons\wizard-hat.png" />
     <Content Include="media\images\icons\wrench.png" />
     <Content Include="media\images\samples\2009 Sonoma Coast Pinot Noir.jpg" />
@@ -437,6 +443,9 @@
     <Content Include="system42\private\app-wizard\wizards\multi-event-wizard.hl" />
     <Content Include="system42\private\app-wizard\wizards\multi-event-wizard\controls.hl" />
     <Content Include="system42\private\app-wizard\wizards\multi-event-wizard\events.hl" />
+    <Content Include="system42\private\app-wizard\wizards\forked-multi-event-wizard.hl" />
+    <Content Include="system42\private\app-wizard\wizards\forked-multi-event-wizard\controls.hl" />
+    <Content Include="system42\private\app-wizard\wizards\forked-multi-event-wizard\events.hl" />
     <None Include="todo.txt" />
     <Content Include="your-files\readme.txt" />
     <Content Include="your-files\tmp\readme.txt" />

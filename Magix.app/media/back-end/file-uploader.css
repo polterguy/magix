@@ -62,3 +62,10 @@
 	color:Red;
 }
 
+.file-upload
+{
+    background-image:url(../images/icons/big-arrow.png);
+    background-repeat:no-repeat;
+    background-position:bottom right;
+}
+

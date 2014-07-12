@@ -57,3 +57,40 @@ to the next iteration, within the for-each execution scope"
       add=>[@][_tmp]
         value=>[.]
 
+
+event
+  name=>magix.test.for-each-modify-collection
+  persist=>false
+  inspect=>@"verifies [for-each] works
+
+loops through a list of nodes, deleting every node, making sure 
+all nodes are deleted, to verify modifying collecctions with for-each 
+is possible"
+  code
+    _data
+      d0=>howdy
+      d1=>howdy
+      d2=>howdy
+    for-each=>[_data]
+      set=>[.]
+    if=>not-equals
+      lhs=>[_data].count
+      rhs=>0
+      code
+        throw=>[for-each] misbehaved
+    _data2
+      d0=>howdy
+      d1=>howdy
+      d2=>howdy2
+    for-each=>[_data2]
+      if=>equals
+        lhs=>[.].value
+        rhs=>howdy
+        code
+          set=>[.]
+    if=>not-equals
+      lhs=>[_data2].count
+      rhs=>1
+      code
+        throw=>[for-each] misbehaved
+

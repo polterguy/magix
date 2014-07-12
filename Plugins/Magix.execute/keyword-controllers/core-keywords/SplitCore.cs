@@ -38,8 +38,8 @@ namespace Magix.execute
                 return;
 			}
 
-            if (!ip.Contains("what") && !ip.Contains("where"))
-                throw new ArgumentException("[split] needs a [what] or a [where] child to understand how to split the expression");
+            if (!ip.Contains("what") && !ip.Contains("where") && !ip.Contains("trim"))
+                throw new ArgumentException("[split] needs a [what], [trim] or a [where] child to understand how to split the expression");
 
             if (ip.Contains("what") && ip.Contains("where"))
                 throw new ArgumentException("only either [what] or [where] can be submitted to [split]");
@@ -49,8 +49,10 @@ namespace Magix.execute
             if (whatToSplit == null)
                 throw new ArgumentException("couldn't make '" + ip.Get<string>() + "' into a string in [split]");
 
-            if (ip.ContainsValue("trim") && ip["trim"].Get<bool>())
+            if (ip.ContainsValue("trim") && ip["trim"].Get<string>().ToLower() == "true")
                 whatToSplit = whatToSplit.Trim();
+            else if (ip.ContainsValue("trim"))
+                whatToSplit = whatToSplit.Trim(ip["trim"].Get<string>().ToCharArray());
 
             ip["result"].UnTie();
 
@@ -77,12 +79,12 @@ namespace Magix.execute
                     }
                 }
             }
-            else
+            else if (ip.Contains("where"))
             {
                 // where
                 if (ip["where"].Value != null && ip["where"].Count > 0)
                     throw new ArgumentException("either supply an integer as value of [where] or supply a list of integer values as children of [where], not both");
-                
+
                 List<int> ints = new List<int>();
                 if (ip["where"].Value != null)
                     ints.Add(
@@ -99,6 +101,10 @@ namespace Magix.execute
                     idxNo = idx;
                 }
                 ip["result"].Add(new Node("", whatToSplit.Substring(idxNo)));
+            }
+            else
+            {
+                ip["result"].Add(new Node("", whatToSplit)); // probably a trim operation
             }
 		}
 	}

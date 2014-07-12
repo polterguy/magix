@@ -25,7 +25,11 @@ namespace Magix.viewports
     {
         protected DynamicPanel content;
         protected Label messageSmall;
-		private bool _isFirst = true;
+        protected Panel confirmWrp;
+		protected Label confirmLbl;
+        protected Button ok;
+        protected Button cancel;
+        private bool _isFirst = true;
 
         protected override string GetDefaultContainer()
         {
@@ -90,6 +94,123 @@ namespace Magix.viewports
 							.Render();
 			}
 		}
+
+        /*
+         * contains code to execute upon confirmation
+         */
+        private Node ConfirmCode
+        {
+            get { return ViewState["Magix.Viewport.Gutenberg.ConfirmCode"] as Node; }
+            set { ViewState["Magix.Viewport.Gutenberg.ConfirmCode"] = value; }
+        }
+
+        /*
+         * asks the user for confirming action
+         */
+        [ActiveEvent(Name = "magix.viewport.confirm")]
+        protected void magix_viewport_confirm(object sender, ActiveEventArgs e)
+        {
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
+            {
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.viewports",
+                    "Magix.viewports.hyperlisp.inspect.hl",
+                    "[magix.viewports.confirm-dox].value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.viewports",
+                    "Magix.viewports.hyperlisp.inspect.hl",
+                    "[magix.viewports.confirm-sample]");
+                return;
+            }
+
+            Node dp = Dp(e.Params);
+
+            if (!ip.ContainsValue("message"))
+                throw new ArgumentException("no [message] given to [magix.viewport.confirm]");
+            string message = Expressions.GetExpressionValue<string>(ip["message"].Get<string>(), dp, ip, false);
+            if (ip["message"].Count > 0)
+                message = Expressions.FormatString(dp, ip, ip["message"], message);
+
+            confirmLbl.Value = message;
+
+            if (ip.Contains("code"))
+                ConfirmCode = ip["code"].Clone();
+            else
+                ConfirmCode = null;
+            confirmWrp.Visible = true;
+
+            if (!ip.Contains("closable-only") || ip["closable-only"].Get<bool>() == false)
+            {
+                ok.Visible = true;
+                cancel.Value = "cancel";
+            }
+            else
+            {
+                cancel.Value = "close";
+                Node tmp = new Node();
+
+                if (ConfirmCode != null)
+                {
+                    Node code = ip["code"].Clone();
+                    code.Name = "";
+                    tmp["node"].Value = code;
+
+                    RaiseActiveEvent(
+                        "magix.execute.node-2-code",
+                        tmp);
+
+                    confirmLbl.Value += "<pre style='text-align:left;margin-left:120px;overflow:auto;max-height:300px;'>" + tmp["code"].Get<string>().Replace("<", "&lt;").Replace(">", "&gt;") + "</pre>";
+                }
+                ok.Visible = false;
+            }
+
+            new EffectFadeIn(confirmWrp, 250)
+                .ChainThese(
+                    new EffectFocusAndSelect(ok))
+                .Render();
+        }
+
+        /*
+         * closes confirm message box
+         */
+        protected void CancelClick(object sender, EventArgs e)
+        {
+            ConfirmCode = null;
+            CloseMessageBox();
+        }
+
+        /*
+         * closes confirm message box
+         */
+        protected void confirmWrp_Esc(object sender, EventArgs e)
+        {
+            ConfirmCode = null;
+            CloseMessageBox();
+        }
+
+        /*
+         * closes confirm message box
+         */
+        private void CloseMessageBox()
+        {
+            confirmWrp.Visible = false;
+            confirmWrp.Style["display"] = "none";
+        }
+
+        /*
+         * closes confirm message box and executes hyperlisp given
+         */
+        protected void OKClick(object sender, EventArgs e)
+        {
+            CloseMessageBox();
+            RaiseActiveEvent(
+                "magix.execute",
+                ConfirmCode);
+            ConfirmCode = null;
+        }
 
         /*
          * returns all default content containers

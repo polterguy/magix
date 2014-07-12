@@ -8,7 +8,7 @@ an ms sql database table"
 magix.core.verify-role
   role=>admin
 
-_name=>select from ms sql active event
+_name=>create select from ms sql event
 
 // creates the wizard main web part
 magix.forms.create-web-part

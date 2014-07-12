@@ -48,7 +48,7 @@ namespace Magix.execute
                 object oldDp = e.Params["_dp"].Value;
                 try
 				{
-                    IterateNode(e.Params, rootExpressionNode);
+                    IterateNode(e.Params, rootExpressionNode, ip);
 				}
                 catch (Exception err)
                 {
@@ -68,25 +68,31 @@ namespace Magix.execute
 			}
 		}
 
-        private static void IterateNode(Node pars, Node currentlyIteratedNode)
+        private static void IterateNode(Node pars, Node currentlyIteratedNode, Node ip)
         {
-            Node ip = Ip(pars);
-            for (int idxNo = 0; idxNo < currentlyIteratedNode.Count; idxNo++)
+            if (currentlyIteratedNode.Count > 0)
             {
-                Node oldIp = ip.Clone();
+                Node curIdx = currentlyIteratedNode[0];
+                while (curIdx != null)
+                {
+                    Node oldIp = ip.Clone();
 
-                Node current = currentlyIteratedNode[idxNo];
-                pars["_dp"].Value = current;
+                    pars["_dp"].Value = curIdx;
 
-                RaiseActiveEvent(
-                    "magix.execute",
-                    pars);
+                    Node nextIdx = curIdx.Next();
 
-                ip.Clear();
-                ip.AddRange(oldIp);
+                    RaiseActiveEvent(
+                        "magix.execute",
+                        pars);
 
-                // child nodes
-                IterateNode(pars, current);
+                    ip.Clear();
+                    ip.AddRange(oldIp);
+
+                    // child nodes
+                    IterateNode(pars, curIdx, ip);
+
+                    curIdx = nextIdx;
+                }
             }
         }
 	}

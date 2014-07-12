@@ -8,7 +8,7 @@ export records from your database to a csv/excel file"
 magix.core.verify-role
   role=>admin
 
-_name=>create db-export active event
+_name=>create database export event
 
 magix.forms.create-web-part
   form-id=>wizard

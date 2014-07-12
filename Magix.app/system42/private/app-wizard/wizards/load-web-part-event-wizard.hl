@@ -8,7 +8,7 @@ a web part, either from the database or the filesystem"
 magix.core.verify-role
   role=>admin
 
-_name=>create web part active event
+_name=>create load web part event
 
 // setting default css files to include for web part
 magix.viewstate.set

@@ -22,7 +22,9 @@ added to the node list of the expression returned by [add].  in this case, one n
 to the node list in the [add] expression, with the name of the [value] node's value.   if you supply 
 a [value] node, who's value is not a node list, you can optionally also supply an additional [value] 
 node as a child of the first [value] node, who's expression or constant value will become the value 
-of the node added to the [add] node's collection
+of the node added to the [add] node's collection.  if you supply the second [value] node, you can 
+addditionally supply this node's value as a formatting expression, using {0} and {1} to de-reference 
+items being children of the second [value] node, to format strings
 
 thread safe"
 
@@ -42,8 +44,8 @@ magix.execute.node-2-code-dox=>@"transforms a node to text
 will transform the [node] node to code syntax, and return it in [code].  [node] can either have 
 its nodes as the value of the [node], as children nodes directly underneath the [node] node, or 
 as an expression returned from the node node's value.  the code returned will be the textual 
-representation of the original tree hierarchy with hyperlisp syntax.  two spaces ' ' opens up 
-a child collection.  => separates name and value of node, name first
+representation of the original tree hierarchy with hyperlisp syntax.  two spaces opens up a child 
+collection.  => separates name and value of node, etc
 
 code returned might also contain type information for types of int, decimal, datetime and bool.  
 if [remove-root] is true, then the root node will be removed, and not be a part of the code 
@@ -64,12 +66,10 @@ magix.execute.code-2-node-dox=>@"transforms hyperlisp text code to nodes
 
 will transform the [code] node to a node tree
 
-the code will be returned in [node] as a node structure, according to indentation.  two spaces 
-opens up child collection, => assings to value, and first parts are name of node.  [code-2-node] 
-also supports =(int)>, =(datetime)>, =(decimal)>> and =(bool)> to assign specific type to value.  
-notice that you can instead of supplying a [code] node, supply a [file] node, which means the 
-code will be loaded through the [magix.file.load] active event, instead of assumed to be found 
-inline into the active event itself.  both [code] and [file] can be either constants or expressions
+the code will be returned in [node] as a node structure.  the code will 
+be parsed as hyperlisp code, meaning two indentations opens up a new 
+children collection, =>assigns a value to the node with the name to the 
+left of the => operator, etc
 
 thread safe"
 
@@ -167,44 +167,6 @@ thread safety is dependent upon the active events raised internally
 within the active event"
 
 
-magix.execute.session-event-dox=>@"creates a new active event for the current session
-
-overrides the active event in [session-event] with the hyperlisp in the [code] expression 
-for the current session.  name of active event is found as [name] node
-
-these types of active events can take and return parameters.  if you wish to pass in or 
-retrieve parameters, then as you invoke the function, just append your parameters 
-underneath the function invocation, and they will be passed into the function, where they 
-will be accessible underneath the [$] node, appended as the last parts of your code block, 
-into your event invocation.  from outside of the active event itself, you can access these 
-parameters directly underneath the active event itself
-
-event will be deleted, if you pass in no [code] block.  note that a session event cannot 
-be marked as neither open nor persisted
-
-not thread safe"
-
-magix.execute.session-event-sample
-  session-event
-    name=>foo.bar
-    code
-      _data=>thomas
-      _backup=>thomas
-      if=>equals
-        lhs=>[_data].value
-        rhs=>[_backup].value
-        code
-          set=>[$][output].value
-            value=>return-value
-          set=>[/][magix.viewport.show-message][message].value
-            value=>[$][input].value
-      magix.viewport.show-message
-  foo.bar
-    input=>hello world 2.0
-  session-event
-    name=>foo.bar
-
-
 magix.execute.list-events-dox=>@"lists all active events in the system
 
 returns all active events within the system.  add [all], [open], [remoted], 
@@ -260,6 +222,9 @@ halt back to the previous catch, in the stack of active events.  [exception]
 in [catch] becomes the value of the [throw] node, or the exception message.  
 use throw together with [try] to handle errors
 
+to create handlers that handles all exceptions, you can create an active event 
+who's name is 'magix.execute.exception'
+
 thread safe"
 
 magix.execute.throw-sample
@@ -277,7 +242,7 @@ magix.execute.using-dox=>@"changes the default namespace
 changes the default namespace for the current scope.  this allows you to raise 
 active events which you normally would have to raise with a period in their 
 name, without the period, which allows active events which normally cannot 
-access the entire execution tree, to do just that
+access the entire execution tree, to access the entire code tree
 
 thread safe"
 
@@ -315,15 +280,29 @@ magix.execute.sandbox-sample
 magix.execute.execute-dox=>@"main hyperlisp execution entry point
 
 executes the incoming parameters as hyperlisp, meaning it will raise everything 
-containing a period, while everything not starting with a '_' will be assumed to 
-be a hyperlisp keyword, and appended behind 'magix.execute.', before that string 
-is raised as an active event
+containing a period ('.') as an active event, while everything not starting with 
+an underscore ('_'), and not containing a period (.), will be assumed to be a 
+hyperlisp keyword, and appended behind 'magix.execute.', before that active event
+is raised
 
 a hyperlisp keyword will have access to the entire data tree, while a normal active 
 event will only be able to modify the parts of the tree from underneath its own node
 
 active events are raised the way the appear sequentially beneath the magix.execute 
 node
+
+you can change the namespace appended before all hyperlisp keywords with the keyword 
+[using], and such modify the namespace appended in front of every hyperlisp keyword 
+to whatever you choose for yourself, and in such a way, create hyperlisp keywords 
+out of active events existing in any namespace you choose
+
+you can alternatively pass in an expression as the value of [execute] which will 
+execute that expression as hyperlisp.  if you do, then your expression must return 
+a node list
+
+if you fully declare your execute keyword, by appending the magix. namespace in 
+front of it, like [magix.execute], then the hyperlisp code beneath [magix.execute] 
+will be executed such that it does not have acccess to the code outside of itself
 
 thread safe"
 
@@ -387,34 +366,38 @@ branching logic and control of flow within your program.  if an [if]
 statement returns true, then no paired [else-if] or [else] statements 
 will be executed
 
-[lhs] means 'left-hand-side', and if you think of the operator, the 
-lhs node is to the left of the operator.  [rhs] means 'right-hand-side', 
-and is conceptually to the right of the operator.  this means that if you 
-have an lhs value of 'x' and an rhs value of 'y' and your operator is 
-'equals', then the full comparison statement becomes 'if x equals y'
-
 the operator used to compare the [lhs] and the [rhs] nodes must be 
 defined using the value of the [if] node.  legal values for the 
-operator type is 'exist', 'not-exist', 'equals', 'not-equals', 
+operator is 'exist', 'not-exist', 'equals', 'not-equals', 
 'less-than', 'more-than', 'less-than-equals' and 'more-than-equals'
 
-depending upon the comparison operator you use, the rhs node is not 
-necessary.  for instance, exist does not need a right-hand-side, or 
-an rhs node, simply since it only checks for the existence of one 
+[lhs] means 'left-hand-side'.  the lhs node is to the left of the 
+operator.  [rhs] means 'right-hand-side', and is conceptually to the 
+right of the operator.  this means that if you have an lhs value of 
+'x' and an rhs value of 'y' and your operator is 'equals', then the 
+full comparison statement becomes 'if x equals y'.  if you have an 
+operator of 'more-than', and an [lhs] of 5 and an [rhs] of 4, then 
+the full statement becomes 'if 5 is more-than 4', which of course 
+will evaluate to true.  both [lhs] and [rhs] can be either constants 
+or expressions
+
+depending upon the comparison operator you use, the rhs node might 
+not be necessary.  for instance, 'exist' does not need a right-hand-side, 
+or an rhs node, simply since it only checks for the existence of one 
 specific node, value or name
 
 you can optionally also supply as many [or] and/or [and] nodes beneath 
 your [if] node.  if you do, then these are additional statements that 
 needs to return true to make the if statement become true as a whole.  
-if you supply an or and/or an and statement beneath your if, then you 
-add up a comparison operator as the value of your and and if statement, 
-and another pair of lhs and rhs nodes beneath your and and or statements
+if you supply an or and/or an and statement beneath your if or else-if, 
+then you must add up a comparison operator as the value of your [and] 
+and [or] statement, and another pair of [lhs] and [rhs] nodes beneath 
+your and and or statements
 
 the engine will convert automatically between int, decimal, date and 
-bool, or resort to string if no conversion is possible.  the [lhs] and 
-[rhs] nodes can be either an expression, or a hardcoded value.  you can 
-compare two node trees in [lhs] and [rhs], which means that the node trees will be compared 
-deeply, comparing their name, value and children for equality
+bool, or resort to string if no conversion is possible.  you can compare 
+two node trees in [lhs] and [rhs], which means that the node trees will 
+be compared deeply, comparing their name, value and children for equality
 
 thread safe"
 
@@ -435,8 +418,8 @@ magix.execute.if-sample
 magix.execute.else-if-dox=>@"checks statement and executes code if true
 
 executes the [code] block of nodes as an execution block, but only if 
-the [else-if] statement returns true, and any previous [if] or [else-if] 
-have returned false
+the [else-if] statement returns true, and no previous [if] or [else-if] 
+have been executed
 
 pair your [else-if] statements together with [if] and [else] to create 
 branching logic and control of flow within your program.  if an [if]
@@ -444,34 +427,38 @@ statement returns true, then no paired [else-if] or [else] statements
 will be executed.  the else-if statement can only follow directly after 
 an [if] statement, or another [else-if] statement
 
-[lhs] means 'left-hand-side', and if you think of the operator, the 
-lhs node is to the left of the operator.  [rhs] means 'right-hand-side', 
-and is conceptually to the right of the operator.  this means that if you 
-have an lhs value of 'x' and an rhs value of 'y' and your operator is 
-'equals', then the full comparison statement becomes 'if x equals y'
-
 the operator used to compare the [lhs] and the [rhs] nodes must be 
-defined using the value of the [if] node.  legal values for the 
-operator type is 'exist', 'not-exist', 'equals', 'not-equals', 
+defined using the value of the [else-if] node.  legal values for the 
+operator is 'exist', 'not-exist', 'equals', 'not-equals', 
 'less-than', 'more-than', 'less-than-equals' and 'more-than-equals'
 
-depending upon the comparison operator you use, the rhs node is not 
-necessary.  for instance, exist does not need a right-hand-side, or 
-an rhs node, simply since it only checks for the existence of one 
+[lhs] means 'left-hand-side'.  the lhs node is to the left of the 
+operator.  [rhs] means 'right-hand-side', and is conceptually to the 
+right of the operator.  this means that if you have an lhs value of 
+'x' and an rhs value of 'y' and your operator is 'equals', then the 
+full comparison statement becomes 'if x equals y'.  if you have an 
+operator of 'more-than', and an [lhs] of 5 and an [rhs] of 4, then 
+the full statement becomes 'if 5 is more-than 4', which of course 
+will evaluate to true.  both [lhs] and [rhs] can be either constants 
+or expressions
+
+depending upon the comparison operator you use, the rhs node might 
+not be necessary.  for instance, 'exist' does not need a right-hand-side, 
+or an rhs node, simply since it only checks for the existence of one 
 specific node, value or name
 
 you can optionally also supply as many [or] and/or [and] nodes beneath 
-your [if] node.  if you do, then these are additional statements that 
+your [else-if] node.  if you do, then these are additional statements that 
 needs to return true to make the if statement become true as a whole.  
-if you supply an or and/or an and statement beneath your if, then you 
-add up a comparison operator as the value of your and and if statement, 
-and another pair of lhs and rhs nodes beneath your and and or statements
+if you supply an or and/or an and statement beneath your if or else-if, 
+then you must add up a comparison operator as the value of your [and] 
+and [or] statement, and another pair of [lhs] and [rhs] nodes beneath 
+your and and or statements
 
 the engine will convert automatically between int, decimal, date and 
-bool, or resort to string if no conversion is possible.  the [lhs] and 
-[rhs] nodes can be either an expression, or a hardcoded value.  you can 
-compare two node trees in [lhs] and [rhs], which means that the node trees will be compared 
-deeply, comparing their name, value and children for equality
+bool, or resort to string if no conversion is possible.  you can compare 
+two node trees in [lhs] and [rhs], which means that the node trees will 
+be compared deeply, comparing their name, value and children for equality
 
 thread safe"
 
@@ -493,7 +480,8 @@ magix.execute.else-if-sample
 magix.execute.else-dox=>@"default execution of if and else-if
 
 executes the underlaying code block, but only if no paired [if] 
-or [else-if] statement has returned true
+or [else-if] statement has been executed.  pair up your [else] 
+with [if] and [else-if] to create branching in your code
 
 thread safe"
 
@@ -571,8 +559,8 @@ magix.execute.iterate-sample
 
 magix.execute.lambda-dox=>@"executes a piece of code
 
-executes the expression in the [lambda] node creating a deep copy 
-of the expression's nodes
+executes the expression in the [lambda] node as hyperlisp, creating 
+a deep copy of the expression's nodes before execution
 
 [lambda] can be given parameters, which will be accessible in the 
 lambda code through the [$] collection.  anything you return as [$] 
@@ -600,9 +588,7 @@ existing override is removed
 
 if you supply a [persist] parameter, and sets its value to false, then 
 the override will not be persisted, and will only last until the 
-application pool is restarted.  this is useful sometimes, since it will 
-execute much faster, especially for overides you will anyway re-run 
-when application pool is restarted
+application pool is restarted
 
 thread safe"
 
@@ -621,7 +607,8 @@ which are remotely overridden are being correctly re-mapped"
 magix.execute.tunnel-dox=>@"overrides an active event to be invoked on another server
 
 creates an external override towards the given [url] for the event found in [name].  
-if you pass in a null value as a [url], or no [url] node, the tunneling is removed
+if you pass in a null value as a [url], or no [url] node, any existing tunnel for 
+the named active event will be removed
 
 make sure the other side has marked the active event as remotable.  once a method is 
 'tunneled', it will no longer be raised locally, but every time the active event is 
@@ -629,8 +616,7 @@ raised internally within your server, it will be polymorphistically raised, on y
 [url] end-point server instead
 
 if a [persist] parameter exists, and it has a value of false, then the tunnel will not 
-be serialized into the data layer, which is useful for active events which anyway will 
-be re-mapped when the application pool is restarted
+be serialized into the data layer
 
 both [name] and [url] can be either expressions or constants
 
@@ -651,11 +637,9 @@ you can create a server-api for web-services, by opening active events for
 being remotely invoked, and such connect servers together, either internally 
 as a part of your server park, or by exposing functionality to other networks
 
-if you set [persist] to false, then the active event will not be serialized into 
-the data storage, meaning it will only last as long as the application is not 
-restarted.  this is useful for active events whom are created for instance during 
-the startup of your application, since it will save time, since they will anyway 
-be overwritten the next time your application restarts
+if you set [persist] to false, then the opening of the active event will not 
+be serialized into the data storage, meaning it will only last as long as the 
+application is not restarted
 
 [name] can be either an expression or a constant
 
@@ -671,12 +655,9 @@ magix.execute.close-dox=>@"closes an existing open active event
 closes the active event found in [name], such that it no longer 
 can be remotely invoked from other servers
 
-if you set [persist] to false, then the active event will not be 
-serialized into the data storage, meaning it will only last as long 
-as the application is not restarted.  this is useful for active 
-events whom are created for instance during the startup of your 
-application, since it will save time, since they will anyway be 
-overwritten the next time your application restarts
+if you set [persist] to false, then the closing of the active event 
+will not be serialized into the data storage, meaning the closing 
+will only last as long as the application is not restarted
 
 [name] can be either an expression or a constant
 
@@ -772,11 +753,8 @@ nullified.  meaning, if it's a node-list it will be emptied
 and the node removed.  if it's a value, the value will become 
 null.  if it's a name, the name will be set to the empty string
 
-the [value]'s value can be either a constant or an expression
-
-the value of [set] must be an expression, unless it's a null 
-value, at which point the result of the set will be put into 
-the value of the [set] itself
+the [value]'s value can be either a constant or an expression.  
+the value of [set] must be an expression
 
 you can set a value of a node to either a name, value of 
 another node or a node-list.  you can set a node-list to 
@@ -809,7 +787,12 @@ magix.execute.split-dox=>@"splits a string
 splits the given expression or constant in the value of [split] according to the [what] 
 content or [where] child nodes, and puts the result into the [result] return node as 
 children nodes.  if you add a [trim] parameter, and set its value to true, then the 
-string will be trimmed before it is split
+string will be trimmed before it is split.  if you add no [where] or [what] node, but 
+add a [trim] node being true, the string will be trimmed for all spacing characters, and 
+returned unchanged besides from being trimmed
+
+if you supply a [trim] node, and its value is anything but 'true', the characters in 
+your trim node will be removed from the beginning and the end of your string
 
 if [what] is given, but has null or empty value, then string will be split for every single 
 character in it.  if [where] is used, then either value of [where] is expected to be one 
@@ -858,8 +841,8 @@ magix.execute.switch-dox=>@"executes logic according to value of string
 within the [case] node who's value equals the content of the [switch] node
 
 the [switch] node's value can be either a constant or an expression.  if no match is found, 
-then [default] will be executed, if it exist.  notice how both the [switch] node itself, 
-and [case] nodes can be expressions
+then [default] will be executed, if a [default] exist.  notice how both the [switch] node 
+itself, and [case] nodes can be both expressions or constants
 
 thread safe"
 
@@ -893,7 +876,7 @@ the forked thread will not be able to change any data on the original node set. 
 [fork] is true, the new thread will be executed as a fire-and-forget thread, bypassing any [wait] 
 statements you might have
 
-not thread safe"
+thread safe"
 
 magix.execute.fork-sample
   fork
@@ -915,6 +898,13 @@ all [fork] blocks created underneath [wait], will have to be finished, before th
 leave the [wait] block.  you can optionally set a maximum number of milliseconds, before the wait 
 is dismissed as an integer value of [wait]
 
+when you create your threads with the [fork] statement inside a [wait], then when the wait is 
+finished executing, the resulting code tree from all your [fork] statements will be copied 
+into the original code tree.  this means that you can have fork statements modify the original 
+code tree, returning their result back to the original code tree's main thread
+
+you can only add [fork] statements beneath a [wait] statement
+
 thread safe"
 
 magix.execute.wait-sample
@@ -934,7 +924,7 @@ the [while] is taking arguments similarly as both the [if] and [else-if].  see a
 these active events to understand how to create a comparison statement(s) to check for 
 in the while loop
 
-while executes immutable, meaning it will not modify its child 
+while executes immutable, meaning it will not modify its children 
 nodes after it is done executing, and every iteration of the loop 
 will execute on a 'virgin' version of its code.  this means that 
 the code it executes will be reset back to what it originally was 
@@ -960,7 +950,8 @@ magix.execute.while-sample
 
 magix.execute.with-dox=>@"temporary changes the data pointer
 
-temporary changes the data pointer to the expression in its value
+temporary changes the data pointer to the expression in its value.  
+[with] must have an expression returning a node list
 
 this is useful if you're handling several keywords in a row, where 
 the expressions within them are all pointing deep into the execution 

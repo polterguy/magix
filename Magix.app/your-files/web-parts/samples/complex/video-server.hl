@@ -192,7 +192,7 @@ panel=>video-wrapper
                 id=>lbl-description
                 value=>[using][get-value:1][value].value
 panel=>video-list
-  class=>span-22 last top-1 min-height-20
+  class=>span-22 last top-1 min-height-20 file-upload
   onfirstload
     magix.viewport.include-client-file
       type=>css

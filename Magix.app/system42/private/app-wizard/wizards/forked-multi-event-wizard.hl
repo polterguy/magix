@@ -1,20 +1,20 @@
 ﻿
 
 inspect=>@"allows you to create an active event that raises 
-several other active events"
+several other active events on different threads"
 
 
 // verifies user is in admin role
 magix.core.verify-role
   role=>admin
 
-_name=>create multi event
+_name=>create forked multi event
 
 // creates the wizard main web part
 magix.forms.create-web-part
   form-id=>wizard
   container=>content1
   class=>span-17 last
-  events-file=>system42/private/app-wizard/wizards/multi-event-wizard/events.hl
-  controls-file=>system42/private/app-wizard/wizards/multi-event-wizard/controls.hl
+  events-file=>system42/private/app-wizard/wizards/forked-multi-event-wizard/events.hl
+  controls-file=>system42/private/app-wizard/wizards/forked-multi-event-wizard/controls.hl
 

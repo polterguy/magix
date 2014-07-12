@@ -109,3 +109,24 @@ correct name, and a null value"
       code
         throw=>[add] misbehaved
 
+
+event
+  name=>magix.test.add-formatting-expression
+  persist=>false
+  inspect=>@"verifies [add] works with formatting expressions
+
+tries to add a single node, where the value is given as a constant, 
+and it having a value node again, which again is a formatting 
+expression"
+  code
+    _buffer
+    add=>[_buffer]
+      value=>tmp
+        value=>howdy {0}
+          =>world
+    if=>not-equals
+      lhs=>[_buffer][tmp].value
+      rhs=>howdy world
+      code
+        throw=>[add] misbehaved
+

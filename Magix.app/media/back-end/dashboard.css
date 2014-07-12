@@ -33,3 +33,32 @@
     background-repeat:no-repeat;
     background-position:top right;
 }
+
+.qr-codes
+{
+    background-image:url(../images/icons/qr-code.png), linear-gradient(rgba(240, 240, 255, 1) 0%, rgba(190, 190, 210, 1) 100%);
+    background-repeat:no-repeat;
+    background-position:top right;
+}
+
+.fusion
+{
+    background-image:url(../images/icons/fusion.png), linear-gradient(rgba(240, 240, 255, 1) 0%, rgba(190, 190, 210, 1) 100%);
+    background-repeat:no-repeat;
+    background-position:top right;
+}
+
+.users
+{
+    background-image:url(../images/icons/user-management.png), linear-gradient(rgba(240, 240, 255, 1) 0%, rgba(190, 190, 210, 1) 100%);
+    background-repeat:no-repeat;
+    background-position:top right;
+}
+
+.roles
+{
+    background-image:url(../images/icons/user-management.png), linear-gradient(rgba(240, 240, 255, 1) 0%, rgba(190, 190, 210, 1) 100%);
+    background-repeat:no-repeat;
+    background-position:top right;
+}
+

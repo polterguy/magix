@@ -54,7 +54,11 @@ namespace Magix.execute
 
                     object nodeValue = null;
                     if (ip["value"].Contains("value"))
+                    {
                         nodeValue = Expressions.GetExpressionValue<object>(ip["value"]["value"].Get<string>(), dp, ip, false);
+                        if (ip["value"]["value"].Count > 0)
+                            nodeValue = Expressions.FormatString(dp, ip, ip["value"]["value"], nodeValue.ToString());
+                    }
                     destinationNode.Add(new Node(nodeName, nodeValue));
                 }
             }

@@ -1,0 +1,107 @@
+﻿
+
+inspect=>@"contains the controls for the forked multi event wizard
+
+contains the controls for the web part that allows the user to create an 
+active event that raises multiple other active events on different threads"
+
+
+panel=>main-wrapper
+  class=>span-15 last air-padding boxed top-1 wizard-content desktop-widget
+  default=>add-value
+  controls
+    label
+      class=>span-13
+      tag=>h2
+      value=>create forked multi event wizard
+    link-button
+      class=>span-2 last text-right
+      value=>back
+      onclick
+        execute-script
+          file=>system42/private/app-wizard/app-wizard.hl
+    label
+      class=>span-15 last bottom-1
+      value=>@"from here you can create an active event that raises multiple other active events on different threads when raised.&nbsp;&nbsp;
+note that you can only invoke active events which are thread safe this way, and not in any ways manipulate the gui.&nbsp;&nbsp;this 
+wizard is useful for creating an active event that retrieves data from multiple other servers in parallel"
+    label
+      class=>span-2 bottom-1
+      tag=>label
+      value=>event name
+    text-box=>active-event-name
+      class=>span-8 bottom-1
+      title=>this is the name of the active event you wish to create
+      placeholder=>active event name ...
+      onfirstload
+        magix.forms.effect
+          type=>focus-and-select
+          form-id=>wizard
+          id=>active-event-name
+    dynamic=>raised-events
+    label
+      class=>span-2 bottom-1 clear
+      tag=>label
+      value=>active event
+    lambda=>lambda-active-event
+      oncreatecontrols
+        // includes necessary javascript files for our autocompleter
+        magix.viewport.include-client-file
+          type=>javascript
+          file=>media/bootstrap/js/jQuery.js
+        magix.viewport.include-client-file
+          type=>javascript
+          file=>media/bootstrap/js/bootstrap.min.js
+        magix.viewport.include-client-file
+          type=>css
+          file=>media/back-end/typeahead.css
+        _json=>
+        list-events
+        for-each=>[list-events][events]
+          if=>not-equals
+            lhs=>[/][_json].value
+            rhs=>
+            code
+              set=>[/][_json].value
+                value=>{0},
+                  =>[/][_json].value
+          set=>[/][_json].value
+            value=>@"{0}""{1}"""
+              =>[/][_json].value
+              =>[.].name
+        _text
+          text-box=>active-event
+            placeholder=>active event ...
+            title=>this is the active event you wish to associate with the value of the get parameter
+            class=>span-8 last bottom-1
+            autocomplete=>false
+            @data-provide=>typeahead
+            @data-items=>5
+            @data-source=>{data-source}
+        set=>[**@data-source=>{data-source}].value
+          value=>\[{0}]
+            =>[_json].value
+        add=>[$]
+          value=>[_text][text-box]
+    button=>create
+      class=>span-2 last clear right top-1
+      value=>create
+      onclick
+        magix.multi-event.create_onclick
+    button=>add-value
+      class=>span-2 right top-1
+      value=>add
+      onfirstload
+        magix.viewstate.set
+          id=>magix.multi-event.items
+      onclick
+        magix.multi-event.add-value_onclick
+    link-button=>edit-event
+      class=>span-3 right clear text-right last
+      value=>edit active event
+      visible=>false
+      onclick
+        set=>[magix.event.edit-event][event].value
+          value=>[$][info].value
+        magix.event.edit-event
+

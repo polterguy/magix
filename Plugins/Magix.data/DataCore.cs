@@ -235,10 +235,10 @@ namespace Magix.data
             if (ip.Contains("id"))
             {
                 string id = Expressions.GetExpressionValue<string>(ip["id"].Get<string>(), dp, ip, false);
-                Database.RemoveById(id, transaction);
+                ip["affected-records"].Value = Database.RemoveById(id, transaction);
             }
             else
-                Database.RemoveByPrototype(prototype, transaction);
+                ip["affected-records"].Value = Database.RemoveByPrototype(prototype, transaction);
         }
 
 		/*

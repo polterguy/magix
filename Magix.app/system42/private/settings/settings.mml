@@ -1,10 +1,8 @@
 
 
-<div class="span-15 last boxed top-1 air-padding">
-  <h2 class="span-15 bottom-1 last">settings</h2>
 {{
 panel
-  class=>span-13 last boxed-light-green air-padding
+  class=>span-13 last desktop-widget air-padding tools-desktop-widget
   controls
     label
       class=>span-13 last bottom-1
@@ -102,7 +100,7 @@ panel
           magix.viewport.clear-controls
             container=>help
 panel
-  class=>span-13 last boxed-light-green air-padding top-1
+  class=>span-13 last desktop-widget air-padding top-1 tools-desktop-widget
   controls
     label
       class=>span-13 last bottom-1
@@ -234,8 +232,97 @@ change the logic of the front end parts of your system"
         add=>[$]
           value=>[_text][text-box]
 
+panel=>server-discovery-settings
+  class=>span-13 last desktop-widget air-padding tools-desktop-widget top-1
+  onfirstload
+    magix.data.load
+      id=>magix.public.server-discovery
+    using=>magix.forms
+      set-value
+        id=>server-name
+        value=>[magix.data.load][value][name].value
+      set-value
+        id=>server-description
+        value=>[magix.data.load][value][description].value
+      set-value
+        id=>server-image
+        value=>[magix.data.load][value][image].value
+  controls
+    label
+      class=>span-13 last bottom-1
+      tag=>h3
+      value=>server discovery settings
+    label
+      class=>span-13 last bottom-1
+      value=>@"these are your server discovery settings, which allows you to describe your server to other servers.&nbsp;&nbsp;
+note that these settings are publicly visible to other servers through the server discovery functionality of magix"
+    label
+      class=>span-3
+      tag=>label
+      value=>server name
+    text-box=>server-name
+      class=>span-10 last
+      placeholder=>server name ...
+    label
+      class=>span-3 clear top-1
+      tag=>label
+      value=>server description
+    text-area=>server-description
+      class=>span-10 top-1 last
+      rows=>5
+      placeholder=>server description ...
+    label
+      class=>span-3 clear top-1
+      tag=>label
+      value=>avatar image
+    img=>server-image
+      class=>span-4 top-1
+      alt=>server avatar image
+      style=>cursor:pointer;
+      title=>click to change server avatar image
+      onclick
+        execute-script
+          file=>system42/private/file-manager/file-manager.hl
+          params
+            filter=>*.png;*.jpg;*.jpeg;
+            container=>browse-for-image
+            deny-create-directory=>true
+            onselect
+              magix.viewport.clear-controls
+                container=>browse-for-image
+                reset-class=>true
+              using=>magix.forms
+                set-value
+                  id=>server-image
+                  value=>{0}{1}
+                    =>[:magix.configuration.get-base-directory][value].value
+                    =>[$][file].value
+            oncancel
+              magix.viewport.clear-controls
+                container=>browse-for-image
+                reset-class=>true
+    button=>save
+      class=>span-2 last right top-1 clear
+      value=>save
+      onclick
+        magix.forms.get-children-values
+          id=>server-discovery-settings
+        magix.forms.get-value
+          id=>server-image
+        set=>[magix.data.save][value][name].value
+          value=>[magix.forms.get-children-values][values][server-name].value
+        set=>[magix.data.save][value][description].value
+          value=>[magix.forms.get-children-values][values][server-description].value
+        set=>[magix.data.save][value][image].value
+          value=>[magix.forms.get-value][value].value
+        magix.data.save
+          id=>magix.public.server-discovery
+        magix.viewport.show-message
+          message=>server discovery settings was saved
+dynamic=>browse-for-image
+
 panel=>smtp-wrapper
-  class=>span-13 last top-1 boxed-light-green air-padding bottom-1
+  class=>span-13 last top-1 desktop-widget air-padding bottom-1 tools-desktop-widget
   default=>update-smtp
   onfirstload
     magix.data.load
@@ -332,6 +419,5 @@ panel=>smtp-wrapper
           id=>magix.smtp.settings
         magix.viewport.show-message
           message=>smtp settings was updated
-
-}}</div>
+}}
 

@@ -4,7 +4,7 @@
 {
 	z-index:5;
 	position:absolute;
-	top:5px;
+	bottom:5px;
 	right:5px;
 	width:36px;
 	height:36px;
@@ -18,7 +18,7 @@
 {
 	z-index:5;
 	position:absolute;
-	top:5px;
+	bottom:5px;
 	right:41px;
 	width:36px;
 	height:36px;
@@ -40,5 +40,36 @@
 	transition-property:opacity;
 	transition-duration:.5s;
 	opacity:1;
+}
+
+.hyperlisp-executor
+{
+    background-image:url(../images/icons/lightning.png), linear-gradient(rgba(255, 255, 255, 1) 0%, rgba(245, 245, 245, 1) 100%);
+    background-repeat:no-repeat;
+    background-position:top right;
+    border-radius:5px;
+	transition-property:box-shadow;
+	transition-duration:.5s;
+    box-shadow:0px 0px 0px rgba(0,0,0,0);
+}
+
+.hyperlisp-executor:hover
+{
+	transition-property:box-shadow;
+	transition-duration:.5s;
+	box-shadow: 8px 8px 5px rgba(0, 0, 0, 0.2);
+}
+
+.hyperlisp-executor-result
+{
+    background-image:linear-gradient(rgba(245, 245, 245, 1) 0%, rgba(225, 225, 225, 1) 100%);
+    border-radius:5px;
+}
+
+.hyperlisp-executor-result:hover
+{
+	transition-property:box-shadow;
+	transition-duration:.5s;
+	box-shadow: 8px 8px 5px rgba(0, 0, 0, 0.2);
 }
 

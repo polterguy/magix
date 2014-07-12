@@ -325,13 +325,13 @@ namespace Magix.data
         /*
          * removes items from database according to prototype
          */
-        internal static void RemoveByPrototype(Node prototype, Guid transaction)
+        internal static int RemoveByPrototype(Node prototype, Guid transaction)
         {
             if (transaction != _transaction.Item1)
             {
                 lock (_transactionalLocker)
                 {
-                    RemoveByPrototype(prototype, transaction);
+                    return RemoveByPrototype(prototype, transaction);
                 }
             }
             lock (_locker)
@@ -365,19 +365,20 @@ namespace Magix.data
                     else
                         SaveFileNodeToDisc(GetDatabase()[idx]);
                 }
+                return nodesToRemove.Count;
             }
         }
 
         /*
          * removes a node by its id
          */
-        internal static void RemoveById(string id, Guid transaction)
+        internal static int RemoveById(string id, Guid transaction)
         {
             if (transaction != _transaction.Item1)
             {
                 lock (_transactionalLocker)
                 {
-                    RemoveById(id, transaction);
+                    return RemoveById(id, transaction);
                 }
             }
             lock (_locker)
@@ -407,7 +408,9 @@ namespace Magix.data
                         SaveFileNodeToDisc(fileObject);
                     else
                         RemoveNodeFromDatabase(fileObject);
+                    return 1;
                 }
+                return 0;
             }
         }
 
