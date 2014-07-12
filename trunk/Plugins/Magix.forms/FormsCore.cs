@@ -132,6 +132,8 @@ namespace Magix.forms
                 container,
                 e.Params);
 
+            ip["name"].UnTie();
+
             if (hasControlsFile || hasControlsId)
                 ip["controls"].UnTie();
 

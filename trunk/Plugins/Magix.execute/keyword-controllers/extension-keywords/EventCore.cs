@@ -18,16 +18,6 @@ namespace Magix.execute
         private static Node _events = new Node();
         private static Node _inspect = new Node();
 
-        private Dictionary<string, Node> SessionEvents
-        {
-            get
-            {
-                if (Page.Session["magix.execute.EventCore.SessionEvents"] == null)
-                    Page.Session["magix.execute.EventCore.SessionEvents"] = new Dictionary<string, Node>();
-                return Page.Session["magix.execute.EventCore.SessionEvents"] as Dictionary<string, Node>;
-            }
-        }
-
         /*
          * creates the associations between existing events in the database, and active event references
          */
@@ -67,6 +57,7 @@ namespace Magix.execute
                     _events[idx["value"]["event"].Get<string>()].AddRange(idx["value"]["code"]);
                     if (idx["value"].ContainsValue("inspect"))
                         AppendInspect(
+                            true,
                             _inspect[idx["value"]["event"].Get<string>()],
                             idx["value"]["inspect"].Get<string>());
 				}
@@ -145,10 +136,13 @@ namespace Magix.execute
                 activeEvent,
                 "magix.execute._active-event-2-code-callback");
 
-            if (remotable)
-                ActiveEvents.Instance.MakeRemotable(activeEvent);
-            else
-                ActiveEvents.Instance.RemoveRemotable(activeEvent);
+            if (ip.Contains("remotable"))
+            {
+                if (remotable)
+                    ActiveEvents.Instance.MakeRemotable(activeEvent);
+                else
+                    ActiveEvents.Instance.RemoveRemotable(activeEvent);
+            }
 
             _events[activeEvent].Clear();
             _events[activeEvent].AddRange(ip["code"].Clone());
@@ -229,6 +223,8 @@ namespace Magix.execute
                 e.Params["_root-only-execution"].UnTie();
                 try
                 {
+                    if (e.Params.Contains("_whitelist"))
+                        e.Params["_whitelist"].Name = "_whitelist-old";
                     RaiseActiveEvent(
                         "magix.execute",
                         e.Params);
@@ -251,6 +247,8 @@ namespace Magix.execute
                 }
                 finally
                 {
+                    if (e.Params.Contains("_whitelist-old"))
+                        e.Params["_whitelist-old"].Name = "_whitelist";
                     if (ip != e.Params)
                     {
                         e.Params["_namespaces"][e.Params["_namespaces"].Count - 1].UnTie();
@@ -260,65 +258,6 @@ namespace Magix.execute
                         e.Params["_dp"].Value = dp;
                     }
                 }
-            }
-        }
-
-        /*
-         * session-event hyperlisp keyword
-         */
-        [ActiveEvent(Name = "magix.execute.session-event")]
-        public void magix_execute_session_event(object sender, ActiveEventArgs e)
-        {
-            Node ip = Ip(e.Params);
-            if (ShouldInspect(ip))
-            {
-                AppendInspectFromResource(
-                    ip["inspect"],
-                    "Magix.execute",
-                    "Magix.execute.hyperlisp.inspect.hl",
-                    "[magix.execute.session-event-dox].value");
-                AppendCodeFromResource(
-                    ip,
-                    "Magix.execute",
-                    "Magix.execute.hyperlisp.inspect.hl",
-                    "[magix.execute.session-event-sample]");
-                return;
-            }
-
-            if (!ip.ContainsValue("name"))
-                throw new ArgumentException("you cannot create an event without a name in the value of the [session-event] keyword");
-            string activeEvent = ip["name"].Get<string>();
-
-            if (ip.Contains("code"))
-            {
-                Node n = new Node();
-                n.AddRange(ip["code"].Clone());
-                SessionEvents[activeEvent] = n;
-            }
-            else
-                SessionEvents.Remove(activeEvent);
-        }
-
-        /*
-         * entry point for hyperlisp created active session-event overrides
-         */
-        [ActiveEvent(Name = "")]
-        public void magix_execute__active_event_2_code_callback_session_events(object sender, ActiveEventArgs e)
-        {
-            if (SessionEvents.ContainsKey(e.Name))
-            {
-                Node ip = Ip(e.Params);
-                Node code = SessionEvents[e.Name].Clone();
-                if (ip.Count > 0)
-                    code["$"].AddRange(ip);
-
-                RaiseActiveEvent(
-                    "magix.execute",
-                    code);
-
-                ip.Clear();
-                if (code.Contains("$") && code["$"].Count > 0)
-                    ip.AddRange(code["$"]);
             }
         }
 

@@ -43,22 +43,27 @@ namespace Magix.execute
                 throw new ArgumentException("you must supply an expression to [for-each]");
 
 			Node tmp = Expressions.GetExpressionValue<Node>(ip.Get<string>(), dp, ip, false);
-			if (tmp != null)
+			if (tmp != null && tmp.Count > 0)
 			{
                 object oldDp = e.Params["_dp"].Value;
                 try
 				{
-					for (int idxNo = 0; idxNo < tmp.Count; idxNo++)
+                    Node curIdx = tmp[0];
+					while (curIdx != null)
 					{
                         Node oldIp = ip.Clone();
-						e.Params["_dp"].Value = tmp[idxNo];
+						e.Params["_dp"].Value = curIdx;
 
-						RaiseActiveEvent(
+                        Node nextIdx = curIdx.Next();
+                        
+                        RaiseActiveEvent(
 							"magix.execute", 
 							e.Params);
 
                         ip.Clear();
                         ip.AddRange(oldIp);
+
+                        curIdx = nextIdx;
 					}
 				}
                 catch (Exception err)

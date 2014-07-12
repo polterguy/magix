@@ -19,6 +19,17 @@ eachother to realize which active events they can invoke on
 each other"
 
   code
+    magix.data.load
+      id=>magix.public.server-discovery
+    if=>exist
+      lhs=>[magix.data.load][value]
+      code
+        set=>[$][name].value
+          value=>[magix.data.load][value][name].value
+        set=>[$][description].value
+          value=>[magix.data.load][value][description].value
+        set=>[$][image].value
+          value=>[magix.data.load][value][image].value
     list-events
       open=(bool)>true
     for-each=>[list-events][events]
@@ -28,4 +39,21 @@ each other"
 open
   persist=>false
   name=>magix.public.get-public-events
+
+
+// creating default server discovery information, if not existing from before
+magix.data.load
+  id=>magix.public.server-discovery
+if=>not-exist
+  lhs=>[magix.data.load][value]
+  code
+    magix.configuration.get-base-directory
+    set=>[@][magix.data.save][value][image].value
+      value=>@"{0}media/images/icons/start-button-blue.png"
+        =>[@][magix.configuration.get-base-directory][value].value
+    magix.data.save
+      id=>magix.public.server-discovery
+      value
+        name=>magix illuminate phosphorus
+        description=>@"this is a default magix illuminate phosphorus release server"
 

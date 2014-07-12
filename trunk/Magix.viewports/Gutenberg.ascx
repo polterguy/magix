@@ -36,6 +36,7 @@
 				id="ok"
 				Class="info-message-ok large span-3"
 				Value="OK"
+                OnEsc="CancelClick"
 				OnClick="OKClick" />
 			<mux:Button
 				runat="server"

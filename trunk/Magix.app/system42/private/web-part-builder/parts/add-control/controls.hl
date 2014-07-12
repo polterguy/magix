@@ -8,7 +8,7 @@ to create the add controls parts of the form builder"
 // creates the panel that wraps all the controls in the system
 // for the user to double click to add a control to the design surface
 panel=>controls-wrapper
-  class=>span-15 last boxed air-padding bottom-1 top-1 desktop-widget
+  class=>span-15 last boxed air-padding bottom-1 top-1 desktop-widget web-part-designer
   controls
 
     // descriptive header

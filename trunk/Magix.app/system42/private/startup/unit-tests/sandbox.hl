@@ -90,3 +90,41 @@ for then to verify the engine chokes, and throws an exception"
       code
         throw=>[sandbox] misbehaved
 
+
+event
+  name=>magix.test.sandbox-invoke-event
+  persist=>false
+  inspect=>@"verifies [sandbox] doesn't restrict keywords in events
+
+creates a sandbox, then invokes an active event, which executes 
+keywords not in the whitelist, making sure execution is allowed"
+  code
+    event
+      name=>magix.test-event.foo
+      code
+        set=>[$][output].value
+          value=>howdy
+    sandbox
+      whitelist
+        magix.test-event.foo
+      code
+        magix.test-event.foo
+
+
+event
+  name=>magix.test.sandbox-set-fails
+  persist=>false
+  inspect=>@"verifies [sandbox] doesn't allow changing code
+
+creates a sandbox, making sure sandboxed code does not allow 
+changing code to keywords not in list"
+  code
+    _expected-exception
+    sandbox
+      whitelist
+        set
+      code
+        set=>[@][_tmp].name
+          value=>foo
+        _tmp
+

@@ -58,3 +58,49 @@ iterate code scope is immutable, and not changed from iteration to iteration"
       set=>[@][_data].value
         value=>foo
 
+
+event
+  name=>magix.test.iterate-modify-collection
+  persist=>false
+  inspect=>@"verifies [iterate] can modify collection
+
+creates an [iterate] statement, having the code of the iterate 
+modify the collection it is iterating over"
+  code
+    _data
+      d0=>howdy
+      d1=>howdy
+        d11=>howdy
+          d111=>howdy
+        d12=>howdy
+      d2=>howdy
+    iterate=>[_data]
+      set=>[.]
+    if=>not-equals
+      lhs=>[_data].count
+      rhs=>0
+      code
+        throw=>[iterate] misbehaved
+    _data2
+      d0=>howdy
+      d1=>howdy2
+        d11=>howdy
+          d111=>howdy
+        d12=>howdy
+      d2=>howdy
+    iterate=>[_data2]
+      if=>equals
+        lhs=>[.].value
+        rhs=>howdy
+        code
+          set=>[.]
+    if=>not-equals
+      lhs=>[_data2].count
+      rhs=>1
+      or=>not-exist
+        lhs=>[_data2][d1]
+      or=>exist
+        lhs=>[_data2][d11]
+      code
+        throw=>[iterate] misbehaved
+

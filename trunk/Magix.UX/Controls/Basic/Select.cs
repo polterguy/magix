@@ -61,7 +61,7 @@ namespace Magix.UX.Widgets
         protected override void AddAttributes(Element el)
         {
             el.AddAttribute("name", ClientID);
-            if (Size != -1)
+            if (Size != -1 && Size != 1)
                 el.AddAttribute("size", Size.ToString());
             base.AddAttributes(el);
         }

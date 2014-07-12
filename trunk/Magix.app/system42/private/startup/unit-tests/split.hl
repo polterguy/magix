@@ -47,3 +47,38 @@ removes empty occurrences"
       code
         throw=>[split] misbehaved
 
+
+event
+  name=>magix.test.split-trim
+  persist=>false
+  inspect=>@"verifies [split] works
+
+creates a [split] statement that only trims the incoming parameter"
+  code
+    _data=>@"  howdy   world this is cool   "
+    split=>[_data].value
+      trim=>true
+    if=>not-equals
+      lhs=>[split][result][0].value
+      rhs=>@"howdy   world this is cool"
+      code
+        throw=>[split] misbehaved
+
+
+event
+  name=>magix.test.split-trim-specifics
+  persist=>false
+  inspect=>@"verifies [split] works
+
+creates a [split] statement that only trims the incoming parameter 
+for specific characters"
+  code
+    _data=>@"ZZhowdy   world this is coolXZX"
+    split=>[_data].value
+      trim=>ZX
+    if=>not-equals
+      lhs=>[split][result][0].value
+      rhs=>@"howdy   world this is cool"
+      code
+        throw=>[split] misbehaved
+

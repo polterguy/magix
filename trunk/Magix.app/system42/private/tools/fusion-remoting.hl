@@ -99,162 +99,513 @@ magix.forms.create-web-part
                     magix.fusion.show-tunneled-active-events
 
   controls
-    label
-      tag=>h2
-      class=>span-17 last
-      value=>fusion remoting
-    label
-      class=>span-17 last
-      tag=>p
-      value=>@"fusion remoting allows you to configure which active events you wish to 
-remotely override with implementations on other servers, and which active events you wish 
-to open for activation from other sources"
-    panel=>toolbar
-      class=>span-17 last btn-group top-1 bottom-1
+    panel=>header-wrapper
+      class=>span-15 last air-padding desktop-widget fusion
       controls
-        button=>open-events
-          class=>span-5
-          value=>open active events
-          onclick
-            magix.fusion.show-open-active-events
-        button=>tunneled-events
-          class=>span-5
-          value=>tunneled active events
-          onclick
-            magix.fusion.show-tunneled-active-events
+        label
+          tag=>h2
+          class=>span-15 last
+          value=>fusion remoting
+        label
+          class=>span-15 last
+          tag=>p
+          value=>@"fusion remoting allows you to configure which active events you wish to 
+    remotely override with implementations on other servers, and which active events you wish 
+    to open for invocation from other sources"
+        panel=>toolbar
+          class=>span-15 last btn-group top-1 bottom-1
+          controls
+            button=>open-events
+              class=>span-5
+              value=>open active events
+              onclick
+                magix.fusion.show-open-active-events
+            button=>tunneled-events
+              class=>span-5
+              value=>tunneled active events
+              onclick
+                magix.fusion.show-tunneled-active-events
 
-    label
-      tag=>label
-      class=>span-4 clear
-      value=>open up active event
-    lambda=>lambda-open-active-event
-      oncreatecontrols
-        // includes necessary javascript files for our autocompleter
-        magix.viewport.include-client-file
-          type=>javascript
-          file=>media/bootstrap/js/jQuery.js
-        magix.viewport.include-client-file
-          type=>javascript
-          file=>media/bootstrap/js/bootstrap.min.js
-        magix.viewport.include-client-file
-          type=>css
-          file=>media/back-end/typeahead.css
-        _json=>
-        list-events
-        for-each=>[list-events][events]
-          if=>not-equals
-            lhs=>[/][_json].value
-            rhs=>
-            code
-              set=>[/][_json].value
-                value=>{0},
-                  =>[/][_json].value
-          set=>[/][_json].value
-            value=>@"{0}""{1}"""
-              =>[/][_json].value
-              =>[.].name
-        _text
-          text-box=>active-event
-            placeholder=>open up active event ...
-            class=>span-6
-            autocomplete=>false
-            @data-provide=>typeahead
-            @data-items=>5
-            @data-source=>{data-source}
-            onenterpressed
-              magix.forms.get-value
-                id=>active-event
-              if=>not-equals
-                lhs=>[magix.forms.get-value][value].value
-                rhs=>
-                code
-                  list-events
-                  if=>not-exist
-                    lhs=>[@][list-events][events][[$][value].value]
+        label
+          tag=>label
+          class=>span-4 clear
+          value=>open up active event
+        panel=>open-wrp
+          class=>span-11 last btn-group
+          default=>open-evt
+          controls
+            lambda=>lambda-open-active-event
+              oncreatecontrols
+                // includes necessary javascript files for our autocompleter
+                magix.viewport.include-client-file
+                  type=>javascript
+                  file=>media/bootstrap/js/jQuery.js
+                magix.viewport.include-client-file
+                  type=>javascript
+                  file=>media/bootstrap/js/bootstrap.min.js
+                magix.viewport.include-client-file
+                  type=>css
+                  file=>media/back-end/typeahead.css
+                _json=>
+                list-events
+                for-each=>[list-events][events]
+                  if=>not-equals
+                    lhs=>[/][_json].value
+                    rhs=>
                     code
-                      magix.viewport.show-message
-                        message=>that active event doesn't exist
-                  else
-                    magix.viewport.confirm
-                      message=>are you sure you wish to open up this active event, such that it can be remotely invoked?
+                      set=>[/][_json].value
+                        value=>{0},
+                          =>[/][_json].value
+                  set=>[/][_json].value
+                    value=>@"{0}""{1}"""
+                      =>[/][_json].value
+                      =>[.].name
+                _text
+                  text-box=>active-event
+                    placeholder=>open up active event ...
+                    class=>span-8
+                    autocomplete=>false
+                    @data-provide=>typeahead
+                    @data-items=>5
+                    @data-source=>{data-source}
+                set=>[**@data-source=>{data-source}].value
+                  value=>\[{0}]
+                    =>[_json].value
+                add=>[$]
+                  value=>[_text][text-box]
+            button=>open-evt
+              class=>span-3 last
+              value=>open
+              onclick
+                magix.forms.get-value
+                  id=>active-event
+                if=>not-equals
+                  lhs=>[magix.forms.get-value][value].value
+                  rhs=>
+                  code
+                    list-events
+                    if=>not-exist
+                      lhs=>[@][list-events][events][[magix.forms.get-value][value].value]
                       code
-                        magix.forms.get-value
-                          id=>active-event
-                        open
-                          name=>[magix.forms.get-value][value].value
-                        magix.forms.set-value
-                          id=>active-event
-                          value=>
-                        using=>magix.viewport
-                          show-message
-                            message=>active event '{0}' was opened
-                              =>[magix.forms.get-value][value].value
-                        magix.fusion.show-open-active-events
-        set=>[**@data-source=>{data-source}].value
-          value=>\[{0}]
-            =>[_json].value
-        add=>[$]
-          value=>[_text][text-box]
+                        magix.viewport.show-message
+                          message=>that active event doesn't exist
+                    else
+                      magix.viewport.confirm
+                        message=>are you sure you wish to open up this active event, such that it can be remotely invoked?
+                        code
+                          magix.forms.get-value
+                            id=>active-event
+                          open
+                            name=>[magix.forms.get-value][value].value
+                          magix.forms.set-value
+                            id=>active-event
+                            value=>
+                          using=>magix.viewport
+                            show-message
+                              message=>active event '{0}' was opened
+                                =>[magix.forms.get-value][value].value
+                          magix.fusion.show-open-active-events
 
-    label
-      tag=>label
-      class=>span-4 top-1 clear
-      value=>tunnel active event
-    panel=>tunnel-wrapper
-      class=>span-13 last top-1 btn-group
-      default=>create-tunnel
-      controls
-        text-box=>tunnel-active-event
-          class=>span-6
-          placeholder=>tunnel active event ...
-        text-box=>tunnel-url
-          class=>span-4
-          placeholder=>tunnel url ...
-        button=>create-tunnel
-          class=>span-3 last
-          value=>create tunnel
-          onclick
-            magix.forms.get-value
-              form-id=>fusion
-              id=>tunnel-active-event
-            magix.forms.get-value
-              form-id=>fusion
-              id=>tunnel-url
-            split=>[magix.forms.get-value:1][value].value
-              what=>://
-            if=>not-equals
-              lhs=>[split][result].count
-              rhs=>2
-              or=>not-equals
-                lhs=>[split][result][0].value
-                rhs=>http
-                and=>not-equals
-                  lhs=>[split][result][0].value
-                  rhs=>https
-              code
-                magix.viewport.show-message
-                  message=>that is not a url!
-                  color=>#ff9999
-                magix.forms.effect
-                  type=>focus-and-select
+        label
+          tag=>label
+          class=>span-4 top-1 clear
+          value=>tunnel active event
+        panel=>tunnel-wrapper
+          class=>span-11 last top-1 btn-group
+          default=>create-tunnel
+          controls
+            text-box=>tunnel-active-event
+              class=>span-4
+              placeholder=>tunnel active event ...
+            text-box=>tunnel-url
+              class=>span-4
+              placeholder=>tunnel url ...
+            button=>create-tunnel
+              class=>span-3 last
+              value=>create tunnel
+              onclick
+                magix.forms.get-value
+                  form-id=>fusion
+                  id=>tunnel-active-event
+                magix.forms.get-value
                   form-id=>fusion
                   id=>tunnel-url
-                stop
-            tunnel
-              name=>[magix.forms.get-value:0][value].value
-              url=>[magix.forms.get-value:1][value].value
-            using=>magix.viewport
-              show-message
-                message=>active event '{0}' was tunneled to '{1}'
-                  =>[magix.forms.get-value:0][value].value
-                  =>[magix.forms.get-value:1][value].value
-            magix.forms.set-value
-              form-id=>fusion
-              id=>tunnel-active-event
-            magix.forms.set-value
-              form-id=>fusion
-              id=>tunnel-url
-            magix.fusion.show-tunneled-active-events
+                split=>[magix.forms.get-value:1][value].value
+                  what=>://
+                if=>not-equals
+                  lhs=>[split][result].count
+                  rhs=>2
+                  or=>not-equals
+                    lhs=>[split][result][0].value
+                    rhs=>http
+                    and=>not-equals
+                      lhs=>[split][result][0].value
+                      rhs=>https
+                  code
+                    magix.viewport.show-message
+                      message=>that is not a url!
+                      color=>#ff9999
+                    magix.forms.effect
+                      type=>focus-and-select
+                      form-id=>fusion
+                      id=>tunnel-url
+                    stop
+                tunnel
+                  name=>[magix.forms.get-value:0][value].value
+                  url=>[magix.forms.get-value:1][value].value
+                using=>magix.viewport
+                  show-message
+                    message=>active event '{0}' was tunneled to '{1}'
+                      =>[magix.forms.get-value:0][value].value
+                      =>[magix.forms.get-value:1][value].value
+                magix.forms.set-value
+                  form-id=>fusion
+                  id=>tunnel-active-event
+                magix.forms.set-value
+                  form-id=>fusion
+                  id=>tunnel-url
+                magix.fusion.show-tunneled-active-events
+        label
+          class=>span-4 top-1
+          tag=>label
+          value=>server explorer
+        panel=>server-explorer
+          class=>span-11 last top-1 btn-group
+          default=>explore
+          events
+            magix.fusion.update-bookmarks
+              magix.data.load
+                prototype
+                  type=>magix.server.bookmark
+              _items
+                _default=>choose bookmark ...
+              for-each=>[magix.data.load][objects]
+                add=>[/][_items]
+                  value=>[.][value][url].value
+                    value=>[.][value][name].value
+              add=>[magix.forms.set-values][values]
+                values=>[_items]
+              magix.forms.set-values
+                id=>bookmarks
+          controls
+            select=>bookmarks
+              class=>span-4
+              onfirstload
+                magix.fusion.update-bookmarks
+              onselectedindexchanged
+                using=>magix.forms
+                  get-value
+                    id=>bookmarks
+                  set-value
+                    id=>server-2-explore
+                    value=>[@][get-value:0][value].value
+                  effect
+                    id=>server-2-explore
+                    type=>focus-and-select
+                  set-value
+                    id=>bookmarks
+                    value=>_default
+            text-box=>server-2-explore
+              class=>span-4
+              placeholder=>explore server ...
+            button=>explore
+              class=>span-3
+              value=>explore
+              onclick
+                magix.forms.get-value
+                  form-id=>fusion
+                  id=>server-2-explore
+                try
+                  code
+                    remote
+                      name=>magix.public.get-public-events
+                      url=>[magix.forms.get-value][value].value
+                    replace=>[@][remote][params][name].value
+                      what=>&
+                      with=>&amp;
+                    replace=>[@][remote][params][name].value
+                      what=><
+                      with=>&lt;
+                    replace=>[@][remote][params][name].value
+                      what=>>
+                      with=>&gt;
+                    set=>[@][magix.forms.create-web-part][**img=>server-image][src].value
+                      value=>[@][remote][params][image].value
+                    set=>[@][magix.forms.create-web-part][**label=>label-name][value].value
+                      value=>[@][remote][params][name].value
+                    set=>[@][magix.forms.create-web-part][**label=>label-description][value].value
+                      value=>[@][remote][params][description].value
+                    set=>[@][magix.forms.create-web-part][controls][label][value].value
+                      value=>server information from: {0}
+                        =>[magix.forms.get-value][value].value
+                    for-each=>[@][remote][params][events]
+                      _lb
+                        link-button
+                          class=>span-8 clear
+                          onclick
+                            set=>[_evt].name
+                              value=>
+                            remote
+                              name=>[$][value].value
+                              url=>[$][info].value
+                              params
+                                inspect
+                            using=>magix.forms
+                              set-value
+                                form-id=>fusion
+                                id=>header-description
+                                value=>[$][value].value
+                              set-value
+                                form-id=>fusion
+                                id=>description
+                                value=>[remote][params][inspect].value
+                              set-enabled
+                                form-id=>fusion
+                                id=>wrap-event
+                                enabled=>true
+                      set=>[@][_lb][link-button][value].value
+                        value=>[.].name
+                      set=>[@][_lb][link-button][info].value
+                        value=>[/][magix.forms.get-value][value].value
+                      add=>[@][..][magix.forms.create-web-part][controls][panel:0][controls]
+                        values=>[@][_lb]
+                    magix.forms.create-web-part
+                      container=>active-events
+                      class=>span-15 last air-padding desktop-widget top-1 relative
+                      form-id=>server-explorer
+                      controls
+                        label=>header
+                          class=>span-15 last bottom-1
+                          tag=>h3
+                        link-button=>close
+                          class=>span-2 top-1
+                          style=>position:absolute;top:0;right:0;
+                          value=>close
+                          onclick
+                            magix.viewport.clear-controls
+                              container=>active-events
+                              reset-class=>true
+                        panel=>events-wrp
+                          class=>span-7
+                        panel=>description-wrp
+                          class=>span-6 last air-padding boxed-light-green
+                          onfirstload
+                            using=>magix.viewstate
+                              set
+                                id=>magix.fusion.current-label
+                          controls
+                            label=>description
+                              tag=>p
+                              class=>span-6 last
+                            label=>header-description
+                              tag=>label
+                              class=>span-6 last
+                            button=>wrap-event
+                              class=>span-2 last right top-1
+                              value=>wrap
+                              disabled=>true
+                              onclick
+                                magix.forms.create-web-part
+                                  container=>wrap-active-event
+                                  form-id=>wrap-active-event
+                                  class=>span-6 last btn-group top-1
+                                  controls
+                                    panel=>wrap-wrp
+                                      class=>span-6 last
+                                      default=>save-wrap
+                                      controls
+                                        text-box=>local-av-name
+                                          class=>span-4
+                                          onesc
+                                            magix.viewport.clear-controls
+                                              container=>wrap-active-event
+                                              reset-class=>true
+                                          placeholder=>local name ...
+                                        button=>save-wrap
+                                          class=>span-2 last
+                                          value=>save
+                                          onclick
+                                            using=>magix.forms
+                                              get-value
+                                                form-id=>wrap-active-event
+                                                id=>local-av-name
+                                              get-value
+                                                form-id=>server-explorer
+                                                id=>header-description
+                                              get-value
+                                                form-id=>fusion
+                                                id=>server-2-explore
+                                            set=>[event][**name=>{event}].value
+                                              value=>[using][get-value:1][value].value
+                                            set=>[event][**url=>{url}].value
+                                              value=>[using][get-value:2][value].value
+                                            remote
+                                              name=>[using][get-value:1][value].value
+                                              url=>[using][get-value:2][value].value
+                                              params
+                                                inspect
+                                                  type=>no-html
+                                            set=>[event][**inspect=>{inspect}].value
+                                              value=>@"invokes '{0}' on {1}
+
+{2}"
+                                                =>[using][get-value:1][value].value
+                                                =>[using][get-value:2][value].value
+                                                =>[@][remote][params][inspect].value
+                                            event
+                                              persist=>true
+                                              name=>[using][get-value:0][value].value
+                                              inspect=>{inspect}
+                                              code
+                                                add=>[remote][params]
+                                                  values=>[$]
+                                                remote
+                                                  name=>{event}
+                                                  url=>{url}
+                                                set=>[$]
+                                                add=>[$]
+                                                  values=>[remote][params]
+                                            using=>magix.viewport
+                                              show-message
+                                                message=>an active event was created with the name '{0}' that wraps '{1}' on {2}
+                                                  =>[using][get-value:0][value].value
+                                                  =>[using][get-value:1][value].value
+                                                  =>[using][get-value:2][value].value
+                                                time=>5000
+                                            magix.forms.set-visible
+                                              form-id=>wrap-active-event
+                                              id=>edit-wrap-av
+                                              value=>true
+                                            using=>magix.forms
+                                              set-info
+                                                form-id=>wrap-active-event
+                                                id=>edit-wrap-av
+                                                value=>[using][get-value:0][value].value
+                                    link-button=>edit-wrap-av
+                                      class=>span-3 last right text-right top-1
+                                      value=>edit active event
+                                      visible=>false
+                                      onclick
+                                        set=>[magix.event.edit-event][event].value
+                                          value=>[$][info].value
+                                        magix.event.edit-event
+                                magix.forms.effect
+                                  type=>focus-and-select
+                                  form-id=>wrap-active-event
+                                  id=>local-av-name
+                            dynamic=>wrap-active-event
+                        panel
+                          class=>span-13 last top-1 air-padding boxed-light-green
+                          controls
+                            label
+                              tag=>h3
+                              class=>span-13 last bottom-1
+                              value=>server description
+                            img=>server-image
+                              class=>span-4
+                              alt=>server avatar image
+                              src=>media/images/icons/start-button.png
+                            label=>label-name
+                              tag=>label
+                              class=>span-9 last
+                            label=>label-description
+                              class=>span-9 last
+                            button=>bookmark
+                              class=>span-4 last clear right top-1
+                              value=>bookmark server
+                              onfirstload
+                                magix.forms.get-value
+                                  id=>server-2-explore
+                                split=>[magix.forms.get-value][value].value
+                                  trim=>/
+                                set=>[magix.data.count][prototype][url].value
+                                  value=>[split][result][0].value
+                                magix.data.count
+                                  prototype
+                                    type=>magix.server.bookmark
+                                if=>not-equals
+                                  lhs=>[magix.data.count][count].value
+                                  rhs=>0
+                                  code
+                                    magix.forms.set-enabled
+                                      id=>bookmark
+                                      value=>false
+                              onclick
+                                magix.forms.get-value
+                                  id=>server-2-explore
+                                split=>[magix.forms.get-value:0][value].value
+                                  trim=>/
+                                magix.forms.get-value
+                                  id=>label-name
+                                magix.forms.get-value
+                                  id=>label-description
+                                magix.forms.get-value
+                                  id=>server-image
+                                set=>[magix.data.save][value][url].value
+                                  value=>[split][result][0].value
+                                set=>[magix.data.save][value][name].value
+                                  value=>[magix.forms.get-value:1][value].value
+                                set=>[magix.data.save][value][description].value
+                                  value=>[magix.forms.get-value:2][value].value
+                                set=>[magix.data.save][value][image].value
+                                  value=>[magix.forms.get-value:3][value].value
+                                magix.data.save
+                                  value
+                                    type=>magix.server.bookmark
+                                magix.viewport.show-message
+                                  message=>server was added to bookmarks
+                                magix.fusion.update-bookmarks
+                                magix.forms.set-enabled
+                                  id=>bookmark
+                                  value=>false
+                                magix.forms.set-enabled
+                                  id=>delete-bookmark
+                                  value=>true
+                            button=>delete-bookmark
+                              class=>span-4 right top-1
+                              value=>delete bookmark
+                              onfirstload
+                                magix.forms.get-value
+                                  id=>server-2-explore
+                                split=>[magix.forms.get-value][value].value
+                                  trim=>/
+                                set=>[magix.data.count][prototype][url].value
+                                  value=>[split][result][0].value
+                                magix.data.count
+                                  prototype
+                                    type=>magix.server.bookmark
+                                if=>equals
+                                  lhs=>[magix.data.count][count].value
+                                  rhs=>0
+                                  code
+                                    magix.forms.set-enabled
+                                      id=>delete-bookmark
+                                      value=>false
+                              onclick
+                                magix.forms.get-value
+                                  id=>server-2-explore
+                                split=>[magix.forms.get-value][value].value
+                                  trim=>/
+                                set=>[magix.data.remove][prototype][url].value
+                                  value=>[split][result][0].value
+                                magix.data.remove
+                                  prototype
+                                    type=>magix.server.bookmark
+                                magix.viewport.show-message
+                                  message=>bookmark was removed
+                                magix.fusion.update-bookmarks
+                                magix.forms.set-enabled
+                                  id=>bookmark
+                                  value=>true
+                                magix.forms.set-enabled
+                                  id=>delete-bookmark
+                                  value=>false
+                  catch
+                    using=>magix.viewport
+                      show-message
+                        message=>that server doesn't appear to be a magix server, message returned from server was '{0}'
+                          =>[@][..][exception].value
+                        time=>10000
 
     dynamic=>active-events
 

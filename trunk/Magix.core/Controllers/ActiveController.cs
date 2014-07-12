@@ -155,6 +155,17 @@ namespace Magix.Core
         }
 
         /*
+         * does no formatting if formatting is false
+         */
+        protected static void AppendInspect(bool dropFormatting, Node node, string value)
+        {
+            if (!dropFormatting)
+                AppendInspect(node, value);
+            else
+                node.Value = node.Get<string>() + value;
+        }
+
+        /*
          * html formats and appends the given value to the given node's value
          */
         protected static void AppendInspect(Node node, string value, bool dropInitialHeader)

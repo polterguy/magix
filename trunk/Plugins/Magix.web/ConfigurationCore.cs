@@ -112,7 +112,7 @@ namespace Magix.web
          * returns the base url of the application
          */
         [ActiveEvent(Name = "magix.configuration.get-base-directory")]
-        public void magix_configuration_get_base_directory(object sender, ActiveEventArgs e)
+        public static void magix_configuration_get_base_directory(object sender, ActiveEventArgs e)
         {
             Node ip = Ip(e.Params);
             if (ShouldInspect(ip))

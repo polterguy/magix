@@ -908,7 +908,7 @@ or if there are more files waiting in the que to be uploaded, before the uploade
 finished"
 
 magix.forms.uploader-sample-end
-  directory=>tmp
+  directory=>your-files/tmp
   onuploaded
     magix.viewport.show-message
       message=>file was uploaded
@@ -920,6 +920,9 @@ a wysiwyg web control is useful for allowing the end user to type in html or mag
 markup language to submit to the server"
 
 magix.forms.wysiwyg-sample-start
+  magix.viewport.include-client-file
+    type=>css
+    file=>media/back-end/wysihtml.css
   magix.forms.create-web-part
     container=>content5
     form-id=>sample-form
@@ -981,7 +984,7 @@ magix.forms.uploader-has-more-data-sample
     controls
       uploader=>uploader-id
         class=>mux-file-uploader
-        directory=>tmp
+        directory=>your-files/tmp
         onuploaded
           magix.forms.uploader-has-more-data
             form-id=>sample-form

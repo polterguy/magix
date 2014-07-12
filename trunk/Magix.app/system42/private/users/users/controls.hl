@@ -6,7 +6,7 @@ contains the controls necessary to show the edit users grid"
 
 
 panel=>users-wrapper
-  class=>span-15 last boxed air-padding top-1 desktop-widget
+  class=>span-15 last boxed air-padding top-1 desktop-widget users
   controls
     label=>lbl-header
       class=>span-15 last

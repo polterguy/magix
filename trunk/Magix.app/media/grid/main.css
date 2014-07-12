@@ -279,6 +279,7 @@ input[type=url].large,
 input[type=week].large {height:36px;font-size:18px;line-height:36px;}
 
 select {margin-top:0px;margin-bottom:0px;height:18px;border-left:none 0;border-right:none 0;}
+select[size] {height:inherit;}
 
 .wysiwyg-color-silver {color:silver;}
 .wysiwyg-color-gray {color:gray;}

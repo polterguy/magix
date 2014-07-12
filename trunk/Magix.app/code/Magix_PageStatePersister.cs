@@ -61,7 +61,7 @@ namespace Magix.app
                 formatter.Serialize(writer, new Pair(ViewState, ControlState));
             }
 
-			string id = _session.ToString() + "|" + Page.Request.Url.ToString();
+			string id = _session.ToString() + "|" + Page.Request.Url.ToString().Replace(" ", "+");
 
 			Page.Session[id] = builder.ToString();
 		}
