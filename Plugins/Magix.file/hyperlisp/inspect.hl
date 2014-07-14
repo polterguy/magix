@@ -26,6 +26,9 @@ creates the directory from value of [directory].  the directory path can be eith
 an expression, or a constant.  the [directory] can also be either a relative path, 
 underneath your web application folder, or an absolute path
 
+[directory] may also contain formatting parameters, such as {0} and {1} which should 
+reference children of the [directory] node
+
 thread safe"
 
 magix.file.create-directory-sample
@@ -104,6 +107,9 @@ this will expect an active event capable of returning text as [value].  if you s
 then all parameters beneath the [magix.file.load] will be passed into the plugin, and used as parameters 
 to the plugin loader
 
+[file] may also contain formatting parameters, such as {0} and {1} which should 
+reference children of the [file] node
+
 thread safe"
 
 magix.file.load-sample
@@ -147,6 +153,9 @@ magix.file.copy-file-dox=>@"copies a file on disc
 copies the given [from] file to the [to] file.  both the file to copy, and the where to 
 copy it, can be either expressions, or constants.  both the [from] and [to] can be either 
 relative path's beneath the web application's folder, or absolute paths
+
+both [from] and [to] may also contain formatting parameters, such as {0} and {1} 
+which should reference children of the [from] and [to] nodes
 
 thread safe"
 

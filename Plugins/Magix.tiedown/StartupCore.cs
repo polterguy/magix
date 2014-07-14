@@ -13,7 +13,7 @@ namespace Magix.tiedown
 	/*
 	 * runs the startup hyperlisp file
 	 */
-	public class StartupCore : ActiveController
+	public sealed class StartupCore : ActiveController
 	{
         private static string _lock = "";
 

@@ -75,6 +75,17 @@ namespace Magix.execute
             conversionNode["node"]["inspect"].UnTie();
 
             Node exe = conversionNode["node"].Clone();
+            if (ip.ContainsValue("file"))
+            {
+                string file = Expressions.GetExpressionValue<string>(ip["file"].Get<string>(), dp, ip, false);
+                if (ip["file"].Count > 0)
+                    file = Expressions.FormatString(dp, ip, ip["file"], file);
+                string directory = file;
+                if (directory.Contains("/"))
+                    directory = directory.Substring(0, directory.LastIndexOf('/'));
+                exe["$"]["script-file"].Value = file;
+                exe["$"]["script-directory"].Value = directory;
+            }
 			ExecuteScript(exe, ip);
 		}
 

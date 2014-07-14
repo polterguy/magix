@@ -1,0 +1,12 @@
+﻿
+
+inspect=>@"changes settings required to install hello world application
+
+changes the default front-end active event to become the one that 
+loads up the hello world web part"
+
+magix.data.save
+  id=>magix.tiedown.default-index-page-event
+  value
+    event=>magix.samples.show-hello-world-application
+

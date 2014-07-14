@@ -180,6 +180,35 @@ namespace Magix.Core
         /*
          * changes the title of the web page
          */
+        [ActiveEvent(Name = "magix.viewport.lock-to-device-width")]
+        protected void magix_viewport_lock_to_device_width(object sender, ActiveEventArgs e)
+        {
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
+            {
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.Core",
+                    "Magix.Core.hyperlisp.inspect.hl",
+                    "[magix.viewport.lock-to-device-width-dox].value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.Core",
+                    "Magix.Core.hyperlisp.inspect.hl",
+                    "[magix.viewport.lock-to-device-width-sample]");
+                return;
+            }
+
+            LiteralControl lit = new LiteralControl();
+            lit.Text = @"
+<meta name=""viewport"" content=""width=device-width, initial-scale=1.0"" />
+";
+            Page.Header.Controls.Add(lit);
+        }
+
+        /*
+         * changes the title of the web page
+         */
         [ActiveEvent(Name = "magix.viewport.set-title")]
         protected void magix_viewport_set_title(object sender, ActiveEventArgs e)
         {

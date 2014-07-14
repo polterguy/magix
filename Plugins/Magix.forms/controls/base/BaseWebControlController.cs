@@ -42,7 +42,7 @@ namespace Magix.forms
             }
 
             BaseWebControl ctrl = FindControl<BaseWebControl>(e.Params);
-            ctrl.Class = ip["value"].Get("");
+            ctrl.Class = ip["value"].Get<string>();
         }
 
         /*

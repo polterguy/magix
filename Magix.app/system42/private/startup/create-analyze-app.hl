@@ -1,0 +1,425 @@
+
+
+inspect=>@"creates the analyze app active event
+
+creates the [magix.package.analyze-app] active event"
+
+
+event
+  name=>magix.package.analyze-app
+  inspect=>@"analyzes a manifest.zip file
+
+iterates through an installation manifest, and analyzes it for 
+potential threats, creating a report for the user"
+  code
+    _result
+    using=>magix.package
+      list-files
+        zip=>[$][file].value
+    set=>[$][result][file-count].value
+      value=>[using][list-files][files].count
+    _total-line-count=>0
+    for-each=>[using][list-files][files]
+      if=>equals
+        lhs=>[.].name
+        rhs=>autorun.hl
+        code
+          set=>[/][_result][is-manifest].value
+            value=>true
+      if=>equals
+        lhs=>[.].name
+        rhs=>readme.txt
+        code
+          using=>magix.package
+            get-content
+              zip=>[$][file].value
+              file=>[.].name
+          set=>[/][_result][developer-description].value
+            value=>[@][using][get-content][value].value
+      split=>[.].name
+        what=>.
+      switch=>[@][split][result][>last].value
+        case=>hl
+          set=>[/][_result][constructs][hyperlisp].name
+            value=>hyperlisp
+        case=>mml
+          set=>[/][_result][constructs][mml].name
+            value=>mml
+        case=>html
+          set=>[/][_result][constructs][html].name
+            value=>html
+        case=>htm
+          set=>[/][_result][constructs][html].name
+            value=>html
+        case=>js
+          set=>[/][_result][constructs][javascript].name
+            value=>javascript
+        case=>dll
+          set=>[/][_result][constructs][binary].name
+            value=>binary
+        case=>css
+          set=>[/][_result][constructs][css].name
+            value=>css
+        case=>png
+          set=>[/][_result][constructs][images].name
+            value=>images
+        case=>jpg
+          set=>[/][_result][constructs][images].name
+            value=>images
+        case=>jpeg
+          set=>[/][_result][constructs][images].name
+            value=>images
+      _filename
+      _line-no=>0
+      set=>[@][_filename].value
+        value=>[.].name
+      if=>not-exist
+        lhs=>[/][_result][filetypes][[@][split][result][>last].value]
+        code
+          set=>[/][_result][filetypes][[@][..][..][split][result][>last].value].value
+            value=>0
+      using=>magix.math
+        add=>[/][_result][filetypes][[@][..][split][result][>last].value]
+          =>[/][_result][filetypes][[@][..][split][result][>last].value].value
+          =>1
+      if=>equals
+        lhs=>[@][split][result][>last].value
+        rhs=>dll
+        code
+          add=>[/][_result][warning]
+            value=>warning5
+              value=>@"the file '{0}' is a binary file.&nbsp;&nbsp;these types of files are impossible for me to analyze, and 
+you should not install this package unless you are dead certain about that you can trust its source!!"
+                =>[/][for-each][_filename].value
+                =>[/][for-each][_line-no].value
+      else-if=>equals
+        lhs=>[@][split][result][>last].value
+        rhs=>hl
+        code
+          using=>magix.package
+            get-content
+              zip=>[$][file].value
+              file=>[.].name
+          code-2-node
+            code=>[@][using][get-content][value].value
+          iterate=>[@][code-2-node][node]
+            if=>not-exist
+              lhs=>[/][_result][hyperlisp][[.].name]
+              code
+                set=>[/][_result][hyperlisp][[.].name].value
+                  value=>0
+            using=>magix.math
+              add=>[/][_result][hyperlisp][[.].name]
+                =>[/][_result][hyperlisp][[.].name].value
+                =>1
+            using=>magix.math
+              add=>[/][for-each][_line-no]
+                =>[/][for-each][_line-no].value
+                =>1
+              add=>[/][_total-line-count]
+                =>[/][_total-line-count].value
+                =>1
+            if=>equals
+              lhs=>[.].name
+              rhs=>fork
+              code
+                set=>[/][_result][constructs][threading].name
+                  value=>threading
+                add=>[/][_result][information]
+                  value=>info
+                    value=>@"the file '{0}' seems to be creating multiple threads at line no. {1}"
+                      =>[/][for-each][_filename].value
+                      =>[/][for-each][_line-no].value
+            else-if=>equals
+              lhs=>[.].name
+              rhs=>throw
+              code
+                set=>[/][_result][constructs][exceptions].name
+                  value=>exceptions
+                add=>[/][_result][information]
+                  value=>info
+                    value=>@"the file '{0}' seems to be throwing exceptions at line no. {1}"
+                      =>[/][for-each][_filename].value
+                      =>[/][for-each][_line-no].value
+            else-if=>equals
+              lhs=>[.].name
+              rhs=>while
+              or=>equals
+                lhs=>[.].name
+                rhs=>iterate
+              or=>equals
+                lhs=>[.].name
+                rhs=>for-each
+              code
+                set=>[/][_result][constructs][loops].name
+                  value=>loops
+            else-if=>equals
+              lhs=>[.].name
+              rhs=>if
+              or=>equals
+                lhs=>[.].name
+                rhs=>else-if
+              or=>equals
+                lhs=>[.].name
+                rhs=>else
+              code
+                set=>[/][_result][constructs][branching].name
+                  value=>branching
+            else-if=>equals
+              lhs=>[.].name
+              rhs=>switch
+              code
+                set=>[/][_result][constructs][switch].name
+                  value=>switch
+            else-if=>equals
+              lhs=>[.].name
+              rhs=>code-2-node
+              or=>equals
+                lhs=>[.].name
+                rhs=>node-2-code
+              code
+                set=>[/][_result][constructs][code].name
+                  value=>code
+            else-if=>equals
+              lhs=>[.].name
+              rhs=>execute-script
+              code
+                set=>[/][_result][constructs][script-execution].name
+                  value=>script-execution
+                add=>[/][_result][information]
+                  value=>info
+                    value=>@"the file '{0}' seems to be executing hyperlisp scripts at line no. {1}"
+                      =>[/][for-each][_filename].value
+                      =>[/][for-each][_line-no].value
+            else-if=>equals
+              lhs=>[.].name
+              rhs=>open
+              code
+                set=>[/][_result][constructs][open].name
+                  value=>open
+                add=>[/][_result][warnings]
+                  value=>warning4
+                    value=>@"the file '{0}' seems to be opening active events for remote invocations at line no. {1}.&nbsp;&nbsp;this means that the 
+attack surface of your server will dramatically increase!!&nbsp;&nbsp;you should make sure the developer who created this package really knows 
+what he is doing, and that you truly trust him or her, before proceeding with installation!!"
+                      =>[/][for-each][_filename].value
+                      =>[/][for-each][_line-no].value
+            else-if=>equals
+              lhs=>[.].name
+              rhs=>tunnel
+              code
+                set=>[/][_result][constructs][tunneling].name
+                  value=>tunneling
+                add=>[/][_result][warnings]
+                  value=>warning4
+                    value=>@"the file '{0}' seems to be tunneling active events for remote invocations at line no. {1}.&nbsp;&nbsp;this means that the 
+attack surface of your server will dramatically increase!!&nbsp;&nbsp;you should make sure the developer who created this package really knows 
+what he is doing, and that you truly trust him or her, before proceeding with installation!!"
+                      =>[/][for-each][_filename].value
+                      =>[/][for-each][_line-no].value
+            else-if=>equals
+              lhs=>[.].name
+              rhs=>remote
+              code
+                set=>[/][_result][constructs][remoting].name
+                  value=>remoting
+                add=>[/][_result][warnings]
+                  value=>warning3
+                    value=>@"the file '{0}' seems to be invoking remote active events at line no. {1}.&nbsp;&nbsp;you should make sure the 
+developer who created this package really knows what he is doing, and that you truly trust him or her, before proceeding with installation!!"
+                      =>[/][for-each][_filename].value
+                      =>[/][for-each][_line-no].value
+            else-if=>equals
+              lhs=>[.].name
+              rhs=>override
+              code
+                set=>[/][_result][constructs][overriding].name
+                  value=>overriding
+                add=>[/][_result][warnings]
+                  value=>warning3
+                    value=>@"the file '{0}' seems to be overriding active events at line no. {1}.&nbsp;&nbsp;you should make sure the 
+developer who created this package really knows what he is doing, and that you truly trust him or her, before proceeding with installation!!"
+                      =>[/][for-each][_filename].value
+                      =>[/][for-each][_line-no].value
+            else-if=>equals
+              lhs=>[.].name
+              rhs=>magix.session.get
+              or=>equals
+                lhs=>[.].name
+                rhs=>using
+                and=>equals
+                  lhs=>[.].name
+                  rhs=>magix.session
+                  and=>exist
+                    lhs=>[.][get]
+              code
+                set=>[/][_result][constructs][session].name
+                  value=>session
+                add=>[/][_result][information]
+                  value=>info
+                    value=>@"the file '{0}' seems to be accessing items from your session at line no. {1}"
+                      =>[/][for-each][_filename].value
+                      =>[/][for-each][_line-no].value
+            else-if=>equals
+              lhs=>[.].name
+              rhs=>magix.session.set
+              or=>equals
+                lhs=>[.].name
+                rhs=>using
+                and=>equals
+                  lhs=>[.].name
+                  rhs=>magix.session
+                  and=>exist
+                    lhs=>[.][set]
+              code
+                set=>[/][_result][constructs][session].name
+                  value=>session
+                add=>[/][_result][information]
+                  value=>info
+                    value=>@"the file '{0}' seems to be putting items into your session at line no. {1}"
+                      =>[/][for-each][_filename].value
+                      =>[/][for-each][_line-no].value
+            else-if=>equals
+              lhs=>[.].name
+              rhs=>magix.viewstate.set
+              or=>equals
+                lhs=>[.].name
+                rhs=>using
+                and=>equals
+                  lhs=>[.].name
+                  rhs=>magix.viewstate
+                  and=>exist
+                    lhs=>[.][set]
+              code
+                set=>[/][_result][constructs][viewstate].name
+                  value=>viewstate
+                add=>[/][_result][information]
+                  value=>info
+                    value=>@"the file '{0}' seems to be putting items into your viewstate at line no. {1}"
+                      =>[/][for-each][_filename].value
+                      =>[/][for-each][_line-no].value
+            else-if=>equals
+              lhs=>[.].name
+              rhs=>debug
+              code
+                set=>[/][_result][constructs][debugger].name
+                  value=>debugger
+            else-if=>equals
+              lhs=>[.].name
+              rhs=>magix.data.save
+              or=>equals
+                lhs=>[.].name
+                rhs=>using
+                and=>equals
+                  lhs=>[.].name
+                  rhs=>magix.data
+                  and=>exist
+                    lhs=>[.][save]
+              code
+                set=>[/][_result][constructs][data].name
+                  value=>data
+                add=>[/][_result][information]
+                  value=>info
+                    value=>@"the file '{0}' seems to be saving items to your database at line no. {1}.&nbsp;&nbsp;
+these parts should be carefully examined to make sure it does not compromise your database"
+                      =>[/][for-each][_filename].value
+                      =>[/][for-each][_line-no].value
+            else-if=>equals
+              lhs=>[.].name
+              rhs=>magix.file.save
+              or=>equals
+                lhs=>[.].name
+                rhs=>using
+                and=>equals
+                  lhs=>[.].name
+                  rhs=>magix.file
+                  and=>exist
+                    lhs=>[.][save]
+              code
+                set=>[/][_result][constructs][files].name
+                  value=>files
+                add=>[/][_result][information]
+                  value=>info
+                    value=>@"the file '{0}' seems to be saving files to your disc at line no. {1}.&nbsp;&nbsp;
+these parts should be carefully examined to make sure it does not compromise your filesystem somehow"
+                      =>[/][for-each][_filename].value
+                      =>[/][for-each][_line-no].value
+            else-if=>equals
+              lhs=>[.].name
+              rhs=>magix.data.load
+              or=>equals
+                lhs=>[.].name
+                rhs=>using
+                and=>equals
+                  lhs=>[.].name
+                  rhs=>magix.data
+                  and=>exist
+                    lhs=>[.][load]
+              code
+                set=>[/][_result][constructs][data].name
+                  value=>data
+                add=>[/][_result][information]
+                  value=>info
+                    value=>@"the file '{0}' seems to be loading items from your database at line no. {1}.&nbsp;&nbsp;
+these parts should be carefully examined to make sure it does not compromise your database"
+                      =>[/][for-each][_filename].value
+                      =>[/][for-each][_line-no].value
+            else-if=>equals
+              lhs=>[.].name
+              rhs=>magix.data.remove
+              or=>equals
+                lhs=>[.].name
+                rhs=>using
+                and=>equals
+                  lhs=>[.].name
+                  rhs=>magix.data
+                  and=>exist
+                    lhs=>[.][remove]
+              code
+                set=>[/][_result][constructs][data].name
+                  value=>data
+                add=>[/][_result][information]
+                  value=>info
+                    value=>@"the file '{0}' seems to be removing items from your database at line no. {1}.&nbsp;&nbsp;
+these parts should be carefully examined to make sure it does not compromise your database"
+                      =>[/][for-each][_filename].value
+                      =>[/][for-each][_line-no].value
+            switch=>[.].name
+              case=>event
+                if=>exist
+                  lhs=>[.][code]
+                  code
+                    add=>[/][_result][events]
+                      value=>[.][name].value
+                    split=>[.][name].value
+                      what=>.
+                    if=>equals
+                      lhs=>[@][split][result][0].value
+                      rhs=>magix
+                      code
+                        add=>[/][_result][warnings]
+                          value=>warning2
+                            value=>@"active event '{0}' in file '{1}' at line no. {2} is created in the 'magix' namespace, which might create future problems for you!&nbsp;&nbsp;
+the magix namespace is supposed to be in general terms protected for future magix features, however, there are exceptions to this rule, such as when 
+creating hyperlisp extension keywords, and desktop shortcuts.&nbsp;&nbsp;read the explanation from the developer in 'readme.txt' to understand his motives"
+                              =>[.][name].value
+                              =>[/][for-each][_filename].value
+                              =>[/][for-each][_line-no].value
+    if=>not-exist
+      lhs=>[/][_result][developer-description].value
+      code
+        add=>[/][_result][warnings]
+          value=>warning1
+            value=>@"this manifest does not contain a 'readme.txt', which means it has no description of usage from its developer"
+    if=>not-exist
+      lhs=>[/][_result][is-manifest]
+      code
+        add=>[/][_result][errors]
+          value=>error
+            value=>@"this is not a manifest file, and hence cannot be installed on your system"
+    add=>[$][result]
+      value=>hyperlisp-lines-of-code
+        value=>[/][_total-line-count].value
+    add=>[$][result]
+      values=>[/][_result]
+

@@ -106,6 +106,7 @@
     <Content Include="media\images\icons\tree-indent.png" />
     <Content Include="media\images\icons\tree.png" />
     <Content Include="media\images\icons\user-management.png" />
+    <Content Include="media\images\icons\wiki-apps.png" />
     <Content Include="media\images\icons\wizard-hat.png" />
     <Content Include="media\images\icons\wrench.png" />
     <Content Include="media\images\samples\2009 Sonoma Coast Pinot Noir.jpg" />
@@ -446,8 +447,12 @@
     <Content Include="system42\private\app-wizard\wizards\forked-multi-event-wizard.hl" />
     <Content Include="system42\private\app-wizard\wizards\forked-multi-event-wizard\controls.hl" />
     <Content Include="system42\private\app-wizard\wizards\forked-multi-event-wizard\events.hl" />
+    <Content Include="system42\private\users\authentication-authorization.hl" />
+    <Content Include="system42\private\tools\fusion-package-manager.hl" />
+    <Content Include="system42\private\startup\create-analyze-app.hl" />
     <None Include="todo.txt" />
     <Content Include="your-files\readme.txt" />
+    <Content Include="your-files\samples\hello-world-app\readme.txt" />
     <Content Include="your-files\tmp\readme.txt" />
     <Content Include="your-files\web.config" />
     <Content Include="your-files\web-parts\samples\simple\leave-comment.hl" />
@@ -456,8 +461,13 @@
     <Content Include="your-files\web-parts\samples\simple\change-password.hl" />
     <Content Include="your-files\web-parts\samples\complex\crud-app.hl" />
     <Content Include="your-files\web-parts\samples\complex\video-server.hl" />
+    <Content Include="your-files\samples\hello-world-app\autorun.hl" />
+    <Content Include="your-files\samples\hello-world-app\web-part.hl" />
+    <Content Include="your-files\samples\hello-world-app\create-events.hl" />
+    <Content Include="your-files\samples\hello-world-app\change-settings.hl" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="your-files\applications\" />
     <Folder Include="your-files\shared\" />
   </ItemGroup>
 </Project>

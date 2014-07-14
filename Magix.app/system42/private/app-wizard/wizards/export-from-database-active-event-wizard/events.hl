@@ -136,6 +136,11 @@ magix.wizard.save_onclick
   _event
     event
       name=>{active-event-name}
+      inspect=>@"wizard generated export items active event
+
+active event that exports items of type [{0}] from the database 
+to a csv file back to the client"
+        =>{type-name}
       code
         _fields
         magix.data.load

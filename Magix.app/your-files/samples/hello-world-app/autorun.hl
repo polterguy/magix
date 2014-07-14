@@ -1,0 +1,21 @@
+﻿
+
+inspect=>@"autorun file for installation of sample hello world application
+
+copies the files in the application where they belong, and creates active events 
+needed to install application"
+
+magix.file.create-directory
+  directory=>your-files/applications/hello-world-example
+using=>magix.file
+  copy-file
+    from=>{0}/web-part.hl
+      =>[$][script-directory].value
+    to=>your-files/applications/hello-world-example/web-part.hl
+execute-script
+  file=>{0}/create-events.hl
+    =>[$][script-directory].value
+execute-script
+  file=>{0}/change-settings.hl
+    =>[$][script-directory].value
+

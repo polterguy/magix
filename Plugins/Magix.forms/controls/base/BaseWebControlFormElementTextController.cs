@@ -22,7 +22,7 @@ namespace Magix.forms
             base.FillOutParameters(pars, ctrl);
 
             Node ip = Ip(pars);
-            Node codeNode = ip["_code"].Value as Node;
+            Node codeNode = ip["_code"].Get<Node>();
             BaseWebControlFormElementText that = ctrl as BaseWebControlFormElementText;
 
             if (that != null && codeNode.ContainsValue("value"))

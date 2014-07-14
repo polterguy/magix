@@ -14,13 +14,13 @@ namespace Magix.tiedown
 	/*
 	 * loads the default viewport
 	 */
-	public class ViewportCore : ActiveController
+	public sealed class ViewportCore : ActiveController
 	{
 		/*
 		 * loads the default viewport
 		 */
 		[ActiveEvent(Name = "magix.viewport.load-viewport")]
-		public void magix_viewport_load_viewport(object sender, ActiveEventArgs e)
+		public static void magix_viewport_load_viewport(object sender, ActiveEventArgs e)
 		{
             Node ip = Ip(e.Params);
             if (ShouldInspect(ip))

@@ -98,7 +98,7 @@ html
 .desktop-widget
 {
 	display:block;
-	border-radius:5px;
+	border-radius:15px;
 	box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
 	background-image: linear-gradient(rgba(240, 240, 255, 1) 0%, rgba(190, 190, 210, 1) 100%);
 	padding:18px 40px;
@@ -116,7 +116,7 @@ html
 .desktop-widget-item
 {
 	background-color:rgba(150, 150, 150, 0);
-    border-radius:5px;
+    border-radius:15px;
 }
 
 .desktop-widget-item:hover

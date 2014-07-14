@@ -13,13 +13,13 @@ namespace Magix.tiedown
 	/*
 	 * runs the page load hyperlisp file
 	 */
-	public class PageLoadCore : ActiveController
+	public sealed class PageLoadCore : ActiveController
 	{
 		/*
 		 * runs the page load hyperlisp file
 		 */
 		[ActiveEvent(Name = "magix.viewport.page-load")]
-		public void magix_viewport_page_load(object sender, ActiveEventArgs e)
+		public static void magix_viewport_page_load(object sender, ActiveEventArgs e)
 		{
             Node ip = Ip(e.Params);
             if (ShouldInspect(ip))

@@ -3,6 +3,17 @@
 inspect=>@"contains the documentation for magix.core"
 
 
+magix.viewport.lock-to-device-width-dox=>@"locks viewport to device width
+
+locks the viewport to the width of the device.  useful for making sure 
+smartphones and tablets cannot zoom
+
+must be called when page is initially loaded"
+
+magix.viewport.lock-to-device-width-sample
+  magix.viewport.lock-to-device-width
+
+
 magix.viewport.set-title-dox=>@"changes the title of the web page
 
 sets the title of your web page to [title].  [title] can be either 

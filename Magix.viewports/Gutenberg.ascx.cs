@@ -23,7 +23,7 @@ namespace Magix.viewports
      */
     public class Gutenberg : Viewport
     {
-		protected Panel wrp;
+		protected Panel container;
 		protected DynamicPanel header;
 		protected DynamicPanel menu;
         protected DynamicPanel content1;

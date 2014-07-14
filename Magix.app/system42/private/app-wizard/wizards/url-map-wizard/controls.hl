@@ -58,46 +58,57 @@ http get parameter is given, with a specific value, an active event of your choi
       class=>span-3 text-right bottom-1
       tag=>label
       value=>active event
-    lambda=>lambda-active-event
-      oncreatecontrols
-        // includes necessary javascript files for our autocompleter
-        magix.viewport.include-client-file
-          type=>javascript
-          file=>media/bootstrap/js/jQuery.js
-        magix.viewport.include-client-file
-          type=>javascript
-          file=>media/bootstrap/js/bootstrap.min.js
-        magix.viewport.include-client-file
-          type=>css
-          file=>media/back-end/typeahead.css
-        _json=>
-        list-events
-        for-each=>[list-events][events]
-          if=>not-equals
-            lhs=>[/][_json].value
-            rhs=>
-            code
+    panel
+      class=>span-7 last btn-group
+      controls
+        lambda=>lambda-active-event
+          oncreatecontrols
+            // includes necessary javascript files for our autocompleter
+            magix.viewport.include-client-file
+              type=>javascript
+              file=>media/bootstrap/js/jQuery.js
+            magix.viewport.include-client-file
+              type=>javascript
+              file=>media/bootstrap/js/bootstrap.min.js
+            magix.viewport.include-client-file
+              type=>css
+              file=>media/back-end/typeahead.css
+            _json=>
+            list-events
+            for-each=>[list-events][events]
+              if=>not-equals
+                lhs=>[/][_json].value
+                rhs=>
+                code
+                  set=>[/][_json].value
+                    value=>{0},
+                      =>[/][_json].value
               set=>[/][_json].value
-                value=>{0},
+                value=>@"{0}""{1}"""
                   =>[/][_json].value
-          set=>[/][_json].value
-            value=>@"{0}""{1}"""
-              =>[/][_json].value
-              =>[.].name
-        _text
-          text-box=>active-event
-            placeholder=>active event ...
-            title=>this is the active event you wish to associate with the value of the get parameter
-            class=>span-7 last bottom-1
-            autocomplete=>false
-            @data-provide=>typeahead
-            @data-items=>5
-            @data-source=>{data-source}
-        set=>[**@data-source=>{data-source}].value
-          value=>\[{0}]
-            =>[_json].value
-        add=>[$]
-          value=>[_text][text-box]
+                  =>[.].name
+            _text
+              text-box=>active-event
+                placeholder=>active event ...
+                title=>this is the active event you wish to associate with the value of the get parameter
+                class=>span-5 bottom-1
+                autocomplete=>false
+                @data-provide=>typeahead
+                @data-items=>5
+                @data-source=>{data-source}
+            set=>[**@data-source=>{data-source}].value
+              value=>\[{0}]
+                =>[_json].value
+            add=>[$]
+              value=>[_text][text-box]
+        button=>add-value
+          class=>span-2 last
+          value=>add
+          onfirstload
+            magix.viewstate.set
+              id=>magix.url-map.items
+          onclick
+            magix.url-map.add-value_onclick
     label
       class=>span-3 left-5 text-right
       tag=>label
@@ -155,14 +166,6 @@ get parameter value given at all"
       value=>create
       onclick
         magix.url-map.create_onclick
-    button=>add-value
-      class=>span-2 right top-1
-      value=>add
-      onfirstload
-        magix.viewstate.set
-          id=>magix.url-map.items
-      onclick
-        magix.url-map.add-value_onclick
     link-button=>edit-event
       class=>span-3 right clear text-right last
       value=>edit active event

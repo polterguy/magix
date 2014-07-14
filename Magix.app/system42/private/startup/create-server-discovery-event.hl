@@ -2,13 +2,13 @@
 
 inspect=>@"creates the server discovery active event
 
-creates and opens up the [magix.public.get-public-events] event, 
+creates and opens up the [magix.public.server-discovery] event, 
 which allows other servers to call this server, to see which 
 events are opened for public access for other servers"
 
 
 event
-  name=>magix.public.get-public-events
+  name=>magix.public.server-discovery
   persist=>false
   inspect=>@"returns all open active events
 
@@ -30,6 +30,13 @@ each other"
           value=>[magix.data.load][value][description].value
         set=>[$][image].value
           value=>[magix.data.load][value][image].value
+    magix.file.list-files
+      directory=>my-files/public-applications
+      filter=>*.manifest.zip
+    for-each=>[magix.file.list-files][files]
+      add=>[$][applications]
+        value=>
+          value=>[.].name
     list-events
       open=(bool)>true
     for-each=>[list-events][events]
@@ -38,7 +45,7 @@ each other"
 
 open
   persist=>false
-  name=>magix.public.get-public-events
+  name=>magix.public.server-discovery
 
 
 // creating default server discovery information, if not existing from before

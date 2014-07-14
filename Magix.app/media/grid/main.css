@@ -56,7 +56,7 @@ tfoot {font-style:italic;}
 caption {background:#eee;}
 div {overflow:visible;}
 input[type=text], input[type=password], input[type=color], input[type=number], input[type=phone], input[type=email], input[type=search], input[type=url], input[type=datetime], input[type=date], input[type=month], input[type=week], input[type=time], input[type=datetimelocal], input[type=range], textarea {border-left:0px none;border-right:0px none;border-top:1px solid #bbb;border-bottom:1px solid #bbb;padding:0;}
-input[type=text], input[type=password], input[type=color], input[type=number], input[type=phone], input[type=email], input[type=search], input[type=url], input[type=datetime], input[type=date], input[type=month], input[type=week], input[type=time], input[type=datetimelocal], input[type=range] {height:16px;}
+input[type=text], input[type=password], input[type=color], input[type=number], input[type=phone], input[type=email], input[type=search], input[type=url], input[type=datetime], input[type=date], input[type=month], input[type=week], input[type=time], input[type=datetimelocal], input[type=range] {border-radius:15px;height:16px;}
 input[type=button] {border:0 none;}
 input[type=checkbox] {height:18px;max-height:18px;margin-bottom:0;margin-left:0;}
 label {font-weight:bold;}
@@ -278,7 +278,7 @@ input[type=time].large,
 input[type=url].large,
 input[type=week].large {height:36px;font-size:18px;line-height:36px;}
 
-select {margin-top:0px;margin-bottom:0px;height:18px;border-left:none 0;border-right:none 0;}
+select {border-radius:15px;margin-top:0px;margin-bottom:0px;height:18px;border-left:none 0;border-right:none 0;}
 select[size] {height:inherit;}
 
 .wysiwyg-color-silver {color:silver;}
@@ -320,23 +320,23 @@ select[size] {height:inherit;}
 	border-radius:0px;
 }
 
-.btn-group input[type=button]:first-child,
-.btn-group input[type=color]:first-child,
-.btn-group input[type=email]:first-child,
-.btn-group input[type=datetime]:first-child,
-.btn-group input[type=datetimelocal]:first-child,
-.btn-group input[type=date]:first-child,
-.btn-group input[type=month]:first-child,
-.btn-group input[type=text]:first-child,
-.btn-group input[type=number]:first-child,
-.btn-group input[type=password]:first-child,
-.btn-group input[type=tel]:first-child,
-.btn-group input[type=range]:first-child,
-.btn-group input[type=search]:first-child,
-.btn-group input[type=time]:first-child,
-.btn-group input[type=url]:first-child,
-.btn-group input[type=week]:first-child,
-.btn-group select:first-child
+.btn-group>input[type=button]:first-child,
+.btn-group>input[type=color]:first-child,
+.btn-group>input[type=email]:first-child,
+.btn-group>input[type=datetime]:first-child,
+.btn-group>input[type=datetimelocal]:first-child,
+.btn-group>input[type=date]:first-child,
+.btn-group>input[type=month]:first-child,
+.btn-group>input[type=text]:first-child,
+.btn-group>input[type=number]:first-child,
+.btn-group>input[type=password]:first-child,
+.btn-group>input[type=tel]:first-child,
+.btn-group>input[type=range]:first-child,
+.btn-group>input[type=search]:first-child,
+.btn-group>input[type=time]:first-child,
+.btn-group>input[type=url]:first-child,
+.btn-group>input[type=week]:first-child,
+.btn-group>select:first-child
 {
 	border-radius:15px 0px 0px 15px;
 }
@@ -391,7 +391,7 @@ textarea.fill-width-left-air,
 .boxed
 {
 	display:block;
-	border-radius:5px;
+	border-radius:15px;
 	box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
 	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgba(240, 240, 240, 1)), to(rgba(210, 210, 210, 1)));
 	background-image: -moz-webkit-gradient(rgba(250, 250, 250, 1) 0%, rgba(210, 210, 210, 1) 100%);
@@ -404,11 +404,7 @@ textarea.fill-width-left-air,
 .boxed-light-green
 {
 	display:block;
-	-moz-border-radius:5px;
-	-webkit-border-radius:5px;
-	-o-border-radius:5px;
-	-ms-border-radius:5px;
-	border-radius:5px;
+	border-radius:15px;
 	-webkit-box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
 	-moz-box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
 	-o-box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
@@ -425,15 +421,7 @@ textarea.fill-width-left-air,
 .boxed-light-red
 {
 	display:block;
-	-moz-border-radius:5px;
-	-webkit-border-radius:5px;
-	-o-border-radius:5px;
-	-ms-border-radius:5px;
-	border-radius:5px;
-	-webkit-box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
-	-moz-box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
-	-o-box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
-	-ms-box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
+	border-radius:15px;
 	box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
 	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgba(240, 200, 200, .5)), to(rgba(210, 180, 180, -5)));
 	background-image: -moz-webkit-gradient(rgba(240, 200, 200, .5) 0%, rgba(210, 180, 180, .5) 100%);
@@ -446,25 +434,13 @@ textarea.fill-width-left-air,
 input[type=button]
 {
 	display:block;
-	-moz-border-radius:5px;
-	-webkit-border-radius:5px;
-	-o-border-radius:5px;
-	-ms-border-radius:5px;
-	border-radius:5px;
+	border-radius:15px;
 	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgba(240, 240, 240, 1)), to(rgba(210, 210, 210, 1)));
 	background-image: -moz-webkit-gradient(rgba(250, 250, 250, 1) 0%, rgba(210, 210, 210, 1) 100%);
 	background-image: -moz-linear-gradient(rgba(250, 250, 250, 1) 0%, rgba(210, 210, 210, 1) 100%);
 	background-image: -o-linear-gradient(rgba(250, 250, 250, 1) 0%, rgba(210, 210, 210, 1) 100%);
 	background-image: -ms-linear-gradient(rgba(250, 250, 250, 1) 0%, rgba(210, 210, 210, 1) 100%);
 	background-image: linear-gradient(rgba(250, 250, 250, 1) 0%, rgba(210, 210, 210, 1) 100%);
-	-moz-transition-property:color;
-	-moz-transition-duration:.2s;
-	-webkit-transition-property:color;
-	-webkit-transition-duration:.2s;
-	-o-transition-property:color;
-	-o-transition-duration:.2s;
-	-ms-transition-property:color;
-	-ms-transition-duration:.2s;
 	transition-property:color;
 	transition-duration:.2s;
 	margin-top:0px;
@@ -534,7 +510,7 @@ select:disabled
 	background-color:rgba(255, 255, 220, 1);
 	z-index:1000;
 	box-shadow: 5px 5px 3px rgba(0, 0, 0, 0.5);
-    border-radius:5px;
+    border-radius:15px;
     border:solid 1px #aaa;
 }
 
@@ -589,7 +565,7 @@ select:disabled
 .hover-shade
 {
     background-color:rgba(0,0,0,.0);
-    border-radius:5px;
+    border-radius:15px;
 	-webkit-animation-name: hover-shade-animation-off;
 	-webkit-animation-duration: .2s;
 	-webkit-animation-direction: normal;

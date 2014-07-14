@@ -3,6 +3,40 @@
 inspect=>@"documentation for magix.tiedown"
 
 
+magix.package.unpack-dox=>@"unpacks the specified [zip] file
+
+unpacks the specified [zip] file to the given [directory].  will 
+automatically overwrite existing files with similar names
+
+both [zip] and [directory] can be either expressions or constants
+
+[directory] may also contain formatting parameters, such as {0} and {1} which should 
+reference children of the [directory] node"
+
+magix.package.unpack-sample
+  magix.package.unpack
+    zip=>your-files/tmp/some-zip-file-zip
+    directory=>your-files/tmp
+
+
+magix.package.list-files-dox=>@"lists contents from the specified [zip] file
+
+lists all the contents inside of the specified [zip] file as [value]"
+
+magix.package.list-file-sample
+  magix.package.list-file
+    zip=>your-files/tmp/some-zip-file.zip
+
+
+magix.package.get-content-dox=>@"returns contents of zipped file
+
+returns contents of [zip] file's [file] as [value], without unpacking zip file"
+
+magix.package.get-content-sample
+  magix.package.get-content
+    zip=>your-files/tmp/some-zip-file.zip
+
+
 magix.viewport.page-load-dox=>@"executes the index.hl hyperlisp file
 
 loads and executes the index.hl hyperlisp file.  index.hl is an embedded resource 

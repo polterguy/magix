@@ -11,11 +11,7 @@
 
 * "console.log" feature for logging into a visible tracer-like tool
 
-* unit testing for sandboxing features
-
 * timed execution, hyperlisp executing at a specific datetime, and/or interval
-
-* refactor all active events to not take value parameters, such as set-viewstate
 
 * delete record in ms sql database manager button
 
@@ -33,8 +29,6 @@
 * make all controllers with non static event handlers sealed! verify!
 
 * verify that active event expressions don't bypass sandbox and max-execution-iterations
-
-* remove all ".Value as Node" and exchange with Get<Node>()
 
 * active event handler for OnLoad for all magix.forms.controls
 
@@ -75,10 +69,6 @@
 * make "magix.data." - transactional support for magix.execute.event/tunnel/override ....
 
 * active event to lock viewport to devices
-
-* pass in form-id into every control event handler
-
-* support controls without id in web part designer
 
 * use magix.data.save-username for last loaded/saved web part in web part designer and not viewstate
 

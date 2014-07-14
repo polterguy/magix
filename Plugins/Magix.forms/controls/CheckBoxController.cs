@@ -33,7 +33,7 @@ namespace Magix.forms
 			CheckBox ret = new CheckBox();
             FillOutParameters(e.Params, ret);
 
-            Node node = ip["_code"].Value as Node;
+            Node node = ip["_code"].Get<Node>();
 
             if (node.ContainsValue("checked"))
 				ret.Checked = node["checked"].Get<bool>();
