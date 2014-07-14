@@ -25,6 +25,8 @@ event
   code
     magix.forms.create-web-part
       form-id=>users
+      container=>content2
+      class=>span-17 last
       controls-file=>system42/private/users/users/controls.hl
       events-file=>system42/private/users/users/events.hl
 

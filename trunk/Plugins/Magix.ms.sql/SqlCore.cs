@@ -243,7 +243,7 @@ namespace Magix.ms.sql
             }
 
             ip["launch-microsoft-sql-server-manager"]["text"].Value = "ms sql query tool";
-            ip["launch-microsoft-sql-server-manager"]["category"].Value = "applications";
+            ip["launch-microsoft-sql-server-manager"]["category"].Value = "tools";
             ip["launch-microsoft-sql-server-manager"]["code"]["execute-script"]["file"].Value = "plugin:magix.file.load-from-resource";
             ip["launch-microsoft-sql-server-manager"]["code"]["execute-script"]["file"]["assembly"].Value = "Magix.ms.sql";
             ip["launch-microsoft-sql-server-manager"]["code"]["execute-script"]["file"]["resource-name"].Value = "Magix.ms.sql.hyperlisp.ms-sql-query.hl";

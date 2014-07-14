@@ -6,7 +6,10 @@
     AutoEventWireup="true" 
     Inherits="Magix.viewports.SingleContainer" %>
 
-<div class="container">
+<mux:Panel
+    runat="server"
+    Class="container"
+    id="container">
     <mux:Panel
 		runat="server"
 		id="confirmWrp"
@@ -21,14 +24,14 @@
 			<mux:Button
 				runat="server"
 				id="ok"
-				Class="info-message-ok large span-3"
+				Class="info-message-ok large span-3 bottom-1"
 				Value="OK"
                 OnEsc="CancelClick"
 				OnClick="OKClick" />
 			<mux:Button
 				runat="server"
 				id="cancel"
-				Class="info-message-cancel large span-3 last"
+				Class="info-message-cancel large span-3 bottom-1 last"
 				Value="Cancel"
                 AccessKey="C"
 				OnClick="CancelClick" />
@@ -43,4 +46,4 @@
         runat="server" 
         OnReload="dynamic_LoadControls"
         id="content" />
-</div>
+</mux:Panel>

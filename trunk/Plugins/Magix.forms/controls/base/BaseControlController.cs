@@ -340,13 +340,22 @@ namespace Magix.forms
             if (that is IValueControl)
                 node["$"]["value"].Value = (that as IValueControl).ControlValue;
 
-            Control tmp = that;
-            while (tmp != null && !(tmp is DynamicPanel))
+            Control container = that;
+            while (container != null && !(container is DynamicPanel))
             {
-                tmp = tmp.Parent;
+                container = container.Parent;
             }
-            if (tmp != null)
-                node["$"]["container"].Value = tmp.ID;
+            if (container != null)
+            {
+                node["$"]["container"].Value = container.ID;
+                Node getFormIdNode = new Node();
+                getFormIdNode["container"].Value = container.ID;
+                RaiseActiveEvent(
+                    "magix.forms.get-form-id",
+                    getFormIdNode);
+                if (getFormIdNode.ContainsValue("form-id"))
+                    node["$"]["form-id"].Value = getFormIdNode["form-id"].Value;
+            }
 
             node["$"]["id"].Value = that.ID;
         }

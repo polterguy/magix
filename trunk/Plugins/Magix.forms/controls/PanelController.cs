@@ -7,6 +7,7 @@
 using System;
 using System.IO;
 using System.Web.UI;
+using System.Collections.Generic;
 using Magix.Core;
 using Magix.UX.Widgets;
 using Magix.UX.Widgets.Core;
@@ -44,8 +45,21 @@ namespace Magix.forms
 
 			if (node.Contains("controls"))
 			{
+                Dictionary<string, int> _ids = new Dictionary<string, int>();
 				foreach (Node idxCtrlNode in node["controls"])
 				{
+                    if (idxCtrlNode.Value != null && idxCtrlNode.Get<string>().StartsWith("{"))
+                    {
+                        // auto assign id type of id
+                        string id = idxCtrlNode.Get<string>().Replace("{", "").Replace("}", "");
+                        if (!_ids.ContainsKey(id))
+                            _ids[id] = 0;
+                        else
+                            _ids[id] = _ids[id] + 1;
+                        id += _ids[id];
+                        idxCtrlNode.Value = id;
+                    }
+
 					string ctrlTypeName = idxCtrlNode.Name;
 
 					bool isControlName = true;

@@ -17,6 +17,7 @@ event
   code
     magix.forms.create-web-part
       form-id=>roles
+      container=>content2
       class=>span-17 last
       controls-file=>system42/private/users/roles/controls.hl
       events-file=>system42/private/users/roles/events.hl

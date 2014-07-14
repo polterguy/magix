@@ -32,7 +32,7 @@ namespace Magix.forms
 			Label ret = new Label();
             FillOutParameters(e.Params, ret);
 
-            Node node = ip["_code"].Value as Node;
+            Node node = ip["_code"].Get<Node>();
 
             if (node.ContainsValue("value"))
 				ret.Value = node["value"].Get<string>();

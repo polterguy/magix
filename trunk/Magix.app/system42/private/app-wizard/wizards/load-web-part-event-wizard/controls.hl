@@ -40,18 +40,21 @@ language file"
     label
       tag=>label
       class=>span-3 top-1
-      value=>load
-    select=>sel-load-from-where
-      class=>span-3 top-1
-      onselectedindexchanged
-        magix.wizard.create-load-from-where-web-part
-      items
-        database=>from database
-        filesystem=>from filesystem
-    dynamic=>dyn-load-from-where
-      class=>span-9 last top-1
-      onfirstload
-        magix.wizard.create-load-from-where-web-part
+      value=>load from
+    panel
+      class=>btn-group span-12 last
+      controls
+        select=>sel-load-from-where
+          class=>span-3 top-1
+          onselectedindexchanged
+            magix.wizard.create-load-from-where-web-part
+          items
+            database=>database
+            filesystem=>filesystem
+        dynamic=>dyn-load-from-where
+          class=>span-9 last top-1
+          onfirstload
+            magix.wizard.create-load-from-where-web-part
     link-button=>show-advanced
       class=>span-2 top-1
       value=>advanced

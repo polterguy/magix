@@ -32,7 +32,7 @@ namespace Magix.forms
 			Img ret = new Img();
             FillOutParameters(e.Params, ret);
 
-            Node node = ip["_code"].Value as Node;
+            Node node = ip["_code"].Get<Node>();
 
             if (node.ContainsValue("src"))
 				ret.Src = node["src"].Get<string>();

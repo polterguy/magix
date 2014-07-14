@@ -74,7 +74,7 @@ namespace Magix.forms
             base.FillOutParameters(pars, ctrl);
 
             Node ip = Ip(pars);
-            Node node = ip["_code"].Value as Node;
+            Node node = ip["_code"].Get<Node>();
             BaseWebControlFormElement that = ctrl as BaseWebControlFormElement;
 
             if (node.ContainsValue("accesskey"))

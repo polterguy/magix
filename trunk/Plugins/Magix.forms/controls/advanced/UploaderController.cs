@@ -54,8 +54,9 @@ namespace Magix.forms
 				ctrl.Uploaded += delegate(object sender2, EventArgs e2)
 				{
                     string directory = (sender2 as Uploader).Folder;
-                    SaveFile(directory, sender2);
+                    string fileName = SaveFile(directory, sender2);
                     FillOutEventInputParameters(codeNode, sender2);
+                    codeNode["$"]["filename"].Value = fileName;
                     RaiseActiveEvent(
 						"magix.execute",
 						codeNode);
@@ -74,7 +75,7 @@ namespace Magix.forms
         /*
          * helper for above
          */
-        private void SaveFile(string folder, object sender2)
+        private string SaveFile(string folder, object sender2)
         {
             Uploader that = sender2 as Uploader;
 
@@ -87,6 +88,7 @@ namespace Magix.forms
             {
                 stream.Write(content, 0, content.Length);
             }
+            return folder.Trim('/') + "/" + that.GetFileName();
         }
 
         /*

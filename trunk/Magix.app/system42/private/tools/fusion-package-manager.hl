@@ -1,0 +1,733 @@
+﻿
+
+inspect=>@"creates the package manager web part
+
+opens up the package manager web part, which allows you to install 
+and change existing applications in your system"
+
+
+// verifies user is in admin role
+magix.core.verify-role
+  role=>admin
+
+magix.viewport.include-client-file
+  type=>css
+  file=>media/back-end/file-uploader.css
+
+magix.forms.create-web-part
+  form-id=>package-manager
+  class=>span-15 last boxed air-padding desktop-widget top-1 package-manager
+  controls
+    label=>header
+      tag=>h3
+      class=>span-15 last bottom-1
+      value=>package manager
+    label=>description
+      class=>span-15 last
+      value=>@"from here you can install new applications, and administrate existing applications.&nbsp;&nbsp;to install a new application, drag and 
+drop its manifest.zip file into this form"
+    panel=>warning-panel
+      class=>boxed-light-red span-13 last air-padding top-1
+      onfirstload
+        magix.data.load-username
+          id=>magix.fusion-package-manager.dismiss-warning
+        if=>exist
+          lhs=>[magix.data.load-username][value]
+          code
+            magix.forms.set-visible
+              form-id=>package-manager
+              id=>warning-panel
+              value=>false
+      controls
+        label=>warning-label
+          tag=>label
+          class=>error span-13 last
+          value=>@"warning!!<br />do not install an application, unless you are dead certain about that you can trust its source!!&nbsp;&nbsp;
+    getting infected with malware with magix, is just as easy as with any other computer system, and even if you get an app from a friend whom you trust, 
+    your friend might not necessarily have picked up this app from a reliable source!&nbsp;&nbsp;be very careful with what you install, and if you can, 
+    view the code and try to figure out what it does before you install it!&nbsp;&nbsp;if your server becomes infected with viruses or trojan 
+    applications, all your data, and your entire system is basically compromised!!"
+        label=>warning-label-2
+          class=>span-13 last top-1
+          value=>@"as a general rule of thumb, you should not trust anything, unless it has beeen reviewed by a security paranoid magix developer expert 
+    friend of yours, and explicitly marked as safe by him or her!!<br/><br/>apps which have been marked as safe, might still be tampered with 
+to include viruses in the future.&nbsp;&nbsp;for your safety, you can upload manifest files and view their content before you choose to 
+install them, which is a safety precaution measurement<br/><br/><em>""only the paranoid survive""</em><br/><br/>ceo of intel"
+        button=>close-warning
+          class=>span-4 top-1 right last
+          value=>yada, yada, yada ...
+          onclick
+            magix.data.save-username
+              id=>magix.fusion-package-manager.dismiss-warning
+              value
+                dismiss=>true
+            magix.forms.set-visible
+              form-id=>package-manager
+              id=>warning-panel
+              value=>false
+    label=>installed-description
+      class=>span-4 top-1
+      tag=>label
+      value=>waiting to be installed
+    select=>select-app
+      class=>span-9 top-1
+      onfirstload
+        _items
+          _default=>choose manifest file ...
+        magix.file.list-files
+          directory=>your-files/waiting-to-be-installed-apps
+          filter=>*.manifest.zip
+        for-each=>[magix.file.list-files][files]
+          split=>[.].name
+            what=>/
+          add=>[/][_items]
+            value=>[.].name
+              value=>[@][split][result][>last].value
+        add=>[magix.forms.set-values][values]
+          values=>[_items]
+        magix.forms.set-values
+          form-id=>package-manager
+          id=>select-app
+      onselectedindexchanged
+        magix.viewport.clear-controls
+          container=>content3
+          reset-class=>true
+        magix.forms.get-value
+          form-id=>package-manager
+          id=>select-app
+        if=>equals
+          lhs=>[magix.forms.get-value][value].value
+          rhs=>_default
+          code
+            magix.viewport.clear-controls
+              container=>content2
+              reset-class=>true
+            stop
+        using=>magix.package
+          list-files
+            zip=>[$][value].value
+        for-each=>[using][list-files][files]
+          _lb
+            link-button=>{zip-file-}
+              class=>span-15 last
+              onclick
+                split=>[$][id].value
+                  what=>-
+                _id
+                set=>[_id].value
+                  value=>zip-file-content-{0}
+                    =>[split][result][>last].value
+                using=>magix.forms
+                  get-visible
+                    form-id=>zip-files
+                    id=>[_id].value
+                if=>equals
+                  lhs=>[using][get-visible][value].value
+                  rhs=>true
+                  code
+                    using=>magix.forms
+                      set-visible
+                        form-id=>zip-files
+                        id=>[_id].value
+                        value=>false
+                    stop
+                using=>magix.forms
+                  get-value
+                    form-id=>package-manager
+                    id=>select-app
+                  set-visible
+                    form-id=>zip-files
+                    id=>[_id].value
+                    value=>true
+                using=>magix.package
+                  get-content
+                    zip=>[using:1][get-value][value].value
+                    file=>[$][value].value
+                replace=>[using:2][get-content][value].value
+                  what=>&
+                  with=>&amp;
+                replace=>[using:2][get-content][value].value
+                  what=><
+                  with=>&lt;
+                replace=>[using:2][get-content][value].value
+                  what=>>
+                  with=>&gt;
+                using=>magix.forms
+                  set-value
+                    form-id=>zip-files
+                    id=>[_id].value
+                    value=>[using:2][get-content][value].value
+            label=>{zip-file-content-}
+              class=>span-15 last view-code bottom-1
+              style=>overflow-x:auto;
+              tag=>pre
+              visible=>false
+          set=>[@][_lb][link-button][value].value
+            value=>[.].name
+          if=>equals
+            lhs=>[.].name
+            rhs=>autorun.hl
+            code
+              set=>[/][_seen-autorun].value
+                value=>true
+          split=>[.].name
+            what=>.
+          switch=>[@][split][result][>last].value
+            case=>dll
+              if=>not-equals
+                lhs=>[/][_seen-binary].value
+                rhs=>true
+                code
+                  set=>[/][_seen-binary].value
+                    value=>true
+                  magix.forms.set-class
+                    id=>container
+                    value=>container major-warning
+                  magix.viewport.confirm
+                    message=>@"this manifest contains one or more binary files, which is impossible for me to determine whether or not contains 
+malicious code or not.&nbsp;&nbsp;it might be perfectly safe to install, but do so only if you completely trust the source which gave you 
+this manifest!!"
+                    code
+                      magix.forms.set-class
+                        id=>container
+                        value=>container
+                      magix.forms.set-value
+                        form-id=>zip-files
+                        id=>warning-label-for-file
+                        value=>@"this manifest contains one or more binary files, which makes it impossible for me to analyze the file to see if it 
+contains malicious code or not.&nbsp;&nbsp;only install this manifest if you completely trust the source that gave it to you!!"
+                      magix.viewport.clear-controls
+                        container=>content3
+                  magix.forms.create-web-part
+                    container=>content3
+                    controls
+                      label
+                        tag=>audio
+                        @src=>media/audio/siren.wav
+                        @loop=>true
+                        @volume=>1.0
+                        @autoplay=>true
+          add=>[/][_controls][panel][controls]
+            values=>[@][_lb]
+        if=>not-equals
+          lhs=>[/][_seen-autorun].value
+          rhs=>true
+          code
+            set=>[/][**_controls][**button=>install-app][disabled].value
+              value=>true
+            set=>[/][**_controls][**label=>no-autorun][visible].value
+              value=>true
+        _controls
+          label=>files-description
+            class=>span-15 last bottom-1
+            tag=>h3
+            value=>files in package
+          panel=>pnl-files-wrp
+            class=>span-15 last
+            controls
+          label=>warning-label-for-file
+            class=>error span-15 last top-1
+          label=>no-autorun
+            class=>error span-15 last top-1
+            visible=>false
+            value=>this file contains no 'autorun.hl' file, and hence is not a working manifest!
+          panel=>sel-wrp
+            class=>span-12 last right btn-group
+            controls
+              button=>delete-app
+                class=>span-4 top-1 last
+                value=>delete app
+                onclick
+                  magix.viewport.confirm
+                    message=>are you sure you wish to permanently delete this application?
+                    code
+                      magix.forms.get-value
+                        form-id=>package-manager
+                        id=>select-app
+                      using=>magix.file
+                        delete
+                          file=>[magix.forms.get-value][value].value
+                      using=>magix.viewport
+                        show-message
+                          message=>the manifesto file '{0}' was deleted from disc
+                            =>[magix.forms.get-value][value].value
+                          time=>5000
+                      magix.viewport.clear-controls
+                        reset-class=>true
+                        all=>true
+                      execute-script
+                        file=>system42/private/tools/fusion-package-manager.hl
+              button=>analyze-app
+                class=>span-4 top-1
+                value=>analyze app
+                onclick
+                  magix.forms.get-value
+                    form-id=>package-manager
+                    id=>select-app
+                  set=>[magix.package.analyze-app][file].value
+                    value=>[magix.forms.get-value][value].value
+                  magix.package.analyze-app
+                  set=>[**label=>manifest-file-name][value].value
+                    value=>[magix.forms.get-value][value].value
+                  set=>[**label=>description-from-developer][value].value
+                    value=>[magix.package.analyze-app][result][developer-description].value
+                  set=>[**label=>file-count][value].value
+                    value=>[magix.package.analyze-app][result][file-count].value
+                  set=>[**label=>hyperlisp-count][value].value
+                    value=>{0} lines of code
+                      =>[magix.package.analyze-app][result][hyperlisp-lines-of-code].value
+                  for-each=>[magix.package.analyze-app][result][filetypes]
+                    _lb
+                      label
+                        class=>span-15 last
+                    set=>[@][_lb][label][value].value
+                      value=>there are {0} files of type '{1}'
+                        =>[.].value
+                        =>[.].name
+                    add=>[/][**panel=>filetypes][controls]
+                      values=>[@][_lb]
+                  set=>[**label=>keyword-count][value].value
+                    value=>{0} unique node names
+                      =>[magix.package.analyze-app][result][hyperlisp].count
+                  for-each=>[magix.package.analyze-app][result][events]
+                    _lb
+                      label
+                        class=>span-15 last
+                    set=>[@][_lb][label][value].value
+                      value=>{0}
+                        =>[.].name
+                    add=>[/][**panel=>events][controls]
+                      values=>[@][_lb]
+                  if=>not-exist
+                    lhs=>[magix.package.analyze-app][result][errors]
+                    code
+                      set=>[/][**label=>label-errors]
+                  for-each=>[magix.package.analyze-app][result][errors]
+                    _lb
+                      label
+                        class=>span-15 last error bottom-1
+                    set=>[@][_lb][label][value].value
+                      value=>{0}
+                        =>[.].value
+                    add=>[/][**panel=>errors][controls]
+                      values=>[@][_lb]
+                  if=>not-exist
+                    lhs=>[magix.package.analyze-app][result][warnings]
+                    code
+                      set=>[/][**label=>label-warnings]
+                  for-each=>[magix.package.analyze-app][result][warnings]
+                    _lb
+                      label
+                        class=>span-15 last bottom-1
+                    set=>[@][_lb][label][value].value
+                      value=><strong>{1}</strong>: {0}
+                        =>[.].value
+                        =>[.].name
+                    add=>[/][**panel=>warnings][controls]
+                      values=>[@][_lb]
+                  if=>not-exist
+                    lhs=>[magix.package.analyze-app][result][information]
+                    code
+                      set=>[/][**label=>label-information]
+                  for-each=>[magix.package.analyze-app][result][information]
+                    _lb
+                      label
+                        class=>span-15 last bottom-1
+                    set=>[@][_lb][label][value].value
+                      value=>{0}
+                        =>[.].value
+                    add=>[/][**panel=>information][controls]
+                      values=>[@][_lb]
+                  if=>exist
+                    lhs=>[magix.package.analyze-app][result][errors]
+                    code
+                      set=>[/][**label=>recommendation][value].value
+                        value=>this file contains errors, and hence cannot be installed on your system!!
+                  else-if=>not-equals
+                    lhs=>[magix.package.analyze-app][result][warnings].count
+                    rhs=>0
+                    code
+                      set=>[/][**label=>recommendation][value].value
+                        value=>@"this file contains warnings, and you should not proceed unless you either trust its developer and distributor, 
+or you have gone through all the files being warned against, and made sure that they do not do any harm to your system!!"
+                  else
+                    set=>[/][**label=>recommendation][value].value
+                      value=>@"this file seems to be ok, but that does not nexessarily mean it is!&nbsp;&nbsp;this automated analyze feature 
+of manifest packages, does not cover all possible scenarios for potential threats, and as a general rule, you should never install packages 
+that you have received from sources you do not trust!"
+                  for-each=>[magix.package.analyze-app][result][constructs]
+                    switch=>[.].name
+                      case=>threading
+                        _lb
+                          label
+                            class=>span-15 last bottom-1
+                        set=>[@][_lb][label][value].value
+                          value=>@"this app uses <strong>threading</strong>.&nbsp;&nbsp;threading is the possibility of creating new threads, 
+having code being executed in parallel.&nbsp;&nbsp;this increases the responsiveness of apps in general, but also makes your applications more 
+difficult to understand"
+                        add=>[/][**panel=>constructs][controls]
+                          values=>[@][_lb]
+                      case=>exceptions
+                        _lb
+                          label
+                            class=>span-15 last bottom-1
+                        set=>[@][_lb][label][value].value
+                          value=>@"this app uses <strong>exceptions</strong>.&nbsp;&nbsp;exceptions are a way to handle errors in a structured 
+manner, facilitating for more clear code, and easier to maintain apps"
+                        add=>[/][**panel=>constructs][controls]
+                          values=>[@][_lb]
+                      case=>script-execution
+                        _lb
+                          label
+                            class=>span-15 last bottom-1
+                        set=>[@][_lb][label][value].value
+                          value=>@"this app executes <strong>scripts</strong>.&nbsp;&nbsp;this means that the application is executing 
+hyperlisp scripts on your system, either dynamically created, or hyperlisp files on your disc"
+                        add=>[/][**panel=>constructs][controls]
+                          values=>[@][_lb]
+                      case=>open
+                        _lb
+                          label
+                            class=>span-15 last bottom-1
+                        set=>[@][_lb][label][value].value
+                          value=>@"this app <strong>opens up</strong> active events.&nbsp;&nbsp;this ties your server together with other 
+servers, making it become stronger in features, but also significantly increases the attack surface of your system"
+                        add=>[/][**panel=>constructs][controls]
+                          values=>[@][_lb]
+                      case=>tunneling
+                        _lb
+                          label
+                            class=>span-15 last bottom-1
+                        set=>[@][_lb][label][value].value
+                          value=>@"this app <strong>tunnels</strong> active events.&nbsp;&nbsp;this ties your server together with other 
+servers, making it become stronger in features, but also significantly increases the attack surface of your system"
+                        add=>[/][**panel=>constructs][controls]
+                          values=>[@][_lb]
+                      case=>remoting
+                        _lb
+                          label
+                            class=>span-15 last bottom-1
+                        set=>[@][_lb][label][value].value
+                          value=>@"this app uses <strong>remote</strong> active events.&nbsp;&nbsp;this ties your server together with other 
+servers, making it become stronger in features, but might also pose security issues for you"
+                        add=>[/][**panel=>constructs][controls]
+                          values=>[@][_lb]
+                      case=>overriding
+                        _lb
+                          label
+                            class=>span-15 last bottom-1
+                        set=>[@][_lb][label][value].value
+                          value=>@"this app <strong>overrides</strong> active events.&nbsp;&nbsp;this means it changes the implementation of 
+active events inside of your system"
+                        add=>[/][**panel=>constructs][controls]
+                          values=>[@][_lb]
+                      case=>session
+                        _lb
+                          label
+                            class=>span-15 last bottom-1
+                        set=>[@][_lb][label][value].value
+                          value=>@"this app uses <strong>sessions</strong>.&nbsp;&nbsp;the session object, is a place where you can store 
+data on a per user basis"
+                        add=>[/][**panel=>constructs][controls]
+                          values=>[@][_lb]
+                      case=>viewstate
+                        _lb
+                          label
+                            class=>span-15 last bottom-1
+                        set=>[@][_lb][label][value].value
+                          value=>@"this app uses the <strong>viewstate</strong>.&nbsp;&nbsp;the viewstate object, is a place where you can store 
+data such that it is available until the page is reloaded, or the user leaves the page somehow"
+                        add=>[/][**panel=>constructs][controls]
+                          values=>[@][_lb]
+                      case=>data
+                        _lb
+                          label
+                            class=>span-15 last bottom-1
+                        set=>[@][_lb][label][value].value
+                          value=>@"this app uses <strong>magix.data</strong>.&nbsp;&nbsp;this means that it saves, loads, or removes objects 
+from your database"
+                        add=>[/][**panel=>constructs][controls]
+                          values=>[@][_lb]
+                      case=>loops
+                        _lb
+                          label
+                            class=>span-15 last bottom-1
+                        set=>[@][_lb][label][value].value
+                          value=>@"this app uses <strong>loops</strong>.&nbsp;&nbsp;loops are a way to iterate over sets of data"
+                        add=>[/][**panel=>constructs][controls]
+                          values=>[@][_lb]
+                      case=>branching
+                        _lb
+                          label
+                            class=>span-15 last bottom-1
+                        set=>[@][_lb][label][value].value
+                          value=>@"this app uses <strong>branching</strong>.&nbsp;&nbsp;branching is a way to conditionally execute 
+code according to some comparison criteria through the use of [if], [else-if] or [else] statements"
+                        add=>[/][**panel=>constructs][controls]
+                          values=>[@][_lb]
+                      case=>switch
+                        _lb
+                          label
+                            class=>span-15 last bottom-1
+                        set=>[@][_lb][label][value].value
+                          value=>@"this app uses <strong>switching</strong>.&nbsp;&nbsp;switching is a way to conditionally execute 
+code according to the value or name of a node"
+                        add=>[/][**panel=>constructs][controls]
+                          values=>[@][_lb]
+                      case=>code
+                        _lb
+                          label
+                            class=>span-15 last bottom-1
+                        set=>[@][_lb][label][value].value
+                          value=>@"this app uses <strong>code-2-node or node-2-code</strong>.&nbsp;&nbsp;this is a useful way to 
+change from text to code, or vice versa, but may also mean that the application is dynamically creating code to execute, in an attempt 
+to try to hide malicious code from the analyzer"
+                        add=>[/][**panel=>constructs][controls]
+                          values=>[@][_lb]
+                      case=>files
+                        _lb
+                          label
+                            class=>span-15 last bottom-1
+                        set=>[@][_lb][label][value].value
+                          value=>@"this app accesses your <strong>filesystem</strong>.&nbsp;&nbsp;this means it can either load or save 
+files on your disc.&nbsp;&nbsp;this means it can access either your database or any other files on your system.&nbsp;&nbsp;you should 
+carefully examine the application to find out which files it is loading and/or saving to, to make sure it does not do anything malicious"
+                        add=>[/][**panel=>constructs][controls]
+                          values=>[@][_lb]
+                      case=>debugger
+                        _lb
+                          label
+                            class=>span-15 last bottom-1
+                        set=>[@][_lb][label][value].value
+                          value=>@"this app uses your <strong>debugger</strong>.&nbsp;&nbsp;this means that the application is probably 
+not yet finished"
+                        add=>[/][**panel=>constructs][controls]
+                          values=>[@][_lb]
+                      case=>hyperlisp
+                        _lb
+                          label
+                            class=>span-15 last bottom-1
+                        set=>[@][_lb][label][value].value
+                          value=>@"this app uses <strong>hyperlisp</strong>.&nbsp;&nbsp;hyperlisp is a programming language which is 
+unique for magix, and at the core of everything that you can do with magix"
+                        add=>[/][**panel=>constructs][controls]
+                          values=>[@][_lb]
+                      case=>mml
+                        _lb
+                          label
+                            class=>span-15 last bottom-1
+                        set=>[@][_lb][label][value].value
+                          value=>@"this app uses <strong>magix markup language</strong>.&nbsp;&nbsp;magix markup language is a superset 
+of html, and allows for creation of server-side controls and web controls, inline into the html itself.&nbsp;&nbsp;these server side controls, 
+can contain logic which is to be executed on the server instead of on the client, and hence will be rendered as controls, where their 
+code will never reach the client's browser"
+                      case=>html
+                        _lb
+                          label
+                            class=>span-15 last bottom-1
+                        set=>[@][_lb][label][value].value
+                          value=>@"this app uses <strong>html</strong>.&nbsp;&nbsp;html, or hyper text markup language, is at the core of the world 
+wide web, and what allows you to read this text"
+                        add=>[/][**panel=>constructs][controls]
+                          values=>[@][_lb]
+                      case=>javascript
+                        _lb
+                          label
+                            class=>span-15 last bottom-1
+                        set=>[@][_lb][label][value].value
+                          value=>@"this app uses <strong>javascript</strong>.&nbsp;&nbsp;javascript is a way to execute code on the client's browser, 
+and often used to build rich functionality.&nbsp;&nbsp;it may also however be used to inject malicious code into your browser, or people visiting your 
+website's browser.&nbsp;&nbsp;there is no ways i can analyze javascript for potential dangers, hence you should only install this application if 
+you understand its risks, or have received it from a source you are dead certain about is safe!!"
+                        add=>[/][**panel=>constructs][controls]
+                          values=>[@][_lb]
+                      case=>binary
+                        _lb
+                          label
+                            class=>span-15 last bottom-1
+                        set=>[@][_lb][label][value].value
+                          value=>@"this app contains <strong>binary files</strong>.&nbsp;&nbsp;binary files are a way to create code in magix which 
+cannot for some reasons be created using hyperlisp.&nbsp;&nbsp;this allows developers to create functionality which does not exist in magix out 
+of the box.&nbsp;&nbsp;binary files are also however a severe security risk, and you should only install this application if you are dead certain 
+about thet you can trust its source!!&nbsp;&nbsp;preferably, you should see the source code for your binary files, and if you can, comnpile and 
+distribute them yourself, to be 100% certain about that you do not install malicious code on your system!!"
+                        add=>[/][**panel=>constructs][controls]
+                          values=>[@][_lb]
+                      case=>css
+                        _lb
+                          label
+                            class=>span-15 last bottom-1
+                        set=>[@][_lb][label][value].value
+                          value=>@"this app contains <strong>stylesheets</strong>.&nbsp;&nbsp;stylesheeets, or css, is a way to separate logic 
+from data on the world wide web.&nbsp;&nbsp;normally a css file poses no risk"
+                        add=>[/][**panel=>constructs][controls]
+                          values=>[@][_lb]
+                      case=>images
+                        _lb
+                          label
+                            class=>span-15 last bottom-1
+                        set=>[@][_lb][label][value].value
+                          value=>@"this app contains <strong>images</strong>"
+                        add=>[/][**panel=>constructs][controls]
+                          values=>[@][_lb]
+                  _controls
+                    label=>manifest-file-name
+                      class=>span-15 last
+                      tag=>h3
+                    label
+                      class=>span-15 last top-1
+                      tag=>label
+                      value=>developer's description
+                    label=>description-from-developer
+                      tag=>pre
+                      class=>span-15 last no-code
+                    label
+                      class=>span-2 top-1
+                      tag=>label
+                      value=>no. files
+                    label=>file-count
+                      class=>span-2 clear
+                    label
+                      class=>span-2 top-1 clear
+                      tag=>label
+                      value=>hyperlisp
+                    label=>hyperlisp-count
+                      class=>span-4 clear
+                    label
+                      class=>span-15 last top-1 clear
+                      tag=>label
+                      value=>filetypes
+                    panel=>filetypes
+                      class=>span-15 last
+                      controls
+                    label
+                      class=>span-2 top-1
+                      tag=>label
+                      value=>keywords
+                    label=>keyword-count
+                      class=>span-5 clear
+                    label
+                      class=>span-15 last top-1 clear
+                      tag=>label
+                      value=>events created
+                    panel=>events
+                      class=>span-15 last
+                      controls
+                    label=>label-errors
+                      class=>span-15 last top-2 clear bottom-1
+                      tag=>h3
+                      value=>errors
+                    panel=>errors
+                      class=>span-15 last
+                      controls
+                    label=>label-warnings
+                      class=>span-15 last top-1 clear bottom-1
+                      tag=>h3
+                      value=>warnings
+                    panel=>warnings
+                      class=>span-15 last
+                      controls
+                    label=>label-information
+                      class=>span-15 last top-1 clear bottom-1
+                      tag=>h3
+                      value=>information
+                    panel=>information
+                      class=>span-15 last
+                      controls
+                    label=>label-constructs
+                      class=>span-15 last top-1 clear bottom-1
+                      tag=>h3
+                      value=>constructs used in application
+                    panel=>constructs
+                      class=>span-15 last
+                      controls
+                    label
+                      class=>span-15 last top-1 clear
+                      tag=>h3
+                      value=>recommendation
+                    label=>recommendation
+                      class=>span-15 last top-1 clear
+                      value=>recommendation
+                    button=>close-analyze
+                      class=>span-6 last right top-1
+                      value=>yada, yada, yada ...
+                      onclick
+                        magix.viewport.clear-controls
+                          container=>content3
+                          reset-class=>true
+                  using=>magix.forms
+                    create-web-part
+                      container=>content3
+                      class=>span-15 air-padding last right boxed-light-green top-1
+                      controls=>[_controls]
+              button=>install-app
+                class=>span-4 top-1
+                value=>install app
+                onclick
+                  magix.viewport.confirm
+                    message=>@"are you sure you wish to install this application?&nbsp;&nbsp;unless you trust the source of this application, 
+installing it might permanently destroy your system, and compromise your data"
+                    code
+                      magix.date.now
+                      replace=>[magix.date.now][value].value
+                        what=>.
+                      replace=>[magix.date.now][value].value
+                        what=>:
+                      replace=>[magix.date.now][value].value
+                        what=>@" "
+                      using=>magix.file
+                        create-directory
+                          directory=>your-files/tmp/installing-app-{0}
+                            =>[magix.date.now][value].value
+                      magix.forms.get-value
+                        form-id=>package-manager
+                        id=>select-app
+                      using=>magix.package
+                        unpack
+                          zip=>[magix.forms.get-value][value].value
+                          directory=>your-files/tmp/installing-app-{0}
+                            =>[magix.date.now][value].value
+                      add=>[execute-script][params]
+                        value=>directory
+                          value=>your-files/tmp/installing-app-{0}
+                            =>[magix.date.now][value].value
+                      execute-script
+                        file=>your-files/tmp/installing-app-{0}/autorun.hl
+                          =>[magix.date.now][value].value
+                      split=>[magix.forms.get-value][value].value
+                        what=>/
+                      using=>magix.file
+                        move-file
+                          from=>[magix.forms.get-value][value].value
+                          to=>my-files/public-applications/{0}
+                            =>[split][result][>last].value
+                      magix.viewport.show-message
+                        message=>@"the application manifest was installed, and its manifest file was put into your server's public directory, 
+such that your app may be shared with your friends, and have them help you improve it, and find security issues, and bugs in it"
+                        time=>7000
+                        color=>#aaffaa
+                      magix.viewport.clear-controls
+                        all=>true
+                        reset-class=>true
+                      execute-script
+                        file=>system42/private/tools/fusion-package-manager.hl
+        using=>magix.forms
+          create-web-part
+            container=>content2
+            class=>span-15 right boxed-light-green air-padding last top-1
+            form-id=>zip-files
+            controls=>[_controls]
+    uploader=>upload-manifest
+      class=>mux-file-uploader
+      directory=>your-files/waiting-to-be-installed-apps
+      onuploaded
+        magix.viewport.clear-controls
+          all=>true
+          reset-class=>true
+        execute-script
+          file=>system42/private/tools/fusion-package-manager.hl
+        magix.viewport.show-message
+          message=>@"manifest file(s) was uploaded, choose the files you wish to install from the select drop-down box"
+          time=>5000
+          color=>#aaffaa
+

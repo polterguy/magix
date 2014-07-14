@@ -522,7 +522,7 @@ namespace Magix.Core
                 // this is a concatenated expression, returning a Node list, where we wish to directly 
                 // access another node inside of the node by reference
                 string innerLastReference = "";
-                Node x2 = idxNode.Value as Node;
+                Node x2 = idxNode.Get<Node>();
                 if (x2 == null)
                 {
                     // value of node is probably a string, try to convert it to a node first

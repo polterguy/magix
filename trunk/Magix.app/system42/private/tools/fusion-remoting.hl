@@ -41,7 +41,7 @@ magix.forms.create-web-part
                   id=>lbl-header
                 if=>equals
                   lhs=>[magix.forms.get-value][value].value
-                  rhs=>magix.public.get-public-events
+                  rhs=>magix.public.server-discovery
                   code
                     magix.viewport.show-message
                       message=>i cannot allow you to close that event, except through the hyperlisp executor!
@@ -318,7 +318,7 @@ magix.forms.create-web-part
                 try
                   code
                     remote
-                      name=>magix.public.get-public-events
+                      name=>magix.public.server-discovery
                       url=>[magix.forms.get-value][value].value
                     replace=>[@][remote][params][name].value
                       what=>&

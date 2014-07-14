@@ -33,7 +33,7 @@ namespace Magix.forms
 			TextBox ret = new TextBox();
             FillOutParameters(e.Params, ret);
 
-            Node node = ip["_code"].Value as Node;
+            Node node = ip["_code"].Get<Node>();
 
             if (node.ContainsValue("autocapitalize"))
 				ret.AutoCapitalize = node["autocapitalize"].Get<bool>();

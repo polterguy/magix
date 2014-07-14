@@ -228,12 +228,20 @@ magix.wizard.create-active-event
   _data
     event
       name=>{active-event-name}
+      inspect=>@"wizard generated load web part active event
+
+active event that loads up the '{0}' web part from the database"
+        =>{database-id}
       code
         magix.forms.create-web-part
           controls-id=>{database-id}
   _data2
     event
       name=>{active-event-name}
+      inspect=>@"wizard generated load web part active event
+
+active event that loads up the '{0}' web part from the filesystem"
+        =>{filename}
       code
         magix.forms.create-web-part
           controls-file=>{filename}

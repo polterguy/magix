@@ -73,9 +73,30 @@ returns the default dashboard shortcuts in your system"
                   class=>span-2
                   onclick
                     magix.tests.run
+      qr-codes
+        text=>vanity qr codes
+        category=>tools
+        code
+          magix.viewport.clear-controls
+            all=>true
+          execute-script
+            file=>system42/private/tools/qr-code-generator.hl
+      active-events
+        text=>all active events
+        category=>tools
+        code
+          magix.viewport.clear-controls
+            all=>true
+          execute-script
+            file=>system42/private/tools/inspect.hl
+            params
+              has-search=>true
+              description-class=>span-9
+              list-class=>span-8 last
+              header=>active events
       overridden-active-events
         text=>dynamic active events
-        category=>security
+        category=>tools
         code
           event
             // to support recursive calling of self ...
@@ -133,20 +154,6 @@ returns the default dashboard shortcuts in your system"
                           container=>content2
                           class=>span-17 left-5 last top-2
           magix.event.view-overridden-active-events
-
-      active-events
-        text=>all active events
-        category=>tools
-        code
-          magix.viewport.clear-controls
-            all=>true
-          execute-script
-            file=>system42/private/tools/inspect.hl
-            params
-              has-search=>true
-              description-class=>span-9
-              list-class=>span-8 last
-              header=>active events
       fusion-remoting
         text=>fusion remoting
         category=>security
@@ -155,22 +162,14 @@ returns the default dashboard shortcuts in your system"
             all=>true
           execute-script
             file=>system42/private/tools/fusion-remoting.hl
-      edit-users
-        text=>edit users
+      authentication-authorization
+        text=>authentication and authorization
         category=>security
         code
           magix.viewport.clear-controls
             all=>true
           execute-script
-            file=>system42/private/users/users.hl
-      edit-roles
-        text=>edit roles
-        category=>security
-        code
-          magix.viewport.clear-controls
-            all=>true
-          execute-script
-            file=>system42/private/users/roles.hl
+            file=>system42/private/users/authentication-authorization.hl
       settings
         text=>settings
         category=>tools
@@ -319,6 +318,14 @@ returns the default dashboard shortcuts in your system"
             all=>true
           execute-script
             file=>system42/private/web-part-builder/builder.hl
+      package-manager
+        text=>fusion package manager
+        category=>applications
+        code
+          magix.viewport.clear-controls
+            all=>true
+          execute-script
+            file=>system42/private/tools/fusion-package-manager.hl
       help-link
         text=>help
         category=>learn
@@ -327,14 +334,6 @@ returns the default dashboard shortcuts in your system"
             file=>system42/private/help/start-help.hl
           magix.browser.scroll
             id=>help
-      qr-codes
-        text=>vanity qr codes
-        category=>applications
-        code
-          magix.viewport.clear-controls
-            all=>true
-          execute-script
-            file=>system42/private/tools/qr-code-generator.hl
     for-each=>[_scripts]
       add=>[$]
         value=>[.]

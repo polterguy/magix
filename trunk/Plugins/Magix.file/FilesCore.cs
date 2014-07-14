@@ -118,6 +118,8 @@ namespace Magix.execute
                 throw new ArgumentException("you need to supply which file to load as the [file] parameter");
 
             string filepath = Expressions.GetExpressionValue<string>(ip["file"].Get<string>(), dp, ip, false);
+            if (ip["file"].Count > 0)
+                filepath = Expressions.FormatString(dp, ip, ip["file"], filepath);
 
 			if (filepath.StartsWith("plugin:"))
             {
@@ -168,6 +170,10 @@ namespace Magix.execute
             if (!file.Contains(":"))
                 file = _basePath + file;
 
+            // changing its attributes before if it is read only
+            if (File.Exists(file) && new FileInfo(file).IsReadOnly)
+                File.SetAttributes(file, FileAttributes.Normal);
+
             if (ip.ContainsValue("value"))
             {
                 string fileContent = Expressions.GetExpressionValue<string>(ip["value"].Get<string>(), dp, ip, false);
@@ -181,7 +187,7 @@ namespace Magix.execute
             }
             else
             {
-                // Deletes an existing file
+                // deletes an existing file
                 File.Delete(file);
             }
 		}
@@ -214,6 +220,8 @@ namespace Magix.execute
                 throw new ArgumentException("you need to tell the engine which file to move as the value of the [from]");
 
             string from = Expressions.GetExpressionValue<string>(ip["from"].Get<string>(), dp, ip, false);
+            if (ip["from"].Count > 0)
+                from = Expressions.FormatString(dp, ip, ip["from"], from);
             if (!from.Contains(":"))
                 from = _basePath + from;
 
@@ -221,9 +229,17 @@ namespace Magix.execute
                 throw new ArgumentException("you need to define where to move file to, as [to] node");
 
             string to = Expressions.GetExpressionValue<string>(ip["to"].Get<string>(), dp, ip, false);
+            if (ip["to"].Count > 0)
+                to = Expressions.FormatString(dp, ip, ip["to"], to);
             if (!to.Contains(":"))
                 to = _basePath + to;
 
+            if (File.Exists(to))
+            {
+                if (new FileInfo(to).IsReadOnly)
+                    File.SetAttributes(to, FileAttributes.Normal);
+                File.Delete(to);
+            }
             File.Move(from, to);
         }
 
@@ -253,19 +269,21 @@ namespace Magix.execute
 
             if (!ip.ContainsValue("from"))
                 throw new ArgumentException("you need to tell the engine which file to copy as the value of the [from]");
-
             string from = Expressions.GetExpressionValue<string>(ip["from"].Get<string>(), dp, ip, false);
+            if (ip["from"].Count > 0)
+                from = Expressions.FormatString(dp, ip, ip["from"], from);
             if (!from.Contains(":"))
                 from = _basePath + from;
 
             if (!ip.ContainsValue("to"))
                 throw new ArgumentException("you need to define which file to copy to, as [to] node");
-
             string to = Expressions.GetExpressionValue<string>(ip["to"].Get<string>(), dp, ip, false);
+            if (ip["to"].Count > 0)
+                to = Expressions.FormatString(dp, ip, ip["to"], to);
             if (!to.Contains(":"))
                 to = _basePath + to;
 
-            File.Copy(from, to);
+            File.Copy(from, to, true);
         }
 
         /*

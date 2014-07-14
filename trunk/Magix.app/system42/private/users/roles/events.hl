@@ -99,18 +99,18 @@ magix.role.edit-role
         tag=>h3
         value=>edit role
 
+      label
+        tag=>label
+        class=>span-3 top-1
+        value=>add child role
       panel=>new-role-wrapper
-        class=>span-10 last top-1
+        class=>span-7 last top-1 btn-group
         default=>save
         onesc
           magix.viewport.clear-controls
             container=>edit-role
             reset-class=>true
         controls
-          label
-            tag=>label
-            class=>span-3
-            value=>add child role
           text-box=>txt-role-name
             class=>span-5
             placeholder=>new role name ...
@@ -130,8 +130,8 @@ magix.role.edit-role
                 parent
 
       button=>delete
-        class=>span-2 top-1
-        value=>delete
+        class=>span-3 right last top-1
+        value=>delete role
         onclick
           set=>[**role].value
             value=>[$][info].value

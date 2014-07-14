@@ -9,7 +9,7 @@
 <mux:Panel
     runat="server"
 	Class="container"
-    id="wrp">
+    id="container">
     <mux:Label
 		runat="server"
 		id="messageSmall"
@@ -34,14 +34,14 @@
 			<mux:Button
 				runat="server"
 				id="ok"
-				Class="info-message-ok large span-3"
+				Class="info-message-ok large span-3 bottom-1"
 				Value="OK"
                 OnEsc="CancelClick"
 				OnClick="OKClick" />
 			<mux:Button
 				runat="server"
 				id="cancel"
-				Class="info-message-cancel large span-3 last"
+				Class="info-message-cancel large span-3 last bottom-1"
 				Value="Cancel"
                 AccessKey="C"
 				OnClick="CancelClick" />

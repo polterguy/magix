@@ -1,0 +1,40 @@
+
+
+inspect=>@"allows for editing users and roles
+
+creates a web part that allows the user to edit users and roles"
+
+
+// verifies user is in admin role
+magix.core.verify-role
+  role=>admin
+
+magix.forms.create-web-part
+  form-id=>authentication-authorization
+  controls
+    panel=>wrp
+      class=>span-15 last boxed air-padding desktop-widget top-1 users
+      controls
+        label
+          tag=>h3
+          class=>span-15 last
+          value=>authentication and authorization
+        label
+          class=>span-15 last top-1
+          value=>from here you can change authentication and authorization within your system by editing your users and roles
+        panel=>wrp-btn
+          class=>span-8 left-3 last btn-group top-1
+          controls
+            button=>edit-users
+              class=>span-4
+              value=>edit users
+              onclick
+                execute-script
+                  file=>system42/private/users/users.hl
+            button=>edit-roles
+              class=>span-4
+              value=>edit roles
+              onclick
+                execute-script
+                  file=>system42/private/users/roles.hl
+

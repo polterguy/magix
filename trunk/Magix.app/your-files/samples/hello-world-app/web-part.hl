@@ -1,0 +1,34 @@
+﻿
+
+inspect=>@"contains web part for hello world sample application
+
+basically just asks user for name, and shows a message box saying; 'hello there x'"
+
+
+panel=>wrp
+  class=>span-8 left-6 top-5 air-padding boxed-light-green
+  default=>show-hello
+  controls
+    label=>lbl-name
+      class=>span-8 last
+      tag=>h2
+      value=>give me your name
+    text-box=>txt-name
+      class=>span-8 last large
+      placeholder=>your name please ...
+      onfirstload
+        using=>magix.forms
+          effect
+            id=>[$][id].value
+            type=>focus-and-select
+    button=>show-hello
+      class=>span-3 last right large
+      value=>ok
+      onclick
+        magix.forms.get-value
+          id=>txt-name
+        using=>magix.viewport
+          show-message
+            message=>hello there {0}
+              =>[magix.forms.get-value][value].value
+

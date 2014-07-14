@@ -108,12 +108,15 @@ namespace Magix.execute
             if (!ip.ContainsValue("directory"))
                 throw new ArgumentException("[create-directory] needs a [directory] argument to know where to create the directory");
             string path = Expressions.GetExpressionValue<string>(ip["directory"].Get<string>(), dp, ip, false);
+            if (ip["directory"].Count > 0)
+                path = Expressions.FormatString(dp, ip, ip["directory"], path);
 
             if (!path.Contains(":"))
                 path = _basePath + path;
 
-			Directory.CreateDirectory(path);
-		}
+            if (!Directory.Exists(path))
+                Directory.CreateDirectory(path);
+        }
 
 		/*
 		 * deletes the current directory

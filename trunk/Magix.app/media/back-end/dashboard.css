@@ -2,7 +2,7 @@
 
 .view-code
 {
-    border-radius:5px;
+    border-radius:15px;
     overflow:hidden;
 }
 
@@ -60,5 +60,46 @@
     background-image:url(../images/icons/user-management.png), linear-gradient(rgba(240, 240, 255, 1) 0%, rgba(190, 190, 210, 1) 100%);
     background-repeat:no-repeat;
     background-position:top right;
+}
+
+.package-manager
+{
+    background-image:url(../images/icons/wiki-apps.png), linear-gradient(rgba(240, 240, 255, 1) 0%, rgba(190, 190, 210, 1) 100%);
+    background-repeat:no-repeat;
+    background-position:top right;
+}
+
+@-webkit-keyframes major-warning
+{
+ from {
+    background-color:#ff0000;
+ }
+ to {
+    background-color:#ffff00;
+ }
+}
+
+@-moz-keyframes major-warning
+{
+ from {
+    background-color:#ff0000;
+ }
+ to {
+    background-color:#ffff00;
+ }
+}
+
+.major-warning
+{
+    background-image:none;
+    background-color:#ff0000;
+	-webkit-animation-name: major-warning;
+	-webkit-animation-duration: 1.5s;
+	-webkit-animation-direction: alternate;
+    -webkit-animation-iteration-count:infinite;
+	-moz-animation-name: major-warning;
+	-moz-animation-duration: 1.5s;
+	-moz-animation-direction: alternate;
+    -moz-animation-iteration-count:infinite;
 }
 

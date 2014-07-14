@@ -260,6 +260,28 @@ namespace Magix.forms
                 }
             }
         }
+
+        /*
+         * retrieves the form-id for a given dynamic container
+         */
+        [ActiveEvent(Name = "magix.forms.get-form-id")]
+        private void magix_forms_get_form_id(object sender, ActiveEventArgs e)
+        {
+            Node ip = Ip(e.Params);
+            if (e.Params.Contains("inspect"))
+            {
+                e.Params["inspect"].Value = @"returns the [form-id] for a given [container]
+
+[container] can be both a constant or an expression";
+                return;
+            }
+
+            Node dp = Dp(e.Params);
+
+            string container = Expressions.GetExpressionValue<string>(ip["container"].Get<string>(), dp, ip, false);
+            if (this.Parent.ID == container)
+                ip["form-id"].Value = FormID;
+        }
 		
 		/*
 		 * changes the mml of web part
@@ -319,7 +341,7 @@ to the value in [mml]";
 			{
                 string id = Expressions.GetExpressionValue<string>(ip["id"].Get<string>(), dp, ip, false);
                 Control ctrl = Selector.FindControl<Control>(
-                    this.Parent /* to include viewport itself */, 
+                    this.Parent.Parent /* to include viewport itself */, 
                     id);
                 if (ctrl != null)
                     ip["_ctrl"].Value = ctrl;

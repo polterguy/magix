@@ -1,0 +1,23 @@
+﻿
+
+inspect=>@"creates active events associated with hello world application
+
+creates one active event, which loads up the web-part.hl file into the main 
+container"
+
+
+event
+  name=>magix.samples.show-hello-world-application
+  inspect=>@"sample hello world application active event
+
+shows the web-part.hl file"
+  code
+    magix.viewport.include-client-file
+      type=>css
+      file=>media/grid/main.css
+    magix.viewport.include-client-file
+      type=>css
+      file=>media/back-end/skins/golden.css
+    magix.forms.create-web-part
+      controls-file=>your-files/applications/hello-world-example/web-part.hl
+
