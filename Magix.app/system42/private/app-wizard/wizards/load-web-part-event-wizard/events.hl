@@ -220,7 +220,7 @@ magix.wizard.show-advanced-settings
           e0
             type=>focus-and-select
             form-id=>wizard
-            id=>container
+            id=>web-part-container
 
 // actual creation of active event
 magix.wizard.create-active-event
@@ -354,7 +354,7 @@ active event that loads up the '{0}' web part from the filesystem"
       // setting container for our web part, if there is any defined
       magix.forms.get-value
         form-id=>wizard
-        id=>container
+        id=>web-part-container
       if=>not-equals
         lhs=>[@][magix.forms.get-value:0][value].value
         rhs=>
