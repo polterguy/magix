@@ -68,7 +68,7 @@ language file"
           tag=>label
           class=>span-3
           value=>container
-        text-box=>container
+        text-box=>web-part-container
           class=>span-3
           placeholder=>container ...
         label
