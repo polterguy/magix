@@ -18,12 +18,12 @@ namespace Magix.tiedown
 	 */
     public sealed class PackageCore : ActiveController
 	{
-		/*
-		 * unpacks a zip file
-		 */
-		[ActiveEvent(Name = "magix.package.unpack")]
+        /*
+         * unpacks a zip file
+         */
+        [ActiveEvent(Name = "magix.package.unpack")]
         public static void magix_package_unpack(object sender, ActiveEventArgs e)
-		{
+        {
             Node ip = Ip(e.Params);
             if (ShouldInspect(ip))
             {
@@ -38,7 +38,7 @@ namespace Magix.tiedown
                     "Magix.tiedown.hyperlisp.inspect.hl",
                     "[magix.package.unpack-sample]");
                 return;
-			}
+            }
 
             Node dp = Dp(e.Params);
 
@@ -56,6 +56,49 @@ namespace Magix.tiedown
                 {
                     idxZipFile.Extract(dirAbsolutePath, ExtractExistingFileAction.OverwriteSilently);
                 }
+            }
+        }
+
+        /*
+         * unpacks a zip file
+         */
+        [ActiveEvent(Name = "magix.package.pack")]
+        public static void magix_package_pack(object sender, ActiveEventArgs e)
+        {
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
+            {
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.tiedown",
+                    "Magix.tiedown.hyperlisp.inspect.hl",
+                    "[magix.package.pack-dox].value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.tiedown",
+                    "Magix.tiedown.hyperlisp.inspect.hl",
+                    "[magix.package.pack-sample]");
+                return;
+            }
+
+            Node dp = Dp(e.Params);
+
+            if (!ip.Contains("files"))
+                throw new ArgumentException("no [files] given to [magix.package.pack]");
+
+            string zipFile = Expressions.GetExpressionValue<string>(ip["zip"].Get<string>(), dp, ip, false);
+            if (ip["zip"].Count > 0)
+                zipFile = Expressions.FormatString(dp, ip, ip["zip"], zipFile);
+
+            string zipAbsolutePath = HttpContext.Current.Server.MapPath(zipFile);
+
+            using (ZipFile zip = new ZipFile())
+            {
+                foreach (Node idxZipFile in ip["files"])
+                {
+                    zip.AddFile(HttpContext.Current.Server.MapPath(idxZipFile.Get<string>()), idxZipFile.Name);
+                }
+                zip.Save(zipAbsolutePath);
             }
         }
 

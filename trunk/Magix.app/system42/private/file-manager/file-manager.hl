@@ -24,6 +24,8 @@ of the file the user selected"
 magix.viewstate.set
   id=>magix.file-manager.selected-file
 magix.viewstate.set
+  id=>magix.file-manager.no-edit-button
+magix.viewstate.set
   id=>magix.file-manager.filter
 magix.viewstate.set
   id=>magix.file-manager.current-folder

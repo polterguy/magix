@@ -20,8 +20,6 @@
 * make Ip method take boolean declaring whether or not "_ip" is mandatory, and if so, throw exception, to clean up all
   checks for "_ip" in magix.execute namespace for instance
 
-* create zip package manager for installing packages
-
 * fix yellow screen of death to show up in ajax callbacks, and create support for showing code that fissles
 
 * create event to invoke to lock screen for iPhones/tablets, etc at 950 pixels
@@ -68,7 +66,13 @@
 
 * make "magix.data." - transactional support for magix.execute.event/tunnel/override ....
 
-* active event to lock viewport to devices
-
 * use magix.data.save-username for last loaded/saved web part in web part designer and not viewstate
+
+* support downloading files in file browser
+
+* refactor file browser, it is messy
+
+* create zip file wizard
+
+* fix the "edit file" button in the file browser
 

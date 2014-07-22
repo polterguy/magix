@@ -9,3 +9,15 @@
 1. Support for using jpg/jpeg files in the dashboard QR code generator
 
 2. changed the name of "container" in create load web part active event to "web-part-container" to not clash with viewport
+
+
+*****************************************************************************************************************************************
+*
+*                    Magix Illuminate Phosphorus version 1.02
+*
+*****************************************************************************************************************************************
+
+1. created support for creating zip files through the magix.package.pack active event
+
+2. fixed previewing and editing bugs in file manager
+

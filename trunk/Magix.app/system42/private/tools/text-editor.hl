@@ -142,7 +142,7 @@ magix.forms.create-web-part
         panel=>toolbar
           class=>fill-width column btn-group
           controls
-            button=>preview
+            button=>preview-button
               class=>span-2 toolbox-preview
               value=>preview
               disabled=>true
