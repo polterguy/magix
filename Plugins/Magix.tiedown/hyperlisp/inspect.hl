@@ -15,8 +15,27 @@ reference children of the [directory] node"
 
 magix.package.unpack-sample
   magix.package.unpack
-    zip=>your-files/tmp/some-zip-file-zip
+    zip=>your-files/tmp/some-zip-file.zip
     directory=>your-files/tmp
+
+
+magix.package.pack-dox=>@"packs the specified [files] file
+
+packs the specified [files] file to the given [zip].  [zip] can be 
+either an expression or a constant.  [zip] may also contain formatting 
+parameters, such as {0} and {1} which should reference children of the 
+[zip] node
+
+the name of the file node is the directory inside the archive, while the 
+value of the file node is tha actual file to put into the archive.  to put 
+the file at the root of the archive, use an empty string as the file node's 
+name"
+
+magix.package.pack-sample
+  magix.package.pack
+    zip=>your-files/tmp/some-zip-file.zip
+    files
+      some-directory=>your-files/tmp/some-file-to-be-zipped.txt
 
 
 magix.package.list-files-dox=>@"lists contents from the specified [zip] file

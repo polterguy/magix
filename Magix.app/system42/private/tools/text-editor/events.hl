@@ -24,7 +24,7 @@ magix.text-editor.refresh-toolbar
     code
       magix.forms.set-enabled
         form-id=>editor
-        id=>preview
+        id=>preview-button
         value=>true
       magix.forms.set-enabled
         form-id=>editor
@@ -36,7 +36,7 @@ magix.text-editor.refresh-toolbar
     code
       magix.forms.set-enabled
         form-id=>editor
-        id=>preview
+        id=>preview-button
         value=>false
       magix.forms.set-enabled
         form-id=>editor
@@ -45,7 +45,7 @@ magix.text-editor.refresh-toolbar
   else
     magix.forms.set-enabled
       form-id=>editor
-      id=>preview
+      id=>preview-button
       value=>false
     magix.forms.set-enabled
       form-id=>editor
