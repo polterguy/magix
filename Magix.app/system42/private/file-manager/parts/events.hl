@@ -1,0 +1,551 @@
+﻿
+
+inspect=>@"contains the events for the file manager
+
+contains all active events for the file-manager.hl web part"
+
+
+magix.file-manager.show-files
+  magix.viewstate.get
+    id=>magix.file-manager.selected-object
+  magix.viewstate.get
+    id=>magix.file-manager.current-directory
+    value=>
+  if=>not-equals
+    lhs=>[magix.viewstate.get:1][value].value
+    rhs=>
+    code
+      set=>[_controls][label][value].value
+        value=>/{0}
+          =>[magix.viewstate.get:1][value].value
+  _controls
+    label
+      class=>span-20 last bottom-1
+      tag=>label
+      value=>/
+    panel=>directories
+      class=>span-6 file-manager-directories
+      controls
+        label
+          class=>span-6
+          tag=>label
+          value=>directories
+    panel=>files
+      class=>span-6 file-manager-files
+      controls
+        label
+          class=>span-6
+          tag=>label
+          value=>files
+    dynamic=>preview-dynamic
+      class=>span-8 last
+  // iterating directories
+  using=>magix.file
+    list-directories
+      directory=>[magix.viewstate.get:1][value].value
+  for-each=>[using:0][list-directories][directories]
+    _lb
+      link-button=>{directory-}
+        class=>span-5 file-manager-directory
+        onclick
+          set=>[magix.file-manager.set-selected-object][object].value
+            value=>[$][info].value
+          magix.file-manager.set-selected-object
+            type=>directory
+    set=>[@][_lb][link-button][info].value
+      value=>[.].name
+    if=>equals
+      lhs=>[/][magix.viewstate.get:0][value][object].value
+      rhs=>[.].name
+      code
+        set=>[@][..][..][_lb][link-button][class].value
+          value=>{0} selected-object
+            =>[@][..][..][_lb][link-button][class].value
+    split=>[.].name
+      what=>/
+    set=>[@][_lb][link-button][value].value
+      value=>[@][split][result][>last].value
+    add=>[@][..][_controls][panel=>directories][controls]
+      values=>[@][_lb]
+  // iterating files
+  using=>magix.file
+    list-files
+      directory=>[magix.viewstate.get:1][value].value
+  for-each=>[using:1][list-files][files]
+    _lb
+      link-button=>{file-}
+        class=>span-5 file-manager-file
+        onclick
+          set=>[magix.file-manager.set-selected-object][object].value
+            value=>[$][info].value
+          magix.file-manager.set-selected-object
+            type=>file
+    set=>[@][_lb][link-button][info].value
+      value=>[.].name
+    if=>equals
+      lhs=>[/][magix.viewstate.get:0][value][object].value
+      rhs=>[.].name
+      code
+        set=>[@][..][..][_lb][link-button][class].value
+          value=>{0} selected-object
+            =>[@][..][..][_lb][link-button][class].value
+    split=>[.].name
+      what=>/
+    set=>[@][_lb][link-button][value].value
+      value=>[@][split][result][>last].value
+    add=>[@][..][_controls][panel=>files][controls]
+      values=>[@][_lb]
+  using=>magix.forms
+    create-web-part
+      container=>file-wrp
+      controls=>[_controls]
+
+// changes the selected object
+magix.file-manager.set-selected-object
+  add=>[magix.viewstate.set][value]
+    values=>[$]
+  magix.viewstate.set
+    id=>magix.file-manager.selected-object
+  magix.file-manager.show-files
+  magix.file-manager.refresh-toolbar
+  split=>[$][object].value
+    what=>/
+  using=>magix.forms
+    set-value
+      form-id=>file-manager
+      id=>selected-object
+      value=>[split][result][>last].value
+    effect
+      form-id=>file-manager
+      id=>selected-object
+      type=>focus-and-select
+
+magix.file-manager.go-back
+  magix.viewstate.get
+    id=>magix.file-manager.current-directory
+  split=>[magix.viewstate.get][value].value
+    what=>/
+  set=>[split][result][>last]
+  _directory=>
+  for-each=>[split][result]
+    if=>not-equals
+      lhs=>[/][_directory].value
+      rhs=>
+      code
+        set=>[/][_directory].value
+          value=>{0}/{1}
+            =>[/][_directory].value
+            =>[.].value
+    else
+      set=>[/][_directory].value
+        value=>{0}
+          =>[.].value
+  set=>[magix.viewstate.set][value].value
+    value=>[_directory].value
+  magix.viewstate.set
+    id=>magix.file-manager.current-directory
+  magix.file-manager.show-files
+  if=>equals
+    lhs=>[_directory].value
+    rhs=>
+    code
+      using=>magix.forms
+        set-enabled
+          form-id=>file-manager
+          id=>back
+          value=>false
+  using=>magix.forms
+    set-value
+      form-id=>file-manager
+      id=>selected-object
+    set-enabled
+      form-id=>file-manager
+      id=>open
+      value=>false
+    set-enabled
+      form-id=>file-manager
+      id=>rename
+      value=>false
+    set-enabled
+      form-id=>file-manager
+      id=>delete
+      value=>false
+    set-enabled
+      form-id=>file-manager
+      id=>copy
+      value=>false
+
+magix.file-manager.open-selected-directory
+  magix.viewstate.get
+    id=>magix.file-manager.selected-object
+  set=>[magix.viewstate.set][value].value
+    value=>[magix.viewstate.get][value][object].value
+  magix.viewstate.set
+    id=>magix.file-manager.current-directory
+  magix.viewstate.set
+    id=>magix.file-manager.selected-object
+  magix.file-manager.show-files
+  using=>magix.forms
+    set-enabled
+      form-id=>file-manager
+      id=>open
+      value=>false
+    set-enabled
+      form-id=>file-manager
+      id=>back
+      value=>true
+    set-enabled
+      form-id=>file-manager
+      id=>rename
+      value=>false
+    set-enabled
+      form-id=>file-manager
+      id=>delete
+      value=>false
+    set-enabled
+      form-id=>file-manager
+      id=>copy
+      value=>false
+  using=>magix.forms
+    set-value
+      form-id=>file-manager
+      id=>selected-object
+
+magix.file-manager.refresh-toolbar
+  magix.viewstate.get
+    id=>magix.file-manager.selected-object
+  switch=>[magix.viewstate.get][value][type].value
+    case=>directory
+      using=>magix.forms
+        set-enabled
+          form-id=>file-manager
+          id=>open
+          value=>true
+    default
+      using=>magix.forms
+        set-enabled
+          form-id=>file-manager
+          id=>open
+          value=>false
+  using=>magix.forms
+    set-enabled
+      form-id=>file-manager
+      id=>create
+      value=>true
+  if=>exist
+    lhs=>[magix.viewstate.get][value]
+    code
+      using=>magix.forms
+        set-enabled
+          form-id=>file-manager
+          id=>rename
+          value=>true
+        set-enabled
+          form-id=>file-manager
+          id=>delete
+          value=>true
+        set-enabled
+          form-id=>file-manager
+          id=>copy
+          value=>true
+  else
+    using=>magix.forms
+      set-enabled
+        form-id=>file-manager
+        id=>rename
+        value=>false
+      set-enabled
+        form-id=>file-manager
+        id=>delete
+        value=>false
+      set-enabled
+        form-id=>file-manager
+        id=>copy
+        value=>false
+  magix.viewstate.get
+    id=>magix.file-manager.clipboard-object
+  if=>exist
+    lhs=>[magix.viewstate.get:1][value]
+    code
+      using=>magix.forms
+        set-enabled
+          form-id=>file-manager
+          id=>paste
+          value=>true
+  else
+    using=>magix.forms
+      set-enabled
+        form-id=>file-manager
+        id=>paste
+        value=>false
+
+magix.file-manager.rename-object
+  magix.forms.get-value
+    form-id=>file-manager
+    id=>selected-object
+  magix.viewstate.get
+    id=>magix.file-manager.selected-object
+  magix.viewstate.get
+    id=>magix.file-manager.current-directory
+  split=>[magix.viewstate.get:0][value][object].value
+    what=>/
+  if=>equals
+    lhs=>[magix.forms.get-value][value].value
+    rhs=>
+    or=>equals
+      lhs=>[magix.forms.get-value][value].value
+      rhs=>[split][result][>last].value
+    code
+      magix.viewport.show-message
+        message=>you must first select a file or folder, and then type its new name into the selected object text-box
+        color=>#ffaaaa
+        time=>5000
+      magix.forms.effect
+        form-id=>file-manager
+        id=>selected-object
+        type=>focus-and-select
+  else
+    if=>equals
+      lhs=>[magix.viewstate.get:0][value][type].value
+      rhs=>directory
+      code
+        using=>magix.file
+          move-directory
+            from=>[magix.viewstate.get:0][value][object].value
+            to=>{0}/{1}
+              =>[magix.viewstate.get:1][value].value
+              =>[magix.forms.get-value][value].value
+        using=>magix.viewport
+          show-message
+            message=>directory '{0}' was renamed to '{1}/{2}'
+              =>[magix.viewstate.get:0][value][object].value
+              =>[magix.viewstate.get:1][value].value
+              =>[magix.forms.get-value][value].value
+            color=>#aaffaa
+            time=>5000
+        set=>[@][magix.viewstate.set][value][object].value
+          value=>{0}/{1}
+            =>[magix.viewstate.get:1][value].value
+            =>[magix.forms.get-value][value].value
+        magix.viewstate.set
+          id=>magix.file-manager.selected-object
+          value
+            type=>directory
+    else
+      using=>magix.file
+        move-file
+          from=>[magix.viewstate.get:0][value][object].value
+          to=>{0}/{1}
+            =>[magix.viewstate.get:1][value].value
+            =>[magix.forms.get-value][value].value
+      using=>magix.viewport
+        show-message
+          message=>file '{0}' was renamed to '{1}/{2}'
+            =>[magix.viewstate.get:0][value][object].value
+            =>[magix.viewstate.get:1][value].value
+            =>[magix.forms.get-value][value].value
+          color=>#aaffaa
+          time=>5000
+      set=>[@][magix.viewstate.set][value][object].value
+        value=>{0}/{1}
+          =>[magix.viewstate.get:1][value].value
+          =>[magix.forms.get-value][value].value
+      magix.viewstate.set
+        id=>magix.file-manager.selected-object
+        value
+          type=>file
+    magix.file-manager.show-files
+    magix.file-manager.refresh-toolbar
+
+magix.file-manager.create-directory
+  magix.forms.get-value
+    form-id=>file-manager
+    id=>selected-object
+  magix.viewstate.get
+    id=>magix.file-manager.current-directory
+  if=>equals
+    lhs=>[magix.forms.get-value][value].value
+    rhs=>
+    code
+      magix.viewport.show-message
+        message=>you must supply a directory name for your new directory in the selected object text-box
+        color=>#ffaaaa
+        time=>5000
+      magix.forms.effect
+        form-id=>file-manager
+        id=>selected-object
+        type=>focus-and-select
+  else
+    using=>magix.file
+      directory-exist
+        directory=>{0}/{1}
+          =>[magix.viewstate.get][value].value
+          =>[magix.forms.get-value][value].value
+    if=>equals
+      lhs=>[@][using][directory-exist][value].value
+      rhs=>true
+      code
+        magix.viewport.show-message
+          message=>that directory already exist
+          color=>#ffaaaa
+          time=>5000
+        magix.viewport.show-message
+          message=>you must supply a directory name for your new directory in the selected object text-box
+        magix.forms.effect
+          form-id=>file-manager
+          id=>selected-object
+          type=>focus-and-select
+    else
+      using=>magix.file
+        create-directory
+          directory=>{0}/{1}
+            =>[magix.viewstate.get][value].value
+            =>[magix.forms.get-value][value].value
+      using=>magix.viewport
+        show-message
+          message=>directory '{0}/{1}' was created
+            =>[magix.viewstate.get][value].value
+            =>[magix.forms.get-value][value].value
+          color=>#aaffaa
+          time=>5000
+      set=>[@][magix.viewstate.set][value][object].value
+        value=>{0}/{1}
+          =>[magix.viewstate.get][value].value
+          =>[magix.forms.get-value][value].value
+      magix.viewstate.set
+        id=>magix.file-manager.selected-object
+        value
+          type=>directory
+      magix.file-manager.show-files
+      magix.file-manager.refresh-toolbar
+      magix.forms.effect
+        form-id=>file-manager
+        id=>selected-object
+        type=>focus-and-select
+
+magix.file-manager.delete-object
+  magix.viewstate.get
+    id=>magix.file-manager.selected-object
+  if=>not-exist
+    lhs=>[magix.viewstate.get][value]
+    code
+      magix.viewport.show-message
+        message=>you must first select an object, and then click delete to have it deleted
+        color=>#ffaaaa
+        time=>5000
+  else
+    using=>magix.viewport
+      confirm
+        message=>are you sure you wish to delete the {0} '{1}'
+          =>[magix.viewstate.get][value][type].value
+          =>[magix.viewstate.get][value][object].value
+        code
+          magix.viewstate.get
+            id=>magix.file-manager.selected-object
+          if=>equals
+            lhs=>[magix.viewstate.get][value][type].value
+            rhs=>directory
+            code
+              using=>magix.file
+                delete-directory
+                  directory=>[magix.viewstate.get][value][object].value
+          else
+            using=>magix.file
+              delete
+                file=>[magix.viewstate.get][value][object].value
+          magix.viewstate.set
+            id=>magix.file-manager.selected-object
+          magix.forms.set-value
+            form-id=>file-manager
+            id=>selected-object
+          magix.file-manager.show-files
+          magix.file-manager.refresh-toolbar
+          using=>magix.viewport
+            show-message
+              message=>{0} '{1}' was deleted
+                =>[magix.viewstate.get][value][type].value
+                =>[magix.viewstate.get][value][object].value
+              color=>#aaffaa
+              time=>5000
+
+magix.file-manager.copy-object
+  magix.viewstate.get
+    id=>magix.file-manager.selected-object
+  add=>[magix.viewstate.set][value]
+    values=>[magix.viewstate.get][value]
+  magix.viewstate.set
+    id=>magix.file-manager.clipboard-object
+  magix.file-manager.refresh-toolbar
+
+magix.file-manager.paste-object
+  magix.viewstate.get
+    id=>magix.file-manager.clipboard-object
+  magix.viewstate.get
+    id=>magix.file-manager.current-directory
+  split=>[magix.viewstate.get][value][object].value
+    what=>/
+  _destination
+  if=>not-exist
+    lhs=>[magix.viewstate.get:1][value].value
+    or=>equals
+      lhs=>[magix.viewstate.get:1][value].value
+      rhs=>
+    code
+      set=>[_destination].value
+        value=>[split][result][>last].value
+  else
+    set=>[_destination].value
+      value=>{0}/{1}
+        =>[magix.viewstate.get:1][value].value
+        =>[split][result][>last].value
+  if=>equals
+    lhs=>[magix.viewstate.get][value][object].value
+    rhs=>[_destination].value
+    code
+      set=>[_destination].value
+        value=>{0} - copy
+          =>[_destination].value
+  switch=>[magix.viewstate.get][value][type].value
+    case=>directory
+      set=>[@][magix.file-manager.paste-directory][source].value
+        value=>[magix.viewstate.get][value][object].value
+      set=>[@][magix.file-manager.paste-directory][destination].value
+        value=>[_destination].value
+      magix.file-manager.paste-directory
+    case=>file
+      set=>[@][magix.file-manager.paste-file][source].value
+        value=>[magix.viewstate.get][value][object].value
+      set=>[@][magix.file-manager.paste-file][destination].value
+        value=>[_destination].value
+      magix.file-manager.paste-file
+
+magix.file-manager.paste-directory
+  set=>[magix.file.copy-directory][from].value
+    value=>[$][source].value
+  set=>[magix.file.copy-directory][to].value
+    value=>[$][destination].value
+  magix.file.copy-directory
+  using=>magix.viewport
+    show-message
+      message=>directory '{0}' was copied as '{1}'
+        =>[$][source].value
+        =>[$][destination].value
+      color=>#aaffaa
+      time=>5000
+  magix.file-manager.show-files
+
+magix.file-manager.paste-file
+  set=>[magix.file.copy-file][from].value
+    value=>[$][source].value
+  set=>[magix.file.copy-file][to].value
+    value=>[$][destination].value
+  magix.file.copy-file
+  using=>magix.viewport
+    show-message
+      message=>file '{0}' was copied as '{1}'
+        =>[$][source].value
+        =>[$][destination].value
+      color=>#aaffaa
+      time=>5000
+  magix.file-manager.show-files
+
