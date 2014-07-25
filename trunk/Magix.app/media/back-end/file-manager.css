@@ -1,0 +1,29 @@
+﻿
+
+.file-manager-directories
+{
+    height:270px;
+    overflow-y:auto;
+}
+
+.file-manager-files
+{
+    height:270px;
+    overflow-y:auto;
+}
+
+.file-manager-directory
+{
+    color:#0b3;
+}
+
+.file-manager-file
+{
+    color:#06c;
+}
+
+.selected-object
+{
+    text-decoration:underline;
+}
+

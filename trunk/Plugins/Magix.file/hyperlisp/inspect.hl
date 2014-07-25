@@ -42,6 +42,9 @@ deletes the directory from value of [directory].  the directory path can be eith
 expression, or a constant.  also the directory can be either a relative path, beneath 
 your web application folder, or an absolute path on disc
 
+[directory] can contain formatting parameters, such as {0} and {1}, referencing 
+children of the [directory] node
+
 thread safe"
 
 magix.file.delete-directory-sample
@@ -55,9 +58,29 @@ moves the given directory in [from] to [to].  both the value of the [from] and t
 can be either expressions or constants.  both the [from] and [to] nodes can either point to 
 a relative directory beneath the web application folder, or an absolute path on disc
 
+[from] and [to] can contain formatting parameters, such as {0} and {1}, referencing 
+children of the nodes
+
 thread safe"
 
 magix.file.move-directory-sample
+  magix.file.move-directory
+    from=>media/tmp
+    to=>media/some-new-directory
+
+
+magix.file.copy-directory-dox=>@"creates a copy of a directory
+
+copies the given directory in [from] to [to].  both the value of the [from] and the [to] node 
+can be either expressions or constants.  both the [from] and [to] nodes can either point to 
+a relative directory beneath the web application folder, or an absolute path on disc
+
+[from] and [to] can contain formatting parameters, such as {0} and {1}, referencing 
+children of the nodes
+
+thread safe"
+
+magix.file.copy-directory-sample
   magix.file.move-directory
     from=>media/tmp
     to=>media/some-new-directory
@@ -69,6 +92,9 @@ returns true as [value] if the directory in the valueof [directory] node exist.
 the value of [directory] can be both an expression or a constant.  in adition, 
 the [directory] can either be a relative path, beneath the web application's 
 main folder, or an absolute path on disc
+
+[directory] can contain formatting parameters, such as {0} and {1}, referencing 
+children of the [directory] node
 
 thread safe"
 
@@ -139,6 +165,9 @@ magix.file.move-file-dox=>@"moves a file on disc
 moves the given [from] file to the [to] directory.  both the file to move, and the where to 
 move it, can be either expressions, or constants.  both the [from] and [to] can be either 
 relative path's beneath the web application's folder, or absolute paths
+
+[from] and [to] can contain formatting parameters, such as {0} and {1}, referencing 
+children of the nodes
 
 thread safe"
 

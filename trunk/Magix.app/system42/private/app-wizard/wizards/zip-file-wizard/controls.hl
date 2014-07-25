@@ -1,0 +1,40 @@
+﻿
+
+inspect=>@"contains the controls for the create zip file wizard
+
+contains the controls for the web part that allows the user to create 
+a zip file"
+
+
+panel
+  class=>span-15 last air-padding boxed top-1 wizard-content desktop-widget
+  controls
+    label
+      tag=>h2
+      class=>span-13
+      value=>create zip file wizard
+    link-button
+      class=>span-2 last text-right
+      value=>back
+      onclick
+        execute-script
+          file=>system42/private/app-wizard/app-wizard.hl
+    label
+      class=>span-15 last bottom-1
+      value=>@"from here you can create a zip file from files within your magix installation"
+    label
+      class=>span-3
+      tag=>label
+      value=>zip file
+    panel
+      class=>btn-group span-12 last
+      controls
+        text-box=>zip-file
+          class=>span-10
+          placeholder=>zip file ...
+        button=>browse
+          class=>span-2 last
+          value=>browse
+          onclick
+            magix.wizard.browse-for-file
+dynamic=>dyn-browse-file

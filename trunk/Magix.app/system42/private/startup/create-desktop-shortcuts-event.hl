@@ -294,9 +294,7 @@ returns the default dashboard shortcuts in your system"
           magix.viewport.clear-controls
             all=>true
           execute-script
-            file=>system42/private/file-manager/file-manager.hl
-            params
-              allow-upload=>true
+            file=>system42/private/file-manager/file-manager-2.hl
       web-controls
         text=>web controls reference
         category=>learn

@@ -76,3 +76,5 @@
 
 * fix the "edit file" button in the file browser
 
+* create gmail alternative, and send email to "Svein" ...
+

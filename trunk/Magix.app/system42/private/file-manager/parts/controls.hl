@@ -1,0 +1,75 @@
+﻿
+
+inspect=>@"contains the controls for the file manager
+
+contains all controls for the file-manager.hl web part"
+
+
+dynamic=>file-wrp
+  class=>span-20 last
+  onfirstload
+    magix.file-manager.show-files
+      directory=>
+panel=>toolbar-wrapper
+  class=>btn-group span-20 right last top-1
+  controls
+    text-box=>selected-object
+      class=>span-3
+      placeholder=>selected object ...
+      onenterpressed
+        magix.viewport.show-message
+          message=>choose one of the buttons on the toolbar to initiate an action
+          color=>#ffaaaa
+          time=>3000
+    button=>back
+      class=>span-2
+      disabled=>true
+      value=>back
+      onclick
+        magix.file-manager.go-back
+    button=>open
+      class=>span-2
+      disabled=>true
+      value=>open
+      onclick
+        magix.file-manager.open-selected-directory
+    button=>rename
+      class=>span-2
+      disabled=>true
+      value=>rename
+      onclick
+        magix.file-manager.rename-object
+    button=>create
+      class=>span-2
+      disabled=>false
+      title=>creates a new directory
+      value=>create
+      onclick
+        magix.file-manager.create-directory
+    button=>delete
+      class=>span-2
+      disabled=>true
+      value=>delete
+      onclick
+        magix.file-manager.delete-object
+    button=>copy
+      class=>span-2
+      disabled=>true
+      value=>copy
+      onclick
+        magix.file-manager.copy-object
+    button=>paste
+      class=>span-2 last
+      disabled=>true
+      value=>paste
+      onclick
+        magix.file-manager.paste-object
+    button=>select
+      class=>span-2
+      disabled=>true
+      value=>select
+    button=>cancel
+      class=>span-2
+      disabled=>true
+      value=>cancel
+

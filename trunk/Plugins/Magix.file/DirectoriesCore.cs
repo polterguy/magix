@@ -146,6 +146,8 @@ namespace Magix.execute
                 throw new ArgumentException("you must supply a [directory] to [delete-directory]");
 
             string path = Expressions.GetExpressionValue<string>(ip["directory"].Get<string>(), dp, ip, false);
+            if (ip["directory"].Count > 0)
+                path = Expressions.FormatString(dp, ip, ip["directory"], path);
 
             if (!path.Contains(":"))
                 path = _basePath + path;
@@ -180,6 +182,8 @@ namespace Magix.execute
             if (!ip.ContainsValue("from"))
                 throw new ArgumentException("you need to supply a [from] node to [move-directory]");
             string from = Expressions.GetExpressionValue<string>(ip["from"].Get<string>(), dp, ip, false);
+            if (ip["from"].Count > 0)
+                from = Expressions.FormatString(dp, ip, ip["from"], from);
 
             if (!from.Contains(":"))
                 from = _basePath + from;
@@ -187,11 +191,88 @@ namespace Magix.execute
             if (!ip.ContainsValue("to"))
                 throw new ArgumentException("you need to define which directory to copy to, as [to] node");
             string to = Expressions.GetExpressionValue<string>(ip["to"].Get<string>(), dp, ip, false);
+            if (ip["to"].Count > 0)
+                to = Expressions.FormatString(dp, ip, ip["to"], to);
 
             if (!to.Contains(":"))
-                to = _basePath+ to;
+                to = _basePath + to;
 
             Directory.Move(from, to);
+        }
+
+        /*
+         * moves the given directory
+         */
+        [ActiveEvent(Name = "magix.file.copy-directory")]
+        public static void magix_file_copy_directory(object sender, ActiveEventArgs e)
+        {
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
+            {
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.file",
+                    "Magix.file.hyperlisp.inspect.hl",
+                    "[magix.file.copy-directory-dox].value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.file",
+                    "Magix.file.hyperlisp.inspect.hl",
+                    "[magix.file.copy-directory-sample]");
+                return;
+            }
+
+            Node dp = Dp(e.Params);
+
+            if (!ip.ContainsValue("from"))
+                throw new ArgumentException("you need to supply a [from] node to [move-directory]");
+            string from = Expressions.GetExpressionValue<string>(ip["from"].Get<string>(), dp, ip, false);
+            if (ip["from"].Count > 0)
+                from = Expressions.FormatString(dp, ip, ip["from"], from);
+
+            if (!from.Contains(":"))
+                from = _basePath + from;
+
+            if (!ip.ContainsValue("to"))
+                throw new ArgumentException("you need to define which directory to copy to, as [to] node");
+            string to = Expressions.GetExpressionValue<string>(ip["to"].Get<string>(), dp, ip, false);
+            if (ip["to"].Count > 0)
+                to = Expressions.FormatString(dp, ip, ip["to"], to);
+
+            if (!to.Contains(":"))
+                to = _basePath + to;
+
+            CopyDirectory(from, to);
+        }
+
+        /*
+         * helper for above
+         */
+        private static void CopyDirectory(string from, string to)
+        {
+            DirectoryInfo dir = new DirectoryInfo(from);
+            DirectoryInfo[] dirs = dir.GetDirectories();
+
+            if (!dir.Exists)
+            {
+                throw new DirectoryNotFoundException("directory '" + from + "' could not be found");
+            }
+
+            if (!Directory.Exists(to))
+            {
+                Directory.CreateDirectory(to);
+            }
+
+            FileInfo[] files = dir.GetFiles();
+            foreach (FileInfo file in files)
+            {
+                file.CopyTo(Path.Combine(to, file.Name), false);
+            }
+
+            foreach (DirectoryInfo subdir in dirs)
+            {
+                CopyDirectory(subdir.FullName, Path.Combine(to, subdir.Name));
+            }
         }
 
         /*
@@ -221,12 +302,14 @@ namespace Magix.execute
             if (!ip.ContainsValue("directory"))
                 throw new ArgumentException("you didn't supply a [directory] to search for to [magix.file.directory-exist]");
 
-            string dir = Expressions.GetExpressionValue<string>(ip["directory"].Get<string>().TrimStart('/'), dp, ip, false);
+            string directory = Expressions.GetExpressionValue<string>(ip["directory"].Get<string>().TrimStart('/'), dp, ip, false);
+            if (ip["directory"].Count > 0)
+                directory = Expressions.FormatString(dp, ip, ip["directory"], directory);
 
-            if (!dir.Contains(":"))
-                dir = _basePath + dir;
+            if (!directory.Contains(":"))
+                directory = _basePath + directory;
 
-            ip["value"].Value = Directory.Exists(dir);
+            ip["value"].Value = Directory.Exists(directory);
         }
     }
 }

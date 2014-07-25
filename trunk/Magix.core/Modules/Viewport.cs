@@ -493,8 +493,11 @@ namespace Magix.Core
             if (ip["id"].Count > 0)
                 name = Expressions.FormatString(dp, ip, ip["id"], name);
 
-			if (ViewState[name] != null && ViewState[name] is Node)
+            if (ViewState[name] != null && ViewState[name] is Node)
+            {
+                ip["value"].UnTie();
                 ip.Add((ViewState[name] as Node).Clone());
+            }
 		}
 
 		/*

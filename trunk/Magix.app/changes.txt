@@ -19,5 +19,9 @@
 
 1. created support for creating zip files through the magix.package.pack active event
 
-2. fixed previewing and editing bugs in file manager
+2. completely rebuilt the file manager
+
+3. support for expression formatters in magix.file.move-directory, and most of the other magix.file active events
+
+4. support for copying directories through magix.file.copy-directory
 

@@ -1,0 +1,34 @@
+
+inspect=>@"creates the file manager web part
+
+creates a web part that allows you to browse the file system 
+in your magix installation"
+
+
+magix.viewport.include-client-file
+  type=>css
+  file=>media/back-end/file-manager.css
+
+// creates the descriptive web part at the top
+magix.forms.create-web-part
+  class=>span-15 last air-padding desktop-widget top-1
+  container=>content1
+  controls
+    label
+      class=>span-15 last
+      tag=>h3
+      value=>file manager
+    label
+      class=>span-15 last top-1
+      value=>@"from here you can browse the file system in your local magix installation.&nbsp;&nbsp;you can move, rename, copy and 
+delete files from here.&nbsp;&nbsp;if you wish to upload files to your system, then first browse to the directory you wish to upload 
+the files to, then drag and drop the files you wish to upload to your browser, and they will be automatically uploaded to your system"
+
+// creates tha actual file manager
+magix.forms.create-web-part
+  class=>span-20 last clear top-1 air-padding desktop-widget
+  form-id=>file-manager
+  container=>content2
+  events-file=>system42/private/file-manager/parts/events.hl
+  controls-file=>system42/private/file-manager/parts/controls.hl
+
