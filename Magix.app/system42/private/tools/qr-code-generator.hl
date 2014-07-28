@@ -116,10 +116,8 @@ magix.forms.create-web-part
                   params
                     filter=>*.png;*.jpg;*.jpeg
                     directory=>media/images/textures
-                    container=>file-browser
-                    class=>span-15 last boxed air-padding bottom-1 top-1
-                    editor-container=>editor-for-persist-wrapper
-                    no-edit=>true
+                    container=>content2
+                    class=>span-20 last boxed air-padding bottom-1 top-1
                     onselect
                       set=>[magix.forms.set-value][value].value
                         value=>[$][file].value
@@ -127,11 +125,11 @@ magix.forms.create-web-part
                         form-id=>qr-codes
                         id=>bg-image
                       magix.viewport.clear-controls
-                        container=>file-browser
+                        container=>content2
                         reset-class=>true
                     oncancel
                       magix.viewport.clear-controls
-                        container=>file-browser
+                        container=>content2
                         reset-class=>true
         label=>fgImageDescription
           tag=>label
@@ -156,10 +154,8 @@ magix.forms.create-web-part
                   params
                     filter=>*.png;*.jpg;*.jpeg
                     directory=>media/images/textures
-                    container=>file-browser
-                    class=>span-15 last boxed air-padding bottom-1 top-1
-                    editor-container=>editor-for-persist-wrapper
-                    no-edit=>true
+                    container=>content2
+                    class=>span-20 last boxed air-padding bottom-1 top-1
                     onselect
                       set=>[magix.forms.set-value][value].value
                         value=>[$][file].value
@@ -167,11 +163,11 @@ magix.forms.create-web-part
                         form-id=>qr-codes
                         id=>fg-image
                       magix.viewport.clear-controls
-                        container=>file-browser
+                        container=>content2
                         reset-class=>true
                     oncancel
                       magix.viewport.clear-controls
-                        container=>file-browser
+                        container=>content2
                         reset-class=>true
         label=>fontNameDescription
           tag=>label
@@ -239,7 +235,7 @@ the tmp folder"
           value=>generate
           onclick
             magix.viewport.clear-controls
-              container=>file-browser
+              container=>content2
             magix.forms.get-children-values
               form-id=>qr-codes
               id=>qr-code-wrap
@@ -290,8 +286,6 @@ this is the only mandatory parameter in fact"
             magix.forms.set-focus
               form-id=>qr-codes
               id=>url
-    dynamic=>file-browser
-      class=>span-17 last top-1
     img=>qrImage
       alt=>qr code rendered for you
       class=>clear column top-1

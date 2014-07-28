@@ -91,8 +91,7 @@ magix.ide.browse_onclick
     params
       filter=>*.hl
       container=>helper-for-persist-wrapper
-      class=>span-15 last boxed air-padding bottom-1
-      editor-container=>editor-for-persist-wrapper
+      class=>span-20 last boxed air-padding bottom-1
       onselect
         set=>[magix.forms.set-value][value].value
           value=>[$][file].value

@@ -184,9 +184,7 @@ magix.ide.create-control-property-modifier-control
                 filter=>*.png;*.jpg;*.jpeg;*.webm;*.mp4;
                 directory=>media/images
                 container=>content3
-                editor-container=>
-                class=>span-15 last boxed air-padding bottom-1 top-1 desktop-widget
-                no-edit=>true
+                class=>span-20 last boxed air-padding bottom-1 top-1 desktop-widget
                 onselect
                   set=>[magix.forms.set-value][value].value
                     value=>[$][file].value

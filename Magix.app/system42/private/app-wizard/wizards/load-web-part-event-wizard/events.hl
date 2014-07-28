@@ -183,7 +183,6 @@ magix.wizard.create-load-from-where-web-part
                 params
                   filter=>*.hl;*.mml;
                   container=>file-browser
-                  deny-create-directory=>true
                   onselect
                     magix.viewport.clear-controls
                       container=>file-browser
