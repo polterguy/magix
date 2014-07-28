@@ -69,6 +69,14 @@ namespace Magix.forms
 			isFirst = true;
             Node ip = Ip(node).Clone();
             Node dp = Dp(node).Clone();
+            Node controls = null;
+            if (!string.IsNullOrEmpty(ip["controls"].Get<string>()))
+            {
+                controls = new Node("controls");
+                controls.AddRange(Expressions.GetExpressionValue<Node>(ip["controls"].Get<string>(), Dp(node), Ip(node), false).Clone());
+            }
+            else
+                controls = ip["controls"].Clone();
             Load +=
 			    delegate
 			    {
@@ -86,14 +94,7 @@ namespace Magix.forms
                         if (!ip.Contains("controls"))
                             throw new ArgumentException("you must supply a [controls] segment for your web part");
 
-                        if (!string.IsNullOrEmpty(ip["controls"].Get<string>()))
-                        {
-                            Node controls = new Node("controls");
-                            controls.AddRange(Expressions.GetExpressionValue<Node>(ip["controls"].Get<string>(), dp, ip, false).Clone());
-                            DataSource["controls"].Value = controls;
-                        }
-                        else
-                            DataSource["controls"].Value = ip["controls"].Clone();
+                        DataSource["controls"].Value = controls;
 
 					    if (ip.Contains("events"))
 					    {

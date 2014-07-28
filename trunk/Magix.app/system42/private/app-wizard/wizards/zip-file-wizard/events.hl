@@ -12,8 +12,7 @@ magix.wizard.browse-for-file
     params
       filter=>*.zip
       container=>dyn-browse-file
-      class=>span-15 last boxed air-padding bottom-1 top-1
-      no-edit-button=>true
+      class=>span-20 last boxed air-padding bottom-1 top-1
       onselect
         magix.viewport.clear-controls
           container=>dyn-browse-file

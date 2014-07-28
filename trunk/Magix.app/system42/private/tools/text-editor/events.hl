@@ -77,8 +77,7 @@ magix.text-editor.save_onclick
         file=>system42/private/file-manager/file-manager.hl
         params
           container=>content2
-          no-edit-button=>true
-          class=>span-15 last boxed air-padding top-1 left-5
+          class=>span-20 last boxed air-padding top-1 left-5
           onselect
             set=>[magix.forms.set-value][value].value
               value=>[$][file].value

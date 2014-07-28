@@ -9,7 +9,7 @@ dynamic=>file-wrp
   class=>span-20 last
   onfirstload
     magix.file-manager.show-files
-      directory=>
+    magix.file-manager.refresh-toolbar
 panel=>toolbar-wrapper
   class=>btn-group span-20 right last top-1
   controls
@@ -68,8 +68,24 @@ panel=>toolbar-wrapper
       class=>span-2
       disabled=>true
       value=>select
-    button=>cancel
+      onclick
+        magix.viewstate.get
+          id=>magix.file-manager.onselect
+        magix.viewstate.get
+          id=>magix.file-manager.selected-object
+        set=>[lambda][file].value
+          value=>[magix.viewstate.get:1][value][object].value
+        add=>[_exe]
+          values=>[magix.viewstate.get][value]
+        lambda=>[_exe]
+        _exe
+    button=>cancel-button
       class=>span-2
-      disabled=>true
       value=>cancel
+      onclick
+        magix.viewstate.get
+          id=>magix.file-manager.oncancel
+        add=>[execute]
+          values=>[magix.viewstate.get][value]
+        execute
 

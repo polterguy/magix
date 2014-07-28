@@ -199,8 +199,7 @@ returns the default dashboard shortcuts in your system"
                       file=>system42/private/file-manager/file-manager.hl
                       params
                         container=>content2
-                        no-edit-button=>true
-                        class=>span-15 last boxed air-padding top-1 left-5
+                        class=>span-20 last boxed air-padding top-1 left-5
                         onselect
                           using=>magix.file
                             load
@@ -249,8 +248,7 @@ returns the default dashboard shortcuts in your system"
                       params
                         container=>content2
                         filter=>*.html
-                        no-edit-button=>true
-                        class=>span-15 last boxed air-padding top-1 left-5
+                        class=>span-20 last boxed air-padding top-1 left-5
                         onselect
                           using=>magix.file
                             load
@@ -294,7 +292,9 @@ returns the default dashboard shortcuts in your system"
           magix.viewport.clear-controls
             all=>true
           execute-script
-            file=>system42/private/file-manager/file-manager-2.hl
+            file=>system42/private/file-manager/file-manager.hl
+            params
+              show-info=>true
       web-controls
         text=>web controls reference
         category=>learn

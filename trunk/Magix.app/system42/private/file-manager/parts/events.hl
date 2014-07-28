@@ -46,7 +46,7 @@ magix.file-manager.show-files
   for-each=>[using:0][list-directories][directories]
     _lb
       link-button=>{directory-}
-        class=>span-5 file-manager-directory
+        class=>span-6 file-manager-directory
         onclick
           set=>[magix.file-manager.set-selected-object][object].value
             value=>[$][info].value
@@ -68,13 +68,20 @@ magix.file-manager.show-files
     add=>[@][..][_controls][panel=>directories][controls]
       values=>[@][_lb]
   // iterating files
+  magix.viewstate.get
+    id=>magix.file-manager.file-filter
+  if=>exist
+    lhs=>[magix.viewstate.get:2][value]
+    code
+      set=>[/][using:1][list-files][filter].value
+        value=>[magix.viewstate.get:2][value].value
   using=>magix.file
     list-files
       directory=>[magix.viewstate.get:1][value].value
   for-each=>[using:1][list-files][files]
     _lb
       link-button=>{file-}
-        class=>span-5 file-manager-file
+        class=>span-6 file-manager-file
         onclick
           set=>[magix.file-manager.set-selected-object][object].value
             value=>[$][info].value
@@ -119,6 +126,154 @@ magix.file-manager.set-selected-object
       form-id=>file-manager
       id=>selected-object
       type=>focus-and-select
+  magix.file-manager.show-preview
+
+magix.file-manager.show-preview
+  magix.viewstate.get
+    id=>magix.file-manager.selected-object
+  switch=>[magix.viewstate.get][value][type].value
+    case=>directory
+      using=>magix.file
+        list-files
+          directory=>[magix.viewstate.get][value][object].value
+        list-directories
+          directory=>[magix.viewstate.get][value][object].value
+      _controls
+        label=>file-header
+          tag=>label
+          class=>span-8 last
+          value=>info
+        label=>directory-count
+          class=>span-8 last
+        label=>file-count
+          class=>span-8 last
+      if=>not-exist
+        lhs=>[@][using][list-files][files]
+        code
+          set=>[@][..][..][_controls][label=>file-count]
+      else
+        set=>[@][..][_controls][label=>file-count][value].value
+          value=>{0} files
+            =>[@][..][using][list-files][files].count
+      if=>not-exist
+        lhs=>[@][using][list-directories][directories]
+        code
+          set=>[@][..][..][_controls][label=>directory-count]
+      else
+        set=>[@][..][_controls][label=>directory-count][value].value
+          value=>{0} directories
+            =>[@][..][using][list-directories][directories].count
+      using=>magix.forms
+        create-web-part
+          container=>preview-dynamic
+          form-id=>preview-dynamic
+          controls=>[@][..][_controls]
+    case=>file
+      _controls
+        label=>file-header
+          tag=>label
+          class=>span-8 last
+          value=>info
+        label=>file-type
+          class=>span-8 last
+      split=>[magix.viewstate.get][value][object].value
+        what=>.
+      _image
+        img
+          class=>span-4
+          title=>click to open file in new window
+          alt=>preview of image
+          style=>cursor:pointer;
+          onclick
+            using=>magix.viewport
+              execute-javascript
+                script=>@"window.open('{0}');"
+                  =>[$][value].value
+      switch=>[@][split][result][>last].value
+        case=>png
+          set=>[@][..][..][_controls][label=>file-type][value].value
+            value=>image file
+          set=>[@][..][..][_image][img][src].value
+            value=>[magix.viewstate.get][value][object].value
+          add=>[@][..][..][_controls]
+            value=>[@][..][..][_image][img]
+        case=>jpeg
+          set=>[@][..][..][_controls][label=>file-type][value].value
+            value=>image file
+          set=>[@][..][..][_image][img][src].value
+            value=>[magix.viewstate.get][value][object].value
+          add=>[@][..][..][_controls]
+            value=>[@][..][..][_image][img]
+        case=>jpg
+          set=>[@][..][..][_controls][label=>file-type][value].value
+            value=>image file
+          set=>[@][..][..][_image][img][src].value
+            value=>[magix.viewstate.get][value][object].value
+          add=>[@][..][..][_controls]
+            value=>[@][..][..][_image][img]
+        case=>ico
+          set=>[@][..][..][_controls][label=>file-type][value].value
+            value=>image file
+          set=>[@][..][..][_image][img][src].value
+            value=>[magix.viewstate.get][value][object].value
+          add=>[@][..][..][_controls]
+            value=>[@][..][..][_image][img]
+        case=>hl
+          set=>[@][..][..][_controls][label=>file-type][value].value
+            value=>hyperlisp file
+        case=>cs
+          set=>[@][..][..][_controls][label=>file-type][value].value
+            value=>c# file
+        case=>mml
+          set=>[@][..][..][_controls][label=>file-type][value].value
+            value=>magix markup language file
+        case=>html
+          set=>[@][..][..][_controls][label=>file-type][value].value
+            value=>hypertext markup language file
+        case=>htm
+          set=>[@][..][..][_controls][label=>file-type][value].value
+            value=>hypertext markup language file
+        case=>js
+          set=>[@][..][..][_controls][label=>file-type][value].value
+            value=>javascript file
+        case=>css
+          set=>[@][..][..][_controls][label=>file-type][value].value
+            value=>stylesheet file
+        case=>aspx
+          set=>[@][..][..][_controls][label=>file-type][value].value
+            value=>asp.net file
+        case=>ascx
+          set=>[@][..][..][_controls][label=>file-type][value].value
+            value=>asp.net file
+        case=>vb
+          set=>[@][..][..][_controls][label=>file-type][value].value
+            value=>visual basic file
+        case=>txt
+          set=>[@][..][..][_controls][label=>file-type][value].value
+            value=>text file
+        case=>config
+          set=>[@][..][..][_controls][label=>file-type][value].value
+            value=>configuration file
+        case=>asax
+          set=>[@][..][..][_controls][label=>file-type][value].value
+            value=>asp.net file
+        case=>csproj
+          set=>[@][..][..][_controls][label=>file-type][value].value
+            value=>visual studio file
+        case=>user
+          set=>[@][..][..][_controls][label=>file-type][value].value
+            value=>visual studio file
+        case=>dll
+          set=>[@][..][..][_controls][label=>file-type][value].value
+            value=>binary file
+        case=>zip
+          set=>[@][..][..][_controls][label=>file-type][value].value
+            value=>archive file
+      using=>magix.forms
+        create-web-part
+          container=>preview-dynamic
+          form-id=>preview-dynamic
+          controls=>[@][..][_controls]
 
 magix.file-manager.go-back
   magix.viewstate.get
@@ -144,36 +299,10 @@ magix.file-manager.go-back
     value=>[_directory].value
   magix.viewstate.set
     id=>magix.file-manager.current-directory
+  magix.viewstate.set
+    id=>magix.file-manager.selected-object
   magix.file-manager.show-files
-  if=>equals
-    lhs=>[_directory].value
-    rhs=>
-    code
-      using=>magix.forms
-        set-enabled
-          form-id=>file-manager
-          id=>back
-          value=>false
-  using=>magix.forms
-    set-value
-      form-id=>file-manager
-      id=>selected-object
-    set-enabled
-      form-id=>file-manager
-      id=>open
-      value=>false
-    set-enabled
-      form-id=>file-manager
-      id=>rename
-      value=>false
-    set-enabled
-      form-id=>file-manager
-      id=>delete
-      value=>false
-    set-enabled
-      form-id=>file-manager
-      id=>copy
-      value=>false
+  magix.file-manager.refresh-toolbar
 
 magix.file-manager.open-selected-directory
   magix.viewstate.get
@@ -186,30 +315,10 @@ magix.file-manager.open-selected-directory
     id=>magix.file-manager.selected-object
   magix.file-manager.show-files
   using=>magix.forms
-    set-enabled
-      form-id=>file-manager
-      id=>open
-      value=>false
-    set-enabled
-      form-id=>file-manager
-      id=>back
-      value=>true
-    set-enabled
-      form-id=>file-manager
-      id=>rename
-      value=>false
-    set-enabled
-      form-id=>file-manager
-      id=>delete
-      value=>false
-    set-enabled
-      form-id=>file-manager
-      id=>copy
-      value=>false
-  using=>magix.forms
     set-value
       form-id=>file-manager
       id=>selected-object
+  magix.file-manager.refresh-toolbar
 
 magix.file-manager.refresh-toolbar
   magix.viewstate.get
@@ -248,8 +357,30 @@ magix.file-manager.refresh-toolbar
           form-id=>file-manager
           id=>copy
           value=>true
+      magix.viewstate.get
+        id=>magix.file-manager.onselect
+      if=>exist
+        lhs=>[@][magix.viewstate.get][value]
+        and=>equals
+          lhs=>[magix.viewstate.get][value][type].value
+          rhs=>file
+        code
+          using=>magix.forms
+            set-enabled
+              form-id=>file-manager
+              id=>select
+              value=>true
+      else
+        using=>magix.forms
+          set-enabled
+            form-id=>file-manager
+            id=>select
+            value=>false
   else
     using=>magix.forms
+      set-value
+        form-id=>file-manager
+        id=>selected-object
       set-enabled
         form-id=>file-manager
         id=>rename
@@ -261,6 +392,14 @@ magix.file-manager.refresh-toolbar
       set-enabled
         form-id=>file-manager
         id=>copy
+        value=>false
+      set-enabled
+        form-id=>file-manager
+        id=>select
+        value=>false
+      set-enabled
+        form-id=>file-manager
+        id=>select
         value=>false
   magix.viewstate.get
     id=>magix.file-manager.clipboard-object
@@ -278,6 +417,37 @@ magix.file-manager.refresh-toolbar
         form-id=>file-manager
         id=>paste
         value=>false
+  magix.viewstate.get
+    id=>magix.file-manager.oncancel
+  if=>exist
+    lhs=>[magix.viewstate.get:2][value]
+    code
+      magix.forms.set-enabled
+        form-id=>file-manager
+        id=>cancel-button
+        value=>true
+  else
+    magix.forms.set-enabled
+      form-id=>file-manager
+      id=>cancel-button
+      value=>false
+  magix.viewstate.get
+    id=>magix.file-manager.current-directory
+  if=>exist
+    lhs=>[magix.viewstate.get:3][value]
+    and=>not-equals
+      lhs=>[magix.viewstate.get:3][value].value
+      rhs=>
+    code
+      magix.forms.set-enabled
+        form-id=>file-manager
+        id=>back
+        value=>true
+  else
+    magix.forms.set-enabled
+      form-id=>file-manager
+      id=>back
+      value=>false
 
 magix.file-manager.rename-object
   magix.forms.get-value

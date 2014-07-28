@@ -286,7 +286,6 @@ note that these settings are publicly visible to other servers through the serve
           params
             filter=>*.png;*.jpg;*.jpeg;
             container=>browse-for-image
-            deny-create-directory=>true
             onselect
               magix.viewport.clear-controls
                 container=>browse-for-image
