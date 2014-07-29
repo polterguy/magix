@@ -1,5 +1,12 @@
 ﻿
 
+.file-manager
+{
+    background-image:url(../images/icons/big-arrow.png), linear-gradient(rgba(240, 240, 255, 1) 0%, rgba(190, 190, 210, 1) 100%);
+    background-repeat:no-repeat;
+    background-position:top right;
+}
+
 .file-manager-directories
 {
     height:270px;
@@ -25,5 +32,11 @@
 .selected-object
 {
     text-decoration:underline;
+}
+
+.image-preview
+{
+    max-height:150px;
+    max-width:80px;
 }
 
