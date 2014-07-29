@@ -6,7 +6,7 @@ contains all controls for the file-manager.hl web part"
 
 
 dynamic=>file-wrp
-  class=>span-20 last
+  class=>span-20 last file-manager
   onfirstload
     magix.file-manager.show-files
     magix.file-manager.refresh-toolbar
@@ -14,7 +14,7 @@ panel=>toolbar-wrapper
   class=>btn-group span-20 right last top-1
   controls
     text-box=>selected-object
-      class=>span-3
+      class=>span-2
       placeholder=>selected object ...
       onenterpressed
         magix.viewport.show-message
@@ -64,6 +64,16 @@ panel=>toolbar-wrapper
       value=>paste
       onclick
         magix.file-manager.paste-object
+    button=>download
+      class=>span-2
+      disabled=>true
+      value=>download
+      onclick
+        magix.viewstate.get
+          id=>magix.file-manager.selected-object
+        set=>[magix.file.download][file].value
+          value=>[magix.viewstate.get][value][object].value
+        magix.file.download
     button=>select
       class=>span-2
       disabled=>true
@@ -88,4 +98,9 @@ panel=>toolbar-wrapper
         add=>[execute]
           values=>[magix.viewstate.get][value]
         execute
+    uploader=>file-manager-uploader
+      class=>mux-file-uploader
+      directory=>
+      onuploaded
+        magix.file-manager.show-files
 

@@ -180,7 +180,7 @@ magix.file-manager.show-preview
         what=>.
       _image
         img
-          class=>span-4
+          class=>image-preview
           title=>click to open file in new window
           alt=>preview of image
           style=>cursor:pointer;
@@ -303,6 +303,7 @@ magix.file-manager.go-back
     id=>magix.file-manager.selected-object
   magix.file-manager.show-files
   magix.file-manager.refresh-toolbar
+  magix.file-manager.current-directory-changed
 
 magix.file-manager.open-selected-directory
   magix.viewstate.get
@@ -319,10 +320,26 @@ magix.file-manager.open-selected-directory
       form-id=>file-manager
       id=>selected-object
   magix.file-manager.refresh-toolbar
+  magix.file-manager.current-directory-changed
 
 magix.file-manager.refresh-toolbar
   magix.viewstate.get
     id=>magix.file-manager.selected-object
+  if=>equals
+    lhs=>[magix.viewstate.get][value][type].value
+    rhs=>file
+    code
+      using=>magix.forms
+        set-enabled
+          form-id=>file-manager
+          id=>download
+          value=>true
+  else
+    using=>magix.forms
+      set-enabled
+        form-id=>file-manager
+        id=>download
+        value=>false
   switch=>[magix.viewstate.get][value][type].value
     case=>directory
       using=>magix.forms
@@ -718,4 +735,13 @@ magix.file-manager.paste-file
       color=>#aaffaa
       time=>5000
   magix.file-manager.show-files
+
+magix.file-manager.current-directory-changed
+  magix.viewstate.get
+    id=>magix.file-manager.current-directory
+  set=>[magix.forms.uploader-set-directory][value].value
+    value=>[magix.viewstate.get][value].value
+  magix.forms.uploader-set-directory
+    form-id=>file-manager
+    id=>file-manager-uploader
 

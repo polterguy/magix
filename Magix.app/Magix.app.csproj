@@ -267,7 +267,6 @@
     <Content Include="media\videos\unsustainable-growth.webm" />
     <Content Include="database\web.config" />
     <None Include="media\xing-wysihtml5\LICENSE" />
-    <Content Include="system42\private\file-manager\file-manager-old.hl" />
     <Content Include="system42\private\app-wizard\app-wizard.hl" />
     <Content Include="system42\private\dashboard\menu.mml" />
     <Content Include="system42\private\dashboard\desktop.hl" />

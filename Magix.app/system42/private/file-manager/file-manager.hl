@@ -9,6 +9,10 @@ magix.viewport.include-client-file
   type=>css
   file=>media/back-end/file-manager.css
 
+magix.viewport.include-client-file
+  type=>css
+  file=>media/back-end/file-uploader.css
+
 if=>equals
   lhs=>[$][show-info].value
   rhs=>true
