@@ -10,17 +10,17 @@ dynamic=>file-wrp
   onfirstload
     magix.file-manager.show-files
     magix.file-manager.refresh-toolbar
+text-box=>selected-object
+  class=>span-6 top-1
+  placeholder=>selected object ...
+  onenterpressed
+    magix.viewport.show-message
+      message=>choose one of the buttons on the toolbar to initiate an action
+      color=>#ffaaaa
+      time=>3000
 panel=>toolbar-wrapper
-  class=>btn-group span-20 right last top-1
+  class=>btn-group span-20 right last top-1 clear
   controls
-    text-box=>selected-object
-      class=>span-2
-      placeholder=>selected object ...
-      onenterpressed
-        magix.viewport.show-message
-          message=>choose one of the buttons on the toolbar to initiate an action
-          color=>#ffaaaa
-          time=>3000
     button=>back
       class=>span-2
       disabled=>true
@@ -58,6 +58,12 @@ panel=>toolbar-wrapper
       value=>copy
       onclick
         magix.file-manager.copy-object
+    button=>cut
+      class=>span-2
+      disabled=>true
+      value=>cut
+      onclick
+        magix.file-manager.cut-object
     button=>paste
       class=>span-2 last
       disabled=>true

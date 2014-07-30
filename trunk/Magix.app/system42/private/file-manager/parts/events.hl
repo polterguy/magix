@@ -374,6 +374,10 @@ magix.file-manager.refresh-toolbar
           form-id=>file-manager
           id=>copy
           value=>true
+        set-enabled
+          form-id=>file-manager
+          id=>cut
+          value=>true
       magix.viewstate.get
         id=>magix.file-manager.onselect
       if=>exist
@@ -409,6 +413,10 @@ magix.file-manager.refresh-toolbar
       set-enabled
         form-id=>file-manager
         id=>copy
+        value=>false
+      set-enabled
+        form-id=>file-manager
+        id=>cut
         value=>false
       set-enabled
         form-id=>file-manager
@@ -680,6 +688,17 @@ magix.file-manager.copy-object
     id=>magix.file-manager.clipboard-object
   magix.file-manager.refresh-toolbar
 
+magix.file-manager.cut-object
+  magix.viewstate.get
+    id=>magix.file-manager.selected-object
+  add=>[magix.viewstate.set][value]
+    values=>[magix.viewstate.get][value]
+  magix.viewstate.set
+    id=>magix.file-manager.clipboard-object
+    value
+      clipboard-type=>cut
+  magix.file-manager.refresh-toolbar
+
 magix.file-manager.paste-object
   magix.viewstate.get
     id=>magix.file-manager.clipboard-object
@@ -701,13 +720,74 @@ magix.file-manager.paste-object
       value=>{0}/{1}
         =>[magix.viewstate.get:1][value].value
         =>[split][result][>last].value
+  using=>magix.file
+    file-exist
+      file=>[_destination].value
+    directory-exist
+      directory=>[_destination].value
   if=>equals
-    lhs=>[magix.viewstate.get][value][object].value
-    rhs=>[_destination].value
+    lhs=>[using][file-exist][value].value
+    rhs=>true
+    or=>equals
+      lhs=>[using][directory-exist][value].value
+      rhs=>true
     code
-      set=>[_destination].value
-        value=>{0} - copy
-          =>[_destination].value
+      if=>equals
+        lhs=>[magix.viewstate.get][value][type].value
+        rhs=>file
+        code
+          split=>[_destination].value
+            what=>.
+          replace=>[_destination].value
+            what=>.{0}
+              =>[@][split][result][>last].value
+          _count=>0
+          while=>exist
+            lhs=>[.]
+            code
+              using=>magix.math
+                add=>[@][..][..][..][_count]
+                  =>[@][..][..][..][_count].value
+                  =>1
+              using=>magix.file
+                file-exist
+                  file=>{0} - copy {1}.{2}
+                    =>[_destination].value
+                    =>[@][..][..][..][_count].value
+                    =>[@][..][..][..][split][result][>last].value
+              if=>not-equals
+                lhs=>[@][using:1][file-exist][value].value
+                rhs=>true
+                code
+                  set=>[_destination].value
+                    value=>{0} - copy {1}.{2}
+                      =>[_destination].value
+                      =>[@][..][..][..][..][_count].value
+                      =>[@][..][..][..][..][split][result][>last].value
+                  stop
+      else
+        _count=>0
+        while=>exist
+          lhs=>[.]
+          code
+            using=>magix.math
+              add=>[@][..][..][..][_count]
+                =>[@][..][..][..][_count].value
+                =>1
+            using=>magix.file
+              directory-exist
+                directory=>{0} - copy {1}
+                  =>[_destination].value
+                  =>[@][..][..][..][_count].value
+            if=>not-equals
+              lhs=>[@][using:1][directory-exist][value].value
+              rhs=>true
+              code
+                set=>[_destination].value
+                  value=>{0} - copy {1}
+                    =>[_destination].value
+                    =>[@][..][..][..][..][_count].value
+                stop
   switch=>[magix.viewstate.get][value][type].value
     case=>directory
       set=>[@][magix.file-manager.paste-directory][source].value
@@ -723,34 +803,74 @@ magix.file-manager.paste-object
       magix.file-manager.paste-file
 
 magix.file-manager.paste-directory
+  magix.viewstate.get
+    id=>magix.file-manager.clipboard-object
   set=>[magix.file.copy-directory][from].value
     value=>[$][source].value
   set=>[magix.file.copy-directory][to].value
     value=>[$][destination].value
+  if=>equals
+    lhs=>[magix.viewstate.get][value][clipboard-type].value
+    rhs=>cut
+    code
+      set=>[magix.file.copy-directory].name
+        value=>magix.file.move-directory
+      magix.viewstate.set
+        id=>magix.file-manager.clipboard-object
+  if=>equals
+    lhs=>[magix.file.copy-directory][from].value
+    rhs=>[magix.file.copy-directory][to].value
+    code
+      magix.viewport.show-message
+        message=>source and destination was the same
+        color=>#ffaaaa
+        time=>5000
+      stop
   magix.file.copy-directory
   using=>magix.viewport
     show-message
-      message=>directory '{0}' was copied as '{1}'
+      message=>directory '{0}' was copied or moved as '{1}'
         =>[$][source].value
         =>[$][destination].value
       color=>#aaffaa
       time=>5000
   magix.file-manager.show-files
+  magix.file-manager.refresh-toolbar
 
 magix.file-manager.paste-file
+  magix.viewstate.get
+    id=>magix.file-manager.clipboard-object
   set=>[magix.file.copy-file][from].value
     value=>[$][source].value
   set=>[magix.file.copy-file][to].value
     value=>[$][destination].value
+  if=>equals
+    lhs=>[magix.file.copy-file][from].value
+    rhs=>[magix.file.copy-file][to].value
+    code
+      magix.viewport.show-message
+        message=>source and destination was the same
+        color=>#ffaaaa
+        time=>5000
+      stop
+  if=>equals
+    lhs=>[magix.viewstate.get][value][clipboard-type].value
+    rhs=>cut
+    code
+      set=>[magix.file.copy-file].name
+        value=>magix.file.move-file
+      magix.viewstate.set
+        id=>magix.file-manager.clipboard-object
   magix.file.copy-file
   using=>magix.viewport
     show-message
-      message=>file '{0}' was copied as '{1}'
+      message=>file '{0}' was copied or moved as '{1}'
         =>[$][source].value
         =>[$][destination].value
       color=>#aaffaa
       time=>5000
   magix.file-manager.show-files
+  magix.file-manager.refresh-toolbar
 
 magix.file-manager.current-directory-changed
   magix.viewstate.get
