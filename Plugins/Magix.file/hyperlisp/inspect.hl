@@ -201,6 +201,9 @@ returns true as [value] if the file in the value of [file] exist.  the value of
 be either a relative path beneath the web application's folder, or an absolute 
 path on disc
 
+[file] may contain formatting parameters, such as {0} and {1} which should reference 
+children of the [file] node
+
 thread safe"
 
 magix.file.file-exist-sample

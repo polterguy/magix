@@ -95,6 +95,21 @@ else
   magix.viewstate.set
     id=>magix.file-manager.select-non-existent
 
+magix.viewstate.get
+  id=>magix.file-manager.current-directory
+if=>exist
+  lhs=>[magix.viewstate.get][value]
+  code
+    set=>[magix.file.directory-exist][directory].value
+      value=>[magix.viewstate.get][value].value
+magix.file.directory-exist
+  directory=>
+if=>equals
+  lhs=>[magix.file.directory-exist][value].value
+  rhs=>false
+  code
+    magix.viewstate.set
+      id=>magix.file-manager.current-directory
 
 // creates the actual file manager
 magix.forms.create-web-part

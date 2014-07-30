@@ -314,6 +314,8 @@ namespace Magix.execute
                 throw new ArgumentException("you didn't supply a [file] for [file-exist]");
 
             string file = Expressions.GetExpressionValue<string>(ip["file"].Get<string>().TrimStart('/'), dp, ip, false);
+            if (ip["file"].Count > 0)
+                file = Expressions.FormatString(dp, ip, ip["file"], file);
             if (!file.Contains(":"))
                 file = _basePath + file;
 
