@@ -41,6 +41,7 @@ magix.wizard.browse-for-item
     file=>system42/private/file-manager/file-manager.hl
     params
       container=>content2
+      select-directory=>true
       onselect
         magix.viewstate.get
           id=>magix.zip-file.items

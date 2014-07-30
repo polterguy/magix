@@ -94,6 +94,16 @@ if=>equals
 else
   magix.viewstate.set
     id=>magix.file-manager.select-non-existent
+if=>equals
+  lhs=>[$][select-directory].value
+  rhs=>true
+  code
+    magix.viewstate.set
+      id=>magix.file-manager.select-directory
+      value=>true
+else
+  magix.viewstate.set
+    id=>magix.file-manager.select-directory
 
 magix.viewstate.get
   id=>magix.file-manager.current-directory

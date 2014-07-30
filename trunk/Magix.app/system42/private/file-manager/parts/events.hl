@@ -325,6 +325,9 @@ magix.file-manager.open-selected-directory
 magix.file-manager.refresh-toolbar
   magix.viewstate.get
     id=>magix.file-manager.selected-object
+  execute
+    magix.viewstate.get
+      id=>magix.file-manager.select-directory
   if=>equals
     lhs=>[magix.viewstate.get][value][type].value
     rhs=>file
@@ -385,6 +388,9 @@ magix.file-manager.refresh-toolbar
         and=>equals
           lhs=>[magix.viewstate.get][value][type].value
           rhs=>file
+          or=>equals
+            lhs=>[execute][magix.viewstate.get][value].value
+            rhs=>true
         code
           using=>magix.forms
             set-enabled
