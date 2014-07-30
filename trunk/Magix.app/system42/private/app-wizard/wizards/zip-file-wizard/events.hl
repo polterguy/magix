@@ -36,3 +36,113 @@ magix.wizard.browse-for-file
           container=>content2
           reset-class=>true
 
+magix.wizard.browse-for-item
+  execute-script
+    file=>system42/private/file-manager/file-manager.hl
+    params
+      container=>content2
+      onselect
+        magix.viewstate.get
+          id=>magix.zip-file.items
+        if=>exist
+          lhs=>[magix.viewstate.get][value]
+          code
+            add=>[magix.viewstate.set][value]
+              values=>[magix.viewstate.get][value]
+        add=>[magix.viewstate.set][value]
+          value=>
+            value=>[$][file].value
+        magix.viewstate.set
+          id=>magix.zip-file.items
+        magix.viewport.clear-controls
+          container=>content2
+          reset-class=>true
+        magix.wizard.create-items
+      oncancel
+        magix.viewport.clear-controls
+          container=>content2
+          reset-class=>true
+
+magix.wizard.create-items
+  magix.viewstate.get
+    id=>magix.zip-file.items
+  if=>not-exist
+    lhs=>[magix.viewstate.get][value]
+    or=>equals
+      lhs=>[magix.viewstate.get][value].count
+      rhs=>0
+    code
+      magix.viewport.clear-controls
+        container=>items-dynamic
+        reset-class=>true
+      stop
+  _controls
+  for-each=>[magix.viewstate.get][value]
+    _lb
+      label
+        class=>span-11
+      link-button
+        class=>span-2 last
+        value=>remove
+        onclick
+          magix.viewstate.get
+            id=>magix.zip-file.items
+          set=>[set:1].value
+            value=>\[magix.viewstate.get][value][=>{0}]
+              =>[$][info].value
+          set
+          add=>[magix.viewstate.set][value]
+            values=>[magix.viewstate.get][value]
+          magix.viewstate.set
+            id=>magix.zip-file.items
+          magix.wizard.create-items
+    set=>[@][_lb][label][value].value
+      value=>[.].value
+    set=>[@][_lb][link-button][info].value
+      value=>[.].value
+    add=>[@][..][_controls]
+      values=>[@][_lb]
+  using=>magix.forms
+    create-web-part
+      container=>items-dynamic
+      class=>span-13 air-padding boxed-light-green top-1
+      controls=>[_controls]
+
+magix.wizard.create-zip
+  magix.viewstate.get
+    id=>magix.zip-file.items
+  if=>not-exist
+    lhs=>[magix.viewstate.get][value]
+    or=>equals
+      lhs=>[magix.viewstate.get][value].count
+      rhs=>0
+    code
+      magix.viewport.show-message
+        message=>you must choose items to zip
+        color=>#ffaaaa
+        time=>5000
+      stop
+  add=>[magix.package.pack][files]
+    values=>[magix.viewstate.get][value]
+  magix.forms.get-value
+    form-id=>wizard
+    id=>zip-file
+  if=>equals
+    lhs=>[magix.forms.get-value][value].value
+    rhs=>
+    code
+      magix.viewport.show-message
+        message=>you must choose a zip file to put your items into
+        color=>#ffaaaa
+        time=>5000
+      stop
+  set=>[magix.package.pack][zip].value
+    value=>[magix.forms.get-value][value].value
+  magix.package.pack
+  using=>magix.viewport
+    show-message
+      message=>zip file '{0}' was created
+        =>[magix.forms.get-value][value].value
+      color=>#aaffaa
+      time=>5000
+

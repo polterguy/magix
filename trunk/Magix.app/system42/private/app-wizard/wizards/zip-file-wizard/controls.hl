@@ -28,6 +28,7 @@ panel
       value=>zip file
     panel
       class=>btn-group span-12 last
+      default=>browse
       controls
         text-box=>zip-file
           class=>span-10
@@ -37,4 +38,15 @@ panel
           value=>browse
           onclick
             magix.wizard.browse-for-file
+    dynamic=>items-dynamic
+    button=>browse-item
+      class=>span-4 left-9 top-1
+      value=>browse for item
+      onclick
+        magix.wizard.browse-for-item
+    button=>create-zip
+      class=>span-2 last top-1
+      value=>create
+      onclick
+        magix.wizard.create-zip
 

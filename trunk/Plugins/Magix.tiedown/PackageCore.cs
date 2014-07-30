@@ -96,7 +96,7 @@ namespace Magix.tiedown
             {
                 foreach (Node idxZipFile in ip["files"])
                 {
-                    zip.AddFile(HttpContext.Current.Server.MapPath(idxZipFile.Get<string>()), idxZipFile.Name);
+                    zip.AddItem(HttpContext.Current.Server.MapPath(idxZipFile.Get<string>()), idxZipFile.Name ?? "");
                 }
                 zip.Save(zipAbsolutePath);
             }

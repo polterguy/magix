@@ -10,6 +10,9 @@ magix.core.verify-role
 
 _name=>create zip file
 
+magix.viewstate.set
+  id=>magix.zip-file.items
+
 // creates the wizard main web part
 magix.forms.create-web-part
   form-id=>wizard
