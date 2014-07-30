@@ -104,6 +104,3 @@ language file"
           value=>[$][info].value
         magix.event.edit-event
 
-dynamic=>file-browser
-  class=>span-17 last
-

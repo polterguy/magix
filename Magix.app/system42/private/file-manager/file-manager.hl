@@ -77,7 +77,6 @@ if=>exist
 else
   magix.viewstate.set
     id=>magix.file-manager.oncancel
-
 if=>exist
   lhs=>[$][directory]
   code
@@ -85,6 +84,16 @@ if=>exist
       value=>[$][directory].value
     magix.viewstate.set
       id=>magix.file-manager.current-directory
+if=>equals
+  lhs=>[$][select-non-existent].value
+  rhs=>true
+  code
+    magix.viewstate.set
+      id=>magix.file-manager.select-non-existent
+      value=>true
+else
+  magix.viewstate.set
+    id=>magix.file-manager.select-non-existent
 
 
 // creates the actual file manager

@@ -83,12 +83,73 @@ panel=>toolbar-wrapper
           id=>magix.file-manager.onselect
         magix.viewstate.get
           id=>magix.file-manager.selected-object
-        set=>[lambda][file].value
-          value=>[magix.viewstate.get:1][value][object].value
+        if=>equals
+          lhs=>[magix.viewstate.get:1][value][type].value
+          rhs=>file
+          code
+            set=>[lambda][file].value
+              value=>[magix.viewstate.get:1][value][object].value
+        else
+          magix.viewstate.get
+            id=>magix.file-manager.select-non-existent
+          magix.viewstate.get
+            id=>magix.file-manager.current-directory
+          if=>equals
+            lhs=>[@][magix.viewstate.get][value].value
+            rhs=>true
+            code
+              magix.forms.get-value
+                form-id=>file-manager
+                id=>selected-object
+              if=>equals
+                lhs=>[@][magix.forms.get-value][value].value
+                rhs=>
+                code
+                  magix.viewport.show-message
+                    message=>you need to supply a file name into the text-box
+                    color=>#ffaaaa
+                    time=>5000
+                  stop
+              else
+                if=>equals
+                  lhs=>[@][..][..][..][magix.viewstate.get:1][value].value
+                  rhs=>
+                  or=>not-exist
+                    lhs=>[@][..][..][..][magix.viewstate.get:1][value]
+                  code
+                    set=>[lambda][file].value
+                      value=>[@][..][..][..][magix.forms.get-value][value].value
+                else-if=>not-equals
+                  lhs=>{0}/{1}
+                    =>[@][..][..][..][magix.viewstate.get:1][value].value
+                    =>[@][..][magix.forms.get-value][value].value
+                  rhs=>[magix.viewstate.get:1][value][object].value
+                  code
+                    set=>[lambda][file].value
+                      value=>{0}/{1}
+                        =>[@][..][..][..][..][..][magix.viewstate.get:1][value].value
+                        =>[@][..][..][..][magix.forms.get-value][value].value
+                else
+                  magix.viewport.show-message
+                    message=>you need to supply a file name into the text-box
+                    color=>#ffaaaa
+                    time=>5000
+                  stop
+          else
+            magix.viewport.show-message
+              message=>you need to select an existing file
+              color=>#ffaaaa
+              time=>5000
+            stop
         add=>[_exe]
           values=>[magix.viewstate.get][value]
         lambda=>[_exe]
         _exe
+    uploader=>file-manager-uploader
+      class=>mux-file-uploader
+      directory=>
+      onuploaded
+        magix.file-manager.show-files
     button=>cancel-button
       class=>span-2
       value=>cancel
@@ -98,9 +159,4 @@ panel=>toolbar-wrapper
         add=>[execute]
           values=>[magix.viewstate.get][value]
         execute
-    uploader=>file-manager-uploader
-      class=>mux-file-uploader
-      directory=>
-      onuploaded
-        magix.file-manager.show-files
 

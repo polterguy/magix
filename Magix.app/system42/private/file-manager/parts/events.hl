@@ -465,6 +465,22 @@ magix.file-manager.refresh-toolbar
       form-id=>file-manager
       id=>back
       value=>false
+  execute
+    magix.viewstate.get
+      id=>magix.file-manager.onselect
+    if=>exist
+      lhs=>[@][magix.viewstate.get][value]
+      code
+        magix.viewstate.get
+          id=>magix.file-manager.select-non-existent
+        if=>equals
+          lhs=>[@][magix.viewstate.get][value].value
+          rhs=>true
+          code
+            magix.forms.set-enabled
+              form-id=>file-manager
+              id=>select
+              value=>true
 
 magix.file-manager.rename-object
   magix.forms.get-value

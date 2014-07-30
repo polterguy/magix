@@ -69,6 +69,8 @@ namespace Magix.execute
             out object objRhsVal)
         {
             string lhsRawValue = where["lhs"].Get<string>();
+            if (where["lhs"].Count > 0)
+                lhsRawValue = Expressions.FormatString(dp, ip, where["lhs"], lhsRawValue);
             string rhsRawValue = null;
             objLhsVal = null;
             objRhsVal = null;
@@ -81,6 +83,8 @@ namespace Magix.execute
                     throw new ArgumentException("missing [rhs] node in expression");
 
                 rhsRawValue = where["rhs"].Get<string>();
+                if (where["rhs"].Count > 0)
+                    rhsRawValue = Expressions.FormatString(dp, ip, where["rhs"], rhsRawValue);
                 ChangeType(rhsRawValue, out objRhsVal, ip, dp);
             }
         }
