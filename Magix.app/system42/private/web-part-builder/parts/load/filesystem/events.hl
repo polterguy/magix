@@ -91,10 +91,7 @@ magix.ide.browse_onclick
         magix.viewport.clear-controls
           container=>helper-for-persist-wrapper
           reset-class=>true
-        magix.forms.effect
-          type=>focus-and-select
-          form-id=>load-content
-          id=>filename
+        magix.ide.load-from-filesystem
       oncancel
         magix.viewport.clear-controls
           container=>helper-for-persist-wrapper
