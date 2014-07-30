@@ -89,12 +89,26 @@ panel=>toolbar-wrapper
           id=>magix.file-manager.onselect
         magix.viewstate.get
           id=>magix.file-manager.selected-object
+        execute
+          magix.viewstate.get
+            id=>magix.file-manager.select-directory
         if=>equals
           lhs=>[magix.viewstate.get:1][value][type].value
           rhs=>file
+          or=>equals
+            lhs=>[execute][magix.viewstate.get][value].value
+            rhs=>true
+            and=>exist
+              lhs=>[magix.viewstate.get:1][value]
           code
             set=>[lambda][file].value
               value=>[magix.viewstate.get:1][value][object].value
+            if=>not-equals
+              lhs=>[magix.viewstate.get:1][value][type].value
+              rhs=>file
+              code
+                set=>[lambda][file][type].value
+                  value=>directory
         else
           magix.viewstate.get
             id=>magix.file-manager.select-non-existent
