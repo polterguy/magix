@@ -92,7 +92,17 @@ magix.ide.browse_onclick
       filter=>*.hl
       container=>helper-for-persist-wrapper
       class=>span-20 last boxed air-padding bottom-1
+      select-non-existent=>true
       onselect
+        split=>[$][file].value
+          what=>.
+        if=>equals
+          lhs=>[split][result].count
+          rhs=>1
+          code
+            set=>[$][file].value
+              value=>{0}.hl
+                =>[$][file].value
         set=>[magix.forms.set-value][value].value
           value=>[$][file].value
         magix.forms.set-value
@@ -101,10 +111,7 @@ magix.ide.browse_onclick
         magix.viewport.clear-controls
           container=>helper-for-persist-wrapper
           reset-class=>true
-        magix.forms.effect
-          form-id=>save-content
-          id=>filename
-          type=>focus-and-select
+        magix.ide.save_onclick
       oncancel
         magix.viewport.clear-controls
           container=>helper-for-persist-wrapper

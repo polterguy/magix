@@ -114,8 +114,14 @@ panel=>toolbar-wrapper
                 if=>equals
                   lhs=>[@][..][..][..][magix.viewstate.get:1][value].value
                   rhs=>
+                  and=>not-equals
+                    lhs=>[@][..][magix.forms.get-value][value].value
+                    rhs=>[magix.viewstate.get:1][value][object].value
                   or=>not-exist
                     lhs=>[@][..][..][..][magix.viewstate.get:1][value]
+                    and=>not-equals
+                      lhs=>[@][..][magix.forms.get-value][value].value
+                      rhs=>[magix.viewstate.get:1][value][object].value
                   code
                     set=>[lambda][file].value
                       value=>[@][..][..][..][magix.forms.get-value][value].value
@@ -124,6 +130,9 @@ panel=>toolbar-wrapper
                     =>[@][..][..][..][magix.viewstate.get:1][value].value
                     =>[@][..][magix.forms.get-value][value].value
                   rhs=>[magix.viewstate.get:1][value][object].value
+                  and=>not-equals
+                    lhs=>[@][..][magix.forms.get-value][value].value
+                    rhs=>[magix.viewstate.get:1][value][object].value
                   code
                     set=>[lambda][file].value
                       value=>{0}/{1}
