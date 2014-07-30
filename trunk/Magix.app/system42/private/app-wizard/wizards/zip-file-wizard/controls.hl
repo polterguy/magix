@@ -37,4 +37,4 @@ panel
           value=>browse
           onclick
             magix.wizard.browse-for-file
-dynamic=>dyn-browse-file
+

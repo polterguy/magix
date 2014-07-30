@@ -11,14 +11,28 @@ magix.wizard.browse-for-file
     file=>system42/private/file-manager/file-manager.hl
     params
       filter=>*.zip
-      container=>dyn-browse-file
-      class=>span-20 last boxed air-padding bottom-1 top-1
+      container=>content2
+      select-non-existent=>true
       onselect
+        split=>[$][file].value
+          what=>.
+        if=>equals
+          lhs=>[split][result].count
+          rhs=>1
+          code
+            set=>[$][file].value
+              value=>{0}.zip
+                =>[$][file].value
+        using=>magix.forms
+          set-value
+            form-id=>wizard
+            id=>zip-file
+            value=>[$][file].value
         magix.viewport.clear-controls
-          container=>dyn-browse-file
+          container=>content2
           reset-class=>true
       oncancel
         magix.viewport.clear-controls
-          container=>dyn-browse-file
+          container=>content2
           reset-class=>true
 

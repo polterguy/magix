@@ -182,10 +182,10 @@ magix.wizard.create-load-from-where-web-part
                 file=>system42/private/file-manager/file-manager.hl
                 params
                   filter=>*.hl;*.mml;
-                  container=>file-browser
+                  container=>content2
                   onselect
                     magix.viewport.clear-controls
-                      container=>file-browser
+                      container=>content2
                       reset-class=>true
                     using=>magix.forms
                       set-value
@@ -194,7 +194,7 @@ magix.wizard.create-load-from-where-web-part
                         value=>[$][file].value
                   oncancel
                     magix.viewport.clear-controls
-                      container=>file-browser
+                      container=>content2
                       reset-class=>true
 
 // shows davanced settings for load web part active event wizard

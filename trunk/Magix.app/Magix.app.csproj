@@ -414,12 +414,9 @@
     <Content Include="system42\private\app-wizard\wizards\load-web-part-event-wizard.hl" />
     <Content Include="system42\private\app-wizard\wizards\load-web-part-event-wizard\events.hl" />
     <Content Include="system42\private\app-wizard\wizards\load-web-part-event-wizard\controls.hl" />
-    <Content Include="system42\private\file-manager\main\events.hl" />
     <Content Include="system42\private\tools\wysiwyg-editor.hl" />
-    <Content Include="system42\private\file-manager\main\create-directory\controls.hl" />
     <Content Include="system42\private\web-part-builder\parts\load\filesystem\controls.hl" />
     <Content Include="system42\private\web-part-builder\parts\load\filesystem\events.hl" />
-    <Content Include="system42\private\file-manager\main\create-file\controls.hl" />
     <Content Include="system42\private\tools\text-editor\events.hl" />
     <Content Include="system42\private\app-wizard\wizards\select-from-ms-sql-event-wizard.hl" />
     <Content Include="system42\private\app-wizard\wizards\select-from-ms-sql-event-wizard\controls.hl" />
