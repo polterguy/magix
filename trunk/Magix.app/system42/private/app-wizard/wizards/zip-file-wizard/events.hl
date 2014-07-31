@@ -46,12 +46,20 @@ magix.wizard.browse-for-item
         magix.viewstate.get
           id=>magix.zip-file.items
         if=>exist
+          lhs=>[magix.viewstate.get][value][[$][file].value]
+          code
+            magix.viewport.show-message
+              message=>item already exists in list of items to archive
+              color=>#ffaaaa
+              time=>5000
+            stop
+        if=>exist
           lhs=>[magix.viewstate.get][value]
           code
             add=>[magix.viewstate.set][value]
               values=>[magix.viewstate.get][value]
         add=>[magix.viewstate.set][value]
-          value=>
+          value=>[$][file].value
             value=>[$][file].value
         magix.viewstate.set
           id=>magix.zip-file.items
@@ -89,7 +97,7 @@ magix.wizard.create-items
           magix.viewstate.get
             id=>magix.zip-file.items
           set=>[set:1].value
-            value=>\[magix.viewstate.get][value][=>{0}]
+            value=>\[magix.viewstate.get][value][{0}=>{0}]
               =>[$][info].value
           set
           add=>[magix.viewstate.set][value]
@@ -140,6 +148,15 @@ magix.wizard.create-zip
   set=>[magix.package.pack][zip].value
     value=>[magix.forms.get-value][value].value
   magix.package.pack
+  magix.forms.set-visible
+    form-id=>wizard
+    id=>download-file
+    value=>true
+  using=>magix.forms
+    set-info
+      form-id=>wizard
+      id=>download-file
+      value=>[magix.package.pack][zip].value
   using=>magix.viewport
     show-message
       message=>zip file '{0}' was created

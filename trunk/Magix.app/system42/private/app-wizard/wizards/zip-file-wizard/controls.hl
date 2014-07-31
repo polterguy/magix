@@ -49,4 +49,12 @@ panel
       value=>create
       onclick
         magix.wizard.create-zip
+    link-button=>download-file
+      class=>span-3 clear right top-1 text-right last
+      value=>download file
+      visible=>false
+      onclick
+        set=>[magix.file.download][file].value
+          value=>[$][info].value
+        magix.file.download
 
