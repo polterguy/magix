@@ -31,7 +31,7 @@ namespace Magix.UX.Widgets
 				{
 					Manager.Instance.JavaScriptWriter.Write(
 						"window.actualEditor.setValue(\"" + 
-						(value.Replace("\n", "\\n").Replace("\r\n", "\\n").Replace("\"", "\\\"")) + "\");");
+						(value.Replace("\n", "\\n").Replace("\r", "").Replace("\"", "\\\"")) + "\");");
 				}
 				ViewState["Value"] = value;
 			}
