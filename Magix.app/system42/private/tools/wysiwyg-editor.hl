@@ -111,7 +111,7 @@ magix.forms.create-web-part
             file=>system42/private/file-manager/file-manager.hl
             params
               container=>content2
-              class=>span-20 last boxed air-padding top-1 left-5
+              class=>span-20 last boxed air-padding top-1
               onselect
                 set=>[magix.forms.set-value][value].value
                   value=>[$][file].value

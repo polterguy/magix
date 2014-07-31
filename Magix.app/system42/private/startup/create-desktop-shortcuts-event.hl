@@ -199,7 +199,7 @@ returns the default dashboard shortcuts in your system"
                       file=>system42/private/file-manager/file-manager.hl
                       params
                         container=>content2
-                        class=>span-20 last boxed air-padding top-1 left-5
+                        class=>span-20 last boxed air-padding top-1 clear
                         onselect
                           using=>magix.file
                             load
@@ -248,7 +248,7 @@ returns the default dashboard shortcuts in your system"
                       params
                         container=>content2
                         filter=>*.html
-                        class=>span-20 last boxed air-padding top-1 left-5
+                        class=>span-20 last boxed air-padding top-1 clear
                         onselect
                           using=>magix.file
                             load
