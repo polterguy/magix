@@ -74,7 +74,7 @@ magix.smtp.can-encrypt-sample
       thomas hansen=>isa.lightbringer@gmail.com
 
 
-magix.imap.retrieve-messages-dox=>@"retrieves messages from an imap server
+magix.imap.get-messages-dox=>@"retrieves messages from an imap server
 
 returns [count] messages starting from [start] from [mailbox-name] in [reverse] 
 order settings the seen flag if [set-seen-flag] is true from [host] on [port] 
@@ -90,8 +90,8 @@ of recipients, [bcc] being a list of blind copy recipients, [date], [uid], [from
 [importance], [index] being index on server, [in-reply-to], [mailbox-name], 
 [message-id], [priority], [signed], [encrypted] and [triple-wrapped]"
 
-magix.imap.retrieve-messages-sample
-  magix.imap.retrieve-messages
+magix.imap.get-messages-sample
+  magix.imap.get-messages
     host=>imap.gmail.com
     port=>993
     ssl=>true
@@ -103,3 +103,33 @@ magix.imap.retrieve-messages-sample
     reverse=>false
     set-seen-flag=>false
     headers-only=>false
+
+
+magix.imap.get-message-dox=>@"retrieves one message from an imap server
+
+returns one message from imap server setting the seen flag if [set-seen-flag] 
+is true from [host] on [port] using [ssl]
+
+[host], [port] and [ssl] is optional, and if not supplied, will be read from 
+magix.imap.settings
+
+will automatically remove any script tags from the message recieved
+
+message is returned as [value] with [subject], [body], [to], [cc] being a list 
+of recipients, [bcc] being a list of blind copy recipients, [date], [uid], [from], 
+[importance], [index] being index on server, [in-reply-to], [mailbox-name], 
+[message-id], [priority], [signed], [encrypted] and [triple-wrapped]
+
+if [set-seen-flag] is false, the message will not be marked as seen"
+
+magix.imap.get-message-sample
+  magix.imap.get-message
+    host=>imap.gmail.com
+    port=>993
+    ssl=>true
+    username=>your-username@gmail.com
+    password=>Pa$$w0rd
+    mailbox-name=>inbox
+    set-seen-flag=>false
+    headers-only=>false
+
