@@ -22,9 +22,11 @@ link-button=>lnk-preview-close
 // actual preview of form
 dynamic=>preview-content
   onfirstload
-    magix.forms.create-web-part
-      form-id=>preview-content
-      container=>preview-content
-      class=>span-22 last bottom-1
-      controls=>[:magix.ide.get-form]
+    magix.ide.get-form
+    using=>magix.forms
+      create-web-part
+        form-id=>preview-content
+        container=>preview-content
+        class=>span-22 last bottom-1
+        controls=>[magix.ide.get-form]
 
