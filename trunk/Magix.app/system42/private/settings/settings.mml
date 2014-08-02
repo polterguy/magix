@@ -319,6 +319,7 @@ note that these settings are publicly visible to other servers through the serve
         magix.viewport.show-message
           message=>server discovery settings was saved
 dynamic=>browse-for-image
+  style=>margin-left:-200px;
 
 panel=>smtp-wrapper
   class=>span-13 last top-1 desktop-widget air-padding bottom-1 tools-desktop-widget

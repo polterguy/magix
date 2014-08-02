@@ -65,51 +65,55 @@ namespace Magix.forms
          * sets up the web part
          */
         public override void InitialLoading(Node node)
-		{
-			isFirst = true;
-            Node ip = Ip(node).Clone();
-            Node dp = Dp(node).Clone();
-            Node controls = null;
-            if (!string.IsNullOrEmpty(ip["controls"].Get<string>()))
-            {
-                controls = new Node("controls");
-                controls.AddRange(Expressions.GetExpressionValue<Node>(ip["controls"].Get<string>(), Dp(node), Ip(node), false).Clone());
-            }
+        {
+            isFirst = true;
+            Node ip = Ip(node);
+            Node dp = Dp(node);
+
+            if (!ip.Contains("controls") && !ip.Contains("mml"))
+                throw new ArgumentException("you must supply either a [controls] segment or an [mml] segment for your web part");
+
+            // controls
+            Node controlsDefinition = null;
+            if (ip["controls"].Value != null)
+                controlsDefinition = Expressions.GetExpressionValue<Node>(ip["controls"].Get<string>(), dp, ip, false).Clone();
             else
-                controls = ip["controls"].Clone();
+                controlsDefinition = ip["controls"].Clone();
+
+            // controls
+            Node eventsDefinition = null;
+            if (ip["events"].Value != null)
+                eventsDefinition = Expressions.GetExpressionValue<Node>(ip["events"].Get<string>(), dp, ip, false).Clone();
+            else
+                eventsDefinition = ip["events"].Clone();
+
+            // form-id
+            string formId = Expressions.GetExpressionValue<string>(ip["form-id"].Get<string>(), dp, ip, false);
+
+            // mml
+            string mml = Expressions.GetExpressionValue<string>(ip["mml"].Get<string>(), dp, ip, false);
+
             Load +=
-			    delegate
-			    {
-				    if (ip.Contains("form-id"))
-					    FormID = Expressions.GetExpressionValue<string>(ip["form-id"].Get<string>(), dp, ip, false);
+                delegate
+                {
+                    FormID = formId;
 
-				    if (ip.Contains("mml"))
-				    {
-					    // mml form
-                        string mml = Expressions.GetExpressionValue<string>(ip["mml"].Get<string>(), dp, ip, false);
-					    TokenizeMarkup(mml);
-				    }
-				    else
-				    {
-                        if (!ip.Contains("controls"))
-                            throw new ArgumentException("you must supply a [controls] segment for your web part");
-
-                        DataSource["controls"].Value = controls;
-
-					    if (ip.Contains("events"))
-					    {
-                            Node evts = ip["events"];
-                            if (!string.IsNullOrEmpty(ip["events"].Get<string>()))
-                                evts = Expressions.GetExpressionValue<Node>(ip["events"].Get<string>(), dp, ip, false);
-						    foreach (Node idxEvent in evts)
-						    {
-							    Methods[idxEvent.Name] = idxEvent.Clone();
-						    }
-					    }
-				    }
-			    };
-			base.InitialLoading(node);
-		}
+                    if (!string.IsNullOrEmpty(mml))
+                    {
+                        // mml form
+                        TokenizeMarkup(mml);
+                    }
+                    else
+                    {
+                        DataSource["controls"].Value = controlsDefinition;
+                        foreach (Node idxEvent in eventsDefinition)
+                        {
+                            Methods[idxEvent.Name] = idxEvent.Clone();
+                        }
+                    }
+                };
+            base.InitialLoading(node);
+        }
 
 		/*
 		 * raises web part dynamic active events
