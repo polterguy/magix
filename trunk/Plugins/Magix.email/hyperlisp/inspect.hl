@@ -3,7 +3,7 @@
 inspect=>@"documentation for magix.email"
 
 
-magix.email.send-email-dox=>@"sends an email over smtp
+magix.smtp.send-email-dox=>@"sends an email over smtp
 
 will send an smtp email, using the magix.smtp.settings from database
 
@@ -12,6 +12,15 @@ requires [header], [body] and [to]
 by default, the email is sent from the [admin-email] from your smtp settings 
 which can be configured in your settings.  this can be overridden however, by 
 supplying a [from] parameter, which then will become the sender's email
+
+if [to] contains a value then this will be the email address the message 
+is sent to.  if [to] does not contain a value, then it is expected to contain 
+a list of email addresses beneath which will become the list of emails the 
+message is sent to.  if [to] contains children, the name of the children 
+will be used as display name and the value of the children will be used as 
+email address to send email to
+
+all parameters can be either expressions or constants
 
 if s/mime is turned on in your settings, the email will be sent signed, using 
 the smime subject name certificate from your server.  you can override which 
@@ -22,14 +31,45 @@ depending upon your settings, the message might be sent signed, with an
 encrypted envelope, or triple wrapped, providing maximum security for your 
 system
 
+notice that if you wish to send an email encrypted, then you must have a public 
+certificate from all recipients of your email, otherwise the email will be sent 
+in plain un-encrypted
+
 if encryption is being used, and encryption was successful, meaning all 
 recipients had valid public s/mime keys, then the active event will return 
-[encryption-successful] as true"
+[encryption-successful] as true
 
-magix.email.send-email-sample
-  magix.email.send-email
+if [force-encryption] is true, then an exception will be raised unless message 
+can be sent encrypted to all recipients
+
+if [async] is true, then the message will be sent on a different thread"
+
+magix.smtp.send-email-sample
+  magix.smtp.send-email
     header=>this is the header
     body=>this is the body of your email
     to=>thomas@magixilluminate.com
     smime-subject-name=>your.certificate@your-server.com
+    async=>false
+    force-encryption=>false
+
+
+magix.smtp.can-encrypt-dox=>@"verifies email can be sent encrypted
+
+verifies that email can be sent using encrypted by verifying all recipients 
+have valid public keys which the server has access to
+
+if [to] contains a value then this will be the email address the message 
+is sent to.  if [to] does not contain a value, then it is expected to contain 
+a list of email addresses beneath which will become the list of emails the 
+message is sent to.  if [to] contains children, the name of the children 
+will be used as display name and the value of the children will be used as 
+email address to send email to
+
+all parameters can be either expressions or constants"
+
+magix.smtp.can-encrypt-sample
+  magix.smtp.can-encrypt
+    to=>thomas@magixilluminate.com
+      thomas hansen=>isa.lightbringer@gmail.com
 
