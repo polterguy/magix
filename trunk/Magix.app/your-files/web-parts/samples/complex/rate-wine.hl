@@ -311,7 +311,7 @@ panel=>main-wrapper
                   set=>[@][..][_url].value
                     value=>{0}?
                       =>[@][..][magix.web.get-url][url].value
-                using=>magix.web
+                using=>magix.email
                   send-email
                     to=>[@][..][magix.data.load][value][admin-email].value
                     subject=>A new rating from {0} has been created

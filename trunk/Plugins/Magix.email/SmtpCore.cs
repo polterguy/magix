@@ -6,22 +6,21 @@
 
 using System;
 using System.Web;
-using System.Net.Mail;
 using System.Configuration;
+using OpaqueMail.Net;
 using Magix.Core;
-using Magix.UX.Builder;
 
-namespace Magix.web
+namespace Magix.email
 {
 	/*
-	 * email core
+	 * email smtp core
 	 */
 	public class SmtpCore : ActiveController
 	{
 		/*
 		 * sends an email over smtp
 		 */
-		[ActiveEvent(Name = "magix.web.send-email")]
+		[ActiveEvent(Name = "magix.email.send-email")]
 		public void magix_web_send_email(object sender, ActiveEventArgs e)
 		{
             Node ip = Ip(e.Params);
@@ -29,14 +28,14 @@ namespace Magix.web
             {
                 AppendInspectFromResource(
                     ip["inspect"],
-                    "Magix.web",
-                    "Magix.web.hyperlisp.inspect.hl",
-                    "[magix.web.send-email-dox].value");
+                    "Magix.email",
+                    "Magix.email.hyperlisp.inspect.hl",
+                    "[magix.email.send-email-dox].value");
                 AppendCodeFromResource(
                     ip,
-                    "Magix.web",
-                    "Magix.web.hyperlisp.inspect.hl",
-                    "[magix.web.send-email-sample]");
+                    "Magix.email",
+                    "Magix.email.hyperlisp.inspect.hl",
+                    "[magix.email.send-email-sample]");
                 return;
 			}
 
@@ -78,6 +77,27 @@ namespace Magix.web
                 Expressions.GetExpressionValue<string>(ip["to"].Get<string>(), dp, ip, false),
                 subject,
                 body);
+
+            if (smtpSettings["value"]["use-smime"].Get<bool>())
+            {
+                string smimeSubjectName = smtpSettings["value"]["smime-subject-name"].Get<string>();
+                if (ip["smime-subject-name"].Value != null)
+                    smimeSubjectName = ip["smime-subject-name"].Get<string>();
+                msg.SmimeSigned = true;
+                msg.SmimeSigningOptionFlags =
+                    smtpSettings["value"]["smime-sign-time"].Get<bool>() ? 
+                        SmimeSigningOptionFlags.SignTime : 
+                        SmimeSigningOptionFlags.None;
+                msg.SmimeEncryptedEnvelope = smtpSettings["value"]["smime-encrypt-envelope"].Get<bool>();
+                if (msg.SmimeEncryptedEnvelope && smtpSettings["value"]["smime-triple-wrap"].Get<bool>())
+                    msg.SmimeTripleWrapped = true;
+                msg.SmimeSigningCertificate = CertHelper.GetCertificateBySubjectName(
+                    smtpSettings["value"]["smime-local-machine"].Get<bool>() ? 
+                        System.Security.Cryptography.X509Certificates.StoreLocation.LocalMachine : 
+                        System.Security.Cryptography.X509Certificates.StoreLocation.CurrentUser,
+                        smimeSubjectName);
+                ip["encryption-successful"].Value = smtp.SmimeVerifyAllRecipientsHavePublicKeys(msg);
+            }
 
             smtp.Send(msg);
 		}
