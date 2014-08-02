@@ -1,0 +1,35 @@
+﻿
+
+inspect=>@"documentation for magix.email"
+
+
+magix.email.send-email-dox=>@"sends an email over smtp
+
+will send an smtp email, using the magix.smtp.settings from database
+
+requires [header], [body] and [to]
+
+by default, the email is sent from the [admin-email] from your smtp settings 
+which can be configured in your settings.  this can be overridden however, by 
+supplying a [from] parameter, which then will become the sender's email
+
+if s/mime is turned on in your settings, the email will be sent signed, using 
+the smime subject name certificate from your server.  you can override which 
+certificate to use by setting the [smime-subject-name] parameter to a different 
+certificate than the server's default certificate
+
+depending upon your settings, the message might be sent signed, with an 
+encrypted envelope, or triple wrapped, providing maximum security for your 
+system
+
+if encryption is being used, and encryption was successful, meaning all 
+recipients had valid public s/mime keys, then the active event will return 
+[encryption-successful] as true"
+
+magix.email.send-email-sample
+  magix.email.send-email
+    header=>this is the header
+    body=>this is the body of your email
+    to=>thomas@magixilluminate.com
+    smime-subject-name=>your.certificate@your-server.com
+

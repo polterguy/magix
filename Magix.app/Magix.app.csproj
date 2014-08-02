@@ -11,7 +11,7 @@
     <OutputType>Library</OutputType>
     <RootNamespace>Magix.app</RootNamespace>
     <AssemblyName>Magix.app</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
     <UpgradeBackupLocation>
@@ -33,6 +33,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
@@ -41,6 +42,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="log4net">
@@ -169,7 +171,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349C5851-65DF-11DA-9384-00065B846F21}">
         <WebProjectProperties>
-          <UseIIS>False</UseIIS>
+          <UseIIS>True</UseIIS>
           <AutoAssignPort>False</AutoAssignPort>
           <DevelopmentServerPort>8080</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
@@ -209,6 +211,10 @@
     <ProjectReference Include="..\Plugins\Magix.data\Magix.data.csproj">
       <Project>{4fc8426a-ed89-4100-887e-c571e3dc9c8c}</Project>
       <Name>Magix.data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Plugins\Magix.email\Magix.email.csproj">
+      <Project>{062101e4-e07f-4dd3-b556-6c8a0c9c6934}</Project>
+      <Name>Magix.email</Name>
     </ProjectReference>
     <ProjectReference Include="..\Plugins\Magix.execute\Magix.execute.csproj">
       <Project>{7bbd5bd2-e3fe-42c2-94f8-878f4156a03e}</Project>
@@ -257,6 +263,14 @@
     <ProjectReference Include="..\Plugins\Magix.xml\Magix.xml.csproj">
       <Project>{eae2f2ae-0098-44f1-8b3d-1887266e94cf}</Project>
       <Name>Magix.xml</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Tools\OpaqueMail-master\OpaqueMail.Net.CertHelper\OpaqueMail.Net.CertHelper.csproj">
+      <Project>{9f1402f2-d701-43a5-9ad6-cfa926c31dce}</Project>
+      <Name>OpaqueMail.Net.CertHelper</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Tools\OpaqueMail-master\OpaqueMail.Net\OpaqueMail.Net.csproj">
+      <Project>{bf21d27f-72ad-492e-8219-6c82c2330c72}</Project>
+      <Name>OpaqueMail.Net</Name>
     </ProjectReference>
     <ProjectReference Include="..\Tools\QRCodeLib\QRCodeLib.csproj">
       <Project>{e98126b2-af17-4783-96b9-856d6744dca3}</Project>
