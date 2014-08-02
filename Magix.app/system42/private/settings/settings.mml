@@ -595,6 +595,9 @@ if not it will use the local user account on your system"
                     form-id=>admin-settings
                     id=>[$][id].value
                     value=>[magix.data.load][value][smime-subject-name].value
+        literal
+          text=>@"<p class=""top-1 span-11 last"">below you can choose to encrypt outgoing messages if your server has the certificate 
+to the recipients you send emails to</p>"
         label=>lbl-smime-encrypt-envelope
           tag=>label
           class=>span-3 top-1 clear
