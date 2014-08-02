@@ -73,3 +73,33 @@ magix.smtp.can-encrypt-sample
     to=>thomas@magixilluminate.com
       thomas hansen=>isa.lightbringer@gmail.com
 
+
+magix.imap.retrieve-messages-dox=>@"retrieves messages from an imap server
+
+returns [count] messages starting from [start] from [mailbox-name] in [reverse] 
+order settings the seen flag if [set-seen-flag] is true from [host] on [port] 
+using [ssl].  if [headers-only] is true, it will download only headers from server
+
+[host], [port] and [ssl] is optional, and if not supplied, will be read from 
+magix.imap.settings
+
+will automatically remove any script tags from all messages recieved
+
+messages are returned as [result] with [subject], [body], [to], [cc] being a list 
+of recipients, [bcc] being a list of blind copy recipients, [date], [uid], [from], 
+[importance], [index] being index on server, [in-reply-to], [mailbox-name], 
+[message-id], [priority], [signed], [encrypted] and [triple-wrapped]"
+
+magix.imap.retrieve-messages-sample
+  magix.imap.retrieve-messages
+    host=>imap.gmail.com
+    port=>993
+    ssl=>true
+    username=>your-username@gmail.com
+    password=>Pa$$w0rd
+    count=>50
+    start=>0
+    mailbox-name=>inbox
+    reverse=>false
+    set-seen-flag=>false
+    headers-only=>false

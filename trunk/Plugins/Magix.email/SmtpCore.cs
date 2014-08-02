@@ -116,7 +116,7 @@ namespace Magix.email
                     throw new Exception("could not encrypt message, hence no email was sent. not all recipients had public keys");
             }
 
-            if (ip.Contains("async") && ip["async"].Get<bool>())
+            if (ip.ContainsValue("async") && ip["async"].Get<bool>())
                 smtp.SendAsync(msg);
             else
                 smtp.Send(msg);
