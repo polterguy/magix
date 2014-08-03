@@ -177,6 +177,7 @@ namespace Magix.email
                 }
                 ip["result"]["uid-" + idxEmail.ImapUid]["date"].Value = idxEmail.Date;
                 ip["result"]["uid-" + idxEmail.ImapUid]["return-path"].Value = idxEmail.ReturnPath;
+                ip["result"]["uid-" + idxEmail.ImapUid]["from"].Value = idxEmail.From;
                 ip["result"]["uid-" + idxEmail.ImapUid]["uid"].Value = idxEmail.ImapUid;
                 ip["result"]["uid-" + idxEmail.ImapUid]["mailbox-name"].Value = idxEmail.Mailbox;
                 ip["result"]["uid-" + idxEmail.ImapUid]["message-id"].Value = idxEmail.MessageId;
@@ -184,7 +185,13 @@ namespace Magix.email
                 ip["result"]["uid-" + idxEmail.ImapUid]["encrypted"].Value = idxEmail.SmimeEncryptedEnvelope;
                 ip["result"]["uid-" + idxEmail.ImapUid]["triple-wrapped"].Value = idxEmail.SmimeTripleWrapped;
                 if (!headersOnly)
+                {
                     ip["result"]["uid-" + idxEmail.ImapUid]["body"].Value = Functions.RemoveScriptTags(idxEmail.Body);
+                    foreach (Attachment idxAtt in idxEmail.Attachments)
+                    {
+                        //idxAtt.
+                    }
+                }
 
                 if (idxEmail.SmimeSigningCertificateChain.Count > 0)
                 {
@@ -251,6 +258,7 @@ namespace Magix.email
             }
             ip["value"]["date"].Value = msg.Date;
             ip["value"]["return-path"].Value = msg.ReturnPath;
+            ip["value"]["from"].Value = msg.From;
             ip["value"]["uid"].Value = msg.ImapUid;
             ip["value"]["mailbox-name"].Value = msg.Mailbox;
             ip["value"]["message-id"].Value = msg.MessageId;

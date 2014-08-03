@@ -319,29 +319,6 @@ magix.imap.set-quota-sample
     size=>10512
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 magix.pop3.get-messages-dox=>@"retrieves messages from a pop3 server
 
 returns [count] messages starting from [start] in [reverse] order from 
@@ -362,8 +339,8 @@ of recipients, [bcc] being a list of blind copy recipients, [date], [message-id]
 
 magix.pop3.get-messages-sample
   magix.pop3.get-messages
-    host=>imap.gmail.com
-    port=>993
+    host=>pop.gmail.com
+    port=>995
     ssl=>true
     username=>your-username@gmail.com
     password=>Pa$$w0rd
@@ -391,8 +368,8 @@ of recipients, [bcc] being a list of blind copy recipients, [date], [message-id]
 
 magix.pop3.get-message-sample
   magix.pop3.get-message
-    host=>imap.gmail.com
-    port=>993
+    host=>pop3.gmail.com
+    port=>995
     ssl=>true
     username=>your-username@gmail.com
     password=>Pa$$w0rd
@@ -413,8 +390,8 @@ will return [success] as true if deletion was successful"
 
 magix.pop3.delete-messages-sample
   magix.pop3.delete-message
-    host=>imap.gmail.com
-    port=>993
+    host=>pop.gmail.com
+    port=>995
     ssl=>true
     username=>your-username@gmail.com
     password=>Pa$$w0rd
@@ -433,8 +410,8 @@ magix.imap.settings
 
 magix.pop3.get-capabilities-sample
   magix.pop3.get-capabilities
-    host=>imap.gmail.com
-    port=>993
+    host=>pop.gmail.com
+    port=>995
     ssl=>true
     username=>your-username@gmail.com
     password=>Pa$$w0rd
