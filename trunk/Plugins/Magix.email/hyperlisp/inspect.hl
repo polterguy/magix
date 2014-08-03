@@ -181,3 +181,140 @@ magix.imap.delete-message-sample
       =>5
       =>7
 
+magix.imap.get-capabilities-dox=>@"returns server's capabilities
+
+returns imap server's version and its capabilities as [result]
+
+[host], [port] and [ssl] is optional, and if not supplied, will be read from 
+magix.imap.settings
+
+[username] and [password] must be supplied"
+
+magix.imap.get-capabilities-sample
+  magix.imap.get-capabilities
+    host=>imap.gmail.com
+    port=>993
+    ssl=>true
+    username=>your-username@gmail.com
+    password=>Pa$$w0rd
+
+
+magix.imap.list-mailbox-names-dox=>@"returns all mailbox names
+
+returns all mailboxes as [result]
+
+[host], [port] and [ssl] is optional, and if not supplied, will be read from 
+magix.imap.settings
+
+[username] and [password] must be supplied"
+
+magix.imap.list-mailbox-names-sample
+  magix.imap.list-mailbox-names
+    host=>imap.gmail.com
+    port=>993
+    ssl=>true
+    username=>your-username@gmail.com
+    password=>Pa$$w0rd
+
+
+magix.imap.examine-mailbox-dox=>@"examines specific imap mailbox
+
+returns messages and recent message as [result] for given 
+[mailbox-name]
+
+[host], [port] and [ssl] is optional, and if not supplied, will be read from 
+magix.imap.settings
+
+[username] and [password] must be supplied"
+
+magix.imap.examine-mailbox-sample
+  magix.imap.examine-mailbox
+    host=>imap.gmail.com
+    port=>993
+    ssl=>true
+    username=>your-username@gmail.com
+    password=>Pa$$w0rd
+    mailbox-name=>inbox
+
+
+magix.imap.create-mailbox-dox=>@"creates imap mailbox
+
+create the given [mailbox-name] on the imap server
+
+[host], [port] and [ssl] is optional, and if not supplied, will be read from 
+magix.imap.settings
+
+[username] and [password] must be supplied"
+
+magix.imap.create-mailbox-sample
+  magix.imap.create-mailbox
+    host=>imap.gmail.com
+    port=>993
+    ssl=>true
+    username=>your-username@gmail.com
+    password=>Pa$$w0rd
+    mailbox-name=>spam-folder
+
+
+magix.imap.delete-mailbox-dox=>@"deletes an imap mailbox
+
+deletes the given [mailbox-name] on the imap server
+
+[host], [port] and [ssl] is optional, and if not supplied, will be read from 
+magix.imap.settings
+
+[username] and [password] must be supplied"
+
+magix.imap.delete-mailbox-sample
+  magix.imap.delete-mailbox
+    host=>imap.gmail.com
+    port=>993
+    ssl=>true
+    username=>your-username@gmail.com
+    password=>Pa$$w0rd
+    mailbox-name=>unused-mailbox
+
+
+magix.imap.get-quota-dox=>@"returns quota for an imap mailbox
+
+returns quotas for the given [mailbox-name] on the imap server
+
+[host], [port] and [ssl] is optional, and if not supplied, will be read from 
+magix.imap.settings
+
+[username] and [password] must be supplied
+
+quotas will be returned as [result]"
+
+magix.imap.get-quota-sample
+  magix.imap.get-quota
+    host=>imap.gmail.com
+    port=>993
+    ssl=>true
+    username=>your-username@gmail.com
+    password=>Pa$$w0rd
+    mailbox-name=>inbox
+
+
+magix.imap.set-quota-dox=>@"sets quota for an imap mailbox
+
+sets quotas for the given [mailbox-name] on the imap server
+
+[host], [port] and [ssl] is optional, and if not supplied, will be read from 
+magix.imap.settings
+
+[username] and [password] must be supplied
+
+[size] becomes the new quota of the mailbox given.  if operation is successful, 
+[success] will return true"
+
+magix.imap.set-quota-sample
+  magix.imap.set-quota
+    host=>imap.gmail.com
+    port=>993
+    ssl=>true
+    username=>your-username@gmail.com
+    password=>Pa$$w0rd
+    mailbox-name=>inbox
+    size=>10512
+

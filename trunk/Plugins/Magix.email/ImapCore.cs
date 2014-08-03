@@ -9,6 +9,7 @@ using System.Web;
 using System.Net.Mail;
 using System.Configuration;
 using System.Collections.Generic;
+using System.Security.Cryptography.X509Certificates;
 using OpaqueMail.Net;
 using Magix.Core;
 
@@ -17,35 +18,16 @@ namespace Magix.email
 	/*
 	 * email imap core
 	 */
-	public class ImapCore : ActiveController
+    public class ImapCore : ActiveController
 	{
         /*
-         * retrieves messages from imap server
+         * helper to retrieve connection settings
          */
-        [ActiveEvent(Name = "magix.imap.get-messages")]
-        public void magix_imap_get_messages(object sender, ActiveEventArgs e)
+        private static Node GetConnectionSettings(Node ip, Node pars)
         {
-            Node ip = Ip(e.Params);
-            if (ShouldInspect(ip))
-            {
-                AppendInspectFromResource(
-                    ip["inspect"],
-                    "Magix.email",
-                    "Magix.email.hyperlisp.inspect.hl",
-                    "[magix.imap.get-messages-dox].value");
-                AppendCodeFromResource(
-                    ip,
-                    "Magix.email",
-                    "Magix.email.hyperlisp.inspect.hl",
-                    "[magix.imap.get-messages-sample]");
-                return;
-            }
-
-            Node dp = Dp(e.Params);
-
             Node imapSettings = new Node("magix.data.load");
             imapSettings["id"].Value = "magix.imap.settings";
-            BypassExecuteActiveEvent(imapSettings, e.Params);
+            BypassExecuteActiveEvent(imapSettings, pars);
 
             string host = null;
             int port = -1;
@@ -74,111 +56,103 @@ namespace Magix.email
             if (port == -1)
                 throw new Exception("no port found in imap settings");
             if (string.IsNullOrEmpty(username))
-                throw new Exception("no username given to [magix.imap.get-messages]");
+                throw new Exception("no username given");
             if (string.IsNullOrEmpty(password))
-                throw new Exception("no password given to [magix.imap.get-messages]");
+                throw new Exception("no password given");
 
-            int count = 50;
-            if (ip.ContainsValue("count"))
-                count = ip["count"].Get<int>();
+            Node retVal = new Node();
+            retVal["host"].Value = host;
+            retVal["port"].Value = port;
+            retVal["ssl"].Value = ssl;
+            retVal["username"].Value = username;
+            retVal["password"].Value = password;
+            return retVal;
+        }
 
-            int startIndex = 50;
-            if (ip.ContainsValue("start"))
-                startIndex = ip["start"].Get<int>();
-
-            string mailBoxName = null;
-            if (ip.ContainsValue("mailbox-name"))
-                mailBoxName = ip["mailbox-name"].Get<string>();
-
-            bool reverse = false;
-            if (ip.ContainsValue("reverse"))
-                reverse = ip["reverse"].Get<bool>();
-
-            bool setSeenFlag = false;
-            if (ip.ContainsValue("set-seen-flag"))
-                setSeenFlag = ip["set-seen-flag"].Get<bool>();
-
-            bool headersOnly = false;
-            if (ip.ContainsValue("headers-only"))
-                headersOnly = ip["headers-only"].Get<bool>();
-
-            ImapClient imap = new ImapClient(host, port, username, password, ssl);
+        /*
+         * returns an ImapClient instance according to settings and opens it
+         */
+        private ImapClient OpenImapConnection(Node settings)
+        {
+            ImapClient imap = new ImapClient(
+                settings["host"].Get<string>(),
+                settings["port"].Get<int>(),
+                settings["username"].Get<string>(),
+                settings["password"].Get<string>(),
+                settings["ssl"].Get<bool>());
             imap.Connect();
             imap.Authenticate();
+            return imap;
+        }
+
+        /*
+         * retrieves messages from imap server
+         */
+        [ActiveEvent(Name = "magix.imap.get-messages")]
+        public void magix_imap_get_messages(object sender, ActiveEventArgs e)
+        {
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
+            {
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.email",
+                    "Magix.email.hyperlisp.inspect.hl",
+                    "[magix.imap.get-messages-dox].value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.email",
+                    "Magix.email.hyperlisp.inspect.hl",
+                    "[magix.imap.get-messages-sample]");
+                return;
+            }
+
+            Node dp = Dp(e.Params);
+
+            int count = ip.GetValue("count", 50);
+            int startIndex = ip.GetValue("start", 0);
+            string mailBoxName = ip.GetValue<string>("mailbox-name", null);
+            if (string.IsNullOrEmpty(mailBoxName))
+                throw new ArgumentException("no [mailbox-name] given");
+            bool reverse = ip.GetValue("reverse", false);
+            bool setSeenFlag = ip.GetValue("set-seen-flag", false);
+            bool headersOnly = ip.GetValue("headers-only", false);
+
+            ImapClient imap = OpenImapConnection(GetConnectionSettings(ip, e.Params));
 
             List<ReadOnlyMailMessage> list = null;
-
             if (ip.Contains("search"))
             {
-                string bcc = null;
-                if (ip["search"].ContainsValue("bcc"))
-                    bcc = ip["search"]["bcc"].Get<string>();
-
-                string before = null;
-                if (ip["search"].ContainsValue("before"))
-                    before = ip["search"]["before"].Get<string>();
-
-                string body = null;
-                if (ip["search"].ContainsValue("body"))
-                    body = ip["search"]["body"].Get<string>();
-
-                string cc = null;
-                if (ip["search"].ContainsValue("cc"))
-                    cc = ip["search"]["cc"].Get<string>();
-
-                bool deleted = false;
-                if (ip["search"].ContainsValue("deleted"))
-                    deleted = ip["search"]["deleted"].Get<bool>();
-
-                bool draft = false;
-                if (ip["search"].ContainsValue("draft"))
-                    draft = ip["search"]["draft"].Get<bool>();
-
-                bool flagged = false;
-                if (ip["search"].ContainsValue("flagged"))
-                    flagged = ip["search"]["flagged"].Get<bool>();
-
-                string from = null;
-                if (ip["search"].ContainsValue("from"))
-                    from = ip["search"]["from"].Get<string>();
-
-                string header = null;
-                if (ip["search"].ContainsValue("header"))
-                    header = ip["search"]["header"].Get<string>();
-
-                bool newMsg = false;
-                if (ip["search"].ContainsValue("new"))
-                    newMsg = ip["search"]["new"].Get<bool>();
+                string bcc = ip["search"].GetValue<string>("bcc", null);
+                string before = ip["search"].GetValue<string>("before", null);
+                string body = ip["search"].GetValue<string>("body", null);
+                string cc = ip["search"].GetValue<string>("cc", null);
+                bool deleted = ip["search"].GetValue("deleted", false);
+                bool draft = ip["search"].GetValue("draft", false);
+                bool flagged = ip["search"].GetValue("flagged", false);
+                string from = ip["search"].GetValue<string>("from", null);
+                string header = ip["search"].GetValue<string>("header", null);
+                bool newMsg = ip["search"].GetValue("new", false);
 
                 string search = "";
-
                 if (!string.IsNullOrEmpty(bcc))
                     search += "BCC \"" + bcc + "\" ";
-
                 if (!string.IsNullOrEmpty(before))
                     search += "BEFORE \"" + before + "\" ";
-
                 if (!string.IsNullOrEmpty(body))
                     search += "BODY \"" + body + "\" ";
-
                 if (!string.IsNullOrEmpty(cc))
                     search += "CC \"" + cc + "\" ";
-
                 if (deleted)
                     search += "DELETED ";
-
                 if (draft)
                     search += "DRAFT ";
-
                 if (flagged)
                     search += "FLAGGED ";
-
                 if (!string.IsNullOrEmpty(from))
                     search += "FROM \"" + from + "\" ";
-
                 if (!string.IsNullOrEmpty(header))
                     search += "HEADER \"" + header + "\" ";
-
                 if (newMsg)
                     search += "NEW ";
 
@@ -211,6 +185,19 @@ namespace Magix.email
                 ip["result"]["uid-" + idxEmail.ImapUid]["triple-wrapped"].Value = idxEmail.SmimeTripleWrapped;
                 if (!headersOnly)
                     ip["result"]["uid-" + idxEmail.ImapUid]["body"].Value = Functions.RemoveScriptTags(idxEmail.Body);
+
+                if (idxEmail.SmimeSigningCertificateChain.Count > 0)
+                {
+                    Node smtpSettings = new Node("magix.data.load");
+                    smtpSettings["id"].Value = "magix.smtp.settings";
+                    BypassExecuteActiveEvent(smtpSettings, e.Params);
+                    bool localMachine = smtpSettings["value"]["smime-local-machine"].Get<bool>();
+
+                    foreach (X509Certificate2 idxCert in idxEmail.SmimeSigningCertificateChain)
+                    {
+                        CertHelper.InstallWindowsCertificate(idxCert, localMachine ? StoreLocation.LocalMachine : StoreLocation.CurrentUser);
+                    }
+                }
             }
         }
 
@@ -238,63 +225,17 @@ namespace Magix.email
 
             Node dp = Dp(e.Params);
 
-            Node imapSettings = new Node("magix.data.load");
-            imapSettings["id"].Value = "magix.imap.settings";
-            BypassExecuteActiveEvent(imapSettings, e.Params);
-
-            string host = null;
-            int port = -1;
-            bool ssl = false;
-            string username = null;
-            string password = null;
-            if (!imapSettings.Contains("value"))
-            {
-                host = imapSettings["value"]["host"].Get<string>();
-                port = imapSettings["value"]["port"].Get<int>();
-                ssl = imapSettings["value"]["ssl"].Get<bool>();
-            }
-            if (ip.ContainsValue("host"))
-                host = ip["host"].Get<string>();
-            if (ip.ContainsValue("port"))
-                port = ip["port"].Get<int>();
-            if (ip.ContainsValue("ssl"))
-                ssl = ip["ssl"].Get<bool>();
-            if (ip.ContainsValue("username"))
-                username = ip["username"].Get<string>();
-            if (ip.ContainsValue("password"))
-                password = ip["password"].Get<string>();
-
-            if (string.IsNullOrEmpty(host))
-                throw new Exception("no host found in imap settings");
-            if (port == -1)
-                throw new Exception("no port found in imap settings");
-            if (string.IsNullOrEmpty(username))
-                throw new Exception("no username given to [magix.imap.get-messages]");
-            if (string.IsNullOrEmpty(password))
-                throw new Exception("no password given to [magix.imap.get-messages]");
-
-            string mailBoxName = null;
-            if (ip.ContainsValue("mailbox-name"))
-                mailBoxName = ip["mailbox-name"].Get<string>();
-
-            bool setSeenFlag = false;
-            if (ip.ContainsValue("set-seen-flag"))
-                setSeenFlag = ip["set-seen-flag"].Get<bool>();
-
-            bool headersOnly = true;
-            if (ip.ContainsValue("headers-only"))
-                headersOnly = ip["headers-only"].Get<bool>();
-
+            string mailBoxName = ip.GetValue<string>("mailbox-name", null);
+            bool setSeenFlag = ip.GetValue("set-seen-flag", false);
+            bool headersOnly = ip.GetValue("headers-only", false);
             if (!ip.ContainsValue("uid"))
-                throw new ArgumentException("no [uid] given to [magix.imap.get-message]");
+                throw new ArgumentException("no [uid] given");
             int uid = ip["uid"].Get<int>();
 
-            ImapClient imap = new ImapClient(host, port, username, password, ssl);
-            imap.Connect();
-            imap.Authenticate();
-
+            ImapClient imap = OpenImapConnection(GetConnectionSettings(ip, e.Params));
             ReadOnlyMailMessage msg = imap.GetMessageUid(mailBoxName, uid, headersOnly, setSeenFlag);
 
+            // decorating result
             ip["value"]["subject"].Value = msg.Subject;
             ip["value"]["to"].Value = msg.DeliveredTo;
             foreach (MailAddress idxCc in msg.CC)
@@ -316,6 +257,19 @@ namespace Magix.email
             ip["value"]["triple-wrapped"].Value = msg.SmimeTripleWrapped;
             if (!headersOnly)
                 ip["value"]["body"].Value = Functions.RemoveScriptTags(msg.Body);
+
+            if (msg.SmimeSigningCertificateChain.Count > 0)
+            {
+                Node smtpSettings = new Node("magix.data.load");
+                smtpSettings["id"].Value = "magix.smtp.settings";
+                BypassExecuteActiveEvent(smtpSettings, e.Params);
+                bool localMachine = smtpSettings["value"]["smime-local-machine"].Get<bool>();
+
+                foreach (X509Certificate2 idxCert in msg.SmimeSigningCertificateChain)
+                {
+                    CertHelper.InstallWindowsCertificate(idxCert, localMachine ? StoreLocation.LocalMachine : StoreLocation.CurrentUser);
+                }
+            }
         }
 
         /*
@@ -342,41 +296,6 @@ namespace Magix.email
 
             Node dp = Dp(e.Params);
 
-            Node imapSettings = new Node("magix.data.load");
-            imapSettings["id"].Value = "magix.imap.settings";
-            BypassExecuteActiveEvent(imapSettings, e.Params);
-
-            string host = null;
-            int port = -1;
-            bool ssl = false;
-            string username = null;
-            string password = null;
-            if (!imapSettings.Contains("value"))
-            {
-                host = imapSettings["value"]["host"].Get<string>();
-                port = imapSettings["value"]["port"].Get<int>();
-                ssl = imapSettings["value"]["ssl"].Get<bool>();
-            }
-            if (ip.ContainsValue("host"))
-                host = ip["host"].Get<string>();
-            if (ip.ContainsValue("port"))
-                port = ip["port"].Get<int>();
-            if (ip.ContainsValue("ssl"))
-                ssl = ip["ssl"].Get<bool>();
-            if (ip.ContainsValue("username"))
-                username = ip["username"].Get<string>();
-            if (ip.ContainsValue("password"))
-                password = ip["password"].Get<string>();
-
-            if (string.IsNullOrEmpty(host))
-                throw new Exception("no host found in imap settings");
-            if (port == -1)
-                throw new Exception("no port found in imap settings");
-            if (string.IsNullOrEmpty(username))
-                throw new Exception("no username given to [magix.imap.get-messages]");
-            if (string.IsNullOrEmpty(password))
-                throw new Exception("no password given to [magix.imap.get-messages]");
-
             string mailBoxName = null;
             if (ip.ContainsValue("mailbox-name"))
                 mailBoxName = ip["mailbox-name"].Get<string>();
@@ -394,12 +313,9 @@ namespace Magix.email
                 }
             }
             else
-                throw new ArgumentException("no [uid] given to [magix.imap.delete-message]");
+                throw new ArgumentException("no [uid] given");
 
-            ImapClient imap = new ImapClient(host, port, username, password, ssl);
-            imap.Connect();
-            imap.Authenticate();
-
+            ImapClient imap = OpenImapConnection(GetConnectionSettings(ip, e.Params));
             ip["success"].Value = imap.DeleteMessages(mailBoxName, uids.ToArray());
         }
 
@@ -427,45 +343,7 @@ namespace Magix.email
 
             Node dp = Dp(e.Params);
 
-            Node imapSettings = new Node("magix.data.load");
-            imapSettings["id"].Value = "magix.imap.settings";
-            BypassExecuteActiveEvent(imapSettings, e.Params);
-
-            string host = null;
-            int port = -1;
-            bool ssl = false;
-            string username = null;
-            string password = null;
-            if (!imapSettings.Contains("value"))
-            {
-                host = imapSettings["value"]["host"].Get<string>();
-                port = imapSettings["value"]["port"].Get<int>();
-                ssl = imapSettings["value"]["ssl"].Get<bool>();
-            }
-            if (ip.ContainsValue("host"))
-                host = ip["host"].Get<string>();
-            if (ip.ContainsValue("port"))
-                port = ip["port"].Get<int>();
-            if (ip.ContainsValue("ssl"))
-                ssl = ip["ssl"].Get<bool>();
-            if (ip.ContainsValue("username"))
-                username = ip["username"].Get<string>();
-            if (ip.ContainsValue("password"))
-                password = ip["password"].Get<string>();
-
-            if (string.IsNullOrEmpty(host))
-                throw new Exception("no host found in imap settings");
-            if (port == -1)
-                throw new Exception("no port found in imap settings");
-            if (string.IsNullOrEmpty(username))
-                throw new Exception("no username given to [magix.imap.get-messages]");
-            if (string.IsNullOrEmpty(password))
-                throw new Exception("no password given to [magix.imap.get-messages]");
-
-            ImapClient imap = new ImapClient(host, port, username, password, ssl);
-            imap.Connect();
-            imap.Authenticate();
-
+            ImapClient imap = OpenImapConnection(GetConnectionSettings(ip, e.Params));
             string version;
             string[] capabilities = imap.GetCapabilities(out version);
 
@@ -474,6 +352,209 @@ namespace Magix.email
             {
                 ip["result"]["feature"].Add(new Node("", idxFeature));
             }
+        }
+
+        /*
+         * returns imap server's mailbox names
+         */
+        [ActiveEvent(Name = "magix.imap.list-mailbox-names")]
+        public void magix_imap_list_mailbox_names(object sender, ActiveEventArgs e)
+        {
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
+            {
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.email",
+                    "Magix.email.hyperlisp.inspect.hl",
+                    "[magix.imap.list-mailbox-names-dox].value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.email",
+                    "Magix.email.hyperlisp.inspect.hl",
+                    "[magix.imap.list-mailbox-names-sample]");
+                return;
+            }
+
+            Node dp = Dp(e.Params);
+
+            ImapClient imap = OpenImapConnection(GetConnectionSettings(ip, e.Params));
+            Mailbox[] boxes = imap.ListMailboxes(true);
+
+            foreach (Mailbox idxBox in boxes)
+            {
+                ip["result"].Add(new Node("", idxBox.Name));
+            }
+        }
+
+        /*
+         * examines imap server's mailbox
+         */
+        [ActiveEvent(Name = "magix.imap.examine-mailbox")]
+        public void magix_imap_examine_mailbox(object sender, ActiveEventArgs e)
+        {
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
+            {
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.email",
+                    "Magix.email.hyperlisp.inspect.hl",
+                    "[magix.imap.examine-mailbox-dox].value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.email",
+                    "Magix.email.hyperlisp.inspect.hl",
+                    "[magix.imap.examine-mailbox-sample]");
+                return;
+            }
+
+            Node dp = Dp(e.Params);
+
+            string mailBoxName = ip.GetValue<string>("mailbox-name", null);
+            if (string.IsNullOrEmpty(mailBoxName))
+                throw new ArgumentException("no [mailbox-name] given");
+
+            ImapClient imap = OpenImapConnection(GetConnectionSettings(ip, e.Params));
+            Mailbox box = imap.ExamineMailbox(mailBoxName);
+
+            ip["result"]["message-count"].Value = box.Count;
+            ip["result"]["recent-count"].Value = box.Recent;
+        }
+
+        /*
+         * creates an imap mailbox
+         */
+        [ActiveEvent(Name = "magix.imap.create-mailbox")]
+        public void magix_imap_create_mailbox(object sender, ActiveEventArgs e)
+        {
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
+            {
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.email",
+                    "Magix.email.hyperlisp.inspect.hl",
+                    "[magix.imap.create-mailbox-dox].value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.email",
+                    "Magix.email.hyperlisp.inspect.hl",
+                    "[magix.imap.create-mailbox-sample]");
+                return;
+            }
+
+            Node dp = Dp(e.Params);
+
+            string mailBoxName = ip.GetValue<string>("mailbox-name", null);
+            if (string.IsNullOrEmpty(mailBoxName))
+                throw new ArgumentException("no [mailbox-name] given");
+
+            ImapClient imap = OpenImapConnection(GetConnectionSettings(ip, e.Params));
+            ip["success"].Value = imap.CreateMailbox(mailBoxName);
+        }
+
+        /*
+         * deletes an imap mailbox
+         */
+        [ActiveEvent(Name = "magix.imap.delete-mailbox")]
+        public void magix_imap_delete_mailbox(object sender, ActiveEventArgs e)
+        {
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
+            {
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.email",
+                    "Magix.email.hyperlisp.inspect.hl",
+                    "[magix.imap.delete-mailbox-dox].value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.email",
+                    "Magix.email.hyperlisp.inspect.hl",
+                    "[magix.imap.delete-mailbox-sample]");
+                return;
+            }
+
+            Node dp = Dp(e.Params);
+
+            string mailBoxName = ip.GetValue<string>("mailbox-name", null);
+            if (string.IsNullOrEmpty(mailBoxName))
+                throw new ArgumentException("no [mailbox-name] given");
+
+            ImapClient imap = OpenImapConnection(GetConnectionSettings(ip, e.Params));
+            ip["success"].Value = imap.DeleteMailbox(mailBoxName);
+        }
+
+        /*
+         * returns quota for mailbox
+         */
+        [ActiveEvent(Name = "magix.imap.get-quota")]
+        public void magix_imap_get_quota(object sender, ActiveEventArgs e)
+        {
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
+            {
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.email",
+                    "Magix.email.hyperlisp.inspect.hl",
+                    "[magix.imap.get-quota-dox].value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.email",
+                    "Magix.email.hyperlisp.inspect.hl",
+                    "[magix.imap.get-quota-sample]");
+                return;
+            }
+
+            Node dp = Dp(e.Params);
+
+            string mailBoxName = ip.GetValue<string>("mailbox-name", null);
+            if (string.IsNullOrEmpty(mailBoxName))
+                throw new ArgumentException("no [mailbox-name] given");
+
+            ImapClient imap = OpenImapConnection(GetConnectionSettings(ip, e.Params));
+            QuotaUsage quota = imap.GetQuota(mailBoxName);
+
+            ip["result"]["maximum"].Value = quota.QuotaMaximum;
+            ip["result"]["usage"].Value = quota.Usage;
+        }
+
+        /*
+         * sets quota for mailbox
+         */
+        [ActiveEvent(Name = "magix.imap.set-quota")]
+        public void magix_imap_set_quota(object sender, ActiveEventArgs e)
+        {
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
+            {
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.email",
+                    "Magix.email.hyperlisp.inspect.hl",
+                    "[magix.imap.set-quota-dox].value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.email",
+                    "Magix.email.hyperlisp.inspect.hl",
+                    "[magix.imap.set-quota-sample]");
+                return;
+            }
+
+            Node dp = Dp(e.Params);
+
+            string mailBoxName = ip.GetValue<string>("mailbox-name", null);
+            if (string.IsNullOrEmpty(mailBoxName))
+                throw new ArgumentException("no [mailbox-name] given");
+
+            int quotaSize = ip.GetValue("size", -1);
+            if (quotaSize == -1)
+                throw new ArgumentException("no [size] given");
+
+            ImapClient imap = OpenImapConnection(GetConnectionSettings(ip, e.Params));
+            ip["success"].Value = imap.SetQuota(mailBoxName, quotaSize);
         }
     }
 }

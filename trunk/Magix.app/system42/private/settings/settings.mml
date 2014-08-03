@@ -712,5 +712,68 @@ envelope to be turned on"
           id=>magix.smtp.settings
         magix.viewport.show-message
           message=>smtp settings was updated
+
+panel=>imap-wrapper
+  class=>span-13 last top-1 desktop-widget air-padding bottom-1 tools-desktop-widget
+  default=>update-imap
+  onfirstload
+    magix.data.load
+      id=>magix.imap.settings
+    using=>magix.forms
+      set-value
+        id=>imap-server
+        value=>[magix.data.load][value][host].value
+      set-value
+        id=>imap-port
+        value=>[magix.data.load][value][port].value
+      set-value
+        id=>imap-ssl
+        value=>[magix.data.load][value][ssl].value
+  controls
+    label
+      class=>span-13
+      tag=>h3
+      value=>imap settings
+    label
+      class=>span-13 top-1
+      value=>@"these are your imap settings.  these settings will be use by default for all imap operations, unless they are 
+explicitly overridden in active event invocations"
+    label
+      tag=>label
+      class=>span-3 top-1
+      value=>imap server
+    text-box=>imap-server
+      class=>span-5 top-1
+      placeholder=>imap server ...
+    label
+      tag=>label
+      class=>span-1 top-1
+      value=>port
+    text-box=>imap-port
+      class=>span-2 top-1
+      placeholder=>port ...
+    label
+      tag=>label
+      class=>span-1 top-1
+      for=>imap-ssl
+      value=>ssl
+    check-box=>imap-ssl
+      class=>span-1 last top-1
+    button=>update-imap
+      class=>span-2 top-1 right clear last
+      value=>update
+      onclick
+        magix.forms.get-children-values
+          id=>imap-wrapper
+        set=>[magix.data.save][value][host].value
+          value=>[magix.forms.get-children-values][values][imap-server].value
+        set=>[magix.data.save][value][port].value
+          value=>[magix.forms.get-children-values][values][imap-port].value
+        set=>[magix.data.save][value][ssl].value
+          value=>[magix.forms.get-children-values][values][imap-ssl].value
+        magix.data.save
+          id=>magix.imap.settings
+        magix.viewport.show-message
+          message=>imap settings was updated
 }}
 
