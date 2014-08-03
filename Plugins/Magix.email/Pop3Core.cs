@@ -18,7 +18,7 @@ namespace Magix.email
 	/*
 	 * email pop3 core
 	 */
-    public class Pop3Core : ActiveController
+    internal class Pop3Core : CommonHelper
 	{
         /*
          * helper to retrieve connection settings
@@ -139,7 +139,10 @@ namespace Magix.email
                 ip["result"]["uid-" + idxEmail.MessageId]["encrypted"].Value = idxEmail.SmimeEncryptedEnvelope;
                 ip["result"]["uid-" + idxEmail.MessageId]["triple-wrapped"].Value = idxEmail.SmimeTripleWrapped;
                 if (!headersOnly)
+                {
                     ip["result"]["uid-" + idxEmail.MessageId]["body"].Value = Functions.RemoveScriptTags(idxEmail.Body);
+                    SaveAttachmentsLocally(e.Params, idxEmail);
+                }
 
                 if (idxEmail.SmimeSigningCertificateChain.Count > 0)
                 {

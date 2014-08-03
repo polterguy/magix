@@ -838,5 +838,75 @@ explicitly overridden in active event invocations"
           id=>magix.pop3.settings
         magix.viewport.show-message
           message=>pop3 settings was updated
+
+panel=>email-wrapper
+  class=>span-13 last top-1 desktop-widget air-padding bottom-1 tools-desktop-widget
+  default=>update-email
+  controls
+    label
+      tag=>h3
+      class=>span-13 last
+      value=>general email settings
+    label
+      class=>span-13 last top-1
+      value=>@"these are your general email settings.&nbsp;&nbsp;settings that applies for all types of email servers"
+    label
+      class=>span-4 top-1
+      tag=>label
+      value=>attachment directory
+    panel
+      class=>btn-group
+      controls
+        text-box=>attachment-directory
+          class=>span-7 top-1
+          placeholder=>attachment directory ...
+          onfirstload
+            magix.data.load
+              id=>magix.email.attachment-directory
+            if=>exist
+              lhs=>[magix.data.load][value]
+              code
+                using=>magix.forms
+                  set-value
+                    form-id=>admin-settings
+                    id=>attachment-directory
+                    value=>[magix.data.load][value][directory].value
+        button=>browse-att-directory
+          class=>span-2 top-1 last
+          value=>browse
+          onclick
+            execute-script
+              file=>system42/private/file-manager/file-manager.hl
+              params
+                container=>browse-attachment-dynamic
+                select-directory=>true
+                select-file=>false
+                onselect
+                  magix.viewport.clear-controls
+                    container=>browse-attachment-dynamic
+                    reset-class=>true
+                  using=>magix.forms
+                    set-value
+                      id=>attachment-directory
+                      value=>[$][file].value
+                oncancel
+                  magix.viewport.clear-controls
+                    container=>browse-attachment-dynamic
+                    reset-class=>true
+    button=>update-email
+      class=>span-2 top-1 right clear last
+      value=>update
+      onclick
+        magix.forms.get-value
+          id=>attachment-directory
+        set=>[magix.data.save][value][directory].value
+          value=>[magix.forms.get-value][value].value
+        magix.data.save
+          id=>magix.email.attachment-directory
+        magix.viewport.show-message
+          message=>attachment directory was saved
+          color=>#aaffaa
+dynamic=>browse-attachment-dynamic
+  style=>margin-left:-200px;
 }}
 
