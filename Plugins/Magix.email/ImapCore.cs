@@ -235,6 +235,9 @@ namespace Magix.email
             ImapClient imap = OpenImapConnection(GetConnectionSettings(ip, e.Params));
             ReadOnlyMailMessage msg = imap.GetMessageUid(mailBoxName, uid, headersOnly, setSeenFlag);
 
+            if (msg == null)
+                throw new ArgumentException("message didn't exist on server");
+
             // decorating result
             ip["value"]["subject"].Value = msg.Subject;
             ip["value"]["to"].Value = msg.DeliveredTo;
@@ -285,12 +288,12 @@ namespace Magix.email
                     ip["inspect"],
                     "Magix.email",
                     "Magix.email.hyperlisp.inspect.hl",
-                    "[magix.imap.delete-message-dox].value");
+                    "[magix.imap.delete-messages-dox].value");
                 AppendCodeFromResource(
                     ip,
                     "Magix.email",
                     "Magix.email.hyperlisp.inspect.hl",
-                    "[magix.imap.delete-message-sample]");
+                    "[magix.imap.delete-messages-sample]");
                 return;
             }
 
