@@ -34,7 +34,7 @@ namespace Magix.email
             bool ssl = false;
             string username = null;
             string password = null;
-            if (!imapSettings.Contains("value"))
+            if (imapSettings.Contains("value"))
             {
                 host = imapSettings["value"]["host"].Get<string>();
                 port = imapSettings["value"]["port"].Get<int>();
