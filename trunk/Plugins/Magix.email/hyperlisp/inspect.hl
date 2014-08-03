@@ -83,12 +83,21 @@ using [ssl].  if [headers-only] is true, it will download only headers from serv
 [host], [port] and [ssl] is optional, and if not supplied, will be read from 
 magix.imap.settings
 
+[username] and [password] must be supplied
+
 will automatically remove any script tags from all messages recieved
 
 messages are returned as [result] with [subject], [body], [to], [cc] being a list 
 of recipients, [bcc] being a list of blind copy recipients, [date], [uid], [from], 
 [importance], [index] being index on server, [in-reply-to], [mailbox-name], 
-[message-id], [priority], [signed], [encrypted] and [triple-wrapped]"
+[message-id], [priority], [signed], [encrypted] and [triple-wrapped]
+
+if you add up a [search] node, you can search for emails matching your criteria.  
+the legal criteria you can use is [bcc], [before], [body], [cc], [deleted], 
+[draft], [flagged], [from], [header] and [new]
+
+if you add up [search] criteria, then [count], [start], [reverse], [headers-only] 
+and [set-seen-flag] will be ignored"
 
 magix.imap.get-messages-sample
   magix.imap.get-messages
@@ -103,6 +112,17 @@ magix.imap.get-messages-sample
     reverse=>false
     set-seen-flag=>false
     headers-only=>false
+    search
+      bcc=>john@doe.com
+      before=>1-March-2014
+      body=>offerings
+      cc=>some.friend@doe.com
+      deleted=>false
+      draft=>false
+      flagged=>true
+      from=>offerings@kmart.com
+      header=>some header
+      new=>true
 
 
 magix.imap.get-message-dox=>@"retrieves one message from an imap server
@@ -112,6 +132,8 @@ is true from [host] on [port] using [ssl]
 
 [host], [port] and [ssl] is optional, and if not supplied, will be read from 
 magix.imap.settings
+
+[username] and [password] must be supplied
 
 will automatically remove any script tags from the message recieved
 
@@ -132,4 +154,30 @@ magix.imap.get-message-sample
     mailbox-name=>inbox
     set-seen-flag=>false
     headers-only=>false
+
+
+magix.imap.delete-messages-dox=>@"deletes message(s) from imap server
+
+[host], [port] and [ssl] is optional, and if not supplied, will be read from 
+magix.imap.settings.  the message will be deleted from the [mailbox-name] 
+mailbox
+
+[username] and [password] must be supplied
+
+[uid] is either an integer value, or a list of nodes containing integer 
+values that should be the uids of the message(s) you wish to delete
+
+will return [success] as true if deletion was successful"
+
+magix.imap.delete-message-sample
+  magix.imap.delete-message
+    host=>imap.gmail.com
+    port=>993
+    ssl=>true
+    username=>your-username@gmail.com
+    password=>Pa$$w0rd
+    mailbox-name=>inbox
+    uid
+      =>5
+      =>7
 
