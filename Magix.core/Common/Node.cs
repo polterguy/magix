@@ -722,6 +722,22 @@ namespace Magix.Core
                 });
         }
 
+        /*
+         * Returns child value, or default if child does not exist, or value is null or empty
+         */
+        public T GetValue<T>(string itemName, T defaultValue)
+        {
+            if (_children.Exists(
+                delegate(Node idx)
+                {
+                    return idx.Name == itemName;
+                }))
+            {
+                return this[itemName].Get<T>();
+            }
+            return defaultValue;
+        }
+
         public void CopyTo(Node[] array, int arrayIndex)
         {
             foreach (Node idx in _children)
