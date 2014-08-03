@@ -35,6 +35,7 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Pop3Core.cs" />
     <Compile Include="ImapCore.cs" />
     <Compile Include="SmtpCore.cs" />
   </ItemGroup>
