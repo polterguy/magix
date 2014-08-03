@@ -383,6 +383,9 @@ magix.file-manager.refresh-toolbar
           value=>true
       magix.viewstate.get
         id=>magix.file-manager.onselect
+      execute
+        magix.viewstate.get
+          id=>magix.file-manager.select-file
       if=>exist
         lhs=>[@][magix.viewstate.get][value]
         and=>equals
@@ -391,6 +394,12 @@ magix.file-manager.refresh-toolbar
           or=>equals
             lhs=>[execute][magix.viewstate.get][value].value
             rhs=>true
+        and=>not-equals
+          lhs=>[@][execute][magix.viewstate.get][value].value
+          rhs=>false
+          or=>equals
+            lhs=>[magix.viewstate.get][value][type].value
+            rhs=>directory
         code
           using=>magix.forms
             set-enabled

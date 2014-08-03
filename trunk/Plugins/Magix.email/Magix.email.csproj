@@ -33,8 +33,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CommonHelper.cs" />
     <Compile Include="Pop3Core.cs" />
     <Compile Include="ImapCore.cs" />
     <Compile Include="SmtpCore.cs" />

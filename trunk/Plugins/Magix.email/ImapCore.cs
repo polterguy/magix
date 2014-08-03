@@ -12,13 +12,14 @@ using System.Collections.Generic;
 using System.Security.Cryptography.X509Certificates;
 using OpaqueMail.Net;
 using Magix.Core;
+using System.IO;
 
 namespace Magix.email
 {
 	/*
 	 * email imap core
 	 */
-    public class ImapCore : ActiveController
+    internal class ImapCore : CommonHelper
 	{
         /*
          * helper to retrieve connection settings
@@ -187,10 +188,7 @@ namespace Magix.email
                 if (!headersOnly)
                 {
                     ip["result"]["uid-" + idxEmail.ImapUid]["body"].Value = Functions.RemoveScriptTags(idxEmail.Body);
-                    foreach (Attachment idxAtt in idxEmail.Attachments)
-                    {
-                        //idxAtt.
-                    }
+                    SaveAttachmentsLocally(e.Params, idxEmail);
                 }
 
                 if (idxEmail.SmimeSigningCertificateChain.Count > 0)

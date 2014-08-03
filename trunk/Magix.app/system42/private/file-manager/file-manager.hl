@@ -104,6 +104,16 @@ if=>equals
 else
   magix.viewstate.set
     id=>magix.file-manager.select-directory
+if=>equals
+  lhs=>[$][select-file].value
+  rhs=>false
+  code
+    magix.viewstate.set
+      id=>magix.file-manager.select-file
+      value=>false
+else
+  magix.viewstate.set
+    id=>magix.file-manager.select-file
 
 magix.viewstate.get
   id=>magix.file-manager.current-directory
