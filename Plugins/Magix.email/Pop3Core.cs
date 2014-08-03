@@ -132,6 +132,7 @@ namespace Magix.email
                 }
                 ip["result"]["uid-" + idxEmail.MessageId]["date"].Value = idxEmail.Date;
                 ip["result"]["uid-" + idxEmail.MessageId]["return-path"].Value = idxEmail.ReturnPath;
+                ip["result"]["uid-" + idxEmail.MessageId]["from"].Value = idxEmail.From;
                 ip["result"]["uid-" + idxEmail.MessageId]["message-id"].Value = idxEmail.MessageId;
                 ip["result"]["uid-" + idxEmail.MessageId]["message-id"].Value = idxEmail.MessageId;
                 ip["result"]["uid-" + idxEmail.MessageId]["signed"].Value = idxEmail.SmimeSigned;
@@ -203,6 +204,7 @@ namespace Magix.email
             }
             ip["value"]["date"].Value = msg.Date;
             ip["value"]["return-path"].Value = msg.ReturnPath;
+            ip["value"]["from"].Value = msg.From;
             ip["value"]["message-id"].Value = msg.MessageId;
             ip["value"]["message-id"].Value = msg.MessageId;
             ip["value"]["priority"].Value = msg.Priority;
