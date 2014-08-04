@@ -1,0 +1,257 @@
+﻿
+
+inspect=>@"contains the active events for the execute hyperlisp event wizard
+
+contains the active events for the web part that allows the user to create an active event 
+that executes a hyperlisp file"
+
+
+// populates the select css file drop down with all css files beneath the media folder
+magix.wizard.populate-select-css-file
+
+  // defaulting directory to media directory, unless a directory is explicitly given as input
+  _directory=>media
+  if=>exist
+    lhs=>[$][directory]
+    code
+      set=>[_directory].value
+        value=>[$][directory].value
+
+  // fetching all files and directories from current directory
+  using=>magix.file
+    list-files
+      directory=>[_directory].value
+      filter=>*.css
+    list-directories
+      directory=>[_directory].value
+
+  // looping through all files
+  for-each=>[using][list-files][files]
+    add=>[$][files]
+      value=>[.].name
+        value=>[.].name
+
+  // looping through all directories, and recursively calling self
+  for-each=>[using][list-directories][directories]
+    set=>[@][magix.wizard.populate-select-css-file][directory].value
+      value=>[.].name
+    magix.wizard.populate-select-css-file
+    if=>exist
+      lhs=>[@][magix.wizard.populate-select-css-file][files]
+      code
+        add=>[$][files]
+          values=>[@][..][..][magix.wizard.populate-select-css-file][files]
+
+// creates the web part that holds the css files
+magix.wizard.create-css-files-container
+
+  magix.forms.create-web-part
+    container=>css-files
+    form-id=>css-files
+    class=>span-13 last air-padding boxed-light-green
+    controls
+      label
+        tag=>label
+        class=>span-2
+        value=>css files
+      select=>add-css-file
+        class=>span-11 last bottom-1
+        onfirstload
+          magix.wizard.populate-select-css-file
+          add=>[magix.forms.set-values][values]
+            values=>[magix.wizard.populate-select-css-file][files]
+          magix.forms.set-values
+            form-id=>css-files
+            id=>add-css-file
+            values
+              _default=>insert css file ...
+        onselectedindexchanged
+          magix.forms.get-value
+            form-id=>css-files
+            id=>add-css-file
+          magix.viewstate.get
+            id=>magix.wizard.css-files
+
+          // checking to see if file is already included
+          _included
+          for-each=>[magix.viewstate.get][value]
+            if=>equals
+              lhs=>[.].name
+              rhs=>[/][magix.forms.get-value][value].value
+              code
+                magix.viewport.show-message
+                  message=>that file is already included
+                set=>[/][_included].value
+                  value=>true
+                magix.forms.set-value
+                  form-id=>css-files
+                  id=>add-css-file
+                  value=>_default
+          if=>not-equals
+            lhs=>[_included].value
+            rhs=>true
+            code
+              add=>[@][magix.viewstate.set][value]
+                values=>[magix.viewstate.get][value]
+              add=>[@][magix.viewstate.set][value]
+                value=>[magix.forms.get-value][value].value
+              magix.viewstate.set
+                id=>magix.wizard.css-files
+              magix.wizard.create-css-files-container
+      lambda=>lambda-css-files
+        oncreatecontrols
+          _control
+            panel
+              class=>span-13 last hover-shade
+              controls
+                label
+                  class=>span-11
+                link-button
+                  class=>span-2 last text-right
+                  value=>remove
+                  onclick
+                    magix.viewstate.get
+                      id=>magix.wizard.css-files
+                    set=>[magix.viewstate.get][value][[$][info].value]
+                    set=>[magix.viewstate.set][value]
+                      value=>[magix.viewstate.get][value]
+                    magix.viewstate.set
+                      id=>magix.wizard.css-files
+                    magix.wizard.create-css-files-container
+          magix.viewstate.get
+            id=>magix.wizard.css-files
+          for-each=>[magix.viewstate.get][value]
+            set=>[/][_control][panel][controls][label][value].value
+              value=>[.].name
+            set=>[/][_control][panel][controls][link-button][info].value
+              value=>[.].name
+            add=>[$]
+              value=>[/][_control][panel]
+
+// shows davanced settings for load web part active event wizard
+magix.wizard.show-advanced-settings
+  magix.forms.get-value
+    form-id=>wizard
+    id=>show-advanced
+  if=>equals
+    lhs=>[magix.forms.get-value][value].value
+    rhs=>advanced
+    code
+      magix.forms.set-visible
+        form-id=>wizard
+        id=>show-advanced
+        value=>false
+      magix.forms.effect
+        form-id=>wizard
+        id=>advanced
+        type=>fade-in
+        time=>250
+
+
+// actual creation of active event
+magix.wizard.create-active-event
+
+  // buffer holding event creation code
+  _data
+    event
+      name=>{active-event-name}
+      inspect=>@"wizard generated execute hyperlisp file active event
+
+active event that executes the '{0}' hyperlisp file, and optionally adds 
+css files to the client"
+        =>{filename}
+      code
+        execute-script
+          file=>{filename}
+
+  // retrieving active event name
+  magix.forms.get-value
+    form-id=>wizard
+    id=>active-event-name
+  split=>[magix.forms.get-value][value].value
+    what=>.
+  if=>equals
+    lhs=>[split][result].count
+    rhs=>1
+    or=>equals
+      lhs=>[split][result][0].value
+      rhs=>magix
+    or=>equals
+      lhs=>[magix.forms.get-value][value].value
+      rhs=>
+    code
+      magix.viewport.show-message
+        message=>you must supply a name for your active event.&nbsp;&nbsp;the name must contain a '.', and cannot start with 'magix.'
+        time=>5000
+        color=>#ffaaaa
+      magix.forms.effect
+        type=>focus-and-select
+        form-id=>wizard
+        id=>active-event-name
+      stop
+
+  // checking to see if active event has good name
+  if=>equals
+    lhs=>[magix.forms.get-value][value].value
+    rhs=>
+    code
+      magix.viewport.show-message
+        message=>you must give your active event a name
+  else
+    magix.forms.get-value
+      id=>filename
+    if=>equals
+      lhs=>[@][magix.forms.get-value][value].value
+      rhs=>
+      code
+        magix.viewport.show-message
+          message=>you must choose a web part hyperlisp file from your filesystem
+    else
+      set=>[/][_good].value
+        value=>true
+      iterate=>[/][_data]
+        if=>equals
+          lhs=>[.].value
+          rhs=>{filename}
+          code
+            set=>[.].value
+              value=>[@][..][..][..][..][magix.forms.get-value][value].value
+        else-if=>equals
+          lhs=>[.].value
+          rhs=>{active-event-name}
+          code
+            set=>[.].value
+              value=>[/][magix.forms.get-value][value].value
+
+  // checking to see if everything is ok
+  if=>equals
+    lhs=>[_good].value
+    rhs=>true
+    code
+
+      // setting css files for web part
+      magix.viewstate.get
+        id=>magix.wizard.css-files
+      for-each=>[@][magix.viewstate.get][value]
+        _css
+          magix.viewport.include-client-file
+            type=>css
+        set=>[@][_css][magix.viewport.include-client-file][file].value
+          value=>[.].name
+        add=>[/][_data][event][code]
+          value=>[@][_css][magix.viewport.include-client-file]
+
+      // creating active event
+      execute=>[_data]
+      magix.viewport.show-message
+        message=>active event was created
+      magix.forms.set-visible
+        form-id=>wizard
+        id=>edit-event
+        value=>true
+      using=>magix.forms
+        set-info
+          form-id=>wizard
+          id=>edit-event
+          value=>[magix.forms.get-value][value].value
+

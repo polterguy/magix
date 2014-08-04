@@ -1,0 +1,24 @@
+﻿
+
+inspect=>@"allows you to create an active event that executes 
+a hyperlisp file"
+
+
+// verifies user is in admin role
+magix.core.verify-role
+  role=>admin
+
+_name=>create execute hyperlisp event
+
+// setting default css files to include for web part
+magix.viewstate.set
+  id=>magix.wizard.css-files
+  value
+
+// creates the wizard main web part
+magix.forms.create-web-part
+  form-id=>wizard
+  class=>span-17 last
+  events-file=>system42/private/app-wizard/wizards/execute-hyperlisp-event-wizard/events.hl
+  controls-file=>system42/private/app-wizard/wizards/execute-hyperlisp-event-wizard/controls.hl
+
