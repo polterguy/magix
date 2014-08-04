@@ -1,0 +1,96 @@
+﻿
+
+inspect=>@"contains the controls for the execute hyperlisp event wizard
+
+contains the controls for the web part that allows the user to create an active event 
+that executes a hyperlisp file"
+
+
+panel
+  default=>create
+  class=>span-15 last air-padding boxed top-1 wizard-content desktop-widget
+  controls
+    label
+      tag=>h2
+      class=>span-13
+      value=>create execute hyperlisp file event wizard
+    link-button
+      class=>span-2 last text-right
+      value=>back
+      onclick
+        execute-script
+          file=>system42/private/app-wizard/app-wizard.hl
+    label
+      class=>span-15 last bottom-1
+      value=>@"from here you can create an active event that will execute a hyperlisp file when raised"
+    label
+      class=>clear span-3
+      tag=>label
+      value=>active event name
+    text-box=>active-event-name
+      class=>span-12 last
+      placeholder=>active event name ...
+      onfirstload
+        magix.forms.effect
+          type=>focus-and-select
+          form-id=>wizard
+          id=>active-event-name
+    label
+      class=>clear span-3 top-1
+      tag=>label
+      value=>hyperlisp file
+    panel
+      class=>btn-group span-12 last top-1
+      controls
+        text-box=>filename
+          class=>span-10
+          placeholder=>file name ...
+        button=>browse
+          class=>span-2 last
+          value=>browse
+          onclick
+            execute-script
+              file=>system42/private/file-manager/file-manager.hl
+              params
+                filter=>*.hl;
+                container=>content2
+                onselect
+                  magix.viewport.clear-controls
+                    container=>content2
+                    reset-class=>true
+                  using=>magix.forms
+                    set-value
+                      id=>filename
+                      value=>[$][file].value
+                oncancel
+                  magix.viewport.clear-controls
+                    container=>content2
+                    reset-class=>true
+    link-button=>show-advanced
+      class=>span-2 top-1
+      value=>advanced
+      onclick
+        magix.wizard.show-advanced-settings
+    panel=>advanced
+      class=>span-15 last top-1
+      style=>display:none;
+      controls
+        dynamic=>css-files
+          class=>span-15 last last
+          onfirstload
+            magix.wizard.create-css-files-container
+    button=>create
+      class=>span-2 last top-1 right
+      value=>create
+      onclick
+        magix.wizard.create-active-event
+
+    link-button=>edit-event
+      class=>span-3 right clear text-right last
+      value=>edit active event
+      visible=>false
+      onclick
+        set=>[magix.event.edit-event][event].value
+          value=>[$][info].value
+        magix.event.edit-event
+

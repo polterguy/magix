@@ -1,0 +1,70 @@
+﻿
+
+inspect=>@"starts the magix email client
+
+starts the maagix email client, first verifying that all 
+settings have been correctly setup"
+
+magix.data.load=>smtp
+  id=>magix.smtp.settings
+
+_controls
+  label
+    tag=>h1
+    class=>fill-width top-1 bottom-1
+    value=>magix mail
+
+if=>not-exist
+  lhs=>[magix.data.load=>smtp][value]
+  code
+    magix.viewport.show-message
+      message=>there are no smtp settings in magix, please setup smtp settings in settings, or setup smtp for your user
+      color=>#ffaaaa
+      time=>5000
+    magix.core.check-role
+      role=>admin
+    if=>equals
+      lhs=>[@][magix.core.check-role][result].value
+      rhs=>true
+      code
+        _lb
+          panel
+            class=>span-15 last air-padding desktop-widget top-1
+            controls
+              label
+                tag=>h3
+                class=>span-15 last bottom-1
+                value=>setup settings before proceeding
+              label
+                class=>span-15 last bottom-1
+                value=>you must first setup your settings before you can start taking advantage of magix mail
+              link-button
+                class=>span-4
+                value=>global settings
+                onclick
+                  magix.viewport.clear-controls
+                    all=>true
+                  magix.forms.create-mml-web-part
+                    mml-file=>system42/private/settings/settings.mml
+                    container=>content1
+                    form-id=>admin-settings
+                    class=>span-17 last
+                  magix.browser.scroll
+                    id=>smtp-wrapper
+              link-button
+                class=>span-4
+                value=>user settings
+                onclick
+                  magix.viewport.clear-controls
+                    all=>true
+                  execute-script
+                    file=>system42/private/email/user-setup/setup-smtp.hl
+        add=>[_controls]
+          values=>[@][_lb]
+        set=>[using][create-web-part][class].value
+          value=>span-17 last
+
+using=>magix.forms
+  create-web-part
+    controls=>[_controls]
+
