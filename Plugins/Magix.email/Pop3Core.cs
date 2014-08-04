@@ -23,33 +23,56 @@ namespace Magix.email
         /*
          * helper to retrieve connection settings
          */
-        private static Node GetConnectionSettings(Node ip, Node pars)
+        private Node GetConnectionSettings(Node ip, Node pars)
         {
-            Node pop3Settings = new Node("magix.data.load");
-            pop3Settings["id"].Value = "magix.pop3.settings";
-            BypassExecuteActiveEvent(pop3Settings, pars);
-
             string host = null;
             int port = -1;
             bool ssl = false;
             string username = null;
             string password = null;
-            if (pop3Settings.Contains("value"))
+
+            if (!ip.ContainsValue("host"))
             {
-                host = pop3Settings["value"]["host"].Get<string>();
-                port = pop3Settings["value"]["port"].Get<int>();
-                ssl = pop3Settings["value"]["ssl"].Get<bool>();
+                Node pop3Settings = new Node("magix.data.load");
+                pop3Settings["id"].Value = "magix.pop3.settings";
+                BypassExecuteActiveEvent(pop3Settings, pars);
+                if (pop3Settings.Contains("value"))
+                {
+                    host = pop3Settings["value"]["host"].Get<string>();
+                    port = pop3Settings["value"]["port"].Get<int>();
+                    ssl = pop3Settings["value"]["ssl"].Get<bool>();
+                }
             }
-            if (ip.ContainsValue("host"))
-                host = ip["host"].Get<string>();
-            if (ip.ContainsValue("port"))
-                port = ip["port"].Get<int>();
-            if (ip.ContainsValue("ssl"))
-                ssl = ip["ssl"].Get<bool>();
-            if (ip.ContainsValue("username"))
-                username = ip["username"].Get<string>();
-            if (ip.ContainsValue("password"))
-                password = ip["password"].Get<string>();
+            else
+            {
+                if (ip.ContainsValue("host"))
+                    host = ip["host"].Get<string>();
+                if (ip.ContainsValue("port"))
+                    port = ip["port"].Get<int>();
+                if (ip.ContainsValue("ssl"))
+                    ssl = ip["ssl"].Get<bool>();
+            }
+            if (!ip.ContainsValue("username"))
+            {
+                string logInUser = (Page.Session["magix.core.user"] as Node)["username"].Get<string>();
+
+                Node imapSettings = new Node("magix.data.load");
+                imapSettings["id"].Value = "magix.pop3.settings-" + logInUser;
+                BypassExecuteActiveEvent(imapSettings, pars);
+
+                if (imapSettings.Contains("value"))
+                {
+                    username = imapSettings["username"].Get<string>();
+                    password = imapSettings["password"].Get<string>();
+                }
+            }
+            else
+            {
+                if (ip.ContainsValue("username"))
+                    username = ip["username"].Get<string>();
+                if (ip.ContainsValue("password"))
+                    password = ip["password"].Get<string>();
+            }
 
             if (string.IsNullOrEmpty(host))
                 throw new Exception("no host found in imap settings");

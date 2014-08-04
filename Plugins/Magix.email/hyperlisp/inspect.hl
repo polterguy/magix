@@ -7,6 +7,11 @@ magix.smtp.send-email-dox=>@"sends an email over smtp
 
 will send an smtp email, using the magix.smtp.settings from database
 
+if you supply [host], [port], [use-smime], [smime-subject-name], [smime-sign-time], 
+[smime-encrypt-envelope], [smime-triple-wrap], [smime-local-machine], [username],
+and [password] then these settings will be used instead of the settings from your 
+database
+
 requires [header], [body] and [to]
 
 by default, the email is sent from the [admin-email] from your smtp settings 
@@ -415,5 +420,18 @@ magix.pop3.get-capabilities-sample
     ssl=>true
     username=>your-username@gmail.com
     password=>Pa$$w0rd
+
+
+magix.nntp.list-groups-dox=>@"list groups on server
+
+list the groups on [host] at [port] from [start] to [end].  if no [end] is 
+given, or it is -1, then all groups from [start] will be listed.  default 
+value of [start] is 0"
+
+magix.nntp.list-groups-sample
+  magix.nntp.list-groups
+    host=>bbs.math.ncu.edu.tw
+    start=>0
+    end=>-1
 
 
