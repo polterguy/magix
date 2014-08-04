@@ -45,9 +45,13 @@ namespace Magix.email
                     BypassExecuteActiveEvent(createDirectory, pars);
                 }
 
+                Node ip = Ip(pars);
+
                 foreach (Attachment idxAtt in idxEmail.Attachments)
                 {
                     string relativePath = Page.Server.MapPath(directoryPath) + idxAtt.ContentId + "_" + idxAtt.Name;
+
+                    ip["attachments"].Add("", directoryPath + idxAtt.ContentId + "_" + idxAtt.Name);
                     using (FileStream stream = File.Create(relativePath))
                     {
                         idxAtt.ContentStream.Seek(0, SeekOrigin.Begin);

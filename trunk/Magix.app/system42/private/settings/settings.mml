@@ -849,7 +849,9 @@ panel=>email-wrapper
       value=>general email settings
     label
       class=>span-13 last top-1
-      value=>@"these are your general email settings.&nbsp;&nbsp;settings that applies for all types of email servers"
+      value=>@"these are your general email settings.&nbsp;&nbsp;settings that applies for all types of email servers.&nbsp;&nbsp;the attachment 
+directory will become the root directory where email attachments will be saved.&nbsp;&nbsp;the actual attachments will be saved underneath 
+this directory, in a directory with the name of the username logged into the system"
     label
       class=>span-4 top-1
       tag=>label
