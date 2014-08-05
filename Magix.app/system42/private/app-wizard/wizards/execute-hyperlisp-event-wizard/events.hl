@@ -55,7 +55,7 @@ magix.wizard.create-css-files-container
         class=>span-2
         value=>css files
       select=>add-css-file
-        class=>span-11 last bottom-1
+        class=>span-11 last
         onfirstload
           magix.wizard.populate-select-css-file
           add=>[magix.forms.set-values][values]
@@ -127,6 +127,8 @@ magix.wizard.create-css-files-container
               value=>[.].name
             add=>[$]
               value=>[/][_control][panel]
+          set=>[$][0][class].value
+            value=>span-13 last hover-shade top-1
 
 // shows davanced settings for load web part active event wizard
 magix.wizard.show-advanced-settings
