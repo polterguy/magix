@@ -19,11 +19,11 @@ _controls
     value=>magix mail
 
 if=>not-exist
-  lhs=>[magix.data.load=>smtp][value]
+  lhs=>[magix.data.load-username=>smtp][value]
   or=>not-exist
-    lhs=>[magix.data.load=>imap][value]
+    lhs=>[magix.data.load-username=>imap][value]
     and=>not-exist
-      lhs=>[magix.data.load=>pop3][value]
+      lhs=>[magix.data.load-username=>pop3][value]
   code
     magix.viewport.show-message
       message=>please setup email settings first

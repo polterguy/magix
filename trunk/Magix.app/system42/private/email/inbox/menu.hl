@@ -1,0 +1,12 @@
+﻿
+
+inspect=>@"contains the menu parts of email client
+
+contains the menu parts controls definition file of the 
+magix mail application"
+
+
+label
+  class=>span-5 last
+  tag=>h3
+  value=>menu

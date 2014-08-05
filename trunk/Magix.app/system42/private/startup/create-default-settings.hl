@@ -16,7 +16,7 @@ if=>not-exist
     magix.data.save
       id=>magix.admin.settings.default-front-end-viewport
       value
-        viewport=>Magix.viewports.SingleContainer
+        viewport=>Magix.viewports.Gutenberg
 
 // checking to see if default back-end css file setting exists, and if not, creating it
 magix.data.load

@@ -399,6 +399,25 @@ magix.forms.create-web-part
           value=>account
         select=>email-account-type
           class=>span-5 last
+          onfirstload
+            magix.data.load-username
+              id=>magix.email.account-type
+            if=>exist
+              lhs=>[magix.data.load-username][value]
+              code
+                switch=>[magix.data.load-username][value][account-type].value
+                  case=>pop3
+                    magix.email-settings.create-pop3-settings
+                    magix.forms.set-value
+                      form-id=>email-settings
+                      id=>email-account-type
+                      value=>pop3
+                  case=>imap
+                    magix.email-settings.create-imap-settings
+                    magix.forms.set-value
+                      form-id=>email-settings
+                      id=>email-account-type
+                      value=>imap
           onselectedindexchanged
             if=>equals
               lhs=>[$][value].value
@@ -522,6 +541,70 @@ magix.forms.create-web-part
               rhs=>false
               code
                 stop
+        set=>[@][magix.data.save-username][value][account-type].value
+          value=>[magix.forms.get-children-values][values][email-account-type].value
+        magix.data.save-username
+          id=>magix.email.account-type
+        
+        // saving smtp settings
+        set=>[@][magix.data.save-username=>smtp][value][host].value
+          value=>[magix.forms.get-children-values][values][smtp-server].value
+        set=>[@][magix.data.save-username=>smtp][value][port].value
+          value=>[magix.forms.get-children-values][values][smtp-port].value
+        set=>[@][magix.data.save-username=>smtp][value][ssl].value
+          value=>[magix.forms.get-children-values][values][smtp-ssl].value
+        set=>[@][magix.data.save-username=>smtp][value][username].value
+          value=>[magix.forms.get-children-values][values][smtp-username].value
+        set=>[@][magix.data.save-username=>smtp][value][password].value
+          value=>[magix.forms.get-children-values][values][smtp-password].value
+        set=>[@][magix.data.save-username=>smtp][value][email].value
+          value=>[magix.forms.get-children-values][values][smtp-email].value
+        set=>[@][magix.data.save-username=>smtp][value][use-smime].value
+          value=>[magix.forms.get-children-values][values][smtp-smime].value
+        set=>[@][magix.data.save-username=>smtp][value][smime-sign-time].value
+          value=>[magix.forms.get-children-values][values][smtp-sign-time].value
+        set=>[@][magix.data.save-username=>smtp][value][smime-encrypt-envelope].value
+          value=>[magix.forms.get-children-values][values][smtp-encrypt-envelope].value
+        set=>[@][magix.data.save-username=>smtp][value][smime-triple-wrap].value
+          value=>[magix.forms.get-children-values][values][smtp-triple-wrap].value
+        set=>[@][magix.data.save-username=>smtp][value][smtp-local-machine].value
+          value=>[magix.forms.get-children-values][values][smtp-local-machine].value
+        magix.data.save-username=>smtp
+          id=>magix.smtp.settings
+
+        if=>equals
+          lhs=>[magix.forms.get-children-values][values][email-account-type].value
+          rhs=>pop3
+          code
+
+            // saving pop3 settings
+            set=>[@][magix.data.save-username=>pop3][value][host].value
+              value=>[magix.forms.get-children-values][values][pop3-host].value
+            set=>[@][magix.data.save-username=>pop3][value][port].value
+              value=>[magix.forms.get-children-values][values][pop3-port].value
+            set=>[@][magix.data.save-username=>pop3][value][ssl].value
+              value=>[magix.forms.get-children-values][values][pop3-ssl].value
+            set=>[@][magix.data.save-username=>pop3][value][username].value
+              value=>[magix.forms.get-children-values][values][pop3-username].value
+            set=>[@][magix.data.save-username=>pop3][value][password].value
+              value=>[magix.forms.get-children-values][values][pop3-password].value
+            magix.data.save-username=>pop3
+              id=>magix.pop3.settings
+        else
+
+          // saving imap settings
+          set=>[@][magix.data.save-username=>imap][value][host].value
+            value=>[magix.forms.get-children-values][values][imap-host].value
+          set=>[@][magix.data.save-username=>imap][value][port].value
+            value=>[magix.forms.get-children-values][values][imap-port].value
+          set=>[@][magix.data.save-username=>imap][value][ssl].value
+            value=>[magix.forms.get-children-values][values][imap-ssl].value
+          set=>[@][magix.data.save-username=>imap][value][username].value
+            value=>[magix.forms.get-children-values][values][imap-username].value
+          set=>[@][magix.data.save-username=>imap][value][password].value
+            value=>[magix.forms.get-children-values][values][imap-password].value
+          magix.data.save-username=>imap
+            id=>magix.imap.settings
         execute-script=>execute-afterwards
 
 
