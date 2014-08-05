@@ -470,11 +470,12 @@
     <Content Include="system42\private\file-manager\parts\events.hl" />
     <Content Include="system42\private\file-manager\parts\controls.hl" />
     <Content Include="system42\private\email\email-client.hl" />
-    <Content Include="system42\private\email\user-setup\setup-smtp.hl" />
+    <Content Include="system42\private\email\user-setup\setup-settings.hl" />
     <Content Include="system42\private\startup\create-email-defaults.hl" />
     <Content Include="system42\private\app-wizard\wizards\execute-hyperlisp-file-wizard.hl" />
     <Content Include="system42\private\app-wizard\wizards\execute-hyperlisp-event-wizard\controls.hl" />
     <Content Include="system42\private\app-wizard\wizards\execute-hyperlisp-event-wizard\events.hl" />
+    <Content Include="system42\private\email\email-inbox.hl" />
     <None Include="todo.txt" />
     <Content Include="your-files\readme.txt" />
     <Content Include="your-files\samples\hello-world-app\readme.txt" />

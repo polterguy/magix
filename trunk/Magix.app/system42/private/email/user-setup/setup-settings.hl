@@ -1,0 +1,529 @@
+﻿
+
+inspect=>@"sets up smtp for local user
+
+allows user to setup smtp for himself"
+
+if=>exist
+  lhs=>[$][execute-afterwards]
+  code
+    set=>[**execute-script=>execute-afterwards][file].value
+      value=>[$][execute-afterwards].value
+else
+  set=>[**execute-script=>execute-afterwards]
+
+magix.forms.create-web-part
+  form-id=>email-settings
+  class=>fill-width column
+  events
+
+    magix.email-settings.verify-mandatory-setting
+      using=>magix.forms
+        get-value
+          form-id=>email-settings
+          id=>[$][value].value
+      if=>equals
+        lhs=>[using][get-value][value].value
+        rhs=>
+        code
+          set=>[$][success].value
+            value=>false
+          using=>magix.viewport
+            show-message
+              message=>you need to fill out {0} before proceeding
+                =>[$][value].value
+              color=>#ffaaaa
+              time=>5000
+          using=>magix.forms
+            effect
+              form-id=>email-settings
+              id=>[$][value].value
+              type=>focus-and-select
+      else
+        set=>[$][success].value
+          value=>true
+
+    magix.email-settings.change-smtp-controls
+      magix.forms.get-value
+        form-id=>email-settings
+        id=>smtp-smime
+      if=>equals
+        lhs=>[magix.forms.get-value][value].value
+        rhs=>true
+        code
+          using=>magix.forms
+            set-enabled
+              form-id=>email-settings
+              id=>smtp-sign-time
+              value=>true
+            set-enabled
+              form-id=>email-settings
+              id=>smtp-local-machine
+              value=>true
+            set-enabled
+              form-id=>email-settings
+              id=>smtp-subject-name
+              value=>true
+            set-enabled
+              form-id=>email-settings
+              id=>smtp-encrypt-envelope
+              value=>true
+            set-enabled
+              form-id=>email-settings
+              id=>smtp-triple-wrap
+              value=>true
+      else
+        using=>magix.forms
+          set-enabled
+            form-id=>email-settings
+            id=>smtp-sign-time
+            value=>false
+          set-enabled
+            form-id=>email-settings
+            id=>smtp-local-machine
+            value=>false
+          set-enabled
+            form-id=>email-settings
+            id=>smtp-subject-name
+            value=>false
+          set-enabled
+            form-id=>email-settings
+            id=>smtp-encrypt-envelope
+            value=>false
+          set-enabled
+            form-id=>email-settings
+            id=>smtp-triple-wrap
+            value=>false
+
+    magix.email-settings.create-pop3-settings
+      magix.data.load
+        id=>magix.pop3.settings
+      if=>exist
+        lhs=>[magix.data.load][value]
+        code
+          set=>[**text-box=>pop3-host][value].value
+            value=>[**host=>?].value
+          set=>[**text-box=>pop3-port][value].value
+            value=>[**port=>?].value
+          set=>[**check-box=>pop3-ssl][checked].value
+            value=>[**ssl=>?].value
+      using=>magix.forms
+        get-value
+          form-id=>email-settings
+          id=>smtp-username
+        get-value
+          form-id=>email-settings
+          id=>smtp-password
+      set=>[**text-box=>pop3-username][value].value
+        value=>[using][get-value:0][value].value
+      set=>[**text-box=>pop3-password][value].value
+        value=>[using][get-value:1][value].value
+      _controls
+        panel
+          class=>span-7 last top-1
+          controls
+            label
+              tag=>label
+              class=>span-2 text-right
+              value=>host
+            text-box=>pop3-host
+              class=>span-5 last
+              placeholder=>host ...
+            label
+              tag=>label
+              class=>span-2 text-right top-1
+              value=>port
+            text-box=>pop3-port
+              class=>span-5 last top-1
+              placeholder=>port ...
+            label
+              tag=>label
+              class=>span-2 text-right top-1
+              value=>ssl
+              for=>pop3-ssl
+            check-box=>pop3-ssl
+              class=>span-1 top-1
+            label
+              tag=>label
+              class=>span-2 text-right top-1 clear
+              value=>username
+            text-box=>pop3-username
+              class=>span-5 last top-1
+              placeholder=>username ...
+            label
+              tag=>label
+              class=>span-2 text-right top-1
+              value=>password
+            text-box=>pop3-password
+              class=>span-5 last top-1
+              placeholder=>password ...
+              type=>password
+      using=>magix.forms
+        create-web-part
+          container=>email-account-dynamic
+          controls=>[_controls]
+
+    magix.email-settings.create-imap-settings
+      magix.data.load
+        id=>magix.imap.settings
+      if=>exist
+        lhs=>[magix.data.load][value]
+        code
+          set=>[**text-box=>imap-host][value].value
+            value=>[**host=>?].value
+          set=>[**text-box=>imap-port][value].value
+            value=>[**port=>?].value
+          set=>[**check-box=>imap-ssl][checked].value
+            value=>[**ssl=>?].value
+      using=>magix.forms
+        get-value
+          form-id=>email-settings
+          id=>smtp-username
+        get-value
+          form-id=>email-settings
+          id=>smtp-password
+      set=>[**text-box=>imap-username][value].value
+        value=>[using][get-value:0][value].value
+      set=>[**text-box=>imap-password][value].value
+        value=>[using][get-value:1][value].value
+      _controls
+        panel
+          class=>span-7 last top-1
+          controls
+            label
+              tag=>label
+              class=>span-2 text-right
+              value=>host
+            text-box=>imap-host
+              class=>span-5 last
+              placeholder=>host ...
+            label
+              tag=>label
+              class=>span-2 text-right top-1
+              value=>port
+            text-box=>imap-port
+              class=>span-5 last top-1
+              placeholder=>port ...
+            label
+              tag=>label
+              class=>span-2 text-right top-1
+              value=>ssl
+              for=>imap-ssl
+            check-box=>imap-ssl
+              class=>span-1 top-1
+            label
+              tag=>label
+              class=>span-2 text-right top-1 clear
+              value=>username
+            text-box=>imap-username
+              class=>span-5 last top-1
+              placeholder=>username ...
+            label
+              tag=>label
+              class=>span-2 text-right top-1
+              value=>password
+            text-box=>imap-password
+              class=>span-5 last top-1
+              placeholder=>password ...
+              type=>password
+      using=>magix.forms
+        create-web-part
+          container=>email-account-dynamic
+          controls=>[_controls]
+
+  controls
+    label
+      class=>fill-width top-1 bottom-2
+      tag=>h1
+      value=>magix mail
+    panel=>smtp-wrp
+      class=>span-7
+      onfirstload
+        magix.data.load
+          id=>magix.smtp.settings
+        using=>magix.forms
+          set-value
+            form-id=>email-settings
+            id=>smtp-server
+            value=>[magix.data.load][value][host].value
+          set-value
+            form-id=>email-settings
+            id=>smtp-port
+            value=>[magix.data.load][value][port].value
+          set-value
+            form-id=>email-settings
+            id=>smtp-ssl
+            value=>[magix.data.load][value][ssl].value
+          set-value
+            form-id=>email-settings
+            id=>smtp-username
+            value=>[magix.data.load][value][username].value
+          set-value
+            form-id=>email-settings
+            id=>smtp-password
+            value=>[magix.data.load][value][password].value
+          set-value
+            form-id=>email-settings
+            id=>smtp-email
+            value=>[magix.data.load][value][admin-email].value
+          set-value
+            form-id=>email-settings
+            id=>smtp-smime
+            value=>[magix.data.load][value][use-smime].value
+          set-value
+            form-id=>email-settings
+            id=>smtp-sign-time
+            value=>[magix.data.load][value][smime-sign-time].value
+          set-value
+            form-id=>email-settings
+            id=>smtp-local-machine
+            value=>[magix.data.load][value][smime-local-machine].value
+          set-value
+            form-id=>email-settings
+            id=>smtp-subject-name
+            value=>[magix.data.load][value][smime-subject-name].value
+          set-value
+            form-id=>email-settings
+            id=>smtp-encrypt-envelope
+            value=>[magix.data.load][value][smime-encrypt-envelope].value
+          set-value
+            form-id=>email-settings
+            id=>smtp-triple-wrap
+            value=>[magix.data.load][value][smime-triple-wrap].value
+        magix.email-settings.change-smtp-controls
+      controls
+        label
+          class=>fill-width last clear bottom-1
+          tag=>h3
+          value=>smtp settings
+        label
+          class=>span-2 text-right
+          tag=>label
+          value=>smtp server
+        text-box=>smtp-server
+          class=>span-5 last
+          placeholder=>smtp server ...
+        label
+          class=>span-2 clear top-1 text-right
+          tag=>label
+          value=>port
+        text-box=>smtp-port
+          class=>span-5 top-1 last
+          placeholder=>smtp port ...
+        label
+          class=>span-2 clear top-1 text-right
+          tag=>label
+          value=>use ssl
+          for=>smtp-ssl
+        check-box=>smtp-ssl
+          class=>span-1 top-1 last
+        label
+          class=>span-2 clear top-1 text-right
+          tag=>label
+          value=>username
+        text-box=>smtp-username
+          class=>span-5 top-1 last
+          placeholder=>smtp username ...
+        label
+          class=>span-2 clear top-1 text-right
+          tag=>label
+          value=>password
+        text-box=>smtp-password
+          class=>span-5 top-1 last
+          placeholder=>smtp password ...
+          type=>password
+        label
+          class=>span-2 clear top-1 text-right
+          tag=>label
+          value=>email
+        text-box=>smtp-email
+          class=>span-5 top-1 last
+          placeholder=>email address ...
+        label
+          class=>span-2 clear top-1 text-right
+          tag=>label
+          value=>s/mime
+          for=>smtp-smime
+        check-box=>smtp-smime
+          class=>span-1 top-1 last
+          oncheckedchanged
+            magix.email-settings.change-smtp-controls
+        label
+          class=>span-2 clear top-1 text-right
+          tag=>label
+          value=>sign time
+          for=>smtp-sign-time
+        check-box=>smtp-sign-time
+          class=>span-1 top-1 last
+        label
+          class=>span-2 clear top-1 text-right
+          tag=>label
+          value=>machine
+          for=>smtp-local-machine
+          title=>where to fetch your certificate, local machine storage or system user storage
+        check-box=>smtp-local-machine
+          class=>span-1 top-1 last
+        label
+          class=>span-2 clear top-1 text-right
+          tag=>label
+          value=>certificate
+          title=>subject name for certificate to use as public key
+        text-box=>smtp-subject-name
+          class=>span-5 top-1 last
+          placeholder=>subject name ...
+        label
+          class=>span-2 clear top-1 text-right
+          tag=>label
+          value=>encrypt env.
+          for=>smtp-encrypt-envelope
+          title=>whether or not envelope of outgoing emails should be encrypted or not
+        check-box=>smtp-encrypt-envelope
+          class=>span-1 top-1 last
+        label
+          class=>span-2 clear top-1 text-right
+          tag=>label
+          value=>triple wrap
+          for=>smtp-triple-wrap
+        check-box=>smtp-triple-wrap
+          class=>span-1 top-1 last
+    panel=>incoming-wrp
+      class=>span-7 left-2
+      controls
+        label
+          class=>fill-width last clear bottom-1
+          tag=>h3
+          value=>pop3/imap settings
+        label
+          class=>span-2 text-right
+          tag=>label
+          value=>account
+        select=>email-account-type
+          class=>span-5 last
+          onselectedindexchanged
+            if=>equals
+              lhs=>[$][value].value
+              rhs=>_default
+              code
+                magix.viewport.clear-controls
+                  container=>email-account-dynamic
+            else-if=>equals
+              lhs=>[$][value].value
+              rhs=>pop3
+              code
+                magix.email-settings.create-pop3-settings
+            else
+              magix.email-settings.create-imap-settings
+          items
+            _default=>choose account type ...
+            pop3=>pop3
+            imap=>imap
+        dynamic=>email-account-dynamic
+          class=>span-7 last
+    button=>save
+      class=>span-2 left-14 last clear top-1
+      value=>save
+      onclick
+        magix.forms.get-children-values
+          id=>content1
+        _mandatory
+          =>smtp-server
+          =>smtp-port
+          =>smtp-username
+          =>smtp-password
+          =>smtp-email
+        _success=>true
+        for-each=>[_mandatory]
+          set=>[@][magix.email-settings.verify-mandatory-setting][value].value
+            value=>[.].value
+          magix.email-settings.verify-mandatory-setting
+          if=>equals
+            lhs=>[magix.email-settings.verify-mandatory-setting][success].value
+            rhs=>false
+            code
+              set=>[/][_success].value
+                value=>false
+              stop
+        if=>equals
+          lhs=>[_success].value
+          rhs=>false
+          code
+            stop
+        if=>equals
+          lhs=>[magix.forms.get-children-values][values][smtp-smime].value
+          rhs=>true
+          code
+            magix.email-settings.verify-mandatory-setting
+              value=>smtp-subject-name
+            if=>equals
+              lhs=>[@][magix.email-settings.verify-mandatory-setting][success].value
+              rhs=>false
+              code
+                stop
+        if=>equals
+          lhs=>[**email-account-type=>?].value
+          rhs=>_default
+          code
+            magix.viewport.show-message
+              message=>you need to choose and setup a pop3/imap email account
+              color=>#ffaaaa
+              time=>5000
+            magix.forms.effect
+              form-id=>email-settings
+              id=>email-account-type
+              type=>focus-and-select
+            stop
+        else-if=>equals
+          lhs=>[**email-account-type=>?].value
+          rhs=>pop3
+          code
+            _mandatory
+              =>pop3-host
+              =>pop3-port
+              =>pop3-username
+              =>pop3-password
+            for-each=>[@][_mandatory]
+              set=>[@][magix.email-settings.verify-mandatory-setting][value].value
+                value=>[.].value
+              magix.email-settings.verify-mandatory-setting
+              if=>equals
+                lhs=>[@][magix.email-settings.verify-mandatory-setting][success].value
+                rhs=>false
+                code
+                  set=>[/][_success].value
+                    value=>false
+                  stop
+            if=>equals
+              lhs=>[_success].value
+              rhs=>false
+              code
+                stop
+        else-if=>equals
+          lhs=>[**email-account-type=>?].value
+          rhs=>imap
+          code
+            _mandatory
+              =>imap-host
+              =>imap-port
+              =>imap-username
+              =>imap-password
+            for-each=>[@][_mandatory]
+              set=>[@][magix.email-settings.verify-mandatory-setting][value].value
+                value=>[.].value
+              magix.email-settings.verify-mandatory-setting
+              if=>equals
+                lhs=>[@][magix.email-settings.verify-mandatory-setting][success].value
+                rhs=>false
+                code
+                  set=>[/][_success].value
+                    value=>false
+                  stop
+            if=>equals
+              lhs=>[_success].value
+              rhs=>false
+              code
+                stop
+        execute-script=>execute-afterwards
+
+
+
+

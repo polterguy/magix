@@ -1,0 +1,13 @@
+﻿
+
+inspect=>@"the actual email client of magix mail
+
+opens your inbox.  expects settings to be setup before.  use 
+email-client.hl to start inbox, and don't call this file directly, 
+since it expects settings to be already setup, and email-client.hl 
+will verify settings are setup, and open up settings web part if 
+they're not"
+
+
+magix.viewport.show-message
+  message=>starting email client
