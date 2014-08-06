@@ -7,6 +7,16 @@ magix mail application"
 
 
 label
-  class=>span-5 last
+  class=>span-5 last bottom-1
   tag=>h3
   value=>menu
+
+link-button
+  class=>span-5 last
+  value=>settings
+  onclick
+    execute-script
+      file=>system42/private/email/user-setup/setup-settings.hl
+      params
+        execute-afterwards=>system42/private/email/inbox/email-inbox.hl
+

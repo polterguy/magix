@@ -12,10 +12,134 @@ if=>exist
 else
   set=>[**execute-script=>execute-afterwards]
 
+magix.viewport.clear-controls
+  all=>true
+
 magix.forms.create-web-part
   form-id=>email-settings
+  container=>content2
   class=>fill-width column
   events
+
+    magix.email-settings.load-smtp-settings
+      magix.data.load-username=>smtp
+        id=>magix.smtp.settings
+      if=>not-exist
+        lhs=>[magix.data.load-username=>smtp][value]
+        code
+          magix.email-settings.load-global-smtp-settings
+      else
+        magix.email-settings.load-private-smtp-settings
+
+    magix.email-settings.load-private-smtp-settings
+      magix.data.load-username=>smtp
+        id=>magix.smtp.settings
+      using=>magix.forms
+        set-value
+          form-id=>email-settings
+          id=>smtp-server
+          value=>[magix.data.load-username][value][host].value
+        set-value
+          form-id=>email-settings
+          id=>smtp-port
+          value=>[magix.data.load-username][value][port].value
+        set-value
+          form-id=>email-settings
+          id=>smtp-ssl
+          value=>[magix.data.load-username][value][ssl].value
+        set-value
+          form-id=>email-settings
+          id=>smtp-username
+          value=>[magix.data.load-username][value][username].value
+        set-value
+          form-id=>email-settings
+          id=>smtp-password
+          value=>[magix.data.load-username][value][password].value
+        set-value
+          form-id=>email-settings
+          id=>smtp-email
+          value=>[magix.data.load-username][value][email].value
+        set-value
+          form-id=>email-settings
+          id=>smtp-smime
+          value=>[magix.data.load-username][value][use-smime].value
+        set-value
+          form-id=>email-settings
+          id=>smtp-sign-time
+          value=>[magix.data.load-username][value][smime-sign-time].value
+        set-value
+          form-id=>email-settings
+          id=>smtp-local-machine
+          value=>[magix.data.load-username][value][smime-local-machine].value
+        set-value
+          form-id=>email-settings
+          id=>smtp-subject-name
+          value=>[magix.data.load-username][value][smime-subject-name].value
+        set-value
+          form-id=>email-settings
+          id=>smtp-encrypt-envelope
+          value=>[magix.data.load-username][value][smime-encrypt-envelope].value
+        set-value
+          form-id=>email-settings
+          id=>smtp-triple-wrap
+          value=>[magix.data.load-username][value][smime-triple-wrap].value
+        set-value
+          form-id=>email-settings
+          id=>smtp-subject-name
+          value=>[magix.data.load-username][value][smime-subject-name].value
+
+    magix.email-settings.load-global-smtp-settings
+      magix.data.load
+        id=>magix.smtp.settings
+      using=>magix.forms
+        set-value
+          form-id=>email-settings
+          id=>smtp-server
+          value=>[magix.data.load][value][host].value
+        set-value
+          form-id=>email-settings
+          id=>smtp-port
+          value=>[magix.data.load][value][port].value
+        set-value
+          form-id=>email-settings
+          id=>smtp-ssl
+          value=>[magix.data.load][value][ssl].value
+        set-value
+          form-id=>email-settings
+          id=>smtp-username
+          value=>[magix.data.load][value][username].value
+        set-value
+          form-id=>email-settings
+          id=>smtp-password
+          value=>[magix.data.load][value][password].value
+        set-value
+          form-id=>email-settings
+          id=>smtp-email
+          value=>[magix.data.load][value][admin-email].value
+        set-value
+          form-id=>email-settings
+          id=>smtp-smime
+          value=>[magix.data.load][value][use-smime].value
+        set-value
+          form-id=>email-settings
+          id=>smtp-sign-time
+          value=>[magix.data.load][value][smime-sign-time].value
+        set-value
+          form-id=>email-settings
+          id=>smtp-local-machine
+          value=>[magix.data.load][value][smime-local-machine].value
+        set-value
+          form-id=>email-settings
+          id=>smtp-subject-name
+          value=>[magix.data.load][value][smime-subject-name].value
+        set-value
+          form-id=>email-settings
+          id=>smtp-encrypt-envelope
+          value=>[magix.data.load][value][smime-encrypt-envelope].value
+        set-value
+          form-id=>email-settings
+          id=>smtp-triple-wrap
+          value=>[magix.data.load][value][smime-triple-wrap].value
 
     magix.email-settings.verify-mandatory-setting
       using=>magix.forms
@@ -95,7 +219,78 @@ magix.forms.create-web-part
             id=>smtp-triple-wrap
             value=>false
 
-    magix.email-settings.create-pop3-settings
+    magix.email-settings.load-pop3-settings
+      magix.data.load-username
+        id=>magix.pop3.settings
+      if=>not-exist
+        lhs=>[magix.data.load-username][value]
+        code
+          magix.email-settings.load-global-pop3-settings
+      else
+        magix.email-settings.load-private-pop3-settings
+
+    magix.email-settings.load-private-pop3-settings
+      magix.data.load-username
+        id=>magix.pop3.settings
+      if=>exist
+        lhs=>[magix.data.load-username][value]
+        code
+          set=>[**text-box=>pop3-host][value].value
+            value=>[**host=>?].value
+          set=>[**text-box=>pop3-port][value].value
+            value=>[**port=>?].value
+          set=>[**check-box=>pop3-ssl][checked].value
+            value=>[**ssl=>?].value
+          set=>[**text-box=>pop3-username][value].value
+            value=>[**username=>?].value
+          set=>[**text-box=>pop3-password][value].value
+            value=>[**password=>?].value
+      _controls
+        panel
+          class=>span-7 last top-1
+          controls
+            label
+              tag=>label
+              class=>span-2 text-right
+              value=>host
+            text-box=>pop3-host
+              class=>span-5 last
+              placeholder=>host ...
+            label
+              tag=>label
+              class=>span-2 text-right top-1
+              value=>port
+            text-box=>pop3-port
+              class=>span-5 last top-1
+              placeholder=>port ...
+            label
+              tag=>label
+              class=>span-2 text-right top-1
+              value=>ssl
+              for=>pop3-ssl
+            check-box=>pop3-ssl
+              class=>span-1 top-1
+            label
+              tag=>label
+              class=>span-2 text-right top-1 clear
+              value=>username
+            text-box=>pop3-username
+              class=>span-5 last top-1
+              placeholder=>username ...
+            label
+              tag=>label
+              class=>span-2 text-right top-1
+              value=>password
+            text-box=>pop3-password
+              class=>span-5 last top-1
+              placeholder=>password ...
+              type=>password
+      using=>magix.forms
+        create-web-part
+          container=>email-account-dynamic
+          controls=>[_controls]
+
+    magix.email-settings.load-global-pop3-settings
       magix.data.load
         id=>magix.pop3.settings
       if=>exist
@@ -163,7 +358,78 @@ magix.forms.create-web-part
           container=>email-account-dynamic
           controls=>[_controls]
 
-    magix.email-settings.create-imap-settings
+    magix.email-settings.load-imap-settings
+      magix.data.load-username
+        id=>magix.imap.settings
+      if=>not-exist
+        lhs=>[magix.data.load-username][value]
+        code
+          magix.email-settings.load-global-imap-settings
+      else
+        magix.email-settings.load-private-imap-settings
+
+    magix.email-settings.load-private-imap-settings
+      magix.data.load-username
+        id=>magix.imap.settings
+      if=>exist
+        lhs=>[magix.data.load-username][value]
+        code
+          set=>[**text-box=>imap-host][value].value
+            value=>[**host=>?].value
+          set=>[**text-box=>imap-port][value].value
+            value=>[**port=>?].value
+          set=>[**check-box=>imap-ssl][checked].value
+            value=>[**ssl=>?].value
+          set=>[**text-box=>imap-username][value].value
+            value=>[**username=>?].value
+          set=>[**text-box=>imap-password][value].value
+            value=>[**password=>?].value
+      _controls
+        panel
+          class=>span-7 last top-1
+          controls
+            label
+              tag=>label
+              class=>span-2 text-right
+              value=>host
+            text-box=>imap-host
+              class=>span-5 last
+              placeholder=>host ...
+            label
+              tag=>label
+              class=>span-2 text-right top-1
+              value=>port
+            text-box=>imap-port
+              class=>span-5 last top-1
+              placeholder=>port ...
+            label
+              tag=>label
+              class=>span-2 text-right top-1
+              value=>ssl
+              for=>imap-ssl
+            check-box=>imap-ssl
+              class=>span-1 top-1
+            label
+              tag=>label
+              class=>span-2 text-right top-1 clear
+              value=>username
+            text-box=>imap-username
+              class=>span-5 last top-1
+              placeholder=>username ...
+            label
+              tag=>label
+              class=>span-2 text-right top-1
+              value=>password
+            text-box=>imap-password
+              class=>span-5 last top-1
+              placeholder=>password ...
+              type=>password
+      using=>magix.forms
+        create-web-part
+          container=>email-account-dynamic
+          controls=>[_controls]
+
+    magix.email-settings.load-global-imap-settings
       magix.data.load
         id=>magix.imap.settings
       if=>exist
@@ -232,64 +498,10 @@ magix.forms.create-web-part
           controls=>[_controls]
 
   controls
-    label
-      class=>fill-width top-1 bottom-2
-      tag=>h1
-      value=>magix mail
     panel=>smtp-wrp
       class=>span-7
       onfirstload
-        magix.data.load
-          id=>magix.smtp.settings
-        using=>magix.forms
-          set-value
-            form-id=>email-settings
-            id=>smtp-server
-            value=>[magix.data.load][value][host].value
-          set-value
-            form-id=>email-settings
-            id=>smtp-port
-            value=>[magix.data.load][value][port].value
-          set-value
-            form-id=>email-settings
-            id=>smtp-ssl
-            value=>[magix.data.load][value][ssl].value
-          set-value
-            form-id=>email-settings
-            id=>smtp-username
-            value=>[magix.data.load][value][username].value
-          set-value
-            form-id=>email-settings
-            id=>smtp-password
-            value=>[magix.data.load][value][password].value
-          set-value
-            form-id=>email-settings
-            id=>smtp-email
-            value=>[magix.data.load][value][admin-email].value
-          set-value
-            form-id=>email-settings
-            id=>smtp-smime
-            value=>[magix.data.load][value][use-smime].value
-          set-value
-            form-id=>email-settings
-            id=>smtp-sign-time
-            value=>[magix.data.load][value][smime-sign-time].value
-          set-value
-            form-id=>email-settings
-            id=>smtp-local-machine
-            value=>[magix.data.load][value][smime-local-machine].value
-          set-value
-            form-id=>email-settings
-            id=>smtp-subject-name
-            value=>[magix.data.load][value][smime-subject-name].value
-          set-value
-            form-id=>email-settings
-            id=>smtp-encrypt-envelope
-            value=>[magix.data.load][value][smime-encrypt-envelope].value
-          set-value
-            form-id=>email-settings
-            id=>smtp-triple-wrap
-            value=>[magix.data.load][value][smime-triple-wrap].value
+        magix.email-settings.load-smtp-settings
         magix.email-settings.change-smtp-controls
       controls
         label
@@ -407,13 +619,13 @@ magix.forms.create-web-part
               code
                 switch=>[magix.data.load-username][value][account-type].value
                   case=>pop3
-                    magix.email-settings.create-pop3-settings
+                    magix.email-settings.load-pop3-settings
                     magix.forms.set-value
                       form-id=>email-settings
                       id=>email-account-type
                       value=>pop3
                   case=>imap
-                    magix.email-settings.create-imap-settings
+                    magix.email-settings.load-imap-settings
                     magix.forms.set-value
                       form-id=>email-settings
                       id=>email-account-type
@@ -429,9 +641,9 @@ magix.forms.create-web-part
               lhs=>[$][value].value
               rhs=>pop3
               code
-                magix.email-settings.create-pop3-settings
+                magix.email-settings.load-pop3-settings
             else
-              magix.email-settings.create-imap-settings
+              magix.email-settings.load-imap-settings
           items
             _default=>choose account type ...
             pop3=>pop3
@@ -443,7 +655,7 @@ magix.forms.create-web-part
       value=>save
       onclick
         magix.forms.get-children-values
-          id=>content1
+          id=>content2
         _mandatory
           =>smtp-server
           =>smtp-port
@@ -569,6 +781,8 @@ magix.forms.create-web-part
           value=>[magix.forms.get-children-values][values][smtp-triple-wrap].value
         set=>[@][magix.data.save-username=>smtp][value][smtp-local-machine].value
           value=>[magix.forms.get-children-values][values][smtp-local-machine].value
+        set=>[@][magix.data.save-username=>smtp][value][smime-subject-name].value
+          value=>[magix.forms.get-children-values][values][smtp-subject-name].value
         magix.data.save-username=>smtp
           id=>magix.smtp.settings
 

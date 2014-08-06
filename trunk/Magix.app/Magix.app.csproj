@@ -63,6 +63,7 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Default.aspx" />
+    <Content Include="media\back-end\email-client.css" />
     <Content Include="media\back-end\file-manager.css" />
     <Content Include="media\back-end\dashboard.css" />
     <Content Include="media\back-end\skins\golden.css" />
@@ -475,7 +476,9 @@
     <Content Include="system42\private\app-wizard\wizards\execute-hyperlisp-file-wizard.hl" />
     <Content Include="system42\private\app-wizard\wizards\execute-hyperlisp-event-wizard\controls.hl" />
     <Content Include="system42\private\app-wizard\wizards\execute-hyperlisp-event-wizard\events.hl" />
-    <Content Include="system42\private\email\email-inbox.hl" />
+    <Content Include="system42\private\email\inbox\email-inbox.hl" />
+    <Content Include="system42\private\email\inbox\header.hl" />
+    <Content Include="system42\private\email\inbox\menu.hl" />
     <None Include="todo.txt" />
     <Content Include="your-files\readme.txt" />
     <Content Include="your-files\samples\hello-world-app\readme.txt" />

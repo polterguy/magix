@@ -5,6 +5,18 @@ inspect=>@"starts the magix email client
 starts the magix mail client, first verifying that all 
 settings have been correctly setup"
 
+magix.viewport.include-client-file
+  type=>css
+  file=>media/back-end/email-client.css
+
+magix.forms.create-web-part
+  container=>content1
+  class=>span-24 top-2 bottom-2
+  controls-file=>system42/private/email/inbox/header.hl
+
+magix.viewport.pin-container
+  container=>content1
+
 magix.data.load-username=>smtp
   id=>magix.smtp.settings
 magix.data.load-username=>imap
@@ -34,8 +46,8 @@ if=>not-exist
     execute-script
       file=>system42/private/email/user-setup/setup-settings.hl
       params
-        execute-afterwards=>system42/private/email/email-inbox.hl
+        execute-afterwards=>system42/private/email/inbox/email-inbox.hl
 else
   execute-script
-    file=>system42/private/email/email-inbox.hl
+    file=>system42/private/email/inbox/email-inbox.hl
 
