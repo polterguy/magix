@@ -8,14 +8,6 @@ since it expects settings to be already setup, and email-client.hl
 will verify settings are setup, and open up settings web part if 
 they're not"
 
-magix.viewport.include-client-file
-  type=>css
-  file=>media/back-end/email-client.css
-
-magix.forms.create-web-part
-  container=>content1
-  class=>span-24 top-2 bottom-2
-  controls-file=>system42/private/email/inbox/header.hl
 
 magix.forms.create-web-part
   container=>content2
