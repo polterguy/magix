@@ -34,15 +34,15 @@ namespace Magix.email
 
             if (!ip.ContainsValue("host"))
             {
-                Node imapSettings = new Node("magix.data.load");
-                imapSettings["id"].Value = "magix.imap.settings";
-                BypassExecuteActiveEvent(imapSettings, pars);
+                Node imapSettings = GetSettings(pars);
 
                 if (imapSettings.Contains("value"))
                 {
                     host = imapSettings["value"]["host"].Get<string>();
                     port = imapSettings["value"]["port"].Get<int>();
                     ssl = imapSettings["value"]["ssl"].Get<bool>();
+                    username = imapSettings["value"]["username"].Get<string>();
+                    password = imapSettings["value"]["password"].Get<string>();
                 }
             }
             else
@@ -54,27 +54,10 @@ namespace Magix.email
                 if (ip.ContainsValue("ssl"))
                     ssl = ip["ssl"].Get<bool>();
             }
-            if (!ip.ContainsValue("username"))
-            {
-                string logInUser = (Page.Session["magix.core.user"] as Node)["username"].Get<string>();
-                
-                Node imapSettings = new Node("magix.data.load");
-                imapSettings["id"].Value = "magix.imap.settings-" + logInUser;
-                BypassExecuteActiveEvent(imapSettings, pars);
-
-                if (imapSettings.Contains("value"))
-                {
-                    username = imapSettings["username"].Get<string>();
-                    password = imapSettings["password"].Get<string>();
-                }
-            }
-            else
-            {
-                if (ip.ContainsValue("username"))
-                    username = ip["username"].Get<string>();
-                if (ip.ContainsValue("password"))
-                    password = ip["password"].Get<string>();
-            }
+            if (ip.ContainsValue("username"))
+                username = ip["username"].Get<string>();
+            if (ip.ContainsValue("password"))
+                password = ip["password"].Get<string>();
 
             if (string.IsNullOrEmpty(host))
                 throw new Exception("no host found in imap settings");
@@ -92,6 +75,29 @@ namespace Magix.email
             retVal["username"].Value = username;
             retVal["password"].Value = password;
             return retVal;
+        }
+
+        /*
+         * helper for above
+         */
+        private Node GetSettings(Node pars)
+        {
+            // trying private user settings first
+            string username = (Page.Session["magix.core.user"] as Node)["username"].Get<string>();
+
+            Node imapSettings = new Node("magix.data.load");
+            imapSettings["id"].Value = "magix.imap.settings-" + username;
+            BypassExecuteActiveEvent(imapSettings, pars);
+
+            if (imapSettings.Contains("value"))
+                return imapSettings;
+
+            // trying global settings
+            imapSettings = new Node("magix.data.load");
+            imapSettings["id"].Value = "magix.imap.settings";
+            BypassExecuteActiveEvent(imapSettings, pars);
+
+            return imapSettings;
         }
 
         /*
@@ -136,9 +142,9 @@ namespace Magix.email
 
             int count = ip.GetValue("count", 50);
             int startIndex = ip.GetValue("start", 0);
-            string mailBoxName = ip.GetValue<string>("mailbox-name", null);
+            string mailBoxName = ip.GetValue<string>("mailbox", null);
             if (string.IsNullOrEmpty(mailBoxName))
-                throw new ArgumentException("no [mailbox-name] given");
+                throw new ArgumentException("no [mailbox] given");
             bool reverse = ip.GetValue("reverse", false);
             bool setSeenFlag = ip.GetValue("set-seen-flag", false);
             bool headersOnly = ip.GetValue("headers-only", false);
@@ -204,7 +210,7 @@ namespace Magix.email
                 ip["result"]["uid-" + idxEmail.ImapUid]["return-path"].Value = idxEmail.ReturnPath;
                 ip["result"]["uid-" + idxEmail.ImapUid]["from"].Value = idxEmail.From;
                 ip["result"]["uid-" + idxEmail.ImapUid]["uid"].Value = idxEmail.ImapUid;
-                ip["result"]["uid-" + idxEmail.ImapUid]["mailbox-name"].Value = idxEmail.Mailbox;
+                ip["result"]["uid-" + idxEmail.ImapUid]["mailbox"].Value = idxEmail.Mailbox;
                 ip["result"]["uid-" + idxEmail.ImapUid]["message-id"].Value = idxEmail.MessageId;
                 ip["result"]["uid-" + idxEmail.ImapUid]["signed"].Value = idxEmail.SmimeSigned;
                 ip["result"]["uid-" + idxEmail.ImapUid]["encrypted"].Value = idxEmail.SmimeEncryptedEnvelope;
@@ -254,7 +260,7 @@ namespace Magix.email
 
             Node dp = Dp(e.Params);
 
-            string mailBoxName = ip.GetValue<string>("mailbox-name", null);
+            string mailBoxName = ip.GetValue<string>("mailbox", null);
             bool setSeenFlag = ip.GetValue("set-seen-flag", false);
             bool headersOnly = ip.GetValue("headers-only", false);
             if (!ip.ContainsValue("uid"))
@@ -282,7 +288,7 @@ namespace Magix.email
             ip["value"]["return-path"].Value = msg.ReturnPath;
             ip["value"]["from"].Value = msg.From;
             ip["value"]["uid"].Value = msg.ImapUid;
-            ip["value"]["mailbox-name"].Value = msg.Mailbox;
+            ip["value"]["mailbox"].Value = msg.Mailbox;
             ip["value"]["message-id"].Value = msg.MessageId;
             ip["value"]["priority"].Value = msg.Priority;
             ip["value"]["signed"].Value = msg.SmimeSigned;
@@ -330,8 +336,8 @@ namespace Magix.email
             Node dp = Dp(e.Params);
 
             string mailBoxName = null;
-            if (ip.ContainsValue("mailbox-name"))
-                mailBoxName = ip["mailbox-name"].Get<string>();
+            if (ip.ContainsValue("mailbox"))
+                mailBoxName = ip["mailbox"].Get<string>();
 
             List<int> uids = new List<int>();
             if (ip.ContainsValue("uid"))
@@ -444,9 +450,9 @@ namespace Magix.email
 
             Node dp = Dp(e.Params);
 
-            string mailBoxName = ip.GetValue<string>("mailbox-name", null);
+            string mailBoxName = ip.GetValue<string>("mailbox", null);
             if (string.IsNullOrEmpty(mailBoxName))
-                throw new ArgumentException("no [mailbox-name] given");
+                throw new ArgumentException("no [mailbox] given");
 
             ImapClient imap = OpenImapConnection(GetConnectionSettings(ip, e.Params));
             Mailbox box = imap.ExamineMailbox(mailBoxName);
@@ -479,9 +485,9 @@ namespace Magix.email
 
             Node dp = Dp(e.Params);
 
-            string mailBoxName = ip.GetValue<string>("mailbox-name", null);
+            string mailBoxName = ip.GetValue<string>("mailbox", null);
             if (string.IsNullOrEmpty(mailBoxName))
-                throw new ArgumentException("no [mailbox-name] given");
+                throw new ArgumentException("no [mailbox] given");
 
             ImapClient imap = OpenImapConnection(GetConnectionSettings(ip, e.Params));
             ip["success"].Value = imap.CreateMailbox(mailBoxName);
@@ -511,9 +517,9 @@ namespace Magix.email
 
             Node dp = Dp(e.Params);
 
-            string mailBoxName = ip.GetValue<string>("mailbox-name", null);
+            string mailBoxName = ip.GetValue<string>("mailbox", null);
             if (string.IsNullOrEmpty(mailBoxName))
-                throw new ArgumentException("no [mailbox-name] given");
+                throw new ArgumentException("no [mailbox] given");
 
             ImapClient imap = OpenImapConnection(GetConnectionSettings(ip, e.Params));
             ip["success"].Value = imap.DeleteMailbox(mailBoxName);
@@ -543,9 +549,9 @@ namespace Magix.email
 
             Node dp = Dp(e.Params);
 
-            string mailBoxName = ip.GetValue<string>("mailbox-name", null);
+            string mailBoxName = ip.GetValue<string>("mailbox", null);
             if (string.IsNullOrEmpty(mailBoxName))
-                throw new ArgumentException("no [mailbox-name] given");
+                throw new ArgumentException("no [mailbox] given");
 
             ImapClient imap = OpenImapConnection(GetConnectionSettings(ip, e.Params));
             QuotaUsage quota = imap.GetQuota(mailBoxName);
@@ -578,9 +584,9 @@ namespace Magix.email
 
             Node dp = Dp(e.Params);
 
-            string mailBoxName = ip.GetValue<string>("mailbox-name", null);
+            string mailBoxName = ip.GetValue<string>("mailbox", null);
             if (string.IsNullOrEmpty(mailBoxName))
-                throw new ArgumentException("no [mailbox-name] given");
+                throw new ArgumentException("no [mailbox] given");
 
             int quotaSize = ip.GetValue("size", -1);
             if (quotaSize == -1)

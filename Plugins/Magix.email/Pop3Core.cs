@@ -33,14 +33,15 @@ namespace Magix.email
 
             if (!ip.ContainsValue("host"))
             {
-                Node pop3Settings = new Node("magix.data.load");
-                pop3Settings["id"].Value = "magix.pop3.settings";
-                BypassExecuteActiveEvent(pop3Settings, pars);
+                Node pop3Settings = GetSettings(pars);
+
                 if (pop3Settings.Contains("value"))
                 {
                     host = pop3Settings["value"]["host"].Get<string>();
                     port = pop3Settings["value"]["port"].Get<int>();
                     ssl = pop3Settings["value"]["ssl"].Get<bool>();
+                    username = pop3Settings["value"]["username"].Get<string>();
+                    password = pop3Settings["value"]["password"].Get<string>();
                 }
             }
             else
@@ -52,27 +53,10 @@ namespace Magix.email
                 if (ip.ContainsValue("ssl"))
                     ssl = ip["ssl"].Get<bool>();
             }
-            if (!ip.ContainsValue("username"))
-            {
-                string logInUser = (Page.Session["magix.core.user"] as Node)["username"].Get<string>();
-
-                Node imapSettings = new Node("magix.data.load");
-                imapSettings["id"].Value = "magix.pop3.settings-" + logInUser;
-                BypassExecuteActiveEvent(imapSettings, pars);
-
-                if (imapSettings.Contains("value"))
-                {
-                    username = imapSettings["username"].Get<string>();
-                    password = imapSettings["password"].Get<string>();
-                }
-            }
-            else
-            {
-                if (ip.ContainsValue("username"))
-                    username = ip["username"].Get<string>();
-                if (ip.ContainsValue("password"))
-                    password = ip["password"].Get<string>();
-            }
+            if (ip.ContainsValue("username"))
+                username = ip["username"].Get<string>();
+            if (ip.ContainsValue("password"))
+                password = ip["password"].Get<string>();
 
             if (string.IsNullOrEmpty(host))
                 throw new Exception("no host found in imap settings");
@@ -90,6 +74,29 @@ namespace Magix.email
             retVal["username"].Value = username;
             retVal["password"].Value = password;
             return retVal;
+        }
+
+        /*
+         * helper for above
+         */
+        private Node GetSettings(Node pars)
+        {
+            // trying private user settings first
+            string username = (Page.Session["magix.core.user"] as Node)["username"].Get<string>();
+
+            Node pop3Settings = new Node("magix.data.load");
+            pop3Settings["id"].Value = "magix.pop3.settings-" + username;
+            BypassExecuteActiveEvent(pop3Settings, pars);
+
+            if (pop3Settings.Contains("value"))
+                return pop3Settings;
+
+            // trying global settings
+            pop3Settings = new Node("magix.data.load");
+            pop3Settings["id"].Value = "magix.pop3.settings";
+            BypassExecuteActiveEvent(pop3Settings, pars);
+
+            return pop3Settings;
         }
 
         /*

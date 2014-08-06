@@ -56,9 +56,7 @@ namespace Magix.email
 
             if (!ip.ContainsValue("host"))
             {
-                Node smtpSettings = new Node("magix.data.load");
-                smtpSettings["id"].Value = "magix.smtp.settings";
-                BypassExecuteActiveEvent(smtpSettings, e.Params);
+                Node smtpSettings = GetSettings(e.Params);
 
                 if (smtpSettings.Contains("value"))
                 {
@@ -72,6 +70,8 @@ namespace Magix.email
                     smimeEncryptEnvelope = smtpSettings["value"]["smime-encrypt-envelope"].Get<bool>();
                     smimeTripleWrap = smtpSettings["value"]["smime-triple-wrap"].Get<bool>();
                     smimeLocalMachine = smtpSettings["value"]["smime-local-machine"].Get<bool>();
+                    username = smtpSettings["value"]["username"].Get<string>();
+                    password = smtpSettings["value"]["password"].Get<string>();
                 }
             }
             else
@@ -95,27 +95,10 @@ namespace Magix.email
                 if (ip.ContainsValue("smime-local-machine"))
                     smimeLocalMachine = ip["smime-local-machine"].Get<bool>();
             }
-            if (!ip.ContainsValue("username"))
-            {
-                string logInUser = (Page.Session["magix.core.user"] as Node)["username"].Get<string>();
-
-                Node smtpSettings = new Node("magix.data.load");
-                smtpSettings["id"].Value = "magix.smtp.settings-" + logInUser;
-                BypassExecuteActiveEvent(smtpSettings, e.Params);
-
-                if (smtpSettings.Contains("value"))
-                {
-                    username = smtpSettings["username"].Get<string>();
-                    password = smtpSettings["password"].Get<string>();
-                }
-            }
-            else
-            {
-                if (ip.ContainsValue("username"))
-                    username = ip["username"].Get<string>();
-                if (ip.ContainsValue("password"))
-                    password = ip["password"].Get<string>();
-            }
+            if (ip.ContainsValue("username"))
+                username = ip["username"].Get<string>();
+            if (ip.ContainsValue("password"))
+                password = ip["password"].Get<string>();
 
             if (string.IsNullOrEmpty(host))
                 throw new Exception("no host found in smtp settings");
@@ -154,6 +137,29 @@ namespace Magix.email
                 smimeSubjectName, 
                 subject, 
                 body);
+        }
+
+        /*
+         * helper for above
+         */
+        private Node GetSettings(Node pars)
+        {
+            // trying private user settings first
+            string username = (Page.Session["magix.core.user"] as Node)["username"].Get<string>();
+
+            Node smtpSettings = new Node("magix.data.load");
+            smtpSettings["id"].Value = "magix.smtp.settings-" + username;
+            BypassExecuteActiveEvent(smtpSettings, pars);
+
+            if (smtpSettings.Contains("value"))
+                return smtpSettings;
+
+            // trying global settings
+            smtpSettings = new Node("magix.data.load");
+            smtpSettings["id"].Value = "magix.smtp.settings";
+            BypassExecuteActiveEvent(smtpSettings, pars);
+
+            return smtpSettings;
         }
 
         /*
