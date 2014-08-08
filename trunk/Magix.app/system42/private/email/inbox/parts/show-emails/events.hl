@@ -1,0 +1,53 @@
+﻿
+
+inspect=>@"active events for show-emails.hl file
+
+contains active events for the inbox list of emails web part"
+
+
+magix.emails.load-email
+  using=>magix.data
+    load
+      id=>[$][email-id].value
+  if=>not-exist
+    lhs=>[using][load][value][body]
+    code
+      // downloading body of email
+      magix.data.load-username=>pop3-settings
+        id=>magix.pop3.settings
+      add=>[@][magix.pop3.get-message]
+        values=>[@][magix.data.load-username=>pop3-settings][value]
+      split=>[$][email-id].value
+        what=>magix.email.pop3-message-
+      set=>[@][magix.pop3.get-message][index].value
+        value=>[@][split][result][0].value
+      magix.pop3.get-message
+        headers-only=>false
+
+      // saving updated version of email, including downloaded body
+      add=>[@][using][save][value]
+        values=>[@][magix.pop3.get-message][value]
+      using=>magix.data
+        save
+          id=>[$][email-id].value
+          value
+            type=>magix.email.message
+      set=>[using][load][value]
+        value=>[@][using][save][value]
+
+  // creating view email body web part
+  set=>[_controls][**label=>body][value].value
+    value=>[using][load][value][body].value
+  _controls
+    label=>body
+      class=>span-16 last
+      tag=>div
+  set=>[using=>magix.forms][create-web-part][container].value
+    value=>[$][container].value
+  using=>magix.forms
+    create-web-part
+      class=>span-16 last email-item-body
+      controls=>[_controls]
+
+
+

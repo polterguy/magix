@@ -7,11 +7,12 @@ creates the show emails web part in content3"
 
 magix.forms.create-web-part
   container=>content3
-  class=>span-16 last boxed air-padding
+  class=>span-18 last boxed air-padding
   form-id=>inbox-list
+  events-file=>system42/private/email/inbox/parts/show-emails/events.hl
   controls
     label=>header
-      class=>span-16 last bottom-1
+      class=>span-18 last bottom-1
       tag=>h3
       value=>inbox
     lambda=>list-of-emails
@@ -21,44 +22,53 @@ magix.forms.create-web-part
           end=>25
           prototype
             type=>magix.email.message
+        _pnl
+          panel
+            class=>span-18 last
+            controls
         for-each=>[magix.data.load][objects]
           _pnl
-            panel
-              class=>span-16 last email-item
+            label=>{subject-}
+              class=>span-8 email-item-subject
               onclick
-                debug
-              controls
-                label=>{subject-}
-                  class=>span-8
-                label=>{from-}
-                  class=>span-5
-                label=>{date-}
-                  class=>span-3 last
-          set=>[@][_pnl][panel=>{email-}][info].value
+                split=>[$][id].value
+                  what=>subject-
+                set=>[magix.emails.load-email][container].value
+                  value=>dynamic-{0}
+                    =>[split][result][0].value
+                set=>[magix.emails.load-email][email-id].value
+                  value=>[$][info].value
+                magix.emails.load-email
+            label=>{from-}
+              class=>span-7 email-item-from
+            label=>{date-}
+              class=>span-3 last email-item-date
+            dynamic=>{dynamic-}
+          set=>[@][_pnl][label=>{subject-}][info].value
             value=>[.][id].value
           split=>[.][value][subject].value
             where=>40
-          set=>[@][_pnl][**label=>{subject-}][value].value
+          set=>[@][_pnl][label=>{subject-}][value].value
             value=>[@][split][result][0].value
           if=>more-than
             lhs=>[@][split][result].count
             rhs=>1
             code
-              set=>[@][..][..][_pnl][**label=>{subject-}][title].value
+              set=>[@][..][..][_pnl][label=>{subject-}][title].value
                 value=>[.][value][subject].value
-              set=>[@][..][..][_pnl][**label=>{subject-}][value].value
+              set=>[@][..][..][_pnl][label=>{subject-}][value].value
                 value=>{0} ...
-                  =>[@][..][..][_pnl][**label=>{subject-}][value].value
+                  =>[@][..][..][_pnl][label=>{subject-}][value].value
           if=>equals
             lhs=>[.][value][from][display-name].value
             rhs=>
             code
-              set=>[@][..][..][_pnl][**label=>{from-}][value].value
+              set=>[@][..][..][_pnl][label=>{from-}][value].value
                 value=>[.][value][from].value
           else
-            set=>[@][..][_pnl][**label=>{from-}][value].value
+            set=>[@][..][_pnl][label=>{from-}][value].value
               value=>[.][value][from][display-name].value
-            set=>[@][..][_pnl][**label=>{from-}][title].value
+            set=>[@][..][_pnl][label=>{from-}][title].value
               value=>[.][value][from].value
           using=>magix.date
             format
@@ -67,8 +77,10 @@ magix.forms.create-web-part
               current-culture=>true
           set=>[@][_pnl][**label=>{date-}][value].value
             value=>[@][using][format][value].value
-          add=>[$]
+          add=>[@][..][_pnl][panel][controls]
             values=>[@][_pnl]
+        add=>[$]
+          values=>[@][_pnl]
 
 
 

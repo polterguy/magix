@@ -160,6 +160,7 @@ namespace Magix.email
 
             foreach (ReadOnlyMailMessage idxEmail in list)
             {
+                ip["result"]["uid-" + idxEmail.MessageId]["index"].Value = idxEmail.Index;
                 ip["result"]["uid-" + idxEmail.MessageId]["subject"].Value = idxEmail.Subject;
                 ip["result"]["uid-" + idxEmail.MessageId]["to"].Value = idxEmail.DeliveredTo;
                 foreach (MailAddress idxCc in idxEmail.CC)
@@ -249,7 +250,8 @@ namespace Magix.email
             }
             ip["value"]["date"].Value = msg.Date;
             ip["value"]["return-path"].Value = msg.ReturnPath;
-            ip["value"]["from"].Value = msg.From;
+            ip["value"]["from"].Value = msg.From.Address;
+            ip["value"]["from"]["display-name"].Value = msg.From.DisplayName;
             ip["value"]["message-id"].Value = msg.MessageId;
             ip["value"]["message-id"].Value = msg.MessageId;
             ip["value"]["priority"].Value = msg.Priority;
