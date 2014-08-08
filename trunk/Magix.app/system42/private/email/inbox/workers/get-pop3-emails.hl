@@ -1,0 +1,84 @@
+﻿
+
+inspect=>@"downloads emails from pop3 server
+
+downloads emails from pop3 account"
+
+
+// loading settings and username
+magix.data.load-username=>pop3-settings
+  id=>magix.pop3.settings
+magix.session.get=>user
+  id=>magix.core.user
+
+add=>[**magix.pop3.get-messages]
+  values=>[magix.data.load-username=>pop3-settings][value]
+
+// saving "lock" into database
+magix.data.save-username
+  id=>magix.email.retrieving-emails
+  value
+    yup=>yup!
+
+// making sure lock is removed after thread finishes
+set=>[**magix.data.remove=>lock][id].value
+  value=>magix.email.retrieving-emails-{0}
+    =>[magix.session.get=>user][value][username].value
+
+// creating a new thread
+fork
+
+  // looping as long as there are new emails
+  _start=>0
+  while=>equals
+    lhs=>true
+    rhs=>true
+    code
+      set=>[@][magix.pop3.get-messages][start].value
+        value=>[@][..][..][_start].value
+      magix.pop3.get-messages
+        count=>5
+        reverse=>true
+        headers-only=>true
+
+      // checking to see if there was any result, or if we're at eof
+      if=>not-exist
+        lhs=>[@][magix.pop3.get-messages][result]
+        code
+          stop
+
+      // looping through all emails downloaded, checking to see if there are any new emails
+      _has-new=>false
+      for-each=>[@][magix.pop3.get-messages][result]
+        set=>[@][magix.data.load][id].value
+          value=>[.].name
+        magix.data.load
+        if=>not-exist
+          lhs=>[@][magix.data.load][value]
+          code
+            // email didn't exist in databasse from before
+            set=>[@][..][..][..][_has-new].value
+              value=>true
+            // saving new email to database
+            set=>[@][magix.data.save][id].value
+              value=>[.].name
+            add=>[@][magix.data.save][value]
+              values=>[.]
+            magix.data.save
+              value
+                type=>magix.email.message
+
+      // checking to see if there was any new messages, and if not, stopping execution
+      if=>equals
+        lhs=>[@][_has-new].value
+        rhs=>false
+        code
+          stop
+
+      // incrementing index where to retrieve emails from
+      using=>magix.math
+        add=>[@][..][..][..][_start]
+          =>[@][..][..][..][_start].value
+          =>5
+
+  magix.data.remove=>lock

@@ -7,3 +7,42 @@
     background-image:none;
 }
 
+@-webkit-keyframes email-blink
+{
+ from {
+     color:#ff6a00;
+ }
+ to {
+     color:#ffd800;
+ }
+}
+
+@-moz-keyframes email-blink
+{
+ from {
+     color:#ff6a00;
+ }
+ to {
+     color:#ffd800;
+ }
+}
+
+.email-blink
+{
+	-webkit-animation-name: email-blink;
+	-webkit-animation-duration: .5s;
+	-webkit-animation-direction:alternate;
+    -webkit-animation-iteration-count:infinite;
+	-moz-animation-name: email-blink;
+	-moz-animation-duration: .5s;
+	-moz-animation-direction: alternate;
+    -moz-animation-iteration-count:infinite;
+}
+
+.email-item
+{
+    border-top:solid 1px #ccc;
+    cursor:pointer;
+}
+
+

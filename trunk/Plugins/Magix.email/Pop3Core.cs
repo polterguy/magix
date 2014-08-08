@@ -142,6 +142,12 @@ namespace Magix.email
             bool headersOnly = ip.GetValue("headers-only", false);
             string user = ip.GetValue("user", "");
 
+            if (string.IsNullOrEmpty(user) && 
+                !ip.ContainsValue("username") && 
+                HttpContext.Current != null && 
+                HttpContext.Current.Session["magix.core.user"] != null)
+                user = (HttpContext.Current.Session["magix.core.user"] as Node)["username"].Get<string>();
+
             Pop3Client pop3 = OpenPop3Connection(GetConnectionSettings(ip, e.Params, user));
 
             int messageCount = pop3.GetMessageCount();

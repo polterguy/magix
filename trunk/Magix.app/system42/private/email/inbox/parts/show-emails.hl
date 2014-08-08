@@ -1,0 +1,63 @@
+﻿
+
+inspect=>@"creates the show emails web part
+
+creates the show emails web part in content3"
+
+
+magix.forms.create-web-part
+  container=>content3
+  class=>span-15 last boxed air-padding
+  form-id=>inbox-list
+  controls
+    label=>header
+      class=>span-15 last bottom-1
+      tag=>h3
+      value=>inbox
+    lambda=>list-of-emails
+      oncreatecontrols
+        magix.data.load=>load-emails
+          start=>0
+          end=>10
+          prototype
+            type=>magix.email.message
+        for-each=>[magix.data.load][objects]
+          _pnl
+            panel
+              class=>span-15 last email-item
+              onclick
+                debug
+              controls
+                label=>{subject-}
+                  class=>span-8
+                label=>{from-}
+                  class=>span-4
+                label=>{date-}
+                  class=>span-3 last
+          set=>[@][_pnl][panel=>{email-}][info].value
+            value=>[.][id].value
+          set=>[@][_pnl][**label=>{subject-}][value].value
+            value=>[.][value][subject].value
+          if=>equals
+            lhs=>[.][value][from][display-name].value
+            rhs=>
+            code
+              set=>[@][..][..][_pnl][**label=>{from-}][value].value
+                value=>[.][value][from].value
+          else
+            set=>[@][..][_pnl][**label=>{from-}][value].value
+              value=>[.][value][from][display-name].value
+          using=>magix.date
+            format
+              date=>[.][value][date].value
+              format=>g
+              current-culture=>true
+          set=>[@][_pnl][**label=>{date-}][value].value
+            value=>[@][using][format][value].value
+          add=>[$]
+            values=>[@][_pnl]
+
+
+
+
+
