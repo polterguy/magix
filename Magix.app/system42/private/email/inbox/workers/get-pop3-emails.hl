@@ -51,7 +51,8 @@ fork
       _has-new=>false
       for-each=>[@][magix.pop3.get-messages][result]
         set=>[@][magix.data.load][id].value
-          value=>[.].name
+          value=>magix.email.pop3-message-{0}
+            =>[.][index].value
         magix.data.load
         if=>not-exist
           lhs=>[@][magix.data.load][value]
@@ -61,7 +62,8 @@ fork
               value=>true
             // saving new email to database
             set=>[@][magix.data.save][id].value
-              value=>[.].name
+              value=>magix.email.pop3-message-{0}
+                =>[.][index].value
             add=>[@][magix.data.save][value]
               values=>[.]
             magix.data.save

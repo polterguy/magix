@@ -7,19 +7,19 @@ magix mail application"
 
 
 label
-  class=>span-4 last bottom-1
+  class=>span-2 last bottom-1
   tag=>h3
   value=>menu
 
 link-button=>inbox-link
-  class=>span-4 last
+  class=>span-2 last
   value=>inbox
   onclick
     execute-script
       file=>system42/private/email/inbox/workers/get-emails.hl
 
 link-button=>settings-link
-  class=>span-4 last top-1
+  class=>span-2 last top-1
   value=>settings ...
   onclick
     execute-script

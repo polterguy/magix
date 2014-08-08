@@ -7,6 +7,7 @@ creates the [magix.package.analyze-app] active event"
 
 event
   name=>magix.package.analyze-app
+  persist=>false
   inspect=>@"analyzes a manifest.zip file
 
 iterates through an installation manifest, and analyzes it for 

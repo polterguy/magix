@@ -1,5 +1,11 @@
 ﻿
 
+
+.container
+{
+    overflow:visible;
+}
+
 .boxed
 {
     border-radius:0;
@@ -39,14 +45,27 @@
     -moz-animation-iteration-count:infinite;
 }
 
-.email-item
+.email-item-subject
 {
     border-top:solid 1px #ccc;
     cursor:pointer;
 }
 
-.container
+.email-item-from
 {
-    overflow:visible;
+    border-top:solid 1px #ccc;
+}
+
+.email-item-date
+{
+    border-top:solid 1px #ccc;
+}
+
+.email-item-body
+{
+    background-color:#fefefe;
+    border:1px solid #fafafa;
+    box-shadow:3px 3px 5px rgba(0,0,0,1);
+    padding:18px 40px;
 }
 
