@@ -479,6 +479,9 @@
     <Content Include="system42\private\email\inbox\inbox.hl" />
     <Content Include="system42\private\email\parts\header.hl" />
     <Content Include="system42\private\email\inbox\parts\menu-controls.hl" />
+    <Content Include="system42\private\email\inbox\workers\get-emails.hl" />
+    <Content Include="system42\private\email\inbox\workers\get-pop3-emails.hl" />
+    <Content Include="system42\private\email\inbox\parts\show-emails.hl" />
     <None Include="todo.txt" />
     <Content Include="your-files\readme.txt" />
     <Content Include="your-files\samples\hello-world-app\readme.txt" />

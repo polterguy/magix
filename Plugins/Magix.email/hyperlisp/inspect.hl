@@ -330,17 +330,12 @@ returns [count] messages starting from [start] in [reverse] order from
 [host] on [port] using [ssl].  if [headers-only] is true, it will 
 download only headers from server
 
-[host], [port] and [ssl] is optional, and if not supplied, will be read from 
-magix.pop3.settings
-
-[username] and [password] must be supplied
+[host], [port], [ssl], [username] and [password] is optional, and if 
+not supplied, will be read from magix.pop3.settings
 
 will automatically remove any script tags from all messages recieved
 
-messages are returned as [result] with [subject], [body], [to], [cc] being a list 
-of recipients, [bcc] being a list of blind copy recipients, [date], [message-id], 
-[from], [importance], [index] being index on server, [in-reply-to], [priority], 
-[signed], [encrypted] and [triple-wrapped]"
+messages are returned as [result]"
 
 magix.pop3.get-messages-sample
   magix.pop3.get-messages

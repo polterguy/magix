@@ -1,0 +1,77 @@
+﻿
+
+inspect=>@"downloads emails from server
+
+downloads emails from either pop3 or imap account"
+
+// removing previous locks
+magix.data.remove-username
+  id=>magix.email.retrieving-emails
+
+// creating please wait web part
+magix.forms.create-web-part
+  container=>content3
+  form-id=>please-wait
+  class=>span-15 last boxed air-padding
+  controls
+    label
+      class=>span-15 last
+      tag=>h3
+      value=>please wait ...
+    label
+      class=>span-15 last top-1 email-blink
+      value=>downloading messages from your email server
+    timer=>check-for-finished
+      interval=>2000
+      ontick
+        magix.data.count
+          prototype
+            type=>magix.email.message
+        using=>magix.forms
+          set-value
+            form-id=>please-wait
+            id=>count-label
+            value=>{0} emails in system
+              =>[magix.data.count][count].value
+          set-value
+            form-id=>inbox
+            id=>inbox-link
+            value=>inbox ({0})
+              =>[magix.data.count][count].value
+        magix.data.load-username
+          id=>magix.email.retrieving-emails
+        if=>not-exist
+          lhs=>[magix.data.load-username][value]
+          code
+            // finished loading emails from server
+            magix.viewport.show-message
+              message=>finished loading emails
+              color=>#aaffaa
+              time=>2000
+            execute-script
+              file=>system42/private/email/inbox/parts/show-emails.hl
+    label=>count-label
+      class=>span-15 last top-1
+      onfirstload
+        magix.data.count
+          prototype
+            type=>magix.email.message
+        using=>magix.forms
+          set-value
+            form-id=>please-wait
+            id=>count-label
+            value=>{0} emails in system
+              =>[magix.data.count][count].value
+
+// checking which account type user has
+magix.data.load-username
+  id=>magix.email.account-type
+
+// loading emails according to account type
+switch=>[magix.data.load-username][value][account-type].value
+  case=>pop3
+    execute-script
+      file=>system42/private/email/inbox/workers/get-pop3-emails.hl
+  case=>imap
+
+

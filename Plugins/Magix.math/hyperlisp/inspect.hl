@@ -106,3 +106,15 @@ thread safe"
 magix.date.now-sample
   magix.date.now
 
+
+magix.date.format-dox=>@"formats date
+
+formats [date] and returns as [value] according to 
+[format].  if [current-culture] is true, it will use 
+the current culture to format the date, otherwise it will 
+use invariant culture
+
+both [date] and [format] can either be expressions or constants"
+
+
+

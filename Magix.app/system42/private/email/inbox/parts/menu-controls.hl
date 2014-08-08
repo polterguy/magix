@@ -16,7 +16,7 @@ link-button=>inbox-link
   value=>inbox
   onclick
     execute-script
-      file=>system42/private/email/inbox/
+      file=>system42/private/email/inbox/workers/get-emails.hl
 
 link-button=>settings-link
   class=>span-4 last top-1
