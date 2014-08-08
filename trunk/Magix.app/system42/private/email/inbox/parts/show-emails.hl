@@ -7,37 +7,48 @@ creates the show emails web part in content3"
 
 magix.forms.create-web-part
   container=>content3
-  class=>span-15 last boxed air-padding
+  class=>span-16 last boxed air-padding
   form-id=>inbox-list
   controls
     label=>header
-      class=>span-15 last bottom-1
+      class=>span-16 last bottom-1
       tag=>h3
       value=>inbox
     lambda=>list-of-emails
       oncreatecontrols
         magix.data.load=>load-emails
           start=>0
-          end=>10
+          end=>25
           prototype
             type=>magix.email.message
         for-each=>[magix.data.load][objects]
           _pnl
             panel
-              class=>span-15 last email-item
+              class=>span-16 last email-item
               onclick
                 debug
               controls
                 label=>{subject-}
                   class=>span-8
                 label=>{from-}
-                  class=>span-4
+                  class=>span-5
                 label=>{date-}
                   class=>span-3 last
           set=>[@][_pnl][panel=>{email-}][info].value
             value=>[.][id].value
+          split=>[.][value][subject].value
+            where=>40
           set=>[@][_pnl][**label=>{subject-}][value].value
-            value=>[.][value][subject].value
+            value=>[@][split][result][0].value
+          if=>more-than
+            lhs=>[@][split][result].count
+            rhs=>1
+            code
+              set=>[@][..][..][_pnl][**label=>{subject-}][title].value
+                value=>[.][value][subject].value
+              set=>[@][..][..][_pnl][**label=>{subject-}][value].value
+                value=>{0} ...
+                  =>[@][..][..][_pnl][**label=>{subject-}][value].value
           if=>equals
             lhs=>[.][value][from][display-name].value
             rhs=>
@@ -47,6 +58,8 @@ magix.forms.create-web-part
           else
             set=>[@][..][_pnl][**label=>{from-}][value].value
               value=>[.][value][from][display-name].value
+            set=>[@][..][_pnl][**label=>{from-}][title].value
+              value=>[.][value][from].value
           using=>magix.date
             format
               date=>[.][value][date].value
