@@ -11,14 +11,14 @@ label
   tag=>h3
   value=>menu
 
-link-button
+link-button=>inbox-link
   class=>span-4 last
   value=>inbox
   onclick
-    magix.viewport.show-message
-      message=>loading messages ...
+    execute-script
+      file=>system42/private/email/inbox/
 
-link-button
+link-button=>settings-link
   class=>span-4 last top-1
   value=>settings ...
   onclick

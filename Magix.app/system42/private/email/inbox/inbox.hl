@@ -11,6 +11,7 @@ they're not"
 
 magix.forms.create-web-part
   container=>content2
+  form-id=>inbox
   class=>span-4 boxed air-padding
   controls-file=>system42/private/email/inbox/parts/menu-controls.hl
 
