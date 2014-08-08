@@ -87,8 +87,7 @@ namespace Magix.execute
 
                 List<int> ints = new List<int>();
                 if (ip["where"].Value != null)
-                    ints.Add(
-                        Expressions.GetExpressionValue<int>(ip["where"].Get<string>(), dp, ip, false));
+                    ints.Add(Expressions.GetExpressionValue<int>(ip["where"].Get<string>(), dp, ip, false));
                 foreach (Node idx in ip["where"])
                 {
                     ints.Add(Expressions.GetExpressionValue<int>(idx.Get<string>(), dp, ip, false));
@@ -97,7 +96,13 @@ namespace Magix.execute
                 int idxNo = 0;
                 foreach (int idx in ints)
                 {
-                    ip["result"].Add(new Node("", whatToSplit.Substring(idxNo, idx - idxNo)));
+                    int currentEnd = idx;
+                    if (currentEnd > whatToSplit.Length)
+                    {
+                        ip["result"].Add(new Node("", whatToSplit.Substring(idxNo)));
+                        return;
+                    }
+                    ip["result"].Add(new Node("", whatToSplit.Substring(idxNo, currentEnd - idxNo)));
                     idxNo = idx;
                 }
                 ip["result"].Add(new Node("", whatToSplit.Substring(idxNo)));

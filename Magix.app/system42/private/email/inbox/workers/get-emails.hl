@@ -17,10 +17,10 @@ magix.forms.create-web-part
     label
       class=>span-15 last
       tag=>h3
-      value=>please wait ...
+      value=>please wait while checking for new emails ...
     label
       class=>span-15 last top-1 email-blink
-      value=>downloading messages from your email server
+      value=>downloading new messages from your email server ...
     timer=>check-for-finished
       interval=>2000
       ontick
