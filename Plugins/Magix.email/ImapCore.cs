@@ -148,6 +148,7 @@ namespace Magix.email
             bool reverse = ip.GetValue("reverse", false);
             bool setSeenFlag = ip.GetValue("set-seen-flag", false);
             bool headersOnly = ip.GetValue("headers-only", false);
+            string user = ip.GetValue("user", "");
 
             ImapClient imap = OpenImapConnection(GetConnectionSettings(ip, e.Params));
 
@@ -218,7 +219,7 @@ namespace Magix.email
                 if (!headersOnly)
                 {
                     ip["result"]["uid-" + idxEmail.ImapUid]["body"].Value = Functions.RemoveScriptTags(idxEmail.Body);
-                    SaveAttachmentsLocally(e.Params, idxEmail);
+                    SaveAttachmentsLocally(e.Params, idxEmail, user);
                 }
 
                 if (idxEmail.SmimeSigningCertificateChain.Count > 0)

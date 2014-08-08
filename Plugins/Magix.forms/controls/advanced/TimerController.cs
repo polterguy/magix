@@ -53,6 +53,32 @@ namespace Magix.forms
             ip["_ctrl"].Value = ret;
 		}
 
+        /*
+         * disables or enables timer
+         */
+        [ActiveEvent(Name = "magix.forms.timer.enable")]
+        private static void magix_forms_timer_enable(object sender, ActiveEventArgs e)
+        {
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
+            {
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.forms",
+                    "Magix.forms.hyperlisp.inspect.hl",
+                    "[magix.forms.timer.enable-dox].value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.forms",
+                    "Magix.forms.hyperlisp.inspect.hl",
+                    "[magix.forms.timer.enable-sample]");
+                return;
+            }
+
+            Timer ctrl = FindControl<Timer>(e.Params);
+            ctrl.Disabled = !ip.GetValue("value", true);
+        }
+
 		protected override void Inspect (Node node)
 		{
             AppendInspectFromResource(

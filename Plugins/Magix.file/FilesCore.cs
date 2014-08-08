@@ -26,6 +26,31 @@ namespace Magix.execute
         }
 
         /*
+         * returns base path for application
+         */
+        [ActiveEvent(Name = "magix.file.get-base-path")]
+        public static void magix_file_get_base_path(object sender, ActiveEventArgs e)
+        {
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(e.Params))
+            {
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.file",
+                    "Magix.file.hyperlisp.inspect.hl",
+                    "[magix.file.get-base-path-dox].value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.file",
+                    "Magix.file.hyperlisp.inspect.hl",
+                    "[magix.file.get-base-path-sample]");
+                return;
+            }
+
+            ip["path"].Value = _basePath.Trim('/');
+        }
+
+        /*
          * lists all files in directory
          */
         [ActiveEvent(Name = "magix.file.list-files")]

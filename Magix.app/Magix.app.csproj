@@ -476,9 +476,9 @@
     <Content Include="system42\private\app-wizard\wizards\execute-hyperlisp-file-wizard.hl" />
     <Content Include="system42\private\app-wizard\wizards\execute-hyperlisp-event-wizard\controls.hl" />
     <Content Include="system42\private\app-wizard\wizards\execute-hyperlisp-event-wizard\events.hl" />
-    <Content Include="system42\private\email\inbox\email-inbox.hl" />
-    <Content Include="system42\private\email\inbox\header.hl" />
-    <Content Include="system42\private\email\inbox\menu.hl" />
+    <Content Include="system42\private\email\inbox\inbox.hl" />
+    <Content Include="system42\private\email\parts\header.hl" />
+    <Content Include="system42\private\email\inbox\parts\menu-controls.hl" />
     <None Include="todo.txt" />
     <Content Include="your-files\readme.txt" />
     <Content Include="your-files\samples\hello-world-app\readme.txt" />

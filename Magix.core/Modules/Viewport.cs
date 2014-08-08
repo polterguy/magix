@@ -261,7 +261,7 @@ namespace Magix.Core
 
             Node dp = Dp(e.Params);
 
-            string container = Expressions.GetExpressionValue<string>(ip["container"].Get<string>(), dp, ip, false);
+            string container = Expressions.GetExpressionValue<string>(ip.GetValue("container", ""), dp, ip, false);
             bool resetClass = ip.ContainsValue("reset-class") ?
                 Expressions.GetExpressionValue<bool>(ip["reset-class"].Get<string>(), dp, ip, false) :
                 false;

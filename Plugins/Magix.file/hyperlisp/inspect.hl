@@ -3,6 +3,14 @@
 inspect=>@"contains documentation for magix.file assembly"
 
 
+magix.file.get-base-path-dox=>@"returns base path of application
+
+returns the bas path of where the application is installed"
+
+magix.file.get-base-path-sample
+  magix.file.get-base-path
+
+
 magix.file.list-directories-dox=>@"list directories within another directory
 
 lists the directories in [directories] from the given [directory], which can 

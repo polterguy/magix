@@ -25,3 +25,19 @@
 
 4. support for copying directories through magix.file.copy-directory
 
+
+*****************************************************************************************************************************************
+*
+*                    Magix Illuminate Phosphorus version 1.06
+*
+*****************************************************************************************************************************************
+
+1. added "magix.forms.timer.enable" active event for disabling and enabling magix.forms.timer(s)
+
+2. changed magix.smtp namespace logic
+
+3. added magix.pop3 and magix.imap namespace for retrieving emails from pop3 and imap servers
+
+4. created email client "magix mail" as a lightweight alternative to Gmail
+
+

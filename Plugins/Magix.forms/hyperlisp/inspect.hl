@@ -884,6 +884,17 @@ magix.forms.timer-sample-end
       time=>500
 
 
+magix.forms.timer.enable-dox=>@"enables or disables timer
+
+enables or disables timer according to [value]"
+
+magix.forms.timer.enable-sample
+  magix.forms.timer.enable
+    form-id=>some-form-id
+    id=>timer-id
+    value=>false
+
+
 magix.forms.uploader-dox-start=>@"creates an uploader type of web control
 
 uploaders are useful for allowing the end user to drag and drop files onto the browser 

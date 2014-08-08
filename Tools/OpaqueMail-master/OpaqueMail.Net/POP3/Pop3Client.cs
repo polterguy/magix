@@ -672,7 +672,7 @@ namespace OpaqueMail.Net
                 int loopStartIndex = reverseOrder ? numMessages + 1 - startIndex : startIndex;
                 int loopIterateCount = reverseOrder ? -1 : 1;
                 int loopIterations = 0;
-                for (int i = loopStartIndex; loopIterations < numMessages; i+=loopIterateCount)
+                for (int i = loopStartIndex; loopIterations < numMessages; i += loopIterateCount)
                 {
                     ReadOnlyMailMessage message = await GetMessageHelper(i, "", headersOnly);
                     if (message != null)

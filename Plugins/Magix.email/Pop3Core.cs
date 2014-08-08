@@ -23,7 +23,7 @@ namespace Magix.email
         /*
          * helper to retrieve connection settings
          */
-        private Node GetConnectionSettings(Node ip, Node pars)
+        private static Node GetConnectionSettings(Node ip, Node pars, string userUsername)
         {
             string host = null;
             int port = -1;
@@ -33,7 +33,7 @@ namespace Magix.email
 
             if (!ip.ContainsValue("host"))
             {
-                Node pop3Settings = GetSettings(pars);
+                Node pop3Settings = GetSettings(pars, userUsername);
 
                 if (pop3Settings.Contains("value"))
                 {
@@ -79,11 +79,8 @@ namespace Magix.email
         /*
          * helper for above
          */
-        private Node GetSettings(Node pars)
+        private static Node GetSettings(Node pars, string username)
         {
-            // trying private user settings first
-            string username = (Page.Session["magix.core.user"] as Node)["username"].Get<string>();
-
             Node pop3Settings = new Node("magix.data.load");
             pop3Settings["id"].Value = "magix.pop3.settings-" + username;
             BypassExecuteActiveEvent(pop3Settings, pars);
@@ -102,7 +99,7 @@ namespace Magix.email
         /*
          * returns an ImapClient instance according to settings and opens it
          */
-        private Pop3Client OpenPop3Connection(Node settings)
+        private static Pop3Client OpenPop3Connection(Node settings)
         {
             Pop3Client pop3 = new Pop3Client(
                 settings["host"].Get<string>(),
@@ -119,7 +116,7 @@ namespace Magix.email
          * retrieves messages from imap server
          */
         [ActiveEvent(Name = "magix.pop3.get-messages")]
-        public void magix_pop3_get_messages(object sender, ActiveEventArgs e)
+        public static void magix_pop3_get_messages(object sender, ActiveEventArgs e)
         {
             Node ip = Ip(e.Params);
             if (ShouldInspect(ip))
@@ -143,10 +140,17 @@ namespace Magix.email
             int startIndex = ip.GetValue("start", 0);
             bool reverse = ip.GetValue("reverse", false);
             bool headersOnly = ip.GetValue("headers-only", false);
+            string user = ip.GetValue("user", "");
 
-            Pop3Client imap = OpenPop3Connection(GetConnectionSettings(ip, e.Params));
+            Pop3Client pop3 = OpenPop3Connection(GetConnectionSettings(ip, e.Params, user));
 
-            List<ReadOnlyMailMessage> list = imap.GetMessages(count, startIndex, reverse, headersOnly);
+            int messageCount = pop3.GetMessageCount();
+            if (startIndex > messageCount)
+                return;
+            if (count + startIndex > messageCount)
+                count = messageCount - startIndex;
+
+            List<ReadOnlyMailMessage> list = pop3.GetMessages(count, startIndex, reverse, headersOnly);
 
             foreach (ReadOnlyMailMessage idxEmail in list)
             {
@@ -162,7 +166,8 @@ namespace Magix.email
                 }
                 ip["result"]["uid-" + idxEmail.MessageId]["date"].Value = idxEmail.Date;
                 ip["result"]["uid-" + idxEmail.MessageId]["return-path"].Value = idxEmail.ReturnPath;
-                ip["result"]["uid-" + idxEmail.MessageId]["from"].Value = idxEmail.From;
+                ip["result"]["uid-" + idxEmail.MessageId]["from"].Value = idxEmail.From.Address;
+                ip["result"]["uid-" + idxEmail.MessageId]["from"]["display-name"].Value = idxEmail.From.DisplayName;
                 ip["result"]["uid-" + idxEmail.MessageId]["message-id"].Value = idxEmail.MessageId;
                 ip["result"]["uid-" + idxEmail.MessageId]["message-id"].Value = idxEmail.MessageId;
                 ip["result"]["uid-" + idxEmail.MessageId]["signed"].Value = idxEmail.SmimeSigned;
@@ -171,7 +176,7 @@ namespace Magix.email
                 if (!headersOnly)
                 {
                     ip["result"]["uid-" + idxEmail.MessageId]["body"].Value = Functions.RemoveScriptTags(idxEmail.Body);
-                    SaveAttachmentsLocally(e.Params, idxEmail);
+                    SaveAttachmentsLocally(e.Params, idxEmail, user);
                 }
 
                 if (idxEmail.SmimeSigningCertificateChain.Count > 0)
@@ -217,8 +222,9 @@ namespace Magix.email
             if (!ip.ContainsValue("index"))
                 throw new ArgumentException("no [index] given");
             int index = ip["index"].Get<int>();
+            string user = ip.GetValue("user", "");
 
-            Pop3Client imap = OpenPop3Connection(GetConnectionSettings(ip, e.Params));
+            Pop3Client imap = OpenPop3Connection(GetConnectionSettings(ip, e.Params, user));
             ReadOnlyMailMessage msg = imap.GetMessage(index, headersOnly);
 
             if (msg == null)
@@ -300,7 +306,9 @@ namespace Magix.email
             else
                 throw new ArgumentException("no [uid] given");
 
-            Pop3Client imap = OpenPop3Connection(GetConnectionSettings(ip, e.Params));
+            string user = ip.GetValue("user", "");
+
+            Pop3Client imap = OpenPop3Connection(GetConnectionSettings(ip, e.Params, user));
             ip["success"].Value = imap.DeleteMessages(index.ToArray());
         }
 
@@ -328,7 +336,9 @@ namespace Magix.email
 
             Node dp = Dp(e.Params);
 
-            Pop3Client imap = OpenPop3Connection(GetConnectionSettings(ip, e.Params));
+            string user = ip.GetValue("user", "");
+
+            Pop3Client imap = OpenPop3Connection(GetConnectionSettings(ip, e.Params, user));
             string[] capabilities = imap.GetCapabilities();
 
             foreach (string idxFeature in capabilities)
