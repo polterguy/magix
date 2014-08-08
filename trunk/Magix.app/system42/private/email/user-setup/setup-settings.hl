@@ -1,20 +1,42 @@
 ﻿
 
-inspect=>@"sets up smtp for local user
+inspect=>@"sets up email settings for logged in user
 
-allows user to setup smtp for himself"
+allows user to setup smtp, imap and pop3 for himself.  pass in 
+[execute-afterwards] as a code block for what hyperlisp code to 
+execute when settings are successfully saved"
 
+// adding up execute afterwards code block, if given
 if=>exist
   lhs=>[$][execute-afterwards]
   code
-    set=>[**execute-script=>execute-afterwards][file].value
-      value=>[$][execute-afterwards].value
+    add=>[**execute=>execute-afterwards]
+      values=>[$][execute-afterwards]
 else
-  set=>[**execute-script=>execute-afterwards]
+  set=>[**execute=>execute-afterwards]
+
+// adding up extra buttons if requested
+if=>exist
+  lhs=>[$][extra-buttons]
+  code
+    _save
+      panel
+        class=>btn-group span-4 left-12 top-1 clear
+    add=>[@][_save][panel][controls]
+      value=>[**button=>save]
+    add=>[@][_save][panel][controls]
+      values=>[$][extra-buttons]
+    set=>[magix.forms.create-web-part][**button=>save]
+    set=>[@][_save][panel][controls][button=>save][class].value
+      value=>span-2
+    add=>[magix.forms.create-web-part][controls]
+      values=>[@][_save]
 
 magix.viewport.clear-controls
   all=>true
+  reset-class=>true
 
+// creating settings web part
 magix.forms.create-web-part
   form-id=>email-settings
   container=>content2
@@ -819,8 +841,9 @@ magix.forms.create-web-part
             value=>[magix.forms.get-children-values][values][imap-password].value
           magix.data.save-username=>imap
             id=>magix.imap.settings
-        execute-script=>execute-afterwards
-
-
-
+        magix.viewport.show-message
+          message=>settings was saved
+          color=>#aaffaa
+          time=>2000
+        execute=>execute-afterwards
 

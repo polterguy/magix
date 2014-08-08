@@ -21,7 +21,7 @@ namespace Magix.email
 	 */
     internal class CommonHelper : ActiveController
 	{
-        protected void SaveAttachmentsLocally(Node pars, ReadOnlyMailMessage idxEmail)
+        protected static void SaveAttachmentsLocally(Node pars, ReadOnlyMailMessage idxEmail, string username)
         {
             if (idxEmail.Attachments.Count > 0)
             {
@@ -29,8 +29,6 @@ namespace Magix.email
                 attachmentDirectory["id"].Value = "magix.email.attachment-directory";
                 BypassExecuteActiveEvent(attachmentDirectory, pars);
                 string directory = attachmentDirectory["value"]["directory"].Get<string>();
-
-                string username = (Page.Session["magix.core.user"] as Node)["username"].Get<string>();
 
                 string directoryPath = directory.Trim('/') + "/" + username + "/";
 
@@ -49,7 +47,11 @@ namespace Magix.email
 
                 foreach (Attachment idxAtt in idxEmail.Attachments)
                 {
-                    string relativePath = Page.Server.MapPath(directoryPath) + idxAtt.ContentId + "_" + idxAtt.Name;
+                    Node getBase = new Node();
+                    RaiseActiveEvent(
+                        "magix.file.get-base-path",
+                        getBase);
+                    string relativePath = getBase["path"].Get<string>() + "/" + idxAtt.ContentId + "_" + idxAtt.Name;
 
                     ip["attachments"].Add("", directoryPath + idxAtt.ContentId + "_" + idxAtt.Name);
                     using (FileStream stream = File.Create(relativePath))
