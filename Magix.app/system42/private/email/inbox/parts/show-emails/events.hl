@@ -15,9 +15,11 @@ magix.emails.download-email
         values=>[$]
       magix.emails.download-email-pop3
     case=>imap
+      add=>[@][magix.emails.download-email-imap]
+        values=>[$]
       magix.emails.download-email-imap
 
-magix.emails.download-email-pop3
+magix.emails.download-email-imap
   magix.viewport.show-message
     message=>implement this sucker ...
 

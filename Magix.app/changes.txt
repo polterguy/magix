@@ -52,3 +52,9 @@
     making unit tests execute apprx. 30% faster
 
 10. fixed a bug in magix.forms.set-style that made it impossible to remove a style value
+
+11. fixed such that some active events that is created initially during startup is not serialized, as they neither should
+
+
+
+
