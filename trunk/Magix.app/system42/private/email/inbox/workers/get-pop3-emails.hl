@@ -29,7 +29,7 @@ set=>[**magix.data.remove=>lock][id].value
 fork
 
   // looping as long as there are new emails
-  _start=>0
+  _start=>1
   while=>equals
     lhs=>true
     rhs=>true
@@ -69,6 +69,7 @@ fork
             magix.data.save
               value
                 type=>magix.email.message
+                read=>false
 
       // checking to see if there was any new messages, and if not, stopping execution
       if=>equals

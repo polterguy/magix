@@ -32,23 +32,23 @@
 *
 *****************************************************************************************************************************************
 
-1. added "magix.forms.timer.enable" active event for disabling and enabling magix.forms.timer(s)
+1.  added "magix.forms.timer.enable" active event for disabling and enabling magix.forms.timer(s)
 
-2. changed magix.smtp namespace logic
+2.  changed magix.smtp namespace logic
 
-3. added magix.pop3 and magix.imap namespace for retrieving emails from pop3 and imap servers
+3.  added magix.pop3 and magix.imap namespace for retrieving emails from pop3 and imap servers
 
-4. created email client "magix mail" as a lightweight alternative to Gmail
+4.  created email client "magix mail" as a lightweight alternative to Gmail
 
-5. created magix.execute.sort keyword to sort node lists
+5.  created magix.execute.sort keyword to sort node lists
 
-6. created magix.date.format active event to format dates
+6.  created magix.date.format active event to format dates
 
-7. fixed a bug in the comparison logic when comparing nodes in [if], [else-if] and [while]
+7.  fixed a bug in the comparison logic when comparing nodes in [if], [else-if] and [while]
 
-8. added more unit tests
+8.  added more unit tests
 
-9. significantly improved execution of comparison statements, affecting [if], [else-if] and [while]
-   making unit tests execute apprx. 30% faster
+9.  significantly improved execution of comparison statements, affecting [if], [else-if] and [while]
+    making unit tests execute apprx. 30% faster
 
-
+10. fixed a bug in magix.forms.set-style that made it impossible to remove a style value
