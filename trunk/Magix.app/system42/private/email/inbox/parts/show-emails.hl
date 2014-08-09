@@ -5,6 +5,49 @@ inspect=>@"creates the show emails web part
 creates the show emails web part in content3"
 
 
+_start=>0
+_end=>25
+_count=>25
+
+if=>exist
+  lhs=>[$][start]
+  code
+    set=>[_start].value
+      value=>[$][start].value
+    set=>[_end].value
+      value=>[$][end].value
+    using=>magix.math
+      subtract=>[_count]
+        =>[_end].value
+        =>[_start].value
+
+iterate=>[magix.forms.create-web-part]
+  if=>equals
+    lhs=>[.].value
+    rhs=>{emails-start}
+    code
+      set=>[.].value
+        value=>[/][_start].value
+  else-if=>equals
+    lhs=>[.].value
+    rhs=>{emails-end}
+    code
+      set=>[.].value
+        value=>[/][_end].value
+  else-if=>equals
+    lhs=>[.].value
+    rhs=>{emails-count}
+    code
+      set=>[.].value
+        value=>[/][_count].value
+
+if=>equals
+  lhs=>[_start].value
+  rhs=>0
+  code
+    set=>[**button=>previous-emails][disabled].value
+      value=>true
+
 magix.forms.create-web-part
   container=>content3
   class=>span-17 last boxed air-padding
@@ -12,9 +55,56 @@ magix.forms.create-web-part
   events-file=>system42/private/email/inbox/parts/show-emails/events.hl
   controls
     label=>header
-      class=>span-17 last bottom-1
+      class=>span-8 bottom-1
       tag=>h3
       value=>inbox
+    panel
+      class=>span-9 last btn-group email-search-bar
+      controls
+        button=>previous-emails
+          class=>span-2
+          value=><
+          onclick
+            _start=>{emails-start}
+            _end=>{emails-end}
+            _count=>{emails-count}
+            using=>magix.math
+              subtract=>[_start]
+                =>[_start].value
+                =>[_count].value
+              subtract=>[_end]
+                =>[_end].value
+                =>[_count].value
+            set=>[execute-script][params][start].value
+              value=>[_start].value
+            set=>[execute-script][params][end].value
+              value=>[_end].value
+            execute-script
+              file=>system42/private/email/inbox/parts/show-emails.hl
+        text-box=>search-emails
+          class=>span-5
+          placeholder=>search ...
+          onenterpressed
+        button=>next-emails
+          class=>span-2 last
+          value=>>
+          onclick
+            _start=>{emails-start}
+            _end=>{emails-end}
+            _count=>{emails-count}
+            using=>magix.math
+              add=>[_start]
+                =>[_start].value
+                =>[_count].value
+              add=>[_end]
+                =>[_end].value
+                =>[_count].value
+            set=>[execute-script][params][start].value
+              value=>[_start].value
+            set=>[execute-script][params][end].value
+              value=>[_end].value
+            execute-script
+              file=>system42/private/email/inbox/parts/show-emails.hl
     lambda=>list-of-emails
       oncreatecontrols
         magix.data.load=>load-emails
@@ -40,11 +130,15 @@ magix.forms.create-web-part
         _objects
         while=>less-than
           lhs=>[_objects].count
-          rhs=>25
+          rhs=>{emails-count}
+          and=>more-than
+            lhs=>[magix.data.load=>load-emails][objects].count
+            rhs=>{emails-start}
           code
+            _start=>{emails-start}
             add=>[_objects]
-              value=>[magix.data.load=>load-emails][objects][0]
-            set=>[magix.data.load=>load-emails][objects][0]
+              value=>[magix.data.load=>load-emails][objects][[@][_start].value]
+            set=>[magix.data.load=>load-emails][objects][[@][_start].value]
         set=>[magix.data.load=>load-emails][objects]
         add=>[magix.data.load=>load-emails][objects]
           values=>[_objects]

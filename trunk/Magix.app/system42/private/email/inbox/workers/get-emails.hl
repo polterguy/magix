@@ -56,6 +56,8 @@ magix.forms.create-web-part
               message=>finished loading emails
               color=>#aaffaa
               time=>2000
+            magix.viewport.clear-controls
+              container=>content3
             execute-script
               file=>system42/private/email/inbox/parts/show-emails.hl
     label=>count-label
