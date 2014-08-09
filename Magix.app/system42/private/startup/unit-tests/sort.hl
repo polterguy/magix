@@ -1,0 +1,157 @@
+
+
+inspect=>@"tests for the [add] keyword
+
+creates unit tests for testing the [add] 
+hyperlisp keyword"
+
+
+event
+  name=>magix.test.sort-strings
+  persist=>false
+  inspect=>@"verifies [sort] works
+
+tries to sort a list of nodes with string sorting"
+  code
+    _data
+      item1
+        name=>thomas
+      item2
+        name=>john
+      item3
+        name=>jane
+      item4
+        name=>carrie
+      item5
+        name=>johnie
+    sort=>[_data]
+      if=>less-than
+        lhs=>[@][_first][0][name].value
+        rhs=>[@][_second][0][name].value
+        code
+          add=>[@][..][..][_result]
+            value=>[@][..][..][_first]
+      else-if=>more-than
+        lhs=>[@][_first][0][name].value
+        rhs=>[@][_second][0][name].value
+        code
+          add=>[@][..][..][_result]
+            value=>[@][..][..][_second]
+    if=>not-equals
+      lhs=>[_data][0].name
+      rhs=>item4
+      or=>not-equals
+        lhs=>[_data][1].name
+        rhs=>item3
+      or=>not-equals
+        lhs=>[_data][2].name
+        rhs=>item2
+      or=>not-equals
+        lhs=>[_data][3].name
+        rhs=>item5
+      or=>not-equals
+        lhs=>[_data][4].name
+        rhs=>item1
+      code
+        throw=>[sort] misbehaved
+
+
+event
+  name=>magix.test.sort-dates
+  persist=>false
+  inspect=>@"verifies [sort] works
+
+tries to sort a list of nodes with date sorting"
+  code
+    _data
+      item1
+        date=(date)>2014.09.01 22:22:22
+      item2
+        date=(date)>2013.06.01 22:22:22
+      item3
+        date=(date)>2012.06.01 22:22:23
+      item4
+        date=(date)>2012.06.01 22:22:22
+      item5
+        date=(date)>2013.07.01 22:22:22
+    sort=>[_data]
+      if=>less-than
+        lhs=>[@][_first][0][date].value
+        rhs=>[@][_second][0][date].value
+        code
+          add=>[@][..][..][_result]
+            value=>[@][..][..][_first]
+      else-if=>more-than
+        lhs=>[@][_first][0][date].value
+        rhs=>[@][_second][0][date].value
+        code
+          add=>[@][..][..][_result]
+            value=>[@][..][..][_second]
+    if=>not-equals
+      lhs=>[_data][0].name
+      rhs=>item4
+      or=>not-equals
+        lhs=>[_data][1].name
+        rhs=>item3
+      or=>not-equals
+        lhs=>[_data][2].name
+        rhs=>item2
+      or=>not-equals
+        lhs=>[_data][3].name
+        rhs=>item5
+      or=>not-equals
+        lhs=>[_data][4].name
+        rhs=>item1
+      code
+        throw=>[sort] misbehaved
+
+
+event
+  name=>magix.test.sort-integers
+  persist=>false
+  inspect=>@"verifies [sort] works
+
+tries to sort a list of nodes with number sorting"
+  code
+    _data
+      item1
+        dec=(dec)>110000
+      item2
+        dec=(dec)>10000
+      item3
+        dec=(dec)>1006
+      item4
+        dec=(dec)>1000
+      item5
+        dec=(dec)>12000
+    sort=>[_data]
+      if=>less-than
+        lhs=>[@][_first][0][dec].value
+        rhs=>[@][_second][0][dec].value
+        code
+          add=>[@][..][..][_result]
+            value=>[@][..][..][_first]
+      else-if=>more-than
+        lhs=>[@][_first][0][dec].value
+        rhs=>[@][_second][0][dec].value
+        code
+          add=>[@][..][..][_result]
+            value=>[@][..][..][_second]
+    if=>not-equals
+      lhs=>[_data][0].name
+      rhs=>item4
+      or=>not-equals
+        lhs=>[_data][1].name
+        rhs=>item3
+      or=>not-equals
+        lhs=>[_data][2].name
+        rhs=>item2
+      or=>not-equals
+        lhs=>[_data][3].name
+        rhs=>item5
+      or=>not-equals
+        lhs=>[_data][4].name
+        rhs=>item1
+      code
+        throw=>[sort] misbehaved
+

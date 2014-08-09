@@ -206,25 +206,33 @@ namespace Magix.execute
             switch (objLhsValue.GetType().ToString())
             {
                 case "System.Int32":
+                    if (objRhsValue.GetType() == typeof(int))
+                        return ((int)objLhsValue).CompareTo(objRhsValue);
                     int tmpVal;
                     if (!int.TryParse(objRhsValue.ToString(), out tmpVal))
                         return (objLhsValue.ToString()).CompareTo(objRhsValue.ToString());
-                    return ((int)objLhsValue).CompareTo(Convert.ToInt32(objRhsValue));
+                    return ((int)objLhsValue).CompareTo(tmpVal);
                 case "System.Decimal":
+                    if (objRhsValue.GetType() == typeof(decimal))
+                        return ((decimal)objLhsValue).CompareTo(objRhsValue);
                     decimal tmpVal2;
                     if (!decimal.TryParse(objRhsValue.ToString(), NumberStyles.None, CultureInfo.InvariantCulture, out tmpVal2))
                         return (objLhsValue.ToString()).CompareTo(objRhsValue.ToString());
-                    return ((decimal)objLhsValue).CompareTo(Convert.ToDecimal(objRhsValue));
+                    return ((decimal)objLhsValue).CompareTo(tmpVal2);
                 case "System.DateTime":
+                    if (objRhsValue.GetType() == typeof(DateTime))
+                        return ((DateTime)objLhsValue).CompareTo(objRhsValue);
                     DateTime tmpVal3;
                     if (!DateTime.TryParseExact(objRhsValue.ToString(), "yyyy.MM.dd hh:MM:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out tmpVal3))
                         return (objLhsValue.ToString()).CompareTo(objRhsValue.ToString());
-                    return ((DateTime)objLhsValue).CompareTo(objRhsValue);
+                    return ((DateTime)objLhsValue).CompareTo(tmpVal3);
                 case "System.Boolean":
+                    if (objRhsValue.GetType() == typeof(bool))
+                        return ((bool)objLhsValue).CompareTo(objRhsValue);
                     bool tmpVal4;
                     if (!bool.TryParse(objRhsValue.ToString(), out tmpVal4))
                         return (objLhsValue.ToString()).CompareTo(objRhsValue.ToString());
-                    return ((bool)objLhsValue).CompareTo(objRhsValue);
+                    return ((bool)objLhsValue).CompareTo(tmpVal4);
                 case "Magix.Core.Node":
                     return ((Node)objLhsValue).Equals(objRhsValue) ? 0 : -1;
                 default:

@@ -7,6 +7,114 @@ works the way they should work"
 
 
 event
+  name=>magix.test.if-date-date
+  persist=>false
+  inspect=>@"verifies [if] statements works with dates
+
+creates an [if] statement, that is supposed 
+to yield true, making sure its associated [else] is 
+not executing"
+  code
+    _data1=(date)>2014.01.01 23:59:59
+    if=>equals
+      lhs=>[_data1].value
+      rhs=(date)>2014.01.01 23:59:59
+      code
+    else
+      throw=>[if] misbehaved
+
+
+event
+  name=>magix.test.if-date-string
+  persist=>false
+  inspect=>@"verifies [if] statements works with dates
+
+creates an [if] statement, that is supposed 
+to yield true, making sure its associated [else] is 
+not executing"
+  code
+    _data1=(date)>2014.01.01 23:59:59
+    if=>equals
+      lhs=>[_data1].value
+      rhs=>2014.01.01 23:59:59
+      code
+    else
+      throw=>[if] misbehaved
+
+
+event
+  name=>magix.test.if-date-string-no-date
+  persist=>false
+  inspect=>@"verifies [if] statements works with dates
+
+creates an [if] statement, that is supposed 
+to yield true, making sure its associated [else] is 
+not executing"
+  code
+    _data1=(date)>2014.01.01 23:59:59
+    if=>not-equals
+      lhs=>[_data1].value
+      rhs=>2014.01.01A23:59:59
+      code
+    else
+      throw=>[if] misbehaved
+
+
+event
+  name=>magix.test.if-date-less-than
+  persist=>false
+  inspect=>@"verifies [if] statements works with dates
+
+creates an [if] statement, that is supposed 
+to yield true, making sure its associated [else] is 
+not executing"
+  code
+    _data1=(date)>2014.01.01 23:59:59
+    if=>less-than
+      lhs=>[_data1].value
+      rhs=(date)>2015.01.01 23:59:59
+      code
+    else
+      throw=>[if] misbehaved
+
+
+event
+  name=>magix.test.if-date-less-than-string
+  persist=>false
+  inspect=>@"verifies [if] statements works with dates
+
+creates an [if] statement, that is supposed 
+to yield true, making sure its associated [else] is 
+not executing"
+  code
+    _data1=(date)>2014.01.01 23:59:59
+    if=>less-than
+      lhs=>[_data1].value
+      rhs=>2015.01.01 25:59:59A
+      code
+    else
+      throw=>[if] misbehaved
+
+
+event
+  name=>magix.test.if-decimal-less-than-string
+  persist=>false
+  inspect=>@"verifies [if] statements works with decimal
+
+creates an [if] statement, that is supposed 
+to yield true, making sure its associated [else] is 
+not executing"
+  code
+    _data1=(dec)>1000
+    if=>less-than
+      lhs=>[_data1].value
+      rhs=>11000
+      code
+    else
+      throw=>[if] misbehaved
+
+
+event
   name=>magix.test.if-complex-true
   persist=>false
   inspect=>@"verifies complex [if] statements works

@@ -977,8 +977,44 @@ magix.execute.with-sample
         value=>[.].value
 
 
+magix.execute.sort-dox=>@"sorts a node list
 
+executes the underlaying code block appending [_first] and [_second] being 
+two nodes from the list of nodes pointed to by the value of [sort] itself
 
+expects to have [_result] being set underneath the instruction pointer to 
+inform engine of which node is the node that comes before the other.  if no 
+[_result] is set during execution of the code inside of [sort], then the nodes 
+are assumed to be equal in regards to sorting
+
+if [_result] is set to [_first], then [_first] is said to come before [_second].  
+if [_result] is set to [_second], then [_second] is said to come before [_first]"
+
+magix.execute.sort-sample
+  _data
+    item1
+      dec=(dec)>110000
+    item2
+      dec=(dec)>10000
+    item3
+      dec=(dec)>1006
+    item4
+      dec=(dec)>1000
+    item5
+      dec=(dec)>12000
+  sort=>[_data]
+    if=>less-than
+      lhs=>[@][_first][0][dec].value
+      rhs=>[@][_second][0][dec].value
+      code
+        add=>[@][..][..][_result]
+          value=>[@][..][..][_first]
+    else-if=>more-than
+      lhs=>[@][_first][0][dec].value
+      rhs=>[@][_second][0][dec].value
+      code
+        add=>[@][..][..][_result]
+          value=>[@][..][..][_second]
 
 
 

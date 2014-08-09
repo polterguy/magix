@@ -40,4 +40,15 @@
 
 4. created email client "magix mail" as a lightweight alternative to Gmail
 
+5. created magix.execute.sort keyword to sort node lists
+
+6. created magix.date.format active event to format dates
+
+7. fixed a bug in the comparison logic when comparing nodes in [if], [else-if] and [while]
+
+8. added more unit tests
+
+9. significantly improved execution of comparison statements, affecting [if], [else-if] and [while]
+   making unit tests execute apprx. 30% faster
+
 

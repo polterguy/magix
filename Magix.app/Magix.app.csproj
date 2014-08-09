@@ -173,7 +173,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349C5851-65DF-11DA-9384-00065B846F21}">
         <WebProjectProperties>
-          <UseIIS>False</UseIIS>
+          <UseIIS>True</UseIIS>
           <AutoAssignPort>False</AutoAssignPort>
           <DevelopmentServerPort>8080</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
@@ -483,6 +483,7 @@
     <Content Include="system42\private\email\inbox\workers\get-pop3-emails.hl" />
     <Content Include="system42\private\email\inbox\parts\show-emails.hl" />
     <Content Include="system42\private\email\inbox\parts\show-emails\events.hl" />
+    <Content Include="system42\private\startup\unit-tests\sort.hl" />
     <None Include="todo.txt" />
     <Content Include="your-files\readme.txt" />
     <Content Include="your-files\samples\hello-world-app\readme.txt" />
