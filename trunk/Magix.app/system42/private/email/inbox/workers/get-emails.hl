@@ -12,14 +12,14 @@ magix.data.remove-username
 magix.forms.create-web-part
   container=>content3
   form-id=>please-wait
-  class=>span-18 last boxed air-padding
+  class=>span-17 last boxed air-padding
   controls
     label
-      class=>span-18 last
+      class=>span-17 last
       tag=>h3
       value=>please wait while downloading new emails ...
     label=>wait-message
-      class=>span-18 last top-1 email-blink
+      class=>span-17 last top-1 email-blink
       value=>downloading new messages from your email server 
     timer=>check-for-finished
       interval=>2000
@@ -59,7 +59,7 @@ magix.forms.create-web-part
             execute-script
               file=>system42/private/email/inbox/parts/show-emails.hl
     label=>count-label
-      class=>span-18 last top-1
+      class=>span-17 last top-1
       onfirstload
         magix.data.count
           prototype

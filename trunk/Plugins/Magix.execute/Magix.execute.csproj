@@ -35,6 +35,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="helpers\DatabaseRemoval.cs" />
+    <Compile Include="keyword-controllers\core-keywords\SortCore.cs" />
     <Compile Include="keyword-controllers\core-keywords\SandboxCore.cs" />
     <Compile Include="keyword-controllers\core-keywords\UsingCore.cs" />
     <Compile Include="keyword-controllers\extension-keywords\CodeCore.cs" />

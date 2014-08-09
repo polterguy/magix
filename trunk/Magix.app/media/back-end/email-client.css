@@ -47,25 +47,28 @@
 
 .email-item-subject
 {
-    border-top:solid 1px #ccc;
     cursor:pointer;
 }
 
 .email-item-from
 {
-    border-top:solid 1px #ccc;
 }
 
 .email-item-date
 {
-    border-top:solid 1px #ccc;
 }
 
 .email-item-body
 {
     background-color:#fefefe;
-    border:1px solid #fafafa;
     box-shadow:3px 3px 5px rgba(0,0,0,1);
     padding:18px 40px;
+}
+
+.emails-sleeping-dynamic
+{
+    border-top:1px solid #d0d0d0;
+    float:left;
+    width:100%;
 }
 

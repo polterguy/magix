@@ -40,13 +40,25 @@ magix.emails.load-email
     value=>[using][load][value][body].value
   _controls
     label=>body
-      class=>span-16 last
+      class=>span-15 last
       tag=>div
+    panel
+      class=>btn-group span-6 last right
+      controls
+        button
+          class=>span-2
+          value=>reply
+        button
+          class=>span-2
+          value=>quote
+        button
+          class=>span-2 last
+          value=>delete
   set=>[using=>magix.forms][create-web-part][container].value
     value=>[$][container].value
   using=>magix.forms
     create-web-part
-      class=>span-16 last email-item-body
+      class=>span-15 last email-item-body bottom-3 top-1
       controls=>[_controls]
 
 
