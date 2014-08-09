@@ -171,6 +171,7 @@ namespace Magix.email
                 {
                     ip["result"]["uid-" + idxEmail.MessageId]["bcc"][idxBcc.DisplayName].Value = idxBcc.Address;
                 }
+                ip["result"]["uid-" + idxEmail.MessageId]["is-html"].Value = idxEmail.IsBodyHtml;
                 ip["result"]["uid-" + idxEmail.MessageId]["date"].Value = idxEmail.Date;
                 ip["result"]["uid-" + idxEmail.MessageId]["return-path"].Value = idxEmail.ReturnPath;
                 ip["result"]["uid-" + idxEmail.MessageId]["from"].Value = idxEmail.From.Address;
@@ -238,6 +239,7 @@ namespace Magix.email
                 throw new ArgumentException("message didn't exist on server");
 
             // decorating result
+            ip["value"]["index"].Value = msg.Index;
             ip["value"]["subject"].Value = msg.Subject;
             ip["value"]["to"].Value = msg.DeliveredTo;
             foreach (MailAddress idxCc in msg.CC)
@@ -248,6 +250,7 @@ namespace Magix.email
             {
                 ip["value"]["bcc"][idxBcc.DisplayName].Value = idxBcc.Address;
             }
+            ip["value"]["is-html"].Value = msg.IsBodyHtml;
             ip["value"]["date"].Value = msg.Date;
             ip["value"]["return-path"].Value = msg.ReturnPath;
             ip["value"]["from"].Value = msg.From.Address;

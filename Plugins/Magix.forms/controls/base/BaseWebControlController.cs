@@ -202,7 +202,7 @@ namespace Magix.forms
 
             BaseWebControl ctrl = FindControl<BaseWebControl>(e.Params);
             ctrl.Style[Expressions.GetExpressionValue<string>(ip["key"].Get<string>(), dp, ip, false)] =
-                Expressions.GetExpressionValue<string>(ip["value"].Get<string>(), dp, ip, false);
+                Expressions.GetExpressionValue<string>(ip.GetValue("value", ""), dp, ip, false);
         }
 
         /*

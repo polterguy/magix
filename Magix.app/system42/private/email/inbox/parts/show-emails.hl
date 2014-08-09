@@ -66,6 +66,11 @@ magix.forms.create-web-part
                 set=>[magix.emails.load-email][email-id].value
                   value=>[$][info].value
                 magix.emails.load-email
+                using=>magix.forms
+                  set-style
+                    form-id=>inbox-list
+                    id=>[$][id].value
+                    key=>font-weight
             label=>{from-}
               class=>span-6 email-item-from
             label=>{date-}
@@ -74,6 +79,12 @@ magix.forms.create-web-part
               class=>emails-sleeping-dynamic
           set=>[@][_pnl][label=>{subject-}][info].value
             value=>[.][id].value
+          if=>not-equals
+            lhs=>[.][value][read].value
+            rhs=>true
+            code
+              set=>[@][..][..][_pnl][label=>{subject-}][style].value
+                value=>font-weight:bold;
           if=>not-equals
             lhs=>[.][value][subject].value
             rhs=>
