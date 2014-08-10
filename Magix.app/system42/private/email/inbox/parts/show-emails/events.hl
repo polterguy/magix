@@ -5,6 +5,77 @@ inspect=>@"active events for show-emails.hl file
 contains active events for the inbox list of emails web part"
 
 
+magix.emails.load-email
+  iterate=>[magix.execute]
+    if=>equals
+      lhs=>[.].value
+      rhs=>{container}
+      code
+        set=>[.].value
+          value=>[$][container].value
+  add=>[magix.execute]
+    value=>[$]
+  magix.execute
+    using=>magix.data
+      load
+        id=>[$][email-id].value
+    if=>not-exist
+      lhs=>[using][load][value][body]
+      code
+        // downloading email, then recursively calling self, before stopping execution of event
+        add=>[@][magix.emails.download-email]
+          values=>[$]
+        add=>[@][magix.emails.load-email]
+          values=>[$]
+        magix.emails.download-email
+        magix.emails.load-email
+        stop
+
+    // creating view email body web part
+    set=>[_controls][**label=>body][value].value
+      value=>[using][load][value][body].value
+    set=>[_controls][**label=>email-header][value].value
+      value=>[using][load][value][subject].value
+    if=>equals
+      lhs=>[using][load][value][is-html].value
+      rhs=>false
+      code
+        // email is not html
+        set=>[_controls][**label=>body][tag].value
+          value=>pre
+    _controls
+      panel=>email-content
+        class=>span-15 last email-content-body
+        controls
+          label=>email-header
+            class=>span-15 last bottom-2
+            tag=>h3
+          label=>body
+            class=>span-15 last
+            tag=>div
+      panel
+        class=>btn-group span-6 last right
+        controls
+          button
+            class=>span-2
+            value=>reply
+          button
+            class=>span-2
+            value=>delete
+          button
+            class=>span-2 last
+            value=>close
+            onclick
+              magix.viewport.clear-controls
+                container=>{container}
+                reset-class
+                  new-class=>emails-sleeping-dynamic
+    using=>magix.forms
+      create-web-part
+        container=>{container}
+        class=>span-15 last email-item-body bottom-3 top-1
+        controls=>[_controls]
+
 magix.emails.download-email
   // checking what type of account user has
   magix.data.load-username
@@ -27,66 +98,30 @@ magix.emails.download-email-pop3
   // downloading body of email
   magix.data.load-username=>pop3-settings
     id=>magix.pop3.settings
-  add=>[@][magix.pop3.get-message]
-    values=>[@][magix.data.load-username=>pop3-settings][value]
+  add=>[magix.pop3.get-message]
+    values=>[magix.data.load-username=>pop3-settings][value]
   split=>[$][email-id].value
     what=>magix.email.pop3-message-
-  set=>[@][magix.pop3.get-message][index].value
-    value=>[@][split][result][0].value
+  set=>[magix.pop3.get-message][index].value
+    value=>[split][result][0].value
   magix.pop3.get-message
     headers-only=>false
-
-  // saving updated version of email, including downloaded body
-  add=>[@][using][save][value]
-    values=>[@][magix.pop3.get-message][value]
-  using=>magix.data
-    save
-      id=>[$][email-id].value
-      value
-        type=>magix.email.message
-        read=>true
-
-magix.emails.load-email
   using=>magix.data
     load
       id=>[$][email-id].value
-  if=>not-exist
-    lhs=>[using][load][value][body]
-    code
-      // downloading email, then recursively calling self, before stopping execution of event
-      add=>[@][magix.emails.download-email]
-        values=>[$]
-      add=>[@][magix.emails.load-email]
-        values=>[$]
-      magix.emails.download-email
-      magix.emails.load-email
-      stop
 
-  // creating view email body web part
-  set=>[_controls][**label=>body][value].value
-    value=>[using][load][value][body].value
-  _controls
-    label=>body
-      class=>span-15 last
-      tag=>div
-    panel
-      class=>btn-group span-6 last right
-      controls
-        button
-          class=>span-2
-          value=>reply
-        button
-          class=>span-2
-          value=>quote
-        button
-          class=>span-2 last
-          value=>delete
-  set=>[using=>magix.forms][create-web-part][container].value
-    value=>[$][container].value
-  using=>magix.forms
-    create-web-part
-      class=>span-15 last email-item-body bottom-3 top-1
-      controls=>[_controls]
+  // saving updated version of email, including downloaded body
+  add=>[using:1][save][value]
+    values=>[using:0][load][value]
+  set=>[using:1][save][value][body].value
+    value=>[magix.pop3.get-message][value][body].value
+  set=>[using:1][save][value][is-html].value
+    value=>[magix.pop3.get-message][value][is-html].value
+  set=>[using:1][save][value][read].value
+    value=>true
+  using=>magix.data
+    save
+      id=>[$][email-id].value
 
 
 

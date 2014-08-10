@@ -52,10 +52,15 @@ namespace Magix.execute
 
             ip["result"].UnTie();
 
+            bool caseSensitive = ip.GetValue("case", true);
+
             int idxNo = 0;
             while (true)
             {
-                idxNo = whatToSearch.IndexOf(whatToSearchFor, idxNo);
+                if (!caseSensitive)
+                    idxNo = whatToSearch.IndexOf(whatToSearchFor, idxNo, StringComparison.OrdinalIgnoreCase);
+                else
+                    idxNo = whatToSearch.IndexOf(whatToSearchFor, idxNo);
                 if (idxNo == -1)
                     break;
                 ip["result"].Add(new Node("", idxNo++));

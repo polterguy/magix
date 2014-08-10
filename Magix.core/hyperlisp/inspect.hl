@@ -37,7 +37,11 @@ if you do not supply a [container] parameter, but instead supply an
 except the system containers, such as trace and help
 
 if you supply [reset-class] and set its value to true, then the css 
-classes of the dynamic will be reset back to empty"
+classes of the dynamic will be reset back to empty.  if [reset-class] 
+contains a child node called [new-class], then the container will have 
+its css class set to this value, and not empty as [reset-class] by 
+itself indicates.  if you supply a [new-class] node, then the value 
+of [reset-class] is ignored"
 
 magix.viewport.clear-controls-sample
   magix.viewport.clear-controls

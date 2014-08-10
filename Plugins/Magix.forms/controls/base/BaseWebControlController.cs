@@ -147,7 +147,10 @@ namespace Magix.forms
 
             BaseWebControl ctrl = FindControl<BaseWebControl>(e.Params);
             Node dp = Dp(e.Params);
-            ctrl.Info = Expressions.GetExpressionValue<string>(ip["value"].Get<string>(), dp, ip, false);
+            string info = Expressions.GetExpressionValue<string>(ip["value"].Get<string>(), dp, ip, false);
+            if (ip["value"].Count > 0)
+                info = Expressions.FormatString(dp, ip, ip["value"], info);
+            ctrl.Info = info;
         }
 
         /*

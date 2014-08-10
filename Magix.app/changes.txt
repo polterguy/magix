@@ -55,6 +55,14 @@
 
 11. fixed such that some active events that is created initially during startup is not serialized, as they neither should
 
+12. added support for changing cs class when invoking magix.viewport.clear-controls by adding new-class as paratemeter to reset-class
+
+13. added case parameter to magix.execute.index-of to make it possible to perform a case-insensitive search for a string
+
+14. magix.forms.set-info can now take formatting parameters
+
+
+
 
 
 

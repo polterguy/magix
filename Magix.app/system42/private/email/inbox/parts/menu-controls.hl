@@ -12,14 +12,14 @@ label
   value=>menu
 
 link-button=>inbox-link
-  class=>span-3 last
+  class=>span-2 last
   value=>inbox
   onclick
     execute-script
       file=>system42/private/email/inbox/workers/get-emails.hl
 
 link-button=>settings-link
-  class=>span-3 last top-1
+  class=>span-2 last top-1
   value=>settings ...
   onclick
     execute-script
