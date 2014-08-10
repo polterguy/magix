@@ -52,15 +52,15 @@ namespace Magix.execute
 			string what = Expressions.GetExpressionValue<string>(ip["what"].Get<string>(), dp, ip, false);
             if (ip["what"].Count > 0)
                 what = Expressions.FormatString(dp, ip, ip["what"], what);
+            what = what.Replace("\\n", "\n").Replace("\\r", "\r").Replace("\\t", "\t");
 
 			string with = ip.Contains("with") ? 
                 Expressions.GetExpressionValue<string>(ip["with"].Get<string>(""), dp, ip, false) : 
                 "";
             if (!string.IsNullOrEmpty(with))
-            {
                 if (ip["with"].Count > 0)
-                    what = Expressions.FormatString(dp, ip, ip["what"], what);
-            }
+                    with = Expressions.FormatString(dp, ip, ip["with"], with);
+            with = with.Replace("\\n", "\n").Replace("\\r", "\r").Replace("\\t", "\t");
 
             if (ip.Get<string>().IndexOf('[') == 0)
             {

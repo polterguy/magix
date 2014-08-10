@@ -63,7 +63,7 @@ if=>equals
 
 magix.forms.create-web-part
   container=>content3
-  class=>span-18 last boxed air-padding
+  class=>span-18 last boxed air-padding bottom-5
   form-id=>inbox-list
   events-file=>system42/private/email/inbox/parts/show-emails/events.hl
   controls

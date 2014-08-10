@@ -218,8 +218,8 @@ namespace Magix.email
                 ip["result"]["uid-" + idxEmail.ImapUid]["triple-wrapped"].Value = idxEmail.SmimeTripleWrapped;
                 if (!headersOnly)
                 {
-                    ip["result"]["uid-" + idxEmail.ImapUid]["body"].Value = Functions.RemoveScriptTags(idxEmail.Body);
-                    SaveAttachmentsLocally(e.Params, idxEmail, user);
+                    string bodyHtml = RemoveHtmlBody(Functions.RemoveScriptTags(idxEmail.Body));
+                    ip["result"]["uid-" + idxEmail.MessageId]["body"].Value = SaveAttachmentsLocally(e.Params, idxEmail, user, bodyHtml);
                 }
 
                 if (idxEmail.SmimeSigningCertificateChain.Count > 0)

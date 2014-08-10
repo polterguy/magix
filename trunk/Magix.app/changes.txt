@@ -61,6 +61,11 @@
 
 14. magix.forms.set-info can now take formatting parameters
 
+15. fixed a bug in magix.execute.replace that didn't allow for "with" to have formatting parameters without messing up "what"
+
+16. added support for replacing \r, \n and \t in magix.execute.replace in both "with" and "what" parameters
+
+
 
 
 
