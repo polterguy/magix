@@ -8,6 +8,7 @@ creates the show emails web part in content3"
 _start=>0
 _end=>25
 _count=>25
+_search=>
 
 if=>exist
   lhs=>[$][start]
@@ -20,6 +21,12 @@ if=>exist
       subtract=>[_count]
         =>[_end].value
         =>[_start].value
+
+if=>exist
+  lhs=>[$][search]
+  code
+    set=>[_search].value
+      value=>[$][search].value
 
 iterate=>[magix.forms.create-web-part]
   if=>equals
@@ -40,6 +47,12 @@ iterate=>[magix.forms.create-web-part]
     code
       set=>[.].value
         value=>[/][_count].value
+  else-if=>equals
+    lhs=>[.].value
+    rhs=>{emails-search}
+    code
+      set=>[.].value
+        value=>[/][_search].value
 
 if=>equals
   lhs=>[_start].value
@@ -81,10 +94,17 @@ magix.forms.create-web-part
               value=>[_end].value
             execute-script
               file=>system42/private/email/inbox/parts/show-emails.hl
+              params
+                search=>{emails-search}
         text-box=>search-emails
           class=>span-5
           placeholder=>search ...
+          value=>{emails-search}
           onenterpressed
+            set=>[execute-script][params][search].value
+              value=>[$][value].value
+            execute-script
+              file=>system42/private/email/inbox/parts/show-emails.hl
         button=>next-emails
           class=>span-2 last
           value=>>
@@ -105,11 +125,53 @@ magix.forms.create-web-part
               value=>[_end].value
             execute-script
               file=>system42/private/email/inbox/parts/show-emails.hl
+              params
+                search=>{emails-search}
     lambda=>list-of-emails
       oncreatecontrols
         magix.data.load=>load-emails
           prototype
             type=>magix.email.message
+
+        // removing emails not meeting search criteria, if any criteria is given
+        _search=>{emails-search}
+        if=>not-equals
+          lhs=>[@][_search].value
+          rhs=>
+          code
+            for-each=>[magix.data.load=>load-emails][objects]
+              if=>not-exist
+                lhs=>[.][value][body]
+                code
+                  set=>[.][value][body].value
+                    value=>
+              if=>not-exist
+                lhs=>[.][value][from][display-name]
+                code
+                  set=>[.][value][from][display-name].value
+                    value=>
+              index-of=>[.][value][subject].value
+                what=>[/][_search].value
+              if=>not-exist
+                lhs=>[@][index-of][result]
+                code
+                  index-of=>[.][value][body].value
+                    what=>[/][_search].value
+                  if=>not-exist
+                    lhs=>[@][index-of][result]
+                    code
+                      index-of=>[.][value][from].value
+                        what=>[/][_search].value
+                      if=>not-exist
+                        lhs=>[@][index-of][result]
+                        code
+                          index-of=>[.][value][from][display-name].value
+                            what=>[/][_search].value
+                          if=>not-exist
+                            lhs=>[@][index-of][result]
+                            code
+                              // removing item since it didn't match search criteria on any of the searchable fields
+                              set=>[.]
 
         // sorting emails according to date
         sort=>[magix.data.load=>load-emails][objects]
