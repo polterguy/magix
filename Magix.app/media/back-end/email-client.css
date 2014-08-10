@@ -82,7 +82,7 @@
 
 .email-item-from
 {
-    color:#999999;
+    color:#777777;
 }
 
 .email-item-date
@@ -103,16 +103,24 @@
     background-color:#fefefe;
     box-shadow:3px 3px 5px rgba(0,0,0,1);
     padding:18px 40px;
+    width:auto;
+    margin-left:-30px;
 }
 
 
 .email-content-body
 {
-    overflow:auto;
+    width:auto;
+}
+
+.email-content-body-body
+{
+    width:auto;
 }
 
 .email-item-body pre
 {
     background-color:#fefefe;
+    width:auto;
 }
 

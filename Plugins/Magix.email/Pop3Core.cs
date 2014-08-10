@@ -143,7 +143,7 @@ namespace Magix.email
             string user = ip.GetValue("user", "");
 
             if (string.IsNullOrEmpty(user) && 
-                !ip.ContainsValue("username") && 
+                !ip.ContainsValue("user") && 
                 HttpContext.Current != null && 
                 HttpContext.Current.Session["magix.core.user"] != null)
                 user = (HttpContext.Current.Session["magix.core.user"] as Node)["username"].Get<string>();
@@ -183,8 +183,8 @@ namespace Magix.email
                 ip["result"]["uid-" + idxEmail.MessageId]["triple-wrapped"].Value = idxEmail.SmimeTripleWrapped;
                 if (!headersOnly)
                 {
-                    ip["result"]["uid-" + idxEmail.MessageId]["body"].Value = Functions.RemoveScriptTags(idxEmail.Body);
-                    SaveAttachmentsLocally(e.Params, idxEmail, user);
+                    string bodyHtml = RemoveHtmlBody(Functions.RemoveScriptTags(idxEmail.Body));
+                    ip["result"]["uid-" + idxEmail.MessageId]["body"].Value = SaveAttachmentsLocally(e.Params, idxEmail, user, bodyHtml);
                 }
 
                 if (idxEmail.SmimeSigningCertificateChain.Count > 0)
@@ -232,6 +232,12 @@ namespace Magix.email
             int index = ip["index"].Get<int>();
             string user = ip.GetValue("user", "");
 
+            if (string.IsNullOrEmpty(user) &&
+                !ip.ContainsValue("user") &&
+                HttpContext.Current != null &&
+                HttpContext.Current.Session["magix.core.user"] != null)
+                user = (HttpContext.Current.Session["magix.core.user"] as Node)["username"].Get<string>();
+
             Pop3Client imap = OpenPop3Connection(GetConnectionSettings(ip, e.Params, user));
             ReadOnlyMailMessage msg = imap.GetMessage(index, headersOnly);
 
@@ -262,7 +268,10 @@ namespace Magix.email
             ip["value"]["encrypted"].Value = msg.SmimeEncryptedEnvelope;
             ip["value"]["triple-wrapped"].Value = msg.SmimeTripleWrapped;
             if (!headersOnly)
-                ip["value"]["body"].Value = Functions.RemoveScriptTags(msg.Body);
+            {
+                string bodyHtml = RemoveHtmlBody(Functions.RemoveScriptTags(msg.Body));
+                ip["value"]["body"].Value = SaveAttachmentsLocally(e.Params, msg, user, bodyHtml);
+            }
 
             if (msg.SmimeSigningCertificateChain.Count > 0)
             {

@@ -40,9 +40,12 @@ magix.emails.load-email
       lhs=>[using][load][value][is-html].value
       rhs=>false
       code
-        // email is not html
-        set=>[_controls][**label=>body][tag].value
-          value=>pre
+        // email is not html, making sure all carriage returns are replaced with <br/> tags
+        replace=>[_controls][**label=>body][value].value
+          what=>\n
+          with=><br/>
+        replace=>[_controls][**label=>body][value].value
+          what=>\r
     _controls
       panel=>email-content
         class=>span-15 last email-content-body
@@ -51,14 +54,17 @@ magix.emails.load-email
             class=>span-15 last bottom-2
             tag=>h3
           label=>body
-            class=>span-15 last
+            class=>span-15 last email-content-body-body
             tag=>div
       panel
-        class=>btn-group span-6 last right
+        class=>btn-group span-8 last right
         controls
           button
             class=>span-2
             value=>reply
+          button
+            class=>span-2
+            value=>print
           button
             class=>span-2
             value=>delete

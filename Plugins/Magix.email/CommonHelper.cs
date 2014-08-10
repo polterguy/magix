@@ -21,7 +21,10 @@ namespace Magix.email
 	 */
     internal class CommonHelper : ActiveController
 	{
-        protected static void SaveAttachmentsLocally(Node pars, ReadOnlyMailMessage idxEmail, string username)
+        /*
+         * saves attachments locally and updates html of email to update links
+         */
+        protected static string SaveAttachmentsLocally(Node pars, ReadOnlyMailMessage idxEmail, string username, string bodyHtml)
         {
             if (idxEmail.Attachments.Count > 0)
             {
@@ -51,17 +54,41 @@ namespace Magix.email
                     RaiseActiveEvent(
                         "magix.file.get-base-path",
                         getBase);
-                    string relativePath = getBase["path"].Get<string>() + "/" + idxAtt.ContentId + "_" + idxAtt.Name;
+                    string absolutePath = getBase["path"].Get<string>() + "/" + directoryPath + idxAtt.ContentId + "_" + idxAtt.Name;
+                    string relativePath = directoryPath + idxAtt.ContentId + "_" + idxAtt.Name;
 
-                    ip["attachments"].Add("", directoryPath + idxAtt.ContentId + "_" + idxAtt.Name);
-                    using (FileStream stream = File.Create(relativePath))
+                    using (FileStream stream = File.Create(absolutePath))
                     {
                         idxAtt.ContentStream.Seek(0, SeekOrigin.Begin);
                         idxAtt.ContentStream.CopyTo(stream);
                         stream.Close();
                     }
+                    bodyHtml = bodyHtml.Replace("cid:" + idxAtt.ContentId, relativePath);
+                    ip["attachments"].Add("", relativePath);
+                    ip["attachments"][ip["attachments"].Count - 1]["original-name"].Value = idxAtt.Name;
                 }
             }
+
+            return bodyHtml;
+        }
+
+        /*
+         * removes everything not inside of <body></body>
+         */
+        protected static string RemoveHtmlBody(string html)
+        {
+            int indexOfBody = html.IndexOf("<body", StringComparison.OrdinalIgnoreCase);
+            if (indexOfBody != -1)
+            {
+                int indexOfBodyStartTagEnd = html.IndexOf(">", indexOfBody);
+                html = html.Substring(indexOfBodyStartTagEnd);
+                int indexOfBodyEnd = html.IndexOf("</body>", StringComparison.OrdinalIgnoreCase);
+                if (indexOfBodyEnd != -1)
+                {
+                    html = html.Substring(0, indexOfBodyEnd);
+                }
+            }
+            return html;
         }
     }
 }
