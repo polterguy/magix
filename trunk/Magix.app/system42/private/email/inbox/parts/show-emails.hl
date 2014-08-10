@@ -63,14 +63,22 @@ if=>equals
 
 magix.forms.create-web-part
   container=>content3
-  class=>span-17 last boxed air-padding
+  class=>span-18 last boxed air-padding
   form-id=>inbox-list
   events-file=>system42/private/email/inbox/parts/show-emails/events.hl
   controls
-    label=>header
-      class=>span-8 bottom-1
+    label=>inbox-header
+      class=>span-9 bottom-1
       tag=>h3
-      value=>inbox
+      onfirstload
+        magix.viewstate.get
+          id=>magix.email.view-count
+        using=>magix.forms
+          set-value
+            form-id=>inbox-list
+            id=>inbox-header
+            value=>inbox ({0})
+              =>[magix.viewstate.get][value].value
     panel
       class=>span-9 last btn-group email-search-bar
       controls
@@ -132,6 +140,7 @@ magix.forms.create-web-part
         magix.data.load=>load-emails
           prototype
             type=>magix.email.message
+            deleted=>false
 
         // removing emails not meeting search criteria, if any criteria is given
         _search=>{emails-search}
@@ -188,6 +197,12 @@ magix.forms.create-web-part
               add=>[@][..][..][_result]
                 value=>[@][..][..][_first]
 
+        // settings view count for later references
+        set=>[@][magix.viewstate.set][value].value
+          value=>[magix.data.load=>load-emails][objects].count
+        magix.viewstate.set
+          id=>magix.email.view-count
+
         // removing all emails but the 25 emails we're supposed to see from the list of emails
         _objects
         while=>less-than
@@ -206,16 +221,37 @@ magix.forms.create-web-part
           values=>[_objects]
         _pnl
           panel
-            class=>span-17 last
+            class=>span-18 last
             controls
         for-each=>[magix.data.load][objects]
           _pnl
             label=>{subject-}
-              class=>span-8 email-item-subject
+              class=>span-9 email-item-subject
               value=>&nbsp;
               onclick
                 split=>[$][id].value
                   what=>subject-
+                index-of=>[$][info].value
+                  what=>viewing-
+                if=>equals
+                  lhs=>[index-of][result][0].value
+                  rhs=>0
+                  code
+                    // already viewing, clearing viewing viewport to "unview" email
+                    replace=>[$][info].value
+                      what=>viewing-
+                    using=>magix.forms
+                      set-info
+                        form-id=>inbox-list
+                        id=>[$][id].value
+                        value=>[$][info].value
+                    set=>[@][magix.viewport.clear-controls][container].value
+                      value=>dynamic-{0}
+                        =>[split][result][0].value
+                    magix.viewport.clear-controls
+                      reset-class
+                        new-class=>emails-sleeping-dynamic
+                    stop
                 set=>[magix.emails.load-email][container].value
                   value=>dynamic-{0}
                     =>[split][result][0].value
@@ -227,6 +263,11 @@ magix.forms.create-web-part
                     form-id=>inbox-list
                     id=>[$][id].value
                     key=>font-weight
+                  set-info
+                    form-id=>inbox-list
+                    id=>[$][id].value
+                    value=>viewing-{0}
+                      =>[$][info].value
             label=>{from-}
               class=>span-6 email-item-from
             label=>{date-}

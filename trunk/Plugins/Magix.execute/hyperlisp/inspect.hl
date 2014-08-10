@@ -502,6 +502,9 @@ returns the index of all occurences of the [what] constant
 or expression as nodes containing the integer value of where match 
 was found underneath the [result] return node
 
+if [case] equals false, the search will ignore casing of text when 
+looking for a match
+
 thread safe"
 
 magix.execute.index-of-sample

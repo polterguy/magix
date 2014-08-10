@@ -266,6 +266,10 @@ namespace Magix.Core
                 Expressions.GetExpressionValue<bool>(ip["reset-class"].Get<string>(), dp, ip, false) :
                 false;
 
+            string resetClassNewClass = null;
+            if (ip.Contains("reset-class") && ip["reset-class"].Contains("new-class"))
+                resetClassNewClass = ip["reset-class"]["new-class"].Get<string>("");
+
             if (ip.ContainsValue("all") && ip["all"].Get<bool>())
             {
                 foreach (string idx in GetAllDefaultContainers())
@@ -274,8 +278,13 @@ namespace Magix.Core
                         this,
                         idx);
                     ClearControls(dyn);
-                    if (resetClass)
-                        dyn.Class = "";
+                    if (resetClass || !string.IsNullOrEmpty(resetClassNewClass))
+                    {
+                        if (!string.IsNullOrEmpty(resetClassNewClass))
+                            dyn.Class = resetClassNewClass;
+                        else
+                            dyn.Class = "";
+                    }
                 }
             }
             else
@@ -287,8 +296,13 @@ namespace Magix.Core
                 if (dyn == null)
                     return;
                 ClearControls(dyn);
-                if (resetClass)
-                    dyn.Class = "";
+                if (resetClass || !string.IsNullOrEmpty(resetClassNewClass))
+                {
+                    if (!string.IsNullOrEmpty(resetClassNewClass))
+                        dyn.Class = resetClassNewClass;
+                    else
+                        dyn.Class = "";
+                }
             }
 		}
 
