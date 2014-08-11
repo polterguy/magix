@@ -118,9 +118,9 @@
     width:auto;
 }
 
-.email-item-body pre
+.email-attachments
 {
-    background-color:#fefefe;
-    width:auto;
+    border-top:1px solid #999999;
+    margin-top:53px;
+    margin-bottom:-18px;
 }
-

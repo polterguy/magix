@@ -13,12 +13,20 @@ event
 
 will transfer a file from the server to the client.  useful 
 for transfering private files to the client.  [file] is path 
-to file to transfer"
+to file to transfer
+
+if you supply [as], then that will become the filename of the 
+file when downloaded to the client"
   code
     if=>not-exist
       lhs=>[$][file].value
       code
         throw=>no [file] given to [magix.file.download]
+    if=>exist
+      lhs=>[$][as]
+      code
+        set=>[magix.web.postpone-execution][code][magix.web.transfer-file][as].value
+          value=>[$][as].value
     set=>[magix.web.postpone-execution][code][magix.web.transfer-file][file].value
       value=>[$][file].value
     magix.web.postpone-execution
