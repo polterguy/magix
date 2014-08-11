@@ -9,6 +9,7 @@ using System.IO;
 using System.Net;
 using System.Web;
 using System.Configuration;
+using System.Text.RegularExpressions;
 using Magix.Core;
 
 namespace Magix.web
@@ -184,6 +185,36 @@ namespace Magix.web
                 default:
                     return "application/octet-stream";
             }
+        }
+
+        /*
+         * return the given http get parameter
+         */
+        [ActiveEvent(Name = "magix.web.strip-html")]
+        private void magix_web_strip_html(object sender, ActiveEventArgs e)
+        {
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
+            {
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.web",
+                    "Magix.web.hyperlisp.inspect.hl",
+                    "[magix.web.strip-html-dox].value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.web",
+                    "Magix.web.hyperlisp.inspect.hl",
+                    "[magix.web.strip-html-sample]");
+                return;
+            }
+
+            Node dp = Dp(e.Params);
+
+            string html = Expressions.GetExpressionValue<string>(ip["value"].Get<string>(), dp, ip, false);
+            html = Regex.Replace(html, "<.*?>", string.Empty);
+
+            ip["result"].Value = html;
         }
     }
 }

@@ -37,7 +37,7 @@ magix.execute
       tag=>label
       value=>body
     text-area=>reply-body
-      class=>span-17 last
+      class=>span-17 last email-reply-body
       rows=>25
       placeholder=>body ...
     panel

@@ -485,7 +485,7 @@
     <Content Include="system42\private\email\inbox\parts\show-emails\events.hl" />
     <Content Include="system42\private\startup\unit-tests\sort.hl" />
     <Content Include="system42\private\email\inbox\parts\reply\reply-web-part.hl" />
-    <Content Include="system42\private\email\inbox\parts\reply\reply-html-web-part.hl" />
+    <Content Include="system42\private\email\inbox\parts\reply\reply-no-html-web-part.hl" />
     <None Include="todo.txt" />
     <Content Include="your-files\readme.txt" />
     <Content Include="your-files\samples\hello-world-app\readme.txt" />
