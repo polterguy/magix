@@ -46,18 +46,46 @@ magix.emails.load-email
           with=><br/>
         replace=>[_controls][**label=>body][value].value
           what=>\r
+    if=>exist
+      lhs=>[using][load][value][attachments]
+      code
+        for-each=>[using][load][value][attachments]
+          _lb
+            link-button
+              class=>span-7 last
+              onclick
+                set=>[magix.file.download][file].value
+                  value=>[$][info].value
+                set=>[magix.file.download][as].value
+                  value=>[$][value].value
+                magix.file.download
+          set=>[@][_lb][link-button][value].value
+            value=>[.][original-name].value
+          set=>[@][_lb][link-button][info].value
+            value=>[.].value
+          add=>[/][_controls][panel=>attachments][controls]
+            values=>[@][_lb]
+    else
+      set=>[_controls][panel=>attachments]
     _controls
       panel=>email-content
         class=>span-15 last email-content-body
         controls
           label=>email-header
-            class=>span-15 last bottom-2
+            class=>span-15 last bottom-1
             tag=>h3
           label=>body
             class=>span-15 last email-content-body-body
             tag=>div
+      panel=>attachments
+        class=>span-7 clear email-attachments
+        controls
+          label
+            class=>span-7 last
+            tag=>label
+            value=>attachments
       panel
-        class=>btn-group span-8 last right
+        class=>btn-group span-8 last right clear
         controls
           button
             class=>span-2
@@ -123,6 +151,11 @@ magix.emails.download-email-pop3
     value=>[magix.pop3.get-message][value][body].value
   set=>[using:1][save][value][is-html].value
     value=>[magix.pop3.get-message][value][is-html].value
+  if=>exist
+    lhs=>[magix.pop3.get-message][value][attachments]
+    code
+      add=>[using:1][save][value][attachments]
+        values=>[magix.pop3.get-message][value][attachments]
   set=>[using:1][save][value][read].value
     value=>true
   using=>magix.data

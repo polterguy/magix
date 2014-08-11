@@ -104,12 +104,16 @@ namespace Magix.web
             string file = Page.Server.MapPath(Expressions.GetExpressionValue<string>(ip["file"].Get<string>(), dp, ip, false));
 
             FileInfo fileInfo = new FileInfo(file);
-            
+
+            string fileAs = fileInfo.Name;
+            if (ip.ContainsValue("as"))
+                fileAs = Expressions.GetExpressionValue<string>(ip["as"].Get<string>(), dp, ip, false);
+
             // transmitting file
             Page.Response.Filter = null; // ditching magix ux filter rendering ...
             Page.Response.ClearContent();
             Page.Response.ClearHeaders();
-            Page.Response.AddHeader("Content-Disposition", string.Format("attachment;filename={0}", fileInfo.Name));
+            Page.Response.AddHeader("Content-Disposition", string.Format("attachment;filename={0}", fileAs));
             Page.Response.AddHeader("Content-Length", fileInfo.Length.ToString());
             Page.Response.ContentType = GetContentType(fileInfo.Extension.ToLower());
             Page.Response.TransmitFile(file);

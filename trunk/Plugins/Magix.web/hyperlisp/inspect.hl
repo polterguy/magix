@@ -62,6 +62,10 @@ magix.web.transfer-file-dox=>@"transfers a file to the client
 will transfer a file back to the client.  the file to transfer is given 
 as [file]
 
+if [as] is given, the file will be transfered to the client with the file 
+name of [as], otherwise it will be transfered as the name it has on the 
+server
+
 not thread safe"
 
 magix.web.transfer-file-sample

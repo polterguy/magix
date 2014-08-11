@@ -65,6 +65,7 @@
 
 16. added support for replacing \r, \n and \t in magix.execute.replace in both "with" and "what" parameters
 
+17. added support for transfering a file with different name through "as" parameter in magix.web.transfer-file
 
 
 

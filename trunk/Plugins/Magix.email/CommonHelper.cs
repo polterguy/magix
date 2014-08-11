@@ -24,7 +24,7 @@ namespace Magix.email
         /*
          * saves attachments locally and updates html of email to update links
          */
-        protected static string SaveAttachmentsLocally(Node pars, ReadOnlyMailMessage idxEmail, string username, string bodyHtml)
+        protected static string SaveAttachmentsLocally(Node pars, ReadOnlyMailMessage idxEmail, string username, string bodyHtml, Node current)
         {
             if (idxEmail.Attachments.Count > 0)
             {
@@ -64,8 +64,8 @@ namespace Magix.email
                         stream.Close();
                     }
                     bodyHtml = bodyHtml.Replace("cid:" + idxAtt.ContentId, relativePath);
-                    ip["attachments"].Add("", relativePath);
-                    ip["attachments"][ip["attachments"].Count - 1]["original-name"].Value = idxAtt.Name;
+                    current["attachments"].Add("", relativePath);
+                    current["attachments"][current["attachments"].Count - 1]["original-name"].Value = idxAtt.Name;
                 }
             }
 

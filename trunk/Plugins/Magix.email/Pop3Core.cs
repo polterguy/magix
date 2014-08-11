@@ -184,7 +184,7 @@ namespace Magix.email
                 if (!headersOnly)
                 {
                     string bodyHtml = RemoveHtmlBody(Functions.RemoveScriptTags(idxEmail.Body));
-                    ip["result"]["uid-" + idxEmail.MessageId]["body"].Value = SaveAttachmentsLocally(e.Params, idxEmail, user, bodyHtml);
+                    ip["result"]["uid-" + idxEmail.MessageId]["body"].Value = SaveAttachmentsLocally(e.Params, idxEmail, user, bodyHtml, ip["result"]["uid-" + idxEmail.MessageId]);
                 }
 
                 if (idxEmail.SmimeSigningCertificateChain.Count > 0)
@@ -270,7 +270,7 @@ namespace Magix.email
             if (!headersOnly)
             {
                 string bodyHtml = RemoveHtmlBody(Functions.RemoveScriptTags(msg.Body));
-                ip["value"]["body"].Value = SaveAttachmentsLocally(e.Params, msg, user, bodyHtml);
+                ip["value"]["body"].Value = SaveAttachmentsLocally(e.Params, msg, user, bodyHtml, ip["value"]);
             }
 
             if (msg.SmimeSigningCertificateChain.Count > 0)
