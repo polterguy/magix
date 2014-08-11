@@ -161,21 +161,25 @@ magix.forms.create-web-part
                     value=>
               index-of=>[.][value][subject].value
                 what=>[/][_search].value
+                case=>false
               if=>not-exist
                 lhs=>[@][index-of][result]
                 code
                   index-of=>[.][value][body].value
                     what=>[/][_search].value
+                    case=>false
                   if=>not-exist
                     lhs=>[@][index-of][result]
                     code
                       index-of=>[.][value][from].value
                         what=>[/][_search].value
+                        case=>false
                       if=>not-exist
                         lhs=>[@][index-of][result]
                         code
                           index-of=>[.][value][from][display-name].value
                             what=>[/][_search].value
+                            case=>false
                           if=>not-exist
                             lhs=>[@][index-of][result]
                             code

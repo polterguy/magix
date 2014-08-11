@@ -24,6 +24,23 @@ magix.forms.create-web-part
     timer=>check-for-finished
       interval=>2000
       ontick
+        magix.data.load-username
+          id=>magix.email.error-retrieving-emails
+        if=>exist
+          lhs=>[magix.data.load-username][value]
+          code
+            // error
+            using=>magix.viewport
+              show-message
+                message=>something went wrong when downloading messages, message from server was; '{0}'
+                  =>[magix.data.load-username][value][message].value
+                color=>#ffaaaa
+                time=>10000
+            magix.viewport.clear-controls
+              container=>content3
+            execute-script
+              file=>system42/private/email/inbox/parts/show-emails.hl
+            stop
         magix.data.count
           prototype
             type=>magix.email.message
@@ -49,7 +66,7 @@ magix.forms.create-web-part
         magix.data.load-username
           id=>magix.email.retrieving-emails
         if=>not-exist
-          lhs=>[magix.data.load-username][value]
+          lhs=>[magix.data.load-username:1][value]
           code
             // finished loading emails from server
             magix.viewport.show-message

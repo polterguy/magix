@@ -13,6 +13,13 @@ magix.session.get=>user
 
 add=>[**magix.pop3.get-messages]
   values=>[magix.data.load-username=>pop3-settings][value]
+set=>[**magix.pop3.get-messages][user].value
+  value=>[magix.session.get=>user][value][username].value
+
+add=>[**magix.pop3.get-message-count]
+  values=>[magix.data.load-username=>pop3-settings][value]
+set=>[**magix.pop3.get-message-count][user].value
+  value=>[magix.session.get=>user][value][username].value
 
 // saving "lock" into database
 magix.data.save-username
@@ -20,69 +27,86 @@ magix.data.save-username
   value
     yup=>yup!
 
+// removing previous error signals, and making sure errors are saved correctly if they occur
+magix.data.remove-username
+  id=>magix.email.error-retrieving-emails
+
+set=>[fork][**magix.data.save=>error][id].value
+  value=>magix.email.error-retrieving-emails-{0}
+    =>[magix.session.get=>user][value][username].value
+
 // making sure lock is removed after thread finishes
 set=>[**magix.data.remove=>lock][id].value
+  value=>magix.email.retrieving-emails-{0}
+    =>[magix.session.get=>user][value][username].value
+set=>[**magix.data.remove=>lock2][id].value
   value=>magix.email.retrieving-emails-{0}
     =>[magix.session.get=>user][value][username].value
 
 // creating a new thread
 fork
-
-  // looping as long as there are new emails
-  _start=>1
-  while=>equals
-    lhs=>true
-    rhs=>true
+  try
     code
-      set=>[@][magix.pop3.get-messages][start].value
-        value=>[@][..][..][_start].value
-      magix.pop3.get-messages
-        count=>5
-        reverse=>true
-        headers-only=>true
-
-      // checking to see if there was any result, or if we're at eof
-      if=>not-exist
-        lhs=>[@][magix.pop3.get-messages][result]
+      // looping as long as there are new emails
+      while=>equals
+        lhs=>true
+        rhs=>true
         code
-          stop
+          magix.pop3.get-message-count
+          if=>equals
+            lhs=>[@][magix.pop3.get-message-count][count].value
+            rhs=>0
+            code
+              // finished, no new emails ...
+              stop
+          using=>magix.math
+            subtract=>[@][..][magix.pop3.get-messages][start]
+              =>[@][..][magix.pop3.get-message-count][count].value
+              =>5
+          if=>less-than
+            lhs=>[@][magix.pop3.get-messages][start].value
+            rhs=>1
+            code
+              set=>[@][..][..][magix.pop3.get-messages][start].value
+                value=>1
+          if=>more-than
+            lhs=>[@][magix.pop3.get-messages][count].value
+            rhs=>[@][magix.pop3.get-message-count][count].value
+            code
+              set=>[@][..][..][magix.pop3.get-messages][count].value
+                value=>[@][..][..][magix.pop3.get-message-count][count].value
+          magix.pop3.get-messages
+            count=>5
+            reverse=>false
+            headers-only=>false
 
-      // looping through all emails downloaded, checking to see if there are any new emails
-      _has-new=>false
-      for-each=>[@][magix.pop3.get-messages][result]
-        set=>[@][magix.data.load][id].value
-          value=>magix.email.pop3-message-{0}
-            =>[.][index].value
-        magix.data.load
-        if=>not-exist
-          lhs=>[@][magix.data.load][value]
-          code
-            // email didn't exist in databasse from before
-            set=>[@][..][..][..][_has-new].value
-              value=>true
-            // saving new email to database
-            set=>[@][magix.data.save][id].value
+          // looping through all emails downloaded, checking to see if there are any new emails
+          for-each=>[@][magix.pop3.get-messages][result]
+            set=>[@][magix.data.load][id].value
               value=>magix.email.pop3-message-{0}
                 =>[.][index].value
-            add=>[@][magix.data.save][value]
-              values=>[.]
-            magix.data.save
-              value
-                type=>magix.email.message
-                read=>false
-                deleted=>false
+            magix.data.load
+            if=>not-exist
+              lhs=>[@][magix.data.load][value]
+              code
+                // email didn't exist in databasse from before
+                set=>[@][..][..][..][_has-new].value
+                  value=>true
+                // saving new email to database
+                set=>[@][magix.data.save][id].value
+                  value=>magix.email.pop3-message-{0}
+                    =>[.][index].value
+                add=>[@][magix.data.save][value]
+                  values=>[.]
+                magix.data.save
+                  value
+                    type=>magix.email.message
+                    read=>false
+                    deleted=>false
 
-      // checking to see if there was any new messages, and if not, stopping execution
-      if=>equals
-        lhs=>[@][_has-new].value
-        rhs=>false
-        code
-          stop
-
-      // incrementing index where to retrieve emails from
-      using=>magix.math
-        add=>[@][..][..][..][_start]
-          =>[@][..][..][..][_start].value
-          =>5
-
-  magix.data.remove=>lock
+      magix.data.remove=>lock
+    catch
+      set=>[@][magix.data.save][value][message].value
+        value=>[@][exception].value
+      magix.data.save=>error
+      magix.data.remove=>lock2

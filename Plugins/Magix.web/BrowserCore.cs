@@ -41,7 +41,9 @@ namespace Magix.web
 
             if (ip.ContainsValue("id"))
             {
-                string id = ip["id"].Get<string>();
+                Node dp = Dp(e.Params);
+
+                string id = Expressions.GetExpressionValue<string>(ip["id"].Get<string>(), dp, ip, false);
                 string clientId = Magix.UX.Selector.FindControl<System.Web.UI.Control>(Page, id).ClientID;
 
                 Node js = new Node();
