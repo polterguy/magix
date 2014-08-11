@@ -46,6 +46,8 @@ magix.execute
         button=>send
           class=>span-2
           value=>send
+          onclick
+            debug
         button=>cancel
           class=>span-2 last
           value=>cancel
@@ -54,12 +56,17 @@ magix.execute
               container=>{reply-container}
               reset-class=>true
 
+  _events
+    magix.email.current-reply-container
+      set=>[$][container].value
+        value=>{reply-container}
   using=>magix.forms
     create-web-part
       class=>span-17 last top-1
       container=>{reply-container}
       form-id=>{reply-container}
       controls=>[_controls]
+      events=>[_events]
 
 
 

@@ -687,7 +687,7 @@ namespace OpaqueMail.Net
                         messagesReturned++;
                     }
 
-                    if (messagesReturned >= count)
+                    if (messagesReturned >= count || messagesReturned >= numMessages)
                         break;
                     else
                         loopIterations++;
@@ -850,14 +850,16 @@ namespace OpaqueMail.Net
         /// <param name="endMarker">A string indicating the end of the current message.</param>
         public async Task<string> ReadDataAsync(string endMarker)
         {
-            string response = "";
+            StringBuilder builder = new StringBuilder();
 
             LastCommandResult = false;
             bool receivingMessage = true, firstResponse = true;
             while (receivingMessage)
             {
                 int bytesRead = await Pop3Stream.ReadAsync(InternalBuffer, 0, Constants.LARGEBUFFERSIZE);
-                response += Encoding.UTF8.GetString(InternalBuffer, 0, bytesRead);
+                string response = Encoding.UTF8.GetString(InternalBuffer, 0, bytesRead);
+
+                builder.Append(response);
 
                 // Deal with bad commands and responses with errors.
                 if (firstResponse && response.StartsWith("-"))
@@ -867,37 +869,37 @@ namespace OpaqueMail.Net
                 }
 
                 // Check if the last sequence received ends with a line break, possibly indicating an end of message.
-                if (response.EndsWith("\r\n"))
+                if (builder.ToString(builder.Length - 2, 2) == "\r\n")
                 {
                     if (endMarker.Length > 0)
                     {
-                        if (response.EndsWith(endMarker))
+                        if (builder.ToString(builder.Length - endMarker.Length, endMarker.Length) == endMarker)
                         {
                             receivingMessage = false;
 
                             // Strip start +OK message.
-                            if (response.StartsWith("+OK\r\n"))
-                                response = response.Substring(5);
+                            if (builder.ToString(0, 5) == "+OK\r\n")
+                                builder = new StringBuilder(builder.ToString(5, builder.Length - 5));
                             else
-                                response = response.Substring(4);
+                                builder = new StringBuilder(builder.ToString(4, builder.Length - 4));
 
                             // Strip end POP3 padding.
-                            response = response.Substring(0, response.Length - endMarker.Length);
+                            builder = new StringBuilder(builder.ToString(0, builder.Length - endMarker.Length));
                         }
                     }
                     else
                     {
                         // Check if the message includes a POP3 "OK" signature, signifying the message is complete.
                         // Eliminate POP3 message padding.
-                        if (response.StartsWith("+OK\r\n"))
+                        if (builder.ToString(0, 5) == "+OK\r\n")
                         {
                             receivingMessage = false;
-                            response = response.Substring(5);
+                            builder = new StringBuilder(builder.ToString(5, builder.Length - 5));
                         }
-                        else if (response.StartsWith("+OK"))
+                        else if (builder.ToString(0, 3) == "+OK")
                         {
                             receivingMessage = false;
-                            response = response.Substring(4, response.Length - 6);
+                            builder = new StringBuilder(builder.ToString(4, builder.Length - 6));
                         }
                     }
                 }
@@ -906,7 +908,7 @@ namespace OpaqueMail.Net
             }
 
             LastCommandResult = true;
-            return response;
+            return builder.ToString();
         }
 
         /// <summary>

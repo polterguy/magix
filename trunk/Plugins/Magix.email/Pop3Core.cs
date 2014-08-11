@@ -115,6 +115,44 @@ namespace Magix.email
         /*
          * retrieves messages from imap server
          */
+        [ActiveEvent(Name = "magix.pop3.get-message-count")]
+        public static void magix_pop3_get_messages_count(object sender, ActiveEventArgs e)
+        {
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
+            {
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.email",
+                    "Magix.email.hyperlisp.inspect.hl",
+                    "[magix.pop3.get-message-count-dox].value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.email",
+                    "Magix.email.hyperlisp.inspect.hl",
+                    "[magix.pop3.get-message-count-sample]");
+                return;
+            }
+
+            Node dp = Dp(e.Params);
+
+            string user = ip.GetValue("user", "");
+
+            if (string.IsNullOrEmpty(user) && 
+                !ip.ContainsValue("user") && 
+                HttpContext.Current != null && 
+                HttpContext.Current.Session["magix.core.user"] != null)
+                user = (HttpContext.Current.Session["magix.core.user"] as Node)["username"].Get<string>();
+
+            using (Pop3Client pop3 = OpenPop3Connection(GetConnectionSettings(ip, e.Params, user)))
+            {
+                ip["count"].Value = pop3.GetMessageCount();
+            }
+        }
+
+        /*
+         * retrieves messages from imap server
+         */
         [ActiveEvent(Name = "magix.pop3.get-messages")]
         public static void magix_pop3_get_messages(object sender, ActiveEventArgs e)
         {
@@ -148,55 +186,59 @@ namespace Magix.email
                 HttpContext.Current.Session["magix.core.user"] != null)
                 user = (HttpContext.Current.Session["magix.core.user"] as Node)["username"].Get<string>();
 
-            Pop3Client pop3 = OpenPop3Connection(GetConnectionSettings(ip, e.Params, user));
-
-            int messageCount = pop3.GetMessageCount();
-            if (startIndex > messageCount)
-                return;
-            if (count + startIndex > messageCount)
-                count = messageCount - startIndex;
-
-            List<ReadOnlyMailMessage> list = pop3.GetMessages(count, startIndex, reverse, headersOnly);
-
-            foreach (ReadOnlyMailMessage idxEmail in list)
+            using (Pop3Client pop3 = OpenPop3Connection(GetConnectionSettings(ip, e.Params, user)))
             {
-                ip["result"]["uid-" + idxEmail.MessageId]["index"].Value = idxEmail.Index;
-                ip["result"]["uid-" + idxEmail.MessageId]["subject"].Value = idxEmail.Subject;
-                ip["result"]["uid-" + idxEmail.MessageId]["to"].Value = idxEmail.DeliveredTo;
-                foreach (MailAddress idxCc in idxEmail.CC)
+                List<ReadOnlyMailMessage> list = pop3.GetMessages(count, startIndex, reverse, headersOnly);
+                try
                 {
-                    ip["result"]["uid-" + idxEmail.MessageId]["cc"][idxCc.DisplayName].Value = idxCc.Address;
-                }
-                foreach (MailAddress idxBcc in idxEmail.Bcc)
-                {
-                    ip["result"]["uid-" + idxEmail.MessageId]["bcc"][idxBcc.DisplayName].Value = idxBcc.Address;
-                }
-                ip["result"]["uid-" + idxEmail.MessageId]["is-html"].Value = idxEmail.IsBodyHtml;
-                ip["result"]["uid-" + idxEmail.MessageId]["date"].Value = idxEmail.Date;
-                ip["result"]["uid-" + idxEmail.MessageId]["return-path"].Value = idxEmail.ReturnPath;
-                ip["result"]["uid-" + idxEmail.MessageId]["from"].Value = idxEmail.From.Address;
-                ip["result"]["uid-" + idxEmail.MessageId]["from"]["display-name"].Value = idxEmail.From.DisplayName;
-                ip["result"]["uid-" + idxEmail.MessageId]["message-id"].Value = idxEmail.MessageId;
-                ip["result"]["uid-" + idxEmail.MessageId]["message-id"].Value = idxEmail.MessageId;
-                ip["result"]["uid-" + idxEmail.MessageId]["signed"].Value = idxEmail.SmimeSigned;
-                ip["result"]["uid-" + idxEmail.MessageId]["encrypted"].Value = idxEmail.SmimeEncryptedEnvelope;
-                ip["result"]["uid-" + idxEmail.MessageId]["triple-wrapped"].Value = idxEmail.SmimeTripleWrapped;
-                if (!headersOnly)
-                {
-                    string bodyHtml = RemoveHtmlBody(Functions.RemoveScriptTags(idxEmail.Body));
-                    ip["result"]["uid-" + idxEmail.MessageId]["body"].Value = SaveAttachmentsLocally(e.Params, idxEmail, user, bodyHtml, ip["result"]["uid-" + idxEmail.MessageId]);
-                }
-
-                if (idxEmail.SmimeSigningCertificateChain.Count > 0)
-                {
-                    Node smtpSettings = new Node("magix.data.load");
-                    smtpSettings["id"].Value = "magix.smtp.settings";
-                    BypassExecuteActiveEvent(smtpSettings, e.Params);
-                    bool localMachine = smtpSettings["value"]["smime-local-machine"].Get<bool>();
-
-                    foreach (X509Certificate2 idxCert in idxEmail.SmimeSigningCertificateChain)
+                    foreach (ReadOnlyMailMessage idxEmail in list)
                     {
-                        CertHelper.InstallWindowsCertificate(idxCert, localMachine ? StoreLocation.LocalMachine : StoreLocation.CurrentUser);
+                        ip["result"]["uid-" + idxEmail.MessageId]["index"].Value = idxEmail.Index;
+                        ip["result"]["uid-" + idxEmail.MessageId]["subject"].Value = idxEmail.Subject;
+                        ip["result"]["uid-" + idxEmail.MessageId]["to"].Value = idxEmail.DeliveredTo;
+                        foreach (MailAddress idxCc in idxEmail.CC)
+                        {
+                            ip["result"]["uid-" + idxEmail.MessageId]["cc"][idxCc.DisplayName].Value = idxCc.Address;
+                        }
+                        foreach (MailAddress idxBcc in idxEmail.Bcc)
+                        {
+                            ip["result"]["uid-" + idxEmail.MessageId]["bcc"][idxBcc.DisplayName].Value = idxBcc.Address;
+                        }
+                        ip["result"]["uid-" + idxEmail.MessageId]["is-html"].Value = idxEmail.IsBodyHtml;
+                        ip["result"]["uid-" + idxEmail.MessageId]["date"].Value = idxEmail.Date;
+                        ip["result"]["uid-" + idxEmail.MessageId]["return-path"].Value = idxEmail.ReturnPath;
+                        ip["result"]["uid-" + idxEmail.MessageId]["from"].Value = idxEmail.From.Address;
+                        ip["result"]["uid-" + idxEmail.MessageId]["from"]["display-name"].Value = idxEmail.From.DisplayName;
+                        ip["result"]["uid-" + idxEmail.MessageId]["message-id"].Value = idxEmail.MessageId;
+                        ip["result"]["uid-" + idxEmail.MessageId]["message-id"].Value = idxEmail.MessageId;
+                        ip["result"]["uid-" + idxEmail.MessageId]["signed"].Value = idxEmail.SmimeSigned;
+                        ip["result"]["uid-" + idxEmail.MessageId]["encrypted"].Value = idxEmail.SmimeEncryptedEnvelope;
+                        ip["result"]["uid-" + idxEmail.MessageId]["triple-wrapped"].Value = idxEmail.SmimeTripleWrapped;
+                        if (!headersOnly)
+                        {
+                            string bodyHtml = RemoveHtmlBody(Functions.RemoveScriptTags(idxEmail.Body));
+                            ip["result"]["uid-" + idxEmail.MessageId]["body"].Value = SaveAttachmentsLocally(e.Params, idxEmail, user, bodyHtml, ip["result"]["uid-" + idxEmail.MessageId]);
+                        }
+
+                        if (idxEmail.SmimeSigningCertificateChain.Count > 0)
+                        {
+                            Node smtpSettings = new Node("magix.data.load");
+                            smtpSettings["id"].Value = "magix.smtp.settings";
+                            BypassExecuteActiveEvent(smtpSettings, e.Params);
+                            bool localMachine = smtpSettings["value"]["smime-local-machine"].Get<bool>();
+
+                            foreach (X509Certificate2 idxCert in idxEmail.SmimeSigningCertificateChain)
+                            {
+                                CertHelper.InstallWindowsCertificate(idxCert, localMachine ? StoreLocation.LocalMachine : StoreLocation.CurrentUser);
+                            }
+                        }
+                    }
+                }
+                finally
+                {
+                    foreach (ReadOnlyMailMessage idxEmail in list)
+                    {
+                        idxEmail.Dispose();
                     }
                 }
             }

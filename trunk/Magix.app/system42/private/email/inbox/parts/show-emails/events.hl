@@ -38,6 +38,15 @@ magix.emails.load-email
         magix.emails.load-email
         stop
 
+    // saving updated version of email, including downloaded body
+    add=>[using:1][save][value]
+      values=>[using:0][load][value]
+    set=>[using:1][save][value][read].value
+      value=>true
+    using=>magix.data
+      save
+        id=>[$][email-id].value
+
     // creating view email body web part
     set=>[_controls][**label=>body][value].value
       value=>[using][load][value][body].value
@@ -78,13 +87,13 @@ magix.emails.load-email
       value=>[$][email-id].value
     _controls
       panel=>email-content
-        class=>span-15 last email-content-body
+        class=>span-17 last email-content-body
         controls
           label=>email-header
-            class=>span-15 last bottom-1
+            class=>span-17 last bottom-1
             tag=>h3
           label=>body
-            class=>span-15 last email-content-body-body
+            class=>clear last email-content-body-body
             tag=>div
       panel=>attachments
         class=>span-7 clear email-attachments
@@ -100,6 +109,17 @@ magix.emails.load-email
             class=>span-2
             value=>reply
             onclick
+              magix.email.current-reply-container
+              if=>exist
+                lhs=>[magix.email.current-reply-container][container]
+                code
+                  using=>magix.browser
+                    scroll
+                      id=>[magix.email.current-reply-container][container].value
+                  magix.viewport.show-message
+                    message=>you must first finish your existing reply
+                    color=>#ffaaaa
+                  stop
               set=>[execute-script][params][email-id].value
                 value=>[$][info].value
               set=>[execute-script][params][reply-container].value
@@ -178,24 +198,6 @@ magix.emails.download-email-pop3
     headers-only=>false
   using=>magix.data
     load
-      id=>[$][email-id].value
-
-  // saving updated version of email, including downloaded body
-  add=>[using:1][save][value]
-    values=>[using:0][load][value]
-  set=>[using:1][save][value][body].value
-    value=>[magix.pop3.get-message][value][body].value
-  set=>[using:1][save][value][is-html].value
-    value=>[magix.pop3.get-message][value][is-html].value
-  if=>exist
-    lhs=>[magix.pop3.get-message][value][attachments]
-    code
-      add=>[using:1][save][value][attachments]
-        values=>[magix.pop3.get-message][value][attachments]
-  set=>[using:1][save][value][read].value
-    value=>true
-  using=>magix.data
-    save
       id=>[$][email-id].value
 
 

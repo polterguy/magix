@@ -324,6 +324,22 @@ magix.imap.set-quota-sample
     size=>10512
 
 
+magix.pop3.get-message-count-dox=>@"returns number of messages on server
+
+return message count on pop3 server as [count]
+
+[host], [port], [ssl], [username] and [password] is optional, and if 
+not supplied, will be read from magix.pop3.settings"
+
+magix.pop3.get-message-count-sample
+  magix.pop3.get-message-count
+    host=>pop.gmail.com
+    port=>995
+    ssl=>true
+    username=>your-username@gmail.com
+    password=>Pa$$w0rd
+
+
 magix.pop3.get-messages-dox=>@"retrieves messages from a pop3 server
 
 returns [count] messages starting from [start] in [reverse] order from 
