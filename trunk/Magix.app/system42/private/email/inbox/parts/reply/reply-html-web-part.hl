@@ -1,0 +1,65 @@
+﻿
+
+inspect=>@"web part for replying to an html email
+
+creates the web part necessary to reply to an html email"
+
+
+set=>[**_controls][**text-area=>reply-body][value].value
+  value=>[$][email][body].value
+set=>[**_controls][**text-box=>reply-subject][value].value
+  value=>[$][email][subject].value
+
+iterate=>[magix.execute]
+  if=>equals
+    lhs=>[.].value
+    rhs=>{reply-container}
+    code
+      set=>[.].value
+        value=>[$][reply-container].value
+
+magix.execute
+  _controls
+    label
+      class=>span-17 last
+      tag=>label
+      value=>subject
+    text-box=>reply-subject
+      class=>span-17 last bottom-1
+      placeholder=>subject ...
+      onfirstload
+        magix.forms.effect
+          form-id=>{reply-container}
+          id=>reply-body
+          type=>focus-and-select
+    label
+      class=>span-17 last
+      tag=>label
+      value=>body
+    text-area=>reply-body
+      class=>span-17 last
+      rows=>25
+      placeholder=>body ...
+    panel
+      class=>btn-group span-4 last right top-1
+      controls
+        button=>send
+          class=>span-2
+          value=>send
+        button=>cancel
+          class=>span-2 last
+          value=>cancel
+          onclick
+            magix.viewport.clear-controls
+              container=>{reply-container}
+              reset-class=>true
+
+  using=>magix.forms
+    create-web-part
+      class=>span-17 last top-1
+      container=>{reply-container}
+      form-id=>{reply-container}
+      controls=>[_controls]
+
+
+
