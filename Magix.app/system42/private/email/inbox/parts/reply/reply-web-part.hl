@@ -1,0 +1,40 @@
+﻿
+
+inspect=>@"web part for replying to an email
+
+creates the web part necessary to reply to an email"
+
+
+using=>magix.data
+  load
+    id=>[$][email-id].value
+
+index-of=>[using][load][value][subject].value
+  what=>re:
+  case=>false
+if=>not-exist
+  lhs=>[index-of][result]
+  code
+    set=>[using][load][value][subject].value
+      value=>Re: {0}
+        =>[using][load][value][subject].value
+
+if=>equals
+  lhs=>[using][load][value][is-html].value
+  rhs=>false
+  code
+    add=>[@][execute-script][params][email]
+      values=>[using][load][value]
+    add=>[@][execute-script][params]
+      values=>[$]
+    set=>[@][execute-script][params][script-file]
+    set=>[@][execute-script][params][script-directory]
+    execute-script
+      file=>system42/private/email/inbox/parts/reply/reply-html-web-part.hl
+else
+  magix.viewport.show-message
+    message=>implement ...
+
+
+
+

@@ -13,6 +13,13 @@ magix.emails.load-email
       code
         set=>[.].value
           value=>[$][container].value
+    else-if=>equals
+      lhs=>[.].value
+      rhs=>{reply-container}
+      code
+        set=>[.].value
+          value=>reply-{0}
+            id=>[$][container].value
   add=>[magix.execute]
     value=>[$]
   magix.execute
@@ -67,6 +74,8 @@ magix.emails.load-email
             values=>[@][_lb]
     else
       set=>[_controls][panel=>attachments]
+    set=>[_controls][**button=>reply][info].value
+      value=>[$][email-id].value
     _controls
       panel=>email-content
         class=>span-15 last email-content-body
@@ -87,9 +96,17 @@ magix.emails.load-email
       panel
         class=>btn-group span-8 last right clear
         controls
-          button
+          button=>reply
             class=>span-2
             value=>reply
+            onclick
+              set=>[execute-script][params][email-id].value
+                value=>[$][info].value
+              set=>[execute-script][params][reply-container].value
+                value=>reply-{0}
+                  =>[$][container].value
+              execute-script
+                file=>system42/private/email/inbox/parts/reply/reply-web-part.hl
           button
             class=>span-2
             value=>print
@@ -122,6 +139,7 @@ magix.emails.load-email
                 container=>{container}
                 reset-class
                   new-class=>emails-sleeping-dynamic
+      dynamic=>{reply-container}
     using=>magix.forms
       create-web-part
         container=>{container}
