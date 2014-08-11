@@ -222,8 +222,15 @@ magix.configuration.get-base-directory-sample
   magix.configuration.get-base-directory
 
 
+magix.web.strip-html-dox=>@"strips html from text
 
+strips html tags from [value] and returns plain 
+text as [result]"
 
+magix.web.strip-html-sample
+  magix.web.strip-html
+    value=>@"<p>this is html</p>
+<div>and here is more html</div>"
 
 
 

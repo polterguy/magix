@@ -21,19 +21,29 @@ if=>not-exist
 
 if=>equals
   lhs=>[using][load][value][is-html].value
-  rhs=>false
+  rhs=>true
   code
-    add=>[@][execute-script][params][email]
-      values=>[using][load][value]
-    add=>[@][execute-script][params]
-      values=>[$]
-    set=>[@][execute-script][params][script-file]
-    set=>[@][execute-script][params][script-directory]
-    execute-script
-      file=>system42/private/email/inbox/parts/reply/reply-html-web-part.hl
-else
-  magix.viewport.show-message
-    message=>implement ...
+    using=>magix.web
+      strip-html
+        value=>[using][load][value][body].value
+    set=>[using][load][value][body].value
+      value=>[@][using][strip-html][result].value
+
+replace=>[using][load][value][body].value
+  what=>\n
+  with=>\n>
+set=>[using][load][value][body].value
+  value=>>{0}
+    =>[using][load][value][body].value
+
+add=>[@][execute-script][params][email]
+  values=>[using][load][value]
+add=>[@][execute-script][params]
+  values=>[$]
+set=>[@][execute-script][params][script-file]
+set=>[@][execute-script][params][script-directory]
+execute-script
+  file=>system42/private/email/inbox/parts/reply/reply-no-html-web-part.hl
 
 
 
