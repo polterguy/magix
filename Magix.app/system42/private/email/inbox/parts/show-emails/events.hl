@@ -100,6 +100,24 @@ magix.emails.load-email
             class=>span-2 last
             value=>close
             onclick
+              _container=>{container}
+              _label
+              replace=>[_container].value
+                what=>dynamic-
+              set=>[_label].value
+                value=>subject-{0}
+                  =>[_container].value
+              using=>magix.forms
+                get-info
+                  form-id=>inbox-list
+                  id=>[_label].value
+              replace=>[using][get-info][value].value
+                what=>viewing-
+              using=>magix.forms
+                set-info
+                  form-id=>inbox-list
+                  id=>[_label].value
+                  value=>[using:0][get-info][value].value
               magix.viewport.clear-controls
                 container=>{container}
                 reset-class
