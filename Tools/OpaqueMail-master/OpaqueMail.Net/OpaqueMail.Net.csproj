@@ -53,6 +53,7 @@
     <Compile Include="ReadOnlyMailMessage.cs" />
     <Compile Include="POP3\Pop3Client.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SMTP\OldSmtpClient.cs" />
     <Compile Include="SMTP\SmtpClient.cs" />
     <Compile Include="TnefEncoding.cs" />
   </ItemGroup>

@@ -266,6 +266,10 @@
       <Project>{eae2f2ae-0098-44f1-8b3d-1887266e94cf}</Project>
       <Name>Magix.xml</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Tools\BlackMail\BlackMail.csproj">
+      <Project>{7e6a3e4f-d462-4416-a7b5-4976dda8bffc}</Project>
+      <Name>BlackMail</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Tools\OpaqueMail-master\OpaqueMail.Net.CertHelper\OpaqueMail.Net.CertHelper.csproj">
       <Project>{9f1402f2-d701-43a5-9ad6-cfa926c31dce}</Project>
       <Name>OpaqueMail.Net.CertHelper</Name>

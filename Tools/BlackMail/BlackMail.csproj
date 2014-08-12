@@ -4,13 +4,13 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{062101E4-E07F-4DD3-B556-6C8A0C9C6934}</ProjectGuid>
+    <ProjectGuid>{7E6A3E4F-D462-4416-A7B5-4976DDA8BFFC}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>Magix.email</RootNamespace>
-    <AssemblyName>Magix.email</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>BlackMail</RootNamespace>
+    <AssemblyName>BlackMail</AssemblyName>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -20,7 +20,6 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -29,40 +28,15 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CommonHelper.cs" />
-    <Compile Include="Pop3Core.cs" />
-    <Compile Include="ImapCore.cs" />
-    <Compile Include="SmtpCore.cs" />
+    <Compile Include="MailMessage.cs" />
+    <Compile Include="SmtpClient.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\Magix.core\Magix.Core.csproj">
-      <Project>{11376d5f-13bd-4529-ba92-dde415b96220}</Project>
-      <Name>Magix.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Tools\BlackMail\BlackMail.csproj">
-      <Project>{7e6a3e4f-d462-4416-a7b5-4976dda8bffc}</Project>
-      <Name>BlackMail</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Tools\OpaqueMail-master\OpaqueMail.Net.CertHelper\OpaqueMail.Net.CertHelper.csproj">
-      <Project>{9f1402f2-d701-43a5-9ad6-cfa926c31dce}</Project>
-      <Name>OpaqueMail.Net.CertHelper</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Tools\OpaqueMail-master\OpaqueMail.Net\OpaqueMail.Net.csproj">
-      <Project>{bf21d27f-72ad-492e-8219-6c82c2330c72}</Project>
-      <Name>OpaqueMail.Net</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="hyperlisp\inspect.hl" />
-  </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

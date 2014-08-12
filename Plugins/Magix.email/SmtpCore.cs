@@ -7,7 +7,7 @@
 using System;
 using System.Web;
 using System.Configuration;
-using OpaqueMail.Net;
+using BlackMail;
 using Magix.Core;
 
 namespace Magix.email
@@ -183,62 +183,74 @@ namespace Magix.email
             string subject, 
             string body)
         {
-            SmtpClient smtp = new SmtpClient(host, port);
-            smtp.EnableSsl = ssl;
-
+            string baseUrl = GetApplicationBaseUrl();
+            SmtpClient smtp = new SmtpClient(host, port, ssl);
             smtp.Credentials = new System.Net.NetworkCredential(username, password);
-
             MailMessage msg = new MailMessage();
-            msg.From = new System.Net.Mail.MailAddress(fromEmail);
             msg.Subject = subject;
             msg.Body = body;
-            if (ip["to"].Value != null)
+            if (ip.ContainsValue("to"))
                 msg.To.Add(Expressions.GetExpressionValue<string>(ip["to"].Get<string>(), dp, ip, false));
             foreach (Node idx in ip["to"])
             {
-                msg.To.Add(new System.Net.Mail.MailAddress(idx.Get<string>(), idx.Name));
+                msg.To.Add(Expressions.GetExpressionValue<string>(idx.Get<string>(), dp, ip, false));
             }
-
-            bool canEncrypt = false;
-            bool validSmimeSettings = false;
-
-            if (useSmime)
+            smtp.Send(msg);
+            /*using (OpaqueMail.Net.SmtpClient smtp = new OpaqueMail.Net.SmtpClient(host, port))
             {
-                msg.SmimeSigned = true;
-                msg.SmimeSigningOptionFlags =
-                    smimeSignTime ?
-                        SmimeSigningOptionFlags.SignTime :
-                        SmimeSigningOptionFlags.None;
-                msg.SmimeEncryptedEnvelope = smimeEncryptEnvelope;
-                if (msg.SmimeEncryptedEnvelope && smimeTripleWrap)
-                    msg.SmimeTripleWrapped = true;
-                msg.SmimeSigningCertificate = CertHelper.GetCertificateBySubjectName(
-                    smimeLocalMachine ?
-                        System.Security.Cryptography.X509Certificates.StoreLocation.LocalMachine :
-                        System.Security.Cryptography.X509Certificates.StoreLocation.CurrentUser,
-                        smimeSubjectName);
-                ip["encryption-successful"].Value = smtp.SmimeVerifyAllRecipientsHavePublicKeys(msg);
-                canEncrypt = ip["encryption-successful"].Get<bool>();
-            }
+                smtp.EnableSsl = ssl;
 
-            if (!canEncrypt && ip.ContainsValue("force-encryption") && ip["force-encryption"].Get<bool>())
-            {
-                if (!validSmimeSettings)
-                    throw new Exception("could not encrypt message, hence no message was sent. settings for s/mime not setup");
-                else
-                    throw new Exception("could not encrypt message, hence no email was sent. not all recipients had public keys");
-            }
-            if (!canEncrypt)
-            {
-                msg.SmimeEncryptionOptionFlags = SmimeEncryptionOptionFlags.None;
-                msg.SmimeEncryptedEnvelope = false;
-                msg.SmimeTripleWrapped = false;
-            }
+                smtp.Credentials = new System.Net.NetworkCredential(username, password);
 
-            if (ip.ContainsValue("async") && ip["async"].Get<bool>())
-                smtp.SendAsync(msg);
-            else
+                OpaqueMail.Net.MailMessage msg = new OpaqueMail.Net.MailMessage();
+                msg.From = new System.Net.Mail.MailAddress(fromEmail);
+                msg.Subject = subject;
+                msg.Body = body;
+                if (ip["to"].Value != null)
+                    msg.To.Add(Expressions.GetExpressionValue<string>(ip["to"].Get<string>(), dp, ip, false));
+                foreach (Node idx in ip["to"])
+                {
+                    msg.To.Add(new System.Net.Mail.MailAddress(idx.Get<string>(), idx.Name));
+                }
+
+                bool canEncrypt = false;
+                bool validSmimeSettings = false;
+
+                if (useSmime)
+                {
+                    msg.SmimeSigned = true;
+                    msg.SmimeSigningOptionFlags =
+                        smimeSignTime ?
+                            OpaqueMail.Net.SmimeSigningOptionFlags.SignTime :
+                            OpaqueMail.Net.SmimeSigningOptionFlags.None;
+                    msg.SmimeEncryptedEnvelope = smimeEncryptEnvelope;
+                    if (msg.SmimeEncryptedEnvelope && smimeTripleWrap)
+                        msg.SmimeTripleWrapped = true;
+                    msg.SmimeSigningCertificate = OpaqueMail.Net.CertHelper.GetCertificateBySubjectName(
+                        smimeLocalMachine ?
+                            System.Security.Cryptography.X509Certificates.StoreLocation.LocalMachine :
+                            System.Security.Cryptography.X509Certificates.StoreLocation.CurrentUser,
+                            smimeSubjectName);
+                    ip["encryption-successful"].Value = smtp.SmimeVerifyAllRecipientsHavePublicKeys(msg);
+                    canEncrypt = ip["encryption-successful"].Get<bool>();
+                }
+
+                if (!canEncrypt && ip.ContainsValue("force-encryption") && ip["force-encryption"].Get<bool>())
+                {
+                    if (!validSmimeSettings)
+                        throw new Exception("could not encrypt message, hence no message was sent. settings for s/mime not setup");
+                    else
+                        throw new Exception("could not encrypt message, hence no email was sent. not all recipients had public keys");
+                }
+                if (!canEncrypt)
+                {
+                    msg.SmimeEncryptionOptionFlags = OpaqueMail.Net.SmimeEncryptionOptionFlags.None;
+                    msg.SmimeEncryptedEnvelope = false;
+                    msg.SmimeTripleWrapped = false;
+                }
+
                 smtp.Send(msg);
+            }*/
         }
 
         /*
@@ -265,7 +277,7 @@ namespace Magix.email
 
             Node dp = Dp(e.Params);
 
-            SmtpClient smtp = new SmtpClient();
+            /*SmtpClient smtp = new SmtpClient();
 
             MailMessage msg = new MailMessage();
             if (ip["to"].Value != null)
@@ -275,7 +287,7 @@ namespace Magix.email
                 msg.To.Add(new System.Net.Mail.MailAddress(idx.Get<string>(), idx.Name));
             }
 
-            ip["can-encrypt"].Value = smtp.SmimeVerifyAllRecipientsHavePublicKeys(msg);
+            ip["can-encrypt"].Value = smtp.SmimeVerifyAllRecipientsHavePublicKeys(msg);*/
         }
     }
 }
