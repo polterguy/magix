@@ -182,11 +182,7 @@ namespace OpaqueMail.Net
         None = 0,
         RequireCertificateVerification = 1,
         RequireKeyUsageOfDataEncipherment = 2,
-        RequireEnhancedKeyUsageofSecureEmail = 4,
-
-        // OpaqueMail optional setting for protecting the subject.
-        // Note: This is not part of the current RFC specifcation and should only be used when sending to other OpaqueMail agents.
-        EncryptSubject = 256
+        RequireEnhancedKeyUsageofSecureEmail = 4
     }
 
     /// <summary>

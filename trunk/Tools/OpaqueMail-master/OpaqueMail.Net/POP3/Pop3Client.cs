@@ -1,16 +1,18 @@
 ﻿/*
- * OpaqueMail (http://opaquemail.org/).
+ * Magix - A Web Application Framework for Humans
+ * Copyright 2010 - 2014 - thomas@magixilluminate.com
+ * Magix is licensed as MITx11, see enclosed License.txt File for Details.
  * 
- * Licensed according to the MIT License (http://mit-license.org/).
+ * This file is based upon the work done by Bert Johnson in OpaqueMail at 
+ * http://opaquemail.org/
  * 
- * Copyright © Bert Johnson (http://bertjohnson.net/) of Bkip Inc. (http://bkip.com/).
+ * Parts of the file is hence Copyright © Bert Johnson (http://bertjohnson.net/) 
+ * of Bkip Inc. (http://bkip.com/)
  * 
- * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the “Software”), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+ * The library OpaqueMail was forked to fix bugs, and to make sure it was 
+ * compatible with older frameworks than 4.5
  * 
- * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
- * 
- * THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
- * 
+ * OpaqueMail is licensed as MIT License (http://mit-license.org/).
  */
 
 using System;
@@ -25,26 +27,29 @@ using System.Threading.Tasks;
 
 namespace OpaqueMail.Net
 {
-    /// <summary>
-    /// Allows applications to retrieve and manage e-mail by using the Post Office Protocol (POP3).
-    /// </summary>
-    /// <remarks>Includes OpaqueMail extensions to facilitate processing of secure S/MIME messages.</remarks>
     public class Pop3Client : IDisposable
     {
-        #region Public Members
-        /// <summary>Optional shared secret for securing authentication via the APOP command.</summary>
+        private bool LastCapabilitiesCheckAuthenticationState = false;
+        private byte[] InternalBuffer = new byte[Constants.LARGEBUFFERSIZE];
+        private TcpClient Pop3TcpClient;
+        private Stream Pop3Stream;
+        private String SessionWelcomeMessage = "";
+        private string ServerExpirationPolicy = "";
+        private string ServerImplementation = "";
+        private int ServerLoginDelay = 0;
+        private bool SessionIsAuthenticated = false;
+
+        public string LastCommandIssued;
+        public bool LastCommandResult = false;
+        public string LastErrorMessage;
+        public int Port;
         public string APOPSharedSecret = "";
-        /// <summary>Gets or sets the credentials used to authenticate.</summary>
         public NetworkCredential Credentials;
-        /// <summary>Specify whether the OpaqueMail.Pop3Client uses Secure Sockets Layer (SSL).</summary>
         public bool EnableSsl;
-        /// <summary>Flags determining whether specialized properties are returned with a ReadOnlyMailMessage.</summary>
         public ReadOnlyMailMessageProcessingFlags ProcessingFlags = ReadOnlyMailMessageProcessingFlags.IncludeRawHeaders | ReadOnlyMailMessageProcessingFlags.IncludeRawBody;
-        /// <summary>Set of extended POP3 capabilities.</summary>
         public HashSet<string> Capabilities = new HashSet<string>();
-        /// <summary>Gets or sets the name or IP address of the host used for POP3 transactions.</summary>
         public string Host;
-        /// <summary>Whether the session has successfully been authenticated.</summary>
+
         public bool IsAuthenticated
         {
             get
@@ -55,7 +60,7 @@ namespace OpaqueMail.Net
                     return false;
             }
         }
-        /// <summary>Determine whether the current session is still alive.</summary>
+
         public bool IsConnected
         {
             get
@@ -66,17 +71,7 @@ namespace OpaqueMail.Net
                     return false;
             }
         }
-        /// <summary>The authentication state when capabilities were last queried.</summary>
-        private bool LastCapabilitiesCheckAuthenticationState = false;
-        /// <summary>The last command issued to the POP3 server.</summary>
-        public string LastCommandIssued;
-        /// <summary>Whether the last POP3 command was successful.</summary>
-        public bool LastCommandResult = false;
-        /// <summary>The last error message returned by the POP3 server.</summary>
-        public string LastErrorMessage;
-        /// <summary>Gets or sets the port used for POP3 transactions.</summary>
-        public int Port;
-        /// <summary>Gets or sets a value, in milliseconds, that determines how long the stream will attempt to read before timing out.</summary>
+
         public int ReadTimeout
         {
             get
@@ -92,12 +87,12 @@ namespace OpaqueMail.Net
                     Pop3Stream.ReadTimeout = value;
             }
         }
-        /// <summary>The welcome message provided by the POP3 server.</summary>
+
         public string WelcomeMessage
         {
             get { return SessionWelcomeMessage; }
         }
-        /// <summary>Gets or sets a value, in milliseconds, that determines how long the stream will attempt to write before timing out.</summary>
+
         public int WriteTimeout
         {
             get
@@ -113,36 +108,7 @@ namespace OpaqueMail.Net
                     Pop3Stream.WriteTimeout = value;
             }
         }
-        #endregion Public Members
 
-        #region Private Members
-        /// <summary>Buffer used during various S/MIME operations.</summary>
-        private byte[] InternalBuffer = new byte[Constants.LARGEBUFFERSIZE];
-        /// <summary>Connection to the remote POP3 server.</summary>
-        private TcpClient Pop3TcpClient;
-        /// <summary>Stream for communicating with the POP3 server.</summary>
-        private Stream Pop3Stream;
-        /// <summary>The welcome message provided by the POP3 server.</summary>
-        private String SessionWelcomeMessage = "";
-        /// <summary>Returns the POP3 server's expiration policy as found from the CAPA command.</summary>
-        private string ServerExpirationPolicy = "";
-        /// <summary>Returns the POP3 server's implementation string as found from the CAPA command.</summary>
-        private string ServerImplementation = "";
-        /// <summary>Returns the POP3 server's login delay as found from the CAPA command.</summary>
-        private int ServerLoginDelay = 0;
-        /// <summary>Whether the session has successfully been authenticated.</summary>
-        private bool SessionIsAuthenticated = false;
-        #endregion Private Members
-
-        #region Constructors
-        /// <summary>
-        /// Initializes a new instance of the OpaqueMail.Pop3Client class by using the specified settings.
-        /// </summary>
-        /// <param name="host">Name or IP of the host used for POP3 transactions.</param>
-        /// <param name="port">Port to be used by the host.</param>
-        /// <param name="userName">The username associated with this connection.</param>
-        /// <param name="password">The password associated with this connection.</param>
-        /// <param name="enableSSL">Whether the POP3 connection uses TLS / SSL protection.</param>
         public Pop3Client(string host, int port, string userName, string password, bool enableSSL)
         {
             Host = host;
@@ -151,9 +117,22 @@ namespace OpaqueMail.Net
             EnableSsl = enableSSL;
         }
 
-        /// <summary>
-        /// Default destructor.
-        /// </summary>
+        public void Dispose()
+        {
+            if (Pop3TcpClient != null)
+            {
+                if (Pop3TcpClient.Connected)
+                {
+                    SendCommand("QUIT\r\n");
+                    string response = ReadData();
+                }
+                Pop3TcpClient.Close();
+                Pop3TcpClient = null;
+            }
+            if (Pop3Stream != null)
+                Pop3Stream.Dispose();
+        }
+
         ~Pop3Client()
         {
             if (Pop3Stream != null)
@@ -161,12 +140,7 @@ namespace OpaqueMail.Net
             if (Pop3TcpClient != null)
                 Pop3TcpClient.Close();
         }
-        #endregion Constructors
 
-        #region Public Methods
-        /// <summary>
-        /// Perform an authentication handshake with the POP3 server.
-        /// </summary>
         public bool Authenticate()
         {
             string response = "";
@@ -196,9 +170,6 @@ namespace OpaqueMail.Net
             }
         }
 
-        /// <summary>
-        /// Connect to the remote POP3 server.
-        /// </summary>
         public bool Connect()
         {
             try
@@ -228,28 +199,16 @@ namespace OpaqueMail.Net
             }
         }
 
-        /// <summary>
-        /// Delete a message from the server based on its index.
-        /// </summary>
-        /// <param name="index">Index of the message to delete.</param>
         public bool DeleteMessage(int index)
         {
             return Task.Run(() => DeleteMessageAsync(index)).Result;
         }
 
-        /// <summary>
-        /// Delete a message from the server based on its index.
-        /// </summary>
-        /// <param name="uid">UID of the message to delete.</param>
         public bool DeleteMessageUid(string uid)
         {
             return Task.Run(() => DeleteMessageAsync(uid)).Result;
         }
 
-        /// <summary>
-        /// Delete a message from the server based on its index.
-        /// </summary>
-        /// <param name="index">Index of the message to delete.</param>
         public async Task<bool> DeleteMessageAsync(int index)
         {
             // Protect against commands being called out of order.
@@ -261,10 +220,6 @@ namespace OpaqueMail.Net
             return LastCommandResult;
         }
 
-        /// <summary>
-        /// Delete a message from the server based on its UID.
-        /// </summary>
-        /// <param name="uid">UID of the message to delete.</param>
         public async Task<bool> DeleteMessageAsync(string uid)
         {
             // Protect against commands being called out of order.
@@ -276,19 +231,11 @@ namespace OpaqueMail.Net
             return LastCommandResult;
         }
 
-        /// <summary>
-        /// Delete a series of messages from the server based on their indices.
-        /// </summary>
-        /// <param name="indices">Array of message indices to delete.</param>
         public bool DeleteMessages(int[] indices)
         {
             return Task.Run(() => DeleteMessagesAsync(indices)).Result;
         }
 
-        /// <summary>
-        /// Delete a series of messages from the server based on their indices.
-        /// </summary>
-        /// <param name="indices">Array of message indices to delete.</param>
         public async Task<bool> DeleteMessagesAsync(int[] indices)
         {
             // Protect against commands being called out of order.
@@ -306,19 +253,11 @@ namespace OpaqueMail.Net
             return returnValue;
         }
 
-        /// <summary>
-        /// Delete a series of messages from the server based on their UIDs.
-        /// </summary>
-        /// <param name="uids">Array of message UIDs to delete.</param>
         public bool DeleteMessages(string[] uids)
         {
             return Task.Run(() => DeleteMessagesAsync(uids)).Result;
         }
 
-        /// <summary>
-        /// Delete a series of messages from the server based on their UIDs.
-        /// </summary>
-        /// <param name="uids">Array of message UIDs to delete.</param>
         public async Task<bool> DeleteMessagesAsync(string[] uids)
         {
             // Protect against commands being called out of order.
@@ -336,36 +275,11 @@ namespace OpaqueMail.Net
             return returnValue;
         }
 
-        /// <summary>
-        /// Sends a QUIT message to the POP3 server, gracefully ends the TCP connection, and releases all resources used by the current instances of the OpaqueMail.Pop3Client class.
-        /// </summary>
-        public void Dispose()
-        {
-            if (Pop3TcpClient != null)
-            {
-                if (Pop3TcpClient.Connected)
-                {
-                    SendCommand("QUIT\r\n");
-                    string response = ReadData();
-                }
-                Pop3TcpClient.Close();
-                Pop3TcpClient = null;
-            }
-            if (Pop3Stream != null)
-                Pop3Stream.Dispose();
-        }
-
-        /// <summary>
-        /// Retrieve a list of the POP3's servers extended capabilities.
-        /// </summary>
         public string[] GetCapabilities()
         {
             return Task.Run(() => GetCapabilitiesAsync()).Result;
         }
 
-        /// <summary>
-        /// Retrieve a list of the POP3's servers extended capabilities.
-        /// </summary>
         public async Task<string[]> GetCapabilitiesAsync()
         {
             // If we've logged in or out since last checking capabilities, ignore the cache.
@@ -430,93 +344,51 @@ namespace OpaqueMail.Net
                 return new string[] { };
         }
 
-        /// <summary>
-        /// Retrieve a specific message from the server based on its index.
-        /// </summary>
-        /// <param name="index">The index number of the message to return.</param>
         public ReadOnlyMailMessage GetMessage(int index)
         {
             return Task.Run(() => GetMessageAsync(index)).Result;
         }
 
-        /// <summary>
-        /// Retrieve a specific message from the server based on its UID.
-        /// </summary>
-        /// <param name="uid">The UID of the message, as returned by a UIDL command.</param>
         public ReadOnlyMailMessage GetMessageUid(string uid)
         {
             return Task.Run(() => GetMessageUidAsync(uid)).Result;
         }
 
-        /// <summary>
-        /// Retrieve a specific message from the server based on its index, optionally returning only headers.
-        /// </summary>
-        /// <param name="index">The index number of the message to return.</param>
-        /// <param name="headersOnly">Return only the message's headers when true; otherwise, return the message and body.</param>
         public ReadOnlyMailMessage GetMessage(int index, bool headersOnly)
         {
             return Task.Run(() => GetMessageAsync(index, headersOnly)).Result;
         }
 
-        /// <summary>
-        /// Retrieve a specific message from the server based on its UID, optionally returning only headers.
-        /// </summary>
-        /// <param name="uid">The UID of the message, as returned by a UIDL command.</param>
-        /// <param name="headersOnly">Return only the message's headers when true; otherwise, return the message and body.</param>
         public ReadOnlyMailMessage GetMessageUid(string uid, bool headersOnly)
         {
             return Task.Run(() => GetMessageUidAsync(uid, headersOnly)).Result;
         }
 
-        /// <summary>
-        /// Retrieve a specific message from the server based on its index.
-        /// </summary>
-        /// <param name="index">The index number of the message to return.</param>
         public async Task<ReadOnlyMailMessage> GetMessageAsync(int index)
         {
             return await GetMessageHelper(index, "", false);
         }
 
-        /// <summary>
-        /// Retrieve a specific message from the server based on its UID.
-        /// </summary>
-        /// <param name="uid">The UID of the message, as returned by a UIDL command.</param>
         public async Task<ReadOnlyMailMessage> GetMessageUidAsync(string uid)
         {
             return await GetMessageHelper(-1, uid, false);
         }
 
-        /// <summary>
-        /// Retrieve a specific message from the server based on its index, optionally returning only headers.
-        /// </summary>
-        /// <param name="index">The index number of the message to return.</param>
-        /// <param name="headersOnly">Return only the message's headers when true; otherwise, return the message and body.</param>
         public async Task<ReadOnlyMailMessage> GetMessageAsync(int index, bool headersOnly)
         {
             return await GetMessageHelper(index, "", headersOnly);
         }
 
-        /// <summary>
-        /// Retrieve a specific message from the server based on its UID, optionally returning only headers.
-        /// </summary>
-        /// <param name="uid">The UID of the message, as returned by a UIDL command.</param>
-        /// <param name="headersOnly">Return only the message's headers when true; otherwise, return the message and body.</param>
         public async Task<ReadOnlyMailMessage> GetMessageUidAsync(string uid, bool headersOnly)
         {
             return await GetMessageHelper(-1, uid, headersOnly);
         }
 
-        /// <summary>
-        /// Return the number of messages on the POP3 server.
-        /// </summary>
         public int GetMessageCount()
         {
             return Task.Run(() => GetMessageCountAsync()).Result;
         }
 
-        /// <summary>
-        /// Return the number of messages on the POP3 server.
-        /// </summary>
         public async Task<int> GetMessageCountAsync()
         {
             // Protect against commands being called out of order.
@@ -537,101 +409,51 @@ namespace OpaqueMail.Net
             return numMessages;
         }
 
-        /// <summary>
-        /// Retrieve up to 25 of the most recent messages on the POP3 server.
-        /// </summary>
         public List<ReadOnlyMailMessage> GetMessages()
         {
             return Task.Run(() => GetMessagesAsync()).Result;
         }
 
-        /// <summary>
-        /// Retrieve up to count of the most recent messages on the POP3 server.
-        /// </summary>
-        /// <param name="count">The maximum number of messages to return.</param>
         public List<ReadOnlyMailMessage> GetMessages(int count)
         {
             return Task.Run(() => GetMessagesAsync(count)).Result;
         }
 
-        /// <summary>
-        /// Retrieve up to count of the most recent messages on the POP3 server, optionally returning only headers.
-        /// </summary>
-        /// <param name="count">The maximum number of messages to return.</param>
-        /// <param name="headersOnly">Return only the message's headers when true; otherwise, return the message and body.</param>
         public List<ReadOnlyMailMessage> GetMessages(int count, bool headersOnly)
         {
             return Task.Run(() => GetMessagesAsync(count, headersOnly)).Result;
         }
 
-        /// <summary>
-        /// Retrieve up to count of the most recent messages on the POP3 server, starting at a specific index.
-        /// </summary>
-        /// <param name="count">The maximum number of messages to return.</param>
-        /// <param name="startIndex">The relative 1-indexed message to start at.</param>
-        /// <param name="reverseOrder">Whether to return messages in descending order.</param>
         public List<ReadOnlyMailMessage> GetMessages(int count, int startIndex, bool reverseOrder)
         {
             return Task.Run(() => GetMessagesAsync(count, startIndex, reverseOrder)).Result;
         }
 
-        /// <summary>
-        /// Retrieve up to count of the most recent messages on the POP3 server, optionally returning only headers.
-        /// </summary>
-        /// <param name="count">The maximum number of messages to return.</param>
-        /// <param name="startIndex">The relative 1-indexed message to start with.</param>
-        /// <param name="reverseOrder">Whether to return messages in descending order.</param>
-        /// <param name="headersOnly">Return only the message's headers when true; otherwise, return the message and body.</param>        
         public List<ReadOnlyMailMessage> GetMessages(int count, int startIndex, bool reverseOrder, bool headersOnly)
         {
             return Task.Run(() => GetMessagesAsync(count, startIndex, reverseOrder, headersOnly)).Result;
         }
 
-        /// <summary>
-        /// Retrieve up to 25 of the most recent messages on the POP3 server.
-        /// </summary>
         public async Task<List<ReadOnlyMailMessage>> GetMessagesAsync()
         {
             return await GetMessagesAsync(25, 1, false, false);
         }
 
-        /// <summary>
-        /// Retrieve up to count of the most recent messages on the POP3 server.
-        /// </summary>
-        /// <param name="count">The maximum number of messages to return.</param>
         public async Task<List<ReadOnlyMailMessage>> GetMessagesAsync(int count)
         {
             return await GetMessagesAsync(count, 1, false, false);
         }
 
-        /// <summary>
-        /// Retrieve up to count of the most recent messages on the POP3 server, optionally returning only headers.
-        /// </summary>
-        /// <param name="count">The maximum number of messages to return.</param>
-        /// <param name="headersOnly">Return only the message's headers when true; otherwise, return the message and body.</param>
         public async Task<List<ReadOnlyMailMessage>> GetMessagesAsync(int count, bool headersOnly)
         {
             return await GetMessagesAsync(count, 1, false, headersOnly);
         }
 
-        /// <summary>
-        /// Retrieve up to count of the most recent messages on the POP3 server, starting at a specific index.
-        /// </summary>
-        /// <param name="count">The maximum number of messages to return.</param>
-        /// <param name="startIndex">The relative 1-indexed message to start at.</param>
-        /// <param name="reverseOrder">Whether to return messages in descending order.</param>
         public async Task<List<ReadOnlyMailMessage>> GetMessagesAsync(int count, int startIndex, bool reverseOrder)
         {
             return await GetMessagesAsync(count, startIndex, reverseOrder, false);
         }
 
-        /// <summary>
-        /// Retrieve up to count of the most recent messages on the POP3 server, optionally returning only headers.
-        /// </summary>
-        /// <param name="count">The maximum number of messages to return.</param>
-        /// <param name="startIndex">The relative 1-indexed message to start with.</param>
-        /// <param name="reverseOrder">Whether to return messages in descending order.</param>
-        /// <param name="headersOnly">Return only the message's headers when true; otherwise, return the message and body.</param>        
         public async Task<List<ReadOnlyMailMessage>> GetMessagesAsync(int count, int startIndex, bool reverseOrder, bool headersOnly)
         {
             // Protect against commands being called out of order.
@@ -697,19 +519,11 @@ namespace OpaqueMail.Net
             return messages;
         }
 
-        /// <summary>
-        /// Determine the UID of a message according to the UIDL command.
-        /// </summary>
-        /// <param name="index">The index number of the message to return.</param>
         public string GetUidl(int index)
         {
             return Task.Run(() => GetUidlAsync(index)).Result;
         }
 
-        /// <summary>
-        /// Determine the UID of a message according to the UIDL command.
-        /// </summary>
-        /// <param name="index">The index number of the message to return.</param>
         public async Task<string> GetUidlAsync(int index)
         {
             // Protect against commands being called out of order.
@@ -734,9 +548,6 @@ namespace OpaqueMail.Net
             }
         }
 
-        /// <summary>
-        /// Log out and end the current session.
-        /// </summary>
         public void LogOut()
         {
             SendCommand("QUIT\r\n");
@@ -744,17 +555,11 @@ namespace OpaqueMail.Net
             SessionIsAuthenticated = false;
         }
 
-        /// <summary>
-        /// Prolong the current session, but issue no command.
-        /// </summary>
         public bool NoOp()
         {
             return Task.Run(() => NoOpAsync()).Result;
         }
 
-        /// <summary>
-        /// Prolong the current session, but issue no command.
-        /// </summary>
         public async Task<bool> NoOpAsync()
         {
             await SendCommandAsync("NOOP\r\n");
@@ -763,18 +568,11 @@ namespace OpaqueMail.Net
             return LastCommandResult;
         }
 
-        /// <summary>
-        /// Read the last response from the POP3 server.
-        /// </summary>
         public string ReadData()
         {
             return ReadData("");
         }
 
-        /// <summary>
-        /// Read the last response from the POP3 server.
-        /// </summary>
-        /// <param name="endMarker">A string indicating the end of the current message.</param>
         public string ReadData(string endMarker)
         {
             string response = "";
@@ -836,18 +634,11 @@ namespace OpaqueMail.Net
             return response;
         }
         
-        /// <summary>
-        /// Read the last response from the POP3 server.
-        /// </summary>
         public async Task<string> ReadDataAsync()
         {
             return await ReadDataAsync("");
         }
 
-        /// <summary>
-        /// Read the last response from the POP3 server.
-        /// </summary>
-        /// <param name="endMarker">A string indicating the end of the current message.</param>
         public async Task<string> ReadDataAsync(string endMarker)
         {
             StringBuilder builder = new StringBuilder();
@@ -911,17 +702,11 @@ namespace OpaqueMail.Net
             return builder.ToString();
         }
 
-        /// <summary>
-        /// Unmark any messages during this session so that they will not be deleted upon exiting.
-        /// </summary>
         public bool Reset()
         {
             return Task.Run(() => ResetAsync()).Result;
         }
 
-        /// <summary>
-        /// Unmark any messages during this session so that they will not be deleted upon exiting.
-        /// </summary>
         public async Task<bool> ResetAsync()
         {
             // Protect against commands being called out of order.
@@ -934,31 +719,18 @@ namespace OpaqueMail.Net
             return LastCommandResult;
         }
 
-        /// <summary>
-        /// Helper function to send a message to the POP3 server.
-        /// Should always be followed by GetPop3StreamString.
-        /// </summary>
-        /// <param name="command">Text to transmit.</param>
         public void SendCommand(string command)
         {
             LastCommandIssued = command;
             Functions.SendStreamString(Pop3Stream, InternalBuffer, command);
         }
 
-        /// <summary>
-        /// Helper function to send a message to the POP3 server.
-        /// Should always be followed by GetPop3StreamString.
-        /// </summary>
-        /// <param name="command">Text to transmit.</param>
         public async Task SendCommandAsync(string command)
         {
             LastCommandIssued = command;
             await Functions.SendStreamStringAsync(Pop3Stream, InternalBuffer, command);
         }
 
-        /// <summary>
-        /// Negotiate TLS security for the current session.
-        /// </summary>
         public void StartTLS()
         {
             if (!(Pop3Stream is SslStream))
@@ -966,15 +738,7 @@ namespace OpaqueMail.Net
             if (!((SslStream)Pop3Stream).IsAuthenticated)
                 ((SslStream)Pop3Stream).AuthenticateAsClient(Host);
         }
-        #endregion Public Methods
 
-        #region Private Methods
-        /// <summary>
-        /// Helper function to retrieve a specific message from the server based on its index or UID, optionally returning only headers.
-        /// </summary>
-        /// <param name="index">The index number of the message to return.</param>
-        /// <param name="uid">The UID of the message, as returned by a UIDL command.</param>
-        /// <param name="headersOnly">Return only the message's headers when true; otherwise, return the message and body.</param>
         private async Task<ReadOnlyMailMessage> GetMessageHelper(int index, string uid, bool headersOnly)
         {
             // Protect against commands being called out of order.
@@ -1021,23 +785,13 @@ namespace OpaqueMail.Net
             // If unable to find or parse the message, return null.
             return null;
         }
-        #endregion Private Methods
 
-        #region Public Properties
-        /// Returns the POP3 server's pipelining capability as found from the CAPA command.
         private bool ServerSupportsPipelining = false;
-        /// <summary>Whether the POP3 server supports the "TOP" command for previewing headers.</summary>
         private bool? ServerSupportsTop = null;
-        /// <summary>Whether the POP3 server supports SASL authentication, as found from the CAPA command.</summary>
         private bool ServerSupportsSASL = false;
-        /// <summary>Whether the POP3 server supports TLS negotation, as found from the CAPA command.</summary>
         private bool ServerSupportsSTLS = false;
-        /// <summary>Whether the POP3 server supports the "UIDL" command for uniquely identifying messages.</summary>
         private bool? ServerSupportsUIDL = null;
 
-        /// <summary>
-        /// Returns the POP3 server's expiration policy as found from the CAPA command.
-        /// </summary>
         public string ExpirationPolicy
         {
             get
@@ -1050,9 +804,6 @@ namespace OpaqueMail.Net
             }
         }
 
-        /// <summary>
-        /// Returns the POP3 server's implementation string as found from the CAPA command.
-        /// </summary>
         public string Implementation
         {
             get
@@ -1065,9 +816,6 @@ namespace OpaqueMail.Net
             }
         }
 
-        /// <summary>
-        /// Returns the POP3 server's login delay as found from the CAPA command.
-        /// </summary>
         public int LoginDelay
         {
             get
@@ -1080,9 +828,6 @@ namespace OpaqueMail.Net
             }
         }
 
-        /// <summary>
-        /// Returns the POP3 server's pipelining capability as found from the CAPA command.
-        /// </summary>
         public bool SupportsPipelining
         {
             get
@@ -1095,9 +840,6 @@ namespace OpaqueMail.Net
             }
         }
 
-        /// <summary>
-        /// Whether the POP3 server supports SASL authentication, as found from the CAPA command.
-        /// </summary>
         public bool SupportsSASL
         {
             get
@@ -1110,9 +852,6 @@ namespace OpaqueMail.Net
             }
         }
 
-        /// <summary>
-        /// Whether the POP3 server supports TLS negotation, as found from the CAPA command.
-        /// </summary>
         public bool SupportsSTLS
         {
             get
@@ -1125,9 +864,6 @@ namespace OpaqueMail.Net
             }
         }
 
-        /// <summary>
-        /// Whether the POP3 server supports the "TOP" command, as found from the CAPA command.
-        /// </summary>
         public bool SupportsTop
         {
             get
@@ -1144,9 +880,6 @@ namespace OpaqueMail.Net
             }
         }
 
-        /// <summary>
-        /// Whether the POP3 server supports the "UIDL" command, as found from the CAPA command.
-        /// </summary>
         public bool SupportsUIDL
         {
             get
@@ -1162,28 +895,12 @@ namespace OpaqueMail.Net
                 return ServerSupportsUIDL == true ? true : false;
             }
         }
-        #endregion Public Properties
     }
 
-    /// <summary>
-    /// Represents the exception that is thrown when the OpaqueMail.Pop3Client is not able to complete an operation.
-    /// </summary>
     public class Pop3Exception : Exception
     {
-        /// <summary>
-        /// Initializes a new instance of the OpaqueMail.Pop3Exception class.
-        /// </summary>
         public Pop3Exception() : base() { }
-        /// <summary>
-        /// Initializes a new instance of the OpaqueMail.Pop3Exception class with the specified error message and inner exception.
-        /// </summary>
-        /// <param name="message">A System.String that describes the error that occurred.</param>
         public Pop3Exception(string message) : base(message) { }
-        /// <summary>
-        /// Initializes a new instance of the OpaqueMail.Pop3Exception class with the specified error message and inner exception.
-        /// </summary>
-        /// <param name="message">A System.String that describes the error that occurred.</param>
-        /// <param name="innerException">The exception that is the cause of the current exception.</param>
         public Pop3Exception(string message, Exception innerException) : base(message, innerException) { }
     }
 }

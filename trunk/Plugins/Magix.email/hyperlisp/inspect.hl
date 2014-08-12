@@ -45,9 +45,7 @@ recipients had valid public s/mime keys, then the active event will return
 [encryption-successful] as true
 
 if [force-encryption] is true, then an exception will be raised unless message 
-can be sent encrypted to all recipients
-
-if [async] is true, then the message will be sent on a different thread"
+can be sent encrypted to all recipients"
 
 magix.smtp.send-email-sample
   magix.smtp.send-email
