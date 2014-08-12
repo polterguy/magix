@@ -42,6 +42,8 @@ add=>[@][execute-script][params]
   values=>[$]
 set=>[@][execute-script][params][script-file]
 set=>[@][execute-script][params][script-directory]
+set=>[@][execute-script][params][email-id].value
+  value=>[$][email-id].value
 execute-script
   file=>system42/private/email/inbox/parts/reply/reply-no-html-web-part.hl
 
