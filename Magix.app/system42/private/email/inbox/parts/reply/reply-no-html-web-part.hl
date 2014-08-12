@@ -7,7 +7,7 @@ creates the web part necessary to reply to an html email"
 
 set=>[**_controls][**text-area=>reply-body][value].value
   value=>[$][email][body].value
-set=>[**_controls][**text-box=>reply-subject][value].value
+set=>[**_controls][**label=>reply-subject][value].value
   value=>[$][email][subject].value
 
 iterate=>[magix.execute]
@@ -17,29 +17,30 @@ iterate=>[magix.execute]
     code
       set=>[.].value
         value=>[$][reply-container].value
+  if=>equals
+    lhs=>[.].value
+    rhs=>{email-id}
+    code
+      set=>[.].value
+        value=>[$][email-id].value
 
 magix.execute
   _controls
     label
+      class=>span-17 last top-1 bottom-1
+      tag=>hr
+    label=>reply-subject
       class=>span-17 last
       tag=>label
-      value=>subject
-    text-box=>reply-subject
-      class=>span-17 last bottom-1
-      placeholder=>subject ...
+    text-area=>reply-body
+      class=>span-17 last email-reply-body
+      rows=>25
+      placeholder=>body ...
       onfirstload
         magix.forms.effect
           form-id=>{reply-container}
           id=>reply-body
           type=>focus-and-select
-    label
-      class=>span-17 last
-      tag=>label
-      value=>body
-    text-area=>reply-body
-      class=>span-17 last email-reply-body
-      rows=>25
-      placeholder=>body ...
     panel
       class=>btn-group span-4 last right top-1
       controls
@@ -47,7 +48,28 @@ magix.execute
           class=>span-2
           value=>send
           onclick
-            debug
+            magix.data.load
+              id=>{email-id}
+            magix.data.load-username
+              id=>magix.smtp.settings
+            magix.forms.get-value=>reply-body
+              form-id=>{reply-container}
+              id=>reply-body
+            magix.forms.get-value=>subject
+              form-id=>{reply-container}
+              id=>reply-subject
+            using=>magix.smtp
+              send-email
+                to=>[magix.data.load][value][from].value
+                from=>[magix.data.load-username][value][email].value
+                subject=>[magix.forms.get-value=>subject][value].value
+                body=>[magix.forms.get-value=>reply-body][value].value
+            magix.viewport.show-message
+              message=>email successfully sent
+              color=>#aaffaa
+            magix.viewport.clear-controls
+              container=>{reply-container}
+              reset-css=>true
         button=>cancel
           class=>span-2 last
           value=>cancel

@@ -228,6 +228,12 @@ namespace Magix.email
                 else
                     throw new Exception("could not encrypt message, hence no email was sent. not all recipients had public keys");
             }
+            if (!canEncrypt)
+            {
+                msg.SmimeEncryptionOptionFlags = SmimeEncryptionOptionFlags.None;
+                msg.SmimeEncryptedEnvelope = false;
+                msg.SmimeTripleWrapped = false;
+            }
 
             if (ip.ContainsValue("async") && ip["async"].Get<bool>())
                 smtp.SendAsync(msg);
