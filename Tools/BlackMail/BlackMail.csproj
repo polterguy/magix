@@ -31,11 +31,17 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Security" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MailMessage.cs" />
-    <Compile Include="SmtpClient.cs" />
+    <Compile Include="CertificateHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="smtp\Attachment.cs" />
+    <Compile Include="smtp\SmtpClient.cs" />
+    <Compile Include="smtp\EncryptionHelper.cs" />
+    <Compile Include="smtp\MessageContent.cs" />
+    <Compile Include="smtp\MailAddress.cs" />
+    <Compile Include="smtp\MailMessage.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
