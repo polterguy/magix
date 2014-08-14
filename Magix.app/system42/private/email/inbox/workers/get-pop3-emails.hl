@@ -52,6 +52,7 @@ fork
         lhs=>true
         rhs=>true
         code
+          stop
           magix.pop3.get-message-count
           if=>equals
             lhs=>[@][magix.pop3.get-message-count][count].value
