@@ -47,13 +47,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Magix.QR", "Plugins\Magix.Q
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Magix.ms.sql", "Plugins\Magix.ms.sql\Magix.ms.sql.csproj", "{E438846C-9C26-48C0-82FA-C0AFB9CD355E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpaqueMail.Net", "Tools\OpaqueMail-master\OpaqueMail.Net\OpaqueMail.Net.csproj", "{BF21D27F-72AD-492E-8219-6C82C2330C72}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpaqueMail.Net.CertHelper", "Tools\OpaqueMail-master\OpaqueMail.Net.CertHelper\OpaqueMail.Net.CertHelper.csproj", "{9F1402F2-D701-43A5-9AD6-CFA926C31DCE}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Magix.email", "Plugins\Magix.email\Magix.email.csproj", "{062101E4-E07F-4DD3-B556-6C8A0C9C6934}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlackMail", "Tools\BlackMail\BlackMail.csproj", "{7E6A3E4F-D462-4416-A7B5-4976DDA8BFFC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -137,22 +131,10 @@ Global
 		{E438846C-9C26-48C0-82FA-C0AFB9CD355E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E438846C-9C26-48C0-82FA-C0AFB9CD355E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E438846C-9C26-48C0-82FA-C0AFB9CD355E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BF21D27F-72AD-492E-8219-6C82C2330C72}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BF21D27F-72AD-492E-8219-6C82C2330C72}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BF21D27F-72AD-492E-8219-6C82C2330C72}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BF21D27F-72AD-492E-8219-6C82C2330C72}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9F1402F2-D701-43A5-9AD6-CFA926C31DCE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9F1402F2-D701-43A5-9AD6-CFA926C31DCE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9F1402F2-D701-43A5-9AD6-CFA926C31DCE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9F1402F2-D701-43A5-9AD6-CFA926C31DCE}.Release|Any CPU.Build.0 = Release|Any CPU
 		{062101E4-E07F-4DD3-B556-6C8A0C9C6934}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{062101E4-E07F-4DD3-B556-6C8A0C9C6934}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{062101E4-E07F-4DD3-B556-6C8A0C9C6934}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{062101E4-E07F-4DD3-B556-6C8A0C9C6934}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7E6A3E4F-D462-4416-A7B5-4976DDA8BFFC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7E6A3E4F-D462-4416-A7B5-4976DDA8BFFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7E6A3E4F-D462-4416-A7B5-4976DDA8BFFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7E6A3E4F-D462-4416-A7B5-4976DDA8BFFC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -178,9 +160,6 @@ Global
 		{47AFBBBE-CDF6-4B3A-8BD8-478406735C99} = {95BA2698-F938-49BE-B55E-1B2F2FC1269F}
 		{B9D247FE-C4EA-49B2-83E9-0ED75D844B72} = {63544738-20E9-459A-83F6-D18EF70B6157}
 		{E98126B2-AF17-4783-96B9-856D6744DCA3} = {59698B4A-2CB8-46B3-A63A-DB1B3C79034B}
-		{BF21D27F-72AD-492E-8219-6C82C2330C72} = {59698B4A-2CB8-46B3-A63A-DB1B3C79034B}
-		{9F1402F2-D701-43A5-9AD6-CFA926C31DCE} = {59698B4A-2CB8-46B3-A63A-DB1B3C79034B}
-		{7E6A3E4F-D462-4416-A7B5-4976DDA8BFFC} = {59698B4A-2CB8-46B3-A63A-DB1B3C79034B}
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = Magix.app\Magix.app.csproj

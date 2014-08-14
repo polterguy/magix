@@ -34,6 +34,7 @@
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
     <Prefer32Bit>false</Prefer32Bit>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
@@ -45,18 +46,23 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BouncyCastle">
+      <HintPath>..\packages\MimeKit.0.93.0.0\lib\net45\BouncyCastle.dll</HintPath>
+    </Reference>
     <Reference Include="log4net">
       <HintPath>..\references\log4net.dll</HintPath>
     </Reference>
+    <Reference Include="MailKit">
+      <HintPath>..\packages\MailKit.0.93.0.0\lib\net45\MailKit.dll</HintPath>
+    </Reference>
+    <Reference Include="MimeKit">
+      <HintPath>..\packages\MimeKit.0.93.0.0\lib\net45\MimeKit.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web" />
     <Reference Include="System.Configuration" />
-    <Reference Include="System.Web.ApplicationServices" />
-    <Reference Include="System.Web.DynamicData" />
-    <Reference Include="System.Web.Entity" />
-    <Reference Include="System.Web.Extensions" />
-    <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="changes.txt" />
@@ -265,18 +271,6 @@
     <ProjectReference Include="..\Plugins\Magix.xml\Magix.xml.csproj">
       <Project>{eae2f2ae-0098-44f1-8b3d-1887266e94cf}</Project>
       <Name>Magix.xml</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Tools\BlackMail\BlackMail.csproj">
-      <Project>{7e6a3e4f-d462-4416-a7b5-4976dda8bffc}</Project>
-      <Name>BlackMail</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Tools\OpaqueMail-master\OpaqueMail.Net.CertHelper\OpaqueMail.Net.CertHelper.csproj">
-      <Project>{9f1402f2-d701-43a5-9ad6-cfa926c31dce}</Project>
-      <Name>OpaqueMail.Net.CertHelper</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Tools\OpaqueMail-master\OpaqueMail.Net\OpaqueMail.Net.csproj">
-      <Project>{bf21d27f-72ad-492e-8219-6c82c2330c72}</Project>
-      <Name>OpaqueMail.Net</Name>
     </ProjectReference>
     <ProjectReference Include="..\Tools\QRCodeLib\QRCodeLib.csproj">
       <Project>{e98126b2-af17-4783-96b9-856d6744dca3}</Project>
@@ -490,7 +484,14 @@
     <Content Include="system42\private\startup\unit-tests\sort.hl" />
     <Content Include="system42\private\email\inbox\parts\reply\reply-web-part.hl" />
     <Content Include="system42\private\email\inbox\parts\reply\reply-no-html-web-part.hl" />
+    <Content Include="packages.config" />
     <None Include="todo.txt" />
+    <Content Include="x64\SQLite.Interop.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="x86\SQLite.Interop.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="your-files\readme.txt" />
     <Content Include="your-files\samples\hello-world-app\readme.txt" />
     <Content Include="your-files\tmp\readme.txt" />
