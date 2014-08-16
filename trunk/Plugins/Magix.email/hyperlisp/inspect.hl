@@ -94,7 +94,12 @@ magix.pop3.get-message-count-dox=>@"returns message count from pop3 server
 returns number of unread message from pop3 server as [count]
 
 use [host], [port], [ssl], [username] and [passord] 
-to connect.  all parameters can be either constants or expressions"
+to connect.  all mentioned parameters can be either constants 
+or expressions
+
+[user] is username of logged in user, and will be used as a 
+helper for knowing which directory to save attachments 
+underneath"
 
 magix.pop3.get-message-count-sample
   magix.pop3.get-message-count

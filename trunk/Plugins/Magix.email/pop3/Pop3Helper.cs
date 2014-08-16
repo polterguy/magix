@@ -5,6 +5,7 @@
  */
 
 using System;
+using System.IO;
 using MimeKit;
 using MailKit.Net.Pop3;
 using Magix.Core;
@@ -40,7 +41,12 @@ namespace Magix.email
         /*
          * returns messages from pop3 server
          */
-        internal static void GetMessages(Node ip, Node dp)
+        internal static void GetMessages(
+            Node ip, 
+            Node dp, 
+            string basePath, 
+            string attachmentDirectory, 
+            string linkedAttachmentDirectory)
         {
             string host = Expressions.GetExpressionValue<string>(ip.GetValue("host", ""), dp, ip, false);
             int port = Expressions.GetExpressionValue<int>(ip.GetValue("port", "-1"), dp, ip, false);
@@ -59,7 +65,7 @@ namespace Magix.email
                 for (int idxMsg = 0; idxMsg < count; idxMsg++)
                 {
                     MimeMessage msg = client.GetMessage(idxMsg);
-                    BuildMessage(msg, ip["values"]["msg_" + idxMsg]);
+                    BuildMessage(msg, ip["values"]["msg_" + idxMsg], basePath, attachmentDirectory, linkedAttachmentDirectory);
                 }
             }
         }
@@ -67,13 +73,41 @@ namespace Magix.email
         /*
          * puts a message into a node for returning back to client
          */
-        private static void BuildMessage(MimeMessage msg, Node node)
+        private static void BuildMessage(
+            MimeMessage msg, 
+            Node node, 
+            string basePath, 
+            string attachmentDirectory, 
+            string linkedAttachmentDirectory)
         {
             ExtractHeaders(msg, node);
             ExtractBody(msg, node);
+
             foreach (MimePart idxAtt in msg.Attachments)
             {
-                ;// idxAtt.
+                string fileName = idxAtt.FileName;
+                if (idxAtt.Headers.Contains("Content-Location"))
+                {
+                    // this is a linked resource
+                    string contentLocation = idxAtt.Headers["Content-Location"];
+                    string newFileName = linkedAttachmentDirectory + fileName;
+                    if (node.Contains("body") && node["body"].ContainsValue("html"))
+                    {
+                        node["body"]["html"].Value = node["body"]["html"].Get<string>().Replace(contentLocation, newFileName);
+                    }
+                    using (Stream stream = File.Create(basePath + newFileName))
+                    {
+                        idxAtt.ContentObject.DecodeTo(stream);
+                    }
+                }
+                else
+                {
+                    // this is not a linked attachment
+                    using (Stream stream = File.Create(basePath + attachmentDirectory + fileName))
+                    {
+                        idxAtt.ContentObject.DecodeTo(stream);
+                    }
+                }
             }
         }
 
