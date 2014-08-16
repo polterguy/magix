@@ -5,13 +5,24 @@ inspect=>@"creates the default values for email
 sets up the default attachment directory for email attachments"
 
 
-magix.data.load
+magix.data.load=>public
   id=>magix.email.attachment-directory
 
 if=>not-exist
-  lhs=>[magix.data.load][value]
+  lhs=>[magix.data.load=>public][value]
   code
     magix.data.save
       id=>magix.email.attachment-directory
       value
         directory=>my-files/email
+
+magix.data.load=>private
+  id=>magix.email.attachment-directory-private
+
+if=>not-exist
+  lhs=>[magix.data.load=>private][value]
+  code
+    magix.data.save
+      id=>magix.email.attachment-directory-private
+      value
+        directory=>your-files/email

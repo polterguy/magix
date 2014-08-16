@@ -63,7 +63,47 @@ namespace Magix.email
             }
 
             Node dp = Dp(e.Params);
-            Pop3Helper.GetMessages(ip, dp);
+            string linkedAttachmentDirectory = GetAttachmentDirectory(e.Params, ip, dp, "magix.email.attachment-directory");
+            string attachmentDirectory = GetAttachmentDirectory(e.Params, ip, dp, "magix.email.attachment-directory-private");
+            
+            Node getBase = new Node();
+            RaiseActiveEvent(
+                "magix.file.get-base-path",
+                getBase);
+            string basePath = getBase["path"].Get<string>();
+
+            Pop3Helper.GetMessages(ip, dp, basePath, attachmentDirectory, linkedAttachmentDirectory);
+        }
+
+        /*
+         * helper to retrieve attachment directory
+         */
+        private static string GetAttachmentDirectory(Node pars, Node ip, Node dp, string idOfAttachmentDirectory)
+        {
+            string user = Expressions.GetExpressionValue<string>(ip.GetValue("user", ""), dp, ip, false);
+            if (string.IsNullOrEmpty(user))
+                throw new Exception("no [user] given");
+
+            // getting base attachment directory
+            Node loadAttachmentDirectory = new Node("magix.data.load");
+            loadAttachmentDirectory["id"].Value = idOfAttachmentDirectory;
+            BypassExecuteActiveEvent(loadAttachmentDirectory, pars);
+            string attachmentDirectory = loadAttachmentDirectory["value"]["directory"].Get<string>() + "/" + user;
+
+            // checking to see if directory exist
+            Node verifyDirectoryExist = new Node("magix.file.directory-exist");
+            verifyDirectoryExist["directory"].Value = attachmentDirectory;
+            BypassExecuteActiveEvent(verifyDirectoryExist, pars);
+
+            if (!verifyDirectoryExist["value"].Get<bool>())
+            {
+                // need to create attachment directory for user
+                Node createAttachmentDirectory = new Node("magix.file.create-directory", null);
+                createAttachmentDirectory["directory"].Value = attachmentDirectory;
+                BypassExecuteActiveEvent(createAttachmentDirectory, pars);
+            }
+
+            return attachmentDirectory + "/";
         }
     }
 }

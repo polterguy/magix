@@ -859,9 +859,52 @@ this directory, in a directory with the name of the username logged into the sys
     panel
       class=>btn-group
       controls
+        text-box=>private-attachments
+          class=>span-7 top-1
+          placeholder=>private attachments ...
+          onfirstload
+            magix.data.load
+              id=>magix.email.attachment-directory-private
+            if=>exist
+              lhs=>[magix.data.load][value]
+              code
+                using=>magix.forms
+                  set-value
+                    form-id=>admin-settings
+                    id=>private-attachments
+                    value=>[magix.data.load][value][directory].value
+        button=>browse-private-attachments
+          class=>span-2 top-1 last
+          value=>browse
+          onclick
+            execute-script
+              file=>system42/private/file-manager/file-manager.hl
+              params
+                container=>browse-attachment-dynamic
+                select-directory=>true
+                select-file=>false
+                onselect
+                  magix.viewport.clear-controls
+                    container=>browse-attachment-dynamic
+                    reset-class=>true
+                  using=>magix.forms
+                    set-value
+                      id=>private-attachments
+                      value=>[$][file].value
+                oncancel
+                  magix.viewport.clear-controls
+                    container=>browse-attachment-dynamic
+                    reset-class=>true
+    label
+      class=>span-4 top-1
+      tag=>label
+      value=>linked attachments
+    panel
+      class=>btn-group
+      controls
         text-box=>attachment-directory
           class=>span-7 top-1
-          placeholder=>attachment directory ...
+          placeholder=>linked attachments ...
           onfirstload
             magix.data.load
               id=>magix.email.attachment-directory
