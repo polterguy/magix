@@ -5,26 +5,15 @@
  */
 
 using System;
-using System.Net;
-using System.Web;
-using System.Configuration;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using sys = System.Security.Cryptography.X509Certificates;
 using Magix.Core;
 using MimeKit;
-using MailKit.Net.Smtp;
-using MimeKit.Cryptography;
-using Org.BouncyCastle.X509;
-using Org.BouncyCastle.Crypto;
-using Org.BouncyCastle.Security;
 
 namespace Magix.email
 {
 	/*
 	 * email smtp core
 	 */
-	internal class SmtpCore : ActiveController
+	internal sealed class SmtpCore : ActiveController
 	{
         /*
          * sends email over smtp

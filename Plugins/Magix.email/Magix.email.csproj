@@ -50,6 +50,7 @@
   <ItemGroup>
     <Compile Include="Pop3Core.cs" />
     <Compile Include="ImapCore.cs" />
+    <Compile Include="pop3\Pop3Helper.cs" />
     <Compile Include="SmtpCore.cs" />
     <Compile Include="smtp\SmtpHelper.cs" />
   </ItemGroup>

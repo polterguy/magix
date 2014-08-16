@@ -43,7 +43,12 @@ to do the lookup
 the certificate/key storage to enumerate, is defined in the 
 magix.cryptography library, which by the time of this writing 
 uses the windows certificate storage for looking up keys and 
-certificates"
+certificates
+
+please note that the active event will automatically determine 
+if the smtp server supports the starttls command, or 'explicit 
+ssl', and automatically use an ssl stream for sending the message, 
+if it should"
 
 magix.smtp.send-message-sample
   magix.smtp.send-message
@@ -82,4 +87,20 @@ as you can see, it can span multiple lines"
       =>media/images/help-files/marvin-headshot.png
     linked-attachments
       =>media/images/icons/start-button.png
+
+
+magix.pop3.get-message-count-dox=>@"returns message count from pop3 server
+
+returns number of unread message from pop3 server as [count]
+
+use [host], [port], [ssl], [username] and [passord] 
+to connect.  all parameters can be either constants or expressions"
+
+magix.pop3.get-message-count-sample
+  magix.pop3.get-message-count
+    host=>pop.gmail.com
+    port=>995
+    ssl=>true
+    username=>your.username
+    password=>YourPa$$word
 
