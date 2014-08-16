@@ -47,19 +47,20 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="BouncyCastle">
-      <HintPath>..\packages\MimeKit.0.93.0.0\lib\net45\BouncyCastle.dll</HintPath>
+      <HintPath>..\packages\MimeKit.0.94.0.0\lib\net45\BouncyCastle.dll</HintPath>
     </Reference>
     <Reference Include="log4net">
       <HintPath>..\references\log4net.dll</HintPath>
     </Reference>
-    <Reference Include="MailKit">
-      <HintPath>..\packages\MailKit.0.93.0.0\lib\net45\MailKit.dll</HintPath>
+    <Reference Include="MailKit, Version=0.94.0.0, Culture=neutral, PublicKeyToken=4e064fe7c44a8f1b, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\MailKit.0.94.0.0\lib\net45\MailKit.dll</HintPath>
     </Reference>
-    <Reference Include="MimeKit">
-      <HintPath>..\packages\MimeKit.0.93.0.0\lib\net45\MimeKit.dll</HintPath>
+    <Reference Include="MimeKit, Version=0.94.0.0, Culture=neutral, PublicKeyToken=bede1c8a46c66814, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\MimeKit.0.94.0.0\lib\net45\MimeKit.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Data" />
     <Reference Include="System.Security" />
     <Reference Include="System.Web" />
     <Reference Include="System.Configuration" />
@@ -215,6 +216,10 @@
     <ProjectReference Include="..\Magix.viewports\Magix.viewports.csproj">
       <Project>{47afbbbe-cdf6-4b3a-8bd8-478406735c99}</Project>
       <Name>Magix.viewports</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Plugins\Magix.cryptography\Magix.cryptography.csproj">
+      <Project>{c3c67ab2-fbc1-4929-96f7-0511f0ea966c}</Project>
+      <Name>Magix.cryptography</Name>
     </ProjectReference>
     <ProjectReference Include="..\Plugins\Magix.data\Magix.data.csproj">
       <Project>{4fc8426a-ed89-4100-887e-c571e3dc9c8c}</Project>
@@ -486,12 +491,6 @@
     <Content Include="system42\private\email\inbox\parts\reply\reply-no-html-web-part.hl" />
     <Content Include="packages.config" />
     <None Include="todo.txt" />
-    <Content Include="x64\SQLite.Interop.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="x86\SQLite.Interop.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="your-files\readme.txt" />
     <Content Include="your-files\samples\hello-world-app\readme.txt" />
     <Content Include="your-files\tmp\readme.txt" />
