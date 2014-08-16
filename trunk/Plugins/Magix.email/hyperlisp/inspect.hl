@@ -5,7 +5,45 @@ inspect=>@"documentation for magix.email"
 
 magix.smtp.send-message-dox=>@"sends an email over smtp
 
-TODO: document ..."
+send an email message over smtp to [host] on [port] using 
+implicit ssl if [implicit-ssl] is set, with the given [username] 
+and [password] as credentials for the smtp client
+
+all above parameters can be either expressions or constants
+
+[from] is sender's email, and [from][display-name] his or hers 
+displayed name.  [reply-to] is where to reply
+
+[to], [cc] and [bcc] are lists of emails that the message 
+will be sent to, either as direct recipient, carbon copied 
+recipient or blind carbon copied recipient
+
+[subject] is subject line, and [body] contains either [html], 
+[plain] or both as the message body
+
+you can also attach attachments as [attachments] and linked 
+attachments as [linked-attachments].  the path to the attachments 
+you wish to supply must be relative from underneath your magix 
+installation.  linked attachments are attachments which you 
+reference from inside of the html of your html body parts, and 
+will become automatically linked into the html of your body
+
+if you supply [signed], the message will be signed with an 
+X509 encryption key, and its associated certificate will be 
+inserted into the message as a mime attachment.  the lookup 
+for a certificate and key to use for this operation, will 
+be performed using the email address of the [from] field as 
+the subject-name to do the lookup
+
+if you supply [encrypt], the message will be encrypted with 
+certificates looked up by using all the recipients in the 
+[to], [cc] and [bcc] fields email addresses as the subject-name 
+to do the lookup
+
+the certificate/key storage to enumerate, is defined in the 
+magix.cryptography library, which by the time of this writing 
+uses the windows certificate storage for looking up keys and 
+certificates"
 
 magix.smtp.send-message-sample
   magix.smtp.send-message
@@ -27,6 +65,8 @@ magix.smtp.send-message-sample
     bcc
       =>jane@doe.com
         display-name=>Jane Dode
+    signed=>false
+    encrypt=>false
     subject=>this is subject ...
     body
       html=>@"this is the body of your <b>message</b>
@@ -42,5 +82,4 @@ as you can see, it can span multiple lines"
       =>media/images/help-files/marvin-headshot.png
     linked-attachments
       =>media/images/icons/start-button.png
-
 
