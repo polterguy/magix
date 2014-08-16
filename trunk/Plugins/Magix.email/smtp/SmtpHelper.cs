@@ -121,7 +121,7 @@ namespace Magix.email
                 client.Connect(host, port, implicitSsl);
                 client.AuthenticationMechanisms.Remove("XOAUTH2");
                 if (!string.IsNullOrEmpty(username))
-                    client.Authenticate(new NetworkCredential(username, password));
+                    client.Authenticate(username, password);
                 client.Send(msg);
                 client.Disconnect(true);
             }
