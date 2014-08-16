@@ -8,14 +8,15 @@ using System;
 using System.Net;
 using System.Web;
 using System.Configuration;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using sys = System.Security.Cryptography.X509Certificates;
+using Magix.Core;
 using MimeKit;
 using MailKit.Net.Smtp;
 using MimeKit.Cryptography;
 using Org.BouncyCastle.X509;
 using Org.BouncyCastle.Crypto;
-using Magix.Core;
 using Org.BouncyCastle.Security;
 
 namespace Magix.email
@@ -54,14 +55,52 @@ namespace Magix.email
             MimeEntity body = builder.ToMessageBody();
             if (ip.Contains("signed") && ip["signed"].Get<bool>())
             {
-                sys.X509Certificate2 origCert = MailCommon.FindCertificate(((MailboxAddress)msg.From[0]).Address);
-                X509Certificate cert = DotNetUtilities.FromX509Certificate(origCert);
-                AsymmetricKeyParameter akp = DotNetUtilities.GetKeyPair(origCert.PrivateKey).Private;
-                CmsSigner signer = new CmsSigner(cert, akp);
-                msg.Body = MultipartSigned.Create(signer, body);
+                Node signNode = new Node();
+                signNode["mime-entity"].Value = body;
+                signNode["email-lookup"].Value = ((MailboxAddress)msg.From[0]).Address;
+
+                if (ip.Contains("encrypt") && ip["encrypt"].Get<bool>())
+                {
+                    foreach (MailboxAddress idx in msg.To)
+                        signNode["email-lookups"].Add(new Node("", idx.Address));
+                    foreach (MailboxAddress idx in msg.Cc)
+                        signNode["email-lookups"].Add(new Node("", idx.Address));
+                    foreach (MailboxAddress idx in msg.Bcc)
+                        signNode["email-lookups"].Add(new Node("", idx.Address));
+
+                    RaiseActiveEvent(
+                        "magix.cryptography._sign_and_encrypt-mime-entity",
+                        signNode);
+                }
+                else
+                {
+                    RaiseActiveEvent(
+                        "magix.cryptography._sign-mime-entity",
+                        signNode);
+                }
+
+                body = signNode["mime-entity"].Value as MimeEntity;
             }
-            else
-                msg.Body = body;
+            else if (ip.Contains("encrypt") && ip["encrypt"].Get<bool>())
+            {
+                Node encryptNode = new Node();
+                encryptNode["mime-entity"].Value = body;
+
+                foreach (MailboxAddress idx in msg.To)
+                    encryptNode["email-lookups"].Add(new Node("", idx.Address));
+                foreach (MailboxAddress idx in msg.Cc)
+                    encryptNode["email-lookups"].Add(new Node("", idx.Address));
+                foreach (MailboxAddress idx in msg.Bcc)
+                    encryptNode["email-lookups"].Add(new Node("", idx.Address));
+
+                RaiseActiveEvent(
+                    "magix.cryptography._encrypt-mime-entity",
+                    encryptNode);
+
+                body = encryptNode["mime-entity"].Value as MimeEntity;
+            }
+
+            msg.Body = body;
             SendMessage(ip, dp, msg);
         }
 

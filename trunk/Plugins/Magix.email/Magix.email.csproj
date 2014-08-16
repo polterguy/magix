@@ -32,24 +32,22 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="BouncyCastle">
-      <HintPath>..\..\packages\MimeKit.0.93.0.0\lib\net40\BouncyCastle.dll</HintPath>
+    <Reference Include="BouncyCastle, Version=1.8.5340.34569, Culture=neutral, PublicKeyToken=eec3120e64a3fcba, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\MimeKit.0.94.0.0\lib\net45\BouncyCastle.dll</HintPath>
     </Reference>
-    <Reference Include="MailKit">
-      <HintPath>..\..\packages\MailKit.0.93.0.0\lib\net40\MailKit.dll</HintPath>
+    <Reference Include="MailKit, Version=0.93.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\MailKit.0.94.0.0\lib\net45\MailKit.dll</HintPath>
     </Reference>
-    <Reference Include="MimeKit">
-      <HintPath>..\..\packages\MimeKit.0.93.0.0\lib\net40\MimeKit.dll</HintPath>
+    <Reference Include="MimeKit, Version=0.93.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\MimeKit.0.94.0.0\lib\net45\MimeKit.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Data.SQLite">
-      <HintPath>..\..\packages\System.Data.SQLite.Core.1.0.93.0\lib\net45\System.Data.SQLite.dll</HintPath>
-    </Reference>
     <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MailCommon.cs" />
     <Compile Include="Pop3Core.cs" />
     <Compile Include="ImapCore.cs" />
     <Compile Include="SmtpCore.cs" />
