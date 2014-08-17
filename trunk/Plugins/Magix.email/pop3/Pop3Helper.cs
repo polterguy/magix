@@ -34,7 +34,9 @@ namespace Magix.email
                 client.AuthenticationMechanisms.Remove("XOAUTH2");
                 if (!string.IsNullOrEmpty(username))
                     client.Authenticate(username, password);
-                return client.GetMessageCount();
+                int retVal = client.GetMessageCount();
+                client.Disconnect(true);
+                return retVal;
             }
         }
 
@@ -53,6 +55,7 @@ namespace Magix.email
             bool implicitSsl = Expressions.GetExpressionValue<bool>(ip.GetValue("ssl", "false"), dp, ip, false);
             string username = Expressions.GetExpressionValue<string>(ip.GetValue("username", ""), dp, ip, false);
             string password = Expressions.GetExpressionValue<string>(ip.GetValue("password", ""), dp, ip, false);
+            int count = Expressions.GetExpressionValue<int>(ip.GetValue("count", "50"), dp, ip, false);
 
             using (Pop3Client client = new Pop3Client())
             {
@@ -61,12 +64,15 @@ namespace Magix.email
                 if (!string.IsNullOrEmpty(username))
                     client.Authenticate(username, password);
 
-                int count = client.GetMessageCount();
+                int serverCount = client.GetMessageCount();
+                count = Math.Min(serverCount, count);
                 for (int idxMsg = 0; idxMsg < count; idxMsg++)
                 {
                     MimeMessage msg = client.GetMessage(idxMsg);
                     BuildMessage(msg, ip["values"]["msg_" + idxMsg], basePath, attachmentDirectory, linkedAttachmentDirectory);
+                    client.DeleteMessage(idxMsg);
                 }
+                client.Disconnect(true);
             }
         }
 
@@ -82,58 +88,12 @@ namespace Magix.email
         {
             ExtractHeaders(msg, node);
             ExtractBody(msg, node);
-
-            foreach (MimePart idxAtt in msg.Attachments)
-            {
-                string fileName = idxAtt.FileName;
-                if (idxAtt.Headers.Contains("Content-Location"))
-                {
-                    // this is a linked resource
-                    string contentLocation = idxAtt.Headers["Content-Location"];
-                    string newFileName = linkedAttachmentDirectory + fileName;
-                    if (node.Contains("body") && node["body"].ContainsValue("html"))
-                    {
-                        node["body"]["html"].Value = node["body"]["html"].Get<string>().Replace(contentLocation, newFileName);
-                    }
-                    using (Stream stream = File.Create(basePath + newFileName))
-                    {
-                        idxAtt.ContentObject.DecodeTo(stream);
-                    }
-                }
-                else
-                {
-                    // this is not a linked attachment
-                    using (Stream stream = File.Create(basePath + attachmentDirectory + fileName))
-                    {
-                        idxAtt.ContentObject.DecodeTo(stream);
-                    }
-                }
-            }
-        }
-
-        /*
-         * extracts body parts from message and put into node
-         */
-        private static void ExtractBody(MimeMessage msg, Node node)
-        {
-            foreach (MimePart idxBody in msg.BodyParts)
-            {
-                if (idxBody is TextPart)
-                {
-                    TextPart tp = idxBody as TextPart;
-                    if (idxBody.ContentType.MediaType == "text")
-                    {
-                        if (idxBody.ContentType.MediaSubtype == "plain")
-                        {
-                            node["body"]["plain"].Value = tp.Text;
-                        }
-                        else if (idxBody.ContentType.MediaSubtype == "html")
-                        {
-                            node["body"]["html"].Value = tp.Text;
-                        }
-                    }
-                }
-            }
+            ExtractAttachments(
+                msg, 
+                node, 
+                basePath, 
+                attachmentDirectory, 
+                linkedAttachmentDirectory);
         }
 
         /*
@@ -162,6 +122,67 @@ namespace Magix.email
             node["message-id"].Value = msg.MessageId;
 
             node["subject"].Value = msg.Subject;
+        }
+
+        /*
+         * extracts body parts from message and put into node
+         */
+        private static void ExtractBody(MimeMessage msg, Node node)
+        {
+            foreach (MimePart idxBody in msg.BodyParts)
+            {
+                if (idxBody is TextPart)
+                {
+                    TextPart tp = idxBody as TextPart;
+                    if (idxBody.ContentType.MediaType == "text")
+                    {
+                        if (idxBody.ContentType.MediaSubtype == "plain")
+                        {
+                            node["body"]["plain"].Value = tp.Text;
+                        }
+                        else if (idxBody.ContentType.MediaSubtype == "html")
+                        {
+                            node["body"]["html"].Value = tp.Text;
+                        }
+                    }
+                }
+            }
+        }
+
+        /*
+         * extracts attachments from message
+         */
+        private static void ExtractAttachments(
+            MimeMessage msg, 
+            Node node, 
+            string basePath, 
+            string attachmentDirectory, 
+            string linkedAttachmentDirectory)
+        {
+            foreach (MimePart idxAtt in msg.Attachments)
+            {
+                string fileName;
+                if (idxAtt.Headers.Contains("Content-Location"))
+                {
+                    // this is a linked resource, replacing references inside html with local filename
+                    fileName = linkedAttachmentDirectory + msg.MessageId + "_" + idxAtt.FileName;
+                    if (node.Contains("body") && node["body"].ContainsValue("html"))
+                        node["body"]["html"].Value =
+                            node["body"]["html"].Get<string>().Replace(idxAtt.Headers["Content-Location"], fileName);
+                }
+                else
+                {
+                    fileName = attachmentDirectory + msg.MessageId + "_" + idxAtt.FileName;
+                    Node attNode = new Node("", idxAtt.FileName);
+                    attNode["local-file-name"].Value = fileName;
+                    node["attachments"].Add(attNode);
+                }
+
+                using (Stream stream = File.Create(basePath + fileName))
+                {
+                    idxAtt.ContentObject.DecodeTo(stream);
+                }
+            }
         }
 
         /*

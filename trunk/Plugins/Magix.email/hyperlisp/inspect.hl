@@ -93,13 +93,9 @@ magix.pop3.get-message-count-dox=>@"returns message count from pop3 server
 
 returns number of unread message from pop3 server as [count]
 
-use [host], [port], [ssl], [username] and [passord] 
+use [host], [port], [ssl], [username] and [password] 
 to connect.  all mentioned parameters can be either constants 
-or expressions
-
-[user] is username of logged in user, and will be used as a 
-helper for knowing which directory to save attachments 
-underneath"
+or expressions"
 
 magix.pop3.get-message-count-sample
   magix.pop3.get-message-count
@@ -108,4 +104,29 @@ magix.pop3.get-message-count-sample
     ssl=>true
     username=>your.username
     password=>YourPa$$word
+
+
+magix.pop3.get-messages-dox=>@"returns messages from pop3 server
+
+returns [count] number of messages from pop3 server as [values]
+
+use [host], [port], [ssl], [username] and [password] 
+to connect.  all mentioned parameters can be either constants 
+or expressions
+
+[user] is username of logged in user, and will be used as a 
+helper for knowing which directory to save attachments 
+underneath
+
+messages will be marked as deleted after downloading them"
+
+magix.pop3.get-message-count-sample
+  magix.pop3.get-message-count
+    host=>pop.gmail.com
+    port=>995
+    ssl=>true
+    username=>your.username
+    password=>YourPa$$word
+    user=>admin
+    count=>10
 

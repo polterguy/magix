@@ -63,6 +63,7 @@ namespace Magix.email
             }
 
             Node dp = Dp(e.Params);
+
             string linkedAttachmentDirectory = GetAttachmentDirectory(e.Params, ip, dp, "magix.email.attachment-directory");
             string attachmentDirectory = GetAttachmentDirectory(e.Params, ip, dp, "magix.email.attachment-directory-private");
             
