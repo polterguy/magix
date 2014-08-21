@@ -129,21 +129,3 @@ magix.pop3.get-messages-sample
     count=>10
 
 
-magix.pop3.delete-messages-dox=>@"deletes messages from pop3 server
-
-deletes [count] number of messages from pop3 server
-
-use [host], [port], [ssl], [username] and [password] 
-to connect.  all mentioned parameters can be either constants 
-or expressions"
-
-magix.pop3.delete-messages-sample
-  magix.pop3.delete-messages
-    host=>pop.gmail.com
-    port=>995
-    ssl=>true
-    username=>your.username
-    password=>YourPa$$word
-    user=>admin
-    count=>10
-
