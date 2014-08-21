@@ -125,7 +125,7 @@ magix.forms.create-web-part
             set=>[execute-script][params][end].value
               value=>[_end].value
             execute-script
-              file=>system42/private/email/inbox/parts/show-emails.hl
+              file=>your-files/system-apps/magix-mail/components/inbox/show-emails.hl
               params
                 search=>{emails-search}
         text-box=>search-emails
@@ -136,7 +136,7 @@ magix.forms.create-web-part
             set=>[execute-script][params][search].value
               value=>[$][value].value
             execute-script
-              file=>system42/private/email/inbox/parts/show-emails.hl
+              file=>your-files/system-apps/magix-mail/components/inbox/show-emails.hl
         button=>next-emails
           class=>span-2 last
           value=>>
@@ -156,7 +156,7 @@ magix.forms.create-web-part
             set=>[execute-script][params][end].value
               value=>[_end].value
             execute-script
-              file=>system42/private/email/inbox/parts/show-emails.hl
+              file=>your-files/system-apps/magix-mail/components/inbox/show-emails.hl
               params
                 search=>{emails-search}
     lambda=>list-of-emails

@@ -178,32 +178,6 @@ namespace Magix.email
         }
 
         /*
-         * deletes messages from server
-         */
-        internal static void DeleteMessages(Node ip, Node dp)
-        {
-            string host = Expressions.GetExpressionValue<string>(ip.GetValue("host", ""), dp, ip, false);
-            int port = Expressions.GetExpressionValue<int>(ip.GetValue("port", "-1"), dp, ip, false);
-            bool implicitSsl = Expressions.GetExpressionValue<bool>(ip.GetValue("ssl", "false"), dp, ip, false);
-            string username = Expressions.GetExpressionValue<string>(ip.GetValue("username", ""), dp, ip, false);
-            string password = Expressions.GetExpressionValue<string>(ip.GetValue("password", ""), dp, ip, false);
-            int count = Expressions.GetExpressionValue<int>(ip.GetValue("count", "50"), dp, ip, false);
-
-            using (Pop3Client client = new Pop3Client())
-            {
-                client.Connect(host, port, implicitSsl);
-                client.AuthenticationMechanisms.Remove("XOAUTH2");
-                if (!string.IsNullOrEmpty(username))
-                    client.Authenticate(username, password);
-
-                int serverCount = client.GetMessageCount();
-                count = Math.Min(serverCount, count);
-                client.DeleteMessages(0, count);
-                client.Disconnect(true);
-            }
-        }
-
-        /*
          * puts a message into a node for returning back to client
          */
         private static void BuildMessage(
@@ -248,7 +222,7 @@ namespace Magix.email
 
             node["message-id"].Value = msg.MessageId;
 
-            node["subject"].Value = msg.Subject;
+            node["subject"].Value = msg.Subject ?? "";
         }
 
         /*

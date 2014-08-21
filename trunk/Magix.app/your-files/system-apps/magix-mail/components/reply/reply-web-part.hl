@@ -19,18 +19,15 @@ if=>not-exist
       value=>Re: {0}
         =>[using][load][value][subject].value
 
-if=>not-exist
-  lhs=>[using][load][value][body][plain]
+if=>equals
+  lhs=>[using][load][value][is-html].value
   rhs=>true
   code
     using=>magix.web
       strip-html
-        value=>[using][load][value][body][html].value
+        value=>[using][load][value][body].value
     set=>[using][load][value][body].value
       value=>[@][using][strip-html][result].value
-else
-  set=>[using][load][value][body].value
-    value=>[using][load][value][body][plain].value
 
 replace=>[using][load][value][body].value
   what=>\n

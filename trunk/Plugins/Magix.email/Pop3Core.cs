@@ -77,33 +77,6 @@ namespace Magix.email
         }
 
         /*
-         * retrieves email from pop3 server
-         */
-        [ActiveEvent(Name = "magix.pop3.delete-messages")]
-        public static void magix_pop3_delete_messages(object sender, ActiveEventArgs e)
-        {
-            Node ip = Ip(e.Params);
-            if (ShouldInspect(ip))
-            {
-                AppendInspectFromResource(
-                    ip["inspect"],
-                    "Magix.email",
-                    "Magix.email.hyperlisp.inspect.hl",
-                    "[magix.pop3.delete-messages-dox].value");
-                AppendCodeFromResource(
-                    ip,
-                    "Magix.email",
-                    "Magix.email.hyperlisp.inspect.hl",
-                    "[magix.pop3.delete-messages-sample]");
-                return;
-            }
-
-            Node dp = Dp(e.Params);
-
-            Pop3Helper.DeleteMessages(ip, dp);
-        }
-
-        /*
          * helper to retrieve attachment directory
          */
         private static string GetAttachmentDirectory(Node pars, Node ip, Node dp, string idOfAttachmentDirectory)
