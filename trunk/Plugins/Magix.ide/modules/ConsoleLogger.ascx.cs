@@ -69,7 +69,43 @@ namespace Magix.ide.modules
         }
 
         /*
-         * reloads the tracer when page is posting back
+         * loads the console logger
+         */
+        [ActiveEvent(Name = "magix.console.load")]
+        public static void magix_console_load(object sender, ActiveEventArgs e)
+        {
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
+            {
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.ide",
+                    "Magix.ide.hyperlisp.inspect.hl",
+                    "[magix.console.load-dox].value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.ide",
+                    "Magix.ide.hyperlisp.inspect.hl",
+                    "[magix.console.load-sample]");
+                return;
+            }
+
+            Node exeNode = new Node("magix.viewport.load-module");
+            exeNode["name"].Value = "Magix.ide.modules.ConsoleLogger";
+            exeNode.AddRange(ip.Clone());
+
+            Node newPars = e.Params.Clone();
+            newPars["_root-only-execution"].Value = true;
+            newPars["_ip"].Value = exeNode;
+            newPars["_dp"].Value = exeNode;
+
+            RaiseActiveEvent(
+                "magix.execute",
+                newPars);
+        }
+
+        /*
+         * logs a piece of text to the console logger
          */
         [ActiveEvent(Name = "magix.console.log")]
         public void magix_console_log(object sender, ActiveEventArgs e)

@@ -498,3 +498,18 @@ magix.console.log-sample
   magix.console.log
     value=>this is being shown in logger
 
+
+magix.console.load-dox=>@"loads the console logger
+
+loads the console logger in [container] with [rows] number 
+of rows to show simultaneously and [class] to use as the 
+css class for the module"
+
+magix.console.load-sample
+  magix.console.load
+    container=>content5
+    class=>span-20 top-5 bottom-5 last boxed air-padding
+    rows=>10
+
+
+
