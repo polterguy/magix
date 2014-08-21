@@ -59,7 +59,7 @@ namespace Magix.email
 
             Node exeNode = null;
             if (ip.Contains("code"))
-                exeNode = ip["code"].Clone();
+                exeNode = ip["code"];
 
             using (Pop3Client client = new Pop3Client())
             {
@@ -168,13 +168,15 @@ namespace Magix.email
         {
             // we have a code callback
             Node callbackNode = exeNode.Clone();
-            BuildMessage(msg, callbackNode["_message"], basePath, attachmentDirectory, linkedAttachmentDirectory);
-            pars["_ip"].Value = callbackNode;
+            BuildMessage(msg, exeNode["_message"], basePath, attachmentDirectory, linkedAttachmentDirectory);
+            pars["_ip"].Value = exeNode;
 
             ActiveEvents.Instance.RaiseActiveEvent(
                 typeof(Pop3Helper),
                 "magix.execute",
                 pars);
+            exeNode.Clear();
+            exeNode.AddRange(callbackNode);
         }
 
         /*

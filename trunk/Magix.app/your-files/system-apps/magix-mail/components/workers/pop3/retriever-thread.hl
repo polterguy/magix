@@ -7,7 +7,7 @@ a different thread, since it might take a long time to execute this file"
 
 
 // settings pop3 email account settings for retrieving emails
-add=>[**magix.pop3.get-messages]
+add=>[**get-messages]
   values=>[$][pop-settings]
 add=>[**magix.pop3.get-message-count]
   values=>[$][pop-settings]
@@ -56,67 +56,83 @@ try
             download-count=>0
 
         // starting retrieval of new messages, with callback
-        magix.pop3.get-messages
-          delete=>true
+        _total-download=>0
+        while=>less-than
+          lhs=>[@][_total-download].value
+          rhs=>[@][..][..][magix.pop3.get-message-count][count].value
           code
+            using=>magix.pop3
+              get-messages
+                delete=>true
+                count=>5
+                code
 
-            // first checking if message exist from before
-            using=>magix.data
-              load
-                id=>magix.email.message-{0}
-                  =>[@][..][_message][message-id].value
-            if=>not-exist
-              lhs=>[@][using][load][value]
-              code
+                  // opening up "magix.execute" namespace again
+                  using=>magix.execute
 
-                // setting plain view as preferredd body of message
-                if=>exist
-                  lhs=>[@][..][..][_message][body][plain]
-                  code
-                    set=>[@][..][..][..][..][_message][body].value
-                      value=>[@][..][..][..][..][_message][body][plain].value
-                    set=>[@][..][..][..][..][_message][is-html].value
-                      value=>false
-                else
-                  set=>[@][..][..][..][_message][body].value
-                    value=>[@][..][..][..][_message][body][html].value
-                  set=>[@][..][..][..][_message][is-html].value
-                    value=>true
-                set=>[@][..][..][_message][body][plain]
-                set=>[@][..][..][_message][body][html]
+                    // bumbing total download count
+                    using=>magix.math
+                      add=>[@][..][..][..][..][..][..][..][_total-download]
+                        =>[@][..][..][..][..][..][..][..][_total-download].value
+                        =>1
 
-                // filtering emails into correct folder
-                add=>[@][magix.email.filter-emails][email]
-                  values=>[@][..][..][_message]
-                magix.email.filter-emails
-                  user=>{user}
-                set=>[@][..][..][_message]
-                add=>[@][..][..][_message]
-                  values=>[@][magix.email.filter-emails][email]
+                    // first checking if message exist from before
+                    using=>magix.data
+                      load
+                        id=>magix.email.message-{0}
+                          =>[@][..][..][_message][message-id].value
+                    if=>not-exist
+                      lhs=>[@][using=>magix.data][load][value]
+                      code
 
-                // saving email into database
-                add=>[@][magix.data.save][value]
-                  values=>[@][..][..][_message]
-                set=>[@][magix.data.save][id].value
-                  value=>magix.email.message-{0}
-                    =>[@][..][..][_message][message-id].value
-                magix.data.save
-                  value
-                    type=>magix.email.message
-                    username=>{user}
-                    read=>false
+                        // setting plain view as preferredd body of message
+                        if=>exist
+                          lhs=>[@][..][..][..][_message][body][plain]
+                          code
+                            set=>[@][..][..][..][..][..][_message][body].value
+                              value=>[@][..][..][..][..][..][_message][body][plain].value
+                            set=>[@][..][..][..][..][..][_message][is-html].value
+                              value=>false
+                        else
+                          set=>[@][..][..][..][..][_message][body].value
+                            value=>[@][..][..][..][..][_message][body][html].value
+                          set=>[@][..][..][..][..][_message][is-html].value
+                            value=>true
+                        set=>[@][..][..][..][_message][body][plain]
+                        set=>[@][..][..][..][_message][body][html]
 
-                // updating status, incrementing download-count by 1
-                magix.data.load=>status
-                  id=>magix.email.thread-status-{0}
-                    =>{user}
-                add=>[@][magix.data.save=>status]
-                  values=>[@][magix.data.load=>status]
-                using=>magix.math
-                  add=>[@][..][magix.data.save=>status][value][download-count]
-                    =>[@][..][magix.data.save=>status][value][download-count].value
-                    =>1
-                magix.data.save=>status
+                        // filtering emails into correct folder
+                        add=>[@][magix.email.filter-emails][email]
+                          values=>[@][..][..][..][_message]
+                        magix.email.filter-emails
+                          user=>{user}
+                        set=>[@][..][..][..][_message]
+                        add=>[@][..][..][..][_message]
+                          values=>[@][magix.email.filter-emails][email]
+
+                        // saving email into database
+                        add=>[@][magix.data.save][value]
+                          values=>[@][..][..][..][_message]
+                        set=>[@][magix.data.save][id].value
+                          value=>magix.email.message-{0}
+                            =>[@][..][..][..][_message][message-id].value
+                        magix.data.save
+                          value
+                            type=>magix.email.message
+                            username=>{user}
+                            read=>false
+
+                        // updating status, incrementing download-count by 1
+                        magix.data.load=>status
+                          id=>magix.email.thread-status-{0}
+                            =>{user}
+                        add=>[@][magix.data.save=>status]
+                          values=>[@][magix.data.load=>status]
+                        using=>magix.math
+                          add=>[@][..][magix.data.save=>status][value][download-count]
+                            =>[@][..][magix.data.save=>status][value][download-count].value
+                            =>1
+                        magix.data.save=>status
 
         // finished retrieving messages, updating status before returning
         set=>[@][magix.data.save=>status-2][value][download-count].value

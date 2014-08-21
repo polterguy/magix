@@ -482,3 +482,19 @@ magix.ide.redo-sample
     redo
     get-form
 
+
+magix.console.log-dox=>@"logs text to console
+
+logs the given [value] to the console web part.  [value] 
+can be either an expression or a constant, and can also 
+contain formatting expressions, such as {0} and {1}, 
+de-referencing children nodes of [value]"
+
+magix.console.log-sample
+  magix.viewport.load-module
+    container=>content5
+    class=>span-22 last
+    name=>Magix.ide.modules.ConsoleLogger
+  magix.console.log
+    value=>this is being shown in logger
+

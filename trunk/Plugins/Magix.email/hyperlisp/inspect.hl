@@ -116,7 +116,22 @@ or expressions
 
 [user] is username of logged in user, and will be used as a 
 helper for knowing which directory to save attachments 
-underneath"
+underneath
+
+if you supply a [code] block, then this block of hyperlisp 
+code will be used as a callback, invoked for every single 
+message received.  this enables you to save messages as they 
+are being downloaded from your pop3 server to a database, or 
+something similar.  if you do not supply a [code] block, then 
+all messages will be returned to caller as [values]
+
+if you supply [delete] and set its value to true, then after 
+either the [code] block has been invoked, or the message has 
+been downloaded, depending upon if you have a [code] block or 
+not, the message will be deleted from your email server
+
+if you don't supply a [count] or supply its value as -1, then 
+all messages that are unread on the server will be downloaded"
 
 magix.pop3.get-messages-sample
   magix.pop3.get-messages
@@ -127,5 +142,5 @@ magix.pop3.get-messages-sample
     password=>YourPa$$word
     user=>admin
     count=>10
-
+    delete=>false
 

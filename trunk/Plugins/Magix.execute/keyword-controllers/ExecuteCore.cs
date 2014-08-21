@@ -158,7 +158,10 @@ namespace Magix.execute
                 {
                     // this is a keyword, and have access to the entire tree, and also needs to have the default namespace 
                     // prepended in front of it before being raised
-                    if (pars.Contains("_namespaces") && pars["_namespaces"].Count > 0)
+                    // notice how [using] name of node always maps to "magix.execute.using", regardless of namespace stack
+                    if (activeEvent == "using")
+                        activeEvent = "magix.execute." + activeEvent;
+                    else if (pars.Contains("_namespaces") && pars["_namespaces"].Count > 0)
                         activeEvent = pars["_namespaces"][pars["_namespaces"].Count - 1].Get<string>() + "." + activeEvent;
                     else
                         activeEvent = "magix.execute." + activeEvent;

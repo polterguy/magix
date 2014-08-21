@@ -34,6 +34,10 @@
     <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="modules\ConsoleLogger.ascx.cs">
+      <DependentUpon>ConsoleLogger.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="modules\EventSniffer.ascx.cs">
       <DependentUpon>EventSniffer.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -73,6 +77,11 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="modules\ExecutorForm.ascx">
+      <SubType>ASPXCodeBehind</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="modules\ConsoleLogger.ascx">
       <SubType>ASPXCodeBehind</SubType>
     </EmbeddedResource>
   </ItemGroup>

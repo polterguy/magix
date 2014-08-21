@@ -633,3 +633,8 @@ select:disabled
     border-radius:5px;
 }
 
+.console-logger p
+{
+    margin-bottom:0;
+}
+

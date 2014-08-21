@@ -77,4 +77,13 @@
 
 22. created magix.application.set/get to set and retrieve application objects
 
+23. created "Magix.ide.modules.ConsoleLogger" module, which serves as a console logger
+
+24. fixed main execution of hyperlisp engine such that [using] always maps to "magix.execute.using" such that we can use different 
+    namespaces inside other namespaces
+
+
+
+
+
 
