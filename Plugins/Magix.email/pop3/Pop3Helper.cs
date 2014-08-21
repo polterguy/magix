@@ -44,11 +44,143 @@ namespace Magix.email
          * returns messages from pop3 server
          */
         internal static void GetMessages(
+            Node pars,
             Node ip, 
             Node dp, 
             string basePath, 
             string attachmentDirectory, 
             string linkedAttachmentDirectory)
+        {
+            string host = Expressions.GetExpressionValue<string>(ip.GetValue("host", ""), dp, ip, false);
+            int port = Expressions.GetExpressionValue<int>(ip.GetValue("port", "-1"), dp, ip, false);
+            bool implicitSsl = Expressions.GetExpressionValue<bool>(ip.GetValue("ssl", "false"), dp, ip, false);
+            string username = Expressions.GetExpressionValue<string>(ip.GetValue("username", ""), dp, ip, false);
+            string password = Expressions.GetExpressionValue<string>(ip.GetValue("password", ""), dp, ip, false);
+
+            Node exeNode = null;
+            if (ip.Contains("code"))
+                exeNode = ip["code"].Clone();
+
+            using (Pop3Client client = new Pop3Client())
+            {
+                client.Connect(host, port, implicitSsl);
+                client.AuthenticationMechanisms.Remove("XOAUTH2");
+                if (!string.IsNullOrEmpty(username))
+                    client.Authenticate(username, password);
+
+                try
+                {
+                    RetrieveMessagesFromServer(
+                        pars, 
+                        dp,
+                        ip, 
+                        basePath, 
+                        attachmentDirectory, 
+                        linkedAttachmentDirectory, 
+                        exeNode, 
+                        client);
+                }
+                finally
+                {
+                    if (client.IsConnected)
+                        client.Disconnect(true);
+                }
+            }
+        }
+
+        /*
+         * retrieves messages from pop3 server
+         */
+        private static void RetrieveMessagesFromServer(
+            Node pars, 
+            Node dp,
+            Node ip, 
+            string basePath, 
+            string attachmentDirectory, 
+            string linkedAttachmentDirectory, 
+            Node exeNode, 
+            Pop3Client client)
+        {
+            int serverCount = client.GetMessageCount();
+            int count = Expressions.GetExpressionValue<int>(ip.GetValue("count", serverCount.ToString()), dp, ip, false);
+            count = Math.Min(serverCount, count);
+
+            bool delete = Expressions.GetExpressionValue<bool>(ip.GetValue("delete", "false"), dp, ip, false);
+
+            for (int idxMsg = 0; idxMsg < count; idxMsg++)
+            {
+                MimeMessage msg = client.GetMessage(idxMsg);
+                HandleMessage(
+                    pars,
+                    ip,
+                    basePath,
+                    attachmentDirectory,
+                    linkedAttachmentDirectory,
+                    exeNode,
+                    idxMsg,
+                    msg);
+
+                if (delete)
+                    client.DeleteMessage(idxMsg);
+            }
+        }
+
+        /*
+         * handles one message from server
+         */
+        private static void HandleMessage(
+            Node pars, 
+            Node ip, 
+            string basePath, 
+            string attachmentDirectory, 
+            string linkedAttachmentDirectory, 
+            Node exeNode, 
+            int idxMsg, 
+            MimeMessage msg)
+        {
+            if (exeNode == null)
+            {
+                // returning messages back to caller as a list of emails
+                BuildMessage(msg, ip["values"]["msg_" + idxMsg], basePath, attachmentDirectory, linkedAttachmentDirectory);
+            }
+            else
+            {
+                HandleMessageInCallback(
+                    pars,
+                    basePath,
+                    attachmentDirectory,
+                    linkedAttachmentDirectory,
+                    exeNode,
+                    msg);
+            }
+        }
+
+        /*
+         * handles message by callback
+         */
+        private static void HandleMessageInCallback(
+            Node pars, 
+            string basePath, 
+            string attachmentDirectory, 
+            string linkedAttachmentDirectory, 
+            Node exeNode, 
+            MimeMessage msg)
+        {
+            // we have a code callback
+            Node callbackNode = exeNode.Clone();
+            BuildMessage(msg, callbackNode["_message"], basePath, attachmentDirectory, linkedAttachmentDirectory);
+            pars["_ip"].Value = callbackNode;
+
+            ActiveEvents.Instance.RaiseActiveEvent(
+                typeof(Pop3Helper),
+                "magix.execute",
+                pars);
+        }
+
+        /*
+         * deletes messages from server
+         */
+        internal static void DeleteMessages(Node ip, Node dp)
         {
             string host = Expressions.GetExpressionValue<string>(ip.GetValue("host", ""), dp, ip, false);
             int port = Expressions.GetExpressionValue<int>(ip.GetValue("port", "-1"), dp, ip, false);
@@ -66,12 +198,7 @@ namespace Magix.email
 
                 int serverCount = client.GetMessageCount();
                 count = Math.Min(serverCount, count);
-                for (int idxMsg = 0; idxMsg < count; idxMsg++)
-                {
-                    MimeMessage msg = client.GetMessage(idxMsg);
-                    BuildMessage(msg, ip["values"]["msg_" + idxMsg], basePath, attachmentDirectory, linkedAttachmentDirectory);
-                    client.DeleteMessage(idxMsg);
-                }
+                client.DeleteMessages(0, count);
                 client.Disconnect(true);
             }
         }

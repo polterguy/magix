@@ -62,9 +62,8 @@ namespace Magix.viewports
 
             if (!ip.ContainsValue("message"))
 				throw new ArgumentException("no [message] given to [magix.viewport.show-message]");
-            string msgTxt = Expressions.GetExpressionValue<string>(ip["message"].Get<string>(), dp, ip, false);
-            if (ip["message"].Count > 0)
-                msgTxt = Expressions.FormatString(dp, ip, ip["message"], msgTxt);
+
+            string msgTxt = Expressions.GetFormattedExpression("message", e.Params, "");
 
 			if (_isFirst)
                 messageSmall.Value = "<p>" + msgTxt + "</p>";
@@ -130,9 +129,7 @@ namespace Magix.viewports
 
             if (!ip.ContainsValue("message"))
                 throw new ArgumentException("no [message] given to [magix.viewport.confirm]");
-            string message = Expressions.GetExpressionValue<string>(ip["message"].Get<string>(), dp, ip, false);
-            if (ip["message"].Count > 0)
-                message = Expressions.FormatString(dp, ip, ip["message"], message);
+            string message = Expressions.GetFormattedExpression("message", e.Params, "");
 
             confirmLbl.Value = message;
 

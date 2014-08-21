@@ -72,6 +72,9 @@ operation.  both [id], [prototype], [start] and [end] can be either constant val
 expressions pointing to an id or a prototype object, which will be used 
 as the criteria to load objects
 
+[id], if given,  can contains formatting expressions, such as {0}, {1} and so on, de-referencing 
+children nodes of [id]
+
 thread safe"
 
 magix.data.load-sample
@@ -88,6 +91,9 @@ if no [id] is given, a unique identifier will be automatically assigned to the o
 and returned as [id].  if an [id] is given, and an object with that same id exists, the 
 existing object will be overwritten and updated.  both the [value] and [id] can either be 
 expressions or constant strings or nodes
+
+[id] can contains formatting expressions, such as {0}, {1} and so on, de-referencing children 
+nodes of [id]
 
 thread safe"
 
@@ -108,6 +114,9 @@ both [id] and [prototype] can be either expressions or constant values.  if an i
 given, you cannot supply a prototype.  if you supply a prototype, then no id can be 
 supplied.  if you supply a prototype, you can use wildcard comparisons by using the 
 % sign as a wildcard equality comparison
+
+[id] can contains formatting expressions, such as {0}, {1} and so on, de-referencing children 
+nodes of [id]
 
 thread safe"
 

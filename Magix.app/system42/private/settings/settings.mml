@@ -375,6 +375,10 @@ panel=>smtp-wrapper
       value=>ssl
     check-box=>smtp-ssl
       class=>span-1 last
+      title=>@"this enables implicit ssl, meaning the 
+client will start with an ssl connection.&nbsp;&nbsp;notice 
+that explicit ssl through the starttls command is automatically 
+used regardless of this setting"
     label
       tag=>label
       class=>span-3 top-1
@@ -576,7 +580,7 @@ and not publicly available for your browser.  typically
 somewhere inside of 'your-files'"
           onfirstload
             magix.data.load
-              id=>magix.email.attachment-directory-private
+              id=>magix.email.attachments-directory
             if=>exist
               lhs=>[magix.data.load][value]
               code
@@ -626,7 +630,7 @@ normal attachments.  typically this is somewhere inside
 of 'my-files'"
           onfirstload
             magix.data.load
-              id=>magix.email.attachment-directory
+              id=>magix.email.linked-attachments-directory
             if=>exist
               lhs=>[magix.data.load][value]
               code
@@ -666,7 +670,7 @@ of 'my-files'"
         set=>[magix.data.save][value][directory].value
           value=>[magix.forms.get-value][value].value
         magix.data.save
-          id=>magix.email.attachment-directory
+          id=>magix.email.linked-attachments-directory
         magix.viewport.show-message
           message=>attachment directory was saved
           color=>#aaffaa

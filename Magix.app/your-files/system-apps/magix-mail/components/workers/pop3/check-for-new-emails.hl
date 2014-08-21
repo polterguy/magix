@@ -1,0 +1,97 @@
+﻿
+
+inspect=>@"checks for new emails on pop3 server
+
+will check for new emails on pop3 server
+
+will return [status] as either 'fetching', 'finished' or 'error' 
+back to caller.  if [status] is 'error', then the error message 
+can be found in [error]
+
+if status is 'fetching', then the number of newly fetched emails 
+might be found in [download-count] and the number of messages on 
+the server in total might be found in [server-count]
+
+if status is 'finished', then the number of newly fetched emails 
+can be found in [download-count]"
+
+
+// retrieving username for current session
+magix.session.get=>username
+  id=>magix.core.user
+
+// checking to see status for current user
+magix.data.load-username=>status
+  id=>magix.email.thread-status
+
+// executing logic depending upon status of current retriever, if any
+switch=>[magix.data.load-username=>status][value][status].value
+
+  case=>fetching
+
+    // still fetching emails from pop3 server, return status and email count
+    set=>[$][status].value
+      value=>fetching
+
+    // number of emails downloaded so far
+    if=>exist
+      lhs=>[$][download-count]
+      code
+        set=>[$][download-count].value
+          value=>[magix.data.load-username=>status][value][download-count].value
+
+    // total number of emails on server
+    if=>exist
+      lhs=>[$][server-count]
+      code
+        set=>[$][server-count].value
+          value=>[magix.data.load-username=>status][value][server-count].value
+
+  case=>finished
+
+    // just finished a thread that has downloaded emails from pop3 server
+    set=>[$][status].value
+      value=>finished
+
+    // number of emails downloaded
+    set=>[$][download-count].value
+      value=>[magix.data.load-username=>status][value][download-count].value
+
+    // cleaning up status from application object
+    magix.data.remove-username
+      id=>magix.email.thread-status
+
+  case=>error
+
+    // an error occurred when fetching emails from server, returning error to caller
+    set=>[$][status].value
+      value=>error
+
+    // returning error to caller
+    set=>[$][error].value
+      value=>[magix.data.load-username=>status][value][message].value
+
+    // cleaning up status from application object
+    magix.data.remove-username
+      id=>magix.email.thread-status
+
+  default
+
+    // no existing status, starting a new thread fetching emails from server
+    // first retrieving settings needed to check for new emails
+    magix.data.load-username=>load-pop3-settings
+      id=>magix.pop3.settings
+
+    // forking new thread, passing in pop3 settings
+    add=>[@][fork][execute-script][params][pop-settings]
+      values=>[@][magix.data.load-username=>load-pop3-settings][value]
+
+    // passing in username of current session
+    set=>[@][fork][execute-script][params][pop-settings][user].value
+      value=>[magix.session.get=>username][value][username].value
+
+    // creating our fork, executing the retrieve emails hyperlisp file on a different thread
+    fork
+      execute-script
+        file=>your-files/system-apps/magix-mail/components/workers/pop3/retriever-thread.hl
+

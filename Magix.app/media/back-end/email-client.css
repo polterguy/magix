@@ -33,7 +33,7 @@
  }
 }
 
-.email-blink
+.animate-visual-clue
 {
 	-webkit-animation-name: email-blink;
 	-webkit-animation-duration: .5s;
@@ -106,7 +106,6 @@
     width:auto;
     margin-left:-30px;
 }
-
 
 .email-content-body
 {

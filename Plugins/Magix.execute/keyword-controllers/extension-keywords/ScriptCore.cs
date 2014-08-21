@@ -77,9 +77,7 @@ namespace Magix.execute
             Node exe = conversionNode["node"].Clone();
             if (ip.ContainsValue("file"))
             {
-                string file = Expressions.GetExpressionValue<string>(ip["file"].Get<string>(), dp, ip, false);
-                if (ip["file"].Count > 0)
-                    file = Expressions.FormatString(dp, ip, ip["file"], file);
+                string file = Expressions.GetFormattedExpression("file", e.Params, "");
                 string directory = file;
                 if (directory.Contains("/"))
                     directory = directory.Substring(0, directory.LastIndexOf('/'));

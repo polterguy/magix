@@ -49,17 +49,10 @@ namespace Magix.execute
             if (sourceExpressionValue == null)
                 return; // the string user wanted to replace was null
 
-			string what = Expressions.GetExpressionValue<string>(ip["what"].Get<string>(), dp, ip, false);
-            if (ip["what"].Count > 0)
-                what = Expressions.FormatString(dp, ip, ip["what"], what);
+            string what = Expressions.GetFormattedExpression("what", e.Params, "");
             what = what.Replace("\\n", "\n").Replace("\\r", "\r").Replace("\\t", "\t");
 
-			string with = ip.Contains("with") ? 
-                Expressions.GetExpressionValue<string>(ip["with"].Get<string>(""), dp, ip, false) : 
-                "";
-            if (!string.IsNullOrEmpty(with))
-                if (ip["with"].Count > 0)
-                    with = Expressions.FormatString(dp, ip, ip["with"], with);
+            string with = Expressions.GetFormattedExpression("with", e.Params, "");
             with = with.Replace("\\n", "\n").Replace("\\r", "\r").Replace("\\t", "\t");
 
             if (ip.Get<string>().IndexOf('[') == 0)

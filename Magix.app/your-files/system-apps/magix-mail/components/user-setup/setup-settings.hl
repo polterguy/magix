@@ -4,7 +4,10 @@ inspect=>@"sets up email settings for logged in user
 
 allows user to setup smtp, imap and pop3 for himself.  pass in 
 [execute-afterwards] as a code block for what hyperlisp code to 
-execute when settings are successfully saved"
+execute when settings are successfully saved
+
+not to be invoked directly, but through the magix mail 
+component, which can be used with the magix-mail/launch.hl file"
 
 // adding up execute afterwards code block, if given
 if=>exist
@@ -81,34 +84,6 @@ magix.forms.create-web-part
           form-id=>email-settings
           id=>smtp-email
           value=>[magix.data.load-username][value][email].value
-        set-value
-          form-id=>email-settings
-          id=>smtp-smime
-          value=>[magix.data.load-username][value][use-smime].value
-        set-value
-          form-id=>email-settings
-          id=>smtp-sign-time
-          value=>[magix.data.load-username][value][smime-sign-time].value
-        set-value
-          form-id=>email-settings
-          id=>smtp-local-machine
-          value=>[magix.data.load-username][value][smime-local-machine].value
-        set-value
-          form-id=>email-settings
-          id=>smtp-subject-name
-          value=>[magix.data.load-username][value][smime-subject-name].value
-        set-value
-          form-id=>email-settings
-          id=>smtp-encrypt-envelope
-          value=>[magix.data.load-username][value][smime-encrypt-envelope].value
-        set-value
-          form-id=>email-settings
-          id=>smtp-triple-wrap
-          value=>[magix.data.load-username][value][smime-triple-wrap].value
-        set-value
-          form-id=>email-settings
-          id=>smtp-subject-name
-          value=>[magix.data.load-username][value][smime-subject-name].value
 
     magix.email-settings.load-global-smtp-settings
       magix.data.load
@@ -138,30 +113,6 @@ magix.forms.create-web-part
           form-id=>email-settings
           id=>smtp-email
           value=>[magix.data.load][value][admin-email].value
-        set-value
-          form-id=>email-settings
-          id=>smtp-smime
-          value=>[magix.data.load][value][use-smime].value
-        set-value
-          form-id=>email-settings
-          id=>smtp-sign-time
-          value=>[magix.data.load][value][smime-sign-time].value
-        set-value
-          form-id=>email-settings
-          id=>smtp-local-machine
-          value=>[magix.data.load][value][smime-local-machine].value
-        set-value
-          form-id=>email-settings
-          id=>smtp-subject-name
-          value=>[magix.data.load][value][smime-subject-name].value
-        set-value
-          form-id=>email-settings
-          id=>smtp-encrypt-envelope
-          value=>[magix.data.load][value][smime-encrypt-envelope].value
-        set-value
-          form-id=>email-settings
-          id=>smtp-triple-wrap
-          value=>[magix.data.load][value][smime-triple-wrap].value
 
     magix.email-settings.verify-mandatory-setting
       using=>magix.forms
@@ -188,58 +139,6 @@ magix.forms.create-web-part
       else
         set=>[$][success].value
           value=>true
-
-    magix.email-settings.change-smtp-controls
-      magix.forms.get-value
-        form-id=>email-settings
-        id=>smtp-smime
-      if=>equals
-        lhs=>[magix.forms.get-value][value].value
-        rhs=>true
-        code
-          using=>magix.forms
-            set-enabled
-              form-id=>email-settings
-              id=>smtp-sign-time
-              value=>true
-            set-enabled
-              form-id=>email-settings
-              id=>smtp-local-machine
-              value=>true
-            set-enabled
-              form-id=>email-settings
-              id=>smtp-subject-name
-              value=>true
-            set-enabled
-              form-id=>email-settings
-              id=>smtp-encrypt-envelope
-              value=>true
-            set-enabled
-              form-id=>email-settings
-              id=>smtp-triple-wrap
-              value=>true
-      else
-        using=>magix.forms
-          set-enabled
-            form-id=>email-settings
-            id=>smtp-sign-time
-            value=>false
-          set-enabled
-            form-id=>email-settings
-            id=>smtp-local-machine
-            value=>false
-          set-enabled
-            form-id=>email-settings
-            id=>smtp-subject-name
-            value=>false
-          set-enabled
-            form-id=>email-settings
-            id=>smtp-encrypt-envelope
-            value=>false
-          set-enabled
-            form-id=>email-settings
-            id=>smtp-triple-wrap
-            value=>false
 
     magix.email-settings.load-pop3-settings
       magix.data.load-username
@@ -524,7 +423,6 @@ magix.forms.create-web-part
       class=>span-7
       onfirstload
         magix.email-settings.load-smtp-settings
-        magix.email-settings.change-smtp-controls
       controls
         label
           class=>fill-width last clear bottom-1
@@ -573,53 +471,6 @@ magix.forms.create-web-part
         text-box=>smtp-email
           class=>span-5 top-1 last
           placeholder=>email address ...
-        label
-          class=>span-2 clear top-1 text-right
-          tag=>label
-          value=>s/mime
-          for=>smtp-smime
-        check-box=>smtp-smime
-          class=>span-1 top-1 last
-          oncheckedchanged
-            magix.email-settings.change-smtp-controls
-        label
-          class=>span-2 clear top-1 text-right
-          tag=>label
-          value=>sign time
-          for=>smtp-sign-time
-        check-box=>smtp-sign-time
-          class=>span-1 top-1 last
-        label
-          class=>span-2 clear top-1 text-right
-          tag=>label
-          value=>machine
-          for=>smtp-local-machine
-          title=>where to fetch your certificate, local machine storage or system user storage
-        check-box=>smtp-local-machine
-          class=>span-1 top-1 last
-        label
-          class=>span-2 clear top-1 text-right
-          tag=>label
-          value=>certificate
-          title=>subject name for certificate to use as public key
-        text-box=>smtp-subject-name
-          class=>span-5 top-1 last
-          placeholder=>subject name ...
-        label
-          class=>span-2 clear top-1 text-right
-          tag=>label
-          value=>encrypt env.
-          for=>smtp-encrypt-envelope
-          title=>whether or not envelope of outgoing emails should be encrypted or not
-        check-box=>smtp-encrypt-envelope
-          class=>span-1 top-1 last
-        label
-          class=>span-2 clear top-1 text-right
-          tag=>label
-          value=>triple wrap
-          for=>smtp-triple-wrap
-        check-box=>smtp-triple-wrap
-          class=>span-1 top-1 last
     panel=>incoming-wrp
       class=>span-7 left-2
       controls
@@ -633,6 +484,12 @@ magix.forms.create-web-part
           value=>account
         select=>email-account-type
           class=>span-5 last
+          title=>imap email servers are currently not supported
+          items
+            _default=>choose account type ...
+            pop3=>pop3
+            imap=>imap
+              enabled=>false
           onfirstload
             magix.data.load-username
               id=>magix.email.account-type
@@ -666,10 +523,6 @@ magix.forms.create-web-part
                 magix.email-settings.load-pop3-settings
             else
               magix.email-settings.load-imap-settings
-          items
-            _default=>choose account type ...
-            pop3=>pop3
-            imap=>imap
         dynamic=>email-account-dynamic
           class=>span-7 last
     button=>save
@@ -681,8 +534,6 @@ magix.forms.create-web-part
         _mandatory
           =>smtp-server
           =>smtp-port
-          =>smtp-username
-          =>smtp-password
           =>smtp-email
         _success=>true
         for-each=>[_mandatory]
@@ -701,17 +552,6 @@ magix.forms.create-web-part
           rhs=>false
           code
             stop
-        if=>equals
-          lhs=>[magix.forms.get-children-values][values][smtp-smime].value
-          rhs=>true
-          code
-            magix.email-settings.verify-mandatory-setting
-              value=>smtp-subject-name
-            if=>equals
-              lhs=>[@][magix.email-settings.verify-mandatory-setting][success].value
-              rhs=>false
-              code
-                stop
         if=>equals
           lhs=>[**email-account-type=>?].value
           rhs=>_default
@@ -793,18 +633,6 @@ magix.forms.create-web-part
           value=>[magix.forms.get-children-values][values][smtp-password].value
         set=>[@][magix.data.save-username=>smtp][value][email].value
           value=>[magix.forms.get-children-values][values][smtp-email].value
-        set=>[@][magix.data.save-username=>smtp][value][use-smime].value
-          value=>[magix.forms.get-children-values][values][smtp-smime].value
-        set=>[@][magix.data.save-username=>smtp][value][smime-sign-time].value
-          value=>[magix.forms.get-children-values][values][smtp-sign-time].value
-        set=>[@][magix.data.save-username=>smtp][value][smime-encrypt-envelope].value
-          value=>[magix.forms.get-children-values][values][smtp-encrypt-envelope].value
-        set=>[@][magix.data.save-username=>smtp][value][smime-triple-wrap].value
-          value=>[magix.forms.get-children-values][values][smtp-triple-wrap].value
-        set=>[@][magix.data.save-username=>smtp][value][smtp-local-machine].value
-          value=>[magix.forms.get-children-values][values][smtp-local-machine].value
-        set=>[@][magix.data.save-username=>smtp][value][smime-subject-name].value
-          value=>[magix.forms.get-children-values][values][smtp-subject-name].value
         magix.data.save-username=>smtp
           id=>magix.smtp.settings
 

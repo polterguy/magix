@@ -31,7 +31,10 @@ namespace Magix.forms
                         throw new ArgumentException("list item for select needs unique name of node to be used as value");
                     if (idxItemNode.Value == null)
                         throw new ArgumentException("list item for select needs value of node to be used as text to show user in item");
-                    ret.Items.Add(new ListItem(idxItemNode.Get<string>(), idxItemNode.Name));
+                    ListItem item = new ListItem(idxItemNode.Get<string>(), idxItemNode.Name);
+                    if (!idxItemNode.GetValue("enabled", true))
+                        item.Enabled = false;
+                    ret.Items.Add(item);
                 }
             }
         }
@@ -50,6 +53,8 @@ namespace Magix.forms
                 true);
             node["items"]["item1"].Value = "this is item 1";
             node["items"]["item2"].Value = "this is item 2";
+            node["items"]["item2"]["enabled"].Value = false;
+            node["items"]["item3"].Value = "this is item 3";
         }
     }
 }

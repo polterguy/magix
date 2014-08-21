@@ -43,9 +43,7 @@ namespace Magix.tiedown
             Node dp = Dp(e.Params);
 
             string zipFile = Expressions.GetExpressionValue<string>(ip["zip"].Get<string>(), dp, ip, false);
-            string directory = Expressions.GetExpressionValue<string>(ip["directory"].Get<string>(), dp, ip, false);
-            if (ip["directory"].Count > 0)
-                directory = Expressions.FormatString(dp, ip, ip["directory"], directory);
+            string directory = Expressions.GetFormattedExpression("directory", e.Params, "");
 
             string zipAbsolutePath = HttpContext.Current.Server.MapPath(zipFile);
             string dirAbsolutePath = HttpContext.Current.Server.MapPath(directory);
@@ -86,9 +84,7 @@ namespace Magix.tiedown
             if (!ip.Contains("files"))
                 throw new ArgumentException("no [files] given to [magix.package.pack]");
 
-            string zipFile = Expressions.GetExpressionValue<string>(ip["zip"].Get<string>(), dp, ip, false);
-            if (ip["zip"].Count > 0)
-                zipFile = Expressions.FormatString(dp, ip, ip["zip"], zipFile);
+            string zipFile = Expressions.GetFormattedExpression("zip", e.Params, "");
 
             string zipAbsolutePath = HttpContext.Current.Server.MapPath(zipFile);
 

@@ -42,7 +42,7 @@ namespace Magix.forms
             }
 
             BaseWebControl ctrl = FindControl<BaseWebControl>(e.Params);
-            ctrl.Class = ip["value"].Get<string>();
+            ctrl.Class = Expressions.GetFormattedExpression("value", e.Params, "");
         }
 
         /*
@@ -94,7 +94,7 @@ namespace Magix.forms
             }
 
             BaseWebControl ctrl = FindControl<BaseWebControl>(e.Params);
-            ctrl.Title = ip["value"].Get<string>();
+            ctrl.Title = Expressions.GetFormattedExpression("value", e.Params, "");
         }
 
         /*
@@ -146,11 +146,7 @@ namespace Magix.forms
             }
 
             BaseWebControl ctrl = FindControl<BaseWebControl>(e.Params);
-            Node dp = Dp(e.Params);
-            string info = Expressions.GetExpressionValue<string>(ip["value"].Get<string>(), dp, ip, false);
-            if (ip["value"].Count > 0)
-                info = Expressions.FormatString(dp, ip, ip["value"], info);
-            ctrl.Info = info;
+            ctrl.Info = Expressions.GetFormattedExpression("value", e.Params, "");
         }
 
         /*
@@ -204,8 +200,11 @@ namespace Magix.forms
             Node dp = Dp(e.Params);
 
             BaseWebControl ctrl = FindControl<BaseWebControl>(e.Params);
-            ctrl.Style[Expressions.GetExpressionValue<string>(ip["key"].Get<string>(), dp, ip, false)] =
-                Expressions.GetExpressionValue<string>(ip.GetValue("value", ""), dp, ip, false);
+            string key = Expressions.GetFormattedExpression("key", e.Params, "");
+            if (string.IsNullOrEmpty(key))
+                throw new Exception("no [key] given to [magix.forms.set-style]");
+            string value = Expressions.GetFormattedExpression("value", e.Params, "");
+            ctrl.Style[key] = value;
         }
 
         /*
@@ -257,7 +256,6 @@ namespace Magix.forms
                     "[magix.forms.set-focus-sample]");
 				return;
 			}
-
             FindControl<BaseWebControl>(e.Params).Focus();
 		}
 

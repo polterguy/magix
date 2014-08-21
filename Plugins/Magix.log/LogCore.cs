@@ -68,12 +68,9 @@ namespace Magix.log
 				throw new ArgumentException("no [body] given to [magix.log.append]");
 
             Node dp = Dp(e.Params);
-            string header = Expressions.GetExpressionValue<string>(ip["header"].Get<string>(), dp, ip, false);
-            if (ip["header"].Count > 0)
-                header = Expressions.FormatString(dp, ip, ip["header"], header);
-            string body = Expressions.GetExpressionValue<string>(ip["body"].Get<string>(), dp, ip, false);
-            if (ip["body"].Count > 0)
-                body = Expressions.FormatString(dp, ip, ip["body"], body);
+
+            string header = Expressions.GetFormattedExpression("header", e.Params, "");
+            string body = Expressions.GetFormattedExpression("body", e.Params, "");
             bool error = ip.ContainsValue("error") && ip["error"].Get<bool>();
 
             if (error)

@@ -158,9 +158,7 @@ namespace Magix.forms
             Node dp = Dp(e.Params);
 
             IValueControl ctrl = FindControl<IValueControl>(e.Params);
-            string value = Expressions.GetExpressionValue<string>(ip["value"].Get<string>(), dp, ip, false);
-            if (ip["value"].Count > 0)
-                value = Expressions.FormatString(dp, ip, ip["value"], value);
+            string value = Expressions.GetFormattedExpression("value", e.Params, null);
             ctrl.ControlValue = value;
         }
 
@@ -313,10 +311,18 @@ namespace Magix.forms
 			if (ip.Contains("form-id"))
 				ctrlNode["form-id"].Value = ip["form-id"].Value;
 
+            object oldIp = pars["_ip"].Value;
             pars["_ip"].Value = ctrlNode;
-            RaiseActiveEvent(
-                "magix.forms._get-control",
-                pars);
+            try
+            {
+                RaiseActiveEvent(
+                    "magix.forms._get-control",
+                    pars);
+            }
+            finally
+            {
+                pars["_ip"].Value = oldIp;
+            }
 
 			if (ctrlNode.Contains("_ctrl"))
                 return ctrlNode["_ctrl"].Get<T>();

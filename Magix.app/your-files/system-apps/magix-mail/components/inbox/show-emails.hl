@@ -2,13 +2,31 @@
 
 inspect=>@"creates the show emails web part
 
-creates the show emails web part in content3"
+creates the show emails web part in content4.  loads emails 
+from database and displays as a grid to the user, making it 
+possible to read, reply, delete and such on individual emails
+
+also makes it possible to search and page back and forth between 
+emails
+
+takes [start], and [search] as parameters which informs the 
+file where to start showing emails
+
+emails will be shown in a last in, firt out, meaning the newest 
+email will be shown first"
 
 
 _start=>0
 _end=>25
 _count=>25
 _search=>
+_mailbox=>inbox
+
+if=>exist
+  lhs=>[$][mailbox]
+  code
+    set=>[_mailbox].value
+      value=>[$][mailbox].value
 
 if=>exist
   lhs=>[$][start]
@@ -53,6 +71,12 @@ iterate=>[magix.forms.create-web-part]
     code
       set=>[.].value
         value=>[/][_search].value
+  else-if=>equals
+    lhs=>[.].value
+    rhs=>{mailbox}
+    code
+      set=>[.].value
+        value=>[/][_mailbox].value
 
 if=>equals
   lhs=>[_start].value
@@ -65,7 +89,7 @@ magix.forms.create-web-part
   container=>content3
   class=>span-18 last boxed air-padding bottom-5
   form-id=>inbox-list
-  events-file=>system42/private/email/inbox/parts/show-emails/events.hl
+  events-file=>your-files/system-apps/magix-mail/components/inbox/events.hl
   controls
     label=>inbox-header
       class=>span-9 bottom-1
@@ -140,7 +164,7 @@ magix.forms.create-web-part
         magix.data.load=>load-emails
           prototype
             type=>magix.email.message
-            deleted=>false
+            folder=>{mailbox}
 
         // removing emails not meeting search criteria, if any criteria is given
         _search=>{emails-search}
@@ -274,8 +298,10 @@ magix.forms.create-web-part
                       =>[$][info].value
             label=>{from-}
               class=>span-6 email-item-from
+              value=>&nbsp;
             label=>{date-}
               class=>span-3 last email-item-date
+              value=>&nbsp;
             dynamic=>{dynamic-}
               class=>emails-sleeping-dynamic
           set=>[@][_pnl][label=>{subject-}][info].value
@@ -306,6 +332,8 @@ magix.forms.create-web-part
           if=>equals
             lhs=>[.][value][from][display-name].value
             rhs=>
+            or=>not-exist
+              lhs=>[.][value][from][display-name]
             code
               set=>[@][..][..][_pnl][label=>{from-}][value].value
                 value=>[.][value][from].value
@@ -325,8 +353,4 @@ magix.forms.create-web-part
             values=>[@][_pnl]
         add=>[$]
           values=>[@][_pnl]
-
-
-
-
 

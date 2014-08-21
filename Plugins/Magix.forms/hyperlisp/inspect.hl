@@ -646,7 +646,10 @@ larger than 1, then the select will not render as a drop-down-list type of
 control, but show multiple items at the same time
 
 [onselectedindexchanged] is raised when the selected item of the web control 
-is being changed by the user"
+is being changed by the user
+
+if an item contains [enabled] and its value is false, the item will not be 
+enabled by default"
 
 magix.forms.select-sample-end
   size=(int)>5

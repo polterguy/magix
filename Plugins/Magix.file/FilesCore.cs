@@ -142,9 +142,7 @@ namespace Magix.execute
             if (!ip.ContainsValue("file"))
                 throw new ArgumentException("you need to supply which file to load as the [file] parameter");
 
-            string filepath = Expressions.GetExpressionValue<string>(ip["file"].Get<string>(), dp, ip, false);
-            if (ip["file"].Count > 0)
-                filepath = Expressions.FormatString(dp, ip, ip["file"], filepath);
+            string filepath = Expressions.GetFormattedExpression("file", e.Params, "");
 
 			if (filepath.StartsWith("plugin:"))
             {
@@ -244,18 +242,14 @@ namespace Magix.execute
             if (!ip.ContainsValue("from"))
                 throw new ArgumentException("you need to tell the engine which file to move as the value of the [from]");
 
-            string from = Expressions.GetExpressionValue<string>(ip["from"].Get<string>(), dp, ip, false);
-            if (ip["from"].Count > 0)
-                from = Expressions.FormatString(dp, ip, ip["from"], from);
+            string from = Expressions.GetFormattedExpression("from", e.Params, "");
             if (!from.Contains(":"))
                 from = _basePath + from;
 
             if (!ip.ContainsValue("to"))
                 throw new ArgumentException("you need to define where to move file to, as [to] node");
 
-            string to = Expressions.GetExpressionValue<string>(ip["to"].Get<string>(), dp, ip, false);
-            if (ip["to"].Count > 0)
-                to = Expressions.FormatString(dp, ip, ip["to"], to);
+            string to = Expressions.GetFormattedExpression("to", e.Params, "");
             if (!to.Contains(":"))
                 to = _basePath + to;
 
@@ -294,17 +288,13 @@ namespace Magix.execute
 
             if (!ip.ContainsValue("from"))
                 throw new ArgumentException("you need to tell the engine which file to copy as the value of the [from]");
-            string from = Expressions.GetExpressionValue<string>(ip["from"].Get<string>(), dp, ip, false);
-            if (ip["from"].Count > 0)
-                from = Expressions.FormatString(dp, ip, ip["from"], from);
+            string from = Expressions.GetFormattedExpression("from", e.Params, "");
             if (!from.Contains(":"))
                 from = _basePath + from;
 
             if (!ip.ContainsValue("to"))
                 throw new ArgumentException("you need to define which file to copy to, as [to] node");
-            string to = Expressions.GetExpressionValue<string>(ip["to"].Get<string>(), dp, ip, false);
-            if (ip["to"].Count > 0)
-                to = Expressions.FormatString(dp, ip, ip["to"], to);
+            string to = Expressions.GetFormattedExpression("to", e.Params, "");
             if (!to.Contains(":"))
                 to = _basePath + to;
 
@@ -338,9 +328,7 @@ namespace Magix.execute
             if (!ip.ContainsValue("file"))
                 throw new ArgumentException("you didn't supply a [file] for [file-exist]");
 
-            string file = Expressions.GetExpressionValue<string>(ip["file"].Get<string>().TrimStart('/'), dp, ip, false);
-            if (ip["file"].Count > 0)
-                file = Expressions.FormatString(dp, ip, ip["file"], file);
+            string file = Expressions.GetFormattedExpression("file", e.Params, "");
             if (!file.Contains(":"))
                 file = _basePath + file;
 

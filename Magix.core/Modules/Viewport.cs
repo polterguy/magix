@@ -333,10 +333,7 @@ namespace Magix.Core
 
             Node dp = Dp(e.Params);
 
-            string script = Expressions.GetExpressionValue<string>(ip["script"].Get<string>(), dp, ip, false);
-            if (ip["script"].Count > 0)
-                script = Expressions.FormatString(dp, ip, ip["script"], script);
-
+            string script = Expressions.GetFormattedExpression("script", e.Params, "");
 			Manager.Instance.JavaScriptWriter.Write(script);
 		}
 
@@ -457,14 +454,12 @@ namespace Magix.Core
 
             if (!ip.ContainsValue("id"))
                 throw new ArgumentException("no [id] given to [magix.viewstate.set]");
-            string name = Expressions.GetExpressionValue<string>(ip["id"].Get<string>(), dp, ip, false);
-            if (ip["id"].Count > 0)
-                name = Expressions.FormatString(dp, ip, ip["id"], name);
+            string id = Expressions.GetFormattedExpression("id", e.Params, "");
 
             if (!ip.Contains("value"))
 			{
-				if (ViewState[name] != null)
-					ViewState.Remove(name);
+				if (ViewState[id] != null)
+					ViewState.Remove(id);
 			}
 			else
 			{
@@ -473,7 +468,7 @@ namespace Magix.Core
                     value = Expressions.GetExpressionValue<Node>(ip["value"].Get<string>(), dp, ip, false).Clone();
                 else
                     value = ip["value"].Clone();
-				ViewState[name] = value;
+				ViewState[id] = value;
 			}
 		}
 
@@ -503,14 +498,12 @@ namespace Magix.Core
 
             if (!ip.ContainsValue("id"))
                 throw new ArgumentException("no [id] given to [magix.viewstate.get]");
-            string name = Expressions.GetExpressionValue<string>(ip["id"].Get<string>(), dp, ip, false);
-            if (ip["id"].Count > 0)
-                name = Expressions.FormatString(dp, ip, ip["id"], name);
+            string id = Expressions.GetFormattedExpression("id", e.Params, "");
 
-            if (ViewState[name] != null && ViewState[name] is Node)
+            if (ViewState[id] != null && ViewState[id] is Node)
             {
                 ip["value"].UnTie();
-                ip.Add((ViewState[name] as Node).Clone());
+                ip.Add((ViewState[id] as Node).Clone());
             }
 		}
 

@@ -121,7 +121,9 @@ namespace Magix.data
                     prototype = ip["prototype"];
             }
             else if (ip.ContainsValue("id"))
-                id = Expressions.GetExpressionValue<string>(ip["id"].Get<string>(), dp, ip, false);
+            {
+                id = Expressions.GetFormattedExpression("id", e.Params, "");
+            }
             else
                 throw new ArgumentException("either [prototype] or [id] is needed for [magix.data.load]");
 
@@ -182,7 +184,7 @@ namespace Magix.data
 
             if (ip.Contains("id"))
             {
-                string id = Expressions.GetExpressionValue<string>(ip["id"].Get<string>(), dp, ip, false);
+                string id = Expressions.GetFormattedExpression("id", e.Params, "");
                 Database.SaveById(value, id, transaction);
             }
             else
@@ -234,7 +236,7 @@ namespace Magix.data
 
             if (ip.Contains("id"))
             {
-                string id = Expressions.GetExpressionValue<string>(ip["id"].Get<string>(), dp, ip, false);
+                string id = Expressions.GetFormattedExpression("id", e.Params, "");
                 ip["affected-records"].Value = Database.RemoveById(id, transaction);
             }
             else
