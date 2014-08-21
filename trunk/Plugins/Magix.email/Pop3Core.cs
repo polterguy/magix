@@ -64,16 +64,43 @@ namespace Magix.email
 
             Node dp = Dp(e.Params);
 
-            string linkedAttachmentDirectory = GetAttachmentDirectory(e.Params, ip, dp, "magix.email.attachment-directory");
-            string attachmentDirectory = GetAttachmentDirectory(e.Params, ip, dp, "magix.email.attachment-directory-private");
-            
+            string linkedAttachmentDirectory = GetAttachmentDirectory(e.Params, ip, dp, "magix.email.linked-attachments-directory");
+            string attachmentDirectory = GetAttachmentDirectory(e.Params, ip, dp, "magix.email.attachments-directory");
+
             Node getBase = new Node();
             RaiseActiveEvent(
                 "magix.file.get-base-path",
                 getBase);
             string basePath = getBase["path"].Get<string>();
 
-            Pop3Helper.GetMessages(ip, dp, basePath, attachmentDirectory, linkedAttachmentDirectory);
+            Pop3Helper.GetMessages(e.Params, ip, dp, basePath, attachmentDirectory, linkedAttachmentDirectory);
+        }
+
+        /*
+         * retrieves email from pop3 server
+         */
+        [ActiveEvent(Name = "magix.pop3.delete-messages")]
+        public static void magix_pop3_delete_messages(object sender, ActiveEventArgs e)
+        {
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
+            {
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.email",
+                    "Magix.email.hyperlisp.inspect.hl",
+                    "[magix.pop3.delete-messages-dox].value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.email",
+                    "Magix.email.hyperlisp.inspect.hl",
+                    "[magix.pop3.delete-messages-sample]");
+                return;
+            }
+
+            Node dp = Dp(e.Params);
+
+            Pop3Helper.DeleteMessages(ip, dp);
         }
 
         /*

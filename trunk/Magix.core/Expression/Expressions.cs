@@ -106,6 +106,37 @@ namespace Magix.Core
         }
 
         /*
+         * returns the formatted value of an expression, if the expression exist, or else defaultValue
+         */
+        public static string GetFormattedExpression(string childName, Node pars, string defaultValue)
+        {
+            Node ip = pars;
+            if (pars.ContainsValue("_ip"))
+                ip = pars["_ip"].Get<Node>();
+            Node dp = pars;
+            if (pars.ContainsValue("_dp"))
+                dp = pars["_dp"].Get<Node>();
+            return GetFormattedExpression(childName, dp, ip, defaultValue);
+        }
+
+        /*
+         * returns the formatted value of an expression, if the expression exist, or else defaultValue
+         */
+        private static string GetFormattedExpression(string childName, Node dp, Node ip, string defaultValue)
+        {
+            if (ip.ContainsValue(childName))
+            {
+                string expressionValue = GetExpressionValue<string>(ip[childName].Get<string>(), dp, ip, false);
+                if (ip[childName].Count > 0)
+                {
+                    return FormatString(dp, ip, ip[childName], expressionValue);
+                }
+                return expressionValue;
+            }
+            return defaultValue;
+        }
+
+        /*
          * formats a string with its children nodes
          */
         public static string FormatString(Node dp, Node ip, Node contentNode, string valueToSet)

@@ -26,19 +26,7 @@ magix.emails.load-email
     using=>magix.data
       load
         id=>[$][email-id].value
-    if=>not-exist
-      lhs=>[using][load][value][body]
-      code
-        // downloading email, then recursively calling self, before stopping execution of event
-        add=>[@][magix.emails.download-email]
-          values=>[$]
-        add=>[@][magix.emails.load-email]
-          values=>[$]
-        magix.emails.download-email
-        magix.emails.load-email
-        stop
-
-    // saving updated version of email, including downloaded body
+    // making sure email is marked as read
     add=>[using:1][save][value]
       values=>[using:0][load][value]
     set=>[using:1][save][value][read].value
@@ -47,23 +35,27 @@ magix.emails.load-email
       save
         id=>[$][email-id].value
 
-    // creating view email body web part
-    set=>[_controls][**label=>body][value].value
-      value=>[using][load][value][body].value
-    set=>[_controls][**label=>email-header][value].value
-      value=>[using][load][value][subject].value
-    if=>equals
-      lhs=>[using][load][value][is-html].value
-      rhs=>false
+    // creating view email body web part, prioritizing non-html view
+    if=>exist
+      lhs=>[using][load][value][body][plain]
       code
-        // email is not html, making sure all carriage returns are replaced with <br/> tags
+        set=>[_controls][**label=>body][value].value
+          value=>[using][load][value][body][plain].value
+
+        // replacing carriage returns
         replace=>[_controls][**label=>body][value].value
           what=>\n
           with=><br/>
         replace=>[_controls][**label=>body][value].value
           what=>\r
-    if=>exist
-      lhs=>[using][load][value][attachments]
+    else
+      set=>[_controls][**label=>body][value].value
+        value=>[using][load][value][body][html].value
+    set=>[_controls][**label=>email-header][value].value
+      value=>[using][load][value][subject].value
+    if=>more-than
+      lhs=>[using][load][value][attachments].count
+      rhs=>0
       code
         for-each=>[using][load][value][attachments]
           _lb
@@ -76,9 +68,9 @@ magix.emails.load-email
                   value=>[$][value].value
                 magix.file.download
           set=>[@][_lb][link-button][value].value
-            value=>[.][original-name].value
-          set=>[@][_lb][link-button][info].value
             value=>[.].value
+          set=>[@][_lb][link-button][info].value
+            value=>[.][local-file-name].value
           add=>[/][_controls][panel=>attachments][controls]
             values=>[@][_lb]
     else
@@ -126,7 +118,7 @@ magix.emails.load-email
                 value=>reply-{0}
                   =>[$][container].value
               execute-script
-                file=>system42/private/email/inbox/parts/reply/reply-web-part.hl
+                file=>your-files/system-apps/magix-mail/components/reply/reply-web-part.hl
           button
             class=>span-2
             value=>print
@@ -165,40 +157,4 @@ magix.emails.load-email
         container=>{container}
         class=>span-15 last email-item-body bottom-3 top-1
         controls=>[_controls]
-
-magix.emails.download-email
-  // checking what type of account user has
-  magix.data.load-username
-    id=>magix.email.account-type
-  switch=>[magix.data.load-username][value][account-type].value
-    case=>pop3
-      add=>[@][magix.emails.download-email-pop3]
-        values=>[$]
-      magix.emails.download-email-pop3
-    case=>imap
-      add=>[@][magix.emails.download-email-imap]
-        values=>[$]
-      magix.emails.download-email-imap
-
-magix.emails.download-email-imap
-  magix.viewport.show-message
-    message=>implement this sucker ...
-
-magix.emails.download-email-pop3
-  // downloading body of email
-  magix.data.load-username=>pop3-settings
-    id=>magix.pop3.settings
-  add=>[magix.pop3.get-message]
-    values=>[magix.data.load-username=>pop3-settings][value]
-  split=>[$][email-id].value
-    what=>magix.email.pop3-message-
-  set=>[magix.pop3.get-message][index].value
-    value=>[split][result][0].value
-  magix.pop3.get-message
-    headers-only=>false
-  using=>magix.data
-    load
-      id=>[$][email-id].value
-
-
 

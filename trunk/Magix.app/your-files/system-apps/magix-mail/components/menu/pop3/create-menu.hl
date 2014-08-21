@@ -1,0 +1,15 @@
+﻿
+
+inspect=>@"creates the menu parts of magix mail
+
+creates the menu of magix mail consisting of links to your 
+inbox, settings, etc"
+
+
+magix.forms.create-web-part
+  container=>content2
+  form-id=>inbox
+  class=>span-2 boxed air-padding
+  controls-file=>your-files/system-apps/magix-mail/components/menu/pop3/parts/controls.hl
+  events-file=>your-files/system-apps/magix-mail/components/menu/pop3/parts/events.hl
+

@@ -326,7 +326,8 @@ namespace Magix.UX.Widgets.Core
                     else
                         builder.Append(",");
 
-                    string val = values[idxKey].ToString().Replace("\\", "\\\\").Replace("\"", "\\\"").Replace("\n", "\\n").Replace("\r", "\\r");
+                    string val = values[idxKey] ?? "";
+                    val = val.Replace("\\", "\\\\").Replace("\"", "\\\"").Replace("\n", "\\n").Replace("\r", "\\r");
 
                     builder.AppendFormat("[\"{0}\",\"{1}\"]",
                         idxKey,

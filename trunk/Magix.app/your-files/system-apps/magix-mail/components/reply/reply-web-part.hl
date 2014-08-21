@@ -19,15 +19,18 @@ if=>not-exist
       value=>Re: {0}
         =>[using][load][value][subject].value
 
-if=>equals
-  lhs=>[using][load][value][is-html].value
+if=>not-exist
+  lhs=>[using][load][value][body][plain]
   rhs=>true
   code
     using=>magix.web
       strip-html
-        value=>[using][load][value][body].value
+        value=>[using][load][value][body][html].value
     set=>[using][load][value][body].value
       value=>[@][using][strip-html][result].value
+else
+  set=>[using][load][value][body].value
+    value=>[using][load][value][body][plain].value
 
 replace=>[using][load][value][body].value
   what=>\n
@@ -45,7 +48,7 @@ set=>[@][execute-script][params][script-directory]
 set=>[@][execute-script][params][email-id].value
   value=>[$][email-id].value
 execute-script
-  file=>system42/private/email/inbox/parts/reply/reply-no-html-web-part.hl
+  file=>your-files/system-apps/magix-mail/components/reply/reply-no-html-web-part.hl
 
 
 

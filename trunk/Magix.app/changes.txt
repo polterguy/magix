@@ -67,8 +67,14 @@
 
 17. added support for transfering a file with different name through "as" parameter in magix.web.transfer-file
 
-18. forked OpaqueMail
+18. magix.data load/remove/save can now take formatting expressions within their [id] nodes
 
+19. magix.forms.set-class can now take formatting parameters in [value]
 
+20. magix.forms.set-title can now take formatting parameters in [value]
+
+21. fixed a bug in MUX which sometimes would lead to nul reference exceptions when settings values of controls to null in ajax callbacks
+
+22. created magix.application.set/get to set and retrieve application objects
 
 

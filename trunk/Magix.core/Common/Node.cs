@@ -201,7 +201,7 @@ namespace Magix.Core
                                         idxNoChar += 1;
                                         bufferQuery += '%';
                                     }
-                                    else
+                                    else if (!string.IsNullOrEmpty(bufferQuery))
                                     {
                                         strings.Add(bufferQuery);
                                         bufferQuery = "";
@@ -213,20 +213,23 @@ namespace Magix.Core
                             if (!string.IsNullOrEmpty(bufferQuery))
                                 strings.Add(bufferQuery);
                             string content = idxThis.Get<string>();
-                            int idxNoSearch = 0;
-                            found = true;
-                            foreach (string idxQuery in strings)
+                            if (strings.Count > 0 && !string.IsNullOrEmpty(content))
                             {
-                                int noFound = content.IndexOf(idxQuery, idxNoSearch);
-                                if (noFound == -1)
+                                int idxNoSearch = 0;
+                                found = true;
+                                foreach (string idxQuery in strings)
                                 {
-                                    found = false;
-                                    break;
+                                    int noFound = content.IndexOf(idxQuery, idxNoSearch);
+                                    if (noFound == -1)
+                                    {
+                                        found = false;
+                                        break;
+                                    }
                                 }
-                            }
-                            if (found)
-                            {
-                                found = idxThis.HasNodes(idxProto);
+                                if (found)
+                                {
+                                    found = idxThis.HasNodes(idxProto);
+                                }
                             }
                         }
                         else

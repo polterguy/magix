@@ -1,0 +1,78 @@
+﻿
+
+inspect=>@"starts magix mail
+
+starts the magix mail client, first verifying that all 
+settings have been correctly setup.  if settings have not 
+been initialized, this file will load up the settings 
+web part, and force user to setup his mail settings, before 
+inbox will be launched
+
+this file assumes that a user is already logged in, and 
+if not it will throw an exception
+
+file takes no parameters, and will use most parts of the 
+viewport containers for its web parts.  file is dependent 
+upon the gutenberg container"
+
+
+// including css file
+magix.viewport.include-client-file
+  type=>css
+  file=>media/back-end/email-client.css
+
+// clearing all containers
+magix.viewport.clear-controls
+  all=>true
+  reset-class=>true
+
+// creating header web part
+magix.forms.create-web-part
+  container=>content1
+  class=>span-24
+  controls
+    label
+      tag=>h1
+      class=>fill-width top-1 bottom-1
+      value=>magix mail
+
+// pinning header web part, such that it won't be affected by clear-controls that clears all containers
+magix.viewport.pin-container
+  container=>content1
+
+// loading email settings to see if settings are setup
+magix.data.load-username=>smtp
+  id=>magix.smtp.settings
+magix.data.load-username=>pop3
+  id=>magix.pop3.settings
+
+// making sure email settings exists, and if not, fire up settings web part
+if=>not-exist
+  lhs=>[magix.data.load-username=>smtp][value]
+  or=>not-exist
+    lhs=>[magix.data.load-username=>pop3][value]
+  code
+
+    // settings for user does not exist, therefor we start the settings web part, forcing user to setup his mail settings first
+    magix.viewport.show-message
+      message=>please setup email settings first
+      color=>#ffffaa
+      time=>5000
+
+    // start settings web part, making sure inbox is automatically loaded afterwards
+    execute-script
+      file=>your-files/system-apps/magix-mail/components/user-setup/setup-settings.hl
+      params
+        execute-afterwards
+          execute-script
+            file=>your-files/system-apps/magix-mail/components/menu/pop3/create-menu.hl
+          execute-script
+            file=>your-files/system-apps/magix-mail/components/inbox/show-emails.hl
+else
+
+  // settings for user is setup, and we can start inbox
+  execute-script
+    file=>your-files/system-apps/magix-mail/components/menu/pop3/create-menu.hl
+  execute-script
+    file=>your-files/system-apps/magix-mail/components/inbox/show-emails.hl
+

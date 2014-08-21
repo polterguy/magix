@@ -5,24 +5,64 @@ inspect=>@"creates the default values for email
 sets up the default attachment directory for email attachments"
 
 
-magix.data.load=>public
-  id=>magix.email.attachment-directory
-
+magix.data.load=>linked-attachments-directory
+  id=>magix.email.linked-attachments-directory
 if=>not-exist
-  lhs=>[magix.data.load=>public][value]
+  lhs=>[magix.data.load=>linked-attachments-directory][value]
   code
+    // creating default linked attachments directory setting
     magix.data.save
-      id=>magix.email.attachment-directory
+      id=>magix.email.linked-attachments-directory
       value
         directory=>my-files/email
 
-magix.data.load=>private
-  id=>magix.email.attachment-directory-private
-
+magix.data.load=>attachments-directory
+  id=>magix.email.attachments-directory
 if=>not-exist
-  lhs=>[magix.data.load=>private][value]
+  lhs=>[magix.data.load=>attachments-directory][value]
   code
+    // creating default normal attachments directory setting
     magix.data.save
-      id=>magix.email.attachment-directory-private
+      id=>magix.email.attachments-directory
       value
         directory=>your-files/email
+
+magix.data.load=>smtp-settings
+  id=>magix.smtp.settings
+if=>not-exist
+  lhs=>[magix.data.load=>smtp-settings][value]
+  code
+    // creating default smtp settings, tying to gmail
+    magix.data.save
+      id=>magix.smtp.settings
+      value
+        host=>smtp.gmail.com
+        port=>587
+        ssl=>false
+
+magix.data.load=>pop3-settings
+  id=>magix.pop3.settings
+if=>not-exist
+  lhs=>[magix.data.load=>pop3-settings][value]
+  code
+    // creating default pop3 settings, tying to gmail
+    magix.data.save
+      id=>magix.pop3.settings
+      value
+        host=>pop.gmail.com
+        port=>995
+        ssl=>true
+
+magix.data.load=>imap-settings
+  id=>magix.imap.settings
+if=>not-exist
+  lhs=>[magix.data.load=>imap-settings][value]
+  code
+    // creating default imap settings, tying to gmail
+    magix.data.save
+      id=>magix.imap.settings
+      value
+        host=>imap.gmail.com
+        port=>993
+        ssl=>true
+

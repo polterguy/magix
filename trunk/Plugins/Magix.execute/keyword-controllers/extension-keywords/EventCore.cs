@@ -111,9 +111,7 @@ namespace Magix.execute
 
             bool remotable = ip.Contains("remotable") && ip["remotable"].Get<bool>();
 
-            string inspect = Expressions.GetExpressionValue<string>(ip["inspect"].Get<string>(), dp, ip, false);
-            if (ip["inspect"].Count != 0)
-                inspect = Expressions.FormatString(dp, ip, ip["inspect"], inspect);
+            string inspect = Expressions.GetFormattedExpression("inspect", pars, "");
 
             if (!ip.Contains("persist") || ip["persist"].Get<bool>())
             {

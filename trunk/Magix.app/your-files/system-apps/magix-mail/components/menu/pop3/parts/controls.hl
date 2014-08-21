@@ -1,0 +1,32 @@
+﻿
+
+inspect=>@"contains the menu controls of magix mail
+
+contains the menu parts controls definition file of the 
+magix mail application"
+
+
+label
+  class=>span-2 last bottom-1
+  tag=>h3
+  value=>menu
+
+link-button=>inbox-link
+  class=>span-2 last
+  value=>inbox
+  onclick
+    magix.email.inbox-clicked
+
+link-button=>settings-link
+  class=>span-2 last top-1
+  value=>settings ...
+  onclick
+    magix.email.settings-clicked
+
+timer=>check-for-new-emails
+  interval=>20000
+  ontick
+    magix.email.check-for-new-emails
+  onfirstload
+    magix.email.check-for-new-emails
+

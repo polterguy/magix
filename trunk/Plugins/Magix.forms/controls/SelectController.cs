@@ -82,13 +82,15 @@ namespace Magix.forms
                 foreach (Node idx in ip["values"])
 				{
 					ListItem it = new ListItem(idx.Get<string>(), idx.Name);
+                    if (!idx.GetValue("enabled", true))
+                        it.Enabled = false;
 					lst.Items.Add(it);
 				}
 			}
 			lst.ReRender();
 		}
 
-		protected override void Inspect (Node node)
+		protected override void Inspect(Node node)
 		{
             AppendInspectFromResource(
                 node["inspect"],

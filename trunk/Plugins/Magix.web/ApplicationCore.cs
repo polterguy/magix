@@ -16,13 +16,13 @@ namespace Magix.web
 	/*
 	 * session core
 	 */
-	internal sealed class SessionCore : ActiveController
+	internal sealed class ApplicationCore : ActiveController
 	{
 		/*
-		 * sets a session object
+		 * sets an application object
 		 */
-		[ActiveEvent(Name = "magix.session.set")]
-		private void magix_session_set(object sender, ActiveEventArgs e)
+		[ActiveEvent(Name = "magix.application.set")]
+		private void magix_application_set(object sender, ActiveEventArgs e)
 		{
             Node ip = Ip(e.Params);
             if (ShouldInspect(ip))
@@ -31,25 +31,25 @@ namespace Magix.web
                     ip["inspect"],
                     "Magix.web",
                     "Magix.web.hyperlisp.inspect.hl",
-                    "[magix.session.set-dox].value");
+                    "[magix.application.set-dox].value");
                 AppendCodeFromResource(
                     ip,
                     "Magix.web",
                     "Magix.web.hyperlisp.inspect.hl",
-                    "[magix.session.set-sample]");
+                    "[magix.application.set-sample]");
                 return;
 			}
 
             Node dp = Dp(e.Params);
 
             if (!ip.ContainsValue("id"))
-                throw new ArgumentException("no [id] given to [magix.session.set]");
+                throw new ArgumentException("no [id] given to [magix.application.set]");
             string id = Expressions.GetFormattedExpression("id", e.Params, "");
 
             if (!ip.Contains("value"))
 			{
-				// removal of existing session object
-				Page.Session.Remove(id);
+				// removal of existing application object
+				HttpContext.Current.Application.Remove(id);
 			}
 			else
 			{
@@ -59,15 +59,15 @@ namespace Magix.web
                     value = Expressions.GetExpressionValue<Node>(ip["value"].Get<string>(), dp, ip, false).Clone();
                 else
                     value = ip["value"].Clone();
-				Page.Session[id] = value;
+				HttpContext.Current.Application[id] = value;
 			}
 		}
 
         /*
-         * returns an existing session object
+         * returns an existing application object
          */
-		[ActiveEvent(Name = "magix.session.get")]
-		private void magix_session_get(object sender, ActiveEventArgs e)
+		[ActiveEvent(Name = "magix.application.get")]
+		private void magix_application_get(object sender, ActiveEventArgs e)
 		{
             Node ip = Ip(e.Params);
             if (ShouldInspect(ip))
@@ -76,23 +76,23 @@ namespace Magix.web
                     ip["inspect"],
                     "Magix.web",
                     "Magix.web.hyperlisp.inspect.hl",
-                    "[magix.session.get-dox].value");
+                    "[magix.application.get-dox].value");
                 AppendCodeFromResource(
                     ip,
                     "Magix.web",
                     "Magix.web.hyperlisp.inspect.hl",
-                    "[magix.session.get-sample]");
+                    "[magix.application.get-sample]");
                 return;
 			}
 
             Node dp = Dp(e.Params);
 
             if (!ip.ContainsValue("id"))
-                throw new ArgumentException("no [id] given to [magix.session.get]");
+                throw new ArgumentException("no [id] given to [magix.application.get]");
             string id = Expressions.GetFormattedExpression("id", e.Params, "");
 
-			if (Page.Session[id] != null && Page.Session[id] is Node)
-                ip.Add((Page.Session[id] as Node).Clone());
+            if (HttpContext.Current.Application[id] != null && HttpContext.Current.Application[id] is Node)
+                ip.Add((HttpContext.Current.Application[id] as Node).Clone());
 		}
     }
 }

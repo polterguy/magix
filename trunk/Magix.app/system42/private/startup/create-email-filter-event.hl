@@ -1,0 +1,19 @@
+
+
+inspect=>@"creates the email filtering active event
+
+creates the active event that does email filtering"
+
+
+event
+  name=>magix.email.filter-emails
+  persist=>false
+  inspect=>@"filters emails according to user's settings
+
+will filter emails and put them into the right folder 
+according to user's settings.  current version simply 
+marks all emails as belonging to 'inbox'"
+  code
+    set=>[$][email][folder].value
+      value=>inbox
+

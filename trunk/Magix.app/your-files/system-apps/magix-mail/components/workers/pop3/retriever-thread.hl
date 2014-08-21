@@ -1,0 +1,122 @@
+﻿
+
+inspect=>@"downloads new emails from pop3 server
+
+will download all emails from pop3 server.  expected to be invoked from 
+a different thread, since it might take a long time to execute this file"
+
+
+// settings pop3 email account settings for retrieving emails
+add=>[**magix.pop3.get-messages]
+  values=>[$][pop-settings]
+add=>[**magix.pop3.get-message-count]
+  values=>[$][pop-settings]
+
+iterate=>[try]
+  if=>equals
+    lhs=>[.].value
+    rhs=>{user}
+    code
+      set=>[.].value
+        value=>[$][pop-settings][user].value
+
+try
+  code
+
+    // settings status in case getting new messages count from server takes a long time, and a new thread is started before it is finished
+    magix.data.save
+      id=>magix.email.thread-status-{0}
+        =>{user}
+      value
+        status=>fetching
+
+    // checking pop3 server for message count to see if new messages have arrived ...
+    magix.pop3.get-message-count
+
+    // removing status
+    magix.data.remove
+      id=>magix.email.thread-status-{0}
+        =>{user}
+
+    // if new emails exist on server, we start downloading them
+    if=>not-equals
+      lhs=>[@][magix.pop3.get-message-count][count].value
+      rhs=>0
+      code
+
+        // setting status to fetching, and number of new emails on server
+        set=>[@][magix.data.save=>status][value][server-count].value
+          value=>[@][..][..][magix.pop3.get-message-count][count].value
+
+        magix.data.save=>status
+          id=>magix.email.thread-status-{0}
+            =>{user}
+          value
+            status=>fetching
+            download-count=>0
+
+        // starting retrieval of new messages, with callback
+        magix.pop3.get-messages
+          delete=>true
+          code
+
+            // filtering emails into correct folder
+            add=>[@][magix.email.filter-emails][email]
+              values=>[@][_message]
+            magix.email.filter-emails
+              user=>{user}
+            set=>[@][_message]
+            add=>[@][_message]
+              values=>[@][magix.email.filter-emails][email]
+
+            // saving email into database
+            add=>[@][magix.data.save][value]
+              values=>[@][_message]
+            set=>[@][magix.data.save][id].value
+              value=>magix.email.message-{0}
+                =>[@][_message][message-id].value
+            magix.data.save
+              value
+                type=>magix.email.message
+                username=>{user}
+                read=>false
+
+            // updating status, incrementing download-count by 1
+            magix.data.load=>status
+              id=>magix.email.thread-status-{0}
+                =>{user}
+            add=>[@][magix.data.save=>status]
+              values=>[@][magix.data.load=>status]
+            using=>magix.math
+              add=>[@][..][magix.data.save=>status][value][download-count]
+                =>[@][..][magix.data.save=>status][value][download-count].value
+                =>1
+            magix.data.save=>status
+
+        // finished retrieving messages, updating status before returning
+        set=>[@][magix.data.save=>status-2][value][download-count].value
+          value=>[@][..][..][magix.pop3.get-message-count][count].value
+        magix.data.save=>status-2
+          id=>magix.email.thread-status-{0}
+            =>{user}
+          value
+            status=>finished
+
+  catch
+
+    using=>magix.log
+      append
+        header=>error while downloading emails from pop3 server for user '{0}'
+          =>{user}
+        body=>@"message from server was; '{0}'"
+          =>[@][..][exception].value
+
+    // storing error message such that it can be read on the gui thread
+    set=>[@][magix.data.save][value][message].value
+      value=>[@][exception].value
+    magix.data.save
+      id=>magix.email.thread-status-{0}
+        =>{user}
+      value
+        status=>error
+
