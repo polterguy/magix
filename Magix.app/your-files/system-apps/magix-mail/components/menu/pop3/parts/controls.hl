@@ -24,7 +24,7 @@ link-button=>settings-link
     magix.email.settings-clicked
 
 timer=>check-for-new-emails
-  interval=>20000
+  interval=>5000
   ontick
     magix.email.check-for-new-emails
   onfirstload

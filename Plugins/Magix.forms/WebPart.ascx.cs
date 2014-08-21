@@ -81,17 +81,24 @@ namespace Magix.forms
                 controlsDefinition = ip["controls"].Clone();
 
             // controls
-            Node eventsDefinition = null;
-            if (ip["events"].Value != null)
-                eventsDefinition = Expressions.GetExpressionValue<Node>(ip["events"].Get<string>(), dp, ip, false).Clone();
-            else
-                eventsDefinition = ip["events"].Clone();
+            Node eventsDefinition = new Node();
+            if (ip.Contains("events"))
+            {
+                if (ip["events"].Value != null)
+                    eventsDefinition = Expressions.GetExpressionValue<Node>(ip["events"].Get<string>(), dp, ip, false).Clone();
+                else
+                    eventsDefinition = ip["events"].Clone();
+            }
 
             // form-id
             string formId = Expressions.GetExpressionValue<string>(ip["form-id"].Get<string>(), dp, ip, false);
 
             // mml
-            string mml = Expressions.GetExpressionValue<string>(ip["mml"].Get<string>(), dp, ip, false);
+            string mml = null;
+            if (ip.Contains("mml"))
+            {
+                mml = Expressions.GetExpressionValue<string>(ip["mml"].Get<string>(), dp, ip, false);
+            }
 
             Load +=
                 delegate

@@ -2,7 +2,7 @@
 
 inspect=>@"creates the show emails web part
 
-creates the show emails web part in content4.  loads emails 
+creates the show emails web part in content3.  loads emails 
 from database and displays as a grid to the user, making it 
 possible to read, reply, delete and such on individual emails
 

@@ -29,6 +29,12 @@ switch=>[magix.data.load-username=>status][value][status].value
 
   case=>fetching
 
+    using=>magix.console
+      log
+        value=>@"downloaded {0} of {1} messages from server"
+          =>[magix.data.load-username=>status][value][download-count].value
+          =>[magix.data.load-username=>status][value][server-count].value
+
     // still fetching emails from pop3 server, return status and email count
     set=>[$][status].value
       value=>fetching
@@ -49,6 +55,11 @@ switch=>[magix.data.load-username=>status][value][status].value
 
   case=>finished
 
+    using=>magix.console
+      log
+        value=>@"finished downloading {0} messages from server"
+          =>[magix.data.load-username=>status][value][download-count].value
+
     // just finished a thread that has downloaded emails from pop3 server
     set=>[$][status].value
       value=>finished
@@ -63,6 +74,12 @@ switch=>[magix.data.load-username=>status][value][status].value
 
   case=>error
 
+    using=>magix.console
+      log
+        value=>error, message from server was; '{0}'
+          =>[magix.data.load-username=>status][value][message].value
+        error=>true
+
     // an error occurred when fetching emails from server, returning error to caller
     set=>[$][status].value
       value=>error
@@ -76,6 +93,9 @@ switch=>[magix.data.load-username=>status][value][status].value
       id=>magix.email.thread-status
 
   default
+
+    magix.console.log
+      value=>starting new fetching thread
 
     // no existing status, starting a new thread fetching emails from server
     // first retrieving settings needed to check for new emails
