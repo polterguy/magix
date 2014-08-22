@@ -89,7 +89,7 @@
 
 27. magix.data.load now returns "created" being DateTime of creation, and "revision-count" being number of times this object has been saved
 
-
+28. fixed a bug that made the documentation for magix.data.count disappear
 
 
 

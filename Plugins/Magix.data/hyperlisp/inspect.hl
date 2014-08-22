@@ -75,11 +75,13 @@ to -1, which means all objects matching criteria.  [start], [end] and [prototype
 if [id] is given, since [id] is unique, and will make sure only one object is loaded
 
 if a [prototype] node is given, it can contain node values with % to signify wildcards for a match 
-operation.  both [id], [prototype], [start] and [end] can be either constant values, nodes or 
-expressions pointing to an id or a prototype object, which will be used 
-as the criteria to load objects.  no nodes in prototype can contain neither formatting values, 
-nor expressions, since the [prototype] node is not evaluated in any form before being passed into 
-the match algorithm
+operation.  to search for something actually containing a percentage sign '%', use two percentage 
+signs to signify you're looking for one percentage sign like this '%%'
+
+both [id], [prototype], [start] and [end] can be either constant values, nodes or expressions 
+pointing to an id or a prototype object, which will be used as the criteria to load objects.  
+no nodes in prototype can contain neither formatting values, nor expressions, since the [prototype] 
+node is not evaluated in any form before being passed into the match algorithm
 
 [id], if given,  can contains formatting expressions, such as {0}, {1} and so on, de-referencing 
 children nodes of [id]
@@ -94,14 +96,15 @@ magix.data.load-sample
 
 magix.data.save-dox=>@"saves a node to the database
 
-will serialize the given [value] node with the given [id] in the persistent data storage
+will serialize the given [value] node with the given [id] into the database
 
 if no [id] is given, a unique identifier will be automatically assigned to the object, 
 and returned as [id].  if an [id] is given, and an object with that same id exists, the 
-existing object will be overwritten and updated.  both the [value] and [id] can either be 
+existing object will be overwritten and updated.  both [value] and [id] can be either 
 expressions or constant strings or nodes.  if [value] is an expression, it will be used as 
 an expression pointing to a node that is to be saved, and the children node of the node 
-pointed to in the expression of [value] are saved as the value of the object
+pointed to in the expression of [value] are saved as the value of the object.  if [value] 
+is an expression, it must be an expression returning a node list
 
 [id] can contains formatting expressions, such as {0}, {1} and so on, de-referencing children 
 nodes of [id]
@@ -119,12 +122,15 @@ magix.data.save-sample
 
 magix.data.remove-dox=>@"removes a node from the database
 
-removes the given [id] or [prototype] object(s) from your persistent data storage
+removes the given [id] or [prototype] object(s) from your database
 
 both [id] and [prototype] can be either expressions or constant values.  if an id is 
 given, you cannot supply a prototype.  if you supply a prototype, then no id can be 
-supplied.  if you supply a prototype, you can use wildcard comparisons by using the 
-% sign as a wildcard equality comparison
+supplied.  if you supply a prototype, you can use wildcard comparisons by using '%' 
+as a wildcard equality comparison.  to search for a percentage sign, use two percentage 
+signs to signify you're looking for one, like this '%%'
+
+the active event will return the number of records actually deleted as [affected-records]
 
 [id] can contains formatting expressions, such as {0}, {1} and so on, de-referencing children 
 nodes of [id]
@@ -138,10 +144,9 @@ magix.data.remove-sample
 
 magix.data.count-dox=>@"counts objects in database
 
-returns the total number of objects in data storage as [count].  add [prototype] 
-to filter results.  [prototype], if given, can be either an expression or a constant.  
-if no prototype is given, the active event will return al objects in database.  objects 
-are returned as [count]
+returns the number of objects in database matching [prototype] as [count].  if no [prototype] 
+is given, all objects in database will be counted.  [prototype], if given, can be either an 
+expression or a constant.  number of objects matching criteria is returned as [count]
 
 thread safe"
 

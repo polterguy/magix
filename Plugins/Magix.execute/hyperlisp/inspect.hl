@@ -282,27 +282,28 @@ magix.execute.execute-dox=>@"main hyperlisp execution entry point
 executes the incoming parameters as hyperlisp, meaning it will raise everything 
 containing a period ('.') as an active event, while everything not starting with 
 an underscore ('_'), and not containing a period (.), will be assumed to be a 
-hyperlisp keyword, and appended behind 'magix.execute.', before that active event
-is raised
+hyperlisp keyword, and have the current namespace prepended in front of it, before 
+it is raised as an active event.  the default namespace is 'magix.execute', but this 
+can be overridden with the [using] keyword
 
 a hyperlisp keyword will have access to the entire data tree, while a normal active 
-event will only be able to modify the parts of the tree from underneath its own node
+event can only access the parts of the tree from underneath its own node
 
-active events are raised the way the appear sequentially beneath the magix.execute 
-node
-
-you can change the namespace appended before all hyperlisp keywords with the keyword 
-[using], and such modify the namespace appended in front of every hyperlisp keyword 
-to whatever you choose for yourself, and in such a way, create hyperlisp keywords 
-out of active events existing in any namespace you choose
+you can change the namespace prepended in front of all hyperlisp keywords with the 
+keyword [using], and such modify the namespace prepended in front of every hyperlisp 
+keyword to whatever you choose for yourself, and in such a way, create hyperlisp 
+keywords of existing active events, from any namespace you choose
 
 you can alternatively pass in an expression as the value of [execute] which will 
 execute that expression as hyperlisp.  if you do, then your expression must return 
-a node list
+a node list, and you can not use the fully qualified version of magix.execute.execute, 
+but must use only [execute] as your keyword
 
 if you fully declare your execute keyword, by appending the magix. namespace in 
 front of it, like [magix.execute], then the hyperlisp code beneath [magix.execute] 
-will be executed such that it does not have acccess to the code outside of itself
+will be executed such that it does not have acccess to the code outside of itself.  
+this is useful to make sure code does not have side-effects on other parts of your 
+code
 
 thread safe"
 
@@ -316,9 +317,11 @@ magix.execute.execute-sample
       code
         magix.execute
           _data=>hi thomas
-          using=>magix.viewport
-            show-message
-              message=>[_data].value
+          execute=>[_exe-node]
+          _exe-node
+            using=>magix.viewport
+              show-message
+                message=>[_data].value
     else
       magix.viewport.show-message
         message=>hi stranger
