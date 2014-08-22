@@ -107,41 +107,24 @@ namespace Magix.data
                 return;
             }
 
+            Node dp = Dp(e.Params);
+
             if (ip.Contains("id") && ip.Contains("prototype"))
                 throw new ArgumentException("cannot use both [id] and [prototype] in [magix.data.load]");
 
-            Node dp = Dp(e.Params);
+            if (!ip.Contains("id") && !ip.Contains("prototype"))
+                throw new ArgumentException("either [id] or [prototype] is needed for [magix.data.load]");
 
-            Node prototype = null;
-            string id = null;
-            if (ip.Contains("prototype"))
-            {
-                if (ip.ContainsValue("prototype"))
-                    prototype = Expressions.GetExpressionValue<Node>(ip["prototype"].Get<string>(), dp, ip, false);
-                else
-                    prototype = ip["prototype"];
-            }
-            else if (ip.ContainsValue("id"))
-            {
-                id = Expressions.GetFormattedExpression("id", e.Params, "");
-            }
-            else
-                throw new ArgumentException("either [prototype] or [id] is needed for [magix.data.load]");
+            string id = Expressions.GetFormattedExpression("id", e.Params, null);
+            Node prototype = GetPrototype(ip, dp);
 
-            int start = 0;
-            if (ip.ContainsValue("start"))
-                start = Expressions.GetExpressionValue<int>(ip["start"].Get<string>(), dp, ip, false);
+            Guid transaction = e.Params.GetValue("_database-transaction", Guid.Empty);
 
-            int end = -1;
-            if (ip.ContainsValue("end"))
-                end = Expressions.GetExpressionValue<int>(ip["end"].Get<string>(), dp, ip, false);
+            int start = Expressions.GetExpressionValue<int>(ip.GetValue("start", "0"), dp, ip, false);
+            int end = Expressions.GetExpressionValue<int>(ip.GetValue("end", "-1"), dp, ip, false);
 
             if (id != null && (start != 0 || end != -1 || prototype != null))
                 throw new ArgumentException("if you supply an [id], then [start], [end] and [prototype] cannot be defined");
-
-            Guid transaction = Guid.Empty;
-            if (e.Params.ContainsValue("_database-transaction"))
-                transaction = e.Params["_database-transaction"].Get<Guid>();
 
             Database.LoadItems(ip, prototype, id, start, end, transaction);
         }
@@ -214,32 +197,21 @@ namespace Magix.data
                 return;
             }
 
+            Node dp = Dp(e.Params);
+
             if (ip.Contains("id") && ip.Contains("prototype"))
                 throw new ArgumentException("cannot use both [id] and [prototype] in [magix.data.load]");
 
-            Node dp = Dp(e.Params);
+            if (!ip.Contains("id") && !ip.Contains("prototype"))
+                throw new ArgumentException("either [id] or [prototype] is needed for [magix.data.load]");
 
-            Node prototype = null;
-            if (ip.Contains("prototype"))
-            {
-                if (ip.ContainsValue("prototype"))
-                    prototype = Expressions.GetExpressionValue<Node>(ip["prototype"].Get<string>(), dp, ip, false);
-                else
-                    prototype = ip["prototype"];
-            }
+            string id = Expressions.GetFormattedExpression("id", e.Params, null);
+            Node prototype = GetPrototype(ip, dp);
 
-            if (!ip.ContainsValue("id") && prototype == null)
-                throw new ArgumentException("missing [id] or [prototype] while trying to remove object");
+            Guid transaction = e.Params.GetValue("_database-transaction", Guid.Empty);
 
-            Guid transaction = Guid.Empty;
-            if (e.Params.ContainsValue("_database-transaction"))
-                transaction = e.Params["_database-transaction"].Get<Guid>();
-
-            if (ip.Contains("id"))
-            {
-                string id = Expressions.GetFormattedExpression("id", e.Params, "");
+            if (id != null)
                 ip["affected-records"].Value = Database.RemoveById(id, transaction);
-            }
             else
                 ip["affected-records"].Value = Database.RemoveByPrototype(prototype, transaction);
         }
@@ -268,6 +240,18 @@ namespace Magix.data
 
             Node dp = Dp(e.Params);
 
+            Node prototype = GetPrototype(ip, dp);
+
+            Guid transaction = e.Params.GetValue("_database-transaction", Guid.Empty);
+
+            ip["count"].Value = Database.CountRecords(ip, prototype, transaction);
+        }
+
+        /*
+         * helper to retrieve prototype, will return null if no prototype exist
+         */
+        private static Node GetPrototype(Node ip, Node dp)
+        {
             Node prototype = null;
             if (ip.Contains("prototype"))
             {
@@ -276,12 +260,7 @@ namespace Magix.data
                 else
                     prototype = ip["prototype"];
             }
-
-            Guid transaction = Guid.Empty;
-            if (e.Params.ContainsValue("_database-transaction"))
-                transaction = e.Params["_database-transaction"].Get<Guid>();
-
-            Database.CountRecords(ip, prototype, transaction);
+            return prototype;
         }
     }
 }

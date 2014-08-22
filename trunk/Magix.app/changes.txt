@@ -85,6 +85,10 @@
 25. created new wizard for creating active events that executes hyperlisp files, with the possibility of adding parameters 
     into the file being executed
 
+26. magix.data.remove-username now returns affected-records
+
+
+
 
 
 
