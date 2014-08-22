@@ -22,7 +22,6 @@ namespace Magix.data
         private static object _locker = new object();
         private static object _transactionalLocker = new object();
         private static string _dbPath;
-        private static string _appPath;
         private static Node _database;
         private static Tuple<Guid, Node> _transaction = new Tuple<Guid, Node>(Guid.Empty, new Node());
 
@@ -34,11 +33,9 @@ namespace Magix.data
             {
                 lock (_transactionalLocker)
                 {
-                    if (_appPath != null)
+                    if (_dbPath != null)
                         return; // multiple initializations might occur
 
-                    _appPath = HttpContext.Current.Server.MapPath("/");
-                    _appPath = _appPath.Replace("\\", "/");
                     _dbPath = ConfigurationManager.AppSettings["magix.core.database-path"];
                     _database = new Node();
 
@@ -65,6 +62,14 @@ namespace Magix.data
                 "magix.file.list-directories",
                 directories);
 
+            directories["directories"].Sort(
+                delegate(Node left, Node right)
+                {
+                    int leftInt = int.Parse(left.Name.Replace(_dbPath, "").Substring(2));
+                    int rightInt = int.Parse(right.Name.Replace(_dbPath, "").Substring(2));
+                    return leftInt.CompareTo(rightInt);
+                });
+
             foreach (Node idxDirectory in directories["directories"])
                 yield return idxDirectory.Name;
         }
@@ -81,6 +86,14 @@ namespace Magix.data
                 typeof(Database),
                 "magix.file.list-files",
                 files);
+
+            files["files"].Sort(
+                delegate(Node left, Node right)
+                {
+                    int leftInt = int.Parse(left.Name.Replace(directory, "").Substring(3).Replace(".hl", ""));
+                    int rightInt = int.Parse(right.Name.Replace(directory, "").Substring(3).Replace(".hl", ""));
+                    return leftInt.CompareTo(rightInt);
+                });
 
             foreach (Node idxFile in files["files"])
                 yield return idxFile.Name;
@@ -182,7 +195,7 @@ namespace Magix.data
             }
             foreach (Node idxFileNode in toBeRemoved)
             {
-                RemoveNodeFromDatabase(idxFileNode);
+                RemoveFileFromDatabase(idxFileNode);
             }
         }
 
@@ -237,6 +250,8 @@ namespace Magix.data
         }
 
         #endregion
+
+        #region [ -- public methods -- ]
 
         /*
          * loads items from database
@@ -431,7 +446,7 @@ namespace Magix.data
                 foreach (string idx in filesToUpdate)
                 {
                     if (GetDatabase()[idx].Count == 0)
-                        RemoveNodeFromDatabase(GetDatabase()[idx]);
+                        RemoveFileFromDatabase(GetDatabase()[idx]);
                     else
                         SaveFileNodeToDisc(GetDatabase()[idx]);
                 }
@@ -463,7 +478,7 @@ namespace Magix.data
                             if (idxFileNode.Count > 0)
                                 SaveFileNodeToDisc(idxFileNode);
                             else
-                                RemoveNodeFromDatabase(idxFileNode);
+                                RemoveFileFromDatabase(idxFileNode);
                             return 1;
                         }
                     }
@@ -471,6 +486,8 @@ namespace Magix.data
                 return 0;
             }
         }
+
+        #endregion
 
         #region [ -- private helpers -- ]
 
@@ -543,84 +560,56 @@ namespace Magix.data
          */
         private static string FindAvailableNewFileName()
         {
-            Node listDirectoriesNode = new Node();
-            listDirectoriesNode["directory"].Value = _dbPath;
-            ActiveEvents.Instance.RaiseActiveEvent(
-                typeof(Database),
-                "magix.file.list-directories",
-                listDirectoriesNode);
-
-            listDirectoriesNode["directories"].Sort(
-                delegate(Node left, Node right)
-                {
-                    int leftInt = int.Parse(left.Name.Replace(_dbPath, "").Substring(2));
-                    int rightInt = int.Parse(right.Name.Replace(_dbPath, "").Substring(2));
-                    return leftInt.CompareTo(rightInt);
-                });
-
             int maxFilesPerDirectory = int.Parse(ConfigurationManager.AppSettings["magix.core.database-files-per-directory"]);
 
-            foreach (Node idxDirectory in listDirectoriesNode["directories"])
+            // checking to see if we can use existing directory
+            List<string> directoryList = new List<string>(GetDirectories(_dbPath));
+            foreach (string idxDirectory in directoryList)
             {
-                Node listFilesNode = new Node();
-                listFilesNode["filter"].Value = "db*.hl";
-                listFilesNode["directory"].Value = idxDirectory.Name;
-                ActiveEvents.Instance.RaiseActiveEvent(
-                    typeof(Database),
-                    "magix.file.list-files",
-                    listFilesNode);
-
-                if (listFilesNode["files"].Count >= maxFilesPerDirectory)
+                List<string> filesList = new List<string>(GetFiles(idxDirectory));
+                if (filesList.Count >= maxFilesPerDirectory)
                     continue;
-                listFilesNode["files"].Sort(
-                    delegate(Node left, Node right)
-                    {
-                        int leftInt = int.Parse(left.Name.Replace(idxDirectory.Name, "").Substring(3).Replace(".hl", ""));
-                        int rightInt = int.Parse(right.Name.Replace(idxDirectory.Name, "").Substring(3).Replace(".hl", ""));
-                        return leftInt.CompareTo(rightInt);
-                    });
-                for (int idxNo = 0; idxNo < listFilesNode["files"].Count; idxNo++)
+                for (int idxNo = 0; idxNo < filesList.Count; idxNo++)
                 {
-                    if (!listFilesNode["files"].Exists(
-                        delegate(Node file)
+                    if (!filesList.Exists(
+                        delegate(string file)
                         {
-                            return file.Name == idxDirectory.Name + "/db" + idxNo + ".hl";
+                            return file == idxDirectory + "/db" + idxNo + ".hl";
                         }))
-                    {
-                        return idxDirectory.Name + "/db" + idxNo + ".hl";
-                    }
+                        return idxDirectory + "/db" + idxNo + ".hl";
                 }
-                return idxDirectory.Name + "/db" + listFilesNode["files"].Count + ".hl";
+                return idxDirectory + "/db" + filesList.Count + ".hl";
             }
 
-            // didn't find an available file, without creating new directory
-            for (int idxNo = 0; idxNo < listDirectoriesNode["directories"].Count; idxNo++)
+            // didn't find an available filename, without creating new directory
+            for (int idxNo = 0; idxNo < directoryList.Count; idxNo++)
             {
-                if (!listDirectoriesNode["directories"].Exists(
-                    delegate(Node dirNode)
+                if (!directoryList.Exists(
+                    delegate(string dirNode)
                     {
-                        return dirNode.Name == _dbPath + "db" + idxNo;
+                        return dirNode == _dbPath + "db" + idxNo;
                     }))
                 {
-                    Node createDirectoryNode = new Node();
-                    createDirectoryNode["directory"].Value = _dbPath + "db" + idxNo;
-                    ActiveEvents.Instance.RaiseActiveEvent(
-                        typeof(Database),
-                        "magix.file.create-directory",
-                        createDirectoryNode);
-
-                    return createDirectoryNode["directory"].Get<string>() + "db0.hl";
+                    CreateNewDirectory(_dbPath + "db" + idxNo);
+                    return _dbPath + "db" + idxNo + "/db0.hl";
                 }
             }
 
-            Node createNewDirectoryNode = new Node();
-            createNewDirectoryNode["directory"].Value = _dbPath + "db" + listDirectoriesNode["directories"].Count;
+            CreateNewDirectory(_dbPath + "db" + directoryList.Count);
+            return _dbPath + "db" + directoryList.Count + "/db0.hl";
+        }
+
+        /*
+         * helper to create directory
+         */
+        private static void CreateNewDirectory(string directory)
+        {
+            Node createDirectoryNode = new Node();
+            createDirectoryNode["directory"].Value = directory;
             ActiveEvents.Instance.RaiseActiveEvent(
                 typeof(Database),
                 "magix.file.create-directory",
-                createNewDirectoryNode);
-
-            return createNewDirectoryNode["directory"].Get<string>() + "/db0.hl";
+                createDirectoryNode);
         }
 
         /*
@@ -649,7 +638,7 @@ namespace Magix.data
         /*
          * removes a file node from database
          */
-        private static void RemoveNodeFromDatabase(Node fileObject)
+        private static void RemoveFileFromDatabase(Node fileObject)
         {
             if (_transaction.Item1 != Guid.Empty)
             {
@@ -666,14 +655,9 @@ namespace Magix.data
 
             string directoryName = fileObject.Name.Substring(0, fileObject.Name.LastIndexOf("/"));
 
-            Node countFiles = new Node();
-            countFiles["directory"].Value = directoryName;
-            ActiveEvents.Instance.RaiseActiveEvent(
-                typeof(Database),
-                "magix.file.list-files",
-                countFiles);
-
-            if (countFiles["files"].Count == 0)
+            // checking to see if directory is empty
+            List<string> files = new List<string>(GetFiles(directoryName));
+            if (files.Count == 0)
             {
                 // deleting directory
                 Node deleteDirectory = new Node();
