@@ -223,7 +223,7 @@ namespace Magix.data
         public static void magix_data_count(object sender, ActiveEventArgs e)
         {
             Node ip = Ip(e.Params);
-            if (ShouldInspect(e.Params))
+            if (ShouldInspect(ip))
             {
                 AppendInspectFromResource(
                     ip["inspect"],
