@@ -3,9 +3,9 @@
 inspect=>@"contains the documentation for magix.data"
 
 
-magix.data.application-startup-dox=>@"loads entire database from disc
+magix.data.application-startup-dox=>@"loads database from disc into memory
 
-reloads serialized ram-based database into memory of web-server"
+reloads serialized ram-based database into memory"
 
 
 magix.data.transaction-dox=>@"initiates a database transaction
@@ -13,9 +13,11 @@ magix.data.transaction-dox=>@"initiates a database transaction
 creates a database transaction.  unless [magix.data.commit] is raised before the scope of the 
 transaction ends somehow, all changes done to the database inside of the transaction will be 
 rolled back, and discarded.  this is useful to make sure a long operation is successful as a 
-whole to allow changes to the database.  as long as a transaction is active, no other threads 
-will be able to access the database, and will have to wait for the transaction to finish, before 
-they're allowed to read and write to and from the database
+whole to allow changes to the database
+
+if a transaction is active, no other threads will be able to access the database, and will 
+have to wait for the transaction to finish, before they're allowed to read and write to and 
+from the database
 
 thread safe"
 
@@ -60,17 +62,24 @@ if you supply a prototype, it will return objects found as [objects], with child
 [objects] being the matching objects.  if you supply an [id] node, it will return the matched 
 object as [value]
 
-if you supply a [prototype] and an [only-id], then only the ids of the objects that matches your 
-prototype will be loaded, and not the actual content of your object
+in addition to loading the actual object and its id(s), [revision-count] and [created] will 
+also be returned for all objects matching your criteria.  [revision-count] is the number of 
+times the object has been saved, and [created] is the date and time of creation of your object
+
+if you supply a [prototype] and an [only-id], then only the ids, [revision-count] and [created] 
+values of the objects that matches your prototype will be loaded, and not the actual content of 
+your object
 
 use [start] and [end] to fetch a specific slice of objects, [start] defaults to 0 and [end] defaults 
 to -1, which means all objects matching criteria.  [start], [end] and [prototype] cannot be defined 
-if [id] is given, since [id] is supposed to be unique, and will make sure only one object is loaded
+if [id] is given, since [id] is unique, and will make sure only one object is loaded
 
 if a [prototype] node is given, it can contain node values with % to signify wildcards for a match 
 operation.  both [id], [prototype], [start] and [end] can be either constant values, nodes or 
 expressions pointing to an id or a prototype object, which will be used 
-as the criteria to load objects
+as the criteria to load objects.  no nodes in prototype can contain neither formatting values, 
+nor expressions, since the [prototype] node is not evaluated in any form before being passed into 
+the match algorithm
 
 [id], if given,  can contains formatting expressions, such as {0}, {1} and so on, de-referencing 
 children nodes of [id]
@@ -90,7 +99,9 @@ will serialize the given [value] node with the given [id] in the persistent data
 if no [id] is given, a unique identifier will be automatically assigned to the object, 
 and returned as [id].  if an [id] is given, and an object with that same id exists, the 
 existing object will be overwritten and updated.  both the [value] and [id] can either be 
-expressions or constant strings or nodes
+expressions or constant strings or nodes.  if [value] is an expression, it will be used as 
+an expression pointing to a node that is to be saved, and the children node of the node 
+pointed to in the expression of [value] are saved as the value of the object
 
 [id] can contains formatting expressions, such as {0}, {1} and so on, de-referencing children 
 nodes of [id]

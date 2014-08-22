@@ -111,22 +111,22 @@ namespace Magix.data
 
             if (ip.Contains("id") && ip.Contains("prototype"))
                 throw new ArgumentException("cannot use both [id] and [prototype] in [magix.data.load]");
-
-            if (!ip.Contains("id") && !ip.Contains("prototype"))
+            if (!ip.ContainsValue("id") && !ip.Contains("prototype"))
                 throw new ArgumentException("either [id] or [prototype] is needed for [magix.data.load]");
 
             string id = Expressions.GetFormattedExpression("id", e.Params, null);
-            Node prototype = GetPrototype(ip, dp);
-
             Guid transaction = e.Params.GetValue("_database-transaction", Guid.Empty);
 
-            int start = Expressions.GetExpressionValue<int>(ip.GetValue("start", "0"), dp, ip, false);
-            int end = Expressions.GetExpressionValue<int>(ip.GetValue("end", "-1"), dp, ip, false);
-
-            if (id != null && (start != 0 || end != -1 || prototype != null))
-                throw new ArgumentException("if you supply an [id], then [start], [end] and [prototype] cannot be defined");
-
-            Database.LoadItems(ip, prototype, id, start, end, transaction);
+            if (id == null)
+                Database.Load(
+                    ip,
+                    GetPrototype(ip, dp),
+                    Expressions.GetExpressionValue<int>(ip.GetValue("start", "0"), dp, ip, false),
+                    Expressions.GetExpressionValue<int>(ip.GetValue("end", "-1"), dp, ip, false),
+                    transaction,
+                    ip.GetValue("only-id", false));
+            else
+                Database.Load(ip, id, transaction);
         }
 
         /*
