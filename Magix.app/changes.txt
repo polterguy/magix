@@ -82,6 +82,8 @@
 24. fixed main execution of hyperlisp engine such that [using] always maps to "magix.execute.using" such that we can use different 
     namespaces inside other namespaces
 
+25. created new wizard for creating active events that executes hyperlisp files, with the possibility of adding parameters 
+    into the file being executed
 
 
 

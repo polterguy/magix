@@ -8,7 +8,7 @@ a hyperlisp file"
 magix.core.verify-role
   role=>admin
 
-_name=>create execute hyperlisp event
+_name=>create execute file event
 
 // setting default css files to include for web part
 magix.viewstate.set
