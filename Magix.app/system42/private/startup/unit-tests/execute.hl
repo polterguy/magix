@@ -107,7 +107,7 @@ event
 executes more than 65.536 lines of code, making sure 
 the execution overflows the execution engine"
   code
-    _expected-exception=>execution engine overflowed
+    _expected-exception=>execution engine overflow
     _iter=>0
     // multiplying 17000 times three gives the number of executions in this block
     // since [using] is one keyword, [add] another and [set] the third

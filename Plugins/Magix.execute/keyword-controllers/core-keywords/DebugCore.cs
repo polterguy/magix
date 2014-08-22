@@ -13,7 +13,7 @@ namespace Magix.execute
 	/*
 	 * debug logic
 	 */
-	public class DebugCore : ActiveController
+	internal sealed class DebugCore : ActiveController
 	{
 		/*
 		 * debug hyperlisp keyword
@@ -37,26 +37,21 @@ namespace Magix.execute
                 return;
 			}
 
-            Node stack = null;
+            Node stack = ip.RootNode();
             if (!string.IsNullOrEmpty(ip.Get<string>()))
             {
-                Node dp = Dp(e.Params);
-                stack = Expressions.GetExpressionValue<Node>(ip.Get<string>(), dp, ip, false);
+                stack = Expressions.GetExpressionValue<Node>(ip.Get<string>(), Dp(e.Params), ip, false);
                 if (stack == null)
-                    throw new ArgumentException("tried to debug a non-existing node tree in [debug]");
+                    throw new ArgumentException("tried to debug a non-existing node tree in [debug], expression was; '" + ip.Get<string>() +"'");
             }
-            else
-                stack = ip.RootNode();
 
-			Node tmp = new Node();
-			tmp["code"].AddRange(stack.Clone());
-			tmp["code"]["_state"].UnTie();
-			tmp["message"].Value = "stackdump of tree from debug instruction";
-			tmp["closable-only"].Value = true;
-
+			Node confirmNode = new Node();
+			confirmNode["code"].AddRange(stack.Clone());
+			confirmNode["message"].Value = "stackdump of tree from debug instruction";
+			confirmNode["closable-only"].Value = true;
 			RaiseActiveEvent(
 				"magix.viewport.confirm",
-				tmp);
+				confirmNode);
 		}
 	}
 }

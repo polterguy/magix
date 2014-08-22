@@ -47,7 +47,7 @@ namespace Magix.execute
                 {
                     ip = Expressions.GetExpressionValue<Node>(ip.Get<string>(), Dp(e.Params), ip, false); // lambda execute expression
                     if (ip == null)
-                        throw new ArgumentException("nothing to [execute]");
+                        throw new ArgumentException("[execute] value did not return a node list, expression was; '" + ip.Get<string>() + "'");
                 }
                 Execute(ip, e.Params);
             }
@@ -178,7 +178,7 @@ namespace Magix.execute
             int noCurrentExecutedHyperLispWords = pars["_current-executed-iterations"].Get<int>();
             int maxExecutionLines = pars["_max-execution-iterations"].Get<int>();
             if (noCurrentExecutedHyperLispWords >= maxExecutionLines)
-                throw new ApplicationException("execution engine overflowed");
+                throw new StackOverflowException("execution engine overflow");
             noCurrentExecutedHyperLispWords += 1;
             pars["_current-executed-iterations"].Value = noCurrentExecutedHyperLispWords;
         }
@@ -191,7 +191,7 @@ namespace Magix.execute
             if (pars.Contains("_whitelist"))
             {
                 if (!pars["_whitelist"].Contains(activeEvent))
-                    throw new ApplicationException("tried to execute an active event that was not in the [whitelist]");
+                    throw new InvalidOperationException("active event '" + activeEvent + "' not in [whitelist]");
             }
         }
     }
