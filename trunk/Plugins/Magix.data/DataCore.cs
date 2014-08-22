@@ -10,11 +10,11 @@ using Magix.Core;
 
 namespace Magix.data
 {
-	/*
-	 * data storage
-	 */
-	internal sealed class DataCore : ActiveController
-	{
+    /*
+     * data storage
+     */
+    internal sealed class DataCore : ActiveController
+    {
         /*
          * slurps up everything from database
          */
@@ -31,6 +31,7 @@ namespace Magix.data
                     "[magix.data.application-startup-dox].value");
                 return;
             }
+
             Database.Initialize();
         }
 
@@ -84,15 +85,15 @@ namespace Magix.data
             Database.Commit(e.Params);
         }
 
-		/*
-		 * loads an object from database
-		 */
-		[ActiveEvent(Name = "magix.data.load")]
-		public static void magix_data_load(object sender, ActiveEventArgs e)
-		{
+        /*
+         * loads an object from database
+         */
+        [ActiveEvent(Name = "magix.data.load")]
+        public static void magix_data_load(object sender, ActiveEventArgs e)
+        {
             Node ip = Ip(e.Params);
             if (ShouldInspect(ip))
-			{
+            {
                 AppendInspectFromResource(
                     ip["inspect"],
                     "Magix.data",
@@ -104,14 +105,14 @@ namespace Magix.data
                     "Magix.data.hyperlisp.inspect.hl",
                     "[magix.data.load-sample]");
                 return;
-			}
+            }
 
             if (ip.Contains("id") && ip.Contains("prototype"))
                 throw new ArgumentException("cannot use both [id] and [prototype] in [magix.data.load]");
 
             Node dp = Dp(e.Params);
 
-			Node prototype = null;
+            Node prototype = null;
             string id = null;
             if (ip.Contains("prototype"))
             {
@@ -127,33 +128,33 @@ namespace Magix.data
             else
                 throw new ArgumentException("either [prototype] or [id] is needed for [magix.data.load]");
 
-			int start = 0;
+            int start = 0;
             if (ip.ContainsValue("start"))
                 start = Expressions.GetExpressionValue<int>(ip["start"].Get<string>(), dp, ip, false);
 
-			int end = -1;
+            int end = -1;
             if (ip.ContainsValue("end"))
                 end = Expressions.GetExpressionValue<int>(ip["end"].Get<string>(), dp, ip, false);
 
-			if (id != null && (start != 0 || end != -1 || prototype != null))
-				throw new ArgumentException("if you supply an [id], then [start], [end] and [prototype] cannot be defined");
+            if (id != null && (start != 0 || end != -1 || prototype != null))
+                throw new ArgumentException("if you supply an [id], then [start], [end] and [prototype] cannot be defined");
 
             Guid transaction = Guid.Empty;
             if (e.Params.ContainsValue("_database-transaction"))
                 transaction = e.Params["_database-transaction"].Get<Guid>();
 
             Database.LoadItems(ip, prototype, id, start, end, transaction);
-		}
+        }
 
-		/*
-		 * saves an object to database
-		 */
-		[ActiveEvent(Name = "magix.data.save")]
-		public static void magix_data_save(object sender, ActiveEventArgs e)
-		{
+        /*
+         * saves an object to database
+         */
+        [ActiveEvent(Name = "magix.data.save")]
+        public static void magix_data_save(object sender, ActiveEventArgs e)
+        {
             Node ip = Ip(e.Params);
             if (ShouldInspect(ip))
-			{
+            {
                 AppendInspectFromResource(
                     ip["inspect"],
                     "Magix.data",
@@ -164,11 +165,11 @@ namespace Magix.data
                     "Magix.data",
                     "Magix.data.hyperlisp.inspect.hl",
                     "[magix.data.save-sample]");
-				return;
-			}
+                return;
+            }
 
             if (!ip.Contains("value"))
-				throw new ArgumentException("[value] must be given to [magix.data.save]");
+                throw new ArgumentException("[value] must be given to [magix.data.save]");
 
             Node value = null;
 
@@ -189,17 +190,17 @@ namespace Magix.data
             }
             else
                 ip["id"].Value = Database.SaveNewObject(value, transaction);
-		}
+        }
 
-		/*
-		 * removes an object from database
-		 */
-		[ActiveEvent(Name = "magix.data.remove")]
-		public static void magix_data_remove(object sender, ActiveEventArgs e)
-		{
+        /*
+         * removes an object from database
+         */
+        [ActiveEvent(Name = "magix.data.remove")]
+        public static void magix_data_remove(object sender, ActiveEventArgs e)
+        {
             Node ip = Ip(e.Params);
             if (ShouldInspect(ip))
-			{
+            {
                 AppendInspectFromResource(
                     ip["inspect"],
                     "Magix.data",
@@ -211,7 +212,7 @@ namespace Magix.data
                     "Magix.data.hyperlisp.inspect.hl",
                     "[magix.data.remove-sample]");
                 return;
-			}
+            }
 
             if (ip.Contains("id") && ip.Contains("prototype"))
                 throw new ArgumentException("cannot use both [id] and [prototype] in [magix.data.load]");
@@ -228,7 +229,7 @@ namespace Magix.data
             }
 
             if (!ip.ContainsValue("id") && prototype == null)
-				throw new ArgumentException("missing [id] or [prototype] while trying to remove object");
+                throw new ArgumentException("missing [id] or [prototype] while trying to remove object");
 
             Guid transaction = Guid.Empty;
             if (e.Params.ContainsValue("_database-transaction"))
@@ -243,15 +244,15 @@ namespace Magix.data
                 ip["affected-records"].Value = Database.RemoveByPrototype(prototype, transaction);
         }
 
-		/*
-		 * counts objects in database
-		 */
-		[ActiveEvent(Name = "magix.data.count")]
-		public static void magix_data_count(object sender, ActiveEventArgs e)
-		{
+        /*
+         * counts objects in database
+         */
+        [ActiveEvent(Name = "magix.data.count")]
+        public static void magix_data_count(object sender, ActiveEventArgs e)
+        {
             Node ip = Ip(e.Params);
             if (ShouldInspect(e.Params))
-			{
+            {
                 AppendInspectFromResource(
                     ip["inspect"],
                     "Magix.data",
@@ -263,7 +264,7 @@ namespace Magix.data
                     "Magix.data.hyperlisp.inspect.hl",
                     "[magix.data.count-sample]");
                 return;
-			}
+            }
 
             Node dp = Dp(e.Params);
 
@@ -281,7 +282,7 @@ namespace Magix.data
                 transaction = e.Params["_database-transaction"].Get<Guid>();
 
             Database.CountRecords(ip, prototype, transaction);
-		}
-	}
+        }
+    }
 }
 

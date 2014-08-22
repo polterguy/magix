@@ -42,6 +42,46 @@ magix.wizard.populate-select-css-file
         add=>[$][files]
           values=>[@][..][..][magix.wizard.populate-select-css-file][files]
 
+// retrieves all hyperlisp files in installation
+magix.wizard.retrieve-hyperlisp-files
+
+  // defaulting directory to media directory, unless a directory is explicitly given as input
+  _directory=>
+  if=>exist
+    lhs=>[$][directory]
+    code
+      set=>[_directory].value
+        value=>[$][directory].value
+
+  // fetching all files and directories from current directory
+  using=>magix.file
+    list-files
+      directory=>[_directory].value
+      filter=>*.hl
+    list-directories
+      directory=>[_directory].value
+
+  // looping through all files
+  for-each=>[using][list-files][files]
+    add=>[$][files]
+      value=>[.].name
+        value=>[.].name
+
+  // looping through all directories, and recursively calling self
+  for-each=>[using][list-directories][directories]
+    if=>not-equals
+      lhs=>[.].name
+      rhs=>database
+      code
+        set=>[@][magix.wizard.retrieve-hyperlisp-files][directory].value
+          value=>[.].name
+        magix.wizard.retrieve-hyperlisp-files
+        if=>exist
+          lhs=>[@][magix.wizard.retrieve-hyperlisp-files][files]
+          code
+            add=>[$][files]
+              values=>[@][..][..][magix.wizard.retrieve-hyperlisp-files][files]
+
 // creates the web part that holds the css files
 magix.wizard.create-css-files-container
 
@@ -231,6 +271,21 @@ css files to the client"
     rhs=>true
     code
 
+      // adding parameters
+      magix.forms.get-value
+        form-id=>wizard
+        id=>parameters
+      if=>not-equals
+        lhs=>[@][magix.forms.get-value][value].value
+        rhs=>
+        code
+          // we have parameters
+          set=>[@][code-2-node][code].value
+            value=>[@][..][..][magix.forms.get-value][value].value
+          code-2-node
+          add=>[/][_data][event][code][execute-script][params]
+            values=>[@][code-2-node][node]
+
       // setting css files for web part
       magix.viewstate.get
         id=>magix.wizard.css-files
@@ -241,7 +296,7 @@ css files to the client"
         set=>[@][_css][magix.viewport.include-client-file][file].value
           value=>[.].name
         add=>[/][_data][event][code]
-          value=>[@][_css][magix.viewport.include-client-file]
+          values=>[@][_css]
 
       // creating active event
       execute=>[_data]

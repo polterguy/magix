@@ -128,6 +128,8 @@ magix.file-manager.set-selected-object
       type=>focus-and-select
   magix.file-manager.show-preview
 
+
+// shows preview of file web part
 magix.file-manager.show-preview
   magix.viewstate.get
     id=>magix.file-manager.selected-object
