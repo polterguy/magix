@@ -230,7 +230,7 @@ namespace Magix.data
         /*
          * counts records in database
          */
-        internal static void CountRecords(Node ip, Node prototype, Guid transaction)
+        internal static int CountRecords(Node ip, Node prototype, Guid transaction)
         {
             if (transaction != _transaction.Item1)
             {
@@ -255,7 +255,7 @@ namespace Magix.data
                         }
                     }
                 }
-                ip["count"].Value = count;
+                return count;
             }
         }
 

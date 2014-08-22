@@ -87,4 +87,6 @@ data on a per user basis"
         =>[$][id].value
         =>[magix.session.get][value][username].value
     magix.data.remove
+    set=>[$][affected-records].value
+      value=>[magix.data.remove][affected-records].value
 
