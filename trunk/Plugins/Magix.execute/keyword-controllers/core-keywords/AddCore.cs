@@ -9,17 +9,17 @@ using Magix.Core;
 
 namespace Magix.execute
 {
-	/*
-	 * hyperlisp add logic
-	 */
-	public class AddCore : ActiveController
-	{
-		/*
-		 * add hyperlisp keyword
-		 */
-		[ActiveEvent(Name = "magix.execute.add")]
-		public static void magix_execute_add(object sender, ActiveEventArgs e)
-		{
+    /*
+     * hyperlisp add logic
+     */
+    internal sealed class AddCore : ActiveController
+    {
+        /*
+         * add hyperlisp keyword
+         */
+        [ActiveEvent(Name = "magix.execute.add")]
+        public static void magix_execute_add(object sender, ActiveEventArgs e)
+        {
             Node ip = Ip(e.Params, true);
             if (ShouldInspect(ip))
             {
@@ -34,51 +34,57 @@ namespace Magix.execute
                     "Magix.execute.hyperlisp.inspect.hl",
                     "[magix.execute.add-sample]");
                 return;
-			}
+            }
 
-			Node dp = Dp(e.Params);
+            Node dp = Dp(e.Params);
 
             Node destinationNode = Expressions.GetExpressionValue<Node>(ip.Get<string>(), dp, ip, true);
             if (destinationNode == null)
                 throw new ArgumentException("[add] must return an existing node-list, [add] value returned null, expression was; " + ip.Get<string>());
 
             if (ip.ContainsValue("value"))
-            {
-                object sourceObject = Expressions.GetExpressionValue<object>(ip["value"].Get<string>(), dp, ip, false);
-
-                if (sourceObject is Node)
-                    destinationNode.Add((sourceObject as Node).Clone());
-                else
-                {
-                    string nodeName = sourceObject.ToString();
-
-                    object nodeValue = null;
-                    if (ip["value"].Contains("value"))
-                    {
-                        nodeValue = Expressions.GetExpressionValue<object>(ip["value"]["value"].Get<string>(), dp, ip, false);
-                        if (ip["value"]["value"].Count > 0)
-                            nodeValue = Expressions.FormatString(dp, ip, ip["value"]["value"], nodeValue.ToString());
-                    }
-                    destinationNode.Add(new Node(nodeName, nodeValue));
-                }
-            }
+                AddSingleValue(ip, dp, destinationNode);
             else if (ip.ContainsValue("values"))
-            {
-                object sourceObject = Expressions.GetExpressionValue<object>(ip["values"].Get<string>(), dp, ip, false);
+                AddMultipleValues(ip, dp, destinationNode);
+            else
+                destinationNode.AddRange(ip.Clone());
+        }
 
-                if (sourceObject is Node)
-                {
-                    Node sourceNode = sourceObject as Node;
-                    destinationNode.AddRange(sourceNode.Clone());
-                }
-                else
-                    throw new ArgumentException("[values] didn't return nodes in [add]");
-            }
+        /*
+         * adds a single value to destination node
+         */
+        private static void AddSingleValue(Node ip, Node dp, Node destinationNode)
+        {
+            object sourceObject = Expressions.GetExpressionValue<object>(ip["value"].Get<string>(), dp, ip, false);
+            Node sourceObjectAsNode = sourceObject as Node;
+            if (sourceObjectAsNode != null)
+                destinationNode.Add(sourceObjectAsNode.Clone());
             else
             {
-                destinationNode.AddRange(ip.Clone());
+                string nodeName = sourceObject.ToString();
+                object nodeValue = null;
+                if (ip["value"].ContainsValue("value"))
+                {
+                    nodeValue = Expressions.GetExpressionValue<object>(ip["value"]["value"].Get<string>(), dp, ip, false);
+                    if (ip["value"]["value"].Count > 0)
+                        nodeValue = Expressions.FormatString(dp, ip, ip["value"]["value"], nodeValue.ToString());
+                }
+                destinationNode.Add(new Node(nodeName, nodeValue));
             }
-		}
+        }
+
+        /*
+         * adds all children from source into destination
+         */
+        private static void AddMultipleValues(Node ip, Node dp, Node destinationNode)
+        {
+            object sourceObject = Expressions.GetExpressionValue<object>(ip["values"].Get<string>(), dp, ip, false);
+            Node sourceObjectAsNode = sourceObject as Node;
+            if (sourceObjectAsNode != null)
+                destinationNode.AddRange(sourceObjectAsNode.Clone());
+            else
+                throw new ArgumentException("[values] didn't return nodes in [add], expression was; '" + ip["values"].Get<string>() + "'");
+        }
     }
 }
 

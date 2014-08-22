@@ -5,38 +5,61 @@ contains the documentation for all active events in the
 Magix.execute assembly"
 
 
-magix.execute.add-dox=>@"adds a node to another node
+magix.execute.add-dox=>@"adds nodes to a node
 
 creates a deep copy of the node returned by the expression in the [value] node, and appends 
-it into the expression found in [add].  if no [value] node is given, then all children of 
-[add] will be added.  the [add] node must have en expression returning a node lists
+it into the expression found in [add].  if no [value] node is given, and no [values] node is 
+given, then all children of [add] will be added.  the [add] node must have en expression 
+returning a node list
 
-if a [values] node is given then only the children of the node returned by the expression in [values] 
-will be added to the nodes found in the expression of [add].  if a [value] node exists, with an 
-expression returning a node list, then the entire node tree will be copied, with its children, 
-including the node returned from [value] itself
+if a [value] node exists, with an expression returning a node list, then the entire node tree 
+will be copied, with its children, including the node returned from [value] itself
 
-if a [value] node exists, and it is a contant, or an expression returning anything but a node list, 
+if the destination node does not exist, then it will be created
+
+a [values] node can optionally be given instead of [value].  if a [values] node is given, then 
+only the children of the node returned by the expression in [values] will be added to the nodes 
+found in the expression of [add]
+
+if a [value] node exists, and it is a constant, or an expression returning anything but a node list, 
 then a node with the name returned from the constant or expression of the [value] node will be 
 added to the node list of the expression returned by [add].  in this case, one node will be added 
 to the node list in the [add] expression, with the name of the [value] node's value.   if you supply 
 a [value] node, who's value is not a node list, you can optionally also supply an additional [value] 
 node as a child of the first [value] node, who's expression or constant value will become the value 
-of the node added to the [add] node's collection.  if you supply the second [value] node, you can 
-addditionally supply this node's value as a formatting expression, using {0} and {1} to de-reference 
-items being children of the second [value] node, to format strings
+of the node added to the [add] node's collection.  if you supply the second [value] node, and its 
+return value is of type string, you can optionally supply this node's value as a formatting expression, 
+using {0} and {1} to de-reference items being children of the second [value] node, to format strings
 
 thread safe"
 
 magix.execute.add-sample
-  _copy
+  _copy0
+  _copy1
+  _copy2
+  _copy3
   _data
     children=>original
     children1=>will be copied
       item1=>will be copied too
       item2=>will also be copied
-  add=>[_copy]
+  add=>[_copy0]
+    value=>[_data]
+  add=>[_copy1]
     values=>[_data]
+  add=>[_copy2]
+    some-node=>some node value
+      another-node
+        with-a-child=>@"this is a multiline 
+value to demonstrate you can 
+add nodes which have text 
+spanning multiple lines"
+  add=>[_copy3]
+    value=>new-node-name
+      value=>new node value {0}
+        =>with formatting expressions
+  add=>[_does-not-exist]
+    value=>_dynamically-created-with-no-value
 
 
 magix.execute.node-2-code-dox=>@"transforms a node to text
@@ -187,19 +210,20 @@ magix.execute.list-events-sample
 
 magix.execute.try-dox=>@"creates a try block to handle exceptions
 
-use the [try] keyword to create a block of [code], which will execute 
-your [catch] execution block of code, if an exception is thrown, inside 
-your [code] execution block
+use the [try] keyword to create a [block] of unsafe code to execute, where 
+the code within the [code] block might throw an exception, and you wish to 
+be notified if it does, and handle it, either in a [catch] block of code, or 
+a [finally] block of code
 
-this exception handler will be invoked, even if an exception occurs any 
-place underneath your try code block, deep within your logic.  you can 
-handle exceptions being raised in sub-functions, recursively invoked 
-active events, or natively thrown exceptions this way
+when you create a [try] block, you must have a [code] block beneath it, in 
+addition to either a [catch] block, or a [finally] block.  your [catch] node 
+might also optionally contain a value, which will be used as an 'exception filter'
 
-if an exception is thrown, you can access the description of the 
-exception in the [exception] node underneath your catch statement.  you 
-can also add a [finally] piece of code block underneath the [try], which will 
-always be executed, regardless of whether or not an exception was thrown
+if your [catch] node has a value, only exceptions thrown with [type] matching 
+the value of your [catch] block will be handled by your [catch] block
+
+if your [catch] node does not have a value, it will handle all exceptions, both 
+hyperlisp exceptions, in addition to managed clr exceptions
 
 thread safe"
 

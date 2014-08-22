@@ -101,3 +101,43 @@ when no exception is thrown"
       rhs=>yes
       code
         throw=>[finally] misbehaved
+
+
+event
+  name=>magix.test.exception-types
+  persist=>false
+  inspect=>@"verifies [catch] works with types
+
+verifies that the [catch] keyword is executed, but only 
+when the [type] matches the exception"
+  code
+    _error
+    try
+      code
+        try
+          code
+            throw=>my exception
+              type=>my-type
+          catch=>not-to-be-catched
+            set=>[_error].value
+              value=>true
+      catch=>my-type
+    if=>equals
+      lhs=>[_error].value
+      rhs=>true
+      code
+        throw=>[catch] misbehaved
+
+
+event
+  name=>magix.test.exception-no-catch-finally
+  persist=>false
+  inspect=>@"verifies [try] does not work without [catch] or [finally]
+
+verifies that [try] does not allow execution, unless you have either a 
+[finally] or a [catch] block within your [try]"
+  code
+    _expected-exception
+    try
+      code
+
