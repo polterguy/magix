@@ -87,7 +87,7 @@
 
 26. magix.data.remove-username now returns affected-records
 
-
+27. magix.data.load now returns "created" being DateTime of creation, and "revision-count" being number of times this object has been saved
 
 
 
