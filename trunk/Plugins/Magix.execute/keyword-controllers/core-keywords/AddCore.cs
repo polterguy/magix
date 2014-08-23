@@ -40,7 +40,7 @@ namespace Magix.execute
 
             Node destinationNode = Expressions.GetExpressionValue<Node>(ip.Get<string>(), dp, ip, true);
             if (destinationNode == null)
-                throw new ArgumentException("[add] must return an existing node-list, [add] value returned null, expression was; " + ip.Get<string>());
+                throw new HyperlispExecutionErrorException("[add] must return an existing node-list, [add] value returned null, expression was; " + ip.Get<string>());
 
             if (ip.ContainsValue("value"))
                 AddSingleValue(ip, dp, destinationNode);
@@ -83,7 +83,7 @@ namespace Magix.execute
             if (sourceObjectAsNode != null)
                 destinationNode.AddRange(sourceObjectAsNode.Clone());
             else
-                throw new ArgumentException("[values] didn't return nodes in [add], expression was; '" + ip["values"].Get<string>() + "'");
+                throw new HyperlispExecutionErrorException("[values] didn't return nodes in [add], expression was; '" + ip["values"].Get<string>() + "'");
         }
     }
 }
