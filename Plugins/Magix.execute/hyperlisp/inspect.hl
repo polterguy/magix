@@ -278,24 +278,66 @@ regardless of whether or not an exception is thrown"
 
 magix.execute.throw-dox=>@"throws an exception
 
-throws an exception, which will stop the entire current execution, and 
-halt back to the previous catch, in the stack of active events.  [exception] 
+throws an exception, which will stop the current execution stack, and halt 
+back to the previous matched catch, in the stack of active events.  [exception] 
 in [catch] becomes the value of the [throw] node, or the exception message.  
 use throw together with [try] to handle errors
 
-to create handlers that handles all exceptions, you can create an active event 
-who's name is 'magix.execute.exception'
+add up an additional [type] when you throw your exceptions, to create a specific 
+type of exception, which must match the value of your [catch] node to have your 
+catch actually handle your exception
+
+you can create as many [catch] blocks as you wish, with different types, such 
+that you have different [catch] blocks for each type of exception that might occur
+
+from within a [catch] block, you can rethrow the exception you handled, by using 
+the [throw] keyword, with no value.  this allows you to handle an exception, 
+while still rethrowing it to further unroll the stack upwards
+
+to create active event handlers that handles all exceptions, you can create an 
+active event who's name is 'magix.execute.exception', which might be useful for 
+logging purposes and such
 
 thread safe"
 
 magix.execute.throw-sample
   try
     code
-      throw=>some exception error message
+      try
+        code
+          throw=>this is the exception message
+            type=>correct-type
+        catch=>wrong-type
+          magix.viewport.show-message
+            message=>@"this message box will never show, since the 
+exception type it handles is not the correct type"
+    catch=>correct-type
+      set=>[@][magix.viewport.show-message][message].value
+        value=>[@][exception].value
+      magix.viewport.show-message
+  try
+    code
+      try
+        code
+          throw=>this is the second exception message
+        catch
+          magix.viewport.show-message
+            message=>caught exception
+          throw
     catch
       set=>[@][magix.viewport.show-message][message].value
         value=>[@][exception].value
       magix.viewport.show-message
+  try
+    code
+      throw=>this is the second exception message
+        type=>correct-type
+    catch=>wrong-type
+      magix.viewport.show-message
+        message=>this message box never shows
+    catch=>correct-type
+      magix.viewport.show-message
+        message=>the correct [catch] block was executed
 
 
 magix.execute.using-dox=>@"changes the default namespace

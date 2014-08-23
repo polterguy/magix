@@ -60,7 +60,7 @@ event
   inspect=>@"verifies [execute] works without expressions
 
 invokes an [execute] block of code, with the execution block 
-being the children of the execute ndoe itself, making sure the 
+being the children of the execute node itself, making sure the 
 execution of the code is correctly done"
   code
     _outside
@@ -95,6 +95,26 @@ executes normally, without any problems"
       or=>not-equals
         lhs=>[execute=>labeled-execution][_inside].value
         rhs=>executed
+      code
+        throw=>[execute] misbehaved
+
+
+event
+  name=>magix.test.execute-destroy-self
+  persist=>false
+  inspect=>@"verifies 'destroy self' works
+
+deletes the execution pointer from the execution tree, 
+verifying that the next execution statement is actually 
+executed correctly"
+  code
+    _success=>false
+    set=>[.ip]
+    set=>[_success].value
+      value=>true
+    if=>not-equals
+      lhs=>[_success].value
+      rhs=>true
       code
         throw=>[execute] misbehaved
 

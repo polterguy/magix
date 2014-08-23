@@ -91,7 +91,23 @@ namespace Magix.execute
                 return;
             }
 
-            throw new ExceptionCore.ManagedHyperLispException(ip.Get<string>(), ip.GetValue<string>("type", null));
+            if (string.IsNullOrEmpty(ip.Get<string>()))
+            {
+                // this is a rethrow, checking stack to see if we're inside a catch statement
+                Node stackTraceNode = ip;
+                while (stackTraceNode != null)
+                {
+                    if (stackTraceNode.Name == "catch")
+                        break;
+                    stackTraceNode = stackTraceNode.Parent;
+                }
+                if (stackTraceNode != null)
+                    e.Params["_rethrow"].Value = true;
+                else
+                    throw new ApplicationException("cannot rethrow an exception, unless you're inside of a [catch] block");
+            }
+            else
+                throw new ExceptionCore.ManagedHyperLispException(ip.Get<string>(), ip.GetValue<string>("type", null));
         }
 
         /*
@@ -115,28 +131,51 @@ namespace Magix.execute
             {
                 while (err.InnerException != null)
                     err = err.InnerException;
-                if (!string.IsNullOrEmpty(ip["catch"].Get<string>()))
-                {
-                    ManagedHyperLispException hlEx = err as ManagedHyperLispException;
-                    if (hlEx != null)
-                        catched = hlEx.TypeInfo == ip["catch"].Get<string>();
-                    else
-                        catched = err.GetType().FullName == ip["catch"].Get<string>();
-                }
-                else
-                    catched = true; // catch all
 
-                if (catched)
+                foreach (Node idxNode in ip)
                 {
-                    ip["catch"]["exception"].Value = err.Message;
-                    pars["_ip"].Value = ip["catch"];
+                    if (idxNode.Name == "catch")
+                    {
+                        if (!string.IsNullOrEmpty(idxNode.Get<string>()))
+                        {
+                            // checking to see if type information on catch is correct according to type of exception
+                            ManagedHyperLispException hlEx = err as ManagedHyperLispException;
+                            if (hlEx != null)
+                                catched = hlEx.TypeInfo == idxNode.Get<string>();
+                            else
+                                catched = err.GetType().FullName == idxNode.Get<string>();
+                        }
+                        else
+                            catched = true; // catch all
 
-                    RaiseActiveEvent(
-                        "magix.execute",
-                        pars);
+                        if (catched)
+                            catched = ExecuteCatchBlock(pars, idxNode, err);
+                    }
                 }
             }
             return catched;
+        }
+
+        /*
+         * executes specific catch block
+         */
+        private static bool ExecuteCatchBlock(Node pars, Node catchBlock, Exception err)
+        {
+            // executing [catch] block
+            catchBlock["exception"].Value = err.Message;
+            pars["_ip"].Value = catchBlock;
+
+            RaiseActiveEvent(
+                "magix.execute",
+                pars);
+
+            if (pars.GetValue("_rethrow", false))
+            {
+                // checking to see if we should rethrow exception
+                pars["_rethrow"].UnTie();
+                return false;
+            }
+            return true;
         }
 
         /*

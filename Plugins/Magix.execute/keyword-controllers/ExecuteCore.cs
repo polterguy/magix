@@ -95,7 +95,15 @@ namespace Magix.execute
                 // looping through all keywords/active-events in the child collection
                 for (int idxNo = 0; idxNo < ip.Count; idxNo++)
                 {
-                    ExecuteSingleNode(ip, pars, ip[idxNo]);
+                    Node exeNode = ip[idxNo];
+                    ExecuteSingleNode(ip, pars, exeNode);
+
+                    if (exeNode.Parent == null)
+                    {
+                        // "destroy self" logic, decrementing idxNo such that we stick to our "current position", 
+                        // since "current position" is now acually next node
+                        idxNo -= 1;
+                    }
                 }
             }
         }

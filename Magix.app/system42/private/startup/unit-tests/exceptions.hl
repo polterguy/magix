@@ -130,6 +130,86 @@ when the [type] matches the exception"
 
 
 event
+  name=>magix.test.exception-multiple-catch
+  persist=>false
+  inspect=>@"verifies [catch] works with types
+
+verifies that the [catch] keyword is executed, but only 
+when the [type] matches the exception"
+  code
+    _success
+    try
+      code
+        throw=>my exception
+          type=>correct-type
+      catch=>wrong-type
+        throw=>[catch] misbehaved
+      catch=>correct-type
+        set=>[_success].value
+          value=>true
+    if=>not-equals
+      lhs=>[_success].value
+      rhs=>true
+      code
+        throw=>[catch] misbehaved
+
+
+event
+  name=>magix.test.exception-system-types
+  persist=>false
+  inspect=>@"verifies [catch] works with types
+
+verifies that the [catch] keyword is executed, but only 
+when the [type] matches the system type of the exception 
+thrown"
+  code
+    _error
+    try
+      code
+        try
+          code
+            magix.file.load
+              file=>this-file-should-definitely-not-exist.hl
+          catch=>not-to-be-catched
+            set=>[_error].value
+              value=>true
+      catch=>System.IO.FileNotFoundException
+    if=>equals
+      lhs=>[_error].value
+      rhs=>true
+      code
+        throw=>[catch] misbehaved
+
+
+event
+  name=>magix.test.exception-rethrow
+  persist=>false
+  inspect=>@"verifies [throw] works when re-thrown
+
+verifies that a [catch] can successfully rethrow 
+an exception by using [throw] without any message 
+or type"
+  code
+    _success=>false
+    try
+      code
+        try
+          code
+            magix.file.load
+              file=>this-file-should-definitely-not-exist.hl
+          catch
+            throw
+      catch=>System.IO.FileNotFoundException
+        set=>[_success].value
+          value=>true
+    if=>not-equals
+      lhs=>[_success].value
+      rhs=>true
+      code
+        throw=>[throw] misbehaved
+
+
+event
   name=>magix.test.exception-no-catch-finally
   persist=>false
   inspect=>@"verifies [try] does not work without [catch] or [finally]
