@@ -40,49 +40,90 @@ namespace Magix.execute
             Node dp = Dp(e.Params);
 
             if (string.IsNullOrEmpty(ip.Get<string>()))
-                throw new ArgumentException("you must supply an expression to [for-each]");
+                throw new HyperlispSyntaxErrorException("you must supply an expression to [for-each]");
 
-			Node tmp = Expressions.GetExpressionValue<Node>(ip.Get<string>(), dp, ip, false);
-			if (tmp != null && tmp.Count > 0)
-			{
-                object oldDp = e.Params["_dp"].Value;
-                try
-				{
-                    Node curIdx = tmp[0];
-					while (curIdx != null)
-					{
-                        Node oldIp = ip.Clone();
-						e.Params["_dp"].Value = curIdx;
+			Node nodeList = Expressions.GetExpressionValue<Node>(ip.Get<string>(), dp, ip, false);
+            if (nodeList == null)
+                throw new HyperlispExecutionErrorException("expression in [for-each] didn't return a node list, expression was; '" + ip.Get<string>() + "'");
 
-                        Node nextIdx = curIdx.Next();
-                        
-                        RaiseActiveEvent(
-							"magix.execute", 
-							e.Params);
-
-                        ip.Clear();
-                        ip.AddRange(oldIp);
-
-                        curIdx = nextIdx;
-					}
-				}
-                catch (Exception err)
-                {
-                    while (err.InnerException != null)
-                        err = err.InnerException;
-
-                    if (err is StopCore.HyperLispStopException)
-                        return; // do nothing, execution stopped
-
-                    // re-throw all other exceptions ...
-                    throw;
-                }
-                finally
-				{
-					e.Params["_dp"].Value = oldDp;
-				}
-			}
+            if (nodeList.Count > 0)
+                IterateNodeListChecked(e.Params, ip, nodeList);
 		}
+
+        /*
+         * actual implementation of for-each loop, wrapping execution inside of try/catch/finally blocks
+         */
+        private static void IterateNodeListChecked(Node pars, Node ip, Node nodeList)
+        {
+            object oldDp = pars["_dp"].Value;
+            try
+            {
+                IterateNodeListUnChecked(pars, ip, nodeList);
+            }
+            catch (Exception err)
+            {
+                // checking to see if we should rethrow exception, or if this was a [stop] keyword
+                if (ShouldRethrow(err))
+                    throw;
+            }
+            finally
+            {
+                pars["_dp"].Value = oldDp;
+            }
+        }
+
+        /*
+         * actual iteration of node list
+         */
+        private static void IterateNodeListUnChecked(Node pars, Node ip, Node nodeList)
+        {
+            // iterating as long as we have items in our data source
+            Node iterationNode = nodeList[0];
+            while (iterationNode != null)
+            {
+                // saving ip, to make [for-each] "immutable"
+                Node originalIp = ip.Clone();
+
+                // fetching next node before invocation, in case [for-each] body removes the iterated node from the node list
+                Node nextIdx = iterationNode.Next();
+
+                // invokes [for-each] body for current node
+                ExecuteForEachCodeBlock(pars, iterationNode);
+
+                // cleaning up [for-each] body, to make sure it's "immutable"
+                ip.Clear();
+                ip.AddRange(originalIp);
+
+                // advancing the iteration pointer
+                iterationNode = nextIdx;
+            }
+        }
+
+        /*
+         * invokes code block for one node within our data source
+         */
+        private static void ExecuteForEachCodeBlock(Node pars, Node iterationNode)
+        {
+            pars["_dp"].Value = iterationNode;
+            RaiseActiveEvent(
+                "magix.execute",
+                pars);
+        }
+
+        /*
+         * checks to see if this is a [stop] keyword, at which point we "swallow" the exception
+         */
+        private static bool ShouldRethrow(Exception err)
+        {
+            while (err.InnerException != null)
+                err = err.InnerException;
+
+            if (err is StopCore.HyperLispStopException)
+                return false; // do nothing, execution stopped
+
+            // re-throw all other exceptions ...
+            return true;
+        }
 	}
 }
 

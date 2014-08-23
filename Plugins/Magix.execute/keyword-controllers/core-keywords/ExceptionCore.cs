@@ -37,9 +37,9 @@ namespace Magix.execute
             }
 
             if (!ip.Contains("code"))
-                throw new ApplicationException("you need a [code] block inside your [try] keyword, which is supposed to contain the tried code");
+                throw new HyperlispSyntaxErrorException("you need a [code] block inside your [try] keyword, which is supposed to contain the tried code");
             if (!ip.Contains("catch") && !ip.Contains("finally"))
-                throw new ApplicationException("you need at least one of [catch] or [finally] within your [try] keyword");
+                throw new HyperlispSyntaxErrorException("you need at least one of [catch] or [finally] within your [try] keyword");
             try
             {
                 ExecuteTry(e.Params, ip);
@@ -90,7 +90,7 @@ namespace Magix.execute
                 if (stackTraceNode != null)
                     e.Params["_rethrow"].Value = true;
                 else
-                    throw new ApplicationException("cannot rethrow an exception, unless you're inside of a [catch] block");
+                    throw new HyperlispSyntaxErrorException("cannot rethrow an exception, unless you're inside of a [catch] block");
             }
             else
                 throw new HyperlispException(ip.Get<string>(), ip.GetValue<string>("type", null));

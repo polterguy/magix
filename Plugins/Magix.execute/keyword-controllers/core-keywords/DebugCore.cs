@@ -42,7 +42,7 @@ namespace Magix.execute
             {
                 stack = Expressions.GetExpressionValue<Node>(ip.Get<string>(), Dp(e.Params), ip, false);
                 if (stack == null)
-                    throw new ArgumentException("tried to debug a non-existing node tree in [debug], expression was; '" + ip.Get<string>() +"'");
+                    throw new HyperlispExecutionErrorException("tried to debug a non-existing node tree in [debug], expression was; '" + ip.Get<string>() +"'");
             }
 
 			Node confirmNode = new Node();
