@@ -110,6 +110,12 @@ switch=>[magix.data.load-username=>status][value][status].value
     set=>[@][fork][execute-script][params][pop-settings][user].value
       value=>[magix.session.get=>username][value][username].value
 
+    // settings status to 'fetching' such that we get a "thread lock" making sure no more than one thread at the time can enter our retriever
+    magix.data.save-username
+      id=>magix.email.thread-status
+      value
+        status=>fetching
+
     // creating our fork, executing the retrieve emails hyperlisp file on a different thread
     fork
       execute-script

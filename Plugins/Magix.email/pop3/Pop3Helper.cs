@@ -7,6 +7,7 @@
 using System;
 using System.IO;
 using MimeKit;
+using MailKit;
 using MailKit.Net.Pop3;
 using Magix.Core;
 
@@ -71,13 +72,13 @@ namespace Magix.email
                 try
                 {
                     RetrieveMessagesFromServer(
-                        pars, 
+                        pars,
                         dp,
-                        ip, 
-                        basePath, 
-                        attachmentDirectory, 
-                        linkedAttachmentDirectory, 
-                        exeNode, 
+                        ip,
+                        basePath,
+                        attachmentDirectory,
+                        linkedAttachmentDirectory,
+                        exeNode,
                         client);
                 }
                 finally

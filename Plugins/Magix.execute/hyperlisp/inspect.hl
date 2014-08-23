@@ -210,10 +210,10 @@ magix.execute.list-events-sample
 
 magix.execute.try-dox=>@"creates a try block to handle exceptions
 
-use the [try] keyword to create a [block] of unsafe code to execute, where 
+use the [try] keyword to create a block of unsafe [code] to execute, where 
 the code within the [code] block might throw an exception, and you wish to 
 be notified if it does, and handle it, either in a [catch] block of code, or 
-a [finally] block of code
+a [finally] block of code, or both
 
 when you create a [try] block, you must have a [code] block beneath it, in 
 addition to either a [catch] block, or a [finally] block.  your [catch] node 
@@ -234,6 +234,24 @@ magix.execute.try-sample
       magix.viewport.show-message
         message=>crap, didn't work
     catch
+      set=>[@][magix.viewport.show-message][message].value
+        value=>[@][exception].value
+      magix.viewport.show-message
+  try
+    code
+      try
+        code
+          throw=>this is the exception message
+            type=>correct-type
+        catch=>wrong-type
+          magix.viewport.show-message
+            message=>this message box will never show
+        finally
+          magix.viewport.show-message
+            message=>@"this message box will show up though, 
+since a finally statement is guaranteed to be executed, 
+regardless of whether or not an exception is thrown"
+    catch=>correct-type
       set=>[@][magix.viewport.show-message][message].value
         value=>[@][exception].value
       magix.viewport.show-message
