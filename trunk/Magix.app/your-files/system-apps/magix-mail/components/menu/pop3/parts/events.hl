@@ -69,6 +69,9 @@ magix.email.check-for-new-emails
         code
           set=>[@][..][..][magix.email.new-messages-downloaded][download-count].value
             value=>[execute-script][params][download-count].value
+          set=>[@][..][..][magix.email.update-unread-email-count][download-count].value
+            value=>[execute-script][params][download-count].value
+      magix.email.update-unread-email-count
       magix.email.new-messages-downloaded
 
       // removing visual clues for that we're currently fetching emails
@@ -96,9 +99,11 @@ magix.email.check-for-new-emails
 
 // invoked when new messages have arrived
 magix.email.new-messages-downloaded
-  magix.viewport.show-message
-    message=>new messages have been downloaded
-    color=>#aaffaa
+  using=>magix.viewport
+    show-message
+      message=>finished downloading {0} messages from your email server
+        =>[$][download-count].value
+      color=>#aaffaa
 
 
 // updates number of new emails visual clues to user, expects [server-count] and [download-count]
