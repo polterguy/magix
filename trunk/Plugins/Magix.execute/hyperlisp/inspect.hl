@@ -216,23 +216,29 @@ be notified if it does, and handle it, either in a [catch] block of code, or
 a [finally] block of code, or both
 
 when you create a [try] block, you must have a [code] block beneath it, in 
-addition to either a [catch] block, or a [finally] block.  your [catch] node 
+addition to either a [catch] block, a [finally] block, or both.  your [catch] node 
 might also optionally contain a value, which will be used as an 'exception filter'
 
 if your [catch] node has a value, only exceptions thrown with [type] matching 
-the value of your [catch] block will be handled by your [catch] block
+the value of your [catch] block will be handled by your [catch] block, if your 
+exception is a hyperlisp exception.  if your exception is a clr exception, and 
+your [catch] node has a value, then the value of your [catch] node is supposed to 
+match the type name of the clr exception you wish to catch
 
 if your [catch] node does not have a value, it will handle all exceptions, both 
-hyperlisp exceptions, in addition to managed clr exceptions
+hyperlisp exceptions, in addition to all types of managed clr exceptions
 
 thread safe"
 
 magix.execute.try-sample
+  magix.viewport.show-message
+    message=>@"as you can see, there are 5 messages shown here, 
+including this.&nbsp;&nbsp;but two catch blocks are never executed, since 
+they are catching the wrong type of exception"
+    time=>30000
   try
     code
       throw=>to try or not to try
-      magix.viewport.show-message
-        message=>crap, didn't work
     catch
       set=>[@][magix.viewport.show-message][message].value
         value=>[@][exception].value
@@ -252,6 +258,19 @@ magix.execute.try-sample
 since a finally statement is guaranteed to be executed, 
 regardless of whether or not an exception is thrown"
     catch=>correct-type
+      set=>[@][magix.viewport.show-message][message].value
+        value=>[@][exception].value
+      magix.viewport.show-message
+  try
+    code
+      try
+        code
+          magix.file.load
+            file=>i-hope-this-file-does-not-exist.hl
+        catch=>wrong-type
+          magix.viewport.show-message
+            message=>this message box will never show neither
+    catch=>System.IO.FileNotFoundException
       set=>[@][magix.viewport.show-message][message].value
         value=>[@][exception].value
       magix.viewport.show-message

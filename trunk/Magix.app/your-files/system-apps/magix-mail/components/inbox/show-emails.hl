@@ -174,7 +174,7 @@ magix.forms.create-web-part
           code
             for-each=>[magix.data.load=>load-emails][objects]
               if=>not-exist
-                lhs=>[.][value][body]
+                lhs=>[.][value][body].value
                 code
                   set=>[.][value][body].value
                     value=>
