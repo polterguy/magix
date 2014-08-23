@@ -143,10 +143,17 @@ when the [type] matches the exception"
         throw=>my exception
           type=>correct-type
       catch=>wrong-type
-        throw=>[catch] misbehaved
-      catch=>correct-type
         set=>[_success].value
-          value=>true
+          value=>false
+      catch=>correct-type
+        if=>not-exist
+          lhs=>[_success].value
+          code
+            set=>[_success].value
+              value=>true
+      catch=>wrong-type-2
+        set=>[_success].value
+          value=>false
     if=>not-equals
       lhs=>[_success].value
       rhs=>true
