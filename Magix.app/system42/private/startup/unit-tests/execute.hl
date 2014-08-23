@@ -120,6 +120,27 @@ executed correctly"
 
 
 event
+  name=>magix.test.execute-destroy-self-execute
+  persist=>false
+  inspect=>@"verifies 'destroy self' works
+
+deletes the execution pointer from the execution tree, 
+verifying that the next execution statement is actually 
+executed correctly"
+  code
+    _success=>false
+    execute
+      set=>[@]
+    set=>[_success].value
+      value=>true
+    if=>not-equals
+      lhs=>[_success].value
+      rhs=>true
+      code
+        throw=>[execute] misbehaved
+
+
+event
   name=>magix.test.execute-overflow
   persist=>false
   inspect=>@"verifies [execute] overflows

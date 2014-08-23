@@ -15,20 +15,6 @@ namespace Magix.execute
     internal sealed class ExceptionCore : ActiveController
     {
         /*
-         * exception type thrown when [stop] keyword is invoked
-         */
-        public class ManagedHyperLispException : ApplicationException
-        {
-            public string TypeInfo { get; set; }
-
-            public ManagedHyperLispException(string msg, string typeInfo)
-                : base(msg)
-            {
-                TypeInfo = typeInfo;
-            }
-        }
-
-        /*
          * creates a try block
          */
         [ActiveEvent(Name = "magix.execute.try")]
@@ -107,7 +93,7 @@ namespace Magix.execute
                     throw new ApplicationException("cannot rethrow an exception, unless you're inside of a [catch] block");
             }
             else
-                throw new ExceptionCore.ManagedHyperLispException(ip.Get<string>(), ip.GetValue<string>("type", null));
+                throw new HyperlispException(ip.Get<string>(), ip.GetValue<string>("type", null));
         }
 
         /*
@@ -131,6 +117,7 @@ namespace Magix.execute
             {
                 while (err.InnerException != null)
                     err = err.InnerException;
+                HyperlispException hlEx = err as HyperlispException;
 
                 foreach (Node idxNode in ip)
                 {
@@ -139,7 +126,6 @@ namespace Magix.execute
                         if (!string.IsNullOrEmpty(idxNode.Get<string>()))
                         {
                             // checking to see if type information on catch is correct according to type of exception
-                            ManagedHyperLispException hlEx = err as ManagedHyperLispException;
                             if (hlEx != null)
                                 catched = hlEx.TypeInfo == idxNode.Get<string>();
                             else
@@ -149,7 +135,11 @@ namespace Magix.execute
                             catched = true; // catch all
 
                         if (catched)
+                        {
+                            // if ExecuteCatchBlock returns false, we're supposed to rethrow exception
                             catched = ExecuteCatchBlock(pars, idxNode, err);
+                            break;
+                        }
                     }
                 }
             }
@@ -157,7 +147,7 @@ namespace Magix.execute
         }
 
         /*
-         * executes specific catch block
+         * executes specific catch block, returns true if exception is handled and should not be rethrown
          */
         private static bool ExecuteCatchBlock(Node pars, Node catchBlock, Exception err)
         {
