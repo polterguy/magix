@@ -73,7 +73,7 @@ try
                       lhs=>[@][using=>magix.data][load][value]
                       code
 
-                        // setting plain view as preferredd body of message
+                        // setting plain view as preferred body of message
                         if=>exist
                           lhs=>[@][..][..][..][_message][body][plain]
                           code
@@ -132,7 +132,7 @@ try
             status=>finished
     else
 
-      // removing status
+      // removing status, to signal our thread has done its job
       magix.data.remove
         id=>magix.email.thread-status-{0}
           =>{user}

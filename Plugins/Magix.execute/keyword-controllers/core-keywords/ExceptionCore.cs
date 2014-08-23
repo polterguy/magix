@@ -60,7 +60,7 @@ namespace Magix.execute
             }
             catch (Exception err)
             {
-                if (ExecuteCatch(e.Params, ip, err))
+                if (!ExecuteCatch(e.Params, ip, err))
                     throw;
             }
             finally
@@ -106,32 +106,37 @@ namespace Magix.execute
         }
 
         /*
-         * executes try catch block
+         * executes try catch block, returns true if exception was caught
          */
         private static bool ExecuteCatch(Node pars, Node ip, Exception err)
         {
+            bool catched = false;
             if (ip.Contains("catch"))
             {
                 while (err.InnerException != null)
                     err = err.InnerException;
                 if (!string.IsNullOrEmpty(ip["catch"].Get<string>()))
                 {
-                    if (!(err is ManagedHyperLispException))
-                        return false; // not to be handled by this exception handler
-                    string type = ip["catch"].Get<string>();
-                    if ((err as ManagedHyperLispException).TypeInfo != type)
-                        return true; // type mismatch, rethrow
+                    ManagedHyperLispException hlEx = err as ManagedHyperLispException;
+                    if (hlEx != null)
+                        catched = hlEx.TypeInfo == ip["catch"].Get<string>();
+                    else
+                        catched = err.GetType().FullName == ip["catch"].Get<string>();
                 }
+                else
+                    catched = true; // catch all
 
-                ip["catch"]["exception"].Value = err.Message;
-                pars["_ip"].Value = ip["catch"];
+                if (catched)
+                {
+                    ip["catch"]["exception"].Value = err.Message;
+                    pars["_ip"].Value = ip["catch"];
 
-                RaiseActiveEvent(
-                    "magix.execute",
-                    pars);
-                return false; // don't rethrow, exception was handled
+                    RaiseActiveEvent(
+                        "magix.execute",
+                        pars);
+                }
             }
-            return true; // no catch, return rethrow
+            return catched;
         }
 
         /*
