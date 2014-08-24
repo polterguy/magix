@@ -659,12 +659,11 @@ loops through all the nodes in the given node-list expression, flattening
 the hierarchy, setting the data-pointer to the currently processed item
 
 notice how this differs in regards to the [for-each] keyword.  the for-each 
-only iterates over the children of the nodes referenced in its expression.  
-while the [iterate] keyword will iterate the entire tree hierarchy, including 
-all children of the nodes in the expression, their children, and their 
-children's children, and so on.  this is useful for iterating entire tree 
-hierarchies, basically treating a tree, like a list of items, flattening the 
-hierarchy
+only iterates over the children of the nodes in its expression.  while the 
+[iterate] keyword will iterate the entire tree hierarchy, including all 
+children of the nodes in the expression, their children, and their children's 
+children, and so on.  this is useful for iterating entire tree hierarchies, 
+basically treating a tree, like a list of items, flattening the hierarchy
 
 your code will execute once for every single node you have in your return 
 expression.  use the [.] expression to de-reference the currently iterated 
@@ -674,7 +673,7 @@ iterate executes immutable, meaning it will not modify its child
 nodes after it is done executing, and every iteration of the loop 
 will execute on a 'virgin' version of its code.  this means that 
 the code it executes will be reset back to what it originally was 
-for every single iteration of the loop
+before execution for every single iteration of the loop
 
 thread safe"
 
