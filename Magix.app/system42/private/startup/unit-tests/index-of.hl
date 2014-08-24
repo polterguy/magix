@@ -85,3 +85,65 @@ pointing to a node, who's value is ' '"
       code
         throw=>[index-of] misbehaved
 
+
+event
+  name=>magix.test.index-of-formatted-expressions
+  persist=>false
+  inspect=>@"verifies that [index-of] works with formatted expressions
+
+creates an [index-of] statement that splits a string 
+upon every index of 'jo', making sure the result is 
+what is expected, where the [what] node is a formatted 
+expression, pointing to a node, who's value is 'jo'"
+  code
+    _what=>j
+    _data=>hello jo this is cool
+    index-of=>[_data].value
+      what=>{0}{1}
+        =>[_what].value
+        =>o
+    if=>not-equals
+      lhs=>[index-of][result].count
+      rhs=>1
+      or=>not-equals
+        lhs=>[index-of][result][0].value
+        rhs=>6
+      code
+        throw=>[index-of] misbehaved
+
+
+event
+  name=>magix.test.index-of-case-insensitive
+  persist=>false
+  inspect=>@"verifies that [index-of] works case insensitive
+
+creates an [index-of] statement that splits a string 
+upon every index of 'jo', case insensitive, making sure 
+the result is what is expected"
+  code
+    _data=>hello jo this is JO cool
+    index-of=>[_data].value
+      what=>jo
+    if=>not-equals
+      lhs=>[index-of][result].count
+      rhs=>1
+      or=>not-equals
+        lhs=>[index-of][result][0].value
+        rhs=>6
+      code
+        throw=>[index-of] misbehaved
+    index-of=>[_data].value
+      what=>jo
+      case=>false
+    if=>not-equals
+      lhs=>[index-of:1][result].count
+      rhs=>2
+      or=>not-equals
+        lhs=>[index-of:1][result][0].value
+        rhs=>6
+      or=>not-equals
+        lhs=>[index-of:1][result][1].value
+        rhs=>17
+      code
+        throw=>[index-of] misbehaved
+

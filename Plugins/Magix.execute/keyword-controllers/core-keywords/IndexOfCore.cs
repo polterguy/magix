@@ -38,34 +38,42 @@ namespace Magix.execute
                 return;
 			}
 
-            if (!ip.Contains("what"))
-                throw new ArgumentException("[index-of] needs a [what] child to understand what to search for");
-
             Node dp = Dp(e.Params);
-            string whatToSearch = Expressions.GetExpressionValue<string>(ip.Get<string>(), dp, ip, false);
-            if (whatToSearch == null)
-                throw new ArgumentException("couldn't make '" + ip.Get<string>() + "' into a string in [index-of]");
 
-            string whatToSearchFor = Expressions.GetExpressionValue<string>(ip["what"].Get<string>(), dp, ip, false);
-            if (string.IsNullOrEmpty(whatToSearchFor))
-                throw new ArgumentException("no value in [what] expression in [index-of]");
+            // retrieving the string to search through
+            string stringToSearch = Expressions.GetExpressionValue<string>(ip.Get<string>(), dp, ip, false);
+            if (stringToSearch == null)
+                throw new HyperlispExecutionErrorException("couldn't make '" + ip.Get<string>() + "' into a string in [index-of]");
 
-            ip["result"].UnTie();
+            // retrieving what to search for in our string
+            string whatToSearchFor = Expressions.GetFormattedExpression("what", e.Params, null);
+            if (whatToSearchFor == null)
+                throw new HyperlispExecutionErrorException("no value in [what] expression in [index-of]");
 
+            // checking to see if we're supposed to search case insensitive
             bool caseSensitive = ip.GetValue("case", true);
 
+            // return results back to caller
+            RetrieveResults(ip, stringToSearch, whatToSearchFor, caseSensitive);
+		}
+
+        /*
+         * actual implementation of index-of
+         */
+        private static void RetrieveResults(Node ip, string stringToSearch, string whatToSearchFor, bool caseSensitive)
+        {
             int idxNo = 0;
             while (true)
             {
                 if (!caseSensitive)
-                    idxNo = whatToSearch.IndexOf(whatToSearchFor, idxNo, StringComparison.OrdinalIgnoreCase);
+                    idxNo = stringToSearch.IndexOf(whatToSearchFor, idxNo, StringComparison.OrdinalIgnoreCase);
                 else
-                    idxNo = whatToSearch.IndexOf(whatToSearchFor, idxNo);
+                    idxNo = stringToSearch.IndexOf(whatToSearchFor, idxNo);
                 if (idxNo == -1)
                     break;
                 ip["result"].Add(new Node("", idxNo++));
             }
-		}
+        }
 	}
 }
 

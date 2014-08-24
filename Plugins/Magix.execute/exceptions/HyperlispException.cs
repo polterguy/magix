@@ -13,14 +13,14 @@ namespace Magix.execute
     /*
      * exception type thrown when [throw] keyword is invoked
      */
-    public class HyperlispException : ApplicationException
+    public class HyperlispManagedException : ApplicationException
     {
         /*
          * type of exception thrown
          */
         public string TypeInfo { get; set; }
 
-        public HyperlispException(string msg, string typeInfo)
+        public HyperlispManagedException(string msg, string typeInfo)
             : base(msg)
         {
             TypeInfo = typeInfo;

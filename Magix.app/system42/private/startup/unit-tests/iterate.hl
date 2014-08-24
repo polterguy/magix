@@ -14,7 +14,7 @@ creates an [iterate] statement, concatenating all nodes into a result node,
 verifying the result is as expected"
   code
     _result
-    _data
+    _data=>begin-count:
       =>one, 
       =>two, 
         =>three, 
@@ -25,14 +25,20 @@ verifying the result is as expected"
       =>eight, 
         =>nine, 
       =>ten
+        =>11-stop
     iterate=>[_data]
+      if=>equals
+        lhs=>[.].value
+        rhs=>11-stop
+        code
+          stop
       set=>[/][_result].value
         value=>{0}{1}
           =>[/][_result].value
           =>[.].value
     if=>not-equals
       lhs=>[_result].value
-      rhs=>one, two, three, four, five, six, seven, eight, nine, ten
+      rhs=>begin-count:one, two, three, four, five, six, seven, eight, nine, ten
       code
         throw=>[iterate] misbehaved
 

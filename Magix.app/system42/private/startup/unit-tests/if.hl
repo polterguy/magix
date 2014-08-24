@@ -115,6 +115,42 @@ not executing"
 
 
 event
+  name=>magix.test.if-formatting-expressions
+  persist=>false
+  inspect=>@"verifies [if] statements works with formatting expressions
+
+creates an [if] statement, that is supposed to yield true, making 
+sure its associated [else] is not executing"
+  code
+    _data1=>thomas hansen
+    if=>equals
+      lhs=>[_data1].value
+      rhs=>thomas {0}
+        =>hansen
+      code
+    else
+      throw=>[if] misbehaved
+
+
+event
+  name=>magix.test.if-operator-expression
+  persist=>false
+  inspect=>@"verifies [if] statements works with operator expressions
+
+creates an [if] statement, that is supposed to yield true, making 
+sure its associated [else] is not executing"
+  code
+    _data1=>thomas hansen
+    _operator=>equals
+    if=>[_operator].value
+      lhs=>thomas hansen
+      rhs=>thomas hansen
+      code
+    else
+      throw=>[if] misbehaved
+
+
+event
   name=>magix.test.if-complex-true
   persist=>false
   inspect=>@"verifies complex [if] statements works
