@@ -39,58 +39,63 @@ namespace Magix.execute
 
             Node dp = Dp(e.Params);
 
+            // verifying syntax is legal
             if (string.IsNullOrEmpty(ip.Get<string>()))
-                throw new ArgumentException("you must supply an expression to [iterate]");
+                throw new HyperlispSyntaxErrorException("you must supply an expression to [iterate]");
 
-			Node rootExpressionNode = Expressions.GetExpressionValue<Node>(ip.Get<string>(), dp, ip, false);
+            // retrieving node list to iterate
+            Node rootExpressionNode = Expressions.GetExpressionValue<Node>(ip.Get<string>(), dp, ip, false);
 			if (rootExpressionNode != null)
-			{
-                object oldDp = e.Params["_dp"].Value;
-                try
-				{
-                    IterateNode(e.Params, rootExpressionNode, ip);
-				}
-                catch (Exception err)
-                {
-                    while (err.InnerException != null)
-                        err = err.InnerException;
-
-                    if (err is StopCore.HyperLispStopException)
-                        return; // do nothing, execution stopped
-
-                    // re-throw all other exceptions ...
-                    throw;
-                }
-                finally
-				{
-					e.Params["_dp"].Value = oldDp;
-				}
-			}
+                IterateTreeChecked(rootExpressionNode, e.Params, ip);
 		}
 
+        /*
+         * iterates tree
+         */
+        private static void IterateTreeChecked(Node rootExpressionNode, Node pars, Node ip)
+        {
+            object oldDp = pars["_dp"].Value;
+            try
+            {
+                IterateNode(pars, rootExpressionNode, ip);
+            }
+            catch (Exception err)
+            {
+                while (err.InnerException != null)
+                    err = err.InnerException;
+
+                if (err is StopCore.HyperLispStopException)
+                    return; // do nothing, execution stopped
+
+                // re-throw all other exceptions ...
+                throw;
+            }
+            finally
+            {
+                pars["_dp"].Value = oldDp;
+            }
+        }
+
+        /*
+         * invokes our callback for the currently iterated node
+         */
         private static void IterateNode(Node pars, Node currentlyIteratedNode, Node ip)
         {
+            Node oldIp = ip.Clone();
+            pars["_dp"].Value = currentlyIteratedNode;
+            RaiseActiveEvent(
+                "magix.execute",
+                pars);
+            ip.Clear();
+            ip.AddRange(oldIp);
+
             if (currentlyIteratedNode.Count > 0)
             {
                 Node curIdx = currentlyIteratedNode[0];
                 while (curIdx != null)
                 {
-                    Node oldIp = ip.Clone();
-
-                    pars["_dp"].Value = curIdx;
-
                     Node nextIdx = curIdx.Next();
-
-                    RaiseActiveEvent(
-                        "magix.execute",
-                        pars);
-
-                    ip.Clear();
-                    ip.AddRange(oldIp);
-
-                    // child nodes
                     IterateNode(pars, curIdx, ip);
-
                     curIdx = nextIdx;
                 }
             }

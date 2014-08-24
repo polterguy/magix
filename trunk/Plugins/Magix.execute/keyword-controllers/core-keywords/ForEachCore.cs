@@ -43,10 +43,8 @@ namespace Magix.execute
                 throw new HyperlispSyntaxErrorException("you must supply an expression to [for-each]");
 
 			Node nodeList = Expressions.GetExpressionValue<Node>(ip.Get<string>(), dp, ip, false);
-            if (nodeList == null)
-                throw new HyperlispExecutionErrorException("expression in [for-each] didn't return a node list, expression was; '" + ip.Get<string>() + "'");
 
-            if (nodeList.Count > 0)
+            if (nodeList != null && nodeList.Count > 0)
                 IterateNodeListChecked(e.Params, ip, nodeList);
 		}
 

@@ -91,5 +91,8 @@
 
 28. fixed a bug that made the documentation for magix.data.count disappear
 
+29. the operator in [if], [else-if] and [while] keywords can now be expressions
+
+
 
 

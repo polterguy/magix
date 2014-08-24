@@ -93,7 +93,7 @@ namespace Magix.execute
                     throw new HyperlispSyntaxErrorException("cannot rethrow an exception, unless you're inside of a [catch] block");
             }
             else
-                throw new HyperlispException(ip.Get<string>(), ip.GetValue<string>("type", null));
+                throw new HyperlispManagedException(ip.Get<string>(), ip.GetValue<string>("type", null));
         }
 
         /*
@@ -117,7 +117,7 @@ namespace Magix.execute
             {
                 while (err.InnerException != null)
                     err = err.InnerException;
-                HyperlispException hlEx = err as HyperlispException;
+                HyperlispManagedException hlEx = err as HyperlispManagedException;
 
                 foreach (Node idxNode in ip)
                 {

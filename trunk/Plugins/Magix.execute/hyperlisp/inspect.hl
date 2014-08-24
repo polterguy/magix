@@ -433,17 +433,20 @@ magix.execute.execute-sample
 magix.execute.for-each-dox=>@"iterates through a node list
 
 loops through all the nodes in the given node-list expression, 
-setting the data-pointer to the currently processed item
+setting the data-pointer to the currently iterated item
 
 your code will execute once for every single node you have in 
 your return expression.  use the [.] expression to de-reference 
 the currently iterated node
 
-for-each executes immutable, meaning it will not modify its child 
-nodes after it is done executing, and every iteration of the loop 
-will execute on a 'virgin' version of its code.  this means that 
-the code it executes will be reset back to what it originally was 
-for every single iteration of the loop
+for-each executes immutable, meaning every iteration will get a 
+fresh copy of the code block inside of your [for-each], and every 
+iteration of the loop will execute on a 'virgin' version of its 
+code.  this means that the code it executes will be reset back 
+to the state it originally was in for every single iteration 
+of the loop
+
+to stop a [for-each] loop, you can use the [stop] keyword
 
 thread safe"
 
@@ -457,7 +460,14 @@ magix.execute.for-each-sample
       message5=>howdy world 5.0
       message6=>howdy world 6.0
       message7=>howdy world 7.0
+      stop-item=>stop here
+      message8=>will not show
   for-each=>[_data][items]
+    if=>equals
+      lhs=>[.].value
+      rhs=>stop here
+      code
+        stop
     set=>[@][magix.viewport.show-message][message].value
       value=>[.].value
 
@@ -472,33 +482,38 @@ branching logic and control of flow within your program.  if an [if]
 statement returns true, then no paired [else-if] or [else] statements 
 will be executed
 
-the operator used to compare the [lhs] and the [rhs] nodes must be 
-defined using the value of the [if] node.  legal values for the 
-operator is 'exist', 'not-exist', 'equals', 'not-equals', 
-'less-than', 'more-than', 'less-than-equals' and 'more-than-equals'
+the values compared must be given through [lhs] and [rhs], which means 
+'left-hand-side' and 'right-hand-side', and the operator used to compare 
+the [lhs] and the [rhs] nodes must be given using the value of the [if] 
+node.  legal values for the operator is 'exist', 'not-exist', 'equals', 
+'not-equals', 'less-than', 'more-than', 'less-than-equals' and 
+'more-than-equals'
 
-[lhs] means 'left-hand-side'.  the lhs node is to the left of the 
-operator.  [rhs] means 'right-hand-side', and is conceptually to the 
-right of the operator.  this means that if you have an lhs value of 
+[lhs] means 'left-hand-side'.  the lhs node is conceptually to the left 
+of the operator.  [rhs] means 'right-hand-side', and is conceptually to 
+the right of the operator.  this means that if you have an lhs value of 
 'x' and an rhs value of 'y' and your operator is 'equals', then the 
 full comparison statement becomes 'if x equals y'.  if you have an 
 operator of 'more-than', and an [lhs] of 5 and an [rhs] of 4, then 
 the full statement becomes 'if 5 is more-than 4', which of course 
-will evaluate to true.  both [lhs] and [rhs] can be either constants 
-or expressions
+will evaluate to true.  both [lhs], [rhs] and the operator value of your 
+[if] can be either constants or expressions
 
-depending upon the comparison operator you use, the rhs node might 
+[lhs] and [rhs] can contain formatting expressions, such as {0} and {1},
+de-referencing children nodes of [lhs] and [rhs]
+
+depending upon the comparison operator you use, the [rhs] node might 
 not be necessary.  for instance, 'exist' does not need a right-hand-side, 
-or an rhs node, simply since it only checks for the existence of one 
-specific node, value or name
+or an rhs node, since it only checks for the existence of one specific 
+node, value or name
 
 you can optionally also supply as many [or] and/or [and] nodes beneath 
 your [if] node.  if you do, then these are additional statements that 
-needs to return true to make the if statement become true as a whole.  
-if you supply an or and/or an and statement beneath your if or else-if, 
-then you must add up a comparison operator as the value of your [and] 
-and [or] statement, and another pair of [lhs] and [rhs] nodes beneath 
-your and and or statements
+needs to return true to make the [if] statement become true as a whole.  
+if you supply an [or] and/or an [and] statement beneath your [if] or 
+[else-if], then you must add up a comparison operator as the value of 
+your [and] and [or] statements, and another pair of [lhs] and [rhs] 
+nodes beneath your [and] and [or] statements
 
 the engine will convert automatically between int, decimal, date and 
 bool, or resort to string if no conversion is possible.  you can compare 
@@ -511,6 +526,8 @@ magix.execute.if-sample
   _data
     item=>cache-object
     cache
+  _comparison
+    operator=>equals
   if=>not-equals
     lhs=>[_data][item].value
     rhs=>[_data][1].name
@@ -519,6 +536,19 @@ magix.execute.if-sample
     code
       magix.viewport.show-message
         message=>not equal, and no _data value
+  if=>equals
+    lhs=>[_data][item].value
+    rhs=>cache-{0}
+      =>object
+    code
+      magix.viewport.show-message
+        message=>the value of item is 'cache-object'
+  if=>[_comparison][operator].value
+    lhs=>5
+    rhs=>5
+    code
+      magix.viewport.show-message
+        message=>the third [if] statement evaluated to true
 
 
 magix.execute.else-if-dox=>@"checks statement and executes code if true
@@ -602,14 +632,18 @@ magix.execute.else-sample
       message=>yup, still sane
 
 
-magix.execute.index-of-dox=>@"returns index of a string
+magix.execute.index-of-dox=>@"returns index(es) of a string
 
 returns the index of all occurences of the [what] constant 
 or expression as nodes containing the integer value of where match 
 was found underneath the [result] return node
 
 if [case] equals false, the search will ignore casing of text when 
-looking for a match
+looking for a match.  by default, the engine will do a case sensitive 
+search, unless [case] is false
+
+[what] can containg formatting expressions such as {0} and {1}, 
+de-referencing children nodes beneath the [what] node
 
 thread safe"
 

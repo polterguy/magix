@@ -38,9 +38,9 @@
     <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="helpers\HyperlispExecutionErrorException.cs" />
-    <Compile Include="helpers\HyperlispSyntaxErrorException.cs" />
-    <Compile Include="helpers\HyperlispException.cs" />
+    <Compile Include="exceptions\HyperlispExecutionErrorException.cs" />
+    <Compile Include="exceptions\HyperlispSyntaxErrorException.cs" />
+    <Compile Include="exceptions\HyperlispException.cs" />
     <Compile Include="helpers\DatabaseRemoval.cs" />
     <Compile Include="keyword-controllers\core-keywords\SortCore.cs" />
     <Compile Include="keyword-controllers\core-keywords\SandboxCore.cs" />

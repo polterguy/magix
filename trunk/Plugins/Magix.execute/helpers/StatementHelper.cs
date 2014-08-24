@@ -25,7 +25,7 @@ namespace Magix.execute
 
         private static bool RecursivelyCheckExpression(Node where, Node ip, Node dp)
         {
-            string expressionOperator = where.Get<string>();
+            string expressionOperator = Expressions.GetExpressionValue<string>(where.Get<string>(), dp, ip, false);
             object objLhsVal;
             object objRhsVal;
             ExtractValues(where, ip, dp, expressionOperator, out objLhsVal, out objRhsVal);
