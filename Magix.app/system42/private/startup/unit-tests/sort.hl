@@ -29,14 +29,12 @@ tries to sort a list of nodes with string sorting"
         lhs=>[@][_first][0][name].value
         rhs=>[@][_second][0][name].value
         code
-          add=>[@][..][..][_result]
-            value=>[@][..][..][_first]
+          set=>[@][..][..][_second]
       else-if=>more-than
         lhs=>[@][_first][0][name].value
         rhs=>[@][_second][0][name].value
         code
-          add=>[@][..][..][_result]
-            value=>[@][..][..][_second]
+          set=>[@][..][..][_first]
     if=>not-equals
       lhs=>[_data][0].name
       rhs=>item4
@@ -79,14 +77,12 @@ tries to sort a list of nodes with date sorting"
         lhs=>[@][_first][0][date].value
         rhs=>[@][_second][0][date].value
         code
-          add=>[@][..][..][_result]
-            value=>[@][..][..][_first]
+          set=>[@][..][..][_second]
       else-if=>more-than
         lhs=>[@][_first][0][date].value
         rhs=>[@][_second][0][date].value
         code
-          add=>[@][..][..][_result]
-            value=>[@][..][..][_second]
+          set=>[@][..][..][_first]
     if=>not-equals
       lhs=>[_data][0].name
       rhs=>item4
@@ -129,14 +125,12 @@ tries to sort a list of nodes with number sorting"
         lhs=>[@][_first][0][dec].value
         rhs=>[@][_second][0][dec].value
         code
-          add=>[@][..][..][_result]
-            value=>[@][..][..][_first]
+          set=>[@][..][..][_second]
       else-if=>more-than
         lhs=>[@][_first][0][dec].value
         rhs=>[@][_second][0][dec].value
         code
-          add=>[@][..][..][_result]
-            value=>[@][..][..][_second]
+          set=>[@][..][..][_first]
     if=>not-equals
       lhs=>[_data][0].name
       rhs=>item4

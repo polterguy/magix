@@ -23,3 +23,63 @@ verify the replacement operation was successful"
       code
         throw=>[replace] misbehaved
 
+
+event
+  name=>magix.test.replace-remove
+  persist=>false
+  inspect=>@"verifies [replace] works
+
+removes occurencies of ' ', for then to 
+verify the remove operation was successful"
+  code
+    _data=>howdy this is   a test of replace
+    replace=>[_data].value
+      what=>@" "
+    if=>not-equals
+      lhs=>[_data].value
+      rhs=>howdythisisatestofreplace
+      code
+        throw=>[replace] misbehaved
+
+
+event
+  name=>magix.test.replace-null
+  persist=>false
+  inspect=>@"verifies [replace] works with null values
+
+verifies [replace] doesn't throw when given a null value 
+to run replacement on"
+  code
+    _data
+    replace=>[_data].value
+      what=>mumbo
+    if=>exist
+      lhs=>[_data].value
+      code
+        throw=>[replace] misbehaved
+
+
+event
+  name=>magix.test.replace-exception
+  persist=>false
+  inspect=>@"verifies [replace] throws with no [what]
+
+verifies [replace] throws when not given a [what] parameter"
+  code
+    _expected-exception
+    _data
+    replace=>[_data].value
+
+
+event
+  name=>magix.test.replace-exception-2
+  persist=>false
+  inspect=>@"verifies [replace] throws with empty [what]
+
+verifies [replace] throws when given an empty [what] parameter"
+  code
+    _expected-exception
+    _data
+    replace=>[_data].value
+      what=>
+

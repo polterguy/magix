@@ -216,14 +216,12 @@ magix.forms.create-web-part
             lhs=>[@][_first][0][value][date].value
             rhs=>[@][_second][0][value][date].value
             code
-              add=>[@][..][..][_result]
-                value=>[@][..][..][_second]
-          if=>more-than
+              set=>[@][..][..][_first]
+          else-if=>more-than
             lhs=>[@][_first][0][value][date].value
             rhs=>[@][_second][0][value][date].value
             code
-              add=>[@][..][..][_result]
-                value=>[@][..][..][_first]
+              set=>[@][..][..][_second]
 
         // settings view count for later references
         set=>[@][magix.viewstate.set][value].value

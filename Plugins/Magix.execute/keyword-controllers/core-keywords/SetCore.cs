@@ -36,14 +36,14 @@ namespace Magix.execute
                 return;
 			}
 
-			string destinationExpression = ip.Get<string>();
-			string sourceExpression = null;
-
-            if (ip.Contains("value"))
-                sourceExpression = ip["value"].Get<string>();
-
             Node dp = Dp(e.Params);
-			Expressions.SetNodeValue(destinationExpression, sourceExpression, dp, ip, ip.Contains("value"));
+            
+            Expressions.SetNodeValue(
+                ip.Get<string>(), 
+                ip.GetValue<string>("value", null), 
+                dp, 
+                ip, 
+                ip.Contains("value"));
 		}
 	}
 }

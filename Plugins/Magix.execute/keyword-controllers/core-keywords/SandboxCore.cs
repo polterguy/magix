@@ -38,36 +38,51 @@ namespace Magix.execute
                 return;
             }
 
+            // verifying sandbox has a [code] block
             if (!ip.Contains("code"))
                 throw new ArgumentException("you need to supply a [code] block to [sandbox] active event");
+
+            // verifying sandbox has a [whitelist]
             if (!ip.Contains("whitelist"))
                 throw new ArgumentException("you need to supply a [whitelist] block to [sandbox] active event");
 
+            // executing sandboxed code
+            SandboxCode(e.Params, ip);
+        }
+
+        /*
+         * actual implementation of sandbox
+         */
+        private static void SandboxCode(Node pars, Node ip)
+        {
+            // storing and clearing old whitelist
+            // and checking to see that no keyword not previously whitelisted has been whitelisted
             Node oldWhitelist = null;
-            if (e.Params.Contains("_whitelist"))
+            if (pars.Contains("_whitelist"))
             {
                 foreach (Node idx in ip["whitelist"])
                 {
-                    if (!e.Params["_whitelist"].Contains(idx.Name))
-                        throw new ArgumentException("cannot whitelist an active event that was blacklisted previously");
+                    if (!pars["_whitelist"].Contains(idx.Name))
+                        throw new HyperlispExecutionErrorException("cannot [whitelist] an active event that was blacklisted in a previous [sandbox]");
                 }
-                oldWhitelist = Node.Create("_whitelist", null, e.Params["_whitelist"].Clone());
+                oldWhitelist = pars["_whitelist"].Clone();
+                pars["_whitelist"].Clear();
             }
 
-            e.Params["_whitelist"].Clear();
-            e.Params["_whitelist"].AddRange(ip["whitelist"].Clone());
+            // setting new whitelist
+            pars["_whitelist"].AddRange(ip["whitelist"].Clone());
             try
             {
-                e.Params["_ip"].Value = ip["code"];
+                pars["_ip"].Value = ip["code"];
                 RaiseActiveEvent(
                     "magix.execute",
-                    e.Params);
+                    pars);
             }
             finally
             {
-                e.Params["_whitelist"].UnTie();
+                pars["_whitelist"].UnTie();
                 if (oldWhitelist != null)
-                    e.Params["_whitelist"].AddRange(oldWhitelist);
+                    pars["_whitelist"].AddRange(oldWhitelist);
             }
         }
 	}

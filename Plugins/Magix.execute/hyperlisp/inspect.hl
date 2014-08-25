@@ -361,14 +361,14 @@ magix.execute.using-sample
 
 magix.execute.sandbox-dox=>@"restricts the active events possible to raise
 
-changes the execution engine, making sure only keywords and active events within 
-[whitelist] are legal keywords
+changes the execution engine, making sure only keywords and active events in 
+our [whitelist] are legal keywords
 
 this is a useful feature to prevent external sources, or untrusted scripts, to 
 execute malicious code.  all keywords and active events which are not declared in 
 the [whitelist] parameter, are illegal to executed as long as the instruction 
-pointer is within the scope of the [code] block, which declares the block of code that 
-is to be sandboxed
+pointer is within the scope of the [code] block, which declares the block of code 
+that is to be sandboxed
 
 thread safe"
 
@@ -377,7 +377,7 @@ magix.execute.sandbox-sample
     whitelist
       foo
     code
-      bar=>throws exception
+      bar=>throws exception, since [bar] is not in [whitelist]
 
 
 magix.execute.execute-dox=>@"main hyperlisp execution entry point
@@ -699,16 +699,16 @@ magix.execute.iterate-sample
           value=>[.].value
 
 
-magix.execute.lambda-dox=>@"executes a piece of code
+magix.execute.lambda-dox=>@"executes a piece of code immutable
 
-executes the expression in the [lambda] node as hyperlisp, creating 
-a deep copy of the expression's nodes before execution
+executes the expression in the [lambda] node as hyperlisp immutable, 
+creating a deep copy of the expression's nodes before execution
 
 [lambda] can be given parameters, which will be accessible in the 
-lambda code through the [$] collection.  anything you return as [$] 
-from inside the code being executed, will become directly accessible 
-as children nodes, from outside of the lambda execution, after the 
-execution is finished
+lambda code executed through the [$] collection.  anything you 
+return as [$] from inside the code being executed, will become 
+directly accessible as children nodes of the [lambda], from outside 
+of the lambda execution, after the execution is finished
 
 thread safe"
 
@@ -835,22 +835,33 @@ magix.execute.remote-sample
 magix.execute.replace-dox=>@"replaces a string with another string
 
 replaces the [what] value/expression with the [with] value/expression 
-in the value of the [replace] node's expression
+in the value of the expression found in the [replace] node
 
 both [what] and [with] can be either constants or expressions.  [with] 
 is optional, and if not given, the [what] parts of the value of 
-[replace] will simply be removed.  the value of [replace] can be either 
-a constant, or an expression.  both [what] and [with] can contain children 
-nodes, which will serve as formatting expressions, possible to de-reference 
-as {0}, {1} and so on
+[replace] will simply be removed
+
+both [what] and [with] can contain children nodes, which will serve as 
+formatting expressions, possible to de-reference as {0}, {1} and so on
+
+you can use \n, \r and \t in both your [what] and [with] values to 
+signify you want to replace occurrencies of line-feed, carriage-return 
+or tabs
 
 thread safe"
 
 magix.execute.replace-sample
   _expression=>some value to be replaced
   replace=>[_expression].value
-    what=>some
-    with=>some other
+    what=>to be replaced
+    with=>has now been updated
+  _expression2=>@"some other value
+to be replaced""
+  replace=>[_expression2].value
+    what=>\n
+    with=>@" "
+  replace=>[_expression2].value
+    what=>\r
 
 
 magix.execute.execute-script-dox=>@"executes a piece of hyper lisp script
@@ -1124,13 +1135,13 @@ magix.execute.sort-dox=>@"sorts a node list
 executes the underlaying code block appending [_first] and [_second] being 
 two nodes from the list of nodes pointed to by the value of [sort] itself
 
-expects to have [_result] being set underneath the instruction pointer to 
-inform engine of which node is the node that comes before the other.  if no 
-[_result] is set during execution of the code inside of [sort], then the nodes 
-are assumed to be equal in regards to sorting
+the code block inside of your sort, is expected to remove either [_first] or 
+[_second] from its list of nodes, signaling which node comes before the other
 
-if [_result] is set to [_first], then [_first] is said to come before [_second].  
-if [_result] is set to [_second], then [_second] is said to come before [_first]"
+if code block removes [_first], then [_second] is said to come before [_first].  
+if code block removes [_second], then [_first] is said to come before [_second].  
+if neither [_first] nor [_second] is removed by your sort implementation, then 
+both nodes are said to be equal in sorting order"
 
 magix.execute.sort-sample
   _data
@@ -1149,14 +1160,12 @@ magix.execute.sort-sample
       lhs=>[@][_first][0][dec].value
       rhs=>[@][_second][0][dec].value
       code
-        add=>[@][..][..][_result]
-          value=>[@][..][..][_first]
+        set=>[@][..][..][_second]
     else-if=>more-than
       lhs=>[@][_first][0][dec].value
       rhs=>[@][_second][0][dec].value
       code
-        add=>[@][..][..][_result]
-          value=>[@][..][..][_second]
+        set=>[@][..][..][_first]
 
 
 
