@@ -9,17 +9,17 @@ using Magix.Core;
 
 namespace Magix.execute
 {
-	/*
-	 * hyperlisp set keyword
-	 */
-	public class SetCore : ActiveController
-	{
-		/*
-		 * hyper lisp set keyword
-		 */
-		[ActiveEvent(Name = "magix.execute.set")]
-		public static void magix_execute_set(object sender, ActiveEventArgs e)
-		{
+    /*
+     * hyperlisp set keyword
+     */
+    public class SetCore : ActiveController
+    {
+        /*
+         * hyper lisp set keyword
+         */
+        [ActiveEvent(Name = "magix.execute.set")]
+        public static void magix_execute_set(object sender, ActiveEventArgs e)
+        {
             Node ip = Ip(e.Params, true);
             if (ShouldInspect(ip))
             {
@@ -34,17 +34,17 @@ namespace Magix.execute
                     "Magix.execute.hyperlisp.inspect.hl",
                     "[magix.execute.set-sample]");
                 return;
-			}
+            }
 
             Node dp = Dp(e.Params);
-            
+
             Expressions.SetNodeValue(
-                ip.Get<string>(), 
-                ip.GetValue<string>("value", null), 
-                dp, 
-                ip, 
+                ip.Get<string>(),
+                ip.GetValue<string>("value", null),
+                dp,
+                ip,
                 ip.Contains("value"));
-		}
-	}
+        }
+    }
 }
 

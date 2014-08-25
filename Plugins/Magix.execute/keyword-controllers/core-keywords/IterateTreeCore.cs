@@ -10,17 +10,17 @@ using Magix.Core;
 
 namespace Magix.execute
 {
-	/*
-	 * iterate-tree hyperlisp keyword
-	 */
-	public class IterateTreeCore : ActiveController
-	{
+    /*
+     * iterate-tree hyperlisp keyword
+     */
+    public class IterateTreeCore : ActiveController
+    {
         /*
          * iterate-tree hyperlisp keyword
          */
         [ActiveEvent(Name = "magix.execute.iterate")]
-		public static void magix_execute_iterate(object sender, ActiveEventArgs e)
-		{
+        public static void magix_execute_iterate(object sender, ActiveEventArgs e)
+        {
             Node ip = Ip(e.Params, true);
             if (ShouldInspect(ip))
             {
@@ -35,7 +35,7 @@ namespace Magix.execute
                     "Magix.execute.hyperlisp.inspect.hl",
                     "[magix.execute.iterate-sample]");
                 return;
-			}
+            }
 
             Node dp = Dp(e.Params);
 
@@ -45,9 +45,9 @@ namespace Magix.execute
 
             // retrieving node list to iterate
             Node rootExpressionNode = Expressions.GetExpressionValue<Node>(ip.Get<string>(), dp, ip, false);
-			if (rootExpressionNode != null)
+            if (rootExpressionNode != null)
                 IterateTreeChecked(rootExpressionNode, e.Params, ip);
-		}
+        }
 
         /*
          * iterates tree
@@ -100,6 +100,6 @@ namespace Magix.execute
                 }
             }
         }
-	}
+    }
 }
 

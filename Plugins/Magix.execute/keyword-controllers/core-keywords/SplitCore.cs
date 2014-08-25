@@ -11,17 +11,17 @@ using Magix.Core;
 
 namespace Magix.execute
 {
-	/*
-	 * hyperlisp split keyword
-	 */
-	public class SplitCore : ActiveController
-	{
-		/*
-		 * hyper lisp split keyword
-		 */
-		[ActiveEvent(Name = "magix.execute.split")]
-		public static void magix_execute_split(object sender, ActiveEventArgs e)
-		{
+    /*
+     * hyperlisp split keyword
+     */
+    public class SplitCore : ActiveController
+    {
+        /*
+         * hyper lisp split keyword
+         */
+        [ActiveEvent(Name = "magix.execute.split")]
+        public static void magix_execute_split(object sender, ActiveEventArgs e)
+        {
             Node ip = Ip(e.Params, true);
             if (ShouldInspect(ip))
             {
@@ -36,82 +36,104 @@ namespace Magix.execute
                     "Magix.execute.hyperlisp.inspect.hl",
                     "[magix.execute.split-sample]");
                 return;
-			}
-
-            if (!ip.Contains("what") && !ip.Contains("where") && !ip.Contains("trim"))
-                throw new ArgumentException("[split] needs a [what], [trim] or a [where] child to understand how to split the expression");
-
-            if (ip.Contains("what") && ip.Contains("where"))
-                throw new ArgumentException("only either [what] or [where] can be submitted to [split]");
+            }
 
             Node dp = Dp(e.Params);
+
+            // verifying syntax is correct
+            if (!ip.Contains("what") && !ip.Contains("where") && !ip.Contains("trim"))
+                throw new HyperlispSyntaxErrorException("[split] needs a [what], [trim] or a [where] child to understand how to split the expression");
+            if (ip.Contains("what") && ip.Contains("where"))
+                throw new HyperlispSyntaxErrorException("only either [what] or [where] can be submitted to [split], and not both");
+
             string whatToSplit = Expressions.GetExpressionValue<string>(ip.Get<string>(), dp, ip, false);
             if (whatToSplit == null)
-                throw new ArgumentException("couldn't make '" + ip.Get<string>() + "' into a string in [split]");
+                throw new HyperlispExecutionErrorException("couldn't make '" + ip.Get<string>() + "' into a string in [split]");
 
+            // running actual split operation
+            Split(ip, dp, whatToSplit);
+        }
+
+        /*
+         * actual split implementation
+         */
+        private static void Split(Node ip, Node dp, string whatToSplit)
+        {
+            // trimming first, if we should
             if (ip.ContainsValue("trim") && ip["trim"].Get<string>().ToLower() == "true")
                 whatToSplit = whatToSplit.Trim();
             else if (ip.ContainsValue("trim"))
                 whatToSplit = whatToSplit.Trim(ip["trim"].Get<string>().ToCharArray());
 
-            ip["result"].UnTie();
-
             if (ip.Contains("what"))
-            {
-                string what = null;
-                if (ip.Contains("what"))
-                    what = Expressions.GetExpressionValue<string>(ip["what"].Get<string>(), dp, ip, false);
-
-                if (string.IsNullOrEmpty(what))
-                {
-                    foreach (char idx in whatToSplit)
-                    {
-                        ip["result"].Add(new Node("", idx.ToString()));
-                    }
-                }
-                else
-                {
-                    string[] splits = whatToSplit.Split(new string[] { what }, StringSplitOptions.RemoveEmptyEntries);
-
-                    foreach (string idx in splits)
-                    {
-                        ip["result"].Add(new Node("", idx));
-                    }
-                }
-            }
+                SplitByStringValue(ip, dp, whatToSplit);
             else if (ip.Contains("where"))
+                SplitByIndex(ip, dp, whatToSplit);
+            else
+                ip["result"].Add(new Node("", whatToSplit)); // probably just a trimming operation
+        }
+
+        /*
+         * splits by string value
+         */
+        private static void SplitByStringValue(Node ip, Node dp, string whatToSplit)
+        {
+            string what = null;
+            if (ip.Contains("what"))
+                what = Expressions.GetExpressionValue<string>(ip["what"].Get<string>(), dp, ip, false);
+
+            if (string.IsNullOrEmpty(what))
             {
-                // where
-                if (ip["where"].Value != null && ip["where"].Count > 0)
-                    throw new ArgumentException("either supply an integer as value of [where] or supply a list of integer values as children of [where], not both");
-
-                List<int> ints = new List<int>();
-                if (ip["where"].Value != null)
-                    ints.Add(Expressions.GetExpressionValue<int>(ip["where"].Get<string>(), dp, ip, false));
-                foreach (Node idx in ip["where"])
+                // splits every single character in string
+                foreach (char idx in whatToSplit)
                 {
-                    ints.Add(Expressions.GetExpressionValue<int>(idx.Get<string>(), dp, ip, false));
+                    ip["result"].Add(new Node("", idx.ToString()));
                 }
-
-                int idxNo = 0;
-                foreach (int idx in ints)
-                {
-                    int currentEnd = idx;
-                    if (currentEnd > whatToSplit.Length)
-                    {
-                        ip["result"].Add(new Node("", whatToSplit.Substring(idxNo)));
-                        return;
-                    }
-                    ip["result"].Add(new Node("", whatToSplit.Substring(idxNo, currentEnd - idxNo)));
-                    idxNo = idx;
-                }
-                ip["result"].Add(new Node("", whatToSplit.Substring(idxNo)));
             }
             else
             {
-                ip["result"].Add(new Node("", whatToSplit)); // probably a trim operation
+                // splits by string value
+                string[] splits = whatToSplit.Split(new string[] { what }, StringSplitOptions.RemoveEmptyEntries);
+                foreach (string idx in splits)
+                {
+                    ip["result"].Add(new Node("", idx));
+                }
             }
-		}
-	}
+        }
+
+        /*
+         * splits by index
+         */
+        private static void SplitByIndex(Node ip, Node dp, string whatToSplit)
+        {
+            if (ip["where"].Value != null && ip["where"].Count > 0)
+                throw new HyperlispSyntaxErrorException("either supply an integer as value of [where] or supply a list of integer values as children of [where], and not both");
+
+            List<int> integerIndexes = new List<int>();
+            if (ip["where"].Value != null)
+                integerIndexes.Add(Expressions.GetExpressionValue<int>(ip["where"].Get<string>(), dp, ip, false));
+            else
+            {
+                foreach (Node idx in ip["where"])
+                {
+                    integerIndexes.Add(Expressions.GetExpressionValue<int>(idx.Get<string>(), dp, ip, false));
+                }
+            }
+
+            int idxNo = 0;
+            foreach (int idxInteger in integerIndexes)
+            {
+                if (idxInteger >= whatToSplit.Length)
+                {
+                    // last occurrency
+                    ip["result"].Add(new Node("", whatToSplit.Substring(idxNo)));
+                    return;
+                }
+                ip["result"].Add(new Node("", whatToSplit.Substring(idxNo, idxInteger - idxNo)));
+                idxNo = idxInteger;
+            }
+            ip["result"].Add(new Node("", whatToSplit.Substring(idxNo)));
+        }
+    }
 }
 

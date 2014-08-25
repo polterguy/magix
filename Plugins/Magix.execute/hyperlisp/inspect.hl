@@ -940,29 +940,50 @@ magix.execute.split-dox=>@"splits a string
 splits the given expression or constant in the value of [split] according to the [what] 
 content or [where] child nodes, and puts the result into the [result] return node as 
 children nodes.  if you add a [trim] parameter, and set its value to true, then the 
-string will be trimmed before it is split.  if you add no [where] or [what] node, but 
-add a [trim] node being true, the string will be trimmed for all spacing characters, and 
-returned unchanged besides from being trimmed
+string will be trimmed for all white space characters before it is split.  if you add no 
+[where] or [what] node, but add a [trim] node being true, the string will be trimmed for 
+all spacing characters, and returned unchanged besides from being trimmed
 
 if you supply a [trim] node, and its value is anything but 'true', the characters in 
 your trim node will be removed from the beginning and the end of your string
 
 if [what] is given, but has null or empty value, then string will be split for every single 
-character in it.  if [where] is used, then either value of [where] is expected to be one 
-integer telling at which index the string should be split, or a list of children nodes 
-underneath the [where] containing indexes for where to split the string is expected
+character in it.  if [where] is used, then the values of [where] is expected to be 
+integers telling at which index the string should be split.  if you supply a [where] node, 
+and it has no children nodes, then the value of [where] is supposed to be an integer 
+tellling at which index you wish for the string to be split
 
-both [what] and [where] value or nodes can be either a constant, or expression(s)
+both [what] and [where] value or children node's values can be either constants, 
+or expressions
 
 if you use [what] to split your string, then the parts which matches the [what] expression 
 in your string, will be removed from the result set
 
+if you supply a [where] block where some of the indexes inside your where block are 
+past the length of the string, then the string will be split into as many strings 
+as is possible, and the remaning indexes in your [where] will simply be ignored
+
 thread safe"
 
 magix.execute.split-sample
-  _data=>some text which will be split for every space
+  _data=>@"  some text that will be split for every space, and trimmed for white space characters  "
   split=>[_data].value
     what=>@" "
+    trim=>true
+  _data2=>@"  will be trimmed only  "
+  split=>[_data2].value
+    trim=>true
+  _data3=>@"XXwill be trimmed for all occurrencies of capital letter xXXX"
+  split=>[_data3].value
+    trim=>X
+  _data4=>@"will be split at 10th index"
+  split=>[_data3].value
+    where=>10
+  _data5=>@"will be split at 10th index and 15th index"
+  split=>[_data3].value
+    where
+      =>10
+      =>15
 
 
 magix.execute.stop-dox=>@"stops the execution of the current scope

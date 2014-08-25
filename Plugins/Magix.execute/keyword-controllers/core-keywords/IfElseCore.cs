@@ -10,17 +10,17 @@ using System.Globalization;
 
 namespace Magix.execute
 {
-	/*
-	 * if/else-if/else hyperlisp active events
-	 */
-	public class IfElseCore : ActiveController
-	{
-		/*
-		 * if implementation
-		 */
-		[ActiveEvent(Name = "magix.execute.if")]
-		public static void magix_execute_if(object sender, ActiveEventArgs e)
-		{
+    /*
+     * if/else-if/else hyperlisp active events
+     */
+    public class IfElseCore : ActiveController
+    {
+        /*
+         * if implementation
+         */
+        [ActiveEvent(Name = "magix.execute.if")]
+        public static void magix_execute_if(object sender, ActiveEventArgs e)
+        {
             Node ip = Ip(e.Params, true);
             if (ShouldInspect(ip))
             {
@@ -35,19 +35,19 @@ namespace Magix.execute
                     "Magix.execute.hyperlisp.inspect.hl",
                     "[magix.execute.if-sample]");
                 return;
-			}
+            }
 
             IfElseIfImplementation(
                 e.Params,
                 "magix.execute.if");
-		}
+        }
 
-		/*
-		 * else-if implementation
-		 */
-		[ActiveEvent(Name = "magix.execute.else-if")]
-		public static void magix_execute_else_if(object sender, ActiveEventArgs e)
-		{
+        /*
+         * else-if implementation
+         */
+        [ActiveEvent(Name = "magix.execute.else-if")]
+        public static void magix_execute_else_if(object sender, ActiveEventArgs e)
+        {
             Node ip = Ip(e.Params, true);
             if (ShouldInspect(ip))
             {
@@ -62,7 +62,7 @@ namespace Magix.execute
                     "Magix.execute.hyperlisp.inspect.hl",
                     "[magix.execute.else-if-sample]");
                 return;
-			}
+            }
 
             // checking syntax
             VerifySyntaxElseIf(ip);
@@ -80,14 +80,14 @@ namespace Magix.execute
                     && next.Name != "else" && next.Name != "magix.execute.else"))
                     PopState(e.Params, ip);
             }
-		}
-		
-		/*
-		 * else implementation
-		 */
-		[ActiveEvent(Name = "magix.execute.else")]
-		public static void magix_execute_else(object sender, ActiveEventArgs e)
-		{
+        }
+
+        /*
+         * else implementation
+         */
+        [ActiveEvent(Name = "magix.execute.else")]
+        public static void magix_execute_else(object sender, ActiveEventArgs e)
+        {
             Node ip = Ip(e.Params, true);
             if (ShouldInspect(ip))
             {
@@ -102,12 +102,12 @@ namespace Magix.execute
                     "Magix.execute.hyperlisp.inspect.hl",
                     "[magix.execute.else-sample]");
                 return;
-			}
+            }
 
             // verifying an [else] is only followed by an [if] or an [else-if]
             VerifySyntaxElse(ip);
 
-			// saving state before we pop it to see if we should execute [else] body
+            // saving state before we pop it to see if we should execute [else] body
             bool state = CheckState(e.Params);
 
             // removing signaling state ("_state_if") from state
@@ -145,8 +145,8 @@ namespace Magix.execute
         /*
          * helper for executing [if]/[else-if]
          */
-		private static void IfElseIfImplementation(Node pars, string evt)
-		{
+        private static void IfElseIfImplementation(Node pars, string evt)
+        {
             Node ip = Ip(pars);
             Node dp = Dp(pars);
 

@@ -9,17 +9,17 @@ using Magix.Core;
 
 namespace Magix.execute
 {
-	/*
-	 * hyperlisp lambda keyword
-	 */
-	public class LambdaCore : ActiveController
-	{
-		/*
-		 * hyper lisp lambda keyword
-		 */
-		[ActiveEvent(Name = "magix.execute.lambda")]
-		public static void magix_execute_lambda(object sender, ActiveEventArgs e)
-		{
+    /*
+     * hyperlisp lambda keyword
+     */
+    public class LambdaCore : ActiveController
+    {
+        /*
+         * hyper lisp lambda keyword
+         */
+        [ActiveEvent(Name = "magix.execute.lambda")]
+        public static void magix_execute_lambda(object sender, ActiveEventArgs e)
+        {
             Node ip = Ip(e.Params, true);
             if (ShouldInspect(ip))
             {
@@ -34,7 +34,7 @@ namespace Magix.execute
                     "Magix.execute.hyperlisp.inspect.hl",
                     "[magix.execute.lambda-sample]");
                 return;
-			}
+            }
 
             Node dp = Dp(e.Params);
 
@@ -58,6 +58,6 @@ namespace Magix.execute
             if (lambdaCodeBlock.Contains("$") && lambdaCodeBlock["$"].Count > 0)
                 ip.AddRange(lambdaCodeBlock["$"]);
         }
-	}
+    }
 }
 
