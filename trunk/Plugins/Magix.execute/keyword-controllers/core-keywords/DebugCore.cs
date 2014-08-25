@@ -10,17 +10,17 @@ using Magix.Core;
 
 namespace Magix.execute
 {
-	/*
-	 * debug logic
-	 */
-	internal sealed class DebugCore : ActiveController
-	{
-		/*
-		 * debug hyperlisp keyword
-		 */
-		[ActiveEvent(Name = "magix.execute.debug")]
-		public void magix_execute_debug(object sender, ActiveEventArgs e)
-		{
+    /*
+     * debug logic
+     */
+    internal sealed class DebugCore : ActiveController
+    {
+        /*
+         * debug hyperlisp keyword
+         */
+        [ActiveEvent(Name = "magix.execute.debug")]
+        public void magix_execute_debug(object sender, ActiveEventArgs e)
+        {
             Node ip = Ip(e.Params, true);
             if (ShouldInspect(ip))
             {
@@ -35,24 +35,24 @@ namespace Magix.execute
                     "Magix.execute.hyperlisp.inspect.hl",
                     "[magix.execute.debug-sample]");
                 return;
-			}
+            }
 
             Node stack = ip.RootNode();
             if (!string.IsNullOrEmpty(ip.Get<string>()))
             {
                 stack = Expressions.GetExpressionValue<Node>(ip.Get<string>(), Dp(e.Params), ip, false);
                 if (stack == null)
-                    throw new HyperlispExecutionErrorException("tried to debug a non-existing node tree in [debug], expression was; '" + ip.Get<string>() +"'");
+                    throw new HyperlispExecutionErrorException("tried to debug a non-existing node tree in [debug], expression was; '" + ip.Get<string>() + "'");
             }
 
-			Node confirmNode = new Node();
-			confirmNode["code"].AddRange(stack.Clone());
-			confirmNode["message"].Value = "stackdump of tree from debug instruction";
-			confirmNode["closable-only"].Value = true;
-			RaiseActiveEvent(
-				"magix.viewport.confirm",
-				confirmNode);
-		}
-	}
+            Node confirmNode = new Node();
+            confirmNode["code"].AddRange(stack.Clone());
+            confirmNode["message"].Value = "stackdump of tree from debug instruction";
+            confirmNode["closable-only"].Value = true;
+            RaiseActiveEvent(
+                "magix.viewport.confirm",
+                confirmNode);
+        }
+    }
 }
 

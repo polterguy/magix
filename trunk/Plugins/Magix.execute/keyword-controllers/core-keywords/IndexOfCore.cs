@@ -11,17 +11,17 @@ using Magix.Core;
 
 namespace Magix.execute
 {
-	/*
-	 * hyperlisp index-of keyword
-	 */
-	public class IndexOfCore : ActiveController
-	{
-		/*
-		 * hyperlisp index-of keyword
-		 */
-		[ActiveEvent(Name = "magix.execute.index-of")]
-		public static void magix_execute_index_of(object sender, ActiveEventArgs e)
-		{
+    /*
+     * hyperlisp index-of keyword
+     */
+    public class IndexOfCore : ActiveController
+    {
+        /*
+         * hyperlisp index-of keyword
+         */
+        [ActiveEvent(Name = "magix.execute.index-of")]
+        public static void magix_execute_index_of(object sender, ActiveEventArgs e)
+        {
             Node ip = Ip(e.Params, true);
             if (ShouldInspect(ip))
             {
@@ -36,7 +36,7 @@ namespace Magix.execute
                     "Magix.execute.hyperlisp.inspect.hl",
                     "[magix.execute.index-of-sample]");
                 return;
-			}
+            }
 
             Node dp = Dp(e.Params);
 
@@ -55,7 +55,7 @@ namespace Magix.execute
 
             // return results back to caller
             RetrieveResults(ip, stringToSearch, whatToSearchFor, caseSensitive);
-		}
+        }
 
         /*
          * actual implementation of index-of
@@ -74,6 +74,6 @@ namespace Magix.execute
                 ip["result"].Add(new Node("", idxNo++));
             }
         }
-	}
+    }
 }
 

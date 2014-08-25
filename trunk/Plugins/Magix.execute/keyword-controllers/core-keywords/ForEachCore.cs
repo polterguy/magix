@@ -10,20 +10,20 @@ using Magix.Core;
 
 namespace Magix.execute
 {
-	/**
-	 * for-each hyperlisp keyword
-	 */
-	public class ForEachCore : ActiveController
-	{
-		/**
-		 * for-each hyperlisp keyword
-		 */
-		[ActiveEvent(Name = "magix.execute.for-each")]
-		public static void magix_execute_for_each(object sender, ActiveEventArgs e)
-		{
+    /**
+     * for-each hyperlisp keyword
+     */
+    public class ForEachCore : ActiveController
+    {
+        /**
+         * for-each hyperlisp keyword
+         */
+        [ActiveEvent(Name = "magix.execute.for-each")]
+        public static void magix_execute_for_each(object sender, ActiveEventArgs e)
+        {
             Node ip = Ip(e.Params, true);
             if (ShouldInspect(ip))
-			{
+            {
                 AppendInspectFromResource(
                     ip["inspect"],
                     "Magix.execute",
@@ -35,18 +35,18 @@ namespace Magix.execute
                     "Magix.execute.hyperlisp.inspect.hl",
                     "[magix.execute.for-each-sample]");
                 return;
-			}
+            }
 
             Node dp = Dp(e.Params);
 
             if (string.IsNullOrEmpty(ip.Get<string>()))
                 throw new HyperlispSyntaxErrorException("you must supply an expression to [for-each]");
 
-			Node nodeList = Expressions.GetExpressionValue<Node>(ip.Get<string>(), dp, ip, false);
+            Node nodeList = Expressions.GetExpressionValue<Node>(ip.Get<string>(), dp, ip, false);
 
             if (nodeList != null && nodeList.Count > 0)
                 IterateNodeListChecked(e.Params, ip, nodeList);
-		}
+        }
 
         /*
          * actual implementation of for-each loop, wrapping execution inside of try/catch/finally blocks
@@ -122,6 +122,6 @@ namespace Magix.execute
             // re-throw all other exceptions ...
             return true;
         }
-	}
+    }
 }
 

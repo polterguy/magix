@@ -11,14 +11,14 @@ using Magix.Core;
 
 namespace Magix.execute
 {
-	/*
-	 * sandbox keyword
-	 */
-	public class SandboxCore : ActiveController
-	{
-         /*
-          * sandbox keyword implementation
-          */
+    /*
+     * sandbox keyword
+     */
+    public class SandboxCore : ActiveController
+    {
+        /*
+         * sandbox keyword implementation
+         */
         [ActiveEvent(Name = "magix.execute.sandbox")]
         public static void magix_execute_sandbox(object sender, ActiveEventArgs e)
         {
@@ -85,6 +85,6 @@ namespace Magix.execute
                     pars["_whitelist"].AddRange(oldWhitelist);
             }
         }
-	}
+    }
 }
 

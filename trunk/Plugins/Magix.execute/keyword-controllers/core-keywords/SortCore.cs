@@ -9,17 +9,17 @@ using Magix.Core;
 
 namespace Magix.execute
 {
-	/*
-	 * hyperlisp sort logic
-	 */
-	public class SortCore : ActiveController
-	{
-		/*
-		 * sort hyperlisp keyword
-		 */
-		[ActiveEvent(Name = "magix.execute.sort")]
-		public static void magix_execute_sort(object sender, ActiveEventArgs e)
-		{
+    /*
+     * hyperlisp sort logic
+     */
+    public class SortCore : ActiveController
+    {
+        /*
+         * sort hyperlisp keyword
+         */
+        [ActiveEvent(Name = "magix.execute.sort")]
+        public static void magix_execute_sort(object sender, ActiveEventArgs e)
+        {
             Node ip = Ip(e.Params, true);
             if (ShouldInspect(ip))
             {
@@ -34,7 +34,7 @@ namespace Magix.execute
                     "Magix.execute.hyperlisp.inspect.hl",
                     "[magix.execute.sort-sample]");
                 return;
-			}
+            }
 
             // retrieving nodes to sort
             Node nodes = Expressions.GetExpressionValue<Node>(ip.Get<string>(), Dp(e.Params), ip, true);

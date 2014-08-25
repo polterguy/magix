@@ -82,3 +82,90 @@ for specific characters"
       code
         throw=>[split] misbehaved
 
+
+event
+  name=>magix.test.split-remove-empty
+  persist=>false
+  inspect=>@"verifies [split] works
+
+creates a [split] statement and verify it removes empty 
+occurrencies"
+  code
+    _data=>@"!howdy!world!"
+    split=>[_data].value
+      what=>!
+    if=>not-equals
+      lhs=>[split][result][0].value
+      rhs=>@"howdy"
+      or=>not-equals
+        lhs=>[split][result][1].value
+        rhs=>@"world"
+      or=>not-equals
+        lhs=>[split][result].count
+        rhs=>2
+      code
+        throw=>[split] misbehaved
+
+
+event
+  name=>magix.test.split-index
+  persist=>false
+  inspect=>@"verifies [split] works
+
+creates a [split] by index statement and verifies it behaves 
+correctly"
+  code
+    _data=>@"0123456789"
+    split=>[_data].value
+      where
+        =>3
+        =>5
+        =>7
+    if=>not-equals
+      lhs=>[split][result].count
+      rhs=>4
+      or=>not-equals
+        lhs=>[split][result][0].value
+        rhs=>012
+      or=>not-equals
+        lhs=>[split][result][1].value
+        rhs=>34
+      or=>not-equals
+        lhs=>[split][result][2].value
+        rhs=>56
+      or=>not-equals
+        lhs=>[split][result][3].value
+        rhs=>789
+      code
+        throw=>[split] misbehaved
+
+
+event
+  name=>magix.test.split-index-off-boundary
+  persist=>false
+  inspect=>@"verifies [split] works
+
+creates a [split] by index statement and verifies it behaves 
+correctly when last split is too large"
+  code
+    _data=>@"0123456789"
+    split=>[_data].value
+      where
+        =>3
+        =>5
+        =>10
+    if=>not-equals
+      lhs=>[split][result].count
+      rhs=>3
+      or=>not-equals
+        lhs=>[split][result][0].value
+        rhs=>012
+      or=>not-equals
+        lhs=>[split][result][1].value
+        rhs=>34
+      or=>not-equals
+        lhs=>[split][result][2].value
+        rhs=>56789
+      code
+        throw=>[split] misbehaved
+
