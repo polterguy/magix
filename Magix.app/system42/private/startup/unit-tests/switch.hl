@@ -1,0 +1,123 @@
+
+
+inspect=>@"tests for the [switch] keyword
+
+creates unit tests for testing the [switch] 
+hyperlisp keyword"
+
+
+event
+  name=>magix.test.switch
+  persist=>false
+  inspect=>@"verifies [switch] works
+
+executes a switch statement, verifying it behaves 
+correctly"
+  code
+    _data=>thomas
+    _success=>false
+    switch=>[_data].value
+      case=>john
+        throw=>[switch] misbehaved
+      case=>thomas
+        set=>[_success].value
+          value=>true
+      case=>peter
+        throw=>[switch] misbehaved
+    if=>not-equals
+      lhs=>[_success].value
+      rhs=>true
+      code
+        throw=>[switch] misbehaved
+
+
+event
+  name=>magix.test.switch-default
+  persist=>false
+  inspect=>@"verifies [switch] works
+
+executes a switch statement, verifying it behaves 
+correctly, and executed [default] when it is supposed 
+to"
+  code
+    _data=>hansen
+    _success=>false
+    switch=>[_data].value
+      case=>john
+        throw=>[switch] misbehaved
+      case=>thomas
+        throw=>[switch] misbehaved
+      case=>peter
+        throw=>[switch] misbehaved
+      default
+        set=>[_success].value
+          value=>true
+    if=>not-equals
+      lhs=>[_success].value
+      rhs=>true
+      code
+        throw=>[switch] misbehaved
+
+
+event
+  name=>magix.test.switch-expressions
+  persist=>false
+  inspect=>@"verifies [switch] works
+
+executes a switch statement, verifying it behaves 
+correctly when given expressions in [case] keywords"
+  code
+    _data=>thomas
+    _success=>false
+      =>john
+      =>thomas
+      =>peter
+    switch=>[_data].value
+      case=>[_success][0].value
+        throw=>[switch] misbehaved
+      case=>[_success][1].value
+        set=>[_success].value
+          value=>true
+      case=>[_success][2].value
+        throw=>[switch] misbehaved
+    if=>not-equals
+      lhs=>[_success].value
+      rhs=>true
+      code
+        throw=>[switch] misbehaved
+
+
+event
+  name=>magix.test.switch-exception
+  persist=>false
+  inspect=>@"verifies [switch] works
+
+executes a switch statement, verifying it behaves 
+correctly, and throws an exception when two similar 
+[case] values are given"
+  code
+    _data=>hansen
+    _expected-exception
+    switch=>[_data].value
+      case=>john
+      case=>john
+
+
+event
+  name=>magix.test.switch-expressions-exceptions
+  persist=>false
+  inspect=>@"verifies [switch] works
+
+executes a switch statement, verifying it behaves 
+correctly when given two expressions with same values, 
+and that it throws an exception"
+  code
+    _expected-exception
+    _data=>thomas
+    _success=>false
+      =>john
+      =>john
+    switch=>[_data].value
+      case=>[_success][0].value
+      case=>[_success][1].value
+

@@ -39,6 +39,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="exceptions\HyperlispExecutionErrorException.cs" />
+    <Compile Include="exceptions\HyperlispStopException.cs" />
     <Compile Include="exceptions\HyperlispSyntaxErrorException.cs" />
     <Compile Include="exceptions\HyperlispManagedException.cs" />
     <Compile Include="helpers\DatabaseRemoval.cs" />

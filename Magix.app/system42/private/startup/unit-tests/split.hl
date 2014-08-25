@@ -169,3 +169,51 @@ correctly when last split is too large"
       code
         throw=>[split] misbehaved
 
+
+event
+  name=>magix.test.split-index-off-boundary-2
+  persist=>false
+  inspect=>@"verifies [split] works
+
+creates a [split] by index statement and verifies it behaves 
+correctly when last split is too large"
+  code
+    _data=>@"0123456789"
+    split=>[_data].value
+      where
+        =>3
+        =>5
+        =>10
+        =>12
+    if=>not-equals
+      lhs=>[split][result].count
+      rhs=>3
+      or=>not-equals
+        lhs=>[split][result][0].value
+        rhs=>012
+      or=>not-equals
+        lhs=>[split][result][1].value
+        rhs=>34
+      or=>not-equals
+        lhs=>[split][result][2].value
+        rhs=>56789
+      code
+        throw=>[split] misbehaved
+
+
+event
+  name=>magix.test.split-index-exception
+  persist=>false
+  inspect=>@"verifies [split] works
+
+creates a [split] by index statement with an error in 
+the index list of where to split, verifying an exception 
+is raised"
+  code
+    _expected-exception
+    _data=>mumbo jumbo
+    split=>[_data].value
+      where
+        =>3
+        =>2
+

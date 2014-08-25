@@ -106,33 +106,48 @@ namespace Magix.execute
          */
         private static void SplitByIndex(Node ip, Node dp, string whatToSplit)
         {
+            // doing the actual splitting
+            int idxNo = 0;
+            foreach (int idxInteger in GetIndexesOfWhereToSplit(dp, ip))
+            {
+                if (idxInteger >= whatToSplit.Length)
+                {
+                    // current occurrency was larger than size of string to split, adding the rest and return to caller
+                    ip["result"].Add(new Node("", whatToSplit.Substring(idxNo)));
+                    return;
+                }
+
+                // adding from where we left of at previous add, and setting the index of where we currently are
+                ip["result"].Add(new Node("", whatToSplit.Substring(idxNo, idxInteger - idxNo)));
+                idxNo = idxInteger;
+            }
+
+            // adding the last occurrency
+            ip["result"].Add(new Node("", whatToSplit.Substring(idxNo)));
+        }
+
+        /*
+         * retrieves the indexes of where to split
+         */
+        private static IEnumerable<int> GetIndexesOfWhereToSplit(Node dp, Node ip)
+        {
             if (ip["where"].Value != null && ip["where"].Count > 0)
                 throw new HyperlispSyntaxErrorException("either supply an integer as value of [where] or supply a list of integer values as children of [where], and not both");
 
             List<int> integerIndexes = new List<int>();
             if (ip["where"].Value != null)
-                integerIndexes.Add(Expressions.GetExpressionValue<int>(ip["where"].Get<string>(), dp, ip, false));
+                yield return Expressions.GetExpressionValue<int>(ip["where"].Get<string>(), dp, ip, false);
             else
             {
+                int last = 0;
                 foreach (Node idx in ip["where"])
                 {
-                    integerIndexes.Add(Expressions.GetExpressionValue<int>(idx.Get<string>(), dp, ip, false));
+                    int current = Expressions.GetExpressionValue<int>(idx.Get<string>(), dp, ip, false);
+                    if (current <= last)
+                        throw new HyperlispExecutionErrorException("each consecutive value of [where] must be larger than the previous");
+                    yield return current;
                 }
             }
-
-            int idxNo = 0;
-            foreach (int idxInteger in integerIndexes)
-            {
-                if (idxInteger >= whatToSplit.Length)
-                {
-                    // last occurrency
-                    ip["result"].Add(new Node("", whatToSplit.Substring(idxNo)));
-                    return;
-                }
-                ip["result"].Add(new Node("", whatToSplit.Substring(idxNo, idxInteger - idxNo)));
-                idxNo = idxInteger;
-            }
-            ip["result"].Add(new Node("", whatToSplit.Substring(idxNo)));
         }
     }
 }
