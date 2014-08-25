@@ -72,7 +72,7 @@ namespace Magix.execute
                 while (err.InnerException != null)
                     err = err.InnerException;
 
-                if (!(err is StopCore.HyperLispStopException)) // don't throw stop keywords
+                if (!(err is HyperlispStopException)) // don't throw stop keywords
                     throw;
             }
         }

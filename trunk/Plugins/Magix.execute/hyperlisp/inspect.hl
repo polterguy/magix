@@ -961,7 +961,8 @@ in your string, will be removed from the result set
 
 if you supply a [where] block where some of the indexes inside your where block are 
 past the length of the string, then the string will be split into as many strings 
-as is possible, and the remaning indexes in your [where] will simply be ignored
+as is possible, and the remaning indexes in your [where] will simply be ignored.  each 
+consecutive value of [where] must be higher than the previous value
 
 thread safe"
 
@@ -990,7 +991,8 @@ magix.execute.stop-dox=>@"stops the execution of the current scope
 
 stops the execution of the current scope in the tree
 
-affects [while], [for-each] and other code scopes, such as events and event handlers
+affects [while], [for-each] and other code scopes, such as events and hyperlisp files 
+executed using [execute-script]
 
 thread safe"
 
@@ -1012,11 +1014,13 @@ magix.execute.stop-sample
 magix.execute.switch-dox=>@"executes logic according to value of string
 
 [switch] creates a comparison between all the children [case] nodes, and executes the code 
-within the [case] node who's value equals the content of the [switch] node
+within the [case] node who's value equals the content of the [switch] node, if any
 
 the [switch] node's value can be either a constant or an expression.  if no match is found, 
 then [default] will be executed, if a [default] exist.  notice how both the [switch] node 
 itself, and [case] nodes can be both expressions or constants
+
+all [case] values must be unique
 
 thread safe"
 

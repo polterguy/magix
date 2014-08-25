@@ -240,7 +240,7 @@ namespace Magix.execute
                     while (err.InnerException != null)
                         err = err.InnerException;
 
-                    if (!(err is StopCore.HyperLispStopException))
+                    if (!(err is HyperlispStopException))
                         throw;
                 }
                 finally
