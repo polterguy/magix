@@ -11,11 +11,11 @@ using Magix.Core;
 
 namespace Magix.execute
 {
-	/*
-	 * using implementation
-	 */
-	public class UsingCore : ActiveController
-	{
+    /*
+     * using implementation
+     */
+    public class UsingCore : ActiveController
+    {
         /*
          * using keyword implementation
          */
@@ -40,6 +40,7 @@ namespace Magix.execute
 
             try
             {
+                // appends namespace into stack of namespaces
                 e.Params["_namespaces"].Add(new Node("item", ip.Get<string>()));
                 RaiseActiveEvent(
                     "magix.execute",
@@ -47,11 +48,12 @@ namespace Magix.execute
             }
             finally
             {
+                // removes the namespace appended above before execution passes outside of current scope
                 e.Params["_namespaces"][e.Params["_namespaces"].Count - 1].UnTie();
                 if (e.Params["_namespaces"].Count == 0)
                     e.Params["_namespaces"].UnTie();
             }
         }
-	}
+    }
 }
 

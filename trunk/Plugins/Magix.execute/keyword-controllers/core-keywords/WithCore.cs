@@ -10,17 +10,17 @@ using Magix.Core;
 
 namespace Magix.execute
 {
-	/*
-	 * with hyperlisp keyword
-	 */
-	public class WithCore : ActiveController
-	{
-		/*
-		 * for-each hyperlisp keyword
-		 */
-		[ActiveEvent(Name = "magix.execute.with")]
-		public static void magix_execute_with(object sender, ActiveEventArgs e)
-		{
+    /*
+     * with hyperlisp keyword
+     */
+    public class WithCore : ActiveController
+    {
+        /*
+         * with hyperlisp keyword
+         */
+        [ActiveEvent(Name = "magix.execute.with")]
+        public static void magix_execute_with(object sender, ActiveEventArgs e)
+        {
             Node ip = Ip(e.Params, true);
             if (ShouldInspect(ip))
             {
@@ -35,29 +35,37 @@ namespace Magix.execute
                     "Magix.execute.hyperlisp.inspect.hl",
                     "[magix.execute.with-sample]");
                 return;
-			}
-
-            if (string.IsNullOrEmpty(ip.Get<string>()))
-                throw new ArgumentException("you must supply an expression to [with]");
+            }
 
             Node dp = Dp(e.Params);
-			Node withExpression = Expressions.GetExpressionValue<Node>(ip.Get<string>(), dp, ip, true);
-            if (withExpression == null)
-                throw new ArgumentException("the expression in your [with] statement returned nothing");
 
-            object oldDp = e.Params["_dp"].Value;
+            // retrieving nodes to execute inner code with as data-pointer
+            Node withNodeList = Expressions.GetExpressionValue<Node>(ip.Get<string>(), dp, ip, true);
+            if (withNodeList == null)
+                throw new HyperlispExecutionErrorException("your [with] keyword needs to return an existing node-list, the expression was; '" + ip.Get<string>() + "'");
+
+            // executes with
+            ExecuteWith(e.Params, withNodeList);
+        }
+
+        /*
+         * actual implementation of [with]
+         */
+        private static void ExecuteWith(Node pars, Node withNodeList)
+        {
+            object oldDp = pars["_dp"].Value;
             try
-			{
-                e.Params["_dp"].Value = withExpression;
-				RaiseActiveEvent(
-					"magix.execute", 
-					e.Params);
-			}
+            {
+                pars["_dp"].Value = withNodeList;
+                RaiseActiveEvent(
+                    "magix.execute",
+                    pars);
+            }
             finally
-			{
-				e.Params["_dp"].Value = oldDp;
-			}
-		}
-	}
+            {
+                pars["_dp"].Value = oldDp;
+            }
+        }
+    }
 }
 
