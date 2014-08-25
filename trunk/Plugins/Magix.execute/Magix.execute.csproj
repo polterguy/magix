@@ -40,7 +40,7 @@
   <ItemGroup>
     <Compile Include="exceptions\HyperlispExecutionErrorException.cs" />
     <Compile Include="exceptions\HyperlispSyntaxErrorException.cs" />
-    <Compile Include="exceptions\HyperlispException.cs" />
+    <Compile Include="exceptions\HyperlispManagedException.cs" />
     <Compile Include="helpers\DatabaseRemoval.cs" />
     <Compile Include="keyword-controllers\core-keywords\SortCore.cs" />
     <Compile Include="keyword-controllers\core-keywords\SandboxCore.cs" />

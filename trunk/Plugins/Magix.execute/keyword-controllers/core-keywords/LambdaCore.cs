@@ -38,21 +38,22 @@ namespace Magix.execute
 
             Node dp = Dp(e.Params);
 
-			string lambdaExpression = ip.Get<string>();
-            Node lambdaCodeBlock = Expressions.GetExpressionValue<Node>(lambdaExpression, dp, ip, false);
-
+            // retrieving and cloning code block to execute
+            Node lambdaCodeBlock = Expressions.GetExpressionValue<Node>(ip.Get<string>(), dp, ip, false);
             if (lambdaCodeBlock == null)
-                throw new ArgumentException("[lambda] couldn't find a block of code to execute from its expression");
-
+                throw new HyperlispExecutionErrorException("[lambda] couldn't find a block of code to execute from its expression");
             lambdaCodeBlock = lambdaCodeBlock.Clone();
 
+            // adding parameters to code block
             if (ip.Count > 0)
                 lambdaCodeBlock["$"].AddRange(ip);
 
+            // executing lambda block
             RaiseActiveEvent(
                 "magix.execute",
                 lambdaCodeBlock);
 
+            // adding parameters to ip back up again
             ip.Clear();
             if (lambdaCodeBlock.Contains("$") && lambdaCodeBlock["$"].Count > 0)
                 ip.AddRange(lambdaCodeBlock["$"]);

@@ -10,12 +10,12 @@ using Magix.Core;
 namespace Magix.execute
 {
 	/*
-	 * hyperlisp add logic
+	 * hyperlisp sort logic
 	 */
 	public class SortCore : ActiveController
 	{
 		/*
-		 * add hyperlisp keyword
+		 * sort hyperlisp keyword
 		 */
 		[ActiveEvent(Name = "magix.execute.sort")]
 		public static void magix_execute_sort(object sender, ActiveEventArgs e)
@@ -36,52 +36,52 @@ namespace Magix.execute
                 return;
 			}
 
-			Node dp = Dp(e.Params);
-
-            Node nodes = Expressions.GetExpressionValue<Node>(ip.Get<string>(), dp, ip, true);
+            // retrieving nodes to sort
+            Node nodes = Expressions.GetExpressionValue<Node>(ip.Get<string>(), Dp(e.Params), ip, true);
             if (nodes == null)
-                throw new ArgumentException("[sort] must return an existing node-list, [sort] value returned null, expression was; " + ip.Get<string>());
+                throw new HyperlispExecutionErrorException("[sort] must return an existing node-list, [sort] value returned null, expression was; " + ip.Get<string>());
 
-            if (nodes != null && nodes.Count > 0)
+            try
             {
-                try
-                {
-                    nodes.Sort(
-                        delegate(Node lhs, Node rhs)
-                        {
-                            Node oldIp = ip.Clone();
-                            ip["_first"].Add(lhs.Clone());
-                            ip["_second"].Add(rhs.Clone());
-
-                            RaiseActiveEvent(
-                                "magix.execute",
-                                e.Params);
-
-                            int retVal = 0;
-                            if (ip.Contains("_result"))
-                            {
-                                if (ip["_result"][0][0].Equals(lhs))
-                                    retVal = -1;
-                                else
-                                    retVal = 1;
-                            }
-                            ip.Clear();
-                            ip.AddRange(oldIp);
-                            return retVal;
-                        });
-                }
-                catch (Exception err)
-                {
-                    while (err.InnerException != null)
-                        err = err.InnerException;
-
-                    if (err is StopCore.HyperLispStopException)
-                        return; // do nothing, execution stopped
-
-                    // re-throw all other exceptions ...
-                    throw;
-                }
+                Sort(e.Params, ip, nodes);
             }
+            catch (Exception err)
+            {
+                while (err.InnerException != null)
+                    err = err.InnerException;
+                if (err is StopCore.HyperLispStopException)
+                    return; // do nothing, execution stopped
+
+                // re-throw all other exceptions ...
+                throw;
+            }
+        }
+
+        /*
+         * actual sorting implementation
+         */
+        private static void Sort(Node pars, Node ip, Node nodes)
+        {
+            nodes.Sort(
+                delegate(Node lhs, Node rhs)
+                {
+                    Node oldIp = ip.Clone();
+                    ip["_first"].Add(lhs.Clone());
+                    ip["_second"].Add(rhs.Clone());
+
+                    RaiseActiveEvent(
+                        "magix.execute",
+                        pars);
+
+                    int retVal = 0;
+                    if (ip.Contains("_first") && !ip.Contains("_second"))
+                        retVal = -1;
+                    else if (ip.Contains("_second") && !ip.Contains("_first"))
+                        retVal = 1;
+                    ip.Clear();
+                    ip.AddRange(oldIp);
+                    return retVal;
+                });
         }
     }
 }

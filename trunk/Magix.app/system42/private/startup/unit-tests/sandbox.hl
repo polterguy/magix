@@ -15,24 +15,13 @@ creates a sandbox, with a whitelist, then tries to execute only keywords which
 are in the whitelist of words, for then to verify the engine doesn't throw an 
 exception"
   code
-    _exception=>false
-    try
+    sandbox
+      whitelist
+        foo
+        bar
       code
-        sandbox
-          whitelist
-            foo
-            bar
-          code
-            bar
-            foo
-      catch
-        set=>[_exception].value
-          value=>true
-    if=>equals
-      lhs=>[_exception].value
-      rhs=>true
-      code
-        throw=>[sandbox] misbehaved
+        bar
+        foo
 
 
 event
@@ -99,16 +88,21 @@ event
 creates a sandbox, then invokes an active event, which executes 
 keywords not in the whitelist, making sure execution is allowed"
   code
-    event
-      name=>magix.test-event.foo
+    try
       code
-        set=>[$][output].value
-          value=>howdy
-    sandbox
-      whitelist
-        magix.test-event.foo
-      code
-        magix.test-event.foo
+        event
+          name=>magix.test-event.foo
+          code
+            set=>[$][output].value
+              value=>howdy
+        sandbox
+          whitelist
+            magix.test-event.foo
+          code
+            magix.test-event.foo
+      finally
+        event
+          name=>magix.test-event.foo
 
 
 event
