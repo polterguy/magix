@@ -12,17 +12,17 @@ using Magix.Core;
 
 namespace Magix.execute
 {
-	/*
-	 * multi threading
-	 */
-	internal sealed class ThreadingCore : ActiveController
-	{
-		/*
-		 * spawns new thread
-		 */
-		[ActiveEvent(Name = "magix.execute.fork")]
-		private static void magix_execute_fork(object sender, ActiveEventArgs e)
-		{
+    /*
+     * multi threading
+     */
+    internal sealed class ThreadingCore : ActiveController
+    {
+        /*
+         * spawns new thread
+         */
+        [ActiveEvent(Name = "magix.execute.fork")]
+        private static void magix_execute_fork(object sender, ActiveEventArgs e)
+        {
             Node ip = Ip(e.Params, true);
             if (ShouldInspect(ip))
             {
@@ -37,7 +37,7 @@ namespace Magix.execute
                     "Magix.execute.hyperlisp.inspect.hl",
                     "[magix.execute.fork-sample]");
                 return;
-			}
+            }
 
             Node nPars = e.Params.Clone();
             nPars["_ip"].Value = e.Params["_ip"].Get<Node>().Clone();
@@ -51,10 +51,13 @@ namespace Magix.execute
                 nPars["_orig-ip"].Value = e.Params["_ip"].Get<Node>();
                 new Thread(ExecuteThread).Start(nPars);
             }
-		}
+        }
 
-		private static void ExecuteThread(object input)
-		{
+        /*
+         * executes thread with [wait] statement
+         */
+        private static void ExecuteThread(object input)
+        {
             Node node = input as Node;
             Node origPars = node["_orig-pars"].Get<Node>();
 
@@ -100,10 +103,13 @@ namespace Magix.execute
                 beforeCount = origPars["_current-executed-iterations"].Get<int>();
                 origPars["_current-executed-iterations"].Value = beforeCount + delta;
             }
-		}
+        }
 
-		private static void ExecuteThreadForget(object input)
-		{
+        /*
+         * executes thread without [wait] statement
+         */
+        private static void ExecuteThreadForget(object input)
+        {
             Node node = input as Node;
             Node origPars = node["_orig-pars"].Get<Node>();
 
@@ -145,12 +151,12 @@ namespace Magix.execute
             }
         }
 
-		/*
-		 * sleeps the current thread till all children threads are finished
-		 */
-		[ActiveEvent(Name = "magix.execute.wait")]
-		private static void magix_execute_wait(object sender, ActiveEventArgs e)
-		{
+        /*
+         * sleeps the current thread till all children threads are finished
+         */
+        [ActiveEvent(Name = "magix.execute.wait")]
+        private static void magix_execute_wait(object sender, ActiveEventArgs e)
+        {
             Node ip = Ip(e.Params, true);
             if (ShouldInspect(ip))
             {
@@ -165,7 +171,7 @@ namespace Magix.execute
                     "Magix.execute.hyperlisp.inspect.hl",
                     "[magix.execute.wait-sample]");
                 return;
-			}
+            }
 
             int noChildren = 0;
             foreach (Node idxIp in ip)
@@ -176,7 +182,7 @@ namespace Magix.execute
             }
             if (noChildren == 0)
                 return;
-            
+
             int milliseconds = ip.Get<int>(-1);
             using (ManualResetEvent reset = new ManualResetEvent(false))
             {
@@ -214,7 +220,7 @@ namespace Magix.execute
                     e.Params["_threads"].UnTie();
                 }
             }
-		}
-	}
+        }
+    }
 }
 

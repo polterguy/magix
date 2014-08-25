@@ -5,24 +5,24 @@
  */
 
 using System;
-using System.Globalization;
 using System.IO;
-using System.Threading;
+using System.Text;
+using System.Globalization;
 using Magix.Core;
 
-namespace Magix.code
+namespace Magix.execute
 {
-	/*
+    /*
      * transforms from node to code and vice versa
-	 */
-	public class CodeCore : ActiveController
-	{
-		/*
-		 * transforms from node to code
-		 */
-		[ActiveEvent(Name = "magix.execute.node-2-code")]
-		public static void magix_exeute_node_2_code(object sender, ActiveEventArgs e)
-		{
+     */
+    public class CodeCore : ActiveController
+    {
+        /*
+         * transforms from node to code
+         */
+        [ActiveEvent(Name = "magix.execute.node-2-code")]
+        public static void magix_exeute_node_2_code(object sender, ActiveEventArgs e)
+        {
             Node ip = Ip(e.Params);
             if (ShouldInspect(ip))
             {
@@ -37,99 +37,24 @@ namespace Magix.code
                     "Magix.execute.hyperlisp.inspect.hl",
                     "[magix.execute.node-2-code-sample]");
                 return;
-			}
-
-            if (!ip.Contains("node"))
-				throw new ArgumentException("no [node] node passed into node-2-code");
+            }
 
             Node dp = Dp(e.Params);
-            Node node = null;
-            if (ip["node"].Value != null && ip["node"].Value is Node)
-                node = ip["node"].Get<Node>();
-            else if (ip["node"].Value != null && ip["node"].Value is string)
-            {
-                node = new Node();
-                node.Add(Expressions.GetExpressionValue<Node>(ip["node"].Get<string>(), dp, ip, false));
-            }
-            else
-                node = ip["node"].Clone();
 
-            if (ip.Contains("remove-root") && ip["remove-root"].Get<bool>())
-                node = node[0];
+            // verifying syntax
+            if (!ip.Contains("node"))
+                throw new HyperlispSyntaxErrorException("no [node] node passed into node-2-code");
 
-			string txt = ParseNodes(0, node);
-            ip["code"].Value = txt;
-		}
+            // transforms node to code
+            ExecuteNode2Code(ip, dp);
+        }
 
-		private static string ParseNodes(int indent, Node node)
-		{
-			string retVal = "";
-			foreach (Node idx in node)
-			{
-				for (int idxNo = 0; idxNo < indent * 2; idxNo ++)
-				{
-					retVal += " ";
-				}
-				string value = "";
-				if (idx.Value != null)
-				{
-					if (idx.Value.GetType () != typeof(string))
-					{
-						switch (idx.Value.GetType ().FullName)
-						{
-						case "System.Int32":
-							value += "=(int)>" + idx.Get<string>();
-							break;
-						case "System.Boolean":
-							value += "=(bool)>" + idx.Get<string>();
-							break;
-						case "System.Decimal":
-							value += "=(dec)>" + idx.Get<decimal>().ToString (CultureInfo.InvariantCulture);
-							break;
-						case "System.DateTime":
-							value += "=(date)>" + idx.Get<DateTime>().ToString ("yyyy.MM.dd HH:mm:ss", CultureInfo.InvariantCulture);
-							break;
-						case "Magix.Core.Node":
-						{
-							string nodeS = "";
-							if (!string.IsNullOrEmpty(idx.Get<Node>().Name))
-								nodeS += idx.Get<Node>().Name;
-							if (idx.Get<Node>().Value != null)
-								nodeS += "=>" + idx.Get<Node>().Get<string>();
-							value += @"=(node)>@""" + nodeS + "\r\n" + ParseNodes(string.IsNullOrEmpty(nodeS) ? 0 : 1, idx.Get<Node>()) + @"""";
-						} break;
-						}
-					}
-					else
-					{
-						if (idx.Get<string>().Contains("\n") || 
-						    idx.Get<string>().StartsWith("\"") ||
-						    idx.Get<string>().StartsWith(" "))
-						{
-							string nValue = idx.Get<string>();
-							nValue = nValue.Replace ("\"", "\"\"");
-							value += "=>" + "@\"" + nValue + "\"";
-						}
-						else
-							value += "=>" + idx.Get<string>("").Replace ("\r\n", "\\n").Replace ("\n", "\\n");
-					}
-				}
-				retVal += idx.Name + value;
-				retVal += "\n";
-				if (idx.Count > 0)
-				{
-					retVal += ParseNodes (indent + 1, idx);
-				}
-			}
-			return retVal;
-		}
-
-		/*
-		 * transforms from code to node
-		 */
-		[ActiveEvent(Name = "magix.execute.code-2-node")]
-		public static void magix_execute_code_2_node(object sender, ActiveEventArgs e)
-		{
+        /*
+         * transforms from code to node
+         */
+        [ActiveEvent(Name = "magix.execute.code-2-node")]
+        public static void magix_execute_code_2_node(object sender, ActiveEventArgs e)
+        {
             Node ip = Ip(e.Params);
             if (ShouldInspect(ip))
             {
@@ -144,216 +69,347 @@ namespace Magix.code
                     "Magix.execute.hyperlisp.inspect.hl",
                     "[magix.execute.code-2-node-sample]");
                 return;
-			}
+            }
 
-            if (!ip.Contains("code") && !ip.Contains("file"))
-                throw new ArgumentException("no [code] or [file] node passed into [code-2-node]");
+            Node dp = Dp(e.Params);
 
+            // verifying syntax of [code-2-node]
+            if (!ip.ContainsValue("code") && !ip.ContainsValue("file"))
+                throw new HyperlispSyntaxErrorException("no [code] or [file] node passed into [code-2-node]");
+
+            // verifying syntax of [code-2-node]
             if (ip.Contains("code") && ip.Contains("file"))
                 throw new ArgumentException("you cannot supply both a [file] node and a [code] node to [code-2-node]");
 
-            Node dp = Dp(e.Params);
+            // executing [code-2-node]
+            ExecuteCode2Node(e.Params, dp, ip);
+        }
+
+        /*
+         * actual implementation of [code-2-node]
+         */
+        private static void ExecuteCode2Node(Node pars, Node dp, Node ip)
+        {
+            // retrieving actual code
             string codeTextString = null;
             if (ip.Contains("code"))
                 codeTextString = Expressions.GetExpressionValue<string>(ip["code"].Get<string>(), dp, ip, false);
             else
-            {
-                try
-                {
-                    RaiseActiveEvent(
-                        "magix.file.load",
-                        e.Params);
+                codeTextString = LoadCodeFromFile(pars, ip);
 
-                    codeTextString = ip["value"].Get<string>();
-                }
-                finally
+            // converting from code to node
+            ExecuteCode2NodeFromString(codeTextString, ip["node"]);
+        }
+
+        /*
+         * transforms from code to node
+         */
+        private static void ExecuteCode2NodeFromString(string codeSource, Node resultNode)
+        {
+            // wrapping our code in a text reader for simplicity
+            using (TextReader reader = new StringReader(codeSource))
+            {
+                int indents = 0;
+                Node currentNode = resultNode;
+                while (true)
                 {
-                    ip["value"].UnTie();
+                    // retrieving next line from reader
+                    string line = reader.ReadLine();
+
+                    if (line == null)
+                        break; // finished, eof
+
+                    if (line.Trim() == string.Empty || line.Trim().StartsWith("//"))
+                        continue; // skipping white lines and comments
+
+                    // retrieving value of next node, and setting current node to the added node, changing indentations accordingly
+                    currentNode = Code2NodeGetNextNode(reader, ref indents, currentNode, line);
                 }
             }
+        }
 
-			Node returnNode = ip["node"];
-			using (TextReader reader = new StringReader(codeTextString))
-			{
-				int indents = 0;
-				Node idxNode = returnNode;
-				while (true)
-				{
-					string line = reader.ReadLine ();
-					if (line == null)
-						break;
+        /*
+         * returns next node parsed from reader
+         */
+        private static Node Code2NodeGetNextNode(TextReader reader, ref int indents, Node idxNode, string line)
+        {
+            string name = "";
+            object value = null;
 
-					if (line.Trim() == "")
-						continue; // Skipping white lines
+            string trimmedLine = line.TrimStart();
+            if (!trimmedLine.Contains("="))
+                name = trimmedLine; // only name here, no value
+            else
+            {
+                // here is probably some sort of both name and value, figuring out name first
+                if (trimmedLine[0] == '=')
+                    name = string.Empty; // empty name ...
+                else
+                    name = trimmedLine.Substring(0, trimmedLine.IndexOf("="));
 
-                    if (line.Trim().StartsWith("//"))
-						continue;
+                // then figuring out value
+                value = Code2NodeGetNodeValue(reader, name, trimmedLine.Substring(name.Length));
+            }
 
-					// Skipping "white lines"
-					if (line.Trim().Length == 0)
-						continue;
+            // adding up node and updating indentations
+            return Code2NodeAddNode(ref indents, idxNode, line, name, value);
+        }
 
-					// Skipping "commenting lines"
-					if (line.Trim().IndexOf("//") == 0)
-						continue;
+        /*
+         * actually adds node to result collection and updates indentations and returns the newly created and added node
+         */
+        private static Node Code2NodeAddNode(ref int indents, Node idxNode, string line, string name, object value)
+        {
+            // figuring out nuber of indentations
+            int currentIndents = GetNumberOfIndentations(line);
+            if (currentIndents == indents)
+            {
+                // same level
+                Node xNode = new Node(name, value);
+                idxNode.Add(xNode);
+            }
+            else if (currentIndents < indents)
+            {
+                // decreasing indentations, moving 'upwards' in hierarchy
+                while (currentIndents < indents)
+                {
+                    idxNode = idxNode.Parent;
+                    indents -= 1;
+                }
+                idxNode.Add(new Node(name, value));
+            }
+            else
+            {
+                // increasing indentations, moving 'downwards' in hierarchy
+                // verifying syntax
+                if (currentIndents - indents > 1)
+                    throw new ArgumentException("multiple indentations found in [code-2-node], without specifying child node name");
+                idxNode = idxNode[idxNode.Count - 1];
+                idxNode.Add(new Node(name, value));
+                indents += 1;
+            }
 
-					// Counting indents
-					int currentIndents = 0;
-					foreach (char idx in line)
-					{
-						if (idx != ' ')
-							break;
-						currentIndents += 1;
-					}
-					if (currentIndents % 2 != 0)
-						throw new ArgumentException("only even number of indents allowed in code syntax");
-					currentIndents = currentIndents / 2; // Number of nodes inwards/outwards
+            // returning node just added
+            return idxNode;
+        }
 
-					string name = "";
-					object value = null;
+        /*
+         * figuring out node value
+         */
+        private static object Code2NodeGetNodeValue(TextReader reader, string name, string trimmedLineWithoutName)
+        {
+            object value = null;
+            switch (trimmedLineWithoutName.Split('>')[0] + ">")
+            {
+                case "=>":
+                    if (!trimmedLineWithoutName.StartsWith("=>@\""))
+                        value = trimmedLineWithoutName.Substring(2); // simple string value
+                    else
+                        value = Code2NodeReadMultipleLines(reader, trimmedLineWithoutName.Substring(4));
+                    break;
+                case "=(int)>":
+                    value = int.Parse(trimmedLineWithoutName.Substring(7));
+                    break;
+                case "=(date)>":
+                    value = DateTime.ParseExact(
+                        trimmedLineWithoutName.Substring(8),
+                        "yyyy.MM.dd HH:mm:ss",
+                        CultureInfo.InvariantCulture);
+                    break;
+                case "=(bool)>":
+                    value = bool.Parse(trimmedLineWithoutName.Substring(8));
+                    break;
+                case "=(dec)>":
+                    value = decimal.Parse(trimmedLineWithoutName.Substring(7), CultureInfo.InvariantCulture);
+                    break;
+                case "=(node)>":
+                    value = Code2NodeReadMultipleLines(reader, trimmedLineWithoutName.Substring(10));
 
-					string tmp = line.TrimStart();
-					if (!tmp.Contains("="))
-					{
-						name = tmp;
-					}
-					else
-					{
-                        if (tmp[0] == '=')
-                            name = ""; // empty name ...
+                    // converting our inner node value from code to node, recursively calling "self" to retrieve node value
+                    Node tmpNode = new Node();
+                    tmpNode["code"].Value = value.ToString().Trim();
+                    RaiseActiveEvent(
+                        "magix.execute.code-2-node",
+                        tmpNode);
+                    value = tmpNode["node"].Clone();
+                    break;
+            }
+            return value;
+        }
+
+        /*
+         * reads from the text reader until string literal is closed
+         */
+        private static object Code2NodeReadMultipleLines(TextReader reader, string tmpLine)
+        {
+            object value = null;
+            while (true)
+            {
+                // looping until string is ended, which might span several lines, first figuring out if this is the last line
+                int noFnut = 0;
+                for (int idxNo = tmpLine.Length - 1; idxNo >= 0; idxNo--)
+                {
+                    if (tmpLine[idxNo] == '"')
+                        noFnut += 1;
+                    else
+                        break;
+                }
+
+                // replacing all occurrencies of "" with "
+                value += tmpLine.Replace("\"\"", "\"");
+
+                if (noFnut % 2 != 0)
+                {
+                    // this was our last line of multi-line text, removing last " appended from current line before breaking while loop
+                    value = ((string)value).TrimEnd().Substring(0, ((string)value).Length - 1);
+                    break;
+                }
+
+                // adding carriage return
+                value += "\n";
+                tmpLine = reader.ReadLine();
+
+                if (tmpLine == null)
+                    throw new HyperlispSyntaxErrorException("unfinished string literal: " + value);
+            }
+            return value;
+        }
+
+        /*
+         * returns number of indentations of current line from code
+         */
+        private static int GetNumberOfIndentations(string line)
+        {
+            // counting indents
+            int indentations = 0;
+            foreach (char idx in line)
+            {
+                if (idx != ' ')
+                    break;
+                indentations += 1;
+            }
+            if (indentations % 2 != 0)
+                throw new HyperlispSyntaxErrorException("only even number of indents allowed in code syntax");
+            return indentations / 2;
+        }
+
+        /*
+         * loads code from file
+         */
+        private static string LoadCodeFromFile(Node pars, Node ip)
+        {
+            try
+            {
+                RaiseActiveEvent(
+                    "magix.file.load",
+                    pars);
+                return ip["value"].Get<string>();
+            }
+            finally
+            {
+                ip["value"].UnTie();
+            }
+        }
+
+        /*
+         * implementation of [node-2-code]
+         */
+        private static void ExecuteNode2Code(Node ip, Node dp)
+        {
+            Node node = new Node();
+            if (ip["node"].Value != null && ip["node"].Value is Node)
+            {
+                // node's value is a node in itself
+                node = ip["node"].Get<Node>();
+            }
+            else if (ip["node"].Value != null)
+            {
+                // assuming it's an expression
+                node.Add(Expressions.GetExpressionValue<Node>(ip["node"].Get<string>(), dp, ip, false));
+            }
+            else
+            {
+                // assuming nodes to convert is beneath [node] as children
+                node = ip["node"].Clone();
+            }
+
+            // checking to see if we should remove root node
+            if (ip.Contains("remove-root") && ip["remove-root"].Get<bool>())
+                node = node[0];
+
+            // parsing nodes, and returning value
+            StringBuilder builder = new StringBuilder();
+            ParseNodes(0, node, builder);
+            ip["code"].Value = builder.ToString();
+        }
+
+        /*
+         * actual parsing from nodes to code syntax
+         */
+        private static void ParseNodes(int indent, Node node, StringBuilder builder)
+        {
+            foreach (Node idx in node)
+            {
+                for (int idxNo = 0; idxNo < indent; idxNo++)
+                {
+                    builder.Append("  ");
+                }
+                string value = "";
+                if (idx.Value != null)
+                {
+                    if (idx.Value.GetType() != typeof(string))
+                    {
+                        switch (idx.Value.GetType().FullName)
+                        {
+                            case "System.Int32":
+                                value += "=(int)>" + idx.Get<string>();
+                                break;
+                            case "System.Boolean":
+                                value += "=(bool)>" + idx.Get<string>();
+                                break;
+                            case "System.Decimal":
+                                value += "=(dec)>" + idx.Get<decimal>().ToString(CultureInfo.InvariantCulture);
+                                break;
+                            case "System.DateTime":
+                                value += "=(date)>" + idx.Get<DateTime>().ToString("yyyy.MM.dd HH:mm:ss", CultureInfo.InvariantCulture);
+                                break;
+                            case "Magix.Core.Node":
+                                {
+                                    string nodeS = "";
+                                    if (!string.IsNullOrEmpty(idx.Get<Node>().Name))
+                                        nodeS += idx.Get<Node>().Name;
+                                    if (idx.Get<Node>().Value != null)
+                                        nodeS += "=>" + idx.Get<Node>().Get<string>();
+
+                                    StringBuilder builder2 = new StringBuilder();
+                                    builder2.Append(@"=(node)>@""" + nodeS + "\r\n");
+                                    ParseNodes(string.IsNullOrEmpty(nodeS) ? 0 : 1, idx.Get<Node>(), builder2);
+                                    builder2.Append(@"""");
+                                    value += builder2.ToString();
+                                } break;
+                        }
+                    }
+                    else
+                    {
+                        if (idx.Get<string>().Contains("\n") ||
+                            idx.Get<string>().StartsWith("\"") ||
+                            idx.Get<string>().StartsWith(" "))
+                        {
+                            string nValue = idx.Get<string>();
+                            nValue = nValue.Replace("\"", "\"\"");
+                            value += "=>" + "@\"" + nValue + "\"";
+                        }
                         else
-    						name = tmp.Split(new string[]{"="}, StringSplitOptions.RemoveEmptyEntries)[0];
-						switch (tmp.Substring(name.Length).Split('>')[0] + ">")
-						{
-						case "=>":
-							if (!tmp.Substring(name.Length + 2).TrimStart().StartsWith("@\""))
-							{
-								value = tmp.Substring(name.Length + 2).TrimStart();
-							}
-							else
-							{
-								string tmpLine = tmp.Substring(name.Length + 2).TrimStart();
-								tmpLine = tmpLine.Substring(2);
-								while (true)
-								{
-									int noFnut = 0;
-									for (int idxNo = tmpLine.Length - 1; idxNo >= 0; idxNo--)
-									{
-										if (tmpLine[idxNo] == '"')
-											noFnut += 1;
-										else
-											break;
-									}
-
-									value += tmpLine.Replace("\"\"", "\"");
-
-									if (noFnut % 2 != 0)
-									{
-										value = ((string)value).TrimEnd().Substring(0, ((string)value).Length - 1);
-										break;
-									}
-
-									value += "\n";
-									tmpLine = reader.ReadLine();
-
-									if (tmpLine == null)
-										throw new ArgumentException("unfinished string literal: " + value);
-								}
-							} break;
-						case "=(int)>":
-							value = int.Parse (tmp.Substring (name.Length + 7).Trim());
-							break;
-						case "=(date)>":
-							value = DateTime.ParseExact(
-                                tmp.Substring (name.Length + 8).Trim(), 
-                                "yyyy.MM.dd HH:mm:ss", 
-                                CultureInfo.InvariantCulture);
-							break;
-						case "=(bool)>":
-							value = bool.Parse(tmp.Substring (name.Length + 8).Trim());
-							break;
-						case "=(dec)>":
-							value = decimal.Parse(tmp.Substring (name.Length + 7).Trim(), CultureInfo.InvariantCulture);
-							break;
-                        case "=(node)>":
-							string tmpLine2 = tmp.Substring(name.Length + 8).TrimStart();
-							tmpLine2 = tmpLine2.Substring(2);
-							while (true)
-							{
-								int noFnut = 0;
-								for (int idxNo = tmpLine2.Length - 1; idxNo >= 0; idxNo--)
-								{
-									if (tmpLine2[idxNo] == '"')
-										noFnut += 1;
-									else
-										break;
-								}
-
-								value += tmpLine2.Replace("\"\"", "\"");
-
-								if (noFnut % 2 != 0)
-								{
-									value = ((string)value).TrimEnd().Substring(0, ((string)value).Length - 1);
-									break;
-								}
-
-								value += "\n";
-								tmpLine2 = reader.ReadLine();
-
-								if (tmpLine2 == null)
-									throw new ArgumentException("unfinished string literal: " + value);
-							}
-
-                            Node tmpNode = new Node();
-                            tmpNode["code"].Value = value.ToString().Trim();
-                            RaiseActiveEvent(
-                                "magix.execute.code-2-node",
-                                tmpNode);
-                            value = tmpNode["node"].Clone();
-                            break;
-						}
-					}
-
-					if (currentIndents == indents)
-					{
-						Node xNode = new Node(name, value);
-						idxNode.Add(xNode);
-					}
-
-					// Decreasing, upwards in hierarchy...
-					if (currentIndents < indents)
-					{
-						while (currentIndents < indents)
-						{
-							idxNode = idxNode.Parent;
-							indents -= 1;
-						}
-						idxNode.Add (new Node(name, value));
-					}
-
-					if (currentIndents != indents && currentIndents > indents && currentIndents - indents > 1)
-						throw new ArgumentException("multiple indentations found in [code-2-node], without specifying child node name");
-
-					// Increasing, downwards in hierarchy...
-					if (currentIndents > indents)
-					{
-						idxNode = idxNode[idxNode.Count - 1];
-						idxNode.Add(new Node(name, value));
-						indents += 1;
-					}
-				}
-			}
-		}
-	}
+                            value += "=>" + idx.Get<string>("").Replace("\r\n", "\\n").Replace("\n", "\\n");
+                    }
+                }
+                builder.Append(idx.Name + value + "\n");
+                if (idx.Count > 0)
+                    ParseNodes(indent + 1, idx, builder);
+            }
+        }
+    }
 }
-
-
-
-
-
-
-
-
 
 
 

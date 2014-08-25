@@ -350,13 +350,15 @@ access the entire execution tree, to access the entire code tree
 thread safe"
 
 magix.execute.using-sample
+  _result
   using=>magix.math
-    add
+    add=>[_result]
       =(int)>4
       =(int)>1
   using=>magix.viewport
     show-message
-      message=>[using][add].value
+      message=>the result of our add operation is; {0}
+        =>[_result].value
 
 
 magix.execute.sandbox-dox=>@"restricts the active events possible to raise
@@ -1098,15 +1100,51 @@ magix.execute.while-dox=>@"loops as long as condition is true
 creates a loop that executes the underlaying code block repeatedly, as long as the 
 comparison statement(s) in the value of [while] is true
 
-the [while] is taking arguments similarly as both the [if] and [else-if].  see any of 
-these active events to understand how to create a comparison statement(s) to check for 
-in the while loop
+the values compared must be given through [lhs] and [rhs], which means 
+'left-hand-side' and 'right-hand-side', and the operator used to compare 
+the [lhs] and the [rhs] nodes must be given using the value of the [while] 
+node.  legal values for the operator is 'exist', 'not-exist', 'equals', 
+'not-equals', 'less-than', 'more-than', 'less-than-equals' and 
+'more-than-equals'
+
+[lhs] means 'left-hand-side'.  the lhs node is conceptually to the left 
+of the operator.  [rhs] means 'right-hand-side', and is conceptually to 
+the right of the operator.  this means that if you have an lhs value of 
+'x' and an rhs value of 'y' and your operator is 'equals', then the 
+full comparison statement becomes 'while x equals y'.  if you have an 
+operator of 'more-than', and an [lhs] of 5 and an [rhs] of 4, then 
+the full statement becomes 'while 5 is more-than 4', which of course 
+will evaluate to true in a never ending loop.  both [lhs], [rhs] and 
+the operator value of your [while] can be either constants or expressions
+
+[lhs] and [rhs] can contain formatting expressions, such as {0} and {1},
+de-referencing children nodes of [lhs] and [rhs]
+
+depending upon the comparison operator you use, the [rhs] node might 
+not be necessary.  for instance, 'exist' does not need a right-hand-side, 
+or an rhs node, since it only checks for the existence of one specific 
+node, value or name
+
+you can optionally also supply as many [or] and/or [and] nodes beneath 
+your [while] node.  if you do, then these are additional statements that 
+needs to return true to make the [while] statement become true as a whole.  
+if you supply an [or] and/or an [and] statement beneath your [while], then 
+you must add up a comparison operator as the value of your [and] and [or] 
+statements, and another pair of [lhs] and [rhs] nodes beneath your [and] 
+and [or] statements
+
+the engine will convert automatically between int, decimal, date and 
+bool, or resort to string if no conversion is possible.  you can compare 
+two node trees in [lhs] and [rhs], which means that the node trees will 
+be compared deeply, comparing their name, value and children for equality
 
 while executes immutable, meaning it will not modify its children 
 nodes after it is done executing, and every iteration of the loop 
-will execute on a 'virgin' version of its code.  this means that 
-the code it executes will be reset back to what it originally was 
-for every single iteration of the loop
+will execute on a 'virgin' version of the [code} block.  this means 
+that the code it executes will be reset back to what it originally 
+was for every single iteration of the loop
+
+you can stop a [while] loop with the [stop] keyword
 
 thread safe"
 
@@ -1123,17 +1161,16 @@ magix.execute.while-sample
         value=>[_data][0].value
       set=>[_data][0]
       magix.viewport.show-message
-        message=>to be changed
 
 
 magix.execute.with-dox=>@"temporary changes the data pointer
 
 temporary changes the data pointer to the expression in its value.  
-[with] must have an expression returning a node list
+[with] must have an expression returning an existing node list
 
 this is useful if you're handling several keywords in a row, where 
 the expressions within them are all pointing deep into the execution 
-tree somewhere
+tree somewhere to shorten your expressions
 
 thread safe"
 

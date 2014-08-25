@@ -9,17 +9,17 @@ using Magix.Core;
 
 namespace Magix.execute
 {
-	/*
-	 * while keyword
-	 */
-	public class WhileCore : ActiveController
-	{
-		/*
-		 * while keyword
-		 */
-		[ActiveEvent(Name = "magix.execute.while")]
-		public static void magix_execute_while(object sender, ActiveEventArgs e)
-		{
+    /*
+     * while keyword
+     */
+    public class WhileCore : ActiveController
+    {
+        /*
+         * while keyword
+         */
+        [ActiveEvent(Name = "magix.execute.while")]
+        public static void magix_execute_while(object sender, ActiveEventArgs e)
+        {
             Node ip = Ip(e.Params, true);
             if (ShouldInspect(ip))
             {
@@ -34,39 +34,59 @@ namespace Magix.execute
                     "Magix.execute.hyperlisp.inspect.hl",
                     "[magix.execute.while-sample]");
                 return;
-			}
-
-            if (!ip.Contains("code"))
-                throw new ArgumentException("you need to supply a [code] block to the [while] active event");
+            }
 
             Node dp = Dp(e.Params);
-			while (StatementHelper.CheckExpressions(ip, dp))
-			{
-                e.Params["_ip"].Value = ip["code"];
-                try
-                {
-                    Node oldIp = ip["code"].Clone();
 
-                    RaiseActiveEvent(
-                        "magix.execute",
-                        e.Params);
+            // verifying syntax is correct
+            if (!ip.Contains("code"))
+                throw new HyperlispSyntaxErrorException("you need to supply a [code] block to the [while] keyword");
 
-                    ip["code"].Clear();
-                    ip["code"].AddRange(oldIp);
-                }
-                catch (Exception err)
-                {
-                    while (err.InnerException != null)
-                        err = err.InnerException;
+            // executing [while]
+            WhileChecked(e.Params, ip, dp);
+        }
 
-                    if (err is HyperlispStopException)
-                        return; // do nothing, execution stopped
-
-                    // re-throw all other exceptions ...
-                    throw;
-                }
+        /*
+         * wraps while in a try
+         */
+        private static void WhileChecked(Node pars, Node ip, Node dp)
+        {
+            try
+            {
+                WhileUnchecked(pars, ip, dp);
             }
-		}
-	}
+            catch (Exception err)
+            {
+                while (err.InnerException != null)
+                    err = err.InnerException;
+
+                if (err is HyperlispStopException)
+                    return; // do nothing, execution stopped
+
+                // re-throw all other exceptions ...
+                throw;
+            }
+        }
+
+        /*
+         * actual while implementation
+         */
+        private static void WhileUnchecked(Node pars, Node ip, Node dp)
+        {
+            // looping as long as statement is true
+            while (StatementHelper.CheckExpressions(ip, dp))
+            {
+                Node oldIp = ip["code"].Clone();
+                pars["_ip"].Value = ip["code"];
+
+                RaiseActiveEvent(
+                    "magix.execute",
+                    pars);
+
+                ip["code"].Clear();
+                ip["code"].AddRange(oldIp);
+            }
+        }
+    }
 }
 
