@@ -43,7 +43,7 @@ namespace Magix.execute
             // retrieving the string to search through
             string stringToSearch = Expressions.GetExpressionValue<string>(ip.Get<string>(), dp, ip, false);
             if (stringToSearch == null)
-                throw new HyperlispExecutionErrorException("couldn't make '" + ip.Get<string>() + "' into a string in [index-of]");
+                return;
 
             // retrieving what to search for in our string
             string whatToSearchFor = Expressions.GetFormattedExpression("what", e.Params, null);

@@ -102,6 +102,7 @@
     <Content Include="media\images\help-files\web-part-designer-screenshot.jpg" />
     <Content Include="media\images\icons\arrows.png" />
     <Content Include="media\images\icons\big-arrow.png" />
+    <Content Include="media\images\icons\binder.png" />
     <Content Include="media\images\icons\blackboard.png" />
     <Content Include="media\images\icons\book.png" />
     <Content Include="media\images\icons\fusion.png" />

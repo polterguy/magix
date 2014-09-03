@@ -116,5 +116,24 @@ use invariant culture
 
 both [date] and [format] can either be expressions or constants"
 
+magix.date.format-sample
+  magix.date.format
+    date=(date)>2014.11.24 23:59:28
 
+
+magix.date.format-offset-dox=>@"formats date
+
+formats [date] and returns as [value] to inform about period from 
+now date.  for instance, if the date is 2 hours ago, it will return 
+'2 hours ago'.  if date is 2 months ago, it will return '2 months ago' 
+and so on
+
+possible return values are 'x years ago', 'x months ago', 'x weeks ago', 
+'x days ago', 'x hours ago', 'x minutes ago' and 'just now' if date is 
+before current date.  if date is in the future, possible return values 
+are 'x years from now', 'x months from now', and so on"
+
+magix.date.format-offset-sample
+  magix.date.format-offset
+    date=(date)>2013.11.24 23:59:28
 

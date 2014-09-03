@@ -93,6 +93,10 @@
 
 29. the operator in [if], [else-if] and [while] keywords can now be expressions
 
+30. significantly optimized parts of the hyperlisp execution engine, especially conversion between code text and nodes
 
+31. all magix.forms active events that takes [id] and [form-id] can now have both id and form-id being formatted expressions
+
+32. created magix.date.format-offset active event that will return timespan in friendly manners such as "1 day ago" and so on
 
 

@@ -78,17 +78,29 @@
 .email-item-subject
 {
     cursor:pointer;
+    white-space:nowrap;
+    overflow-x:hidden;
 }
 
 .email-item-from
 {
-    color:#777777;
+    cursor:pointer;
+    color:#999999;
+    white-space:nowrap;
+    overflow-x:hidden;
 }
 
 .email-item-date
 {
+    cursor:pointer;
     font-style:italic;
-    color:#aaaaaa;
+    color:#cccccc;
+}
+
+.email-has-attachments
+{
+    background-image:url(../images/icons/binder.png);
+    background-repeat:no-repeat;
 }
 
 .emails-sleeping-dynamic

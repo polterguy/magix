@@ -5,6 +5,53 @@ inspect=>@"active events for show-emails.hl file
 contains active events for the inbox list of emails web part"
 
 
+// toggles email as visible or invisible according to whether or not it's already being viewed
+magix.emails.toggle-email
+  using=>magix.forms
+    get-value
+      form-id=>inbox-list
+      id=>viewing-{0}
+        =>[$][id].value
+  if=>equals
+    lhs=>[using][get-value][value].value
+    rhs=>true
+    code
+      // already viewing, "unviewing" email
+      using=>magix.forms
+        set-value
+          form-id=>inbox-list
+          id=>viewing-{0}
+            =>[$][id].value
+          value=>false
+      set=>[@][magix.viewport.clear-controls][container].value
+        value=>dynamic-{0}
+          =>[$][id].value
+      magix.viewport.clear-controls
+        reset-class
+          new-class=>emails-sleeping-dynamic
+  else
+    // making email show
+    using=>magix.forms
+      set-value
+        form-id=>inbox-list
+        id=>viewing-{0}
+          =>[$][id].value
+        value=>true
+      set-style
+        form-id=>inbox-list
+        id=>subject-{0}
+          =>[$][id].value
+        key=>font-weight
+        value=>normal
+    set=>[@][magix.emails.load-email][container].value
+      value=>dynamic-{0}
+        =>[$][id].value
+    set=>[@][magix.emails.load-email][email-id].value
+      value=>[$][email-id].value
+    magix.emails.load-email
+
+
+// loads email for viewing
 magix.emails.load-email
   iterate=>[magix.execute]
     if=>equals
@@ -26,6 +73,7 @@ magix.emails.load-email
     using=>magix.data
       load
         id=>[$][email-id].value
+
     // making sure email is marked as read
     add=>[using:1][save][value]
       values=>[using:0][load][value]
@@ -35,19 +83,26 @@ magix.emails.load-email
       save
         id=>[$][email-id].value
 
-    // creating view email body web part, prioritizing non-html view
-    set=>[_controls][**label=>body][value].value
-      value=>[using][load][value][body].value
-    if=>equals
-      lhs=>[using][load][value][is-html].value
-      rhs=>false
+    // extracting body, prioritizing html view
+    _body
+    if=>exist
+      lhs=>[using][load][value][body][html]
       code
-        // email is not html, making sure all carriage returns are replaced with <br/> tags
-        replace=>[_controls][**label=>body][value].value
-          what=>\n
-          with=><br/>
-        replace=>[_controls][**label=>body][value].value
-          what=>\r
+        set=>[_body].value
+          value=>[using][load][value][body][html].value
+    else
+      set=>[_body].value
+        value=>[using][load][value][body][plain].value
+
+      // email is not html, making sure all carriage returns are replaced with <br/> tags
+      replace=>[_body].value
+        what=>\n
+        with=><br/>
+      replace=>[_body].value
+        what=>\r
+
+    set=>[_controls][**label=>body][value].value
+      value=>[_body].value
 
     set=>[_controls][**label=>email-header][value].value
       value=>[using][load][value][subject].value
@@ -93,7 +148,7 @@ magix.emails.load-email
             tag=>label
             value=>attachments
       panel
-        class=>btn-group span-8 last right clear
+        class=>btn-group span-4 last right clear
         controls
           button=>reply
             class=>span-2
@@ -118,37 +173,8 @@ magix.emails.load-email
               execute-script
                 file=>your-files/system-apps/magix-mail/components/reply/reply-web-part.hl
           button
-            class=>span-2
-            value=>print
-          button
-            class=>span-2
-            value=>delete
-          button
             class=>span-2 last
-            value=>close
-            onclick
-              _container=>{container}
-              _label
-              replace=>[_container].value
-                what=>dynamic-
-              set=>[_label].value
-                value=>subject-{0}
-                  =>[_container].value
-              using=>magix.forms
-                get-info
-                  form-id=>inbox-list
-                  id=>[_label].value
-              replace=>[using][get-info][value].value
-                what=>viewing-
-              using=>magix.forms
-                set-info
-                  form-id=>inbox-list
-                  id=>[_label].value
-                  value=>[using:0][get-info][value].value
-              magix.viewport.clear-controls
-                container=>{container}
-                reset-class
-                  new-class=>emails-sleeping-dynamic
+            value=>delete
       dynamic=>{reply-container}
     using=>magix.forms
       create-web-part

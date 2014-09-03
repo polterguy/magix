@@ -349,9 +349,15 @@ to the value in [mml]";
             if (!ip.ContainsValue("id"))
 				throw new ArgumentException("you need to supply an [id] to know which control to find");
 
-            if (!ip.Contains("form-id") || Expressions.GetExpressionValue<string>(ip["form-id"].Get<string>(), dp, ip, false) == FormID)
+            string formId = null;
+            if (ip.ContainsValue("form-id"))
+            {
+                formId = Expressions.GetFormattedExpression("form-id", e.Params, null);
+            }
+
+            if (formId == null || formId == FormID)
 			{
-                string id = Expressions.GetExpressionValue<string>(ip["id"].Get<string>(), dp, ip, false);
+                string id = Expressions.GetFormattedExpression("id", e.Params, null);
                 Control ctrl = Selector.FindControl<Control>(
                     this.Parent.Parent /* to include viewport itself */, 
                     id);
