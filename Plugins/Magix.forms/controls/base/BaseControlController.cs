@@ -308,8 +308,12 @@ namespace Magix.forms
 
 			Node ctrlNode = new Node("magix.forms._get-control");
 			ctrlNode["id"].Value = ip["id"].Value;
-			if (ip.Contains("form-id"))
-				ctrlNode["form-id"].Value = ip["form-id"].Value;
+            ctrlNode["id"].AddRange(ip["id"].Clone());
+            if (ip.Contains("form-id"))
+            {
+                ctrlNode["form-id"].Value = ip["form-id"].Value;
+                ctrlNode["form-id"].AddRange(ip["form-id"].Clone());
+            }
 
             object oldIp = pars["_ip"].Value;
             pars["_ip"].Value = ctrlNode;

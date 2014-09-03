@@ -188,7 +188,7 @@ namespace Magix.web
         }
 
         /*
-         * return the given http get parameter
+         * strips html from node
          */
         [ActiveEvent(Name = "magix.web.strip-html")]
         private void magix_web_strip_html(object sender, ActiveEventArgs e)

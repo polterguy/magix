@@ -73,22 +73,6 @@ try
                       lhs=>[@][using=>magix.data][load][value]
                       code
 
-                        // setting plain view as preferred body of message
-                        if=>exist
-                          lhs=>[@][..][..][..][_message][body][plain]
-                          code
-                            set=>[@][..][..][..][..][..][_message][body].value
-                              value=>[@][..][..][..][..][..][_message][body][plain].value
-                            set=>[@][..][..][..][..][..][_message][is-html].value
-                              value=>false
-                        else
-                          set=>[@][..][..][..][..][_message][body].value
-                            value=>[@][..][..][..][..][_message][body][html].value
-                          set=>[@][..][..][..][..][_message][is-html].value
-                            value=>true
-                        set=>[@][..][..][..][_message][body][plain]
-                        set=>[@][..][..][..][_message][body][html]
-
                         // filtering emails into correct folder
                         add=>[@][magix.email.filter-emails][email]
                           values=>[@][..][..][..][_message]

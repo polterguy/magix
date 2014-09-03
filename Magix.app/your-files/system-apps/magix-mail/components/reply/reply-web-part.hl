@@ -19,22 +19,27 @@ if=>not-exist
       value=>Re: {0}
         =>[using][load][value][subject].value
 
-if=>equals
-  lhs=>[using][load][value][is-html].value
-  rhs=>true
+// prioritizing plain view, stripping html if no plain view exist
+_body
+if=>not-exist
+  lhs=>[using][load][value][body][plain].value
   code
+    set=>[_body].value
+      value=>[using][load][value][body][html].value
     using=>magix.web
       strip-html
-        value=>[using][load][value][body].value
-    set=>[using][load][value][body].value
+        value=>[_body].value
+    set=>[_body].value
       value=>[@][using][strip-html][result].value
-
-replace=>[using][load][value][body].value
+else
+  set=>[_body].value
+    value=>[using][load][value][body][plain].value
+replace=>[_body].value
   what=>\n
   with=>\n>
 set=>[using][load][value][body].value
   value=>>{0}
-    =>[using][load][value][body].value
+    =>[_body].value
 
 add=>[@][execute-script][params][email]
   values=>[using][load][value]

@@ -12,8 +12,8 @@ emails
 takes [start], and [search] as parameters which informs the 
 file where to start showing emails
 
-emails will be shown in a last in, firt out, meaning the newest 
-email will be shown first"
+emails will be shown sorted such that your last emails will be 
+shown first"
 
 
 _start=>0
@@ -166,23 +166,25 @@ magix.forms.create-web-part
             type=>magix.email.message
             folder=>{mailbox}
 
-        // removing emails not meeting search criteria, if any criteria is given
+        // removing emails not matching search criteria, if any criteria is given
         _search=>{emails-search}
         if=>not-equals
           lhs=>[@][_search].value
           rhs=>
           code
             for-each=>[magix.data.load=>load-emails][objects]
+
+              // making html view the preferred view
               if=>not-exist
-                lhs=>[.][value][body].value
+                lhs=>[.][value][body][html].value
                 code
                   set=>[.][value][body].value
-                    value=>
-              if=>not-exist
-                lhs=>[.][value][from][display-name]
-                code
-                  set=>[.][value][from][display-name].value
-                    value=>
+                    value=>[.][value][body][plain].value
+              else
+                set=>[.][value][body].value
+                  value=>[.][value][body][html].value
+
+              // doing search through all fields
               index-of=>[.][value][subject].value
                 what=>[/][_search].value
                 case=>false
@@ -251,64 +253,57 @@ magix.forms.create-web-part
             controls
         for-each=>[magix.data.load][objects]
           _pnl
+            hidden=>{viewing-}
+              value=>false
             label=>{subject-}
-              class=>span-9 email-item-subject
               value=>&nbsp;
+              class=>span-8 email-item-subject
               onclick
                 split=>[$][id].value
                   what=>subject-
-                index-of=>[$][info].value
-                  what=>viewing-
-                if=>equals
-                  lhs=>[index-of][result][0].value
-                  rhs=>0
-                  code
-                    // already viewing, clearing viewing viewport to "unview" email
-                    replace=>[$][info].value
-                      what=>viewing-
-                    using=>magix.forms
-                      set-info
-                        form-id=>inbox-list
-                        id=>[$][id].value
-                        value=>[$][info].value
-                    set=>[@][magix.viewport.clear-controls][container].value
-                      value=>dynamic-{0}
-                        =>[split][result][0].value
-                    magix.viewport.clear-controls
-                      reset-class
-                        new-class=>emails-sleeping-dynamic
-                    stop
-                set=>[magix.emails.load-email][container].value
-                  value=>dynamic-{0}
-                    =>[split][result][0].value
-                set=>[magix.emails.load-email][email-id].value
+                set=>[magix.emails.toggle-email][id].value
+                  value=>[split][result][0].value
+                set=>[magix.emails.toggle-email][email-id].value
                   value=>[$][info].value
-                magix.emails.load-email
-                using=>magix.forms
-                  set-style
-                    form-id=>inbox-list
-                    id=>[$][id].value
-                    key=>font-weight
-                  set-info
-                    form-id=>inbox-list
-                    id=>[$][id].value
-                    value=>viewing-{0}
-                      =>[$][info].value
+                magix.emails.toggle-email
             label=>{from-}
               class=>span-6 email-item-from
               value=>&nbsp;
+              onclick
+                split=>[$][id].value
+                  what=>from-
+                set=>[magix.emails.toggle-email][id].value
+                  value=>[split][result][0].value
+                set=>[magix.emails.toggle-email][email-id].value
+                  value=>[$][info].value
+                magix.emails.toggle-email
             label=>{date-}
-              class=>span-3 last email-item-date
+              class=>span-3 email-item-date
+              value=>&nbsp;
+              onclick
+                split=>[$][id].value
+                  what=>date-
+                set=>[magix.emails.toggle-email][id].value
+                  value=>[split][result][0].value
+                set=>[magix.emails.toggle-email][email-id].value
+                  value=>[$][info].value
+                magix.emails.toggle-email
+            label=>{icons-}
+              class=>span-1 last
               value=>&nbsp;
             dynamic=>{dynamic-}
               class=>emails-sleeping-dynamic
-          set=>[@][_pnl][label=>{subject-}][info].value
+          set=>[@][_pnl][**label=>{subject-}][info].value
+            value=>[.][id].value
+          set=>[@][_pnl][**label=>{from-}][info].value
+            value=>[.][id].value
+          set=>[@][_pnl][**label=>{date-}][info].value
             value=>[.][id].value
           if=>not-equals
             lhs=>[.][value][read].value
             rhs=>true
             code
-              set=>[@][..][..][_pnl][label=>{subject-}][style].value
+              set=>[@][..][..][_pnl][**label=>{subject-}][style].value
                 value=>font-weight:bold;
           if=>not-equals
             lhs=>[.][value][subject].value
@@ -316,37 +311,52 @@ magix.forms.create-web-part
             code
               split=>[.][value][subject].value
                 where=>40
-              set=>[@][..][..][_pnl][label=>{subject-}][value].value
+              set=>[@][..][..][_pnl][**label=>{subject-}][value].value
                 value=>[@][split][result][0].value
               if=>more-than
                 lhs=>[@][split][result].count
                 rhs=>1
                 code
-                  set=>[@][..][..][..][..][_pnl][label=>{subject-}][title].value
+                  set=>[@][..][..][..][..][_pnl][**label=>{subject-}][title].value
                     value=>[.][value][subject].value
-                  set=>[@][..][..][..][..][_pnl][label=>{subject-}][value].value
+                  set=>[@][..][..][..][..][_pnl][**label=>{subject-}][value].value
                     value=>{0} ...
-                      =>[@][..][..][..][..][_pnl][label=>{subject-}][value].value
+                      =>[@][..][..][..][..][_pnl][**label=>{subject-}][value].value
           if=>equals
             lhs=>[.][value][from][display-name].value
             rhs=>
             or=>not-exist
               lhs=>[.][value][from][display-name]
             code
-              set=>[@][..][..][_pnl][label=>{from-}][value].value
+              set=>[@][..][..][_pnl][**label=>{from-}][value].value
+                value=>[.][value][from].value
+              set=>[@][..][..][_pnl][**label=>{from-}][title].value
                 value=>[.][value][from].value
           else
-            set=>[@][..][_pnl][label=>{from-}][value].value
+            set=>[@][..][_pnl][**label=>{from-}][value].value
               value=>[.][value][from][display-name].value
-            set=>[@][..][_pnl][label=>{from-}][title].value
-              value=>[.][value][from].value
+            set=>[@][..][_pnl][**label=>{from-}][title].value
+              value=>{0} &lt;{1}&gt;
+                =>[.][value][from][display-name].value
+                =>[.][value][from].value
+          if=>exist
+            lhs=>[.][value][attachments]
+            code
+              set=>[@][..][..][_pnl][**label=>{icons-}][class].value
+                value=>{0} email-has-attachments
+                  =>[@][..][..][_pnl][**label=>{icons-}][class].value
           using=>magix.date
             format
               date=>[.][value][date].value
               format=>g
               current-culture=>true
-          set=>[@][_pnl][**label=>{date-}][value].value
+          set=>[@][_pnl][**label=>{date-}][title].value
             value=>[@][using][format][value].value
+          using=>magix.date
+            format-offset
+              date=>[.][value][date].value
+          set=>[@][_pnl][**label=>{date-}][value].value
+            value=>[@][using:1][format-offset][value].value
           add=>[@][..][_pnl][panel][controls]
             values=>[@][_pnl]
         add=>[$]

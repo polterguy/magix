@@ -33,22 +33,47 @@ namespace Magix.email
         {
             MimeMessage msg = new MimeMessage();
             msg.Subject = Expressions.GetExpressionValue<string>(ip.GetValue("subject", "(no subject)"), dp, ip, false);
-            msg.From.Add(new MailboxAddress(ip["from"].GetValue("display-name", ""), ip["from"].Get<string>()));
+
+            string fromEmail = Expressions.GetExpressionValue<string>(ip["from"].Get<string>(), dp, ip, false);
+            string fromName = Expressions.GetExpressionValue<string>(ip["from"].GetValue("display-name", ""), dp, ip, false);
+            msg.From.Add(new MailboxAddress(fromName, fromEmail));
 
             if (ip.ContainsValue("reply-to"))
-                msg.ReplyTo.Add(new MailboxAddress(ip["reply-to"].GetValue("display-name", ""), ip.GetValue("reply-to", "")));
+            {
+                string replyToEmail = Expressions.GetExpressionValue<string>(ip["reply-to"].Get<string>(), dp, ip, false);
+                string replyToName = Expressions.GetExpressionValue<string>(ip["reply-to"].GetValue("display-name", ""), dp, ip, false);
+                msg.ReplyTo.Add(new MailboxAddress(replyToName, replyToEmail));
+            }
 
             if (ip.Contains("to"))
+            {
                 foreach (Node idxTo in ip["to"])
-                    msg.To.Add(new MailboxAddress(idxTo.GetValue("display-name", ""), idxTo.Get<string>()));
+                {
+                    string toEmail = Expressions.GetExpressionValue<string>(idxTo.Get<string>(), dp, ip, false);
+                    string toName = Expressions.GetExpressionValue<string>(idxTo.GetValue("display-name", ""), dp, ip, false);
+                    msg.To.Add(new MailboxAddress(toName, toEmail));
+                }
+            }
 
             if (ip.Contains("cc"))
-                foreach (Node idxCc in ip["cc"])
-                    msg.Cc.Add(new MailboxAddress(idxCc.GetValue("display-name", ""), idxCc.Get<string>()));
+            {
+                foreach (Node idxTo in ip["cc"])
+                {
+                    string toEmail = Expressions.GetExpressionValue<string>(idxTo.Get<string>(), dp, ip, false);
+                    string toName = Expressions.GetExpressionValue<string>(idxTo.GetValue("display-name", ""), dp, ip, false);
+                    msg.To.Add(new MailboxAddress(toName, toEmail));
+                }
+            }
 
             if (ip.Contains("bcc"))
-                foreach (Node idxBcc in ip["bcc"])
-                    msg.Bcc.Add(new MailboxAddress(idxBcc.GetValue("display-name", ""), idxBcc.Get<string>()));
+            {
+                foreach (Node idxTo in ip["bcc"])
+                {
+                    string toEmail = Expressions.GetExpressionValue<string>(idxTo.Get<string>(), dp, ip, false);
+                    string toName = Expressions.GetExpressionValue<string>(idxTo.GetValue("display-name", ""), dp, ip, false);
+                    msg.To.Add(new MailboxAddress(toName, toEmail));
+                }
+            }
 
             return msg;
         }
@@ -59,7 +84,7 @@ namespace Magix.email
         internal static MimeEntity BuildMessageBody(Node ip, Node dp)
         {
             BodyBuilder builder = new BodyBuilder();
-            BuildBody(ip, builder);
+            BuildBody(ip, dp, builder);
             BuildAttachments(ip, builder);
             return builder.ToMessageBody();
         }
@@ -130,14 +155,20 @@ namespace Magix.email
         /*
          * builds body of message
          */
-        private static void BuildBody(Node ip, BodyBuilder builder)
+        private static void BuildBody(Node ip, Node dp, BodyBuilder builder)
         {
             if (ip.Contains("body"))
             {
                 if (ip["body"].Contains("html"))
-                    builder.HtmlBody = ip["body"]["html"].Get<string>();
+                {
+                    string body = Expressions.GetExpressionValue<string>(ip["body"]["html"].Get<string>(), dp, ip, false);
+                    builder.HtmlBody = body;
+                }
                 if (ip["body"].Contains("plain"))
-                    builder.TextBody = ip["body"]["plain"].Get<string>();
+                {
+                    string body = Expressions.GetExpressionValue<string>(ip["body"]["plain"].Get<string>(), dp, ip, false);
+                    builder.TextBody = body;
+                }
             }
         }
 

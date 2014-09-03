@@ -26,15 +26,13 @@ iterate=>[magix.execute]
 
 magix.execute
   _controls
-    label
-      class=>span-17 last top-1 bottom-1
-      tag=>hr
     label=>reply-subject
       class=>span-17 last
       tag=>label
+      visible=>false
     text-area=>reply-body
       class=>span-17 last email-reply-body
-      rows=>25
+      rows=>15
       placeholder=>body ...
       onfirstload
         magix.forms.effect
@@ -58,12 +56,16 @@ magix.execute
             magix.forms.get-value=>subject
               form-id=>{reply-container}
               id=>reply-subject
+            add=>[using][send-message]
+              values=>[magix.data.load-username][value]
             using=>magix.smtp
-              send-email
-                to=>[magix.data.load][value][from].value
+              send-message
+                to
+                  =>[magix.data.load][value][from].value
                 from=>[magix.data.load-username][value][email].value
                 subject=>[magix.forms.get-value=>subject][value].value
-                body=>[magix.forms.get-value=>reply-body][value].value
+                body
+                  plain=>[magix.forms.get-value=>reply-body][value].value
             magix.viewport.show-message
               message=>email successfully sent
               color=>#aaffaa
