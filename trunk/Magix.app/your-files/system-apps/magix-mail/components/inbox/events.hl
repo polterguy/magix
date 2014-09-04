@@ -130,6 +130,8 @@ magix.emails.load-email
       set=>[_controls][panel=>attachments]
     set=>[_controls][**button=>reply][info].value
       value=>[$][email-id].value
+    set=>[_controls][**button=>delete][info].value
+      value=>[$][email-id].value
     _controls
       panel=>email-content
         class=>span-17 last email-content-body
@@ -172,13 +174,69 @@ magix.emails.load-email
                   =>[$][container].value
               execute-script
                 file=>your-files/system-apps/magix-mail/components/reply/reply-web-part.hl
-          button
+          button=>delete
             class=>span-2 last
             value=>delete
+            onfirstload
+              magix.viewstate.get
+                id=>magix.emails.current-view
+              if=>equals
+                lhs=>[magix.viewstate.get][value][mailbox].value
+                rhs=>trash
+                code
+                  magix.forms.set-value
+                    form-id=>inbox
+                    id=>delete
+                    value=>un-delete
+            onclick
+              magix.viewstate.get
+                id=>magix.emails.current-view
+              if=>equals
+                lhs=>[magix.viewstate.get][value][mailbox].value
+                rhs=>trash
+                code
+
+                  // we're in trashcan, undeleting email
+                  using=>magix.data
+                    load
+                      id=>[$][info].value
+                  set=>[@][using][load][value][folder].value
+                    value=>inbox
+                  using=>magix.data
+                    save
+                      id=>[$][info].value
+                      value=>[@][..][using][load][value]
+                  magix.viewport.show-message
+                    message=>message was moved to inbox
+                    time=>1000
+                  execute-script
+                    file=>your-files/system-apps/magix-mail/components/inbox/show-emails.hl
+                    params
+                      frozen=>true
+              else
+
+                // we're in inbox, deleting message
+                using=>magix.data
+                  load
+                    id=>[$][info].value
+                set=>[@][using][load][value][folder].value
+                  value=>trash
+                using=>magix.data
+                  save
+                    id=>[$][info].value
+                    value=>[@][..][using][load][value]
+                magix.viewport.show-message
+                  message=>message was moved to trash
+                  time=>1000
+                execute-script
+                  file=>your-files/system-apps/magix-mail/components/inbox/show-emails.hl
+                  params
+                    frozen=>true
       dynamic=>{reply-container}
     using=>magix.forms
       create-web-part
         container=>{container}
         class=>span-15 last email-item-body bottom-3 top-1
         controls=>[_controls]
+    magix.email.update-unread-email-count
 

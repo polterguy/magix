@@ -46,6 +46,40 @@ if=>exist
     set=>[_search].value
       value=>[$][search].value
 
+if=>equals
+  lhs=>[$][frozen].value
+  rhs=>true
+  code
+
+    // retrieving and using last view
+    magix.viewstate.get
+      id=>magix.emails.current-view
+    set=>[_start].value
+      value=>[@][magix.viewstate.get][value][start].value
+    set=>[_end].value
+      value=>[@][magix.viewstate.get][value][end].value
+    set=>[_count].value
+      value=>[@][magix.viewstate.get][value][count].value
+    set=>[_search].value
+      value=>[@][magix.viewstate.get][value][search].value
+    set=>[_mailbox].value
+      value=>[@][magix.viewstate.get][value][mailbox].value
+else
+
+  // storing last view for future references
+  set=>[@][magix.viewstate.set][value][start].value
+    value=>[_start].value
+  set=>[@][magix.viewstate.set][value][end].value
+    value=>[_end].value
+  set=>[@][magix.viewstate.set][value][count].value
+    value=>[_count].value
+  set=>[@][magix.viewstate.set][value][search].value
+    value=>[_search].value
+  set=>[@][magix.viewstate.set][value][mailbox].value
+    value=>[_mailbox].value
+  magix.viewstate.set
+    id=>magix.emails.current-view
+
 iterate=>[magix.forms.create-web-part]
   if=>equals
     lhs=>[.].value
@@ -101,7 +135,8 @@ magix.forms.create-web-part
           set-value
             form-id=>inbox-list
             id=>inbox-header
-            value=>inbox ({0})
+            value=>{0} ({1})
+              =>{mailbox}
               =>[magix.viewstate.get][value].value
     panel
       class=>span-9 last btn-group email-search-bar
@@ -348,7 +383,7 @@ magix.forms.create-web-part
           using=>magix.date
             format
               date=>[.][value][date].value
-              format=>g
+              format=>F
               current-culture=>true
           set=>[@][_pnl][**label=>{date-}][title].value
             value=>[@][using][format][value].value

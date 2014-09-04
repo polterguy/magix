@@ -14,12 +14,20 @@ label
 link-button=>inbox-link
   class=>span-2 last
   value=>inbox
+  onfirstload
+    magix.email.update-unread-email-count
   onclick
     magix.email.inbox-clicked
 
+link-button=>trash-link
+  class=>span-2 last
+  value=>trash
+  onclick
+    magix.email.trash-clicked
+
 link-button=>settings-link
-  class=>span-2 last top-1
-  value=>settings ...
+  class=>span-2 last
+  value=>settings
   onclick
     magix.email.settings-clicked
 
