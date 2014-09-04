@@ -12,6 +12,14 @@ magix.email.inbox-clicked
     file=>your-files/system-apps/magix-mail/components/inbox/show-emails.hl
 
 
+// trash link was clicked, making sure we show all emails in trashcan
+magix.email.trash-clicked
+  execute-script
+    file=>your-files/system-apps/magix-mail/components/inbox/show-emails.hl
+    params
+      mailbox=>trash
+
+
 // invoked when settings link is clicked.  show settings form, and make sure inbox is shown after settings is canceled or saved
 magix.email.settings-clicked
   execute-script
@@ -45,21 +53,7 @@ magix.email.check-for-new-emails
     case=>fetching
 
       // email retriever is still fetching emails from pop3 server
-      if=>exist
-        lhs=>[execute-script][params][server-count]
-        code
-          set=>[@][..][..][magix.email.update-unread-email-count][server-count].value
-            value=>[execute-script][params][server-count].value
-      if=>exist
-        lhs=>[execute-script][params][download-count]
-        code
-          set=>[@][..][..][magix.email.update-unread-email-count][download-count].value
-            value=>[execute-script][params][download-count].value
       magix.email.update-unread-email-count
-
-      // shoving visual clues to user that emails are being fetched
-      magix.email.show-visual-clue-fetching-emails
-        show-clue=>true
 
     case=>finished
 
@@ -69,14 +63,8 @@ magix.email.check-for-new-emails
         code
           set=>[@][..][..][magix.email.new-messages-downloaded][download-count].value
             value=>[execute-script][params][download-count].value
-          set=>[@][..][..][magix.email.update-unread-email-count][download-count].value
-            value=>[execute-script][params][download-count].value
       magix.email.update-unread-email-count
       magix.email.new-messages-downloaded
-
-      // removing visual clues for that we're currently fetching emails
-      magix.email.show-visual-clue-fetching-emails
-        show-clue=>false
 
     case=>error
 
@@ -87,10 +75,6 @@ magix.email.check-for-new-emails
             =>[execute-script][params][error].value
           time=>10000
           color=>#ffaaaa
-
-      // removing visual clues for that we're currently fetching emails
-      magix.email.show-visual-clue-fetching-emails
-        show-clue=>false
 
     default
 
@@ -106,61 +90,17 @@ magix.email.new-messages-downloaded
       color=>#aaffaa
 
 
-// updates number of new emails visual clues to user, expects [server-count] and [download-count]
+// updates number of new emails visual clues to user
 magix.email.update-unread-email-count
-
-
-// changes visual clues on inbox link to indicate whether or not we're fetching emails or not
-magix.email.show-visual-clue-fetching-emails
-
-  magix.forms.get-class
-    form-id=>inbox
-    id=>inbox-link
-
-  // checking to see if we're supposed to show visual clues or hide them
-  if=>equals
-    lhs=>[$][show-clue].value
-    rhs=>true
-    code
-
-      // we're supposed to show visual clues.  but first we must check to see if visual clues already are visible
-      index-of=>[magix.forms.get-class][value].value
-        what=>animate-visual-clue
-
-      if=>not-exist
-        lhs=>[@][index-of][result]
-        code
-
-          // css class giving visual clues that we're fetching emails is not on, therefor we turn it on
-          using=>magix.forms
-            set-title
-              form-id=>inbox
-              id=>inbox-link
-              value=>fetching emails from your email server
-            set-class
-              form-id=>inbox
-              id=>inbox-link
-              value=>{0} animate-visual-clue
-                =>[magix.forms.get-class][value].value
-  else
-
-    // we're supposed to remove visual clues.  but first we must check to see if visual clues are on or off
-    index-of=>[magix.forms.get-class][value].value
-      what=>animate-visual-clue
-
-    if=>exist
-      lhs=>[@][index-of][result]
-      code
-
-        // css class giving visual clues that we're fetching emails is on, therefor we turn it off
-        replace=>[magix.forms.get-class][value].value
-          what=>@" animate-visual-clue"
-        using=>magix.forms
-          set-title
-            form-id=>inbox
-            id=>inbox-link
-          set-class
-            form-id=>inbox
-            id=>inbox-link
-            value=>[magix.forms.get-class][value].value
+  magix.data.count
+    prototype
+      type=>magix.email.message
+      folder=>inbox
+      read=>false
+  using=>magix.forms
+    set-value
+      form-id=>inbox
+      id=>inbox-link
+      value=>inbox ({0})
+        =>[magix.data.count][count].value
 
