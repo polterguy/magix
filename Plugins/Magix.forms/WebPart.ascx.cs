@@ -359,7 +359,7 @@ to the value in [mml]";
 			{
                 string id = Expressions.GetFormattedExpression("id", e.Params, null);
                 Control ctrl = Selector.FindControl<Control>(
-                    this.Parent.Parent /* to include viewport itself */, 
+                    this.Parent /* to include viewport itself */, 
                     id);
                 if (ctrl != null)
                     ip["_ctrl"].Value = ctrl;

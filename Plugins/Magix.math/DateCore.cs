@@ -109,27 +109,27 @@ namespace Magix.date
             if (date < DateTime.Now)
             {
                 TimeSpan span = DateTime.Now - date;
-                if (span.TotalDays > 730)
+                if (span.TotalDays >= 730)
                     ip["value"].Value = string.Format("{0} years ago", (int)(span.TotalDays / 365));
-                else if (span.TotalDays > 365)
+                else if (span.TotalDays >= 365)
                     ip["value"].Value = "1 year ago";
-                else if (span.TotalDays > 62)
+                else if (span.TotalDays >= 62)
                     ip["value"].Value = string.Format("{0} months ago", (int)(span.TotalDays / 30));
-                else if (span.TotalDays > 31)
+                else if (span.TotalDays >= 31)
                     ip["value"].Value = "1 month ago";
-                else if (span.TotalDays > 13)
+                else if (span.TotalDays >= 14)
                     ip["value"].Value = string.Format("{0} weeks ago", (int)(span.TotalDays / 7));
-                else if (span.TotalDays > 7)
+                else if (span.TotalDays >= 7)
                     ip["value"].Value = "1 week ago";
-                else if (span.TotalHours > 47)
+                else if (span.TotalHours >= 48)
                     ip["value"].Value = string.Format("{0} days ago", (int)(span.TotalHours / 24));
-                else if (span.TotalHours > 24)
+                else if (span.TotalHours >= 24)
                     ip["value"].Value = "1 day ago";
-                else if (span.TotalMinutes > 119)
+                else if (span.TotalMinutes >= 120)
                     ip["value"].Value = string.Format("{0} hours ago", (int)(span.TotalMinutes / 60));
-                else if (span.TotalMinutes > 60)
+                else if (span.TotalMinutes >= 60)
                     ip["value"].Value = "1 hour ago";
-                else if (span.TotalMinutes > 5)
+                else if (span.TotalMinutes >= 5)
                     ip["value"].Value = string.Format("{0} minutes ago", (int)span.TotalMinutes);
                 else
                     ip["value"].Value = "just now";
@@ -137,27 +137,27 @@ namespace Magix.date
             else
             {
                 TimeSpan span = date - DateTime.Now;
-                if (span.TotalDays > 730)
+                if (span.TotalDays >= 730)
                     ip["value"].Value = string.Format("{0} years from now", (int)(span.TotalDays / 365));
-                else if (span.TotalDays > 365)
+                else if (span.TotalDays >= 365)
                     ip["value"].Value = "1 year from now";
-                else if (span.TotalDays > 62)
+                else if (span.TotalDays >= 62)
                     ip["value"].Value = string.Format("{0} months from now", (int)(span.TotalDays / 30));
-                else if (span.TotalDays > 31)
+                else if (span.TotalDays >= 31)
                     ip["value"].Value = "1 month from now";
-                else if (span.TotalDays > 13)
+                else if (span.TotalDays >= 14)
                     ip["value"].Value = string.Format("{0} weeks from now", (int)(span.TotalDays / 7));
-                else if (span.TotalDays > 7)
+                else if (span.TotalDays >= 7)
                     ip["value"].Value = "1 week from now";
-                else if (span.TotalHours > 47)
+                else if (span.TotalHours >= 48)
                     ip["value"].Value = string.Format("{0} days from now", (int)(span.TotalHours / 24));
-                else if (span.TotalHours > 24)
+                else if (span.TotalHours >= 24)
                     ip["value"].Value = "1 day from now";
-                else if (span.TotalMinutes > 119)
+                else if (span.TotalMinutes >= 120)
                     ip["value"].Value = string.Format("{0} hours from now", (int)(span.TotalMinutes / 60));
-                else if (span.TotalMinutes > 60)
+                else if (span.TotalMinutes >= 60)
                     ip["value"].Value = "1 hour from now";
-                else if (span.TotalMinutes > 5)
+                else if (span.TotalMinutes >= 5)
                     ip["value"].Value = string.Format("{0} minutes from now", (int)span.TotalMinutes);
                 else
                     ip["value"].Value = "now";

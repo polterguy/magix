@@ -1,0 +1,265 @@
+﻿
+
+inspect=>@"creates the show contacts web part
+
+creates the show contacts web part in content3.  loads contacts 
+from database and displays as a grid to the user
+
+also makes it possible to search and page back and forth between 
+contacts
+
+takes [start], and [search] as parameters which informs the 
+file where to start showing contacts"
+
+
+_start=>0
+_end=>25
+_count=>25
+_search=>
+
+if=>exist
+  lhs=>[$][start]
+  code
+    set=>[_start].value
+      value=>[$][start].value
+    set=>[_end].value
+      value=>[$][end].value
+    using=>magix.math
+      subtract=>[_count]
+        =>[_end].value
+        =>[_start].value
+
+if=>exist
+  lhs=>[$][search]
+  code
+    set=>[_search].value
+      value=>[$][search].value
+
+iterate=>[magix.forms.create-web-part]
+  if=>equals
+    lhs=>[.].value
+    rhs=>{contacts-start}
+    code
+      set=>[.].value
+        value=>[/][_start].value
+  else-if=>equals
+    lhs=>[.].value
+    rhs=>{contacts-end}
+    code
+      set=>[.].value
+        value=>[/][_end].value
+  else-if=>equals
+    lhs=>[.].value
+    rhs=>{contacts-count}
+    code
+      set=>[.].value
+        value=>[/][_count].value
+  else-if=>equals
+    lhs=>[.].value
+    rhs=>{contacts-search}
+    code
+      set=>[.].value
+        value=>[/][_search].value
+
+if=>equals
+  lhs=>[_start].value
+  rhs=>0
+  code
+    set=>[**button=>previous-emails][disabled].value
+      value=>true
+
+magix.forms.create-web-part
+  container=>content3
+  class=>span-18 last boxed air-padding bottom-1
+  form-id=>contacts-list
+  events-file=>your-files/system-apps/magix-mail/components/contacts/events.hl
+  controls
+    label=>contacts-header
+      class=>span-9 bottom-1
+      tag=>h3
+      onfirstload
+        magix.viewstate.get
+          id=>magix.email.contacts-count
+        using=>magix.forms
+          set-value
+            form-id=>contacts-list
+            id=>contacts-header
+            value=>contacts ({0})
+              =>[magix.viewstate.get][value].value
+    panel
+      class=>span-9 last btn-group email-search-bar
+      controls
+        button=>previous-contacts
+          class=>span-2
+          value=><
+          onclick
+            _start=>{contacts-start}
+            _end=>{contacts-end}
+            _count=>{contacts-count}
+            using=>magix.math
+              subtract=>[_start]
+                =>[_start].value
+                =>[_count].value
+              subtract=>[_end]
+                =>[_end].value
+                =>[_count].value
+            set=>[execute-script][params][start].value
+              value=>[_start].value
+            set=>[execute-script][params][end].value
+              value=>[_end].value
+            execute-script
+              file=>your-files/system-apps/magix-mail/components/contacts/show-contacts.hl
+              params
+                search=>{contacts-search}
+        text-box=>search-contacts
+          class=>span-5
+          placeholder=>search ...
+          value=>{contacts-search}
+          onenterpressed
+            set=>[execute-script][params][search].value
+              value=>[$][value].value
+            execute-script
+              file=>your-files/system-apps/magix-mail/components/contacts/show-contacts.hl
+        button=>next-contacts
+          class=>span-2 last
+          value=>>
+          onclick
+            _start=>{contacts-start}
+            _end=>{contacts-end}
+            _count=>{contacts-count}
+            using=>magix.math
+              add=>[_start]
+                =>[_start].value
+                =>[_count].value
+              add=>[_end]
+                =>[_end].value
+                =>[_count].value
+            set=>[execute-script][params][start].value
+              value=>[_start].value
+            set=>[execute-script][params][end].value
+              value=>[_end].value
+            execute-script
+              file=>your-files/system-apps/magix-mail/components/contacts/show-contacts.hl
+              params
+                search=>{contacts-search}
+    lambda=>list-of-contacts
+      oncreatecontrols
+        magix.data.load=>load-contacts
+          prototype
+            type=>magix.email.contact
+
+        // removing contacts not matching search criteria, if any criteria is given
+        _search=>{contacts-search}
+        if=>not-equals
+          lhs=>[@][_search].value
+          rhs=>
+          code
+            for-each=>[magix.data.load=>load-contacts][objects]
+
+              // doing search through all fields
+              index-of=>[.][value][display-name].value
+                what=>[/][_search].value
+                case=>false
+              if=>not-exist
+                lhs=>[@][index-of][result]
+                code
+                  index-of=>[.][value][email].value
+                    what=>[/][_search].value
+                    case=>false
+                  if=>not-exist
+                    lhs=>[@][index-of][result]
+                    code
+                      index-of=>[.][value][description].value
+                        what=>[/][_search].value
+                        case=>false
+                      if=>not-exist
+                        lhs=>[@][index-of][result]
+                        code
+                          // removing item since it didn't match search criteria on any of the searchable fields
+                          set=>[.]
+
+        // sorting contacts according to email address
+        sort=>[magix.data.load=>load-contacts][objects]
+          if=>less-than
+            lhs=>[@][_first][0][value][email].value
+            rhs=>[@][_second][0][value][email].value
+            code
+              set=>[@][..][..][_second]
+          else-if=>more-than
+            lhs=>[@][_first][0][value][email].value
+            rhs=>[@][_second][0][value][email].value
+            code
+              set=>[@][..][..][_first]
+
+        // settings view count for later references
+        set=>[@][magix.viewstate.set][value].value
+          value=>[magix.data.load=>load-contacts][objects].count
+        magix.viewstate.set
+          id=>magix.email.contacts-count
+
+        // removing all contacts but the 25 contacts we're supposed to see from the list of emails
+        _objects
+        while=>less-than
+          lhs=>[_objects].count
+          rhs=>{contacts-count}
+          and=>more-than
+            lhs=>[magix.data.load=>load-contacts][objects].count
+            rhs=>{contacts-start}
+          code
+            _start=>{contacts-start}
+            add=>[_objects]
+              value=>[magix.data.load=>load-contacts][objects][[@][_start].value]
+            set=>[magix.data.load=>load-contacts][objects][[@][_start].value]
+        set=>[magix.data.load=>load-contacts][objects]
+        add=>[magix.data.load=>load-contacts][objects]
+          values=>[_objects]
+        _pnl
+          panel
+            class=>span-18 last
+            controls
+        for-each=>[magix.data.load][objects]
+          _pnl
+            hidden=>{viewing-}
+              value=>false
+            label=>{email-}
+              class=>span-9 email-contact-email last
+              onclick
+                split=>[$][id].value
+                  what=>email-
+                set=>[magix.emails.toggle-contact][id].value
+                  value=>[split][result][0].value
+                set=>[magix.emails.toggle-contact][contact-id].value
+                  value=>[$][info].value
+                magix.emails.toggle-contact
+            label=>{name-}
+              value=>&nbsp;
+              class=>span-9 email-contact-name
+              onclick
+                split=>[$][id].value
+                  what=>name-
+                set=>[magix.emails.toggle-contact][id].value
+                  value=>[split][result][0].value
+                set=>[magix.emails.toggle-contact][contact-id].value
+                  value=>[$][info].value
+                magix.emails.toggle-contact
+            dynamic=>{dynamic-}
+              class=>contact-sleeping-dynamic
+          if=>not-equals
+            lhs=>[.][value][display-name].value
+            rhs=>
+            and=>exist
+              lhs=>[.][value][display-name].value
+            code
+              set=>[@][..][..][_pnl][**label=>{name-}][value].value
+                value=>[.][value][display-name].value
+          set=>[@][_pnl][**label=>{name-}][info].value
+            value=>[.][id].value
+          set=>[@][_pnl][**label=>{email-}][value].value
+            value=>[.][value][email].value
+          set=>[@][_pnl][**label=>{email-}][info].value
+            value=>[.][id].value
+          add=>[@][..][_pnl][panel][controls]
+            values=>[@][_pnl]
+        add=>[$]
+          values=>[@][_pnl]
+

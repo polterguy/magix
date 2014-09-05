@@ -11,6 +11,12 @@ label
   tag=>h3
   value=>menu
 
+link-button=>contacts-link
+  class=>span-2 last
+  value=>contacts
+  onclick
+    magix.email.contacts-clicked
+
 link-button=>inbox-link
   class=>span-2 last
   value=>inbox
@@ -19,6 +25,12 @@ link-button=>inbox-link
   onclick
     magix.email.inbox-clicked
 
+link-button=>sent-link
+  class=>span-2 last
+  value=>sent
+  onclick
+    magix.email.sent-clicked
+
 link-button=>trash-link
   class=>span-2 last
   value=>trash
@@ -26,7 +38,7 @@ link-button=>trash-link
     magix.email.trash-clicked
 
 link-button=>settings-link
-  class=>span-2 last
+  class=>span-2 last top-1
   value=>settings
   onclick
     magix.email.settings-clicked

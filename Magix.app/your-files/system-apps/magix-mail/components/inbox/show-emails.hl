@@ -121,7 +121,7 @@ if=>equals
 
 magix.forms.create-web-part
   container=>content3
-  class=>span-18 last boxed air-padding bottom-5
+  class=>span-18 last boxed air-padding bottom-1
   form-id=>inbox-list
   events-file=>your-files/system-apps/magix-mail/components/inbox/events.hl
   controls
@@ -172,6 +172,8 @@ magix.forms.create-web-part
               value=>[$][value].value
             execute-script
               file=>your-files/system-apps/magix-mail/components/inbox/show-emails.hl
+              params
+                mailbox=>{mailbox}
         button=>next-emails
           class=>span-2 last
           value=>>
