@@ -132,6 +132,21 @@ magix.emails.load-email
       value=>[$][email-id].value
     set=>[_controls][**button=>delete][info].value
       value=>[$][email-id].value
+    magix.viewstate.get
+      id=>magix.emails.current-view
+    if=>equals
+      lhs=>[@][magix.viewstate.get][value][mailbox].value
+      rhs=>trash
+      code
+        set=>[**button=>reply]
+        set=>[**panel=>btn-group][class].value
+          value=>span-2 last right clear
+    else-if=>equals
+      lhs=>[@][magix.viewstate.get][value][mailbox].value
+      rhs=>sent
+      code
+        set=>[**button=>reply]
+        set=>[**button=>delete]
     _controls
       panel=>email-content
         class=>span-17 last email-content-body
@@ -149,7 +164,7 @@ magix.emails.load-email
             class=>span-7 last
             tag=>label
             value=>attachments
-      panel
+      panel=>btn-group
         class=>btn-group span-4 last right clear
         controls
           button=>reply
@@ -236,7 +251,7 @@ magix.emails.load-email
     using=>magix.forms
       create-web-part
         container=>{container}
-        class=>span-15 last email-item-body bottom-3 top-1
+        class=>span-18 last email-item-body bottom-1 top-1
         controls=>[_controls]
     magix.email.update-unread-email-count
 

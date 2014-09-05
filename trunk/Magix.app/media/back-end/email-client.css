@@ -110,13 +110,20 @@
     width:100%;
 }
 
+.emails-sleeping-dynamic:last-child
+{
+    border-top:0 none;
+    float:left;
+    width:100%;
+}
+
 .email-item-body
 {
     background-color:#fefefe;
     box-shadow:3px 3px 5px rgba(0,0,0,1);
     padding:18px 40px;
     width:auto;
-    margin-left:-30px;
+    margin-left:-20px;
 }
 
 .email-content-body
@@ -139,3 +146,55 @@
 .email-reply-body
 {
 }
+
+.email-contact-email
+{
+    cursor:pointer;
+    white-space:nowrap;
+    overflow-x:hidden;
+}
+
+.email-contact-name
+{
+    cursor:pointer;
+    white-space:nowrap;
+    overflow-x:hidden;
+}
+
+.contact-sleeping-dynamic
+{
+    border-top:1px solid #d0d0d0;
+    float:left;
+    width:100%;
+}
+
+.contact-sleeping-dynamic:last-child
+{
+    border-top:0 none;
+    float:left;
+    width:100%;
+}
+
+.contact-item-body
+{
+    background-color:#fefefe;
+    box-shadow:3px 3px 5px rgba(0,0,0,1);
+    padding:18px 40px;
+    width:auto;
+    margin-left:-20px;
+    margin-right:-20px;
+}
+
+.contact-date
+{
+    color:#cccccc;
+    font-style:italic;
+}
+
+.contact-description
+{
+    font-style:italic;
+    color:#cccccc;
+    white-space:pre;
+}
+

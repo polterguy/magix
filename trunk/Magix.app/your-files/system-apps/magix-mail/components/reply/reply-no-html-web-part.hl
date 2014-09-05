@@ -58,10 +58,32 @@ magix.execute
               id=>reply-subject
             add=>[using][send-message]
               values=>[magix.data.load-username][value]
+
+            // saving sent email
+            set=>[magix.data.save][value][username].value
+              value=>[magix.data.load][value][username].value
+            set=>[magix.data.save][value][from].value
+              value=>[magix.data.load-username][value][email].value
+            set=>[magix.data.save][value][date].value
+              value=>[:magix.date.now][value].value
+            set=>[magix.data.save][value][to][].value
+              value=>[magix.data.load][value][from].value
+            set=>[magix.data.save][value][to][][display-name].value
+              value=>[magix.data.load][value][from][display-name].value
+            set=>[magix.data.save][value][subject].value
+              value=>[magix.forms.get-value=>subject][value].value
+            set=>[magix.data.save][value][body][plain].value
+              value=>[magix.forms.get-value=>reply-body][value].value
+            magix.data.save
+              value
+                type=>magix.email.message
+                read=>true
+                folder=>sent
             using=>magix.smtp
               send-message
                 to
                   =>[magix.data.load][value][from].value
+                    display-name=>[magix.data.load][value][from][display-name].value
                 from=>[magix.data.load-username][value][email].value
                 subject=>[magix.forms.get-value=>subject][value].value
                 body

@@ -12,8 +12,33 @@ event
 
 will filter emails and put them into the right folder 
 according to user's settings.  current version simply 
-marks all emails as belonging to 'inbox'"
+marks all emails as belonging to 'inbox'
+
+will also extract all email addresses from email and add 
+to contacts as emails"
   code
     set=>[$][email][folder].value
       value=>inbox
+
+    // adding sender to contacts if he's not there already
+    set=>[magix.data.count][prototype][email].value
+      value=>[$][email][from].value
+    magix.data.count
+      prototype
+        type=>magix.email.contact
+    if=>equals
+      lhs=>[magix.data.count][count].value
+      rhs=>0
+      code
+        // sender is not in contact list, adding him or her up
+        set=>[@][magix.data.save][value][email].value
+          value=>[$][email][from].value
+        if=>exist
+          lhs=>[$][email][from][display-name]
+          code
+            set=>[@][..][..][magix.data.save][value][display-name].value
+              value=>[$][email][from][display-name].value
+        magix.data.save
+          value
+            type=>magix.email.contact
 

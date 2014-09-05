@@ -52,6 +52,3 @@ set=>[@][execute-script][params][email-id].value
 execute-script
   file=>your-files/system-apps/magix-mail/components/reply/reply-no-html-web-part.hl
 
-
-
-
