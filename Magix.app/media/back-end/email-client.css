@@ -124,11 +124,39 @@
     padding:18px 40px;
     width:auto;
     margin-left:-20px;
+    position:relative;
 }
 
 .email-content-body
 {
     width:auto;
+    min-width:660px;
+}
+
+.email-content-close
+{
+    position:absolute;
+    top:9px;
+    right:9px;
+    text-align:right;
+    color:#9999ff;
+}
+
+.email-sent-to
+{
+}
+
+.email-sent-to-item
+{
+    border-radius:9px;
+    border:1px solid rgba(0,0,0,.1);
+    display:block;
+    float:left;
+    padding-left:10px;
+    padding-right:10px;
+    padding-top:-1px;
+    padding-bottom:-1px;
+    margin-right:10px;
 }
 
 .email-content-body-body

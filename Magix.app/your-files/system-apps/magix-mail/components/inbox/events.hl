@@ -147,15 +147,125 @@ magix.emails.load-email
       code
         set=>[**button=>reply]
         set=>[**button=>delete]
+    for-each=>[using][load][value][to]
+      _lb
+        label
+          class=>email-sent-to-item
+      if=>exist
+        lhs=>[.][display-name]
+        code
+          set=>[@][..][..][_lb][label][value].value
+            value=>{0} &lt;{1}&gt;
+              =>[.][display-name].value
+              =>[.].value
+      else
+        set=>[@][..][_lb][label][value].value
+          value=>{0}
+            =>[.].value
+      add=>[@][..][_controls][**panel=>email-to][controls][panel][controls]
+        values=>[@][_lb]
+    if=>exist
+      lhs=>[using][load][value][cc]
+      code
+        for-each=>[using][load][value][cc]
+          _lb
+            label
+              class=>email-sent-to-item
+          if=>exist
+            lhs=>[.][display-name]
+            code
+              set=>[@][..][..][_lb][label][value].value
+                value=>{0} &lt;{1}&gt;
+                  =>[.][display-name].value
+                  =>[.].value
+          else
+            set=>[@][..][_lb][label][value].value
+              value=>{0}
+                =>[.].value
+          add=>[@][..][..][..][_controls][**panel=>email-cc][controls][panel][controls]
+            values=>[@][_lb]
+    else
+      set=>[@][..][_controls][**panel=>email-cc]
+    if=>exist
+      lhs=>[using][load][value][bcc]
+      code
+        for-each=>[using][load][value][bcc]
+          _lb
+            label
+              class=>email-sent-to-item
+          if=>exist
+            lhs=>[.][display-name]
+            code
+              set=>[@][..][..][_lb][label][value].value
+                value=>{0} &lt;{1}&gt;
+                  =>[.][display-name].value
+                  =>[.].value
+          else
+            set=>[@][..][_lb][label][value].value
+              value=>{0}
+                =>[.].value
+          add=>[@][..][..][..][_controls][**panel=>email-bcc][controls][panel][controls]
+            values=>[@][_lb]
+    else
+      set=>[@][..][_controls][**panel=>email-bcc]
     _controls
       panel=>email-content
-        class=>span-17 last email-content-body
+        class=>span-16 email-content-body
         controls
           label=>email-header
-            class=>span-17 last bottom-1
+            class=>span-15 last bottom-1
             tag=>h3
+          link-button=>close-email
+            class=>span-1 email-content-close
+            value=>X
+            onclick
+              // "unviewing" email
+              replace=>[$][container].value
+                what=>dynamic-
+              using=>magix.forms
+                set-value
+                  form-id=>inbox-list
+                  id=>viewing-{0}
+                    =>[$][container].value
+                  value=>false
+              set=>[@][magix.viewport.clear-controls][container].value
+                value=>dynamic-{0}
+                  =>[$][container].value
+              magix.viewport.clear-controls
+                reset-class
+                  new-class=>emails-sleeping-dynamic
+          panel=>email-to
+            class=>span-17 last email-sent-to
+            controls
+              label
+                class=>span-1
+                tag=>label
+                value=>to:
+              panel
+                class=>span-16 last
+                controls
+          panel=>email-cc
+            class=>span-17 last email-sent-to
+            controls
+              label
+                class=>span-1
+                tag=>label
+                value=>cc:
+              panel
+                class=>span-16 last
+                controls
+          panel=>email-bcc
+            class=>span-17 last email-sent-to
+            controls
+              label
+                class=>span-1
+                tag=>label
+                value=>bcc:
+              panel
+                class=>span-16 last
+                controls
           label=>body
-            class=>clear last email-content-body-body
+            class=>clear last email-content-body-body top-1 column
             tag=>div
       panel=>attachments
         class=>span-7 clear email-attachments
@@ -200,7 +310,7 @@ magix.emails.load-email
                 rhs=>trash
                 code
                   magix.forms.set-value
-                    form-id=>inbox
+                    form-id=>{container}
                     id=>delete
                     value=>un-delete
             onclick
@@ -251,6 +361,7 @@ magix.emails.load-email
     using=>magix.forms
       create-web-part
         container=>{container}
+        form-id=>{container}
         class=>span-18 last email-item-body bottom-1 top-1
         controls=>[_controls]
     magix.email.update-unread-email-count

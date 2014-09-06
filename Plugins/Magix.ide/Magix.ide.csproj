@@ -85,8 +85,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="modules\ConsoleLogger.ascx">
-      <SubType>ASPXCodeBehind</SubType>
-    </EmbeddedResource>
+    <EmbeddedResource Include="modules\ConsoleLogger.ascx" />
   </ItemGroup>
 </Project>
