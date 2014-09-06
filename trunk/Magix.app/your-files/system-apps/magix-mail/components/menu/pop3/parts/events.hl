@@ -6,6 +6,11 @@ contains the menu parts events definition file of the
 magix mail application"
 
 
+// compose new email link clicked
+magix.email.compose-clicked
+  debug
+
+
 // inbox link was clicked, making sure we show all emails in inbox
 magix.email.inbox-clicked
   execute-script

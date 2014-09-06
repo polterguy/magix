@@ -11,11 +11,11 @@ label
   tag=>h3
   value=>menu
 
-link-button=>contacts-link
+link-button=>compose-link
   class=>span-2 last
-  value=>contacts
+  value=>compose
   onclick
-    magix.email.contacts-clicked
+    magix.email.compose-clicked
 
 link-button=>inbox-link
   class=>span-2 last
@@ -24,6 +24,12 @@ link-button=>inbox-link
     magix.email.update-unread-email-count
   onclick
     magix.email.inbox-clicked
+
+link-button=>contacts-link
+  class=>span-2 last
+  value=>contacts
+  onclick
+    magix.email.contacts-clicked
 
 link-button=>sent-link
   class=>span-2 last
