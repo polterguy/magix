@@ -181,7 +181,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349C5851-65DF-11DA-9384-00065B846F21}">
         <WebProjectProperties>
-          <UseIIS>False</UseIIS>
+          <UseIIS>True</UseIIS>
           <AutoAssignPort>False</AutoAssignPort>
           <DevelopmentServerPort>8080</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
@@ -499,6 +499,8 @@
     <Content Include="your-files\system-apps\magix-mail\components\workers\pop3\retriever-thread.hl" />
     <Content Include="your-files\system-apps\magix-mail\components\contacts\show-contacts.hl" />
     <Content Include="your-files\system-apps\magix-mail\components\contacts\events.hl" />
+    <Content Include="your-files\system-apps\magix-mail\components\composer\compose.hl" />
+    <Content Include="your-files\system-apps\magix-mail\components\composer\events.hl" />
     <None Include="your-files\web.config" />
     <Content Include="your-files\web-parts\samples\simple\leave-comment.hl" />
     <Content Include="your-files\web-parts\samples\complex\rate-wine.hl" />

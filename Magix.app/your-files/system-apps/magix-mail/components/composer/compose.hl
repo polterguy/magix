@@ -1,0 +1,73 @@
+﻿
+
+inspect=>@"creates the compose email web part
+
+creates the compose email web part in content3"
+
+
+// cleaning out recipients
+magix.viewstate.set
+  id=>magix.email.recipients
+
+// including css file
+magix.viewport.include-client-file
+  type=>css
+  file=>media/back-end/wysihtml.css
+
+// changing class of inbox web part such that it won't go left
+magix.forms.set-class
+  id=>content4
+  value=>span-18 last boxed air-padding bottom-1 left-4
+
+magix.forms.create-web-part
+  container=>content3
+  class=>span-18 last boxed air-padding bottom-1
+  form-id=>composer
+  events-file=>your-files/system-apps/magix-mail/components/composer/events.hl
+  controls
+    label
+      class=>span-16 bottom-1
+      value=>compose email
+      tag=>h3
+    button=>add-recipient
+      class=>span-2 last bottom-1
+      value=>+
+      title=>add recipient
+      onclick
+        magix.email.add-recipient
+    dynamic=>dynamic-add-recipient
+    dynamic=>dynamic-recipients
+      onfirstload
+        magix.email.create-recipient-list
+    text-box=>compose-subject
+      class=>span-18 last bottom-1
+      placeholder=>subject ...
+      onfirstload
+        magix.forms.effect
+          form-id=>composer
+          id=>compose-subject
+          type=>focus-and-select
+    text-area=>compose-body
+      class=>span-18 last bottom-1
+      rows=>15
+      placeholder=>body ...
+    panel
+      class=>btn-group span-4 last right
+      controls
+        button=>send
+          class=>span-2
+          value=>send
+          onclick
+            debug
+        button=>cancel
+          class=>span-2 last
+          value=>cancel
+          onclick
+            // changing class of inbox web part such that it won't go left
+            magix.forms.set-class
+              id=>content4
+              value=>span-18 last boxed air-padding bottom-1
+            magix.viewport.clear-controls
+              container=>content3
+              reset-class=>true
+

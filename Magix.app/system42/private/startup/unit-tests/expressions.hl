@@ -186,6 +186,80 @@ the first match has a null value"
 
 
 event
+  name=>magix.test.expressions-wildcard-inner-expression-name
+  persist=>false
+  inspect=>@"verifies expressions works with wildcards
+
+tries to retrieve a deep expression where the value of the 
+node is a wildcard, and the name of the node is given through 
+an expression"
+  code
+    _node-name=>v1
+    _buffer-data
+      _data
+        v0
+          message=>error
+        v0=>hello
+          message=>error
+        v1=>correct
+          message=>success
+    if=>not-equals
+      lhs=>[_buffer-data][**[_node-name].value=>?][message].value
+      rhs=>success
+      code
+        throw=>wildcard expressions misbehaved
+
+
+event
+  name=>magix.test.expressions-wildcard-inner-expression-name-null-value
+  persist=>false
+  inspect=>@"verifies expressions works with wildcards
+
+tries to retrieve a deep expression where the value of the 
+node is a wildcard, and the name of the node is given through 
+an expression"
+  code
+    _node-name=>v1
+    _buffer-data
+      _data
+        v0
+          message=>error
+        v0=>hello
+          message=>error
+        v1
+          message=>success
+    if=>not-equals
+      lhs=>[_buffer-data][**[_node-name].value][message].value
+      rhs=>success
+      code
+        throw=>wildcard expressions misbehaved
+
+
+event
+  name=>magix.test.expressions-wildcard-inner-expression-value
+  persist=>false
+  inspect=>@"verifies expressions works with wildcards
+
+tries to retrieve a deep expression where the value of the 
+node is given through an expression and the name is a wildcard"
+  code
+    _node-name=>correct
+    _buffer-data
+      _data
+        v0
+          message=>error
+        v0=>hello
+          message=>error
+        v1=>correct
+          message=>success
+    if=>not-equals
+      lhs=>[_buffer-data][**?=>[_node-name].value][message].value
+      rhs=>success
+      code
+        throw=>wildcard expressions misbehaved
+
+
+event
   name=>magix.test.expressions-nested
   persist=>false
   inspect=>@"verifies nested expressions works

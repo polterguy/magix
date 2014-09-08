@@ -1,0 +1,308 @@
+﻿
+
+inspect=>@"active events for compose.hl file
+
+contains active events for the compose email web part"
+
+
+// adds up a recipient to an email being composed
+magix.email.add-recipient
+  magix.forms.create-web-part
+    container=>dynamic-add-recipient
+    form-id=>dynamic-add-recipient
+    class=>span-16 last bottom-1
+    controls
+      panel
+        class=>btn-group span-17
+        default=>recipient-to
+        controls
+
+          lambda=>lambda-recipient-text-box
+            oncreatecontrols
+              // includes necessary javascript files for our autocompleter
+              magix.viewport.include-client-file
+                type=>javascript
+                file=>media/bootstrap/js/jQuery.js
+              magix.viewport.include-client-file
+                type=>javascript
+                file=>media/bootstrap/js/bootstrap.min.js
+              magix.viewport.include-client-file
+                type=>css
+                file=>media/back-end/typeahead.css
+              _json=>
+              magix.data.load
+                prototype
+                  type=>magix.email.contact
+              for-each=>[magix.data.load][objects]
+                if=>not-equals
+                  lhs=>[/][_json].value
+                  rhs=>
+                  code
+                    set=>[/][_json].value
+                      value=>{0},
+                        =>[/][_json].value
+                if=>exist
+                  lhs=>[.][value][display-name].value
+                  and=>not-equals
+                    lhs=>[.][value][display-name].value
+                    rhs=>
+                  code
+                    set=>[/][_json].value
+                      value=>@"{0}""{1} - {2}"""
+                        =>[/][_json].value
+                        =>[.][value][display-name].value
+                        =>[.][value][email].value
+                else
+                  set=>[/][_json].value
+                    value=>@"{0}""{1}"""
+                      =>[/][_json].value
+                      =>[.][value][email].value
+              _text
+                text-box=>recipient
+                  placeholder=>recipient ...
+                  class=>span-11
+                  autocomplete=>false
+                  @data-provide=>typeahead
+                  @data-items=>10
+                  @data-source=>{data-source}
+                  onfirstload
+                    magix.forms.effect
+                      form-id=>dynamic-add-recipient
+                      id=>recipient
+                      type=>focus-and-select
+                  onesc
+                    magix.viewport.clear-controls
+                      reset-class=>true
+                      container=>dynamic-add-recipient
+                    magix.forms.effect
+                      form-id=>composer
+                      id=>compose-subject
+                      type=>focus-and-select
+              set=>[**@data-source=>{data-source}].value
+                value=>\[{0}]
+                  =>[_json].value
+              add=>[$]
+                values=>[_text]
+
+          button=>recipient-to
+            class=>span-2
+            value=>to
+            onclick
+              magix.email.add-recipient-to-email
+                field=>to
+          button=>recipient-cc
+            class=>span-2
+            value=>cc
+            onclick
+              magix.email.add-recipient-to-email
+                field=>cc
+          button=>recipient-bcc
+            class=>span-2 last
+            value=>bcc
+            onclick
+              magix.email.add-recipient-to-email
+                field=>bcc
+
+
+// adds up a recipient to email
+magix.email.add-recipient-to-email
+  magix.viewstate.get
+    id=>magix.email.recipients
+  if=>exist
+    lhs=>[magix.viewstate.get][value]
+    code
+      add=>[magix.viewstate.set][value]
+        values=>[magix.viewstate.get][value]
+  magix.forms.get-value
+    form-id=>dynamic-add-recipient
+    id=>recipient
+  index-of=>[magix.forms.get-value][value].value
+    what=>@" - "
+  if=>exist
+    lhs=>[index-of][result]
+    code
+      split=>[magix.forms.get-value][value].value
+        where=>[index-of][result][>last].value
+      using=>magix.math
+        add=>[index-of][result][>last]
+          =>[index-of][result][>last].value
+          =>3
+      split=>[magix.forms.get-value][value].value
+        where=>[index-of][result][>last].value
+      set=>[_recipient][].value
+        value=>[@][split:1][result][1].value
+      set=>[_recipient][][display-name].value
+        value=>[@][split:0][result][0].value
+  else
+    set=>[_recipient][].value
+      value=>[magix.forms.get-value][value].value
+  _recipient
+  add=>[magix.viewstate.set][value][[$][field].value]
+    values=>[_recipient]
+  magix.viewstate.set
+    id=>magix.email.recipients
+  magix.viewport.clear-controls
+    reset-class=>true
+    container=>dynamic-add-recipient
+  magix.email.create-recipient-list
+
+
+// creates visual list of recipients
+magix.email.create-recipient-list
+  magix.viewstate.get
+    id=>magix.email.recipients
+  _controls
+    label=>label-to
+      class=>span-1
+      value=>to:
+      tag=>label
+    panel=>recipients-to
+      class=>span-17 last
+    label=>label-cc
+      class=>span-1
+      value=>cc:
+      tag=>label
+    panel=>recipients-cc
+      class=>span-17 last
+    label=>label-bcc
+      class=>span-1
+      value=>bcc:
+      tag=>label
+    panel=>recipients-bcc
+      class=>span-17 last
+  if=>more-than
+    lhs=>[magix.viewstate.get][value][to].count
+    rhs=>0
+    code
+      for-each=>[magix.viewstate.get][value][to]
+        _lb
+          panel
+            class=>column email-sent-to-item
+            controls
+              label
+                style=>display:block;float:left;
+              link-button
+                value=>X
+                style=>margin-left:10px;display:block;float:left;
+                onclick
+                  set=>[magix.emails.remove-recipient][email].value
+                    value=>[$][info].value
+                  magix.emails.remove-recipient
+                    field=>to
+        set=>[@][_lb][**link-button][info].value
+          value=>[.].value
+        if=>exist
+          lhs=>[.][display-name]
+          code
+            set=>[@][..][..][_lb][**label][value].value
+              value=>{0} &lt;{1}&gt;
+                =>[.][display-name].value
+                =>[.].value
+        else
+          set=>[@][..][_lb][**label][value].value
+            value=>[.].value
+        add=>[/][_controls][**panel=>recipients-to][controls]
+          values=>[@][_lb]
+  else
+    set=>[_controls][**label=>label-to]
+    set=>[_controls][**panel=>recipients-to]
+  if=>more-than
+    lhs=>[magix.viewstate.get][value][cc].count
+    rhs=>0
+    code
+      for-each=>[magix.viewstate.get][value][cc]
+        _lb
+          panel
+            class=>column email-sent-to-item
+            controls
+              label
+                style=>display:block;float:left;
+              link-button
+                value=>X
+                style=>margin-left:10px;display:block;float:left;
+                onclick
+                  set=>[magix.emails.remove-recipient][email].value
+                    value=>[$][info].value
+                  magix.emails.remove-recipient
+                    field=>cc
+        set=>[@][_lb][**link-button][info].value
+          value=>[.].value
+        if=>exist
+          lhs=>[.][display-name]
+          code
+            set=>[@][..][..][_lb][**label][value].value
+              value=>{0} &lt;{1}&gt;
+                =>[.][display-name].value
+                =>[.].value
+        else
+          set=>[@][..][_lb][**label][value].value
+            value=>[.].value
+        add=>[/][_controls][**panel=>recipients-cc][controls]
+          values=>[@][_lb]
+  else
+    set=>[_controls][**label=>label-cc]
+    set=>[_controls][**panel=>recipients-cc]
+  if=>more-than
+    lhs=>[magix.viewstate.get][value][bcc].count
+    rhs=>0
+    code
+      for-each=>[magix.viewstate.get][value][bcc]
+        _lb
+          panel
+            class=>column email-sent-to-item
+            controls
+              label
+                style=>display:block;float:left;
+              link-button
+                value=>X
+                style=>margin-left:10px;display:block;float:left;
+                onclick
+                  set=>[magix.emails.remove-recipient][email].value
+                    value=>[$][info].value
+                  magix.emails.remove-recipient
+                    field=>bcc
+        set=>[@][_lb][**link-button][info].value
+          value=>[.].value
+        if=>exist
+          lhs=>[.][display-name]
+          code
+            set=>[@][..][..][_lb][**label][value].value
+              value=>{0} &lt;{1}&gt;
+                =>[.][display-name].value
+                =>[.].value
+        else
+          set=>[@][..][_lb][**label][value].value
+            value=>[.].value
+        add=>[/][_controls][**panel=>recipients-bcc][controls]
+          values=>[@][_lb]
+  else
+    set=>[_controls][**label=>label-bcc]
+    set=>[_controls][**panel=>recipients-bcc]
+  using=>magix.forms
+    create-web-part
+      container=>dynamic-recipients
+      class=>span-18 last bottom-1
+      controls=>[_controls]
+  magix.forms.effect
+    form-id=>composer
+    id=>compose-subject
+    type=>focus-and-select
+  
+
+// removes a recipient from the to/cc/bcc list of recipients
+magix.emails.remove-recipient
+  magix.viewstate.get
+    id=>magix.email.recipients
+  set=>[magix.viewstate.get][value][[$][field].value][?=>[$][email].value]
+  add=>[magix.viewstate.set][value]
+    values=>[magix.viewstate.get][value]
+  if=>equals
+    lhs=>[magix.viewstate.set][value].count
+    rhs=>0
+    code
+      set=>[magix.viewstate.set][value]
+  magix.viewstate.set
+    id=>magix.email.recipients
+  magix.email.create-recipient-list
+
+
