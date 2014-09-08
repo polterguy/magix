@@ -28,7 +28,7 @@ magix.viewport.clear-controls
 
 // starting console logger
 magix.viewport.load-module
-  container=>content4
+  container=>content5
   class=>span-22 air-padding boxed last bottom-5
   name=>Magix.ide.modules.ConsoleLogger
   rows=>5

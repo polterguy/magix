@@ -370,18 +370,39 @@ namespace Magix.Core
                             if (bufferNodeName.Contains("=>"))
                             {
                                 if (bufferNodeName.IndexOf("=>") > 2)
+                                {
                                     searchName = bufferNodeName.Substring(2).Split(new string[] { "=>" }, StringSplitOptions.RemoveEmptyEntries)[0];
+                                    if (searchName.StartsWith("["))
+                                    {
+                                        // inner expression, fetching result
+                                        searchName = GetExpressionValue<string>(searchName, dp, ip, false);
+                                    }
+                                }
                                 else
                                     searchName = "";
                                 if (bufferNodeName.IndexOf("=>") < bufferNodeName.Length - 2)
+                                {
                                     searchValue = bufferNodeName.Split(new string[] { "=>" }, StringSplitOptions.RemoveEmptyEntries)[1];
+                                    if (searchValue.StartsWith("["))
+                                    {
+                                        // inner expression, fetching result
+                                        searchValue = GetExpressionValue<string>(searchValue, dp, ip, false);
+                                    }
+                                }
                                 else
                                     searchValue = "";
                             }
                             else
                             {
                                 if (bufferNodeName.Length > 2)
+                                {
                                     searchName = bufferNodeName.Substring(2);
+                                    if (searchName.StartsWith("["))
+                                    {
+                                        // inner expression, fetching result
+                                        searchName = GetExpressionValue<string>(searchName, dp, ip, false);
+                                    }
+                                }
                             }
 
                             Node searchNode = FindNode(idxNode, searchName, searchValue);
@@ -409,7 +430,14 @@ namespace Magix.Core
                                 if (tmpSearch.Length == 1)
                                     searchValue = "";
                                 else
+                                {
                                     searchValue = tmpSearch[1];
+                                    if (searchValue.StartsWith("["))
+                                    {
+                                        // inner expression, fetching result
+                                        searchValue = GetExpressionValue<string>(searchValue, dp, ip, false);
+                                    }
+                                }
                             }
                             bool found = false;
                             foreach (Node idxInnerNode in idxNode)

@@ -147,61 +147,67 @@ magix.emails.load-email
       code
         set=>[**button=>reply]
         set=>[**button=>delete]
+
+    // adding up list of recipients
     for-each=>[using][load][value][to]
       _lb
-        label
+        link-button
           class=>email-sent-to-item
       if=>exist
         lhs=>[.][display-name]
         code
-          set=>[@][..][..][_lb][label][value].value
+          set=>[@][..][..][_lb][link-button][value].value
             value=>{0} &lt;{1}&gt;
               =>[.][display-name].value
               =>[.].value
       else
-        set=>[@][..][_lb][label][value].value
+        set=>[@][..][_lb][link-button][value].value
           value=>{0}
             =>[.].value
       add=>[@][..][_controls][**panel=>email-to][controls][panel][controls]
         values=>[@][_lb]
+
+    // adding up list of cc recipients
     if=>exist
       lhs=>[using][load][value][cc]
       code
         for-each=>[using][load][value][cc]
           _lb
-            label
+            link-button
               class=>email-sent-to-item
           if=>exist
             lhs=>[.][display-name]
             code
-              set=>[@][..][..][_lb][label][value].value
+              set=>[@][..][..][_lb][link-button][value].value
                 value=>{0} &lt;{1}&gt;
                   =>[.][display-name].value
                   =>[.].value
           else
-            set=>[@][..][_lb][label][value].value
+            set=>[@][..][_lb][link-button][value].value
               value=>{0}
                 =>[.].value
           add=>[@][..][..][..][_controls][**panel=>email-cc][controls][panel][controls]
             values=>[@][_lb]
     else
       set=>[@][..][_controls][**panel=>email-cc]
+
+    // adding up list of bcc recipients
     if=>exist
       lhs=>[using][load][value][bcc]
       code
         for-each=>[using][load][value][bcc]
           _lb
-            label
+            link-button
               class=>email-sent-to-item
           if=>exist
             lhs=>[.][display-name]
             code
-              set=>[@][..][..][_lb][label][value].value
+              set=>[@][..][..][_lb][link-button][value].value
                 value=>{0} &lt;{1}&gt;
                   =>[.][display-name].value
                   =>[.].value
           else
-            set=>[@][..][_lb][label][value].value
+            set=>[@][..][_lb][link-button][value].value
               value=>{0}
                 =>[.].value
           add=>[@][..][..][..][_controls][**panel=>email-bcc][controls][panel][controls]

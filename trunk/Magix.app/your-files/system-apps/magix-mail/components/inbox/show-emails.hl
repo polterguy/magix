@@ -2,7 +2,7 @@
 
 inspect=>@"creates the show emails web part
 
-creates the show emails web part in content3.  loads emails 
+creates the show emails web part in content4.  loads emails 
 from database and displays as a grid to the user, making it 
 possible to read, reply, delete and such on individual emails
 
@@ -120,7 +120,7 @@ if=>equals
       value=>true
 
 magix.forms.create-web-part
-  container=>content3
+  container=>content4
   class=>span-18 last boxed air-padding bottom-1
   form-id=>inbox-list
   events-file=>your-files/system-apps/magix-mail/components/inbox/events.hl
