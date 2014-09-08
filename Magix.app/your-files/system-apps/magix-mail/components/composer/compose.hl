@@ -9,6 +9,34 @@ creates the compose email web part in content3"
 magix.viewstate.set
   id=>magix.email.recipients
 
+_recipients
+if=>exist
+  lhs=>[$][to]
+  code
+    add=>[_recipients]
+      value=>[$][to]
+if=>exist
+  lhs=>[$][cc]
+  code
+    add=>[_recipients]
+      value=>[$][cc]
+if=>exist
+  lhs=>[$][bcc]
+  code
+    add=>[_recipients]
+      value=>[$][bcc]
+
+// if [to], [cc] or [bcc] parameters are given, we set the initial recipients
+if=>not-equals
+  lhs=>[_recipients].count
+  rhs=>0
+  code
+    add=>[@][magix.viewstate.set][value]
+      values=>[_recipients]
+    magix.viewstate.set
+      id=>magix.email.recipients
+
+
 // including css files
 magix.viewport.include-client-file
   type=>css

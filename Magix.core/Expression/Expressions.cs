@@ -461,7 +461,17 @@ namespace Magix.Core
                         {
                             string[] splits = bufferNodeName.Split(new string[] { "=>" }, StringSplitOptions.None);
                             string name = splits[0];
+                            if (name.StartsWith("["))
+                            {
+                                // inner expression, fetching result
+                                name = GetExpressionValue<string>(name, dp, ip, false);
+                            }
                             string value = splits[1];
+                            if (value.StartsWith("["))
+                            {
+                                // inner expression, fetching result
+                                value = GetExpressionValue<string>(value, dp, ip, false);
+                            }
                             bool foundNode = false;
                             foreach (Node idxInnerNode in idxNode)
                             {
