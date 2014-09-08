@@ -70,6 +70,8 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Default.aspx" />
+    <Content Include="media\audio\pin.wav" />
+    <Content Include="media\audio\siren.wav" />
     <Content Include="media\back-end\email-client.css" />
     <Content Include="media\back-end\file-manager.css" />
     <Content Include="media\back-end\dashboard.css" />
@@ -108,6 +110,7 @@
     <Content Include="media\images\icons\fusion.png" />
     <Content Include="media\images\icons\key.png" />
     <Content Include="media\images\icons\lightning.png" />
+    <Content Include="media\images\icons\mjolner.png" />
     <Content Include="media\images\icons\qr-code.png" />
     <Content Include="media\images\icons\star.png" />
     <Content Include="media\images\icons\start-button-blue.png" />
