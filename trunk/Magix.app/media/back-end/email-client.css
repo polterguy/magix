@@ -6,6 +6,13 @@
     overflow:visible;
 }
 
+.mjolner
+{
+    padding-left:56px;
+    background-image:url(../images/icons/mjolner.png);
+    background-repeat:no-repeat;
+}
+
 .boxed
 {
     border-radius:0;
