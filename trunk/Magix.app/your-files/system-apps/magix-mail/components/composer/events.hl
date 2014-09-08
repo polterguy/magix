@@ -394,3 +394,60 @@ magix.email.create-attachment-list
       container=>compose-attachments
       reset-class=>true
 
+
+// returns [value] as true if composer is already loaded
+magix.email.is-composer-loaded
+  set=>[$][value].value
+    value=>true
+
+
+// adds [to], [cc] or [bcc] recipient to existing email composer
+magix.email.add-new-recipient
+  magix.viewstate.get
+    id=>magix.email.recipients
+  iterate=>[magix.viewstate.get][value]
+    if=>equals
+      lhs=>[.].name
+      rhs=>
+      and=>exist
+        lhs=>[$][to][=>[.].value]
+        or=>exist
+          lhs=>[$][cc][=>[.].value]
+        or=>exist
+          lhs=>[$][bcc][=>[.].value]
+      code
+        magix.viewport.show-message
+          message=>recipient already added
+          color=>#ffaaaa
+        set=>[/][_stop].value
+          value=>true
+  _stop
+  if=>equals
+    lhs=>[_stop].value
+    rhs=>true
+    code
+      stop
+  if=>exist
+    lhs=>[magix.viewstate.get][value]
+    code
+      add=>[magix.viewstate.set][value]
+        values=>[magix.viewstate.get][value]
+  if=>exist
+    lhs=>[$][to]
+    code
+      add=>[magix.viewstate.set][value][to]
+        values=>[$][to]
+  if=>exist
+    lhs=>[$][cc]
+    code
+      add=>[magix.viewstate.set][value][cc]
+        values=>[$][cc]
+  if=>exist
+    lhs=>[$][bcc]
+    code
+      add=>[magix.viewstate.set][value][bcc]
+        values=>[$][bcc]
+  magix.viewstate.set
+    id=>magix.email.recipients
+  magix.email.create-recipient-list
+

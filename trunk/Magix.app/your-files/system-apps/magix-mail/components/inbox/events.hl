@@ -148,11 +148,17 @@ magix.emails.load-email
         set=>[**button=>reply]
         set=>[**button=>delete]
 
-    // adding up list of recipients
+    // adding up list of to recipients
     for-each=>[using][load][value][to]
       _lb
         link-button
           class=>email-sent-to-item
+          onclick
+            code-2-node
+              code=>[$][info].value
+            add=>[magix.email.compose-email][to]
+              values=>[code-2-node][node]
+            magix.email.compose-email
       if=>exist
         lhs=>[.][display-name]
         code
@@ -162,8 +168,11 @@ magix.emails.load-email
               =>[.].value
       else
         set=>[@][..][_lb][link-button][value].value
-          value=>{0}
-            =>[.].value
+          value=>[.].value
+      node-2-code
+        node=>[.]
+      set=>[@][_lb][link-button][info].value
+        value=>[@][node-2-code][code].value
       add=>[@][..][_controls][**panel=>email-to][controls][panel][controls]
         values=>[@][_lb]
 
@@ -175,6 +184,12 @@ magix.emails.load-email
           _lb
             link-button
               class=>email-sent-to-item
+              onclick
+                code-2-node
+                  code=>[$][info].value
+                add=>[magix.email.compose-email][to]
+                  values=>[code-2-node][node]
+                magix.email.compose-email
           if=>exist
             lhs=>[.][display-name]
             code
@@ -184,8 +199,11 @@ magix.emails.load-email
                   =>[.].value
           else
             set=>[@][..][_lb][link-button][value].value
-              value=>{0}
-                =>[.].value
+              value=>[.].value
+          node-2-code
+            node=>[.]
+          set=>[@][_lb][link-button][info].value
+            value=>[@][node-2-code][code].value
           add=>[@][..][..][..][_controls][**panel=>email-cc][controls][panel][controls]
             values=>[@][_lb]
     else
@@ -199,6 +217,12 @@ magix.emails.load-email
           _lb
             link-button
               class=>email-sent-to-item
+              onclick
+                code-2-node
+                  code=>[$][info].value
+                add=>[magix.email.compose-email][to]
+                  values=>[code-2-node][node]
+                magix.email.compose-email
           if=>exist
             lhs=>[.][display-name]
             code
@@ -208,8 +232,11 @@ magix.emails.load-email
                   =>[.].value
           else
             set=>[@][..][_lb][link-button][value].value
-              value=>{0}
-                =>[.].value
+              value=>[.].value
+          node-2-code
+            node=>[.]
+          set=>[@][_lb][link-button][info].value
+            value=>[@][node-2-code][code].value
           add=>[@][..][..][..][_controls][**panel=>email-bcc][controls][panel][controls]
             values=>[@][_lb]
     else
@@ -371,4 +398,21 @@ magix.emails.load-email
         class=>span-18 last email-item-body bottom-1 top-1
         controls=>[_controls]
     magix.email.update-unread-email-count
+
+
+// opens up compose email web part with [to], [cc] and [bcc] recipients as given in parameters, or adds recipient to existing composer
+magix.email.compose-email
+  if=>equals
+    lhs=>[:magix.email.is-composer-loaded][value].value
+    rhs=>true
+    code
+      add=>[@][magix.email.add-new-recipient]
+        values=>[$]
+      magix.email.add-new-recipient
+  else
+    // loading composer with 
+    add=>[@][execute-script][params]
+      values=>[$]
+    execute-script
+      file=>your-files/system-apps/magix-mail/components/composer/compose.hl
 

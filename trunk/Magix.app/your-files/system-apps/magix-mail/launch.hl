@@ -27,7 +27,8 @@ magix.viewport.clear-controls
   reset-class=>true
 
 // starting console logger
-magix.viewport.load-module
+// uncomment to allow for logging to console
+_magix.viewport.load-module
   container=>content5
   class=>span-22 air-padding boxed last bottom-5
   name=>Magix.ide.modules.ConsoleLogger
@@ -39,7 +40,7 @@ magix.forms.create-web-part
   class=>span-24
   controls
     link-button
-      class=>fill-width top-1 bottom-1 mjolner
+      class=>top-1 bottom-1 mjolner left-4 column
       value=>mjølner mail
       onclick
         magix.email.inbox-clicked
