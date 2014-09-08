@@ -137,6 +137,27 @@ magix.email.add-recipient-to-email
     set=>[_recipient][].value
       value=>[magix.forms.get-value][value].value
   _recipient
+  for-each=>[magix.viewstate.get][value]
+    for-each=>[.]
+      if=>equals
+        lhs=>[.].value
+        rhs=>[/][_recipient][0].value
+        code
+          magix.viewport.show-message
+            message=>recipient already in to, cc or bcc field of email
+            color=>#ffaaaa
+          set=>[/][_stop].value
+            value=>true
+          magix.forms.effect
+            form-id=>dynamic-add-recipient
+            id=>recipient
+            type=>focus-and-select
+  if=>equals
+    lhs=>[_stop].value
+    rhs=>true
+    code
+      stop
+  _stop
   add=>[magix.viewstate.set][value][[$][field].value]
     values=>[_recipient]
   magix.viewstate.set
@@ -278,11 +299,19 @@ magix.email.create-recipient-list
   else
     set=>[_controls][**label=>label-bcc]
     set=>[_controls][**panel=>recipients-bcc]
-  using=>magix.forms
-    create-web-part
+  if=>more-than
+    lhs=>[_controls].count
+    rhs=>0
+    code
+      using=>magix.forms
+        create-web-part
+          container=>dynamic-recipients
+          class=>span-18 last bottom-1
+          controls=>[_controls]
+  else
+    magix.viewport.clear-controls
       container=>dynamic-recipients
-      class=>span-18 last bottom-1
-      controls=>[_controls]
+      reset-class=>true
   magix.forms.effect
     form-id=>composer
     id=>compose-subject
@@ -305,4 +334,63 @@ magix.emails.remove-recipient
     id=>magix.email.recipients
   magix.email.create-recipient-list
 
+
+// creates list of attachments in email
+magix.email.create-attachment-list
+  magix.viewstate.get
+    id=>magix.email.attachments
+  _controls
+    label
+      value=>attachments
+      class=>span-10 last
+      tag=>label
+  if=>more-than
+    lhs=>[magix.viewstate.get][value].count
+    rhs=>0
+    code
+      // creating attachments web part
+      for-each=>[magix.viewstate.get][value]
+        _lb
+          panel
+            class=>clear span-10 last email-attachment
+            controls
+              label
+                class=>span-9
+              link-button
+                class=>span-1 last text-right
+                value=>X
+                onclick
+                  magix.viewstate.get
+                    id=>magix.email.attachments
+                  set=>[magix.viewstate.get][value][[$][info].value]
+                  if=>more-than
+                    lhs=>[magix.viewstate.get][value].count
+                    rhs=>0
+                    code
+                      add=>[magix.viewstate.set][value]
+                        values=>[magix.viewstate.get][value]
+                  magix.viewstate.set
+                    id=>magix.email.attachments
+                  magix.email.create-attachment-list
+                  magix.forms.effect
+                    form-id=>composer
+                    id=>compose-subject
+                    type=>focus-and-select
+        set=>[@][_lb][**label][value].value
+          value=>[.].name
+        set=>[@][_lb][**link-button][info].value
+          value=>[.].name
+        add=>[/][_controls]
+          values=>[@][_lb]
+      using=>magix.forms
+        create-web-part
+          container=>compose-attachments
+          form-id=>compose-attachments
+          class=>span-18 last
+          controls=>[_controls]
+  else
+    // clearing attachments web part
+    magix.viewport.clear-controls
+      container=>compose-attachments
+      reset-class=>true
 

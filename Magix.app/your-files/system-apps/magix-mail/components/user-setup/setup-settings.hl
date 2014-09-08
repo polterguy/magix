@@ -84,6 +84,10 @@ magix.forms.create-web-part
           form-id=>email-settings
           id=>smtp-email
           value=>[magix.data.load-username][value][email].value
+        set-value
+          form-id=>email-settings
+          id=>smtp-display-name
+          value=>[magix.data.load-username][value][display-name].value
 
     magix.email-settings.load-global-smtp-settings
       magix.data.load
@@ -471,6 +475,13 @@ magix.forms.create-web-part
         text-box=>smtp-email
           class=>span-5 top-1 last
           placeholder=>email address ...
+        label
+          class=>span-2 clear top-1 text-right
+          tag=>label
+          value=>name
+        text-box=>smtp-display-name
+          class=>span-5 top-1 last
+          placeholder=>display name ...
     panel=>incoming-wrp
       class=>span-7 left-2
       controls
@@ -535,6 +546,7 @@ magix.forms.create-web-part
           =>smtp-server
           =>smtp-port
           =>smtp-email
+          =>smtp-display-name
         _success=>true
         for-each=>[_mandatory]
           set=>[@][magix.email-settings.verify-mandatory-setting][value].value
@@ -633,6 +645,8 @@ magix.forms.create-web-part
           value=>[magix.forms.get-children-values][values][smtp-password].value
         set=>[@][magix.data.save-username=>smtp][value][email].value
           value=>[magix.forms.get-children-values][values][smtp-email].value
+        set=>[@][magix.data.save-username=>smtp][value][display-name].value
+          value=>[magix.forms.get-children-values][values][smtp-display-name].value
         magix.data.save-username=>smtp
           id=>magix.smtp.settings
 

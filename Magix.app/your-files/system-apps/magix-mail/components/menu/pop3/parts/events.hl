@@ -63,12 +63,12 @@ magix.email.settings-clicked
           value=>cancel
           onclick
             execute-script
-              file=>your-files/system-apps/magix-mail/components/menu/create-menu.hl
+              file=>your-files/system-apps/magix-mail/components/menu/pop3/create-menu.hl
             execute-script
               file=>your-files/system-apps/magix-mail/components/inbox/show-emails.hl
       execute-afterwards
         execute-script
-          file=>your-files/system-apps/magix-mail/components/menu/create-menu.hl
+          file=>your-files/system-apps/magix-mail/components/menu/pop3/create-menu.hl
         execute-script
           file=>your-files/system-apps/magix-mail/components/inbox/show-emails.hl
 

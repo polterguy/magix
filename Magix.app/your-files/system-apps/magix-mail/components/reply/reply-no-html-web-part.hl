@@ -59,11 +59,25 @@ magix.execute
             add=>[using][send-message]
               values=>[magix.data.load-username][value]
 
+            // actually sending email
+            using=>magix.smtp
+              send-message
+                to
+                  =>[magix.data.load][value][from].value
+                    display-name=>[magix.data.load][value][from][display-name].value
+                from=>[magix.data.load-username][value][email].value
+                  display-name=>[magix.data.load-username][value][display-name].value
+                subject=>[magix.forms.get-value=>subject][value].value
+                body
+                  plain=>[magix.forms.get-value=>reply-body][value].value
+
             // saving sent email
             set=>[magix.data.save][value][username].value
               value=>[magix.data.load][value][username].value
             set=>[magix.data.save][value][from].value
               value=>[magix.data.load-username][value][email].value
+            set=>[magix.data.save][value][from][display-name].value
+              value=>[magix.data.load-username][value][display-name].value
             set=>[magix.data.save][value][date].value
               value=>[:magix.date.now][value].value
             set=>[magix.data.save][value][to][].value
@@ -79,18 +93,13 @@ magix.execute
                 type=>magix.email.message
                 read=>true
                 folder=>sent
-            using=>magix.smtp
-              send-message
-                to
-                  =>[magix.data.load][value][from].value
-                    display-name=>[magix.data.load][value][from][display-name].value
-                from=>[magix.data.load-username][value][email].value
-                subject=>[magix.forms.get-value=>subject][value].value
-                body
-                  plain=>[magix.forms.get-value=>reply-body][value].value
+
+            // showing user feedback
             magix.viewport.show-message
               message=>email successfully sent
               color=>#aaffaa
+
+            // clearing viewport
             magix.viewport.clear-controls
               container=>{reply-container}
               reset-css=>true
