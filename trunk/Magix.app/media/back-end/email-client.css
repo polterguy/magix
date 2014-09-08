@@ -226,3 +226,15 @@
     white-space:pre;
 }
 
+.email-attachment
+{
+    background-color:rgba(0,0,0,0);
+    border-radius:3px;
+}
+
+.email-attachment:hover
+{
+    background-color:rgba(0,0,0,.1);
+}
+
+
