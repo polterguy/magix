@@ -41,7 +41,7 @@ magix.forms.create-web-part
     label
       tag=>h1
       class=>fill-width top-1 bottom-1
-      value=>magix mail
+      value=>mjølner mail
 
 // pinning header web part, such that it won't be affected by clear-controls that clears all containers
 magix.viewport.pin-container

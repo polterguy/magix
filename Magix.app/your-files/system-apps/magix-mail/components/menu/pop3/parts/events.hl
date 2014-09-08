@@ -117,9 +117,18 @@ magix.email.check-for-new-emails
 magix.email.new-messages-downloaded
   using=>magix.viewport
     show-message
-      message=>finished downloading {0} messages from your email server
+      message=>finished downloading {0} messages from your email server.&nbsp;&nbsp;click your inbox to view email
         =>[$][download-count].value
       color=>#aaffaa
+
+  // making "ping" sound
+  magix.forms.create-web-part
+    container=>misc-dynamic
+    controls
+      label
+        tag=>audio
+        @src=>media/audio/pin.wav
+        @autoplay
 
 
 // updates number of new emails visual clues to user
