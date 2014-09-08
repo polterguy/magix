@@ -38,10 +38,11 @@ magix.forms.create-web-part
   container=>content1
   class=>span-24
   controls
-    label
-      tag=>h1
+    link-button
       class=>fill-width top-1 bottom-1 mjolner
       value=>mjølner mail
+      onclick
+        magix.email.inbox-clicked
 
 // pinning header web part, such that it won't be affected by clear-controls that clears all containers
 magix.viewport.pin-container

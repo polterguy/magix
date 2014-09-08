@@ -11,6 +11,11 @@
     padding-left:56px;
     background-image:url(../images/icons/mjolner.png);
     background-repeat:no-repeat;
+    margin-bottom:18px;
+    margin-top:18px;
+    font-size:3em;
+    line-height:1em;
+    color:#9999ff;
 }
 
 .boxed
