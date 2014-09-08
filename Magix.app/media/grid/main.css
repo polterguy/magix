@@ -423,11 +423,6 @@ textarea.fill-width-left-air,
 	display:block;
 	border-radius:15px;
 	box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
-	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgba(240, 200, 200, .5)), to(rgba(210, 180, 180, -5)));
-	background-image: -moz-webkit-gradient(rgba(240, 200, 200, .5) 0%, rgba(210, 180, 180, .5) 100%);
-	background-image: -moz-linear-gradient(rgba(240, 200, 200, .5) 0%, rgba(210, 180, 180, .5) 100%);
-	background-image: -o-linear-gradient(rgba(240, 200, 200, .5) 0%, rgba(210, 180, 180, .5) 100%);
-	background-image: -ms-linear-gradient(rgba(240, 200, 200, .5) 0%, rgba(210, 180, 180, .5) 100%);
 	background-image: linear-gradient(rgba(240, 200, 200, .5) 0%, rgba(210, 180, 180, .5) 100%);
 }
 
@@ -435,11 +430,6 @@ input[type=button]
 {
 	display:block;
 	border-radius:15px;
-	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgba(240, 240, 240, 1)), to(rgba(210, 210, 210, 1)));
-	background-image: -moz-webkit-gradient(rgba(250, 250, 250, 1) 0%, rgba(210, 210, 210, 1) 100%);
-	background-image: -moz-linear-gradient(rgba(250, 250, 250, 1) 0%, rgba(210, 210, 210, 1) 100%);
-	background-image: -o-linear-gradient(rgba(250, 250, 250, 1) 0%, rgba(210, 210, 210, 1) 100%);
-	background-image: -ms-linear-gradient(rgba(250, 250, 250, 1) 0%, rgba(210, 210, 210, 1) 100%);
 	background-image: linear-gradient(rgba(250, 250, 250, 1) 0%, rgba(210, 210, 210, 1) 100%);
 	transition-property:color;
 	transition-duration:.2s;
@@ -450,22 +440,12 @@ input[type=button]
 
 input[type=button]:hover
 {
-	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgba(240, 240, 240, 1)), to(rgba(180, 180, 180, 1)));
-	background-image: -moz-webkit-gradient(rgba(240, 240, 240, 1) 0%, rgba(180, 180, 180, 1) 100%);
-	background-image: -moz-linear-gradient(rgba(240, 240, 240, 1) 0%, rgba(180, 180, 180, 1) 100%);
-	background-image: -o-linear-gradient(rgba(240, 240, 240, 1) 0%, rgba(180, 180, 180, 1) 100%);
-	background-image: -ms-linear-gradient(rgba(240, 240, 240, 1) 0%, rgba(180, 180, 180, 1) 100%);
 	background-image: linear-gradient(rgba(240, 240, 240, 1) 0%, rgba(180, 180, 180, 1) 100%);
 	color:#00a;
 }
 
 input[type=button]:disabled
 {
-	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgba(240, 240, 240, 1)), to(rgba(180, 180, 180, 1)));
-	background-image: -moz-webkit-gradient(rgba(240, 240, 240, 1) 0%, rgba(180, 180, 180, 1) 100%);
-	background-image: -moz-linear-gradient(rgba(240, 240, 240, 1) 0%, rgba(180, 180, 180, 1) 100%);
-	background-image: -o-linear-gradient(rgba(240, 240, 240, 1) 0%, rgba(180, 180, 180, 1) 100%);
-	background-image: -ms-linear-gradient(rgba(240, 240, 240, 1) 0%, rgba(180, 180, 180, 1) 100%);
 	background-image: linear-gradient(rgba(240, 240, 240, 1) 0%, rgba(180, 180, 180, 1) 100%);
 	color:#aaa;
 }

@@ -84,7 +84,7 @@ magix.forms.create-web-part
       placeholder=>body ...
     dynamic=>compose-attachments
     panel
-      class=>btn-group span-4 last right
+      class=>btn-group span-8 last right
       controls
         button=>send
           class=>span-2
@@ -217,7 +217,18 @@ magix.forms.create-web-part
             magix.forms.set-class
               id=>content4
               value=>span-18 last boxed air-padding bottom-1
-
+        button=>sign
+          class=>span-2 sign-email
+          value=>sign
+          title=>signs email with your ssl certificate
+          onclick
+            debug
+        button=>encrypt
+          class=>span-2 encrypt-email
+          value=>lock
+          title=>encrypts email using your ssl private key
+          onclick
+            debug
         button=>cancel
           class=>span-2 last
           value=>cancel

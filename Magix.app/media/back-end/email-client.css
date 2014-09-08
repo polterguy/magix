@@ -25,38 +25,6 @@
     background-image:none;
 }
 
-@-webkit-keyframes email-blink
-{
- from {
-     color:#ff6a00;
- }
- to {
-     color:#ffd800;
- }
-}
-
-@-moz-keyframes email-blink
-{
- from {
-     color:#ff6a00;
- }
- to {
-     color:#ffd800;
- }
-}
-
-.animate-visual-clue
-{
-	-webkit-animation-name: email-blink;
-	-webkit-animation-duration: .5s;
-	-webkit-animation-direction:alternate;
-    -webkit-animation-iteration-count:infinite;
-	-moz-animation-name: email-blink;
-	-moz-animation-duration: .5s;
-	-moz-animation-direction: alternate;
-    -moz-animation-iteration-count:infinite;
-}
-
 .email-search-bar
 {
     opacity:0.2;
@@ -185,6 +153,40 @@
 
 .email-reply-body
 {
+}
+
+input[type=button].sign-email
+{
+	background-image: linear-gradient(rgba(250, 250, 250, 1) 0%, rgba(210, 210, 210, 1) 100%);
+}
+
+input[type=button].encrypt-email
+{
+	background-image: linear-gradient(rgba(250, 250, 250, 1) 0%, rgba(210, 210, 210, 1) 100%);
+}
+
+input[type=button]:hover.sign-email,
+input[type=button]:hover.encrypt-email
+{
+	background-image: linear-gradient(rgba(240, 240, 240, 1) 0%, rgba(180, 180, 180, 1) 100%);
+	color:#00a;
+}
+
+input[type=button]:disabled.sign-email,
+input[type=button]:disabled.encrypt-email
+{
+	background-image: linear-gradient(rgba(240, 240, 240, 1) 0%, rgba(180, 180, 180, 1) 100%);
+	color:#aaa;
+}
+
+input[type=button].signed-email
+{
+    background-image:linear-gradient(rgba(210, 210, 210, 1) 0%, rgba(250, 250, 250, 1) 100%);
+}
+
+input[type=button].encrypted-email
+{
+    background-image:linear-gradient(rgba(210, 210, 210, 1) 0%, rgba(250, 250, 250, 1) 100%);
 }
 
 .email-contact-email
