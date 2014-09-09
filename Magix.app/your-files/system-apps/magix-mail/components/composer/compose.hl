@@ -5,9 +5,11 @@ inspect=>@"creates the compose email web part
 creates the compose email web part in content3"
 
 
-// cleaning out recipients
+// cleaning out recipients and attachments
 magix.viewstate.set
   id=>magix.email.recipients
+magix.viewstate.set
+  id=>magix.email.attachments
 
 _recipients
 if=>exist
