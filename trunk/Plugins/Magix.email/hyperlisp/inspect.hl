@@ -3,6 +3,12 @@
 inspect=>@"documentation for magix.email"
 
 
+magix.core.application-startup-dox=>@"registers windows secure context
+
+registers the default windows secure context from mimekit, such 
+that encryption and signing of emails works out of the box"
+
+
 magix.smtp.send-message-dox=>@"sends an email over smtp
 
 send an email message over smtp to [host] on [port] using 
@@ -131,7 +137,14 @@ been downloaded, depending upon if you have a [code] block or
 not, the message will be deleted from your email server
 
 if you don't supply a [count] or supply its value as -1, then 
-all messages that are unread on the server will be downloaded"
+all messages that are unread on the server will be downloaded
+
+if email is signed, and its signature can be confirmed, then 
+[signed] will be returned as true.  if email is signed, but its 
+signature or content have been tampered with, then [signed] 
+will return false
+
+if email is encrypted, then [encrypt] will be true"
 
 magix.pop3.get-messages-sample
   magix.pop3.get-messages

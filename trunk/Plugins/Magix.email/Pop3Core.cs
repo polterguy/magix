@@ -6,6 +6,7 @@
 
 using System;
 using Magix.Core;
+using MimeKit.Cryptography;
 
 namespace Magix.email
 {
@@ -14,6 +15,26 @@ namespace Magix.email
 	 */
     internal sealed class Pop3Core : ActiveController
 	{
+        /*
+         * registers secure context
+         */
+        [ActiveEvent(Name = "magix.core.application-startup")]
+        public static void magix_core_application_startup(object sender, ActiveEventArgs e)
+        {
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
+            {
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.email",
+                    "Magix.email.hyperlisp.inspect.hl",
+                    "[magix.core.application-startup-dox].value");
+                return;
+            }
+
+            CryptographyContext.Register(typeof(WindowsSecureMimeContext));
+        }
+
         /*
          * retrieves message count from pop3 server
          */

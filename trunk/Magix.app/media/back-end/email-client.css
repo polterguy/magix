@@ -81,7 +81,54 @@
 {
     background-image:url(../images/icons/binder.png);
     background-repeat:no-repeat;
+    background-position-y:0px;
 }
+
+.email-signed-has-attachments
+{
+    background-image:url(../images/icons/binder.png);
+    background-repeat:no-repeat;
+    background-position-y:-18px;
+}
+
+.email-encrypted-has-attachments
+{
+    background-image:url(../images/icons/binder.png);
+    background-repeat:no-repeat;
+    background-position-y:-36px;
+}
+
+.email-signed-encrypted-has-attachments
+{
+    background-image:url(../images/icons/binder.png);
+    background-repeat:no-repeat;
+    background-position-y:-54px;
+}
+
+.email-signed
+{
+    background-image:url(../images/icons/binder.png);
+    background-repeat:no-repeat;
+    background-position-y:-72px;
+}
+
+.email-encrypted
+{
+    background-image:url(../images/icons/binder.png);
+    background-repeat:no-repeat;
+    background-position-y:-90px;
+}
+
+.email-signed-encrypted
+{
+    background-image:url(../images/icons/binder.png);
+    background-repeat:no-repeat;
+    background-position-y:-108px;
+}
+
+
+
+
 
 .emails-sleeping-dynamic
 {

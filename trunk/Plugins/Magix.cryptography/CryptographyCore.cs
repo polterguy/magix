@@ -84,6 +84,29 @@ explaining why");
         }
 
         /*
+         * checks to see if email can be encrypted
+         */
+        [ActiveEvent(Name = "magix.cryptography.import-certificate")]
+        private static void magix_cryptography_import_certificate(object sender, ActiveEventArgs e)
+        {
+            Node ip = Ip(e.Params);
+            if (ip.ContainsValue("inspect"))
+            {
+                ActiveController.AppendInspect(ip["inspect"], @"imports a certificate into certificate database
+
+will import the given [certificate] file into the certificate database.  if 
+[password] is given, it will be used as password to extract the certificate");
+                return;
+            }
+
+            Node dp = Dp(e.Params);
+
+            string certificateFile = Expressions.GetExpressionValue<string>(ip["certificate"].Get<string>(), dp, ip, false);
+            string password = Expressions.GetExpressionValue<string>(ip["password"].Get<string>(), dp, ip, false);
+            CryptographyHelper.ImportCertificate(certificateFile, password);
+        }
+
+        /*
          * signs a mime entity
          */
         [ActiveEvent(Name = "magix.cryptography._sign-mime-entity")]

@@ -565,6 +565,51 @@ magix.email.send-composed-email
   magix.session.get
     id=>magix.core.user
 
+  // checking to see if we should sign email
+  magix.execute
+    _sign
+    magix.forms.get-class=>sign
+      form-id=>composer
+      id=>sign
+    index-of=>[magix.forms.get-class=>sign][value].value
+      what=>signed-email
+    if=>exist
+      lhs=>[index-of][result]
+      code
+        // adding signature to email
+        set=>[_signed].value
+          value=>true
+
+    // checking to see if we should encrypt email
+    _encrypt
+    magix.forms.get-class=>encrypt
+      form-id=>composer
+      id=>encrypt
+    index-of=>[magix.forms.get-class=>encrypt][value].value
+      what=>encrypted-email
+    if=>exist
+      lhs=>[index-of:1][result]
+      code
+        // adding signature to email
+        set=>[_encrypt].value
+          value=>true
+  if=>equals
+    lhs=>[magix.execute][_signed].value
+    rhs=>true
+    code
+      set=>[magix.data.save][value][signed].value
+        value=>true
+      set=>[magix.smtp.send-message][signed].value
+        value=>true
+  if=>equals
+    lhs=>[magix.execute][_encrypt].value
+    rhs=>true
+    code
+      set=>[magix.data.save][value][encrypt].value
+        value=>true
+      set=>[magix.smtp.send-message][encrypt].value
+        value=>true
+
   // saving sent email
   set=>[magix.data.save][value][username].value
     value=>[magix.session.get][value][username].value

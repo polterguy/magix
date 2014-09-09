@@ -6,7 +6,9 @@
 
 using System;
 using System.IO;
+using System.Collections.Generic;
 using MimeKit;
+using MimeKit.Cryptography;
 using MailKit;
 using MailKit.Net.Pop3;
 using Magix.Core;
@@ -191,13 +193,7 @@ namespace Magix.email
             string linkedAttachmentDirectory)
         {
             ExtractHeaders(msg, node);
-            ExtractBody(msg, node);
-            ExtractAttachments(
-                msg, 
-                node, 
-                basePath, 
-                attachmentDirectory, 
-                linkedAttachmentDirectory);
+            ExtractBody(new MimeEntity[] { msg.Body }, node, false, msg, basePath, attachmentDirectory, linkedAttachmentDirectory);
         }
 
         /*
@@ -231,9 +227,16 @@ namespace Magix.email
         /*
          * extracts body parts from message and put into node
          */
-        private static void ExtractBody(MimeMessage msg, Node node)
+        private static void ExtractBody(
+            IEnumerable<MimeEntity> entities, 
+            Node node, 
+            bool skipSignature,
+            MimeMessage msg, 
+            string basePath,
+            string attachmentDirectory,
+            string linkedAttachmentDirectory)
         {
-            foreach (MimePart idxBody in msg.BodyParts)
+            foreach (MimeEntity idxBody in entities)
             {
                 if (idxBody is TextPart)
                 {
@@ -250,6 +253,39 @@ namespace Magix.email
                         }
                     }
                 }
+                else if (idxBody is ApplicationPkcs7Mime)
+                {
+                    ApplicationPkcs7Mime pkcs7 = idxBody as ApplicationPkcs7Mime;
+                    if (pkcs7.SecureMimeType == SecureMimeType.EnvelopedData)
+                    {
+                        MimeEntity entity = pkcs7.Decrypt();
+                        ExtractBody(new MimeEntity[] { entity }, node, false, msg, basePath, attachmentDirectory, linkedAttachmentDirectory);
+                        node["encrypted"].Value = true;
+                    }
+                }
+                else if (!skipSignature && idxBody is MultipartSigned)
+                {
+                    MultipartSigned signed = idxBody as MultipartSigned;
+                    bool valid = false;
+                    foreach (IDigitalSignature signature in signed.Verify())
+                    {
+                        valid = signature.Verify();
+                        if (!valid)
+                            break;
+                    }
+                    node["signed"].Value = valid;
+                    ExtractBody(new MimeEntity[] { signed }, node, true, msg, basePath, attachmentDirectory, linkedAttachmentDirectory);
+                }
+                else if (idxBody is Multipart)
+                {
+                    Multipart mp = idxBody as Multipart;
+                    ExtractBody(mp, node, false, msg, basePath, attachmentDirectory, linkedAttachmentDirectory);
+                }
+                else if (idxBody is MimePart)
+                {
+                    // this is an attachment
+                    ExtractAttachments(idxBody as MimePart, msg, node, basePath, attachmentDirectory, linkedAttachmentDirectory);
+                }
             }
         }
 
@@ -257,35 +293,36 @@ namespace Magix.email
          * extracts attachments from message
          */
         private static void ExtractAttachments(
-            MimeMessage msg, 
+            MimePart entity,
+            MimeMessage msg,
             Node node, 
             string basePath, 
             string attachmentDirectory, 
             string linkedAttachmentDirectory)
         {
-            foreach (MimePart idxAtt in msg.Attachments)
-            {
-                string fileName;
-                if (idxAtt.Headers.Contains("Content-Location"))
-                {
-                    // this is a linked resource, replacing references inside html with local filename
-                    fileName = linkedAttachmentDirectory + msg.MessageId + "_" + idxAtt.FileName;
-                    if (node.Contains("body") && node["body"].ContainsValue("html"))
-                        node["body"]["html"].Value =
-                            node["body"]["html"].Get<string>().Replace(idxAtt.Headers["Content-Location"], fileName);
-                }
-                else
-                {
-                    fileName = attachmentDirectory + msg.MessageId + "_" + idxAtt.FileName;
-                    Node attNode = new Node("", idxAtt.FileName);
-                    attNode["local-file-name"].Value = fileName;
-                    node["attachments"].Add(attNode);
-                }
+            if (entity is ApplicationPkcs7Mime)
+                return; // don't bother about p7m attachments
 
-                using (Stream stream = File.Create(basePath + fileName))
-                {
-                    idxAtt.ContentObject.DecodeTo(stream);
-                }
+            string fileName;
+            if (entity.Headers.Contains("Content-Location"))
+            {
+                // this is a linked resource, replacing references inside html with local filename
+                fileName = linkedAttachmentDirectory + msg.MessageId + "_" + entity.FileName;
+                if (node.Contains("body") && node["body"].ContainsValue("html"))
+                    node["body"]["html"].Value =
+                        node["body"]["html"].Get<string>().Replace(entity.Headers["Content-Location"], fileName);
+            }
+            else
+            {
+                fileName = attachmentDirectory + msg.MessageId + "_" + entity.FileName;
+                Node attNode = new Node("", entity.FileName);
+                attNode["local-file-name"].Value = fileName;
+                node["attachments"].Add(attNode);
+            }
+
+            using (Stream stream = File.Create(basePath + fileName))
+            {
+                entity.ContentObject.DecodeTo(stream);
             }
         }
 

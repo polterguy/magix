@@ -268,6 +268,21 @@ magix.emails.load-email
             values=>[@][_lb]
     else
       set=>[@][..][_controls][**panel=>email-bcc]
+
+    // checking if email is signed, and if so, enabling "import signature button"
+    if=>equals
+      lhs=>[using][load][value][signed].value
+      rhs=>true
+      code
+        // email was signed, enabling import signature button
+        set=>[**_controls][**panel=>btn-group][class].value
+          value=>btn-group span-6 last right clear
+        set=>[**_controls][**button=>import-signature][info].value
+          value=>[$][email-id].value
+    else
+      // email was not signed, removing import signature button from button row
+      set=>[**_controls][**button=>import-signature]
+
     _controls
       panel=>email-content
         class=>span-16 email-content-body
@@ -369,6 +384,27 @@ magix.emails.load-email
                   =>[$][container].value
               execute-script
                 file=>your-files/system-apps/magix-mail/components/reply/reply-web-part.hl
+          button=>import-signature
+            class=>span-2
+            value=>import
+            title=>imports certificate from sender into certificate database
+            onclick
+              using=>magix.data
+                load
+                  id=>[$][info].value
+              for-each=>[using][load][value][attachments]
+                if=>equals
+                  lhs=>[.].value
+                  rhs=>smime.p7s
+                  code
+                    set=>[@][magix.cryptography.import-certificate][certificate].value
+                      value=>[.][local-file-name].value
+                    magix.cryptography.import-certificate
+                    magix.viewport.show-message
+                      message=>certificate was successfully imported into certificate database
+                      color=>#aaffaa
+                      time=>5000
+                    stop
           button=>delete
             class=>span-2 last
             value=>delete

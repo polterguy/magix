@@ -304,7 +304,7 @@ magix.forms.create-web-part
                   value=>[$][info].value
                 magix.emails.toggle-email
             label=>{from-}
-              class=>span-6 email-item-from
+              class=>span-5 email-item-from
               value=>&nbsp;
               onclick
                 split=>[$][id].value
@@ -326,7 +326,7 @@ magix.forms.create-web-part
                   value=>[$][info].value
                 magix.emails.toggle-email
             label=>{icons-}
-              class=>span-1 last
+              class=>span-2 last
               value=>&nbsp;
             dynamic=>{dynamic-}
               class=>emails-sleeping-dynamic
@@ -378,9 +378,87 @@ magix.forms.create-web-part
                 =>[.][value][from].value
           if=>exist
             lhs=>[.][value][attachments]
+            and=>not-equals
+              lhs=>[.][value][signed].value
+              rhs=>true
+            and=>not-equals
+              lhs=>[.][value][encrypted].value
+              rhs=>true
             code
               set=>[@][..][..][_pnl][**label=>{icons-}][class].value
                 value=>{0} email-has-attachments
+                  =>[@][..][..][_pnl][**label=>{icons-}][class].value
+          else-if=>exist
+            lhs=>[.][value][attachments]
+            and=>equals
+              lhs=>[.][value][signed].value
+              rhs=>true
+            and=>not-equals
+              lhs=>[.][value][encrypted].value
+              rhs=>true
+            code
+              set=>[@][..][..][_pnl][**label=>{icons-}][class].value
+                value=>{0} email-signed-has-attachments
+                  =>[@][..][..][_pnl][**label=>{icons-}][class].value
+          else-if=>exist
+            lhs=>[.][value][attachments]
+            and=>not-equals
+              lhs=>[.][value][signed].value
+              rhs=>true
+            and=>equals
+              lhs=>[.][value][encrypted].value
+              rhs=>true
+            code
+              set=>[@][..][..][_pnl][**label=>{icons-}][class].value
+                value=>{0} email-encrypted-has-attachments
+                  =>[@][..][..][_pnl][**label=>{icons-}][class].value
+          else-if=>exist
+            lhs=>[.][value][attachments]
+            and=>equals
+              lhs=>[.][value][signed].value
+              rhs=>true
+            and=>equals
+              lhs=>[.][value][encrypted].value
+              rhs=>true
+            code
+              set=>[@][..][..][_pnl][**label=>{icons-}][class].value
+                value=>{0} email-signed-encrypted-has-attachments
+                  =>[@][..][..][_pnl][**label=>{icons-}][class].value
+          else-if=>not-exist
+            lhs=>[.][value][attachments]
+            and=>equals
+              lhs=>[.][value][signed].value
+              rhs=>true
+            and=>not-equals
+              lhs=>[.][value][encrypted].value
+              rhs=>true
+            code
+              set=>[@][..][..][_pnl][**label=>{icons-}][class].value
+                value=>{0} email-signed
+                  =>[@][..][..][_pnl][**label=>{icons-}][class].value
+          else-if=>not-exist
+            lhs=>[.][value][attachments]
+            and=>not-equals
+              lhs=>[.][value][signed].value
+              rhs=>true
+            and=>equals
+              lhs=>[.][value][encrypted].value
+              rhs=>true
+            code
+              set=>[@][..][..][_pnl][**label=>{icons-}][class].value
+                value=>{0} email-encrypted
+                  =>[@][..][..][_pnl][**label=>{icons-}][class].value
+          else-if=>not-exist
+            lhs=>[.][value][attachments]
+            and=>equals
+              lhs=>[.][value][signed].value
+              rhs=>true
+            and=>equals
+              lhs=>[.][value][encrypted].value
+              rhs=>true
+            code
+              set=>[@][..][..][_pnl][**label=>{icons-}][class].value
+                value=>{0} email-signed-encrypted
                   =>[@][..][..][_pnl][**label=>{icons-}][class].value
           using=>magix.date
             format
