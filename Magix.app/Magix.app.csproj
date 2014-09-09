@@ -107,6 +107,7 @@
     <Content Include="media\images\icons\binder.png" />
     <Content Include="media\images\icons\blackboard.png" />
     <Content Include="media\images\icons\book.png" />
+    <Content Include="media\images\icons\checked.png" />
     <Content Include="media\images\icons\fusion.png" />
     <Content Include="media\images\icons\key.png" />
     <Content Include="media\images\icons\lightning.png" />

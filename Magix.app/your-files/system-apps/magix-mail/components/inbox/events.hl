@@ -148,6 +148,33 @@ magix.emails.load-email
         set=>[**button=>reply]
         set=>[**button=>delete]
 
+    // adding up from field
+    _lb
+      link-button
+        class=>email-sent-from-item
+        onclick
+          code-2-node
+            code=>[$][info].value
+          add=>[magix.email.compose-email][to]
+            values=>[code-2-node][node]
+          magix.email.compose-email
+    if=>exist
+      lhs=>[using][load][value][from][display-name]
+      code
+        set=>[@][..][..][_lb][link-button][value].value
+          value=>{0} &lt;{1}&gt;
+            =>[using][load][value][from][display-name].value
+            =>[using][load][value][from].value
+    else
+      set=>[@][..][_lb][link-button][value].value
+        value=>[using][load][value][from].value
+    node-2-code
+      node=>[using][load][value][from]
+    set=>[@][_lb][link-button][info].value
+      value=>[@][node-2-code][code].value
+    add=>[@][_controls][**panel=>email-from][controls][panel][controls]
+      values=>[@][_lb]
+
     // adding up list of to recipients
     for-each=>[using][load][value][to]
       _lb
@@ -267,11 +294,21 @@ magix.emails.load-email
               magix.viewport.clear-controls
                 reset-class
                   new-class=>emails-sleeping-dynamic
+          panel=>email-from
+            class=>span-17 last email-sent-from
+            controls
+              label
+                class=>span-1 email-address-label
+                tag=>label
+                value=>from:
+              panel
+                class=>span-16 last
+                controls
           panel=>email-to
             class=>span-17 last email-sent-to
             controls
               label
-                class=>span-1
+                class=>span-1 email-address-label
                 tag=>label
                 value=>to:
               panel
@@ -281,7 +318,7 @@ magix.emails.load-email
             class=>span-17 last email-sent-to
             controls
               label
-                class=>span-1
+                class=>span-1 email-address-label
                 tag=>label
                 value=>cc:
               panel
@@ -291,14 +328,14 @@ magix.emails.load-email
             class=>span-17 last email-sent-to
             controls
               label
-                class=>span-1
+                class=>span-1 email-address-label
                 tag=>label
                 value=>bcc:
               panel
                 class=>span-16 last
                 controls
           label=>body
-            class=>clear last email-content-body-body top-1 column
+            class=>clear last email-content-body-body top-1 column bottom-1
             tag=>div
       panel=>attachments
         class=>span-7 clear email-attachments

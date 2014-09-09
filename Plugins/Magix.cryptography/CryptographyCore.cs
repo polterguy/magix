@@ -15,10 +15,79 @@ namespace Magix.cryptography
     internal class CryptographyCore : ActiveController
     {
         /*
+         * checks to see if email can be signed
+         */
+        [ActiveEvent(Name = "magix.cryptography.can-sign")]
+        private static void magix_cryptography_can_sign(object sender, ActiveEventArgs e)
+        {
+            Node ip = Ip(e.Params);
+            if (ip.ContainsValue("inspect"))
+            {
+                ActiveController.AppendInspect(ip["inspect"], @"returns true if email can be signed
+
+will check to see if email can be signed, and if so, return [value] as true.  expects 
+to be given a [email] email address, which it uses as lookup to find an ssl certificate 
+and private key
+
+[email] can be either an expression or a constant");
+                return;
+            }
+
+            string emailAdr = Expressions.GetExpressionValue<string>(ip["email"].Get<string>(), Dp(e.Params), ip, false);
+            ip["value"].Value = CryptographyHelper.CanSign(emailAdr);
+        }
+
+        /*
+         * checks to see if email can be encrypted
+         */
+        [ActiveEvent(Name = "magix.cryptography.can-encrypt")]
+        private static void magix_cryptography_can_encrypt(object sender, ActiveEventArgs e)
+        {
+            Node ip = Ip(e.Params);
+            if (ip.ContainsValue("inspect"))
+            {
+                ActiveController.AppendInspect(ip["inspect"], @"returns true if email can be encrypted
+
+will check to see if email can be encrypted, and if so, return [value] as true.  expects 
+to be given a list of emails as [emails], which it uses as lookup to make sure all recipients 
+have valid certificates
+
+[emails] can be either a list of children nodes, or have its value point to another node 
+which is to be used as the list of nodes containing the emails to verify have certificates
+
+if encryptiong cannot be performed, then [message] will be returned as the child of [value] 
+explaining why");
+                return;
+            }
+
+            Node emails = null;
+            if (ip.ContainsValue("emails"))
+                emails = Expressions.GetExpressionValue<Node>(ip["emails"].Get<string>(), Dp(e.Params), ip, false);
+            else
+                emails = ip["emails"];
+            if (emails.Count == 0)
+            {
+                ip["value"].Value = false;
+                ip["value"]["message"].Value = "no recipients to encrypt for";
+            }
+            else
+            {
+                string canEncrypt = CryptographyHelper.CanEncrypt(emails);
+                if (canEncrypt == null)
+                    ip["value"].Value = true;
+                else
+                {
+                    ip["value"].Value = false;
+                    ip["value"]["message"].Value = canEncrypt;
+                }
+            }
+        }
+
+        /*
          * signs a mime entity
          */
         [ActiveEvent(Name = "magix.cryptography._sign-mime-entity")]
-        public static void magix_cryptography__sign_mime_entity(object sender, ActiveEventArgs e)
+        private static void magix_cryptography__sign_mime_entity(object sender, ActiveEventArgs e)
         {
             Node ip = Ip(e.Params);
             if (ip.ContainsValue("inspect"))
@@ -49,7 +118,7 @@ since it requires an object of type MimeEntity to be passed in");
          * signs a mime entity
          */
         [ActiveEvent(Name = "magix.cryptography._encrypt-mime-entity")]
-        public static void magix_cryptography__encrypt_mime_entity(object sender, ActiveEventArgs e)
+        private static void magix_cryptography__encrypt_mime_entity(object sender, ActiveEventArgs e)
         {
             Node ip = Ip(e.Params);
             if (ip.ContainsValue("inspect"))
@@ -84,7 +153,7 @@ since it requires an object of type MimeEntity to be passed in");
          * signs a mime entity
          */
         [ActiveEvent(Name = "magix.cryptography._sign_and_encrypt-mime-entity")]
-        public static void magix_cryptography__sign_and_encrypt_mime_entity(object sender, ActiveEventArgs e)
+        private static void magix_cryptography__sign_and_encrypt_mime_entity(object sender, ActiveEventArgs e)
         {
             Node ip = Ip(e.Params);
             if (ip.ContainsValue("inspect"))
