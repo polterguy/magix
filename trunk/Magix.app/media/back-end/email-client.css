@@ -109,8 +109,7 @@
 
 .email-content-body
 {
-    width:auto;
-    min-width:660px;
+    width:660px;
 }
 
 .email-content-close
@@ -126,6 +125,26 @@
 {
 }
 
+.email-address-label
+{
+    font-weight:normal;
+    color:#cccccc;
+}
+
+.email-sent-from-item
+{
+    border-radius:9px;
+    border:1px solid rgba(0,0,0,.1);
+    display:block;
+    float:left;
+    padding-left:10px;
+    padding-right:10px;
+    padding-top:-1px;
+    padding-bottom:-1px;
+    margin-right:10px;
+    color:#6666ff;
+}
+
 .email-sent-to-item
 {
     border-radius:9px;
@@ -137,11 +156,13 @@
     padding-top:-1px;
     padding-bottom:-1px;
     margin-right:10px;
+    color:#aaaaff;
 }
 
 .email-content-body-body
 {
-    width:auto;
+    width:660px;
+    overflow-x:hidden;
 }
 
 .email-attachments

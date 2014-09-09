@@ -127,7 +127,7 @@ magix.email.new-messages-downloaded
     controls
       label
         tag=>audio
-        @src=>media/audio/pin.wav
+        @src=>media/audio/ping.wav
         @autoplay
 
 

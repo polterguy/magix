@@ -312,10 +312,14 @@ magix.email.create-recipient-list
     magix.viewport.clear-controls
       container=>dynamic-recipients
       reset-class=>true
-  magix.forms.effect
-    form-id=>composer
-    id=>compose-subject
-    type=>focus-and-select
+  if=>more-than
+    lhs=>[_controls].count
+    rhs=>0
+    code
+      magix.forms.effect
+        form-id=>composer
+        id=>compose-subject
+        type=>focus-and-select
   
 
 // removes a recipient from the to/cc/bcc list of recipients
@@ -450,4 +454,160 @@ magix.email.add-new-recipient
   magix.viewstate.set
     id=>magix.email.recipients
   magix.email.create-recipient-list
+
+
+// sends composed email
+magix.email.send-composed-email
+  magix.viewstate.get=>recipients
+    id=>magix.email.recipients
+  if=>not-exist
+    lhs=>[magix.viewstate.get=>recipients][value][to]
+    or=>equals
+      lhs=>[magix.viewstate.get=>recipients][value][to].count
+      rhs=>0
+    code
+      magix.viewport.show-message
+        message=>your email must have at least one to recipient.&nbsp;&nbsp;click the plus button to add recipients to your email
+        color=>#ffaaaa
+      stop
+  using=>magix.forms
+    get-value=>subject
+      form-id=>composer
+      id=>compose-subject
+    get-value=>body
+      form-id=>composer
+      id=>compose-body
+  if=>equals
+    lhs=>[using][get-value=>subject][value].value
+    rhs=>
+    code
+      magix.viewport.show-message
+        message=>your email has no subject
+        color=>#ffaaaa
+      magix.forms.effect
+        form-id=>composer
+        id=>compose-subject
+        type=>focus-and-select
+      stop
+  if=>equals
+    lhs=>[using][get-value=>body][value].value
+    rhs=>
+    code
+      magix.viewport.show-message
+        message=>your email has no body
+        color=>#ffaaaa
+      magix.forms.effect
+        form-id=>composer
+        id=>compose-body
+        type=>focus-and-select
+      stop
+  magix.viewstate.get=>attachments
+    id=>magix.email.attachments
+  magix.data.load-username=>smtp-settings
+    id=>magix.smtp.settings
+  set=>[magix.smtp.send-message][from].value
+    value=>[magix.data.load-username=>smtp-settings][value][email].value
+  set=>[magix.smtp.send-message][from][display-name].value
+    value=>[magix.data.load-username=>smtp-settings][value][display-name].value
+  set=>[magix.data.load-username=>smtp-settings][value][email]
+  add=>[magix.smtp.send-message]
+    values=>[magix.data.load-username=>smtp-settings][value]
+
+  // to recipients
+  for-each=>[magix.viewstate.get=>recipients][value][to]
+    add=>[/][magix.smtp.send-message][to]
+      value=>
+        value=>[.].value
+    if=>exist
+      lhs=>[.][display-name].value
+      code
+        add=>[/][magix.smtp.send-message][to][>last]
+          value=>display-name
+            value=>[.][display-name].value
+
+  // cc recipients
+  for-each=>[magix.viewstate.get=>recipients][value][cc]
+    add=>[/][magix.smtp.send-message][cc]
+      value=>
+        value=>[.].value
+    if=>exist
+      lhs=>[.][display-name].value
+      code
+        add=>[/][magix.smtp.send-message][cc][>last]
+          value=>display-name
+            value=>[.][display-name].value
+
+  // bcc recipients
+  for-each=>[magix.viewstate.get=>recipients][value][bcc]
+    add=>[/][magix.smtp.send-message][bcc]
+      value=>
+        value=>[.].value
+    if=>exist
+      lhs=>[.][display-name].value
+      code
+        add=>[/][magix.smtp.send-message][bcc][>last]
+          value=>display-name
+            value=>[.][display-name].value
+
+  // subject and body
+  set=>[magix.smtp.send-message][subject].value
+    value=>[**get-value=>subject][value].value
+  set=>[magix.smtp.send-message][body][plain].value
+    value=>[**get-value=>body][value].value
+
+  // attachments
+  for-each=>[magix.viewstate.get=>attachments][value]
+    add=>[/][magix.smtp.send-message][attachments]
+      value=>
+        value=>[.].value
+
+  // retrieving username
+  magix.session.get
+    id=>magix.core.user
+
+  // saving sent email
+  set=>[magix.data.save][value][username].value
+    value=>[magix.session.get][value][username].value
+  set=>[magix.data.save][value][from]
+    value=>[magix.smtp.send-message][from]
+  set=>[magix.data.save][value][date].value
+    value=>[:magix.date.now][value].value
+  add=>[magix.data.save][value][to]
+    values=>[magix.smtp.send-message][to]
+  if=>exist
+    lhs=>[magix.smtp.send-message][cc]
+    code
+      add=>[magix.data.save][value][cc]
+        values=>[magix.smtp.send-message][cc]
+  if=>exist
+    lhs=>[magix.smtp.send-message][bcc]
+    code
+      add=>[magix.data.save][value][bcc]
+        values=>[magix.smtp.send-message][bcc]
+  set=>[magix.data.save][value][subject].value
+    value=>[**get-value=>subject][value].value
+  set=>[magix.data.save][value][body][plain].value
+    value=>[**get-value=>body][value].value
+  magix.data.save
+    value
+      type=>magix.email.message
+      read=>true
+      folder=>sent
+
+  // sending email
+  magix.smtp.send-message
+
+  // showing user feedback, and clearing viewport container
+  magix.viewport.show-message
+    message=>email successfully sent
+    color=>#aaffaa
+  magix.viewport.clear-controls
+    container=>content3
+    reset-class=>true
+
+  // resettings class back on inbox
+  magix.forms.set-class
+    id=>content4
+    value=>span-18 last boxed air-padding bottom-1
+
 
