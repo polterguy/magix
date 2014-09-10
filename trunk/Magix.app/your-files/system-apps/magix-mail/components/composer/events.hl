@@ -454,6 +454,9 @@ magix.email.add-new-recipient
   magix.viewstate.set
     id=>magix.email.recipients
   magix.email.create-recipient-list
+  magix.viewport.clear-controls
+    container=>dynamic-add-recipient
+    reset-class=>true
 
 
 // sends composed email
@@ -649,10 +652,4 @@ magix.email.send-composed-email
   magix.viewport.clear-controls
     container=>content3
     reset-class=>true
-
-  // resettings class back on inbox
-  magix.forms.set-class
-    id=>content4
-    value=>span-18 last boxed air-padding bottom-1
-
 

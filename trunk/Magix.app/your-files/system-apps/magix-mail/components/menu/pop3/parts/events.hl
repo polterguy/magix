@@ -16,18 +16,12 @@ magix.email.compose-clicked
 magix.email.inbox-clicked
   execute-script
     file=>your-files/system-apps/magix-mail/components/inbox/show-emails.hl
-  magix.viewport.clear-controls
-    container=>content3
-    reset-class=>true
 
 
 // contacts link was clicked, making sure we show all contacts
 magix.email.contacts-clicked
   execute-script
     file=>your-files/system-apps/magix-mail/components/contacts/show-contacts.hl
-  magix.viewport.clear-controls
-    container=>content3
-    reset-class=>true
 
 
 // sent items link was clicked, making sure we show all emails that have been sent
@@ -36,9 +30,6 @@ magix.email.sent-clicked
     file=>your-files/system-apps/magix-mail/components/inbox/show-emails.hl
     params
       mailbox=>sent
-  magix.viewport.clear-controls
-    container=>content3
-    reset-class=>true
 
 
 // trash link was clicked, making sure we show all emails in trashcan
@@ -47,9 +38,6 @@ magix.email.trash-clicked
     file=>your-files/system-apps/magix-mail/components/inbox/show-emails.hl
     params
       mailbox=>trash
-  magix.viewport.clear-controls
-    container=>content3
-    reset-class=>true
 
 
 // invoked when settings link is clicked.  show settings form, and make sure inbox is shown after settings is canceled or saved

@@ -6,11 +6,13 @@
 
 using System;
 using System.IO;
+using System.Linq;
 using System.Collections.Generic;
 using MimeKit;
 using MimeKit.Cryptography;
 using MailKit;
 using MailKit.Net.Pop3;
+using HtmlAgilityPack;
 using Magix.Core;
 
 namespace Magix.email
@@ -194,6 +196,52 @@ namespace Magix.email
         {
             ExtractHeaders(msg, node);
             ExtractBody(new MimeEntity[] { msg.Body }, node, false, msg, basePath, attachmentDirectory, linkedAttachmentDirectory);
+            CleanUpInlineAttachments(node, attachmentDirectory, linkedAttachmentDirectory);
+        }
+
+        /*
+         * tries to show inline attachments as they're supposed to be shown
+         */
+        private static void CleanUpInlineAttachments(Node node, string attachmentDirectory, string linkedAttachmentDirectory)
+        {
+            if (node.Contains("body") && node["body"].ContainsValue("html"))
+            {
+                HtmlDocument doc = new HtmlDocument();
+                doc.LoadHtml(node["body"]["html"].Get<string>());
+                List<HtmlNode> images = doc.DocumentNode.Descendants()
+                    .Where(n => n.Name == "img")
+                    .ToList();
+                foreach (HtmlNode idxImage in images)
+                {
+                    if (idxImage.Attributes["src"] != null)
+                    {
+                        HtmlAttribute src = idxImage.Attributes["src"];
+                        if (src.Value.StartsWith("cid:"))
+                        {
+                            string imageSrc = src.Value.Substring(4);
+                            if (node.Contains("attachments"))
+                            {
+                                foreach (Node idxAtt in node["attachments"])
+                                {
+                                    if (idxAtt.Get<string>() == imageSrc)
+                                    {
+                                        Node moveImage = new Node();
+                                        moveImage["from"].Value = attachmentDirectory + "/" + imageSrc;
+                                        moveImage["to"].Value = linkedAttachmentDirectory + "/" + imageSrc;
+                                        ActiveEvents.Instance.RaiseActiveEvent(
+                                            typeof(Pop3Helper),
+                                            "magix.file.move-file",
+                                            moveImage);
+                                        src.Value = linkedAttachmentDirectory + "/" + imageSrc;
+                                    }
+                                    idxAtt.UnTie();
+                                }
+                            }
+                        }
+                    }
+                }
+                node["body"]["html"].Value = doc.DocumentNode.InnerHtml;
+            }
         }
 
         /*
@@ -251,7 +299,7 @@ namespace Magix.email
                         }
                         else if (idxBody.ContentType.MediaSubtype == "html")
                         {
-                            node["body"]["html"].Value = tp.Text;
+                            node["body"]["html"].Value = CleanHtml(tp.Text);
                         }
                     }
                 }
@@ -298,6 +346,24 @@ namespace Magix.email
                     ExtractAttachments(idxBody as MimePart, msg, node, basePath, attachmentDirectory, linkedAttachmentDirectory);
                 }
             }
+        }
+
+        /*
+         * cleans up html from email
+         */
+        private static string CleanHtml(string html)
+        {
+            HtmlDocument doc = new HtmlDocument();
+            doc.LoadHtml(html);
+            doc.DocumentNode.Descendants()
+                .Where(n => n.Name == "script" || n.Name == "style" || n.Name == "#comment")
+                .ToList()
+                .ForEach(n => n.Remove());
+            HtmlNode el = doc.DocumentNode.SelectSingleNode("//body");
+            if (el != null)
+                return el.InnerHtml;
+            else
+                return doc.DocumentNode.InnerHtml;
         }
 
         /*
