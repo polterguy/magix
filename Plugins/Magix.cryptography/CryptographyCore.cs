@@ -5,15 +5,39 @@
  */
 
 using System;
+using System.Collections.Generic;
+using sys2 = System.Security.Cryptography.X509Certificates;
 using MimeKit;
 using MimeKit.Cryptography;
-using System.Collections.Generic;
+using Org.BouncyCastle.X509;
+using Org.BouncyCastle.Security;
+using Org.BouncyCastle.Crypto.Prng;
 using Magix.Core;
 
 namespace Magix.cryptography
 {
     internal class CryptographyCore : ActiveController
     {
+        /*
+         * creates a certificate and a private key
+         */
+        [ActiveEvent(Name = "magix.cryptography.create-certificate-key")]
+        private static void magix_cryptography_create_certificate_key(object sender, ActiveEventArgs e)
+        {
+            Node ip = Ip(e.Params);
+            if (ip.ContainsValue("inspect"))
+            {
+                ActiveController.AppendInspect(ip["inspect"], @"creates a new certificate and private key
+
+will create a new certificate, containing a private key, and install into 
+certificate/key database");
+                return;
+            }
+
+            string subjectNameString = Expressions.GetExpressionValue<string>(ip["subject-name"].Get<string>(), Dp(e.Params), ip, false);
+            CryptographyHelper.Generate(subjectNameString);
+        }
+
         /*
          * checks to see if email can be signed
          */
@@ -95,7 +119,8 @@ explaining why");
                 ActiveController.AppendInspect(ip["inspect"], @"imports a certificate into certificate database
 
 will import the given [certificate] file into the certificate database.  if 
-[password] is given, it will be used as password to extract the certificate");
+[password] is given, it will be used as password to extract the certificate, 
+assuming the certificate also contains a private key");
                 return;
             }
 

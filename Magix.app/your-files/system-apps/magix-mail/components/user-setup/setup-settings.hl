@@ -29,7 +29,7 @@ if=>exist
   code
     _save
       panel
-        class=>btn-group span-4 left-12 top-1 clear
+        class=>btn-group span-4 left-14 top-1 clear
     add=>[@][_save][panel][controls]
       value=>[**button=>save]
     add=>[@][_save][panel][controls]
@@ -48,7 +48,7 @@ magix.viewport.clear-controls
 magix.forms.create-web-part
   form-id=>email-settings
   container=>content2
-  class=>fill-width column
+  class=>span-18 left-3
   events
 
     magix.email-settings.load-smtp-settings
@@ -493,7 +493,7 @@ magix.forms.create-web-part
           class=>span-5 top-1 last
           placeholder=>display name ...
     panel=>incoming-wrp
-      class=>span-7 boxed air-padding
+      class=>span-7 boxed air-padding last
       controls
         label
           class=>fill-width last clear bottom-1
@@ -556,7 +556,8 @@ magix.forms.create-web-part
         label
           class=>span-16 last top-1
           value=>@"if you have an existing ssl certificate and/or a cryptography private key, you can drag and drop your certificate/key file 
-into this area, and it will be automatically uploaded, such that you can use it for cryptography purposes"
+into this area, and it will be automatically uploaded, such that you can use it for cryptography purposes.&nbsp;&nbsp;you can also create 
+a new certificate and key here"
         dynamic=>import-certificate
         uploader=>upload-certificate
           class=>mux-file-uploader
@@ -612,7 +613,7 @@ into this area, and it will be automatically uploaded, such that you can use it 
                           container=>import-certificate
                           reset-class=>true
     button=>save
-      class=>span-2 left-16 last clear top-1
+      class=>span-2 right last clear top-1
       value=>save
       onclick
         magix.forms.get-children-values
