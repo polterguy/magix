@@ -27,28 +27,20 @@ namespace Magix.cryptography
          */
         public static bool CanSign(string email)
         {
-            foreach (sys.StoreLocation idxStore in new sys.StoreLocation[] { sys.StoreLocation.CurrentUser })
+            try
             {
-                sys.X509Store store = new sys.X509Store(idxStore);
-                store.Open(sys.OpenFlags.ReadOnly);
-                try
+                MailboxAddress signer = new MailboxAddress("", email);
+                TextPart entity = new TextPart("text");
+                using (WindowsSecureMimeContext ctx = new WindowsSecureMimeContext(sys.StoreLocation.CurrentUser))
                 {
-                    sys.X509Certificate2Collection coll = store.Certificates.Find(sys.X509FindType.FindBySubjectName, email, true);
-                    if (coll.Count > 0)
-                    {
-                        foreach (sys.X509Certificate2 idxCert in coll)
-                        {
-                            if (idxCert.HasPrivateKey)
-                                return true;
-                        }
-                    }
-                }
-                finally
-                {
-                    store.Close();
+                    MultipartSigned.Create(ctx, signer, DigestAlgorithm.Sha1, entity);
+                    return true;
                 }
             }
-            return false;
+            catch
+            {
+                return false;
+            }
         }
 
         /*
@@ -56,22 +48,21 @@ namespace Magix.cryptography
          */
         public static string CanEncrypt(Node emails)
         {
-            string retVal = null;
-            sys.X509Store currentUserStore = new sys.X509Store(sys.StoreLocation.CurrentUser);
-            currentUserStore.Open(sys.OpenFlags.ReadOnly);
             try
             {
-                foreach (Node idxEmail in emails)
+                List<MailboxAddress> list = new List<MailboxAddress>();
+                foreach (Node idx in emails)
+                    list.Add(new MailboxAddress("", idx.Get<string>()));
+                TextPart entity = new TextPart("text");
+                using (WindowsSecureMimeContext ctx = new WindowsSecureMimeContext(sys.StoreLocation.CurrentUser))
                 {
-                    sys.X509Certificate2Collection coll = currentUserStore.Certificates.Find(sys.X509FindType.FindBySubjectName, idxEmail.Value, true);
-                    if (coll.Count == 0)
-                        retVal += "email '" + idxEmail.Value + "' does not have a valid certificate.&nbsp;&nbsp;";
+                    ApplicationPkcs7Mime.Encrypt(ctx, list, entity);
                 }
-                return retVal;
+                return null;
             }
-            finally
+            catch(Exception err)
             {
-                currentUserStore.Close();
+                return err.Message;
             }
         }
 
@@ -128,6 +119,28 @@ namespace Magix.cryptography
                         ctx.Import(stream, password);
                     else
                         ctx.Import(stream);
+                }
+            }
+        }
+
+        /*
+         * removes all certificates matching subjectName from database
+         */
+        internal static void RemoveCertificates(string subjectName)
+        {
+            foreach (sys.StoreLocation idxStore in new sys.StoreLocation[] { sys.StoreLocation.CurrentUser })
+            {
+                sys.X509Store store = new sys.X509Store(idxStore);
+                store.Open(sys.OpenFlags.ReadOnly);
+                try
+                {
+                    sys.X509Certificate2Collection coll = store.Certificates.Find(sys.X509FindType.FindBySubjectName, subjectName, false);
+                    if (coll.Count > 0)
+                        store.RemoveRange(coll);
+                }
+                finally
+                {
+                    store.Close();
                 }
             }
         }

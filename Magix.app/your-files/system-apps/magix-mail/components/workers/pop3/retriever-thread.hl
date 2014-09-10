@@ -77,7 +77,7 @@ try
                         add=>[@][magix.email.filter-emails][email]
                           values=>[@][..][..][..][_message]
                         magix.email.filter-emails
-                          user=>{user}
+                          username=>{user}
                         set=>[@][..][..][..][_message]
                         add=>[@][..][..][..][_message]
                           values=>[@][magix.email.filter-emails][email]
@@ -105,10 +105,10 @@ try
                             =>[@][..][magix.data.save=>status][value][download-count].value
                             =>1
                         magix.data.save=>status
+                        set=>[/][**magix.data.save=>status-2][value][download-count].value
+                          value=>[@][magix.data.save=>status][value][download-count].value
 
         // finished retrieving messages, updating status before returning
-        set=>[@][magix.data.save=>status-2][value][download-count].value
-          value=>[@][..][..][magix.pop3.get-message-count][count].value
         magix.data.save=>status-2
           id=>magix.email.thread-status-{0}
             =>{user}

@@ -80,6 +80,9 @@ else
   magix.viewstate.set
     id=>magix.emails.current-view
 
+magix.session.get=>username
+  id=>magix.core.user
+
 iterate=>[magix.forms.create-web-part]
   if=>equals
     lhs=>[.].value
@@ -111,6 +114,12 @@ iterate=>[magix.forms.create-web-part]
     code
       set=>[.].value
         value=>[/][_mailbox].value
+  else-if=>equals
+    lhs=>[.].value
+    rhs=>{user}
+    code
+      set=>[.].value
+        value=>[/][magix.session.get=>username][value][username].value
 
 if=>equals
   lhs=>[_start].value
@@ -202,6 +211,7 @@ magix.forms.create-web-part
           prototype
             type=>magix.email.message
             folder=>{mailbox}
+            username=>{user}
 
         // removing emails not matching search criteria, if any criteria is given
         _search=>{emails-search}
@@ -252,13 +262,13 @@ magix.forms.create-web-part
         // sorting emails according to date
         sort=>[magix.data.load=>load-emails][objects]
           if=>less-than
-            lhs=>[@][_first][0][value][date].value
-            rhs=>[@][_second][0][value][date].value
+            lhs=>[@][_first][0][value][download-date].value
+            rhs=>[@][_second][0][value][download-date].value
             code
               set=>[@][..][..][_first]
           else-if=>more-than
-            lhs=>[@][_first][0][value][date].value
-            rhs=>[@][_second][0][value][date].value
+            lhs=>[@][_first][0][value][download-date].value
+            rhs=>[@][_second][0][value][download-date].value
             code
               set=>[@][..][..][_second]
 
@@ -388,6 +398,8 @@ magix.forms.create-web-part
               set=>[@][..][..][_pnl][**label=>{icons-}][class].value
                 value=>{0} email-has-attachments
                   =>[@][..][..][_pnl][**label=>{icons-}][class].value
+              set=>[@][..][..][_pnl][**label=>{icons-}][title].value
+                value=>email has attachments
           else-if=>exist
             lhs=>[.][value][attachments]
             and=>equals
@@ -400,6 +412,8 @@ magix.forms.create-web-part
               set=>[@][..][..][_pnl][**label=>{icons-}][class].value
                 value=>{0} email-signed-has-attachments
                   =>[@][..][..][_pnl][**label=>{icons-}][class].value
+              set=>[@][..][..][_pnl][**label=>{icons-}][title].value
+                value=>email is signed, and has attachments
           else-if=>exist
             lhs=>[.][value][attachments]
             and=>not-equals
@@ -412,6 +426,8 @@ magix.forms.create-web-part
               set=>[@][..][..][_pnl][**label=>{icons-}][class].value
                 value=>{0} email-encrypted-has-attachments
                   =>[@][..][..][_pnl][**label=>{icons-}][class].value
+              set=>[@][..][..][_pnl][**label=>{icons-}][title].value
+                value=>email is encrypted, and has attachments
           else-if=>exist
             lhs=>[.][value][attachments]
             and=>equals
@@ -424,6 +440,8 @@ magix.forms.create-web-part
               set=>[@][..][..][_pnl][**label=>{icons-}][class].value
                 value=>{0} email-signed-encrypted-has-attachments
                   =>[@][..][..][_pnl][**label=>{icons-}][class].value
+              set=>[@][..][..][_pnl][**label=>{icons-}][title].value
+                value=>email is signed, encrypted, and has attachments
           else-if=>not-exist
             lhs=>[.][value][attachments]
             and=>equals
@@ -436,6 +454,8 @@ magix.forms.create-web-part
               set=>[@][..][..][_pnl][**label=>{icons-}][class].value
                 value=>{0} email-signed
                   =>[@][..][..][_pnl][**label=>{icons-}][class].value
+              set=>[@][..][..][_pnl][**label=>{icons-}][title].value
+                value=>email is signed
           else-if=>not-exist
             lhs=>[.][value][attachments]
             and=>not-equals
@@ -448,6 +468,8 @@ magix.forms.create-web-part
               set=>[@][..][..][_pnl][**label=>{icons-}][class].value
                 value=>{0} email-encrypted
                   =>[@][..][..][_pnl][**label=>{icons-}][class].value
+              set=>[@][..][..][_pnl][**label=>{icons-}][title].value
+                value=>email is encrypted
           else-if=>not-exist
             lhs=>[.][value][attachments]
             and=>equals
@@ -460,6 +482,8 @@ magix.forms.create-web-part
               set=>[@][..][..][_pnl][**label=>{icons-}][class].value
                 value=>{0} email-signed-encrypted
                   =>[@][..][..][_pnl][**label=>{icons-}][class].value
+              set=>[@][..][..][_pnl][**label=>{icons-}][title].value
+                value=>email is signed and encrypted
           using=>magix.date
             format
               date=>[.][value][date].value

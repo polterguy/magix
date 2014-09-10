@@ -144,6 +144,10 @@ magix.forms.create-web-part
                 search=>{contacts-search}
     lambda=>list-of-contacts
       oncreatecontrols
+        magix.session.get=>get-user
+          id=>magix.core.user
+        set=>[magix.data.load=>load-contacts][prototype][username].value
+          value=>[magix.session.get=>get-user][value][username].value
         magix.data.load=>load-contacts
           prototype
             type=>magix.email.contact

@@ -14,31 +14,62 @@ will filter emails and put them into the right folder
 according to user's settings.  current version simply 
 marks all emails as belonging to 'inbox'
 
-will also extract all email addresses from email and add 
-to contacts as emails"
+will also extract all emails from email and add 
+them to contacts"
   code
+
+    // putting email in "inbox" folder
     set=>[$][email][folder].value
       value=>inbox
 
-    // adding sender to contacts if he's not there already
-    set=>[magix.data.count][prototype][email].value
-      value=>[$][email][from].value
-    magix.data.count
-      prototype
-        type=>magix.email.contact
-    if=>equals
-      lhs=>[magix.data.count][count].value
-      rhs=>0
+    // adding sender and recipients to contacts if they're not already there
+    _emails
+
+    // first sender
+    add=>[_emails]
+      value=>
+        value=>[$][email][from].value
+    if=>exist
+      lhs=>[$][email][from][display-name]
       code
-        // sender is not in contact list, adding him or her up
-        set=>[@][magix.data.save][value][email].value
-          value=>[$][email][from].value
-        if=>exist
-          lhs=>[$][email][from][display-name]
-          code
-            set=>[@][..][..][magix.data.save][value][display-name].value
-              value=>[$][email][from][display-name].value
-        magix.data.save
-          value
-            type=>magix.email.contact
+        add=>[_emails][0]
+          value=>[$][email][from][display-name]
+
+    // then to, cc and bcc if existing
+    for-each=>[$][email][to]
+      add=>[@][..][_emails]
+        value=>[.]
+    for-each=>[$][email][cc]
+      add=>[@][..][_emails]
+        value=>[.]
+    for-each=>[$][email][bcc]
+      add=>[@][..][_emails]
+        value=>[.]
+
+    // then looping through all emails and adding them, unless they exist in contacts from before
+    for-each=>[_emails]
+      set=>[@][magix.data.count][prototype][email].value
+        value=>[.].value
+      set=>[@][magix.data.count][prototype][username].value
+        value=>[$][username].value
+      magix.data.count
+        prototype
+          type=>magix.email.contact
+      if=>equals
+        lhs=>[@][magix.data.count][count].value
+        rhs=>0
+        code
+          // sender is not in contact list, adding him or her up
+          set=>[@][magix.data.save][value][email].value
+            value=>[.].value
+          set=>[@][magix.data.save][value][username].value
+            value=>[$][username].value
+          if=>exist
+            lhs=>[.][display-name]
+            code
+              set=>[@][..][..][magix.data.save][value][display-name].value
+                value=>[.][display-name].value
+          magix.data.save
+            value
+              type=>magix.email.contact
 
