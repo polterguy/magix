@@ -49,6 +49,9 @@
     <Reference Include="BouncyCastle">
       <HintPath>..\packages\MimeKit.0.94.0.0\lib\net45\BouncyCastle.dll</HintPath>
     </Reference>
+    <Reference Include="HtmlAgilityPack">
+      <HintPath>..\packages\HtmlAgilityPack.1.4.8\lib\Net45\HtmlAgilityPack.dll</HintPath>
+    </Reference>
     <Reference Include="log4net">
       <HintPath>..\references\log4net.dll</HintPath>
     </Reference>

@@ -44,11 +44,6 @@ magix.viewport.include-client-file
   type=>css
   file=>media/back-end/file-uploader.css
 
-// changing class of inbox web part such that it won't go left
-magix.forms.set-class
-  id=>content4
-  value=>span-18 last boxed air-padding bottom-1 left-4
-
 magix.forms.create-web-part
   container=>content3
   class=>span-18 last boxed air-padding bottom-1
@@ -242,10 +237,6 @@ magix.forms.create-web-part
           class=>span-2 last
           value=>cancel
           onclick
-            // changing class of inbox web part such that it won't go left
-            magix.forms.set-class
-              id=>content4
-              value=>span-18 last boxed air-padding bottom-1
             magix.viewport.clear-controls
               container=>content3
               reset-class=>true
