@@ -196,52 +196,6 @@ namespace Magix.email
         {
             ExtractHeaders(msg, node);
             ExtractBody(new MimeEntity[] { msg.Body }, node, false, msg, basePath, attachmentDirectory, linkedAttachmentDirectory);
-            CleanUpInlineAttachments(node, attachmentDirectory, linkedAttachmentDirectory);
-        }
-
-        /*
-         * tries to show inline attachments as they're supposed to be shown
-         */
-        private static void CleanUpInlineAttachments(Node node, string attachmentDirectory, string linkedAttachmentDirectory)
-        {
-            if (node.Contains("body") && node["body"].ContainsValue("html"))
-            {
-                HtmlDocument doc = new HtmlDocument();
-                doc.LoadHtml(node["body"]["html"].Get<string>());
-                List<HtmlNode> images = doc.DocumentNode.Descendants()
-                    .Where(n => n.Name == "img")
-                    .ToList();
-                foreach (HtmlNode idxImage in images)
-                {
-                    if (idxImage.Attributes["src"] != null)
-                    {
-                        HtmlAttribute src = idxImage.Attributes["src"];
-                        if (src.Value.StartsWith("cid:"))
-                        {
-                            string imageSrc = src.Value.Substring(4);
-                            if (node.Contains("attachments"))
-                            {
-                                foreach (Node idxAtt in node["attachments"])
-                                {
-                                    if (idxAtt.Get<string>() == imageSrc)
-                                    {
-                                        Node moveImage = new Node();
-                                        moveImage["from"].Value = attachmentDirectory + "/" + imageSrc;
-                                        moveImage["to"].Value = linkedAttachmentDirectory + "/" + imageSrc;
-                                        ActiveEvents.Instance.RaiseActiveEvent(
-                                            typeof(Pop3Helper),
-                                            "magix.file.move-file",
-                                            moveImage);
-                                        src.Value = linkedAttachmentDirectory + "/" + imageSrc;
-                                    }
-                                    idxAtt.UnTie();
-                                }
-                            }
-                        }
-                    }
-                }
-                node["body"]["html"].Value = doc.DocumentNode.InnerHtml;
-            }
         }
 
         /*
@@ -388,6 +342,14 @@ namespace Magix.email
                 if (node.Contains("body") && node["body"].ContainsValue("html"))
                     node["body"]["html"].Value =
                         node["body"]["html"].Get<string>().Replace(entity.Headers["Content-Location"], fileName);
+            }
+            else if (entity.Headers.Contains("Content-ID"))
+            {
+                fileName = linkedAttachmentDirectory + msg.MessageId + "_" + entity.FileName;
+                string contentId = entity.Headers["Content-ID"].Trim('<').Trim('>');
+                if (node.Contains("body") && node["body"].ContainsValue("html"))
+                    node["body"]["html"].Value =
+                        node["body"]["html"].Get<string>().Replace("cid:" + contentId, fileName);
             }
             else
             {
