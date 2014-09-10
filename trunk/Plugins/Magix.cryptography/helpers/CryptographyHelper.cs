@@ -8,12 +8,19 @@ using System;
 using System.IO;
 using System.Collections.Generic;
 using sys = System.Security.Cryptography.X509Certificates;
+using sys2 = System.Security.Cryptography;
 using MimeKit;
 using MimeKit.Cryptography;
 using Org.BouncyCastle.X509;
 using Org.BouncyCastle.Security;
 using Org.BouncyCastle.Crypto;
 using Magix.Core;
+using Org.BouncyCastle.Math;
+using Org.BouncyCastle.Asn1.X509;
+using Org.BouncyCastle.Crypto.Generators;
+using Org.BouncyCastle.Crypto.Prng;
+using Org.BouncyCastle.Utilities;
+using Org.BouncyCastle.Crypto.Parameters;
 
 namespace Magix.cryptography
 {
@@ -143,6 +150,67 @@ namespace Magix.cryptography
                     store.Close();
                 }
             }
+        }
+
+        public static void Generate(string subjectName)
+        {
+            var keyPairGenerator = new RsaKeyPairGenerator();
+            var secureRandom = new SecureRandom(new CryptoApiRandomGenerator());
+            keyPairGenerator.Init(new KeyGenerationParameters(secureRandom, 2048));
+            var keyPair = keyPairGenerator.GenerateKeyPair();
+            var publicKey = keyPair.Public;
+            var privateKey = (RsaPrivateCrtKeyParameters)keyPair.Private;
+
+            var certificateGenerator = new X509V3CertificateGenerator();
+            BigInteger serialNumber = BigIntegers.CreateRandomInRange(BigInteger.One, BigInteger.ValueOf(Int64.MaxValue), secureRandom);
+            certificateGenerator.SetSerialNumber(serialNumber);
+            certificateGenerator.SetSubjectDN(new X509Name("CN=" + subjectName + ", E=" + subjectName));
+            certificateGenerator.SetIssuerDN(new X509Name("CN=" + subjectName + ", E=" + subjectName));
+            certificateGenerator.SetNotBefore(DateTime.Now.AddDays(-1));
+            certificateGenerator.SetNotAfter(DateTime.Now.AddYears(3));
+            certificateGenerator.SetSignatureAlgorithm("SHA512WithRSA");
+            certificateGenerator.SetPublicKey(publicKey);
+
+            var newCert = certificateGenerator.Generate(privateKey);
+            var dotNetCert = new sys.X509Certificate2(DotNetUtilities.ToX509Certificate(newCert));
+            var dotNetPrivateKey = ToDotNetKey(privateKey);
+            dotNetCert.PrivateKey = dotNetPrivateKey;
+
+            sys.X509Store store = new sys.X509Store();
+            store.Open(sys.OpenFlags.ReadWrite);
+            try
+            {
+                store.Add(dotNetCert);
+            }
+            finally
+            {
+                store.Close();
+            }
+        }
+
+        public static sys2.AsymmetricAlgorithm ToDotNetKey(RsaPrivateCrtKeyParameters privateKey)
+        {
+            var cspPars = new sys2.CspParameters
+            {
+                KeyContainerName = Guid.NewGuid().ToString(),
+                KeyNumber = (int)sys2.KeyNumber.Exchange
+            };
+
+            var rsaProvider = new sys2.RSACryptoServiceProvider(cspPars);
+            var parameters = new sys2.RSAParameters
+            {
+                Modulus = privateKey.Modulus.ToByteArrayUnsigned(),
+                P = privateKey.P.ToByteArrayUnsigned(),
+                Q = privateKey.Q.ToByteArrayUnsigned(),
+                DP = privateKey.DP.ToByteArrayUnsigned(),
+                DQ = privateKey.DQ.ToByteArrayUnsigned(),
+                InverseQ = privateKey.QInv.ToByteArrayUnsigned(),
+                D = privateKey.Exponent.ToByteArrayUnsigned(),
+                Exponent = privateKey.PublicExponent.ToByteArrayUnsigned()
+            };
+
+            rsaProvider.ImportParameters(parameters);
+            return rsaProvider;
         }
     }
 }
