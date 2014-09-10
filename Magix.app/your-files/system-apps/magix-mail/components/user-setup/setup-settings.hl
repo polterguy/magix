@@ -555,8 +555,8 @@ magix.forms.create-web-part
           class=>span-16 last
         label
           class=>span-16 last top-1
-          value=>@"if you have an ssl certificate and/or a cryptography private key, you can drag and drop your file onto this area, 
-and it will be automatically uploaded such that you can use it for cryptography purposes"
+          value=>@"if you have an existing ssl certificate and/or a cryptography private key, you can drag and drop your certificate/key file 
+into this area, and it will be automatically uploaded, such that you can use it for cryptography purposes"
         dynamic=>import-certificate
         uploader=>upload-certificate
           class=>mux-file-uploader
