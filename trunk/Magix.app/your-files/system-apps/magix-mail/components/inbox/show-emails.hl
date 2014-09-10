@@ -400,6 +400,36 @@ magix.forms.create-web-part
                   =>[@][..][..][_pnl][**label=>{icons-}][class].value
               set=>[@][..][..][_pnl][**label=>{icons-}][title].value
                 value=>email has attachments
+          else-if=>equals
+            lhs=>[.][value][attachments].count
+            rhs=>1
+            and=>equals
+              lhs=>[.][value][signed].value
+              rhs=>true
+            and=>not-equals
+              lhs=>[.][value][encrypted].value
+              rhs=>true
+            code
+              set=>[@][..][..][_pnl][**label=>{icons-}][class].value
+                value=>{0} email-signed
+                  =>[@][..][..][_pnl][**label=>{icons-}][class].value
+              set=>[@][..][..][_pnl][**label=>{icons-}][title].value
+                value=>email is signed
+          else-if=>equals
+            lhs=>[.][value][attachments].count
+            rhs=>1
+            and=>equals
+              lhs=>[.][value][signed].value
+              rhs=>true
+            and=>equals
+              lhs=>[.][value][encrypted].value
+              rhs=>true
+            code
+              set=>[@][..][..][_pnl][**label=>{icons-}][class].value
+                value=>{0} email-signed-encrypted
+                  =>[@][..][..][_pnl][**label=>{icons-}][class].value
+              set=>[@][..][..][_pnl][**label=>{icons-}][title].value
+                value=>email is signed and encrypted
           else-if=>exist
             lhs=>[.][value][attachments]
             and=>equals
@@ -444,20 +474,6 @@ magix.forms.create-web-part
                 value=>email is signed, encrypted, and has attachments
           else-if=>not-exist
             lhs=>[.][value][attachments]
-            and=>equals
-              lhs=>[.][value][signed].value
-              rhs=>true
-            and=>not-equals
-              lhs=>[.][value][encrypted].value
-              rhs=>true
-            code
-              set=>[@][..][..][_pnl][**label=>{icons-}][class].value
-                value=>{0} email-signed
-                  =>[@][..][..][_pnl][**label=>{icons-}][class].value
-              set=>[@][..][..][_pnl][**label=>{icons-}][title].value
-                value=>email is signed
-          else-if=>not-exist
-            lhs=>[.][value][attachments]
             and=>not-equals
               lhs=>[.][value][signed].value
               rhs=>true
@@ -470,20 +486,6 @@ magix.forms.create-web-part
                   =>[@][..][..][_pnl][**label=>{icons-}][class].value
               set=>[@][..][..][_pnl][**label=>{icons-}][title].value
                 value=>email is encrypted
-          else-if=>not-exist
-            lhs=>[.][value][attachments]
-            and=>equals
-              lhs=>[.][value][signed].value
-              rhs=>true
-            and=>equals
-              lhs=>[.][value][encrypted].value
-              rhs=>true
-            code
-              set=>[@][..][..][_pnl][**label=>{icons-}][class].value
-                value=>{0} email-signed-encrypted
-                  =>[@][..][..][_pnl][**label=>{icons-}][class].value
-              set=>[@][..][..][_pnl][**label=>{icons-}][title].value
-                value=>email is signed and encrypted
           using=>magix.date
             format
               date=>[.][value][date].value
