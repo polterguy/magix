@@ -84,7 +84,7 @@ explaining why");
         }
 
         /*
-         * checks to see if email can be encrypted
+         * imports a certificate into database
          */
         [ActiveEvent(Name = "magix.cryptography.import-certificate")]
         private static void magix_cryptography_import_certificate(object sender, ActiveEventArgs e)
@@ -104,6 +104,28 @@ will import the given [certificate] file into the certificate database.  if
             string certificateFile = Expressions.GetExpressionValue<string>(ip["certificate"].Get<string>(), dp, ip, false);
             string password = Expressions.GetExpressionValue<string>(ip["password"].Get<string>(), dp, ip, false);
             CryptographyHelper.ImportCertificate(certificateFile, password);
+        }
+
+        /*
+         * removes a certificate from database by subject name
+         */
+        [ActiveEvent(Name = "magix.cryptography.remove-certificates")]
+        private static void magix_cryptography_remove_certificates(object sender, ActiveEventArgs e)
+        {
+            Node ip = Ip(e.Params);
+            if (ip.ContainsValue("inspect"))
+            {
+                ActiveController.AppendInspect(ip["inspect"], @"removes certificates from certificate database
+
+will remove all given certificates from the certificate database according to 
+[subject-name]");
+                return;
+            }
+
+            Node dp = Dp(e.Params);
+
+            string subjectName = Expressions.GetExpressionValue<string>(ip["subject-name"].Get<string>(), dp, ip, false);
+            CryptographyHelper.RemoveCertificates(subjectName);
         }
 
         /*

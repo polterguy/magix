@@ -9,6 +9,11 @@ execute when settings are successfully saved
 not to be invoked directly, but through the magix mail 
 component, which can be used with the magix-mail/launch.hl file"
 
+// including css files
+magix.viewport.include-client-file
+  type=>css
+  file=>media/back-end/file-uploader.css
+
 // adding up execute afterwards code block, if given
 if=>exist
   lhs=>[$][execute-afterwards]
@@ -424,7 +429,7 @@ magix.forms.create-web-part
 
   controls
     panel=>smtp-wrp
-      class=>span-7
+      class=>span-7 boxed air-padding
       onfirstload
         magix.email-settings.load-smtp-settings
       controls
@@ -439,6 +444,11 @@ magix.forms.create-web-part
         text-box=>smtp-server
           class=>span-5 last
           placeholder=>smtp server ...
+          onfirstload
+            magix.forms.effect
+              form-id=>email-settings
+              id=>smtp-server
+              type=>focus-and-select
         label
           class=>span-2 clear top-1 text-right
           tag=>label
@@ -483,7 +493,7 @@ magix.forms.create-web-part
           class=>span-5 top-1 last
           placeholder=>display name ...
     panel=>incoming-wrp
-      class=>span-7 left-2
+      class=>span-7 boxed air-padding
       controls
         label
           class=>fill-width last clear bottom-1
@@ -536,8 +546,73 @@ magix.forms.create-web-part
               magix.email-settings.load-imap-settings
         dynamic=>email-account-dynamic
           class=>span-7 last
+    panel=>encryption
+      class=>span-16 last boxed air-padding clear top-1
+      controls
+        label
+          tag=>h3
+          value=>cryptography
+          class=>span-16 last
+        label
+          class=>span-16 last top-1
+          value=>@"if you have an ssl certificate and/or a cryptography private key, you can drag and drop your file onto this area, 
+and it will be automatically uploaded such that you can use it for cryptography purposes"
+        dynamic=>import-certificate
+        uploader=>upload-certificate
+          class=>mux-file-uploader
+          directory=>my-files/tmp
+          onuploaded
+            split=>[$][filename].value
+              what=>/
+            set=>[**label=>certificate-name][value].value
+              value=>[split][result][>last].value
+            set=>[**button=>do-import][info].value
+              value=>[$][filename].value
+            magix.forms.create-web-part
+              form-id=>import-certificate
+              container=>import-certificate
+              class=>span-14 air-padding boxed-light-green last top-1
+              controls
+                panel
+                  default=>do-import
+                  controls
+                    label
+                      tag=>h3
+                      value=>certificate
+                      class=>span-14 bottom-1 last
+                    label=>certificate-name
+                      tag=>label
+                      class=>span-14 last
+                    text-box=>cert-password
+                      class=>span-5
+                      placeholder=>password ...
+                      onfirstload
+                        magix.forms.effect
+                          form-id=>import-certificate
+                          id=>cert-password
+                          type=>focus-and-select
+                    button=>do-import
+                      class=>span-2 right last clear
+                      value=>import
+                      onclick
+                        magix.forms.get-value
+                          form-id=>import-certificate
+                          id=>cert-password
+                        using=>magix.cryptography
+                          import-certificate
+                            certificate=>[$][info].value
+                            password=>[magix.forms.get-value][value].value
+                        magix.viewport.show-message
+                          message=>certificate imported successfully
+                          color=>#aaffaa
+                        using=>magix.file
+                          delete
+                            file=>[$][info].value
+                        magix.viewport.clear-controls
+                          container=>import-certificate
+                          reset-class=>true
     button=>save
-      class=>span-2 left-14 last clear top-1
+      class=>span-2 left-16 last clear top-1
       value=>save
       onclick
         magix.forms.get-children-values

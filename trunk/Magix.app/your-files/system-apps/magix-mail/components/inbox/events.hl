@@ -279,6 +279,25 @@ magix.emails.load-email
           value=>btn-group span-6 last right clear
         set=>[**_controls][**button=>import-signature][info].value
           value=>[$][email-id].value
+
+        // asking user if he wish to import certificate into database, but only if no existing certificate exists for the sender's email address
+        // if we can encrypt an email to sender, an existing certificate already exist
+        set=>[@][magix.cryptography.can-encrypt][emails][].value
+          value=>[using][load][value][from].value
+        magix.cryptography.can-encrypt
+        if=>not-equals
+          lhs=>[@][magix.cryptography.can-encrypt][value].value
+          rhs=>true
+          code
+            set=>[@][magix.viewport.confirm][**magix.cryptography.import-certificate][certificate].value
+              value=>[using][load][value][attachments][=>smime.p7s][local-file-name].value
+            magix.viewport.confirm
+              message=>email is signed, do you wish to import its certificate into your certificate database?
+              code
+                magix.cryptography.import-certificate
+                magix.viewport.show-message
+                  message=>certificate was successfully imported into your certificate database
+                  color=>#aaffaa
     else
       // email was not signed, removing import signature button from button row
       set=>[**_controls][**button=>import-signature]
@@ -397,13 +416,33 @@ magix.emails.load-email
                   lhs=>[.].value
                   rhs=>smime.p7s
                   code
-                    set=>[@][magix.cryptography.import-certificate][certificate].value
-                      value=>[.][local-file-name].value
-                    magix.cryptography.import-certificate
-                    magix.viewport.show-message
-                      message=>certificate was successfully imported into certificate database
-                      color=>#aaffaa
-                      time=>5000
+                    set=>[@][magix.cryptography.can-encrypt][emails][0].value
+                      value=>[/][using][load][value][from].value
+                    magix.cryptography.can-encrypt
+                    if=>equals
+                      lhs=>[@][magix.cryptography.can-encrypt][value].value
+                      rhs=>true
+                      code
+                        set=>[@][magix.viewport.confirm][**magix.cryptography.import-certificate][certificate].value
+                          value=>[.][local-file-name].value
+                        set=>[@][magix.viewport.confirm][**magix.cryptography.remove-certificates][subject-name].value
+                          value=>[/][using][load][value][from].value
+                        magix.viewport.confirm
+                          message=>an existing certificate already exist for the sender's email address, do you wish to delete the existing certificate and import the one from this email?
+                          code
+                            magix.cryptography.import-certificate
+                            magix.viewport.show-message
+                              message=>certificate was successfully imported into certificate database
+                              color=>#aaffaa
+                              time=>5000
+                    else
+                      set=>[@][magix.cryptography.import-certificate][certificate].value
+                        value=>[.][local-file-name].value
+                      magix.cryptography.import-certificate
+                      magix.viewport.show-message
+                        message=>certificate was successfully imported into certificate database
+                        color=>#aaffaa
+                        time=>5000
                     stop
           button=>delete
             class=>span-2 last

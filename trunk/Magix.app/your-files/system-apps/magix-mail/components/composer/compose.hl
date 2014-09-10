@@ -42,9 +42,6 @@ if=>not-equals
 // including css files
 magix.viewport.include-client-file
   type=>css
-  file=>media/back-end/wysihtml.css
-magix.viewport.include-client-file
-  type=>css
   file=>media/back-end/file-uploader.css
 
 // changing class of inbox web part such that it won't go left

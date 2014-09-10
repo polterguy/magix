@@ -222,6 +222,8 @@ namespace Magix.email
             node["message-id"].Value = msg.MessageId;
 
             node["subject"].Value = msg.Subject ?? "";
+
+            node["download-date"].Value = DateTime.Now;
         }
 
         /*
@@ -258,9 +260,18 @@ namespace Magix.email
                     ApplicationPkcs7Mime pkcs7 = idxBody as ApplicationPkcs7Mime;
                     if (pkcs7.SecureMimeType == SecureMimeType.EnvelopedData)
                     {
-                        MimeEntity entity = pkcs7.Decrypt();
-                        ExtractBody(new MimeEntity[] { entity }, node, false, msg, basePath, attachmentDirectory, linkedAttachmentDirectory);
-                        node["encrypted"].Value = true;
+                        try
+                        {
+                            MimeEntity entity = pkcs7.Decrypt();
+                            ExtractBody(new MimeEntity[] { entity }, node, false, msg, basePath, attachmentDirectory, linkedAttachmentDirectory);
+                            node["encrypted"].Value = true;
+                        }
+                        catch (Exception err)
+                        {
+                            // couldn't decrypt
+                            node["body"]["plain"].Value = "couldn't decrypt message, exceptions was; '" + err.Message + "'";
+                            node["encrypted"].Value = true;
+                        }
                     }
                 }
                 else if (!skipSignature && idxBody is MultipartSigned)
@@ -315,7 +326,7 @@ namespace Magix.email
             else
             {
                 fileName = attachmentDirectory + msg.MessageId + "_" + entity.FileName;
-                Node attNode = new Node("", entity.FileName);
+                Node attNode = new Node("", entity.FileName ?? "");
                 attNode["local-file-name"].Value = fileName;
                 node["attachments"].Add(attNode);
             }
