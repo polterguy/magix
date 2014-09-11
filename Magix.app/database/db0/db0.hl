@@ -1,0 +1,135 @@
+id=>47957dc118ba4822bc0f4c7ee1a3e537
+  created=(date)>2014.09.11 14:04:21
+  revision-count=(dec)>1
+  value
+    type=>magix.core.role
+    name=>admin
+    child
+      name=>poweruser
+      child
+        name=>user
+id=>magix.admin.settings.default-front-end-viewport
+  created=(date)>2014.09.11 14:04:21
+  revision-count=(dec)>1
+  value
+    viewport=>Magix.viewports.Gutenberg
+id=>magix.admin.settings.default-back-end-css-file
+  created=(date)>2014.09.11 14:04:21
+  revision-count=(dec)>1
+  value
+    file=>media/back-end/skins/mystique.css
+id=>276ee432eba143e6b44ebeadacc535ed
+  created=(date)>2014.09.11 14:04:21
+  revision-count=(dec)>1
+  value
+    type=>magix.core.user
+    name=>phosphorus admin
+    username=>admin
+    pwd=>21232f297a57a5a743894a0e4a801fc3
+    roles
+      admin=>true
+id=>92ce85e3-c654-4a88-9557-d0a4c93cbe14
+  created=(date)>2014.09.11 14:04:21
+  revision-count=(dec)>1
+  value
+    event=>magix.event.edit-event
+    type=>magix.execute.event
+    remotable=(bool)>False
+    inspect=>@"allows editing active events
+
+allows the user to edit active events using the hyperlisp 
+executor.  expects [event] as event name to edit
+
+currently logged in user must belong to the admin role to 
+invoke this active event
+
+optionally you can supply a [container] parameter that defines 
+where to load the executor.  otherwise the executor will be loaded 
+into the content1 container
+
+you can also supply a [class] argument, which will become the css 
+class of the executor once loaded"
+    code
+      magix.core.verify-role
+        role=>admin
+      set=>[_event][_event].name
+        value=>[$][event].value
+      execute=>[_event]
+      _event
+        _event
+          inspect
+            type=>no-html
+      if=>exist
+        lhs=>[$][container]
+        code
+          set=>[magix.viewport.load-module][container].value
+            value=>[$][container].value
+      if=>exist
+        lhs=>[$][class]
+        code
+          set=>[magix.viewport.load-module][class].value
+            value=>[$][class].value
+      magix.viewport.load-module
+        class=>span-17 last
+        container=>content1
+        name=>Magix.ide.modules.ExecutorForm
+      add=>[node-2-code][node]
+        value=>event
+      set=>[node-2-code][node][event][name].value
+        value=>[$][event].value
+      add=>[node-2-code][node][event][code]
+        values=>[_event][0]
+      set=>[node-2-code][node][event][inspect].value
+        value=>[_event][0][inspect].value
+      add=>[node-2-code][node][event]
+        value=>[node-2-code][node][event][code]
+      set=>[node-2-code][node][event][code:0]
+      set=>[node-2-code][node][event][code][inspect]
+      node-2-code
+      set=>[magix.executor.set-code][code].value
+        value=>[node-2-code][code].value
+      magix.executor.set-code
+id=>magix.email.linked-attachments-directory
+  created=(date)>2014.09.11 14:04:21
+  revision-count=(dec)>1
+  value
+    directory=>my-files/email
+id=>magix.email.attachments-directory
+  created=(date)>2014.09.11 14:04:21
+  revision-count=(dec)>1
+  value
+    directory=>your-files/email
+id=>magix.smtp.settings
+  created=(date)>2014.09.11 14:04:21
+  revision-count=(dec)>1
+  value
+    host=>smtp.gmail.com
+    port=>587
+    ssl=>false
+id=>magix.pop3.settings
+  created=(date)>2014.09.11 14:04:21
+  revision-count=(dec)>1
+  value
+    host=>pop.gmail.com
+    port=>995
+    ssl=>true
+id=>magix.imap.settings
+  created=(date)>2014.09.11 14:04:21
+  revision-count=(dec)>1
+  value
+    host=>imap.gmail.com
+    port=>993
+    ssl=>true
+id=>magix.public.server-discovery
+  created=(date)>2014.09.11 14:04:21
+  revision-count=(dec)>1
+  value
+    name=>magix illuminate phosphorus
+    description=>this is a default magix illuminate phosphorus release server
+    image=>http://localhost:8080/media/images/icons/start-button-blue.png
+id=>magix.admin.setting.show-help-admin
+  created=(date)>2014.09.11 14:04:27
+  revision-count=(dec)>2
+  updated=(date)>2014.09.11 14:04:31
+  value
+    value=>false
