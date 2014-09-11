@@ -125,4 +125,4 @@ ClientBin/
 # magix specific ignores #
 ##########################
 
-database/db*/db*.hl
+Magix.app/database/db*/db*.hl
