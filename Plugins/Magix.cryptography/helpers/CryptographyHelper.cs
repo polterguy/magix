@@ -55,6 +55,8 @@ namespace Magix.cryptography
          */
         public static string CanEncrypt(Node emails)
         {
+            if (emails.Count == 0)
+                return "there are no recipients";
             try
             {
                 List<MailboxAddress> list = new List<MailboxAddress>();
@@ -152,52 +154,83 @@ namespace Magix.cryptography
             }
         }
 
-        public static void Generate(string subjectName)
+        /*
+         * creates a certificate and a private key and installs into windows registry
+         */
+        public static void CreateCertificateKey(
+            string subjectName, 
+            string issuerName, 
+            string signatureAlgorithm, 
+            int strength, 
+            DateTime begin, 
+            DateTime end,
+            string subjectCountryCode,
+            string subjectOrganization,
+            string subjectTitle,
+            string issuerCountryCode,
+            string issuerOrganization,
+            string issuerTitle,
+            string subjectCommonName,
+            string issuerCommonName)
         {
-            var keyPairGenerator = new RsaKeyPairGenerator();
-            var secureRandom = new SecureRandom(new CryptoApiRandomGenerator());
-            keyPairGenerator.Init(new KeyGenerationParameters(secureRandom, 2048));
-            var keyPair = keyPairGenerator.GenerateKeyPair();
-            var publicKey = keyPair.Public;
-            var privateKey = (RsaPrivateCrtKeyParameters)keyPair.Private;
+            RsaKeyPairGenerator keyPairGenerator = new RsaKeyPairGenerator();
+            SecureRandom secureRandom = new SecureRandom(new CryptoApiRandomGenerator());
+            keyPairGenerator.Init(new KeyGenerationParameters(secureRandom, strength));
+            AsymmetricCipherKeyPair asCipherKeyPair = keyPairGenerator.GenerateKeyPair();
+            AsymmetricKeyParameter publicKey = asCipherKeyPair.Public;
+            RsaPrivateCrtKeyParameters privateKey = (RsaPrivateCrtKeyParameters)asCipherKeyPair.Private;
 
-            var certificateGenerator = new X509V3CertificateGenerator();
+            X509V3CertificateGenerator certificateGenerator = new X509V3CertificateGenerator();
             BigInteger serialNumber = BigIntegers.CreateRandomInRange(BigInteger.One, BigInteger.ValueOf(Int64.MaxValue), secureRandom);
             certificateGenerator.SetSerialNumber(serialNumber);
-            certificateGenerator.SetSubjectDN(new X509Name("CN=" + subjectName + ", E=" + subjectName));
-            certificateGenerator.SetIssuerDN(new X509Name("CN=" + subjectName + ", E=" + subjectName));
-            certificateGenerator.SetNotBefore(DateTime.Now.AddDays(-1));
-            certificateGenerator.SetNotAfter(DateTime.Now.AddYears(3));
-            certificateGenerator.SetSignatureAlgorithm("SHA512WithRSA");
+
+            string subjectNameString = "E=" + subjectName;
+            if (subjectCommonName != null)
+                subjectNameString += ", CN=" + subjectCommonName;
+            if (subjectCountryCode != null)
+                subjectNameString += ", C=" + subjectCountryCode;
+            if (subjectOrganization != null)
+                subjectNameString += ", O=" + subjectOrganization;
+            if (subjectTitle != null)
+                subjectNameString += ", T=" + subjectTitle;
+            certificateGenerator.SetSubjectDN(new X509Name(subjectNameString));
+
+            string issuerNameString = "E=" + issuerName;
+            if (issuerCommonName != null)
+                issuerNameString += ", CN=" + issuerCommonName;
+            if (issuerCountryCode != null)
+                issuerNameString += ", C=" + issuerCountryCode;
+            if (issuerOrganization != null)
+                issuerNameString += ", O=" + issuerOrganization;
+            if (issuerTitle != null)
+                issuerNameString += ", T=" + issuerTitle;
+            certificateGenerator.SetIssuerDN(new X509Name(issuerNameString));
+
+            certificateGenerator.SetNotBefore(begin);
+            certificateGenerator.SetNotAfter(end);
+            certificateGenerator.SetSignatureAlgorithm(signatureAlgorithm);
             certificateGenerator.SetPublicKey(publicKey);
 
-            var newCert = certificateGenerator.Generate(privateKey);
-            var dotNetCert = new sys.X509Certificate2(DotNetUtilities.ToX509Certificate(newCert));
-            var dotNetPrivateKey = ToDotNetKey(privateKey);
-            dotNetCert.PrivateKey = dotNetPrivateKey;
+            X509Certificate certificate = certificateGenerator.Generate(privateKey);
+            sys.X509Certificate2 windowsCertificate = new sys.X509Certificate2(DotNetUtilities.ToX509Certificate(certificate));
+            windowsCertificate.PrivateKey = ConvertToSystemKey(privateKey);
 
-            sys.X509Store store = new sys.X509Store();
-            store.Open(sys.OpenFlags.ReadWrite);
-            try
-            {
-                store.Add(dotNetCert);
-            }
-            finally
-            {
-                store.Close();
-            }
+            InstallIntoRegistry(windowsCertificate);
         }
 
-        public static sys2.AsymmetricAlgorithm ToDotNetKey(RsaPrivateCrtKeyParameters privateKey)
+        /*
+         * converts a bouncy castle private key to a windows private key
+         */
+        private static sys2.AsymmetricAlgorithm ConvertToSystemKey(RsaPrivateCrtKeyParameters privateKey)
         {
-            var cspPars = new sys2.CspParameters
+            sys2.CspParameters cspPars = new sys2.CspParameters
             {
                 KeyContainerName = Guid.NewGuid().ToString(),
                 KeyNumber = (int)sys2.KeyNumber.Exchange
             };
 
-            var rsaProvider = new sys2.RSACryptoServiceProvider(cspPars);
-            var parameters = new sys2.RSAParameters
+            sys2.RSACryptoServiceProvider rsaCryptoProvider = new sys2.RSACryptoServiceProvider(cspPars);
+            sys2.RSAParameters rsaParameters = new sys2.RSAParameters
             {
                 Modulus = privateKey.Modulus.ToByteArrayUnsigned(),
                 P = privateKey.P.ToByteArrayUnsigned(),
@@ -209,8 +242,25 @@ namespace Magix.cryptography
                 Exponent = privateKey.PublicExponent.ToByteArrayUnsigned()
             };
 
-            rsaProvider.ImportParameters(parameters);
-            return rsaProvider;
+            rsaCryptoProvider.ImportParameters(rsaParameters);
+            return rsaCryptoProvider;
+        }
+
+        /*
+         * installs certificate and key into windows registry
+         */
+        private static void InstallIntoRegistry(sys.X509Certificate2 windowsCertificate)
+        {
+            sys.X509Store store = new sys.X509Store();
+            store.Open(sys.OpenFlags.ReadWrite);
+            try
+            {
+                store.Add(windowsCertificate);
+            }
+            finally
+            {
+                store.Close();
+            }
         }
     }
 }
