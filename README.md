@@ -29,7 +29,7 @@ To create an Active Event you do something like this
 ```
 public class ControllerSample : ActiveController
 {
-[ActiveEvent(Name = "my-company.my-active-event")]
+  [ActiveEvent(Name = "my-company.my-active-event")]
   public void foo(object sender, ActiveEventArgs e)
   {
     /* extract parameters passsed in from e.Params */
