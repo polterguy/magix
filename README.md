@@ -72,3 +72,9 @@ magix.forms.create-web-part
             message=>@"return value from active event was {0}"
               =>[my-company.my-active-event][ret-val].Value
 ```
+
+The beauty of Magix comes from being able to tie together dynamic functionality with C# code compiled to the CLR, and such create a more dynamic, flexible and agile solution as an end result.
+
+In addition Magix comes with literally hundreds of pre-built modules, such as the ability to create X509 certificates and keys, visually browse an MS SQL Database through the browser, creating QR Codes, CMS functionality, etc, etc, etc. To play around with Magix, all you need from before is Visual Studio. Open the Magix2.sln file, and start debugging. The Database is automatically setup for you, and you can immediately start playing around with Magix
+
+To teach yourself Hyperlisp, Magix contains a built-in Hyperlisp Executor, that allows you to create and execute Hyperlisp through your browser.
