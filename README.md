@@ -166,6 +166,15 @@ open
 
 
 ##############################################################################################
+# Features
+##############################################################################################
+
+Magix comes with literally hundreds of features out of the box, wwhich you can immediately start consuming once you start using Magix. There are hundreds of pre-existing Active Events for you to consume, and if none of the existing ones are what you're looking for, creating a new Active Event is as easy as creating a class, and adding a method to your class
+
+If you have specific feature requests for Magix, please submit them as issues here on GitHub, such that we can collaborate, and discuss them in public. The same goes with bugs of course
+
+
+##############################################################################################
 # License
 ##############################################################################################
 
