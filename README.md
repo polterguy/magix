@@ -50,3 +50,5 @@ ActiveEvents.Instance.RaiseActiveEvent(
   "my-company.my-active-event",
   node);
 ```
+
+You can pass in and return as many parameters as you wish to an Active Event. Active Events can also easily be consumed from the supplied scripting language calledd Hyperlisp.
