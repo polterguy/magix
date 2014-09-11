@@ -126,3 +126,8 @@ ClientBin/
 ##########################
 
 Magix.app/database/db*/db*.hl
+Magix.app/your-files/tmp/*
+!Magix.app/your-files/tmp/readme.txt
+Magix.app/my-files/tmp/*
+!Magix.app/my-files/tmp/readme.txt
+!.gitignore
