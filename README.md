@@ -26,25 +26,23 @@ Magix is created around one axiom called "Active Events", and Active Event is an
 
 To create an Active Event you do something like this
 
-public class ControllerSample : ActiveController
-{
-	[ActiveEvent(Name = "my-company.my-active-event")]
-	public void foo(object sender, ActiveEventArgs e)
-	{
-	  /* extract parameters passsed in from e.Params */
-
-	  /* do logic ... */
-
-	  /* return values back to caller through e.Params */
-	}
-}
+  public class ControllerSample : ActiveController
+  {
+    [ActiveEvent(Name = "my-company.my-active-event")]
+    public void foo(object sender, ActiveEventArgs e)
+    {
+      /* extract parameters passsed in from e.Params */
+      /* do logic ... */
+      /* return values back to caller through e.Params */
+    }
+  }
 
 To consume the above active event, all you need to do is to create a Node passed in as parameters to your Active Event and invoke it using RaiseActiveEvent
 
-Node node = new Node();
-node["my-parameter"].Value = DateTime.Now;
-ActiveEvents.Instance.RaiseActiveEvent(
-  this,
-  "my-company.my-active-event",
-  node);
+  Node node = new Node();
+  node["my-parameter"].Value = DateTime.Now;
+  ActiveEvents.Instance.RaiseActiveEvent(
+    this,
+    "my-company.my-active-event",
+    node);
 
