@@ -21,3 +21,30 @@ If this is not an option, you can even create relatively complex and rich web ap
 If you're skilled enough to use Microsoft Excel or Word, then you're skilled enough to create simple web apps with Magix
 
 For a thorough explanation of Magix, please check out Magix' youtube channel at; https://www.youtube.com/MareMara13
+
+Magix is created around one axiom called "Active Events", and Active Event is an alternative to methods and functions for invoking functionality, and allows for loosely couplinjg together different modules and components, orchestrating your application together, with a much more plugable architecture
+
+To create an Active Event you do something like this
+
+public class ControllerSample : ActiveController
+{
+	[ActiveEvent(Name = "my-company.my-active-event")]
+	public void foo(object sender, ActiveEventArgs e)
+	{
+	  /* extract parameters passsed in from e.Params */
+
+	  /* do logic ... */
+
+	  /* return values back to caller through e.Params */
+	}
+}
+
+To consume the above active event, all you need to do is to create a Node passed in as parameters to your Active Event and invoke it using RaiseActiveEvent
+
+Node node = new Node();
+node["my-parameter"].Value = DateTime.Now;
+ActiveEvents.Instance.RaiseActiveEvent(
+  this,
+  "my-company.my-active-event",
+  node);
+
