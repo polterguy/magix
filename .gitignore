@@ -125,9 +125,15 @@ ClientBin/
 # magix specific ignores #
 ##########################
 
+# excluding database files
 Magix.app/database/db*/db*.hl
+
+# exclusing the private tmp folder, except the readme file
 Magix.app/your-files/tmp/*
 !Magix.app/your-files/tmp/readme.txt
+!Magix.app/your-files/tmp/.gitignore
+
+# excluding the public tmp folder, except the readme file
 Magix.app/my-files/tmp/*
 !Magix.app/my-files/tmp/readme.txt
-!.gitignore
+!Magix.app/my-files/tmp/.gitignore
