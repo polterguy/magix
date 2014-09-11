@@ -2,7 +2,7 @@
 
 inspect=>@"creates the compose email web part
 
-creates the compose email web part in content3"
+creates the compose email web part"
 
 
 // cleaning out recipients and attachments
@@ -11,6 +11,7 @@ magix.viewstate.set
 magix.viewstate.set
   id=>magix.email.attachments
 
+// adding recipients
 _recipients
 if=>exist
   lhs=>[$][to]
@@ -28,6 +29,93 @@ if=>exist
     add=>[_recipients]
       value=>[$][bcc]
 
+// checking to see if this is a reply, and if it is, we make sure the original email is loaded to be replied to, and not a fresh email
+if=>exist
+  lhs=>[$][reply-container]
+  code
+    set=>[magix.forms.create-web-part][container].value
+      value=>[$][reply-container].value
+    set=>[magix.forms.create-web-part][**button=>cancel][onclick][magix.viewport.clear-controls][container].value
+      value=>[$][reply-container].value
+if=>exist
+  lhs=>[$][email-id]
+  code
+    set=>[magix.forms.create-web-part][**label=>header][value].value
+      value=>reply
+    using=>magix.data
+      load
+        id=>[$][email-id].value
+
+    // setting to fields of email
+    set=>[@][magix.viewstate.set][value][to][].value
+      value=>[@][using][load][value][from].value
+    if=>exist
+      lhs=>[@][using][load][value][from][display-name]
+      code
+        set=>[@][..][..][magix.viewstate.set][value][to][0][display-name].value
+          value=>[@][..][..][using][load][value][from][display-name].value
+    magix.viewstate.set
+      id=>magix.email.recipients
+
+    // setting subject of email
+    index-of=>[@][using][load][value][subject].value
+      what=>re:
+      case=>false
+    if=>not-equals
+      lhs=>[@][index-of][result][0].value
+      rhs=>0
+      code
+        set=>[@][..][..][using][load][value][subject].value
+          value=>Re:{0}
+            =>[@][..][..][using][load][value][subject].value
+    set=>[magix.forms.create-web-part][**text-box=>compose-subject][value].value
+      value=>[@][using][load][value][subject].value
+
+    // setting body of email
+    if=>exist
+      lhs=>[@][using][load][value][body][plain].value
+      code
+        replace=>[@][..][..][using][load][value][body][plain].value
+          what=>\n
+          with=>\n>
+        set=>[magix.forms.create-web-part][**text-area=>compose-body][value].value
+          value=>>{0}
+            =>[@][..][..][using][load][value][body][plain].value
+    else-if=>exist
+      lhs=>[@][using][load][value][body][html].value
+      code
+        set=>[@][magix.web.strip-html][value].value
+          value=>[@][..][..][using][load][value][body][html].value
+        magix.web.strip-html
+        replace=>[@][magix.web.strip-html][result].value
+          what=>\n
+          with=>\n>
+        set=>[magix.forms.create-web-part][**text-area=>compose-body][value].value
+          value=>>{0}
+            =>[@][magix.web.strip-html][result].value
+
+// checking to see if we should make reply container smaller than its default
+if=>equals
+  lhs=>[$][smaller].value
+  rhs=>true
+  code
+    set=>[magix.forms.create-web-part][class].value
+      value=>span-15 last boxed air-padding bottom-1 top-2
+    set=>[magix.forms.create-web-part][**label=>header][class].value
+      value=>span-13 bottom-1
+    set=>[magix.forms.create-web-part][**text-box=>compose-subject][class].value
+      value=>span-15 last bottom-1
+    set=>[magix.forms.create-web-part][**text-area=>compose-body][class].value
+      value=>span-15 last bottom-1
+
+    // making sure other parts also understands this is a smaller reply container
+    magix.viewstate.set
+      id=>magix.email.smaller-composer
+      value=>true
+else
+  magix.viewstate.set
+    id=>magix.email.smaller-composer
+
 // if [to], [cc] or [bcc] parameters are given, we set the initial recipients
 if=>not-equals
   lhs=>[_recipients].count
@@ -37,7 +125,6 @@ if=>not-equals
       values=>[_recipients]
     magix.viewstate.set
       id=>magix.email.recipients
-
 
 // including css files
 magix.viewport.include-client-file
@@ -50,7 +137,7 @@ magix.forms.create-web-part
   form-id=>composer
   events-file=>your-files/system-apps/magix-mail/components/composer/events.hl
   controls
-    label
+    label=>header
       class=>span-16 bottom-1
       value=>compose email
       tag=>h3

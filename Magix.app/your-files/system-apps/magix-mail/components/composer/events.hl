@@ -7,12 +7,27 @@ contains active events for the compose email web part"
 
 // adds up a recipient to an email being composed
 magix.email.add-recipient
+
+  // checking to see if we have a smaller surface to display our add-recipient web-part on
+  magix.viewstate.get
+    id=>magix.email.smaller-composer
+  if=>equals
+    lhs=>[magix.viewstate.get][value].value
+    rhs=>true
+    code
+      set=>[magix.forms.create-web-part][class].value
+        value=>span-14 last bottom-1
+      set=>[magix.forms.create-web-part][**panel=>btn-group-add-recipient][class].value
+        value=>btn-group span-14
+      set=>[magix.forms.create-web-part][**text-box=>recipient][class].value
+        value=>span-8
+
   magix.forms.create-web-part
     container=>dynamic-add-recipient
     form-id=>dynamic-add-recipient
-    class=>span-16 last bottom-1
+    class=>span-17 last bottom-1
     controls
-      panel
+      panel=>btn-group-add-recipient
         class=>btn-group span-17
         default=>recipient-to
         controls
@@ -332,11 +347,30 @@ magix.emails.remove-recipient
   if=>equals
     lhs=>[magix.viewstate.set][value].count
     rhs=>0
+    or=>equals
+      lhs=>[magix.viewstate.set][value][to].count
+      rhs=>0
+      or=>not-exist
+        lhs=>[magix.viewstate.set][value][to]
+      and=>equals
+        lhs=>[magix.viewstate.set][value][cc].count
+        rhs=>0
+        or=>not-exist
+          lhs=>[magix.viewstate.set][value][cc]
+      and=>equals
+        lhs=>[magix.viewstate.set][value][bcc].count
+        rhs=>0
+        or=>not-exist
+          lhs=>[magix.viewstate.set][value][bcc]
     code
       set=>[magix.viewstate.set][value]
   magix.viewstate.set
     id=>magix.email.recipients
   magix.email.create-recipient-list
+  if=>not-exist
+    lhs=>[magix.viewstate.set][value]
+    code
+      magix.email.add-recipient
 
 
 // creates list of attachments in email

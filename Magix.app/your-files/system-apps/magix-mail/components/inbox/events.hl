@@ -138,6 +138,7 @@ magix.emails.load-email
       lhs=>[@][magix.viewstate.get][value][mailbox].value
       rhs=>trash
       code
+        // not allowing replying to trashed email
         set=>[**button=>reply]
         set=>[**panel=>btn-group][class].value
           value=>span-2 last right clear
@@ -145,6 +146,7 @@ magix.emails.load-email
       lhs=>[@][magix.viewstate.get][value][mailbox].value
       rhs=>sent
       code
+        // not allowing replying to sent email
         set=>[**button=>reply]
         set=>[**button=>delete]
 
@@ -369,7 +371,9 @@ magix.emails.load-email
                 value=>reply-{0}
                   =>[$][container].value
               execute-script
-                file=>your-files/system-apps/magix-mail/components/reply/reply-web-part.hl
+                file=>your-files/system-apps/magix-mail/components/composer/compose.hl
+                params
+                  smaller=>true
           button=>delete
             class=>span-2 last
             value=>delete

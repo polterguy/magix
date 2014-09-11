@@ -487,8 +487,6 @@
     <Content Include="system42\private\app-wizard\wizards\execute-hyperlisp-event-wizard\events.hl" />
     <Content Include="your-files\system-apps\magix-mail\components\inbox\events.hl" />
     <Content Include="system42\private\startup\unit-tests\sort.hl" />
-    <Content Include="your-files\system-apps\magix-mail\components\reply\reply-web-part.hl" />
-    <Content Include="your-files\system-apps\magix-mail\components\reply\reply-no-html-web-part.hl" />
     <Content Include="packages.config" />
     <Content Include="system42\private\startup\create-email-filter-event.hl" />
     <Content Include="system42\private\startup\unit-tests\switch.hl" />

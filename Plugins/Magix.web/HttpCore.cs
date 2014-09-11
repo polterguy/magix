@@ -9,7 +9,7 @@ using System.IO;
 using System.Net;
 using System.Web;
 using System.Configuration;
-using System.Text.RegularExpressions;
+using HtmlAgilityPack;
 using Magix.Core;
 
 namespace Magix.web
@@ -212,9 +212,10 @@ namespace Magix.web
             Node dp = Dp(e.Params);
 
             string html = Expressions.GetExpressionValue<string>(ip["value"].Get<string>(), dp, ip, false);
-            html = Regex.Replace(html, "<.*?>", string.Empty);
+            HtmlDocument doc = new HtmlDocument();
+            doc.LoadHtml(html);
 
-            ip["result"].Value = html;
+            ip["result"].Value = doc.DocumentNode.InnerText;
         }
     }
 }
