@@ -1,4 +1,4 @@
-magix
+Magix Illuminate
 =====
 
 Magix Illuminate Phosphorus
@@ -88,7 +88,7 @@ Magix is also a complete MVC framework, which allows you to create your applicat
 
 
 ##############################################################################################
-# the Magix database
+# The Magix database
 ##############################################################################################
 
 The combination of the integrated database, which is storing its data as Hyperlisp tree structures, Hyperlisp and ActiveEvents, makes all mapping technologies between your database and your code completely redundant. To store something into the database, simply invoke the magix.data.save active event, as the sample below shows you
@@ -133,3 +133,16 @@ This readme however is not the place for showing all the features of Magix, sinc
 If you have questions, you can also email the author at thomas@magixilluminate.com
 
 Magix is Open Source, Free Software, Free as in Freedom and Free in Free Beer. The License for Magix is MITx11
+
+
+##############################################################################################
+# License
+##############################################################################################
+
+copyright (c) 2010 – 2014 thomas hansen - thomas@magixilluminate.com
+
+permission is hereby granted, free of charge, to any person or company, to obtain a copy of this software and associated documentation files (the “software”), to deal in the software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the software, and to permit persons to whom the software is furnished to do so, subject to the following conditions:
+
+the above copyright notice and this permission notice shall be included in all copies or substantial portions of the software
+
+the software is provided “as is”, without warranty of any kind, express or implied, including but not limited to the warranties of merchantability, fitness for a particular purpose and noninfringement.  in no event shall the authors or copyright holders be liable for any claim, damage or other liability, whether in an action of contract, tort or otherwise, arising from, out of or in connection with the software or the use or other dealings in the software
