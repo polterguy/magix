@@ -33,6 +33,7 @@ public class ControllerSample : ActiveController
   public void foo(object sender, ActiveEventArgs e)
   {
     /* extract parameters passsed in from e.Params */
+    DateTime date = e.Params["my-parameter"].Get<DateTime>();
     /* do logic ... */
     /* return values back to caller through e.Params */
   }
