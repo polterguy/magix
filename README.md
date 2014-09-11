@@ -84,7 +84,7 @@ Using Hyperlisp, you can create fairly complex features. For instance, the Mjøl
 
 Hyperlisp is a commpletely unique programming language, which allows you to directly modify the execution tree itself. In fact, Hyperlisp is neither an interpreted language nor a compiled language. It is in fact a simple syntax which allows you to create tree structures which the runtime can accept as executable code, allowing you to create the execution tree the runtime executes directly as your code. This facilitates for a lot of really interesting traits, such as the ability to directly modify the code currently being executedd, and so on. Hyperlisp is a completely unique programming language, facilitating for features which are easy to become acquinted with and love once you've learned the basic syntax. Hyperlisp is not Lisp btw in any ways, it is only inspired by Lisp. Hyperlisp also does not compile down to IL code in any ways, but is simply a syntactic helper built on top of Active Events, allowing for dynamically created code to coexist with compiled code. Hyperlisp brings the best of the static programming languages into the world of the best of the dyamic programming languages
 
-Magix is also a complete MVC framework, which allows you to create your applications within a much more scalable architecture than what most other frameworks do. In Magix a Controller is called an ActiveController, a View an ActiveModule and then there is no need for a Model, since the underlaying Node structure makes the Model redundant, by allowing you to serialize data directly into the databaseusing the Hyperlisp format.
+Magix is also a complete MVC framework, which allows you to create your applications within a much more scalable architecture than what most other frameworks do. In Magix a Controller is called an ActiveController, a View an ActiveModule and then there is no need for a Model, since the underlaying Node structure makes the Model redundant, by allowing you to serialize data directly into the database using the Hyperlisp format.
 
 
 ##############################################################################################
@@ -136,6 +136,36 @@ Magix is Open Source, Free Software, Free as in Freedom and Free in Free Beer. T
 
 
 ##############################################################################################
+# Magix as a Cloud
+##############################################################################################
+
+Magix is also a complete Cloud Computing System, allowing you to override individual Active Events to go to other servers, almost like Web Services. This is done 100% transparently, and is an integral feature of Magix Polymorphism Mechanisms. For instance, if you wish to use another server as your database server, you can override all the magix.data active events like the code below you shows
+
+```
+tunnel
+  name=>magix.data.load
+  url=>http://foo.com
+tunnel
+  name=>magix.data.save
+  url=>http://foo.com
+tunnel
+  name=>magix.data.count
+  url=>http://foo.com
+```
+
+All references to magix.data.load/save and count, will now go towards the foo.com server instead of using the local database. Using this technique, you can fuse together hundreds of servers, creating a non-homogenous cloud, resulting in that your server park fuse together, and behaves like one system. Scaling out has never been easier than with Magix. Make sure you open the active events in the other end by using the code below if you choose to do such a thing
+
+```
+open
+  name=>magix.data.load
+open
+  name=>magix.data.save
+open
+  name=>magix.data.count
+```
+
+
+##############################################################################################
 # License
 ##############################################################################################
 
@@ -146,3 +176,4 @@ permission is hereby granted, free of charge, to any person or company, to obtai
 the above copyright notice and this permission notice shall be included in all copies or substantial portions of the software
 
 the software is provided “as is”, without warranty of any kind, express or implied, including but not limited to the warranties of merchantability, fitness for a particular purpose and noninfringement.  in no event shall the authors or copyright holders be liable for any claim, damage or other liability, whether in an action of contract, tort or otherwise, arising from, out of or in connection with the software or the use or other dealings in the software
+
