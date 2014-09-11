@@ -558,6 +558,73 @@ magix.forms.create-web-part
           value=>@"if you have an existing ssl certificate and/or a cryptography private key, you can drag and drop your certificate/key file 
 into this area, and it will be automatically uploaded, such that you can use it for cryptography purposes.&nbsp;&nbsp;you can also create 
 a new certificate and key here"
+        button=>create-certificate-btn
+          class=>span-8 top-1
+          value=>create new certificate and private key
+          onclick
+            magix.forms.create-web-part
+              container=>create-certificate-dynamic
+              form-id=>create-certificate
+              class=>span-16 last top-1
+              default=>save-new-certificate
+              controls
+                panel
+                  default=>save-new-certificate
+                  controls
+                    label
+                      class=>span-3
+                      tag=>label
+                      value=>subject name
+                    text-box=>new-certificate-subject-name
+                      class=>span-5
+                      placeholder=>subject name ...
+                      onesc
+                        magix.viewport.clear-controls
+                          container=>create-certificate-dynamic
+                          reset-class=>true
+                      onfirstload
+                        magix.forms.get-value
+                          form-id=>email-settings
+                          id=>smtp-email
+                        if=>equals
+                          lhs=>[magix.forms.get-value][value].value
+                          rhs=>
+                          code
+                            magix.viewport.show-message
+                              message=>@"if you plan to use this certificate and key with your email, you should have the 
+same subject name as your email address.&nbsp;&nbsp;please make sure your smtp email address in your smtp settings are 
+the same as your subject name in your certificate/key"
+                              color=>#ffffaa
+                              time=>10000
+                        else
+                          using=>magix.forms
+                            set-value
+                              form-id=>create-certificate
+                              id=>new-certificate-subject-name
+                              value=>[magix.forms.get-value][value].value
+                        magix.forms.effect
+                          form-id=>create-certificate
+                          id=>new-certificate-subject-name
+                          type=>focus-and-select
+                    button=>save-new-certificate
+                      class=>span-2
+                      value=>create
+                      onclick
+                        magix.forms.get-value
+                          form-id=>create-certificate
+                          id=>new-certificate-subject-name
+                        using=>magix.cryptography
+                          create-certificate-key
+                            subject-name=>[magix.forms.get-value][value].value
+                            issuer-name=>[magix.forms.get-value][value].value
+                        magix.viewport.show-message
+                          message=>your certificate was successfully created, and you can now create signed emails, and receive encrypted emails
+                          color=>#aaffaa
+                          time=>5000
+                        magix.viewport.clear-controls
+                          container=>create-certificate-dynamic
+                          reset-class=>true
+        dynamic=>create-certificate-dynamic
         dynamic=>import-certificate
         uploader=>upload-certificate
           class=>mux-file-uploader

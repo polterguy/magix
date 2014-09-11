@@ -127,7 +127,7 @@ namespace Magix.forms
             if (ip.Contains("container"))
                 container = Expressions.GetExpressionValue<string>(ip["container"].Get<string>(), dp, ip, false);
 
-			LoadActiveModule(
+            LoadActiveModule(
 				"Magix.forms.WebPart",
                 container,
                 e.Params);
