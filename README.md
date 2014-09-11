@@ -33,9 +33,13 @@ public class ControllerSample : ActiveController
   public void foo(object sender, ActiveEventArgs e)
   {
     /* extract parameters passsed in from e.Params */
-    DateTime date = e.Params["my-parameter"].Get<DateTime>();
+    DateTime date = e.Params["my-parameter"].Get<DateTime>(DateTime.Now);
+
     /* do logic ... */
+    date = date.AddDays(1);
+
     /* return values back to caller through e.Params */
+    e.Params["ret-val"].Value = date;
   }
 }
 ```
@@ -51,4 +55,20 @@ ActiveEvents.Instance.RaiseActiveEvent(
   node);
 ```
 
-You can pass in and return as many parameters as you wish to an Active Event. Active Events can also easily be consumed from the supplied scripting language calledd Hyperlisp.
+You can pass in and return as many parameters as you wish to an Active Event. Active Events can also easily be consumed from the supplied scripting language called Hyperlisp.
+
+For instance, here is Hyperlisp code creating a web-part that consumes the above Active Event
+
+```
+magix.forms.create-web-part
+  class=>span-22 last boxed
+  controls
+    button=>my-button
+      class=>span-5 large
+      onclick
+        my-company.my-active-event
+        using=>magix.viewport
+          show-message
+            message=>@"return value from active event was {0}"
+              =>[my-company.my-active-event][ret-val].Value
+```
