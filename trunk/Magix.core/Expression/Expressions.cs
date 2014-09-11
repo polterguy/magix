@@ -18,6 +18,17 @@ namespace Magix.Core
         /*
          * returns expression value
          */
+        public static T GetExpressionValue<T>(string expression, Node dp, Node ip, bool createPath, T defaultValue)
+        {
+            T retVal = GetExpressionValue<T>(expression, dp, ip, createPath);
+            if (retVal == null || retVal.Equals(default(T)))
+                return defaultValue;
+            return retVal;
+        }
+
+        /*
+         * returns expression value
+         */
         public static T GetExpressionValue<T>(string expression, Node dp, Node ip, bool createPath)
         {
             object retVal = GetExpressionValue(expression, dp, ip, createPath);

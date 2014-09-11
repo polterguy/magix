@@ -1,0 +1,122 @@
+﻿
+
+inspect=>@"documentation for magix.cryptography"
+
+
+magix.cryptography.create-certificate-key-dox=>@"create an ecryption key and certificate
+
+creates an encryption key and certificate and installs it into the certificate/key 
+database.  takes [subject-name], [issuer-name], [signature-algorithm], [strength], 
+[begin] and [end] as parameters
+
+[signature-algorithm] defaults to 'SHA512WithRSA' if not given, [strength] defaults 
+to 2048, [begin] defaults to today's date and [end] defaults to 3 years from now
+
+in addition, [subject-name] and [issuer-name] can also contain [common-name], [country-code], 
+[organization] and [title] as children nodes, which will be used as parameters to the creation 
+of the subject-name and issuer-name parts of the certificate/key"
+
+magix.cryptography.create-certificate-key-sample
+  magix.cryptography.create-certificate-key
+    subject-name=>thomas@magixilluminate.com
+      common-name=>Thomas Hansen
+      country-code=>NO
+      organization=>Magix Illuminate
+      title=>CTO
+    issuer-name=>thomas@magixilluminate.com
+      common-name=>Thomas Hansen
+      country-code=>NO
+      organization=>Magix Illuminate
+      title=>CTO
+    signature-algorithm=>SHA512WithRSA
+    strength=>2048
+    begin=>2014.09.11 08:46:00
+    end=>2018.12.23 21:10:00
+
+
+magix.cryptography.can-sign-dox=>@"verifies sender can sign emails
+
+verifies that a valid signature certificate exists for the given [email], and 
+returns [value] as true if emails can be signed"
+
+magix.cryptography.can-sign-sample
+  magix.cryptography.can-sign
+    email=>thomas@magixilluminate.com
+
+
+magix.cryptography.can-encrypt-dox=>@"verifies email can be encrypted
+
+will check to see if email can be encrypted, and if so, return [value] as true.  expects 
+to be given a list of emails as [emails], which it uses as lookup to make sure all recipients 
+have valid certificates
+
+[emails] can be either a list of children nodes, or have its value point to another node 
+which is to be used as the list of nodes containing the emails to verify have certificates
+
+if encryptiong cannot be performed, then [message] will be returned as the child of [value] 
+explaining why"
+
+magix.cryptography.can-encrypt-sample
+  magix.cryptography.can-sign
+    email=>thomas@magixilluminate.com
+
+
+magix.cryptography.import-certificate-dox=>@"imports a certificate into certificate database
+
+will import the given [certificate] file into the certificate database.  if [password] is given, 
+it will be used as password to extract the certificate's private key, assuming the certificate 
+also contains a private key"
+
+magix.cryptography.import-certificate-sample
+  magix.cryptography.import-certificate
+    certificate=>your-files/tmp/some-certificate.pfx
+    password=>mumbo-jumbo-password
+
+
+magix.cryptography.remove-certificates-dox=>@"removes certificates from certificate database
+
+will remove all certificates and their associated private keys matching the [eubject-name] from 
+the certificate database"
+
+magix.cryptography.remove-certificates-sample
+  magix.cryptography.remove-certificates
+    subject-name=>thomas@magixilluminate.com
+
+
+magix.cryptography._sign-mime-entity-dox=>@"signs a mime entity if possible
+
+will attempt to sign the given MimeKit [mime-entity], and return the signed 
+entity as [mime-entity].  pass in [email-lookup] which the event will use to 
+search for a valid certificate to use for signing
+
+this active event is not supposed to be raise from anything but C# code, 
+since it requires an object of type MimeEntity to be passed in"
+
+
+magix.cryptography._encrypt-mime-entity-dox=>@"encrypts a mime entity if possible
+
+will attempt to encrypt the given MimeKit [mime-entity], and return the encrypted 
+entity as [mime-entity].  pass in [email-lookups] which the event will use to 
+search for valid certificates to use for encryption
+
+this active event is not supposed to be raise from anything but C# code, 
+since it requires an object of type MimeEntity to be passed in"
+
+
+magix.cryptography._sign_and_encrypt-mime-entity-dox=>@"signs and encrypts a mime entity if possible
+
+will attempt to sign and encrypt the given MimeKit [mime-entity], and return 
+the entity as [mime-entity].  pass in [email-lookups] which the event will use to 
+search for valid certificates to use for signing and [email-lookup] as the email 
+address of the signer
+
+this active event is not supposed to be raise from anything but C# code, 
+since it requires an object of type MimeEntity to be passed in"
+
+
+
+
+
+
+
+

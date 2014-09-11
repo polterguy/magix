@@ -25,17 +25,63 @@ namespace Magix.cryptography
         private static void magix_cryptography_create_certificate_key(object sender, ActiveEventArgs e)
         {
             Node ip = Ip(e.Params);
-            if (ip.ContainsValue("inspect"))
+            if (ip.Contains("inspect"))
             {
-                ActiveController.AppendInspect(ip["inspect"], @"creates a new certificate and private key
-
-will create a new certificate, containing a private key, and install into 
-certificate/key database");
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.cryptography",
+                    "Magix.cryptography.hyperlisp.inspect.hl",
+                    "[magix.cryptography.create-certificate-key-dox].value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.cryptography",
+                    "Magix.cryptography.hyperlisp.inspect.hl",
+                    "[magix.cryptography.create-certificate-key-sample]");
                 return;
             }
 
-            string subjectNameString = Expressions.GetExpressionValue<string>(ip["subject-name"].Get<string>(), Dp(e.Params), ip, false);
-            CryptographyHelper.Generate(subjectNameString);
+            Node dp = Dp(e.Params);
+
+            string subjectName = Expressions.GetExpressionValue<string>(ip["subject-name"].Get<string>(), Dp(e.Params), ip, false);
+            string subjectCommonName = ip["subject-name"].ContainsValue("common-name") ?
+                Expressions.GetExpressionValue<string>(ip["subject-name"]["common-name"].Get<string>(), dp, ip, false, null) : null;
+            string subjectCountryCode = ip["subject-name"].ContainsValue("country-code") ?
+                Expressions.GetExpressionValue<string>(ip["subject-name"]["country-code"].Get<string>(), dp, ip, false, null) : null;
+            string subjectOrganization = ip["subject-name"].ContainsValue("organization") ?
+                Expressions.GetExpressionValue<string>(ip["subject-name"]["organization"].Get<string>(), dp, ip, false, null) : null;
+            string subjectTitle = ip["subject-name"].ContainsValue("title") ?
+                Expressions.GetExpressionValue<string>(ip["subject-name"]["title"].Get<string>(), dp, ip, false, null) : null;
+
+            string issuerName = Expressions.GetExpressionValue<string>(ip["issuer-name"].Get<string>(), Dp(e.Params), ip, false);
+            string issuerCommonName = ip["issuer-name"].ContainsValue("common-name") ?
+                Expressions.GetExpressionValue<string>(ip["issuer-name"]["common-name"].Get<string>(), dp, ip, false, null) : null;
+            string issuerCountryCode = ip["issuer-name"].ContainsValue("country-code") ?
+                Expressions.GetExpressionValue<string>(ip["issuer-name"]["country-code"].Get<string>(), dp, ip, false, null) : null;
+            string issuerOrganization = ip["issuer-name"].ContainsValue("organization") ?
+                Expressions.GetExpressionValue<string>(ip["issuer-name"]["organization"].Get<string>(), dp, ip, false, null) : null;
+            string issuerTitle = ip["issuer-name"].ContainsValue("title") ?
+                Expressions.GetExpressionValue<string>(ip["issuer-name"]["title"].Get<string>(), dp, ip, false, null) : null;
+
+            string signatureAlgorithm = Expressions.GetExpressionValue<string>(ip.GetValue<string>("signature-algorithm", null), dp, ip, false, "SHA512WithRSA");
+            int strength = Expressions.GetExpressionValue<int>(ip.GetValue<string>("strength", null), dp, ip, false, 2048);
+            DateTime begin = Expressions.GetExpressionValue<DateTime>(ip.GetValue<string>("begin", null), dp, ip, false, DateTime.Now.Date);
+            DateTime end = Expressions.GetExpressionValue<DateTime>(ip.GetValue<string>("end", null), dp, ip, false, DateTime.Now.Date.AddYears(3));
+
+            CryptographyHelper.CreateCertificateKey(
+                subjectName, 
+                issuerName, 
+                signatureAlgorithm, 
+                strength, 
+                begin, 
+                end, 
+                subjectCountryCode,
+                subjectOrganization,
+                subjectTitle,
+                issuerCountryCode,
+                issuerOrganization,
+                issuerTitle,
+                subjectCommonName,
+                issuerCommonName);
         }
 
         /*
@@ -45,19 +91,23 @@ certificate/key database");
         private static void magix_cryptography_can_sign(object sender, ActiveEventArgs e)
         {
             Node ip = Ip(e.Params);
-            if (ip.ContainsValue("inspect"))
+            if (ip.Contains("inspect"))
             {
-                ActiveController.AppendInspect(ip["inspect"], @"returns true if email can be signed
-
-will check to see if email can be signed, and if so, return [value] as true.  expects 
-to be given a [email] email address, which it uses as lookup to find an ssl certificate 
-and private key
-
-[email] can be either an expression or a constant");
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.cryptography",
+                    "Magix.cryptography.hyperlisp.inspect.hl",
+                    "[magix.cryptography.can-sign-dox].value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.cryptography",
+                    "Magix.cryptography.hyperlisp.inspect.hl",
+                    "[magix.cryptography.can-sign-sample]");
                 return;
             }
 
             string emailAdr = Expressions.GetExpressionValue<string>(ip["email"].Get<string>(), Dp(e.Params), ip, false);
+
             ip["value"].Value = CryptographyHelper.CanSign(emailAdr);
         }
 
@@ -68,19 +118,18 @@ and private key
         private static void magix_cryptography_can_encrypt(object sender, ActiveEventArgs e)
         {
             Node ip = Ip(e.Params);
-            if (ip.ContainsValue("inspect"))
+            if (ip.Contains("inspect"))
             {
-                ActiveController.AppendInspect(ip["inspect"], @"returns true if email can be encrypted
-
-will check to see if email can be encrypted, and if so, return [value] as true.  expects 
-to be given a list of emails as [emails], which it uses as lookup to make sure all recipients 
-have valid certificates
-
-[emails] can be either a list of children nodes, or have its value point to another node 
-which is to be used as the list of nodes containing the emails to verify have certificates
-
-if encryptiong cannot be performed, then [message] will be returned as the child of [value] 
-explaining why");
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.cryptography",
+                    "Magix.cryptography.hyperlisp.inspect.hl",
+                    "[magix.cryptography.can-encrypt-dox].value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.cryptography",
+                    "Magix.cryptography.hyperlisp.inspect.hl",
+                    "[magix.cryptography.can-encrypt-sample]");
                 return;
             }
 
@@ -89,21 +138,15 @@ explaining why");
                 emails = Expressions.GetExpressionValue<Node>(ip["emails"].Get<string>(), Dp(e.Params), ip, false);
             else
                 emails = ip["emails"];
-            if (emails.Count == 0)
-            {
-                ip["value"].Value = false;
-                ip["value"]["message"].Value = "no recipients to encrypt for";
-            }
+
+            string canEncrypt = CryptographyHelper.CanEncrypt(emails);
+
+            if (canEncrypt == null)
+                ip["value"].Value = true;
             else
             {
-                string canEncrypt = CryptographyHelper.CanEncrypt(emails);
-                if (canEncrypt == null)
-                    ip["value"].Value = true;
-                else
-                {
-                    ip["value"].Value = false;
-                    ip["value"]["message"].Value = canEncrypt;
-                }
+                ip["value"].Value = false;
+                ip["value"]["message"].Value = canEncrypt;
             }
         }
 
@@ -114,13 +157,18 @@ explaining why");
         private static void magix_cryptography_import_certificate(object sender, ActiveEventArgs e)
         {
             Node ip = Ip(e.Params);
-            if (ip.ContainsValue("inspect"))
+            if (ip.Contains("inspect"))
             {
-                ActiveController.AppendInspect(ip["inspect"], @"imports a certificate into certificate database
-
-will import the given [certificate] file into the certificate database.  if 
-[password] is given, it will be used as password to extract the certificate, 
-assuming the certificate also contains a private key");
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.cryptography",
+                    "Magix.cryptography.hyperlisp.inspect.hl",
+                    "[magix.cryptography.import-certificate-dox].value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.cryptography",
+                    "Magix.cryptography.hyperlisp.inspect.hl",
+                    "[magix.cryptography.import-certificate-sample]");
                 return;
             }
 
@@ -128,6 +176,7 @@ assuming the certificate also contains a private key");
 
             string certificateFile = Expressions.GetExpressionValue<string>(ip["certificate"].Get<string>(), dp, ip, false);
             string password = Expressions.GetExpressionValue<string>(ip["password"].Get<string>(), dp, ip, false);
+
             CryptographyHelper.ImportCertificate(certificateFile, password);
         }
 
@@ -138,18 +187,25 @@ assuming the certificate also contains a private key");
         private static void magix_cryptography_remove_certificates(object sender, ActiveEventArgs e)
         {
             Node ip = Ip(e.Params);
-            if (ip.ContainsValue("inspect"))
+            if (ip.Contains("inspect"))
             {
-                ActiveController.AppendInspect(ip["inspect"], @"removes certificates from certificate database
-
-will remove all given certificates from the certificate database according to 
-[subject-name]");
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.cryptography",
+                    "Magix.cryptography.hyperlisp.inspect.hl",
+                    "[magix.cryptography.remove-certificates-dox].value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.cryptography",
+                    "Magix.cryptography.hyperlisp.inspect.hl",
+                    "[magix.cryptography.remove-certificates-sample]");
                 return;
             }
 
             Node dp = Dp(e.Params);
 
             string subjectName = Expressions.GetExpressionValue<string>(ip["subject-name"].Get<string>(), dp, ip, false);
+
             CryptographyHelper.RemoveCertificates(subjectName);
         }
 
@@ -160,28 +216,21 @@ will remove all given certificates from the certificate database according to
         private static void magix_cryptography__sign_mime_entity(object sender, ActiveEventArgs e)
         {
             Node ip = Ip(e.Params);
-            if (ip.ContainsValue("inspect"))
+            if (ip.Contains("inspect"))
             {
-                ActiveController.AppendInspect(ip["inspect"], @"signs a mime entity if possible
-
-will attempt to sign the given MimeKit [mime-entity], and return the signed 
-entity as [mime-entity].  pass in [email-lookup] which the event will use to 
-search for a valid certificate to use for signing
-
-this active event is not supposed to be raise from anything but C# code, 
-since it requires an object of type MimeEntity to be passed in");
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.cryptography",
+                    "Magix.cryptography.hyperlisp.inspect.hl",
+                    "[magix.cryptography._sign-mime-entity-dox].value");
                 return;
             }
 
             MimeEntity entity = ip["mime-entity"].Get<MimeEntity>();
             string emailAdr = ip["email-lookup"].Get<string>();
             MailboxAddress signer = new MailboxAddress("", emailAdr);
-            MimeEntity signed = CryptographyHelper.SignEntity(entity, signer);
-            if (signed != null)
-            {
-                ip["success"].Value = true;
-                ip["mime-entity"].Value = signed;
-            }
+
+            ip["mime-entity"].Value = CryptographyHelper.SignEntity(entity, signer);
         }
 
         /*
@@ -191,71 +240,50 @@ since it requires an object of type MimeEntity to be passed in");
         private static void magix_cryptography__encrypt_mime_entity(object sender, ActiveEventArgs e)
         {
             Node ip = Ip(e.Params);
-            if (ip.ContainsValue("inspect"))
+            if (ip.Contains("inspect"))
             {
-                ActiveController.AppendInspect(ip["inspect"], @"encrypts a mime entity if possible
-
-will attempt to encrypt the given MimeKit [mime-entity], and return the encrypted 
-entity as [mime-entity].  pass in [email-lookups] which the event will use to 
-search for valid certificates to use for signing
-
-this active event is not supposed to be raise from anything but C# code, 
-since it requires an object of type MimeEntity to be passed in");
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.cryptography",
+                    "Magix.cryptography.hyperlisp.inspect.hl",
+                    "[magix.cryptography._encrypt-mime-entity-dox].value");
                 return;
             }
 
             MimeEntity entity = ip["mime-entity"].Get<MimeEntity>();
             List<MailboxAddress> list = new List<MailboxAddress>();
             foreach (Node idx in ip["email-lookups"])
-            {
                 list.Add(new MailboxAddress("", idx.Get<string>()));
-            }
 
-            MimeEntity encrypted = CryptographyHelper.EncryptEntity(entity, list);
-            if (encrypted != null)
-            {
-                ip["success"].Value = true;
-                ip["mime-entity"].Value = encrypted;
-            }
+            ip["mime-entity"].Value = CryptographyHelper.EncryptEntity(entity, list);
         }
 
         /*
-         * signs a mime entity
+         * signs and encrypts a mime entity
          */
         [ActiveEvent(Name = "magix.cryptography._sign_and_encrypt-mime-entity")]
         private static void magix_cryptography__sign_and_encrypt_mime_entity(object sender, ActiveEventArgs e)
         {
             Node ip = Ip(e.Params);
-            if (ip.ContainsValue("inspect"))
+            if (ip.Contains("inspect"))
             {
-                ActiveController.AppendInspect(ip["inspect"], @"signs and encrypts a mime entity if possible
-
-will attempt to sign and encrypt the given MimeKit [mime-entity], and return 
-the entity as [mime-entity].  pass in [email-lookups] which the event will use to 
-search for valid certificates to use for signing and [email-lookup] as the email 
-address for the signer
-
-this active event is not supposed to be raise from anything but C# code, 
-since it requires an object of type MimeEntity to be passed in");
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.cryptography",
+                    "Magix.cryptography.hyperlisp.inspect.hl",
+                    "[magix.cryptography._sign_and_encrypt-mime-entity-dox].value");
                 return;
             }
 
             MimeEntity entity = ip["mime-entity"].Get<MimeEntity>();
             List<MailboxAddress> list = new List<MailboxAddress>();
             foreach (Node idx in ip["email-lookups"])
-            {
                 list.Add(new MailboxAddress("", idx.Get<string>()));
-            }
 
             string emailAdr = ip["email-lookup"].Get<string>();
             MailboxAddress signer = new MailboxAddress("", emailAdr);
 
-            MimeEntity encrypted = CryptographyHelper.SignAndEncryptEntity(entity, signer, list);
-            if (encrypted != null)
-            {
-                ip["success"].Value = true;
-                ip["mime-entity"].Value = encrypted;
-            }
+            ip["mime-entity"].Value = CryptographyHelper.SignAndEncryptEntity(entity, signer, list);
         }
     }
 }
