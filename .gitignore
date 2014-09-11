@@ -137,3 +137,7 @@ Magix.app/your-files/tmp/*
 Magix.app/my-files/tmp/*
 !Magix.app/my-files/tmp/readme.txt
 !Magix.app/my-files/tmp/.gitignore
+
+# excluding mjølner mail files
+Magix.app/my-files/email/*
+Magix.app/your-files/email/*
