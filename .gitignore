@@ -121,9 +121,9 @@ ClientBin/
 *.publishsettings
 
 
-##########################
-# magix specific ignores #
-##########################
+########################
+# magix specific ignores 
+########################
 
 # excluding database files
 Magix.app/database/db*/db*.hl
@@ -141,3 +141,6 @@ Magix.app/my-files/tmp/*
 # excluding mjølner mail files
 Magix.app/my-files/email/*
 Magix.app/your-files/email/*
+
+# excluding log files
+Magix.app/system42/private/magix-log/*
