@@ -80,7 +80,7 @@ namespace Magix.execute
         {
             string what = null;
             if (ip.Contains("what"))
-                what = Expressions.GetExpressionValue<string>(ip["what"].Get<string>(), dp, ip, false);
+                what = Expressions.GetExpressionValue<string>(ip["what"].Get<string>(), dp, ip, false).Replace("\\n", "\n").Replace("\\r", "\r");
 
             if (string.IsNullOrEmpty(what))
             {

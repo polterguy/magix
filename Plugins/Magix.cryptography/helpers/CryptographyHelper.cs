@@ -133,28 +133,6 @@ namespace Magix.cryptography
         }
 
         /*
-         * removes all certificates matching subjectName from database
-         */
-        internal static void RemoveCertificates(string subjectName)
-        {
-            foreach (sys.StoreLocation idxStore in new sys.StoreLocation[] { sys.StoreLocation.CurrentUser })
-            {
-                sys.X509Store store = new sys.X509Store(idxStore);
-                store.Open(sys.OpenFlags.ReadOnly);
-                try
-                {
-                    sys.X509Certificate2Collection coll = store.Certificates.Find(sys.X509FindType.FindBySubjectName, subjectName, false);
-                    if (coll.Count > 0)
-                        store.RemoveRange(coll);
-                }
-                finally
-                {
-                    store.Close();
-                }
-            }
-        }
-
-        /*
          * creates a certificate and a private key and installs into windows registry
          */
         public static void CreateCertificateKey(
@@ -173,6 +151,7 @@ namespace Magix.cryptography
             string subjectCommonName,
             string issuerCommonName)
         {
+            // creating key pair
             RsaKeyPairGenerator keyPairGenerator = new RsaKeyPairGenerator();
             SecureRandom secureRandom = new SecureRandom(new CryptoApiRandomGenerator());
             keyPairGenerator.Init(new KeyGenerationParameters(secureRandom, strength));
@@ -180,10 +159,12 @@ namespace Magix.cryptography
             AsymmetricKeyParameter publicKey = asCipherKeyPair.Public;
             RsaPrivateCrtKeyParameters privateKey = (RsaPrivateCrtKeyParameters)asCipherKeyPair.Private;
 
+            // initializing certificate generator
             X509V3CertificateGenerator certificateGenerator = new X509V3CertificateGenerator();
             BigInteger serialNumber = BigIntegers.CreateRandomInRange(BigInteger.One, BigInteger.ValueOf(Int64.MaxValue), secureRandom);
             certificateGenerator.SetSerialNumber(serialNumber);
 
+            // setting subject name
             string subjectNameString = "E=" + subjectName;
             if (subjectCommonName != null)
                 subjectNameString += ", CN=" + subjectCommonName;
@@ -195,6 +176,7 @@ namespace Magix.cryptography
                 subjectNameString += ", T=" + subjectTitle;
             certificateGenerator.SetSubjectDN(new X509Name(subjectNameString));
 
+            // setting issuer name
             string issuerNameString = "E=" + issuerName;
             if (issuerCommonName != null)
                 issuerNameString += ", CN=" + issuerCommonName;
@@ -206,15 +188,23 @@ namespace Magix.cryptography
                 issuerNameString += ", T=" + issuerTitle;
             certificateGenerator.SetIssuerDN(new X509Name(issuerNameString));
 
+            // setting other properties of certificate
             certificateGenerator.SetNotBefore(begin);
             certificateGenerator.SetNotAfter(end);
             certificateGenerator.SetSignatureAlgorithm(signatureAlgorithm);
             certificateGenerator.SetPublicKey(publicKey);
 
+            // setting key usage
+            KeyPurposeID[] usages = new KeyPurposeID[] { KeyPurposeID.IdKPEmailProtection };
+            certificateGenerator.AddExtension(
+                X509Extensions.ExtendedKeyUsage.Id,
+                false,
+                new ExtendedKeyUsage(usages));
+
+            // creating certificate and installing into certificate/key database
             X509Certificate certificate = certificateGenerator.Generate(privateKey);
             sys.X509Certificate2 windowsCertificate = new sys.X509Certificate2(DotNetUtilities.ToX509Certificate(certificate));
             windowsCertificate.PrivateKey = ConvertToSystemKey(privateKey);
-
             InstallIntoRegistry(windowsCertificate);
         }
 

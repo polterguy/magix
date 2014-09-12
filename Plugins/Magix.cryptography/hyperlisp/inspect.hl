@@ -5,7 +5,7 @@ inspect=>@"documentation for magix.cryptography"
 
 magix.cryptography.create-certificate-key-dox=>@"create an ecryption key and certificate
 
-creates an encryption key and certificate and installs it into the certificate/key 
+creates a self-signed encryption key and certificate, and installs it into the certificate/key 
 database.  takes [subject-name], [issuer-name], [signature-algorithm], [strength], 
 [begin] and [end] as parameters
 
@@ -71,16 +71,6 @@ magix.cryptography.import-certificate-sample
   magix.cryptography.import-certificate
     certificate=>your-files/tmp/some-certificate.pfx
     password=>mumbo-jumbo-password
-
-
-magix.cryptography.remove-certificates-dox=>@"removes certificates from certificate database
-
-will remove all certificates and their associated private keys matching the [eubject-name] from 
-the certificate database"
-
-magix.cryptography.remove-certificates-sample
-  magix.cryptography.remove-certificates
-    subject-name=>thomas@magixilluminate.com
 
 
 magix.cryptography._sign-mime-entity-dox=>@"signs a mime entity if possible

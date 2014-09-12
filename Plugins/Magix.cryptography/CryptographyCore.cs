@@ -42,6 +42,7 @@ namespace Magix.cryptography
 
             Node dp = Dp(e.Params);
 
+            // subject name
             string subjectName = Expressions.GetExpressionValue<string>(ip["subject-name"].Get<string>(), Dp(e.Params), ip, false);
             string subjectCommonName = ip["subject-name"].ContainsValue("common-name") ?
                 Expressions.GetExpressionValue<string>(ip["subject-name"]["common-name"].Get<string>(), dp, ip, false, null) : null;
@@ -52,6 +53,7 @@ namespace Magix.cryptography
             string subjectTitle = ip["subject-name"].ContainsValue("title") ?
                 Expressions.GetExpressionValue<string>(ip["subject-name"]["title"].Get<string>(), dp, ip, false, null) : null;
 
+            // issuer name
             string issuerName = Expressions.GetExpressionValue<string>(ip["issuer-name"].Get<string>(), Dp(e.Params), ip, false);
             string issuerCommonName = ip["issuer-name"].ContainsValue("common-name") ?
                 Expressions.GetExpressionValue<string>(ip["issuer-name"]["common-name"].Get<string>(), dp, ip, false, null) : null;
@@ -62,11 +64,13 @@ namespace Magix.cryptography
             string issuerTitle = ip["issuer-name"].ContainsValue("title") ?
                 Expressions.GetExpressionValue<string>(ip["issuer-name"]["title"].Get<string>(), dp, ip, false, null) : null;
 
+            // misc
             string signatureAlgorithm = Expressions.GetExpressionValue<string>(ip.GetValue<string>("signature-algorithm", null), dp, ip, false, "SHA512WithRSA");
             int strength = Expressions.GetExpressionValue<int>(ip.GetValue<string>("strength", null), dp, ip, false, 2048);
             DateTime begin = Expressions.GetExpressionValue<DateTime>(ip.GetValue<string>("begin", null), dp, ip, false, DateTime.Now.Date);
             DateTime end = Expressions.GetExpressionValue<DateTime>(ip.GetValue<string>("end", null), dp, ip, false, DateTime.Now.Date.AddYears(3));
 
+            // creating key and certificate, and installing into database
             CryptographyHelper.CreateCertificateKey(
                 subjectName, 
                 issuerName, 
@@ -178,35 +182,6 @@ namespace Magix.cryptography
             string password = Expressions.GetExpressionValue<string>(ip["password"].Get<string>(), dp, ip, false);
 
             CryptographyHelper.ImportCertificate(certificateFile, password);
-        }
-
-        /*
-         * removes a certificate from database by subject name
-         */
-        [ActiveEvent(Name = "magix.cryptography.remove-certificates")]
-        private static void magix_cryptography_remove_certificates(object sender, ActiveEventArgs e)
-        {
-            Node ip = Ip(e.Params);
-            if (ip.Contains("inspect"))
-            {
-                AppendInspectFromResource(
-                    ip["inspect"],
-                    "Magix.cryptography",
-                    "Magix.cryptography.hyperlisp.inspect.hl",
-                    "[magix.cryptography.remove-certificates-dox].value");
-                AppendCodeFromResource(
-                    ip,
-                    "Magix.cryptography",
-                    "Magix.cryptography.hyperlisp.inspect.hl",
-                    "[magix.cryptography.remove-certificates-sample]");
-                return;
-            }
-
-            Node dp = Dp(e.Params);
-
-            string subjectName = Expressions.GetExpressionValue<string>(ip["subject-name"].Get<string>(), dp, ip, false);
-
-            CryptographyHelper.RemoveCertificates(subjectName);
         }
 
         /*

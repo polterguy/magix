@@ -48,7 +48,7 @@ magix.viewport.clear-controls
 magix.forms.create-web-part
   form-id=>email-settings
   container=>content2
-  class=>span-18 left-3
+  class=>span-18 left-3 bottom-5
   events
 
     magix.email-settings.load-smtp-settings
@@ -93,6 +93,10 @@ magix.forms.create-web-part
           form-id=>email-settings
           id=>smtp-display-name
           value=>[magix.data.load-username][value][display-name].value
+        set-value
+          form-id=>email-settings
+          id=>email-signature
+          value=>[magix.data.load-username][value][email-signature].value
 
     magix.email-settings.load-global-smtp-settings
       magix.data.load
@@ -546,6 +550,22 @@ magix.forms.create-web-part
               magix.email-settings.load-imap-settings
         dynamic=>email-account-dynamic
           class=>span-7 last
+    panel=>signature
+      class=>span-16 last boxed air-padding clear top-1
+      controls
+        label
+          tag=>h3
+          value=>signature
+          class=>span-16 last
+        label
+          class=>span-16 last top-1
+          value=>@"here you can create your own email signature, which will be appended to all emails you send by default.&nbsp;&nbsp;
+typically signatures are used to convey your contact information, such as phone no., address, title etc.&nbsp;&nbsp;mjølner mail will automatically 
+add two hyphens above your signature, to make email clients understand that this is your signature"
+        text-area=>email-signature
+          class=>span-16 last top-1
+          placeholder=>email signature ...
+          rows=>5
     panel=>encryption
       class=>span-16 last boxed air-padding clear top-1
       controls
@@ -555,7 +575,7 @@ magix.forms.create-web-part
           class=>span-16 last
         label
           class=>span-16 last top-1
-          value=>@"if you have an existing ssl certificate and/or a cryptography private key, you can drag and drop your certificate/key file 
+          value=>@"if you have an existing ssl certificate and/or a private cryptography key, you can drag and drop your certificate/key file 
 into this area, and it will be automatically uploaded, such that you can use it for cryptography purposes.&nbsp;&nbsp;you can also create 
 a new certificate and key here"
         button=>create-certificate-btn
@@ -790,6 +810,14 @@ the same as your subject name in your certificate/key"
           value=>[magix.forms.get-children-values][values][smtp-email].value
         set=>[@][magix.data.save-username=>smtp][value][display-name].value
           value=>[magix.forms.get-children-values][values][smtp-display-name].value
+
+        // signature
+        magix.forms.get-value=>signature
+          form-id=>email-settings
+          id=>email-signature
+        set=>[@][magix.data.save-username=>smtp][value][email-signature].value
+          value=>[@][magix.forms.get-value=>signature][value].value
+
         magix.data.save-username=>smtp
           id=>magix.smtp.settings
 

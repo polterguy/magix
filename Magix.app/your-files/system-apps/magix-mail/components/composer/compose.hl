@@ -109,6 +109,19 @@ if=>exist
     if=>exist
       lhs=>[@][using][load][value][body][plain].value
       code
+        // trying to find signature of email, and removing it
+        split=>[@][..][..][using][load][value][body][plain].value
+          what=>@"\n--\n"
+        if=>equals
+          lhs=>[@][split][result].count
+          rhs=>2
+          code
+            set=>[@][..][..][..][..][using][load][value][body][plain].value
+              value=>[@][..][..][split][result][0].value
+            split=>[@][..][..][..][..][using][load][value][body][plain].value
+              trim=>true
+            set=>[@][..][..][..][..][using][load][value][body][plain].value
+              value=>[@][split][result][0].value
         replace=>[@][..][..][using][load][value][body][plain].value
           what=>\n
           with=>\n>
@@ -164,6 +177,18 @@ if=>not-equals
 magix.viewport.include-client-file
   type=>css
   file=>media/back-end/file-uploader.css
+
+// setting signature
+magix.data.load-username=>signature
+  id=>magix.smtp.settings
+set=>[magix.forms.create-web-part][**text-area=>compose-body][value].value
+  value=>@"{0}
+
+
+-- 
+{1}"
+    =>[magix.forms.create-web-part][**text-area=>compose-body][value].value
+    =>[magix.data.load-username=>signature][value][email-signature].value
 
 magix.forms.create-web-part
   container=>content3
