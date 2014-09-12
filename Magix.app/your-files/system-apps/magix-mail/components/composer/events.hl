@@ -187,6 +187,18 @@ magix.email.add-recipient-to-email
 magix.email.create-recipient-list
   magix.viewstate.get
     id=>magix.email.recipients
+  magix.viewstate.get=>smaller
+    id=>magix.email.smaller-composer
+  if=>equals
+    lhs=>[@][magix.viewstate.get=>smaller][value].value
+    rhs=>true
+    code
+      set=>[_controls][panel=>recipients-to][class].value
+        value=>span-14 last
+      set=>[_controls][panel=>recipients-cc][class].value
+        value=>span-14 last
+      set=>[_controls][panel=>recipients-bcc][class].value
+        value=>span-14 last
   _controls
     label=>label-to
       class=>span-1
@@ -318,6 +330,14 @@ magix.email.create-recipient-list
     lhs=>[_controls].count
     rhs=>0
     code
+      magix.viewstate.get
+        id=>magix.email.smaller-composer
+      if=>equals
+        lhs=>[@][magix.viewstate.get][value].value
+        rhs=>true
+        code
+          set=>[@][..][..][using][create-web-part][class].value
+            value=>span-15 last bottom-1
       using=>magix.forms
         create-web-part
           container=>dynamic-recipients

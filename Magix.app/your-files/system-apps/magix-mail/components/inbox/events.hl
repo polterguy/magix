@@ -130,6 +130,10 @@ magix.emails.load-email
       set=>[_controls][panel=>attachments]
     set=>[_controls][**button=>reply][info].value
       value=>[$][email-id].value
+    set=>[_controls][**button=>reply-all][info].value
+      value=>[$][email-id].value
+    set=>[_controls][**button=>forward][info].value
+      value=>[$][email-id].value
     set=>[_controls][**button=>delete][info].value
       value=>[$][email-id].value
     magix.viewstate.get
@@ -140,6 +144,8 @@ magix.emails.load-email
       code
         // not allowing replying to trashed email
         set=>[**button=>reply]
+        set=>[**button=>reply-all]
+        set=>[**button=>forward]
         set=>[**panel=>btn-group][class].value
           value=>span-2 last right clear
     else-if=>equals
@@ -148,6 +154,8 @@ magix.emails.load-email
       code
         // not allowing replying to sent email
         set=>[**button=>reply]
+        set=>[**button=>reply-all]
+        set=>[**button=>forward]
         set=>[**button=>delete]
 
     // adding up from field
@@ -348,7 +356,7 @@ magix.emails.load-email
             tag=>label
             value=>attachments
       panel=>btn-group
-        class=>btn-group span-4 last right clear
+        class=>btn-group span-8 last right clear
         controls
           button=>reply
             class=>span-2
@@ -374,6 +382,56 @@ magix.emails.load-email
                 file=>your-files/system-apps/magix-mail/components/composer/compose.hl
                 params
                   smaller=>true
+          button=>reply-all
+            class=>span-2
+            value=>reply all
+            onclick
+              magix.email.current-reply-container
+              if=>exist
+                lhs=>[magix.email.current-reply-container][container]
+                code
+                  using=>magix.browser
+                    scroll
+                      id=>[magix.email.current-reply-container][container].value
+                  magix.viewport.show-message
+                    message=>you must first finish your existing reply
+                    color=>#ffaaaa
+                  stop
+              set=>[execute-script][params][email-id].value
+                value=>[$][info].value
+              set=>[execute-script][params][reply-container].value
+                value=>reply-{0}
+                  =>[$][container].value
+              execute-script
+                file=>your-files/system-apps/magix-mail/components/composer/compose.hl
+                params
+                  smaller=>true
+                  reply-all=>true
+          button=>forward
+            class=>span-2
+            value=>forward
+            onclick
+              magix.email.current-reply-container
+              if=>exist
+                lhs=>[magix.email.current-reply-container][container]
+                code
+                  using=>magix.browser
+                    scroll
+                      id=>[magix.email.current-reply-container][container].value
+                  magix.viewport.show-message
+                    message=>you must first finish your existing reply
+                    color=>#ffaaaa
+                  stop
+              set=>[execute-script][params][email-id].value
+                value=>[$][info].value
+              set=>[execute-script][params][reply-container].value
+                value=>reply-{0}
+                  =>[$][container].value
+              execute-script
+                file=>your-files/system-apps/magix-mail/components/composer/compose.hl
+                params
+                  smaller=>true
+                  forward=>true
           button=>delete
             class=>span-2 last
             value=>delete

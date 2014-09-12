@@ -46,16 +46,50 @@ if=>exist
       load
         id=>[$][email-id].value
 
-    // setting to fields of email
-    set=>[@][magix.viewstate.set][value][to][].value
-      value=>[@][using][load][value][from].value
-    if=>exist
-      lhs=>[@][using][load][value][from][display-name]
+    // only setting recipients if we are not forwarding email
+    if=>not-equals
+      lhs=>[$][forward].value
+      rhs=>true
       code
-        set=>[@][..][..][magix.viewstate.set][value][to][0][display-name].value
-          value=>[@][..][..][using][load][value][from][display-name].value
-    magix.viewstate.set
-      id=>magix.email.recipients
+
+        // setting to fields of email
+        set=>[@][magix.viewstate.set][value][to][].value
+          value=>[@][..][..][using][load][value][from].value
+        if=>exist
+          lhs=>[@][..][..][using][load][value][from][display-name]
+          code
+            set=>[@][..][..][magix.viewstate.set][value][to][0][display-name].value
+              value=>[@][..][..][..][..][using][load][value][from][display-name].value
+
+        // setting cc fields, if reply-all is true
+        if=>equals
+          lhs=>[$][reply-all].value
+          rhs=>true
+          code
+            for-each=>[@][..][..][..][..][using][load][value][to]
+              add=>[@][..][..][..][magix.viewstate.set][value][cc]
+                value=>
+                  value=>[.].value
+              if=>exist
+                lhs=>[.][display-name]
+                code
+                  add=>[@][..][..][..][..][..][magix.viewstate.set][value][cc][>last]
+                    value=>display-name
+                      value=>[.][display-name].value
+            for-each=>[@][..][..][..][..][using][load][value][cc]
+              add=>[@][..][..][..][magix.viewstate.set][value][cc]
+                value=>
+                  value=>[.].value
+              if=>exist
+                lhs=>[.][display-name]
+                code
+                  add=>[@][..][..][..][..][..][magix.viewstate.set][value][cc][>last]
+                    value=>display-name
+                      value=>[.][display-name].value
+
+        // changing viewstate value to reflect to, cc and bcc fields
+        magix.viewstate.set
+          id=>magix.email.recipients
 
     // setting subject of email
     index-of=>[@][using][load][value][subject].value
