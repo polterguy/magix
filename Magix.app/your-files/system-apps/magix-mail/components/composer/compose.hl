@@ -91,7 +91,7 @@ if=>exist
         magix.viewstate.set
           id=>magix.email.recipients
 
-    // setting subject of email
+    // setting subject of email, making sure it starts with "re:"
     index-of=>[@][using][load][value][subject].value
       what=>re:
       case=>false
@@ -99,38 +99,53 @@ if=>exist
       lhs=>[@][index-of][result][0].value
       rhs=>0
       code
+
+        // no existing "re:" was found, adding our own
         set=>[@][..][..][using][load][value][subject].value
           value=>Re:{0}
             =>[@][..][..][using][load][value][subject].value
     set=>[magix.forms.create-web-part][**text-box=>compose-subject][value].value
       value=>[@][using][load][value][subject].value
 
-    // setting body of email
+    // setting body of email, trying the "plain" version first
     if=>exist
       lhs=>[@][using][load][value][body][plain].value
       code
-        // trying to find signature of email, and removing it
+
+        // we found a "plain" version of email, using that one instead of html version as reply body
+        // trying to find signature of email, and removing it, but only if email is either reply or reply-all, and not forwarded
         split=>[@][..][..][using][load][value][body][plain].value
           what=>@"\n--\n"
         if=>equals
           lhs=>[@][split][result].count
           rhs=>2
+          and=>not-equals
+            lhs=>[$][forward].value
+            rhs=>true
           code
+
+            // we found a signature, now we'll remove it from the reply body
             set=>[@][..][..][..][..][using][load][value][body][plain].value
               value=>[@][..][..][split][result][0].value
             split=>[@][..][..][..][..][using][load][value][body][plain].value
               trim=>true
             set=>[@][..][..][..][..][using][load][value][body][plain].value
               value=>[@][split][result][0].value
+
+        // adding up angle brackets to signify the quoted text
         replace=>[@][..][..][using][load][value][body][plain].value
           what=>\n
           with=>\n>
+
+        // setting body of email to be replied-to email
         set=>[magix.forms.create-web-part][**text-area=>compose-body][value].value
           value=>>{0}
             =>[@][..][..][using][load][value][body][plain].value
     else-if=>exist
       lhs=>[@][using][load][value][body][html].value
       code
+
+        // no plain version of email existed, using html version as reply body
         set=>[@][magix.web.strip-html][value].value
           value=>[@][..][..][using][load][value][body][html].value
         magix.web.strip-html
@@ -141,11 +156,13 @@ if=>exist
           value=>>{0}
             =>[@][magix.web.strip-html][result].value
 
-// checking to see if we should make reply container smaller than its default
+// checking to see if we should make compose-email container smaller than its default, which might be the case for replies
 if=>equals
   lhs=>[$][smaller].value
   rhs=>true
   code
+
+    // this is a smaller reply containerr, possibly a reply inside another email
     set=>[magix.forms.create-web-part][class].value
       value=>span-15 last boxed air-padding bottom-1 top-2
     set=>[magix.forms.create-web-part][**label=>header][class].value
@@ -160,6 +177,8 @@ if=>equals
       id=>magix.email.smaller-composer
       value=>true
 else
+
+  // making sure other components knows this is not a smaller container, by setting a viewstate variable
   magix.viewstate.set
     id=>magix.email.smaller-composer
 
@@ -168,6 +187,8 @@ if=>not-equals
   lhs=>[_recipients].count
   rhs=>0
   code
+
+    // we have initial recipients, which might occur when an email address is clicked inside another email message
     add=>[@][magix.viewstate.set][value]
       values=>[_recipients]
     magix.viewstate.set
