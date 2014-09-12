@@ -118,13 +118,17 @@ namespace Magix.data
             Guid transaction = e.Params.GetValue("_database-transaction", Guid.Empty);
 
             if (id == null)
+            {
+                bool caseSensitivePrototype = Expressions.GetExpressionValue<bool>(ip.GetValue("case", "true"), dp, ip, false);
                 Database.Load(
                     ip,
                     GetPrototype(ip, dp),
                     Expressions.GetExpressionValue<int>(ip.GetValue("start", "0"), dp, ip, false),
                     Expressions.GetExpressionValue<int>(ip.GetValue("end", "-1"), dp, ip, false),
                     transaction,
-                    ip.GetValue("only-id", false));
+                    ip.GetValue("only-id", false),
+                    caseSensitivePrototype);
+            }
             else
                 Database.Load(ip, id, transaction);
         }
@@ -213,7 +217,10 @@ namespace Magix.data
             if (id != null)
                 ip["affected-records"].Value = Database.RemoveById(id, transaction);
             else
-                ip["affected-records"].Value = Database.RemoveByPrototype(prototype, transaction);
+            {
+                bool caseSensitivePrototype = Expressions.GetExpressionValue<bool>(ip.GetValue("case", "true"), dp, ip, false);
+                ip["affected-records"].Value = Database.RemoveByPrototype(prototype, transaction, caseSensitivePrototype);
+            }
         }
 
         /*
@@ -241,10 +248,11 @@ namespace Magix.data
             Node dp = Dp(e.Params);
 
             Node prototype = GetPrototype(ip, dp);
+            bool caseSensitivePrototype = Expressions.GetExpressionValue<bool>(ip.GetValue("case", "true"), dp, ip, false);
 
             Guid transaction = e.Params.GetValue("_database-transaction", Guid.Empty);
 
-            ip["count"].Value = Database.CountRecords(ip, prototype, transaction);
+            ip["count"].Value = Database.CountRecords(ip, prototype, transaction, caseSensitivePrototype);
         }
 
         /*
@@ -255,10 +263,22 @@ namespace Magix.data
             Node prototype = null;
             if (ip.Contains("prototype"))
             {
+                prototype = new Node();
                 if (ip.ContainsValue("prototype"))
-                    prototype = Expressions.GetExpressionValue<Node>(ip["prototype"].Get<string>(), dp, ip, false);
+                    prototype.Add(Expressions.GetExpressionValue<Node>(ip["prototype"].Get<string>(), dp, ip, false).Clone());
                 else
-                    prototype = ip["prototype"];
+                    prototype.Add(ip["prototype"].Clone());
+                foreach (Node idxIpChild in ip)
+                {
+                    if (idxIpChild.Name == "or")
+                    {
+                        // this is an "or"'ed prototype
+                        if (idxIpChild.Value != null)
+                            prototype.Add(Expressions.GetExpressionValue<Node>(idxIpChild.Get<string>(), dp, ip, false).Clone());
+                        else
+                            prototype.Add(idxIpChild.Clone());
+                    }
+                }
             }
             return prototype;
         }

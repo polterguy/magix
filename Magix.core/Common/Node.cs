@@ -172,12 +172,22 @@ namespace Magix.Core
 			Parent.Insert(dnaNo + 1, node);
 		}
 
+        /*
+         * Compares the nodes in the "this" pointer to 
+         * see if they contain all the nodex that exists in our "prototype"
+         * Node. If so, it will return true, else false
+         */
+        public bool HasNodes(Node prototype)
+        {
+            return HasNodes(prototype, true);
+        }
+
 		/*
 		 * Compares the nodes in the "this" pointer to 
 		 * see if they contain all the nodex that exists in our "prototype"
 		 * Node. If so, it will return true, else false
 		 */
-		public bool HasNodes(Node prototype)
+		public bool HasNodes(Node prototype, bool caseSensitive)
 		{
             bool found = true;
             foreach (Node idxProto in prototype)
@@ -219,7 +229,9 @@ namespace Magix.Core
                                 found = true;
                                 foreach (string idxQuery in strings)
                                 {
-                                    int noFound = content.IndexOf(idxQuery, idxNoSearch);
+                                    int noFound = caseSensitive ? 
+                                        content.IndexOf(idxQuery, idxNoSearch) :
+                                        content.IndexOf(idxQuery, idxNoSearch, StringComparison.InvariantCultureIgnoreCase);
                                     if (noFound == -1)
                                     {
                                         found = false;

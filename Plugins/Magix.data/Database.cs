@@ -256,13 +256,13 @@ namespace Magix.data
         /*
          * loads items from database
          */
-        internal static void Load(Node ip, Node prototype, int start, int end, Guid transaction, bool onlyId)
+        internal static void Load(Node ip, Node prototype, int start, int end, Guid transaction, bool onlyId, bool caseSensitivePrototype)
         {
             if (transaction != _transaction.Item1)
             {
                 lock (_transactionalLocker)
                 {
-                    Load(ip, prototype, start, end, transaction, onlyId);
+                    Load(ip, prototype, start, end, transaction, onlyId, caseSensitivePrototype);
                 }
             }
             lock (_locker)
@@ -273,7 +273,16 @@ namespace Magix.data
                     foreach (Node idxObjectNode in idxFileNode)
                     {
                         // loading by prototype
-                        if (idxObjectNode["value"].HasNodes(prototype))
+                        bool match = false;
+                        foreach (Node idxPrototype in prototype)
+                        {
+                            if (idxObjectNode["value"].HasNodes(idxPrototype, caseSensitivePrototype))
+                            {
+                                match = true;
+                                break;
+                            }
+                        }
+                        if (match)
                         {
                             if ((start == 0 || curMatchingItem >= start) && (end == -1 || curMatchingItem < end))
                             {
@@ -326,13 +335,13 @@ namespace Magix.data
         /*
          * counts records in database
          */
-        internal static int CountRecords(Node ip, Node prototype, Guid transaction)
+        internal static int CountRecords(Node ip, Node prototype, Guid transaction, bool caseSensitive)
         {
             if (transaction != _transaction.Item1)
             {
                 lock (_transactionalLocker)
                 {
-                    CountRecords(ip, prototype, transaction);
+                    CountRecords(ip, prototype, transaction, caseSensitive);
                 }
             }
             lock (_locker)
@@ -344,8 +353,20 @@ namespace Magix.data
                     {
                         if (prototype == null)
                             count += 1;
-                        else if (idxObjectNode["value"].HasNodes(prototype))
-                            count += 1;
+                        else
+                        {
+                            bool match = false;
+                            foreach (Node idxPrototype in prototype)
+                            {
+                                if (idxObjectNode["value"].HasNodes(idxPrototype, caseSensitive))
+                                {
+                                    match = true;
+                                    break;
+                                }
+                            }
+                            if (match)
+                                count += 1;
+                        }
                     }
                 }
                 return count;
@@ -412,13 +433,13 @@ namespace Magix.data
         /*
          * removes items from database according to prototype
          */
-        internal static int RemoveByPrototype(Node prototype, Guid transaction)
+        internal static int RemoveByPrototype(Node prototype, Guid transaction, bool caseSensitive)
         {
             if (transaction != _transaction.Item1)
             {
                 lock (_transactionalLocker)
                 {
-                    return RemoveByPrototype(prototype, transaction);
+                    return RemoveByPrototype(prototype, transaction, caseSensitive);
                 }
             }
             lock (_locker)
@@ -429,7 +450,16 @@ namespace Magix.data
                 {
                     foreach (Node idxObjectNode in idxFileNode)
                     {
-                        if (idxObjectNode["value"].HasNodes(prototype))
+                        bool match = false;
+                        foreach (Node idxPrototype in prototype)
+                        {
+                            if (idxObjectNode["value"].HasNodes(idxPrototype, caseSensitive))
+                            {
+                                match = true;
+                                break;
+                            }
+                        }
+                        if (match)
                         {
                             nodesToRemove.Add(idxObjectNode);
                             if (!filesToUpdate.Exists(
