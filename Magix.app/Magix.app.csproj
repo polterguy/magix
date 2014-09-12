@@ -490,6 +490,7 @@
     <Content Include="packages.config" />
     <Content Include="system42\private\startup\create-email-filter-event.hl" />
     <Content Include="system42\private\startup\unit-tests\switch.hl" />
+    <Content Include="system42\public\system-web-parts\login.hl" />
     <None Include="todo.txt" />
     <Content Include="your-files\readme.txt" />
     <Content Include="your-files\samples\hello-world-app\readme.txt" />

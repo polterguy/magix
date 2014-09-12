@@ -49,6 +49,21 @@ magix.forms.create-web-part
 magix.viewport.pin-container
   container=>content1
 
+// verifying that a user is currently logged in, and if not, opening up login form, and postponing execution of this file
+magix.session.get=>user
+  id=>magix.core.user
+if=>not-exist
+  lhs=>[magix.session.get=>user][value]
+  code
+    execute-script
+      file=>system42/public/system-web-parts/login.hl
+      params
+        container=>content2
+        onsuccess
+          execute-script
+            file=>your-files/system-apps/magix-mail/launch.hl
+    stop
+
 // loading email settings to see if settings are setup
 magix.data.load-username=>smtp
   id=>magix.smtp.settings

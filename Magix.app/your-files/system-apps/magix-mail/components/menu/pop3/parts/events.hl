@@ -40,6 +40,16 @@ magix.email.trash-clicked
       mailbox=>trash
 
 
+// logout link was clicked, logging out user
+magix.email.logout-clicked
+  magix.session.set
+    id=>magix.core.user
+
+  // reloading page
+  magix.viewport.execute-javascript
+    script=>@"location.reload();"
+
+
 // invoked when settings link is clicked.  show settings form, and make sure inbox is shown after settings is canceled or saved
 magix.email.settings-clicked
   execute-script
@@ -121,6 +131,10 @@ magix.email.new-messages-downloaded
 
 // updates number of new emails visual clues to user
 magix.email.update-unread-email-count
+  magix.session.get
+    id=>magix.core.user
+  set=>[magix.data.count][prototype][username].value
+    value=>[magix.session.get][value][username].value
   magix.data.count
     prototype
       type=>magix.email.message

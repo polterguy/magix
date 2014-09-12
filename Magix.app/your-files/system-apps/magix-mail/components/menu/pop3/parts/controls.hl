@@ -43,6 +43,12 @@ link-button=>trash-link
   onclick
     magix.email.trash-clicked
 
+link-button=>log-out
+  class=>span-2 last
+  value=>logout
+  onclick
+    magix.email.logout-clicked
+
 link-button=>settings-link
   class=>span-2 last top-1
   value=>settings

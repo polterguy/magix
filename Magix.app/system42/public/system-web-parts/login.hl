@@ -1,0 +1,84 @@
+﻿
+
+inspect=>@"creates the login web part
+
+creates the login web part"
+
+
+// checking to see if a specific container has been given
+if=>exist
+  lhs=>[$][container]
+  code
+    set=>[magix.forms.create-web-part][container].value
+      value=>[$][container].value
+
+if=>exist
+  lhs=>[$][onsuccess]
+  code
+    add=>[**_execute-afterwards]
+      values=>[$][onsuccess]
+
+// creating actual login form
+magix.forms.create-web-part
+  class=>span-6 air-padding left-4 last boxed
+  container=>content1
+  form-id=>login-form
+  controls
+    panel
+      class=>span-6 last
+      default=>login-btn
+      controls
+        label
+          class=>span-6 last bottom-1
+          tag=>h3
+          value=>please login ...
+        label
+          tag=>label
+          class=>span-2
+          value=>username
+        text-box=>login-username
+          class=>span-4 last
+          placeholder=>username ...
+          onfirstload
+            magix.forms.effect
+              form-id=>login-form
+              id=>login-username
+              type=>focus-and-select
+        label
+          tag=>label
+          class=>span-2
+          value=>password
+        text-box=>login-password
+          class=>span-4 last
+          placeholder=>password ...
+          type=>password
+        button=>login-btn
+          class=>span-2 last right
+          value=>login
+          onclick
+            magix.forms.get-value=>username
+              form-id=>login-form
+              id=>login-username
+            magix.forms.get-value=>password
+              form-id=>login-form
+              id=>login-password
+            set=>[magix.core.login-user][username].value
+              value=>[magix.forms.get-value=>username][value].value
+            set=>[magix.core.login-user][password].value
+              value=>[magix.forms.get-value=>password][value].value
+            magix.core.login-user
+            if=>equals
+              lhs=>[magix.core.login-user][success].value
+              rhs=>true
+              code
+                execute=>[_execute-afterwards]
+            else
+              magix.viewport.show-message
+                message=>sory, couldn't authenticate you
+                color=>#ffaaaa
+              magix.forms.effect
+                form-id=>login-form
+                id=>login-username
+                type=>focus-and-select
+            _execute-afterwards
+
