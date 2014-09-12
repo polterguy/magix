@@ -207,98 +207,66 @@ magix.forms.create-web-part
                 search=>{emails-search}
     lambda=>list-of-emails
       oncreatecontrols
-        magix.data.load=>load-emails
-          prototype
-            type=>magix.email.message
-            folder=>{mailbox}
-            username=>{user}
-
-        // removing emails not matching search criteria, if any criteria is given
         _search=>{emails-search}
         if=>not-equals
           lhs=>[@][_search].value
           rhs=>
           code
-            for-each=>[magix.data.load=>load-emails][objects]
+            add=>[magix.data.load=>load-emails][or]
+              values=>[magix.data.load=>load-emails][prototype]
+            add=>[magix.data.load=>load-emails][or:1]
+              values=>[magix.data.load=>load-emails][prototype]
+            add=>[magix.data.load=>load-emails][or:2]
+              values=>[magix.data.load=>load-emails][prototype]
+            set=>[magix.data.load=>load-emails][prototype][body][html].value
+              value=>%{0}%
+                =>[_search].value
+            add=>[magix.data.load=>load-emails][or:3]
+              values=>[magix.data.load=>load-emails][prototype]
+            set=>[magix.data.load=>load-emails][or:3][body][html].name
+              value=>plain
+            set=>[magix.data.load=>load-emails][or:0][subject].value
+              value=>%{0}%
+                =>[_search].value
+            set=>[magix.data.load=>load-emails][or:1][from].value
+              value=>%{0}%
+                =>[_search].value
+            set=>[magix.data.load=>load-emails][or:2][from][display-name].value
+              value=>%{0}%
+                =>[_search].value
 
-              // making html view the preferred view
-              if=>not-exist
-                lhs=>[.][value][body][html].value
-                code
-                  set=>[.][value][body].value
-                    value=>[.][value][body][plain].value
-              else
-                set=>[.][value][body].value
-                  value=>[.][value][body][html].value
+        // making sure view count uses same prototypes as load
+        add=>[_execute-count]
+          values=>[magix.data.load=>load-emails]
+        set=>[_execute-count][start]
+        set=>[_execute-count][end]
+        set=>[_execute-count][sort]
+        set=>[_execute-count].name
+          value=>magix.data.count
 
-              // doing search through all fields
-              index-of=>[.][value][subject].value
-                what=>[/][_search].value
-                case=>false
-              if=>not-exist
-                lhs=>[@][index-of][result]
-                code
-                  index-of=>[.][value][body].value
-                    what=>[/][_search].value
-                    case=>false
-                  if=>not-exist
-                    lhs=>[@][index-of][result]
-                    code
-                      index-of=>[.][value][from].value
-                        what=>[/][_search].value
-                        case=>false
-                      if=>not-exist
-                        lhs=>[@][index-of][result]
-                        code
-                          index-of=>[.][value][from][display-name].value
-                            what=>[/][_search].value
-                            case=>false
-                          if=>not-exist
-                            lhs=>[@][index-of][result]
-                            code
-                              // removing item since it didn't match search criteria on any of the searchable fields
-                              set=>[.]
+        // loading emails
+        magix.data.load=>load-emails
+          start=>{emails-start}
+          end=>{emails-end}
+          sort=>download-date
+            descending=>true
+          prototype
+            type=>magix.email.message
+            folder=>{mailbox}
+            username=>{user}
 
-        // sorting emails according to date
-        sort=>[magix.data.load=>load-emails][objects]
-          if=>less-than
-            lhs=>[@][_first][0][value][download-date].value
-            rhs=>[@][_second][0][value][download-date].value
-            code
-              set=>[@][..][..][_first]
-          else-if=>more-than
-            lhs=>[@][_first][0][value][download-date].value
-            rhs=>[@][_second][0][value][download-date].value
-            code
-              set=>[@][..][..][_second]
-
-        // settings view count for later references
+        // storing viewcount for later references
+        _execute-count
         set=>[@][magix.viewstate.set][value].value
-          value=>[magix.data.load=>load-emails][objects].count
+          value=>[magix.data.count][count].value
         magix.viewstate.set
           id=>magix.email.view-count
 
-        // removing all emails but the 25 emails we're supposed to see from the list of emails
-        _objects
-        while=>less-than
-          lhs=>[_objects].count
-          rhs=>{emails-count}
-          and=>more-than
-            lhs=>[magix.data.load=>load-emails][objects].count
-            rhs=>{emails-start}
-          code
-            _start=>{emails-start}
-            add=>[_objects]
-              value=>[magix.data.load=>load-emails][objects][[@][_start].value]
-            set=>[magix.data.load=>load-emails][objects][[@][_start].value]
-        set=>[magix.data.load=>load-emails][objects]
-        add=>[magix.data.load=>load-emails][objects]
-          values=>[_objects]
         _pnl
           panel
             class=>span-18 last
             controls
-        for-each=>[magix.data.load][objects]
+        for-each=>[magix.data.load=>load-emails][objects]
           _pnl
             hidden=>{viewing-}
               value=>false

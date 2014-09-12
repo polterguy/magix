@@ -69,6 +69,11 @@ itself
 if you supply a prototype, you can make the engine perform a case-insensitive search by adding 
 [case] and setting its value to false
 
+if you supply a prototype, you can also sort by any of the top level nodes in your result by 
+adding a [sort] parameter, and setting its name to be the name of the node you wish to sort 
+by.  you can sort descending by that node by adding [descending] beneath [sort].  ascending 
+is default
+
 in addition to loading the actual object and its id(s), [revision-count] and [created] will 
 also be returned for all objects matching your criteria.  [revision-count] is the number of 
 times the object has been saved, and [created] is the date and time of creation of your object

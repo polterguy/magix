@@ -256,18 +256,31 @@ namespace Magix.data
         /*
          * loads items from database
          */
-        internal static void Load(Node ip, Node prototype, int start, int end, Guid transaction, bool onlyId, bool caseSensitivePrototype)
+        internal static void Load(
+            Node ip, 
+            Node prototype, 
+            int start, 
+            int end, 
+            Guid transaction, 
+            bool onlyId, 
+            bool caseSensitivePrototype, 
+            string sortBy, 
+            bool descending)
         {
             if (transaction != _transaction.Item1)
             {
                 lock (_transactionalLocker)
                 {
-                    Load(ip, prototype, start, end, transaction, onlyId, caseSensitivePrototype);
+                    Load(ip, prototype, start, end, transaction, onlyId, caseSensitivePrototype, sortBy, descending);
                 }
             }
             lock (_locker)
             {
                 int curMatchingItem = 0;
+
+                // this one is only used if "sort" is given
+                List<Node> result = new List<Node>();
+
                 foreach (Node idxFileNode in GetDatabase())
                 {
                     foreach (Node idxObjectNode in idxFileNode)
@@ -282,8 +295,10 @@ namespace Magix.data
                                 break;
                             }
                         }
-                        if (match)
+                        if (match && string.IsNullOrEmpty(sortBy))
                         {
+                            // since we have no sort order here, we can add the nodes directly to our result, assuming we're inside the 
+                            // requested range
                             if ((start == 0 || curMatchingItem >= start) && (end == -1 || curMatchingItem < end))
                             {
                                 Node objectNode = new Node("object");
@@ -296,6 +311,36 @@ namespace Magix.data
                             }
                             curMatchingItem += 1;
                         }
+                        else if (match)
+                        {
+                            result.Add(idxObjectNode);
+                        }
+                    }
+                }
+
+                // sorting result, if we should
+                if (result.Count > 0)
+                {
+                    result.Sort(
+                        delegate(Node left, Node right)
+                        {
+                            string lhs = left["value"].GetValue(sortBy, "");
+                            string rhs = right["value"].GetValue(sortBy, "");
+                            if (descending)
+                                return rhs.CompareTo(lhs);
+                            return lhs.CompareTo(rhs);
+                        });
+                    
+                    // returning sliced and sorted result
+                    for (int idxResult = start; idxResult != end && idxResult < result.Count; idxResult++)
+                    {
+                        Node objectNode = new Node("object");
+                        objectNode["id"].Value = result[idxResult].Get<string>();
+                        objectNode["created"].Value = result[idxResult]["created"].Value;
+                        objectNode["revision-count"].Value = result[idxResult]["revision-count"].Value;
+                        if (!onlyId)
+                            objectNode["value"].AddRange(result[idxResult]["value"].Clone());
+                        ip["objects"].Add(objectNode);
                     }
                 }
             }
