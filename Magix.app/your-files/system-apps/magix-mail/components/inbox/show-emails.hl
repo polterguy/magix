@@ -22,6 +22,14 @@ _count=>25
 _search=>
 _mailbox=>inbox
 
+_container=>content4
+
+if=>exist
+  lhs=>[$][container]
+  code
+    set=>[_container].value
+      value=>[$][container].value
+
 if=>exist
   lhs=>[$][mailbox]
   code
@@ -80,6 +88,19 @@ else
   magix.viewstate.set
     id=>magix.emails.current-view
 
+if=>exist
+  lhs=>[$][criteria]
+  code
+    set=>[**magix.data.load=>load-emails][prototype]
+    add=>[**magix.data.load=>load-emails]
+      values=>[$][criteria]
+    add=>[**button=>previous-emails][**execute-script][params]
+      value=>[$][criteria]
+    add=>[**button=>next-emails][**execute-script][params]
+      value=>[$][criteria]
+    set=>[**text-box=>search-emails][enabled].value
+      value=>false
+
 magix.session.get=>username
   id=>magix.core.user
 
@@ -120,6 +141,12 @@ iterate=>[magix.forms.create-web-part]
     code
       set=>[.].value
         value=>[/][magix.session.get=>username][value][username].value
+  else-if=>equals
+    lhs=>[.].value
+    rhs=>{container}
+    code
+      set=>[.].value
+        value=>[/][_container].value
 
 if=>equals
   lhs=>[_start].value
@@ -129,7 +156,7 @@ if=>equals
       value=>true
 
 magix.forms.create-web-part
-  container=>content4
+  container=>{container}
   class=>span-18 last boxed air-padding bottom-1
   form-id=>inbox-list
   events-file=>your-files/system-apps/magix-mail/components/inbox/events.hl
@@ -172,6 +199,7 @@ magix.forms.create-web-part
               file=>your-files/system-apps/magix-mail/components/inbox/show-emails.hl
               params
                 search=>{emails-search}
+                container=>{container}
         text-box=>search-emails
           class=>span-5
           placeholder=>search ...
@@ -183,6 +211,7 @@ magix.forms.create-web-part
               file=>your-files/system-apps/magix-mail/components/inbox/show-emails.hl
               params
                 mailbox=>{mailbox}
+                container=>{container}
         button=>next-emails
           class=>span-2 last
           value=>>
@@ -205,6 +234,7 @@ magix.forms.create-web-part
               file=>your-files/system-apps/magix-mail/components/inbox/show-emails.hl
               params
                 search=>{emails-search}
+                container=>{container}
     lambda=>list-of-emails
       oncreatecontrols
         _search=>{emails-search}

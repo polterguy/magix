@@ -78,3 +78,13 @@
 
 * create gmail alternative, and send email to "Svein" ...
 
+* show attachments in sent emails in mjølner
+
+* implement sorting on nodes deeper than root level in magix.data.load
+
+* make all links open in new window in mjølner
+
+* create unit tests for new database logic, such as multiple prototypes, ordering, etc
+
+
+
