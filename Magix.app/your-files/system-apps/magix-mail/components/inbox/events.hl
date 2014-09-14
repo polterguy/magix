@@ -100,6 +100,9 @@ magix.emails.load-email
         with=><br/>
       replace=>[_body].value
         what=>\r
+      replace=>[_body].value
+        regex=>@"(\b(https?):\/\/[-A-Za-z0-9+&@#\/%?=~_|!:,.;]*[-A-Za-z0-9+&@#\/%=~_|])"
+        with=>@"<a href="$1" target="_blank">$1</a>"
 
     set=>[_controls][**label=>body][value].value
       value=>[_body].value
