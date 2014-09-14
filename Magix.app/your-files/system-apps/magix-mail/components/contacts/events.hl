@@ -150,7 +150,7 @@ magix.emails.load-contact
                 value=>[using][load][value][email].value
               set=>[execute-script][params][criteria][or:2][bcc][].value
                 value=>[using][load][value][email].value
-              set=>[execute-script][params][header-append].value
+              set=>[execute-script][params][header].value
                 value=>[using][load][value][email].value
               execute-script
                 file=>your-files/system-apps/magix-mail/components/inbox/show-emails.hl
