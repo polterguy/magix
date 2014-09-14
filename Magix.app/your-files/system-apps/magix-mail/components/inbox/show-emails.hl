@@ -21,6 +21,7 @@ _end=>25
 _count=>25
 _search=>
 _mailbox=>inbox
+_header-append=>
 
 _container=>content4
 
@@ -29,6 +30,13 @@ if=>exist
   code
     set=>[_container].value
       value=>[$][container].value
+
+if=>exist
+  lhs=>[$][header-append]
+  code
+    set=>[_header-append].value
+      value=>@" - {0} - "
+        =>[$][header-append].value
 
 if=>exist
   lhs=>[$][mailbox]
@@ -98,8 +106,8 @@ if=>exist
       value=>[$][criteria]
     add=>[**button=>next-emails][**execute-script][params]
       value=>[$][criteria]
-    set=>[**text-box=>search-emails][enabled].value
-      value=>false
+    set=>[**text-box=>search-emails][disabled].value
+      value=>true
 
 magix.session.get=>username
   id=>magix.core.user
@@ -147,6 +155,13 @@ iterate=>[magix.forms.create-web-part]
     code
       set=>[.].value
         value=>[/][_container].value
+  else-if=>equals
+    lhs=>[.].value
+    rhs=>{header-append}
+    code
+      set=>[.].value
+        value=> {0} 
+          =>[/][_header-append].value
 
 if=>equals
   lhs=>[_start].value
@@ -171,8 +186,9 @@ magix.forms.create-web-part
           set-value
             form-id=>inbox-list
             id=>inbox-header
-            value=>{0} ({1})
+            value=>{0}{1} ({2})
               =>{mailbox}
+              =>{header-append}
               =>[magix.viewstate.get][value].value
     panel
       class=>span-9 last btn-group email-search-bar
