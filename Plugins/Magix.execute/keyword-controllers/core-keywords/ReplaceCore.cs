@@ -6,6 +6,7 @@
 
 using System;
 using System.IO;
+using System.Text.RegularExpressions;
 using Magix.Core;
 
 namespace Magix.execute
@@ -39,9 +40,10 @@ namespace Magix.execute
 
             Node dp = Dp(e.Params);
 
-            // verifying a [what] is given, and that it has a value
-            if (!ip.ContainsValue("what") || ip["what"].Get<string>().Length == 0)
-                throw new HyperlispSyntaxErrorException("[replace] needs a [what] parameter");
+            // verifying a [what] or a [regex] is given, and that it has a value
+            if ((!ip.ContainsValue("what") || ip["what"].Get<string>().Length == 0) && 
+                (!ip.ContainsValue("regex") || ip["regex"].Get<string>().Length == 0))
+                throw new HyperlispSyntaxErrorException("[replace] needs a [what] or a [regex] parameter");
 
             // where to put our updated string
             string destinationExpression = ip.Get<string>();
@@ -62,21 +64,41 @@ namespace Magix.execute
          */
         private static void Replace(Node pars, Node ip, Node dp, string destinationExpression, string sourceValue)
         {
-            // what to replace in our source
-            string what = Expressions.GetFormattedExpression("what", pars, "");
-            what = what.Replace("\\n", "\n").Replace("\\r", "\r").Replace("\\t", "\t");
+            if (ip.ContainsValue("what"))
+            {
+                // what to replace in our source
+                string what = Expressions.GetFormattedExpression("what", pars, "");
+                what = what.Replace("\\n", "\n").Replace("\\r", "\r").Replace("\\t", "\t");
 
-            // what to replace it with in our source
-            string with = Expressions.GetFormattedExpression("with", pars, "");
-            with = with.Replace("\\n", "\n").Replace("\\r", "\r").Replace("\\t", "\t");
+                // what to replace it with in our source
+                string with = Expressions.GetFormattedExpression("with", pars, "");
+                with = with.Replace("\\n", "\n").Replace("\\r", "\r").Replace("\\t", "\t");
 
-            // the actual replacement operation
-            Expressions.SetNodeValue(
-                destinationExpression,
-                sourceValue.Replace(what, with),
-                dp,
-                ip,
-                false);
+                // the actual replacement operation
+                Expressions.SetNodeValue(
+                    destinationExpression,
+                    sourceValue.Replace(what, with),
+                    dp,
+                    ip,
+                    false);
+            }
+            else // assuming regex
+            {
+                // what to replace in our source
+                string what = Expressions.GetFormattedExpression("regex", pars, "");
+
+                // what to replace it with in our source
+                string with = Expressions.GetFormattedExpression("with", pars, "");
+
+                // the actual replacement operation
+                Regex regex = new Regex(what);
+                Expressions.SetNodeValue(
+                    destinationExpression,
+                    regex.Replace(sourceValue, with),
+                    dp,
+                    ip,
+                    false);
+            }
         }
     }
 }

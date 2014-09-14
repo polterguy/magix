@@ -400,7 +400,7 @@ magix.email.create-attachment-list
   _controls
     label
       value=>attachments
-      class=>span-10 last
+      class=>span-15 last
       tag=>label
   if=>more-than
     lhs=>[magix.viewstate.get][value].count
@@ -410,10 +410,10 @@ magix.email.create-attachment-list
       for-each=>[magix.viewstate.get][value]
         _lb
           panel
-            class=>clear span-10 last email-attachment
+            class=>clear span-15 last email-attachment bottom-1
             controls
               label
-                class=>span-9
+                class=>span-14
               link-button
                 class=>span-1 last text-right
                 value=>X
@@ -444,7 +444,7 @@ magix.email.create-attachment-list
         create-web-part
           container=>compose-attachments
           form-id=>compose-attachments
-          class=>span-18 last
+          class=>span-15 last
           controls=>[_controls]
   else
     // clearing attachments web part

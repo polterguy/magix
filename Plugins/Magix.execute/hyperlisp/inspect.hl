@@ -850,6 +850,10 @@ you can use \n, \r and \t in both your [what] and [with] values to
 signify you want to replace occurrencies of line-feed, carriage-return 
 or tabs
 
+alternatively you can supply a [regex] instead of a [what] parameter, 
+which means that replace will be doing a regular expression replace 
+instead of a traditional replacement
+
 thread safe"
 
 magix.execute.replace-sample
