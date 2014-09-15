@@ -86,5 +86,8 @@
 
 * create unit tests for new database logic, such as multiple prototypes, ordering, etc
 
+* make it possible to sort by types in magix.data.load
+
+
 
 

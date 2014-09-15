@@ -120,12 +120,10 @@ namespace Magix.data
             if (id == null)
             {
                 bool caseSensitivePrototype = Expressions.GetExpressionValue<bool>(ip.GetValue("case", "true"), dp, ip, false);
-                string sortBy = Expressions.GetExpressionValue<string>(ip.GetValue("sort", ""), dp, ip, false);
+                string sortBy = ip.GetValue("sort", "");
                 bool descending = true;
                 if (!string.IsNullOrEmpty(sortBy))
-                {
                     descending = Expressions.GetExpressionValue<bool>(ip["sort"].GetValue("descending", "false"), dp, ip, false);
-                }
                 Database.Load(
                     ip,
                     GetPrototype(ip, dp),

@@ -321,15 +321,31 @@ namespace Magix.data
                 // sorting result, if we should
                 if (result.Count > 0)
                 {
-                    result.Sort(
-                        delegate(Node left, Node right)
-                        {
-                            string lhs = left["value"].GetValue(sortBy, "");
-                            string rhs = right["value"].GetValue(sortBy, "");
-                            if (descending)
-                                return rhs.CompareTo(lhs);
-                            return lhs.CompareTo(rhs);
-                        });
+                    bool sortIsExpression = sortBy.StartsWith("[");
+                    if (sortIsExpression)
+                    {
+                        result.Sort(
+                            delegate(Node left, Node right)
+                            {
+                                string lhs = Expressions.GetExpressionValue<string>(sortBy, left["value"], ip, false) ?? "";
+                                string rhs = Expressions.GetExpressionValue<string>(sortBy, right["value"], ip, false) ?? "";
+                                if (descending)
+                                    return rhs.CompareTo(lhs);
+                                return lhs.CompareTo(rhs);
+                            });
+                    }
+                    else
+                    {
+                        result.Sort(
+                            delegate(Node left, Node right)
+                            {
+                                string lhs = left["value"].GetValue(sortBy, "");
+                                string rhs = right["value"].GetValue(sortBy, "");
+                                if (descending)
+                                    return rhs.CompareTo(lhs);
+                                return lhs.CompareTo(rhs);
+                            });
+                    }
                     
                     // returning sliced and sorted result
                     for (int idxResult = start; idxResult != end && idxResult < result.Count; idxResult++)

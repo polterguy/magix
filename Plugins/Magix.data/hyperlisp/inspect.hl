@@ -67,7 +67,7 @@ multiple prototypes by appending new prototypes as [or] nodes directly underneat
 itself
 
 if you supply a prototype, you can make the engine perform a case-insensitive search by adding 
-[case] and setting its value to false
+[case], and setting its value to false
 
 if you supply a prototype, you can also sort by any of the top level nodes in your result by 
 adding a [sort] parameter, and setting its name to be the name of the node you wish to sort 
