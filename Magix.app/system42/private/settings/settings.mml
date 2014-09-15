@@ -148,7 +148,7 @@ change the logic of the front end parts of your system"
     label
       tag=>label
       class=>span-3
-      value=>default active event
+      value=>default event
     lambda=>lambda-front-end-event
       oncreatecontrols
         // includes necessary javascript files for our autocompleter

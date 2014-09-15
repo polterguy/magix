@@ -376,10 +376,10 @@ namespace Magix.UX
                 _internalJavaScriptMemStream.Flush();
                 _internalJavaScriptMemStream.Position = 0;
 
-                using (TextReader readerContent = new StreamReader(_internalJavaScriptMemStream))
+                using (TextReader readerContent = new StreamReader(_internalJavaScriptMemStream, Encoding.UTF8))
                 {
                     string allContent = readerContent.ReadToEnd();
-                    using (TextWriter writer = new StreamWriter(next))
+                    using (TextWriter writer = new StreamWriter(next, Encoding.UTF8))
                     {
                         AddDynamicScriptIncludes(writer);
                         writer.WriteLine(allContent);

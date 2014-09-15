@@ -83,3 +83,21 @@ verifies [replace] throws when given an empty [what] parameter"
     replace=>[_data].value
       what=>
 
+
+event
+  name=>magix.test.replace-regex
+  persist=>false
+  inspect=>@"verifies [replace] works with [regex]
+
+verifies [replace] can do regex replacements"
+  code
+    _data=>$17.43  €2 16.33  £0.98  0.43   £43   12€  17
+    replace=>[_data].value
+      regex=>(\p{Sc}\s?)?(\d+\.?((?<=\.)\d+)?)(?(1)|\s?\p{Sc})?
+      with=>$2
+    if=>not-equals
+      lhs=>[_data].value
+      rhs=>17.43  2 16.33  0.98  0.43   43   12  17
+      code
+        throw=>[replace] did not work with [regex]
+
