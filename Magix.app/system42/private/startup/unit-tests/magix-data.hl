@@ -638,3 +638,155 @@ making sure every thread finishes before the next one starts"
       code
         throw=>[magix.data.transaction] misbehaved with threads
 
+
+event
+  name=>magix.test.data-multiple-prototypes
+  persist=>false
+  inspect=>@"verifies [load] works with multiple prototypes
+
+saves several different objects, and verifies that it is possible 
+to load these objects using multiple prototypes that are or'ed 
+together"
+  code
+    using=>magix.data
+      save
+        value
+          type=>magix.tests.test-object-type-5
+          name=>tjobing
+      save
+        value
+          type=>magix.tests.test-object-type-5
+          name=>tjobang
+      load
+        prototype
+          type=>magix.tests.test-object-type-5
+          name=>tjobing
+        or
+          type=>magix.tests.test-object-type-5
+          name=>tjobang
+      remove
+        prototype
+          type=>magix.tests.test-object-type-5
+    if=>not-equals
+      lhs=>[using][load][objects].count
+      rhs=>2
+      or=>not-exist
+        lhs=>[using][load][objects][**name=>tjobing]
+      or=>not-exist
+        lhs=>[using][load][objects][**name=>tjobang]
+      code
+        throw=>[load] did not work with multiple prototypes
+
+
+event
+  name=>magix.test.data-sort
+  persist=>false
+  inspect=>@"verifies [load] works with sorting
+
+saves several different objects, and verifies that it is possible 
+to load these objects sorted"
+  code
+    using=>magix.data
+      save
+        value
+          type=>magix.tests.test-object-type-6
+          name=>xxx
+      save
+        value
+          type=>magix.tests.test-object-type-6
+          name=>aaa
+      load
+        sort=>name
+        prototype
+          type=>magix.tests.test-object-type-6
+      remove
+        prototype
+          type=>magix.tests.test-object-type-6
+    if=>not-equals
+      lhs=>[using][load][objects][0][value][name].value
+      rhs=>aaa
+      or=>not-equals
+        lhs=>[using][load][objects][1][value][name].value
+        rhs=>xxx
+      code
+        throw=>[load] did not work with sorting
+
+
+event
+  name=>magix.test.data-sort-descending
+  persist=>false
+  inspect=>@"verifies [load] works with sorting
+
+saves several different objects, and verifies that it is possible 
+to load these objects sorted"
+  code
+    using=>magix.data
+      save
+        value
+          type=>magix.tests.test-object-type-6
+          name=>xxx
+      save
+        value
+          type=>magix.tests.test-object-type-6
+          name=>aaa
+      load
+        sort=>name
+          descending=>true
+        prototype
+          type=>magix.tests.test-object-type-6
+      remove
+        prototype
+          type=>magix.tests.test-object-type-6
+    if=>not-equals
+      lhs=>[using][load][objects][0][value][name].value
+      rhs=>xxx
+      or=>not-equals
+        lhs=>[using][load][objects][1][value][name].value
+        rhs=>aaa
+      code
+        throw=>[load] misbehaved
+
+
+event
+  name=>magix.test.data-sorted-sliced
+  persist=>false
+  inspect=>@"verifies [load] works with sorting when sliced
+
+saves several different objects, and verifies that it is possible 
+to load a part of these objects sorted"
+  code
+    using=>magix.data
+      save
+        value
+          type=>magix.tests.test-object-type-6
+          name=>xxx
+      save
+        value
+          type=>magix.tests.test-object-type-6
+          name=>bbb
+      save
+        value
+          type=>magix.tests.test-object-type-6
+          name=>aaa
+      save
+        value
+          type=>magix.tests.test-object-type-6
+          name=>yyy
+      load
+        start=>1
+        end=>3
+        sort=>name
+        prototype
+          type=>magix.tests.test-object-type-6
+      remove
+        prototype
+          type=>magix.tests.test-object-type-6
+    if=>not-equals
+      lhs=>[using][load][objects][0][value][name].value
+      rhs=>bbb
+      or=>not-equals
+        lhs=>[using][load][objects][1][value][name].value
+        rhs=>xxx
+      code
+        throw=>[load] misbehaved
+
