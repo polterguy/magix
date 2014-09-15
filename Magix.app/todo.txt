@@ -88,6 +88,11 @@
 
 * make it possible to sort by types in magix.data.load
 
+* make it possible to sort by revision-count and such in magix.data.load
+
+
+
+
 
 
 
