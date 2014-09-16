@@ -855,3 +855,59 @@ to load these objects sorted by an expression"
       code
         throw=>[load] misbehaved
 
+
+event
+  name=>magix.test.data-sorted-integers-expression
+  persist=>false
+  inspect=>@"verifies [load] works with sorting expressions
+
+saves several different objects, and verifies that it is possible 
+to load these objects sorted by an expression, when we're sorting 
+by an integer value"
+  code
+    using=>magix.data
+      save
+        value
+          type=>magix.tests.test-object-type-6
+          no=>3
+          sort=(dec)>14
+      save
+        value
+          type=>magix.tests.test-object-type-6
+          no=>2
+          sort=(dec)>9
+      save
+        value
+          type=>magix.tests.test-object-type-6
+          no=>4
+          sort=(dec)>120
+      save
+        value
+          type=>magix.tests.test-object-type-6
+          no=>1
+          sort=(dec)>1
+      load
+        sort=>[sort].value
+        prototype
+          type=>magix.tests.test-object-type-6
+      remove
+        prototype
+          type=>magix.tests.test-object-type-6
+    if=>not-equals
+      lhs=>[using][load][objects].count
+      rhs=>4
+      or=>not-equals
+        lhs=>[using][load][objects][0][value][no].value
+        rhs=>1
+      or=>not-equals
+        lhs=>[using][load][objects][1][value][no].value
+        rhs=>2
+      or=>not-equals
+        lhs=>[using][load][objects][2][value][no].value
+        rhs=>3
+      or=>not-equals
+        lhs=>[using][load][objects][3][value][no].value
+        rhs=>4
+      code
+        throw=>[load] misbehaved
+

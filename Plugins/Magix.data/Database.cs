@@ -327,11 +327,29 @@ namespace Magix.data
                         result.Sort(
                             delegate(Node left, Node right)
                             {
-                                string lhs = Expressions.GetExpressionValue<string>(sortBy, left["value"], ip, false) ?? "";
-                                string rhs = Expressions.GetExpressionValue<string>(sortBy, right["value"], ip, false) ?? "";
+                                object lhs = Expressions.GetExpressionValue<object>(sortBy, left["value"], ip, false) ?? "";
+                                object rhs = Expressions.GetExpressionValue<object>(sortBy, right["value"], ip, false) ?? "";
                                 if (descending)
-                                    return rhs.CompareTo(lhs);
-                                return lhs.CompareTo(rhs);
+                                {
+                                    if (rhs.GetType() == typeof(decimal))
+                                        return ((decimal)rhs).CompareTo(lhs);
+                                    else if (rhs.GetType() == typeof(DateTime))
+                                        return ((DateTime)rhs).CompareTo(lhs);
+                                    else if (rhs.GetType() == typeof(bool))
+                                        return ((bool)rhs).CompareTo(lhs);
+                                    else if (rhs.GetType() == typeof(int))
+                                        return ((int)rhs).CompareTo(lhs);
+                                    return ((string)rhs).CompareTo(lhs);
+                                }
+                                if (lhs.GetType() == typeof(decimal))
+                                    return ((decimal)lhs).CompareTo(rhs);
+                                else if (lhs.GetType() == typeof(DateTime))
+                                    return ((DateTime)lhs).CompareTo(rhs);
+                                else if (lhs.GetType() == typeof(bool))
+                                    return ((bool)lhs).CompareTo(rhs);
+                                else if (lhs.GetType() == typeof(int))
+                                    return ((int)lhs).CompareTo(rhs);
+                                return ((string)lhs).CompareTo(rhs);
                             });
                     }
                     else
