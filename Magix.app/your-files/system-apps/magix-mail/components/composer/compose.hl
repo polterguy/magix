@@ -115,7 +115,7 @@ if=>exist
         // we found a "plain" version of email, using that one instead of html version as reply body
         // trying to find signature of email, and removing it, but only if email is either reply or reply-all, and not forwarded
         split=>[@][..][..][using][load][value][body][plain].value
-          what=>@"\n--\n"
+          regex=>@"\n-- *\n"
         if=>equals
           lhs=>[@][split][result].count
           rhs=>2

@@ -321,50 +321,8 @@ namespace Magix.data
                 // sorting result, if we should
                 if (result.Count > 0)
                 {
-                    bool sortIsExpression = sortBy.StartsWith("[");
-                    if (sortIsExpression)
-                    {
-                        result.Sort(
-                            delegate(Node left, Node right)
-                            {
-                                object lhs = Expressions.GetExpressionValue<object>(sortBy, left["value"], ip, false) ?? "";
-                                object rhs = Expressions.GetExpressionValue<object>(sortBy, right["value"], ip, false) ?? "";
-                                if (descending)
-                                {
-                                    if (rhs.GetType() == typeof(decimal))
-                                        return ((decimal)rhs).CompareTo(lhs);
-                                    else if (rhs.GetType() == typeof(DateTime))
-                                        return ((DateTime)rhs).CompareTo(lhs);
-                                    else if (rhs.GetType() == typeof(bool))
-                                        return ((bool)rhs).CompareTo(lhs);
-                                    else if (rhs.GetType() == typeof(int))
-                                        return ((int)rhs).CompareTo(lhs);
-                                    return ((string)rhs).CompareTo(lhs);
-                                }
-                                if (lhs.GetType() == typeof(decimal))
-                                    return ((decimal)lhs).CompareTo(rhs);
-                                else if (lhs.GetType() == typeof(DateTime))
-                                    return ((DateTime)lhs).CompareTo(rhs);
-                                else if (lhs.GetType() == typeof(bool))
-                                    return ((bool)lhs).CompareTo(rhs);
-                                else if (lhs.GetType() == typeof(int))
-                                    return ((int)lhs).CompareTo(rhs);
-                                return ((string)lhs).CompareTo(rhs);
-                            });
-                    }
-                    else
-                    {
-                        result.Sort(
-                            delegate(Node left, Node right)
-                            {
-                                string lhs = left["value"].GetValue(sortBy, "");
-                                string rhs = right["value"].GetValue(sortBy, "");
-                                if (descending)
-                                    return rhs.CompareTo(lhs);
-                                return lhs.CompareTo(rhs);
-                            });
-                    }
-                    
+                    SortResults(ip, sortBy, descending, result);
+
                     // returning sliced and sorted result
                     for (int idxResult = start; idxResult != end && idxResult < result.Count; idxResult++)
                     {
@@ -378,6 +336,51 @@ namespace Magix.data
                     }
                 }
             }
+        }
+
+        /*
+         * sorts result
+         */
+        private static void SortResults(Node ip, string sortBy, bool descending, List<Node> result)
+        {
+            bool sortIsExpression = sortBy.StartsWith("[");
+            result.Sort(
+                delegate(Node left, Node right)
+                {
+                    object lhs = null;
+                    object rhs = null;
+                    if (sortIsExpression)
+                    {
+                        lhs = Expressions.GetExpressionValue<object>(sortBy, left["value"], ip, false) ?? "";
+                        rhs = Expressions.GetExpressionValue<object>(sortBy, right["value"], ip, false) ?? "";
+                    }
+                    else
+                    {
+                        lhs = left["value"][sortBy].Value;
+                        rhs = right["value"][sortBy].Value;
+                    }
+                    if (descending)
+                    {
+                        if (rhs.GetType() == typeof(decimal))
+                            return ((decimal)rhs).CompareTo(lhs);
+                        else if (rhs.GetType() == typeof(DateTime))
+                            return ((DateTime)rhs).CompareTo(lhs);
+                        else if (rhs.GetType() == typeof(bool))
+                            return ((bool)rhs).CompareTo(lhs);
+                        else if (rhs.GetType() == typeof(int))
+                            return ((int)rhs).CompareTo(lhs);
+                        return ((string)rhs).CompareTo(lhs);
+                    }
+                    if (lhs.GetType() == typeof(decimal))
+                        return ((decimal)lhs).CompareTo(rhs);
+                    else if (lhs.GetType() == typeof(DateTime))
+                        return ((DateTime)lhs).CompareTo(rhs);
+                    else if (lhs.GetType() == typeof(bool))
+                        return ((bool)lhs).CompareTo(rhs);
+                    else if (lhs.GetType() == typeof(int))
+                        return ((int)lhs).CompareTo(rhs);
+                    return ((string)lhs).CompareTo(rhs);
+                });
         }
 
         /*

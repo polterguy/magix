@@ -34,6 +34,20 @@ _magix.viewport.load-module
   name=>Magix.ide.modules.ConsoleLogger
   rows=>5
 
+// making sure we delete any previous locks
+magix.session.get=>previously-loaded
+  id=>magix.email.has-loaded-email-client
+if=>not-exist
+  lhs=>[magix.session.get=>previously-loaded][value]
+  code
+    // mjølner email has not been previously loaded in this session
+    // making sure we remove previous locks, and marks the session as having loaded mjølner mail
+    magix.session.get=>previously-loaded
+      id=>magix.email.has-loaded-email-client
+      value=>true
+    magix.data.remove-username
+      id=>magix.email.thread-status
+
 // creating header web part
 magix.forms.create-web-part
   container=>content1

@@ -7,6 +7,7 @@
 using System;
 using System.Globalization;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using Magix.Core;
 
 namespace Magix.execute
@@ -41,8 +42,8 @@ namespace Magix.execute
             Node dp = Dp(e.Params);
 
             // verifying syntax is correct
-            if (!ip.Contains("what") && !ip.Contains("where") && !ip.Contains("trim"))
-                throw new HyperlispSyntaxErrorException("[split] needs a [what], [trim] or a [where] child to understand how to split the expression");
+            if (!ip.Contains("what") && !ip.Contains("where") && !ip.Contains("trim") && !ip.Contains("regex"))
+                throw new HyperlispSyntaxErrorException("[split] needs a [what], [trim], [regex] or a [where] child to understand how to split the expression");
             if (ip.Contains("what") && ip.Contains("where"))
                 throw new HyperlispSyntaxErrorException("only either [what] or [where] can be submitted to [split], and not both");
 
@@ -69,8 +70,27 @@ namespace Magix.execute
                 SplitByStringValue(ip, dp, whatToSplit);
             else if (ip.Contains("where"))
                 SplitByIndex(ip, dp, whatToSplit);
+            else if (ip.Contains("regex"))
+                SplitByRegex(ip, dp, whatToSplit);
             else
                 ip["result"].Add(new Node("", whatToSplit)); // probably just a trimming operation
+        }
+
+        /*
+         * splits string by regex
+         */
+        private static void SplitByRegex(Node ip, Node dp, string whatToSplit)
+        {
+            string regexString = Expressions.GetExpressionValue<string>(ip["regex"].Get<string>(), dp, ip, false);
+            Regex regex = new Regex(regexString);
+            int idxNo = 0;
+            foreach (Match idxMatch in regex.Matches(whatToSplit))
+            {
+                ip["result"].Add(new Node("", whatToSplit.Substring(idxNo, idxMatch.Index)));
+                idxNo = idxMatch.Index + idxMatch.Length;
+            }
+            if (idxNo < whatToSplit.Length - 1)
+                ip["result"].Add(new Node("", whatToSplit.Substring(idxNo)));
         }
 
         /*
