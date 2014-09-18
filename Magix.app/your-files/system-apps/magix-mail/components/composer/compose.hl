@@ -115,7 +115,7 @@ if=>exist
         // we found a "plain" version of email, using that one instead of html version as reply body
         // trying to find signature of email, and removing it, but only if email is either reply or reply-all, and not forwarded
         split=>[@][..][..][using][load][value][body][plain].value
-          regex=>@"\n-- *\n"
+          regex=>@"\r*\n-- *\r*\n"
         if=>equals
           lhs=>[@][split][result].count
           rhs=>2
@@ -256,6 +256,8 @@ magix.forms.create-web-part
           class=>span-2
           value=>send
           onclick
+            set=>[magix.email.send-composed-email][reply-container].value
+              value=>[$][container].value
             magix.email.send-composed-email
         button=>sign
           class=>span-2 sign-email

@@ -34,6 +34,21 @@ _magix.viewport.load-module
   name=>Magix.ide.modules.ConsoleLogger
   rows=>5
 
+// verifying that a user is currently logged in, and if not, opening up login form, and postponing execution of this file
+magix.session.get=>user
+  id=>magix.core.user
+if=>not-exist
+  lhs=>[magix.session.get=>user][value]
+  code
+    execute-script
+      file=>system42/public/system-web-parts/login.hl
+      params
+        container=>content2
+        onsuccess
+          execute-script
+            file=>your-files/system-apps/magix-mail/launch.hl
+    stop
+
 // making sure we delete any previous locks
 magix.session.get=>previously-loaded
   id=>magix.email.has-loaded-email-client
@@ -62,21 +77,6 @@ magix.forms.create-web-part
 // pinning header web part, such that it won't be affected by clear-controls that clears all containers
 magix.viewport.pin-container
   container=>content1
-
-// verifying that a user is currently logged in, and if not, opening up login form, and postponing execution of this file
-magix.session.get=>user
-  id=>magix.core.user
-if=>not-exist
-  lhs=>[magix.session.get=>user][value]
-  code
-    execute-script
-      file=>system42/public/system-web-parts/login.hl
-      params
-        container=>content2
-        onsuccess
-          execute-script
-            file=>your-files/system-apps/magix-mail/launch.hl
-    stop
 
 // loading email settings to see if settings are setup
 magix.data.load-username=>smtp

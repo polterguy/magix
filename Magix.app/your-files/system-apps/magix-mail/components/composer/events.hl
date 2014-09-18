@@ -703,7 +703,8 @@ magix.email.send-composed-email
   magix.viewport.show-message
     message=>email successfully sent
     color=>#aaffaa
+  set=>[magix.viewport.clear-controls][container].value
+    value=>[$][reply-container].value
   magix.viewport.clear-controls
-    container=>content3
     reset-class=>true
 
