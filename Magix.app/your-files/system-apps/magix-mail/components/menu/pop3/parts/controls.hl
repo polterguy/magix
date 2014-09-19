@@ -6,17 +6,20 @@ contains the menu parts controls definition file of the
 magix mail application"
 
 
+// header label of menu
 label
   class=>span-2 last bottom-1
   tag=>h3
   value=>menu
 
+// compose new email link
 link-button=>compose-link
   class=>span-2 last
   value=>compose
   onclick
     magix.email.compose-clicked
 
+// open inbox link
 link-button=>inbox-link
   class=>span-2 last
   value=>inbox
@@ -25,36 +28,42 @@ link-button=>inbox-link
   onclick
     magix.email.inbox-clicked
 
+// open contacts link
 link-button=>contacts-link
   class=>span-2 last
   value=>contacts
   onclick
     magix.email.contacts-clicked
 
+// open sent emails link
 link-button=>sent-link
   class=>span-2 last
   value=>sent
   onclick
     magix.email.sent-clicked
 
+// open trash link
 link-button=>trash-link
   class=>span-2 last
   value=>trash
   onclick
     magix.email.trash-clicked
 
+// logout link
 link-button=>log-out
   class=>span-2 last
   value=>logout
   onclick
     magix.email.logout-clicked
 
+// open settings link
 link-button=>settings-link
   class=>span-2 last top-1
   value=>settings
   onclick
     magix.email.settings-clicked
 
+// timer that periodically checks for new emails
 timer=>check-for-new-emails
   interval=>30000
   ontick
@@ -62,6 +71,7 @@ timer=>check-for-new-emails
   onfirstload
     magix.email.check-for-new-emails
 
+// miscelanous dynamic, used for "ping" sound played when new emails arrive
 dynamic=>misc-dynamic
 
 

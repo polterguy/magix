@@ -2,9 +2,10 @@
 
 inspect=>@"creates the show emails web part
 
-creates the show emails web part in content4.  loads emails 
-from database and displays as a grid to the user, making it 
-possible to read, reply, delete and such on individual emails
+creates the show emails web part in content4 or [container].  
+loads emails from database and displays as a grid to the user, 
+making it possible to read, reply, delete and such on individual 
+emails
 
 also makes it possible to search and page back and forth between 
 emails
@@ -12,8 +13,8 @@ emails
 takes [start], and [search] as parameters which informs the 
 file where to start showing emails
 
-emails will be shown sorted such that your last emails will be 
-shown first"
+emails will be shown sorted such that the emails downloaded last, 
+will be shown first"
 
 
 _start=>0
@@ -170,6 +171,8 @@ if=>equals
     set=>[**button=>previous-emails][disabled].value
       value=>true
 
+
+// creates the web part that shows the list of emails
 magix.forms.create-web-part
   container=>{container}
   class=>span-18 last boxed air-padding bottom-1

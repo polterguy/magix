@@ -309,10 +309,24 @@ namespace Magix.email
         {
             HtmlDocument doc = new HtmlDocument();
             doc.LoadHtml(html);
+
+            // removing all script and style tags, in addition to all comments
             doc.DocumentNode.Descendants()
                 .Where(n => n.Name == "script" || n.Name == "style" || n.Name == "#comment")
                 .ToList()
                 .ForEach(n => n.Remove());
+
+            // making sure all links opens up in _blank targets
+            HtmlNodeCollection links = doc.DocumentNode.SelectNodes("//a");
+            foreach (HtmlNode link in links)
+            {
+                if (link.Attributes["target"] != null)
+                    link.Attributes["target"].Value = "_blank";
+                else
+                    link.Attributes.Add("target", "_blank");
+            }
+
+            // returning only contents of body element
             HtmlNode el = doc.DocumentNode.SelectSingleNode("//body");
             if (el != null)
                 return el.InnerHtml;

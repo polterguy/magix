@@ -8,8 +8,9 @@ been initialized, this file will load up the settings
 web part, and force user to setup his mail settings, before 
 inbox will be launched
 
-this file assumes that a user is already logged in, and 
-if not it will throw an exception
+if no user is logged in, the file will launch the global 
+login form, before proceeding and allowing the execution 
+of the rest of the file
 
 file takes no parameters, and will use most parts of the 
 viewport containers for its web parts.  file is dependent 
@@ -21,10 +22,12 @@ magix.viewport.include-client-file
   type=>css
   file=>media/back-end/email-client.css
 
+
 // clearing all containers
 magix.viewport.clear-controls
   all=>true
   reset-class=>true
+
 
 // starting console logger
 // uncomment to allow for logging to console
@@ -33,6 +36,7 @@ _magix.viewport.load-module
   class=>span-22 air-padding boxed last bottom-5
   name=>Magix.ide.modules.ConsoleLogger
   rows=>5
+
 
 // verifying that a user is currently logged in, and if not, opening up login form, and postponing execution of this file
 magix.session.get=>user
@@ -49,12 +53,14 @@ if=>not-exist
             file=>your-files/system-apps/magix-mail/launch.hl
     stop
 
+
 // making sure we delete any previous locks
 magix.session.get=>previously-loaded
   id=>magix.email.has-loaded-email-client
 if=>not-exist
   lhs=>[magix.session.get=>previously-loaded][value]
   code
+
     // mjølner email has not been previously loaded in this session
     // making sure we remove previous locks, and marks the session as having loaded mjølner mail
     magix.session.get=>previously-loaded
@@ -62,6 +68,7 @@ if=>not-exist
       value=>true
     magix.data.remove-username
       id=>magix.email.thread-status
+
 
 // creating header web part
 magix.forms.create-web-part
@@ -78,11 +85,13 @@ magix.forms.create-web-part
 magix.viewport.pin-container
   container=>content1
 
+
 // loading email settings to see if settings are setup
 magix.data.load-username=>smtp
   id=>magix.smtp.settings
 magix.data.load-username=>pop3
   id=>magix.pop3.settings
+
 
 // making sure email settings exists, and if not, fire up settings web part
 if=>not-exist
