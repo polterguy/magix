@@ -1,0 +1,79 @@
+2014-09-12 08:49:04,487 DEBUG magix - {error while downloading emails from pop3 server for user 'admin' - message from server was; 'No such host is known'}
+2014-09-12 09:17:46,119 DEBUG magix - {error while downloading emails from pop3 server for user 'admin' - message from server was; 'No such host is known'}
+2014-09-12 09:59:28,963 DEBUG magix - {error while downloading emails from pop3 server for user 'admin' - message from server was; 'The requested name is valid, but no data of the requested type was found'}
+2014-09-12 10:11:09,036 DEBUG magix - {error while downloading emails from pop3 server for user 'admin' - message from server was; 'An established connection was aborted by the software in your host machine'}
+2014-09-12 10:37:41,916 DEBUG magix - {user created or edited, by admin - user 'polterguy' was created or edited}
+2014-09-12 10:38:58,322 DEBUG magix - {error while downloading emails from pop3 server for user 'polterguy' - message from server was; 'Authentication failed.'}
+2014-09-12 10:39:39,577 DEBUG magix - {error while downloading emails from pop3 server for user 'polterguy' - message from server was; 'Authentication failed.'}
+2014-09-12 10:40:03,294 DEBUG magix - {error while downloading emails from pop3 server for user 'polterguy' - message from server was; 'Authentication failed.'}
+2014-09-12 10:40:36,185 DEBUG magix - {error while downloading emails from pop3 server for user 'polterguy' - message from server was; 'Authentication failed.'}
+2014-09-12 10:41:02,499 DEBUG magix - {error while downloading emails from pop3 server for user 'polterguy' - message from server was; 'Authentication failed.'}
+2014-09-12 10:41:25,486 DEBUG magix - {error while downloading emails from pop3 server for user 'polterguy' - message from server was; 'Authentication failed.'}
+2014-09-12 10:41:42,980 DEBUG magix - {error while downloading emails from pop3 server for user 'polterguy' - message from server was; 'Authentication failed.'}
+2014-09-12 10:42:06,355 DEBUG magix - {error while downloading emails from pop3 server for user 'polterguy' - message from server was; 'Authentication failed.'}
+2014-09-12 10:42:40,795 DEBUG magix - {error while downloading emails from pop3 server for user 'polterguy' - message from server was; 'Authentication failed.'}
+2014-09-12 10:42:56,403 DEBUG magix - {error while downloading emails from pop3 server for user 'polterguy' - message from server was; 'Authentication failed.'}
+2014-09-12 10:43:28,424 DEBUG magix - {error while downloading emails from pop3 server for user 'polterguy' - message from server was; 'Authentication failed.'}
+2014-09-12 10:43:33,045 DEBUG magix - {error while downloading emails from pop3 server for user 'polterguy' - message from server was; 'Authentication failed.'}
+2014-09-12 10:43:57,016 DEBUG magix - {error while downloading emails from pop3 server for user 'polterguy' - message from server was; 'Authentication failed.'}
+2014-09-12 10:44:06,617 DEBUG magix - {error while downloading emails from pop3 server for user 'polterguy' - message from server was; 'Authentication failed.'}
+2014-09-12 10:44:22,183 DEBUG magix - {error while downloading emails from pop3 server for user 'polterguy' - message from server was; 'Authentication failed.'}
+2014-09-12 10:44:27,960 DEBUG magix - {error while downloading emails from pop3 server for user 'polterguy' - message from server was; 'Authentication failed.'}
+2014-09-12 10:44:46,904 DEBUG magix - {error while downloading emails from pop3 server for user 'polterguy' - message from server was; 'Authentication failed.'}
+2014-09-12 10:44:52,550 DEBUG magix - {error while downloading emails from pop3 server for user 'polterguy' - message from server was; 'Authentication failed.'}
+2014-09-12 10:45:27,236 DEBUG magix - {error while downloading emails from pop3 server for user 'polterguy' - message from server was; 'Authentication failed.'}
+2014-09-12 10:46:28,927 DEBUG magix - {error while downloading emails from pop3 server for user 'polterguy' - message from server was; 'Authentication failed.'}
+2014-09-12 10:46:59,893 DEBUG magix - {error while downloading emails from pop3 server for user 'polterguy' - message from server was; 'Authentication failed.'}
+2014-09-12 10:47:30,203 DEBUG magix - {error while downloading emails from pop3 server for user 'polterguy' - message from server was; 'Authentication failed.'}
+2014-09-12 10:49:07,623 DEBUG magix - {error while downloading emails from pop3 server for user 'polterguy' - message from server was; 'Authentication failed.'}
+2014-09-12 10:49:38,528 DEBUG magix - {error while downloading emails from pop3 server for user 'polterguy' - message from server was; 'Authentication failed.'}
+2014-09-12 10:50:13,934 DEBUG magix - {error while downloading emails from pop3 server for user 'polterguy' - message from server was; 'Authentication failed.'}
+2014-09-12 10:51:55,577 DEBUG magix - {error while downloading emails from pop3 server for user 'polterguy' - message from server was; 'Authentication failed.'}
+2014-09-12 18:24:27,351 ERROR magix - {thread choked - }
+2014-09-15 10:11:37,558 ERROR magix - {thread choked - }
+2014-09-15 10:11:43,385 ERROR magix - {unit tests executed with errors - magix.tests.run did not execute successfully, message from system; [open] and/or [remote] misbehaved}
+2014-09-15 10:13:49,393 ERROR magix - {thread choked - }
+2014-09-15 10:13:54,785 DEBUG magix - {unit tests executed successfully - magix.tests.run was running successfully, 162 tests executed successfully in 15699 milliseconds}
+2014-09-15 10:17:34,076 ERROR magix - {thread choked - }
+2014-09-15 10:17:38,774 ERROR magix - {unit tests executed with errors - magix.tests.run did not execute successfully, message from system; [replace] did not work with exceptions}
+2014-09-15 10:45:56,588 ERROR magix - {thread choked - }
+2014-09-15 10:46:01,712 DEBUG magix - {unit tests executed successfully - magix.tests.run was running successfully, 163 tests executed successfully in 14918 milliseconds}
+2014-09-15 11:28:44,414 ERROR magix - {thread choked - }
+2014-09-15 11:28:49,245 DEBUG magix - {unit tests executed successfully - magix.tests.run was running successfully, 164 tests executed successfully in 14241 milliseconds}
+2014-09-15 11:31:47,955 ERROR magix - {thread choked - }
+2014-09-15 11:31:53,183 DEBUG magix - {unit tests executed successfully - magix.tests.run was running successfully, 165 tests executed successfully in 14486 milliseconds}
+2014-09-15 11:33:11,128 ERROR magix - {thread choked - }
+2014-09-15 11:33:15,502 ERROR magix - {unit tests executed with errors - magix.tests.run did not execute successfully, message from system; [load] misbehaved}
+2014-09-15 11:34:15,462 ERROR magix - {thread choked - }
+2014-09-15 11:34:20,551 DEBUG magix - {unit tests executed successfully - magix.tests.run was running successfully, 166 tests executed successfully in 14689 milliseconds}
+2014-09-15 11:36:26,011 ERROR magix - {thread choked - }
+2014-09-15 11:36:30,283 ERROR magix - {unit tests executed with errors - magix.tests.run did not execute successfully, message from system; [load] misbehaved}
+2014-09-15 11:38:05,602 ERROR magix - {thread choked - }
+2014-09-15 11:38:10,727 DEBUG magix - {unit tests executed successfully - magix.tests.run was running successfully, 167 tests executed successfully in 14531 milliseconds}
+2014-09-15 11:38:53,825 ERROR magix - {thread choked - }
+2014-09-15 11:38:58,596 DEBUG magix - {unit tests executed successfully - magix.tests.run was running successfully, 167 tests executed successfully in 13960 milliseconds}
+2014-09-15 13:33:20,414 ERROR magix - {thread choked - }
+2014-09-15 13:33:25,654 DEBUG magix - {unit tests executed successfully - magix.tests.run was running successfully, 168 tests executed successfully in 15010 milliseconds}
+2014-09-15 13:33:57,639 ERROR magix - {thread choked - }
+2014-09-15 13:34:02,767 DEBUG magix - {unit tests executed successfully - magix.tests.run was running successfully, 168 tests executed successfully in 14220 milliseconds}
+2014-09-15 21:34:33,622 ERROR magix - {thread choked - }
+2014-09-15 21:34:39,479 DEBUG magix - {unit tests executed successfully - magix.tests.run was running successfully, 168 tests executed successfully in 17192 milliseconds}
+2014-09-16 08:29:16,108 ERROR magix - {thread choked - }
+2014-09-16 08:29:21,051 ERROR magix - {unit tests executed with errors - magix.tests.run did not execute successfully, message from system; [load] misbehaved}
+2014-09-16 08:34:50,487 ERROR magix - {thread choked - }
+2014-09-16 08:34:54,982 ERROR magix - {unit tests executed with errors - magix.tests.run did not execute successfully, message from system; [load] misbehaved}
+2014-09-16 08:38:35,180 ERROR magix - {thread choked - }
+2014-09-16 08:38:40,840 DEBUG magix - {unit tests executed successfully - magix.tests.run was running successfully, 169 tests executed successfully in 15325 milliseconds}
+2014-09-16 08:45:44,023 ERROR magix - {thread choked - }
+2014-09-16 08:45:49,574 DEBUG magix - {unit tests executed successfully - magix.tests.run was running successfully, 170 tests executed successfully in 15352 milliseconds}
+2014-09-16 17:55:47,439 ERROR magix - {thread choked - }
+2014-09-16 17:55:52,843 DEBUG magix - {unit tests executed successfully - magix.tests.run was running successfully, 170 tests executed successfully in 14713 milliseconds}
+2014-09-16 18:37:13,128 ERROR magix - {thread choked - }
+2014-09-16 18:37:17,170 ERROR magix - {unit tests executed with errors - magix.tests.run did not execute successfully, message from system; Index and length must refer to a location within the string.
+Parameter name: length}
+2014-09-16 18:42:43,153 ERROR magix - {thread choked - }
+2014-09-16 18:42:47,135 ERROR magix - {unit tests executed with errors - magix.tests.run did not execute successfully, message from system; Index and length must refer to a location within the string.
+Parameter name: length}
+2014-09-16 18:43:52,947 ERROR magix - {thread choked - }
+2014-09-16 18:43:56,984 DEBUG magix - {unit tests executed successfully - magix.tests.run was running successfully, 172 tests executed successfully in 13201 milliseconds}
+2014-09-18 20:52:57,734 DEBUG magix - {error while downloading emails from pop3 server for user 'admin' - message from server was; 'The requested name is valid, but no data of the requested type was found'}

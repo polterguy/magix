@@ -142,5 +142,4 @@ Magix.app/my-files/email/*
 Magix.app/your-files/email/*
 
 # excluding log files
-Magix.app/system42/private/magix-log/*
 Magix.app/system42/private/magix-log/log.txt
