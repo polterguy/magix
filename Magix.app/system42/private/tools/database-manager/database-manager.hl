@@ -1,0 +1,14 @@
+﻿
+
+inspect=>@"starts the database manager application
+
+starts the database manager application"
+
+
+magix.forms.create-web-part
+  container=>content1
+  form-id=>database-manager
+  class=>span-17 last top-1
+  controls-file=>system42/private/tools/database-manager/database-manager-controls.hl
+  events-file=>system42/private/tools/database-manager/database-manager-events.hl
+

@@ -41,14 +41,14 @@ switch=>[magix.data.load-username=>status][value][status].value
 
     // number of emails downloaded so far
     if=>exist
-      lhs=>[$][download-count]
+      lhs=>[magix.data.load-username=>status][value][download-count]
       code
         set=>[$][download-count].value
           value=>[magix.data.load-username=>status][value][download-count].value
 
     // total number of emails on server
     if=>exist
-      lhs=>[$][server-count]
+      lhs=>[magix.data.load-username=>status][value][server-count]
       code
         set=>[$][server-count].value
           value=>[magix.data.load-username=>status][value][server-count].value
@@ -115,6 +115,10 @@ switch=>[magix.data.load-username=>status][value][status].value
       id=>magix.email.thread-status
       value
         status=>fetching
+
+    // returning status to caller
+    set=>[$][status].value
+      value=>fetching
 
     // creating our fork, executing the retrieve emails hyperlisp file on a different thread
     fork

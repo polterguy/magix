@@ -12,6 +12,7 @@ add=>[**get-messages]
 add=>[**magix.pop3.get-message-count]
   values=>[$][pop-settings]
 
+// adding username to all who needs it
 iterate=>[try]
   if=>equals
     lhs=>[.].value
@@ -20,6 +21,7 @@ iterate=>[try]
       set=>[.].value
         value=>[$][pop-settings][user].value
 
+// starting actual downloading of emails
 try
   code
 
@@ -49,6 +51,8 @@ try
           lhs=>[@][_total-download].value
           rhs=>[@][..][..][magix.pop3.get-message-count][count].value
           code
+
+            // looping while new messages exist on pop3 server
             using=>magix.pop3
               get-messages
                 delete=>true
@@ -58,7 +62,7 @@ try
                   // opening up "magix.execute" namespace again
                   using=>magix.execute
 
-                    // bumbing total download count
+                    // bumping total download count
                     using=>magix.math
                       add=>[@][..][..][..][..][..][..][..][_total-download]
                         =>[@][..][..][..][..][..][..][..][_total-download].value
@@ -73,11 +77,13 @@ try
                       lhs=>[@][using=>magix.data][load][value]
                       code
 
-                        // filtering emails into correct folder
+                        // processing emails since it doesn't exist in database from before
                         add=>[@][magix.email.filter-emails][email]
                           values=>[@][..][..][..][_message]
                         magix.email.filter-emails
                           username=>{user}
+
+                        // updating email with processed email returned from filter-message active event
                         set=>[@][..][..][..][_message]
                         add=>[@][..][..][..][_message]
                           values=>[@][magix.email.filter-emails][email]

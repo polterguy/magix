@@ -318,12 +318,15 @@ namespace Magix.email
 
             // making sure all links opens up in _blank targets
             HtmlNodeCollection links = doc.DocumentNode.SelectNodes("//a");
-            foreach (HtmlNode link in links)
+            if (links != null)
             {
-                if (link.Attributes["target"] != null)
-                    link.Attributes["target"].Value = "_blank";
-                else
-                    link.Attributes.Add("target", "_blank");
+                foreach (HtmlNode link in links)
+                {
+                    if (link.Attributes["target"] != null)
+                        link.Attributes["target"].Value = "_blank";
+                    else
+                        link.Attributes.Add("target", "_blank");
+                }
             }
 
             // returning only contents of body element

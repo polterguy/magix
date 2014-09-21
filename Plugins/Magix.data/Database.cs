@@ -415,6 +415,45 @@ namespace Magix.data
         }
 
         /*
+         * loads distinct expressions from database
+         */
+        internal static void LoadDistinct(string expression, Guid transaction, Node ip)
+        {
+            if (transaction != _transaction.Item1)
+            {
+                lock (_transactionalLocker)
+                {
+                    LoadDistinct(expression, transaction, ip);
+                }
+            }
+            lock (_locker)
+            {
+                foreach (Node idxFileNode in GetDatabase())
+                {
+                    foreach (Node idxObjectNode in idxFileNode)
+                    {
+                        string idxExpressionValue = Expressions.GetExpressionValue<string>(
+                            expression, 
+                            idxObjectNode["value"], 
+                            idxObjectNode["value"], 
+                            false);
+                        if (idxExpressionValue !=null)
+                        {
+                            if (!ip["result"].Exists(
+                                delegate(Node idx)
+                                {
+                                    return idx.Get<string>() == idxExpressionValue;
+                                }))
+                            {
+                                ip["result"].Add(new Node("", idxExpressionValue));
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        /*
          * counts records in database
          */
         internal static int CountRecords(Node ip, Node prototype, Guid transaction, bool caseSensitive)

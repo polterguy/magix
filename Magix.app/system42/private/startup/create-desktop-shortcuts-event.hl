@@ -73,6 +73,14 @@ returns the default dashboard shortcuts in your system"
                   class=>span-2
                   onclick
                     magix.tests.run
+      database-manager
+        text=>database manager
+        category=>tools
+        code
+          magix.viewport.clear-controls
+            all=>true
+          execute-script
+            file=>system42/private/tools/database-manager/database-manager.hl
       qr-codes
         text=>vanity qr codes
         category=>tools

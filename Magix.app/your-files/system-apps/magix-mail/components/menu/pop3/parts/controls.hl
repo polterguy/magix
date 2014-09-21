@@ -2,8 +2,8 @@
 
 inspect=>@"contains the menu controls of magix mail
 
-contains the menu parts controls definition file of the 
-magix mail application"
+the menu parts controls definition file of the magix 
+mail application"
 
 
 // header label of menu
@@ -71,7 +71,6 @@ timer=>check-for-new-emails
   onfirstload
     magix.email.check-for-new-emails
 
-// miscelanous dynamic, used for "ping" sound played when new emails arrive
+// miscelanous dynamic, used for "ping" sound played when new emails arrive for instance
 dynamic=>misc-dynamic
-
 

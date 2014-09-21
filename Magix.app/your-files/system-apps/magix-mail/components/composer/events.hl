@@ -167,6 +167,7 @@ magix.email.add-recipient-to-email
             form-id=>dynamic-add-recipient
             id=>recipient
             type=>focus-and-select
+          stop
   if=>equals
     lhs=>[_stop].value
     rhs=>true

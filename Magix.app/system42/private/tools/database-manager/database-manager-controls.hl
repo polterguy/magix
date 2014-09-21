@@ -1,0 +1,39 @@
+﻿
+
+inspect=>@"contains the controls for the database manager
+
+contains the controls for the database manager web part"
+
+
+// header
+label
+  class=>span-17 last
+  tag=>h2
+  value=>database manager
+
+// pager
+panel=>paging-wrp
+  class=>span-8 right last btn-group bottom-1
+  controls
+    button=>previous
+      class=>span-2
+      value=>&lt;
+    text-box=>search
+      class=>span-4
+      placeholder=>search ...
+    button=>next
+      class=>span-2 last
+      value=>&gt;
+
+// datagrid of items
+lambda=>items
+  oncreatecontrols
+    set=>[magix.database-manager.create-data-grid][start].value
+      value=>0
+    set=>[magix.database-manager.create-data-grid][end].value
+      value=>25
+    magix.database-manager.create-data-grid
+    add=>[$]
+      values=>[magix.database-manager.create-data-grid][controls]
+
+

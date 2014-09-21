@@ -140,6 +140,37 @@ namespace Magix.data
         }
 
         /*
+         * loads distinct object expressions from database
+         */
+        [ActiveEvent(Name = "magix.data.load-distinct")]
+        public static void magix_data_load_distinct(object sender, ActiveEventArgs e)
+        {
+            Node ip = Ip(e.Params);
+            if (ShouldInspect(ip))
+            {
+                AppendInspectFromResource(
+                    ip["inspect"],
+                    "Magix.data",
+                    "Magix.data.hyperlisp.inspect.hl",
+                    "[magix.data.load-distinct-dox].value");
+                AppendCodeFromResource(
+                    ip,
+                    "Magix.data",
+                    "Magix.data.hyperlisp.inspect.hl",
+                    "[magix.data.load-distinct-sample]");
+                return;
+            }
+
+            if (!ip.ContainsValue("expression"))
+                throw new ArgumentException("[magix.data.load] needs an [expression] parameter");
+
+            string expression = ip["expression"].Get<string>();
+            Guid transaction = e.Params.GetValue("_database-transaction", Guid.Empty);
+
+            Database.LoadDistinct(expression, transaction, ip);
+        }
+
+        /*
          * saves an object to database
          */
         [ActiveEvent(Name = "magix.data.save")]

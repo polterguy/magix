@@ -1,0 +1,181 @@
+﻿
+
+inspect=>@"contains the events for the database manager
+
+contains the events for the database manager web part"
+
+
+// returns the controls for the datagrid being the items from the database
+magix.database-manager.create-data-grid
+  _controls
+    panel
+      class=>span-17 last
+      controls
+        label
+          tag=>label
+          class=>span-12
+          value=>id
+        label
+          tag=>label
+          class=>span-4
+          value=>created
+        label
+          tag=>label
+          class=>span-1 last
+          value=>rev.
+  using=>magix.data
+    load
+      start=>[$][start].value
+      end=>[$][end].value
+      sort=>[..][created].value
+      only-id=>true
+      prototype
+  for-each=>[using=>magix.data][load][objects]
+    _pn
+      panel=>{wrp-pnl-}
+        style=>cursor:pointer;
+        onclick
+          set=>[magix.database-manager.select-item][id].value
+            value=>[$][info].value
+          replace=>[$][id].value
+            what=>wrp-pnl-
+            with=>wrp-dyn-
+          set=>[magix.database-manager.select-item][container].value
+            value=>[$][id].value
+          magix.database-manager.select-item
+        controls
+          label=>id
+            class=>span-12
+          label=>created
+            class=>span-4
+          label=>revision-count
+            class=>span-1 last text-right
+      dynamic=>{wrp-dyn-}
+      hidden=>{is-viewing-}
+    set=>[@][_pn][panel][info].value
+      value=>[id].value
+    set=>[@][_pn][**label=>id][value].value
+      value=>[id].value
+    set=>[@][_pn][**label=>created][value].value
+      value=>[created].value
+    set=>[@][_pn][**label=>revision-count][value].value
+      value=>[revision-count].value
+    add=>[/][_controls][panel][controls]
+      values=>[@][_pn]
+  add=>[$][controls]
+    values=>[_controls]
+
+
+// creates the "view single item" web part
+magix.database-manager.select-item
+  _viewing
+  set=>[_viewing].value
+    value=>[$][container].value
+  replace=>[_viewing].value
+    what=>wrp-dyn-
+    with=>is-viewing-
+  using=>magix.forms
+    get-value
+      form-id=>database-manager
+      id=>[_viewing].value
+  if=>equals
+    lhs=>[using=>magix.forms][get-value][value].value
+    rhs=>true
+    code
+      using=>magix.forms
+        set-value
+          form-id=>database-manager
+          id=>[_viewing].value
+          value=>
+      using=>magix.viewport
+        clear-controls
+          container=>[$][container].value
+  else
+    using=>magix.forms
+      set-value
+        form-id=>database-manager
+        id=>[_viewing].value
+        value=>true
+    using=>magix.data
+      load
+        id=>[$][id].value
+    node-2-code
+      node=>[@][using=>magix.data][load][value]
+      remove-root=>true
+    set=>[@][**label=>code][value].value
+      value=>[@][node-2-code][code].value
+    set=>[@][**button=>edit][info].value
+      value=>[$][id].value
+    set=>[@][**button=>delete][info].value
+      value=>[$][id].value
+    set=>[@][**button=>save][info].value
+      value=>[$][id].value
+    using=>magix.forms
+      create-web-part
+        container=>[$][container].value
+        form-id=>[$][container].value
+        class=>span-17 last
+        controls
+          panel=>view-wrp
+            class=>span-15 air-padding last view-code bottom-1
+            tag=>pre
+            controls
+              label=>code
+                class=>span-15 last
+              panel
+                class=>span-4 last right clear btn-group
+                controls
+                  button=>edit
+                    class=>span-2
+                    value=>edit
+                    onclick
+                      using=>magix.data
+                        load
+                          id=>[$][info].value
+                      node-2-code
+                        node=>[using=>magix.data][load][value]
+                        remove-root=>true
+                      using=>magix.forms
+                        set-value
+                          form-id=>[$][form-id].value
+                          id=>edit-object
+                          value=>[node-2-code][code].value
+                        set-visible
+                          form-id=>[$][form-id].value
+                          id=>edit-object
+                          value=>true
+                        set-visible
+                          form-id=>[$][form-id].value
+                          id=>save
+                          value=>true
+                  button=>delete
+                    class=>span-2
+                    value=>delete
+                    onclick
+                      debug
+              text-area=>edit-object
+                class=>span-15 last top-1
+                rows=>10
+                visible=>false
+                placeholder=>object data ...
+              button=>save
+                class=>span-2 top-1 last right
+                value=>save
+                visible=>false
+                onclick
+                  using=>magix.forms
+                    get-value
+                      form-id=>[$][form-id].value
+                      id=>edit-object
+                  code-2-node
+                    code=>[using=>magix.forms][get-value][value].value
+                  using=>magix.data
+                    save
+                      id=>[$][info].value
+                      value=>[code-2-node][node]
+                  magix.viewport.show-message
+                    message=>object was saved
+                  using=>magix.viewport
+                    clear-controls
+                      container=>[$][form-id].value
+

@@ -1,6 +1,6 @@
 ﻿
 
-inspect=>@"contains the menu parts of email client
+inspect=>@"contains the menu parts events of magix mail
 
 contains the menu parts events definition file of the 
 magix mail application"
@@ -113,9 +113,11 @@ magix.email.check-for-new-emails
 
 // invoked when new messages have arrived
 magix.email.new-messages-downloaded
+
+  // showing message box
   using=>magix.viewport
     show-message
-      message=>finished downloading {0} messages from your email server.&nbsp;&nbsp;click your inbox to view email
+      message=>finished downloading {0} messages from your email server.&nbsp;&nbsp;click your inbox link to view emails
         =>[$][download-count].value
       color=>#aaffaa
 

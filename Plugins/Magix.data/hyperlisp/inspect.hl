@@ -106,6 +106,19 @@ magix.data.load-sample
       type=>magix.execute.event
 
 
+magix.data.load-distinct-dox=>@"loads distinct expression values from database
+
+returns all database values of given [expression] from database and returns 
+as [result]
+
+thread safe"
+
+magix.data.load-sample
+  magix.data.load
+    prototype
+      type=>magix.execute.event
+
+
 magix.data.save-dox=>@"saves a node to the database
 
 will serialize the given [value] node with the given [id] into the database
