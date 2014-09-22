@@ -5,8 +5,28 @@ inspect=>@"contains the events for the database manager
 contains the events for the database manager web part"
 
 
-// returns the controls for the datagrid being the items from the database
+// creates tha actual data-grid of items from database
 magix.database-manager.create-data-grid
+
+  // creating actual datagrid
+  magix.forms.create-web-part
+    container=>data-grid
+    form-id=>database-manager
+    class=>span-17 last
+    controls
+      lambda=>items
+        oncreatecontrols
+          set=>[magix.database-manager.create-data-grid-items][start].value
+            value=>0
+          set=>[magix.database-manager.create-data-grid-items][end].value
+            value=>25
+          magix.database-manager.create-data-grid-items
+          add=>[$]
+            values=>[magix.database-manager.create-data-grid-items][controls]
+
+
+// returns the controls for the datagrid being the items from the database
+magix.database-manager.create-data-grid-items
   _controls
     panel
       class=>span-17 last
@@ -23,11 +43,32 @@ magix.database-manager.create-data-grid
           tag=>label
           class=>span-1 last
           value=>rev.
+  magix.forms.get-value
+    form-id=>database-manager-wrp
+    id=>prototype-search
+  if=>not-equals
+    lhs=>[magix.forms.get-value][value].value
+    rhs=>
+    code
+      set=>[using=>magix.data][load][prototype]
+      code-2-node
+        code=>[magix.forms.get-value][value].value
+      if=>not-exist
+        lhs=>[@][code-2-node][node][prototype]
+        code
+          add=>[@][..][..][code-2-node][node]
+            value=>prototype
+      if=>exist
+        lhs=>[@][code-2-node][node][start]
+        code
+          set=>[using=>magix.data][load][start]
+          set=>[using=>magix.data][load][end]
+      add=>[using=>magix.data][load]
+        values=>[@][code-2-node][node]
   using=>magix.data
     load
       start=>[$][start].value
       end=>[$][end].value
-      sort=>[..][created].value
       only-id=>true
       prototype
   for-each=>[using=>magix.data][load][objects]
@@ -148,6 +189,10 @@ magix.database-manager.select-item
                           form-id=>[$][form-id].value
                           id=>save
                           value=>true
+                        effect
+                          form-id=>[$][form-id].value
+                          id=>edit-object
+                          type=>focus-and-select
                   button=>delete
                     class=>span-2
                     value=>delete
@@ -158,6 +203,14 @@ magix.database-manager.select-item
                 rows=>10
                 visible=>false
                 placeholder=>object data ...
+                onesc
+                  using=>magix.forms
+                    set-visible
+                      form-id=>[$][form-id].value
+                      id=>edit-object
+                    set-visible
+                      form-id=>[$][form-id].value
+                      id=>save
               button=>save
                 class=>span-2 top-1 last right
                 value=>save
@@ -178,4 +231,11 @@ magix.database-manager.select-item
                   using=>magix.viewport
                     clear-controls
                       container=>[$][form-id].value
+                  replace=>[$][container].value
+                    what=>wrp-dyn-
+                    with=>is-viewing-
+                  using=>magix.forms
+                    set-value
+                      form-id=>database-manager-wrp
+                      id=>[$][container].value
 

@@ -13,27 +13,68 @@ label
 
 // pager
 panel=>paging-wrp
-  class=>span-8 right last btn-group bottom-1
+  class=>span-6 right last btn-group bottom-1
   controls
     button=>previous
       class=>span-2
       value=>&lt;
-    text-box=>search
-      class=>span-4
-      placeholder=>search ...
+    button=>search
+      class=>span-2
+      value=>search
+      onclick
+        magix.forms.effect
+          form-id=>database-manager-wrp
+          id=>pnl-search-wrp
+          type=>fade-in
+          time=>250
+          chained
+            e0
+              form-id=>database-manager-wrp
+              id=>prototype-search
+              type=>focus-and-select
     button=>next
       class=>span-2 last
       value=>&gt;
 
+// prototype search wrapper
+panel=>pnl-search-wrp
+  class=>span-17 last bottom-1
+  style=>display:none;
+  controls
+    label
+      class=>span-17 last
+      value=>criteria
+      tag=>label
+    text-area=>prototype-search
+      class=>span-17 last
+      placeholder=>@"prototype
+  type=>magix.%
+or
+  type=>%email%
+sort=>[..][id].value
+
+..."
+      rows=>7
+      onesc
+        magix.forms.effect
+          form-id=>database-manager-wrp
+          id=>pnl-search-wrp
+          type=>fade-out
+          time=>250
+    button=>apply-search
+      class=>span-2 last left-15
+      value=>apply
+      onclick
+        magix.database-manager.create-data-grid
+        magix.forms.effect
+          form-id=>database-manager-wrp
+          id=>pnl-search-wrp
+          type=>fade-out
+          time=>250
+
 // datagrid of items
-lambda=>items
-  oncreatecontrols
-    set=>[magix.database-manager.create-data-grid][start].value
-      value=>0
-    set=>[magix.database-manager.create-data-grid][end].value
-      value=>25
+dynamic=>data-grid
+  onfirstload
     magix.database-manager.create-data-grid
-    add=>[$]
-      values=>[magix.database-manager.create-data-grid][controls]
 
 

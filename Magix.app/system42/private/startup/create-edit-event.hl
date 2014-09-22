@@ -8,6 +8,7 @@ pass in [event] as the name of the active event you wish to edit"
 
 event
   name=>magix.event.edit-event
+  persist=>false
   inspect=>@"allows editing active events
 
 allows the user to edit active events using the hyperlisp 
