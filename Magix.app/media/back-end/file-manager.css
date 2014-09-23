@@ -1,42 +1,34 @@
 ﻿
 
-.file-manager
-{
-    background-image:url(../images/icons/big-arrow.png), linear-gradient(rgba(240, 240, 255, 1) 0%, rgba(190, 190, 210, 1) 100%);
-    background-repeat:no-repeat;
-    background-position:top right;
+.file-manager {
+    background-image: url(../images/icons/big-arrow.png), linear-gradient(rgba(240, 240, 255, 1) 0%, rgba(190, 190, 210, 1) 100%);
+    background-repeat: no-repeat;
+    background-position: top right;
 }
 
-.file-manager-directories
-{
-    height:270px;
-    overflow-y:auto;
+.file-manager-directories {
+    height: 270px;
+    overflow-y: auto;
 }
 
-.file-manager-files
-{
-    height:270px;
-    overflow-y:auto;
+.file-manager-files {
+    height: 270px;
+    overflow-y: auto;
 }
 
-.file-manager-directory
-{
-    color:#0b3;
+.file-manager-directory {
+    color: #0b3;
 }
 
-.file-manager-file
-{
-    color:#06c;
+.file-manager-file {
+    color: #06c;
 }
 
-.selected-object
-{
-    text-decoration:underline;
+.selected-object {
+    text-decoration: underline;
 }
 
-.image-preview
-{
-    max-height:150px;
-    max-width:80px;
+.image-preview {
+    max-height: 150px;
+    max-width: 80px;
 }
-

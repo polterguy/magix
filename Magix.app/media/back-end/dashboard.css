@@ -1,105 +1,94 @@
 ﻿
 
-.view-code
-{
-    border-radius:15px;
-    overflow:hidden;
+.view-code {
+    border-radius: 15px;
+    overflow: hidden;
+    white-space:pre-wrap;
 }
 
-.tools-desktop-widget
-{
-    background-image:url(../images/icons/wrench.png), linear-gradient(rgba(240, 240, 255, 1) 0%, rgba(190, 190, 210, 1) 100%);
-    background-repeat:no-repeat;
-    background-position:top right;
+.tools-desktop-widget {
+    background-image: url(../images/icons/wrench.png), linear-gradient(rgba(240, 240, 255, 1) 0%, rgba(190, 190, 210, 1) 100%);
+    background-repeat: no-repeat;
+    background-position: top right;
 }
 
-.security-desktop-widget
-{
-    background-image:url(../images/icons/key.png), linear-gradient(rgba(240, 240, 255, 1) 0%, rgba(190, 190, 210, 1) 100%);
-    background-repeat:no-repeat;
-    background-position:top right;
+.security-desktop-widget {
+    background-image: url(../images/icons/key.png), linear-gradient(rgba(240, 240, 255, 1) 0%, rgba(190, 190, 210, 1) 100%);
+    background-repeat: no-repeat;
+    background-position: top right;
 }
 
-.applications-desktop-widget
-{
-    background-image:url(../images/icons/tree.png), linear-gradient(rgba(240, 240, 255, 1) 0%, rgba(190, 190, 210, 1) 100%);
-    background-repeat:no-repeat;
-    background-position:top right;
+.applications-desktop-widget {
+    background-image: url(../images/icons/tree.png), linear-gradient(rgba(240, 240, 255, 1) 0%, rgba(190, 190, 210, 1) 100%);
+    background-repeat: no-repeat;
+    background-position: top right;
 }
 
-.learn-desktop-widget
-{
-    background-image:url(../images/icons/book.png), linear-gradient(rgba(240, 240, 255, 1) 0%, rgba(190, 190, 210, 1) 100%);
-    background-repeat:no-repeat;
-    background-position:top right;
+.learn-desktop-widget {
+    background-image: url(../images/icons/book.png), linear-gradient(rgba(240, 240, 255, 1) 0%, rgba(190, 190, 210, 1) 100%);
+    background-repeat: no-repeat;
+    background-position: top right;
 }
 
-.qr-codes
-{
-    background-image:url(../images/icons/qr-code.png), linear-gradient(rgba(240, 240, 255, 1) 0%, rgba(190, 190, 210, 1) 100%);
-    background-repeat:no-repeat;
-    background-position:top right;
+.qr-codes {
+    background-image: url(../images/icons/qr-code.png), linear-gradient(rgba(240, 240, 255, 1) 0%, rgba(190, 190, 210, 1) 100%);
+    background-repeat: no-repeat;
+    background-position: top right;
 }
 
-.fusion
-{
-    background-image:url(../images/icons/fusion.png), linear-gradient(rgba(240, 240, 255, 1) 0%, rgba(190, 190, 210, 1) 100%);
-    background-repeat:no-repeat;
-    background-position:top right;
+.fusion {
+    background-image: url(../images/icons/fusion.png), linear-gradient(rgba(240, 240, 255, 1) 0%, rgba(190, 190, 210, 1) 100%);
+    background-repeat: no-repeat;
+    background-position: top right;
 }
 
-.users
-{
-    background-image:url(../images/icons/user-management.png), linear-gradient(rgba(240, 240, 255, 1) 0%, rgba(190, 190, 210, 1) 100%);
-    background-repeat:no-repeat;
-    background-position:top right;
+.users {
+    background-image: url(../images/icons/user-management.png), linear-gradient(rgba(240, 240, 255, 1) 0%, rgba(190, 190, 210, 1) 100%);
+    background-repeat: no-repeat;
+    background-position: top right;
 }
 
-.roles
-{
-    background-image:url(../images/icons/user-management.png), linear-gradient(rgba(240, 240, 255, 1) 0%, rgba(190, 190, 210, 1) 100%);
-    background-repeat:no-repeat;
-    background-position:top right;
+.roles {
+    background-image: url(../images/icons/user-management.png), linear-gradient(rgba(240, 240, 255, 1) 0%, rgba(190, 190, 210, 1) 100%);
+    background-repeat: no-repeat;
+    background-position: top right;
 }
 
-.package-manager
-{
-    background-image:url(../images/icons/wiki-apps.png), linear-gradient(rgba(240, 240, 255, 1) 0%, rgba(190, 190, 210, 1) 100%);
-    background-repeat:no-repeat;
-    background-position:top right;
+.package-manager {
+    background-image: url(../images/icons/wiki-apps.png), linear-gradient(rgba(240, 240, 255, 1) 0%, rgba(190, 190, 210, 1) 100%);
+    background-repeat: no-repeat;
+    background-position: top right;
 }
 
-@-webkit-keyframes major-warning
-{
- from {
-    background-color:#ff0000;
- }
- to {
-    background-color:#ffff00;
- }
+@-webkit-keyframes major-warning {
+    from {
+        background-color: #ff0000;
+    }
+
+    to {
+        background-color: #ffff00;
+    }
 }
 
-@-moz-keyframes major-warning
-{
- from {
-    background-color:#ff0000;
- }
- to {
-    background-color:#ffff00;
- }
+@-moz-keyframes major-warning {
+    from {
+        background-color: #ff0000;
+    }
+
+    to {
+        background-color: #ffff00;
+    }
 }
 
-.major-warning
-{
-    background-image:none;
-    background-color:#ff0000;
-	-webkit-animation-name: major-warning;
-	-webkit-animation-duration: 1.5s;
-	-webkit-animation-direction: alternate;
-    -webkit-animation-iteration-count:infinite;
-	-moz-animation-name: major-warning;
-	-moz-animation-duration: 1.5s;
-	-moz-animation-direction: alternate;
-    -moz-animation-iteration-count:infinite;
+.major-warning {
+    background-image: none;
+    background-color: #ff0000;
+    -webkit-animation-name: major-warning;
+    -webkit-animation-duration: 1.5s;
+    -webkit-animation-direction: alternate;
+    -webkit-animation-iteration-count: infinite;
+    -moz-animation-name: major-warning;
+    -moz-animation-duration: 1.5s;
+    -moz-animation-direction: alternate;
+    -moz-animation-iteration-count: infinite;
 }
-

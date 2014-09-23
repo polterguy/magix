@@ -1,320 +1,270 @@
 ﻿
 
 
-.container
-{
-    overflow:visible;
+.container {
+    overflow: visible;
 }
 
-.mjolner
-{
-    background-repeat:no-repeat;
-    margin-bottom:18px;
-    margin-top:18px;
-    font-size:3em;
-    line-height:1em;
-    color:#9999ff;
+.mjolner {
+    background-repeat: no-repeat;
+    margin-bottom: 18px;
+    margin-top: 18px;
+    font-size: 3em;
+    line-height: 1em;
+    color: #9999ff;
 }
 
-.boxed
-{
-    border-radius:0;
-    background-color:#fafafa;
-    background-image:none;
+.boxed {
+    border-radius: 0;
+    background-color: #fafafa;
+    background-image: none;
 }
 
-.email-search-bar
-{
-    opacity:0.2;
-    transition-property:opacity;
-    transition-duration:.5s;
+.email-search-bar {
+    opacity: 0.2;
+    transition-property: opacity;
+    transition-duration: .5s;
 }
 
-.email-search-bar:hover
-{
-    opacity:1;
-    transition-property:opacity;
-    transition-duration:.5s;
+.email-search-bar:hover {
+    opacity: 1;
+    transition-property: opacity;
+    transition-duration: .5s;
 }
 
 .email-search-bar *,
-.email-search-bar input[type=button]
-{
-    box-shadow:3px 3px 3px rgba(0,0,0,0);
-    transition-property:box-shadow;
-    transition-duration:.5s;
+.email-search-bar input[type=button] {
+    box-shadow: 3px 3px 3px rgba(0,0,0,0);
+    transition-property: box-shadow;
+    transition-duration: .5s;
 }
 
 .email-search-bar:hover *,
-.email-search-bar:hover input[type=button]
-{
-    box-shadow:3px 3px 3px rgba(0,0,0,.5);
-    transition-property:box-shadow;
-    transition-duration:.5s;
+.email-search-bar:hover input[type=button] {
+    box-shadow: 3px 3px 3px rgba(0,0,0,.5);
+    transition-property: box-shadow;
+    transition-duration: .5s;
 }
 
-.email-item-subject
-{
-    cursor:pointer;
-    white-space:nowrap;
-    overflow-x:hidden;
+.email-item-subject {
+    cursor: pointer;
+    white-space: nowrap;
+    overflow-x: hidden;
 }
 
-.email-item-from
-{
-    cursor:pointer;
-    color:#999999;
-    white-space:nowrap;
-    overflow-x:hidden;
+.email-item-from {
+    cursor: pointer;
+    color: #999999;
+    white-space: nowrap;
+    overflow-x: hidden;
 }
 
-.email-item-date
-{
-    cursor:pointer;
-    font-style:italic;
-    color:#cccccc;
+.email-item-date {
+    cursor: pointer;
+    font-style: italic;
+    color: #cccccc;
 }
 
-.email-has-attachments
-{
-    background-image:url(../images/icons/binder.png);
-    background-repeat:no-repeat;
-    background-position-y:0px;
+.email-has-attachments {
+    background-image: url(../images/icons/binder.png);
+    background-repeat: no-repeat;
+    background-position-y: 0px;
 }
 
-.email-signed-has-attachments
-{
-    background-image:url(../images/icons/binder.png);
-    background-repeat:no-repeat;
-    background-position-y:-18px;
+.email-signed-has-attachments {
+    background-image: url(../images/icons/binder.png);
+    background-repeat: no-repeat;
+    background-position-y: -18px;
 }
 
-.email-encrypted-has-attachments
-{
-    background-image:url(../images/icons/binder.png);
-    background-repeat:no-repeat;
-    background-position-y:-36px;
+.email-encrypted-has-attachments {
+    background-image: url(../images/icons/binder.png);
+    background-repeat: no-repeat;
+    background-position-y: -36px;
 }
 
-.email-signed-encrypted-has-attachments
-{
-    background-image:url(../images/icons/binder.png);
-    background-repeat:no-repeat;
-    background-position-y:-54px;
+.email-signed-encrypted-has-attachments {
+    background-image: url(../images/icons/binder.png);
+    background-repeat: no-repeat;
+    background-position-y: -54px;
 }
 
-.email-signed
-{
-    background-image:url(../images/icons/binder.png);
-    background-repeat:no-repeat;
-    background-position-y:-72px;
+.email-signed {
+    background-image: url(../images/icons/binder.png);
+    background-repeat: no-repeat;
+    background-position-y: -72px;
 }
 
-.email-encrypted
-{
-    background-image:url(../images/icons/binder.png);
-    background-repeat:no-repeat;
-    background-position-y:-90px;
+.email-encrypted {
+    background-image: url(../images/icons/binder.png);
+    background-repeat: no-repeat;
+    background-position-y: -90px;
 }
 
-.email-signed-encrypted
-{
-    background-image:url(../images/icons/binder.png);
-    background-repeat:no-repeat;
-    background-position-y:-108px;
+.email-signed-encrypted {
+    background-image: url(../images/icons/binder.png);
+    background-repeat: no-repeat;
+    background-position-y: -108px;
 }
 
-
-
-
-
-.emails-sleeping-dynamic
-{
-    border-top:1px solid #d0d0d0;
-    float:left;
-    width:100%;
+.emails-sleeping-dynamic {
+    border-top: 1px solid #d0d0d0;
+    float: left;
+    width: 100%;
 }
 
-.emails-sleeping-dynamic:last-child
-{
-    border-top:0 none;
-    float:left;
-    width:100%;
+.emails-sleeping-dynamic:last-child {
+    border-top: 0 none;
+    float: left;
+    width: 100%;
 }
 
-.email-item-body
-{
-    background-color:#fefefe;
-    box-shadow:3px 3px 5px rgba(0,0,0,1);
-    padding:18px 40px;
-    width:auto;
-    margin-left:-20px;
-    position:relative;
+.email-item-body {
+    background-color: #fefefe;
+    box-shadow: 3px 3px 5px rgba(0,0,0,1);
+    padding: 18px 40px;
+    width: auto;
+    margin-left: -20px;
+    position: relative;
 }
 
-.email-content-body
-{
-    width:660px;
+.email-content-body {
+    width: 660px;
 }
 
-.email-content-close
-{
-    position:absolute;
-    top:9px;
-    right:9px;
-    text-align:right;
-    color:#9999ff;
+.email-content-close {
+    position: absolute;
+    top: 9px;
+    right: 9px;
+    text-align: right;
+    color: #9999ff;
 }
 
-.email-sent-to
-{
+.email-sent-to {
 }
 
-.email-address-label
-{
-    font-weight:normal;
-    color:#cccccc;
+.email-address-label {
+    font-weight: normal;
+    color: #cccccc;
 }
 
-.email-sent-from-item
-{
-    border-radius:9px;
-    border:1px solid rgba(0,0,0,.1);
-    display:block;
-    float:left;
-    padding-left:10px;
-    padding-right:10px;
-    padding-top:-1px;
-    padding-bottom:-1px;
-    margin-right:10px;
-    color:#6666ff;
+.email-sent-from-item {
+    border-radius: 9px;
+    border: 1px solid rgba(0,0,0,.1);
+    display: block;
+    float: left;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: -1px;
+    padding-bottom: -1px;
+    margin-right: 10px;
+    color: #6666ff;
 }
 
-.email-sent-to-item
-{
-    border-radius:9px;
-    border:1px solid rgba(0,0,0,.1);
-    display:block;
-    float:left;
-    padding-left:10px;
-    padding-right:10px;
-    padding-top:-1px;
-    padding-bottom:-1px;
-    margin-right:10px;
-    color:#aaaaff;
+.email-sent-to-item {
+    border-radius: 9px;
+    border: 1px solid rgba(0,0,0,.1);
+    display: block;
+    float: left;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: -1px;
+    padding-bottom: -1px;
+    margin-right: 10px;
+    color: #aaaaff;
 }
 
-.email-content-body-body
-{
-    width:660px;
-    overflow-x:hidden;
+.email-content-body-body {
+    width: 660px;
+    overflow-x: hidden;
 }
 
-.email-attachments
-{
-    border-top:1px solid #999999;
-    margin-top:53px;
-    margin-bottom:-18px;
+.email-attachments {
+    border-top: 1px solid #999999;
+    margin-top: 53px;
+    margin-bottom: -18px;
 }
 
-.email-reply-body
-{
+.email-reply-body {
 }
 
-input[type=button].sign-email
-{
-	background-image: linear-gradient(rgba(250, 250, 250, 1) 0%, rgba(210, 210, 210, 1) 100%);
+input[type=button].sign-email {
+    background-image: linear-gradient(rgba(250, 250, 250, 1) 0%, rgba(210, 210, 210, 1) 100%);
 }
 
-input[type=button].encrypt-email
-{
-	background-image: linear-gradient(rgba(250, 250, 250, 1) 0%, rgba(210, 210, 210, 1) 100%);
+input[type=button].encrypt-email {
+    background-image: linear-gradient(rgba(250, 250, 250, 1) 0%, rgba(210, 210, 210, 1) 100%);
 }
 
 input[type=button]:hover.sign-email,
-input[type=button]:hover.encrypt-email
-{
-	background-image: linear-gradient(rgba(240, 240, 240, 1) 0%, rgba(180, 180, 180, 1) 100%);
-	color:#00a;
+input[type=button]:hover.encrypt-email {
+    background-image: linear-gradient(rgba(240, 240, 240, 1) 0%, rgba(180, 180, 180, 1) 100%);
+    color: #00a;
 }
 
 input[type=button]:disabled.sign-email,
-input[type=button]:disabled.encrypt-email
-{
-	background-image: linear-gradient(rgba(240, 240, 240, 1) 0%, rgba(180, 180, 180, 1) 100%);
-	color:#aaa;
+input[type=button]:disabled.encrypt-email {
+    background-image: linear-gradient(rgba(240, 240, 240, 1) 0%, rgba(180, 180, 180, 1) 100%);
+    color: #aaa;
 }
 
-input[type=button].signed-email
-{
-    background-image:linear-gradient(rgba(210, 210, 210, 1) 0%, rgba(250, 250, 250, 1) 100%);
+input[type=button].signed-email {
+    background-image: linear-gradient(rgba(210, 210, 210, 1) 0%, rgba(250, 250, 250, 1) 100%);
 }
 
-input[type=button].encrypted-email
-{
-    background-image:linear-gradient(rgba(210, 210, 210, 1) 0%, rgba(250, 250, 250, 1) 100%);
+input[type=button].encrypted-email {
+    background-image: linear-gradient(rgba(210, 210, 210, 1) 0%, rgba(250, 250, 250, 1) 100%);
 }
 
-.email-contact-email
-{
-    cursor:pointer;
-    white-space:nowrap;
-    overflow-x:hidden;
+.email-contact-email {
+    cursor: pointer;
+    white-space: nowrap;
+    overflow-x: hidden;
 }
 
-.email-contact-name
-{
-    cursor:pointer;
-    white-space:nowrap;
-    overflow-x:hidden;
+.email-contact-name {
+    cursor: pointer;
+    white-space: nowrap;
+    overflow-x: hidden;
 }
 
-.contact-sleeping-dynamic
-{
-    border-top:1px solid #d0d0d0;
-    float:left;
-    width:100%;
+.contact-sleeping-dynamic {
+    border-top: 1px solid #d0d0d0;
+    float: left;
+    width: 100%;
 }
 
-.contact-sleeping-dynamic:last-child
-{
-    border-top:0 none;
-    float:left;
-    width:100%;
+.contact-sleeping-dynamic:last-child {
+    border-top: 0 none;
+    float: left;
+    width: 100%;
 }
 
-.contact-item-body
-{
-    background-color:#fefefe;
-    box-shadow:3px 3px 5px rgba(0,0,0,1);
-    padding:18px 40px;
-    width:auto;
-    margin-left:-20px;
-    margin-right:-20px;
+.contact-item-body {
+    background-color: #fefefe;
+    box-shadow: 3px 3px 5px rgba(0,0,0,1);
+    padding: 18px 40px;
+    width: auto;
+    margin-left: -20px;
+    margin-right: -20px;
 }
 
-.contact-date
-{
-    color:#cccccc;
-    font-style:italic;
+.contact-date {
+    color: #cccccc;
+    font-style: italic;
 }
 
-.contact-description
-{
-    font-style:italic;
-    color:#cccccc;
-    white-space:pre;
+.contact-description {
+    font-style: italic;
+    color: #cccccc;
+    white-space: pre;
 }
 
-.email-attachment
-{
-    background-color:rgba(0,0,0,0);
-    border-radius:3px;
+.email-attachment {
+    background-color: rgba(0,0,0,0);
+    border-radius: 3px;
 }
 
-.email-attachment:hover
-{
-    background-color:rgba(0,0,0,.1);
+.email-attachment:hover {
+    background-color: rgba(0,0,0,.1);
 }
-
-

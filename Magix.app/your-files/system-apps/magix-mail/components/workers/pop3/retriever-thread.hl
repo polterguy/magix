@@ -55,7 +55,7 @@ try
             // looping while new messages exist on pop3 server
             using=>magix.pop3
               get-messages
-                delete=>false
+                delete=>true
                 count=>33
                 code
 
@@ -69,12 +69,13 @@ try
                         =>1
 
                     // first checking if message exist from before
+                    set=>[@][using=>magix.data][load][prototype][message-id].value
+                      value=>[@][..][_message][message-id].value
                     using=>magix.data
                       load
-                        id=>magix.email.message-{0}
-                          =>[@][..][..][_message][message-id].value
+                        only-id=>true
                     if=>not-exist
-                      lhs=>[@][using=>magix.data][load][value]
+                      lhs=>[@][using=>magix.data][load][objects]
                       code
 
                         // processing emails since it doesn't exist in database from before
@@ -91,9 +92,6 @@ try
                         // saving email into database
                         add=>[@][magix.data.save][value]
                           values=>[@][..][..][..][_message]
-                        set=>[@][magix.data.save][id].value
-                          value=>magix.email.message-{0}
-                            =>[@][..][..][..][_message][message-id].value
                         magix.data.save
                           value
                             type=>magix.email.message

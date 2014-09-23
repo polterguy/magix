@@ -119,7 +119,7 @@ namespace Magix.execute
                 DataBaseRemoval.Remove(activeEvent, "magix.execute.event", pars);
 
                 Node saveNode = new Node("magix.data.save");
-                saveNode["id"].Value = Guid.NewGuid().ToString();
+                saveNode["id"].Value = Guid.NewGuid().ToString().Replace("-", "");
                 saveNode["value"]["event"].Value = activeEvent;
                 saveNode["value"]["type"].Value = "magix.execute.event";
                 saveNode["value"]["remotable"].Value = remotable;

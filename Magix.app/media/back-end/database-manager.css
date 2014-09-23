@@ -1,27 +1,21 @@
 ﻿
 
-.database-item
-{
-    cursor:pointer;
+.database-item {
+    cursor: pointer;
 }
 
-.database-item span
-{
-    color:#5555ff;
+.database-item span {
+    color: #5555ff;
 }
 
-.db-sleeping-dynamic
-{
-    border-top:1px solid #b0b0b0;
-    float:left;
-    width:100%;
+.db-sleeping-dynamic {
+    border-top: 1px solid #b0b0b0;
+    float: left;
+    width: 100%;
 }
 
-.db-sleeping-dynamic:last-child
-{
-    border-top:0 none;
-    float:left;
-    width:100%;
+.db-sleeping-dynamic:last-child {
+    border-top: 0 none;
+    float: left;
+    width: 100%;
 }
-
-

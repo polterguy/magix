@@ -62,12 +62,11 @@ input[type=button]:disabled.toolbox-redo,
 input[type=button]:disabled.toolbox-preview,
 input[type=button]:disabled.toolbox-execute,
 input[type=button]:disabled.toolbox-save,
-input[type=button]:disabled.toolbox-load
-{
-    background:url(../images/icons/toolbox-icons.png);
-    background-repeat:no-repeat;
-    padding-left:20px;
-    text-align:left;
+input[type=button]:disabled.toolbox-load {
+    background: url(../images/icons/toolbox-icons.png);
+    background-repeat: no-repeat;
+    padding-left: 20px;
+    text-align: left;
 }
 
 input[type=button]:hover.toolbox-button,
@@ -99,120 +98,168 @@ input[type=button]:hover.toolbox-redo,
 input[type=button]:hover.toolbox-preview,
 input[type=button]:hover.toolbox-execute,
 input[type=button]:hover.toolbox-save,
-input[type=button]:hover.toolbox-load
-{
-    background-color:rgba(0,0,0,.05);
+input[type=button]:hover.toolbox-load {
+    background-color: rgba(0,0,0,.05);
 }
 
-input[type=button].toolbox-button {background-position:0px 0px;}
-input[type=button].toolbox-check-box {background-position:0px -18px;}
-input[type=button].toolbox-dynamic {background-position:0px -36px;}
-input[type=button].toolbox-hidden {background-position:0px -54px;}
-input[type=button].toolbox-hyperlink {background-position:0px -72px;}
-input[type=button].toolbox-img {background-position:0px -90px;}
-input[type=button].toolbox-label {background-position:0px -108px;}
-input[type=button].toolbox-lambda {background-position:0px -126px;}
-input[type=button].toolbox-link-button {background-position:0px -144px;}
-input[type=button].toolbox-literal {background-position:0px -162px;}
-input[type=button].toolbox-panel {background-position:0px -180px;}
-input[type=button].toolbox-radio {background-position:0px -198px;}
-input[type=button].toolbox-select {background-position:0px -216px;}
-input[type=button].toolbox-text-area {background-position:0px -234px;}
-input[type=button].toolbox-text-box {background-position:0px -252px;}
-input[type=button].toolbox-uploader {background-position:0px -270px;}
-input[type=button].toolbox-wysiwyg {background-position:0px -288px;}
-input[type=button].toolbox-timer {background-position:0px -306px;}
-input[type=button].toolbox-rating {background-position:0px -484px;}
-input[type=button].toolbox-video {background-position:0px -502px;}
+input[type=button].toolbox-button {
+    background-position: 0px 0px;
+}
+
+input[type=button].toolbox-check-box {
+    background-position: 0px -18px;
+}
+
+input[type=button].toolbox-dynamic {
+    background-position: 0px -36px;
+}
+
+input[type=button].toolbox-hidden {
+    background-position: 0px -54px;
+}
+
+input[type=button].toolbox-hyperlink {
+    background-position: 0px -72px;
+}
+
+input[type=button].toolbox-img {
+    background-position: 0px -90px;
+}
+
+input[type=button].toolbox-label {
+    background-position: 0px -108px;
+}
+
+input[type=button].toolbox-lambda {
+    background-position: 0px -126px;
+}
+
+input[type=button].toolbox-link-button {
+    background-position: 0px -144px;
+}
+
+input[type=button].toolbox-literal {
+    background-position: 0px -162px;
+}
+
+input[type=button].toolbox-panel {
+    background-position: 0px -180px;
+}
+
+input[type=button].toolbox-radio {
+    background-position: 0px -198px;
+}
+
+input[type=button].toolbox-select {
+    background-position: 0px -216px;
+}
+
+input[type=button].toolbox-text-area {
+    background-position: 0px -234px;
+}
+
+input[type=button].toolbox-text-box {
+    background-position: 0px -252px;
+}
+
+input[type=button].toolbox-uploader {
+    background-position: 0px -270px;
+}
+
+input[type=button].toolbox-wysiwyg {
+    background-position: 0px -288px;
+}
+
+input[type=button].toolbox-timer {
+    background-position: 0px -306px;
+}
+
+input[type=button].toolbox-rating {
+    background-position: 0px -484px;
+}
+
+input[type=button].toolbox-video {
+    background-position: 0px -502px;
+}
 
 input[type=button].toolbox-undo,
 input[type=button]:hover.toolbox-undo,
-input[type=button]:disabled.toolbox-undo
-{
-    background-position:0px -324px;
-    background-color:rgba(0,0,0,.1);
-    box-shadow:none;
+input[type=button]:disabled.toolbox-undo {
+    background-position: 0px -324px;
+    background-color: rgba(0,0,0,.1);
+    box-shadow: none;
 }
 
 input[type=button].toolbox-redo,
 input[type=button]:hover.toolbox-redo,
-input[type=button]:disabled.toolbox-redo
-{
-    background-position:0px -342px;
-    background-color:rgba(0,0,0,.1);
-    box-shadow:none;
+input[type=button]:disabled.toolbox-redo {
+    background-position: 0px -342px;
+    background-color: rgba(0,0,0,.1);
+    box-shadow: none;
 }
 
 input[type=button].toolbox-copy,
 input[type=button]:hover.toolbox-copy,
-input[type=button]:disabled.toolbox-copy
-{
-    background-position:0px -360px;
-    background-color:rgba(0,0,0,.1);
-    box-shadow:none;
+input[type=button]:disabled.toolbox-copy {
+    background-position: 0px -360px;
+    background-color: rgba(0,0,0,.1);
+    box-shadow: none;
 }
 
 input[type=button].toolbox-cut,
 input[type=button]:hover.toolbox-cut,
-input[type=button]:disabled.toolbox-cut
-{
-    background-position:0px -432px;
-    background-color:rgba(0,0,0,.1);
-    box-shadow:none;
+input[type=button]:disabled.toolbox-cut {
+    background-position: 0px -432px;
+    background-color: rgba(0,0,0,.1);
+    box-shadow: none;
 }
 
 input[type=button].toolbox-paste,
 input[type=button]:hover.toolbox-paste,
-input[type=button]:disabled.toolbox-paste
-{
-    background-position:0px -378px;
-    background-color:rgba(0,0,0,.1);
-    box-shadow:none;
+input[type=button]:disabled.toolbox-paste {
+    background-position: 0px -378px;
+    background-color: rgba(0,0,0,.1);
+    box-shadow: none;
 }
 
 input[type=button].toolbox-delete,
 input[type=button]:hover.toolbox-delete,
-input[type=button]:disabled.toolbox-delete
-{
-    background-position:0px -396px;
-    background-color:rgba(0,0,0,.1);
-    box-shadow:none;
+input[type=button]:disabled.toolbox-delete {
+    background-position: 0px -396px;
+    background-color: rgba(0,0,0,.1);
+    box-shadow: none;
 }
 
 input[type=button].toolbox-preview,
 input[type=button]:hover.toolbox-preview,
-input[type=button]:disabled.toolbox-preview
-{
-    background-position:0px -414px;
-    background-color:rgba(0,0,0,.1);
-    box-shadow:none;
+input[type=button]:disabled.toolbox-preview {
+    background-position: 0px -414px;
+    background-color: rgba(0,0,0,.1);
+    box-shadow: none;
 }
 
 input[type=button].toolbox-execute,
 input[type=button]:hover.toolbox-execute,
-input[type=button]:disabled.toolbox-execute
-{
-    background-position:0px -414px;
-    background-color:rgba(0,0,0,.1);
-    box-shadow:none;
+input[type=button]:disabled.toolbox-execute {
+    background-position: 0px -414px;
+    background-color: rgba(0,0,0,.1);
+    box-shadow: none;
 }
 
 input[type=button].toolbox-save,
 input[type=button]:hover.toolbox-save,
-input[type=button]:disabled.toolbox-save
-{
-    background-position:0px -450px;
-    background-color:rgba(0,0,0,.1);
-    box-shadow:none;
+input[type=button]:disabled.toolbox-save {
+    background-position: 0px -450px;
+    background-color: rgba(0,0,0,.1);
+    box-shadow: none;
 }
 
 input[type=button].toolbox-load,
 input[type=button]:hover.toolbox-load,
-input[type=button]:disabled.toolbox-load
-{
-    background-position:0px -468px;
-    background-color:rgba(0,0,0,.1);
-    box-shadow:none;
+input[type=button]:disabled.toolbox-load {
+    background-position: 0px -468px;
+    background-color: rgba(0,0,0,.1);
+    box-shadow: none;
 }
 
 input[type=button]:hover.toolbox-undo,
@@ -224,9 +271,8 @@ input[type=button]:hover.toolbox-delete,
 input[type=button]:hover.toolbox-preview,
 input[type=button]:hover.toolbox-execute,
 input[type=button]:hover.toolbox-save,
-input[type=button]:hover.toolbox-load
-{
-    background-color:rgba(0,0,0,.2);
+input[type=button]:hover.toolbox-load {
+    background-color: rgba(0,0,0,.2);
 }
 
 input[type=button]:hover:disabled.toolbox-undo,
@@ -238,8 +284,6 @@ input[type=button]:hover:disabled.toolbox-delete,
 input[type=button]:hover:disabled.toolbox-preview,
 input[type=button]:hover:disabled.toolbox-execute,
 input[type=button]:hover:disabled.toolbox-save,
-input[type=button]:hover:disabled.toolbox-load
-{
-    background-color:rgba(0,0,0,.1);
+input[type=button]:hover:disabled.toolbox-load {
+    background-color: rgba(0,0,0,.1);
 }
-

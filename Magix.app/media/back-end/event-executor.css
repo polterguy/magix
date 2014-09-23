@@ -1,75 +1,66 @@
 ﻿
 
-.indent-event-executor
-{
-	z-index:5;
-	position:absolute;
-	bottom:5px;
-	right:5px;
-	width:36px;
-	height:36px;
-	background:transparent url(../images/icons/arrows.png) no-repeat -36px 0;
-	transition-property:opacity;
-	transition-duration:.5s;
-	opacity:.2;
+.indent-event-executor {
+    z-index: 5;
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    width: 36px;
+    height: 36px;
+    background: transparent url(../images/icons/arrows.png) no-repeat -36px 0;
+    transition-property: opacity;
+    transition-duration: .5s;
+    opacity: .2;
 }
 
-.de-indent-event-executor
-{
-	z-index:5;
-	position:absolute;
-	bottom:5px;
-	right:41px;
-	width:36px;
-	height:36px;
-	background:transparent url(../images/icons/arrows.png) no-repeat 0 0;
-	transition-property:opacity;
-	transition-duration:.5s;
-	opacity:.2;
+.de-indent-event-executor {
+    z-index: 5;
+    position: absolute;
+    bottom: 5px;
+    right: 41px;
+    width: 36px;
+    height: 36px;
+    background: transparent url(../images/icons/arrows.png) no-repeat 0 0;
+    transition-property: opacity;
+    transition-duration: .5s;
+    opacity: .2;
 }
 
-.indent-event-executor:hover
-{
-	transition-property:opacity;
-	transition-duration:.5s;
-	opacity:1;
+.indent-event-executor:hover {
+    transition-property: opacity;
+    transition-duration: .5s;
+    opacity: 1;
 }
 
-.de-indent-event-executor:hover
-{
-	transition-property:opacity;
-	transition-duration:.5s;
-	opacity:1;
+.de-indent-event-executor:hover {
+    transition-property: opacity;
+    transition-duration: .5s;
+    opacity: 1;
 }
 
-.hyperlisp-executor
-{
-    background-image:url(../images/icons/lightning.png), linear-gradient(rgba(255, 255, 255, 1) 0%, rgba(245, 245, 245, 1) 100%);
-    background-repeat:no-repeat;
-    background-position:top right;
-    border-radius:5px;
-	transition-property:box-shadow;
-	transition-duration:.5s;
-    box-shadow:0px 0px 0px rgba(0,0,0,0);
+.hyperlisp-executor {
+    background-image: url(../images/icons/lightning.png), linear-gradient(rgba(255, 255, 255, 1) 0%, rgba(245, 245, 245, 1) 100%);
+    background-repeat: no-repeat;
+    background-position: top right;
+    border-radius: 5px;
+    transition-property: box-shadow;
+    transition-duration: .5s;
+    box-shadow: 0px 0px 0px rgba(0,0,0,0);
 }
 
-.hyperlisp-executor:hover
-{
-	transition-property:box-shadow;
-	transition-duration:.5s;
-	box-shadow: 8px 8px 5px rgba(0, 0, 0, 0.2);
+.hyperlisp-executor:hover {
+    transition-property: box-shadow;
+    transition-duration: .5s;
+    box-shadow: 8px 8px 5px rgba(0, 0, 0, 0.2);
 }
 
-.hyperlisp-executor-result
-{
-    background-image:linear-gradient(rgba(245, 245, 245, 1) 0%, rgba(225, 225, 225, 1) 100%);
-    border-radius:5px;
+.hyperlisp-executor-result {
+    background-image: linear-gradient(rgba(245, 245, 245, 1) 0%, rgba(225, 225, 225, 1) 100%);
+    border-radius: 5px;
 }
 
-.hyperlisp-executor-result:hover
-{
-	transition-property:box-shadow;
-	transition-duration:.5s;
-	box-shadow: 8px 8px 5px rgba(0, 0, 0, 0.2);
+.hyperlisp-executor-result:hover {
+    transition-property: box-shadow;
+    transition-duration: .5s;
+    box-shadow: 8px 8px 5px rgba(0, 0, 0, 0.2);
 }
-
