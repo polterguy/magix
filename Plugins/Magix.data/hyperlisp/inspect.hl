@@ -71,6 +71,11 @@ wildcard matches using the '%' sign inside of your [id] to make sure you have a 
 do, you can change case sensitiveity of matches by adding a [case] node, and setting its value 
 to either false or true
 
+[prototype], [or] and [not] parameters can also contain conditional statements by using the 
+[if] keyword, which will check for a match the same way the [magix.execute.if] keyword 
+works.  this way you can create complex operator match expressions by appending one or more 
+[if] nodes beneath your [prototype], [or] and [not] nodes
+
 if you supply at least one [prototype], [not] or an [or] parameter, you can also sort by any 
 of the top level nodes in your result by adding a [sort] parameter, and setting its name to 
 be the name of the node you wish to sort by.  you can sort descending by that node by adding 
@@ -171,6 +176,11 @@ to either false or true
 if you supply a [prototype], [or] or [not] node, you can make the engine perform a case-insensitive 
 search, by adding [case] and setting its value to false
 
+[prototype], [or] and [not] parameters can also contain conditional statements by using the 
+[if] keyword, which will check for a match the same way the [magix.execute.if] keyword 
+works.  this way you can create complex operator match expressions by appending one or more 
+[if] nodes beneath your [prototype], [or] and [not] nodes
+
 the active event will return the number of records actually deleted as [affected-records]
 
 [id] can contains formatting expressions, such as {0}, {1} and so on, de-referencing children 
@@ -202,6 +212,11 @@ both the id must match, in addition to the rest of your parameters, at which cas
 wildcard matches using the '%' sign inside of your [id] to make sure you have a match.  if you 
 do, you can change case sensitiveity of matches by adding a [case] node, and setting its value 
 to either false or true
+
+[prototype], [or] and [not] parameters can also contain conditional statements by using the 
+[if] keyword, which will check for a match the same way the [magix.execute.if] keyword 
+works.  this way you can create complex operator match expressions by appending one or more 
+[if] nodes beneath your [prototype], [or] and [not] nodes
 
 if you supply a [prototype], [or] or [not] node, you can make the engine perform a case-insensitive 
 search, by adding [case] and setting its value to false

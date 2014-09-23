@@ -8,7 +8,7 @@ using System;
 using Magix.Core;
 using System.Globalization;
 
-namespace Magix.execute
+namespace Magix.Core
 {
 	/**
      * helper for checking statements, such as [if]/[if-else] and [while]

@@ -55,7 +55,7 @@ try
             // looping while new messages exist on pop3 server
             using=>magix.pop3
               get-messages
-                delete=>true
+                delete=>false
                 count=>33
                 code
 

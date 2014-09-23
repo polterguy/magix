@@ -192,17 +192,22 @@ namespace Magix.Core
             bool found = true;
             foreach (Node idxProto in prototype)
             {
-                found = false;
-                foreach (Node idxThis in this)
+                if (idxProto.Name == "if")
+                    found = StatementHelper.CheckExpressions(idxProto, this);
+                else
                 {
-                    if (idxProto.Name == idxThis.Name)
+                    found = false;
+                    foreach (Node idxThis in this)
                     {
-                        string query = idxProto.Get<string>();
-                        if (query == null || Expressions.IsWildcardMatch(query, idxThis.Get<string>(), caseSensitive))
-                            found = idxThis.HasNodes(idxProto);
+                        if (idxProto.Name == idxThis.Name)
+                        {
+                            string query = idxProto.Get<string>();
+                            if (query == null || Expressions.IsWildcardMatch(query, idxThis.Get<string>(), caseSensitive))
+                                found = idxThis.HasNodes(idxProto);
+                        }
+                        if (found)
+                            break;
                     }
-                    if (found)
-                        break;
                 }
                 if (!found)
                     break;

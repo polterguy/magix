@@ -58,6 +58,11 @@ magix.database-manager.create-data-grid-items
   magix.forms.get-value
     form-id=>database-manager-wrp
     id=>prototype-search
+  using=>magix.forms
+    set-title
+      form-id=>database-manager-wrp
+      id=>search
+      value=>[magix.forms.get-value][value].value
   if=>not-equals
     lhs=>[magix.forms.get-value][value].value
     rhs=>

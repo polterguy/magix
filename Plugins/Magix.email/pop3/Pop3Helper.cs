@@ -114,6 +114,15 @@ namespace Magix.email
 
             for (int idxMsg = 0; idxMsg < count; idxMsg++)
             {
+                // short circuting in case message is already downloaded
+                string uuid = null;
+                if (client.SupportsUids)
+                {
+                    uuid = client.GetMessageUid(idxMsg);
+                    if (MessageAlreadyDownloaded(uuid))
+                        continue;
+                }
+
                 MimeMessage msg = client.GetMessage(idxMsg);
                 HandleMessage(
                     pars,
@@ -123,11 +132,27 @@ namespace Magix.email
                     linkedAttachmentDirectory,
                     exeNode,
                     idxMsg,
-                    msg);
+                    msg,
+                    uuid);
 
                 if (delete)
                     client.DeleteMessage(idxMsg);
             }
+        }
+
+        /*
+         * checks to see if message is already download, and if it is, returns true
+         */
+        private static bool MessageAlreadyDownloaded(string uuid)
+        {
+            Node checkDataLayer = new Node();
+            checkDataLayer["or"]["uuid"].Value = uuid;
+            checkDataLayer["or"]["type"].Value = "magix.email.message";
+            ActiveEvents.Instance.RaiseActiveEvent(
+                typeof(Pop3Helper),
+                "magix.data.count",
+                checkDataLayer);
+            return checkDataLayer["count"].Get<int>() > 0;
         }
 
         /*
@@ -141,12 +166,13 @@ namespace Magix.email
             string linkedAttachmentDirectory, 
             Node exeNode, 
             int idxMsg, 
-            MimeMessage msg)
+            MimeMessage msg,
+            string uuid)
         {
             if (exeNode == null)
             {
                 // returning messages back to caller as a list of emails
-                BuildMessage(msg, ip["values"]["msg_" + idxMsg], basePath, attachmentDirectory, linkedAttachmentDirectory);
+                BuildMessage(msg, ip["values"]["msg_" + idxMsg], basePath, attachmentDirectory, linkedAttachmentDirectory, uuid);
             }
             else
             {
@@ -156,7 +182,8 @@ namespace Magix.email
                     attachmentDirectory,
                     linkedAttachmentDirectory,
                     exeNode,
-                    msg);
+                    msg,
+                    uuid);
             }
         }
 
@@ -169,11 +196,12 @@ namespace Magix.email
             string attachmentDirectory, 
             string linkedAttachmentDirectory, 
             Node exeNode, 
-            MimeMessage msg)
+            MimeMessage msg,
+            string uuid)
         {
             // we have a code callback
             Node callbackNode = exeNode.Clone();
-            BuildMessage(msg, exeNode["_message"], basePath, attachmentDirectory, linkedAttachmentDirectory);
+            BuildMessage(msg, exeNode["_message"], basePath, attachmentDirectory, linkedAttachmentDirectory, uuid);
             pars["_ip"].Value = exeNode;
 
             ActiveEvents.Instance.RaiseActiveEvent(
@@ -192,16 +220,17 @@ namespace Magix.email
             Node node, 
             string basePath, 
             string attachmentDirectory, 
-            string linkedAttachmentDirectory)
+            string linkedAttachmentDirectory,
+            string uuid)
         {
-            ExtractHeaders(msg, node);
+            ExtractHeaders(msg, node, uuid);
             ExtractBody(new MimeEntity[] { msg.Body }, node, false, msg, basePath, attachmentDirectory, linkedAttachmentDirectory);
         }
 
         /*
          * extract headers from email and put into node
          */
-        private static void ExtractHeaders(MimeMessage msg, Node node)
+        private static void ExtractHeaders(MimeMessage msg, Node node, string uuid)
         {
             GetAddress(msg.Sender, "sender", node);
 
@@ -220,6 +249,9 @@ namespace Magix.email
 
             if (!string.IsNullOrEmpty(msg.InReplyTo))
                 node["in-reply-to"].Value = msg.InReplyTo;
+
+            if (!string.IsNullOrEmpty(uuid))
+                node["uuid"].Value = uuid;
 
             node["message-id"].Value = msg.MessageId;
 

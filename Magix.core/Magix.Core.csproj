@@ -38,6 +38,7 @@
     <Reference Include="System.Configuration" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\StatementHelper.cs" />
     <Compile Include="Controllers\ActiveController.cs" />
     <Compile Include="Controllers\ActiveControllerAttribute.cs" />
     <Compile Include="Events\ActiveEventArgs.cs" />

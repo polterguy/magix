@@ -54,7 +54,6 @@
     <Compile Include="keyword-controllers\core-keywords\LambdaCore.cs" />
     <Compile Include="keyword-controllers\core-keywords\IndexOfCore.cs" />
     <Compile Include="keyword-controllers\core-keywords\SplitCore.cs" />
-    <Compile Include="helpers\StatementHelper.cs" />
     <Compile Include="keyword-controllers\ExecuteCore.cs" />
     <Compile Include="keyword-controllers\core-keywords\ExceptionCore.cs" />
     <Compile Include="keyword-controllers\core-keywords\WhileCore.cs" />
