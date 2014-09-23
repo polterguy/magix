@@ -373,7 +373,19 @@ magix.database-manager.select-item
                     class=>span-2
                     value=>delete
                     onclick
-                      debug
+                      using=>magix.data
+                        remove
+                          id=>[$][info].value
+                      magix.viewstate.get=>current-view
+                        id=>magix.database-manager.current-view
+                      if=>exist
+                        lhs=>[magix.viewstate.get=>current-view][value]
+                        code
+                          set=>[magix.database-manager.create-data-grid][start].value
+                            value=>[magix.viewstate.get=>current-view][value][start].value
+                          set=>[magix.database-manager.create-data-grid][end].value
+                            value=>[magix.viewstate.get=>current-view][value][end].value
+                      magix.database-manager.create-data-grid
               text-area=>edit-object
                 class=>span-15 last top-1
                 rows=>10

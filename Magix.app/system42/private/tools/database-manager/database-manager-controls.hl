@@ -64,6 +64,17 @@ sort=>[..].value
 
 ..."
       rows=>12
+      onfirstload
+        magix.data.load-username
+          id=>magix.database-manager.current-view
+        if=>exist
+          lhs=>[magix.data.load-username][value]
+          code
+            using=>magix.forms
+              set-value
+                form-id=>database-manager-wrp
+                id=>prototype-search
+                value=>[magix.data.load-username][value][current-view].value
       onesc
         magix.forms.effect
           form-id=>database-manager-wrp
@@ -80,6 +91,13 @@ sort=>[..].value
           id=>pnl-search-wrp
           type=>fade-out
           time=>250
+        magix.forms.get-value
+          form-id=>database-manager-wrp
+          id=>prototype-search
+        set=>[magix.data.save-username][value][current-view].value
+          value=>[magix.forms.get-value][value].value
+        magix.data.save-username
+          id=>magix.database-manager.current-view
 
 // datagrid of items
 dynamic=>data-grid
