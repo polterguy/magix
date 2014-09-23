@@ -488,8 +488,8 @@ the values compared must be given through [lhs] and [rhs], which means
 'left-hand-side' and 'right-hand-side', and the operator used to compare 
 the [lhs] and the [rhs] nodes must be given using the value of the [if] 
 node.  legal values for the operator is 'exist', 'not-exist', 'equals', 
-'not-equals', 'less-than', 'more-than', 'less-than-equals' and 
-'more-than-equals'
+'not-equals', 'less-than', 'more-than', 'less-than-equals', 
+'more-than-equals', 'regex-match' and 'not-regex-match'
 
 [lhs] means 'left-hand-side'.  the lhs node is conceptually to the left 
 of the operator.  [rhs] means 'right-hand-side', and is conceptually to 
@@ -565,10 +565,12 @@ statement returns true, then no paired [else-if] or [else] statements
 will be executed.  the else-if statement can only follow directly after 
 an [if] statement, or another [else-if] statement
 
-the operator used to compare the [lhs] and the [rhs] nodes must be 
-defined using the value of the [else-if] node.  legal values for the 
-operator is 'exist', 'not-exist', 'equals', 'not-equals', 
-'less-than', 'more-than', 'less-than-equals' and 'more-than-equals'
+the values compared must be given through [lhs] and [rhs], which means 
+'left-hand-side' and 'right-hand-side', and the operator used to compare 
+the [lhs] and the [rhs] nodes must be given using the value of the [else-if] 
+node.  legal values for the operator is 'exist', 'not-exist', 'equals', 
+'not-equals', 'less-than', 'more-than', 'less-than-equals', 
+'more-than-equals', 'regex-match' and 'not-regex-match'
 
 [lhs] means 'left-hand-side'.  the lhs node is to the left of the 
 operator.  [rhs] means 'right-hand-side', and is conceptually to the 
@@ -1116,8 +1118,8 @@ the values compared must be given through [lhs] and [rhs], which means
 'left-hand-side' and 'right-hand-side', and the operator used to compare 
 the [lhs] and the [rhs] nodes must be given using the value of the [while] 
 node.  legal values for the operator is 'exist', 'not-exist', 'equals', 
-'not-equals', 'less-than', 'more-than', 'less-than-equals' and 
-'more-than-equals'
+'not-equals', 'less-than', 'more-than', 'less-than-equals', 
+'more-than-equals', 'regex-match' and 'not-regex-match'
 
 [lhs] means 'left-hand-side'.  the lhs node is conceptually to the left 
 of the operator.  [rhs] means 'right-hand-side', and is conceptually to 

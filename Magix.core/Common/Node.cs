@@ -192,7 +192,7 @@ namespace Magix.Core
             bool found = true;
             foreach (Node idxProto in prototype)
             {
-                if (idxProto.Name == "if")
+                if (idxProto.Name == "%%")
                     found = StatementHelper.CheckExpressions(idxProto, this);
                 else
                 {

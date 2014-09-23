@@ -7,6 +7,7 @@
 using System;
 using Magix.Core;
 using System.Globalization;
+using System.Text.RegularExpressions;
 
 namespace Magix.Core
 {
@@ -188,6 +189,16 @@ namespace Magix.Core
                 case "less-than-equals":
                     expressionIsTrue = CompareValues(objLhsVal, objRhsVal) != 1;
                     break;
+                case "regex-match":
+                    {
+                        Regex regex = new Regex(objLhsVal.ToString(), RegexOptions.CultureInvariant);
+                        expressionIsTrue = regex.IsMatch(objRhsVal.ToString());
+                    } break;
+                case "not-regex-match":
+                    {
+                        Regex regex = new Regex(objLhsVal.ToString(), RegexOptions.CultureInvariant);
+                        expressionIsTrue = !regex.IsMatch(objRhsVal.ToString());
+                    } break;
                 default:
                     throw new ArgumentException("tried to pass in a comparison operator which doesn't exist, operator was; " + expressionOperator);
             }

@@ -71,10 +71,11 @@ wildcard matches using the '%' sign inside of your [id] to make sure you have a 
 do, you can change case sensitiveity of matches by adding a [case] node, and setting its value 
 to either false or true
 
-[prototype], [or] and [not] parameters can also contain conditional statements by using the 
-[if] keyword, which will check for a match the same way the [magix.execute.if] keyword 
-works.  this way you can create complex operator match expressions by appending one or more 
-[if] nodes beneath your [prototype], [or] and [not] nodes
+[prototype], [or] and [not] parameters can also contain conditional statements by using [%%] 
+nodes, which will check for a match the same way the [magix.execute.if] keyword works.  this 
+way you can create complex operator match expressions by appending one or more [%%] nodes 
+beneath your [prototype], [or] and [not] nodes, which must evaluate to true in order to create 
+a matching result
 
 if you supply at least one [prototype], [not] or an [or] parameter, you can also sort by any 
 of the top level nodes in your result by adding a [sort] parameter, and setting its name to 
@@ -176,10 +177,11 @@ to either false or true
 if you supply a [prototype], [or] or [not] node, you can make the engine perform a case-insensitive 
 search, by adding [case] and setting its value to false
 
-[prototype], [or] and [not] parameters can also contain conditional statements by using the 
-[if] keyword, which will check for a match the same way the [magix.execute.if] keyword 
-works.  this way you can create complex operator match expressions by appending one or more 
-[if] nodes beneath your [prototype], [or] and [not] nodes
+[prototype], [or] and [not] parameters can also contain conditional statements by using [%%] 
+nodes, which will check for a match the same way the [magix.execute.if] keyword works.  this 
+way you can create complex operator match expressions by appending one or more [%%] nodes 
+beneath your [prototype], [or] and [not] nodes, which must evaluate to true in order to create 
+a matching result
 
 the active event will return the number of records actually deleted as [affected-records]
 
@@ -213,10 +215,11 @@ wildcard matches using the '%' sign inside of your [id] to make sure you have a 
 do, you can change case sensitiveity of matches by adding a [case] node, and setting its value 
 to either false or true
 
-[prototype], [or] and [not] parameters can also contain conditional statements by using the 
-[if] keyword, which will check for a match the same way the [magix.execute.if] keyword 
-works.  this way you can create complex operator match expressions by appending one or more 
-[if] nodes beneath your [prototype], [or] and [not] nodes
+[prototype], [or] and [not] parameters can also contain conditional statements by using [%%] 
+nodes, which will check for a match the same way the [magix.execute.if] keyword works.  this 
+way you can create complex operator match expressions by appending one or more [%%] nodes 
+beneath your [prototype], [or] and [not] nodes, which must evaluate to true in order to create 
+a matching result
 
 if you supply a [prototype], [or] or [not] node, you can make the engine perform a case-insensitive 
 search, by adding [case] and setting its value to false
