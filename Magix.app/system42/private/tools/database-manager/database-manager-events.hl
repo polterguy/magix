@@ -105,6 +105,16 @@ magix.database-manager.create-data-grid-items
       only-id=>true
       prototype
     count
+  if=>more-than
+    lhs=>[$][end].value
+    rhs=>[using=>magix.data][count][count].value
+    code
+      set=>[$][end].value
+        value=>[using=>magix.data][count][count].value
+  using=>magix.math
+    add=>[$][start]
+      =>[$][start].value
+      =>1
   using=>magix.forms
     set-value
       form-id=>database-manager-wrp
