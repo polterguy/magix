@@ -6,7 +6,7 @@ contains the controls for the database manager web part"
 
 
 // header
-label
+label=>items-header
   class=>span-17 last
   tag=>h2
   value=>database manager
@@ -18,6 +18,8 @@ panel=>paging-wrp
     button=>previous
       class=>span-2
       value=>&lt;
+      onclick
+        magix.database-manager.previous-items
     button=>search
       class=>span-2
       value=>search
@@ -35,6 +37,8 @@ panel=>paging-wrp
     button=>next
       class=>span-2 last
       value=>&gt;
+      onclick
+        magix.database-manager.next-items
 
 // prototype search wrapper
 panel=>pnl-search-wrp
@@ -47,14 +51,19 @@ panel=>pnl-search-wrp
       tag=>label
     text-area=>prototype-search
       class=>span-17 last
-      placeholder=>@"prototype
-  type=>magix.%
+      placeholder=>@"id=>magix.%
+start=>0
+end=>10
 or
   type=>%email%
-sort=>[..][id].value
+not
+  type=>%contact%
+case=>true
+sort=>[..].value
+  descending=>true
 
 ..."
-      rows=>7
+      rows=>12
       onesc
         magix.forms.effect
           form-id=>database-manager-wrp

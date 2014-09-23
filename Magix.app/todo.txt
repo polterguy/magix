@@ -90,6 +90,20 @@
 
 * make it possible to sort by revision-count and such in magix.data.load
 
+* make prototype and id selection conform to each other, and make id take wildcard for selection
+
+* make support for regex selection in magix.data
+
+* export and import both xml, csv, node and database format from database manager
+
+* create support for id extraction in database manager
+
+* create support for "extract columns" in magix.data.load, and implement in database manager, to view specific columns from specific objects
+
+* create support for create and import backup in database manager
+
+* completely get rid of [prototype] and make only [or] be left in magix.data.load/count/etc ...
+
 
 
 

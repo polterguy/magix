@@ -75,6 +75,7 @@
     <Content Include="Default.aspx" />
     <Content Include="media\audio\pin.wav" />
     <Content Include="media\audio\siren.wav" />
+    <Content Include="media\back-end\database-manager.css" />
     <Content Include="media\back-end\email-client.css" />
     <Content Include="media\back-end\file-manager.css" />
     <Content Include="media\back-end\dashboard.css" />
@@ -188,7 +189,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349C5851-65DF-11DA-9384-00065B846F21}">
         <WebProjectProperties>
-          <UseIIS>False</UseIIS>
+          <UseIIS>True</UseIIS>
           <AutoAssignPort>False</AutoAssignPort>
           <DevelopmentServerPort>8080</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>

@@ -51,49 +51,52 @@ magix.data.commit-sample
     magix.data.commit
 
 
-magix.data.load-dox=>@"loads a node from database
+magix.data.load-dox=>@"loads nodes from the database
 
-loads the first object matching the given [id] or the given [prototype].  it will return all 
-objects matching your prototype if you supply a prototype node.  or the object matching your 
-id if you supply an id.  if neither prototype nor id is given, it will load all objects from 
-database
+pass in either [id], [prototype], [or], [not] or any combinations of the mentioned parameters 
+to filter your results.  [prototype] is an alias for [or], and are semantically the same, and 
+means that the result must match your given [or] or [prototype] nodes.  [not] means that the 
+objects cannot match to be returned.  both [prototype], [or] and [not] are tree hierarchies, and 
+if given will make sure the nodes contain or does not contain the nodes given to be a match
 
-if you supply a prototype, it will return objects found as [objects], with child nodes of 
-[objects] being the matching objects.  if you supply an [id] node, it will return the matched 
-object as [value]
+if you supply only an [id] parameter, and neither [or], [not] nor [prototype], then only one 
+object will be returned if any, who needs to match the [id] given exactly, beneath the result 
+of your [magix.execute.load] node itself.  if you supply either a [prototype], [or] or a [not] 
+node, then all objects will be returned as [object] contained inside an [objects] node inside 
+of your [magix.data.load] node itself
 
-if you supply a [prototype], you can or together the results of multiple prototypes, by adding 
-multiple prototypes by appending new prototypes as [or] nodes directly underneath the keyword 
-itself
+if you supply both an [id] node, in addition to either a [or], [prototype] or [not] node, then 
+both the id must match, in addition to the rest of your parameters, at which case you can use 
+wildcard matches using the '%' sign inside of your [id] to make sure you have a match.  if you 
+do, you can change case sensitiveity of matches by adding a [case] node, and setting its value 
+to either false or true
 
-if you supply a prototype, you can make the engine perform a case-insensitive search by adding 
-[case], and setting its value to false
-
-if you supply a prototype, you can also sort by any of the top level nodes in your result by 
-adding a [sort] parameter, and setting its name to be the name of the node you wish to sort 
-by.  you can sort descending by that node by adding [descending] beneath [sort].  ascending 
-is default
+if you supply at least one [prototype], [not] or an [or] parameter, you can also sort by any 
+of the top level nodes in your result by adding a [sort] parameter, and setting its name to 
+be the name of the node you wish to sort by.  you can sort descending by that node by adding 
+[descending] beneath [sort].  ascending is default
 
 in addition to loading the actual object and its id(s), [revision-count] and [created] will 
 also be returned for all objects matching your criteria.  [revision-count] is the number of 
 times the object has been saved, and [created] is the date and time of creation of your object
 
-if you supply a [prototype] and an [only-id], then only the ids, [revision-count] and [created] 
-values of the objects that matches your prototype will be loaded, and not the actual content of 
-your object
+if you supply at least one [prototype], [not] or an [or] parameter in addition to [only-id], 
+then only the ids, [revision-count] and [created] values of the objects that matches your 
+parameters will be loaded, and not the actual content of your object
 
 use [start] and [end] to fetch a specific slice of objects, [start] defaults to 0 and [end] defaults 
 to -1, which means all objects matching criteria.  [start], [end] and [prototype] cannot be defined 
-if [id] is given, since [id] is unique, and will make sure only one object is loaded
+if only [id] is given, since [id] is unique, and will make sure only one object is loaded unless you 
+also supply a [prototype], [or] or [not] parameter
 
-if a [prototype] node is given, it can contain node values with % to signify wildcards for a match 
-operation.  to search for something actually containing a percentage sign '%', use two percentage 
-signs to signify you're looking for one percentage sign like this '%%'
+if at least one [prototype], [or] or [not] node is given, it can contain node values with '%' to 
+signify wildcards for a match operation.  to search for something actually containing a percentage 
+sign '%', use two percentage signs to signify you're looking for one percentage sign like this '%%'
 
-both [id], [prototype], [start] and [end] can be either constant values, nodes or expressions 
-pointing to an id or a prototype object, which will be used as the criteria to load objects.  
-no nodes in prototype can contain neither formatting values, nor expressions, since the [prototype] 
-node is not evaluated in any form before being passed into the match algorithm
+both [id], [or], [not], [prototype], [start] and [end] can be either constant values, nodes or 
+expressions pointing to an id or a prototype object, which will be used as the criteria to load objects.  
+no nodes in [prototype], [or] or [not] can contain neither formatting values, nor expressions, since 
+the [prototype] node is not evaluated in any form before being passed into the matching algorithm
 
 [id], if given,  can contains formatting expressions, such as {0}, {1} and so on, de-referencing 
 children nodes of [id]
@@ -147,20 +150,26 @@ magix.data.save-sample
 
 magix.data.remove-dox=>@"removes a node from the database
 
-removes the given [id] or [prototype] object(s) from your database
+pass in either [id], [prototype], [or], [not] or any combinations of the mentioned parameters 
+to filter your results.  [prototype] is an alias for [or], and are semantically the same, and 
+means that the result must match your given [or] or [prototype] nodes.  [not] means that the 
+objects cannot match to be returned.  both [prototype], [or] and [not] are tree hierarchies, and 
+if given will make sure the nodes contain or does not contain the nodes given to be a match
 
-both [id] and [prototype] can be either expressions or constant values.  if an id is 
-given, you cannot supply a prototype.  if you supply a prototype, then no id can be 
-supplied.  if you supply a prototype, you can use wildcard comparisons by using '%' 
-as a wildcard equality comparison.  to search for a percentage sign, use two percentage 
-signs to signify you're looking for one, like this '%%'
+if you supply only an [id] parameter, and neither [or], [not] nor [prototype], then only one 
+object will be returned if any, who needs to match the [id] given exactly, beneath the result 
+of your [magix.execute.load] node itself.  if you supply either a [prototype], [or] or a [not] 
+node, then all objects will be returned as [object] contained inside an [objects] node inside 
+of your [magix.data.load] node itself
 
-if you supply a [prototype], you can or together the results of multiple prototypes, by adding 
-multiple prototypes by appending new prototypes as [or] nodes directly underneath the keyword 
-itself
+if you supply both an [id] node, in addition to either a [or], [prototype] or [not] node, then 
+both the id must match, in addition to the rest of your parameters, at which case you can use 
+wildcard matches using the '%' sign inside of your [id] to make sure you have a match.  if you 
+do, you can change case sensitiveity of matches by adding a [case] node, and setting its value 
+to either false or true
 
-if you supply a prototype, you can make the engine perform a case-insensitive search by adding 
-[case] and setting its value to false
+if you supply a [prototype], [or] or [not] node, you can make the engine perform a case-insensitive 
+search, by adding [case] and setting its value to false
 
 the active event will return the number of records actually deleted as [affected-records]
 
@@ -176,16 +185,26 @@ magix.data.remove-sample
 
 magix.data.count-dox=>@"counts objects in database
 
-returns the number of objects in database matching [prototype] as [count].  if no [prototype] 
-is given, all objects in database will be counted.  [prototype], if given, can be either an 
-expression or a constant.  number of objects matching criteria is returned as [count]
+pass in either [id], [prototype], [or], [not] or any combinations of the mentioned parameters 
+to filter your results.  [prototype] is an alias for [or], and are semantically the same, and 
+means that the result must match your given [or] or [prototype] nodes.  [not] means that the 
+objects cannot match to be returned.  both [prototype], [or] and [not] are tree hierarchies, and 
+if given will make sure the nodes contain or does not contain the nodes given to be a match
 
-if you supply a [prototype], you can or together the results of multiple prototypes, by adding 
-multiple prototypes by appending new prototypes as [or] nodes directly underneath the keyword 
-itself
+if you supply only an [id] parameter, and neither [or], [not] nor [prototype], then only one 
+object will be returned if any, who needs to match the [id] given exactly, beneath the result 
+of your [magix.execute.load] node itself.  if you supply either a [prototype], [or] or a [not] 
+node, then all objects will be returned as [object] contained inside an [objects] node inside 
+of your [magix.data.load] node itself
 
-if you supply a prototype, you can make the engine perform a case-insensitive search by adding 
-[case] and setting its value to false
+if you supply both an [id] node, in addition to either a [or], [prototype] or [not] node, then 
+both the id must match, in addition to the rest of your parameters, at which case you can use 
+wildcard matches using the '%' sign inside of your [id] to make sure you have a match.  if you 
+do, you can change case sensitiveity of matches by adding a [case] node, and setting its value 
+to either false or true
+
+if you supply a [prototype], [or] or [not] node, you can make the engine perform a case-insensitive 
+search, by adding [case] and setting its value to false
 
 thread safe"
 

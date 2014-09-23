@@ -197,61 +197,9 @@ namespace Magix.Core
                 {
                     if (idxProto.Name == idxThis.Name)
                     {
-                        string query = idxProto.Get<string>() ?? "";
-                        if (query.Contains("%"))
-                        {
-                            List<string> strings = new List<string>();
-                            string bufferQuery = "";
-                            for (int idxNoChar = 0; idxNoChar < query.Length; idxNoChar++)
-                            {
-                                if (query[idxNoChar] == '%')
-                                {
-                                    if (idxNoChar + 1 < query.Length && query[idxNoChar + 1] == '%')
-                                    {
-                                        idxNoChar += 1;
-                                        bufferQuery += '%';
-                                    }
-                                    else if (!string.IsNullOrEmpty(bufferQuery))
-                                    {
-                                        strings.Add(bufferQuery);
-                                        bufferQuery = "";
-                                    }
-                                }
-                                else
-                                    bufferQuery += query[idxNoChar];
-                            }
-                            if (!string.IsNullOrEmpty(bufferQuery))
-                                strings.Add(bufferQuery);
-                            string content = idxThis.Get<string>();
-                            if (strings.Count > 0 && !string.IsNullOrEmpty(content))
-                            {
-                                int idxNoSearch = 0;
-                                found = true;
-                                foreach (string idxQuery in strings)
-                                {
-                                    int noFound = caseSensitive ? 
-                                        content.IndexOf(idxQuery, idxNoSearch) :
-                                        content.IndexOf(idxQuery, idxNoSearch, StringComparison.InvariantCultureIgnoreCase);
-                                    if (noFound == -1)
-                                    {
-                                        found = false;
-                                        break;
-                                    }
-                                }
-                                if (found)
-                                {
-                                    found = idxThis.HasNodes(idxProto);
-                                }
-                            }
-                        }
-                        else
-                        {
-                            if ((idxThis.Get<string>() ?? "") == query)
-                            {
-                                found = idxThis.HasNodes(idxProto);
-                                break;
-                            }
-                        }
+                        string query = idxProto.Get<string>();
+                        if (query == null || Expressions.IsWildcardMatch(query, idxThis.Get<string>(), caseSensitive))
+                            found = idxThis.HasNodes(idxProto);
                     }
                     if (found)
                         break;

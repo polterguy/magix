@@ -5,6 +5,11 @@ inspect=>@"starts the database manager application
 starts the database manager application"
 
 
+// including css
+magix.viewport.include-client-file
+  type=>css
+  file=>media/back-end/database-manager.css
+
 magix.forms.create-web-part
   container=>content1
   form-id=>database-manager-wrp

@@ -248,6 +248,56 @@ being an expression, and having the prototype contain wildcards"
 
 
 event
+  name=>magix.test.data-load-wildcard-begin-end
+  persist=>false
+  inspect=>@"verifies [load] works with wildcard prototype
+
+saves three objects, for then to load them with a [prototype], making 
+sure the objects are being reloaded, for then to remove the objects, 
+using a prototype, having the prototype contain wildcards"
+  code
+    using=>magix.data
+      save
+        value
+          type=>magix.tests.test-object-type-3
+          tmp=>testing-first-object
+      save
+        value
+          type=>magix.tests.test-object-type-3
+          tmp=>testing-second-lasting-object
+      save
+        value
+          type=>magix.tests.test-object-type-3
+          tmp=>some-testing-third-object-last
+      load
+        or
+          type=>magix.tests.test-object-type-3
+          tmp=>%testing%
+      load
+        or
+          type=>magix.tests.test-object-type-3
+          tmp=>testing%
+      load
+        or
+          type=>magix.tests.test-object-type-3
+          tmp=>%testing%last
+      remove
+        or
+          type=>magix.tests.test-object-type-3
+    if=>not-equals
+      lhs=>[using][load:0][objects].count
+      rhs=>3
+      or=>not-equals
+        lhs=>[using][load:1][objects].count
+        rhs=>2
+      or=>not-equals
+        lhs=>[using][load:2][objects].count
+        rhs=>1
+      code
+        throw=>[magix.data.load] misbehaved
+
+
+event
   name=>magix.test.data-load-remove-complex-prototype
   persist=>false
   inspect=>@"verifies [load] works with complex prototype
@@ -967,3 +1017,105 @@ by an integer value"
       code
         throw=>[load] misbehaved
 
+
+event
+  name=>magix.test.load-or-not
+  persist=>false
+  inspect=>@"verifies [save] and [load] works
+
+saves an object, for then to load it, and verify the object 
+loaded when using [or] and [not]"
+  code
+    using=>magix.data
+      save
+        value
+          type=>magix.tests.data-test-object-10
+          name=>tjobing
+      save
+        value
+          type=>magix.tests.data-test-object-10
+          name=>tjobang
+      load
+        or
+          type=>magix.tests.data-test-object-10
+        not
+          name=>tjobang
+      remove
+        or
+          type=>magix.tests.data-test-object-10
+    if=>not-equals
+      lhs=>[using][load][objects].count
+      rhs=>1
+      or=>not-equals
+        lhs=>[using][load][objects][0][value][name].value
+        rhs=>tjobing
+      code
+        throw=>[magix.data.save] misbehaved
+
+
+event
+  name=>magix.test.load-or-and-id
+  persist=>false
+  inspect=>@"verifies [save] and [load] works
+
+saves an object, for then to load it, and verify the object 
+loaded when using [or] and [not]"
+  code
+    using=>magix.data
+      save
+        id=>magix.tests.data-test-object-10-ver-1
+        value
+          type=>magix.tests.data-test-object-10
+          name=>tjobing
+      save
+        id=>magix.tests.data-test-object-10-ver-2
+        value
+          type=>magix.tests.data-test-object-10
+          name=>tjobang
+      load
+        id=>magix.tests.data-test-object-10-ver-%
+        or
+          type=>magix.tests.data-test-object-10
+      remove
+        or
+          type=>magix.tests.data-test-object-10
+    if=>not-equals
+      lhs=>[using][load][objects].count
+      rhs=>2
+      code
+        throw=>[magix.data.save] misbehaved
+
+
+event
+  name=>magix.test.load-or-and-id-no-case
+  persist=>false
+  inspect=>@"verifies [save] and [load] works
+
+saves an object, for then to load it, and verify the object 
+loaded when using [or] and [not]"
+  code
+    using=>magix.data
+      save
+        id=>magix.tests.data-test-object-10-Ver-1
+        value
+          type=>magix.tests.Data-test-object-10
+          name=>tjobing
+      save
+        id=>magix.tests.daTa-test-object-10-ver-2
+        value
+          type=>magix.tesTs.data-test-object-10
+          name=>tjobang
+      load
+        id=>magix.tests.data-test-object-10-ver-%
+        case=>false
+        or
+          type=>magix.tests.data-test-object-10
+      remove
+        case=>false
+        or
+          type=>magix.tests.data-test-object-10
+    if=>not-equals
+      lhs=>[using][load][objects].count
+      rhs=>2
+      code
+        throw=>[magix.data.save] misbehaved

@@ -257,21 +257,22 @@ namespace Magix.data
          * loads items from database
          */
         internal static void Load(
-            Node ip, 
-            Node prototype, 
-            int start, 
-            int end, 
-            Guid transaction, 
-            bool onlyId, 
-            bool caseSensitivePrototype, 
-            string sortBy, 
-            bool descending)
+            Node ip,
+            Node prototype,
+            int start,
+            int end,
+            Guid transaction,
+            bool onlyId,
+            bool caseSensitivePrototype,
+            string sortBy,
+            bool descending,
+            string id)
         {
             if (transaction != _transaction.Item1)
             {
                 lock (_transactionalLocker)
                 {
-                    Load(ip, prototype, start, end, transaction, onlyId, caseSensitivePrototype, sortBy, descending);
+                    Load(ip, prototype, start, end, transaction, onlyId, caseSensitivePrototype, sortBy, descending, id);
                 }
             }
             lock (_locker)
@@ -285,35 +286,30 @@ namespace Magix.data
                 {
                     foreach (Node idxObjectNode in idxFileNode)
                     {
-                        // loading by prototype
-                        bool match = false;
-                        foreach (Node idxPrototype in prototype)
+                        if (IsMatchingId(idxObjectNode, id, caseSensitivePrototype))
                         {
-                            if (idxObjectNode["value"].HasNodes(idxPrototype, caseSensitivePrototype))
+                            // checking prototype
+                            bool match = IsMatchingPrototype(idxObjectNode, prototype, caseSensitivePrototype);
+                            if (match && string.IsNullOrEmpty(sortBy))
                             {
-                                match = true;
-                                break;
+                                // since we have no sort order here, we can add the nodes directly to our result, assuming we're inside the 
+                                // requested range
+                                if ((start == 0 || curMatchingItem >= start) && (end == -1 || curMatchingItem < end))
+                                {
+                                    Node objectNode = new Node("object");
+                                    objectNode["id"].Value = idxObjectNode.Get<string>();
+                                    objectNode["created"].Value = idxObjectNode["created"].Value;
+                                    objectNode["revision-count"].Value = idxObjectNode["revision-count"].Value;
+                                    if (!onlyId)
+                                        objectNode["value"].AddRange(idxObjectNode["value"].Clone());
+                                    ip["objects"].Add(objectNode);
+                                }
+                                curMatchingItem += 1;
                             }
-                        }
-                        if (match && string.IsNullOrEmpty(sortBy))
-                        {
-                            // since we have no sort order here, we can add the nodes directly to our result, assuming we're inside the 
-                            // requested range
-                            if ((start == 0 || curMatchingItem >= start) && (end == -1 || curMatchingItem < end))
+                            else if (match)
                             {
-                                Node objectNode = new Node("object");
-                                objectNode["id"].Value = idxObjectNode.Get<string>();
-                                objectNode["created"].Value = idxObjectNode["created"].Value;
-                                objectNode["revision-count"].Value = idxObjectNode["revision-count"].Value;
-                                if (!onlyId)
-                                    objectNode["value"].AddRange(idxObjectNode["value"].Clone());
-                                ip["objects"].Add(objectNode);
+                                result.Add(idxObjectNode);
                             }
-                            curMatchingItem += 1;
-                        }
-                        else if (match)
-                        {
-                            result.Add(idxObjectNode);
                         }
                     }
                 }
@@ -336,6 +332,41 @@ namespace Magix.data
                     }
                 }
             }
+        }
+
+        /*
+         * checks for matching prototype
+         */
+        private static bool IsMatchingPrototype(Node idxObjectNode, Node prototype, bool caseSensitivePrototype)
+        {
+            if (prototype.Contains("not"))
+            {
+                foreach (Node idxPrototype in prototype["not"])
+                {
+                    if (idxObjectNode["value"].HasNodes(idxPrototype, caseSensitivePrototype))
+                        return false;
+                }
+            }
+
+            if (prototype["or"].Count == 0)
+                return true;
+
+            foreach (Node idxPrototype in prototype["or"])
+            {
+                if (idxObjectNode["value"].HasNodes(idxPrototype, caseSensitivePrototype))
+                    return true;
+            }
+            return false;
+        }
+
+        /*
+         * checks for matching id in object, and returns true if match is found
+         */
+        private static bool IsMatchingId(Node objNode, string id, bool caseSensitive)
+        {
+            if (string.IsNullOrEmpty(id))
+                return true;
+            return Expressions.IsWildcardMatch(id, objNode.Get<string>(), caseSensitive);
         }
 
         /*
@@ -433,11 +464,11 @@ namespace Magix.data
                     foreach (Node idxObjectNode in idxFileNode)
                     {
                         string idxExpressionValue = Expressions.GetExpressionValue<string>(
-                            expression, 
-                            idxObjectNode["value"], 
-                            idxObjectNode["value"], 
+                            expression,
+                            idxObjectNode["value"],
+                            idxObjectNode["value"],
                             false);
-                        if (idxExpressionValue !=null)
+                        if (idxExpressionValue != null)
                         {
                             if (!ip["result"].Exists(
                                 delegate(Node idx)
@@ -456,13 +487,13 @@ namespace Magix.data
         /*
          * counts records in database
          */
-        internal static int CountRecords(Node ip, Node prototype, Guid transaction, bool caseSensitive)
+        internal static int CountRecords(Node ip, Node prototype, Guid transaction, bool caseSensitive, string id)
         {
             if (transaction != _transaction.Item1)
             {
                 lock (_transactionalLocker)
                 {
-                    CountRecords(ip, prototype, transaction, caseSensitive);
+                    CountRecords(ip, prototype, transaction, caseSensitive, id);
                 }
             }
             lock (_locker)
@@ -472,21 +503,16 @@ namespace Magix.data
                 {
                     foreach (Node idxObjectNode in idxFileNode)
                     {
-                        if (prototype == null)
-                            count += 1;
-                        else
+                        if (IsMatchingId(idxObjectNode, id, caseSensitive))
                         {
-                            bool match = false;
-                            foreach (Node idxPrototype in prototype)
-                            {
-                                if (idxObjectNode["value"].HasNodes(idxPrototype, caseSensitive))
-                                {
-                                    match = true;
-                                    break;
-                                }
-                            }
-                            if (match)
+                            if (prototype == null)
                                 count += 1;
+                            else
+                            {
+                                bool match = IsMatchingPrototype(idxObjectNode, prototype, caseSensitive);
+                                if (match)
+                                    count += 1;
+                            }
                         }
                     }
                 }
@@ -554,13 +580,13 @@ namespace Magix.data
         /*
          * removes items from database according to prototype
          */
-        internal static int RemoveByPrototype(Node prototype, Guid transaction, bool caseSensitive)
+        internal static int RemoveByPrototype(Node prototype, Guid transaction, bool caseSensitive, string id)
         {
             if (transaction != _transaction.Item1)
             {
                 lock (_transactionalLocker)
                 {
-                    return RemoveByPrototype(prototype, transaction, caseSensitive);
+                    return RemoveByPrototype(prototype, transaction, caseSensitive, id);
                 }
             }
             lock (_locker)
@@ -571,24 +597,19 @@ namespace Magix.data
                 {
                     foreach (Node idxObjectNode in idxFileNode)
                     {
-                        bool match = false;
-                        foreach (Node idxPrototype in prototype)
+                        if (IsMatchingId(idxObjectNode, id, caseSensitive))
                         {
-                            if (idxObjectNode["value"].HasNodes(idxPrototype, caseSensitive))
+                            bool match = IsMatchingPrototype(idxObjectNode, prototype, caseSensitive);
+                            if (match)
                             {
-                                match = true;
-                                break;
+                                nodesToRemove.Add(idxObjectNode);
+                                if (!filesToUpdate.Exists(
+                                    delegate(string idxFileName)
+                                    {
+                                        return idxFileName == idxFileNode.Name;
+                                    }))
+                                    filesToUpdate.Add(idxFileNode.Name);
                             }
-                        }
-                        if (match)
-                        {
-                            nodesToRemove.Add(idxObjectNode);
-                            if (!filesToUpdate.Exists(
-                                delegate(string idxFileName)
-                                {
-                                    return idxFileName == idxFileNode.Name;
-                                }))
-                                filesToUpdate.Add(idxFileNode.Name);
                         }
                     }
                 }

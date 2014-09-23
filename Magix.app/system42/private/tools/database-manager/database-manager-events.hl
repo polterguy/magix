@@ -8,6 +8,20 @@ contains the events for the database manager web part"
 // creates tha actual data-grid of items from database
 magix.database-manager.create-data-grid
 
+  // checking input parameters
+  if=>exist
+    lhs=>[$][start]
+    code
+      set=>[**start=>{start}].value
+        value=>[$][start].value
+      set=>[**end=>{end}].value
+        value=>[$][end].value
+  else
+    set=>[**start=>{start}].value
+      value=>0
+    set=>[**end=>{end}].value
+      value=>25
+
   // creating actual datagrid
   magix.forms.create-web-part
     container=>data-grid
@@ -16,11 +30,9 @@ magix.database-manager.create-data-grid
     controls
       lambda=>items
         oncreatecontrols
-          set=>[magix.database-manager.create-data-grid-items][start].value
-            value=>0
-          set=>[magix.database-manager.create-data-grid-items][end].value
-            value=>25
           magix.database-manager.create-data-grid-items
+            start=>{start}
+            end=>{end}
           add=>[$]
             values=>[magix.database-manager.create-data-grid-items][controls]
 
@@ -55,6 +67,8 @@ magix.database-manager.create-data-grid-items
         code=>[magix.forms.get-value][value].value
       if=>not-exist
         lhs=>[@][code-2-node][node][prototype]
+        and=>not-exist
+          lhs=>[@][code-2-node][node][or]
         code
           add=>[@][..][..][code-2-node][node]
             value=>prototype
@@ -63,18 +77,46 @@ magix.database-manager.create-data-grid-items
         code
           set=>[using=>magix.data][load][start]
           set=>[using=>magix.data][load][end]
+          set=>[$][start].value
+            value=>[@][..][..][code-2-node][node][start].value
+          set=>[$][end].value
+            value=>[@][..][..][code-2-node][node][end].value
       add=>[using=>magix.data][load]
         values=>[@][code-2-node][node]
+  add=>[magix.viewstate.set=>current-view][value]
+    values=>[using=>magix.data][load]
+  set=>[magix.viewstate.set=>current-view][value][only-id]
+  set=>[magix.viewstate.set=>current-view][value][start].value
+    value=>[$][start].value
+  set=>[magix.viewstate.set=>current-view][value][end].value
+    value=>[$][end].value
+  magix.viewstate.set=>current-view
+    id=>magix.database-manager.current-view
+  add=>[using=>magix.data][count]
+    values=>[using=>magix.data][load]
+  set=>[using=>magix.data][count][start]
+  set=>[using=>magix.data][count][end]
+  set=>[using=>magix.data][count][only-id]
+  set=>[using=>magix.data][count][sort]
   using=>magix.data
     load
       start=>[$][start].value
       end=>[$][end].value
       only-id=>true
       prototype
+    count
+  using=>magix.forms
+    set-value
+      form-id=>database-manager-wrp
+      id=>items-header
+      value=>database manager - {0}/{1} of {2}
+        =>[$][start].value
+        =>[$][end].value
+        =>[using=>magix.data][count][count].value
   for-each=>[using=>magix.data][load][objects]
     _pn
       panel=>{wrp-pnl-}
-        style=>cursor:pointer;
+        class=>database-item
         onclick
           set=>[magix.database-manager.select-item][id].value
             value=>[$][info].value
@@ -91,8 +133,9 @@ magix.database-manager.create-data-grid-items
             class=>span-4
           label=>revision-count
             class=>span-1 last text-right
-      dynamic=>{wrp-dyn-}
       hidden=>{is-viewing-}
+      dynamic=>{wrp-dyn-}
+        class=>db-sleeping-dynamic
     set=>[@][_pn][panel][info].value
       value=>[id].value
     set=>[@][_pn][**label=>id][value].value
@@ -105,6 +148,113 @@ magix.database-manager.create-data-grid-items
       values=>[@][_pn]
   add=>[$][controls]
     values=>[_controls]
+
+
+// pages to previous items
+magix.database-manager.previous-items
+  magix.viewstate.get=>current-view
+    id=>magix.database-manager.current-view
+  if=>more-than
+    lhs=>[magix.viewstate.get=>current-view][value][start].value
+    rhs=>0
+    code
+      _delta
+      using=>magix.math
+        subtract=>[@][..][_delta]
+          =>[magix.viewstate.get=>current-view][value][end].value
+          =>[magix.viewstate.get=>current-view][value][start].value
+        subtract=>[magix.viewstate.get=>current-view][value][start]
+          =>[magix.viewstate.get=>current-view][value][start].value
+          =>[@][..][_delta].value
+        subtract=>[magix.viewstate.get=>current-view][value][end]
+          =>[magix.viewstate.get=>current-view][value][end].value
+          =>[@][..][_delta].value
+      set=>[@][magix.database-manager.create-data-grid][start].value
+        value=>[magix.viewstate.get=>current-view][value][start].value
+      set=>[@][magix.database-manager.create-data-grid][end].value
+        value=>[magix.viewstate.get=>current-view][value][end].value
+      magix.forms.get-value
+        form-id=>database-manager-wrp
+        id=>prototype-search
+      if=>not-equals
+        lhs=>[@][magix.forms.get-value][value].value
+        rhs=>
+        code
+          code-2-node
+            code=>[@][..][..][magix.forms.get-value][value].value
+          set=>[@][code-2-node][node][start]
+          set=>[@][code-2-node][node][end]
+          node-2-code
+            node=>[@][code-2-node][node]
+            remove-root=>true
+          using=>magix.forms
+            set-value
+              form-id=>database-manager-wrp
+              id=>prototype-search
+              value=>[@][..][node-2-code][code].value
+      magix.database-manager.create-data-grid
+  else
+    magix.viewport.show-message
+      message=>already at beginning of dataset
+      time=>2000
+      color=>#ffaaaa
+
+
+// pages to previous items
+magix.database-manager.next-items
+  magix.viewstate.get=>current-view
+    id=>magix.database-manager.current-view
+  add=>[@][magix.data.count]
+    values=>[magix.viewstate.get=>current-view][value]
+  set=>[magix.data.count][start]
+  set=>[magix.data.count][end]
+  set=>[magix.data.count][only-id]
+  set=>[magix.data.count][sort]
+  magix.data.count
+  if=>less-than
+    lhs=>[magix.viewstate.get=>current-view][value][end].value
+    rhs=>[magix.data.count][count].value
+    code
+      _delta
+      using=>magix.math
+        subtract=>[@][..][_delta]
+          =>[magix.viewstate.get=>current-view][value][end].value
+          =>[magix.viewstate.get=>current-view][value][start].value
+        add=>[magix.viewstate.get=>current-view][value][start]
+          =>[magix.viewstate.get=>current-view][value][start].value
+          =>[@][..][_delta].value
+        add=>[magix.viewstate.get=>current-view][value][end]
+          =>[magix.viewstate.get=>current-view][value][end].value
+          =>[@][..][_delta].value
+      set=>[@][magix.database-manager.create-data-grid][start].value
+        value=>[magix.viewstate.get=>current-view][value][start].value
+      set=>[@][magix.database-manager.create-data-grid][end].value
+        value=>[magix.viewstate.get=>current-view][value][end].value
+      magix.forms.get-value
+        form-id=>database-manager-wrp
+        id=>prototype-search
+      if=>not-equals
+        lhs=>[@][magix.forms.get-value][value].value
+        rhs=>
+        code
+          code-2-node
+            code=>[@][..][..][magix.forms.get-value][value].value
+          set=>[@][code-2-node][node][start]
+          set=>[@][code-2-node][node][end]
+          node-2-code
+            node=>[@][code-2-node][node]
+            remove-root=>true
+          using=>magix.forms
+            set-value
+              form-id=>database-manager-wrp
+              id=>prototype-search
+              value=>[@][..][node-2-code][code].value
+      magix.database-manager.create-data-grid
+  else
+    magix.viewport.show-message
+      message=>already at end of dataset
+      time=>2000
+      color=>#ffaaaa
 
 
 // creates the "view single item" web part
@@ -131,6 +281,8 @@ magix.database-manager.select-item
       using=>magix.viewport
         clear-controls
           container=>[$][container].value
+          reset-class=>true
+            new-class=>db-sleeping-dynamic
   else
     using=>magix.forms
       set-value
@@ -143,6 +295,15 @@ magix.database-manager.select-item
     node-2-code
       node=>[@][using=>magix.data][load][value]
       remove-root=>true
+    replace=>[@][node-2-code][code].value
+      what=>&
+      with=>&amp;
+    replace=>[@][node-2-code][code].value
+      what=>>
+      with=>&gt;
+    replace=>[@][node-2-code][code].value
+      what=><
+      with=>&lt;
     set=>[@][**label=>code][value].value
       value=>[@][node-2-code][code].value
     set=>[@][**button=>edit][info].value

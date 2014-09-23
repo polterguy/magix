@@ -109,15 +109,13 @@ namespace Magix.data
 
             Node dp = Dp(e.Params);
 
-            if (ip.Contains("id") && ip.Contains("prototype"))
-                throw new ArgumentException("cannot use both [id] and [prototype] in [magix.data.load]");
-            if (!ip.ContainsValue("id") && !ip.Contains("prototype"))
-                throw new ArgumentException("either [id] or [prototype] is needed for [magix.data.load]");
+            if (!ip.ContainsValue("id") && !ip.Contains("prototype") && !ip.Contains("or"))
+                throw new ArgumentException("either [id], [prototype], [or] or any combination of all is needed for [magix.data.load]");
 
             string id = Expressions.GetFormattedExpression("id", e.Params, null);
             Guid transaction = e.Params.GetValue("_database-transaction", Guid.Empty);
 
-            if (id == null)
+            if (ip.Contains("prototype") || ip.Contains("or") || ip.Contains("not"))
             {
                 bool caseSensitivePrototype = Expressions.GetExpressionValue<bool>(ip.GetValue("case", "true"), dp, ip, false);
                 string sortBy = ip.GetValue("sort", "");
@@ -133,7 +131,8 @@ namespace Magix.data
                     ip.GetValue("only-id", false),
                     caseSensitivePrototype,
                     sortBy,
-                    descending);
+                    descending,
+                    id);
             }
             else
                 Database.Load(ip, id, transaction);
@@ -240,24 +239,21 @@ namespace Magix.data
 
             Node dp = Dp(e.Params);
 
-            if (ip.Contains("id") && ip.Contains("prototype"))
-                throw new ArgumentException("cannot use both [id] and [prototype] in [magix.data.load]");
-
-            if (!ip.Contains("id") && !ip.Contains("prototype"))
-                throw new ArgumentException("either [id] or [prototype] is needed for [magix.data.load]");
+            if (!ip.Contains("id") && !ip.Contains("prototype") && !ip.Contains("or"))
+                throw new ArgumentException("either [id], [prototype], [or] or any combination of all is needed for [magix.data.remove]");
 
             string id = Expressions.GetFormattedExpression("id", e.Params, null);
             Node prototype = GetPrototype(ip, dp);
 
             Guid transaction = e.Params.GetValue("_database-transaction", Guid.Empty);
 
-            if (id != null)
-                ip["affected-records"].Value = Database.RemoveById(id, transaction);
-            else
+            if (ip.Contains("prototype") || ip.Contains("or") || ip.Contains("not"))
             {
                 bool caseSensitivePrototype = Expressions.GetExpressionValue<bool>(ip.GetValue("case", "true"), dp, ip, false);
-                ip["affected-records"].Value = Database.RemoveByPrototype(prototype, transaction, caseSensitivePrototype);
+                ip["affected-records"].Value = Database.RemoveByPrototype(prototype, transaction, caseSensitivePrototype, id);
             }
+            else
+                ip["affected-records"].Value = Database.RemoveById(id, transaction);
         }
 
         /*
@@ -284,12 +280,13 @@ namespace Magix.data
 
             Node dp = Dp(e.Params);
 
+            string id = ip.GetValue<string>("id", null);
             Node prototype = GetPrototype(ip, dp);
             bool caseSensitivePrototype = Expressions.GetExpressionValue<bool>(ip.GetValue("case", "true"), dp, ip, false);
 
             Guid transaction = e.Params.GetValue("_database-transaction", Guid.Empty);
 
-            ip["count"].Value = Database.CountRecords(ip, prototype, transaction, caseSensitivePrototype);
+            ip["count"].Value = Database.CountRecords(ip, prototype, transaction, caseSensitivePrototype, id);
         }
 
         /*
@@ -297,27 +294,27 @@ namespace Magix.data
          */
         private static Node GetPrototype(Node ip, Node dp)
         {
-            Node prototype = null;
-            if (ip.Contains("prototype"))
+            Node prototype = new Node();
+            foreach (Node idxIpChild in ip)
             {
-                prototype = new Node();
-                if (ip.ContainsValue("prototype"))
-                    prototype.Add(Expressions.GetExpressionValue<Node>(ip["prototype"].Get<string>(), dp, ip, false).Clone());
-                else
-                    prototype.Add(ip["prototype"].Clone());
-                foreach (Node idxIpChild in ip)
+                if (idxIpChild.Name == "or" || idxIpChild.Name == "prototype")
                 {
-                    if (idxIpChild.Name == "or")
-                    {
-                        // this is an "or"'ed prototype
-                        if (idxIpChild.Value != null)
-                            prototype.Add(Expressions.GetExpressionValue<Node>(idxIpChild.Get<string>(), dp, ip, false).Clone());
-                        else
-                            prototype.Add(idxIpChild.Clone());
-                    }
+                    // this is an "or"'ed prototype
+                    if (idxIpChild.Value != null)
+                        prototype["or"].Add(Expressions.GetExpressionValue<Node>(idxIpChild.Get<string>(), dp, ip, false).Clone());
+                    else
+                        prototype["or"].Add(idxIpChild.Clone());
+                }
+                else if (idxIpChild.Name == "not")
+                {
+                    // this is an "or"'ed prototype
+                    if (idxIpChild.Value != null)
+                        prototype["not"].Add(Expressions.GetExpressionValue<Node>(idxIpChild.Get<string>(), dp, ip, false).Clone());
+                    else
+                        prototype["not"].Add(idxIpChild.Clone());
                 }
             }
-            return prototype;
+            return prototype.Count == 0 ? null : prototype;
         }
     }
 }

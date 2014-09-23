@@ -16,6 +16,77 @@ namespace Magix.Core
 	public class Expressions
 	{
         /*
+         * returns true if val contains wildcard match from expression
+         */
+        public static bool IsWildcardMatch(string expression, string val, bool caseSensitive)
+        {
+            bool found = false;
+            if (expression == "%")
+                return val != null;
+
+            if (expression.Contains("%"))
+            {
+                List<string> strings = new List<string>();
+                string bufferQuery = "";
+                for (int idxNoChar = 0; idxNoChar < expression.Length; idxNoChar++)
+                {
+                    if (expression[idxNoChar] == '%')
+                    {
+                        if (idxNoChar + 1 < expression.Length && expression[idxNoChar + 1] == '%')
+                        {
+                            idxNoChar += 1;
+                            bufferQuery += '%';
+                        }
+                        else if (!string.IsNullOrEmpty(bufferQuery))
+                        {
+                            strings.Add(bufferQuery);
+                            bufferQuery = "";
+                        }
+                    }
+                    else
+                        bufferQuery += expression[idxNoChar];
+                }
+                if (!string.IsNullOrEmpty(bufferQuery))
+                    strings.Add(bufferQuery);
+                if (strings.Count > 0 && !string.IsNullOrEmpty(val))
+                {
+                    int idxNoSearch = 0;
+                    found = true;
+                    int idxNoString = 0;
+                    foreach (string idxQuery in strings)
+                    {
+                        int noFound = val.IndexOf(idxQuery, idxNoSearch, 
+                            caseSensitive ? 
+                                StringComparison.InvariantCulture : 
+                                StringComparison.InvariantCultureIgnoreCase);
+                        if (noFound == -1)
+                        {
+                            found = false;
+                            break;
+                        }
+                        if (idxNoString == 0 && !expression.StartsWith("%") && noFound != 0)
+                        {
+                            found = false;
+                            break;
+                        }
+                        if (idxNoString == strings.Count - 1 && !expression.EndsWith("%") && !val.EndsWith(idxQuery))
+                        {
+                            found = false;
+                            break;
+                        }
+                        idxNoString += 1;
+                    }
+                }
+            }
+            else
+                found = expression.Equals(val, 
+                    caseSensitive ? 
+                        StringComparison.InvariantCulture : 
+                        StringComparison.InvariantCultureIgnoreCase);
+            return found;
+        }
+
+        /*
          * returns expression value
          */
         public static T GetExpressionValue<T>(string expression, Node dp, Node ip, bool createPath, T defaultValue)
