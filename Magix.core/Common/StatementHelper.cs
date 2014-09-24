@@ -191,13 +191,33 @@ namespace Magix.Core
                     break;
                 case "regex-match":
                     {
-                        Regex regex = new Regex(objLhsVal.ToString(), RegexOptions.CultureInvariant);
-                        expressionIsTrue = regex.IsMatch(objRhsVal.ToString());
+                        if (objLhsVal == null)
+                            throw new ArgumentNullException("[lhs]");
+                        string regexExpr = objLhsVal.ToString();
+                        if (objRhsVal == null)
+                            expressionIsTrue = false;
+                        else
+                        {
+                            string matchingValue = objRhsVal.ToString();
+
+                            Regex regex = new Regex(regexExpr, RegexOptions.CultureInvariant);
+                            expressionIsTrue = regex.IsMatch(matchingValue);
+                        }
                     } break;
                 case "not-regex-match":
                     {
-                        Regex regex = new Regex(objLhsVal.ToString(), RegexOptions.CultureInvariant);
-                        expressionIsTrue = !regex.IsMatch(objRhsVal.ToString());
+                        if (objLhsVal == null)
+                            throw new ArgumentNullException("[lhs]");
+                        string regexExpr = objLhsVal.ToString();
+                        if (objRhsVal == null)
+                            expressionIsTrue = true;
+                        else
+                        {
+                            string matchingValue = objRhsVal.ToString();
+
+                            Regex regex = new Regex(regexExpr, RegexOptions.CultureInvariant);
+                            expressionIsTrue = !regex.IsMatch(matchingValue);
+                        }
                     } break;
                 default:
                     throw new ArgumentException("tried to pass in a comparison operator which doesn't exist, operator was; " + expressionOperator);
