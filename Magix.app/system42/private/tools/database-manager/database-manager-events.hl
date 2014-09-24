@@ -432,3 +432,58 @@ magix.database-manager.select-item
                       form-id=>database-manager-wrp
                       id=>[$][container].value
 
+
+// inserts a new item into database
+magix.database-manager.insert-new-item
+  magix.forms.get-value
+    form-id=>database-manager-wrp
+    id=>insert-txt
+  if=>equals
+    lhs=>[magix.forms.get-value][value].value
+    rhs=>
+    code
+      magix.viewport.show-message
+        message=>you'll need to give me some data for me to be able to create an object for you
+        color=>#ffaaaa
+      stop
+  code-2-node
+    code=>[magix.forms.get-value][value].value
+  if=>exist
+    lhs=>[code-2-node][node][id]
+    code
+      using=>magix.data
+        load
+          id=>[code-2-node][node][id].value
+      if=>exist
+        lhs=>[@][using=>magix.data][load][value]
+        code
+          magix.viewport.show-message
+            message=>object already exists, choose to edit it to update it, or remove id parameter to creation statement to create a new object
+            color=>#ffaaaa
+            time=>5000
+          stop
+  add=>[@][magix.data.save]
+    values=>[@][code-2-node][node]
+  magix.data.save
+  add=>[@][magix.data.save]
+    value=>[@][magix.data.save][value]
+  set=>[@][magix.data.save][value]
+  node-2-code
+    node=>[@][magix.data.save]
+    remove-root=>true
+  using=>magix.forms
+    set-value
+      form-id=>database-manager-wrp
+      id=>insert-txt
+      value=>[@][..][node-2-code][code].value
+  magix.database-manager.create-data-grid
+  magix.viewport.show-message
+    message=>object successfully inserted
+    color=>#aaffaa
+  magix.forms.effect
+    form-id=>database-manager-wrp
+    id=>pnl-insert-wrp
+    type=>fade-out
+    time=>250
+
+

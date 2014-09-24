@@ -13,7 +13,7 @@ label=>items-header
 
 // pager
 panel=>paging-wrp
-  class=>span-6 right last btn-group bottom-1
+  class=>span-8 right last btn-group bottom-1
   controls
     button=>previous
       class=>span-2
@@ -33,6 +33,20 @@ panel=>paging-wrp
             e0
               form-id=>database-manager-wrp
               id=>prototype-search
+              type=>focus-and-select
+    button=>insert
+      class=>span-2
+      value=>insert
+      onclick
+        magix.forms.effect
+          form-id=>database-manager-wrp
+          id=>pnl-insert-wrp
+          type=>fade-in
+          time=>250
+          chained
+            e0
+              form-id=>database-manager-wrp
+              id=>insert-txt
               type=>focus-and-select
     button=>next
       class=>span-2 last
@@ -108,6 +122,36 @@ sort=>[..].value
           value=>[magix.forms.get-value][value].value
         magix.data.save-username
           id=>magix.database-manager.current-view
+
+panel=>pnl-insert-wrp
+  class=>span-17 last bottom-1
+  style=>display:none;
+  controls
+    label
+      class=>span-17 last
+      value=>insert
+      tag=>label
+    text-area=>insert-txt
+      class=>span-17 last
+      placeholder=>@"id=>some-id-this-is-conditional
+value
+  name=>some node
+    birth=>another node
+  company=>yet some more nodes
+
+..."
+      rows=>12
+      onesc
+        magix.forms.effect
+          form-id=>database-manager-wrp
+          id=>pnl-insert-wrp
+          type=>fade-out
+          time=>250
+    button=>apply-insert
+      class=>span-2 last left-15
+      value=>insert
+      onclick
+        magix.database-manager.insert-new-item
 
 // datagrid of items
 dynamic=>data-grid
