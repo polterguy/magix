@@ -491,6 +491,14 @@ node.  legal values for the operator is 'exist', 'not-exist', 'equals',
 'not-equals', 'less-than', 'more-than', 'less-than-equals', 
 'more-than-equals', 'regex-match' and 'not-regex-match'
 
+if you use 'regex-match' or 'not-regex-match' as your operator, then the 
+regular expression you wish to use must be given in the [lhs] node, and 
+the value or expression where you wish to find your match be given through 
+the [rhs] node.  please notice that if you use regular expressions, then 
+if your regular expression starts with a '[', it must be escaped by 
+appending an '\' in front of it, otherwise the expression engine will 
+think it is an expression leading to another node
+
 [lhs] means 'left-hand-side'.  the lhs node is conceptually to the left 
 of the operator.  [rhs] means 'right-hand-side', and is conceptually to 
 the right of the operator.  this means that if you have an lhs value of 
@@ -571,6 +579,15 @@ the [lhs] and the [rhs] nodes must be given using the value of the [else-if]
 node.  legal values for the operator is 'exist', 'not-exist', 'equals', 
 'not-equals', 'less-than', 'more-than', 'less-than-equals', 
 'more-than-equals', 'regex-match' and 'not-regex-match'
+
+if you use 'regex-match' or 'not-regex-match' as your operator, then the 
+regular expression you wish to use must be given in the [lhs] node, and 
+the value or expression where you wish to find your match be given through 
+the [rhs] node.  please notice that if you use regular expressions, then 
+if your regular expression starts with a '[', it must be escaped by 
+appending an '\' in front of it, otherwise the expression engine will 
+think it is an expression leading to another node
+
 
 [lhs] means 'left-hand-side'.  the lhs node is to the left of the 
 operator.  [rhs] means 'right-hand-side', and is conceptually to the 
@@ -1120,6 +1137,15 @@ the [lhs] and the [rhs] nodes must be given using the value of the [while]
 node.  legal values for the operator is 'exist', 'not-exist', 'equals', 
 'not-equals', 'less-than', 'more-than', 'less-than-equals', 
 'more-than-equals', 'regex-match' and 'not-regex-match'
+
+if you use 'regex-match' or 'not-regex-match' as your operator, then the 
+regular expression you wish to use must be given in the [lhs] node, and 
+the value or expression where you wish to find your match be given through 
+the [rhs] node.  please notice that if you use regular expressions, then 
+if your regular expression starts with a '[', it must be escaped by 
+appending an '\' in front of it, otherwise the expression engine will 
+think it is an expression leading to another node
+
 
 [lhs] means 'left-hand-side'.  the lhs node is conceptually to the left 
 of the operator.  [rhs] means 'right-hand-side', and is conceptually to 

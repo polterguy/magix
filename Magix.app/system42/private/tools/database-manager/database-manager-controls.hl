@@ -76,6 +76,16 @@ sort=>[..].value
                 id=>prototype-search
                 value=>[magix.data.load-username][value][current-view].value
       onesc
+        magix.data.load-username
+          id=>magix.database-manager.current-view
+        if=>exist
+          lhs=>[magix.data.load-username][value]
+          code
+            using=>magix.forms
+              set-value
+                form-id=>database-manager-wrp
+                id=>prototype-search
+                value=>[magix.data.load-username][value][current-view].value
         magix.forms.effect
           form-id=>database-manager-wrp
           id=>pnl-search-wrp
