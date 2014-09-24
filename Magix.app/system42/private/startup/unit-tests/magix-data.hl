@@ -406,6 +406,65 @@ contain wildcards, and for then to count them again"
 
 
 event
+  name=>magix.test.data-load-conditional-prototype
+  persist=>false
+  inspect=>@"verifies [load] works with conditional prototype
+
+saves multiple objects, for then to load them with a prototype containing 
+conditional statements, making sure the conditions are correctly met"
+  code
+    using=>magix.data
+      save
+        value
+          type=>magix.test-object.conditions-1
+          name=>John Doe
+      save
+        value
+          type=>magix.test-object.conditions-1
+          name=>Jane Doe
+      save
+        id=>magix.test-object.conditions-1-xyz-object
+        value
+          type=>magix.test-object.conditions-1
+          name=>Thomas Hansen
+      load
+        or
+          type=>magix.test-object.conditions-1
+          %%=>equals
+            lhs=>Jane Doe
+            rhs=>[name].value
+      load
+        or
+          type=>magix.test-object.conditions-1
+          %%=>equals
+            lhs=>magix.test-object.conditions-1-xyz-object
+            rhs=>[..].value
+      load
+        or
+          type=>magix.test-object.conditions-1
+          %%=>regex-match
+            lhs=>(.*)Doe
+            rhs=>[name].value
+          %%=>not-regex-match
+            lhs=>John(.*)
+            rhs=>[name].value
+      remove
+        or
+          type=>magix.test-object.conditions-1
+    if=>not-equals
+      lhs=>[using=>magix.data][load:0][objects].count
+      rhs=>1
+      or=>not-equals
+        lhs=>[using=>magix.data][load:1][objects].count
+        rhs=>1
+      or=>not-equals
+        lhs=>[using=>magix.data][load:2][objects].count
+        rhs=>1
+      code
+        throw=>[magix.data.load] misbehaved
+
+
+event
   name=>magix.test.data-transaction-rollback
   persist=>false
   inspect=>@"verifies [magix.data.transaction] rolls back correctly

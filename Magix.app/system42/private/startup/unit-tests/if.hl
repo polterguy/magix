@@ -568,6 +568,26 @@ the result of another"
 
 
 event
+  name=>magix.test.if-regex
+  persist=>false
+  inspect=>@"verifies [if] statements works with regular expressions
+
+creates an [if] statement, that is supposed to yield true, making 
+sure its associated [else] is not executing"
+  code
+    _data1=>thomas hansen
+    if=>regex-match
+      lhs=>(.*)hansen
+      rhs=>[_data1].value
+      and=>not-regex-match
+        lhs=>ole(.*)
+        rhs=>[_data1].value
+      code
+    else
+      throw=>[if] misbehaved
+
+
+event
   name=>magix.test.if-else-executes
   persist=>false
   inspect=>@"verifies [else] is being executed
