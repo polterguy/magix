@@ -458,7 +458,8 @@ magix.database-manager.insert-new-item
         lhs=>[@][using=>magix.data][load][value]
         code
           magix.viewport.show-message
-            message=>object already exists, choose to edit it to update it, or remove id parameter to creation statement to create a new object
+            message=>@"object already exists, choose to edit it to update it, 
+or remove id parameter to your creation statement to create a new object"
             color=>#ffaaaa
             time=>5000
           stop

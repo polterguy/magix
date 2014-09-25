@@ -77,3 +77,115 @@ Parameter name: length}
 2014-09-16 18:43:52,947 ERROR magix - {thread choked - }
 2014-09-16 18:43:56,984 DEBUG magix - {unit tests executed successfully - magix.tests.run was running successfully, 172 tests executed successfully in 13201 milliseconds}
 2014-09-18 20:52:57,734 DEBUG magix - {error while downloading emails from pop3 server for user 'admin' - message from server was; 'The requested name is valid, but no data of the requested type was found'}
+2014-09-19 10:08:33,954 DEBUG magix - {error while downloading emails from pop3 server for user 'admin' - message from server was; 'The requested name is valid, but no data of the requested type was found'}
+2014-09-19 10:14:33,991 DEBUG magix - {error while downloading emails from pop3 server for user 'admin' - message from server was; 'Object reference not set to an instance of an object.'}
+2014-09-19 10:14:37,140 DEBUG magix - {error while downloading emails from pop3 server for user 'admin' - message from server was; 'Object reference not set to an instance of an object.'}
+2014-09-19 10:15:37,943 DEBUG magix - {error while downloading emails from pop3 server for user 'admin' - message from server was; 'Object reference not set to an instance of an object.'}
+2014-09-19 10:16:39,663 DEBUG magix - {error while downloading emails from pop3 server for user 'admin' - message from server was; 'Object reference not set to an instance of an object.'}
+2014-09-19 10:17:38,004 DEBUG magix - {error while downloading emails from pop3 server for user 'admin' - message from server was; 'Object reference not set to an instance of an object.'}
+2014-09-19 10:18:45,957 DEBUG magix - {error while downloading emails from pop3 server for user 'admin' - message from server was; 'Object reference not set to an instance of an object.'}
+2014-09-19 10:19:38,915 DEBUG magix - {error while downloading emails from pop3 server for user 'admin' - message from server was; 'Object reference not set to an instance of an object.'}
+2014-09-19 10:20:40,173 DEBUG magix - {error while downloading emails from pop3 server for user 'admin' - message from server was; 'Object reference not set to an instance of an object.'}
+2014-09-19 10:22:02,614 DEBUG magix - {error while downloading emails from pop3 server for user 'admin' - message from server was; 'Object reference not set to an instance of an object.'}
+2014-09-19 10:22:50,964 DEBUG magix - {error while downloading emails from pop3 server for user 'admin' - message from server was; 'Object reference not set to an instance of an object.'}
+2014-09-19 10:23:48,839 DEBUG magix - {error while downloading emails from pop3 server for user 'admin' - message from server was; 'Object reference not set to an instance of an object.'}
+2014-09-19 14:26:41,560 DEBUG magix - {error while downloading emails from pop3 server for user 'admin' - message from server was; 'A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond'}
+2014-09-19 15:30:27,461 DEBUG magix - {error while downloading emails from pop3 server for user 'admin' - message from server was; 'Object reference not set to an instance of an object.'}
+2014-09-19 15:30:46,722 DEBUG magix - {error while downloading emails from pop3 server for user 'admin' - message from server was; 'Object reference not set to an instance of an object.'}
+2014-09-19 15:30:55,654 DEBUG magix - {error while downloading emails from pop3 server for user 'admin' - message from server was; 'Object reference not set to an instance of an object.'}
+2014-09-19 15:31:47,884 DEBUG magix - {error while downloading emails from pop3 server for user 'admin' - message from server was; 'Object reference not set to an instance of an object.'}
+2014-09-19 15:32:57,025 DEBUG magix - {error while downloading emails from pop3 server for user 'admin' - message from server was; 'Object reference not set to an instance of an object.'}
+2014-09-19 15:33:49,307 DEBUG magix - {error while downloading emails from pop3 server for user 'admin' - message from server was; 'Object reference not set to an instance of an object.'}
+2014-09-19 15:34:48,140 DEBUG magix - {error while downloading emails from pop3 server for user 'admin' - message from server was; 'Object reference not set to an instance of an object.'}
+2014-09-19 15:36:10,319 DEBUG magix - {error while downloading emails from pop3 server for user 'admin' - message from server was; 'Object reference not set to an instance of an object.'}
+2014-09-19 15:36:48,859 DEBUG magix - {error while downloading emails from pop3 server for user 'admin' - message from server was; 'Object reference not set to an instance of an object.'}
+2014-09-19 15:37:31,628 DEBUG magix - {error while downloading emails from pop3 server for user 'admin' - message from server was; 'Object reference not set to an instance of an object.'}
+2014-09-19 15:38:31,682 DEBUG magix - {error while downloading emails from pop3 server for user 'admin' - message from server was; 'Object reference not set to an instance of an object.'}
+2014-09-19 15:39:34,421 DEBUG magix - {error while downloading emails from pop3 server for user 'admin' - message from server was; 'Object reference not set to an instance of an object.'}
+2014-09-19 15:40:38,847 DEBUG magix - {error while downloading emails from pop3 server for user 'admin' - message from server was; 'Object reference not set to an instance of an object.'}
+2014-09-19 15:41:34,036 DEBUG magix - {error while downloading emails from pop3 server for user 'admin' - message from server was; 'Object reference not set to an instance of an object.'}
+2014-09-19 15:42:33,189 DEBUG magix - {error while downloading emails from pop3 server for user 'admin' - message from server was; 'Object reference not set to an instance of an object.'}
+2014-09-19 15:42:51,792 DEBUG magix - {error while downloading emails from pop3 server for user 'admin' - message from server was; 'Object reference not set to an instance of an object.'}
+2014-09-19 15:43:05,198 DEBUG magix - {error while downloading emails from pop3 server for user 'admin' - message from server was; 'Object reference not set to an instance of an object.'}
+2014-09-19 15:44:07,162 DEBUG magix - {error while downloading emails from pop3 server for user 'admin' - message from server was; 'Object reference not set to an instance of an object.'}
+2014-09-19 15:45:04,365 DEBUG magix - {error while downloading emails from pop3 server for user 'admin' - message from server was; 'Object reference not set to an instance of an object.'}
+2014-09-19 15:46:07,147 DEBUG magix - {error while downloading emails from pop3 server for user 'admin' - message from server was; 'Object reference not set to an instance of an object.'}
+2014-09-19 15:47:08,508 DEBUG magix - {error while downloading emails from pop3 server for user 'admin' - message from server was; 'Object reference not set to an instance of an object.'}
+2014-09-19 15:48:14,377 DEBUG magix - {error while downloading emails from pop3 server for user 'admin' - message from server was; 'Object reference not set to an instance of an object.'}
+2014-09-19 15:50:57,260 DEBUG magix - {error while downloading emails from pop3 server for user 'admin' - message from server was; 'Object reference not set to an instance of an object.'}
+2014-09-19 15:51:21,954 DEBUG magix - {error while downloading emails from pop3 server for user 'admin' - message from server was; 'Object reference not set to an instance of an object.'}
+2014-09-19 15:51:46,042 DEBUG magix - {error while downloading emails from pop3 server for user 'admin' - message from server was; 'Object reference not set to an instance of an object.'}
+2014-09-19 15:52:18,465 DEBUG magix - {error while downloading emails from pop3 server for user 'admin' - message from server was; 'Object reference not set to an instance of an object.'}
+2014-09-19 15:52:28,269 DEBUG magix - {error while downloading emails from pop3 server for user 'admin' - message from server was; 'Object reference not set to an instance of an object.'}
+2014-09-19 15:52:31,910 DEBUG magix - {error while downloading emails from pop3 server for user 'admin' - message from server was; 'Object reference not set to an instance of an object.'}
+2014-09-19 15:52:37,263 DEBUG magix - {error while downloading emails from pop3 server for user 'admin' - message from server was; 'Object reference not set to an instance of an object.'}
+2014-09-19 15:53:15,866 DEBUG magix - {error while downloading emails from pop3 server for user 'admin' - message from server was; 'Object reference not set to an instance of an object.'}
+2014-09-19 15:55:45,257 DEBUG magix - {error while downloading emails from pop3 server for user 'admin' - message from server was; 'Object reference not set to an instance of an object.'}
+2014-09-19 15:55:54,993 DEBUG magix - {error while downloading emails from pop3 server for user 'admin' - message from server was; 'Object reference not set to an instance of an object.'}
+2014-09-19 15:58:19,280 DEBUG magix - {error while downloading emails from pop3 server for user 'admin' - message from server was; 'Object reference not set to an instance of an object.'}
+2014-09-19 18:07:40,109 DEBUG magix - {error while downloading emails from pop3 server for user 'admin' - message from server was; 'A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond 173.194.71.109:995'}
+2014-09-20 09:28:57,018 DEBUG magix - {error while downloading emails from pop3 server for user 'admin' - message from server was; 'The requested name is valid, but no data of the requested type was found'}
+2014-09-20 09:30:49,901 DEBUG magix - {error while downloading emails from pop3 server for user 'admin' - message from server was; 'The requested name is valid, but no data of the requested type was found'}
+2014-09-20 09:32:01,974 DEBUG magix - {error while downloading emails from pop3 server for user 'admin' - message from server was; 'The requested name is valid, but no data of the requested type was found'}
+2014-09-20 09:32:04,544 DEBUG magix - {error while downloading emails from pop3 server for user 'admin' - message from server was; 'The requested name is valid, but no data of the requested type was found'}
+2014-09-20 09:32:15,862 DEBUG magix - {error while downloading emails from pop3 server for user 'admin' - message from server was; 'The requested name is valid, but no data of the requested type was found'}
+2014-09-20 09:33:18,517 DEBUG magix - {error while downloading emails from pop3 server for user 'admin' - message from server was; 'The requested name is valid, but no data of the requested type was found'}
+2014-09-20 09:34:06,399 DEBUG magix - {error while downloading emails from pop3 server for user 'admin' - message from server was; 'The requested name is valid, but no data of the requested type was found'}
+2014-09-22 16:50:52,633 ERROR magix - {thread choked - }
+2014-09-22 16:50:59,004 ERROR magix - {unit tests executed with errors - magix.tests.run did not execute successfully, message from system; The remote name could not be resolved: 'google.com'}
+2014-09-23 08:59:34,335 ERROR magix - {thread choked - }
+2014-09-23 08:59:41,712 ERROR magix - {unit tests executed with errors - magix.tests.run did not execute successfully, message from system; [open] and/or [remote] misbehaved}
+2014-09-23 09:01:31,606 ERROR magix - {thread choked - }
+2014-09-23 09:01:36,860 DEBUG magix - {unit tests executed successfully - magix.tests.run was running successfully, 175 tests executed successfully in 16976 milliseconds}
+2014-09-23 09:48:25,355 ERROR magix - {thread choked - }
+2014-09-23 09:48:30,452 DEBUG magix - {unit tests executed successfully - magix.tests.run was running successfully, 175 tests executed successfully in 16873 milliseconds}
+2014-09-23 10:02:14,344 ERROR magix - {thread choked - }
+2014-09-23 10:02:19,402 DEBUG magix - {unit tests executed successfully - magix.tests.run was running successfully, 175 tests executed successfully in 17209 milliseconds}
+2014-09-23 11:28:32,452 ERROR magix - {thread choked - }
+2014-09-23 11:28:38,111 DEBUG magix - {unit tests executed successfully - magix.tests.run was running successfully, 176 tests executed successfully in 16537 milliseconds}
+2014-09-23 15:56:55,372 DEBUG magix - {error while downloading emails from pop3 server for user 'admin' - message from server was; 'The process cannot access the file 'C:\Projects\magix\Magix.app\your-files\email\admin\5dpushdudkw5b66tfog3ikjj.1395869372732@email.android.com_1488652_681579691893093_772648347_n.jpg' because it is being used by another process.'}
+2014-09-23 16:01:30,880 DEBUG magix - {error while downloading emails from pop3 server for user 'admin' - message from server was; 'The process cannot access the file 'C:\Projects\magix\Magix.app\your-files\email\admin\SESTWEB273qsQIkQsB400001e44@sestweb273_Avtaledokument_Alt i ett-konto_17122392.html' because it is being used by another process.'}
+2014-09-23 16:11:03,026 DEBUG magix - {error while downloading emails from pop3 server for user 'admin' - message from server was; 'Authentication failed.'}
+2014-09-23 16:11:04,249 DEBUG magix - {error while downloading emails from pop3 server for user 'admin' - message from server was; 'Authentication failed.'}
+2014-09-23 16:13:43,433 DEBUG magix - {error while downloading emails from pop3 server for user 'admin' - message from server was; 'The process cannot access the file 'C:\Projects\magix\Magix.app\your-files\email\admin\190749211925DE40A0696618CBABBA5D79136C7E6A@T5SRV027.t5osl.no_Skjema.pdf' because it is being used by another process.'}
+2014-09-23 16:17:23,158 DEBUG magix - {error while downloading emails from pop3 server for user 'admin' - message from server was; 'The POP3 server has unexpectedly disconnected.'}
+2014-09-23 16:17:44,054 DEBUG magix - {error while downloading emails from pop3 server for user 'admin' - message from server was; 'The POP3 server has unexpectedly disconnected.'}
+2014-09-23 16:17:48,428 DEBUG magix - {error while downloading emails from pop3 server for user 'admin' - message from server was; 'The POP3 server has unexpectedly disconnected.'}
+2014-09-23 16:17:57,849 DEBUG magix - {error while downloading emails from pop3 server for user 'admin' - message from server was; 'The POP3 server has unexpectedly disconnected.'}
+2014-09-23 22:13:52,696 DEBUG magix - {error while downloading emails from pop3 server for user 'admin' - message from server was; 'Authentication failed.'}
+2014-09-24 00:01:56,343 DEBUG magix - {error while downloading emails from pop3 server for user 'admin' - message from server was; 'Authentication failed.'}
+2014-09-24 00:02:09,266 DEBUG magix - {error while downloading emails from pop3 server for user 'admin' - message from server was; 'Authentication failed.'}
+2014-09-24 06:55:02,785 DEBUG magix - {error while downloading emails from pop3 server for user 'admin' - message from server was; 'A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond'}
+2014-09-24 06:55:02,790 DEBUG magix - {error while downloading emails from pop3 server for user 'admin' - message from server was; 'A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond'}
+2014-09-24 06:55:02,791 DEBUG magix - {error while downloading emails from pop3 server for user 'admin' - message from server was; 'A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond'}
+2014-09-24 06:55:02,792 DEBUG magix - {error while downloading emails from pop3 server for user 'admin' - message from server was; 'A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond'}
+2014-09-24 08:49:01,665 DEBUG magix - {error while downloading emails from pop3 server for user 'admin' - message from server was; 'A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond'}
+2014-09-24 11:27:25,465 ERROR magix - {thread choked - }
+2014-09-24 11:27:27,386 ERROR magix - {unit tests executed with errors - magix.tests.run did not execute successfully, message from system; [magix.data.load] misbehaved}
+2014-09-24 11:29:55,758 ERROR magix - {thread choked - }
+2014-09-24 11:29:58,999 DEBUG magix - {unit tests executed successfully - magix.tests.run was running successfully, 177 tests executed successfully in 10953 milliseconds}
+2014-09-24 11:31:52,903 ERROR magix - {thread choked - }
+2014-09-24 11:31:54,913 ERROR magix - {unit tests executed with errors - magix.tests.run did not execute successfully, message from system; [magix.data.load] misbehaved}
+2014-09-24 11:37:55,952 ERROR magix - {thread choked - }
+2014-09-24 11:37:58,976 DEBUG magix - {unit tests executed successfully - magix.tests.run was running successfully, 177 tests executed successfully in 10909 milliseconds}
+2014-09-24 11:39:01,468 ERROR magix - {thread choked - }
+2014-09-24 11:39:04,571 DEBUG magix - {unit tests executed successfully - magix.tests.run was running successfully, 177 tests executed successfully in 11045 milliseconds}
+2014-09-24 11:41:54,813 ERROR magix - {thread choked - }
+2014-09-24 11:41:58,028 DEBUG magix - {unit tests executed successfully - magix.tests.run was running successfully, 178 tests executed successfully in 11047 milliseconds}
+2014-09-24 11:43:48,958 ERROR magix - {thread choked - }
+2014-09-24 11:43:51,981 DEBUG magix - {unit tests executed successfully - magix.tests.run was running successfully, 178 tests executed successfully in 10622 milliseconds}
+2014-09-24 11:55:18,266 ERROR magix - {thread choked - }
+2014-09-24 11:55:21,206 ERROR magix - {unit tests executed with errors - magix.tests.run did not execute successfully, message from system; [open] and/or [remote] misbehaved}
+2014-09-24 11:56:09,028 ERROR magix - {thread choked - }
+2014-09-24 11:56:12,766 DEBUG magix - {unit tests executed successfully - magix.tests.run was running successfully, 178 tests executed successfully in 14326 milliseconds}
+2014-09-24 11:57:05,213 ERROR magix - {thread choked - }
+2014-09-24 11:57:08,148 DEBUG magix - {unit tests executed successfully - magix.tests.run was running successfully, 178 tests executed successfully in 10894 milliseconds}
+2014-09-24 11:57:23,757 ERROR magix - {thread choked - }
+2014-09-24 11:57:26,726 DEBUG magix - {unit tests executed successfully - magix.tests.run was running successfully, 178 tests executed successfully in 10842 milliseconds}
+2014-09-24 12:00:30,725 ERROR magix - {thread choked - }
+2014-09-24 12:00:33,837 DEBUG magix - {unit tests executed successfully - magix.tests.run was running successfully, 179 tests executed successfully in 11137 milliseconds}
+2014-09-24 12:02:35,358 ERROR magix - {thread choked - }
+2014-09-24 12:02:38,010 DEBUG magix - {unit tests executed successfully - magix.tests.run was running successfully, 179 tests executed successfully in 9353 milliseconds}
+2014-09-24 14:16:07,920 ERROR magix - {thread choked - }
+2014-09-24 14:16:10,508 DEBUG magix - {unit tests executed successfully - magix.tests.run was running successfully, 179 tests executed successfully in 9289 milliseconds}
+2014-09-25 19:21:45,322 DEBUG magix - {user created or edited, by admin - user 'polterguy' was created or edited}

@@ -13,10 +13,26 @@ if=>exist
       value=>[$][container].value
 
 if=>exist
+  lhs=>[$][class]
+  code
+    set=>[magix.forms.create-web-part][class].value
+      value=>[$][class].value
+
+if=>exist
   lhs=>[$][onsuccess]
   code
     add=>[**_execute-afterwards]
       values=>[$][onsuccess]
+
+if=>exist
+  lhs=>[$][onfailure]
+  code
+    add=>[**_execute-failure]
+      values=>[$][onfailure]
+else
+  set=>[**button=>cancel-btn]
+  set=>[**panel=>btn-group][class].value
+    value=>span-2 last right
 
 // creating actual login form
 magix.forms.create-web-part
@@ -53,8 +69,8 @@ magix.forms.create-web-part
           placeholder=>password ...
           type=>password
         button=>login-btn
-          class=>span-2 last right
-          value=>login
+          class=>span-2 left-2 top-1
+          value=>ok
           onclick
             magix.forms.get-value=>username
               form-id=>login-form
@@ -81,4 +97,10 @@ magix.forms.create-web-part
                 id=>login-username
                 type=>focus-and-select
             _execute-afterwards
+        button=>cancel-btn
+          class=>span-2 last top-1
+          value=>cancel
+          onclick
+            _execute-failure
+            execute=>[_execute-failure]
 

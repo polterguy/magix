@@ -1,0 +1,66 @@
+
+
+inspect=>@"creates conditionally execute code active event
+
+creates an active event which checks if the user belongs to 
+a [role] before executing a piece of code block.  if the user 
+does not belong to that role, or no user is logged in, the 
+active event will show a login user web part, in the given 
+[login-container], and only execute the given code if login 
+is successful, and logged in user belongs to the given role"
+
+
+event
+  name=>magix.core.execute-if-user-authorized
+  persist=>false
+  inspect=>@"executes a piece of code if user belongs to [role]
+
+will execute the given [onsuccess] hyperlisp code, but only if 
+user belongs to the given [role].  if no user is logged in, or 
+the user does not belong to the given [role], then a login web 
+part will be shown in the given [login-container], and user 
+forced to login, with a user that belongs to the given [role], 
+before [onsuccess] is executed
+
+if no user can be successfully logged in, or user gives up trying 
+to login, then the given [onfailure] code, will be executed instead"
+  code
+    if=>not-exist
+      lhs=>[$][role].value
+      or=>not-exist
+        lhs=>[$][onsuccess]
+      or=>not-exist
+        lhs=>[$][onfailure]
+      code
+        throw=>[magix.core.execute-if-user-authorized] needs a [role], [onsuccess] and an [onfailure] parameter
+    set=>[magix.core.check-role][role].value
+      value=>[$][role].value
+    magix.core.check-role
+    if=>equals
+      lhs=>[magix.core.check-role][result].value
+      rhs=>true
+      code
+        add=>[@][magix.execute]
+          values=>[$][onsuccess]
+        magix.execute
+    else
+      using=>magix.viewport
+        show-message
+          message=>you'll need to login with a user belonging to the '{0}' role before you can access that feature
+            =>[$][role].value
+          color=>#ffffaa
+          time=>5000
+      set=>[@][execute-script][params][container].value
+        value=>[$][login-container].value
+
+      // recursively calling self
+      add=>[@][**magix.core.execute-if-user-authorized]
+        values=>[$]
+      add=>[@][execute-script][params][onfailure]
+        values=>[$][onfailure]
+      execute-script
+        file=>system42/public/system-web-parts/login.hl
+        params
+          onsuccess
+            magix.core.execute-if-user-authorized
+

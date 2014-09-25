@@ -495,6 +495,7 @@
     <Content Include="system42\private\tools\database-manager\database-manager.hl" />
     <Content Include="system42\private\tools\database-manager\database-manager-controls.hl" />
     <Content Include="system42\private\tools\database-manager\database-manager-events.hl" />
+    <Content Include="system42\private\startup\create-execute-event-if-user-role.hl" />
     <None Include="todo.txt" />
     <Content Include="your-files\readme.txt" />
     <Content Include="your-files\samples\hello-world-app\readme.txt" />
