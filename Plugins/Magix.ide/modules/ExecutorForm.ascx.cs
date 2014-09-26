@@ -51,7 +51,13 @@ namespace Magix.ide.modules
 				else
 					txtIn.Value = code;
 
-                string storedCode = Session["magix.executor-form.stored-message"] as string;
+                Node restoreCode = new Node();
+                restoreCode["id"].Value = "magix.ide.stored-executor-code";
+                RaiseActiveEvent(
+                    "magix.data.load-username",
+                    restoreCode);
+                string storedCode = restoreCode["value"]["code"].Get<string>(null);
+
                 if (!string.IsNullOrEmpty(storedCode))
                     txtIn.Value = storedCode;
 
@@ -141,13 +147,25 @@ namespace Magix.ide.modules
                 throw new ArgumentException("no [code] given to [magix.executor.set-code]");
             Node dp = Dp(e.Params);
             txtIn.Value = Expressions.GetExpressionValue<string>(ip["code"].Get<string>(), dp, ip, false);
-
-            Session["magix.executor-form.stored-message"] = txtIn.Value;
+            PersistCodeToDatabase();
 		}
+
+        /*
+         * persists executor input code to database
+         */
+        private void PersistCodeToDatabase()
+        {
+            Node restoreCode = new Node();
+            restoreCode["id"].Value = "magix.ide.stored-executor-code";
+            restoreCode["value"]["code"].Value = txtIn.Value;
+            RaiseActiveEvent(
+                "magix.data.save-username",
+                restoreCode);
+        }
 
         protected void txtIn_TextChanged(object sender, EventArgs e)
         {
-            Session["magix.executor-form.stored-message"] = txtIn.Value;
+            PersistCodeToDatabase();
         }
 
 		protected void move_Click(object sender, EventArgs e)
