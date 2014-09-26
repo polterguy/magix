@@ -104,7 +104,11 @@
 
 * completely get rid of [prototype] and make only [or] be left in magix.data.load/count/etc ...
 
+* implement node-2-xml, json-2-node and node-2-json
 
+* create more types of exports in database manager
+
+* create import of items in database manager
 
 
 

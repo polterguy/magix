@@ -641,6 +641,11 @@ magix.database-manager.do-export_onclick
     value=>magix.database-manager.do-export-{0}
       =>[magix.forms.get-value][value].value
   _evt
+  magix.forms.effect
+    form-id=>database-manager-wrp
+    id=>pnl-export-wrp
+    type=>fade-out
+    time=>250
 
 
 // exports items to hyperlisp file
@@ -674,7 +679,7 @@ magix.database-manager.do-export-hyperlisp
   magix.file.download
 
 
-// exports items to json file
+// exports items to zipped hyperlisp file
 magix.database-manager.do-export-hyperlisp-zip
   magix.viewstate.get=>current-view
     id=>magix.database-manager.current-view
@@ -711,6 +716,67 @@ magix.database-manager.do-export-hyperlisp-zip
     value=>your-files/tmp/{0}-export-hyperlisp.zip
       =>[magix.date.now][value].value
   magix.file.download
+
+
+// import button was clicked
+magix.database-manager.import_onclick
+  magix.viewport.show-message
+    message=>@"drag and drop the file(s) you wish to import into the surface of this form, and 
+they will be automatically imported.&nbsp;&nbsp;supported file formats are hyperlisp (.hl) and zipped 
+hyperlisp (.zip)"
+    time=>7000
+  magix.forms.effect
+    form-id=>database-manager-wrp
+    id=>pnl-import-wrp
+    type=>fade-in
+    time=>250
+    chained
+      e0
+        form-id=>database-manager-wrp
+        id=>chk-drop-ids
+        type=>focus-and-select
+
+
+// esc key was pressed when pnl-import-wrp had focus
+magix.database-manager.pnl-import-wrp_onesc
+  magix.forms.effect
+    form-id=>database-manager-wrp
+    id=>pnl-import-wrp
+    type=>fade-out
+    time=>250
+
+
+//  file was dragged and dropped into form for import, expects [file] as path to file to import
+magix.database-manager.import-uploader_onuploaded
+  split=>[$][file].value
+    what=>.
+  switch=>[split][result][>last].value
+    case=>hl
+      set=>[@][magix.database-manager.import-hyperlisp-file][file].value
+        value=>[$][file].value
+      magix.database-manager.import-hyperlisp-file
+
+
+// imports a hyperlisp file
+magix.database-manager.import-hyperlisp-file
+  using=>magix.file
+    load
+      file=>[$][file].value
+  code-2-node
+    code=>[using=>magix.file][load][value].value
+  add=>[magix.data.save][objects]
+    values=>[code-2-node][node]
+  magix.forms.get-value
+    form-id=>database-manager-wrp
+    id=>chk-drop-ids
+  if=>equals
+    lhs=>[magix.forms.get-value][value].value
+    rhs=>true
+    code
+      for-each=>[magix.data.save][objects]
+        set=>[.][id]
+  magix.data.save
+  magix.database-manager.create-data-grid
 
 
 

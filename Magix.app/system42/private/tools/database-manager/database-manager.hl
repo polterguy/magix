@@ -9,6 +9,9 @@ starts the database manager application"
 magix.viewport.include-client-file
   type=>css
   file=>media/back-end/database-manager.css
+magix.viewport.include-client-file
+  type=>css
+  file=>media/back-end/file-uploader.css
 
 magix.forms.create-web-part
   container=>content1

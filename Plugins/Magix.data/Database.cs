@@ -543,6 +543,33 @@ namespace Magix.data
         }
 
         /*
+         * saves new objects
+         */
+        internal static void SaveNewObjects(Node objects, Guid transaction)
+        {
+            if (transaction != _transaction.Item1)
+            {
+                lock (_transactionalLocker)
+                {
+                    SaveNewObjects(objects, transaction);
+                }
+            }
+            lock (_locker)
+            {
+                foreach (Node idxObject in objects)
+                {
+                    if (!idxObject.Contains("value"))
+                        throw new ArgumentException("missing [value] node in [magix.data.save] when attempting to save multiple objects");
+                    string id = idxObject.GetValue<string>("id", null);
+                    if (string.IsNullOrEmpty(id))
+                        idxObject["id"].Value = SaveNewObject(idxObject["value"], id);
+                    else
+                        SaveById(idxObject["value"], id, transaction);
+                }
+            }
+        }
+
+        /*
          * removes items from database according to prototype
          */
         internal static int RemoveByPrototype(Node prototype, Guid transaction, bool caseSensitive, string id)

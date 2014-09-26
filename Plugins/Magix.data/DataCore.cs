@@ -162,28 +162,35 @@ namespace Magix.data
                 return;
             }
 
-            if (!ip.Contains("value"))
-                throw new ArgumentException("[value] must be given to [magix.data.save]");
-
-            Node value = null;
+            if (!ip.Contains("value") && !ip.Contains("objects"))
+                throw new ArgumentException("[value] or [objects] must be given to [magix.data.save]");
 
             Node dp = Dp(e.Params);
-            if (ip.ContainsValue("value"))
-                value = Expressions.GetExpressionValue<Node>(ip["value"].Get<string>(), dp, ip, false).Clone();
-            else
-                value = ip["value"].Clone();
 
             Guid transaction = Guid.Empty;
             if (e.Params.ContainsValue("_database-transaction"))
                 transaction = e.Params["_database-transaction"].Get<Guid>();
 
-            if (ip.Contains("id"))
+            if (ip.Contains("value"))
             {
-                string id = Expressions.GetFormattedExpression("id", e.Params, "");
-                Database.SaveById(value, id, transaction);
+                Node value = null;
+                if (ip.ContainsValue("value"))
+                    value = Expressions.GetExpressionValue<Node>(ip["value"].Get<string>(), dp, ip, false).Clone();
+                else
+                    value = ip["value"].Clone();
+
+                if (ip.Contains("id"))
+                {
+                    string id = Expressions.GetFormattedExpression("id", e.Params, "");
+                    Database.SaveById(value, id, transaction);
+                }
+                else
+                    ip["id"].Value = Database.SaveNewObject(value, transaction);
             }
             else
-                ip["id"].Value = Database.SaveNewObject(value, transaction);
+            {
+                Database.SaveNewObjects(ip["objects"], transaction);
+            }
         }
 
         /*

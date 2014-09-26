@@ -118,20 +118,27 @@ magix.data.load-sample
       type=>magix.execute.event
 
 
-magix.data.save-dox=>@"saves a node to the database
+magix.data.save-dox=>@"saves node(s) to the database
 
-will serialize the given [value] node with the given [id] into the database
+will serialize the given [value] node, or [objects] nodes with the given [id] into 
+the database
 
 if no [id] is given, a unique identifier will be automatically assigned to the object, 
 and returned as [id].  if an [id] is given, and an object with that same id exists, the 
-existing object will be overwritten and updated.  both [value] and [id] can be either 
-expressions or constant strings or nodes.  if [value] is an expression, it will be used as 
-an expression pointing to a node that is to be saved, and the children node of the node 
-pointed to in the expression of [value] are saved as the value of the object.  if [value] 
-is an expression, it must be an expression returning a node list
+existing object will be overwritten and updated.  both [value], [objects] and [id] can be 
+either expressions or constant strings or nodes.  if [value] is an expression, it will be 
+used as an expression pointing to a node that is to be saved, and the children node of the 
+node pointed to in the expression of [value] are saved as the value of the object.  if 
+[value] is an expression, it must be an expression returning a node list
 
-[id] can contains formatting expressions, such as {0}, {1} and so on, de-referencing children 
-nodes of [id]
+[id] can contains formatting expressions, such as {0}, {1} and so on, de-referencing 
+children nodes of [id]
+
+if [objects] are given, it is expected to contain a list of [object] nodes, which will be 
+saved to the database.  every [object] node must have at least a [value] node, being the 
+object you wish to save.  every [object] can also optionally contain an [id] node, which 
+will become the id of the object saved.  if no [id] is given when saving [objects], the ids 
+will be automatically generated, and returned for every object saved
 
 thread safe"
 

@@ -13,7 +13,7 @@ label=>items-header
 
 // pager and toolbar
 panel=>paging-wrp
-  class=>span-12 right last btn-group bottom-1 top-1
+  class=>span-16 right last btn-group bottom-1 top-1
   controls
 
     button=>previous
@@ -22,9 +22,15 @@ panel=>paging-wrp
       onclick
         magix.database-manager.previous-items
 
+    button=>refresh
+      class=>span-2
+      value=>refresh
+      onclick
+        magix.database-manager.create-data-grid
+
     button=>search
       class=>span-2
-      value=>search
+      value=>filter
       onclick
         magix.database-manager.search_onclick
 
@@ -39,6 +45,12 @@ panel=>paging-wrp
       value=>export
       onclick
         magix.database-manager.export
+
+    button=>import
+      class=>span-2
+      value=>import
+      onclick
+        magix.database-manager.import_onclick
 
     button=>remove-all
       class=>span-2
@@ -70,12 +82,14 @@ or
   type=>%email%
 not
   type=>%contact%
+  %%=>regex-match
+    lhs=>.*gmail.*
+    rhs=>[email].value
 case=>true
 sort=>[..].value
   descending=>true
-
 ..."
-      rows=>12
+      rows=>14
       onfirstload
         magix.database-manager.prototype-search_onfirstload
       onesc
@@ -141,6 +155,30 @@ panel=>pnl-export-wrp
           value=>export
           onclick
             magix.database-manager.do-export_onclick
+
+// import items wrapper
+panel=>pnl-import-wrp
+  class=>span-17 last bottom-1
+  style=>display:none;
+  onesc
+    magix.database-manager.pnl-import-wrp_onesc
+  controls
+    check-box=>chk-drop-ids
+      class=>span-1
+    label
+      class=>span-2
+      value=>drop id
+      tag=>label
+      for=>chk-drop-ids
+      title=>don't care about ids existing in file, but create new ids for items imported
+
+uploader=>import-uploader
+  class=>mux-file-uploader
+  directory=>your-files/tmp
+  onuploaded
+    set=>[magix.database-manager.import-uploader_onuploaded][file].value
+      value=>[$][filename].value
+    magix.database-manager.import-uploader_onuploaded
 
 // datagrid of items
 dynamic=>data-grid
