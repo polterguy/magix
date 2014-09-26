@@ -13,7 +13,7 @@ label=>items-header
 
 // pager
 panel=>paging-wrp
-  class=>span-8 right last btn-group bottom-1
+  class=>span-10 right last btn-group bottom-1 top-1
   controls
     button=>previous
       class=>span-2
@@ -48,6 +48,11 @@ panel=>paging-wrp
               form-id=>database-manager-wrp
               id=>insert-txt
               type=>focus-and-select
+    button=>delete-all
+      class=>span-2
+      value=>delete all
+      onclick
+        magix.database-manager.remove-all
     button=>next
       class=>span-2 last
       value=>&gt;

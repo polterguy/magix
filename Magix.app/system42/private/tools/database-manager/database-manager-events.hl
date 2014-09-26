@@ -488,3 +488,36 @@ or remove id parameter to your creation statement to create a new object"
     time=>250
 
 
+// removes all records from database matching the current criteria
+magix.database-manager.remove-all
+  magix.viewstate.get=>current-view
+    id=>magix.database-manager.current-view
+  set=>[magix.viewstate.get=>current-view][value][start]
+  set=>[magix.viewstate.get=>current-view][value][end]
+  set=>[magix.viewstate.get=>current-view][value][sort]
+  if=>equals
+    lhs=>[magix.viewstate.get=>current-view][value].count
+    rhs=>0
+    or=>equals
+      lhs=>[magix.viewstate.get=>current-view][value][prototype].count
+      rhs=>0
+    code
+      magix.viewport.show-message
+        message=>@"i am sorry, i cannot simply allow you to delete the entire database just like that.&nbsp;&nbsp;create a criteria 
+to delete a sub-portion, or use the hyperlisp executor if you really know what you're doing"
+        color=>#ffaaaa
+        time=>7000
+      stop
+  magix.viewport.confirm
+    message=>are you sure you wish to remove all records matching the current criteria?&nbsp;&nbsp;this action cannot be undone!
+    code
+      magix.viewstate.get=>current-view
+        id=>magix.database-manager.current-view
+      add=>[magix.data.remove]
+        values=>[magix.viewstate.get=>current-view][value]
+      set=>[magix.data.remove][start]
+      set=>[magix.data.remove][end]
+      set=>[magix.data.remove][sort]
+      magix.data.remove
+      magix.database-manager.create-data-grid
+

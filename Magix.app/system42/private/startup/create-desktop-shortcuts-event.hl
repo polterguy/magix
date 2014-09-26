@@ -109,6 +109,7 @@ returns the default dashboard shortcuts in your system"
           event
             // to support recursive calling of self ...
             name=>magix.event.view-overridden-active-events
+            persist=>false
             code
               magix.viewport.clear-controls
                 all=>true
