@@ -118,6 +118,7 @@ namespace Magix.data
             if (ip.Contains("prototype") || ip.Contains("or") || ip.Contains("not"))
             {
                 bool caseSensitivePrototype = Expressions.GetExpressionValue<bool>(ip.GetValue("case", "true"), dp, ip, false);
+                bool metaData = Expressions.GetExpressionValue<bool>(ip.GetValue("meta-data", "true"), dp, ip, false);
                 string sortBy = ip.GetValue("sort", "");
                 bool descending = true;
                 if (!string.IsNullOrEmpty(sortBy))
@@ -132,41 +133,11 @@ namespace Magix.data
                     caseSensitivePrototype,
                     sortBy,
                     descending,
-                    id);
+                    id,
+                    metaData);
             }
             else
                 Database.Load(ip, id, transaction);
-        }
-
-        /*
-         * loads distinct object expressions from database
-         */
-        [ActiveEvent(Name = "magix.data.load-distinct")]
-        public static void magix_data_load_distinct(object sender, ActiveEventArgs e)
-        {
-            Node ip = Ip(e.Params);
-            if (ShouldInspect(ip))
-            {
-                AppendInspectFromResource(
-                    ip["inspect"],
-                    "Magix.data",
-                    "Magix.data.hyperlisp.inspect.hl",
-                    "[magix.data.load-distinct-dox].value");
-                AppendCodeFromResource(
-                    ip,
-                    "Magix.data",
-                    "Magix.data.hyperlisp.inspect.hl",
-                    "[magix.data.load-distinct-sample]");
-                return;
-            }
-
-            if (!ip.ContainsValue("expression"))
-                throw new ArgumentException("[magix.data.load] needs an [expression] parameter");
-
-            string expression = ip["expression"].Get<string>();
-            Guid transaction = e.Params.GetValue("_database-transaction", Guid.Empty);
-
-            Database.LoadDistinct(expression, transaction, ip);
         }
 
         /*

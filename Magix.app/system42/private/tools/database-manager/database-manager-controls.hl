@@ -11,48 +11,41 @@ label=>items-header
   tag=>h2
   value=>database manager
 
-// pager
+// pager and toolbar
 panel=>paging-wrp
-  class=>span-10 right last btn-group bottom-1 top-1
+  class=>span-12 right last btn-group bottom-1 top-1
   controls
+
     button=>previous
       class=>span-2
       value=>&lt;
       onclick
         magix.database-manager.previous-items
+
     button=>search
       class=>span-2
       value=>search
       onclick
-        magix.forms.effect
-          form-id=>database-manager-wrp
-          id=>pnl-search-wrp
-          type=>fade-in
-          time=>250
-          chained
-            e0
-              form-id=>database-manager-wrp
-              id=>prototype-search
-              type=>focus-and-select
+        magix.database-manager.search_onclick
+
     button=>insert
       class=>span-2
       value=>insert
       onclick
-        magix.forms.effect
-          form-id=>database-manager-wrp
-          id=>pnl-insert-wrp
-          type=>fade-in
-          time=>250
-          chained
-            e0
-              form-id=>database-manager-wrp
-              id=>insert-txt
-              type=>focus-and-select
-    button=>delete-all
+        magix.database-manager.insert_onclick
+
+    button=>export
+      class=>span-2
+      value=>export
+      onclick
+        magix.database-manager.export
+
+    button=>remove-all
       class=>span-2
       value=>delete all
       onclick
         magix.database-manager.remove-all
+
     button=>next
       class=>span-2 last
       value=>&gt;
@@ -84,58 +77,26 @@ sort=>[..].value
 ..."
       rows=>12
       onfirstload
-        magix.data.load-username
-          id=>magix.database-manager.current-view
-        if=>exist
-          lhs=>[magix.data.load-username][value]
-          code
-            using=>magix.forms
-              set-value
-                form-id=>database-manager-wrp
-                id=>prototype-search
-                value=>[magix.data.load-username][value][current-view].value
+        magix.database-manager.prototype-search_onfirstload
       onesc
-        magix.data.load-username
-          id=>magix.database-manager.current-view
-        if=>exist
-          lhs=>[magix.data.load-username][value]
-          code
-            using=>magix.forms
-              set-value
-                form-id=>database-manager-wrp
-                id=>prototype-search
-                value=>[magix.data.load-username][value][current-view].value
-        magix.forms.effect
-          form-id=>database-manager-wrp
-          id=>pnl-search-wrp
-          type=>fade-out
-          time=>250
+        magix.database-manager.prototype-search_onesc
     button=>apply-search
       class=>span-2 last left-15
       value=>apply
       onclick
-        magix.database-manager.create-data-grid
-        magix.forms.effect
-          form-id=>database-manager-wrp
-          id=>pnl-search-wrp
-          type=>fade-out
-          time=>250
-        magix.forms.get-value
-          form-id=>database-manager-wrp
-          id=>prototype-search
-        set=>[magix.data.save-username][value][current-view].value
-          value=>[magix.forms.get-value][value].value
-        magix.data.save-username
-          id=>magix.database-manager.current-view
+        magix.database-manager.apply-search_onclick
 
+// insert new item wrapper
 panel=>pnl-insert-wrp
   class=>span-17 last bottom-1
   style=>display:none;
   controls
+
     label
       class=>span-17 last
       value=>insert
       tag=>label
+
     text-area=>insert-txt
       class=>span-17 last
       placeholder=>@"id=>some-id-this-is-conditional
@@ -147,16 +108,39 @@ value
 ..."
       rows=>12
       onesc
-        magix.forms.effect
-          form-id=>database-manager-wrp
-          id=>pnl-insert-wrp
-          type=>fade-out
-          time=>250
+        magix.database-manager.insert-txt_onesc
+
     button=>apply-insert
       class=>span-2 last left-15
       value=>insert
       onclick
-        magix.database-manager.insert-new-item
+        magix.database-manager.apply-insert_onclick
+
+// export items wrapper
+panel=>pnl-export-wrp
+  class=>span-17 last bottom-1
+  style=>display:none;
+  default=>do-export
+  onesc
+    magix.database-manager.pnl-export-wrp_onesc
+  controls
+    label
+      class=>span-17 last
+      value=>export as
+      tag=>label
+    panel
+      class=>btn-group span-7 last
+      controls
+        select=>export-type
+          class=>span-5
+          items
+            hyperlisp=>hyperlisp
+            hyperlisp-zip=>zipped hyperlisp
+        button=>do-export
+          class=>span-2 last
+          value=>export
+          onclick
+            magix.database-manager.do-export_onclick
 
 // datagrid of items
 dynamic=>data-grid

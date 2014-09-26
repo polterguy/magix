@@ -5,6 +5,93 @@ inspect=>@"contains the events for the database manager
 contains the events for the database manager web part"
 
 
+// raised when the search button is clicked
+magix.database-manager.search_onclick
+  magix.forms.effect
+    form-id=>database-manager-wrp
+    id=>pnl-search-wrp
+    type=>fade-in
+    time=>250
+    chained
+      e0
+        form-id=>database-manager-wrp
+        id=>prototype-search
+        type=>focus-and-select
+
+
+// insert button was clicked
+magix.database-manager.insert_onclick
+  magix.forms.effect
+    form-id=>database-manager-wrp
+    id=>pnl-insert-wrp
+    type=>fade-in
+    time=>250
+    chained
+      e0
+        form-id=>database-manager-wrp
+        id=>insert-txt
+        type=>focus-and-select
+
+
+// prototype-search is initially loaded
+magix.database-manager.prototype-search_onfirstload
+  magix.data.load-username
+    id=>magix.database-manager.current-view
+  if=>exist
+    lhs=>[magix.data.load-username][value]
+    code
+      using=>magix.forms
+        set-value
+          form-id=>database-manager-wrp
+          id=>prototype-search
+          value=>[magix.data.load-username][value][current-view].value
+
+
+// prototype-search had focus while the esc key was pressed
+magix.database-manager.prototype-search_onesc
+  magix.data.load-username
+    id=>magix.database-manager.current-view
+  if=>exist
+    lhs=>[magix.data.load-username][value]
+    code
+      using=>magix.forms
+        set-value
+          form-id=>database-manager-wrp
+          id=>prototype-search
+          value=>[magix.data.load-username][value][current-view].value
+  magix.forms.effect
+    form-id=>database-manager-wrp
+    id=>pnl-search-wrp
+    type=>fade-out
+    time=>250
+
+
+// apply-search was clicked
+magix.database-manager.apply-search_onclick
+  magix.database-manager.create-data-grid
+  magix.forms.effect
+    form-id=>database-manager-wrp
+    id=>pnl-search-wrp
+    type=>fade-out
+    time=>250
+  magix.forms.get-value
+    form-id=>database-manager-wrp
+    id=>prototype-search
+  set=>[magix.data.save-username][value][current-view].value
+    value=>[magix.forms.get-value][value].value
+  magix.data.save-username
+    id=>magix.database-manager.current-view
+
+
+// esc key was pressed when insert-txt had focus
+magix.database-manager.insert-txt_onesc
+  magix.forms.effect
+    form-id=>database-manager-wrp
+    id=>pnl-insert-wrp
+    type=>fade-out
+    time=>250
+
+
 // creates tha actual data-grid of items from database
 magix.database-manager.create-data-grid
 
@@ -434,7 +521,7 @@ magix.database-manager.select-item
 
 
 // inserts a new item into database
-magix.database-manager.insert-new-item
+magix.database-manager.apply-insert_onclick
   magix.forms.get-value
     form-id=>database-manager-wrp
     id=>insert-txt
@@ -520,4 +607,110 @@ to delete a sub-portion, or use the hyperlisp executor if you really know what y
       set=>[magix.data.remove][sort]
       magix.data.remove
       magix.database-manager.create-data-grid
+
+
+// exports the current view to a hyperlisp file
+magix.database-manager.export
+  magix.forms.effect
+    form-id=>database-manager-wrp
+    id=>pnl-export-wrp
+    type=>fade-in
+    time=>250
+    chained
+      e0
+        form-id=>database-manager-wrp
+        id=>export-type
+        type=>focus-and-select
+
+
+// esc key was pressed when pnl-export-wrp had focus
+magix.database-manager.pnl-export-wrp_onesc
+  magix.forms.effect
+    form-id=>database-manager-wrp
+    id=>pnl-export-wrp
+    type=>fade-out
+    time=>250
+
+
+// do-export button was clicked
+magix.database-manager.do-export_onclick
+  magix.forms.get-value
+    form-id=>database-manager-wrp
+    id=>export-type
+  set=>[_evt].name
+    value=>magix.database-manager.do-export-{0}
+      =>[magix.forms.get-value][value].value
+  _evt
+
+
+// exports items to hyperlisp file
+magix.database-manager.do-export-hyperlisp
+  magix.viewstate.get=>current-view
+    id=>magix.database-manager.current-view
+  set=>[magix.viewstate.get=>current-view][value][start]
+  set=>[magix.viewstate.get=>current-view][value][end]
+  add=>[magix.data.load]
+    values=>[magix.viewstate.get=>current-view][value]
+  magix.data.load
+    meta-data=>false
+  node-2-code
+    node=>[magix.data.load][objects]
+    remove-root=>true
+  magix.date.now
+  replace=>[magix.date.now][value].value
+    what=>.
+  replace=>[magix.date.now][value].value
+    what=>:
+  replace=>[magix.date.now][value].value
+    what=>@" "
+  using=>magix.file
+    save
+      file=>your-files/tmp/{0}-export-hyperlisp.hl
+        =>[magix.date.now][value].value
+      value=>[node-2-code][code].value
+  set=>[magix.file.download][file].value
+    value=>your-files/tmp/{0}-export-hyperlisp.hl
+      =>[magix.date.now][value].value
+  magix.file.download
+
+
+// exports items to json file
+magix.database-manager.do-export-hyperlisp-zip
+  magix.viewstate.get=>current-view
+    id=>magix.database-manager.current-view
+  set=>[magix.viewstate.get=>current-view][value][start]
+  set=>[magix.viewstate.get=>current-view][value][end]
+  add=>[magix.data.load]
+    values=>[magix.viewstate.get=>current-view][value]
+  magix.data.load
+    meta-data=>false
+  node-2-code
+    node=>[magix.data.load][objects]
+    remove-root=>true
+  magix.date.now
+  replace=>[magix.date.now][value].value
+    what=>.
+  replace=>[magix.date.now][value].value
+    what=>:
+  replace=>[magix.date.now][value].value
+    what=>@" "
+  using=>magix.file
+    save
+      file=>your-files/tmp/{0}-export-hyperlisp.hl
+        =>[magix.date.now][value].value
+      value=>[node-2-code][code].value
+  add=>[magix.package.pack][files]
+    value=>
+      value=>your-files/tmp/{0}-export-hyperlisp.hl
+        =>[magix.date.now][value].value
+  set=>[magix.package.pack][zip].value
+    value=>your-files/tmp/{0}-export-hyperlisp.zip
+      =>[magix.date.now][value].value
+  magix.package.pack
+  set=>[magix.file.download][file].value
+    value=>your-files/tmp/{0}-export-hyperlisp.zip
+      =>[magix.date.now][value].value
+  magix.file.download
+
+
 

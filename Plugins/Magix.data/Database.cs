@@ -266,13 +266,14 @@ namespace Magix.data
             bool caseSensitivePrototype,
             string sortBy,
             bool descending,
-            string id)
+            string id,
+            bool metaData)
         {
             if (transaction != _transaction.Item1)
             {
                 lock (_transactionalLocker)
                 {
-                    Load(ip, prototype, start, end, transaction, onlyId, caseSensitivePrototype, sortBy, descending, id);
+                    Load(ip, prototype, start, end, transaction, onlyId, caseSensitivePrototype, sortBy, descending, id, metaData);
                 }
             }
             lock (_locker)
@@ -298,8 +299,11 @@ namespace Magix.data
                                 {
                                     Node objectNode = new Node("object");
                                     objectNode["id"].Value = idxObjectNode.Get<string>();
-                                    objectNode["created"].Value = idxObjectNode["created"].Value;
-                                    objectNode["revision-count"].Value = idxObjectNode["revision-count"].Value;
+                                    if (metaData)
+                                    {
+                                        objectNode["created"].Value = idxObjectNode["created"].Value;
+                                        objectNode["revision-count"].Value = idxObjectNode["revision-count"].Value;
+                                    }
                                     if (!onlyId)
                                         objectNode["value"].AddRange(idxObjectNode["value"].Clone());
                                     ip["objects"].Add(objectNode);
@@ -439,45 +443,6 @@ namespace Magix.data
                             ip["revision-count"].Value = idxObjectNode["revision-count"].Value;
                             ip["value"].AddRange(idxObjectNode["value"].Clone());
                             return;
-                        }
-                    }
-                }
-            }
-        }
-
-        /*
-         * loads distinct expressions from database
-         */
-        internal static void LoadDistinct(string expression, Guid transaction, Node ip)
-        {
-            if (transaction != _transaction.Item1)
-            {
-                lock (_transactionalLocker)
-                {
-                    LoadDistinct(expression, transaction, ip);
-                }
-            }
-            lock (_locker)
-            {
-                foreach (Node idxFileNode in GetDatabase())
-                {
-                    foreach (Node idxObjectNode in idxFileNode)
-                    {
-                        string idxExpressionValue = Expressions.GetExpressionValue<string>(
-                            expression,
-                            idxObjectNode["value"],
-                            idxObjectNode["value"],
-                            false);
-                        if (idxExpressionValue != null)
-                        {
-                            if (!ip["result"].Exists(
-                                delegate(Node idx)
-                                {
-                                    return idx.Get<string>() == idxExpressionValue;
-                                }))
-                            {
-                                ip["result"].Add(new Node("", idxExpressionValue));
-                            }
                         }
                     }
                 }

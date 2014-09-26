@@ -185,10 +185,9 @@ namespace Magix.execute
 
             Node dp = Dp(e.Params);
 
-            if (!ip.ContainsValue("file"))
+            string file = Expressions.GetFormattedExpression("file", e.Params, null);
+            if (string.IsNullOrEmpty(file))
                 throw new ArgumentException("you need to define which file to save, as [file]");
-
-            string file = Expressions.GetExpressionValue<string>(ip["file"].Get<string>(), dp, ip, false);
 
             if (!file.Contains(":"))
                 file = _basePath + file;

@@ -86,6 +86,9 @@ in addition to loading the actual object and its id(s), [revision-count] and [cr
 also be returned for all objects matching your criteria.  [revision-count] is the number of 
 times the object has been saved, and [created] is the date and time of creation of your object
 
+if you supply a [meta-data] node, and set its value to false, then neither [created] nor 
+[revision-count] will be returned
+
 if you supply at least one [prototype], [not] or an [or] parameter in addition to [only-id], 
 then only the ids, [revision-count] and [created] values of the objects that matches your 
 parameters will be loaded, and not the actual content of your object
@@ -106,19 +109,6 @@ the [prototype] node is not evaluated in any form before being passed into the m
 
 [id], if given,  can contains formatting expressions, such as {0}, {1} and so on, de-referencing 
 children nodes of [id]
-
-thread safe"
-
-magix.data.load-sample
-  magix.data.load
-    prototype
-      type=>magix.execute.event
-
-
-magix.data.load-distinct-dox=>@"loads distinct expression values from database
-
-returns all database values of given [expression] from database and returns 
-as [result]
 
 thread safe"
 

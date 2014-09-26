@@ -70,6 +70,9 @@ namespace Magix.execute
             ParseNode(doc.DocumentElement, ip["dom"]["_tmp"]);
 		}
 
+        /*
+         * helper for above
+         */
 		private static void ParseNode(XmlNode xml, Node node)
 		{
 			node.Name = xml.Name;
