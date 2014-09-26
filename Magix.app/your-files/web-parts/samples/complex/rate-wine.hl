@@ -45,7 +45,7 @@ panel=>main-wrapper
   controls
     label=>label-header
       value=>Remember your favorite wine
-      class=>span-12 left-4 top-2 bottom-2
+      class=>span-14 left-4 top-2 bottom-2
       tag=>h1
     label=>label-description
       value=>Here you can rate our wines, and send a note to yourself, such that you can remember which wine was your favorite when you did our wine flight. Or if you wish, you can purchase our wines from our website, and have them shipped directly to where you live.
