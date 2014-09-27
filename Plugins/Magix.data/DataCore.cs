@@ -118,6 +118,7 @@ namespace Magix.data
             if (ip.Contains("prototype") || ip.Contains("or") || ip.Contains("not"))
             {
                 bool caseSensitivePrototype = Expressions.GetExpressionValue<bool>(ip.GetValue("case", "true"), dp, ip, false);
+                bool distinct = Expressions.GetExpressionValue<bool>(ip.GetValue("distinct", "false"), dp, ip, false);
                 bool metaData = Expressions.GetExpressionValue<bool>(ip.GetValue("meta-data", "true"), dp, ip, false);
                 string sortBy = ip.GetValue("sort", "");
                 bool descending = true;
@@ -180,17 +181,12 @@ namespace Magix.data
                     value = ip["value"].Clone();
 
                 if (ip.Contains("id"))
-                {
-                    string id = Expressions.GetFormattedExpression("id", e.Params, "");
-                    Database.SaveById(value, id, transaction);
-                }
+                    Database.SaveById(value, Expressions.GetFormattedExpression("id", e.Params, ""), transaction);
                 else
                     ip["id"].Value = Database.SaveNewObject(value, transaction);
             }
             else
-            {
                 Database.SaveNewObjects(ip["objects"], transaction);
-            }
         }
 
         /*

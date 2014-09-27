@@ -110,6 +110,10 @@
 
 * create import of items in database manager
 
+* [distinct] feature coupled with [extract], also implement in magix.data.count
+
+
+
 
 
 

@@ -278,64 +278,153 @@ namespace Magix.data
             }
             lock (_locker)
             {
-                int curMatchingItem = 0;
+                LoadByPrototypeImplementation(
+                    ip, 
+                    prototype, 
+                    start, 
+                    end, 
+                    onlyId, 
+                    caseSensitivePrototype, 
+                    sortBy, 
+                    descending, 
+                    id, 
+                    metaData);
+                if (!onlyId && ip.Contains("extract"))
+                    ExtractValues(ip);
+            }
+        }
 
-                // this one is only used if "sort" is given
-                List<Node> result = new List<Node>();
-
-                foreach (Node idxFileNode in GetDatabase())
+        /*
+         * extracts values if an [extract] node is given
+         */
+        private static void ExtractValues(Node ip)
+        {
+            Node objects = ip["objects"].UnTie();
+            foreach (Node idxObj in objects)
+            {
+                Node toAdd = new Node("object");
+                foreach (Node idxExtract in ip["extract"])
                 {
-                    foreach (Node idxObjectNode in idxFileNode)
-                    {
-                        if (IsMatchingId(idxObjectNode, id, caseSensitivePrototype))
-                        {
-                            // checking prototype
-                            bool match = IsMatchingPrototype(idxObjectNode, prototype, caseSensitivePrototype);
-                            if (match && string.IsNullOrEmpty(sortBy))
-                            {
-                                // since we have no sort order here, we can add the nodes directly to our result, assuming we're inside the 
-                                // requested range
-                                if ((start == 0 || curMatchingItem >= start) && (end == -1 || curMatchingItem < end))
-                                {
-                                    Node objectNode = new Node("object");
-                                    objectNode["id"].Value = idxObjectNode.Get<string>();
-                                    if (metaData)
-                                    {
-                                        objectNode["created"].Value = idxObjectNode["created"].Value;
-                                        objectNode["revision-count"].Value = idxObjectNode["revision-count"].Value;
-                                    }
-                                    if (!onlyId)
-                                        objectNode["value"].AddRange(idxObjectNode["value"].Clone());
-                                    ip["objects"].Add(objectNode);
-                                }
-                                curMatchingItem += 1;
-                            }
-                            else if (match)
-                            {
-                                result.Add(idxObjectNode);
-                            }
-                        }
-                    }
+                    string name = idxExtract.Name;
+                    object value = Expressions.GetExpressionValue<object>(idxExtract.Get<string>(), idxObj["value"], idxObj["value"], false);
+                    if (value == null && idxExtract.ContainsValue("default"))
+                        value = idxExtract["default"].Value;
+                    toAdd.Add(name, value);
                 }
+                ip["objects"].Add(toAdd);
+            }
+        }
 
-                // sorting result, if we should
-                if (result.Count > 0)
+        /*
+         * helper for above
+         */
+        private static void LoadByPrototypeImplementation(
+            Node ip, 
+            Node prototype, 
+            int start, 
+            int end, 
+            bool onlyId, 
+            bool caseSensitivePrototype, 
+            string sortBy, 
+            bool descending, 
+            string id, 
+            bool metaData)
+        {
+            int curMatchingItem = 0;
+
+            // this one is only used if "sort" is given
+            List<Node> result = new List<Node>();
+
+            foreach (Node idxFileNode in GetDatabase())
+            {
+                foreach (Node idxObjectNode in idxFileNode)
                 {
-                    SortResults(ip, sortBy, descending, result);
-
-                    // returning sliced and sorted result
-                    for (int idxResult = start; idxResult != end && idxResult < result.Count; idxResult++)
-                    {
-                        Node objectNode = new Node("object");
-                        objectNode["id"].Value = result[idxResult].Get<string>();
-                        objectNode["created"].Value = result[idxResult]["created"].Value;
-                        objectNode["revision-count"].Value = result[idxResult]["revision-count"].Value;
-                        if (!onlyId)
-                            objectNode["value"].AddRange(result[idxResult]["value"].Clone());
-                        ip["objects"].Add(objectNode);
-                    }
+                    curMatchingItem = AddNodeIfMatch(
+                        ip, 
+                        prototype, 
+                        start, 
+                        end, 
+                        onlyId, 
+                        caseSensitivePrototype, 
+                        sortBy, 
+                        id, 
+                        metaData, 
+                        curMatchingItem, 
+                        result, 
+                        idxObjectNode);
                 }
             }
+
+            // sorting result, if we should
+            if (result.Count > 0)
+            {
+                SortResults(ip, sortBy, descending, result);
+                SliceResult(ip, start, end, onlyId, result);
+            }
+        }
+
+        /*
+         * helper for above
+         */
+        private static void SliceResult(Node ip, int start, int end, bool onlyId, List<Node> result)
+        {
+            // returning sliced and sorted result
+            for (int idxResult = start; idxResult != end && idxResult < result.Count; idxResult++)
+            {
+                Node objectNode = new Node("object");
+                objectNode["id"].Value = result[idxResult].Get<string>();
+                objectNode["created"].Value = result[idxResult]["created"].Value;
+                objectNode["revision-count"].Value = result[idxResult]["revision-count"].Value;
+                if (!onlyId)
+                    objectNode["value"].AddRange(result[idxResult]["value"].Clone());
+                ip["objects"].Add(objectNode);
+            }
+        }
+
+        /*
+         * checks node for match, and if match is found, adds to result
+         */
+        private static int AddNodeIfMatch(
+            Node ip, 
+            Node prototype, 
+            int start, 
+            int end, 
+            bool onlyId, 
+            bool caseSensitivePrototype, 
+            string sortBy, 
+            string id, 
+            bool metaData, 
+            int curMatchingItem, 
+            List<Node> result, 
+            Node idxObjectNode)
+        {
+            if (IsMatchingId(idxObjectNode, id, caseSensitivePrototype))
+            {
+                // checking prototype
+                bool match = IsMatchingPrototype(idxObjectNode, prototype, caseSensitivePrototype);
+                if (match && string.IsNullOrEmpty(sortBy))
+                {
+                    // since we have no sort order here, we can add the nodes directly to our result, assuming we're inside the 
+                    // requested range
+                    if ((start == 0 || curMatchingItem >= start) && (end == -1 || curMatchingItem < end))
+                    {
+                        Node objectNode = new Node("object");
+                        objectNode["id"].Value = idxObjectNode.Get<string>();
+                        if (metaData)
+                        {
+                            objectNode["created"].Value = idxObjectNode["created"].Value;
+                            objectNode["revision-count"].Value = idxObjectNode["revision-count"].Value;
+                        }
+                        if (!onlyId)
+                            objectNode["value"].AddRange(idxObjectNode["value"].Clone());
+                        ip["objects"].Add(objectNode);
+                    }
+                    curMatchingItem += 1;
+                }
+                else if (match)
+                    result.Add(idxObjectNode);
+            }
+            return curMatchingItem;
         }
 
         /*
@@ -386,8 +475,8 @@ namespace Magix.data
                     object rhs = null;
                     if (sortIsExpression)
                     {
-                        lhs = Expressions.GetExpressionValue<object>(sortBy, left["value"], ip, false) ?? "";
-                        rhs = Expressions.GetExpressionValue<object>(sortBy, right["value"], ip, false) ?? "";
+                        lhs = Expressions.GetExpressionValue<object>(sortBy, left["value"], left["value"], false);
+                        rhs = Expressions.GetExpressionValue<object>(sortBy, right["value"], left["value"], false);
                     }
                     else
                     {
@@ -396,16 +485,17 @@ namespace Magix.data
                     }
                     if (descending)
                     {
-                        if (rhs.GetType() == typeof(decimal))
-                            return ((decimal)rhs).CompareTo(lhs);
-                        else if (rhs.GetType() == typeof(DateTime))
-                            return ((DateTime)rhs).CompareTo(lhs);
-                        else if (rhs.GetType() == typeof(bool))
-                            return ((bool)rhs).CompareTo(lhs);
-                        else if (rhs.GetType() == typeof(int))
-                            return ((int)rhs).CompareTo(lhs);
-                        return ((string)rhs).CompareTo(lhs);
+                        // switching objects around
+                        object tmpLhs = lhs;
+                        lhs = rhs;
+                        rhs = tmpLhs;
                     }
+                    if (lhs == null && rhs != null)
+                        return -1;
+                    if (rhs == null && lhs != null)
+                        return 1;
+                    if (lhs == null && rhs == null)
+                        return 0;
                     if (lhs.GetType() == typeof(decimal))
                         return ((decimal)lhs).CompareTo(rhs);
                     else if (lhs.GetType() == typeof(DateTime))
@@ -439,14 +529,36 @@ namespace Magix.data
                         if (id == idxObjectNode.Get<string>())
                         {
                             // loading by id
-                            ip["created"].Value = idxObjectNode["created"].Value;
-                            ip["revision-count"].Value = idxObjectNode["revision-count"].Value;
-                            ip["value"].AddRange(idxObjectNode["value"].Clone());
+                            if (ip.Contains("extract"))
+                                ExtractValue(ip, idxObjectNode);
+                            else
+                            {
+                                ip["created"].Value = idxObjectNode["created"].Value;
+                                ip["revision-count"].Value = idxObjectNode["revision-count"].Value;
+                                ip["value"].AddRange(idxObjectNode["value"].Clone());
+                            }
                             return;
                         }
                     }
                 }
             }
+        }
+
+        /*
+         * extracts values if an [extract] node is given
+         */
+        private static void ExtractValue(Node ip, Node result)
+        {
+            Node toAdd = new Node("value");
+            foreach (Node idxExtract in ip["extract"])
+            {
+                string name = idxExtract.Name;
+                object value = Expressions.GetExpressionValue<object>(idxExtract.Get<string>(), result["value"], result["value"], false);
+                if (value == null && idxExtract.ContainsValue("default"))
+                    value = idxExtract["default"].Value;
+                toAdd.Add(name, value);
+            }
+            ip.Add(toAdd);
         }
 
         /*

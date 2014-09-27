@@ -8,10 +8,9 @@ magix.package.unpack-dox=>@"unpacks the specified [zip] file
 unpacks the specified [zip] file to the given [directory].  will 
 automatically overwrite existing files with similar names
 
-both [zip] and [directory] can be either expressions or constants
-
-[directory] may also contain formatting parameters, such as {0} and {1} which should 
-reference children of the [directory] node"
+both [zip] and [directory] can be either expressions or constants, and can 
+also contain formatting parameters, such as {0} and {1} which should 
+reference children of the nodes"
 
 magix.package.unpack-sample
   magix.package.unpack

@@ -75,7 +75,7 @@ namespace Magix.execute
             Node dp = Dp(e.Params);
 
             string dir = ip.ContainsValue("directory") ?
-                Expressions.GetExpressionValue<string>(ip["directory"].Get<string>().TrimStart('/'), dp, ip, false) :
+                Expressions.GetFormattedExpression("directory", e.Params, "").TrimStart('/') :
                 "";
             string filter = ip.ContainsValue("filter") ?
                 Expressions.GetExpressionValue<string>(ip["filter"].Get<string>(), dp, ip, false) :

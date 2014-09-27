@@ -110,6 +110,18 @@ the [prototype] node is not evaluated in any form before being passed into the m
 [id], if given,  can contains formatting expressions, such as {0}, {1} and so on, de-referencing 
 children nodes of [id]
 
+if you add an [extract] node, you can create a flat hierarchy out of your result, by declaring which 
+columns you wish to return through adding children nodes beneath [extract] where the name of the children 
+nodes are the alias name of the columns returned, and the value of the nodes beneath [extract] is an 
+expression inside your result.  for each node beneath [extract], you can supply an addition [default] 
+value, which will be used if the expression in your column yields null or the empty string.  by using 
+[extract], you can create a two dimensional table from your load statements, flattening the returned 
+result.  if you combine [extract] with [only-id], then [extract] will be ignored, and only id's and 
+meta data of objects will be returned
+
+if you add [only-id] and set its value to true, this will override your [extract] settings, and return 
+the id and other meta data, ignoring your [extract] parameters
+
 thread safe"
 
 magix.data.load-sample

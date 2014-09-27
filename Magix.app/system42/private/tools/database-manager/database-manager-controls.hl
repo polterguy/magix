@@ -88,8 +88,12 @@ not
 case=>true
 sort=>[..].value
   descending=>true
+extract
+  column1=>[some-column].value
+  columns2=>[some-other-column].count
+
 ..."
-      rows=>14
+      rows=>19
       onfirstload
         magix.database-manager.prototype-search_onfirstload
       onesc
@@ -184,5 +188,4 @@ uploader=>import-uploader
 dynamic=>data-grid
   onfirstload
     magix.database-manager.create-data-grid
-
 

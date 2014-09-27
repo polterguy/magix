@@ -121,7 +121,7 @@ magix.database-manager.create-data-grid
             start=>{start}
             end=>{end}
           add=>[$]
-            values=>[magix.database-manager.create-data-grid-items][controls]
+            values=>[0][controls]
 
 
 // returns the controls for the datagrid being the items from the database
@@ -391,6 +391,13 @@ magix.database-manager.select-item
         form-id=>database-manager
         id=>[_viewing].value
         value=>true
+    magix.viewstate.get=>current-view
+      id=>magix.database-manager.current-view
+    if=>exist
+      lhs=>[@][magix.viewstate.get=>current-view][value][extract]
+      code
+        add=>[@][..][..][using=>magix.data][load]
+          value=>[@][..][..][magix.viewstate.get=>current-view][value][extract]
     using=>magix.data
       load
         id=>[$][id].value
@@ -748,6 +755,13 @@ magix.database-manager.pnl-import-wrp_onesc
 
 //  file was dragged and dropped into form for import, expects [file] as path to file to import
 magix.database-manager.import-uploader_onuploaded
+  set=>[magix.database-manager.import-file][file].value
+    value=>[$][file].value
+  magix.database-manager.import-file
+
+
+// imports the given [file]
+magix.database-manager.import-file
   split=>[$][file].value
     what=>.
   switch=>[split][result][>last].value
@@ -755,6 +769,16 @@ magix.database-manager.import-uploader_onuploaded
       set=>[@][magix.database-manager.import-hyperlisp-file][file].value
         value=>[$][file].value
       magix.database-manager.import-hyperlisp-file
+    case=>zip
+      set=>[@][magix.database-manager.import-zip-file][file].value
+        value=>[$][file].value
+      magix.database-manager.import-zip-file
+    default
+      using=>magix.viewport
+        show-message
+          message=>i am sorry, i don't know how to import the given '{0}' file
+            =>[$][file].value
+          color=>#ffaaaa
 
 
 // imports a hyperlisp file
@@ -779,4 +803,37 @@ magix.database-manager.import-hyperlisp-file
   magix.database-manager.create-data-grid
 
 
+// imports a zip file
+magix.database-manager.import-zip-file
+  magix.date.now
+  replace=>[magix.date.now][value].value
+    what=>.
+  replace=>[magix.date.now][value].value
+    what=>:
+  replace=>[magix.date.now][value].value
+    what=>@" "
+  using=>magix.file
+    create-directory
+      directory=>your-files/tmp/unzipped_{0}
+        =>[magix.date.now][value].value
+  using=>magix.package
+    unpack
+      zip=>[$][file].value
+      directory=>your-files/tmp/unzipped_{0}
+        =>[magix.date.now][value].value
+  set=>[magix.database-manager.import-directory][directory].value
+    value=>your-files/tmp/unzipped_{0}
+      =>[magix.date.now][value].value
+  magix.database-manager.import-directory
+
+
+// imports all files in given [directory]
+magix.database-manager.import-directory
+  using=>magix.file
+    list-files
+      directory=>[$][directory].value
+  for-each=>[using=>magix.file][list-files][files]
+    set=>[@][magix.database-manager.import-file][file].value
+      value=>[.].name
+    magix.database-manager.import-file
 

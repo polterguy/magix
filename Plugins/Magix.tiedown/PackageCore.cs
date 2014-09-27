@@ -42,7 +42,7 @@ namespace Magix.tiedown
 
             Node dp = Dp(e.Params);
 
-            string zipFile = Expressions.GetExpressionValue<string>(ip["zip"].Get<string>(), dp, ip, false);
+            string zipFile = Expressions.GetFormattedExpression("zip", e.Params, "");
             string directory = Expressions.GetFormattedExpression("directory", e.Params, "");
 
             string zipAbsolutePath = HttpContext.Current.Server.MapPath(zipFile);

@@ -119,6 +119,9 @@ through the [directory] node's value, and can be both an expression, or a consta
 given, it will list all the files from the root directory of your web application.  both the path, 
 and the filter, can be both constants or expressions
 
+[directory] can contain formatting parameters, such as {0} and {1}, de-referencing children 
+nodes of the [directory] node
+
 thread safe"
 
 magix.file.list-files-sample
