@@ -49,6 +49,12 @@ panel=>paging-wrp
     button=>import
       class=>span-2
       value=>import
+      title=>@"max file size is 20mb, however, 
+importing such a big file will 
+take a lot of time.  i suggest 
+you import smaller files, by 
+chopping up your files in 
+smaller chunks"
       onclick
         magix.database-manager.import_onclick
 
@@ -154,6 +160,7 @@ panel=>pnl-export-wrp
           items
             hyperlisp=>hyperlisp
             hyperlisp-zip=>zipped hyperlisp
+            csv=>csv
         button=>do-export
           class=>span-2 last
           value=>export

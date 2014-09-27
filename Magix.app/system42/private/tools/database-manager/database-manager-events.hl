@@ -686,6 +686,77 @@ magix.database-manager.do-export-hyperlisp
   magix.file.download
 
 
+// exports items to csv file
+magix.database-manager.do-export-csv
+  magix.viewstate.get=>current-view
+    id=>magix.database-manager.current-view
+  if=>not-exist
+    lhs=>[magix.viewstate.get=>current-view][value][extract]
+    code
+      magix.viewport.show-message
+        message=>you cannot export to csv unless you create an [extract] parameter
+      stop
+  set=>[magix.viewstate.get=>current-view][value][start]
+  set=>[magix.viewstate.get=>current-view][value][end]
+  add=>[magix.data.load]
+    values=>[magix.viewstate.get=>current-view][value]
+  magix.data.load
+    meta-data=>false
+  _content=>
+  for-each=>[magix.viewstate.get=>current-view][value][extract]
+    if=>equals
+      lhs=>[/][_content].value
+      rhs=>
+      code
+        set=>[/][_content].value
+          value=>@"""{0}"""
+            =>[.].name
+    else
+      set=>[/][_content].value
+        value=>@"{0}, ""{1}"""
+          =>[/][_content].value
+          =>[.].name
+  for-each=>[magix.data.load][objects]
+    _obj=>
+    for-each=>[.]
+      replace=>[.].value
+        what=>@""""
+        with=>@""""""
+      if=>equals
+        lhs=>[@][..][_obj].value
+        rhs=>
+        code
+          set=>[@][..][..][..][_obj].value
+            value=>@"""{0}"""
+              =>[.].value
+      else
+        set=>[@][..][..][_obj].value
+          value=>@"{0},""{1}"""
+            =>[@][..][..][_obj].value
+            =>[.].value
+    set=>[/][_content].value
+      value=>@"{0}
+{1}"
+        =>[/][_content].value
+        =>[@][_obj].value
+  magix.date.now
+  replace=>[magix.date.now][value].value
+    what=>.
+  replace=>[magix.date.now][value].value
+    what=>:
+  replace=>[magix.date.now][value].value
+    what=>@" "
+  using=>magix.file
+    save
+      file=>your-files/tmp/{0}-export-csv.csv
+        =>[magix.date.now][value].value
+      value=>[_content].value
+  set=>[magix.file.download][file].value
+    value=>your-files/tmp/{0}-export-csv.csv
+      =>[magix.date.now][value].value
+  magix.file.download
+
+
 // exports items to zipped hyperlisp file
 magix.database-manager.do-export-hyperlisp-zip
   magix.viewstate.get=>current-view
@@ -797,6 +868,7 @@ magix.database-manager.import-hyperlisp-file
     lhs=>[magix.forms.get-value][value].value
     rhs=>true
     code
+      // dropping ids of objects
       for-each=>[magix.data.save][objects]
         set=>[.][id]
   magix.data.save
